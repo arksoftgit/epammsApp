@@ -1,0 +1,746 @@
+body
+{
+   margin: 0px 0px 0px 0px;
+   padding: 0px;
+   text-align:left; /* horizontal centering for IE Win quirks, tried "align:center, works in FF but not IE */
+   font-family:Verdana, Arial, Helvetica, sans-serif;
+   font-size: 11px;
+   line-height: normal;
+   font-weight: normal;
+   font-variant: normal;
+   text-transform: none;
+   background-position: 0px 0px;
+   background-color:#8FBC8F;  /* DarkSeaGreen */
+}
+
+#tempbody
+{
+}
+
+/************* Outer container for everything on the page **************/
+
+#wrapper
+{
+   margin: auto;
+   position:relative; /* puts container in front of distance */
+   text-align:left;
+   height:100%;
+   width:1001px;
+   bottom:0px;
+
+   background-color:black;
+   border-left:1px solid #000;
+   border-top:1px solid #000;
+   border-right:1px solid #000;
+}
+
+/***********************************************/
+/* Layout Divs                                 */
+/***********************************************/
+
+#bannernew
+{
+   border-top: 1px solid #000000;
+   border-bottom: 1px solid #000000;
+   border-right: 1px solid #000000;
+   border-left:1px solid #000000;
+   text-align:left;
+   left: 0px;
+   width: 1000px;
+   height:120px; /* was 75px; */
+}
+
+#bannernew img
+{
+   width: 100%;
+   height: 100%;
+}
+
+/************* TOP Navigation styles **************/
+
+#mainnavigation
+{
+   font-family:Verdana, Arial, Helvetica, sans-serif;
+   font-size: 12px;
+   margin: 0;
+   padding: 0px 0px 0px 0px;
+   text-align:center;
+
+
+
+   width: 1000px;
+   line-height: 13px;
+}
+
+#mainnavigation ul
+{
+   border-top: 1px solid #000000;
+   border-bottom: 1px solid #000000;
+   border-right: 1px solid #000000;
+   border-left:1px solid #000000;
+   padding: 1px 0px 1px 0px;  /* was 0px 0px 0px 0px; */
+   margin: 0;
+   background-color:#cc0000;  /* red */
+   color: white;  /* not in original */
+
+
+
+   width: 1000px;
+   line-height: 13px; /* height of menu bar; */
+}
+
+#mainnavigation ul li
+{
+   display: inline;
+   padding: 3px 0px 3px 0px;  /* was 3px 3px 3px 3px; */
+   margin: 0;
+   width: 1000px;  /* was width:auto;
+   left: 0px;  /* not in original */
+}
+
+#mainnavigation ul li a
+{
+   padding-left: 8px;  /* was 10px not in original; */
+   padding-right: 8px;  /* was 10px not in original; */
+   padding-bottom: 1px;  /* was 5px not in original; */
+   padding-top: 1px;  /* was 5px not in original; */
+   font-size: 11px;
+   color: white;  /* was color: #ffffff; */
+   background-color: #cc0000;  /* red */
+   text-decoration: none;
+   border-right: 1px solid #fff;  /* not in original */
+}
+
+#mainnavigation ul li a:hover, #mainnavigation ul li a:focus
+{
+   background-color: #000000;
+}
+
+/********** NEW TOP NAVIGATION ****/
+
+#navcontainer ul
+{
+   text-align: center;
+   padding-bottom: 1px;  /* was 5px; */
+   padding-top: 1px;  /* was 5px; */
+   padding-left: 0;
+   margin-top: 0;
+   /* cancels gap caused by top padding in Opera 7.54 */
+   margin-left: 0;
+   background-color: #00aed6;
+   color: white;
+   width: 1000px;
+/* width: 100%; */
+/* font-family: Arial,Helvetica,sans-serif; */
+   font-family:Verdana, Arial, Helvetica, sans-serif;
+   line-height: 18px; /* height of menu bar; */
+   /* fixes Firefox 0.9.3 */
+
+
+
+
+
+}
+
+#navcontainer ul li
+{
+   display: inline;
+   padding-left: 0;
+   padding-right: 0;
+   padding-bottom: 1px;  /* was 5px; */
+   /* matches link padding except for left and right */
+   padding-top: 1px;  /* was 5px; */
+
+/* top: -3px; */
+/* right: 110px; */
+   left: 0px;
+   width: 1000px;
+}
+
+#navcontainer ul li a
+{
+   padding-left: 8px;  /* was 10px; */
+   padding-right: 8px;  /* was 10px; */
+   padding-bottom: 1px;  /* was 5px; */
+   padding-top: 1px;  /* was 5px; */
+   color: white;
+   text-decoration: none;
+   border-right: 1px solid #fff;
+}
+
+#navcontainer ul li a:hover
+{
+   background-color: #369;
+   color: white;
+}
+
+#navcontainer #active
+{
+   border-left: 1px solid #fff;
+}
+
+#nav2
+{
+   font-family:Verdana, Arial, Helvetica, sans-serif;
+   font-size: 12px;
+   margin: 0;
+   padding: 0px 0px 0px 0px;
+   text-align:center;
+   width: 1000px;  /* was 1006 */
+   line-height: 3px;  /* was 13 */
+}
+
+#nav2 ul
+{
+   border-top: 1px solid #000000;
+   border-bottom: 1px solid #000000; /* border-bottom: 1px solid #142865; */
+   border-right: 1px solid #000000;  /* border-right: 1px solid #142865; */
+   border-left:1px solid #000000;
+   padding: 0px 0px 0px 0px;
+   margin: 0;
+   background-color: #142865;
+   width: 1000px;  /* was 1006 */
+   line-height: 3px;  /* was 13 */
+}
+
+#nav2 ul li
+{
+   display: inline;
+   padding: 3px 3px 3px 3px;
+   margin: 0;
+   width:auto;
+}
+
+#nav2 ul li a
+{
+   font-size: 11px;
+   color: #ffffff;
+   background-color: #142865;
+   text-decoration: none;
+}
+
+#nav2 ul li a:hover, #mainnavigation ul li a:focus
+{
+   background-color: #142865;
+}
+
+/**For Left Navigation Background***/
+
+#nav3
+{
+   border-bottom: 1px solid #000000;
+   border-right: 1px solid #ffffff;
+   font-family:Verdana, Arial, Helvetica, sans-serif;
+   margin: 0;
+   padding: 3px 0px 3px 0px;
+   background-color: #142865;
+   position: absolute;
+   top: 150px;
+   left: 0px;
+   width: 137px;
+   height: 1000px;
+}
+
+.menu2
+{
+   padding:0 0 0 32px; margin:0; list-style:none; height:35px; background:#fff url(button1.gif);
+/* position:relative; */
+   border:1px solid #000; border-width:0 1px; border-bottom:1px solid #444;
+
+   position: absolute;
+   top: 84px;
+   left: 0px;
+   width: 1000px;
+}
+
+.menu2 li {float:left;}
+.menu2 li a {display:block; float:left; height:35px; line-height:35px; color:#aaa;
+             text-decoration:none; font-size:11px; font-family:arial, verdana, sans-serif; font-weight:bold;
+             text-align:center; padding:0 0 0 8px; cursor:pointer;}
+.menu2 li a b {float:left; display:block; padding:0 16px 0 8px;}
+.menu2 li.current a {color:#fff; background:url(button3.gif);}
+.menu2 li.current a b {background:url(button3.gif) no-repeat right top;}
+.menu2 li a:hover {color:#fff; background:#000 url(button4.gif);}
+.menu2 li a:hover b {background:url(button4.gif) no-repeat right top;}
+.menu2 li.current a:hover {color:#fff; background:#000 url(button3.gif); cursor:default;}
+.menu2 li.current a:hover b {background:url(button3.gif) no-repeat right top;}
+
+.menu4
+{
+   padding:0 0 0 1em; margin:0; list-style:none; height:35px; background:url(pro_four0.gif);
+   position: absolute;
+   top: 84px;
+   left: 0px;
+   width: 1000px;
+}
+
+.menu4 li {float:left;}
+.menu4 li a {display:block; float:left; height:35px; line-height:33px; color:#aaa;
+             text-decoration:none; font-family:arial, verdana, sans-serif;
+             text-align:center; padding:0 0 0 14px; cursor:pointer; font-size:11px;}
+.menu4 li a b {float:left; display:block; padding:0 28px 0 14px;}
+.menu4 li.current a {color:#fff; background:url(pro_four2.gif);}
+.menu4 li.current a b {background:url(pro_four2.gif) no-repeat right top;}
+.menu4 li a:hover {color:#fff; background: url(pro_four1.gif);}
+.menu4 li a:hover b {background:url(pro_four1.gif) no-repeat right top;}
+.menu4 li.current a:hover {color:#fff; background: url(pro_four2.gif); cursor:default;}
+.menu4 li.current a:hover b {background:url(pro_four2.gif) no-repeat right top;}
+
+/********** Used in topmenuend.inc *******/
+
+#aftermainnav
+{
+   font-family:Verdana, Arial, Helvetica, sans-serif;
+   font-size: 4px;  /* was 12px; */
+   margin: 0;
+   padding: 0px 0px 0px 0px;  /* was 3px 0px 3px 0px; */
+
+
+
+   width: 1000px;
+   line-height: 3px;  /* was 8px; */
+}
+
+#aftermainnav ul
+{
+   border-top: 1px solid #000000;
+   border-bottom: 1px solid #000000;
+   border-right: 1px solid #000000;
+   border-left:1px solid #000000;
+   padding: 0px 0px 0px 0px;  /* was 3px 0px 3px 0px; */
+   margin: 0;
+   background-color:#000000;  /* was #00aed6; */
+
+
+
+   width: 1000px;
+   line-height: 2px;  /* was 8px; */
+}
+
+#aftermainnav ul li
+{
+   display: inline;
+   padding: 0px 0px 0px 0px;  /* was 3px 0px 3px 0px; */
+   margin: 0;
+   width:auto;
+}
+
+#aftermainnav ul li a:hover, #mainnavigation ul li a:focus
+{
+   background-color:#ffffff;  /* was #00dddd; */
+   color: #000000;
+}
+
+/********** Main Content div *******/
+maincontent
+{
+   background-color:black;  /* was green; */
+   width:1000px;
+}
+
+/********** Used in Left_Nav_Background.inc *******/
+
+#beforesidenav
+{
+   border-bottom: 1px solid #000000;
+   border-right: 1px solid #000000;
+   font-family:Verdana, Arial, Helvetica, sans-serif;
+   margin: 0;
+   padding: 3px 0px 3px 0px;
+   background-color:black;  /* was green; */
+
+
+
+   width: 137px;
+
+}
+
+/********** LEFT NAVIGATION *******/
+
+#sidenavigation
+{
+   float:left;
+   width: 137px;
+   margin: 0px;
+   font-family:Verdana, Arial, Helvetica, sans-serif;
+   text-align:right;
+   font-size: 12px;
+
+
+
+
+   color: white;
+   background-color:black;
+}
+
+#sidenavigation ul
+{
+   list-style: none;
+   margin: 0;
+   padding: 0;
+}
+
+#sidenavigation li
+{
+   border-bottom: 1px solid #cc0000;
+}
+
+#sidenavigation li.Level1
+{
+   border-bottom: 5px solid #cc0000;
+   text-align:left;
+}
+
+#sidenavigation li a
+{
+   display: block;
+   padding: 5px 5px 5px 0.5em;
+   border-left: 10px solid #cc0000;
+   border-right: 1px solid #000000;
+   background:#000000;
+   color:#ffffff;
+   text-decoration: none;
+}
+
+#sidenavigation li a:hover
+{
+   border-left: 10px solid #cc0000;
+   border-right: 1px solid #000000;
+/* background-color: #d3d3d3; */ /* LightGray */
+   color: #3c6cff; /* was #334d55; #e8e3d4; */
+}
+
+#sidenavigation li a.sideselected
+{
+   border-left: 10px solid #cc0000;
+   border-right: 1px solid #000000;
+   background-color: #0000ff;
+   color: #00ff00;
+}
+
+/************** MAIN CONTENT ****************/
+
+#content
+{
+  float:left;
+  margin: 0px;
+  width:863px;
+  background-color: #ffffff;
+  padding: 0px 0px 0px 0px;
+}
+
+#contentnosidemenu
+{
+  float:left;
+  background-color: #ffffff;
+  margin: 0px;
+  padding: 0px 0px 0px 0px;
+  width:1000px;
+}
+
+#contentbudget
+{
+  float:left;
+  margin: 0px;
+  width:863px;
+  background-color: #ffffff;
+  padding: 0px 0px 0px 0px;
+  overflow:auto;
+}
+
+#contentdashboard
+{
+  float:left;
+  margin: 0px;
+  width:100%;
+  height:100%;
+  background-color: #ffffff;
+  padding: 0px 0px 0px 0px;
+  overflow:auto;
+}
+
+#contentpopup
+{
+  float:left;
+  margin: 0px;
+  width:100%;
+  height:100%;
+  background-color: #ffffff;
+  padding: 0px 0px 0px 0px;
+  overflow:auto;
+}
+
+#contentbudgetprint
+{
+  float:left;
+  margin: 0px;
+  width:1500px;
+  background-color: #ffffff;
+  padding: 0px 0px 0px 0px;
+}
+
+/************** FOOTER ****************/
+
+#footer
+{
+   color: #fff;
+   height:25px;
+   text-align:right;
+}
+
+/************** DASHBOARD STUFF ****************/
+
+#column-1
+{
+background-color:#eeeeee;
+width:260px;
+float:left;
+  margin-left: 7px;
+  _margin-left: 4px;
+}
+
+#column-2
+{
+background-color:#eeeeee;
+width:260px;
+float:left;
+}
+
+#column-3
+{
+background-color:#eeeeee;
+width:260px;
+float:left;
+}
+
+#column-2, #column-3
+{
+  margin-left: 5px;
+}
+
+.region-display
+{
+  position: relative;
+  float: left;
+  width : 260px; /* same as column width */
+  height: 200px;
+  margin-top: 15px;
+  border-top: 1px solid #BCA97A;
+  border-bottom: 1px solid #BCA97A;
+  background-color: #BCA97A;
+  overflow: hidden;
+}
+
+.region-display .region-header
+{
+  display: block;
+  overflow: hidden;
+  width: 100%;
+  height: 25px;
+}
+
+.region-display .region-body-content
+{
+  border: 0;
+  padding: 0;
+  overflow: auto;
+  overflow-x: hidden;
+  /* float: left; */
+  margin-left: 1px;
+  margin-right: 1px;
+  width: 258px;
+  background-color: #ffffff;
+}
+
+.region-display .region-body-content .PortletCustomize
+{
+}
+
+.region-display .region-header-title
+{
+  position: relative;
+  float: left;
+  height: 25px;
+  margin-top: 5px;
+  line-height: 12px;
+  text-indent: 5px;
+  font: bold 12px arial;
+  color: #333333;  /* black */
+}
+
+.region-display .region-header-title-expand
+{
+  position: relative;
+  float: right;
+  margin-top: 5px;
+  margin-left: 1px;
+  margin-right: 2px;
+  height: 25px;
+  width: 18px;
+  background-image: url("./images/btn_expand.gif");
+  background-repeat: no-repeat;
+}
+
+.region-display .region-header-title-expand-hover
+{
+  background-image: url("./images/btn_expand-o.gif");
+  background-repeat: no-repeat;
+  background-position: 98% 5%;
+
+}
+
+.region-display .region-header-title-contract
+{
+  position: relative;
+  float: right;
+  margin-top: 5px;
+  margin-left: 1px;
+  margin-right: 2px;
+  height: 25px;
+  width: 18px;
+  background-image: url("./images/btn_contract.gif");
+  background-repeat: no-repeat;
+}
+
+.region-display .region-header-title-contract-hover
+{
+  background-image: url("./images/btn_contract-o.gif");
+  background-repeat: no-repeat;
+  background-position: 99.5% 5%;
+}
+
+.region-display .region-header-title-open
+{
+  position: relative;
+  float: right;
+  margin-top: 5px;
+  margin-left: 1px;
+  margin-right: 1px;
+  height: 25px;
+  width: 18px;
+  background-image: url("./images/add_button.gif");
+  background-repeat: no-repeat;
+}
+
+/**********************************/
+/* Beginning TAB Pane Control CSS */
+/**********************************/
+
+.dynamic-tab-pane-control.tab-pane
+{
+   position:   relative;
+   width:      100%;    /* width needed weird IE bug */
+   margin-right:  -2px; /* to make room for the shadow */
+   float:      left;
+}
+.dynamic-tab-pane-control .tab-row .tab
+{
+   width:         70px;
+   height:        16px;
+   background-image: url( "images/tab.png" );
+   position:      relative;
+   top:        0;
+   display:    inline;
+   float:         left;
+   overflow:      hidden;
+   cursor:        Default;
+   margin:        1px -1px 1px 2px;
+   padding:    2px 0px 0px 0px;
+   border:        0;
+   z-index:    1;
+   font:       11px Tahoma;
+   white-space:      nowrap;
+   text-align:    center;
+}
+
+.dynamic-tab-pane-control .tab-row .tab.selected
+{
+   width:         74px !important;
+   height:        18px !important;
+   background-image: url( "images/tab.active.png" ) !important;
+   background-repeat:   no-repeat;
+   border-bottom-width: 0;
+   z-index:    3;
+   padding:    2px 0 0px 0;
+   margin:        1px -3px -3px 0px;
+   top:        -2px;
+   font:       11px Tahoma;
+}
+
+.dynamic-tab-pane-control .tab-row .tab a
+{
+   font:       11px Tahoma;
+   color:         Black;
+   text-decoration:  none;
+   cursor:        default;
+}
+
+.dynamic-tab-pane-control .tab-row .tab.hover
+{
+   font:       11px Tahoma;
+   width:         70px;
+   height:        16px;
+   background-image: url( "tab.hover.png" );
+   background-repeat:   no-repeat;
+}
+
+
+.dynamic-tab-pane-control .tab-page
+{
+   clear:         both;
+   border:        1px solid rgb( 145, 155, 156 );
+   background:    rgb( 252, 252, 254 );
+   z-index:    2;
+   position:      relative;
+   top:        -2px;
+   font:       11px Tahoma;
+   color:         Black;
+   /* filter: */
+   /*244, 243, 238*/
+   /* 145, 155, 156*/
+   padding:    10px;
+        float:                  left;
+}
+
+/*
+.dynamic-tab-pane-control .tab-page
+{
+   clear:         both;
+   border:        1px solid rgb( 145, 155, 156 );
+   background:    rgb( 252, 252, 254 );
+   z-index:    2;
+   position:      relative;
+   top:        -2px;
+   font:       11px Tahoma;
+   color:         Black;
+   /* filter: */
+   /*244, 243, 238*/
+   /* 145, 155, 156*/
+   padding:    10px;
+}
+*/
+
+.dynamic-tab-pane-control .tab-row
+{
+   z-index:    1;
+   white-space:   nowrap;
+}
+.dynamic-tab-pane-control h2
+{
+   text-align: center;
+   width:      auto;
+}
+
+.dynamic-tab-pane-control h2 a
+{
+   display: inline;
+   width:      auto;
+}
+
+.dynamic-tab-pane-control a:hover
+{
+   background: transparent;
+}
+/**********************************/
+/*    End TAB Pane Control CSS    */
+/**********************************/

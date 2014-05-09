@@ -1,0 +1,1 @@
+copy "C:\Program Files\Apache Group\Tomcat 7.0\webapps\ROOT\epamms\*.jsp" .

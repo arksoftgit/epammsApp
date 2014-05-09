@@ -1,0 +1,35 @@
+ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	width: 806px;
+	border-bottom: 1px solid #ccc;
+	}
+
+ul li {
+	position: relative;
+        display: inline;
+	}
+
+
+li ul {
+	position: absolute;
+	left: 20px;
+	top: 17px;
+	display: none;
+	}
+
+li ul li {
+	   display: block;
+         }
+
+
+li:hover ul, li.over ul { 
+	display: block; }
+
+
+
+/*
+http://www.alistapart.com/articles/horizdropdowns
+http://www.blooberry.com/indexdot/css/properties/classify/display.htm   (css display: in-line options)
+*/

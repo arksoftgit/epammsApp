@@ -1,0 +1,3 @@
+<%
+int nTimeout = 60;
+%>

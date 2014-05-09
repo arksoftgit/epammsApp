@@ -1,0 +1,12 @@
+<html>
+<head>
+   <title>ePamms Logout</title>
+   <link href="epamms.css" rel="stylesheet" type="text/css">
+</head>
+<body bgcolor="silver">
+You are now logged out of ePamms<br>
+<p align="center"><font size="3"><a href="./wStartUpUserLogin.jsp">Click here to log back in to ePamms<br>
+  </a><br>
+
+</body>
+</html>

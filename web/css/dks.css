@@ -1,0 +1,776 @@
+/***********************************************/
+/* This css has 3 possible columns for content.  Left is the navigation, middle and right. 2 real content areas. */
+/* Author: MjB Web Design modified by jsb Web Design :-> */
+/***********************************************/
+
+/***********************************************/
+/* HTML TAG STLYES                             */
+/***********************************************/ 
+
+body {
+	margin: 10px 10px 5px 5px;
+	padding: 0px;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	line-height: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	background-position: 0px 0px;
+	background-image:  url(redpageback.gif);
+}
+
+a{
+	color: #006699;
+	text-decoration: none;
+}
+
+a:link{
+	color: #006699;
+	text-decoration: none;
+}
+
+a:visited{
+	color: #006699;
+	text-decoration: none;
+}
+
+a:hover{
+	color: #006699;
+	text-decoration: underline;
+}
+
+
+h1{
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size: 120%;
+	color: #334d55;
+	margin: 0px;
+	padding: 0px;
+}
+
+h2{
+	font-size: 12px;
+	font-weight: bold;
+	color: #000000;
+}
+
+h3{
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size: 100%;
+	color: #334d55;
+ 	margin: 0px;
+	padding: 0px;
+}
+
+h4{
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size: 100%;
+	font-weight: normal;
+	color: #333333;
+ 	margin: 0px;
+	padding: 0px;
+}
+
+h5{
+ 	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size: 100%;
+	color: #334d55;
+ 	margin: 0px;
+ 	padding: 0px;
+}
+
+ul{
+	list-style-type: square;
+}
+
+ul ul{
+	list-style-type: disc;
+}
+
+ul ul ul{
+	list-style-type: none;
+}
+
+label{
+ 	font-family:Verdana, Arial, Helvetica, sans-serif;
+ 	/*font-size: 100%;*/
+	font-size: 12px;
+ 	font-weight: bold;
+ 	color: #334d55;
+}
+
+/************ Table Sort styles ************/
+
+table {
+	width: 80%;
+	margin: 1em auto;
+	border-collapse: collapse;
+	border: 1px solid black;
+}
+
+thead th.gridheading {
+	color: #000;
+	background-color: #AAF;
+}
+
+thead th,
+tfoot th {
+	padding: 0.5em;
+	text-align: left;
+	border: 1px solid black;
+	background-color: #AAF;
+}
+
+tfoot td {
+	border-top: 1px solid black;
+}
+
+tbody td {
+	padding: 0.5em;
+	border-left: 1px solid black;
+	border-right: 1px solid black;
+}
+
+tr.odd {
+	background-color: #DDF;
+}
+
+td.numeric,
+th.numeric {
+	text-align: right;
+}
+
+th {
+ 	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+ 	font-weight: bold;
+ 	color: #334d55;
+	background-color: #DDF;
+}
+
+table.sortable tr {
+ 	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+ 	color: #334d55;
+	border: 1px solid black;
+	background-color: #EEE;
+}
+
+table.sortable td {
+ 	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+ 	color: #334d55;
+	border: 1px solid black;
+}
+
+td {
+ 	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+ 	color: #334d55;
+	border: 1px solid black;
+	background-color: #CC6;
+}
+
+/*******TABLE LAYOUTS - MOVING TOWARD A FLUID DESIGN*********/
+
+#mainTable {
+	border: 1px solid #000000;
+	/*/*/line-height: 1.5em; /* */
+}
+
+#mainTable td {
+	padding: 20px;/*Pads each table cell in modern browsers*/
+}
+ 
+#maincontent {
+	border-left: 2px dotted #333;
+	font-size: 12px;	/*/*/font-size: 100%; /* */
+}
+ 
+#sidebar {
+	width: 200px;
+	font-size: 12px;	/*/*/font-size: 85%; /* */
+}
+
+/***********************************************/
+/* Layout Divs                                 */
+/***********************************************/
+
+#bannernew {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	left: 0px;
+	width: 800px;
+	background-image: url(../PROTOTYPING/top_ENCbanner.jpg);
+	background-repeat:no-repeat;
+	height:94px;
+	border-top:1px solid #000;
+	border-right:1px solid #000;
+	border-left:1px solid #000;
+	voice-family: "\"}\"";
+	voice-family: inherit;
+}
+		
+#secondcolumn{
+   float:right;
+	position:absolute;
+   top: 219px;
+	left: 505px;
+  	width: 282px;
+	border-left: 1px solid #cccccc;
+	padding-right: 10px;
+	padding-left: 10px;
+}
+
+#secondcolumn.small_flash_col_2_top {
+	background-color: #FFFFFF;
+	position: absolute;
+	top: 35px;
+	left: 7px;
+	width: 280px;
+	padding: 3px 3px 3px 3px; 
+}
+#content{
+  float: left;
+  width: 66%;
+  position:absolute;
+  left: 140px;
+  top: 125px;
+}
+#fullcontent{
+  float: left;
+  width: 66%;
+  position:absolute;
+  left: 140px;
+  top: 220px;
+}
+
+/************* TOP Navigation styles **************/
+
+#mainnavigation{
+	border-bottom: 1px solid #000000;
+	border-right: 1px solid #000000;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	margin: 0;
+	padding: 3px 3px 3px 3px;
+	text-align:center;
+	position: absolute;
+	top: 97px;
+	right: 110px;
+	left: 0px;
+	width: 806px;
+	line-height: 13px;
+}
+
+#mainnavigation ul{
+	padding: 3px 0px 3px 0px;
+	margin: 0;
+	background-color:#cc0000;
+	position: absolute;
+	top: -3px;
+	right: 110px;
+	left: 0px;
+	width: 806px;
+	line-height: 13px;
+}
+
+#mainnavigation ul li{
+	display: inline;
+	padding: 3px 3px 3px 3px;
+	margin: 0;
+	width:auto;
+}
+
+	#mainnavigation ul li a{
+	font-size: 11px;
+	color: #FFFFFF;
+	background-color: #cc0000;
+	text-decoration: none;
+	padding: 3px 0px 3px 0px;
+	line-height: 13px;
+} 
+
+#mainnavigation ul li a:hover, #mainnavigation ul li a:focus{
+	background-color: #000000;
+}
+
+#nav2{
+	border-bottom: 1px solid #000000;
+	border-right: 1px solid #ffffff;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	margin: 0;
+	padding: 3px 0px 3px 0px;
+	text-align:center;
+	position: absolute;
+	top: 112px;
+	left: 0px;
+	width: 806px;
+	line-height: 13px;
+}
+
+#nav2 ul{
+	padding: 3px 0px 3px 0px;
+	margin: 0;
+	background-color:#000000;
+	position: absolute;
+	top: 1px;
+	right: 110px;
+	left: 0px;
+	width: 806px;
+	line-height: 13px;
+}
+
+#nav2 ul li{
+	display: inline;
+	padding: 3px 0px 3px 0px;
+	margin: 0;
+	width:auto;
+}
+
+#nav2 ul li a{
+	font-size: 11px;
+	color: #FFFFFF;
+	background-color: #000000;
+	text-decoration: none;
+	padding: 3px 0px 3px 0px;
+	line-height: 13px;
+} 
+
+#nav2 ul li a:hover, #mainnavigation ul li a:focus{
+	background-color: #ffffff;
+	color: #000000;
+}
+
+/**For Left Navigation Background***/
+
+#nav3{
+	border-bottom: 1px solid #000000;
+	border-right: 1px solid #ffffff;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	margin: 0;
+	padding: 3px 0px 3px 0px;
+	background-color:black;
+	position: absolute;
+	top: 150px;
+	left: 0px;
+	width: 137px;
+	height: 800px;
+}
+
+/********** LEFT NAVIGATION *******/
+
+#sidenavigation {
+	float: left;
+	width: 137px; /* was 137 */
+	margin: 0px;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	text-align:right;
+	font-size: 12px;
+	position:absolute;
+	top: 156px;
+	height: 900px;
+	left: -1px;
+} 
+ 
+#sidenavigation ul { 
+	list-style: none; 
+	margin: 0; 
+	padding: 0; 
+} 
+
+#sidenavigation li { 
+	border-bottom: 1px solid #cc0000; 
+} 
+
+#sidenavigation li.Level1 { 
+	border-bottom: 5px solid #cc0000; 
+	text-align:left;
+} 
+
+/************** Left navigation ***********/ 
+#sidenavigation li a { 
+	display: block; 
+	padding: 5px 5px 5px 0.5em; 
+	border-left: 10px solid #cc0000; 
+	border-right: 1px solid #000000; 
+	background:#000000;
+	color:#ffffff; 
+	text-decoration: none; 
+}
+#sidenavigation li a:hover {
+	border-left: 10px solid #cc0000;
+	border-right: 1px solid #000000;
+	background-color: #ffffff;
+	color: #000000;
+}
+
+/************** BOTTOM NAVIGATION ***********/
+
+#bottomnav{
+	border-bottom: 1px solid #000000;
+	border-right: 1px solid #000000;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	margin: 0;
+	padding: 3px 3px 3px 3px;
+	text-align:center;
+	position: relative;
+	top: 900px;
+	right: 110px;
+	left: 3px;
+	width: 800px;
+	height: 12px;
+	line-height: 12px;
+}
+
+#bottomnav ul{
+	padding: 3px 0px 3px 0px;
+	margin: 0;
+	background-color:#cc0000;
+	position: relative;
+	top: -3px;
+	right: 110px;
+	left: -1px;
+	width: 800px;
+	height: 11px;
+	line-height: 12px;
+}
+
+#bottomnav ul li{
+	display: inline;
+	padding: 3px 3px 3px 3px;
+	margin: 0;
+	width:auto;
+}
+
+#bottomnav ul li a{
+	font-size: 11px;
+	color: #FFFFFF;
+	background-color: #cc0000;
+	text-decoration: none;
+	padding: 3px 0px 3px 0px;
+	height: 11px;
+	line-height: 11px;
+} 
+
+#bottomnav ul li a:hover, #nav ul li a:focus{
+	background-color: #000000;
+}
+
+#bottomnav2{
+	border-bottom: 1px solid #000000;
+	border-right: 1px solid #ffffff;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	margin: 0;
+	padding: 3px 0px 3px 0px;
+	text-align:center;
+	position: relative;
+	top: 903px;
+	right: 110px;
+	left: 3px;
+	width: 800px;
+	height: 12px;
+	line-height: 12px;
+}
+
+#bottomnav2 ul{
+	padding: 3px 0px 3px 0px;
+	margin: 0;
+	background-color:#000000;
+	position: relative;
+	top: 2px;
+	right: 110px;
+	left: -1px;
+	width: 800px;
+	height: 11px;
+	line-height: 12px;
+}
+
+#bottomnav2 ul li{
+	display: inline;
+	padding: 3px 0px 3px 0px;
+	margin: 0;
+	width:auto;
+}
+
+#bottomnav2 ul li a{
+	font-size: 11px;
+	color: #FFFFFF;
+	background-color: #000000;
+	text-decoration: none;
+	padding: 3px 0px 3px 0px;
+	height: 11px;
+	line-height: 11px;
+} 
+
+#bottomnav2 ul li a:hover, #nav ul li a:focus{
+	background-color: #ffffff;
+	color: #000000;
+}
+
+/*********** PAGE PARTS  **************/
+
+#siteName{
+	margin: 0;
+	padding: 0 0 0 10px;
+}
+
+.pagetitle {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	font-style: normal;
+	font-weight: bold;
+	background-color: #CCCC99;
+	position: absolute;
+	top: 179px;
+	left: 141px;
+	width: 650px;
+	line-height: inherit;
+	color: #000000;
+	text-decoration: none;
+	text-align: left;
+	white-space: normal;
+	display: table;
+	vertical-align: middle;
+	padding: 3px;
+}
+#small_flash_col_2_top {
+	background-color: #FFFFFF;
+	position: absolute;
+	top: 19px;
+	left: 12px;
+	width: 280px;
+	padding: 3px;
+}
+
+#small_corner_banner {
+	position: absolute;
+	top: 132px;
+	left: 0px;
+	background-image: url(../PROTOTYPING/blackcornerbanner.gif);
+	background-repeat:no-repeat;
+	height:auto;
+	}
+#left_navigation_background {
+	position: absolute;
+	top: 132px;
+	left: 0px;
+	background-color: #FFFFFF;
+	background-repeat:no-repeat;
+	height:auto;
+	}
+.picture_caption {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-style: italic;
+	line-height: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	color: #231e0c;
+	text-decoration: none;
+}
+
+div.pullquote {
+	float: right;
+	width: 120px;
+	border: solid #cc0000; border-width: 4px 0px 4px 0px;
+	padding: 3px 3px 3px 3px;
+	margin: 3px 3px 3px 3px;
+	font-size: 11px;
+	color: #000000;
+	font-style: italic;
+	font: bold 1em arial, helevetica, verdana, sans-serif;
+}
+
+.textlabel{
+	font-size: 11px;
+	font: arial, helevetica, verdana, sans-serif;
+}
+
+.text10 {
+	font-size: 10px;
+}
+
+.text12 {
+	font-size: 11px;
+	background-color: #FFFFCC;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.text12border {
+	font-size: 12px;
+	border: 2px;
+	background-color: #FFFFCC;
+}
+
+.text36 {
+	font-size: 36px;
+}
+
+.headertop {
+	font-size: 22px;
+      color: black;
+}
+
+.noborder {
+	border: 0;
+}
+
+#what_to_do {
+	position:absolute;
+	top: 148px;
+	left: 591px;
+}
+
+.box { 
+	float: left; 
+	width: 162px; 
+	height: 100px; 
+	position: relative;
+}
+
+#boxContent {
+	border: none;
+	background-color: #FFFFCC;
+	position:relative;
+	left: 174px;
+	top: 662px;
+ }
+
+
+/************** FEATURE STYLES ***************/
+
+.feature{
+	padding: 0px 0px 10px 10px;
+	font-size: 80%;
+}
+
+.feature h3{
+	padding: 30px 0px 5px 0px;
+	text-align: center;
+}
+
+.feature img{
+	float: right;
+	padding: 10px 10px 0px 0px;
+}
+
+
+/************** STORY STYLES *****************/
+
+.story{
+	clear: both;
+	padding: 10px 0px 0px 10px;
+	font-size: 80%;
+}
+
+.story p{
+	padding: 0px 0px 10px 0px;
+}
+
+
+/************* SITE INFO STYLES ***************/
+
+#siteInfo{
+	clear: both;
+	border: 1px solid #cccccc;
+	font-size: 75%;
+	color: #cccccc;
+	padding: 10px 10px 10px 10px;
+}
+
+#siteInfo img{
+	padding: 4px 4px 4px 10px;
+	vertical-align: middle;
+}
+
+
+/************* SEARCH STYLES ***************/
+
+#search{
+	padding: 5px 0px 5px 10px;
+	border-bottom: 1px solid #cccccc;
+	font-size: 90%;
+}
+
+#search form{
+	margin: 0px;
+	padding: 0px;
+}
+
+#search label{
+	display: block;
+	margin: 0px;
+	padding: 0px;
+}
+
+
+/*********** #navBar link styles - NOT SURE IF WE NEED THESE ***********/
+
+#navBar ul a:link, #navBar ul a:visited {display: block;}
+#navBar ul {list-style: none; margin: 0; padding: 0;}
+
+/* hack to fix IE/Win's broken rendering of block-level anchors in lists */
+#navBar li {border-bottom: 1px solid #EEE;}
+
+/* fix for browsers that don't need the hack */
+html>body #navBar li {border-bottom: none;}
+
+
+/*********** #SECTION LINKS STYLES ***********/
+
+#sectionLinks{
+	position: relative;
+	margin: 0px;
+	padding: 0px;
+	border-bottom: 1px solid #cccccc;
+	font-size: 90%;
+}
+
+#sectionLinks h3{
+	padding: 10px 0px 2px 10px;
+}
+
+#sectionLinks a {
+	display: block;
+	border-top: 1px solid #cccccc;
+	padding: 2px 0px 2px 10px;
+}
+
+#sectionLinks a:hover{
+	background-color: #dddddd;
+}
+
+
+/*********** RELATED LINKS STYLES ***********/
+
+.relatedLinks{
+	position: relative;
+	margin: 0px;
+	padding: 0px 0px 10px 10px;
+	font-size: 90%;
+}
+
+.relatedLinks h3{
+	padding: 10px 0px 2px 0px;
+}
+
+.relatedLinks a:link,
+.relatedLinks a:visited {
+	display: block; 
+}
+
+/************** #PROMO styles **************/
+
+#promo{
+	padding: 30px 0px 10px;
+}
+
+#promo img{
+	display: block;
+}

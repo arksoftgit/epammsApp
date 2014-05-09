@@ -1,0 +1,38 @@
+/***********************************************/
+/* HTML TAG STYLES                             */
+/***********************************************/
+
+
+#wrapper{
+   width:500px;
+   height:auto;
+   position:relative;
+   text-align:center
+}
+
+/************* Defines the body **************/
+body{
+	text-align:center;
+	color:#265e15;
+	font-family: Verdana, Helvetica, sans-serif;
+	font-size:11px;
+}
+
+
+/************* TOP Navigation styles **************/
+
+
+/** Content of the Page **/
+#contentinquiry{
+	width:600px;
+	display:block;
+	text-align:left;
+	position:relative;
+	min-height:600px;
+	padding-top: 0;
+	background-color: #ffffff;
+		}
+
+
+
+

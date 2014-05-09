@@ -1,0 +1,59 @@
+Usage.BoldItalic,Usage.ClaimsClassification,Usage.Name
+
+R,Bacteria,Pseudomonas aeruginosa (1)
+R,Bacteria,Staphylococcus aureus (1)
+R,Bacteria,Salmonella choleraesuis
+R,Bacteria,Acinetobacter calcoaceticus
+R,Bacteria,Bordetella bronchiseptica
+R,Bacteria,Chlamydia psittaci
+R,Bacteria,Enterobacter aerogenes
+R,Bacteria,Enterobacter cloacae
+R,Bacteria,Enterococcus faecalis- Vancomycin Resistant (VRE)
+R,Bacteria,Escherichia coli (1)
+R,Bacteria,Fusobacterium necrophorum
+R,Bacteria,Kiebsiella pneumoniae (1)
+R,Bacteria,Legionella pneumophilia
+R,Bacteria,Listeria monocytogenes
+R,Bacteria,Pasteurella multocida 
+R,Bacteria,Proteus mirabilis
+R,Bacteria,Proteus vulgaris
+R,Bacteria,Salmonella enteritidis
+R,Bacteria,Salmonella typhi
+R,Bacteria,Salmonella typhimurium
+R,Bacteria,Serratia marcescens
+R,Bacteria,Shigella fiexneri
+R,Bacteria,Shigella sonnei
+R,Bacteria,Staphylococcus aureus- Methicillin resistant (MRSA)
+R,Bacteria,Staphylococcus aureus- Vancomycin Intermediate Resistant (VISA)
+R,Bacteria,Staphylococcus epidermidis (2)
+R,Bacteria,Streptococcus faecalis (1)
+R,Bacteria,Steptococcus pyogenes [cause of Scarlet fever]
+R,Bacteria,                    (1)  ATCC & antibiotic-resistant strain
+R,Bacteria,                    (2)  antibiotic-resistant strain only
+
+R,Fungi,Aspergillus niger
+R,Fungi,Candida albicans
+R,Fungi,Trichophyton mentagrophytes [Athlete's Foot Fungus]
+R,Fungi,[a cause of Ringworm] [a cause of Ringworm of the foot]
+
+R,Viruses,*Adenovirus Type 4
+R,Viruses,*Hepatitis B Virus (HBV)
+R,Viruses,*Hepatitis C Virus (HCV)
+R,Viruses,*Herpes Simplex Type 1
+R,Viruses,*Herpes Simplex Type 2
+R,Viruses,*Human coronavirus 
+R,Viruses,*HIV-1 (AIDS virus)
+R,Viruses,*Influenza A/ Hong Kong
+R,Viruses,*Respiratory Syncytial Virus (RSV)
+R,Viruses,*Rubella (German Measles)
+R,Viruses,*Vaccinia [Pox virus]
+R,Viruses,*Avian polyomavirus
+R,Viruses,*Canine distemper
+R,Viruses,*Canine parvovirus- at 2 oz. per gallon
+R,Viruses,*Feline leukemia
+R,Viruses,*Feline picomavirus
+R,Viruses,*Infectious bovine rhinotracheitis
+R,Viruses,*Infectious bronchitis (Avian IBV)
+R,Viruses,*Pseudorabies (PRV)
+R,Viruses,*Rabies
+R,Viruses,*Transmissible gastroenteritis virus (TGE)

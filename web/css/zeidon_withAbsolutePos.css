@@ -1,0 +1,1179 @@
+
+/***********************************************/
+/* HTML TAG STYLES                             */
+/***********************************************/
+
+
+body{
+   margin: 0px 0px 0px 0px;
+   padding: 0px;
+   text-align:left; /* horizontal centering for IE Win quirks, tried "align:center, works in FF but not IE */
+   font-family:Verdana, Arial, Helvetica, sans-serif;
+   font-size: 10px;
+   line-height: normal;
+   font-weight: normal;
+   font-variant: normal;
+   text-transform: none;
+   background-position: 0px 0px;
+   /* background-color:#fc6; */
+}
+
+button{
+   font-size: 10px;
+}
+
+table button{
+   font-family:Verdana, Arial, Helvetica, sans-serif;
+   font-size: 10px;
+   height:20px
+}
+
+select{
+   height:18px;
+}
+
+a{
+   color: #006699;
+   text-decoration: none;
+}
+
+a:link{
+   color: #006699;
+   text-decoration: none;
+}
+
+a:visited{
+   color: #006699;
+   text-decoration: none;
+}
+
+a:hover{
+   color: #006699;
+   text-decoration: underline;
+}
+
+h1{
+   font-family:Verdana, Arial, Helvetica, sans-serif;
+   font-size: 120%;
+   color: #334d55;
+   margin: 0px;
+   padding: 0px;
+}
+
+h2{
+   font-size: 12px;
+   font-weight: bold;
+   color: #000000;
+}
+
+h3{
+   font-family:Verdana, Arial, Helvetica, sans-serif;
+   font-size: 100%;
+   color: #334d55;
+   margin: 0px;
+   padding: 0px;
+}
+
+h4{
+   font-family:Verdana, Arial, Helvetica, sans-serif;
+   font-size: 100%;
+   font-weight: normal;
+   color: #333333;
+   margin: 0px;
+   padding: 0px;
+}
+
+h5{
+   font-family:Verdana, Arial, Helvetica, sans-serif;
+   font-size: 100%;
+   color: #334d55;
+   margin: 0px;
+   padding: 0px;
+}
+
+ul{
+   list-style-type: square;
+}
+
+ul ul{
+   list-style-type: disc;
+}
+
+ul ul ul{
+   list-style-type: none;
+}
+
+label{
+   font-family:Verdana, Arial, Helvetica, sans-serif;
+   /*font-size: 100%;*/
+   font-size: 12px;
+   font-weight: bold;
+   color: #334d55;
+}
+
+/************ Table Scrolling style *********/
+.tableScroll {
+	overflow: auto;
+	margin: 0 auto;
+	}
+
+.tableScroll table {
+	width: 99%;		/*100% of container produces horiz. scroll in Mozilla*/
+	margin: 0;
+	border: none;
+	background-color: #f7f7f7;
+        border-collapse: separate; /* if I don't do this, on Firefox I get grid lines past the end of table */
+        border-spacing: 0px;
+	}
+
+.tableScroll table tr:hover
+{  /* can't get this to work!!! */
+  background-color: #E8E3D4;
+}
+	
+.tableScroll table>tbody	{  /* child selector syntax which IE6 and older do not support*/
+	overflow: auto; 
+	overflow-x: hidden;
+	}
+	
+.tableScroll thead tr	{
+	position:relative; 
+	top: expression(offsetParent.scrollTop); /*IE5+ only*/
+	}
+	
+.tableScroll thead td, thead th {
+	color: steelblue;
+	font-weight: bold;
+	border-top: solid 1px #d8d8d8;
+	}	
+	
+.tableScroll td	{
+	color: #000;
+	padding-top: 1px;
+	padding-right: 2px;
+	padding-bottom: 1px;
+	font-size: 10px;
+	}
+
+.tableScroll tfoot td	{
+	text-align: center;
+	font-size: 11px;
+	font-weight: bold;
+	background-color: papayawhip;
+	color: steelblue;
+	border-top: solid 2px slategray;
+	}
+
+.tableScroll td:last-child {padding-right: 20px;} /*prevent Mozilla scrollbar from hiding cell content*/
+
+/************ Table Sort styles ************/
+table{
+   width: 80%;
+   margin-top: 0em;
+   margin-right: 0em;
+   margin-bottom: 1em;
+   margin-left: 0em;   
+   border-collapse: collapse;
+   border: 1px solid black;
+}
+
+table tr:hover
+{ /* can't get this to work!!! */
+  background-color: #E8E3D4;
+}
+
+
+tbody tr.odd{
+   border: 1px solid #ccc;
+   background-color: #ddf;
+}
+
+tbody tr{
+   border: 1px solid #ccc;
+   background-color: #fff;
+}
+
+tbody tr:hover
+{
+  background-color: #E8E3D4;
+
+}
+
+
+
+td.numeric,
+th.numeric{
+   text-align: right;
+}
+
+
+thead th.gridheading{
+   color: #000;
+   background-color: #bbf;
+}
+
+
+thead th,
+tfoot th{
+   font-family:Verdana, Arial, Helvetica, sans-serif;
+   font-size: 10px;
+   font-weight: bold;
+   padding: 0.5em;
+   text-align: left;
+   border: 1px solid #334d55;
+   background-color: #E8E8E8;
+   color:#000080;
+}
+
+tfoot td{
+   border-top: 1px solid #ccc;
+}
+
+tbody td{
+   font-family:Verdana, Arial, Helvetica, sans-serif;
+   font-size: 10px;
+   color: #334d55;
+   border: 1px solid #ccc;
+   padding: 0.25em;
+}
+
+table.sortable thead th{
+   background-color:#E8E8E8;
+   color:#000080;
+}
+
+table.sortable tr.odd{
+   background-color: #ddf;
+}
+
+table.sortable tr{
+   background-color: #fff;
+}
+
+table.sortable tr:hover
+{
+  background-color: #E8E3D4;
+
+}
+
+
+
+table.tableStyle1 tr.odd{
+   border: 1px solid #ccc;
+   background-color: #ffb;
+}
+
+table.tableStyle1 tr{
+   border: 1px solid #ccc;
+   background-color: #ffc;
+}
+
+fieldset table
+{
+   margin-top: 1em;
+   margin-right: 0em;
+   margin-bottom: 1em;
+   margin-left: 0em;   
+}
+
+fieldset table td
+{
+   background-color: #ccf;
+   
+}
+
+select
+{
+   font-family:Verdana, Arial, Helvetica, sans-serif;
+   font-size: 10px;
+}
+
+input
+{
+   font-family:Verdana, Arial, Helvetica, sans-serif;
+   font-size: 10px;
+   height: 17px;
+}
+
+table input
+{
+   font-family:Verdana, Arial, Helvetica, sans-serif;
+   font-size: 10px;
+   height: 14px;
+}
+table select
+{
+   font-family:Verdana, Arial, Helvetica, sans-serif;
+   font-size: 10px;
+   height: 17px;
+}
+
+
+li
+{
+   font-family:Verdana, Arial, Helvetica, sans-serif;
+   font-size: 10px;
+}
+
+textarea
+{
+   font-family:Verdana, Arial, Helvetica, sans-serif;
+   font-size: 10px;
+}
+
+img {
+   border: none;
+}
+
+/************* Outer container for everything on the page **************/
+
+#wrapper{
+}
+
+/***********************************************/
+/* Layout Divs                                 */
+/***********************************************/
+
+#bannernew{
+   border-top: 1px solid #000000;
+   border-bottom: 1px solid #000000;
+   border-right: 1px solid #000000;
+   border-left:1px solid #000000;
+   text-align:left;
+   left: 0px;
+   width: 1000px;
+   height:75px;
+}
+
+#bannernew img{
+   width: 100%;
+   height: 100%;
+}
+
+
+/************* TOP Navigation styles **************/
+
+
+#mainnavigation{
+   font-family:Verdana, Arial, Helvetica, sans-serif;
+   font-size: 12px;
+   margin: 0;
+   padding: 3px 3px 3px 3px;
+   text-align:center;
+   position: absolute;
+   top: 77px;
+   left: 0px;
+   width: 1000px;
+   line-height: 13px;
+}
+
+#mainnavigation ul{
+   border-top: 1px solid #000000;
+   border-bottom: 1px solid #000000;
+   border-right: 1px solid #000000;
+   border-left:1px solid #000000;
+   padding: 3px 0px 3px 0px;
+   margin: 0;
+   background-color:#cc0000;
+   position: absolute;
+   top: -3px;
+   left: 0px;
+   width: 1000px;
+   line-height: 13px;
+}
+
+#mainnavigation ul li{
+   display: inline;
+   padding: 3px 3px 3px 3px;
+   margin: 0;
+   width:auto;
+}
+
+#mainnavigation ul li a{
+   font-size: 11px;
+   color: #FFFFFF;
+   background-color: #cc0000;
+   text-decoration: none;
+   padding: 3px 0px 3px 0px;
+   line-height: 13px;
+}
+
+#mainnavigation ul li a:hover, #mainnavigation ul li a:focus{
+   background-color: #000000;
+}
+
+/********** Used in topmenuend.inc *******/
+
+#aftermainnav{
+   font-family:Verdana, Arial, Helvetica, sans-serif;
+   font-size: 12px;
+   margin: 0;
+   padding: 3px 0px 3px 0px;
+   position: absolute;
+   top: 92px;
+   left: 0px;
+   width: 1000px;
+   line-height: 13px;
+}
+
+#aftermainnav ul{
+   border-top: 1px solid #000000;
+   border-bottom: 1px solid #000000;
+   border-right: 1px solid #000000;
+   border-left:1px solid #000000;
+   padding: 3px 0px 3px 0px;
+   margin: 0;
+   background-color:#000000;
+   position: absolute;
+   top: 1px;
+   left: 0px;
+   width: 1000px;
+   line-height: 13px;
+}
+
+#aftermainnav ul li{
+   display: inline;
+   padding: 3px 0px 3px 0px;
+   margin: 0;
+   width:auto;
+}
+
+#aftermainnav ul li a:hover, #mainnavigation ul li a:focus{
+   background-color: #ffffff;
+   color: #000000;
+}
+
+
+#navtest{
+   font-family:Verdana, Arial, Helvetica, sans-serif;
+   font-size: 12px;
+   margin: 0;
+   padding: 3px 0px 3px 0px;
+   position: absolute;
+   top: 132px;
+   left: 0px;
+   width: 137px;
+   line-height: 13px;
+}
+
+#navtest ul{
+   border-top: 1px solid #000000;
+   border-bottom: 1px solid #000000;
+   border-right: 1px solid #000000;
+   border-left:1px solid #000000;
+   padding: 3px 0px 3px 0px;
+   margin: 0;
+   background-color:#000000;
+   position: absolute;
+   top: 0px;
+   left: 0px;
+   width: 137px;
+   line-height: 13px;
+}
+
+#navtest ul li{
+   display: inline;
+   padding: 3px 0px 3px 0px;
+   margin: 0;
+   width:auto;
+}
+
+
+/********** Used in Left_Nav_Background.inc *******/
+
+#beforesidenav{
+   border-bottom: 1px solid #000000;
+   border-right: 1px solid #000000;
+   font-family:Verdana, Arial, Helvetica, sans-serif;
+   margin: 0;
+   padding: 3px 0px 3px 0px;
+   background-color:black;
+   position: absolute;
+   top: 110px;
+   left: 0px;
+   width: 137px;
+   height: 800px;
+}
+
+
+
+
+/********** LEFT NAVIGATION *******/
+#lowerContainer{
+}
+#sidebar{
+   width: 137px; /* was 137 */
+   margin: 0px;
+   font-family:Verdana, Arial, Helvetica, sans-serif;
+   text-align:right;
+   font-size: 12px;
+}
+
+#sidenavigation{
+   width: 137px; /* was 137 */
+   margin: 0px;
+   font-family:Verdana, Arial, Helvetica, sans-serif;
+   text-align:right;
+   font-size: 12px;
+   position:absolute;
+   top: 115px;
+   left: -1px;
+}
+
+#sidenavigation ul{
+   list-style: none;
+   margin: 0;
+   padding: 0;
+}
+
+#sidenavigation li{
+   border-bottom: 1px solid #cc0000;
+}
+
+#sidenavigation li.Level1{
+   border-bottom: 5px solid #cc0000;
+   text-align:left;
+}
+
+#sidenavigation li a{
+   display: block;
+   padding: 5px 5px 5px 0.5em;
+   border-left: 10px solid #cc0000;
+   border-right: 1px solid #000000;
+   background:#000000;
+   color:#ffffff;
+   text-decoration: none;
+}
+#sidenavigation li a:hover{
+   border-left: 10px solid #cc0000;
+   border-right: 1px solid #000000;
+   background-color: #ffffff;
+   color: #000000;
+}
+
+/************** MAIN CONTENT ****************/
+
+#content{
+  margin: 0px;
+  padding: 0px 0px 0px 0px;
+  position:absolute;
+  left: 138px;
+  top: 117px;
+}
+
+
+#contentnosidemenu
+{
+  margin: 0px;
+  padding: 0px 0px 0px 0px;
+  position:absolute;
+  left: 0px;
+  top: 134px;
+}
+
+
+/*********** PAGE PARTS  **************/
+
+.pagetitle{
+   font-family:Verdana, Arial, Helvetica, sans-serif;
+   font-size: 13px;
+   font-style: normal;
+   font-weight: bold;
+   background-color: #CCCC99;
+   position: absolute;
+   top: 179px;
+   left: 141px;
+   width: 650px;
+   line-height: inherit;
+   color: #000000;
+   text-decoration: none;
+   text-align: left;
+   white-space: normal;
+   display: table;
+   vertical-align: middle;
+   padding: 3px;
+}
+
+.picture_caption{
+   font-family:Verdana, Arial, Helvetica, sans-serif;
+   font-size: 12px;
+   font-style: italic;
+   line-height: normal;
+   font-weight: normal;
+   font-variant: normal;
+   text-transform: none;
+   color: #231e0c;
+   text-decoration: none;
+}
+
+.alignright{
+   text-align: right;
+}
+
+.rightjustify{
+   text-align: right;
+}
+
+.divcontent{
+
+   margin-left: 12px;
+}
+
+.divborder{
+   border: solid darkgray;
+   border-width: 1px 1px 1px 1px;
+   border-style: inset;
+}
+
+
+.divtopborder{
+   border-top: solid black;
+   border-top-width: 1px;
+}
+
+
+.divmessage
+{
+   text-align: center;
+   font-size: 11px;
+}
+
+
+.budgetlegend{
+   border: solid darkgray;
+   border-width: 1px 1px 1px 1px;
+   border-style: inset;
+}
+
+.controlhidden
+{
+   visibility: hidden;
+}
+
+.divtable{
+   valign:top;
+   margin-top:0px; 
+   margin-bottom:0px; 
+   width:100%;
+}
+
+.formStylebutton {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	width: 50px;
+	padding: 0px 2px 0px 2px;
+	background-image: url(images/buttonbg.gif);
+	background-color: #C6C5D7;
+	cursor: pointer;
+	background-repeat: repeat-x;
+	height: 22px;   
+}
+
+.grouptable{
+}
+
+.textpagedivider
+{
+   font-size: 11px;
+   font: arial, helevetica, verdana, sans-serif;
+   padding-left: 3px;
+   background-color: #bbf;
+   border: solid #000000; 
+}
+
+.textlabel{
+   font-size: 11px;
+   font: arial, helevetica, verdana, sans-serif;
+}
+
+.text10{
+   font-size: 10px;
+}
+
+.text10Red {
+   font-size: 10px;
+   color: #ff0000;
+}
+
+.text10bold{
+   font-size: 10px;
+   font-family: Verdana, Arial, Helvetica, sans-serif;
+   font-weight: bold;
+   color: #000000;
+   background-color: #FFFFFF;
+}
+
+.text12bold{
+   font-size: 10px;
+   font-weight: bold;
+   font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.text12{
+   font-size: 10px;
+   font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.text14{
+   font-size: 10px;
+   font-family:Verdana, Arial, Helvetica, sans-serif;
+}
+
+.text14bold{
+   font-size: 10px;
+   font-family: Verdana, Arial, Helvetica, sans-serif;
+   font-weight: bold;
+   color: #000000;
+   background-color: #FFFFFF;
+}
+
+.text12border{
+   font-size: 10px;
+   border: 2px;
+   background-color: #FFFFCC;
+}
+
+.textborder{
+   font-size: 10px;
+   border: solid #8cacbb;
+   border-width: 1px 1px 1px 1px;
+}
+
+.text28{
+   font-size: 22px;
+   border: 2px;
+   color: black;
+
+}
+
+.text36{
+   font-size: 36px;
+}
+
+tablemargin
+{
+   width: 80%;
+   margin-top: 1em;
+   margin-right;
+}
+
+.securityqtnlstbox{
+   overflow:scroll;
+}
+
+.hidden{
+   display: none;
+}
+
+.headertop{
+   /* font-size:  22px; */
+   font-size:  15px;
+   font-weight: bold;
+   color:      black;
+   text-align: left;
+}
+
+.headertopsmall{
+   font-size:  12px;
+   font-weight: bold;
+   color:      black;
+   text-align: left;
+}
+
+.headertopcenter{
+   font-size:  15px;
+   font-weight: bold;
+   color:      black;
+   text-align: center;
+}
+
+.budgetheading{
+   font-size:  10px;
+   font-weight: bold;
+   text-align: right;
+   text-decoration: underline;
+}
+
+.budgetheading3yr{
+   font-size:  10px;
+   font-weight: bold;
+   text-align: center;
+   text-decoration: underline;
+}
+
+.contentdescription
+{
+   font-size: 12px;
+   font-family: Verdana, Arial, Helvetica, sans-serif;
+   color: black;
+}
+
+
+.noborder{
+   border: 0;
+}
+
+.colorRed
+{
+   color: red;
+}
+
+.lastnamewidth
+{
+   width: 200px;
+}
+.dropwidth
+{
+   width: 100px;
+}
+
+
+
+
+/************* SEARCH STYLES ***************/
+
+#search{
+   padding: 5px 0px 5px 10px;
+   border-bottom: 1px solid #cccccc;
+   font-size: 90%;
+}
+
+#search form{
+   margin: 0px;
+   padding: 0px;
+}
+
+#search label{
+   display: block;
+   margin: 0px;
+   padding: 0px;
+}
+
+
+
+/************** #PRINT styles **************/
+
+.print_section
+{
+	border:1px solid gray;
+	background:#e1e1e1;
+	margin:0 0 15px 0;
+	padding:10px;
+	float:left;
+	width:95%;
+}
+
+.print_section p.printbutton
+{
+	float:left;
+}
+
+.print_section p.printbutton a
+{
+	text-decoration:none;
+	background:white;
+	display:block;
+	float:left;
+	margin:3px;
+	padding:10px;
+	border:1px solid red;
+}
+
+@media print
+{
+
+   overflow : scroll;
+ 
+   .noprint, .printbutton
+   {
+      display:none;
+   }
+
+   .print
+   {
+      display:block;
+   }
+}
+
+
+/**********************************/
+/* Beginning TAB Pane Control CSS */
+/**********************************/
+
+.dynamic-tab-pane-control.tab-pane {
+	position:	relative;
+	width:		100%;		/* width needed weird IE bug */
+	margin-right:	-2px;	/* to make room for the shadow */
+}
+.dynamic-tab-pane-control .tab-row .tab {
+	width:			70px;
+	height:			16px;
+	background-image:	url( "images/tab.png" );
+	position:		relative;
+	top:			0;
+	display:		inline;
+	float:			left;
+	overflow:		hidden;
+	cursor:			Default;
+	margin:			1px -1px 1px 2px;
+	padding:		2px 0px 0px 0px;
+	border:			0;
+	z-index:		1;
+	font:			11px Tahoma;
+	white-space:		nowrap;
+	text-align:		center;
+}
+
+.dynamic-tab-pane-control .tab-row .tab.selected {
+	width:			74px !important;
+	height:			18px !important;
+	background-image:	url( "images/tab.active.png" ) !important;
+	background-repaet:	no-repeat;
+	border-bottom-width:	0;
+	z-index:		3;
+	padding:		2px 0 0px 0;
+	margin:			1px -3px -3px 0px;
+	top:			-2px;
+	font:			11px Tahoma;
+}
+
+.dynamic-tab-pane-control .tab-row .tab a {
+	font:			11px Tahoma;
+	color:			Black;
+	text-decoration:	none;
+	cursor:			default;
+}
+
+.dynamic-tab-pane-control .tab-row .tab.hover {
+	font:			11px Tahoma;
+	width:			70px;
+	height:			16px;
+	background-image:	url( "tab.hover.png" );
+	background-repaet:	no-repeat;
+}
+
+
+.dynamic-tab-pane-control .tab-page {
+	clear:			both;
+	border:			1px solid rgb( 145, 155, 156 );
+	background:		rgb( 252, 252, 254 );
+	z-index:		2;
+	position:		relative;
+	top:			-2px;
+	font:			11px Tahoma;
+	color:			Black;
+	/* filter: */
+	/*244, 243, 238*/
+	/* 145, 155, 156*/
+	padding:		10px;
+}
+
+.dynamic-tab-pane-control .tab-row {
+	z-index:		1;
+	white-space:	nowrap;
+}
+.dynamic-tab-pane-control h2 {
+	text-align:	center;
+	width:		auto;
+}
+
+.dynamic-tab-pane-control h2 a {
+	display:	inline;
+	width:		auto;
+}
+
+.dynamic-tab-pane-control a:hover {
+	background: transparent;
+}
+/**********************************/
+/*    End TAB Pane Control CSS    */
+/**********************************/
+
+/***********************************************/
+/* This css has 3 possible columns for content.  Left is the navigation, middle and right. 2 real content areas. */
+/* Author: MjB Web Design modified by jsb Web Design :-> */
+/***********************************************/
+
+span.cw{
+   z-index:1
+}
+
+div.cw{
+   z-index:1
+}
+
+table.cw{
+   z-index:1
+}
+
+tr.cw{
+   z-index:1
+}
+
+td.cw{
+   z-index:1
+}
+
+/***********************************************/
+
+.scw           {padding:1px;vertical-align:middle;}
+iframe.scw     {position:absolute;z-index:1;
+                top:0px;left:0px;visibility:hidden;
+                width:1px;height:1px;}
+table.scw      {padding:0px;visibility:hidden;
+                position:absolute;cursor:default;
+                width:200px;top:0px;left:0px;
+                z-index:2;
+                text-align:center;
+                margin: 0px;
+               }
+
+/* IMPORTANT:  The SCW calendar script requires all
+               the classes defined here.
+*/
+table.scw      {padding:       1px;
+                vertical-align:middle;
+                border:        ridge 2px;
+                font-size:     7pt;
+                font-family: Arial,Helvetica,Sans-Serif;
+                font-weight:   bold;}
+td.scw,
+td.scwDrag,
+td.scwHead                 {padding:       0px 0px;
+                            border: 0px;
+                            text-align:    center;}
+td.scwDrag                 {font-size:     7pt;}
+select.scwHead             {margin:        3px 1px;}
+input.scwHead              {height:        22px;
+                            width:         22px;
+                            vertical-align:middle;
+                            text-align:    center;
+                            margin:        2px 1px;
+                            font-weight:   bold;
+                            font-size:     7pt;
+                            font-family:   fixedSys;}
+td.scwWeekNumberHead,
+td.scwWeek                 {padding:       0px;
+                            border: 0px;
+                            text-align:    center;
+                            font-weight:   bold;}
+td.scwFoot,
+td.scwFootHover,
+td.scwFoot:hover,
+td.scwFootDisabled         {padding:       0px;
+                            border: 0px;
+                            text-align:    center;
+                            font-weight:   normal;}
+table.scwCells             {text-align:    right;
+                            font-size:     7pt;
+                            width:         96%;}
+td.scwCells,
+td.scwCellsHover,
+td.scwCells:hover,
+td.scwCellsDisabled,
+td.scwCellsExMonth,
+td.scwCellsExMonthHover,
+td.scwCellsExMonth:hover,
+td.scwCellsExMonthDisabled,
+td.scwCellsWeekend,
+td.scwCellsWeekendHover,
+td.scwCellsWeekend:hover,
+td.scwCellsWeekendDisabled,
+td.scwInputDate,
+td.scwInputDateHover,
+td.scwInputDate:hover,
+td.scwInputDateDisabled,
+td.scwWeekNo,
+td.scwWeeks                {padding:           3px;
+                            width:             16px;
+                            border: 0px;
+                            height:            16px;
+                            font-weight:       bold;
+                            vertical-align:    middle;}
+/* Blend the colours into your page here...    */
+/* Calendar background */
+table.scw                  {background-color:  #6666CC;}
+/* Drag Handle */
+td.scwDrag                 {background-color:  #9999CC;
+                            color:             #CCCCFF;}
+/* Week number heading */
+td.scwWeekNumberHead       {color:             #6666CC;}
+/* Week day headings */
+td.scwWeek                 {color:             #CCCCCC;}
+/* Week numbers */
+td.scwWeekNo               {background-color:  #776677;
+                            color:             #CCCCCC;}
+/* Enabled Days */
+/* Week Day */
+td.scwCells                {background-color:  #CCCCCC;
+                            color:             #000000;}
+/* Day matching the input date */
+td.scwInputDate            {background-color:  #CC9999;
+                            color:             #FF0000;}
+/* Weekend Day */
+td.scwCellsWeekend         {background-color:  #CCCCCC;
+                            color:             #CC6666;}
+/* Day outside the current month */
+td.scwCellsExMonth         {background-color:  #CCCCCC;
+                            color:             #666666;}
+/* Today selector */
+td.scwFoot                 {background-color:  #6666CC;
+                            color:             #FFFFFF;}
+/* MouseOver/Hover formatting
+       If you want to "turn off" any of the formatting
+       then just set to the same as the standard format
+       above.
+
+       Note: The reason that the following are
+       implemented using both a class and a :hover
+       pseudoclass is because Opera handles the rendering
+       involved in the class swap very poorly and IE6
+       (and below) only implements pseudoclasses on the
+       anchor tag.
+*/
+/* Active cells */
+td.scwCells:hover,
+td.scwCellsHover           {background-color:  #FFFF00;
+                            cursor:            pointer;
+                            cursor:            hand;
+                            color:             #000000;}
+/* Day matching the input date */
+td.scwInputDate:hover,
+td.scwInputDateHover       {background-color:  #FFFF00;
+                            cursor:            pointer;
+                            cursor:            hand;
+                            color:             #000000;}
+/* Weekend cells */
+td.scwCellsWeekend:hover,
+td.scwCellsWeekendHover    {background-color:  #FFFF00;
+                            cursor:            pointer;
+                            cursor:            hand;
+                            color:             #000000;}
+/* Day outside the current month */
+td.scwCellsExMonth:hover,
+td.scwCellsExMonthHover    {background-color:  #FFFF00;
+                            cursor:            pointer;
+                            cursor:            hand;
+                            color:             #000000;}
+/* Today selector */
+td.scwFoot:hover,
+td.scwFootHover            {color:             #FFFF00;
+                            cursor:            pointer;
+                            cursor:            hand;
+                            font-weight:       bold;}
+/* Disabled cells */
+/* Week Day */
+/* Day matching the input date */
+td.scwInputDateDisabled    {background-color:  #999999;
+                            color:             #000000;}
+td.scwCellsDisabled        {background-color:  #999999;
+                            color:             #000000;}
+/* Weekend Day */
+td.scwCellsWeekendDisabled {background-color:  #999999;
+                            color:             #CC6666;}
+/* Day outside the current month */
+td.scwCellsExMonthDisabled {background-color:  #999999;
+                            color:             #666666;}
+td.scwFootDisabled         {background-color:  #6666CC;
+                            color:             #FFFFFF;}
+

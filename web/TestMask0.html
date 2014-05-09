@@ -1,0 +1,267 @@
+<HTML>
+
+<HEAD>
+
+<TITLE> Javascript Edit Mask Sample </TITLE>
+
+<script type="text/javascript" language="javascript">
+
+// Javascript Numeric EditMask
+
+// Written By John McGlothlin - Patoooey@optonline.net
+
+// April 7th, 2004
+
+//
+
+// simple RegEx patterns to make life easy.
+
+var reOneOrMoreDigits = /[\d+]/;
+
+var reNoDigits = /[^\d]/gi;
+
+
+
+function doMask(textBox) {
+
+
+
+   var keyCode = event.which ? event.which : event.keyCode;
+
+
+
+   // enter, backspace, delete and tab keys are allowed thru
+
+   if(keyCode == 13 || keyCode == 8 || keyCode == 9 || keyCode == 46)
+
+      return true;
+
+
+
+   // get character from keyCode....dealing with the "Numeric KeyPad"
+
+   // keyCodes so that it can be used
+
+   var keyCharacter = cleanKeyCode(keyCode);
+
+
+
+   // grab the textBox value and the mask
+
+   var val = textBox.value;
+
+   var mask = textBox.mask;
+
+
+
+   // simple Regex to check if key is a digit
+
+   if(reOneOrMoreDigits.test(keyCharacter) == false)
+
+      return false;
+
+
+
+   // get value minus any masking by removing all non-numerics
+
+   val = val.replace(reNoDigits,'');
+
+
+
+   // add current keystroke
+
+   val += keyCharacter;
+
+
+
+   // mask it...val holds the existing TextBox.value + the current keystroke
+
+   textBox.value = val.maskValue(mask);
+
+
+
+   setCaretAtEnd(textBox);
+
+
+
+   return false;
+
+}
+
+// puts starting chars in field
+
+function onFocusMask(textBox) {
+
+   var val = textBox.value;
+
+   var mask = textBox.mask;
+
+   if(val.length == 0 || val == null) {
+
+      var k = mask.indexOf('#');
+
+      textBox.value = mask.substring(0,k);
+
+   }
+
+   setCaretAtEnd(textBox);
+
+   // set just in case.
+
+   textBox.maxlength = mask.length;
+
+}
+
+// blank field if no digits entered
+
+function onBlurMask(textBox) {
+
+   var val = textBox.value;
+
+   // if no digits....nada entered.....blank it.
+
+   if(reOneOrMoreDigits.test(val) == false) {
+
+      textBox.value = '';
+
+   }
+
+}
+
+String.prototype.maskValue = function(mask) {
+
+   var retVal = mask;
+
+   var val = this;
+
+
+
+   //loop thru mask and replace #'s with current value one at a time
+
+   // better way of doing this ???
+
+   for(var k=0;k<val.length;k++) {
+
+      retVal = retVal.replace(/#/i, val.charAt(k));
+
+   }
+
+   // get rid of rest of #'s
+
+   retVal = retVal.replace(/#/gi, "");
+
+   return retVal;
+
+}
+
+// The Numeric KeyPad returns keyCodes that ain't all that workable.
+
+//
+
+// ie: KeyPad '1' returns keyCode 97 which String.fromCharCode converts to an 'a'.
+
+//
+
+// This cheesy way allows the Numeric KeyPad to be used
+
+function cleanKeyCode(key)
+
+{
+
+   switch(key)
+
+   {
+
+      case 96: return "0"; break;
+
+      case 97: return "1"; break;
+
+      case 98: return "2"; break;
+
+      case 99: return "3"; break;
+
+      case 100: return "4"; break;
+
+      case 101: return "5"; break;
+
+      case 102: return "6"; break;
+
+      case 103: return "7"; break;
+
+      case 104: return "8"; break;
+
+      case 105: return "9"; break;
+
+      default: return String.fromCharCode(key); break;
+
+   }
+
+}
+
+// From:
+
+// http://www.faqts.com/knowledge_base/view.phtml/aid/1159/fid/130
+
+function setCaretAtEnd (field) {
+
+  if (field.createTextRange) {
+
+    var r = field.createTextRange();
+
+    r.moveStart('character', field.value.length);
+
+    r.collapse();
+
+    r.select();
+
+  }
+
+}
+
+</script>
+
+</HEAD>
+
+
+
+<BODY>
+
+<form name="formName" method="post">
+
+<table>
+
+    <tr>
+
+       <td>SSN:</td>
+
+      <td><INPUT TYPE="text" NAME="fieldName1" mask="###-##-####" onblur="return onBlurMask(this);" onfocus="return onFocusMask(this);" onkeydown="return doMask(this);"></td>
+
+   </tr>
+
+    <tr>
+
+        <td>Phone:</td>
+
+      <td><INPUT TYPE="text" NAME="fieldName" mask="(###) ###-####" onblur="return onBlurMask(this);" onfocus="return onFocusMask(this);" onkeydown="return doMask(this);"></td>
+
+   </tr>
+
+   <tr>
+
+        <td>Zip:</td>
+
+      <td><INPUT TYPE="text" NAME="fieldName2" mask="#####-####" onblur="return onBlurMask(this);" onfocus="return onFocusMask(this);" onkeydown="return doMask(this);"></td>
+
+   <tr>
+
+        <td>Time:</td>
+
+      <td><INPUT TYPE="text" NAME="fieldName3" mask="##:##:##" onblur="return onBlurMask(this);" onfocus="return onFocusMask(this);" onkeydown="return doMask(this);"></td>
+
+</table>
+
+</form>
+
+</BODY>
+
+</HTML>

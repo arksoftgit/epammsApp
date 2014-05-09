@@ -1,0 +1,4471 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<%-- wMLCMarketingSection --%>
+
+<%@ page import="java.util.*" %>
+<%@ page import="javax.servlet.*" %>
+<%@ page import="javax.servlet.http.*" %>
+<%@ page import="org.apache.commons.lang.*" %>
+<%@ page import="com.quinsoft.zeidon.*" %>
+<%@ page import="com.quinsoft.zeidon.standardoe.*" %>
+<%@ page import="com.quinsoft.zeidon.utils.*" %>
+<%@ page import="com.quinsoft.zeidon.vml.*" %>
+<%@ page import="com.quinsoft.zeidon.domains.*" %>
+<%@ page import="com.arksoft.epamms.*" %>
+
+<%! 
+
+ObjectEngine objectEngine = JavaObjectEngine.getInstance();
+
+public int DoInputMapping( HttpServletRequest request,
+                           HttpSession session,
+                           ServletContext application )
+{
+   String taskId = (String)  session.getAttribute( "ZeidonTaskId" );
+   Task task = objectEngine.getTaskById( taskId );
+
+   View mMasLC = null;
+   View vGridTmp = null; // temp view to grid view
+   View vMsgQ = null; // message queue
+   String strError = "";
+   String strDateFormat = "";
+   String strValue = "";
+   int    iView = 0;
+   long   lEntityKey = 0;
+   String strEntityKey = "";
+   String strTag = "";
+   String strTemp = "";
+   int    iTableRowCnt = 0;
+   String strSuffix = "";
+   int    nRelPos = 0;
+   int    nRC = 0;
+   int    nMapError = 1;
+
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) )
+   {
+      // EditBox: MarketingTitle
+      nRC = mMasLC.cursor( "M_MarketingSection" ).checkExistenceOfEntity();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strValue = request.getParameter( "MarketingTitle" );
+         try
+         {
+            mMasLC.cursor( "M_MarketingSection" ).setAttribute( "Title", strValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            strError += "MarketingTitle" + "\t" + strValue + "\t" + e.getReason();
+
+            // Create an entity in the message queue object.
+            vMsgQ = task.getViewByName( "__MSGQ" );
+            if ( VmlOperation.isValid( vMsgQ ) )
+            {
+               vMsgQ.cursor( "WebMsg" ).createEntity( CursorPosition.NEXT );
+               vMsgQ.cursor( "WebMsg" ).setAttribute( "ControlTag", "MarketingTitle" );
+               vMsgQ.cursor( "WebMsg" ).setAttribute( "ErrorMsg", strError );
+            }
+         }
+      }
+
+      // EditBox: Subtitle
+      nRC = mMasLC.cursor( "M_MarketingSection" ).checkExistenceOfEntity();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strValue = request.getParameter( "Subtitle" );
+         try
+         {
+            mMasLC.cursor( "M_MarketingSection" ).setAttribute( "Subtitle", strValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            strError += "Subtitle" + "\t" + strValue + "\t" + e.getReason();
+
+            // Create an entity in the message queue object.
+            vMsgQ = task.getViewByName( "__MSGQ" );
+            if ( VmlOperation.isValid( vMsgQ ) )
+            {
+               vMsgQ.cursor( "WebMsg" ).createEntity( CursorPosition.NEXT );
+               vMsgQ.cursor( "WebMsg" ).setAttribute( "ControlTag", "Subtitle" );
+               vMsgQ.cursor( "WebMsg" ).setAttribute( "ErrorMsg", strError );
+            }
+         }
+      }
+
+      // MLEdit: NoteToReviewer
+      nRC = mMasLC.cursor( "M_MarketingSection" ).checkExistenceOfEntity();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strValue = request.getParameter( "NoteToReviewer" );
+         try
+         {
+            mMasLC.cursor( "M_MarketingSection" ).setAttribute( "ReviewerNote", strValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            strError += "NoteToReviewer" + "\t" + strValue + "\t" + e.getReason();
+
+            // Create an entity in the message queue object.
+            vMsgQ = task.getViewByName( "__MSGQ" );
+            if ( VmlOperation.isValid( vMsgQ ) )
+            {
+               vMsgQ.cursor( "WebMsg" ).createEntity( CursorPosition.NEXT );
+               vMsgQ.cursor( "WebMsg" ).setAttribute( "ControlTag", "NoteToReviewer" );
+               vMsgQ.cursor( "WebMsg" ).setAttribute( "ErrorMsg", strError );
+            }
+         }
+      }
+
+      // Grid: GridMarketing
+      iTableRowCnt = 0;
+
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
+      vGridTmp = mMasLC.newView();
+      nRC = vGridTmp.cursor( "M_MarketingStatement" ).setFirst(  );
+      while ( nRC >= 0 )
+      {
+         lEntityKey = vGridTmp.cursor( "M_MarketingStatement" ).getEntityKey();
+         strEntityKey = Long.toString( lEntityKey );
+         iTableRowCnt++;
+
+         nRC = vGridTmp.cursor( "M_MarketingStatement" ).setNextContinue( );
+      }
+      vGridTmp.drop();
+      // Grid: AreasUse
+      iTableRowCnt = 0;
+
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
+      vGridTmp = mMasLC.newView();
+      nRC = vGridTmp.cursor( "MarketingAreaUse" ).setFirst( "M_MarketingSection" );
+      while ( nRC >= 0 )
+      {
+         lEntityKey = vGridTmp.cursor( "MarketingAreaUse" ).getEntityKey();
+         strEntityKey = Long.toString( lEntityKey );
+         iTableRowCnt++;
+
+         strTag = "GS_AreaUse" + strEntityKey;
+         strValue = request.getParameter( strTag );
+         try
+         {
+            if ( strValue != null )
+               vGridTmp.cursor( "M_MarketingUsage" ).setAttribute( "wSelected", "Y" );
+            else
+               vGridTmp.cursor( "M_MarketingUsage" ).setAttribute( "wSelected", "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            strError += "GS_AreaUse" + "\t" + strValue + "\t" + e.getReason();
+
+            // Create an entity in the message queue object.
+            vMsgQ = task.getViewByName( "__MSGQ" );
+            if ( VmlOperation.isValid( vMsgQ ) )
+            {
+               vMsgQ.cursor( "WebMsg" ).createEntity( CursorPosition.NEXT );
+               vMsgQ.cursor( "WebMsg" ).setAttribute( "ControlTag", "GS_AreaUse" );
+               vMsgQ.cursor( "WebMsg" ).setAttribute( "ErrorMsg", strError );
+            }
+         }
+
+         nRC = vGridTmp.cursor( "MarketingAreaUse" ).setNextContinue( );
+      }
+      vGridTmp.drop();
+      // Grid: AppTypes
+      iTableRowCnt = 0;
+
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
+      vGridTmp = mMasLC.newView();
+      nRC = vGridTmp.cursor( "MarketingAppType" ).setFirst( "M_MarketingSection" );
+      while ( nRC >= 0 )
+      {
+         lEntityKey = vGridTmp.cursor( "MarketingAppType" ).getEntityKey();
+         strEntityKey = Long.toString( lEntityKey );
+         iTableRowCnt++;
+
+         strTag = "GS_AppType" + strEntityKey;
+         strValue = request.getParameter( strTag );
+         try
+         {
+            if ( strValue != null )
+               vGridTmp.cursor( "M_MarketingUsage" ).setAttribute( "wSelected", "Y" );
+            else
+               vGridTmp.cursor( "M_MarketingUsage" ).setAttribute( "wSelected", "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            strError += "GS_AppType" + "\t" + strValue + "\t" + e.getReason();
+
+            // Create an entity in the message queue object.
+            vMsgQ = task.getViewByName( "__MSGQ" );
+            if ( VmlOperation.isValid( vMsgQ ) )
+            {
+               vMsgQ.cursor( "WebMsg" ).createEntity( CursorPosition.NEXT );
+               vMsgQ.cursor( "WebMsg" ).setAttribute( "ControlTag", "GS_AppType" );
+               vMsgQ.cursor( "WebMsg" ).setAttribute( "ErrorMsg", strError );
+            }
+         }
+
+         nRC = vGridTmp.cursor( "MarketingAppType" ).setNextContinue( );
+      }
+      vGridTmp.drop();
+      // Grid: Fungi
+      iTableRowCnt = 0;
+
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
+      vGridTmp = mMasLC.newView();
+      nRC = vGridTmp.cursor( "MarketingFungi" ).setFirst( "M_MarketingSection" );
+      while ( nRC >= 0 )
+      {
+         lEntityKey = vGridTmp.cursor( "MarketingFungi" ).getEntityKey();
+         strEntityKey = Long.toString( lEntityKey );
+         iTableRowCnt++;
+
+         strTag = "GS_Fungi" + strEntityKey;
+         strValue = request.getParameter( strTag );
+         try
+         {
+            if ( strValue != null )
+               vGridTmp.cursor( "M_MarketingUsage" ).setAttribute( "wSelected", "Y" );
+            else
+               vGridTmp.cursor( "M_MarketingUsage" ).setAttribute( "wSelected", "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            strError += "GS_Fungi" + "\t" + strValue + "\t" + e.getReason();
+
+            // Create an entity in the message queue object.
+            vMsgQ = task.getViewByName( "__MSGQ" );
+            if ( VmlOperation.isValid( vMsgQ ) )
+            {
+               vMsgQ.cursor( "WebMsg" ).createEntity( CursorPosition.NEXT );
+               vMsgQ.cursor( "WebMsg" ).setAttribute( "ControlTag", "GS_Fungi" );
+               vMsgQ.cursor( "WebMsg" ).setAttribute( "ErrorMsg", strError );
+            }
+         }
+
+         nRC = vGridTmp.cursor( "MarketingFungi" ).setNextContinue( );
+      }
+      vGridTmp.drop();
+      // Grid: Bacteria
+      iTableRowCnt = 0;
+
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
+      vGridTmp = mMasLC.newView();
+      nRC = vGridTmp.cursor( "MarketingBacteria" ).setFirst( "M_MarketingSection" );
+      while ( nRC >= 0 )
+      {
+         lEntityKey = vGridTmp.cursor( "MarketingBacteria" ).getEntityKey();
+         strEntityKey = Long.toString( lEntityKey );
+         iTableRowCnt++;
+
+         strTag = "GS_Bacteria" + strEntityKey;
+         strValue = request.getParameter( strTag );
+         try
+         {
+            if ( strValue != null )
+               vGridTmp.cursor( "M_MarketingUsage" ).setAttribute( "wSelected", "Y" );
+            else
+               vGridTmp.cursor( "M_MarketingUsage" ).setAttribute( "wSelected", "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            strError += "GS_Bacteria" + "\t" + strValue + "\t" + e.getReason();
+
+            // Create an entity in the message queue object.
+            vMsgQ = task.getViewByName( "__MSGQ" );
+            if ( VmlOperation.isValid( vMsgQ ) )
+            {
+               vMsgQ.cursor( "WebMsg" ).createEntity( CursorPosition.NEXT );
+               vMsgQ.cursor( "WebMsg" ).setAttribute( "ControlTag", "GS_Bacteria" );
+               vMsgQ.cursor( "WebMsg" ).setAttribute( "ErrorMsg", strError );
+            }
+         }
+
+         nRC = vGridTmp.cursor( "MarketingBacteria" ).setNextContinue( );
+      }
+      vGridTmp.drop();
+      // Grid: Surfaces
+      iTableRowCnt = 0;
+
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
+      vGridTmp = mMasLC.newView();
+      nRC = vGridTmp.cursor( "MarketingSurface" ).setFirst( "M_MarketingSection" );
+      while ( nRC >= 0 )
+      {
+         lEntityKey = vGridTmp.cursor( "MarketingSurface" ).getEntityKey();
+         strEntityKey = Long.toString( lEntityKey );
+         iTableRowCnt++;
+
+         strTag = "GS_Surface" + strEntityKey;
+         strValue = request.getParameter( strTag );
+         try
+         {
+            if ( strValue != null )
+               vGridTmp.cursor( "M_MarketingUsage" ).setAttribute( "wSelected", "Y" );
+            else
+               vGridTmp.cursor( "M_MarketingUsage" ).setAttribute( "wSelected", "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            strError += "GS_Surface" + "\t" + strValue + "\t" + e.getReason();
+
+            // Create an entity in the message queue object.
+            vMsgQ = task.getViewByName( "__MSGQ" );
+            if ( VmlOperation.isValid( vMsgQ ) )
+            {
+               vMsgQ.cursor( "WebMsg" ).createEntity( CursorPosition.NEXT );
+               vMsgQ.cursor( "WebMsg" ).setAttribute( "ControlTag", "GS_Surface" );
+               vMsgQ.cursor( "WebMsg" ).setAttribute( "ErrorMsg", strError );
+            }
+         }
+
+         nRC = vGridTmp.cursor( "MarketingSurface" ).setNextContinue( );
+      }
+      vGridTmp.drop();
+      // Grid: Viruses
+      iTableRowCnt = 0;
+
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
+      vGridTmp = mMasLC.newView();
+      nRC = vGridTmp.cursor( "MarketingViruses" ).setFirst( "M_MarketingSection" );
+      while ( nRC >= 0 )
+      {
+         lEntityKey = vGridTmp.cursor( "MarketingViruses" ).getEntityKey();
+         strEntityKey = Long.toString( lEntityKey );
+         iTableRowCnt++;
+
+         strTag = "GS_Virus" + strEntityKey;
+         strValue = request.getParameter( strTag );
+         try
+         {
+            if ( strValue != null )
+               vGridTmp.cursor( "M_MarketingUsage" ).setAttribute( "wSelected", "Y" );
+            else
+               vGridTmp.cursor( "M_MarketingUsage" ).setAttribute( "wSelected", "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            strError += "GS_Virus" + "\t" + strValue + "\t" + e.getReason();
+
+            // Create an entity in the message queue object.
+            vMsgQ = task.getViewByName( "__MSGQ" );
+            if ( VmlOperation.isValid( vMsgQ ) )
+            {
+               vMsgQ.cursor( "WebMsg" ).createEntity( CursorPosition.NEXT );
+               vMsgQ.cursor( "WebMsg" ).setAttribute( "ControlTag", "GS_Virus" );
+               vMsgQ.cursor( "WebMsg" ).setAttribute( "ErrorMsg", strError );
+            }
+         }
+
+         nRC = vGridTmp.cursor( "MarketingViruses" ).setNextContinue( );
+      }
+      vGridTmp.drop();
+   }
+
+   return( nMapError );
+}
+
+%>
+
+<%
+
+session = request.getSession( );
+Task task = null;
+View wWebXA = null;
+KZMSGQOO_Object mMsgQ = null; // view to Message Queue
+View vKZXMLPGO = null;
+String strLastPage = "";
+short  nRepos = 0;
+int bDone = 0;
+int nPos = 0;
+int nOptRC = 0;
+int nRC = 0;
+
+int nRCk = 0;  // temp fix for SetCursorEntityKey
+
+long lEKey = 0; // temp fix for SetCursorEntityKey
+
+String strKey = "";
+String strActionToProcess = "";
+String strURL = "";
+String strError = "";
+String strErrorFlag = "";
+String strErrorTitle = "";
+String strErrorMsg = "";
+String strFocusCtrl = "";
+String strBannerName = "";
+String strOpenFile = "";
+String strOpenPopupWindow = "";
+String strPopupWindowSZX = "";
+String strPopupWindowSZY = "";
+String strDateFormat = "";
+String strKeyRole = "";
+String strFeedback = "";
+String strDialogName = "";
+String strWindowName = "";
+String strLastWindow;
+String strLastAction;
+String strFunctionCall = "";
+String strNextJSP_Name = "";
+String strInputFileName = "";
+
+strActionToProcess = (String) request.getParameter( "zAction" );
+
+strLastWindow = (String) session.getAttribute( "ZeidonWindow" );
+if ( StringUtils.isBlank( strLastWindow ) ) 
+   strLastWindow = "NoLastWindow";
+
+strLastAction = (String) session.getAttribute( "ZeidonAction" );
+
+if ( strLastWindow.equals("wMLCMarketingSection") && StringUtils.isBlank( strActionToProcess ) && StringUtils.isBlank( strLastAction ) )
+{
+   strURL = response.encodeRedirectURL( "logout.html" );
+   response.sendRedirect( strURL );
+   return;
+}
+
+// Check to see if the Zeidon subtask view already exists.  If not, create
+// it and copy it into the application object.
+String taskId = (String) session.getAttribute( "ZeidonTaskId" );
+if ( StringUtils.isBlank( taskId ) )
+{
+   strURL = response.encodeRedirectURL( "logout.html" );
+   response.sendRedirect( strURL );
+   return;
+}
+else
+{
+   task = objectEngine.getTaskById( taskId );
+}
+
+if ( task == null )
+{
+   // strURL = response.encodeRedirectURL( "logout.html" );
+   // response.sendRedirect( strURL );
+   return; // something really bad has happened!!!
+}
+
+strActionToProcess = (String) request.getParameter( "zAction" );
+
+vKZXMLPGO = JspWebUtils.createWebSession( task, "testUserId" );
+mMsgQ = new KZMSGQOO_Object( vKZXMLPGO );
+mMsgQ.setView( VmlOperation.getMessageObject( task ) );
+wMLC_Dialog wMLC = new wMLC_Dialog( vKZXMLPGO );
+
+strURL = "";
+bDone = 0;
+nRC = 0;
+
+if ( strActionToProcess != null )
+{
+   if ( task != null )
+   {
+      // Delete the message object if error on last interation.
+      View vMsgQ = task.getViewByName( "__MSGQ" );
+      if ( VmlOperation.isValid( vMsgQ ) )
+      {
+         mMsgQ.setView( null );
+         vMsgQ.drop( );
+      }
+
+      strFeedback = request.getParameter( "zFeedback" );
+      if ( strFeedback != "" )
+      {
+         wMLC.TraceLine( "DoInputMapping Feedback: " + strFeedback );
+         wMLC.SaveFeedback( "mOrganiz", "wMLC", "MarketingSection", strFeedback );
+      }
+
+   }
+
+   while ( bDone == 0 && StringUtils.equals( strActionToProcess, "AcceptMarketingSection" ) )
+   {
+      bDone = 1;
+      session.setAttribute( "ZeidonAction", "AcceptMarketingSection" );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      nOptRC = wMLC.AcceptMarketingSection( new zVIEW ( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == 0 && StringUtils.equals( strActionToProcess, "CancelMarketingSection" ) )
+   {
+      bDone = 1;
+      session.setAttribute( "ZeidonAction", "CancelMarketingSection" );
+
+      // Action Operation
+      nRC = 0;
+      nOptRC = wMLC.CancelMarketingSection( new zVIEW ( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == 0 && StringUtils.equals( strActionToProcess, "ClearSelectedAppTypes" ) )
+   {
+      bDone = 1;
+      session.setAttribute( "ZeidonAction", "ClearSelectedAppTypes" );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window unknown
+
+      break;
+   }
+
+   while ( bDone == 0 && StringUtils.equals( strActionToProcess, "ClearSelectedAreasUse" ) )
+   {
+      bDone = 1;
+      session.setAttribute( "ZeidonAction", "ClearSelectedAreasUse" );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window unknown
+
+      break;
+   }
+
+   while ( bDone == 0 && StringUtils.equals( strActionToProcess, "ClearSelectedBacteria" ) )
+   {
+      bDone = 1;
+      session.setAttribute( "ZeidonAction", "ClearSelectedBacteria" );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window unknown
+
+      break;
+   }
+
+   while ( bDone == 0 && StringUtils.equals( strActionToProcess, "ClearSelectedFungi" ) )
+   {
+      bDone = 1;
+      session.setAttribute( "ZeidonAction", "ClearSelectedFungi" );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window unknown
+
+      break;
+   }
+
+   while ( bDone == 0 && StringUtils.equals( strActionToProcess, "ClearSelectedSurfaces" ) )
+   {
+      bDone = 1;
+      session.setAttribute( "ZeidonAction", "ClearSelectedSurfaces" );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window unknown
+
+      break;
+   }
+
+   while ( bDone == 0 && StringUtils.equals( strActionToProcess, "ClearSelectedViruses" ) )
+   {
+      bDone = 1;
+      session.setAttribute( "ZeidonAction", "ClearSelectedViruses" );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window unknown
+
+      break;
+   }
+
+   while ( bDone == 0 && StringUtils.equals( strActionToProcess, "DeleteMarketingSection" ) )
+   {
+      bDone = 1;
+      session.setAttribute( "ZeidonAction", "DeleteMarketingSection" );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mMasLC;
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         nRC = mMasLC.cursor( "M_MarketingStatement" ).setByEntityKey( lEKey );
+         if ( nRC < 0 )
+         {
+         // This is temp code because SetCursorEntityKey doesn't work on subobjects.
+            nRCk = mMasLC.cursor( "M_MarketingStatement" ).setFirst();
+            while ( nRCk >= 0 )
+            {
+               lEKey = mMasLC.cursor( "M_MarketingStatement" ).getEntityKey();
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  nRCk = -1;
+               }
+               else
+                  nRCk = mMasLC.cursor( "M_MarketingStatement" ).setNextContinue( );
+            }
+         }
+      }
+
+      // Action Operation
+      nRC = 0;
+      nOptRC = wMLC.SelectMarketingSectionForDelete( new zVIEW ( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "DeleteMarketingSection" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == 0 && StringUtils.equals( strActionToProcess, "MoveMarketingStatementDown" ) )
+   {
+      bDone = 1;
+      session.setAttribute( "ZeidonAction", "MoveMarketingStatementDown" );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mMasLC;
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         nRC = mMasLC.cursor( "M_MarketingStatement" ).setByEntityKey( lEKey );
+         if ( nRC < 0 )
+         {
+         // This is temp code because SetCursorEntityKey doesn't work on subobjects.
+            nRCk = mMasLC.cursor( "M_MarketingStatement" ).setFirst();
+            while ( nRCk >= 0 )
+            {
+               lEKey = mMasLC.cursor( "M_MarketingStatement" ).getEntityKey();
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  nRCk = -1;
+               }
+               else
+                  nRCk = mMasLC.cursor( "M_MarketingStatement" ).setNextContinue( );
+            }
+         }
+      }
+
+      // Action Operation
+      nRC = 0;
+      nOptRC = wMLC.MoveMarketingStatementDown( new zVIEW ( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == 0 && StringUtils.equals( strActionToProcess, "MoveMarketingStatementUp" ) )
+   {
+      bDone = 1;
+      session.setAttribute( "ZeidonAction", "MoveMarketingStatementUp" );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mMasLC;
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         nRC = mMasLC.cursor( "M_MarketingStatement" ).setByEntityKey( lEKey );
+         if ( nRC < 0 )
+         {
+         // This is temp code because SetCursorEntityKey doesn't work on subobjects.
+            nRCk = mMasLC.cursor( "M_MarketingStatement" ).setFirst();
+            while ( nRCk >= 0 )
+            {
+               lEKey = mMasLC.cursor( "M_MarketingStatement" ).getEntityKey();
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  nRCk = -1;
+               }
+               else
+                  nRCk = mMasLC.cursor( "M_MarketingStatement" ).setNextContinue( );
+            }
+         }
+      }
+
+      // Action Operation
+      nRC = 0;
+      nOptRC = wMLC.MoveMarketingStatementUp( new zVIEW ( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == 0 && StringUtils.equals( strActionToProcess, "NewMarketingStatement" ) )
+   {
+      bDone = 1;
+      session.setAttribute( "ZeidonAction", "NewMarketingStatement" );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      nOptRC = wMLC.AddNewMarketingStatement( new zVIEW ( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "MarketingStatement" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == 0 && StringUtils.equals( strActionToProcess, "NextMarketingSection" ) )
+   {
+      bDone = 1;
+      session.setAttribute( "ZeidonAction", "NextMarketingSection" );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      nOptRC = wMLC.NextMarketingSection( new zVIEW ( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == 0 && StringUtils.equals( strActionToProcess, "PreviousMarketingSection" ) )
+   {
+      bDone = 1;
+      session.setAttribute( "ZeidonAction", "PreviousMarketingSection" );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      nOptRC = wMLC.PreviousMarketingSection( new zVIEW ( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == 0 && StringUtils.equals( strActionToProcess, "SaveAddNewMarketingSection" ) )
+   {
+      bDone = 1;
+      session.setAttribute( "ZeidonAction", "SaveAddNewMarketingSection" );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      nOptRC = wMLC.SaveAddNewMarketingSection( new zVIEW ( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == 0 && StringUtils.equals( strActionToProcess, "SelectAllAppTypes" ) )
+   {
+      bDone = 1;
+      session.setAttribute( "ZeidonAction", "SelectAllAppTypes" );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window unknown
+
+      break;
+   }
+
+   while ( bDone == 0 && StringUtils.equals( strActionToProcess, "SelectAllAreas" ) )
+   {
+      bDone = 1;
+      session.setAttribute( "ZeidonAction", "SelectAllAreas" );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window unknown
+
+      break;
+   }
+
+   while ( bDone == 0 && StringUtils.equals( strActionToProcess, "SelectAllBacteria" ) )
+   {
+      bDone = 1;
+      session.setAttribute( "ZeidonAction", "SelectAllBacteria" );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window unknown
+
+      break;
+   }
+
+   while ( bDone == 0 && StringUtils.equals( strActionToProcess, "SelectAllFungi" ) )
+   {
+      bDone = 1;
+      session.setAttribute( "ZeidonAction", "SelectAllFungi" );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window unknown
+
+      break;
+   }
+
+   while ( bDone == 0 && StringUtils.equals( strActionToProcess, "SelectAllSurfaces" ) )
+   {
+      bDone = 1;
+      session.setAttribute( "ZeidonAction", "SelectAllSurfaces" );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window unknown
+
+      break;
+   }
+
+   while ( bDone == 0 && StringUtils.equals( strActionToProcess, "SelectAllViruses" ) )
+   {
+      bDone = 1;
+      session.setAttribute( "ZeidonAction", "SelectAllViruses" );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window unknown
+
+      break;
+   }
+
+   while ( bDone == 0 && StringUtils.equals( strActionToProcess, "UpdateAreasUseStatement" ) )
+   {
+      bDone = 1;
+      session.setAttribute( "ZeidonAction", "UpdateAreasUseStatement" );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      nOptRC = wMLC.SelectAreasUseStatementForUpdate( new zVIEW ( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wSLC", "AreasOfUseStatement" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == 0 && StringUtils.equals( strActionToProcess, "UpdateMarketingStatement" ) )
+   {
+      bDone = 1;
+      session.setAttribute( "ZeidonAction", "UpdateMarketingStatement" );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mMasLC;
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         nRC = mMasLC.cursor( "M_MarketingStatement" ).setByEntityKey( lEKey );
+         if ( nRC < 0 )
+         {
+         // This is temp code because SetCursorEntityKey doesn't work on subobjects.
+            nRCk = mMasLC.cursor( "M_MarketingStatement" ).setFirst();
+            while ( nRCk >= 0 )
+            {
+               lEKey = mMasLC.cursor( "M_MarketingStatement" ).getEntityKey();
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  nRCk = -1;
+               }
+               else
+                  nRCk = mMasLC.cursor( "M_MarketingStatement" ).setNextContinue( );
+            }
+         }
+      }
+
+      // Action Operation
+      nRC = 0;
+      nOptRC = wMLC.SelectMarketingStmtForUpdate( new zVIEW ( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "MarketingStatement" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == 0 && strActionToProcess.equals( "ZEIDON_ComboBoxSubmit" ) )
+   {
+      bDone = 1;
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application );
+      if ( nRC < 0 )
+         break;
+
+      // No redirection, we are staying on this page.
+      nRC = 0;
+      break;
+   }
+
+   while ( bDone == 0 && StringUtils.equals( strActionToProcess, "smNextMarketingSection" ) )
+   {
+      bDone = 1;
+      session.setAttribute( "ZeidonAction", "smNextMarketingSection" );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      nOptRC = wMLC.NextMarketingSection( new zVIEW ( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == 0 && StringUtils.equals( strActionToProcess, "smPreviousMarketingSection" ) )
+   {
+      bDone = 1;
+      session.setAttribute( "ZeidonAction", "smPreviousMarketingSection" );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      nOptRC = wMLC.PreviousMarketingSection( new zVIEW ( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == 0 && StringUtils.equals( strActionToProcess, "smAcceptMarketingSection" ) )
+   {
+      bDone = 1;
+      session.setAttribute( "ZeidonAction", "smAcceptMarketingSection" );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      nOptRC = wMLC.AcceptMarketingSection( new zVIEW ( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == 0 && StringUtils.equals( strActionToProcess, "smSaveAddNewMarketingSection" ) )
+   {
+      bDone = 1;
+      session.setAttribute( "ZeidonAction", "smSaveAddNewMarketingSection" );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      nOptRC = wMLC.SaveAddNewMarketingSection( new zVIEW ( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == 0 && StringUtils.equals( strActionToProcess, "smCancelMarketingSection" ) )
+   {
+      bDone = 1;
+      session.setAttribute( "ZeidonAction", "smCancelMarketingSection" );
+
+      // Action Operation
+      nRC = 0;
+      nOptRC = wMLC.CancelMarketingSection( new zVIEW ( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == 0 && StringUtils.equals( strActionToProcess, "mProductManagement" ) )
+   {
+      bDone = 1;
+      session.setAttribute( "ZeidonAction", "mProductManagement" );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
+      nOptRC = wStartUp.ProductManagement( new zVIEW ( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartTopWindow, "wStartUp", "AdminListPrimaryRegistrants" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == 0 && StringUtils.equals( strActionToProcess, "mSubregistrants" ) )
+   {
+      bDone = 1;
+      session.setAttribute( "ZeidonAction", "mSubregistrants" );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
+      nOptRC = wStartUp.SubregistrantManagement( new zVIEW ( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartTopWindow, "wStartUp", "AdminListSubregistrants" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == 0 && StringUtils.equals( strActionToProcess, "mTrackingNotificationCompliance" ) )
+   {
+      bDone = 1;
+      session.setAttribute( "ZeidonAction", "mTrackingNotificationCompliance" );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
+      nOptRC = wStartUp.TrackingNotificationCompliance( new zVIEW ( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartTopWindow, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == 0 && StringUtils.equals( strActionToProcess, "mStateRegistrations" ) )
+   {
+      bDone = 1;
+      session.setAttribute( "ZeidonAction", "mStateRegistrations" );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
+      nOptRC = wStartUp.StateRegistrations( new zVIEW ( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartTopWindow, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == 0 && StringUtils.equals( strActionToProcess, "mMarketingFulfillment" ) )
+   {
+      bDone = 1;
+      session.setAttribute( "ZeidonAction", "mMarketingFulfillment" );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
+      nOptRC = wStartUp.MarketingFulfillment( new zVIEW ( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartTopWindow, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == 0 && StringUtils.equals( strActionToProcess, "mWebDevelopment" ) )
+   {
+      bDone = 1;
+      session.setAttribute( "ZeidonAction", "mWebDevelopment" );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
+      nOptRC = wStartUp.WebDevelopment( new zVIEW ( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartTopWindow, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == 0 && StringUtils.equals( strActionToProcess, "mAdministration" ) )
+   {
+      bDone = 1;
+      session.setAttribute( "ZeidonAction", "mAdministration" );
+
+      // Action Operation
+      nRC = 0;
+      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
+      nOptRC = wStartUp.PrimaryRegistrantCompanySetup( new zVIEW ( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartTopWindow, "wStartUp", "AdminUpdatePrimaryRegistrant" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == 0 && StringUtils.equals( strActionToProcess, "mLogin" ) )
+   {
+      bDone = 1;
+      session.setAttribute( "ZeidonAction", "mLogin" );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
+      nOptRC = wStartUp.ProcessLogin( new zVIEW ( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ResetTopWindow, "wStartUp", "UserLogin" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == 0 && StringUtils.equals( strActionToProcess, "mTemplate" ) )
+   {
+      bDone = 1;
+      session.setAttribute( "ZeidonAction", "mTemplate" );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
+      nOptRC = wStartUp.Template( new zVIEW ( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wTemplD", "TemplateList" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == 0 && strActionToProcess.equals( "_OnUnload" ) )
+   {
+      bDone = 1;
+      if ( task != null )
+      {
+         task.log().debug( "OnUnload UnregisterZeidonApplication: ----------------------------------->>> " + "wMLCMarketingSection" );
+         task.dropTask();
+         task = null;
+         session.setAttribute( "ZeidonTaskId", task );
+      }
+
+      // Next Window is HTML termination
+      strURL = response.encodeRedirectURL( "logout.html" );
+      response.sendRedirect( strURL );
+      return;
+   }
+
+   while ( bDone == 0 && strActionToProcess.equals( "_OnTimeout" ) )
+   {
+      bDone = 1;
+      if ( task != null )
+      {
+         task.log().debug( "OnUnload UnregisterZeidonApplication: ----------------------------------->>> " + "wMLCMarketingSection" );
+         task.dropTask();
+         task = null;
+         session.setAttribute( "ZeidonTaskId", task );
+      }
+
+      // Next Window is HTML termination
+      strURL = response.encodeRedirectURL( "TimeOut.html" );
+      response.sendRedirect( strURL );
+      return;
+   }
+
+   while ( bDone == 0 && strActionToProcess.equals( "_OnResubmitPage" ) )
+   {
+      bDone = 1;
+      session.setAttribute( "ZeidonAction", "_OnResubmitPage" );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application );
+      if ( nRC < 0 )
+         break;
+
+      strURL = response.encodeRedirectURL( "wMLCMarketingSection.jsp" );
+      nRC = 1;  //do the redirection
+      break;
+   }
+
+   if ( nRC != 0 )
+   {
+      if ( nRC > 0 )
+      {
+         if ( nRC > 1 )
+         {
+            strURL = response.encodeRedirectURL( "wMLCMarketingSection.jsp" );
+            task.log().debug( "Action Error Redirect to: " + strURL );
+         }
+
+         strActionToProcess = "";
+         response.sendRedirect( strURL );
+      }
+      else
+      {
+         if ( nRC > -128 )
+         {
+            strActionToProcess = "";
+            strURL = response.encodeRedirectURL( "wMLCMarketingSection.jsp" );
+            response.sendRedirect( strURL );
+            task.log().debug( "Mapping Error Redirect to: " + strURL );
+         }
+         else
+         {
+            task.log().debug( "InputMapping Reentry Prevented" );
+         }
+      }
+   }
+
+   if ( StringUtils.isBlank( strActionToProcess ) )
+   {
+   // task.GarbageCollectViews( );
+      return;
+   }
+}
+
+if ( strErrorFlag != "Y" )
+{
+   nOptRC = wMLC.InitMarketingSection( new zVIEW ( vKZXMLPGO ) );
+   if ( nOptRC <= -128 )
+   {
+      task.log().debug( "Operation Reentry Prevented" );
+      return;
+   }
+
+   if ( nOptRC == 2 )
+   {
+      View vView;
+      String strMessage;
+      String strURLParameters;
+
+      vView = task.getViewByName( "wXferO" );
+      strMessage = vView.cursor("Root").getStringFromAttribute("WebReturnMessage" );
+      strURLParameters = "?CallingPage=wMLCMarketingSection.jsp" +
+                         "&Message=" + strMessage +
+                         "&DialogName=" + "wMLC" +
+                         "&OperationName=" + "InitMarketingSection";
+      strURL = response.encodeRedirectURL( "MessageDisplay.jsp" + strURLParameters );
+      response.sendRedirect( strURL );
+      task.log().debug( "Pre/Post Redirect to: " + strURL );
+      return;
+   }
+
+   nRC = vKZXMLPGO.cursor("DynamicBannerName" ).setFirst( "DialogName", "wMLC", "" );
+   if ( nRC >= 0 )
+      strBannerName = vKZXMLPGO.cursor("DynamicBannerName").getStringFromAttribute("BannerName" );
+
+   if ( StringUtils.isBlank( strBannerName ) )
+      strBannerName = "./include/banner.inc";
+
+   wWebXA = task.getViewByName( "wWebXfer" );
+   if ( VmlOperation.isValid( wWebXA ) )
+   {
+      wWebXA.cursor("Root").setAttribute( "CurrentDialog", "wMLC" );
+      wWebXA.cursor("Root").setAttribute( "CurrentDialog", "MarketingSection" );
+   }
+}
+
+%>
+
+<html>
+<head>
+
+<title>Marketing Section</title>
+
+<%@ include file="./include/head.inc" %>
+<!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
+<!-- log a user out.  Timeout.inc is not used if the dialog or window has a timeout value set. -->
+<%@ include file="./include/timeout.inc" %>
+<link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
+<script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/validations.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/tabpane.js"></script>
+<script language="JavaScript" type="text/javascript">
+
+var isWindowClosing = true;
+var timerID = null;
+onerror = handleErr;
+window.history.forward( 1 );
+var TabACS;
+
+function handleErr( msg, url, l )
+{
+   var txt = "There was an error on this page.\n\n";
+   txt += "Error: " + msg + "\n";
+   txt += "URL: " + url + "\n";
+   txt += "Line: " + l + "\n\n";
+   txt += "Click OK to continue.\n\n";
+// alert( txt );
+   return true;
+}
+
+// This function returns Internet Explorer's major version number,
+// or 0 for others. It works by finding the "MSIE " string and
+// extracting the version number following the space, up to the decimal
+// point, ignoring the minor version number.
+function msieversion( )
+{
+   var ua = window.navigator.userAgent;
+   var msie = ua.indexOf( "MSIE " );
+
+   if ( msie > 0 )      // if Internet Explorer, return version number
+      return parseInt( ua.substring( msie + 5, ua.indexOf( ".", msie ) ) );
+   else                 // if another browser, return 0
+      return 0;
+}
+
+function _OnAlmostTimeout()
+{
+   if ( _IsDocDisabled( ) == false )
+   {
+      var tStart   = new Date();
+
+      alert("Your session will timeout in one minute.  Please click 'OK' within that time to continue and save your work if necessary.")
+
+      var tEnd   = new Date();
+      var tDiff = tEnd.getTime() - tStart.getTime();
+
+      // If the time is less than one minute, resubmit the page.  Otherwise, go to the timeout window.
+      if (tDiff < 60000)
+      {
+         document.wMLCMarketingSection.zAction.value = "_OnResubmitPage";
+         document.wMLCMarketingSection.submit( );
+      }
+      else
+      {
+         _OnTimeout( );
+      }
+   }
+}
+
+function _OnTimeout( )
+{
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCMarketingSection.zAction.value = "_OnTimeout";
+      document.wMLCMarketingSection.submit( );
+   }
+}
+
+function _BeforePageUnload( )
+{
+   if ( _IsDocDisabled( ) == false )
+   {
+      // If the user clicked on the window close box, then
+      // isWindowClosing will be true.  Otherwise if the user
+      // clicked on something else in the page, isWindowClosing will be false.
+      // If the user clicked the window close box, unregister zeidon.
+      if (isWindowClosing)
+      {
+         document.wMLCMarketingSection.zAction.value = "_OnUnload";
+         document.wMLCMarketingSection.submit( );
+      }
+   }
+}
+
+function _IsDocDisabled( )
+{
+   var theForm;
+   var j;
+   var k;
+
+   for ( j = 0; j < document.forms.length; j++ )
+   {
+      theForm = document.forms[ j ];
+      for ( k = 0; k < theForm.length; k++ )
+      {
+         if ( theForm.elements[ k ].name == "zDisable" )
+            return theForm.elements[ k ].disabled;
+      }
+   }
+
+   return false;
+}
+
+function _DisableFormElements( bDisabled )
+{
+   var theForm;
+   var type;
+   var lis;
+   var thisLi;
+   var j;
+   var k;
+   var bRC = false;
+
+   if ( bDisabled && timerID != null )
+   {
+      clearTimeout( timerID );
+      timerID = null;
+   }
+
+   // Controls on the window may have been set as disabled through javascript but
+   // when we try to get the values for these controls in jsp (response.getParameter)
+   // they will always be null.  Set any disabled fields to enabled for
+   // this reason.
+   for ( j = 0; j < document.forms.length; j++ )
+   {
+      theForm = document.forms[ j ];
+      for ( k = 0; k < theForm.length; k++ )
+      {
+         if (theForm.elements[ k ].disabled == true)
+             theForm.elements[ k ].disabled = false;
+      }
+   }
+
+   // We want to set some fields as disabled (like buttons and comboboxes) so that
+   // while the jsp code is processing, users can not select these controls.
+   for ( j = 0; j < document.forms.length; j++ )
+   {
+      theForm = document.forms[ j ];
+      for ( k = 0; k < theForm.length; k++ )
+      {
+         type = theForm.elements[ k ].type;
+
+         if ( type == "button" || type == "submit" || (type != null && type.indexOf( "select" ) == 0) )
+         {
+            theForm.elements[ k ].disabled = bDisabled;
+         }
+         else
+         if ( theForm.elements[ k ].name == "zDisable" )
+         {
+            theForm.elements[ k ].disabled = bDisabled;
+            bRC = true;
+         }
+      }
+   }
+
+   lis = document.getElementsByTagName( "li" );
+   for ( k = 0; k < lis.length; k++ )
+   {
+      thisLi = lis[ k ];
+      thisLi.disabled = bDisabled;
+   }
+
+   return bRC;
+}
+
+function _AfterPageLoaded( )
+{
+// _DisableFormElements( false );
+
+   var szFocusCtrl = document.wMLCMarketingSection.zFocusCtrl.value;
+   if ( szFocusCtrl != "" )
+      eval('document.wMLCMarketingSection.' + szFocusCtrl + '.focus()');
+
+   var szMsg = document.wMLCMarketingSection.zError.value;
+   if ( szMsg != "" )
+      alert( szMsg ); // "Houston ... We have a problem"
+
+   szMsg = document.wMLCMarketingSection.zOpenFile.value;
+   if ( szMsg != "" )
+   {
+      var NewWin = window.open( szMsg );
+      if (NewWin)
+         NewWin.focus( );
+      else
+      {
+         alert("Pop-up windows are being blocked.  You need to set your browser to allow pop-ups from this site for this action to work.");
+      }
+   }
+
+   var keyRole = document.wMLCMarketingSection.zKeyRole.value;
+   // Javascript code entered by user.
+   var thisLi;
+
+// if ( keyRole == "P" || keyRole == "N" ) // If we are here, we have to be a Primary.
+   // We knock out Login and Template as options.
+   thisLi = document.getElementById( "lmLogin" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+   thisLi = document.getElementById( "lmTemplate" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+
+   thisLi = document.getElementById( "lmStateRegistrations" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+
+   // Cannot go to product management if already there.
+   thisLi = document.getElementById( "lmProductManagement" );
+   thisLi.disabled = true;
+   // END of Javascript code entered by user.
+
+   document.wMLCMarketingSection.zError.value = "";
+   document.wMLCMarketingSection.zOpenFile.value = "";
+
+   if ( timerID != null )
+   {
+      clearTimeout( timerID );
+      timerID = null;
+   }
+
+   var nTimeout = document.wMLCMarketingSection.zTimeout.value;
+   if (nTimeout > 0)
+   {
+      var delay = 60000 * nTimeout;  // Timeout value in timeout.inc
+      timerID = setTimeout( "_OnAlmostTimeout( )", delay );
+   }
+   else
+      timerID = null; // No timeout specified
+
+   isWindowClosing = true;
+}
+
+function CheckAllInGrid(id, CheckBoxName)
+{
+   var wcontrols = id.form.elements;
+   var check = id.checked;
+   var wcontrol, i = 0;
+
+   while ( (wcontrol = wcontrols[ i++ ]) != null )
+   {
+      //Check to see if the checkbox belongs to this table then check it.
+      if ( wcontrol.name.indexOf( CheckBoxName ) != -1 && wcontrol.type == 'checkbox' )
+      {
+         wcontrol.checked = check;
+      }
+   }
+}
+
+function AcceptMarketingSection( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCMarketingSection.zAction.value = "AcceptMarketingSection";
+      document.wMLCMarketingSection.submit( );
+   }
+}
+
+function CancelMarketingSection( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCMarketingSection.zAction.value = "CancelMarketingSection";
+      document.wMLCMarketingSection.submit( );
+   }
+}
+
+function ClearSelectedAppTypes( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+      var theForm;
+      var type;
+      var name;
+      var str;
+      var j;
+      var k;
+
+      for ( j = 0; j < document.forms.length; j++ )
+      {
+         theForm = document.forms[ j ];
+         for ( k = 0; k < theForm.length; k++ )
+         {
+            type = theForm.elements[ k ].type;
+
+            if ( type == "checkbox" )
+            {
+               name = theForm.elements[ k ].name;
+               str = name.substr( 0, 10 );
+               if ( str.match("GS_AppType") )
+               {
+                  theForm.elements[ k ].checked = false;
+               }
+            }
+         }
+      }
+
+      return;
+
+
+      // END of Javascript code entered by user.
+
+   }
+}
+
+function ClearSelectedAreasUse( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+      var theForm;
+      var type;
+      var name;
+      var str;
+      var j;
+      var k;
+
+      for ( j = 0; j < document.forms.length; j++ )
+      {
+         theForm = document.forms[ j ];
+         for ( k = 0; k < theForm.length; k++ )
+         {
+            type = theForm.elements[ k ].type;
+
+            if ( type == "checkbox" )
+            {
+               name = theForm.elements[ k ].name;
+               str = name.substr( 0, 10 );
+               if ( str.match("GS_AreaUse") )
+               {
+                  theForm.elements[ k ].checked = false;
+               }
+            }
+         }
+      }
+
+      return;
+
+
+      // END of Javascript code entered by user.
+
+   }
+}
+
+function ClearSelectedBacteria( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+      var theForm;
+      var type;
+      var name;
+      var str;
+      var j;
+      var k;
+
+      for ( j = 0; j < document.forms.length; j++ )
+      {
+         theForm = document.forms[ j ];
+         for ( k = 0; k < theForm.length; k++ )
+         {
+            type = theForm.elements[ k ].type;
+
+            if ( type == "checkbox" )
+            {
+               name = theForm.elements[ k ].name;
+               str = name.substr( 0, 11 );
+               if ( str.match("GS_Bacteria") )
+               {
+                  theForm.elements[ k ].checked = false;
+               }
+            }
+         }
+      }
+
+      return;
+
+
+      // END of Javascript code entered by user.
+
+   }
+}
+
+function ClearSelectedFungi( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+      var theForm;
+      var type;
+      var name;
+      var str;
+      var j;
+      var k;
+
+      for ( j = 0; j < document.forms.length; j++ )
+      {
+         theForm = document.forms[ j ];
+         for ( k = 0; k < theForm.length; k++ )
+         {
+            type = theForm.elements[ k ].type;
+
+            if ( type == "checkbox" )
+            {
+               name = theForm.elements[ k ].name;
+               str = name.substr( 0, 8 );
+               if ( str.match("GS_Fungi") )
+               {
+                  theForm.elements[ k ].checked = false;
+               }
+            }
+         }
+      }
+
+      return;
+
+
+      // END of Javascript code entered by user.
+
+   }
+}
+
+function ClearSelectedSurfaces( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+      var theForm;
+      var type;
+      var name;
+      var str;
+      var j;
+      var k;
+
+      for ( j = 0; j < document.forms.length; j++ )
+      {
+         theForm = document.forms[ j ];
+         for ( k = 0; k < theForm.length; k++ )
+         {
+            type = theForm.elements[ k ].type;
+
+            if ( type == "checkbox" )
+            {
+               name = theForm.elements[ k ].name;
+               str = name.substr( 0, 10 );
+               if ( str.match("GS_Surface") )
+               {
+                  theForm.elements[ k ].checked = false;
+               }
+            }
+         }
+      }
+
+      return;
+
+
+      // END of Javascript code entered by user.
+
+   }
+}
+
+function ClearSelectedViruses( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+      var theForm;
+      var type;
+      var name;
+      var str;
+      var j;
+      var k;
+
+      for ( j = 0; j < document.forms.length; j++ )
+      {
+         theForm = document.forms[ j ];
+         for ( k = 0; k < theForm.length; k++ )
+         {
+            type = theForm.elements[ k ].type;
+
+            if ( type == "checkbox" )
+            {
+               name = theForm.elements[ k ].name;
+               str = name.substr( 0, 8 );
+               if ( str.match("GS_Virus") )
+               {
+                  theForm.elements[ k ].checked = false;
+               }
+            }
+         }
+      }
+
+      return;
+
+
+      // END of Javascript code entered by user.
+
+   }
+}
+
+function DeleteMarketingSection( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      _DisableFormElements( true );
+
+      document.wMLCMarketingSection.zTableRowSelect.value = strEntityKey;
+      document.wMLCMarketingSection.zAction.value = "DeleteMarketingSection";
+      document.wMLCMarketingSection.submit( );
+   }
+}
+
+function InitMarketingSection( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+   var thisLi;
+
+// if ( keyRole == "P" || keyRole == "N" ) // If we are here, we have to be a Primary.
+   // We knock out Login and Template as options.
+   thisLi = document.getElementById( "lmLogin" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+   thisLi = document.getElementById( "lmTemplate" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+
+   thisLi = document.getElementById( "lmStateRegistrations" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+
+   // Cannot go to product management if already there.
+   thisLi = document.getElementById( "lmProductManagement" );
+   thisLi.disabled = true;
+
+      // END of Javascript code entered by user.
+
+   }
+}
+
+function MoveMarketingStatementDown( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      _DisableFormElements( true );
+
+      document.wMLCMarketingSection.zTableRowSelect.value = strEntityKey;
+      document.wMLCMarketingSection.zAction.value = "MoveMarketingStatementDown";
+      document.wMLCMarketingSection.submit( );
+   }
+}
+
+function MoveMarketingStatementUp( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      _DisableFormElements( true );
+
+      document.wMLCMarketingSection.zTableRowSelect.value = strEntityKey;
+      document.wMLCMarketingSection.zAction.value = "MoveMarketingStatementUp";
+      document.wMLCMarketingSection.submit( );
+   }
+}
+
+function NewMarketingStatement( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCMarketingSection.zAction.value = "NewMarketingStatement";
+      document.wMLCMarketingSection.submit( );
+   }
+}
+
+function NextMarketingSection( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCMarketingSection.zAction.value = "NextMarketingSection";
+      document.wMLCMarketingSection.submit( );
+   }
+}
+
+function PreviousMarketingSection( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCMarketingSection.zAction.value = "PreviousMarketingSection";
+      document.wMLCMarketingSection.submit( );
+   }
+}
+
+function SaveAddNewMarketingSection( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCMarketingSection.zAction.value = "SaveAddNewMarketingSection";
+      document.wMLCMarketingSection.submit( );
+   }
+}
+
+function SelectAllAppTypes( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+      var theForm;
+      var type;
+      var name;
+      var str;
+      var j;
+      var k;
+
+      for ( j = 0; j < document.forms.length; j++ )
+      {
+         theForm = document.forms[ j ];
+         for ( k = 0; k < theForm.length; k++ )
+         {
+            type = theForm.elements[ k ].type;
+
+            if ( type == "checkbox" )
+            {
+               name = theForm.elements[ k ].name;
+               str = name.substr( 0, 10 );
+               if ( str.match("GS_AppType") )
+               {
+                  theForm.elements[ k ].checked = true;
+               }
+            }
+         }
+      }
+
+      return;
+
+
+      // END of Javascript code entered by user.
+
+   }
+}
+
+function SelectAllAreas( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+      var theForm;
+      var type;
+      var name;
+      var str;
+      var j;
+      var k;
+
+      for ( j = 0; j < document.forms.length; j++ )
+      {
+         theForm = document.forms[ j ];
+         for ( k = 0; k < theForm.length; k++ )
+         {
+            type = theForm.elements[ k ].type;
+
+            if ( type == "checkbox" )
+            {
+               name = theForm.elements[ k ].name;
+               str = name.substr( 0, 10 );
+               if ( str.match("GS_AreaUse") )
+               {
+                  theForm.elements[ k ].checked = true;
+               }
+            }
+         }
+      }
+
+      return;
+
+
+      // END of Javascript code entered by user.
+
+   }
+}
+
+function SelectAllBacteria( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+      var theForm;
+      var type;
+      var name;
+      var str;
+      var j;
+      var k;
+
+      for ( j = 0; j < document.forms.length; j++ )
+      {
+         theForm = document.forms[ j ];
+         for ( k = 0; k < theForm.length; k++ )
+         {
+            type = theForm.elements[ k ].type;
+
+            if ( type == "checkbox" )
+            {
+               name = theForm.elements[ k ].name;
+               str = name.substr( 0, 11 );
+               if ( str.match("GS_Bacteria") )
+               {
+                  theForm.elements[ k ].checked = true;
+               }
+            }
+         }
+      }
+
+      return;
+
+
+      // END of Javascript code entered by user.
+
+   }
+}
+
+function SelectAllFungi( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+      var theForm;
+      var type;
+      var name;
+      var str;
+      var j;
+      var k;
+
+      for ( j = 0; j < document.forms.length; j++ )
+      {
+         theForm = document.forms[ j ];
+         for ( k = 0; k < theForm.length; k++ )
+         {
+            type = theForm.elements[ k ].type;
+
+            if ( type == "checkbox" )
+            {
+               name = theForm.elements[ k ].name;
+               str = name.substr( 0, 8 );
+               if ( str.match("GS_Fungi") )
+               {
+                  theForm.elements[ k ].checked = true;
+               }
+            }
+         }
+      }
+
+      return;
+
+
+      // END of Javascript code entered by user.
+
+   }
+}
+
+function SelectAllSurfaces( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+      var theForm;
+      var type;
+      var name;
+      var str;
+      var j;
+      var k;
+
+      for ( j = 0; j < document.forms.length; j++ )
+      {
+         theForm = document.forms[ j ];
+         for ( k = 0; k < theForm.length; k++ )
+         {
+            type = theForm.elements[ k ].type;
+
+            if ( type == "checkbox" )
+            {
+               name = theForm.elements[ k ].name;
+               str = name.substr( 0, 10 );
+               if ( str.match("GS_Surface") )
+               {
+                  theForm.elements[ k ].checked = true;
+               }
+            }
+         }
+      }
+
+      return;
+
+
+      // END of Javascript code entered by user.
+
+   }
+}
+
+function SelectAllViruses( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+      var theForm;
+      var type;
+      var name;
+      var str;
+      var j;
+      var k;
+
+      for ( j = 0; j < document.forms.length; j++ )
+      {
+         theForm = document.forms[ j ];
+         for ( k = 0; k < theForm.length; k++ )
+         {
+            type = theForm.elements[ k ].type;
+
+            if ( type == "checkbox" )
+            {
+               name = theForm.elements[ k ].name;
+               str = name.substr( 0, 8 );
+               if ( str.match("GS_Virus") )
+               {
+                  theForm.elements[ k ].checked = true;
+               }
+            }
+         }
+      }
+
+      return;
+
+
+      // END of Javascript code entered by user.
+
+   }
+}
+
+function UpdateAreasUseStatement( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCMarketingSection.zAction.value = "UpdateAreasUseStatement";
+      document.wMLCMarketingSection.submit( );
+   }
+}
+
+function UpdateMarketingStatement( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      _DisableFormElements( true );
+
+      document.wMLCMarketingSection.zTableRowSelect.value = strEntityKey;
+      document.wMLCMarketingSection.zAction.value = "UpdateMarketingStatement";
+      document.wMLCMarketingSection.submit( );
+   }
+}
+
+function smNextMarketingSection( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCMarketingSection.zAction.value = "smNextMarketingSection";
+      document.wMLCMarketingSection.submit( );
+   }
+}
+
+function smPreviousMarketingSection( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCMarketingSection.zAction.value = "smPreviousMarketingSection";
+      document.wMLCMarketingSection.submit( );
+   }
+}
+
+function smAcceptMarketingSection( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCMarketingSection.zAction.value = "smAcceptMarketingSection";
+      document.wMLCMarketingSection.submit( );
+   }
+}
+
+function smSaveAddNewMarketingSection( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCMarketingSection.zAction.value = "smSaveAddNewMarketingSection";
+      document.wMLCMarketingSection.submit( );
+   }
+}
+
+function smCancelMarketingSection( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCMarketingSection.zAction.value = "smCancelMarketingSection";
+      document.wMLCMarketingSection.submit( );
+   }
+}
+
+function mProductManagement( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+
+      // Javascript code entered by user.
+   var thisLi = document.getElementById( "lmProductManagement" );
+   if ( thisLi.disabled == true )
+      return;
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wMLCMarketingSection.zAction.value = "mProductManagement";
+      document.wMLCMarketingSection.submit( );
+   }
+}
+
+function mSubregistrants( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+
+      // Javascript code entered by user.
+   var thisLi = document.getElementById( "lmSubregistrants" );
+   if ( thisLi.disabled == true )
+      return;
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wMLCMarketingSection.zAction.value = "mSubregistrants";
+      document.wMLCMarketingSection.submit( );
+   }
+}
+
+function mTrackingNotificationCompliance( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+
+      // Javascript code entered by user.
+   var thisLi = document.getElementById( "lmTrackingNotificationCompliance" );
+   if ( thisLi.disabled == true )
+      return;
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wMLCMarketingSection.zAction.value = "mTrackingNotificationCompliance";
+      document.wMLCMarketingSection.submit( );
+   }
+}
+
+function mStateRegistrations( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+
+      // Javascript code entered by user.
+   var thisLi = document.getElementById( "lmStateRegistrations" );
+   if ( thisLi.disabled == true )
+      return;
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wMLCMarketingSection.zAction.value = "mStateRegistrations";
+      document.wMLCMarketingSection.submit( );
+   }
+}
+
+function mMarketingFulfillment( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+
+      // Javascript code entered by user.
+   var thisLi = document.getElementById( "lmMarketingFulfillment" );
+   if ( thisLi.disabled == true )
+      return;
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wMLCMarketingSection.zAction.value = "mMarketingFulfillment";
+      document.wMLCMarketingSection.submit( );
+   }
+}
+
+function mWebDevelopment( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+
+      // Javascript code entered by user.
+   var thisLi = document.getElementById( "lmWebDevelopment" );
+   if ( thisLi.disabled == true )
+      return;
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wMLCMarketingSection.zAction.value = "mWebDevelopment";
+      document.wMLCMarketingSection.submit( );
+   }
+}
+
+function mAdministration( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+
+      // Javascript code entered by user.
+   var thisLi = document.getElementById( "lmAdministration" );
+   if ( thisLi.disabled == true )
+      return;
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wMLCMarketingSection.zAction.value = "mAdministration";
+      document.wMLCMarketingSection.submit( );
+   }
+}
+
+function mLogin( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+
+      // Javascript code entered by user.
+   var thisLi = document.getElementById( "lmLogin" );
+   if ( thisLi.disabled == true )
+      return;
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wMLCMarketingSection.zAction.value = "mLogin";
+      document.wMLCMarketingSection.submit( );
+   }
+}
+
+function mLogout( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+
+      // Javascript code entered by user.
+   var thisLi = document.getElementById( "lmLogout" );
+   if ( thisLi.disabled == true )
+      return;
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wMLCMarketingSection.zAction.value = "_OnUnload";
+      document.wMLCMarketingSection.submit( );
+   }
+}
+
+function mTemplate( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+
+      // Javascript code entered by user.
+   var thisLi = document.getElementById( "lmTemplate" );
+   if ( thisLi.disabled == true )
+      return;
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wMLCMarketingSection.zAction.value = "mTemplate";
+      document.wMLCMarketingSection.submit( );
+   }
+}
+
+</script>
+
+</head>
+
+<body onLoad="_AfterPageLoaded( )" onSubmit="_DisableFormElements( true )" onBeforeUnload="_BeforePageUnload( )">
+
+<div id="wrapper">
+
+<jsp:include page='<%=strBannerName %>' />
+
+<!-- Main Navigation *********************** -->
+<div id="mainnavigation">
+   <ul>
+       <li id="lmProductManagement" name="lmProductManagement"><a href="#" onclick="mProductManagement()">Products</a></li>
+       <li id="lmSubregistrants" name="lmSubregistrants"><a href="#" onclick="mSubregistrants()">Subregistrants</a></li>
+       <li id="lmTrackingNotificationCompliance" name="lmTrackingNotificationCompliance"><a href="#" onclick="mTrackingNotificationCompliance()">Tracking/Notification/Compliance</a></li>
+       <li id="lmStateRegistrations" name="lmStateRegistrations"><a href="#" onclick="mStateRegistrations()">State Registrations</a></li>
+       <li id="lmMarketingFulfillment" name="lmMarketingFulfillment"><a href="#" onclick="mMarketingFulfillment()">Marketing/Fulfillment</a></li>
+       <li id="lmWebDevelopment" name="lmWebDevelopment"><a href="#" onclick="mWebDevelopment()">Web Development</a></li>
+       <li id="lmAdministration" name="lmAdministration"><a href="#" onclick="mAdministration()">Company Profile</a></li>
+       <li id="lmLogin" name="lmLogin"><a href="#" onclick="mLogin()">Login</a></li>
+       <li id="lmLogout" name="lmLogout"><a href="#" onclick="mLogout()">Logout</a></li>
+       <li id="lmTemplate" name="lmTemplate"><a href="#" onclick="mTemplate()">Template</a></li>
+   </ul>
+</div>  <!-- end Navigation Bar -->
+
+<%@include file="./include/topmenuend.inc" %>
+<div id="maincontent">
+
+<div id="leftcontent">
+
+<!-- Side Navigation *********************** -->
+<div id="sidenavigation">
+   <ul>
+<%
+   nRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "NextMarketingSection" );
+   if ( nRC < 0 )
+   {
+%>
+       <li><a href="#"  onclick="smNextMarketingSection()">Save and Go To Next</a></li>
+<%
+   }
+%>
+
+<%
+   nRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "PreviousMarketingSection" );
+   if ( nRC < 0 )
+   {
+%>
+       <li><a href="#"  onclick="smPreviousMarketingSection()">Save and Go To Previous</a></li>
+<%
+   }
+%>
+
+<%
+   nRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "SaveAndReturn" );
+   if ( nRC < 0 )
+   {
+%>
+       <li><a href="#"  onclick="smAcceptMarketingSection()">Save and Return</a></li>
+<%
+   }
+%>
+
+<%
+   nRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "SaveAddNew" );
+   if ( nRC < 0 )
+   {
+%>
+       <li><a href="#"  onclick="smSaveAddNewMarketingSection()">Save and Add New</a></li>
+<%
+   }
+%>
+
+<%
+   nRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "CancelAndReturn" );
+   if ( nRC < 0 )
+   {
+%>
+       <li><a href="#"  onclick="smCancelMarketingSection()">Cancel and Return</a></li>
+<%
+   }
+%>
+
+   </ul>
+</div> <!-- sidenavigation -->
+
+</div>  <!-- leftcontent -->
+
+<div id="content">
+<!--System Maintenance-->
+
+<%@ include file="./include/systemmaintenance.inc" %>
+
+<!-- END System Maintenance-->
+
+
+<form name="wMLCMarketingSection" id="wMLCMarketingSection" method="post">
+   <input name="zAction" id="zAction" type="hidden" value="NOVALUE">
+   <input name="zTableRowSelect" id="zTableRowSelect" type="hidden" value="NOVALUE">
+   <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
+
+<%
+   View mMasLC = null;
+   View mMasProd = null;
+   View mPrimReg = null;
+   View mSubLC = null;
+   View mSubProd = null;
+   View wMLCList = null;
+   View mEPA = null;
+   View wWebXfer = null;
+   String strRadioGroupValue = "";
+   String strComboCurrentValue = "";
+   String strAutoComboBoxExternalValue = "";
+   String strComboCountCurrentValue = "0";
+   String strErrorColor = "";
+   String strErrorMapValue = "";
+   String strTextDisplayValue = "";
+   String strTextURL_Value = "";
+   String strSolicitSave = "";
+   int    ComboCount = 0;
+   int    iTableRowCnt = 0;
+   int    nRC2 = 0;
+   nRC = 0;
+
+   vKZXMLPGO = JspWebUtils.createWebSession( task, "testUserId" );
+   // FindErrorFields Processing
+   mMsgQ = new KZMSGQOO_Object( vKZXMLPGO );
+   mMsgQ.setView( VmlOperation.getMessageObject( task ) );
+   strError = mMsgQ.FindErrorFields( );
+   nPos = strError.indexOf( "\t" );
+   if ( nPos > 0 )
+   {
+      strErrorFlag = strError.substring( 0, 1 );
+      strError = strError.substring( nPos + 1 );
+   }
+
+   if ( nPos >= 0 && StringUtils.equals( strErrorFlag, "Y" ) )
+   {
+      nPos = strError.indexOf( "\t\t" );
+      if ( nPos >= 0 )
+      {
+         strErrorTitle = strError.substring( 0, nPos );
+         strErrorMsg = strError.substring( nPos + 2 );
+      }
+   }
+
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
+
+   //strFocusCtrl = task.GetFocusCtrl("wMLC", "MarketingSection" );
+   //strOpenFile = task.FindOpenFile();
+   //strDateFormat = task.GetDateDefaultContextFormat();
+
+   wWebXA = task.getViewByName( "wWebXfer" );
+   if ( VmlOperation.isValid( wWebXA ) )
+   {
+      nRC2 = wWebXA.cursor( "Root" ).checkExistenceOfEntity( );
+      if ( nRC2 >= 0 )
+      {
+         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         if ( strKeyRole == null )
+            strKeyRole = "";
+
+         task.log().debug( "Root.KeyRole: " + strKeyRole );
+      }
+   }
+%>
+
+   <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
+   <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
+   <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
+   <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
+   <input name="zPopupWindowSZX" id="zPopupWindowSZX" type="hidden" value="<%=strPopupWindowSZX%>">
+   <input name="zPopupWindowSZY" id="zPopupWindowSZY" type="hidden" value="<%=strPopupWindowSZY%>">
+   <input name="zErrorFlag" id="zErrorFlag" type="hidden" value="<%=strErrorFlag%>">
+   <input name="zTimeout" id="zTimeout" type="hidden" value="<%=nTimeout%>">
+   <input name="zSolicitSave" id="zSolicitSave" type="hidden" value="<%=strSolicitSave%>">
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:34px;width:100px;"></div>
+
+<div >  <!-- Beginning of a new line -->
+<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
+<% /* MarketingSection:GroupBox */ %>
+<div id="MarketingSection" name="MarketingSection" style="float:left;width:750px;"  class="withborder">
+
+<table cols=2 style="width:750px;"  class="grouptable">
+
+<tr>
+<td  valign="top" style="width:140px;">
+<% /* MarketingTitle::Text */ %>
+
+<span  id="MarketingTitle:" name="MarketingTitle:" style="">Marketing Title:</span>
+
+</td>
+<td  valign="top"  class="text12" style="width:560px;">
+<% /* MarketingTitle:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "MarketingTitle", strErrorTitle );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      strErrorColor = "color: red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log().debug( "Invalid View: " + "MarketingTitle" );
+      else
+      {
+         nRC = mMasLC.cursor( "M_MarketingSection" ).checkExistenceOfEntity();
+         if ( nRC >= 0 )
+         {
+            strErrorMapValue = mMasLC.cursor( "M_MarketingSection" ).getStringFromAttribute( "Title", "" );
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log().debug( "M_MarketingSection.Title: " + strErrorMapValue );
+         }
+         else
+            task.log().debug( "Entity does not exist: " + "mMasLC.M_MarketingSection" );
+      }
+   }
+%>
+
+<input class="text12" name="MarketingTitle" id="MarketingTitle" style="width:560px;<%=strErrorColor%>" tabindex=-1  type="text" value="<%=strErrorMapValue%>" >
+
+</td>
+</tr>
+<tr>
+<td  valign="top" style="width:140px;">
+<% /* Subtitle::Text */ %>
+
+<span  id="Subtitle:" name="Subtitle:" style="">Subtitle:</span>
+
+</td>
+<td  valign="top"  class="text12" style="width:560px;">
+<% /* Subtitle:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "Subtitle", strErrorTitle );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      strErrorColor = "color: red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log().debug( "Invalid View: " + "Subtitle" );
+      else
+      {
+         nRC = mMasLC.cursor( "M_MarketingSection" ).checkExistenceOfEntity();
+         if ( nRC >= 0 )
+         {
+            strErrorMapValue = mMasLC.cursor( "M_MarketingSection" ).getStringFromAttribute( "Subtitle", "" );
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log().debug( "M_MarketingSection.Subtitle: " + strErrorMapValue );
+         }
+         else
+            task.log().debug( "Entity does not exist: " + "mMasLC.M_MarketingSection" );
+      }
+   }
+%>
+
+<input class="text12" name="Subtitle" id="Subtitle" style="width:560px;<%=strErrorColor%>" tabindex=-1  type="text" value="<%=strErrorMapValue%>" >
+
+</td>
+</tr>
+<tr>
+<td  valign="top" style="width:140px;">
+<% /* NoteToReviewer::Text */ %>
+
+<span  id="NoteToReviewer:" name="NoteToReviewer:" style="">Note to Reviewer:</span>
+
+</td>
+<td  valign="top"  class="text12" style="width:560px;">
+<% /* NoteToReviewer:MLEdit */ %>
+<%
+   // MLEdit: NoteToReviewer
+   strErrorMapValue = "";
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) == false )
+      task.log().debug( "Invalid View: " + "NoteToReviewer" );
+   else
+   {
+      nRC = mMasLC.cursor( "M_MarketingSection" ).checkExistenceOfEntity();
+      if ( nRC >= 0 )
+         strErrorMapValue = mMasLC.cursor( "M_MarketingSection" ).getStringFromAttribute( "ReviewerNote", "" );
+         if ( strErrorMapValue == null )
+            strErrorMapValue = "";
+   }
+%>
+
+<textarea  id="NoteToReviewer" name="NoteToReviewer" style="width:560px;height:48px;border:'4px solid';border-style:'groove';" tabindex=-1  wrap="wrap"><%=strErrorMapValue%></textarea>
+
+</td>
+</tr>
+</table>
+
+</div>  <!-- MarketingSection --> 
+
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:16px;width:100px;"></div>
+
+<div >  <!-- Beginning of a new line -->
+<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox2:GroupBox */ %>
+<div id="GroupBox2" name="GroupBox2" style="float:left;width:702px;" >
+
+<table cols=0 style="width:702px;"  class="grouptable">
+
+<tr>
+<td  valign="top"  class="groupbox" style="width:320px;">
+<% /* MarketingStatements:Text */ %>
+
+<span class="groupbox"  id="MarketingStatements" name="MarketingStatements" style="width:228px;height:16px;" tabindex=-1 >Marketing:  Statements</span>
+
+</td>
+<td  valign="top" style="width:226px;">
+<% /* GroupBox5:GroupBox */ %>
+<div id="GroupBox5" name="GroupBox5" style="width:94px;height:24px;float:left;">
+</div>  <!-- GroupBox5 --> 
+</td>
+<td  valign="top"  class="formStylebutton" style="width:78px;">
+<% /* New:PushBtn */ %>
+<button type="button" class="formStylebutton"  id="New" name="New" value="New" onclick="NewMarketingStatement( )"  style="width:78px;height:26px;" tabindex=-1 >New</button>
+
+</td>
+</tr>
+</table>
+
+</div>  <!-- GroupBox2 --> 
+
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:30px;width:100px;"></div>
+
+<div >  <!-- Beginning of a new line -->
+<div style="height:1px;width:28px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox3:GroupBox */ %>
+
+<div id="GroupBox3" name="GroupBox3" style="width:720px;height:240px;float:left;">  <!-- GroupBox3 --> 
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:16px;width:100px;"></div>
+
+<div >  <!-- Beginning of a new line -->
+<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GridMarketing:Grid */ %>
+<div class="tableScroll"  style="height:220px;">
+
+<table name="GridMarketing" id="GridMarketing" cellspacing=0  cols=5  >
+
+<thead><tr>
+
+   <th>Statement Text</th>
+   <th>Update</th>
+   <th>Delete</th>
+   <th>Move Up</th>
+   <th>Move Down</th>
+
+</tr></thead>
+
+<tbody height="170px;">
+
+<%
+   iTableRowCnt = 0;
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) )
+   {
+      long   lEntityKey;
+      String strEntityKey;
+      String strButtonName;
+      String strOdd;
+      String strTag;
+      String strGridEditMarketing;
+      String strBMBUpdateMarketingStatement;
+      String strBMBDeleteMarketingStatement;
+      String strBMBMoveMarketingStatementUp;
+      String strBMBMoveMarketingStatementDown;
+      
+      View vGridMarketing;
+      vGridMarketing = mMasLC.newView();
+      nRC2 = vGridMarketing.cursor( "M_MarketingStatement" ).setFirst(  );
+      while ( nRC2 >= 0 )
+      {
+         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
+         iTableRowCnt++;
+
+         lEntityKey = vGridMarketing.cursor( "M_MarketingStatement" ).getEntityKey();
+         strEntityKey = Long.toString( lEntityKey );
+         strButtonName = "SelectButton" + strEntityKey;
+
+         strGridEditMarketing = "";
+         nRC = vGridMarketing.cursor( "M_MarketingStatement" ).checkExistenceOfEntity();
+         if ( nRC >= 0 )
+            strGridEditMarketing = vGridMarketing.cursor( "M_MarketingStatement" ).getStringFromAttribute( "Text", "" );
+
+            if ( strGridEditMarketing == null )
+               strGridEditMarketing = "";
+
+         if ( StringUtils.isBlank( strGridEditMarketing ) )
+            strGridEditMarketing = "&nbsp";
+
+%>
+
+<tr<%=strOdd%>>
+
+   <td><a href="#" onclick="UpdateMarketingStatement( this.id )" id="GridEditMarketing::<%=strEntityKey%>"><%=strGridEditMarketing%></a>
+   <td nowrap><a href="#"  name="BMBUpdateMarketingStatement" onclick="UpdateMarketingStatement( this.id )" id="BMBUpdateMarketingStatement::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
+   <td nowrap><a href="#"  name="BMBDeleteMarketingStatement" onclick="DeleteMarketingSection( this.id )" id="BMBDeleteMarketingStatement::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
+   <td nowrap><a href="#"  name="BMBMoveMarketingStatementUp" onclick="MoveMarketingStatementUp( this.id )" id="BMBMoveMarketingStatementUp::<%=strEntityKey%>"><img src="./images/ePammsUp.jpg" alt="Move Up"></a></td>
+   <td nowrap><a href="#"  name="BMBMoveMarketingStatementDown" onclick="MoveMarketingStatementDown( this.id )" id="BMBMoveMarketingStatementDown::<%=strEntityKey%>"><img src="./images/ePammsDown.jpg" alt="Move Down"></a></td>
+
+</tr>
+
+<%
+         nRC2 = vGridMarketing.cursor( "M_MarketingStatement" ).setNextContinue( );
+      }
+      vGridMarketing.drop();
+   }
+%>
+</tbody>
+</table>
+
+</div>
+
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  GroupBox3 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:42px;width:100px;"></div>
+
+<div >  <!-- Beginning of a new line -->
+<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
+<% /* TabACS:Tab */ %>
+
+<div id="TabACS" class="tab-pane withborder" style="width:730px;"> <!-- Beginning of Tab Control TabACS -->
+<script type="text/javascript">TabACS = new WebFXTabPane( document.getElementById( "TabACS" ) );</script>
+
+<div id="TabAreasUse" class="tab-page " > <!-- Tab item TabAreasUse -->
+<h2 class="tab"><span>Areas Of Use</span></h2>
+<script type="text/javascript">TabACS.addTabPage( document.getElementById( "TabAreasUse" ) );</script>
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:6px;width:100px;"></div>
+
+<div >  <!-- Beginning of a new line -->
+<div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
+<% /* MarketingAreasUseStatements:GroupBox */ %>
+
+<div id="MarketingAreasUseStatements" name="MarketingAreasUseStatements" style="width:710px;height:308px;float:left;">  <!-- MarketingAreasUseStatements --> 
+
+<div  id="MarketingAreasUseStatements" name="MarketingAreasUseStatements" >Marketing:  Areas of Use Statements</div>
+
+ <!-- This is added as a line spacer -->
+<div style="height:12px;width:100px;"></div>
+
+<div >  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+<% /* HTSelectAllAreas:Text */ %>
+
+<a href="javascript:SelectAllAreas( );" style="width:80px;height:16px;" tabindex=-1 >Select All</a>
+
+<% /* HTClearSelectedAreas:Text */ %>
+
+<a href="javascript:ClearSelectedAreasUse( );" style="width:100px;height:16px;" tabindex=-1 >Clear Selected</a>
+
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:6px;width:100px;"></div>
+
+<div >  <!-- Beginning of a new line -->
+<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
+<% /* AreasUse:Grid */ %>
+<div class="tableScroll"  style="height:262px;">
+
+<table name="AreasUse" id="AreasUse" cellspacing=0  cols=2  >
+
+<thead><tr>
+
+   <th>Select</th>
+   <th>Area</th>
+
+</tr></thead>
+
+<tbody height="212px;">
+
+<%
+   iTableRowCnt = 0;
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) )
+   {
+      long   lEntityKey;
+      String strEntityKey;
+      String strButtonName;
+      String strOdd;
+      String strTag;
+      String strGS_AreaUse;
+      String strGS_AreaUseValue;
+      String strGridEditAreaUse;
+      
+      View vAreasUse;
+      vAreasUse = mMasLC.newView();
+      nRC2 = vAreasUse.cursor( "MarketingAreaUse" ).setFirst( "M_MarketingSection" );
+      while ( nRC2 >= 0 )
+      {
+         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
+         iTableRowCnt++;
+
+         lEntityKey = vAreasUse.cursor( "MarketingAreaUse" ).getEntityKey();
+         strEntityKey = Long.toString( lEntityKey );
+         strButtonName = "SelectButton" + strEntityKey;
+
+         strGS_AreaUse = "";
+         nRC = vAreasUse.cursor( "M_MarketingUsage" ).checkExistenceOfEntity();
+         if ( nRC >= 0 )
+            strGS_AreaUse = vAreasUse.cursor( "M_MarketingUsage" ).getStringFromAttribute( "wSelected", "" );
+
+            if ( strGS_AreaUse == null )
+               strGS_AreaUse = "";
+
+         if ( StringUtils.equals( strGS_AreaUse, "Y" ) )
+         {
+            strGS_AreaUseValue = "GS_AreaUse" + strEntityKey;
+            strGS_AreaUse = "<input name='" + strGS_AreaUseValue + "' id='" + strGS_AreaUseValue + "' value='Y' type='checkbox'  CHECKED > ";
+         }
+         else
+         {
+            strGS_AreaUseValue = "GS_AreaUse" + strEntityKey;
+            strGS_AreaUse = "<input name='" + strGS_AreaUseValue + "' id='" + strGS_AreaUseValue + "' value='Y' type='checkbox' > ";
+         }
+
+         strGridEditAreaUse = "";
+         nRC = vAreasUse.cursor( "M_MarketingUsage" ).checkExistenceOfEntity();
+         if ( nRC >= 0 )
+            strGridEditAreaUse = vAreasUse.cursor( "M_MarketingUsage" ).getStringFromAttribute( "Name", "" );
+
+            if ( strGridEditAreaUse == null )
+               strGridEditAreaUse = "";
+
+         if ( StringUtils.isBlank( strGridEditAreaUse ) )
+            strGridEditAreaUse = "&nbsp";
+
+%>
+
+<tr<%=strOdd%>>
+
+   <td nowrap><%=strGS_AreaUse%></td>
+   <td><%=strGridEditAreaUse%></td>
+
+</tr>
+
+<%
+         nRC2 = vAreasUse.cursor( "MarketingAreaUse" ).setNextContinue( );
+      }
+      vAreasUse.drop();
+   }
+%>
+</tbody>
+</table>
+
+</div>
+
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  MarketingAreasUseStatements --> 
+</div>  <!-- End of a new line -->
+
+</div> <!-- End of Tab item TabAreasUse -->
+
+<div id="TabTypesSurfaces" class="tab-page " > <!-- Tab item TabTypesSurfaces -->
+<h2 class="tab"><span>Types of Surfaces</span></h2>
+<script type="text/javascript">TabACS.addTabPage( document.getElementById( "TabTypesSurfaces" ) );</script>
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:6px;width:100px;"></div>
+
+<div >  <!-- Beginning of a new line -->
+<div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
+<% /* MarketingTypesSurfaces:GroupBox */ %>
+
+<div id="MarketingTypesSurfaces" name="MarketingTypesSurfaces" style="width:710px;height:308px;float:left;">  <!-- MarketingTypesSurfaces --> 
+
+<div  id="MarketingTypesSurfaces" name="MarketingTypesSurfaces" >Marketing:  Types of Surfaces Statements</div>
+
+ <!-- This is added as a line spacer -->
+<div style="height:12px;width:100px;"></div>
+
+<div >  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+<% /* HTSelectAllSurfaces:Text */ %>
+
+<a href="javascript:SelectAllSurfaces( );" style="width:80px;height:16px;" tabindex=-1 >Select All</a>
+
+<% /* HTClearSelectedSurfaces:Text */ %>
+
+<a href="javascript:ClearSelectedSurfaces( );" style="width:100px;height:16px;" tabindex=-1 >Clear Selected</a>
+
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:6px;width:100px;"></div>
+
+<div >  <!-- Beginning of a new line -->
+<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
+<% /* Surfaces:Grid */ %>
+<div class="tableScroll"  style="height:262px;">
+
+<table name="Surfaces" id="Surfaces" cellspacing=0  cols=2  >
+
+<thead><tr>
+
+   <th>Select</th>
+   <th>Surface</th>
+
+</tr></thead>
+
+<tbody height="212px;">
+
+<%
+   iTableRowCnt = 0;
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) )
+   {
+      long   lEntityKey;
+      String strEntityKey;
+      String strButtonName;
+      String strOdd;
+      String strTag;
+      String strGS_Surface;
+      String strGS_SurfaceValue;
+      String strGridEditSurface;
+      
+      View vSurfaces;
+      vSurfaces = mMasLC.newView();
+      nRC2 = vSurfaces.cursor( "MarketingSurface" ).setFirst( "M_MarketingSection" );
+      while ( nRC2 >= 0 )
+      {
+         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
+         iTableRowCnt++;
+
+         lEntityKey = vSurfaces.cursor( "MarketingSurface" ).getEntityKey();
+         strEntityKey = Long.toString( lEntityKey );
+         strButtonName = "SelectButton" + strEntityKey;
+
+         strGS_Surface = "";
+         nRC = vSurfaces.cursor( "M_MarketingUsage" ).checkExistenceOfEntity();
+         if ( nRC >= 0 )
+            strGS_Surface = vSurfaces.cursor( "M_MarketingUsage" ).getStringFromAttribute( "wSelected", "" );
+
+            if ( strGS_Surface == null )
+               strGS_Surface = "";
+
+         if ( StringUtils.equals( strGS_Surface, "Y" ) )
+         {
+            strGS_SurfaceValue = "GS_Surface" + strEntityKey;
+            strGS_Surface = "<input name='" + strGS_SurfaceValue + "' id='" + strGS_SurfaceValue + "' value='Y' type='checkbox'  CHECKED > ";
+         }
+         else
+         {
+            strGS_SurfaceValue = "GS_Surface" + strEntityKey;
+            strGS_Surface = "<input name='" + strGS_SurfaceValue + "' id='" + strGS_SurfaceValue + "' value='Y' type='checkbox' > ";
+         }
+
+         strGridEditSurface = "";
+         nRC = vSurfaces.cursor( "M_MarketingUsage" ).checkExistenceOfEntity();
+         if ( nRC >= 0 )
+            strGridEditSurface = vSurfaces.cursor( "M_MarketingUsage" ).getStringFromAttribute( "Name", "" );
+
+            if ( strGridEditSurface == null )
+               strGridEditSurface = "";
+
+         if ( StringUtils.isBlank( strGridEditSurface ) )
+            strGridEditSurface = "&nbsp";
+
+%>
+
+<tr<%=strOdd%>>
+
+   <td nowrap><%=strGS_Surface%></td>
+   <td><%=strGridEditSurface%></td>
+
+</tr>
+
+<%
+         nRC2 = vSurfaces.cursor( "MarketingSurface" ).setNextContinue( );
+      }
+      vSurfaces.drop();
+   }
+%>
+</tbody>
+</table>
+
+</div>
+
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  MarketingTypesSurfaces --> 
+</div>  <!-- End of a new line -->
+
+</div> <!-- End of Tab item TabTypesSurfaces -->
+
+<div id="TabApplicationTypes" class="tab-page " > <!-- Tab item TabApplicationTypes -->
+<h2 class="tab"><span>Application Types</span></h2>
+<script type="text/javascript">TabACS.addTabPage( document.getElementById( "TabApplicationTypes" ) );</script>
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:6px;width:100px;"></div>
+
+<div >  <!-- Beginning of a new line -->
+<div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
+<% /* MarketingAppTypesStatements:GroupBox */ %>
+
+<div id="MarketingAppTypesStatements" name="MarketingAppTypesStatements" style="width:710px;height:308px;float:left;">  <!-- MarketingAppTypesStatements --> 
+
+<div  id="MarketingAppTypesStatements" name="MarketingAppTypesStatements" >Marketing:  Application Types Statements</div>
+
+ <!-- This is added as a line spacer -->
+<div style="height:12px;width:100px;"></div>
+
+<div >  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+<% /* HTSelectAllAppTypes:Text */ %>
+
+<a href="javascript:SelectAllAppTypes( );" style="width:80px;height:16px;" tabindex=-1 >Select All</a>
+
+<% /* HTClearSelectedAppTypes:Text */ %>
+
+<a href="javascript:ClearSelectedAppTypes( );" style="width:100px;height:16px;" tabindex=-1 >Clear Selected</a>
+
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:6px;width:100px;"></div>
+
+<div >  <!-- Beginning of a new line -->
+<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
+<% /* AppTypes:Grid */ %>
+<div class="tableScroll"  style="height:262px;">
+
+<table name="AppTypes" id="AppTypes" cellspacing=0  cols=2  >
+
+<thead><tr>
+
+   <th>Select</th>
+   <th>Application Type</th>
+
+</tr></thead>
+
+<tbody height="212px;">
+
+<%
+   iTableRowCnt = 0;
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) )
+   {
+      long   lEntityKey;
+      String strEntityKey;
+      String strButtonName;
+      String strOdd;
+      String strTag;
+      String strGS_AppType;
+      String strGS_AppTypeValue;
+      String strGridEditAppType;
+      
+      View vAppTypes;
+      vAppTypes = mMasLC.newView();
+      nRC2 = vAppTypes.cursor( "MarketingAppType" ).setFirst( "M_MarketingSection" );
+      while ( nRC2 >= 0 )
+      {
+         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
+         iTableRowCnt++;
+
+         lEntityKey = vAppTypes.cursor( "MarketingAppType" ).getEntityKey();
+         strEntityKey = Long.toString( lEntityKey );
+         strButtonName = "SelectButton" + strEntityKey;
+
+         strGS_AppType = "";
+         nRC = vAppTypes.cursor( "M_MarketingUsage" ).checkExistenceOfEntity();
+         if ( nRC >= 0 )
+            strGS_AppType = vAppTypes.cursor( "M_MarketingUsage" ).getStringFromAttribute( "wSelected", "" );
+
+            if ( strGS_AppType == null )
+               strGS_AppType = "";
+
+         if ( StringUtils.equals( strGS_AppType, "Y" ) )
+         {
+            strGS_AppTypeValue = "GS_AppType" + strEntityKey;
+            strGS_AppType = "<input name='" + strGS_AppTypeValue + "' id='" + strGS_AppTypeValue + "' value='Y' type='checkbox'  CHECKED > ";
+         }
+         else
+         {
+            strGS_AppTypeValue = "GS_AppType" + strEntityKey;
+            strGS_AppType = "<input name='" + strGS_AppTypeValue + "' id='" + strGS_AppTypeValue + "' value='Y' type='checkbox' > ";
+         }
+
+         strGridEditAppType = "";
+         nRC = vAppTypes.cursor( "M_MarketingUsage" ).checkExistenceOfEntity();
+         if ( nRC >= 0 )
+            strGridEditAppType = vAppTypes.cursor( "M_MarketingUsage" ).getStringFromAttribute( "Name", "" );
+
+            if ( strGridEditAppType == null )
+               strGridEditAppType = "";
+
+         if ( StringUtils.isBlank( strGridEditAppType ) )
+            strGridEditAppType = "&nbsp";
+
+%>
+
+<tr<%=strOdd%>>
+
+   <td nowrap><%=strGS_AppType%></td>
+   <td><%=strGridEditAppType%></td>
+
+</tr>
+
+<%
+         nRC2 = vAppTypes.cursor( "MarketingAppType" ).setNextContinue( );
+      }
+      vAppTypes.drop();
+   }
+%>
+</tbody>
+</table>
+
+</div>
+
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  MarketingAppTypesStatements --> 
+</div>  <!-- End of a new line -->
+
+</div> <!-- End of Tab item TabApplicationTypes -->
+
+<div id="TabBacteria" class="tab-page " > <!-- Tab item TabBacteria -->
+<h2 class="tab"><span>Bacteria</span></h2>
+<script type="text/javascript">TabACS.addTabPage( document.getElementById( "TabBacteria" ) );</script>
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:6px;width:100px;"></div>
+
+<div >  <!-- Beginning of a new line -->
+<div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
+<% /* MarketingBacteriaStatements:GroupBox */ %>
+
+<div id="MarketingBacteriaStatements" name="MarketingBacteriaStatements" style="width:710px;height:308px;float:left;">  <!-- MarketingBacteriaStatements --> 
+
+<div  id="MarketingBacteriaStatements" name="MarketingBacteriaStatements" >Marketing:  Bacteria Statements</div>
+
+ <!-- This is added as a line spacer -->
+<div style="height:12px;width:100px;"></div>
+
+<div >  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+<% /* HTSelectAllBacteria:Text */ %>
+
+<a href="javascript:SelectAllBacteria( );" style="width:80px;height:16px;" tabindex=-1 >Select All</a>
+
+<% /* HTClearSelectedBacteria:Text */ %>
+
+<a href="javascript:ClearSelectedBacteria( );" style="width:100px;height:16px;" tabindex=-1 >Clear Selected</a>
+
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:6px;width:100px;"></div>
+
+<div >  <!-- Beginning of a new line -->
+<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
+<% /* Bacteria:Grid */ %>
+<div class="tableScroll"  style="height:262px;">
+
+<table name="Bacteria" id="Bacteria" cellspacing=0  cols=2  >
+
+<thead><tr>
+
+   <th>Select</th>
+   <th>Bacteria</th>
+
+</tr></thead>
+
+<tbody height="212px;">
+
+<%
+   iTableRowCnt = 0;
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) )
+   {
+      long   lEntityKey;
+      String strEntityKey;
+      String strButtonName;
+      String strOdd;
+      String strTag;
+      String strGS_Bacteria;
+      String strGS_BacteriaValue;
+      String strGridEditBacteria;
+      
+      View vBacteria;
+      vBacteria = mMasLC.newView();
+      nRC2 = vBacteria.cursor( "MarketingBacteria" ).setFirst( "M_MarketingSection" );
+      while ( nRC2 >= 0 )
+      {
+         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
+         iTableRowCnt++;
+
+         lEntityKey = vBacteria.cursor( "MarketingBacteria" ).getEntityKey();
+         strEntityKey = Long.toString( lEntityKey );
+         strButtonName = "SelectButton" + strEntityKey;
+
+         strGS_Bacteria = "";
+         nRC = vBacteria.cursor( "M_MarketingUsage" ).checkExistenceOfEntity();
+         if ( nRC >= 0 )
+            strGS_Bacteria = vBacteria.cursor( "M_MarketingUsage" ).getStringFromAttribute( "wSelected", "" );
+
+            if ( strGS_Bacteria == null )
+               strGS_Bacteria = "";
+
+         if ( StringUtils.equals( strGS_Bacteria, "Y" ) )
+         {
+            strGS_BacteriaValue = "GS_Bacteria" + strEntityKey;
+            strGS_Bacteria = "<input name='" + strGS_BacteriaValue + "' id='" + strGS_BacteriaValue + "' value='Y' type='checkbox'  CHECKED > ";
+         }
+         else
+         {
+            strGS_BacteriaValue = "GS_Bacteria" + strEntityKey;
+            strGS_Bacteria = "<input name='" + strGS_BacteriaValue + "' id='" + strGS_BacteriaValue + "' value='Y' type='checkbox' > ";
+         }
+
+         strGridEditBacteria = "";
+         nRC = vBacteria.cursor( "M_MarketingUsage" ).checkExistenceOfEntity();
+         if ( nRC >= 0 )
+            strGridEditBacteria = vBacteria.cursor( "M_MarketingUsage" ).getStringFromAttribute( "Name", "" );
+
+            if ( strGridEditBacteria == null )
+               strGridEditBacteria = "";
+
+         if ( StringUtils.isBlank( strGridEditBacteria ) )
+            strGridEditBacteria = "&nbsp";
+
+%>
+
+<tr<%=strOdd%>>
+
+   <td nowrap><%=strGS_Bacteria%></td>
+   <td><%=strGridEditBacteria%></td>
+
+</tr>
+
+<%
+         nRC2 = vBacteria.cursor( "MarketingBacteria" ).setNextContinue( );
+      }
+      vBacteria.drop();
+   }
+%>
+</tbody>
+</table>
+
+</div>
+
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  MarketingBacteriaStatements --> 
+</div>  <!-- End of a new line -->
+
+</div> <!-- End of Tab item TabBacteria -->
+
+<div id="TabFungi" class="tab-page " > <!-- Tab item TabFungi -->
+<h2 class="tab"><span>Fungi</span></h2>
+<script type="text/javascript">TabACS.addTabPage( document.getElementById( "TabFungi" ) );</script>
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:6px;width:100px;"></div>
+
+<div >  <!-- Beginning of a new line -->
+<div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
+<% /* MarketingFungiStatements:GroupBox */ %>
+
+<div id="MarketingFungiStatements" name="MarketingFungiStatements" style="width:710px;height:308px;float:left;">  <!-- MarketingFungiStatements --> 
+
+<div  id="MarketingFungiStatements" name="MarketingFungiStatements" >Marketing:  Fungi Statements</div>
+
+ <!-- This is added as a line spacer -->
+<div style="height:12px;width:100px;"></div>
+
+<div >  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+<% /* HTSelectAllFungi:Text */ %>
+
+<a href="javascript:SelectAllFungi( );" style="width:80px;height:16px;" tabindex=-1 >Select All</a>
+
+<% /* HTClearSelectedFungi:Text */ %>
+
+<a href="javascript:ClearSelectedFungi( );" style="width:100px;height:16px;" tabindex=-1 >Clear Selected</a>
+
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:6px;width:100px;"></div>
+
+<div >  <!-- Beginning of a new line -->
+<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
+<% /* Fungi:Grid */ %>
+<div class="tableScroll"  style="height:262px;">
+
+<table name="Fungi" id="Fungi" cellspacing=0  cols=2  >
+
+<thead><tr>
+
+   <th>Select</th>
+   <th>Fungi</th>
+
+</tr></thead>
+
+<tbody height="212px;">
+
+<%
+   iTableRowCnt = 0;
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) )
+   {
+      long   lEntityKey;
+      String strEntityKey;
+      String strButtonName;
+      String strOdd;
+      String strTag;
+      String strGS_Fungi;
+      String strGS_FungiValue;
+      String strGridEditFungi;
+      
+      View vFungi;
+      vFungi = mMasLC.newView();
+      nRC2 = vFungi.cursor( "MarketingFungi" ).setFirst( "M_MarketingSection" );
+      while ( nRC2 >= 0 )
+      {
+         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
+         iTableRowCnt++;
+
+         lEntityKey = vFungi.cursor( "MarketingFungi" ).getEntityKey();
+         strEntityKey = Long.toString( lEntityKey );
+         strButtonName = "SelectButton" + strEntityKey;
+
+         strGS_Fungi = "";
+         nRC = vFungi.cursor( "M_MarketingUsage" ).checkExistenceOfEntity();
+         if ( nRC >= 0 )
+            strGS_Fungi = vFungi.cursor( "M_MarketingUsage" ).getStringFromAttribute( "wSelected", "" );
+
+            if ( strGS_Fungi == null )
+               strGS_Fungi = "";
+
+         if ( StringUtils.equals( strGS_Fungi, "Y" ) )
+         {
+            strGS_FungiValue = "GS_Fungi" + strEntityKey;
+            strGS_Fungi = "<input name='" + strGS_FungiValue + "' id='" + strGS_FungiValue + "' value='Y' type='checkbox'  CHECKED > ";
+         }
+         else
+         {
+            strGS_FungiValue = "GS_Fungi" + strEntityKey;
+            strGS_Fungi = "<input name='" + strGS_FungiValue + "' id='" + strGS_FungiValue + "' value='Y' type='checkbox' > ";
+         }
+
+         strGridEditFungi = "";
+         nRC = vFungi.cursor( "M_MarketingUsage" ).checkExistenceOfEntity();
+         if ( nRC >= 0 )
+            strGridEditFungi = vFungi.cursor( "M_MarketingUsage" ).getStringFromAttribute( "Name", "" );
+
+            if ( strGridEditFungi == null )
+               strGridEditFungi = "";
+
+         if ( StringUtils.isBlank( strGridEditFungi ) )
+            strGridEditFungi = "&nbsp";
+
+%>
+
+<tr<%=strOdd%>>
+
+   <td nowrap><%=strGS_Fungi%></td>
+   <td><%=strGridEditFungi%></td>
+
+</tr>
+
+<%
+         nRC2 = vFungi.cursor( "MarketingFungi" ).setNextContinue( );
+      }
+      vFungi.drop();
+   }
+%>
+</tbody>
+</table>
+
+</div>
+
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  MarketingFungiStatements --> 
+</div>  <!-- End of a new line -->
+
+</div> <!-- End of Tab item TabFungi -->
+
+<div id="TabViruses" class="tab-page " > <!-- Tab item TabViruses -->
+<h2 class="tab"><span>Viruses</span></h2>
+<script type="text/javascript">TabACS.addTabPage( document.getElementById( "TabViruses" ) );</script>
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:6px;width:100px;"></div>
+
+<div >  <!-- Beginning of a new line -->
+<div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
+<% /* MarketingVirusesStatements:GroupBox */ %>
+
+<div id="MarketingVirusesStatements" name="MarketingVirusesStatements" style="width:710px;height:308px;float:left;">  <!-- MarketingVirusesStatements --> 
+
+<div  id="MarketingVirusesStatements" name="MarketingVirusesStatements" >Marketing:  Viruses Statements</div>
+
+ <!-- This is added as a line spacer -->
+<div style="height:12px;width:100px;"></div>
+
+<div >  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+<% /* HTSelectAllViruses:Text */ %>
+
+<a href="javascript:SelectAllViruses( );" style="width:80px;height:16px;" tabindex=-1 >Select All</a>
+
+<% /* HTClearSelectedViruses:Text */ %>
+
+<a href="javascript:ClearSelectedViruses( );" style="width:100px;height:16px;" tabindex=-1 >Clear Selected</a>
+
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:6px;width:100px;"></div>
+
+<div >  <!-- Beginning of a new line -->
+<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
+<% /* Viruses:Grid */ %>
+<div class="tableScroll"  style="height:262px;">
+
+<table name="Viruses" id="Viruses" cellspacing=0  cols=2  >
+
+<thead><tr>
+
+   <th>Select</th>
+   <th>Virus</th>
+
+</tr></thead>
+
+<tbody height="212px;">
+
+<%
+   iTableRowCnt = 0;
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) )
+   {
+      long   lEntityKey;
+      String strEntityKey;
+      String strButtonName;
+      String strOdd;
+      String strTag;
+      String strGS_Virus;
+      String strGS_VirusValue;
+      String strGridEditVirus;
+      
+      View vViruses;
+      vViruses = mMasLC.newView();
+      nRC2 = vViruses.cursor( "MarketingViruses" ).setFirst( "M_MarketingSection" );
+      while ( nRC2 >= 0 )
+      {
+         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
+         iTableRowCnt++;
+
+         lEntityKey = vViruses.cursor( "MarketingViruses" ).getEntityKey();
+         strEntityKey = Long.toString( lEntityKey );
+         strButtonName = "SelectButton" + strEntityKey;
+
+         strGS_Virus = "";
+         nRC = vViruses.cursor( "M_MarketingUsage" ).checkExistenceOfEntity();
+         if ( nRC >= 0 )
+            strGS_Virus = vViruses.cursor( "M_MarketingUsage" ).getStringFromAttribute( "wSelected", "" );
+
+            if ( strGS_Virus == null )
+               strGS_Virus = "";
+
+         if ( StringUtils.equals( strGS_Virus, "Y" ) )
+         {
+            strGS_VirusValue = "GS_Virus" + strEntityKey;
+            strGS_Virus = "<input name='" + strGS_VirusValue + "' id='" + strGS_VirusValue + "' value='Y' type='checkbox'  CHECKED > ";
+         }
+         else
+         {
+            strGS_VirusValue = "GS_Virus" + strEntityKey;
+            strGS_Virus = "<input name='" + strGS_VirusValue + "' id='" + strGS_VirusValue + "' value='Y' type='checkbox' > ";
+         }
+
+         strGridEditVirus = "";
+         nRC = vViruses.cursor( "M_MarketingUsage" ).checkExistenceOfEntity();
+         if ( nRC >= 0 )
+            strGridEditVirus = vViruses.cursor( "M_MarketingUsage" ).getStringFromAttribute( "Name", "" );
+
+            if ( strGridEditVirus == null )
+               strGridEditVirus = "";
+
+         if ( StringUtils.isBlank( strGridEditVirus ) )
+            strGridEditVirus = "&nbsp";
+
+%>
+
+<tr<%=strOdd%>>
+
+   <td nowrap><%=strGS_Virus%></td>
+   <td><%=strGridEditVirus%></td>
+
+</tr>
+
+<%
+         nRC2 = vViruses.cursor( "MarketingViruses" ).setNextContinue( );
+      }
+      vViruses.drop();
+   }
+%>
+</tbody>
+</table>
+
+</div>
+
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  MarketingVirusesStatements --> 
+</div>  <!-- End of a new line -->
+
+</div> <!-- End of Tab item TabViruses -->
+
+</div> <!-- End of Tab Control TabACS -->
+
+<script type="text/javascript">setupAllTabs();</script>
+
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:10px;width:100px;"></div>
+
+<div >  <!-- Beginning of a new line -->
+<div style="height:1px;width:32px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox1:GroupBox */ %>
+
+<div id="GroupBox1" name="GroupBox1" style="width:40px;height:24px;float:left;">  <!-- GroupBox1 --> 
+
+
+</div>  <!--  GroupBox1 --> 
+</div>  <!-- End of a new line -->
+
+
+<%
+   if ( StringUtils.equals( strErrorFlag, "D" ) )
+   {
+      nPos = strError.indexOf( "\t" );
+      if ( nPos >= 0 )
+      {
+         strErrorTitle = strError.substring( 0, nPos );
+         nPos = strError.indexOf( "\t\t" );
+         strErrorMsg = strError.substring( nPos + 2 );
+      }
+   }
+
+%>
+
+   <input name="zError" id="zError" type="hidden" value="<%=strErrorMsg%>">
+
+   <div align="clear:both;center;"><table style="width:750px;background-color:black;color:white;border:none;font-size:8px;"><tr style="background-color:blue;color:white;border:none;">
+   <td nowrap style="background-color:blue;color:white;border:none;padding-top:6px;padding-bottom:6px;font-size:11px;">Feedback: </td>
+   <td nowrap style="background-color:blue;color:white;border:none;padding-top:6px;padding-bottom:6px;font-size:11px;"><input name="zFeedback" id="zFeedback" style="left:4px;width:700px;"></td>
+   </tr></table></div>
+
+</form>
+</div>   <!-- This is the end tag for the div 'content' -->
+
+</div>   <!-- This is the end tag for the div 'maincontent' -->
+
+<%@ include file="./include/footer.inc" %>
+
+</div>  <!-- This is the end tag for wrapper -->
+
+</body>
+</html>
+<%
+   session.setAttribute( "ZeidonWindow", "wMLCMarketingSection" );
+   session.setAttribute( "ZeidonAction", null );
+
+%>

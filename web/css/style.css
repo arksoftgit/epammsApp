@@ -1,0 +1,120 @@
+body {
+	font-size: 62.5%;
+	font-family: "Trebuchet MS", "Arial", "Helvetica", "Verdana", "sans-serif";
+}
+
+table {
+	font-size: 1em;
+}
+
+.demo-description {
+	clear: both;
+	padding: 12px;
+	font-size: 1.3em;
+	line-height: 1.4em;
+}
+
+.ui-draggable, .ui-droppable {
+	background-position: top;
+}
+
+div[level="1"] {
+   background: LightGreen;
+   color: Blue;
+}
+
+div[level="2"] {
+   background: Pink;
+   color: Black;
+}
+
+div[level="3"] {
+   background: LightBlue;
+   color: Green;
+}
+
+div.panel_hidden{
+   display: none
+}
+
+*{
+   font-family: Georgia;
+}
+
+.FormattedJsonLabel {
+   font: 10pt Georgia;
+   background-color:#ECECEC;
+   color:#000000;
+   border:solid 1px #CECECE;
+}
+
+.ObjectBrace {
+   color:#00AA00;
+   font-weight:bold;
+   font-family: monospace;
+}
+
+.ArrayBrace {
+   color:#0033FF;
+   font-weight:bold;
+   font-family: monospace;
+}
+
+.PropertyName {
+   color:#ee0000;
+   font-weight:bold;
+   font-family: monospace;
+}
+
+.String {
+   color:#007777;
+   font-family: monospace;
+}
+
+.Number {
+   color:#AA00AA;
+}
+
+.Boolean {
+   color:#0000FF;
+}
+
+.Function {
+   color:#AA6633;
+   text-decoration:underline;
+}
+
+.Null {
+   color:#0000FF;
+}
+
+.Comma {
+   color:#000000;
+   font-weight:bold;
+}
+
+PRE.CodeContainer {
+   margin-top:0px;
+   margin-bottom:0px;
+}
+
+PRE.CodeContainer img {
+   cursor:pointer;
+   border:none;
+   margin-bottom:-1px;
+}
+
+#ControlsRow {
+   white-space:nowrap;
+   font: 11px Georgia;
+}
+
+#HeaderTitle {
+   text-align:right;
+   font-size:11px;
+}
+
+#HeaderSubTitle {
+   margin-bottom:2px;
+   margin-top:0px
+}

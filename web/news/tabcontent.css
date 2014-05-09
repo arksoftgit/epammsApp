@@ -1,0 +1,38 @@
+.newstabs {
+height:19px;
+display:block;
+border-top: solid 1px #BCBA98;
+margin:5px 10px 2px 10px;
+padding-top:5px;
+}
+
+.newstabs a{
+display:block;
+margin: 0px 5px 5px 0px;
+padding: 2px 5px 2px 5px;
+float: left;
+text-decoration:none;
+border: solid 1px #BCBA98;
+color:#BCBA98;
+font-weight:bold;
+}
+
+.newstabs a.selected{
+border:solid 1px #605E44;
+color:#605E44;
+background-color:#FFFFFF;
+}
+
+.newstabs a:hover{
+background-color: #FFFF00;
+}
+
+.tabcontent{
+display:none;
+}
+
+@media print {
+.tabcontent {
+display:block !important;
+}
+}

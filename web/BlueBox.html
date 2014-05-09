@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title> - Drag multiple demo</title>
+  
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+  <link rel="stylesheet" href="./style.css" />
+
+
+  <link rel="stylesheet" type="text/css" href="./result-light.css">
+
+<script type='text/javascript'>
+$(window).load(function(){
+$(function () {
+
+   var $current_block = null;
+   var generateTag = 100;
+   var xOffset = 0;
+   var yOffset = 0;
+   var $panel = "#panel";
+   var $trash = "#trash";
+   var trash_icon = "<div style='float:bottom'><a href='link/to/trash/script/when/we/have/js/off' style='float:right' title='Remove this block' class='ui-icon ui-icon-trash'>Move image to trash</a></div>";
+   var recycle_icon = "<div style='float:bottom'><a href='link/to/recycle/script/when/we/have/js/off' style='float:right' title='Restore this block' class='ui-icon ui-icon-refresh'>Restore image</a></div>";
+
+   $("#accordion").accordion( {heightStyle: "fill"} );
+
+   $(".draggable").draggable({
+      revert: "invalid", // when not dropped, the item will revert back to its initial position
+      helper: "clone",
+      appendTo: "body",  // this keeps the drag item visible across divs
+      cursor: "move",
+      start: function( event, ui ) {
+      // alert("Top: " +  $(this).offset().top);
+      // console.log(ui);
+      // console.log(ui.draggable);
+
+         var parent = $(this).parent();
+         var k = 0; // just to prevent infinite loop in case something goes wrong
+
+         xOffset = 0;
+         yOffset = 0;
+         while (parent.parent().is("html") === false && k++ < 10)
+         {
+            if (parent.is("div#client"))
+            {
+               xOffset = 0;
+               yOffset = 0;
+            }
+
+            if (parent.is("div#viewport"))
+               break;
+
+            console.log(parent);
+            console.log("top: " + Math.floor(parent.position().top));
+            console.log("left: " + Math.floor(parent.position().left));
+            xOffset += Math.floor(parent.position().left);
+            yOffset += Math.floor(parent.position().top);
+
+            parent = parent.parent();
+         }
+
+         console.log("yAdjust: " + yOffset);
+         console.log("xAdjust: " + xOffset);
+         updatePositionStatus( ui.offset.top - yOffset, ui.offset.left - xOffset );
+         updateSizeStatus( $(this).width(), $(this).height() );
+      },
+      drag: function( event, ui ) {
+         updatePositionStatus( ui.offset.top - yOffset, ui.offset.left - xOffset );
+      },
+      stop: function( event, ui ) {
+      // updatePositionStatus( ui.offset.top - yOffset, ui.offset.left - xOffset );
+         updatePositionStatus( -9999, -9999 );
+         updateSizeStatus( -9999, -9999 );
+     }
+   });
+   $("#panel").droppable({
+      accept: ".draggable",
+      drop: function (event, ui) {
+         var $canvas = $(this);
+         if (!ui.draggable.hasClass("canvas-element")) {
+         // var x = ui.helper.position();
+         // console.log(x);
+         // console.log(ui.position);
+            var canvasElement = $(ui.helper).clone(); // ui.draggable.clone();
+            var uniqueTag = getUniqueId();
+            canvasElement.attr( "id", uniqueTag );
+            canvasElement.attr( "name", uniqueTag );
+            canvasElement.text( uniqueTag );
+            canvasElement.removeClass( "ui-draggable-dragging" ).addClass( "canvas-element" );
+            canvasElement.draggable({
+               cancel: "a.ui-icon", // clicking a link with class .ui-icon won"t initiate dragging
+               containment: "#panel",
+               cursor: "move",
+               start: function( event, ui ) {
+                  updatePositionStatus( ui.offset.top, ui.offset.left );
+                  updateSizeStatus( $(this).width(), $(this).height() );
+               },
+               drag: function( event, ui ) {
+                  updatePositionStatus( ui.offset.top, ui.offset.left );
+               },
+               stop: function( event, ui ) {
+               // updatePositionStatus( ui.offset.top - yOffset, ui.offset.left - xOffset );
+                  updatePositionStatus( -9999, -9999 );
+                  updateSizeStatus( -9999, -9999 );
+               }
+            });
+            canvasElement.resizable({
+               containment: "#panel",
+               start: function( event, ui ) {   // alert("Top: " +  $(this).offset().top);
+                  updatePositionStatus( $(this).offset().top, $(this).offset().left );
+                  updateSizeStatus( $(this).width(), $(this).height() );
+               },
+               resize: function( event, ui ) {
+                  updateSizeStatus( $(this).width(), $(this).height() );
+               },
+               stop: function( event, ui ) {
+                  updatePositionStatus( -9999, -9999 );
+                  updateSizeStatus( -9999, -9999 );
+               }
+            });
+
+            $canvas.append( canvasElement );
+            canvasElement.append( "<h5 class='ui-widget-header'></h5>" );
+            canvasElement.prepend( trash_icon );
+            canvasElement.css({
+               position: "absolute",
+               left: Math.floor( ui.position.left - xOffset ),
+               top: Math.floor( ui.position.top - yOffset ),
+               background: "red",
+               color: "blue",
+               height: "100px",
+               width: "100px"
+            });
+         }
+      }
+   });
+
+   $("#tag").blur( function() {
+      var newText = $(this).val( );
+      $current_block.attr( "id", newText );
+      $current_block.attr( "name", newText );
+   // $current_block.text( newText );  this wipes out all child nodes of the div ... but the complicated next line works.
+      $current_block.contents().filter(function() { return this.nodeType == 3; }).replaceWith( newText );
+
+      return false;  // prevent default and propagation
+   });
+
+   $("body").on( "click", "div.ui-draggable", function() {
+      $current_block = $(this);
+      $("#tag").val( $(this).attr( "id" ) );
+      return false;  // prevent default and propagation
+   });
+   
+   $("body").on( "click", "a.ui-icon-trash", function() {
+      trashImage( $(this) );
+      return false;  // prevent default and propagation
+   });
+
+   $("body").on( "click", "a.ui-icon-refresh", function() {
+      restoreImage( $(this) );
+      return false;  // prevent default and propagation
+   });
+
+   function trashImage( $item ) {
+      var parent = $item.parent();
+      parent = parent.parent();
+      $item.parent().remove();
+      saveProperties( parent );
+      parent.fadeOut( function() {
+         var $list = $( "ul", $trash ).length ?
+            $( "ul", $trash ) :
+            $("<ul class='pool ui-helper-reset'/>").appendTo( $trash );
+
+         parent
+            .prepend( recycle_icon )
+            .appendTo( $list )
+            .fadeIn( function() {
+               parent.animate( { top: "0px", left: "0px", width: "60px", height: "40px" } );
+            });
+      });
+   }
+
+   function restoreImage( $item ) {
+      var parent = $item.parent();
+      parent = parent.parent();
+      $item.parent().remove();
+      restoreProperties( parent );
+      parent.fadeOut(function() {
+         parent
+            .prepend( trash_icon )
+            .appendTo( $("#panel") )
+            .fadeIn( function() {
+               parent.animate( { top: parent.attr( "rtop" ), left: parent.attr( "rleft" ), width: parent.attr( "rwidth" ), height: parent.attr( "rheight" ) } );
+            });
+      });
+   }
+
+   function saveProperties( $item ) {
+   // $item.attr( "rtop", $item.position().top );  these don't have units (e.g. px)
+   // $item.attr( "rleft", $item.position().left );
+      $item.attr( "rtop", $item.css( "top" ) );
+      $item.attr( "rleft", $item.css( "left" ) );
+      $item.attr( "rheight", $item.css( "height" ) );
+      $item.attr( "rwidth", $item.css( "width" ) );
+      $item.css({ position: "relative" });
+    }
+
+   function restoreProperties( $item ) {
+      $item.css({ position: "absolute" });
+   }
+
+   function getUniqueId() {
+      var k = 0; // prevent infinite loop
+      var arr = $(document.getElementById( "Tag" + generateTag ));
+      do
+      {
+         if ( $(arr).length <= 0 ) {
+            break;
+         }
+
+         generateTag++;
+         arr = $(document.getElementById( "Tag" + generateTag )); 
+      } while ( k++ < 100 )
+
+      return "Tag" + generateTag;
+   }
+
+   function updatePositionStatus( offset_top, offset_left ) {
+      // ...then update the numbers
+      var new_position;
+      if ( offset_top === -9999 ) {
+         new_position = "";
+      } else {
+         new_position = "Position: " + Math.floor( offset_top ) + "," + Math.floor( offset_left );
+      }
+
+      $( "span#display_position" ).text( new_position );
+   }
+
+   function updateSizeStatus( width, height ) {
+      // ...then update the numbers
+      var new_size;
+      if ( width === -9999 ) {
+         new_size = "";
+      } else {
+         new_size = "Size: " + width + "," + height;
+      }
+
+      $( "span#display_size" ).text( new_size );
+   }
+
+   var spinner = $( "#spinner" ).spinner();
+
+   $("#disable").click( function() {
+      if ( spinner.spinner( "option", "disabled" ) ) {
+         spinner.spinner( "enable" );
+      } else {
+         spinner.spinner( "disable" );
+      }
+   });
+
+   $("#destroy").click( function() {
+      if ( spinner.data( "ui-spinner" ) ) {
+         spinner.spinner( "destroy" );
+      } else {
+         spinner.spinner();
+      }
+   });
+
+   $("#getvalue").click( function() {
+      alert( spinner.spinner( "value" ) );
+   });
+
+   $("#setvalue").click( function() {
+      spinner.spinner( "value", 5 );
+   });
+
+   $("button").button();
+      
+});
+});
+
+</script>
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+</head>
+<body>
+
+<div id="container" style="width:800px; height:450px;">
+   <div id="viewport" style="background-color:#00A5FF; height:46px;">
+      <h1 style="text-align:center"><span>Label Designer
+            <img src="./images/HA.jpg" width="40" height="30" alt="HA" style="margin:5px; float:right; border-style:double;"></span>
+      </h1>
+      <div id="client" style="margin:0"> <!-- client area -->
+         <div id="panelmenu" class="ui-widget-content" style="position:relative;margin:0">
+         <div id="panel" class="panel_active" style="background-color:lightyellow;top:0px;left:0px;height:400px;width:600px;float:left;position:absolute;">Drop blue box here..  <!-- without position:relative, target position is off -->
+         </div> <!-- panel -->
+         <div id="menu" style="background-color:#00D7FF;top:0px;left:600px;height:400px;width:200px;float:right;position:absolute;">   <!-- without position:relative, clone position is off -->
+            <div id="accordion">
+               <h3>Block Types</h3>
+               <div id="pool">
+                  <div style="position:relative;">  <!-- without position:relative, initial position is off -->
+                  <!-- <div id="drag1" class="draggable resizable ui-widget ui-widget-content" style="background-color:#FF0000;position:absolute;top:5px;left:5px;height:70px;width:60px;">
+                        <p>Drag me to trigger the chain of events.</p></div> -->
+                     <div id="drag2" class="draggable ui-widget-content" style="position:absolute;top:5px;left:5px;width:20px;height:20px;background:blue;display:block;float:left;color:yellow;border:0px;"></div>
+                  </div>
+               </div> <!-- pool -->
+
+               <h3>Block Properties</h3>
+               <div>
+                  <p>
+                    <label for="tag">Tag:</label>
+                    <input id="tag" name="tag" />
+                  </p>
+               </div>
+
+               <h3>Panel Properties</h3>
+               <div>
+                  <p>
+                    <label for="spinner">Select a value:</label>
+                    <input id="spinner" name="value" />
+                  </p>
+                  <p>
+                    <button id="disable">Toggle disable/enable</button>
+                    <button id="destroy">Toggle widget</button>
+                  </p>
+                  <p>
+                    <button id="getvalue">Get value</button>
+                    <button id="setvalue">Set value to 5</button>
+                  </p>
+               </div>
+
+               <h3>Trash</h3>
+               <div id="trash" style="position:relative;">
+               </div>
+
+            </div> <!-- accordian -->
+         </div> <!-- menu -->
+      </div> <!-- panelmenu -->
+      </div> <!-- client -->
+   </div> <!-- viewport -->
+   <div id="footer" style="position:absolute;top:450px;width:800px;background-color:#00A5FF;clear:both;text-align:left;">Copyright &copy; Arksoft, Inc.
+      <span id="display_size" style="float:right;padding-right:10px;"></span>
+      <span id="display_position" style="float:right;padding-right:10px;"></span>
+   </div>
+</div> <!-- container -->
+
+</body>
+</html>
