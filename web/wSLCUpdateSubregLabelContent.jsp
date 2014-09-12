@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 
 <%-- wSLCUpdateSubregLabelContent --%>
 
@@ -11,11 +11,11 @@
 <%@ page import="com.quinsoft.zeidon.utils.*" %>
 <%@ page import="com.quinsoft.zeidon.vml.*" %>
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
-<%@ page import="com.arksoft.epamms.*" %>
+<%@ page import="com.quinsoft.epamms.*" %>
 
 <%! 
 
-ObjectEngine objectEngine = com.arksoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
+ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
 public String ReplaceXSSValues( String szFieldValue )
 {
@@ -266,6 +266,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation CancelNewSubregLabelContent: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -312,6 +314,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation GenerateNewSLC_FromMLC: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -358,6 +362,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation AcceptNewSubregLabelContent: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -418,6 +424,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation AcceptNewSubregLabelContent: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -459,6 +467,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation CancelNewSubregLabelContent: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -949,7 +959,7 @@ else
             catch (Exception e)
             {
                out.println("There is an error on Revision Description: " + e.getMessage());
-               task.log().info( "*** Error on ctrl Revision Description" + e.getMessage() );
+               task.log().error( "*** Error on ctrl Revision Description", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -1011,7 +1021,7 @@ else
 %>
 
 <span style="width:412px;height:32px;" >
-   <input name="ESL_Date" id="ESL_Date" style="width:80px" type="text" value="<%=strErrorMapValue%>"  />
+   <input name="ESL_Date" id="ESL_Date"  style="width:80px" type="text" value="<%=strErrorMapValue%>"  />
    <img src="images/scw.gif" title="Select Date" alt="Select Date"
         onclick="scwShow( document.getElementById( 'ESL_Date' ), this );"  />
 </span>
@@ -1063,7 +1073,7 @@ else
 %>
 
 <span style="width:412px;height:32px;" >
-   <input name="DraftLabel" id="DraftLabel" style="width:80px" type="text" value="<%=strErrorMapValue%>"  />
+   <input name="DraftLabel" id="DraftLabel"  style="width:80px" type="text" value="<%=strErrorMapValue%>"  />
    <img src="images/scw.gif" title="Select Date" alt="Select Date"
         onclick="scwShow( document.getElementById( 'DraftLabel' ), this );"  />
 </span>

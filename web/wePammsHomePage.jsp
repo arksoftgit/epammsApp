@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 
 <%-- wePammsHomePage --%>
 
@@ -11,11 +11,11 @@
 <%@ page import="com.quinsoft.zeidon.utils.*" %>
 <%@ page import="com.quinsoft.zeidon.vml.*" %>
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
-<%@ page import="com.arksoft.epamms.*" %>
+<%@ page import="com.quinsoft.epamms.*" %>
 
 <%! 
 
-ObjectEngine objectEngine = com.arksoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
+ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
 public String ReplaceXSSValues( String szFieldValue )
 {
@@ -240,6 +240,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation CheckReportOnlyUser: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -286,6 +288,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation GOTO_System: " + e.getMessage();
          task.log().info( strVMLError );
       }

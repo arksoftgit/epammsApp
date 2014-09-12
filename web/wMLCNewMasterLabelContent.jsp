@@ -11,11 +11,11 @@
 <%@ page import="com.quinsoft.zeidon.utils.*" %>
 <%@ page import="com.quinsoft.zeidon.vml.*" %>
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
-<%@ page import="com.arksoft.epamms.*" %>
+<%@ page import="com.quinsoft.epamms.*" %>
 
 <%! 
 
-ObjectEngine objectEngine = com.arksoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
+ObjectEngine objectEngine = JavaObjectEngine.getInstance();
 
 public String ReplaceXSSValues( String szFieldValue )
 {
@@ -108,7 +108,6 @@ public int DoInputMapping( HttpServletRequest request,
 
 session = request.getSession( );
 Task task = null;
-View wWebXA = null;
 KZMSGQOO_Object mMsgQ = null; // view to Message Queue
 View vKZXMLPGO = null;
 String strLastPage = "";
@@ -138,7 +137,6 @@ String strOpenPopupWindow = "";
 String strPopupWindowSZX = "";
 String strPopupWindowSZY = "";
 String strDateFormat = "";
-String strKeyRole = "";
 String strDialogName = "";
 String strWindowName = "";
 String strLastWindow;
@@ -229,6 +227,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation AcceptNewMasterLabelContent: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -238,20 +238,44 @@ if ( strActionToProcess != null )
          session.setAttribute( "ZeidonError", "Y" );
          break;
       }
+
+      // Dynamic Next Window
+      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
+         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
+         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
+         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
+         strURL = response.encodeRedirectURL( strNextJSP_Name );
+         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
+         else
+            strFunctionCall = "";
+
+         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
+         {
+            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
+            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCNewMasterLabelContent" );
+         }
+
+         nRC = 1;  // do the redirection
+         break;
+      }
+
+      // Return to Last Window
+      nRC = vKZXMLPGO.cursor( "PagePath" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+         strLastPage = vKZXMLPGO.cursor( "PagePath" ).getStringFromAttribute( "LastPageName" );
+         vKZXMLPGO.cursor( "PagePath" ).deleteEntity( CursorPosition.PREV );
+         strLastPage = strLastPage + ".jsp";
+      }
       else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
+         strLastPage = "wMLCNewMasterLabelContent.jsp";
 
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      strURL = response.encodeRedirectURL( strLastPage );
       nRC = 1;  // do the redirection
       break;
    }
@@ -270,6 +294,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation CancelNewMasterLabelContent: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -279,20 +305,44 @@ if ( strActionToProcess != null )
          session.setAttribute( "ZeidonError", "Y" );
          break;
       }
+
+      // Dynamic Next Window
+      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
+         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
+         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
+         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
+         strURL = response.encodeRedirectURL( strNextJSP_Name );
+         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
+         else
+            strFunctionCall = "";
+
+         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
+         {
+            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
+            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCNewMasterLabelContent" );
+         }
+
+         nRC = 1;  // do the redirection
+         break;
+      }
+
+      // Return to Last Window
+      nRC = vKZXMLPGO.cursor( "PagePath" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+         strLastPage = vKZXMLPGO.cursor( "PagePath" ).getStringFromAttribute( "LastPageName" );
+         vKZXMLPGO.cursor( "PagePath" ).deleteEntity( CursorPosition.PREV );
+         strLastPage = strLastPage + ".jsp";
+      }
       else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
+         strLastPage = "wMLCNewMasterLabelContent.jsp";
 
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      strURL = response.encodeRedirectURL( strLastPage );
       nRC = 1;  // do the redirection
       break;
    }
@@ -330,6 +380,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation AcceptNewMasterLabelContent: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -339,20 +391,44 @@ if ( strActionToProcess != null )
          session.setAttribute( "ZeidonError", "Y" );
          break;
       }
+
+      // Dynamic Next Window
+      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
+         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
+         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
+         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
+         strURL = response.encodeRedirectURL( strNextJSP_Name );
+         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
+         else
+            strFunctionCall = "";
+
+         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
+         {
+            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
+            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCNewMasterLabelContent" );
+         }
+
+         nRC = 1;  // do the redirection
+         break;
+      }
+
+      // Return to Last Window
+      nRC = vKZXMLPGO.cursor( "PagePath" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+         strLastPage = vKZXMLPGO.cursor( "PagePath" ).getStringFromAttribute( "LastPageName" );
+         vKZXMLPGO.cursor( "PagePath" ).deleteEntity( CursorPosition.PREV );
+         strLastPage = strLastPage + ".jsp";
+      }
       else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
+         strLastPage = "wMLCNewMasterLabelContent.jsp";
 
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      strURL = response.encodeRedirectURL( strLastPage );
       nRC = 1;  // do the redirection
       break;
    }
@@ -371,6 +447,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation CancelNewMasterLabelContent: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -380,20 +458,44 @@ if ( strActionToProcess != null )
          session.setAttribute( "ZeidonError", "Y" );
          break;
       }
+
+      // Dynamic Next Window
+      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
+         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
+         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
+         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
+         strURL = response.encodeRedirectURL( strNextJSP_Name );
+         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
+         else
+            strFunctionCall = "";
+
+         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
+         {
+            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
+            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCNewMasterLabelContent" );
+         }
+
+         nRC = 1;  // do the redirection
+         break;
+      }
+
+      // Return to Last Window
+      nRC = vKZXMLPGO.cursor( "PagePath" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+         strLastPage = vKZXMLPGO.cursor( "PagePath" ).getStringFromAttribute( "LastPageName" );
+         vKZXMLPGO.cursor( "PagePath" ).deleteEntity( CursorPosition.PREV );
+         strLastPage = strLastPage + ".jsp";
+      }
       else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
+         strLastPage = "wMLCNewMasterLabelContent.jsp";
 
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      strURL = response.encodeRedirectURL( strLastPage );
       nRC = 1;  // do the redirection
       break;
    }
@@ -418,6 +520,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation ProductManagement: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -427,20 +531,34 @@ if ( strActionToProcess != null )
          session.setAttribute( "ZeidonError", "Y" );
          break;
       }
-      else
-      if ( nOptRC == 1 )
+
+      // Dynamic Next Window
+      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
+         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
+         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
+         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
+         strURL = response.encodeRedirectURL( strNextJSP_Name );
+         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
+         else
+            strFunctionCall = "";
+
+         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
+         {
+            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
+            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCNewMasterLabelContent" );
+         }
+
+         nRC = 1;  // do the redirection
+         break;
       }
 
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartTopWindow, "wStartUp", "AdminListPrimaryRegistrants" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      // Next Window
+      strURL = response.encodeRedirectURL( "wStartUpAdminListPrimaryRegistrants.jsp" );
       nRC = 1;  // do the redirection
       break;
    }
@@ -465,6 +583,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation SubregistrantManagement: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -474,20 +594,34 @@ if ( strActionToProcess != null )
          session.setAttribute( "ZeidonError", "Y" );
          break;
       }
-      else
-      if ( nOptRC == 1 )
+
+      // Dynamic Next Window
+      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
+         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
+         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
+         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
+         strURL = response.encodeRedirectURL( strNextJSP_Name );
+         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
+         else
+            strFunctionCall = "";
+
+         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
+         {
+            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
+            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCNewMasterLabelContent" );
+         }
+
+         nRC = 1;  // do the redirection
+         break;
       }
 
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartTopWindow, "wStartUp", "AdminListSubregistrants" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      // Next Window
+      strURL = response.encodeRedirectURL( "wStartUpAdminListSubregistrants.jsp" );
       nRC = 1;  // do the redirection
       break;
    }
@@ -512,6 +646,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation TrackingNotificationCompliance: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -521,20 +657,34 @@ if ( strActionToProcess != null )
          session.setAttribute( "ZeidonError", "Y" );
          break;
       }
-      else
-      if ( nOptRC == 1 )
+
+      // Dynamic Next Window
+      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
+         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
+         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
+         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
+         strURL = response.encodeRedirectURL( strNextJSP_Name );
+         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
+         else
+            strFunctionCall = "";
+
+         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
+         {
+            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
+            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCNewMasterLabelContent" );
+         }
+
+         nRC = 1;  // do the redirection
+         break;
       }
 
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartTopWindow, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      // Next Window
+      strURL = response.encodeRedirectURL( ".jsp" );
       nRC = 1;  // do the redirection
       break;
    }
@@ -559,6 +709,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation StateRegistrations: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -568,20 +720,34 @@ if ( strActionToProcess != null )
          session.setAttribute( "ZeidonError", "Y" );
          break;
       }
-      else
-      if ( nOptRC == 1 )
+
+      // Dynamic Next Window
+      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
+         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
+         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
+         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
+         strURL = response.encodeRedirectURL( strNextJSP_Name );
+         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
+         else
+            strFunctionCall = "";
+
+         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
+         {
+            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
+            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCNewMasterLabelContent" );
+         }
+
+         nRC = 1;  // do the redirection
+         break;
       }
 
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartTopWindow, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      // Next Window
+      strURL = response.encodeRedirectURL( ".jsp" );
       nRC = 1;  // do the redirection
       break;
    }
@@ -606,6 +772,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation MarketingFulfillment: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -615,20 +783,34 @@ if ( strActionToProcess != null )
          session.setAttribute( "ZeidonError", "Y" );
          break;
       }
-      else
-      if ( nOptRC == 1 )
+
+      // Dynamic Next Window
+      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
+         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
+         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
+         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
+         strURL = response.encodeRedirectURL( strNextJSP_Name );
+         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
+         else
+            strFunctionCall = "";
+
+         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
+         {
+            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
+            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCNewMasterLabelContent" );
+         }
+
+         nRC = 1;  // do the redirection
+         break;
       }
 
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartTopWindow, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      // Next Window
+      strURL = response.encodeRedirectURL( ".jsp" );
       nRC = 1;  // do the redirection
       break;
    }
@@ -653,6 +835,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation WebDevelopment: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -662,20 +846,34 @@ if ( strActionToProcess != null )
          session.setAttribute( "ZeidonError", "Y" );
          break;
       }
-      else
-      if ( nOptRC == 1 )
+
+      // Dynamic Next Window
+      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
+         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
+         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
+         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
+         strURL = response.encodeRedirectURL( strNextJSP_Name );
+         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
+         else
+            strFunctionCall = "";
+
+         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
+         {
+            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
+            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCNewMasterLabelContent" );
+         }
+
+         nRC = 1;  // do the redirection
+         break;
       }
 
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartTopWindow, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      // Next Window
+      strURL = response.encodeRedirectURL( ".jsp" );
       nRC = 1;  // do the redirection
       break;
    }
@@ -695,6 +893,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation PrimaryRegistrantCompanySetup: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -704,20 +904,34 @@ if ( strActionToProcess != null )
          session.setAttribute( "ZeidonError", "Y" );
          break;
       }
-      else
-      if ( nOptRC == 1 )
+
+      // Dynamic Next Window
+      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
+         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
+         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
+         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
+         strURL = response.encodeRedirectURL( strNextJSP_Name );
+         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
+         else
+            strFunctionCall = "";
+
+         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
+         {
+            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
+            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCNewMasterLabelContent" );
+         }
+
+         nRC = 1;  // do the redirection
+         break;
       }
 
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartTopWindow, "wStartUp", "AdminUpdatePrimaryRegistrant" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      // Next Window
+      strURL = response.encodeRedirectURL( "wStartUpAdminUpdatePrimaryRegistrant.jsp" );
       nRC = 1;  // do the redirection
       break;
    }
@@ -742,6 +956,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation ProcessLogin: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -751,67 +967,34 @@ if ( strActionToProcess != null )
          session.setAttribute( "ZeidonError", "Y" );
          break;
       }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
 
-      if ( strNextJSP_Name.equals( "" ) )
+      // Dynamic Next Window
+      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ResetTopWindow, "wStartUp", "UserLogin" );
-      }
+         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
+         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
+         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
+         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
+         strURL = response.encodeRedirectURL( strNextJSP_Name );
+         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
+         else
+            strFunctionCall = "";
 
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
+         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
+         {
+            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
+            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCNewMasterLabelContent" );
+         }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mTemplate" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCNewMasterLabelContent", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCNewMasterLabelContent.jsp", "wStartUp.Template" );
-      try
-      {
-         nOptRC = wStartUp.Template( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         strVMLError = "<br><br>*** Error running Operation Template: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
+         nRC = 1;  // do the redirection
          break;
       }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
 
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wTemplD", "TemplateList" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      // Next Window
+      strURL = response.encodeRedirectURL( "wStartUpUserLogin.jsp" );
       nRC = 1;  // do the redirection
       break;
    }
@@ -930,13 +1113,6 @@ else
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
 
-   wWebXA = task.getViewByName( "wWebXfer" );
-   if ( VmlOperation.isValid( wWebXA ) )
-   {
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wMLC" );
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "NewMasterLabelContent" );
-   }
-
 %>
 
 <html>
@@ -978,7 +1154,6 @@ else
        <li id="lmAdministration" name="lmAdministration"><a href="#" onclick="mAdministration()">Company Profile</a></li>
        <li id="lmLogin" name="lmLogin"><a href="#" onclick="mLogin()">Login</a></li>
        <li id="lmLogout" name="lmLogout"><a href="#" onclick="mLogout()">Logout</a></li>
-       <li id="lmTemplate" name="lmTemplate"><a href="#" onclick="mTemplate()">Template</a></li>
    </ul>
 </div>  <!-- end Navigation Bar -->
 
@@ -1104,27 +1279,13 @@ else
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wMLC", "NewMasterLabelContent" );
    strOpenFile = VmlOperation.FindOpenFile( task );
-   strDateFormat = "YYYY.MM.DD";
+   strDateFormat = "MM/DD/YYYY";
 
-   wWebXA = task.getViewByName( "wWebXfer" );
-   if ( VmlOperation.isValid( wWebXA ) )
-   {
-      nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
-         if ( strKeyRole == null )
-            strKeyRole = "";
-
-         task.log().info( "Root.KeyRole: " + strKeyRole );
-      }
-   }
 %>
 
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
-   <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
    <input name="zPopupWindowSZX" id="zPopupWindowSZX" type="hidden" value="<%=strPopupWindowSZX%>">
    <input name="zPopupWindowSZY" id="zPopupWindowSZY" type="hidden" value="<%=strPopupWindowSZY%>">
@@ -1153,12 +1314,21 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:16px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBMasterLabelContent:GroupBox */ %>
-<fieldset id="GBMasterLabelContent" name="GBMasterLabelContent"   style="size:absolute; width:718px; height:106px;">
-<legend>Master Label Content</legend>
+
+<div id="GBMasterLabelContent" name="GBMasterLabelContent" class="withborder" style="width:718px;height:126px;float:left;">  <!-- GBMasterLabelContent --> 
+
+<div  id="GBMasterLabelContent" name="GBMasterLabelContent" >Master Label Content</div>
+
+ <!-- This is added as a line spacer -->
+<div style="height:36px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp&nbsp</span>
 <% /* Version::Text */ %>
 
-<label  id="Version:" name="Version:" style="width:110px;height:16px;position:absolute;left:18px;top:36px;">Version:</label>
+<span  id="Version:" name="Version:" style="width:110px;height:16px;">Version:</span>
 
+<span style="height:16px;">&nbsp</span>
 <% /* MasterLabelContentVersion:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "MasterLabelContentVersion", strError );
@@ -1198,12 +1368,23 @@ else
    }
 %>
 
-<input class="text12" name="MasterLabelContentVersion" id="MasterLabelContentVersion" style="width:568px;position:absolute;left:136px;top:36px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="MasterLabelContentVersion" id="MasterLabelContentVersion" style="width:568px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:10px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp&nbsp</span>
 <% /* Revision Date::Text */ %>
 
-<label  id="Revision Date:" name="Revision Date:" style="width:110px;height:16px;position:absolute;left:18px;top:62px;">Revision Date:</label>
+<span  id="Revision Date:" name="Revision Date:" style="width:110px;height:16px;">Revision Date:</span>
 
+<span style="height:16px;">&nbsp</span>
 <% /* Revision Date:Text */ %>
 <% strTextDisplayValue = "";
    mMasLC = task.getViewByName( "mMasLC" );
@@ -1229,16 +1410,28 @@ else
    }
 %>
 
-<label  id="Revision Date" name="Revision Date" style="width:130px;height:16px;position:absolute;left:136px;top:62px;"><%=strTextDisplayValue%></label>
+<span  id="Revision Date" name="Revision Date" style="width:130px;height:16px;"><%=strTextDisplayValue%></span>
 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:12px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp&nbsp</span>
 <% /* Finalized::Text */ %>
 
-<label  id="Finalized:" name="Finalized:" style="width:110px;height:16px;position:absolute;left:18px;top:90px;">Finalized:</label>
+<span  id="Finalized:" name="Finalized:" style="width:110px;height:16px;">Finalized:</span>
 
+<span style="height:16px;">&nbsp</span>
 <% /* Finalized: */ %>
-</fieldset>  <!-- GBMasterLabelContent --> 
-<div id='clear'></div>
+</div>  <!-- End of a new line -->
 
+
+</div>  <!--  GBMasterLabelContent --> 
 </div>  <!-- End of a new line -->
 
 

@@ -207,7 +207,6 @@ function _AfterPageLoaded( )
       }
    }
 
-   var keyRole = document.wStartUpUserLogin.zKeyRole.value;
    document.wStartUpUserLogin.zError.value = "";
    document.wStartUpUserLogin.zOpenFile.value = "";
 
@@ -262,36 +261,6 @@ function AdministratorLogin( )
    }
 }
 
-function NewLLD( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wStartUpUserLogin.zAction.value = "NewLLD";
-      document.wStartUpUserLogin.submit( );
-   }
-}
-
-function FORGOT_Password( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wStartUpUserLogin.zAction.value = "FORGOT_Password";
-      document.wStartUpUserLogin.submit( );
-   }
-}
-
 function AutoLogin( )
 {
 
@@ -307,7 +276,7 @@ function AutoLogin( )
    }
 }
 
-function mLogout( )
+function FORGOT_Password( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -317,7 +286,7 @@ function mLogout( )
    {
       _DisableFormElements( true );
 
-      document.wStartUpUserLogin.zAction.value = "_OnUnload";
+      document.wStartUpUserLogin.zAction.value = "FORGOT_Password";
       document.wStartUpUserLogin.submit( );
    }
 }
@@ -359,6 +328,21 @@ function InitLoginWindow( )
    }
 }
 
+function mLogout( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wStartUpUserLogin.zAction.value = "_OnUnload";
+      document.wStartUpUserLogin.submit( );
+   }
+}
+
 function ProcessUserLogin( )
 {
 
@@ -370,6 +354,66 @@ function ProcessUserLogin( )
       _DisableFormElements( true );
 
       document.wStartUpUserLogin.zAction.value = "ProcessUserLogin";
+      document.wStartUpUserLogin.submit( );
+   }
+}
+
+function TestFullSLC_Select( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wStartUpUserLogin.zAction.value = "TestFullSLC_Select";
+      document.wStartUpUserLogin.submit( );
+   }
+}
+
+function TestMasterProducts( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wStartUpUserLogin.zAction.value = "TestMasterProducts";
+      document.wStartUpUserLogin.submit( );
+   }
+}
+
+function TestSLC_Select( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wStartUpUserLogin.zAction.value = "TestSLC_Select";
+      document.wStartUpUserLogin.submit( );
+   }
+}
+
+function TestSubregProducts( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wStartUpUserLogin.zAction.value = "TestSubregProducts";
       document.wStartUpUserLogin.submit( );
    }
 }

@@ -185,7 +185,6 @@ function _AfterPageLoaded( )
       }
    }
 
-   var keyRole = document.wStartUpTopMenu.zKeyRole.value;
    document.wStartUpTopMenu.zError.value = "";
    document.wStartUpTopMenu.zOpenFile.value = "";
 
@@ -380,29 +379,6 @@ function Subregistrants( )
       _DisableFormElements( true );
 
       document.wStartUpTopMenu.zAction.value = "Subregistrants";
-      document.wStartUpTopMenu.submit( );
-   }
-}
-
-function Template( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmTemplate" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wStartUpTopMenu.zAction.value = "Template";
       document.wStartUpTopMenu.submit( );
    }
 }
@@ -665,30 +641,6 @@ function mLogout( )
       _DisableFormElements( true );
 
       document.wStartUpTopMenu.zAction.value = "_OnUnload";
-      document.wStartUpTopMenu.submit( );
-   }
-}
-
-function mTemplate( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmTemplate" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wStartUpTopMenu.zAction.value = "mTemplate";
       document.wStartUpTopMenu.submit( );
    }
 }

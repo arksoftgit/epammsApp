@@ -11,11 +11,11 @@
 <%@ page import="com.quinsoft.zeidon.utils.*" %>
 <%@ page import="com.quinsoft.zeidon.vml.*" %>
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
-<%@ page import="com.arksoft.epamms.*" %>
+<%@ page import="com.quinsoft.epamms.*" %>
 
 <%! 
 
-ObjectEngine objectEngine = com.arksoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
+ObjectEngine objectEngine = JavaObjectEngine.getInstance();
 
 public String ReplaceXSSValues( String szFieldValue )
 {
@@ -102,6 +102,7 @@ String strPopupWindowSZX = "";
 String strPopupWindowSZY = "";
 String strDateFormat = "";
 String strKeyRole = "";
+String strFeedback = "";
 String strDialogName = "";
 String strWindowName = "";
 String strLastWindow;
@@ -170,6 +171,13 @@ if ( strActionToProcess != null )
          vMsgQ.drop( );
       }
 
+      strFeedback = request.getParameter( "zFeedback" );
+      if ( strFeedback != "" )
+      {
+         wStart.TraceLine( "DoInputMapping Feedback: " + strFeedback );
+         wStart.SaveFeedback( "mOrganiz", "wStart", "LoginType", strFeedback );
+      }
+
    }
 
    while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_SelectedRole" ) )
@@ -182,6 +190,32 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+       = task.getViewByName( "" );
+      if ( VmlOperation.isValid(  ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = .cursor( "" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = .cursor( "" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = .cursor( "" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = .cursor( "" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wStartLoginType.jsp", "wStart.GOTO_SelectedRole" );
@@ -191,6 +225,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation GOTO_SelectedRole: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -447,7 +483,7 @@ else
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wStart", "LoginType" );
    strOpenFile = VmlOperation.FindOpenFile( task );
-   strDateFormat = "YYYY.MM.DD";
+   strDateFormat = "MM/DD/YYYY";
 
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
@@ -614,6 +650,11 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 %>
 
    <input name="zError" id="zError" type="hidden" value="<%=strErrorMsg%>">
+
+   <div align="clear:both;center;"><table style="width:750px;background-color:black;color:white;border:none;font-size:8px;"><tr style="background-color:blue;color:white;border:none;">
+   <td nowrap style="background-color:blue;color:white;border:none;padding-top:6px;padding-bottom:6px;font-size:11px;">Feedback: </td>
+   <td nowrap style="background-color:blue;color:white;border:none;padding-top:6px;padding-bottom:6px;font-size:11px;"><input name="zFeedback" id="zFeedback" style="left:4px;width:700px;"></td>
+   </tr></table></div>
 
 </form>
 </div>   <!-- This is the end tag for the div 'contentnosidemenu' -->

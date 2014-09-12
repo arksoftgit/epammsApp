@@ -185,7 +185,6 @@ function _AfterPageLoaded( )
       }
    }
 
-   var keyRole = document.wSPLDTemplateBlockDetail.zKeyRole.value;
    document.wSPLDTemplateBlockDetail.zError.value = "";
    document.wSPLDTemplateBlockDetail.zOpenFile.value = "";
 
@@ -194,8 +193,6 @@ function _AfterPageLoaded( )
       clearTimeout( timerID );
       timerID = null;
    }
-
-   document.wSPLDTemplateBlockDetail.hPosSizeUnits.value = document.wSPLDTemplateBlockDetail.PosSizeUnits.value
 
    var varTimeout = document.wSPLDTemplateBlockDetail.zTimeout.value;
    if ( varTimeout > 0 )
@@ -336,7 +333,7 @@ if (!answer)
    }
 }
 
-function UpdateTemplateSection( strTagEntityKey )
+function UpdateTemplateSection( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -344,10 +341,6 @@ function UpdateTemplateSection( strTagEntityKey )
 
    if ( _IsDocDisabled( ) == false )
    {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wSPLDTemplateBlockDetail.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
       document.wSPLDTemplateBlockDetail.zAction.value = "UpdateTemplateSection";
@@ -652,18 +645,6 @@ function mTemplate( )
 
       document.wSPLDTemplateBlockDetail.zAction.value = "mTemplate";
       document.wSPLDTemplateBlockDetail.submit( );
-   }
-}
-
-function PosSizeUnitsOnChange( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      document.wSPLDTemplateBlockDetail.hPosSizeUnits.value = document.wSPLDTemplateBlockDetail.PosSizeUnits.value;
    }
 }
 

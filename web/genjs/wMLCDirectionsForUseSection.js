@@ -186,7 +186,6 @@ function _AfterPageLoaded( )
       }
    }
 
-   var keyRole = document.wMLCDirectionsForUseSection.zKeyRole.value;
    document.wMLCDirectionsForUseSection.zError.value = "";
    document.wMLCDirectionsForUseSection.zOpenFile.value = "";
 
@@ -239,21 +238,6 @@ function AcceptDirectionsUseSect( )
    }
 }
 
-function AddNewDirectionsUseStmt( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCDirectionsForUseSection.zAction.value = "AddNewDirectionsUseStmt";
-      document.wMLCDirectionsForUseSection.submit( );
-   }
-}
-
 function CancelDirectionsUseSect( )
 {
 
@@ -269,7 +253,7 @@ function CancelDirectionsUseSect( )
    }
 }
 
-function CleanStorDispStmtHTML( )
+function GOTO_DirsForUseStatementAdd( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -279,12 +263,12 @@ function CleanStorDispStmtHTML( )
    {
       _DisableFormElements( true );
 
-      document.wMLCDirectionsForUseSection.zAction.value = "CleanStorDispStmtHTML";
+      document.wMLCDirectionsForUseSection.zAction.value = "GOTO_DirsForUseStatementAdd";
       document.wMLCDirectionsForUseSection.submit( );
    }
 }
 
-function ClearSelectedAppTypes( )
+function GOTO_DirsForUseStatementUpdate( strTagEntityKey )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -292,43 +276,18 @@ function ClearSelectedAppTypes( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      // Javascript code entered by user.
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
 
-      var theForm;
-      var type;
-      var name;
-      var str;
-      var j;
-      var k;
+      document.wMLCDirectionsForUseSection.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
 
-      for ( j = 0; j < document.forms.length; j++ )
-      {
-         theForm = document.forms[ j ];
-         for ( k = 0; k < theForm.length; k++ )
-         {
-            type = theForm.elements[ k ].type;
-
-            if ( type == "checkbox" )
-            {
-               name = theForm.elements[ k ].name;
-               str = name.substr( 0, 10 );
-               if ( str.match("GS_AppType") )
-               {
-                  theForm.elements[ k ].checked = false;
-               }
-            }
-         }
-      }
-
-      return;
-
-
-      // END of Javascript code entered by user.
-
+      document.wMLCDirectionsForUseSection.zAction.value = "GOTO_DirsForUseStatementUpdate";
+      document.wMLCDirectionsForUseSection.submit( );
    }
 }
 
-function ClearSelectedAreasOfUse( )
+function GOTO_SelectRemoveAreasOfUse( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -338,209 +297,7 @@ function ClearSelectedAreasOfUse( )
    {
       // Javascript code entered by user.
 
-      var theForm;
-      var type;
-      var name;
-      var str;
-      var j;
-      var k;
 
-      for ( j = 0; j < document.forms.length; j++ )
-      {
-         theForm = document.forms[ j ];
-         for ( k = 0; k < theForm.length; k++ )
-         {
-            type = theForm.elements[ k ].type;
-
-            if ( type == "checkbox" )
-            {
-               name = theForm.elements[ k ].name;
-               str = name.substr( 0, 13 );
-               if ( str.match("GS_AreasOfUse") )
-               {
-                  theForm.elements[ k ].checked = false;
-               }
-            }
-         }
-      }
-
-      return;
-
-
-      // END of Javascript code entered by user.
-
-   }
-}
-
-function ClearSelectedBacteria( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      // Javascript code entered by user.
-
-      var theForm;
-      var type;
-      var name;
-      var str;
-      var j;
-      var k;
-
-      for ( j = 0; j < document.forms.length; j++ )
-      {
-         theForm = document.forms[ j ];
-         for ( k = 0; k < theForm.length; k++ )
-         {
-            type = theForm.elements[ k ].type;
-
-            if ( type == "checkbox" )
-            {
-               name = theForm.elements[ k ].name;
-               str = name.substr( 0, 11 );
-               if ( str.match("GS_Bacteria") )
-               {
-                  theForm.elements[ k ].checked = false;
-               }
-            }
-         }
-      }
-
-      return;
-
-
-      // END of Javascript code entered by user.
-
-   }
-}
-
-function ClearSelectedFungi( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      // Javascript code entered by user.
-
-      var theForm;
-      var type;
-      var name;
-      var str;
-      var j;
-      var k;
-
-      for ( j = 0; j < document.forms.length; j++ )
-      {
-         theForm = document.forms[ j ];
-         for ( k = 0; k < theForm.length; k++ )
-         {
-            type = theForm.elements[ k ].type;
-
-            if ( type == "checkbox" )
-            {
-               name = theForm.elements[ k ].name;
-               str = name.substr( 0, 8 );
-               if ( str.match("GS_Fungi") )
-               {
-                  theForm.elements[ k ].checked = false;
-               }
-            }
-         }
-      }
-
-      return;
-
-
-      // END of Javascript code entered by user.
-
-   }
-}
-
-function ClearSelectedSurfaces( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      // Javascript code entered by user.
-
-      var theForm;
-      var type;
-      var name;
-      var str;
-      var j;
-      var k;
-
-      for ( j = 0; j < document.forms.length; j++ )
-      {
-         theForm = document.forms[ j ];
-         for ( k = 0; k < theForm.length; k++ )
-         {
-            type = theForm.elements[ k ].type;
-
-            if ( type == "checkbox" )
-            {
-               name = theForm.elements[ k ].name;
-               str = name.substr( 0, 10 );
-               if ( str.match("GS_Surface") )
-               {
-                  theForm.elements[ k ].checked = false;
-               }
-            }
-         }
-      }
-
-      return;
-
-
-      // END of Javascript code entered by user.
-
-   }
-}
-
-function ClearSelectedViruses( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      // Javascript code entered by user.
-
-      var theForm;
-      var type;
-      var name;
-      var str;
-      var j;
-      var k;
-
-      for ( j = 0; j < document.forms.length; j++ )
-      {
-         theForm = document.forms[ j ];
-         for ( k = 0; k < theForm.length; k++ )
-         {
-            type = theForm.elements[ k ].type;
-
-            if ( type == "checkbox" )
-            {
-               name = theForm.elements[ k ].name;
-               str = name.substr( 0, 8 );
-               if ( str.match("GS_Virus") )
-               {
-                  theForm.elements[ k ].checked = false;
-               }
-            }
-         }
-      }
-
-      return;
 
 
       // END of Javascript code entered by user.
@@ -624,330 +381,6 @@ function MoveDirectionsUseStmtUp( strTagEntityKey )
    }
 }
 
-function NextDirectionsUseSect( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCDirectionsForUseSection.zAction.value = "NextDirectionsUseSect";
-      document.wMLCDirectionsForUseSection.submit( );
-   }
-}
-
-function PreviousDirectionsUseSect( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCDirectionsForUseSection.zAction.value = "PreviousDirectionsUseSect";
-      document.wMLCDirectionsForUseSection.submit( );
-   }
-}
-
-function SaveAddNewDirectionsUseSect( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCDirectionsForUseSection.zAction.value = "SaveAddNewDirectionsUseSect";
-      document.wMLCDirectionsForUseSection.submit( );
-   }
-}
-
-function SelectAllAppTypes( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      // Javascript code entered by user.
-
-      var theForm;
-      var type;
-      var name;
-      var str;
-      var j;
-      var k;
-
-      for ( j = 0; j < document.forms.length; j++ )
-      {
-         theForm = document.forms[ j ];
-         for ( k = 0; k < theForm.length; k++ )
-         {
-            type = theForm.elements[ k ].type;
-
-            if ( type == "checkbox" )
-            {
-               name = theForm.elements[ k ].name;
-               str = name.substr( 0, 10 );
-               if ( str.match("GS_AppType") )
-               {
-                  theForm.elements[ k ].checked = true;
-               }
-            }
-         }
-      }
-
-      return;
-
-
-      // END of Javascript code entered by user.
-
-   }
-}
-
-function SelectAllAreasOfUse( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      // Javascript code entered by user.
-
-      var theForm;
-      var type;
-      var name;
-      var str;
-      var j;
-      var k;
-
-      for ( j = 0; j < document.forms.length; j++ )
-      {
-         theForm = document.forms[ j ];
-         for ( k = 0; k < theForm.length; k++ )
-         {
-            type = theForm.elements[ k ].type;
-
-            if ( type == "checkbox" )
-            {
-               name = theForm.elements[ k ].name;
-               str = name.substr( 0, 13 );
-               if ( str.match("GS_AreasOfUse") )
-               {
-                  theForm.elements[ k ].checked = true;
-               }
-            }
-         }
-      }
-
-      return;
-
-
-      // END of Javascript code entered by user.
-
-   }
-}
-
-function SelectAllBacteria( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      // Javascript code entered by user.
-
-      var theForm;
-      var type;
-      var name;
-      var str;
-      var j;
-      var k;
-
-      for ( j = 0; j < document.forms.length; j++ )
-      {
-         theForm = document.forms[ j ];
-         for ( k = 0; k < theForm.length; k++ )
-         {
-            type = theForm.elements[ k ].type;
-
-            if ( type == "checkbox" )
-            {
-               name = theForm.elements[ k ].name;
-               str = name.substr( 0,11 );
-               if ( str.match("GS_Bacteria") )
-               {
-                  theForm.elements[ k ].checked = true;
-               }
-            }
-         }
-      }
-
-      return;
-
-
-      // END of Javascript code entered by user.
-
-   }
-}
-
-function SelectAllFungi( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      // Javascript code entered by user.
-
-      var theForm;
-      var type;
-      var name;
-      var str;
-      var j;
-      var k;
-
-      for ( j = 0; j < document.forms.length; j++ )
-      {
-         theForm = document.forms[ j ];
-         for ( k = 0; k < theForm.length; k++ )
-         {
-            type = theForm.elements[ k ].type;
-
-            if ( type == "checkbox" )
-            {
-               name = theForm.elements[ k ].name;
-               str = name.substr( 0, 8 );
-               if ( str.match("GS_Fungi") )
-               {
-                  theForm.elements[ k ].checked = true;
-               }
-            }
-         }
-      }
-
-      return;
-
-
-      // END of Javascript code entered by user.
-
-   }
-}
-
-function SelectAllSurfaces( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      // Javascript code entered by user.
-
-      var theForm;
-      var type;
-      var name;
-      var str;
-      var j;
-      var k;
-
-      for ( j = 0; j < document.forms.length; j++ )
-      {
-         theForm = document.forms[ j ];
-         for ( k = 0; k < theForm.length; k++ )
-         {
-            type = theForm.elements[ k ].type;
-
-            if ( type == "checkbox" )
-            {
-               name = theForm.elements[ k ].name;
-               str = name.substr( 0, 10 );
-               if ( str.match("GS_Surface") )
-               {
-                  theForm.elements[ k ].checked = true;
-               }
-            }
-         }
-      }
-
-      return;
-
-
-      // END of Javascript code entered by user.
-
-   }
-}
-
-function SelectAllViruses( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      // Javascript code entered by user.
-
-      var theForm;
-      var type;
-      var name;
-      var str;
-      var j;
-      var k;
-
-      for ( j = 0; j < document.forms.length; j++ )
-      {
-         theForm = document.forms[ j ];
-         for ( k = 0; k < theForm.length; k++ )
-         {
-            type = theForm.elements[ k ].type;
-
-            if ( type == "checkbox" )
-            {
-               name = theForm.elements[ k ].name;
-               str = name.substr( 0, 8 );
-               if ( str.match("GS_Virus") )
-               {
-                  theForm.elements[ k ].checked = true;
-               }
-            }
-         }
-      }
-
-      return;
-
-
-      // END of Javascript code entered by user.
-
-   }
-}
-
-function SelectAreasOfUseStmtForUpdate( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCDirectionsForUseSection.zAction.value = "SelectAreasOfUseStmtForUpdate";
-      document.wMLCDirectionsForUseSection.submit( );
-   }
-}
-
 function SelectDirectionsUseStmtForDelete( strTagEntityKey )
 {
 
@@ -967,124 +400,6 @@ function SelectDirectionsUseStmtForDelete( strTagEntityKey )
    }
 }
 
-function SelectDirectionsUseStmtForUpdate( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCDirectionsForUseSection.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wMLCDirectionsForUseSection.zAction.value = "SelectDirectionsUseStmtForUpdate";
-      document.wMLCDirectionsForUseSection.submit( );
-   }
-}
-
-function ShowHideEditorMandatory1( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      // Javascript code entered by user.
-
-      if ( tinyMCE.get( 'MandatoryExclusiveStmt1' ) ) 
-         tinyMCE.execCommand( 'mceRemoveControl', false, 'MandatoryExclusiveStmt1' );
-      else
-         tinyMCE.execCommand( 'mceAddControl', false, 'MandatoryExclusiveStmt1' ); 
-
-      return;
-
-
-      // END of Javascript code entered by user.
-
-   }
-}
-
-function ShowHideEditorMandatory2( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      // Javascript code entered by user.
-
-      if ( tinyMCE.get( 'MandatoryExclusiveStmt2' ) ) 
-         tinyMCE.execCommand( 'mceRemoveControl', false, 'MandatoryExclusiveStmt2' );
-      else
-         tinyMCE.execCommand( 'mceAddControl', false, 'MandatoryExclusiveStmt2' ); 
-
-      return;
-
-
-      // END of Javascript code entered by user.
-
-   }
-}
-
-function ShowHideEditorNoteToReviewer( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      // Javascript code entered by user.
-
-      if ( tinyMCE.get( 'NoteToReviewer' ) ) 
-         tinyMCE.execCommand( 'mceRemoveControl', false, 'NoteToReviewer' );
-      else
-         tinyMCE.execCommand( 'mceAddControl', false, 'NoteToReviewer' ); 
-
-      return;
-
-
-      // END of Javascript code entered by user.
-
-   }
-}
-
-function smNextDirectionsUseSect( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCDirectionsForUseSection.zAction.value = "smNextDirectionsUseSect";
-      document.wMLCDirectionsForUseSection.submit( );
-   }
-}
-
-function smPreviousDirectionsUseSect( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCDirectionsForUseSection.zAction.value = "smPreviousDirectionsUseSect";
-      document.wMLCDirectionsForUseSection.submit( );
-   }
-}
-
 function smAcceptDirectionsUseSect( )
 {
 
@@ -1096,21 +411,6 @@ function smAcceptDirectionsUseSect( )
       _DisableFormElements( true );
 
       document.wMLCDirectionsForUseSection.zAction.value = "smAcceptDirectionsUseSect";
-      document.wMLCDirectionsForUseSection.submit( );
-   }
-}
-
-function smSaveAddNewDirectionsUseSect( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCDirectionsForUseSection.zAction.value = "smSaveAddNewDirectionsUseSect";
       document.wMLCDirectionsForUseSection.submit( );
    }
 }
@@ -1342,30 +642,6 @@ function mLogout( )
       _DisableFormElements( true );
 
       document.wMLCDirectionsForUseSection.zAction.value = "_OnUnload";
-      document.wMLCDirectionsForUseSection.submit( );
-   }
-}
-
-function mTemplate( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmTemplate" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wMLCDirectionsForUseSection.zAction.value = "mTemplate";
       document.wMLCDirectionsForUseSection.submit( );
    }
 }

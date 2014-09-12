@@ -185,7 +185,6 @@ function _AfterPageLoaded( )
       }
    }
 
-   var keyRole = document.wMLCDeleteMarketingStatement.zKeyRole.value;
    document.wMLCDeleteMarketingStatement.zError.value = "";
    document.wMLCDeleteMarketingStatement.zOpenFile.value = "";
 
@@ -223,55 +222,6 @@ function CheckAllInGrid(id, CheckBoxName)
    }
 }
 
-function ConfirmDeleteMarketingStmt( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCDeleteMarketingStatement.zAction.value = "ConfirmDeleteMarketingStmt";
-      document.wMLCDeleteMarketingStatement.submit( );
-   }
-}
-
-function InitMarketingStmtForDelete( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      // Javascript code entered by user.
-
-   var thisLi;
-
-// if ( keyRole == "P" || keyRole == "N" ) // If we are here, we have to be a Primary.
-   // We knock out Login and Template as options.
-   thisLi = document.getElementById( "lmLogin" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   thisLi = document.getElementById( "lmStateRegistrations" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   // Cannot go to product management if already there.
-   thisLi = document.getElementById( "lmProductManagement" );
-   thisLi.disabled = true;
-
-      // END of Javascript code entered by user.
-
-   }
-}
-
 function CancelDeleteMarketingStmt( )
 {
 
@@ -283,6 +233,21 @@ function CancelDeleteMarketingStmt( )
       _DisableFormElements( true );
 
       document.wMLCDeleteMarketingStatement.zAction.value = "CancelDeleteMarketingStmt";
+      document.wMLCDeleteMarketingStatement.submit( );
+   }
+}
+
+function ConfirmDeleteMarketingStmt( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCDeleteMarketingStatement.zAction.value = "ConfirmDeleteMarketingStmt";
       document.wMLCDeleteMarketingStatement.submit( );
    }
 }
@@ -529,30 +494,6 @@ function mLogout( )
       _DisableFormElements( true );
 
       document.wMLCDeleteMarketingStatement.zAction.value = "_OnUnload";
-      document.wMLCDeleteMarketingStatement.submit( );
-   }
-}
-
-function mTemplate( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmTemplate" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wMLCDeleteMarketingStatement.zAction.value = "mTemplate";
       document.wMLCDeleteMarketingStatement.submit( );
    }
 }

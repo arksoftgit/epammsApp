@@ -11,11 +11,11 @@
 <%@ page import="com.quinsoft.zeidon.utils.*" %>
 <%@ page import="com.quinsoft.zeidon.vml.*" %>
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
-<%@ page import="com.arksoft.epamms.*" %>
+<%@ page import="com.quinsoft.epamms.*" %>
 
 <%! 
 
-ObjectEngine objectEngine = com.arksoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
+ObjectEngine objectEngine = JavaObjectEngine.getInstance();
 
 public String ReplaceXSSValues( String szFieldValue )
 {
@@ -149,61 +149,7 @@ public int DoInputMapping( HttpServletRequest request,
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
 
-         strTag = "GS_AreasOfUse" + strEntityKey;
-         strMapValue = request.getParameter( strTag );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "GS_AreasOfUse", "", strMapValue );
-            else
-               if ( strMapValue != null )
-                  vGridTmp.cursor( "M_DirectionsUsage" ).setAttribute( "wkSelected", "Y" );
-               else
-                  vGridTmp.cursor( "M_DirectionsUsage" ).setAttribute( "wkSelected", "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
-         }
-
          csrRC = vGridTmp.cursor( "DirectionsAreasOfUse" ).setNextContinue( );
-      }
-
-      vGridTmp.drop( );
-      // Grid: GridSurfaces
-      iTableRowCnt = 0;
-
-      // We are creating a temp view to the grid view so that if there are 
-      // grids on the same window with the same view we do not mess up the 
-      // entity positions. 
-      vGridTmp = mMasLC.newView( );
-      csrRC = vGridTmp.cursor( "DirectionsSurface" ).setFirst( "M_DirectionsForUseSection" );
-      while ( csrRC.isSet() )
-      {
-         lEntityKey = vGridTmp.cursor( "DirectionsSurface" ).getEntityKey( );
-         strEntityKey = Long.toString( lEntityKey );
-         iTableRowCnt++;
-
-         strTag = "GS_Surface" + strEntityKey;
-         strMapValue = request.getParameter( strTag );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "GS_Surface", "", strMapValue );
-            else
-               if ( strMapValue != null )
-                  vGridTmp.cursor( "M_DirectionsUsage" ).setAttribute( "wkSelected", "Y" );
-               else
-                  vGridTmp.cursor( "M_DirectionsUsage" ).setAttribute( "wkSelected", "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
-         }
-
-         csrRC = vGridTmp.cursor( "DirectionsSurface" ).setNextContinue( );
       }
 
       vGridTmp.drop( );
@@ -221,61 +167,7 @@ public int DoInputMapping( HttpServletRequest request,
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
 
-         strTag = "GS_AppType" + strEntityKey;
-         strMapValue = request.getParameter( strTag );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "GS_AppType", "", strMapValue );
-            else
-               if ( strMapValue != null )
-                  vGridTmp.cursor( "M_DirectionsUsage" ).setAttribute( "wkSelected", "Y" );
-               else
-                  vGridTmp.cursor( "M_DirectionsUsage" ).setAttribute( "wkSelected", "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
-         }
-
          csrRC = vGridTmp.cursor( "DirectionsAppType" ).setNextContinue( );
-      }
-
-      vGridTmp.drop( );
-      // Grid: GridViruses
-      iTableRowCnt = 0;
-
-      // We are creating a temp view to the grid view so that if there are 
-      // grids on the same window with the same view we do not mess up the 
-      // entity positions. 
-      vGridTmp = mMasLC.newView( );
-      csrRC = vGridTmp.cursor( "DirectionsViruses" ).setFirst( "M_DirectionsForUseSection" );
-      while ( csrRC.isSet() )
-      {
-         lEntityKey = vGridTmp.cursor( "DirectionsViruses" ).getEntityKey( );
-         strEntityKey = Long.toString( lEntityKey );
-         iTableRowCnt++;
-
-         strTag = "GS_Virus" + strEntityKey;
-         strMapValue = request.getParameter( strTag );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "GS_Virus", "", strMapValue );
-            else
-               if ( strMapValue != null )
-                  vGridTmp.cursor( "M_DirectionsUsage" ).setAttribute( "wkSelected", "Y" );
-               else
-                  vGridTmp.cursor( "M_DirectionsUsage" ).setAttribute( "wkSelected", "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
-         }
-
-         csrRC = vGridTmp.cursor( "DirectionsViruses" ).setNextContinue( );
       }
 
       vGridTmp.drop( );
@@ -293,25 +185,43 @@ public int DoInputMapping( HttpServletRequest request,
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
 
-         strTag = "GS_Fungi" + strEntityKey;
-         strMapValue = request.getParameter( strTag );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "GS_Fungi", "", strMapValue );
-            else
-               if ( strMapValue != null )
-                  vGridTmp.cursor( "M_DirectionsUsage" ).setAttribute( "wkSelected", "Y" );
-               else
-                  vGridTmp.cursor( "M_DirectionsUsage" ).setAttribute( "wkSelected", "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
-         }
-
          csrRC = vGridTmp.cursor( "DirectionsFungi" ).setNextContinue( );
+      }
+
+      vGridTmp.drop( );
+      // Grid: GridViruses
+      iTableRowCnt = 0;
+
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
+      vGridTmp = mMasLC.newView( );
+      csrRC = vGridTmp.cursor( "DirectionsViruses" ).setFirst( "M_DirectionsForUseSection" );
+      while ( csrRC.isSet() )
+      {
+         lEntityKey = vGridTmp.cursor( "DirectionsViruses" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         iTableRowCnt++;
+
+         csrRC = vGridTmp.cursor( "DirectionsViruses" ).setNextContinue( );
+      }
+
+      vGridTmp.drop( );
+      // Grid: GridSurfaces
+      iTableRowCnt = 0;
+
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
+      vGridTmp = mMasLC.newView( );
+      csrRC = vGridTmp.cursor( "DirectionsSurface" ).setFirst( "M_DirectionsForUseSection" );
+      while ( csrRC.isSet() )
+      {
+         lEntityKey = vGridTmp.cursor( "DirectionsSurface" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         iTableRowCnt++;
+
+         csrRC = vGridTmp.cursor( "DirectionsSurface" ).setNextContinue( );
       }
 
       vGridTmp.drop( );
@@ -328,24 +238,6 @@ public int DoInputMapping( HttpServletRequest request,
          lEntityKey = vGridTmp.cursor( "DirectionsBacteria" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
-
-         strTag = "GS_Bacteria" + strEntityKey;
-         strMapValue = request.getParameter( strTag );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "GS_Bacteria", "", strMapValue );
-            else
-               if ( strMapValue != null )
-                  vGridTmp.cursor( "M_DirectionsUsage" ).setAttribute( "wkSelected", "Y" );
-               else
-                  vGridTmp.cursor( "M_DirectionsUsage" ).setAttribute( "wkSelected", "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
-         }
 
          csrRC = vGridTmp.cursor( "DirectionsBacteria" ).setNextContinue( );
       }
@@ -368,7 +260,6 @@ public int DoInputMapping( HttpServletRequest request,
 
 session = request.getSession( );
 Task task = null;
-View wWebXA = null;
 KZMSGQOO_Object mMsgQ = null; // view to Message Queue
 View vKZXMLPGO = null;
 String strLastPage = "";
@@ -398,7 +289,6 @@ String strOpenPopupWindow = "";
 String strPopupWindowSZX = "";
 String strPopupWindowSZY = "";
 String strDateFormat = "";
-String strKeyRole = "";
 String strDialogName = "";
 String strWindowName = "";
 String strLastWindow;
@@ -480,84 +370,33 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
-      // Action Operation
+      // Action Auto Object Function
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseSection.jsp", "wMLC.AcceptDirectionsUseSect" );
-      try
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_DirectionsForUseSection" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
       {
-         nOptRC = wMLC.AcceptDirectionsUseSect( new zVIEW( vKZXMLPGO ) );
+         if ( cursor.isVersioned( ) )
+         {
+           cursor.acceptSubobject( );
+           nRC = 0;
+         }
       }
-      catch (Exception e)
+
+      // Return to Last Window
+      nRC = vKZXMLPGO.cursor( "PagePath" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         strVMLError = "<br><br>*** Error running Operation AcceptDirectionsUseSect: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
+         strLastPage = vKZXMLPGO.cursor( "PagePath" ).getStringFromAttribute( "LastPageName" );
+         vKZXMLPGO.cursor( "PagePath" ).deleteEntity( CursorPosition.PREV );
+         strLastPage = strLastPage + ".jsp";
       }
       else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
+         strLastPage = "wMLCDirectionsForUseSection.jsp";
 
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "AddNewDirectionsUseStmt" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseSection.jsp", "wMLC.AddNewDirectionsUseStmt" );
-      try
-      {
-         nOptRC = wMLC.AddNewDirectionsUseStmt( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         strVMLError = "<br><br>*** Error running Operation AddNewDirectionsUseStmt: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "DirectionsForUseStatement" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      strURL = response.encodeRedirectURL( strLastPage );
       nRC = 1;  // do the redirection
       break;
    }
@@ -567,16 +406,59 @@ if ( strActionToProcess != null )
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
 
+      // Action Auto Object Function
+      nRC = 0;
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_DirectionsForUseSection" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
+      {
+         if ( cursor.isVersioned( ) )
+         {
+           cursor.cancelSubobject( );
+           nRC = 0;
+         }
+      }
+
+      // Return to Last Window
+      nRC = vKZXMLPGO.cursor( "PagePath" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+         strLastPage = vKZXMLPGO.cursor( "PagePath" ).getStringFromAttribute( "LastPageName" );
+         vKZXMLPGO.cursor( "PagePath" ).deleteEntity( CursorPosition.PREV );
+         strLastPage = strLastPage + ".jsp";
+      }
+      else
+         strLastPage = "wMLCDirectionsForUseSection.jsp";
+
+      strURL = response.encodeRedirectURL( strLastPage );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DirsForUseStatementAdd" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseSection.jsp", "wMLC.CancelDirectionsUseSect" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseSection.jsp", "wMLC.GOTO_DirsForUseStatementAdd" );
       try
       {
-         nOptRC = wMLC.CancelDirectionsUseSect( new zVIEW( vKZXMLPGO ) );
+         nOptRC = wMLC.GOTO_DirsForUseStatementAdd( new zVIEW( vKZXMLPGO ) );
       }
       catch (Exception e)
       {
-         strVMLError = "<br><br>*** Error running Operation CancelDirectionsUseSect: " + e.getMessage();
+         // Set the error return code.
+         nOptRC = 2;
+         strVMLError = "<br><br>*** Error running Operation GOTO_DirsForUseStatementAdd: " + e.getMessage();
          task.log().info( strVMLError );
       }
       if ( nOptRC == 2 )
@@ -585,81 +467,91 @@ if ( strActionToProcess != null )
          session.setAttribute( "ZeidonError", "Y" );
          break;
       }
-      else
-      if ( nOptRC == 1 )
+
+      // Dynamic Next Window
+      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
+         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
+         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
+         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
+         strURL = response.encodeRedirectURL( strNextJSP_Name );
+         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
+         else
+            strFunctionCall = "";
+
+         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
+         {
+            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
+            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCDirectionsForUseSection" );
+         }
+
+         nRC = 1;  // do the redirection
+         break;
       }
 
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      // Next Window
+      strURL = response.encodeRedirectURL( "wMLCDirectionsForUseStatement.jsp" );
+      vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
+      vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCDirectionsForUseSection" );
       nRC = 1;  // do the redirection
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "CleanStorDispStmtHTML" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DirsForUseStatementUpdate" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
 
-   // Javascript code entered by user.
-      nRC = DoInputMapping( request, session, application, true );
-      String str = request.getParameter( "NoteToReviewer" );
-      str = wMLC.SanitizeHTML( str, "", "" );
-      VmlOperation.ReplaceMessage( task, "NoteToReviewer", "", str, false );
-      str = request.getParameter( "MandatoryExclusiveStmt1" );
-      str = wMLC.SanitizeHTML( str, "", "" );
-      VmlOperation.ReplaceMessage( task, "MandatoryExclusiveStmt1", "", str, false );
-      str = request.getParameter( "MandatoryExclusiveStmt2" );
-      str = wMLC.SanitizeHTML( str, "", "" );
-      VmlOperation.ReplaceMessage( task, "MandatoryExclusiveStmt2", "", str, false );
-      if ( nRC != 0 )
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
          break;
-   // END of Javascript code entered by user.
 
-      // Action Operation
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mMasLC;
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mMasLC.cursor( "M_DirectionsForUseStatement" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mMasLC.cursor( "M_DirectionsForUseStatement" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mMasLC.cursor( "M_DirectionsForUseStatement" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mMasLC.cursor( "M_DirectionsForUseStatement" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Action Auto Object Function
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseSection.jsp", "wMLC.CleanStorDispStmtHTML" );
-      try
-      {
-         nOptRC = wMLC.CleanStorDispStmtHTML( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         strVMLError = "<br><br>*** Error running Operation CleanStorDispStmtHTML: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
+      EntityCursor cursor = mMasLC.cursor( "M_DirectionsForUseStatement" );
+      cursor.createTemporalSubobjectVersion( );
 
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      // Next Window
+      strURL = response.encodeRedirectURL( "wMLCDirectionsForUseStatement.jsp" );
+      vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
+      vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCDirectionsForUseSection" );
       nRC = 1;  // do the redirection
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "ClearSelectedAppTypes" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_SelectRemoveAreasOfUse" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
@@ -669,95 +561,6 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "ClearSelectedAreasOfUse" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "ClearSelectedBacteria" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "ClearSelectedFungi" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "ClearSelectedSurfaces" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "ClearSelectedViruses" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
       break;
    }
 
@@ -779,22 +582,22 @@ if ( strActionToProcess != null )
       {
          lEKey = java.lang.Long.parseLong( strEntityKey );
          csrRC = mMasLC.cursor( "M_DirectionsForUseStatement" ).setByEntityKey( lEKey );
-         if ( !csrRC.isSet() ) //if ( nRC < 0 )
+         if ( !csrRC.isSet() )
          {
-         // This is temp code because SetCursorEntityKey doesn't work on subobjects.
+            boolean bFound = false;
             csrRCk = mMasLC.cursor( "M_DirectionsForUseStatement" ).setFirst( );
-            while ( csrRCk.isSet() )
+            while ( csrRCk.isSet() && !bFound )
             {
                lEKey = mMasLC.cursor( "M_DirectionsForUseStatement" ).getEntityKey( );
                strKey = Long.toString( lEKey );
                if ( StringUtils.equals( strKey, strEntityKey ) )
                {
                   // Stop while loop because we have positioned on the correct entity.
-                  break;
+                  bFound = true;
                }
                else
                   csrRCk = mMasLC.cursor( "M_DirectionsForUseStatement" ).setNextContinue( );
-            }
+            } // Grid
          }
       }
 
@@ -807,6 +610,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation MoveDirectionsUseStmtDown: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -816,20 +621,34 @@ if ( strActionToProcess != null )
          session.setAttribute( "ZeidonError", "Y" );
          break;
       }
-      else
-      if ( nOptRC == 1 )
+
+      // Dynamic Next Window
+      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
+         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
+         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
+         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
+         strURL = response.encodeRedirectURL( strNextJSP_Name );
+         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
+         else
+            strFunctionCall = "";
+
+         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
+         {
+            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
+            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCDirectionsForUseSection" );
+         }
+
+         nRC = 1;  // do the redirection
+         break;
       }
 
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      // Stay on Window with Refresh
+      strURL = response.encodeRedirectURL( "wMLCDirectionsForUseSection.jsp" );
       nRC = 1;  // do the redirection
       break;
    }
@@ -852,22 +671,22 @@ if ( strActionToProcess != null )
       {
          lEKey = java.lang.Long.parseLong( strEntityKey );
          csrRC = mMasLC.cursor( "M_DirectionsForUseStatement" ).setByEntityKey( lEKey );
-         if ( !csrRC.isSet() ) //if ( nRC < 0 )
+         if ( !csrRC.isSet() )
          {
-         // This is temp code because SetCursorEntityKey doesn't work on subobjects.
+            boolean bFound = false;
             csrRCk = mMasLC.cursor( "M_DirectionsForUseStatement" ).setFirst( );
-            while ( csrRCk.isSet() )
+            while ( csrRCk.isSet() && !bFound )
             {
                lEKey = mMasLC.cursor( "M_DirectionsForUseStatement" ).getEntityKey( );
                strKey = Long.toString( lEKey );
                if ( StringUtils.equals( strKey, strEntityKey ) )
                {
                   // Stop while loop because we have positioned on the correct entity.
-                  break;
+                  bFound = true;
                }
                else
                   csrRCk = mMasLC.cursor( "M_DirectionsForUseStatement" ).setNextContinue( );
-            }
+            } // Grid
          }
       }
 
@@ -880,6 +699,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation MoveDirectionsUseStmtUp: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -889,306 +710,34 @@ if ( strActionToProcess != null )
          session.setAttribute( "ZeidonError", "Y" );
          break;
       }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
 
-      if ( strNextJSP_Name.equals( "" ) )
+      // Dynamic Next Window
+      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
-      }
+         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
+         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
+         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
+         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
+         strURL = response.encodeRedirectURL( strNextJSP_Name );
+         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
+         else
+            strFunctionCall = "";
 
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
+         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
+         {
+            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
+            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCDirectionsForUseSection" );
+         }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "NextDirectionsUseSect" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseSection.jsp", "wMLC.NextDirectionsUseSect" );
-      try
-      {
-         nOptRC = wMLC.NextDirectionsUseSect( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         strVMLError = "<br><br>*** Error running Operation NextDirectionsUseSect: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
+         nRC = 1;  // do the redirection
          break;
       }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
 
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "PreviousDirectionsUseSect" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseSection.jsp", "wMLC.PreviousDirectionsUseSect" );
-      try
-      {
-         nOptRC = wMLC.PreviousDirectionsUseSect( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         strVMLError = "<br><br>*** Error running Operation PreviousDirectionsUseSect: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "SaveAddNewDirectionsUseSect" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseSection.jsp", "wMLC.SaveAddNewDirectionsUseSect" );
-      try
-      {
-         nOptRC = wMLC.SaveAddNewDirectionsUseSect( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         strVMLError = "<br><br>*** Error running Operation SaveAddNewDirectionsUseSect: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "SelectAllAppTypes" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "SelectAllAreasOfUse" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "SelectAllBacteria" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "SelectAllFungi" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "SelectAllSurfaces" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "SelectAllViruses" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "SelectAreasOfUseStmtForUpdate" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseSection.jsp", "wMLC.SelectAreasOfUseStmtForUpdate" );
-      try
-      {
-         nOptRC = wMLC.SelectAreasOfUseStmtForUpdate( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         strVMLError = "<br><br>*** Error running Operation SelectAreasOfUseStmtForUpdate: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "AreasOfUseStatement" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      // Stay on Window with Refresh
+      strURL = response.encodeRedirectURL( "wMLCDirectionsForUseSection.jsp" );
       nRC = 1;  // do the redirection
       break;
    }
@@ -1211,22 +760,22 @@ if ( strActionToProcess != null )
       {
          lEKey = java.lang.Long.parseLong( strEntityKey );
          csrRC = mMasLC.cursor( "M_DirectionsForUseStatement" ).setByEntityKey( lEKey );
-         if ( !csrRC.isSet() ) //if ( nRC < 0 )
+         if ( !csrRC.isSet() )
          {
-         // This is temp code because SetCursorEntityKey doesn't work on subobjects.
+            boolean bFound = false;
             csrRCk = mMasLC.cursor( "M_DirectionsForUseStatement" ).setFirst( );
-            while ( csrRCk.isSet() )
+            while ( csrRCk.isSet() && !bFound )
             {
                lEKey = mMasLC.cursor( "M_DirectionsForUseStatement" ).getEntityKey( );
                strKey = Long.toString( lEKey );
                if ( StringUtils.equals( strKey, strEntityKey ) )
                {
                   // Stop while loop because we have positioned on the correct entity.
-                  break;
+                  bFound = true;
                }
                else
                   csrRCk = mMasLC.cursor( "M_DirectionsForUseStatement" ).setNextContinue( );
-            }
+            } // Grid
          }
       }
 
@@ -1239,6 +788,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation SelectDirectionsUseStmtForDelete: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -1248,129 +799,36 @@ if ( strActionToProcess != null )
          session.setAttribute( "ZeidonError", "Y" );
          break;
       }
-      else
-      if ( nOptRC == 1 )
+
+      // Dynamic Next Window
+      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
+         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
+         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
+         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
+         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
+         strURL = response.encodeRedirectURL( strNextJSP_Name );
+         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
+         else
+            strFunctionCall = "";
 
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "DeleteDirectionsForUseStatement" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "SelectDirectionsUseStmtForUpdate" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Position on the entity that was selected in the grid.
-      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
-      View mMasLC;
-      mMasLC = task.getViewByName( "mMasLC" );
-      if ( VmlOperation.isValid( mMasLC ) )
-      {
-         lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mMasLC.cursor( "M_DirectionsForUseStatement" ).setByEntityKey( lEKey );
-         if ( !csrRC.isSet() ) //if ( nRC < 0 )
+         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
          {
-         // This is temp code because SetCursorEntityKey doesn't work on subobjects.
-            csrRCk = mMasLC.cursor( "M_DirectionsForUseStatement" ).setFirst( );
-            while ( csrRCk.isSet() )
-            {
-               lEKey = mMasLC.cursor( "M_DirectionsForUseStatement" ).getEntityKey( );
-               strKey = Long.toString( lEKey );
-               if ( StringUtils.equals( strKey, strEntityKey ) )
-               {
-                  // Stop while loop because we have positioned on the correct entity.
-                  break;
-               }
-               else
-                  csrRCk = mMasLC.cursor( "M_DirectionsForUseStatement" ).setNextContinue( );
-            }
+            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
+            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCDirectionsForUseSection" );
          }
-      }
 
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseSection.jsp", "wMLC.SelectDirectionsUseStmtForUpdate" );
-      try
-      {
-         nOptRC = wMLC.SelectDirectionsUseStmtForUpdate( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         strVMLError = "<br><br>*** Error running Operation SelectDirectionsUseStmtForUpdate: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
+         nRC = 1;  // do the redirection
          break;
       }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "DirectionsForUseStatement" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "ShowHideEditorMandatory1" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
 
       // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "ShowHideEditorMandatory2" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
-
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "ShowHideEditorNoteToReviewer" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
-
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      strURL = response.encodeRedirectURL( "wMLCDeleteDirectionsForUseStatement.jsp" );
+      vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
+      vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCDirectionsForUseSection" );
       nRC = 1;  // do the redirection
       break;
    }
@@ -1389,98 +847,6 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smNextDirectionsUseSect" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseSection.jsp", "wMLC.NextDirectionsUseSect" );
-      try
-      {
-         nOptRC = wMLC.NextDirectionsUseSect( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         strVMLError = "<br><br>*** Error running Operation NextDirectionsUseSect: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smPreviousDirectionsUseSect" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseSection.jsp", "wMLC.PreviousDirectionsUseSect" );
-      try
-      {
-         nOptRC = wMLC.PreviousDirectionsUseSect( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         strVMLError = "<br><br>*** Error running Operation PreviousDirectionsUseSect: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
    while ( bDone == false && StringUtils.equals( strActionToProcess, "smAcceptDirectionsUseSect" ) )
    {
       bDone = true;
@@ -1491,84 +857,33 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
-      // Action Operation
+      // Action Auto Object Function
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseSection.jsp", "wMLC.AcceptDirectionsUseSect" );
-      try
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_DirectionsForUseSection" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
       {
-         nOptRC = wMLC.AcceptDirectionsUseSect( new zVIEW( vKZXMLPGO ) );
+         if ( cursor.isVersioned( ) )
+         {
+           cursor.acceptSubobject( );
+           nRC = 0;
+         }
       }
-      catch (Exception e)
+
+      // Return to Last Window
+      nRC = vKZXMLPGO.cursor( "PagePath" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         strVMLError = "<br><br>*** Error running Operation AcceptDirectionsUseSect: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
+         strLastPage = vKZXMLPGO.cursor( "PagePath" ).getStringFromAttribute( "LastPageName" );
+         vKZXMLPGO.cursor( "PagePath" ).deleteEntity( CursorPosition.PREV );
+         strLastPage = strLastPage + ".jsp";
       }
       else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
+         strLastPage = "wMLCDirectionsForUseSection.jsp";
 
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smSaveAddNewDirectionsUseSect" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseSection.jsp", "wMLC.SaveAddNewDirectionsUseSect" );
-      try
-      {
-         nOptRC = wMLC.SaveAddNewDirectionsUseSect( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         strVMLError = "<br><br>*** Error running Operation SaveAddNewDirectionsUseSect: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      strURL = response.encodeRedirectURL( strLastPage );
       nRC = 1;  // do the redirection
       break;
    }
@@ -1578,38 +893,33 @@ if ( strActionToProcess != null )
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
 
-      // Action Operation
+      // Action Auto Object Function
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseSection.jsp", "wMLC.CancelDirectionsUseSect" );
-      try
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_DirectionsForUseSection" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
       {
-         nOptRC = wMLC.CancelDirectionsUseSect( new zVIEW( vKZXMLPGO ) );
+         if ( cursor.isVersioned( ) )
+         {
+           cursor.cancelSubobject( );
+           nRC = 0;
+         }
       }
-      catch (Exception e)
+
+      // Return to Last Window
+      nRC = vKZXMLPGO.cursor( "PagePath" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         strVMLError = "<br><br>*** Error running Operation CancelDirectionsUseSect: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
+         strLastPage = vKZXMLPGO.cursor( "PagePath" ).getStringFromAttribute( "LastPageName" );
+         vKZXMLPGO.cursor( "PagePath" ).deleteEntity( CursorPosition.PREV );
+         strLastPage = strLastPage + ".jsp";
       }
       else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
+         strLastPage = "wMLCDirectionsForUseSection.jsp";
 
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      strURL = response.encodeRedirectURL( strLastPage );
       nRC = 1;  // do the redirection
       break;
    }
@@ -1634,6 +944,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation ProductManagement: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -1643,20 +955,34 @@ if ( strActionToProcess != null )
          session.setAttribute( "ZeidonError", "Y" );
          break;
       }
-      else
-      if ( nOptRC == 1 )
+
+      // Dynamic Next Window
+      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
+         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
+         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
+         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
+         strURL = response.encodeRedirectURL( strNextJSP_Name );
+         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
+         else
+            strFunctionCall = "";
+
+         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
+         {
+            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
+            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCDirectionsForUseSection" );
+         }
+
+         nRC = 1;  // do the redirection
+         break;
       }
 
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartTopWindow, "wStartUp", "AdminListPrimaryRegistrants" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      // Next Window
+      strURL = response.encodeRedirectURL( "wStartUpAdminListPrimaryRegistrants.jsp" );
       nRC = 1;  // do the redirection
       break;
    }
@@ -1681,6 +1007,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation SubregistrantManagement: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -1690,20 +1018,34 @@ if ( strActionToProcess != null )
          session.setAttribute( "ZeidonError", "Y" );
          break;
       }
-      else
-      if ( nOptRC == 1 )
+
+      // Dynamic Next Window
+      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
+         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
+         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
+         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
+         strURL = response.encodeRedirectURL( strNextJSP_Name );
+         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
+         else
+            strFunctionCall = "";
+
+         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
+         {
+            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
+            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCDirectionsForUseSection" );
+         }
+
+         nRC = 1;  // do the redirection
+         break;
       }
 
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartTopWindow, "wStartUp", "AdminListSubregistrants" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      // Next Window
+      strURL = response.encodeRedirectURL( "wStartUpAdminListSubregistrants.jsp" );
       nRC = 1;  // do the redirection
       break;
    }
@@ -1728,6 +1070,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation TrackingNotificationCompliance: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -1737,20 +1081,34 @@ if ( strActionToProcess != null )
          session.setAttribute( "ZeidonError", "Y" );
          break;
       }
-      else
-      if ( nOptRC == 1 )
+
+      // Dynamic Next Window
+      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
+         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
+         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
+         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
+         strURL = response.encodeRedirectURL( strNextJSP_Name );
+         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
+         else
+            strFunctionCall = "";
+
+         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
+         {
+            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
+            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCDirectionsForUseSection" );
+         }
+
+         nRC = 1;  // do the redirection
+         break;
       }
 
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartTopWindow, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      // Next Window
+      strURL = response.encodeRedirectURL( ".jsp" );
       nRC = 1;  // do the redirection
       break;
    }
@@ -1775,6 +1133,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation StateRegistrations: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -1784,20 +1144,34 @@ if ( strActionToProcess != null )
          session.setAttribute( "ZeidonError", "Y" );
          break;
       }
-      else
-      if ( nOptRC == 1 )
+
+      // Dynamic Next Window
+      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
+         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
+         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
+         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
+         strURL = response.encodeRedirectURL( strNextJSP_Name );
+         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
+         else
+            strFunctionCall = "";
+
+         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
+         {
+            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
+            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCDirectionsForUseSection" );
+         }
+
+         nRC = 1;  // do the redirection
+         break;
       }
 
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartTopWindow, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      // Next Window
+      strURL = response.encodeRedirectURL( ".jsp" );
       nRC = 1;  // do the redirection
       break;
    }
@@ -1822,6 +1196,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation MarketingFulfillment: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -1831,20 +1207,34 @@ if ( strActionToProcess != null )
          session.setAttribute( "ZeidonError", "Y" );
          break;
       }
-      else
-      if ( nOptRC == 1 )
+
+      // Dynamic Next Window
+      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
+         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
+         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
+         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
+         strURL = response.encodeRedirectURL( strNextJSP_Name );
+         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
+         else
+            strFunctionCall = "";
+
+         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
+         {
+            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
+            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCDirectionsForUseSection" );
+         }
+
+         nRC = 1;  // do the redirection
+         break;
       }
 
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartTopWindow, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      // Next Window
+      strURL = response.encodeRedirectURL( ".jsp" );
       nRC = 1;  // do the redirection
       break;
    }
@@ -1869,6 +1259,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation WebDevelopment: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -1878,20 +1270,34 @@ if ( strActionToProcess != null )
          session.setAttribute( "ZeidonError", "Y" );
          break;
       }
-      else
-      if ( nOptRC == 1 )
+
+      // Dynamic Next Window
+      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
+         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
+         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
+         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
+         strURL = response.encodeRedirectURL( strNextJSP_Name );
+         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
+         else
+            strFunctionCall = "";
+
+         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
+         {
+            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
+            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCDirectionsForUseSection" );
+         }
+
+         nRC = 1;  // do the redirection
+         break;
       }
 
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartTopWindow, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      // Next Window
+      strURL = response.encodeRedirectURL( ".jsp" );
       nRC = 1;  // do the redirection
       break;
    }
@@ -1911,6 +1317,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation PrimaryRegistrantCompanySetup: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -1920,20 +1328,34 @@ if ( strActionToProcess != null )
          session.setAttribute( "ZeidonError", "Y" );
          break;
       }
-      else
-      if ( nOptRC == 1 )
+
+      // Dynamic Next Window
+      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
+         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
+         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
+         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
+         strURL = response.encodeRedirectURL( strNextJSP_Name );
+         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
+         else
+            strFunctionCall = "";
+
+         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
+         {
+            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
+            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCDirectionsForUseSection" );
+         }
+
+         nRC = 1;  // do the redirection
+         break;
       }
 
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartTopWindow, "wStartUp", "AdminUpdatePrimaryRegistrant" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      // Next Window
+      strURL = response.encodeRedirectURL( "wStartUpAdminUpdatePrimaryRegistrant.jsp" );
       nRC = 1;  // do the redirection
       break;
    }
@@ -1958,6 +1380,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation ProcessLogin: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -1967,67 +1391,34 @@ if ( strActionToProcess != null )
          session.setAttribute( "ZeidonError", "Y" );
          break;
       }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
 
-      if ( strNextJSP_Name.equals( "" ) )
+      // Dynamic Next Window
+      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ResetTopWindow, "wStartUp", "UserLogin" );
-      }
+         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
+         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
+         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
+         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
+         strURL = response.encodeRedirectURL( strNextJSP_Name );
+         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
+         else
+            strFunctionCall = "";
 
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
+         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
+         {
+            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
+            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCDirectionsForUseSection" );
+         }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mTemplate" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseSection.jsp", "wStartUp.Template" );
-      try
-      {
-         nOptRC = wStartUp.Template( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         strVMLError = "<br><br>*** Error running Operation Template: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
+         nRC = 1;  // do the redirection
          break;
       }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
 
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wTemplD", "TemplateList" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      // Next Window
+      strURL = response.encodeRedirectURL( "wStartUpUserLogin.jsp" );
       nRC = 1;  // do the redirection
       break;
    }
@@ -2146,13 +1537,6 @@ else
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
 
-   wWebXA = task.getViewByName( "wWebXfer" );
-   if ( VmlOperation.isValid( wWebXA ) )
-   {
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wMLC" );
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "DirectionsForUseSection" );
-   }
-
 %>
 
 <html>
@@ -2170,12 +1554,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
-
-<!-- TinyMCE -->
-<script language="JavaScript" type="text/javascript" src="./js/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/TinyMCE.js"></script>
-<!-- /TinyMCE -->
-
 <script language="JavaScript" type="text/javascript" src="./js/tabpane.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wMLCDirectionsForUseSection.js"></script>
 
@@ -2201,7 +1579,6 @@ else
        <li id="lmAdministration" name="lmAdministration"><a href="#" onclick="mAdministration()">Company Profile</a></li>
        <li id="lmLogin" name="lmLogin"><a href="#" onclick="mLogin()">Login</a></li>
        <li id="lmLogout" name="lmLogout"><a href="#" onclick="mLogout()">Logout</a></li>
-       <li id="lmTemplate" name="lmTemplate"><a href="#" onclick="mTemplate()">Template</a></li>
    </ul>
 </div>  <!-- end Navigation Bar -->
 
@@ -2214,41 +1591,11 @@ else
 <div id="sidenavigation">
    <ul>
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "NextDirectionsUseSection" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li><a href="#"  onclick="smNextDirectionsUseSect( )">Save and Go To Next</a></li>
-<%
-   }
-%>
-
-<%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "PreviousDirectionsUseSection" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li><a href="#"  onclick="smPreviousDirectionsUseSect( )">Save and Go To Previous</a></li>
-<%
-   }
-%>
-
-<%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "SaveAndReturn" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
        <li><a href="#"  onclick="smAcceptDirectionsUseSect( )">Save and Return</a></li>
-<%
-   }
-%>
-
-<%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "SaveAddNew" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li><a href="#"  onclick="smSaveAddNewDirectionsUseSect( )">Save and Add New</a></li>
 <%
    }
 %>
@@ -2357,27 +1704,13 @@ else
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wMLC", "DirectionsForUseSection" );
    strOpenFile = VmlOperation.FindOpenFile( task );
-   strDateFormat = "YYYY.MM.DD";
+   strDateFormat = "MM/DD/YYYY";
 
-   wWebXA = task.getViewByName( "wWebXfer" );
-   if ( VmlOperation.isValid( wWebXA ) )
-   {
-      nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
-         if ( strKeyRole == null )
-            strKeyRole = "";
-
-         task.log().info( "Root.KeyRole: " + strKeyRole );
-      }
-   }
 %>
 
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
-   <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
    <input name="zPopupWindowSZX" id="zPopupWindowSZX" type="hidden" value="<%=strPopupWindowSZX%>">
    <input name="zPopupWindowSZY" id="zPopupWindowSZY" type="hidden" value="<%=strPopupWindowSZY%>">
@@ -2391,17 +1724,34 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:26px;width:100px;"></div>
+<div style="height:12px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* DirectionsForUseSection:GroupBox */ %>
+
+<div id="DirectionsForUseSection" name="DirectionsForUseSection" class="withborder" style="width:780px;height:194px;float:left;">  <!-- DirectionsForUseSection --> 
+
+<div  id="DirectionsForUseSection" name="DirectionsForUseSection" >Directions for Use Section</div>
+
+ <!-- This is added as a line spacer -->
+<div style="height:18px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
-<% /* DirectionsForUseSection:GroupBox */ %>
-<fieldset id="DirectionsForUseSection" name="DirectionsForUseSection"   style="size:absolute; width:750px; height:174px;">
-<legend>Directions for Use Section</legend>
+<% /* GroupBox2:GroupBox */ %>
+<div id="GroupBox2" name="GroupBox2" style="float:left;width:754px;" >
+
+<table cols=2 style="width:754px;"  class="grouptable">
+
+<tr>
+<td valign="top" style="width:136px;">
 <% /* DirectionsUseTitle::Text */ %>
 
-<label  id="DirectionsUseTitle:" name="DirectionsUseTitle:" style="width:130px;height:16px;position:absolute;left:12px;top:28px;">Title:</label>
+<span  id="DirectionsUseTitle:" name="DirectionsUseTitle:" style="width:130px;height:16px;">Title:</span>
 
+</td>
+<td valign="top"  class="text12" style="width:584px;">
 <% /* DirectionsUseTitle:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "DirectionsUseTitle", strError );
@@ -2441,12 +1791,18 @@ else
    }
 %>
 
-<input class="text12" name="DirectionsUseTitle" id="DirectionsUseTitle" style="width:584px;position:absolute;left:152px;top:28px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="DirectionsUseTitle" id="DirectionsUseTitle" style="width:584px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
+</td>
+</tr>
+<tr>
+<td valign="top" style="width:136px;">
 <% /* Subtitle::Text */ %>
 
-<label  id="Subtitle:" name="Subtitle:" style="width:130px;height:16px;position:absolute;left:12px;top:58px;">Subtitle:</label>
+<span  id="Subtitle:" name="Subtitle:" style="width:130px;height:16px;">Subtitle:</span>
 
+</td>
+<td valign="top"  class="text12" style="width:584px;">
 <% /* Subtitle:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "Subtitle", strError );
@@ -2486,16 +1842,18 @@ else
    }
 %>
 
-<input class="text12" name="Subtitle" id="Subtitle" style="width:584px;position:absolute;left:152px;top:58px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="Subtitle" id="Subtitle" style="width:584px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
+</td>
+</tr>
+<tr>
+<td valign="top" style="width:136px;">
 <% /* NoteToReviewer::Text */ %>
 
-<label  id="NoteToReviewer:" name="NoteToReviewer:" style="width:130px;height:16px;position:absolute;left:12px;top:92px;">Note to Reviewer:</label>
+<span  id="NoteToReviewer:" name="NoteToReviewer:" style="width:130px;height:16px;">Note to Reviewer:</span>
 
-<% /* GB1:GroupBox */ %>
-
-<div id="GB1" name="GB1" style="width:584px;height:86px;position:absolute;left:152px;top:92px;">  <!-- GB1 --> 
-
+</td>
+<td valign="top" style="width:584px;">
 <% /* NoteToReviewer:MLEdit */ %>
 <%
    // MLEdit: NoteToReviewer
@@ -2510,7 +1868,7 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).info( "Invalid View: " + "NoteToReviewer" );
+         task.log( ).debug( "Invalid View: " + "NoteToReviewer" );
       else
       {
          nRC = mMasLC.cursor( "M_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
@@ -2520,42 +1878,78 @@ else
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).info( "M_DirectionsForUseSection.ReviewerNote: " + strErrorMapValue );
+            task.log( ).debug( "M_DirectionsForUseSection.ReviewerNote: " + strErrorMapValue );
          }
          else
-            task.log( ).info( "Entity does not exist: " + "mMasLC.M_DirectionsForUseSection" );
+            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_DirectionsForUseSection" );
       }
    }
 %>
 
-<textarea name="NoteToReviewer" id="NoteToReviewer" class="mceSimple" style="width:576px;height:86px;position:absolute;left:0px;top:0px;border:solid;border-width:4px;border-style:groove;"><%=strErrorMapValue%></textarea>
+<textarea id="NoteToReviewer" name="NoteToReviewer" class="" style="width:584px;height:86px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+
+</td>
+</tr>
+</table>
+
+</div>  <!-- GroupBox2 --> 
+
+</div>  <!-- End of a new line -->
 
 
-</div>  <!--  GB1 --> 
-<% /* BtnNote:BitmapBtn */ %>
-<img src=".\images\tinymce.png" name="BtnNote" id="BtnNote" onclick="ShowHideEditorNoteToReviewer( )" style="width:22px;height:22px;position:absolute;left:738px;top:124px;" title="Note to Reviewer Show/Hide Editor"  alt="Note to Reviewer Show/Hide Editor" >
-
-</fieldset>  <!-- DirectionsForUseSection --> 
-<div id='clear'></div>
-
+</div>  <!--  DirectionsForUseSection --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
  <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
+<div style="height:14px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBDirectionsUseStatements:GroupBox */ %>
-<fieldset id="GBDirectionsUseStatements" name="GBDirectionsUseStatements"   style="size:absolute; width:750px; height:144px;">
-<legend>Directions for Use:  Statements</legend>
-<% /* New:PushBtn */ %>
-<button type="button" class="formStylebutton" name="New" id="New" value="" onclick="AddNewDirectionsUseStmt( )" style="width:78px;height:26px;position:absolute;left:564px;top:10px;">New</button>
 
+<div id="GBDirectionsUseStatements" name="GBDirectionsUseStatements" style="width:780px;float:left;">  <!-- GBDirectionsUseStatements --> 
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:14px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox3:GroupBox */ %>
+
+<div id="GroupBox3" name="GroupBox3" style="width:624px;height:30px;float:left;">  <!-- GroupBox3 --> 
+
+
+</div>  <!--  GroupBox3 --> 
+<% /* GroupBox4:GroupBox */ %>
+
+<div id="GroupBox4" name="GroupBox4" style="width:112px;height:30px;float:left;">  <!-- GroupBox4 --> 
+
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:26px;">&nbsp&nbsp</span>
+<% /* New:PushBtn */ %>
+<button type="button" class="formStylebutton" name="New" id="New" value="" onclick="GOTO_DirsForUseStatementAdd( )" style="width:78px;height:26px;">New</button>
+
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  GroupBox4 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:2px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridDirectionsUse:Grid */ %>
-<div class="tableScroll"  style="position:absolute;top:36px;left:10px;width:730px;height:128px;">
+<div class="tableScroll"  style="width:730px;height:104px;">
 
 <table name="GridDirectionsUse" id="GridDirectionsUse" cellspacing=0  cols=5  >
 
@@ -2569,7 +1963,7 @@ else
 
 </tr></thead>
 
-<tbody height="78px;">
+<tbody height="54px;">
 
 <%
 try
@@ -2618,8 +2012,8 @@ try
 
 <tr<%=strOdd%>>
 
-   <td><a href="#" onclick="SelectDirectionsUseStmtForUpdate( this.id )" id="GridEditDirectionsUse::<%=strEntityKey%>"><%=strGridEditDirectionsUse%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateDirectionsUseStatement" onclick="SelectDirectionsUseStmtForUpdate( this.id )" id="BMBUpdateDirectionsUseStatement::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
+   <td><a href="#" onclick="GOTO_DirsForUseStatementUpdate( this.id )" id="GridEditDirectionsUse::<%=strEntityKey%>"><%=strGridEditDirectionsUse%></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateDirectionsUseStatement" onclick="GOTO_DirsForUseStatementUpdate( this.id )" id="BMBUpdateDirectionsUseStatement::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteDirectionsUseStatement" onclick="SelectDirectionsUseStmtForDelete( this.id )" id="BMBDeleteDirectionsUseStatement::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBMoveDirectionsUseStatementUp" onclick="MoveDirectionsUseStmtUp( this.id )" id="BMBMoveDirectionsUseStatementUp::<%=strEntityKey%>"><img src="./images/ePammsUp.jpg" alt="Move Up"></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBMoveDirectionsUseStateDown" onclick="MoveDirectionsUseStmtDown( this.id )" id="BMBMoveDirectionsUseStateDown::<%=strEntityKey%>"><img src="./images/ePammsDown.jpg" alt="Move Down"></a></td>
@@ -2643,22 +2037,23 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 </div>
 
-</fieldset>  <!-- GBDirectionsUseStatements --> 
-<div id='clear'></div>
+</div>  <!-- End of a new line -->
 
+
+</div>  <!--  GBDirectionsUseStatements --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
  <!-- This is added as a line spacer -->
-<div style="height:12px;width:100px;"></div>
+<div style="height:14px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
+<div style="height:1px;width:20px;float:left;"></div>   <!-- Width Spacer -->
 <% /* TabACS:Tab */ %>
 
-<div id="TabACS" class="tab-pane withborder" style="width:750px;"> <!-- Beginning of Tab Control TabACS -->
+<div id="TabACS" class="tab-pane withborder" style="width:752px;"> <!-- Beginning of Tab Control TabACS -->
 <script type="text/javascript">TabACS = new WebFXTabPane( document.getElementById( "TabACS" ) );</script>
 
 <div id="TabAreasOfUse" class="tab-page " > <!-- Tab item TabAreasOfUse -->
@@ -2681,14 +2076,10 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <div style="height:12px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
 <% /* HTSelectAllAreasOfUse:Text */ %>
 
-<a href="#" id="HTSelectAllAreasOfUse" name="HTSelectAllAreasOfUse"  onclick="SelectAllAreasOfUse( );" style="width:80px;height:16px;">Select All</a>
-
-<% /* HTClearSelectedAreasOfUse:Text */ %>
-
-<a href="#" id="HTClearSelectedAreasOfUse" name="HTClearSelectedAreasOfUse"  onclick="ClearSelectedAreasOfUse( );" style="width:100px;height:16px;">Clear Selected</a>
+<a href="#" id="HTSelectAllAreasOfUse" name="HTSelectAllAreasOfUse"  onclick="GOTO_SelectRemoveAreasOfUse( );" style="width:162px;height:16px;">Select/Remove Entries</a>
 
 </div>  <!-- End of a new line -->
 
@@ -2703,11 +2094,10 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <% /* GridAreasOfUse:Grid */ %>
 <div class="tableScroll"  style="height:262px;">
 
-<table name="GridAreasOfUse" id="GridAreasOfUse" cellspacing=0  cols=2  >
+<table name="GridAreasOfUse" id="GridAreasOfUse" cellspacing=0  cols=1  >
 
 <thead><tr>
 
-   <th>Select</th>
    <th>Area</th>
 
 </tr></thead>
@@ -2726,8 +2116,6 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
-      String strGS_AreasOfUse;
-      String strGS_AreasOfUseValue;
       String strGridEditAreasOfUse;
       
       View vGridAreasOfUse;
@@ -2741,27 +2129,6 @@ try
          lEntityKey = vGridAreasOfUse.cursor( "DirectionsAreasOfUse" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          strButtonName = "SelectButton" + strEntityKey;
-
-         strGS_AreasOfUse = "";
-         nRC = vGridAreasOfUse.cursor( "M_DirectionsUsage" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strGS_AreasOfUse = vGridAreasOfUse.cursor( "M_DirectionsUsage" ).getStringFromAttribute( "wkSelected", "" );
-
-            if ( strGS_AreasOfUse == null )
-               strGS_AreasOfUse = "";
-         }
-
-         if ( StringUtils.equals( strGS_AreasOfUse, "Y" ) )
-         {
-            strGS_AreasOfUseValue = "GS_AreasOfUse" + strEntityKey;
-            strGS_AreasOfUse = "<input name='" + strGS_AreasOfUseValue + "' id='" + strGS_AreasOfUseValue + "' value='Y' type='checkbox'  CHECKED > ";
-         }
-         else
-         {
-            strGS_AreasOfUseValue = "GS_AreasOfUse" + strEntityKey;
-            strGS_AreasOfUse = "<input name='" + strGS_AreasOfUseValue + "' id='" + strGS_AreasOfUseValue + "' value='Y' type='checkbox' > ";
-         }
 
          strGridEditAreasOfUse = "";
          nRC = vGridAreasOfUse.cursor( "M_DirectionsUsage" ).checkExistenceOfEntity( ).toInt();
@@ -2780,7 +2147,6 @@ try
 
 <tr<%=strOdd%>>
 
-   <td nowrap><%=strGS_AreasOfUse%></td>
    <td><%=strGridEditAreasOfUse%></td>
 
 </tr>
@@ -2827,36 +2193,17 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <div  id="DirectionsTypesSurfaces" name="DirectionsTypesSurfaces" >Directions for Use:  Types of Surfaces Statements</div>
 
  <!-- This is added as a line spacer -->
-<div style="height:12px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
-<% /* HTSelectAllSurfaces:Text */ %>
-
-<a href="#" id="HTSelectAllSurfaces" name="HTSelectAllSurfaces"  onclick="SelectAllSurfaces( );" style="width:80px;height:16px;">Select All</a>
-
-<% /* HTClearSelectedSurfaces:Text */ %>
-
-<a href="#" id="HTClearSelectedSurfaces" name="HTClearSelectedSurfaces"  onclick="ClearSelectedSurfaces( );" style="width:100px;height:16px;">Clear Selected</a>
-
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
+<div style="height:34px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridSurfaces:Grid */ %>
 <div class="tableScroll"  style="height:262px;">
 
-<table name="GridSurfaces" id="GridSurfaces" cellspacing=0  cols=2  >
+<table name="GridSurfaces" id="GridSurfaces" cellspacing=0  cols=1  >
 
 <thead><tr>
 
-   <th>Select</th>
    <th>Surface</th>
 
 </tr></thead>
@@ -2875,8 +2222,6 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
-      String strGS_Surface;
-      String strGS_SurfaceValue;
       String strGridEditSurface;
       
       View vGridSurfaces;
@@ -2890,27 +2235,6 @@ try
          lEntityKey = vGridSurfaces.cursor( "DirectionsSurface" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          strButtonName = "SelectButton" + strEntityKey;
-
-         strGS_Surface = "";
-         nRC = vGridSurfaces.cursor( "M_DirectionsUsage" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strGS_Surface = vGridSurfaces.cursor( "M_DirectionsUsage" ).getStringFromAttribute( "wkSelected", "" );
-
-            if ( strGS_Surface == null )
-               strGS_Surface = "";
-         }
-
-         if ( StringUtils.equals( strGS_Surface, "Y" ) )
-         {
-            strGS_SurfaceValue = "GS_Surface" + strEntityKey;
-            strGS_Surface = "<input name='" + strGS_SurfaceValue + "' id='" + strGS_SurfaceValue + "' value='Y' type='checkbox'  CHECKED > ";
-         }
-         else
-         {
-            strGS_SurfaceValue = "GS_Surface" + strEntityKey;
-            strGS_Surface = "<input name='" + strGS_SurfaceValue + "' id='" + strGS_SurfaceValue + "' value='Y' type='checkbox' > ";
-         }
 
          strGridEditSurface = "";
          nRC = vGridSurfaces.cursor( "M_DirectionsUsage" ).checkExistenceOfEntity( ).toInt();
@@ -2929,7 +2253,6 @@ try
 
 <tr<%=strOdd%>>
 
-   <td nowrap><%=strGS_Surface%></td>
    <td><%=strGridEditSurface%></td>
 
 </tr>
@@ -2976,36 +2299,17 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <div  id="DirectionsAppTypes" name="DirectionsAppTypes" >Directions for Use:  Application Types Statements</div>
 
  <!-- This is added as a line spacer -->
-<div style="height:12px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
-<% /* HTSelectAllAppTypes:Text */ %>
-
-<a href="#" id="HTSelectAllAppTypes" name="HTSelectAllAppTypes"  onclick="SelectAllAppTypes( );" style="width:80px;height:16px;">Select All</a>
-
-<% /* HTClearSelectedAppTypes:Text */ %>
-
-<a href="#" id="HTClearSelectedAppTypes" name="HTClearSelectedAppTypes"  onclick="ClearSelectedAppTypes( );" style="width:100px;height:16px;">Clear Selected</a>
-
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
+<div style="height:34px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridAppTypes:Grid */ %>
 <div class="tableScroll"  style="height:262px;">
 
-<table name="GridAppTypes" id="GridAppTypes" cellspacing=0  cols=2  >
+<table name="GridAppTypes" id="GridAppTypes" cellspacing=0  cols=1  >
 
 <thead><tr>
 
-   <th>Select</th>
    <th>Application Types</th>
 
 </tr></thead>
@@ -3024,8 +2328,6 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
-      String strGS_AppType;
-      String strGS_AppTypeValue;
       String strGridEditAppType;
       
       View vGridAppTypes;
@@ -3039,27 +2341,6 @@ try
          lEntityKey = vGridAppTypes.cursor( "DirectionsAppType" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          strButtonName = "SelectButton" + strEntityKey;
-
-         strGS_AppType = "";
-         nRC = vGridAppTypes.cursor( "M_DirectionsUsage" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strGS_AppType = vGridAppTypes.cursor( "M_DirectionsUsage" ).getStringFromAttribute( "wkSelected", "" );
-
-            if ( strGS_AppType == null )
-               strGS_AppType = "";
-         }
-
-         if ( StringUtils.equals( strGS_AppType, "Y" ) )
-         {
-            strGS_AppTypeValue = "GS_AppType" + strEntityKey;
-            strGS_AppType = "<input name='" + strGS_AppTypeValue + "' id='" + strGS_AppTypeValue + "' value='Y' type='checkbox'  CHECKED > ";
-         }
-         else
-         {
-            strGS_AppTypeValue = "GS_AppType" + strEntityKey;
-            strGS_AppType = "<input name='" + strGS_AppTypeValue + "' id='" + strGS_AppTypeValue + "' value='Y' type='checkbox' > ";
-         }
 
          strGridEditAppType = "";
          nRC = vGridAppTypes.cursor( "M_DirectionsUsage" ).checkExistenceOfEntity( ).toInt();
@@ -3078,7 +2359,6 @@ try
 
 <tr<%=strOdd%>>
 
-   <td nowrap><%=strGS_AppType%></td>
    <td><%=strGridEditAppType%></td>
 
 </tr>
@@ -3125,36 +2405,17 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <div  id="DirectionsBacteriaStatements" name="DirectionsBacteriaStatements" >Directions for Use:  Bacteria Statements</div>
 
  <!-- This is added as a line spacer -->
-<div style="height:12px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
-<% /* HTSelectAllBacteria:Text */ %>
-
-<a href="#" id="HTSelectAllBacteria" name="HTSelectAllBacteria"  onclick="SelectAllBacteria( );" style="width:80px;height:16px;">Select All</a>
-
-<% /* HTClearSelectedBacteria:Text */ %>
-
-<a href="#" id="HTClearSelectedBacteria" name="HTClearSelectedBacteria"  onclick="ClearSelectedBacteria( );" style="width:100px;height:16px;">Clear Selected</a>
-
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
+<div style="height:34px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridBacteria:Grid */ %>
 <div class="tableScroll"  style="height:262px;">
 
-<table name="GridBacteria" id="GridBacteria" cellspacing=0  cols=2  >
+<table name="GridBacteria" id="GridBacteria" cellspacing=0  cols=1  >
 
 <thead><tr>
 
-   <th>Select</th>
    <th>Bacteria</th>
 
 </tr></thead>
@@ -3173,8 +2434,6 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
-      String strGS_Bacteria;
-      String strGS_BacteriaValue;
       String strGridEditBacteria;
       
       View vGridBacteria;
@@ -3188,27 +2447,6 @@ try
          lEntityKey = vGridBacteria.cursor( "DirectionsBacteria" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          strButtonName = "SelectButton" + strEntityKey;
-
-         strGS_Bacteria = "";
-         nRC = vGridBacteria.cursor( "M_DirectionsUsage" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strGS_Bacteria = vGridBacteria.cursor( "M_DirectionsUsage" ).getStringFromAttribute( "wkSelected", "" );
-
-            if ( strGS_Bacteria == null )
-               strGS_Bacteria = "";
-         }
-
-         if ( StringUtils.equals( strGS_Bacteria, "Y" ) )
-         {
-            strGS_BacteriaValue = "GS_Bacteria" + strEntityKey;
-            strGS_Bacteria = "<input name='" + strGS_BacteriaValue + "' id='" + strGS_BacteriaValue + "' value='Y' type='checkbox'  CHECKED > ";
-         }
-         else
-         {
-            strGS_BacteriaValue = "GS_Bacteria" + strEntityKey;
-            strGS_Bacteria = "<input name='" + strGS_BacteriaValue + "' id='" + strGS_BacteriaValue + "' value='Y' type='checkbox' > ";
-         }
 
          strGridEditBacteria = "";
          nRC = vGridBacteria.cursor( "M_DirectionsUsage" ).checkExistenceOfEntity( ).toInt();
@@ -3227,7 +2465,6 @@ try
 
 <tr<%=strOdd%>>
 
-   <td nowrap><%=strGS_Bacteria%></td>
    <td><%=strGridEditBacteria%></td>
 
 </tr>
@@ -3274,36 +2511,17 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <div  id="DirectionsFungiStatements" name="DirectionsFungiStatements" >Directions for Use:  Fungi Statements</div>
 
  <!-- This is added as a line spacer -->
-<div style="height:12px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
-<% /* HTSelectAllFungi:Text */ %>
-
-<a href="#" id="HTSelectAllFungi" name="HTSelectAllFungi"  onclick="SelectAllFungi( );" style="width:80px;height:16px;">Select All</a>
-
-<% /* HTClearSelectedFungi:Text */ %>
-
-<a href="#" id="HTClearSelectedFungi" name="HTClearSelectedFungi"  onclick="ClearSelectedFungi( );" style="width:100px;height:16px;">Clear Selected</a>
-
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
+<div style="height:34px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridFungi:Grid */ %>
 <div class="tableScroll"  style="height:262px;">
 
-<table name="GridFungi" id="GridFungi" cellspacing=0  cols=2  >
+<table name="GridFungi" id="GridFungi" cellspacing=0  cols=1  >
 
 <thead><tr>
 
-   <th>Select</th>
    <th>Fungi</th>
 
 </tr></thead>
@@ -3322,8 +2540,6 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
-      String strGS_Fungi;
-      String strGS_FungiValue;
       String strGridEditFungi;
       
       View vGridFungi;
@@ -3337,27 +2553,6 @@ try
          lEntityKey = vGridFungi.cursor( "DirectionsFungi" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          strButtonName = "SelectButton" + strEntityKey;
-
-         strGS_Fungi = "";
-         nRC = vGridFungi.cursor( "M_DirectionsUsage" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strGS_Fungi = vGridFungi.cursor( "M_DirectionsUsage" ).getStringFromAttribute( "wkSelected", "" );
-
-            if ( strGS_Fungi == null )
-               strGS_Fungi = "";
-         }
-
-         if ( StringUtils.equals( strGS_Fungi, "Y" ) )
-         {
-            strGS_FungiValue = "GS_Fungi" + strEntityKey;
-            strGS_Fungi = "<input name='" + strGS_FungiValue + "' id='" + strGS_FungiValue + "' value='Y' type='checkbox'  CHECKED > ";
-         }
-         else
-         {
-            strGS_FungiValue = "GS_Fungi" + strEntityKey;
-            strGS_Fungi = "<input name='" + strGS_FungiValue + "' id='" + strGS_FungiValue + "' value='Y' type='checkbox' > ";
-         }
 
          strGridEditFungi = "";
          nRC = vGridFungi.cursor( "M_DirectionsUsage" ).checkExistenceOfEntity( ).toInt();
@@ -3376,7 +2571,6 @@ try
 
 <tr<%=strOdd%>>
 
-   <td nowrap><%=strGS_Fungi%></td>
    <td><%=strGridEditFungi%></td>
 
 </tr>
@@ -3423,36 +2617,17 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <div  id="DirectionsVirusesStatements" name="DirectionsVirusesStatements" >Directions for Use:  Viruses Statements</div>
 
  <!-- This is added as a line spacer -->
-<div style="height:12px;width:100px;"></div>
+<div style="height:36px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
-<% /* HTSelectAllViruses:Text */ %>
-
-<a href="#" id="HTSelectAllViruses" name="HTSelectAllViruses"  onclick="SelectAllViruses( );" style="width:80px;height:16px;">Select All</a>
-
-<% /* HTClearSelectedViruses:Text */ %>
-
-<a href="#" id="HTClearSelectedViruses" name="HTClearSelectedViruses"  onclick="ClearSelectedViruses( );" style="width:100px;height:16px;">Clear Selected</a>
-
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridViruses:Grid */ %>
 <div class="tableScroll"  style="height:262px;">
 
-<table name="GridViruses" id="GridViruses" cellspacing=0  cols=2  >
+<table name="GridViruses" id="GridViruses" cellspacing=0  cols=1  >
 
 <thead><tr>
 
-   <th>Select</th>
    <th>Virus</th>
 
 </tr></thead>
@@ -3471,8 +2646,6 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
-      String strGS_Virus;
-      String strGS_VirusValue;
       String strGridEditVirus;
       
       View vGridViruses;
@@ -3486,27 +2659,6 @@ try
          lEntityKey = vGridViruses.cursor( "DirectionsViruses" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          strButtonName = "SelectButton" + strEntityKey;
-
-         strGS_Virus = "";
-         nRC = vGridViruses.cursor( "M_DirectionsUsage" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strGS_Virus = vGridViruses.cursor( "M_DirectionsUsage" ).getStringFromAttribute( "wkSelected", "" );
-
-            if ( strGS_Virus == null )
-               strGS_Virus = "";
-         }
-
-         if ( StringUtils.equals( strGS_Virus, "Y" ) )
-         {
-            strGS_VirusValue = "GS_Virus" + strEntityKey;
-            strGS_Virus = "<input name='" + strGS_VirusValue + "' id='" + strGS_VirusValue + "' value='Y' type='checkbox'  CHECKED > ";
-         }
-         else
-         {
-            strGS_VirusValue = "GS_Virus" + strEntityKey;
-            strGS_Virus = "<input name='" + strGS_VirusValue + "' id='" + strGS_VirusValue + "' value='Y' type='checkbox' > ";
-         }
 
          strGridEditVirus = "";
          nRC = vGridViruses.cursor( "M_DirectionsUsage" ).checkExistenceOfEntity( ).toInt();
@@ -3525,7 +2677,6 @@ try
 
 <tr<%=strOdd%>>
 
-   <td nowrap><%=strGS_Virus%></td>
    <td><%=strGridEditVirus%></td>
 
 </tr>
@@ -3565,7 +2716,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 
  <!-- This is added as a line spacer -->
-<div style="height:224px;width:100px;"></div>
+<div style="height:230px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:32px;float:left;"></div>   <!-- Width Spacer -->

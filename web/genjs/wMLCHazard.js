@@ -185,7 +185,6 @@ function _AfterPageLoaded( )
       }
    }
 
-   var keyRole = document.wMLCHazard.zKeyRole.value;
    document.wMLCHazard.zError.value = "";
    document.wMLCHazard.zOpenFile.value = "";
 
@@ -573,6 +572,51 @@ function smEditMarketingSect( )
    }
 }
 
+function smGOTO_ListUsageEntries( )
+{
+
+      // This is for indicating whether the user hit the window close box.
+      isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCHazard.zAction.value = "smGOTO_ListUsageEntries";
+      document.wMLCHazard.submit( );
+   }
+}
+
+function smGOTO_CompositeEntries( )
+{
+
+      // This is for indicating whether the user hit the window close box.
+      isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCHazard.zAction.value = "smGOTO_CompositeEntries";
+      document.wMLCHazard.submit( );
+   }
+}
+
+function smGOTO_CompositeWO_Usage( )
+{
+
+      // This is for indicating whether the user hit the window close box.
+      isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCHazard.zAction.value = "smGOTO_CompositeWO_Usage";
+      document.wMLCHazard.submit( );
+   }
+}
+
 function mProductManagement( )
 {
 
@@ -785,30 +829,6 @@ function mLogout( )
       _DisableFormElements( true );
 
       document.wMLCHazard.zAction.value = "_OnUnload";
-      document.wMLCHazard.submit( );
-   }
-}
-
-function mTemplate( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmTemplate" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wMLCHazard.zAction.value = "mTemplate";
       document.wMLCHazard.submit( );
    }
 }

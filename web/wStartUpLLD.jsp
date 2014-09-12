@@ -11,11 +11,11 @@
 <%@ page import="com.quinsoft.zeidon.utils.*" %>
 <%@ page import="com.quinsoft.zeidon.vml.*" %>
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
-<%@ page import="com.arksoft.epamms.*" %>
+<%@ page import="com.quinsoft.epamms.*" %>
 
 <%! 
 
-ObjectEngine objectEngine = com.arksoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
+ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
 public String ReplaceXSSValues( String szFieldValue )
 {
@@ -1073,7 +1073,7 @@ else
 <head>
 
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-<title>Label DesignerXY</title>
+<title>Label Designer</title>
 
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
 <!-- log a user out.  Timeout.inc is not used if the dialog or window has a timeout value set. -->
@@ -1081,8 +1081,7 @@ else
 
 <script language="JavaScript" type="text/javascript" src="./genjs/wStartUpLLD.js"></script>
 
-
-<script src="js/LabelDesigner.js"></script>
+<script src="js/labeldesigner.js"></script>
 
 <link rel="stylesheet" type="text/css" href="css/result-light.css">
 

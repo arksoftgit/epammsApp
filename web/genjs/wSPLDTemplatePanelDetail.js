@@ -185,7 +185,6 @@ function _AfterPageLoaded( )
       }
    }
 
-   var keyRole = document.wSPLDTemplatePanelDetail.zKeyRole.value;
    document.wSPLDTemplatePanelDetail.zError.value = "";
    document.wSPLDTemplatePanelDetail.zOpenFile.value = "";
 
@@ -194,9 +193,6 @@ function _AfterPageLoaded( )
       clearTimeout( timerID );
       timerID = null;
    }
-
-   document.wSPLDTemplatePanelDetail.hKerningUnits.value = document.wSPLDTemplatePanelDetail.KerningUnits.value
-   document.wSPLDTemplatePanelDetail.hWordSpacingUnits.value = document.wSPLDTemplatePanelDetail.WordSpacingUnits.value
 
    var varTimeout = document.wSPLDTemplatePanelDetail.zTimeout.value;
    if ( varTimeout > 0 )
@@ -315,7 +311,7 @@ if (!answer)
    }
 }
 
-function UpdateTemplateBlock( strTagEntityKey )
+function UpdateTemplateBlock( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -323,10 +319,6 @@ function UpdateTemplateBlock( strTagEntityKey )
 
    if ( _IsDocDisabled( ) == false )
    {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wSPLDTemplatePanelDetail.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
       document.wSPLDTemplatePanelDetail.zAction.value = "UpdateTemplateBlock";
@@ -631,30 +623,6 @@ function mTemplate( )
 
       document.wSPLDTemplatePanelDetail.zAction.value = "mTemplate";
       document.wSPLDTemplatePanelDetail.submit( );
-   }
-}
-
-function KerningUnitsOnChange( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      document.wSPLDTemplatePanelDetail.hKerningUnits.value = document.wSPLDTemplatePanelDetail.KerningUnits.value;
-   }
-}
-
-function WordSpacingUnitsOnChange( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      document.wSPLDTemplatePanelDetail.hWordSpacingUnits.value = document.wSPLDTemplatePanelDetail.WordSpacingUnits.value;
    }
 }
 

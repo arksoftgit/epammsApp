@@ -185,7 +185,6 @@ function _AfterPageLoaded( )
       }
    }
 
-   var keyRole = document.wSPLDTemplateDetail.zKeyRole.value;
    document.wSPLDTemplateDetail.zError.value = "";
    document.wSPLDTemplateDetail.zOpenFile.value = "";
 
@@ -194,8 +193,6 @@ function _AfterPageLoaded( )
       clearTimeout( timerID );
       timerID = null;
    }
-
-   document.wSPLDTemplateDetail.hHazard.value = document.wSPLDTemplateDetail.Hazard.value
 
    var varTimeout = document.wSPLDTemplateDetail.zTimeout.value;
    if ( varTimeout > 0 )
@@ -344,7 +341,7 @@ function NewTemplatePanel( )
    }
 }
 
-function UpdateTemplatePanel( strTagEntityKey )
+function UpdateTemplatePanel( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -352,10 +349,6 @@ function UpdateTemplatePanel( strTagEntityKey )
 
    if ( _IsDocDisabled( ) == false )
    {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wSPLDTemplateDetail.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
       document.wSPLDTemplateDetail.zAction.value = "UpdateTemplatePanel";
@@ -630,18 +623,6 @@ function mTemplate( )
 
       document.wSPLDTemplateDetail.zAction.value = "mTemplate";
       document.wSPLDTemplateDetail.submit( );
-   }
-}
-
-function HazardOnChange( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      document.wSPLDTemplateDetail.hHazard.value = document.wSPLDTemplateDetail.Hazard.value;
    }
 }
 

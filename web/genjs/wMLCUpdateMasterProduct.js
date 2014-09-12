@@ -185,28 +185,6 @@ function _AfterPageLoaded( )
       }
    }
 
-   var keyRole = document.wMLCUpdateMasterProduct.zKeyRole.value;
-   // Javascript code entered by user.
-   var thisLi;
-
-// if ( keyRole == "P" || keyRole == "N" ) // If we are here, we have to be a Primary.
-   // We knock out Login and Template as options.
-   thisLi = document.getElementById( "lmLogin" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   thisLi = document.getElementById( "lmStateRegistrations" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   // Cannot go to product management if already there.
-   thisLi = document.getElementById( "lmProductManagement" );
-   thisLi.disabled = true;
-   // END of Javascript code entered by user.
-
    document.wMLCUpdateMasterProduct.zError.value = "";
    document.wMLCUpdateMasterProduct.zOpenFile.value = "";
 
@@ -280,44 +258,6 @@ function AcceptUpdateMasterProduct( )
    }
 }
 
-function CompareToPreviousMLC( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCUpdateMasterProduct.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wMLCUpdateMasterProduct.zAction.value = "CompareToPreviousMLC";
-      document.wMLCUpdateMasterProduct.submit( );
-   }
-}
-
-function GenerateNewMLC_Version( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCUpdateMasterProduct.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wMLCUpdateMasterProduct.zAction.value = "GenerateNewMLC_Version";
-      document.wMLCUpdateMasterProduct.submit( );
-   }
-}
-
 function CancelUpdateMasterProduct( )
 {
 
@@ -329,6 +269,21 @@ function CancelUpdateMasterProduct( )
       _DisableFormElements( true );
 
       document.wMLCUpdateMasterProduct.zAction.value = "CancelUpdateMasterProduct";
+      document.wMLCUpdateMasterProduct.submit( );
+   }
+}
+
+function CompareToPreviousMLC( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCUpdateMasterProduct.zAction.value = "CompareToPreviousMLC";
       document.wMLCUpdateMasterProduct.submit( );
    }
 }
@@ -352,6 +307,25 @@ function DeleteMasterLabelContent( strTagEntityKey )
    }
 }
 
+function GenerateNewMLC_Version( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCUpdateMasterProduct.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCUpdateMasterProduct.zAction.value = "GenerateNewMLC_Version";
+      document.wMLCUpdateMasterProduct.submit( );
+   }
+}
+
 function InitMasterProductForUpdate( )
 {
 
@@ -360,29 +334,10 @@ function InitMasterProductForUpdate( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      // Javascript code entered by user.
+      _DisableFormElements( true );
 
-   var thisLi;
-
-// if ( keyRole == "P" || keyRole == "N" ) // If we are here, we have to be a Primary.
-   // We knock out Login and Template as options.
-   thisLi = document.getElementById( "lmLogin" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   thisLi = document.getElementById( "lmStateRegistrations" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   // Cannot go to product management if already there.
-   thisLi = document.getElementById( "lmProductManagement" );
-   thisLi.disabled = true;
-
-      // END of Javascript code entered by user.
-
+      document.wMLCUpdateMasterProduct.zAction.value = "InitMasterProductForUpdate";
+      document.wMLCUpdateMasterProduct.submit( );
    }
 }
 
@@ -413,18 +368,6 @@ function UpdateMasterLabelContent( strTagEntityKey )
       var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
 
       document.wMLCUpdateMasterProduct.zTableRowSelect.value = strEntityKey;
-      // Javascript code entered by user.
-/*
-      var userId = VmlOperation.SfGetUserId( task );
-      if ( userId.compare( "Admin" ) == 0 )
-      {
-         var r = confirm( "As Admin, you are permitted to update a Finalized Master Label Content\n" + "If you want to proceed with the update, please press OK" );
-         if ( r == true )
-            return;
-      }
-*/
-      // END of Javascript code entered by user.
-
       _DisableFormElements( true );
 
       document.wMLCUpdateMasterProduct.zAction.value = "UpdateMasterLabelContent";
@@ -693,30 +636,6 @@ function mLogout( )
       _DisableFormElements( true );
 
       document.wMLCUpdateMasterProduct.zAction.value = "_OnUnload";
-      document.wMLCUpdateMasterProduct.submit( );
-   }
-}
-
-function mTemplate( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmTemplate" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wMLCUpdateMasterProduct.zAction.value = "mTemplate";
       document.wMLCUpdateMasterProduct.submit( );
    }
 }

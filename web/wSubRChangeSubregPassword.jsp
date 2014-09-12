@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 
 <%-- wSubRChangeSubregPassword --%>
 
@@ -11,11 +11,11 @@
 <%@ page import="com.quinsoft.zeidon.utils.*" %>
 <%@ page import="com.quinsoft.zeidon.vml.*" %>
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
-<%@ page import="com.arksoft.epamms.*" %>
+<%@ page import="com.quinsoft.epamms.*" %>
 
 <%! 
 
-ObjectEngine objectEngine = com.arksoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
+ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
 public String ReplaceXSSValues( String szFieldValue )
 {
@@ -256,6 +256,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation CancelChangeSubregPassword: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -302,6 +304,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation ConfirmChangeSubregPassword: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -362,6 +366,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation ConfirmChangeSubregPassword: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -403,6 +409,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation CancelChangeSubregPassword: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -836,7 +844,7 @@ else
             catch (Exception e)
             {
                out.println("There is an error on Password: " + e.getMessage());
-               task.log().info( "*** Error on ctrl Password" + e.getMessage() );
+               task.log().error( "*** Error on ctrl Password", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -892,7 +900,7 @@ else
             catch (Exception e)
             {
                out.println("There is an error on NewPassword: " + e.getMessage());
-               task.log().info( "*** Error on ctrl NewPassword" + e.getMessage() );
+               task.log().error( "*** Error on ctrl NewPassword", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -948,7 +956,7 @@ else
             catch (Exception e)
             {
                out.println("There is an error on ConfirmPassword: " + e.getMessage());
-               task.log().info( "*** Error on ctrl ConfirmPassword" + e.getMessage() );
+               task.log().error( "*** Error on ctrl ConfirmPassword", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";

@@ -185,7 +185,6 @@ function _AfterPageLoaded( )
       }
    }
 
-   var keyRole = document.wStartUpChangePrimRegUserPassword.zKeyRole.value;
    document.wStartUpChangePrimRegUserPassword.zError.value = "";
    document.wStartUpChangePrimRegUserPassword.zOpenFile.value = "";
 
@@ -625,30 +624,6 @@ function mLogout( )
       _DisableFormElements( true );
 
       document.wStartUpChangePrimRegUserPassword.zAction.value = "_OnUnload";
-      document.wStartUpChangePrimRegUserPassword.submit( );
-   }
-}
-
-function mTemplate( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmTemplate" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wStartUpChangePrimRegUserPassword.zAction.value = "mTemplate";
       document.wStartUpChangePrimRegUserPassword.submit( );
    }
 }

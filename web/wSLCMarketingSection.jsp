@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 
 <%-- wSLCMarketingSection --%>
 
@@ -11,11 +11,11 @@
 <%@ page import="com.quinsoft.zeidon.utils.*" %>
 <%@ page import="com.quinsoft.zeidon.vml.*" %>
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
-<%@ page import="com.arksoft.epamms.*" %>
+<%@ page import="com.quinsoft.epamms.*" %>
 
 <%! 
 
-ObjectEngine objectEngine = com.arksoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
+ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
 public String ReplaceXSSValues( String szFieldValue )
 {
@@ -139,7 +139,7 @@ public int DoInputMapping( HttpServletRequest request,
                VmlOperation.CreateMessage( task, "Select", "", strMapValue );
             else
                if ( strMapValue != null )
-                  vGridTmp.cursor( "S_MarketingStatement" ).setAttribute( "Selected", "Y" );
+                  vGridTmp.cursor( "S_MarketingStatement" ).setAttribute( "Selected", strMapValue );
                else
                   vGridTmp.cursor( "S_MarketingStatement" ).setAttribute( "Selected", "" );
          }
@@ -150,222 +150,6 @@ public int DoInputMapping( HttpServletRequest request,
          }
 
          csrRC = vGridTmp.cursor( "S_MarketingStatement" ).setNextContinue( );
-      }
-
-      vGridTmp.drop( );
-      // Grid: AreasOfUse
-      iTableRowCnt = 0;
-
-      // We are creating a temp view to the grid view so that if there are 
-      // grids on the same window with the same view we do not mess up the 
-      // entity positions. 
-      vGridTmp = mSubLC.newView( );
-      csrRC = vGridTmp.cursor( "MarketingAreasOfUse" ).setFirst( "S_MarketingSection" );
-      while ( csrRC.isSet() )
-      {
-         lEntityKey = vGridTmp.cursor( "MarketingAreasOfUse" ).getEntityKey( );
-         strEntityKey = Long.toString( lEntityKey );
-         iTableRowCnt++;
-
-         strTag = "GS_AreasOfUse" + strEntityKey;
-         strMapValue = request.getParameter( strTag );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "GS_AreasOfUse", "", strMapValue );
-            else
-               if ( strMapValue != null )
-                  vGridTmp.cursor( "S_MarketingUsage" ).setAttribute( "wkSelected", "Y" );
-               else
-                  vGridTmp.cursor( "S_MarketingUsage" ).setAttribute( "wkSelected", "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
-         }
-
-         csrRC = vGridTmp.cursor( "MarketingAreasOfUse" ).setNextContinue( );
-      }
-
-      vGridTmp.drop( );
-      // Grid: AppTypes
-      iTableRowCnt = 0;
-
-      // We are creating a temp view to the grid view so that if there are 
-      // grids on the same window with the same view we do not mess up the 
-      // entity positions. 
-      vGridTmp = mSubLC.newView( );
-      csrRC = vGridTmp.cursor( "MarketingAppType" ).setFirst( "S_MarketingSection" );
-      while ( csrRC.isSet() )
-      {
-         lEntityKey = vGridTmp.cursor( "MarketingAppType" ).getEntityKey( );
-         strEntityKey = Long.toString( lEntityKey );
-         iTableRowCnt++;
-
-         strTag = "GS_AppTypes" + strEntityKey;
-         strMapValue = request.getParameter( strTag );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "GS_AppTypes", "", strMapValue );
-            else
-               if ( strMapValue != null )
-                  vGridTmp.cursor( "S_MarketingUsage" ).setAttribute( "wkSelected", "Y" );
-               else
-                  vGridTmp.cursor( "S_MarketingUsage" ).setAttribute( "wkSelected", "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
-         }
-
-         csrRC = vGridTmp.cursor( "MarketingAppType" ).setNextContinue( );
-      }
-
-      vGridTmp.drop( );
-      // Grid: Fungi
-      iTableRowCnt = 0;
-
-      // We are creating a temp view to the grid view so that if there are 
-      // grids on the same window with the same view we do not mess up the 
-      // entity positions. 
-      vGridTmp = mSubLC.newView( );
-      csrRC = vGridTmp.cursor( "MarketingFungi" ).setFirst( "S_MarketingSection" );
-      while ( csrRC.isSet() )
-      {
-         lEntityKey = vGridTmp.cursor( "MarketingFungi" ).getEntityKey( );
-         strEntityKey = Long.toString( lEntityKey );
-         iTableRowCnt++;
-
-         strTag = "GS_Fungi" + strEntityKey;
-         strMapValue = request.getParameter( strTag );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "GS_Fungi", "", strMapValue );
-            else
-               if ( strMapValue != null )
-                  vGridTmp.cursor( "S_MarketingUsage" ).setAttribute( "wkSelected", "Y" );
-               else
-                  vGridTmp.cursor( "S_MarketingUsage" ).setAttribute( "wkSelected", "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
-         }
-
-         csrRC = vGridTmp.cursor( "MarketingFungi" ).setNextContinue( );
-      }
-
-      vGridTmp.drop( );
-      // Grid: Bacteria
-      iTableRowCnt = 0;
-
-      // We are creating a temp view to the grid view so that if there are 
-      // grids on the same window with the same view we do not mess up the 
-      // entity positions. 
-      vGridTmp = mSubLC.newView( );
-      csrRC = vGridTmp.cursor( "MarketingBacteria" ).setFirst( "S_MarketingSection" );
-      while ( csrRC.isSet() )
-      {
-         lEntityKey = vGridTmp.cursor( "MarketingBacteria" ).getEntityKey( );
-         strEntityKey = Long.toString( lEntityKey );
-         iTableRowCnt++;
-
-         strTag = "GS_Bacteria" + strEntityKey;
-         strMapValue = request.getParameter( strTag );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "GS_Bacteria", "", strMapValue );
-            else
-               if ( strMapValue != null )
-                  vGridTmp.cursor( "S_MarketingUsage" ).setAttribute( "wkSelected", "Y" );
-               else
-                  vGridTmp.cursor( "S_MarketingUsage" ).setAttribute( "wkSelected", "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
-         }
-
-         csrRC = vGridTmp.cursor( "MarketingBacteria" ).setNextContinue( );
-      }
-
-      vGridTmp.drop( );
-      // Grid: Surfaces
-      iTableRowCnt = 0;
-
-      // We are creating a temp view to the grid view so that if there are 
-      // grids on the same window with the same view we do not mess up the 
-      // entity positions. 
-      vGridTmp = mSubLC.newView( );
-      csrRC = vGridTmp.cursor( "MarketingSurface" ).setFirst( "S_MarketingSection" );
-      while ( csrRC.isSet() )
-      {
-         lEntityKey = vGridTmp.cursor( "MarketingSurface" ).getEntityKey( );
-         strEntityKey = Long.toString( lEntityKey );
-         iTableRowCnt++;
-
-         strTag = "GS_Surface" + strEntityKey;
-         strMapValue = request.getParameter( strTag );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "GS_Surface", "", strMapValue );
-            else
-               if ( strMapValue != null )
-                  vGridTmp.cursor( "S_MarketingUsage" ).setAttribute( "wkSelected", "Y" );
-               else
-                  vGridTmp.cursor( "S_MarketingUsage" ).setAttribute( "wkSelected", "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
-         }
-
-         csrRC = vGridTmp.cursor( "MarketingSurface" ).setNextContinue( );
-      }
-
-      vGridTmp.drop( );
-      // Grid: Viruses
-      iTableRowCnt = 0;
-
-      // We are creating a temp view to the grid view so that if there are 
-      // grids on the same window with the same view we do not mess up the 
-      // entity positions. 
-      vGridTmp = mSubLC.newView( );
-      csrRC = vGridTmp.cursor( "MarketingViruses" ).setFirst( "S_MarketingSection" );
-      while ( csrRC.isSet() )
-      {
-         lEntityKey = vGridTmp.cursor( "MarketingViruses" ).getEntityKey( );
-         strEntityKey = Long.toString( lEntityKey );
-         iTableRowCnt++;
-
-         strTag = "GS_Virus" + strEntityKey;
-         strMapValue = request.getParameter( strTag );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "GS_Virus", "", strMapValue );
-            else
-               if ( strMapValue != null )
-                  vGridTmp.cursor( "S_MarketingUsage" ).setAttribute( "wkSelected", "Y" );
-               else
-                  vGridTmp.cursor( "S_MarketingUsage" ).setAttribute( "wkSelected", "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
-         }
-
-         csrRC = vGridTmp.cursor( "MarketingViruses" ).setNextContinue( );
       }
 
       vGridTmp.drop( );
@@ -507,6 +291,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation AcceptMarketingSect: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -587,6 +373,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation InitAppTypesStmtForUpdate: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -628,6 +416,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation CancelMarketingSect: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -725,6 +515,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation SelectMarketingSectForDelete: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -770,22 +562,22 @@ if ( strActionToProcess != null )
       {
          lEKey = java.lang.Long.parseLong( strEntityKey );
          csrRC = mSubLC.cursor( "S_MarketingStatement" ).setByEntityKey( lEKey );
-         if ( !csrRC.isSet() ) //if ( nRC < 0 )
+         if ( !csrRC.isSet() )
          {
-         // This is temp code because SetCursorEntityKey doesn't work on subobjects.
+            boolean bFound = false;
             csrRCk = mSubLC.cursor( "S_MarketingStatement" ).setFirst( );
-            while ( csrRCk.isSet() )
+            while ( csrRCk.isSet() && !bFound )
             {
                lEKey = mSubLC.cursor( "S_MarketingStatement" ).getEntityKey( );
                strKey = Long.toString( lEKey );
                if ( StringUtils.equals( strKey, strEntityKey ) )
                {
                   // Stop while loop because we have positioned on the correct entity.
-                  break;
+                  bFound = true;
                }
                else
                   csrRCk = mSubLC.cursor( "S_MarketingStatement" ).setNextContinue( );
-            }
+            } // Grid
          }
       }
 
@@ -798,6 +590,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation MoveMarketingStmtDown: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -843,22 +637,22 @@ if ( strActionToProcess != null )
       {
          lEKey = java.lang.Long.parseLong( strEntityKey );
          csrRC = mSubLC.cursor( "S_MarketingStatement" ).setByEntityKey( lEKey );
-         if ( !csrRC.isSet() ) //if ( nRC < 0 )
+         if ( !csrRC.isSet() )
          {
-         // This is temp code because SetCursorEntityKey doesn't work on subobjects.
+            boolean bFound = false;
             csrRCk = mSubLC.cursor( "S_MarketingStatement" ).setFirst( );
-            while ( csrRCk.isSet() )
+            while ( csrRCk.isSet() && !bFound )
             {
                lEKey = mSubLC.cursor( "S_MarketingStatement" ).getEntityKey( );
                strKey = Long.toString( lEKey );
                if ( StringUtils.equals( strKey, strEntityKey ) )
                {
                   // Stop while loop because we have positioned on the correct entity.
-                  break;
+                  bFound = true;
                }
                else
                   csrRCk = mSubLC.cursor( "S_MarketingStatement" ).setNextContinue( );
-            }
+            } // Grid
          }
       }
 
@@ -871,6 +665,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation MoveMarketingStmtUp: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -917,6 +713,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation InitMarketingStmtForInsert: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -963,6 +761,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation SaveAddNewMarketingSect: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -1060,6 +860,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation InitAreasOfUseStmtForUpdate: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -1105,22 +907,22 @@ if ( strActionToProcess != null )
       {
          lEKey = java.lang.Long.parseLong( strEntityKey );
          csrRC = mSubLC.cursor( "S_MarketingStatement" ).setByEntityKey( lEKey );
-         if ( !csrRC.isSet() ) //if ( nRC < 0 )
+         if ( !csrRC.isSet() )
          {
-         // This is temp code because SetCursorEntityKey doesn't work on subobjects.
+            boolean bFound = false;
             csrRCk = mSubLC.cursor( "S_MarketingStatement" ).setFirst( );
-            while ( csrRCk.isSet() )
+            while ( csrRCk.isSet() && !bFound )
             {
                lEKey = mSubLC.cursor( "S_MarketingStatement" ).getEntityKey( );
                strKey = Long.toString( lEKey );
                if ( StringUtils.equals( strKey, strEntityKey ) )
                {
                   // Stop while loop because we have positioned on the correct entity.
-                  break;
+                  bFound = true;
                }
                else
                   csrRCk = mSubLC.cursor( "S_MarketingStatement" ).setNextContinue( );
-            }
+            } // Grid
          }
       }
 
@@ -1133,6 +935,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation SelectMarketingStmtForUpdate: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -1188,6 +992,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation CancelMarketingSect: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -1235,6 +1041,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation ProductManagement: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -1282,6 +1090,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation SubregistrantManagement: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -1329,6 +1139,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation TrackingNotificationCompliance: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -1376,6 +1188,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation StateRegistrations: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -1423,6 +1237,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation MarketingFulfillment: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -1470,6 +1286,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation WebDevelopment: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -1512,6 +1330,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation PrimaryRegistrantCompanySetup: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -1559,6 +1379,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation ProcessLogin: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -1579,53 +1401,6 @@ if ( strActionToProcess != null )
       {
          // Next Window
          strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ResetTopWindow, "wStartUp", "UserLogin" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mTemplate" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCMarketingSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCMarketingSection.jsp", "wStartUp.Template" );
-      try
-      {
-         nOptRC = wStartUp.Template( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         strVMLError = "<br><br>*** Error running Operation Template: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReplaceWindowWithModalWindow, "wTemplD", "TemplateList" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -1796,7 +1571,6 @@ else
        <li id="lmAdministration" name="lmAdministration"><a href="#" onclick="mAdministration()">Company Profile</a></li>
        <li id="lmLogin" name="lmLogin"><a href="#" onclick="mLogin()">Login</a></li>
        <li id="lmLogout" name="lmLogout"><a href="#" onclick="mLogout()">Logout</a></li>
-       <li id="lmTemplate" name="lmTemplate"><a href="#" onclick="mTemplate()">Template</a></li>
    </ul>
 </div>  <!-- end Navigation Bar -->
 
@@ -2002,7 +1776,7 @@ else
             catch (Exception e)
             {
                out.println("There is an error on MarketingTitle: " + e.getMessage());
-               task.log().info( "*** Error on ctrl MarketingTitle" + e.getMessage() );
+               task.log().error( "*** Error on ctrl MarketingTitle", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -2053,7 +1827,7 @@ else
             catch (Exception e)
             {
                out.println("There is an error on Subtitle: " + e.getMessage());
-               task.log().info( "*** Error on ctrl Subtitle" + e.getMessage() );
+               task.log().error( "*** Error on ctrl Subtitle", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -2325,79 +2099,6 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <%
 try
 {
-   iTableRowCnt = 0;
-   mSubLC = task.getViewByName( "mSubLC" );
-   if ( VmlOperation.isValid( mSubLC ) )
-   {
-      long   lEntityKey;
-      String strEntityKey;
-      String strButtonName;
-      String strOdd;
-      String strTag;
-      String strGS_AreasOfUse;
-      String strGS_AreasOfUseValue;
-      String strGridEditAreasOfUse;
-      
-      View vAreasOfUse;
-      vAreasOfUse = mSubLC.newView( );
-      csrRC2 = vAreasOfUse.cursor( "MarketingAreasOfUse" ).setFirst( "S_MarketingSection" );
-      while ( csrRC2.isSet() )
-      {
-         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
-         iTableRowCnt++;
-
-         lEntityKey = vAreasOfUse.cursor( "MarketingAreasOfUse" ).getEntityKey( );
-         strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
-         strGS_AreasOfUse = "";
-         nRC = vAreasOfUse.cursor( "S_MarketingUsage" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strGS_AreasOfUse = vAreasOfUse.cursor( "S_MarketingUsage" ).getStringFromAttribute( "wkSelected", "" );
-
-            if ( strGS_AreasOfUse == null )
-               strGS_AreasOfUse = "";
-         }
-
-         if ( StringUtils.equals( strGS_AreasOfUse, "Y" ) )
-         {
-            strGS_AreasOfUseValue = "GS_AreasOfUse" + strEntityKey;
-            strGS_AreasOfUse = "<input name='" + strGS_AreasOfUseValue + "' id='" + strGS_AreasOfUseValue + "' value='Y' type='checkbox'  CHECKED  disabled > ";
-         }
-         else
-         {
-            strGS_AreasOfUseValue = "GS_AreasOfUse" + strEntityKey;
-            strGS_AreasOfUse = "<input name='" + strGS_AreasOfUseValue + "' id='" + strGS_AreasOfUseValue + "' value='Y' type='checkbox'  disabled > ";
-         }
-
-         strGridEditAreasOfUse = "";
-         nRC = vAreasOfUse.cursor( "S_MarketingUsage" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strGridEditAreasOfUse = vAreasOfUse.cursor( "S_MarketingUsage" ).getStringFromAttribute( "Name", "" );
-
-            if ( strGridEditAreasOfUse == null )
-               strGridEditAreasOfUse = "";
-         }
-
-         if ( StringUtils.isBlank( strGridEditAreasOfUse ) )
-            strGridEditAreasOfUse = "&nbsp";
-
-%>
-
-<tr<%=strOdd%>>
-
-   <td nowrap><%=strGS_AreasOfUse%></td>
-   <td><%=strGridEditAreasOfUse%></td>
-
-</tr>
-
-<%
-         csrRC2 = vAreasOfUse.cursor( "MarketingAreasOfUse" ).setNextContinue( );
-      }
-      vAreasOfUse.drop( );
-   }
 }
 catch (Exception e)
 {
@@ -2474,79 +2175,6 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <%
 try
 {
-   iTableRowCnt = 0;
-   mSubLC = task.getViewByName( "mSubLC" );
-   if ( VmlOperation.isValid( mSubLC ) )
-   {
-      long   lEntityKey;
-      String strEntityKey;
-      String strButtonName;
-      String strOdd;
-      String strTag;
-      String strGS_Surface;
-      String strGS_SurfaceValue;
-      String strGridEditSurface;
-      
-      View vSurfaces;
-      vSurfaces = mSubLC.newView( );
-      csrRC2 = vSurfaces.cursor( "MarketingSurface" ).setFirst( "S_MarketingSection" );
-      while ( csrRC2.isSet() )
-      {
-         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
-         iTableRowCnt++;
-
-         lEntityKey = vSurfaces.cursor( "MarketingSurface" ).getEntityKey( );
-         strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
-         strGS_Surface = "";
-         nRC = vSurfaces.cursor( "S_MarketingUsage" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strGS_Surface = vSurfaces.cursor( "S_MarketingUsage" ).getStringFromAttribute( "wkSelected", "" );
-
-            if ( strGS_Surface == null )
-               strGS_Surface = "";
-         }
-
-         if ( StringUtils.equals( strGS_Surface, "Y" ) )
-         {
-            strGS_SurfaceValue = "GS_Surface" + strEntityKey;
-            strGS_Surface = "<input name='" + strGS_SurfaceValue + "' id='" + strGS_SurfaceValue + "' value='Y' type='checkbox'  CHECKED  disabled > ";
-         }
-         else
-         {
-            strGS_SurfaceValue = "GS_Surface" + strEntityKey;
-            strGS_Surface = "<input name='" + strGS_SurfaceValue + "' id='" + strGS_SurfaceValue + "' value='Y' type='checkbox'  disabled > ";
-         }
-
-         strGridEditSurface = "";
-         nRC = vSurfaces.cursor( "S_MarketingUsage" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strGridEditSurface = vSurfaces.cursor( "S_MarketingUsage" ).getStringFromAttribute( "Name", "" );
-
-            if ( strGridEditSurface == null )
-               strGridEditSurface = "";
-         }
-
-         if ( StringUtils.isBlank( strGridEditSurface ) )
-            strGridEditSurface = "&nbsp";
-
-%>
-
-<tr<%=strOdd%>>
-
-   <td nowrap><%=strGS_Surface%></td>
-   <td><%=strGridEditSurface%></td>
-
-</tr>
-
-<%
-         csrRC2 = vSurfaces.cursor( "MarketingSurface" ).setNextContinue( );
-      }
-      vSurfaces.drop( );
-   }
 }
 catch (Exception e)
 {
@@ -2623,79 +2251,6 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <%
 try
 {
-   iTableRowCnt = 0;
-   mSubLC = task.getViewByName( "mSubLC" );
-   if ( VmlOperation.isValid( mSubLC ) )
-   {
-      long   lEntityKey;
-      String strEntityKey;
-      String strButtonName;
-      String strOdd;
-      String strTag;
-      String strGS_AppTypes;
-      String strGS_AppTypesValue;
-      String strGridEditAppTypes;
-      
-      View vAppTypes;
-      vAppTypes = mSubLC.newView( );
-      csrRC2 = vAppTypes.cursor( "MarketingAppType" ).setFirst( "S_MarketingSection" );
-      while ( csrRC2.isSet() )
-      {
-         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
-         iTableRowCnt++;
-
-         lEntityKey = vAppTypes.cursor( "MarketingAppType" ).getEntityKey( );
-         strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
-         strGS_AppTypes = "";
-         nRC = vAppTypes.cursor( "S_MarketingUsage" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strGS_AppTypes = vAppTypes.cursor( "S_MarketingUsage" ).getStringFromAttribute( "wkSelected", "" );
-
-            if ( strGS_AppTypes == null )
-               strGS_AppTypes = "";
-         }
-
-         if ( StringUtils.equals( strGS_AppTypes, "Y" ) )
-         {
-            strGS_AppTypesValue = "GS_AppTypes" + strEntityKey;
-            strGS_AppTypes = "<input name='" + strGS_AppTypesValue + "' id='" + strGS_AppTypesValue + "' value='Y' type='checkbox'  CHECKED  disabled > ";
-         }
-         else
-         {
-            strGS_AppTypesValue = "GS_AppTypes" + strEntityKey;
-            strGS_AppTypes = "<input name='" + strGS_AppTypesValue + "' id='" + strGS_AppTypesValue + "' value='Y' type='checkbox'  disabled > ";
-         }
-
-         strGridEditAppTypes = "";
-         nRC = vAppTypes.cursor( "S_MarketingUsage" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strGridEditAppTypes = vAppTypes.cursor( "S_MarketingUsage" ).getStringFromAttribute( "Name", "" );
-
-            if ( strGridEditAppTypes == null )
-               strGridEditAppTypes = "";
-         }
-
-         if ( StringUtils.isBlank( strGridEditAppTypes ) )
-            strGridEditAppTypes = "&nbsp";
-
-%>
-
-<tr<%=strOdd%>>
-
-   <td nowrap><%=strGS_AppTypes%></td>
-   <td><%=strGridEditAppTypes%></td>
-
-</tr>
-
-<%
-         csrRC2 = vAppTypes.cursor( "MarketingAppType" ).setNextContinue( );
-      }
-      vAppTypes.drop( );
-   }
 }
 catch (Exception e)
 {
@@ -2772,79 +2327,6 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <%
 try
 {
-   iTableRowCnt = 0;
-   mSubLC = task.getViewByName( "mSubLC" );
-   if ( VmlOperation.isValid( mSubLC ) )
-   {
-      long   lEntityKey;
-      String strEntityKey;
-      String strButtonName;
-      String strOdd;
-      String strTag;
-      String strGS_Bacteria;
-      String strGS_BacteriaValue;
-      String strGridEditBacteria;
-      
-      View vBacteria;
-      vBacteria = mSubLC.newView( );
-      csrRC2 = vBacteria.cursor( "MarketingBacteria" ).setFirst( "S_MarketingSection" );
-      while ( csrRC2.isSet() )
-      {
-         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
-         iTableRowCnt++;
-
-         lEntityKey = vBacteria.cursor( "MarketingBacteria" ).getEntityKey( );
-         strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
-         strGS_Bacteria = "";
-         nRC = vBacteria.cursor( "S_MarketingUsage" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strGS_Bacteria = vBacteria.cursor( "S_MarketingUsage" ).getStringFromAttribute( "wkSelected", "" );
-
-            if ( strGS_Bacteria == null )
-               strGS_Bacteria = "";
-         }
-
-         if ( StringUtils.equals( strGS_Bacteria, "Y" ) )
-         {
-            strGS_BacteriaValue = "GS_Bacteria" + strEntityKey;
-            strGS_Bacteria = "<input name='" + strGS_BacteriaValue + "' id='" + strGS_BacteriaValue + "' value='Y' type='checkbox'  CHECKED  disabled > ";
-         }
-         else
-         {
-            strGS_BacteriaValue = "GS_Bacteria" + strEntityKey;
-            strGS_Bacteria = "<input name='" + strGS_BacteriaValue + "' id='" + strGS_BacteriaValue + "' value='Y' type='checkbox'  disabled > ";
-         }
-
-         strGridEditBacteria = "";
-         nRC = vBacteria.cursor( "S_MarketingUsage" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strGridEditBacteria = vBacteria.cursor( "S_MarketingUsage" ).getStringFromAttribute( "Name", "" );
-
-            if ( strGridEditBacteria == null )
-               strGridEditBacteria = "";
-         }
-
-         if ( StringUtils.isBlank( strGridEditBacteria ) )
-            strGridEditBacteria = "&nbsp";
-
-%>
-
-<tr<%=strOdd%>>
-
-   <td nowrap><%=strGS_Bacteria%></td>
-   <td><%=strGridEditBacteria%></td>
-
-</tr>
-
-<%
-         csrRC2 = vBacteria.cursor( "MarketingBacteria" ).setNextContinue( );
-      }
-      vBacteria.drop( );
-   }
 }
 catch (Exception e)
 {
@@ -2921,79 +2403,6 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <%
 try
 {
-   iTableRowCnt = 0;
-   mSubLC = task.getViewByName( "mSubLC" );
-   if ( VmlOperation.isValid( mSubLC ) )
-   {
-      long   lEntityKey;
-      String strEntityKey;
-      String strButtonName;
-      String strOdd;
-      String strTag;
-      String strGS_Fungi;
-      String strGS_FungiValue;
-      String strGridEditFungi;
-      
-      View vFungi;
-      vFungi = mSubLC.newView( );
-      csrRC2 = vFungi.cursor( "MarketingFungi" ).setFirst( "S_MarketingSection" );
-      while ( csrRC2.isSet() )
-      {
-         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
-         iTableRowCnt++;
-
-         lEntityKey = vFungi.cursor( "MarketingFungi" ).getEntityKey( );
-         strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
-         strGS_Fungi = "";
-         nRC = vFungi.cursor( "S_MarketingUsage" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strGS_Fungi = vFungi.cursor( "S_MarketingUsage" ).getStringFromAttribute( "wkSelected", "" );
-
-            if ( strGS_Fungi == null )
-               strGS_Fungi = "";
-         }
-
-         if ( StringUtils.equals( strGS_Fungi, "Y" ) )
-         {
-            strGS_FungiValue = "GS_Fungi" + strEntityKey;
-            strGS_Fungi = "<input name='" + strGS_FungiValue + "' id='" + strGS_FungiValue + "' value='Y' type='checkbox'  CHECKED  disabled > ";
-         }
-         else
-         {
-            strGS_FungiValue = "GS_Fungi" + strEntityKey;
-            strGS_Fungi = "<input name='" + strGS_FungiValue + "' id='" + strGS_FungiValue + "' value='Y' type='checkbox'  disabled > ";
-         }
-
-         strGridEditFungi = "";
-         nRC = vFungi.cursor( "S_MarketingUsage" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strGridEditFungi = vFungi.cursor( "S_MarketingUsage" ).getStringFromAttribute( "Name", "" );
-
-            if ( strGridEditFungi == null )
-               strGridEditFungi = "";
-         }
-
-         if ( StringUtils.isBlank( strGridEditFungi ) )
-            strGridEditFungi = "&nbsp";
-
-%>
-
-<tr<%=strOdd%>>
-
-   <td nowrap><%=strGS_Fungi%></td>
-   <td><%=strGridEditFungi%></td>
-
-</tr>
-
-<%
-         csrRC2 = vFungi.cursor( "MarketingFungi" ).setNextContinue( );
-      }
-      vFungi.drop( );
-   }
 }
 catch (Exception e)
 {
@@ -3070,79 +2479,6 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <%
 try
 {
-   iTableRowCnt = 0;
-   mSubLC = task.getViewByName( "mSubLC" );
-   if ( VmlOperation.isValid( mSubLC ) )
-   {
-      long   lEntityKey;
-      String strEntityKey;
-      String strButtonName;
-      String strOdd;
-      String strTag;
-      String strGS_Virus;
-      String strGS_VirusValue;
-      String strGridEditVirus;
-      
-      View vViruses;
-      vViruses = mSubLC.newView( );
-      csrRC2 = vViruses.cursor( "MarketingViruses" ).setFirst( "S_MarketingSection" );
-      while ( csrRC2.isSet() )
-      {
-         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
-         iTableRowCnt++;
-
-         lEntityKey = vViruses.cursor( "MarketingViruses" ).getEntityKey( );
-         strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
-         strGS_Virus = "";
-         nRC = vViruses.cursor( "S_MarketingUsage" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strGS_Virus = vViruses.cursor( "S_MarketingUsage" ).getStringFromAttribute( "wkSelected", "" );
-
-            if ( strGS_Virus == null )
-               strGS_Virus = "";
-         }
-
-         if ( StringUtils.equals( strGS_Virus, "Y" ) )
-         {
-            strGS_VirusValue = "GS_Virus" + strEntityKey;
-            strGS_Virus = "<input name='" + strGS_VirusValue + "' id='" + strGS_VirusValue + "' value='Y' type='checkbox'  CHECKED  disabled > ";
-         }
-         else
-         {
-            strGS_VirusValue = "GS_Virus" + strEntityKey;
-            strGS_Virus = "<input name='" + strGS_VirusValue + "' id='" + strGS_VirusValue + "' value='Y' type='checkbox'  disabled > ";
-         }
-
-         strGridEditVirus = "";
-         nRC = vViruses.cursor( "S_MarketingUsage" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strGridEditVirus = vViruses.cursor( "S_MarketingUsage" ).getStringFromAttribute( "Name", "" );
-
-            if ( strGridEditVirus == null )
-               strGridEditVirus = "";
-         }
-
-         if ( StringUtils.isBlank( strGridEditVirus ) )
-            strGridEditVirus = "&nbsp";
-
-%>
-
-<tr<%=strOdd%>>
-
-   <td nowrap><%=strGS_Virus%></td>
-   <td><%=strGridEditVirus%></td>
-
-</tr>
-
-<%
-         csrRC2 = vViruses.cursor( "MarketingViruses" ).setNextContinue( );
-      }
-      vViruses.drop( );
-   }
 }
 catch (Exception e)
 {

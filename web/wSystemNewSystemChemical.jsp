@@ -11,11 +11,11 @@
 <%@ page import="com.quinsoft.zeidon.utils.*" %>
 <%@ page import="com.quinsoft.zeidon.vml.*" %>
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
-<%@ page import="com.arksoft.epamms.*" %>
+<%@ page import=".*" %>
 
 <%! 
 
-ObjectEngine objectEngine = com.arksoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
+ObjectEngine objectEngine = JavaObjectEngine.getInstance();
 
 public String ReplaceXSSValues( String szFieldValue )
 {
@@ -165,6 +165,7 @@ String strPopupWindowSZX = "";
 String strPopupWindowSZY = "";
 String strDateFormat = "";
 String strKeyRole = "";
+String strFeedback = "";
 String strDialogName = "";
 String strWindowName = "";
 String strLastWindow;
@@ -234,6 +235,13 @@ if ( strActionToProcess != null )
          vMsgQ.drop( );
       }
 
+      strFeedback = request.getParameter( "zFeedback" );
+      if ( strFeedback != "" )
+      {
+         wSystem.TraceLine( "DoInputMapping Feedback: " + strFeedback );
+         wSystem.SaveFeedback( "mOrganiz", "wSystem", "NewSystemChemical", strFeedback );
+      }
+
    }
 
    while ( bDone == false && StringUtils.equals( strActionToProcess, "AcceptNewSystemChemicalAndRtn" ) )
@@ -255,6 +263,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation AcceptNewSystemChemical: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -296,6 +306,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation CancelNewSystemChemical: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -356,6 +368,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation AcceptNewSystemChemical: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -397,6 +411,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation CancelNewSystemChemical: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -766,7 +782,7 @@ else
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSystem", "NewSystemChemical" );
    strOpenFile = VmlOperation.FindOpenFile( task );
-   strDateFormat = "YYYY.MM.DD";
+   strDateFormat = "MM/DD/YYYY";
 
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
@@ -999,6 +1015,11 @@ else
 %>
 
    <input name="zError" id="zError" type="hidden" value="<%=strErrorMsg%>">
+
+   <div align="clear:both;center;"><table style="width:750px;background-color:black;color:white;border:none;font-size:8px;"><tr style="background-color:blue;color:white;border:none;">
+   <td nowrap style="background-color:blue;color:white;border:none;padding-top:6px;padding-bottom:6px;font-size:11px;">Feedback: </td>
+   <td nowrap style="background-color:blue;color:white;border:none;padding-top:6px;padding-bottom:6px;font-size:11px;"><input name="zFeedback" id="zFeedback" style="left:4px;width:700px;"></td>
+   </tr></table></div>
 
 </form>
 </div>   <!-- This is the end tag for the div 'content' -->

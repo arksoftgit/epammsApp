@@ -185,7 +185,6 @@ function _AfterPageLoaded( )
       }
    }
 
-   var keyRole = document.wMLCOrganismClaims.zKeyRole.value;
    document.wMLCOrganismClaims.zError.value = "";
    document.wMLCOrganismClaims.zOpenFile.value = "";
 
@@ -703,6 +702,51 @@ function smEditMarketingSect( )
    }
 }
 
+function smGOTO_ListUsageEntries( )
+{
+
+      // This is for indicating whether the user hit the window close box.
+      isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCOrganismClaims.zAction.value = "smGOTO_ListUsageEntries";
+      document.wMLCOrganismClaims.submit( );
+   }
+}
+
+function smGOTO_CompositeEntries( )
+{
+
+      // This is for indicating whether the user hit the window close box.
+      isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCOrganismClaims.zAction.value = "smGOTO_CompositeEntries";
+      document.wMLCOrganismClaims.submit( );
+   }
+}
+
+function smGOTO_CompositeWO_Usage( )
+{
+
+      // This is for indicating whether the user hit the window close box.
+      isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCOrganismClaims.zAction.value = "smGOTO_CompositeWO_Usage";
+      document.wMLCOrganismClaims.submit( );
+   }
+}
+
 function mProductManagement( )
 {
 
@@ -915,30 +959,6 @@ function mLogout( )
       _DisableFormElements( true );
 
       document.wMLCOrganismClaims.zAction.value = "_OnUnload";
-      document.wMLCOrganismClaims.submit( );
-   }
-}
-
-function mTemplate( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmTemplate" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wMLCOrganismClaims.zAction.value = "mTemplate";
       document.wMLCOrganismClaims.submit( );
    }
 }

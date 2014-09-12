@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 
 <%-- wSubRNewSubregUser --%>
 
@@ -11,11 +11,11 @@
 <%@ page import="com.quinsoft.zeidon.utils.*" %>
 <%@ page import="com.quinsoft.zeidon.vml.*" %>
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
-<%@ page import="com.arksoft.epamms.*" %>
+<%@ page import="com.quinsoft.epamms.*" %>
 
 <%! 
 
-ObjectEngine objectEngine = com.arksoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
+ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
 public String ReplaceXSSValues( String szFieldValue )
 {
@@ -489,6 +489,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation AcceptNewSubregUser: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -530,6 +532,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation CancelNewSubregUser: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -590,6 +594,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation AcceptNewSubregUser: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -631,6 +637,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation CancelNewSubregUser: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -678,6 +686,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation ProductManagement: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -725,6 +735,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation SubregistrantManagement: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -772,6 +784,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation TrackingNotificationCompliance: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -819,6 +833,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation StateRegistrations: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -866,6 +882,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation MarketingFulfillment: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -913,6 +931,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation WebDevelopment: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -955,6 +975,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation PrimaryRegistrantCompanySetup: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -1002,6 +1024,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation ProcessLogin: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -1022,53 +1046,6 @@ if ( strActionToProcess != null )
       {
          // Next Window
          strNextJSP_Name = wSubR.SetWebRedirection( vKZXMLPGO, wSubR.zWAB_ResetTopWindow, "wStartUp", "UserLogin" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mTemplate" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSubRNewSubregUser", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRNewSubregUser.jsp", "wStartUp.Template" );
-      try
-      {
-         nOptRC = wStartUp.Template( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         strVMLError = "<br><br>*** Error running Operation Template: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSubR.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSubR.SetWebRedirection( vKZXMLPGO, wSubR.zWAB_ReplaceWindowWithModalWindow, "wTemplD", "TemplateList" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -1238,7 +1215,6 @@ else
        <li id="lmAdministration" name="lmAdministration"><a href="#" onclick="mAdministration()">Company Profile</a></li>
        <li id="lmLogin" name="lmLogin"><a href="#" onclick="mLogin()">Login</a></li>
        <li id="lmLogout" name="lmLogout"><a href="#" onclick="mLogout()">Logout</a></li>
-       <li id="lmTemplate" name="lmTemplate"><a href="#" onclick="mTemplate()">Template</a></li>
    </ul>
 </div>  <!-- end Navigation Bar -->
 
@@ -1532,7 +1508,7 @@ else
             catch (Exception e)
             {
                out.println("There is an error on EBFirstName: " + e.getMessage());
-               task.log().info( "*** Error on ctrl EBFirstName" + e.getMessage() );
+               task.log().error( "*** Error on ctrl EBFirstName", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -1583,7 +1559,7 @@ else
             catch (Exception e)
             {
                out.println("There is an error on EBLastName: " + e.getMessage());
-               task.log().info( "*** Error on ctrl EBLastName" + e.getMessage() );
+               task.log().error( "*** Error on ctrl EBLastName", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -1634,7 +1610,7 @@ else
             catch (Exception e)
             {
                out.println("There is an error on EBTitle: " + e.getMessage());
-               task.log().info( "*** Error on ctrl EBTitle" + e.getMessage() );
+               task.log().error( "*** Error on ctrl EBTitle", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -1685,7 +1661,7 @@ else
             catch (Exception e)
             {
                out.println("There is an error on EBCPhone: " + e.getMessage());
-               task.log().info( "*** Error on ctrl EBCPhone" + e.getMessage() );
+               task.log().error( "*** Error on ctrl EBCPhone", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -1736,7 +1712,7 @@ else
             catch (Exception e)
             {
                out.println("There is an error on EBFax: " + e.getMessage());
-               task.log().info( "*** Error on ctrl EBFax" + e.getMessage() );
+               task.log().error( "*** Error on ctrl EBFax", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -1787,7 +1763,7 @@ else
             catch (Exception e)
             {
                out.println("There is an error on EBEmail: " + e.getMessage());
-               task.log().info( "*** Error on ctrl EBEmail" + e.getMessage() );
+               task.log().error( "*** Error on ctrl EBEmail", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -1950,7 +1926,7 @@ else
             catch (Exception e)
             {
                out.println("There is an error on EBPStreetAddress: " + e.getMessage());
-               task.log().info( "*** Error on ctrl EBPStreetAddress" + e.getMessage() );
+               task.log().error( "*** Error on ctrl EBPStreetAddress", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -2000,7 +1976,7 @@ else
             catch (Exception e)
             {
                out.println("There is an error on EBPAddress: " + e.getMessage());
-               task.log().info( "*** Error on ctrl EBPAddress" + e.getMessage() );
+               task.log().error( "*** Error on ctrl EBPAddress", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -2051,7 +2027,7 @@ else
             catch (Exception e)
             {
                out.println("There is an error on EBPCity: " + e.getMessage());
-               task.log().info( "*** Error on ctrl EBPCity" + e.getMessage() );
+               task.log().error( "*** Error on ctrl EBPCity", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -2179,7 +2155,7 @@ else
             catch (Exception e)
             {
                out.println("There is an error on EBPZipCode: " + e.getMessage());
-               task.log().info( "*** Error on ctrl EBPZipCode" + e.getMessage() );
+               task.log().error( "*** Error on ctrl EBPZipCode", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -2263,7 +2239,7 @@ else
             catch (Exception e)
             {
                out.println("There is an error on EBUserName: " + e.getMessage());
-               task.log().info( "*** Error on ctrl EBUserName" + e.getMessage() );
+               task.log().error( "*** Error on ctrl EBUserName", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -2314,7 +2290,7 @@ else
             catch (Exception e)
             {
                out.println("There is an error on EBPassword: " + e.getMessage());
-               task.log().info( "*** Error on ctrl EBPassword" + e.getMessage() );
+               task.log().error( "*** Error on ctrl EBPassword", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -2365,7 +2341,7 @@ else
             catch (Exception e)
             {
                out.println("There is an error on EBConfirmPassword: " + e.getMessage());
-               task.log().info( "*** Error on ctrl EBConfirmPassword" + e.getMessage() );
+               task.log().error( "*** Error on ctrl EBConfirmPassword", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";

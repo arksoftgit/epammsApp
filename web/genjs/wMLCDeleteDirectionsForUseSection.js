@@ -185,7 +185,6 @@ function _AfterPageLoaded( )
       }
    }
 
-   var keyRole = document.wMLCDeleteDirectionsForUseSection.zKeyRole.value;
    document.wMLCDeleteDirectionsForUseSection.zError.value = "";
    document.wMLCDeleteDirectionsForUseSection.zOpenFile.value = "";
 
@@ -238,97 +237,6 @@ function CancelDeleteDirectionsUseSection( )
    }
 }
 
-function SelectDirectionsUseStmtForDelete( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCDeleteDirectionsForUseSection.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wMLCDeleteDirectionsForUseSection.zAction.value = "SelectDirectionsUseStmtForDelete";
-      document.wMLCDeleteDirectionsForUseSection.submit( );
-   }
-}
-
-function MoveDirectionsUseStatementDown( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCDeleteDirectionsForUseSection.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wMLCDeleteDirectionsForUseSection.zAction.value = "MoveDirectionsUseStatementDown";
-      document.wMLCDeleteDirectionsForUseSection.submit( );
-   }
-}
-
-function MoveDirectionsUseStatementUp( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCDeleteDirectionsForUseSection.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wMLCDeleteDirectionsForUseSection.zAction.value = "MoveDirectionsUseStatementUp";
-      document.wMLCDeleteDirectionsForUseSection.submit( );
-   }
-}
-
-function AddNewDirectionsUseStmt( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCDeleteDirectionsForUseSection.zAction.value = "AddNewDirectionsUseStmt";
-      document.wMLCDeleteDirectionsForUseSection.submit( );
-   }
-}
-
-function SelectDirectionsUseStmtForUpdate( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCDeleteDirectionsForUseSection.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wMLCDeleteDirectionsForUseSection.zAction.value = "SelectDirectionsUseStmtForUpdate";
-      document.wMLCDeleteDirectionsForUseSection.submit( );
-   }
-}
-
 function ConfirmDeleteDirectionsUseSect( )
 {
 
@@ -341,40 +249,6 @@ function ConfirmDeleteDirectionsUseSect( )
 
       document.wMLCDeleteDirectionsForUseSection.zAction.value = "ConfirmDeleteDirectionsUseSect";
       document.wMLCDeleteDirectionsForUseSection.submit( );
-   }
-}
-
-function InitDirectionsUseSectForDelete( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      // Javascript code entered by user.
-
-   var thisLi;
-
-// if ( keyRole == "P" || keyRole == "N" ) // If we are here, we have to be a Primary.
-   // We knock out Login and Template as options.
-   thisLi = document.getElementById( "lmLogin" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   thisLi = document.getElementById( "lmStateRegistrations" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   // Cannot go to product management if already there.
-   thisLi = document.getElementById( "lmProductManagement" );
-   thisLi.disabled = true;
-
-      // END of Javascript code entered by user.
-
    }
 }
 
@@ -620,30 +494,6 @@ function mLogout( )
       _DisableFormElements( true );
 
       document.wMLCDeleteDirectionsForUseSection.zAction.value = "_OnUnload";
-      document.wMLCDeleteDirectionsForUseSection.submit( );
-   }
-}
-
-function mTemplate( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmTemplate" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wMLCDeleteDirectionsForUseSection.zAction.value = "mTemplate";
       document.wMLCDeleteDirectionsForUseSection.submit( );
    }
 }

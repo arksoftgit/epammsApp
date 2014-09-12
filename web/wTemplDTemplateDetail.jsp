@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 
 <%-- wTemplDTemplateDetail --%>
 
@@ -11,11 +11,11 @@
 <%@ page import="com.quinsoft.zeidon.utils.*" %>
 <%@ page import="com.quinsoft.zeidon.vml.*" %>
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
-<%@ page import="com.arksoft.epamms.*" %>
+<%@ page import="com.quinsoft.epamms.*" %>
 
 <%! 
 
-ObjectEngine objectEngine = com.arksoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
+ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
 public String ReplaceXSSValues( String szFieldValue )
 {
@@ -35,7 +35,6 @@ public int DoInputMapping( HttpServletRequest request,
    String taskId = (String) session.getAttribute( "ZeidonTaskId" );
    Task task = objectEngine.getTaskById( taskId );
 
-   View mTempl = null;
    View vGridTmp = null; // temp view to grid view
    View vRepeatingGrp = null; // temp view to repeating group view
    String strDateFormat = "";
@@ -56,29 +55,6 @@ public int DoInputMapping( HttpServletRequest request,
 
    if ( webMapping == false )
       session.setAttribute( "ZeidonError", null );
-
-   mTempl = task.getViewByName( "mTempl" );
-   if ( VmlOperation.isValid( mTempl ) )
-   {
-      // Grid: GridTemplatePanels
-      iTableRowCnt = 0;
-
-      // We are creating a temp view to the grid view so that if there are 
-      // grids on the same window with the same view we do not mess up the 
-      // entity positions. 
-      vGridTmp = mTempl.newView( );
-      csrRC = vGridTmp.cursor( "TemplatePanel" ).setFirst(  );
-      while ( csrRC.isSet() )
-      {
-         lEntityKey = vGridTmp.cursor( "TemplatePanel" ).getEntityKey( );
-         strEntityKey = Long.toString( lEntityKey );
-         iTableRowCnt++;
-
-         csrRC = vGridTmp.cursor( "TemplatePanel" ).setNextContinue( );
-      }
-
-      vGridTmp.drop( );
-   }
 
    if ( webMapping == true )
       return 2;
@@ -216,6 +192,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation CancelAndReturnTemplate: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -255,28 +233,27 @@ if ( strActionToProcess != null )
 
       // Position on the entity that was selected in the grid.
       String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
-      View mTempl;
-      mTempl = task.getViewByName( "mTempl" );
-      if ( VmlOperation.isValid( mTempl ) )
+       = task.getViewByName( "" );
+      if ( VmlOperation.isValid(  ) )
       {
          lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mTempl.cursor( "TemplatePanel" ).setByEntityKey( lEKey );
-         if ( !csrRC.isSet() ) //if ( nRC < 0 )
+         csrRC = .cursor( "" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
          {
-         // This is temp code because SetCursorEntityKey doesn't work on subobjects.
-            csrRCk = mTempl.cursor( "TemplatePanel" ).setFirst( );
-            while ( csrRCk.isSet() )
+            boolean bFound = false;
+            csrRCk = .cursor( "" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
             {
-               lEKey = mTempl.cursor( "TemplatePanel" ).getEntityKey( );
+               lEKey = .cursor( "" ).getEntityKey( );
                strKey = Long.toString( lEKey );
                if ( StringUtils.equals( strKey, strEntityKey ) )
                {
                   // Stop while loop because we have positioned on the correct entity.
-                  break;
+                  bFound = true;
                }
                else
-                  csrRCk = mTempl.cursor( "TemplatePanel" ).setNextContinue( );
-            }
+                  csrRCk = .cursor( "" ).setNextContinue( );
+            } // Grid
          }
       }
 
@@ -289,6 +266,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation DeleteTemplatePanel: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -335,6 +314,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation ListAllStatements: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -374,28 +355,27 @@ if ( strActionToProcess != null )
 
       // Position on the entity that was selected in the grid.
       String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
-      View mTempl;
-      mTempl = task.getViewByName( "mTempl" );
-      if ( VmlOperation.isValid( mTempl ) )
+       = task.getViewByName( "" );
+      if ( VmlOperation.isValid(  ) )
       {
          lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mTempl.cursor( "TemplatePanel" ).setByEntityKey( lEKey );
-         if ( !csrRC.isSet() ) //if ( nRC < 0 )
+         csrRC = .cursor( "" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
          {
-         // This is temp code because SetCursorEntityKey doesn't work on subobjects.
-            csrRCk = mTempl.cursor( "TemplatePanel" ).setFirst( );
-            while ( csrRCk.isSet() )
+            boolean bFound = false;
+            csrRCk = .cursor( "" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
             {
-               lEKey = mTempl.cursor( "TemplatePanel" ).getEntityKey( );
+               lEKey = .cursor( "" ).getEntityKey( );
                strKey = Long.toString( lEKey );
                if ( StringUtils.equals( strKey, strEntityKey ) )
                {
                   // Stop while loop because we have positioned on the correct entity.
-                  break;
+                  bFound = true;
                }
                else
-                  csrRCk = mTempl.cursor( "TemplatePanel" ).setNextContinue( );
-            }
+                  csrRCk = .cursor( "" ).setNextContinue( );
+            } // Grid
          }
       }
 
@@ -408,6 +388,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation NewTemplatePanel: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -454,6 +436,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation SaveAndReturnTemplate: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -493,28 +477,27 @@ if ( strActionToProcess != null )
 
       // Position on the entity that was selected in the grid.
       String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
-      View mTempl;
-      mTempl = task.getViewByName( "mTempl" );
-      if ( VmlOperation.isValid( mTempl ) )
+       = task.getViewByName( "" );
+      if ( VmlOperation.isValid(  ) )
       {
          lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mTempl.cursor( "TemplatePanel" ).setByEntityKey( lEKey );
-         if ( !csrRC.isSet() ) //if ( nRC < 0 )
+         csrRC = .cursor( "" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
          {
-         // This is temp code because SetCursorEntityKey doesn't work on subobjects.
-            csrRCk = mTempl.cursor( "TemplatePanel" ).setFirst( );
-            while ( csrRCk.isSet() )
+            boolean bFound = false;
+            csrRCk = .cursor( "" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
             {
-               lEKey = mTempl.cursor( "TemplatePanel" ).getEntityKey( );
+               lEKey = .cursor( "" ).getEntityKey( );
                strKey = Long.toString( lEKey );
                if ( StringUtils.equals( strKey, strEntityKey ) )
                {
                   // Stop while loop because we have positioned on the correct entity.
-                  break;
+                  bFound = true;
                }
                else
-                  csrRCk = mTempl.cursor( "TemplatePanel" ).setNextContinue( );
-            }
+                  csrRCk = .cursor( "" ).setNextContinue( );
+            } // Grid
          }
       }
 
@@ -527,6 +510,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation UpdateTemplatePanel: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -588,6 +573,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation ProductManagement: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -635,6 +622,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation SubregistrantManagement: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -682,6 +671,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation TrackingNotificationCompliance: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -729,6 +720,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation StateRegistrations: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -776,6 +769,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation MarketingFulfillment: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -823,6 +818,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation WebDevelopment: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -865,6 +862,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation PrimaryRegistrantCompanySetup: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -912,6 +911,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation ProcessLogin: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -932,53 +933,6 @@ if ( strActionToProcess != null )
       {
          // Next Window
          strNextJSP_Name = wTemplD.SetWebRedirection( vKZXMLPGO, wTemplD.zWAB_ResetTopWindow, "wStartUp", "UserLogin" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mTemplate" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wTemplDTemplateDetail", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wTemplDTemplateDetail.jsp", "wStartUp.Template" );
-      try
-      {
-         nOptRC = wStartUp.Template( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         strVMLError = "<br><br>*** Error running Operation Template: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wTemplD.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wTemplD.SetWebRedirection( vKZXMLPGO, wTemplD.zWAB_ReplaceWindowWithModalWindow, "wTemplD", "TemplateList" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -1129,7 +1083,6 @@ else
        <li id="lmAdministration" name="lmAdministration"><a href="#" onclick="mAdministration()">Company Profile</a></li>
        <li id="lmLogin" name="lmLogin"><a href="#" onclick="mLogin()">Login</a></li>
        <li id="lmLogout" name="lmLogout"><a href="#" onclick="mLogout()">Logout</a></li>
-       <li id="lmTemplate" name="lmTemplate"><a href="#" onclick="mTemplate()">Template</a></li>
    </ul>
 </div>  <!-- end Navigation Bar -->
 
@@ -1181,8 +1134,6 @@ else
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
-   View lTemplLST = null;
-   View mTempl = null;
    View mSPLDef = null;
    View mMasLC = null;
    View lPrimReg = null;
@@ -1320,44 +1271,6 @@ else
 </td>
 <td valign="top" style="width:346px;">
 <% /* TemplateName:EditBox */ %>
-<%
-   strErrorMapValue = VmlOperation.CheckError( "TemplateName", strError );
-   if ( !StringUtils.isBlank( strErrorMapValue ) )
-   {
-      if ( StringUtils.equals( strErrorFlag, "Y" ) )
-         strErrorColor = "color:red;";
-   }
-   else
-   {
-      strErrorColor = "";
-      mTempl = task.getViewByName( "mTempl" );
-      if ( VmlOperation.isValid( mTempl ) == false )
-         task.log( ).debug( "Invalid View: " + "TemplateName" );
-      else
-      {
-         nRC = mTempl.cursor( "Template" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            try
-            {
-            strErrorMapValue = mTempl.cursor( "Template" ).getStringFromAttribute( "Name", "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on TemplateName: " + e.getMessage());
-               task.log().info( "*** Error on ctrl TemplateName" + e.getMessage() );
-            }
-            if ( strErrorMapValue == null )
-               strErrorMapValue = "";
-
-            task.log( ).debug( "Template.Name: " + strErrorMapValue );
-         }
-         else
-            task.log( ).debug( "Entity does not exist: " + "mTempl.Template" );
-      }
-   }
-%>
-
 <input name="TemplateName" id="TemplateName"  disabled style="width:346px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
@@ -1371,44 +1284,6 @@ else
 </td>
 <td valign="top" style="width:346px;">
 <% /* CSS_FileName:EditBox */ %>
-<%
-   strErrorMapValue = VmlOperation.CheckError( "CSS_FileName", strError );
-   if ( !StringUtils.isBlank( strErrorMapValue ) )
-   {
-      if ( StringUtils.equals( strErrorFlag, "Y" ) )
-         strErrorColor = "color:red;";
-   }
-   else
-   {
-      strErrorColor = "";
-      mTempl = task.getViewByName( "mTempl" );
-      if ( VmlOperation.isValid( mTempl ) == false )
-         task.log( ).debug( "Invalid View: " + "CSS_FileName" );
-      else
-      {
-         nRC = mTempl.cursor( "Template" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            try
-            {
-            strErrorMapValue = mTempl.cursor( "Template" ).getStringFromAttribute( "CSS_FileName", "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on CSS_FileName: " + e.getMessage());
-               task.log().info( "*** Error on ctrl CSS_FileName" + e.getMessage() );
-            }
-            if ( strErrorMapValue == null )
-               strErrorMapValue = "";
-
-            task.log( ).debug( "Template.CSS_FileName: " + strErrorMapValue );
-         }
-         else
-            task.log( ).debug( "Entity does not exist: " + "mTempl.Template" );
-      }
-   }
-%>
-
 <input name="CSS_FileName" id="CSS_FileName"  disabled style="width:346px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
@@ -1444,61 +1319,6 @@ else
 <%
 try
 {
-   iTableRowCnt = 0;
-   mTempl = task.getViewByName( "mTempl" );
-   if ( VmlOperation.isValid( mTempl ) )
-   {
-      long   lEntityKey;
-      String strEntityKey;
-      String strButtonName;
-      String strOdd;
-      String strTag;
-      String strGridEditTemplatePanelName;
-      String strBMBUpdateTemplatePanel;
-      String strBMBNewTemplatePanel;
-      String strBMBDeleteTemplatePanel;
-      
-      View vGridTemplatePanels;
-      vGridTemplatePanels = mTempl.newView( );
-      csrRC2 = vGridTemplatePanels.cursor( "TemplatePanel" ).setFirst(  );
-      while ( csrRC2.isSet() )
-      {
-         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
-         iTableRowCnt++;
-
-         lEntityKey = vGridTemplatePanels.cursor( "TemplatePanel" ).getEntityKey( );
-         strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
-         strGridEditTemplatePanelName = "";
-         nRC = vGridTemplatePanels.cursor( "TemplatePanel" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strGridEditTemplatePanelName = vGridTemplatePanels.cursor( "TemplatePanel" ).getStringFromAttribute( "dPanelName", "" );
-
-            if ( strGridEditTemplatePanelName == null )
-               strGridEditTemplatePanelName = "";
-         }
-
-         if ( StringUtils.isBlank( strGridEditTemplatePanelName ) )
-            strGridEditTemplatePanelName = "&nbsp";
-
-%>
-
-<tr<%=strOdd%>>
-
-   <td nowrap><a href="#" onclick="UpdateTemplatePanel( this.id )" id="GridEditTemplatePanelName::<%=strEntityKey%>"><%=strGridEditTemplatePanelName%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateTemplatePanel" onclick="UpdateTemplatePanel( this.id )" id="BMBUpdateTemplatePanel::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBNewTemplatePanel" onclick="NewTemplatePanel( this.id )" id="BMBNewTemplatePanel::<%=strEntityKey%>"><img src="./images/ePammsNew.jpg" alt="New"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteTemplatePanel" onclick="DeleteTemplatePanel( this.id )" id="BMBDeleteTemplatePanel::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
-
-</tr>
-
-<%
-         csrRC2 = vGridTemplatePanels.cursor( "TemplatePanel" ).setNextContinue( );
-      }
-      vGridTemplatePanels.drop( );
-   }
 }
 catch (Exception e)
 {

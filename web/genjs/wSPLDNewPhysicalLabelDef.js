@@ -185,7 +185,6 @@ function _AfterPageLoaded( )
       }
    }
 
-   var keyRole = document.wSPLDNewPhysicalLabelDef.zKeyRole.value;
    document.wSPLDNewPhysicalLabelDef.zError.value = "";
    document.wSPLDNewPhysicalLabelDef.zOpenFile.value = "";
 

@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 
 <%-- wSubRUpdateSubregLabelContent --%>
 
@@ -11,11 +11,11 @@
 <%@ page import="com.quinsoft.zeidon.utils.*" %>
 <%@ page import="com.quinsoft.zeidon.vml.*" %>
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
-<%@ page import="com.arksoft.epamms.*" %>
+<%@ page import="com.quinsoft.epamms.*" %>
 
 <%! 
 
-ObjectEngine objectEngine = com.arksoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
+ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
 public String ReplaceXSSValues( String szFieldValue )
 {
@@ -320,6 +320,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation AcceptUpdateSubregLabelContent: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -378,6 +380,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation CancelUpdateSubregLabelContent: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -455,6 +459,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation AcceptUpdateSubregLabelContent: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -496,6 +502,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation CancelUpdateSubregLabelContent: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -543,6 +551,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation ProductManagement: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -590,6 +600,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation SubregistrantManagement: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -637,6 +649,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation TrackingNotificationCompliance: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -684,6 +698,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation StateRegistrations: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -731,6 +747,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation MarketingFulfillment: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -778,6 +796,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation WebDevelopment: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -820,6 +840,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation PrimaryRegistrantCompanySetup: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -867,6 +889,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation ProcessLogin: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -887,53 +911,6 @@ if ( strActionToProcess != null )
       {
          // Next Window
          strNextJSP_Name = wSubR.SetWebRedirection( vKZXMLPGO, wSubR.zWAB_ResetTopWindow, "wStartUp", "UserLogin" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mTemplate" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSubRUpdateSubregLabelContent", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRUpdateSubregLabelContent.jsp", "wStartUp.Template" );
-      try
-      {
-         nOptRC = wStartUp.Template( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         strVMLError = "<br><br>*** Error running Operation Template: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSubR.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSubR.SetWebRedirection( vKZXMLPGO, wSubR.zWAB_ReplaceWindowWithModalWindow, "wTemplD", "TemplateList" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -1103,7 +1080,6 @@ else
        <li id="lmAdministration" name="lmAdministration"><a href="#" onclick="mAdministration()">Company Profile</a></li>
        <li id="lmLogin" name="lmLogin"><a href="#" onclick="mLogin()">Login</a></li>
        <li id="lmLogout" name="lmLogout"><a href="#" onclick="mLogout()">Logout</a></li>
-       <li id="lmTemplate" name="lmTemplate"><a href="#" onclick="mTemplate()">Template</a></li>
    </ul>
 </div>  <!-- end Navigation Bar -->
 
@@ -1289,16 +1265,31 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:28px;float:left;"></div>   <!-- Width Spacer -->
 <% /* Container:GroupBox */ %>
-<fieldset id="Container" name="Container"   style="size:absolute; width:666px; height:410px;">
+
+<div id="Container" name="Container" style="width:666px;height:430px;float:left;">  <!-- Container --> 
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:20px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:22px;float:left;"></div>   <!-- Width Spacer -->
 <% /* Registrant:GroupBox */ %>
 
-<div id="Registrant" name="Registrant" class="withborder" style="width:624px;height:72px;position:absolute;left:22px;top:20px;">  <!-- Registrant --> 
+<div id="Registrant" name="Registrant" class="withborder" style="width:624px;height:72px;float:left;">  <!-- Registrant --> 
 
 <div  id="Registrant" name="Registrant" >Registrant</div>
+
+ <!-- This is added as a line spacer -->
+<div style="height:34px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp</span>
 <% /* MasterProduct::Text */ %>
 
-<label  id="MasterProduct:" name="MasterProduct:" style="width:172px;height:16px;position:absolute;left:8px;top:34px;">Master Product:</label>
+<span  id="MasterProduct:" name="MasterProduct:" style="width:172px;height:16px;">Master Product:</span>
 
+<span style="height:16px;">&nbsp</span>
 <% /* MasterProduct:Text */ %>
 <% strTextDisplayValue = "";
    mSubreg = task.getViewByName( "mSubreg" );
@@ -1324,19 +1315,38 @@ else
    }
 %>
 
-<label  id="MasterProduct" name="MasterProduct" style="width:422px;height:16px;position:absolute;left:188px;top:34px;"><%=strTextDisplayValue%></label>
+<span  id="MasterProduct" name="MasterProduct" style="width:422px;height:16px;"><%=strTextDisplayValue%></span>
+
+</div>  <!-- End of a new line -->
 
 
 </div>  <!--  Registrant --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:16px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:22px;float:left;"></div>   <!-- Width Spacer -->
 <% /* Product:GroupBox */ %>
 
-<div id="Product" name="Product" style="width:624px;height:194px;position:absolute;left:22px;top:108px;">  <!-- Product --> 
+<div id="Product" name="Product" style="width:624px;height:194px;float:left;">  <!-- Product --> 
 
 <div  id="Product" name="Product" >Product</div>
+
+ <!-- This is added as a line spacer -->
+<div style="height:28px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp</span>
 <% /* ProductName::Text */ %>
 
-<label  id="ProductName:" name="ProductName:" style="width:172px;height:16px;position:absolute;left:8px;top:28px;">Name:</label>
+<span  id="ProductName:" name="ProductName:" style="width:172px;height:16px;">Name:</span>
 
+<span style="height:16px;">&nbsp</span>
 <% /* ProductName:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "ProductName", strError );
@@ -1363,7 +1373,7 @@ else
             catch (Exception e)
             {
                out.println("There is an error on ProductName: " + e.getMessage());
-               task.log().info( "*** Error on ctrl ProductName" + e.getMessage() );
+               task.log().error( "*** Error on ctrl ProductName", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -1376,12 +1386,23 @@ else
    }
 %>
 
-<input name="ProductName" id="ProductName" style="width:422px;position:absolute;left:188px;top:28px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="ProductName" id="ProductName" style="width:422px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:16px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp</span>
 <% /* Description::Text */ %>
 
-<label  id="Description:" name="Description:" style="width:172px;height:16px;position:absolute;left:8px;top:60px;">Description:</label>
+<span  id="Description:" name="Description:" style="width:172px;height:16px;">Description:</span>
 
+<span style="height:16px;">&nbsp</span>
 <% /* Description:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "Description", strError );
@@ -1408,7 +1429,7 @@ else
             catch (Exception e)
             {
                out.println("There is an error on Description: " + e.getMessage());
-               task.log().info( "*** Error on ctrl Description" + e.getMessage() );
+               task.log().error( "*** Error on ctrl Description", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -1421,12 +1442,23 @@ else
    }
 %>
 
-<input name="Description" id="Description" style="width:422px;position:absolute;left:188px;top:60px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Description" id="Description" style="width:422px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:16px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp</span>
 <% /* Number::Text */ %>
 
-<label  id="Number:" name="Number:" style="width:172px;height:16px;position:absolute;left:8px;top:92px;">Number:</label>
+<span  id="Number:" name="Number:" style="width:172px;height:16px;">Number:</span>
 
+<span style="height:16px;">&nbsp</span>
 <% /* Number:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "Number", strError );
@@ -1453,7 +1485,7 @@ else
             catch (Exception e)
             {
                out.println("There is an error on Number: " + e.getMessage());
-               task.log().info( "*** Error on ctrl Number" + e.getMessage() );
+               task.log().error( "*** Error on ctrl Number", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -1466,12 +1498,23 @@ else
    }
 %>
 
-<input name="Number" id="Number" style="width:300px;position:absolute;left:188px;top:92px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Number" id="Number" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:16px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp</span>
 <% /* EPARegistrationNumber::Text */ %>
 
-<label  id="EPARegistrationNumber:" name="EPARegistrationNumber:" style="width:172px;height:16px;position:absolute;left:8px;top:124px;">EPA Registration Number:</label>
+<span  id="EPARegistrationNumber:" name="EPARegistrationNumber:" style="width:172px;height:16px;">EPA Registration Number:</span>
 
+<span style="height:16px;">&nbsp</span>
 <% /* EPARegistrationNumber:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "EPARegistrationNumber", strError );
@@ -1498,7 +1541,7 @@ else
             catch (Exception e)
             {
                out.println("There is an error on EPARegistrationNumber: " + e.getMessage());
-               task.log().info( "*** Error on ctrl EPARegistrationNumber" + e.getMessage() );
+               task.log().error( "*** Error on ctrl EPARegistrationNumber", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -1511,12 +1554,23 @@ else
    }
 %>
 
-<input name="EPARegistrationNumber" id="EPARegistrationNumber" style="width:300px;position:absolute;left:188px;top:124px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EPARegistrationNumber" id="EPARegistrationNumber" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:16px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp</span>
 <% /* ESL_Date::Text */ %>
 
-<label  id="ESL_Date:" name="ESL_Date:" style="width:172px;height:16px;position:absolute;left:8px;top:156px;">ESL Date:</label>
+<span  id="ESL_Date:" name="ESL_Date:" style="width:172px;height:16px;">ESL Date:</span>
 
+<span style="height:16px;">&nbsp</span>
 <% /* ESL_Date:Calendar */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "ESL_Date", strError );
@@ -1548,30 +1602,60 @@ else
    }
 %>
 
-<span style="width:300px;height:32px;position:absolute;left:188px;top:156px;" >
-   <input name="ESL_Date" id="ESL_Date" style="width:80px" type="text" value="<%=strErrorMapValue%>"  />
+<span style="width:300px;height:32px;" >
+   <input name="ESL_Date" id="ESL_Date"  style="width:80px" type="text" value="<%=strErrorMapValue%>"  />
    <img src="images/scw.gif" title="Select Date" alt="Select Date"
         onclick="scwShow( document.getElementById( 'ESL_Date' ), this );"  />
 </span>
 
+</div>  <!-- End of a new line -->
+
 
 </div>  <!--  Product --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:12px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:22px;float:left;"></div>   <!-- Width Spacer -->
 <% /* LabelContent:GroupBox */ %>
 
-<div id="LabelContent" name="LabelContent" style="width:624px;height:98px;position:absolute;left:22px;top:314px;">  <!-- LabelContent --> 
+<div id="LabelContent" name="LabelContent" style="width:624px;height:98px;float:left;">  <!-- LabelContent --> 
 
 <div  id="LabelContent" name="LabelContent" >Label Content</div>
+
+ <!-- This is added as a line spacer -->
+<div style="height:26px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp</span>
 <% /* LabelName::Text */ %>
 
-<label  id="LabelName:" name="LabelName:" style="width:172px;height:16px;position:absolute;left:8px;top:26px;">Label Name:</label>
+<span  id="LabelName:" name="LabelName:" style="width:172px;height:16px;">Label Name:</span>
 
+<span style="height:16px;">&nbsp</span>
 <% /* LabelName:EditBox */ %>
-<input name="LabelName" id="LabelName" style="width:422px;position:absolute;left:188px;top:26px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="LabelName" id="LabelName" style="width:422px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:18px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp</span>
 <% /* ContentDescription::Text */ %>
 
-<label  id="ContentDescription:" name="ContentDescription:" style="width:172px;height:16px;position:absolute;left:8px;top:60px;">Content Description:</label>
+<span  id="ContentDescription:" name="ContentDescription:" style="width:172px;height:16px;">Content Description:</span>
 
+<span style="height:16px;">&nbsp</span>
 <% /* ContentDescription:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "ContentDescription", strError );
@@ -1598,7 +1682,7 @@ else
             catch (Exception e)
             {
                out.println("There is an error on ContentDescription: " + e.getMessage());
-               task.log().info( "*** Error on ctrl ContentDescription" + e.getMessage() );
+               task.log().error( "*** Error on ctrl ContentDescription", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -1611,13 +1695,16 @@ else
    }
 %>
 
-<input name="ContentDescription" id="ContentDescription" style="width:422px;position:absolute;left:188px;top:60px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="ContentDescription" id="ContentDescription" style="width:422px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
+</div>  <!-- End of a new line -->
 
 
 </div>  <!--  LabelContent --> 
-</fieldset>  <!-- Container --> 
-<div id='clear'></div>
+</div>  <!-- End of a new line -->
 
+
+</div>  <!--  Container --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->

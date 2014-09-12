@@ -185,7 +185,6 @@ function _AfterPageLoaded( )
       }
    }
 
-   var keyRole = document.wMLCMLC_SideBar.zKeyRole.value;
    document.wMLCMLC_SideBar.zError.value = "";
    document.wMLCMLC_SideBar.zOpenFile.value = "";
 
@@ -223,21 +222,6 @@ function CheckAllInGrid(id, CheckBoxName)
    }
 }
 
-function EditAreasOfUseSect( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCMLC_SideBar.zAction.value = "EditAreasOfUseSect";
-      document.wMLCMLC_SideBar.submit( );
-   }
-}
-
 function EditAppTypesSect( )
 {
 
@@ -253,7 +237,7 @@ function EditAppTypesSect( )
    }
 }
 
-function EditMasterLabelVersionData( )
+function EditAreasOfUseSect( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -263,7 +247,7 @@ function EditMasterLabelVersionData( )
    {
       _DisableFormElements( true );
 
-      document.wMLCMLC_SideBar.zAction.value = "EditMasterLabelVersionData";
+      document.wMLCMLC_SideBar.zAction.value = "EditAreasOfUseSect";
       document.wMLCMLC_SideBar.submit( );
    }
 }
@@ -298,21 +282,6 @@ function EditDirectionsUseSect( )
    }
 }
 
-function EditHazardSect( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCMLC_SideBar.zAction.value = "EditHazardSect";
-      document.wMLCMLC_SideBar.submit( );
-   }
-}
-
 function EditFirstAidSect( )
 {
 
@@ -324,6 +293,21 @@ function EditFirstAidSect( )
       _DisableFormElements( true );
 
       document.wMLCMLC_SideBar.zAction.value = "EditFirstAidSect";
+      document.wMLCMLC_SideBar.submit( );
+   }
+}
+
+function EditHazardSect( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCMLC_SideBar.zAction.value = "EditHazardSect";
       document.wMLCMLC_SideBar.submit( );
    }
 }
@@ -373,6 +357,21 @@ function EditMarketingSect( )
    }
 }
 
+function EditMasterLabelVersionData( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCMLC_SideBar.zAction.value = "EditMasterLabelVersionData";
+      document.wMLCMLC_SideBar.submit( );
+   }
+}
+
 function EditPrecautionarySect( )
 {
 
@@ -414,6 +413,51 @@ function EditSurfacesSect( )
       _DisableFormElements( true );
 
       document.wMLCMLC_SideBar.zAction.value = "EditSurfacesSect";
+      document.wMLCMLC_SideBar.submit( );
+   }
+}
+
+function GOTO_CompositeEntries( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCMLC_SideBar.zAction.value = "GOTO_CompositeEntries";
+      document.wMLCMLC_SideBar.submit( );
+   }
+}
+
+function GOTO_CompositeWO_Usage( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCMLC_SideBar.zAction.value = "GOTO_CompositeWO_Usage";
+      document.wMLCMLC_SideBar.submit( );
+   }
+}
+
+function GOTO_ListUsageEntries( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCMLC_SideBar.zAction.value = "GOTO_ListUsageEntries";
       document.wMLCMLC_SideBar.submit( );
    }
 }

@@ -185,7 +185,6 @@ function _AfterPageLoaded( )
       }
    }
 
-   var keyRole = document.wMLCAreasOfUse.zKeyRole.value;
    document.wMLCAreasOfUse.zError.value = "";
    document.wMLCAreasOfUse.zOpenFile.value = "";
 
@@ -701,6 +700,51 @@ function smEditMarketingSect( )
    }
 }
 
+function smGOTO_ListUsageEntries( )
+{
+
+      // This is for indicating whether the user hit the window close box.
+      isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCAreasOfUse.zAction.value = "smGOTO_ListUsageEntries";
+      document.wMLCAreasOfUse.submit( );
+   }
+}
+
+function smGOTO_CompositeEntries( )
+{
+
+      // This is for indicating whether the user hit the window close box.
+      isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCAreasOfUse.zAction.value = "smGOTO_CompositeEntries";
+      document.wMLCAreasOfUse.submit( );
+   }
+}
+
+function smGOTO_CompositeWO_Usage( )
+{
+
+      // This is for indicating whether the user hit the window close box.
+      isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCAreasOfUse.zAction.value = "smGOTO_CompositeWO_Usage";
+      document.wMLCAreasOfUse.submit( );
+   }
+}
+
 function mProductManagement( )
 {
 
@@ -913,30 +957,6 @@ function mLogout( )
       _DisableFormElements( true );
 
       document.wMLCAreasOfUse.zAction.value = "_OnUnload";
-      document.wMLCAreasOfUse.submit( );
-   }
-}
-
-function mTemplate( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmTemplate" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wMLCAreasOfUse.zAction.value = "mTemplate";
       document.wMLCAreasOfUse.submit( );
    }
 }

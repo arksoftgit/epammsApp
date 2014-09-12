@@ -185,7 +185,6 @@ function _AfterPageLoaded( )
       }
    }
 
-   var keyRole = document.wMLCMarketingStatement.zKeyRole.value;
    document.wMLCMarketingStatement.zError.value = "";
    document.wMLCMarketingStatement.zOpenFile.value = "";
 
@@ -238,7 +237,7 @@ function AcceptMarketingStmt( )
    }
 }
 
-function ShowHideEditorStatementText( )
+function CancelMarketingStmt( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -246,18 +245,10 @@ function ShowHideEditorStatementText( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      // Javascript code entered by user.
+      _DisableFormElements( true );
 
-      if ( tinyMCE.get( 'StatementText' ) ) 
-         tinyMCE.execCommand( 'mceRemoveControl', false, 'StatementText' );
-      else
-         tinyMCE.execCommand( 'mceAddControl', false, 'StatementText' ); 
-
-      return;
-
-
-      // END of Javascript code entered by user.
-
+      document.wMLCMarketingStatement.zAction.value = "CancelMarketingStmt";
+      document.wMLCMarketingStatement.submit( );
    }
 }
 
@@ -310,21 +301,6 @@ function InitMarketingStmtForUpdate( )
    }
 }
 
-function CancelMarketingStmt( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCMarketingStatement.zAction.value = "CancelMarketingStmt";
-      document.wMLCMarketingStatement.submit( );
-   }
-}
-
 function SaveAddNewMarketingStmt( )
 {
 
@@ -337,6 +313,29 @@ function SaveAddNewMarketingStmt( )
 
       document.wMLCMarketingStatement.zAction.value = "SaveAddNewMarketingStmt";
       document.wMLCMarketingStatement.submit( );
+   }
+}
+
+function ShowHideEditorStatementText( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+      if ( tinyMCE.get( 'StatementText' ) ) 
+         tinyMCE.execCommand( 'mceRemoveControl', false, 'StatementText' );
+      else
+         tinyMCE.execCommand( 'mceAddControl', false, 'StatementText' ); 
+
+      return;
+
+
+      // END of Javascript code entered by user.
+
    }
 }
 
@@ -597,30 +596,6 @@ function mLogout( )
       _DisableFormElements( true );
 
       document.wMLCMarketingStatement.zAction.value = "_OnUnload";
-      document.wMLCMarketingStatement.submit( );
-   }
-}
-
-function mTemplate( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmTemplate" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wMLCMarketingStatement.zAction.value = "mTemplate";
       document.wMLCMarketingStatement.submit( );
    }
 }

@@ -185,7 +185,6 @@ function _AfterPageLoaded( )
       }
    }
 
-   var keyRole = document.wSPLDTemplateSectionDetail.zKeyRole.value;
    document.wSPLDTemplateSectionDetail.zError.value = "";
    document.wSPLDTemplateSectionDetail.zOpenFile.value = "";
 
@@ -194,15 +193,6 @@ function _AfterPageLoaded( )
       clearTimeout( timerID );
       timerID = null;
    }
-
-   document.wSPLDTemplateSectionDetail.hComboBoxSectionType.value = document.wSPLDTemplateSectionDetail.ComboBoxSectionType.value
-   document.wSPLDTemplateSectionDetail.hComboBoxTitlePosition.value = document.wSPLDTemplateSectionDetail.ComboBoxTitlePosition.value
-   document.wSPLDTemplateSectionDetail.hTitleBoldItalic.value = document.wSPLDTemplateSectionDetail.TitleBoldItalic.value
-   document.wSPLDTemplateSectionDetail.hSubtitlePosition.value = document.wSPLDTemplateSectionDetail.SubtitlePosition.value
-   document.wSPLDTemplateSectionDetail.hSubtitleBoldItalic.value = document.wSPLDTemplateSectionDetail.SubtitleBoldItalic.value
-   document.wSPLDTemplateSectionDetail.hComboBoxStatementFormat.value = document.wSPLDTemplateSectionDetail.ComboBoxStatementFormat.value
-   document.wSPLDTemplateSectionDetail.hKerningUnits.value = document.wSPLDTemplateSectionDetail.KerningUnits.value
-   document.wSPLDTemplateSectionDetail.hWordSpacingUnits.value = document.wSPLDTemplateSectionDetail.WordSpacingUnits.value
 
    var varTimeout = document.wSPLDTemplateSectionDetail.zTimeout.value;
    if ( varTimeout > 0 )
@@ -619,102 +609,6 @@ function mTemplate( )
 
       document.wSPLDTemplateSectionDetail.zAction.value = "mTemplate";
       document.wSPLDTemplateSectionDetail.submit( );
-   }
-}
-
-function ComboBoxSectionTypeOnChange( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      document.wSPLDTemplateSectionDetail.hComboBoxSectionType.value = document.wSPLDTemplateSectionDetail.ComboBoxSectionType.value;
-   }
-}
-
-function ComboBoxTitlePositionOnChange( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      document.wSPLDTemplateSectionDetail.hComboBoxTitlePosition.value = document.wSPLDTemplateSectionDetail.ComboBoxTitlePosition.value;
-   }
-}
-
-function TitleBoldItalicOnChange( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      document.wSPLDTemplateSectionDetail.hTitleBoldItalic.value = document.wSPLDTemplateSectionDetail.TitleBoldItalic.value;
-   }
-}
-
-function SubtitlePositionOnChange( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      document.wSPLDTemplateSectionDetail.hSubtitlePosition.value = document.wSPLDTemplateSectionDetail.SubtitlePosition.value;
-   }
-}
-
-function SubtitleBoldItalicOnChange( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      document.wSPLDTemplateSectionDetail.hSubtitleBoldItalic.value = document.wSPLDTemplateSectionDetail.SubtitleBoldItalic.value;
-   }
-}
-
-function ComboBoxStatementFormatOnChange( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      document.wSPLDTemplateSectionDetail.hComboBoxStatementFormat.value = document.wSPLDTemplateSectionDetail.ComboBoxStatementFormat.value;
-   }
-}
-
-function KerningUnitsOnChange( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      document.wSPLDTemplateSectionDetail.hKerningUnits.value = document.wSPLDTemplateSectionDetail.KerningUnits.value;
-   }
-}
-
-function WordSpacingUnitsOnChange( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      document.wSPLDTemplateSectionDetail.hWordSpacingUnits.value = document.wSPLDTemplateSectionDetail.WordSpacingUnits.value;
    }
 }
 

@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 
 <%-- wSLCStorageDisposalStatement --%>
 
@@ -11,11 +11,11 @@
 <%@ page import="com.quinsoft.zeidon.utils.*" %>
 <%@ page import="com.quinsoft.zeidon.vml.*" %>
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
-<%@ page import="com.arksoft.epamms.*" %>
+<%@ page import="com.quinsoft.epamms.*" %>
 
 <%! 
 
-ObjectEngine objectEngine = com.arksoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
+ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
 public String ReplaceXSSValues( String szFieldValue )
 {
@@ -255,6 +255,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation AcceptStorDispStmt: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -308,6 +310,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation CancelStorDispStmt: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -354,6 +358,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation SaveAddNewStorDispStmt: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -409,6 +415,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation CancelStorDispStmt: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -456,6 +464,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation ProductManagement: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -503,6 +513,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation SubregistrantManagement: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -550,6 +562,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation TrackingNotificationCompliance: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -597,6 +611,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation StateRegistrations: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -644,6 +660,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation MarketingFulfillment: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -691,6 +709,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation WebDevelopment: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -733,6 +753,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation PrimaryRegistrantCompanySetup: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -780,6 +802,8 @@ if ( strActionToProcess != null )
       }
       catch (Exception e)
       {
+         // Set the error return code.
+         nOptRC = 2;
          strVMLError = "<br><br>*** Error running Operation ProcessLogin: " + e.getMessage();
          task.log().info( strVMLError );
       }
@@ -800,53 +824,6 @@ if ( strActionToProcess != null )
       {
          // Next Window
          strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ResetTopWindow, "wStartUp", "UserLogin" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mTemplate" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCStorageDisposalStatement", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCStorageDisposalStatement.jsp", "wStartUp.Template" );
-      try
-      {
-         nOptRC = wStartUp.Template( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         strVMLError = "<br><br>*** Error running Operation Template: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReplaceWindowWithModalWindow, "wTemplD", "TemplateList" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -1003,7 +980,6 @@ else
        <li id="lmAdministration" name="lmAdministration"><a href="#" onclick="mAdministration()">Company Profile</a></li>
        <li id="lmLogin" name="lmLogin"><a href="#" onclick="mLogin()">Login</a></li>
        <li id="lmLogout" name="lmLogout"><a href="#" onclick="mLogout()">Logout</a></li>
-       <li id="lmTemplate" name="lmTemplate"><a href="#" onclick="mTemplate()">Template</a></li>
    </ul>
 </div>  <!-- end Navigation Bar -->
 
@@ -1171,11 +1147,19 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* StorDispStmt:GroupBox */ %>
-<fieldset id="StorDispStmt" name="StorDispStmt"   style="size:absolute; width:732px; height:576px;">
-<legend>Storage and Disposal Statement</legend>
+
+<div id="StorDispStmt" name="StorDispStmt" style="width:732px;height:596px;float:left;">  <!-- StorDispStmt --> 
+
+<div  id="StorDispStmt" name="StorDispStmt" >Storage and Disposal Statement</div>
+
+ <!-- This is added as a line spacer -->
+<div style="height:28px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp</span>
 <% /* StorDispTitle::Text */ %>
 
-<label  id="StorDispTitle:" name="StorDispTitle:" style="width:150px;height:16px;position:absolute;left:12px;top:28px;">Storage/Disposal Title:</label>
+<span  id="StorDispTitle:" name="StorDispTitle:" style="width:150px;height:16px;">Storage/Disposal Title:</span>
 
 <% /* StorDispTitle:Text */ %>
 <% strTextDisplayValue = "";
@@ -1202,146 +1186,113 @@ else
    }
 %>
 
-<label  id="StorDispTitle" name="StorDispTitle" style="width:566px;height:16px;position:absolute;left:152px;top:28px;"><%=strTextDisplayValue%></label>
+<span  id="StorDispTitle" name="StorDispTitle" style="width:566px;height:16px;"><%=strTextDisplayValue%></span>
 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:8px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp</span>
 <% /* NoteToReviewer::Text */ %>
 
-<label  id="NoteToReviewer:" name="NoteToReviewer:" style="width:130px;height:16px;position:absolute;left:12px;top:52px;">Note to Reviewer:</label>
+<span  id="NoteToReviewer:" name="NoteToReviewer:" style="width:130px;height:16px;">Note to Reviewer:</span>
 
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GB4:GroupBox */ %>
 
-<div id="GB4" name="GB4" style="width:584px;height:56px;position:absolute;left:152px;top:52px;">  <!-- GB4 --> 
+<div id="GB4" name="GB4" style="width:584px;height:56px;float:left;">  <!-- GB4 --> 
 
+
+<div>  <!-- Beginning of a new line -->
 <% /* NoteToReviewer:MLEdit */ %>
-<%
-   // MLEdit: NoteToReviewer
-   strErrorMapValue = VmlOperation.CheckError( "NoteToReviewer", strError );
-   if ( !StringUtils.isBlank( strErrorMapValue ) )
-   {
-      if ( StringUtils.equals( strErrorFlag, "Y" ) )
-         strErrorColor = "color:red;";
-   }
-   else
-   {
-      strErrorColor = "";
-      mSubLC = task.getViewByName( "mSubLC" );
-      if ( VmlOperation.isValid( mSubLC ) == false )
-         task.log( ).info( "Invalid View: " + "NoteToReviewer" );
-      else
-      {
-         nRC = mSubLC.cursor( "S_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strErrorMapValue = mSubLC.cursor( "S_StorageDisposalStatement" ).getStringFromAttribute( "ReviewerNote", "" );
-            if ( strErrorMapValue == null )
-               strErrorMapValue = "";
-
-            task.log( ).info( "S_StorageDisposalStatement.ReviewerNote: " + strErrorMapValue );
-         }
-         else
-            task.log( ).info( "Entity does not exist: " + "mSubLC.S_StorageDisposalStatement" );
-      }
-   }
-%>
-
-<textarea name="NoteToReviewer" id="NoteToReviewer"style="width:576px;height:56px;position:absolute;left:0px;top:0px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+</div>  <!-- End of a new line -->
 
 
 </div>  <!--  GB4 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:10px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp</span>
 <% /* StatementText::Text */ %>
 
-<label  id="StatementText:" name="StatementText:" style="width:130px;height:16px;position:absolute;left:12px;top:118px;">Statement Text:</label>
+<span  id="StatementText:" name="StatementText:" style="width:130px;height:16px;">Statement Text:</span>
 
+<span style="height:360px;">&nbsp&nbsp</span>
 <% /* StatementText:MLEdit */ %>
-<%
-   // MLEdit: StatementText
-   strErrorMapValue = VmlOperation.CheckError( "StatementText", strError );
-   if ( !StringUtils.isBlank( strErrorMapValue ) )
-   {
-      if ( StringUtils.equals( strErrorFlag, "Y" ) )
-         strErrorColor = "color:red;";
-   }
-   else
-   {
-      strErrorColor = "";
-      mSubLC = task.getViewByName( "mSubLC" );
-      if ( VmlOperation.isValid( mSubLC ) == false )
-         task.log( ).info( "Invalid View: " + "StatementText" );
-      else
-      {
-         nRC = mSubLC.cursor( "S_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strErrorMapValue = mSubLC.cursor( "S_StorageDisposalStatement" ).getStringFromAttribute( "Text", "" );
-            if ( strErrorMapValue == null )
-               strErrorMapValue = "";
+</div>  <!-- End of a new line -->
 
-            task.log( ).info( "S_StorageDisposalStatement.Text: " + strErrorMapValue );
-         }
-         else
-            task.log( ).info( "Entity does not exist: " + "mSubLC.S_StorageDisposalStatement" );
-      }
-   }
-%>
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
-<textarea name="StatementText" id="StatementText"style="width:566px;height:360px;position:absolute;left:152px;top:118px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp</span>
 <% /* Mandatory:Text */ %>
 
-<label  id="Mandatory" name="Mandatory" style="width:130px;height:16px;position:absolute;left:12px;top:446px;">Mandatory</label>
+<span  id="Mandatory" name="Mandatory" style="width:130px;height:16px;">Mandatory</span>
 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp</span>
 <% /* Mutually:Text */ %>
 
-<label  id="Mutually" name="Mutually" style="width:130px;height:16px;position:absolute;left:12px;top:462px;">(Mutually</label>
+<span  id="Mutually" name="Mutually" style="width:130px;height:16px;">(Mutually</span>
 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp</span>
 <% /* Exclusive:Text */ %>
 
-<label  id="Exclusive" name="Exclusive" style="width:130px;height:16px;position:absolute;left:12px;top:478px;">Exclusive</label>
+<span  id="Exclusive" name="Exclusive" style="width:130px;height:16px;">Exclusive</span>
 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp</span>
 <% /* Statements:Text */ %>
 
-<label  id="Statements" name="Statements" style="width:130px;height:16px;position:absolute;left:12px;top:494px;">Statements):</label>
+<span  id="Statements" name="Statements" style="width:130px;height:16px;">Statements):</span>
 
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GB6:GroupBox */ %>
 
-<div id="GB6" name="GB6" style="width:566px;height:86px;position:absolute;left:152px;top:494px;">  <!-- GB6 --> 
+<div id="GB6" name="GB6" style="width:566px;height:86px;float:left;">  <!-- GB6 --> 
 
+
+<div>  <!-- Beginning of a new line -->
 <% /* NotForUseStmtText:MLEdit */ %>
-<%
-   // MLEdit: NotForUseStmtText
-   strErrorMapValue = VmlOperation.CheckError( "NotForUseStmtText", strError );
-   if ( !StringUtils.isBlank( strErrorMapValue ) )
-   {
-      if ( StringUtils.equals( strErrorFlag, "Y" ) )
-         strErrorColor = "color:red;";
-   }
-   else
-   {
-      strErrorColor = "";
-      mSubLC = task.getViewByName( "mSubLC" );
-      if ( VmlOperation.isValid( mSubLC ) == false )
-         task.log( ).info( "Invalid View: " + "NotForUseStmtText" );
-      else
-      {
-         nRC = mSubLC.cursor( "S_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strErrorMapValue = mSubLC.cursor( "S_StorageDisposalStatement" ).getStringFromAttribute( "NotForUseText", "" );
-            if ( strErrorMapValue == null )
-               strErrorMapValue = "";
-
-            task.log( ).info( "S_StorageDisposalStatement.NotForUseText: " + strErrorMapValue );
-         }
-         else
-            task.log( ).info( "Entity does not exist: " + "mSubLC.S_StorageDisposalStatement" );
-      }
-   }
-%>
-
-<textarea name="NotForUseStmtText" id="NotForUseStmtText" class="mceSimple" style="width:566px;height:86px;position:absolute;left:0px;top:0px;border:solid;border-width:4px;border-style:groove;"><%=strErrorMapValue%></textarea>
+</div>  <!-- End of a new line -->
 
 
 </div>  <!--  GB6 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:20px;">&nbsp&nbsp</span>
 <% /* NotForUseType:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "NotForUseType", strError );
@@ -1368,7 +1319,7 @@ else
             catch (Exception e)
             {
                out.println("There is an error on NotForUseType: " + e.getMessage());
-               task.log().info( "*** Error on ctrl NotForUseType" + e.getMessage() );
+               task.log().error( "*** Error on ctrl NotForUseType", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -1381,11 +1332,12 @@ else
    }
 %>
 
-<input name="NotForUseType" id="NotForUseType" style="width:130px;position:absolute;left:12px;top:530px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="NotForUseType" id="NotForUseType" style="width:130px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-</fieldset>  <!-- StorDispStmt --> 
-<div id='clear'></div>
+</div>  <!-- End of a new line -->
 
+
+</div>  <!--  StorDispStmt --> 
 </div>  <!-- End of a new line -->
 
 

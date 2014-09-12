@@ -185,7 +185,6 @@ function _AfterPageLoaded( )
       }
    }
 
-   var keyRole = document.wMLCIngredients.zKeyRole.value;
    document.wMLCIngredients.zError.value = "";
    document.wMLCIngredients.zOpenFile.value = "";
 
@@ -573,6 +572,51 @@ function smEditMarketingSect( )
    }
 }
 
+function smGOTO_ListUsageEntries( )
+{
+
+      // This is for indicating whether the user hit the window close box.
+      isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCIngredients.zAction.value = "smGOTO_ListUsageEntries";
+      document.wMLCIngredients.submit( );
+   }
+}
+
+function smGOTO_CompositeEntries( )
+{
+
+      // This is for indicating whether the user hit the window close box.
+      isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCIngredients.zAction.value = "smGOTO_CompositeEntries";
+      document.wMLCIngredients.submit( );
+   }
+}
+
+function smGOTO_CompositeWO_Usage( )
+{
+
+      // This is for indicating whether the user hit the window close box.
+      isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCIngredients.zAction.value = "smGOTO_CompositeWO_Usage";
+      document.wMLCIngredients.submit( );
+   }
+}
+
 function mProductManagement( )
 {
 
@@ -785,30 +829,6 @@ function mLogout( )
       _DisableFormElements( true );
 
       document.wMLCIngredients.zAction.value = "_OnUnload";
-      document.wMLCIngredients.submit( );
-   }
-}
-
-function mTemplate( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmTemplate" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wMLCIngredients.zAction.value = "mTemplate";
       document.wMLCIngredients.submit( );
    }
 }
