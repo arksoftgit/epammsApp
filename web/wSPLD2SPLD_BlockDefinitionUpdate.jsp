@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 
 <%-- wSPLD2SPLD_BlockDefinitionUpdate --%>
 
@@ -15,7 +15,7 @@
 
 <%! 
 
-ObjectEngine objectEngine = JavaObjectEngine.getInstance();
+ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
 public String ReplaceXSSValues( String szFieldValue )
 {
@@ -61,6 +61,25 @@ public int DoInputMapping( HttpServletRequest request,
    mSPLDef = task.getViewByName( "mSPLDef" );
    if ( VmlOperation.isValid( mSPLDef ) )
    {
+      // EditBox: Tag
+      nRC = mSPLDef.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "Tag" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "Tag", "", strMapValue );
+            else
+               mSPLDef.cursor( "LLD_Block" ).setAttribute( "Tag", strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "Tag", e.getReason( ), strMapValue );
+         }
+      }
+
       // ComboBox: ComboBox1
       nRC = mSPLDef.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
@@ -90,7 +109,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox3", "", strMapValue );
             else
-               mSPLDef.cursor( "LLD_Block" ).setAttribute( "Left", strMapValue, "" );
+               mSPLDef.cursor( "LLD_Block" ).setAttribute( "Top", strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -109,7 +128,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox2", "", strMapValue );
             else
-               mSPLDef.cursor( "LLD_Block" ).setAttribute( "Top", strMapValue, "" );
+               mSPLDef.cursor( "LLD_Block" ).setAttribute( "Left", strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -283,6 +302,7 @@ String strOpenPopupWindow = "";
 String strPopupWindowSZX = "";
 String strPopupWindowSZY = "";
 String strDateFormat = "";
+String strKeyRole = "";
 String strDialogName = "";
 String strWindowName = "";
 String strLastWindow;
@@ -395,6 +415,102 @@ if ( strActionToProcess != null )
       {
          // Next Window
          strNextJSP_Name = wSPLD2.SetWebRedirection( vKZXMLPGO, wSPLD2.zWAB_ReturnToParent, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GENERATE_SPLD_LabelDottedBorders" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLD2SPLD_BlockDefinitionUpdate", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLD2SPLD_BlockDefinitionUpdate.jsp", "wSPLD2.GENERATE_SPLD_Label" );
+      try
+      {
+         nOptRC = wSPLD2.GENERATE_SPLD_Label( new zVIEW( vKZXMLPGO ) );
+      }
+      catch (Exception e)
+      {
+         // Set the error return code.
+         nOptRC = 2;
+         strVMLError = "<br><br>*** Error running Operation GENERATE_SPLD_Label: " + e.getMessage();
+         task.log().info( strVMLError );
+      }
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wSPLD2.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wSPLD2.SetWebRedirection( vKZXMLPGO, wSPLD2.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GENERATE_SPLD_Label" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLD2SPLD_BlockDefinitionUpdate", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLD2SPLD_BlockDefinitionUpdate.jsp", "wSPLD2.GENERATE_SPLD_Label" );
+      try
+      {
+         nOptRC = wSPLD2.GENERATE_SPLD_Label( new zVIEW( vKZXMLPGO ) );
+      }
+      catch (Exception e)
+      {
+         // Set the error return code.
+         nOptRC = 2;
+         strVMLError = "<br><br>*** Error running Operation GENERATE_SPLD_Label: " + e.getMessage();
+         task.log().info( strVMLError );
+      }
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wSPLD2.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wSPLD2.SetWebRedirection( vKZXMLPGO, wSPLD2.zWAB_StayOnWindowWithRefresh, "", "" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -820,7 +936,17 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="CANCEL_BlockSubBlockDefinition( )">Cancel and Return</a></li>
+       <li><a href="#"  onclick="GENERATE_SPLD_LabelDottedBorders( )">Generate Label with Borders</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New2" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li><a href="#"  onclick="GENERATE_SPLD_Label( )">Generate Label</a></li>
 <%
    }
 %>
@@ -923,18 +1049,31 @@ else
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSPLD2", "SPLD_BlockDefinitionUpdate" );
    strOpenFile = VmlOperation.FindOpenFile( task );
-   strDateFormat = "MM/DD/YYYY";
+   strDateFormat = "YYYY.MM.DD";
 
+   wWebXA = task.getViewByName( "wWebXfer" );
+   if ( VmlOperation.isValid( wWebXA ) )
+   {
+      nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         if ( strKeyRole == null )
+            strKeyRole = "";
+
+         task.log().info( "Root.KeyRole: " + strKeyRole );
+      }
+   }
 %>
 
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
    <input name="zPopupWindowSZX" id="zPopupWindowSZX" type="hidden" value="<%=strPopupWindowSZX%>">
    <input name="zPopupWindowSZY" id="zPopupWindowSZY" type="hidden" value="<%=strPopupWindowSZY%>">
    <input name="zErrorFlag" id="zErrorFlag" type="hidden" value="<%=strErrorFlag%>">
-   <input name="zTimeout" id="zTimeout" type="hidden" value="<%=nTimeout%>">
    <input name="zSolicitSave" id="zSolicitSave" type="hidden" value="<%=strSolicitSave%>">
 
    <div name="ShowVMLError" id="ShowVMLError" class="ShowVMLError">
@@ -943,7 +1082,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:12px;width:100px;"></div>
+<div style="height:2px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
@@ -956,36 +1095,50 @@ else
 <td valign="top" style="width:136px;">
 <% /* Text1:Text */ %>
 
-<span  id="Text1" name="Text1" style="width:130px;height:26px;">Block Type:</span>
+<span  id="Text1" name="Text1" style="width:130px;height:26px;">Block Tag:</span>
 
 </td>
-<td valign="top" style="width:86px;">
-<% /* Text6:Text */ %>
-<% strTextDisplayValue = "";
-   mSPLDefPanel = task.getViewByName( "mSPLDefPanel" );
-   if ( VmlOperation.isValid( mSPLDefPanel ) == false )
-      task.log( ).debug( "Invalid View: " + "Text6" );
+<td valign="top" style="width:78px;">
+<% /* Tag:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "Tag", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+      strErrorColor = "color:red;";
+   }
    else
    {
-      nRC = mSPLDefPanel.cursor( "BlockSubBlockComponent" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
+      strErrorColor = "";
+      mSPLDef = task.getViewByName( "mSPLDef" );
+      if ( VmlOperation.isValid( mSPLDef ) == false )
+         task.log( ).debug( "Invalid View: " + "Tag" );
+      else
       {
-      try
-      {
-         strTextDisplayValue = mSPLDefPanel.cursor( "BlockSubBlockComponent" ).getStringFromAttribute( "Type", "" );
-      }
-      catch (Exception e)
-      {
-         out.println("There is an error on Text6: " + e.getMessage());
-         task.log().info( "*** Error on ctrl Text6" + e.getMessage() );
-      }
-         if ( strTextDisplayValue == null )
-            strTextDisplayValue = "";
+         nRC = mSPLDef.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+            strErrorMapValue = mSPLDef.cursor( "LLD_Block" ).getStringFromAttribute( "Tag", "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on Tag: " + e.getMessage());
+               task.log().error( "*** Error on ctrl Tag", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "LLD_Block.Tag: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist: " + "mSPLDef.LLD_Block" );
       }
    }
 %>
 
-<span  id="Text6" name="Text6" style="width:86px;height:26px;"><%=strTextDisplayValue%></span>
+<input name="Tag" id="Tag" style="width:78px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -1072,7 +1225,7 @@ else
 <td valign="top" style="width:136px;">
 <% /* Text9:Text */ %>
 
-<span  id="Text9" name="Text9" style="width:130px;height:26px;">X Position:</span>
+<span  id="Text9" name="Text9" style="width:130px;height:26px;">Top:</span>
 
 </td>
 <td valign="top" style="width:78px;">
@@ -1097,7 +1250,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSPLDef.cursor( "LLD_Block" ).getStringFromAttribute( "Left", "" );
+            strErrorMapValue = mSPLDef.cursor( "LLD_Block" ).getStringFromAttribute( "Top", "" );
             }
             catch (Exception e)
             {
@@ -1107,7 +1260,7 @@ else
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "LLD_Block.Left: " + strErrorMapValue );
+            task.log( ).debug( "LLD_Block.Top: " + strErrorMapValue );
          }
          else
             task.log( ).debug( "Entity does not exist: " + "mSPLDef.LLD_Block" );
@@ -1123,7 +1276,7 @@ else
 <td valign="top" style="width:136px;">
 <% /* Text3:Text */ %>
 
-<span  id="Text3" name="Text3" style="width:130px;height:26px;">Y Position:</span>
+<span  id="Text3" name="Text3" style="width:130px;height:26px;">Left:</span>
 
 </td>
 <td valign="top" style="width:78px;">
@@ -1148,7 +1301,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSPLDef.cursor( "LLD_Block" ).getStringFromAttribute( "Top", "" );
+            strErrorMapValue = mSPLDef.cursor( "LLD_Block" ).getStringFromAttribute( "Left", "" );
             }
             catch (Exception e)
             {
@@ -1158,7 +1311,7 @@ else
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "LLD_Block.Top: " + strErrorMapValue );
+            task.log( ).debug( "LLD_Block.Left: " + strErrorMapValue );
          }
          else
             task.log( ).debug( "Entity does not exist: " + "mSPLDef.LLD_Block" );
@@ -1332,6 +1485,9 @@ else
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
+ <!-- This is added as a line spacer -->
+<div style="height:2px;width:100px;"></div>
+
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox2:GroupBox */ %>
@@ -1436,17 +1592,17 @@ else
 <div>  <!-- Beginning of a new line -->
 <% /* Text14:Text */ %>
 <% strTextDisplayValue = "";
-   mSPLDefPanel = task.getViewByName( "mSPLDefPanel" );
-   if ( VmlOperation.isValid( mSPLDefPanel ) == false )
+   mSPLDef = task.getViewByName( "mSPLDef" );
+   if ( VmlOperation.isValid( mSPLDef ) == false )
       task.log( ).debug( "Invalid View: " + "Text14" );
    else
    {
-      nRC = mSPLDefPanel.cursor( "BlockSubBlockComponent" ).checkExistenceOfEntity( ).toInt();
+      nRC = mSPLDef.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
       try
       {
-         strTextDisplayValue = mSPLDefPanel.cursor( "BlockSubBlockComponent" ).getStringFromAttribute( "Name", "" );
+         strTextDisplayValue = mSPLDef.cursor( "LLD_Block" ).getStringFromAttribute( "Name", "" );
       }
       catch (Exception e)
       {
@@ -1597,9 +1753,6 @@ else
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
-
- <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
@@ -1766,7 +1919,7 @@ try
          nRC = vGrid2.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl4 = vGrid2.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "Color", "" );
+            strGridEditCtl4 = vGrid2.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "TextColor", "" );
 
             if ( strGridEditCtl4 == null )
                strGridEditCtl4 = "";

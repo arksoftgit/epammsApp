@@ -185,6 +185,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var keyRole = document.wSPLD2SPLD_BlockDefinitionUpdate.zKeyRole.value;
    document.wSPLD2SPLD_BlockDefinitionUpdate.zError.value = "";
    document.wSPLD2SPLD_BlockDefinitionUpdate.zOpenFile.value = "";
 
@@ -236,6 +237,36 @@ function ACCEPT_BlockSubBlockDefinition( )
       _DisableFormElements( true );
 
       document.wSPLD2SPLD_BlockDefinitionUpdate.zAction.value = "ACCEPT_BlockSubBlockDefinition";
+      document.wSPLD2SPLD_BlockDefinitionUpdate.submit( );
+   }
+}
+
+function GENERATE_SPLD_LabelDottedBorders( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSPLD2SPLD_BlockDefinitionUpdate.zAction.value = "GENERATE_SPLD_LabelDottedBorders";
+      document.wSPLD2SPLD_BlockDefinitionUpdate.submit( );
+   }
+}
+
+function GENERATE_SPLD_Label( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSPLD2SPLD_BlockDefinitionUpdate.zAction.value = "GENERATE_SPLD_Label";
       document.wSPLD2SPLD_BlockDefinitionUpdate.submit( );
    }
 }

@@ -1,60 +1,37 @@
 package com.ajax;
 
 import com.google.gson.Gson;
-import com.quinsoft.zeidon.ActivateFlags;
 import com.quinsoft.zeidon.Application;
 import com.quinsoft.zeidon.CursorPosition;
 import com.quinsoft.zeidon.CursorResult;
-import com.quinsoft.zeidon.EntityInstance;
 import com.quinsoft.zeidon.EntityCursor;
+import com.quinsoft.zeidon.EntityInstance;
 import com.quinsoft.zeidon.ObjectEngine;
 import com.quinsoft.zeidon.Task;
-import com.quinsoft.zeidon.UnknownViewOdException;
 import com.quinsoft.zeidon.View;
 import com.quinsoft.zeidon.WriteOiFlags;
 import com.quinsoft.zeidon.ZeidonException;
-import com.quinsoft.zeidon.standardoe.JavaObjectEngine;
 import com.quinsoft.zeidon.utils.JsonUtils;
 
-import static com.quinsoft.zeidon.vml.VmlOperation.GetApplDirectoryFromView;
-import static com.quinsoft.zeidon.vml.VmlOperation.OrderEntityForView;
-import static com.quinsoft.zeidon.vml.VmlOperation.SetCursorFirstEntityByInteger;
-import static com.quinsoft.zeidon.vml.VmlOperation.zAPPL_DIR_LIB;
-import static com.quinsoft.zeidon.vml.VmlOperation.zIGNORE_ERRORS;
-import static com.quinsoft.zeidon.vml.VmlOperation.zLEVEL_APPLICATION;
-import static com.quinsoft.zeidon.vml.VmlOperation.zREFER_LOD_META;
-import static com.quinsoft.zeidon.vml.VmlOperation.zSINGLE;
-
-
-import com.quinsoft.zeidon.vml.zVIEW;
 import com.quinsoft.zeidon.zeidonoperations.KZOEP1AA;
+import java.net.URLDecoder;
+import java.io.ByteArrayOutputStream;
 import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.io.Writer;
-import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
@@ -495,6 +472,58 @@ public class LabelDesignerServlet extends HttpServlet {
       return "";
    }
 
+   private String getPostData( HttpServletRequest request ) {
+      String decoded = "";
+      try {
+         InputStream is = request.getInputStream();
+         ByteArrayOutputStream os = new ByteArrayOutputStream();
+         byte[] buf = new byte[32];
+         int rc = 0;
+         while( rc >= 0 ) {
+             rc = is.read( buf );
+             if ( rc >= 0 )
+                os.write( buf, 0, rc );
+         }
+         String s = new String( os.toByteArray(), "UTF-8" );
+         decoded = URLDecoder.decode( s, "UTF-8" );
+         logger.debug( ">>>>>>>>>>>>> DECODED: " + decoded );
+
+         logger.debug( "================================" );
+      } catch( IOException io ) {
+         logger.debug( "Error getting Post data: " + io.getMessage() );
+      }
+      return decoded;
+   }
+
+   private void setPathCursorPosition( View vLLD, String entityTagList, int idx1, int depth ) {
+      int idx2 = entityTagList.indexOf( ".", idx1 );
+      if ( idx2 >= 0 ) {
+         String entity = entityTagList.substring( idx1, idx2 );
+         idx1 = idx2 + 1;
+         idx2 = entityTagList.indexOf( ";", idx1 );
+         if ( idx2 >= 0 ) {
+            String tag = entityTagList.substring( idx1, idx2 );
+            EntityCursor cursor;
+            if ( depth > 2 && entity.compareTo( "LLD_Block" ) == 0 ) {
+               if ( depth > 2 ) {
+                  cursor = vLLD.getCursor( "LLD_SubBlock" );
+                  cursor.setToSubobject();
+               }
+            } 
+            cursor = vLLD.getCursor( entity );
+            CursorResult cr = cursor.setFirst( "Tag", tag );
+            if ( cr.isSet() ) {
+               if ( idx2 < entityTagList.length() - 1 ) {
+                  idx2++;
+                  setPathCursorPosition( vLLD, entityTagList, idx2, depth + 1 );
+               }
+            } else {
+               logger.debug( "Could not set cursor for Entity.Tag: " + entity + "." + tag );
+            }
+         }
+      }
+   }
+
    /**
     * @see HttpServlet#doGet( HttpServletRequest request, HttpServletResponse response )
     */
@@ -510,7 +539,7 @@ public class LabelDesignerServlet extends HttpServlet {
     * @throws IOException if an I/O error occurs
     */
    @Override
-   public void doPost( HttpServletRequest request, HttpServletResponse response ) throws IOException, ServletException {
+   public void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
 
       String taskId = (String) request.getSession().getAttribute( "ZeidonTaskId" );
 
@@ -530,7 +559,47 @@ public class LabelDesignerServlet extends HttpServlet {
    // }
 
       String jsonLabel = null;
-      if ( action.compareTo( "saveLabel" ) == 0 ) {
+      
+      if ( action.compareTo( "setCursorPosition" ) == 0 ) {
+         if ( vLLD != null ) {
+            try {
+               vLLD.resetSubobject();
+            } catch (ZeidonException ze) {
+               // I think this means we are at the top
+               logger.debug( "resetSubobject: " + ze.getMessage() );
+            }
+            String viewPath = request.getParameter( "viewPath" );
+            setPathCursorPosition( vLLD, viewPath, 0, 0 );
+            response.setContentType( "text/json" );
+            response.getWriter().write( new Gson().toJson( "{}" ) );
+         }
+      } else if ( action.compareTo( "saveLabel" ) == 0 ) {
+         if ( vLLD != null ) {
+            jsonLabel = getPostData( request );
+         // jsonLabel = request.getParameter( "jsonLabel" );
+            try {
+               JSONParser jsonParser = new JSONParser();
+               JSONObject jsonObject = (JSONObject)jsonParser.parse( jsonLabel );
+               applyJsonLabelToView( vLLD, jsonObject, "", -2, null );  // OIs, SPLD_LLD, depth == 0 for LLD_Page
+               vLLD.commit();
+            } catch( ParseException pe ) {
+               logger.debug( "Unable to parse JSON: " + jsonLabel );
+            } catch( ZeidonException ze ) {
+               logger.debug( "Error processing Json Label: " + ze.getMessage() );
+            } finally {
+               convertLLD_ToJSON( vLLD );
+            // logger.debug( "Completed processing Json Label: " + jsonLabel );
+               response.setContentType( "text/json" );
+            // response.getWriter().write( jsonLabel );
+               response.getWriter().write( new Gson().toJson( "{}" ) );
+            }
+         } else {
+            logger.debug( "Null LLD ... skipped processing Json Label: " + jsonLabel );
+            response.setContentType( "text/json" );
+         // response.getWriter().write( jsonLabel );
+            response.getWriter().write( new Gson().toJson( "" ) );
+         }
+      } else if ( action.compareTo( "saveLabelRefresh" ) == 0 ) {
          if ( vLLD != null ) {
             jsonLabel = request.getParameter( "jsonLabel" );
             try {

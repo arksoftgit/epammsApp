@@ -286,7 +286,7 @@ if ( strActionToProcess != null )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLD2SPLD_PanelUpdate", strActionToProcess );
-
+/*
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
       if ( nRC < 0 )
@@ -345,8 +345,8 @@ if ( strActionToProcess != null )
          // Dynamic Next Window
          strNextJSP_Name = wSPLD2.GetWebRedirection( vKZXMLPGO );
       }
-
-      if ( strNextJSP_Name.equals( "" ) )
+*/
+   // if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
          strNextJSP_Name = wSPLD2.SetWebRedirection( vKZXMLPGO, wSPLD2.zWAB_StartModalSubwindow, "wSPLD2", "SPLD_BlockDefinitionUpdate" );
@@ -1426,7 +1426,7 @@ else
                <div id="page8" name="page8" class="page" style="display:none;">8</div> <!-- page -->
                <div id="page9" name="page9" class="page" style="display:none;">9</div> <!-- page -->
             </div> <!-- label -->
-            <div id="zmenu" class="toggler" style="background-color:#ccc;top:0px;width:3.5in;height:9in;float:right;position:absolute;">   <!-- without position:relative, clone position is off -->
+            <div id="zmenu" class="toggler" style="background-color:#ccc;top:0px;width:3.5in;height:8.5in;float:right;position:absolute;">   <!-- without position:relative, clone position is off -->
                <div id="zaccordion" style="margin-left:0;padding-left:0">
                   <h3>Block Types</h3>
                   <div id="zpool">
@@ -1812,7 +1812,7 @@ else
 <form name="wSPLD2SPLD_UpdateLLD" id="wSPLD2SPLD_UpdateLLD" method="post">
    <input name="zAction" id="zAction" type="hidden" value="NOVALUE">
 </form>
- 
+
 </body>
 </html>
 <%

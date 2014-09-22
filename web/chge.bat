@@ -1,1 +1,1 @@
-qchg "com.quinsoft.ePamms" "com.quinsoft.epamms" *.jsp 
+qchg "com.quinsoft.ePamms" "com.arksoft.epamms" *.jsp 
