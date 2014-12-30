@@ -166,6 +166,7 @@ else
 
 if ( task == null )
 {
+   session.setAttribute( "ZeidonTaskId", null );
     strURL = response.encodeRedirectURL( "logout.jsp" );
     response.sendRedirect( strURL );
    return; // something really bad has happened!!!
@@ -211,17 +212,7 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProductSection.jsp", "wPrimR.AcceptUpdateMasterProductSection" );
-      try
-      {
          nOptRC = wPrimR.AcceptUpdateMasterProductSection( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation AcceptUpdateMasterProductSection: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -342,17 +333,7 @@ if ( strActionToProcess != null )
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
       VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProductSection.jsp", "wStartUp.ProductManagement" );
-      try
-      {
          nOptRC = wStartUp.ProductManagement( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation ProductManagement: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -369,7 +350,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wPrimR.SetWebRedirection( vKZXMLPGO, wPrimR.zWAB_StartTopWindow, "wStartUp", "AdminListPrimaryRegistrants" );
+         strNextJSP_Name = wPrimR.SetWebRedirection( vKZXMLPGO, wPrimR.zWAB_StartTopWindow, "wSPLD", "SubregProductsList" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -391,17 +372,7 @@ if ( strActionToProcess != null )
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
       VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProductSection.jsp", "wStartUp.SubregistrantManagement" );
-      try
-      {
          nOptRC = wStartUp.SubregistrantManagement( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation SubregistrantManagement: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -440,17 +411,7 @@ if ( strActionToProcess != null )
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
       VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProductSection.jsp", "wStartUp.TrackingNotificationCompliance" );
-      try
-      {
          nOptRC = wStartUp.TrackingNotificationCompliance( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation TrackingNotificationCompliance: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -489,17 +450,7 @@ if ( strActionToProcess != null )
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
       VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProductSection.jsp", "wStartUp.StateRegistrations" );
-      try
-      {
          nOptRC = wStartUp.StateRegistrations( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation StateRegistrations: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -538,17 +489,7 @@ if ( strActionToProcess != null )
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
       VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProductSection.jsp", "wStartUp.MarketingFulfillment" );
-      try
-      {
          nOptRC = wStartUp.MarketingFulfillment( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation MarketingFulfillment: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -587,17 +528,7 @@ if ( strActionToProcess != null )
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
       VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProductSection.jsp", "wStartUp.WebDevelopment" );
-      try
-      {
          nOptRC = wStartUp.WebDevelopment( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation WebDevelopment: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -631,17 +562,7 @@ if ( strActionToProcess != null )
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
       VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProductSection.jsp", "wStartUp.PrimaryRegistrantCompanySetup" );
-      try
-      {
          nOptRC = wStartUp.PrimaryRegistrantCompanySetup( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation PrimaryRegistrantCompanySetup: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -680,17 +601,7 @@ if ( strActionToProcess != null )
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
       VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProductSection.jsp", "wStartUp.ProcessLogin" );
-      try
-      {
          nOptRC = wStartUp.ProcessLogin( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation ProcessLogin: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -720,7 +631,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ----------------------------------->>> " + "wPrimRUpdateMasterProductSection" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wPrimRUpdateMasterProductSection" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -737,7 +648,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ----------------------------------->>> " + "wPrimRUpdateMasterProductSection" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ------->>> " + "wPrimRUpdateMasterProductSection" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -849,7 +760,6 @@ else
 <%@ include file="./include/timeout.inc" %>
 <link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/validations.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>

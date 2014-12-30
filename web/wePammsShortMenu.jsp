@@ -141,6 +141,7 @@ else
 
 if ( task == null )
 {
+   session.setAttribute( "ZeidonTaskId", null );
     strURL = response.encodeRedirectURL( "logout.jsp" );
     response.sendRedirect( strURL );
    return; // something really bad has happened!!!
@@ -204,7 +205,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ----------------------------------->>> " + "wePammsShortMenu" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wePammsShortMenu" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -221,7 +222,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ----------------------------------->>> " + "wePammsShortMenu" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ------->>> " + "wePammsShortMenu" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -313,7 +314,6 @@ else
 <%@ include file="./include/timeout.inc" %>
 <link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/validations.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>

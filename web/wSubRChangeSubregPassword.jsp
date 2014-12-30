@@ -210,6 +210,7 @@ else
 
 if ( task == null )
 {
+   session.setAttribute( "ZeidonTaskId", null );
     strURL = response.encodeRedirectURL( "logout.jsp" );
     response.sendRedirect( strURL );
    return; // something really bad has happened!!!
@@ -250,17 +251,7 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRChangeSubregPassword.jsp", "wSubR.CancelChangeSubregPassword" );
-      try
-      {
          nOptRC = wSubR.CancelChangeSubregPassword( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation CancelChangeSubregPassword: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -298,17 +289,7 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRChangeSubregPassword.jsp", "wSubR.ConfirmChangeSubregPassword" );
-      try
-      {
          nOptRC = wSubR.ConfirmChangeSubregPassword( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation ConfirmChangeSubregPassword: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -360,17 +341,7 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRChangeSubregPassword.jsp", "wSubR.ConfirmChangeSubregPassword" );
-      try
-      {
          nOptRC = wSubR.ConfirmChangeSubregPassword( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation ConfirmChangeSubregPassword: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -403,17 +374,7 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRChangeSubregPassword.jsp", "wSubR.CancelChangeSubregPassword" );
-      try
-      {
          nOptRC = wSubR.CancelChangeSubregPassword( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation CancelChangeSubregPassword: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -443,7 +404,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ----------------------------------->>> " + "wSubRChangeSubregPassword" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wSubRChangeSubregPassword" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -460,7 +421,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ----------------------------------->>> " + "wSubRChangeSubregPassword" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ------->>> " + "wSubRChangeSubregPassword" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -572,7 +533,6 @@ else
 <%@ include file="./include/timeout.inc" %>
 <link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/validations.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>

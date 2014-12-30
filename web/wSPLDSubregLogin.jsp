@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 
 <%-- wSPLDSubregLogin --%>
 
@@ -15,7 +15,7 @@
 
 <%! 
 
-ObjectEngine objectEngine = JavaObjectEngine.getInstance();
+ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
 public String ReplaceXSSValues( String szFieldValue )
 {
@@ -98,25 +98,6 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
-      // ComboBox: CBRole
-      nRC = wWebXfer.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strMapValue = request.getParameter( "hCBRole" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "CBRole", "", strMapValue );
-            else
-               wWebXfer.cursor( "Root" ).setAttribute( "KeyRole", strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "CBRole", e.getReason( ), strMapValue );
-         }
-      }
-
       // EditBox: EBPassword
       nRC = wWebXfer.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
@@ -153,6 +134,7 @@ public int DoInputMapping( HttpServletRequest request,
 
 session = request.getSession( );
 Task task = null;
+View wWebXA = null;
 KZMSGQOO_Object mMsgQ = null; // view to Message Queue
 View vKZXMLPGO = null;
 String strLastPage = "";
@@ -182,6 +164,7 @@ String strOpenPopupWindow = "";
 String strPopupWindowSZX = "";
 String strPopupWindowSZY = "";
 String strDateFormat = "";
+String strKeyRole = "";
 String strDialogName = "";
 String strWindowName = "";
 String strLastWindow;
@@ -210,16 +193,19 @@ if ( strLastWindow.equals("wSPLDSubregLogin") && StringUtils.isBlank( strActionT
 String taskId = (String) session.getAttribute( "ZeidonTaskId" );
 if ( StringUtils.isBlank( taskId ) )
 {
-   task = objectEngine.createTask( "epamms", true );
+   task = objectEngine.createTask( "epamms", session.getId() );
    session.setAttribute( "ZeidonTaskId", task.getTaskId() );
 }
 else
 {
-   task = objectEngine.getTaskById( taskId );
+   strURL = response.encodeRedirectURL( "loggedintotask.jsp" );
+   response.sendRedirect( strURL );
+   return;
 }
 
 if ( task == null )
 {
+   session.setAttribute( "ZeidonTaskId", null );
     strURL = response.encodeRedirectURL( "logout.jsp" );
     response.sendRedirect( strURL );
    return; // something really bad has happened!!!
@@ -252,60 +238,6 @@ if ( strActionToProcess != null )
 
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "AutoLogin" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDSubregLogin", strActionToProcess );
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSubregLogin.jsp", "wSPLD.AutoLoginSubregistrant" );
-      try
-      {
-         nOptRC = wSPLD.AutoLoginSubregistrant( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation AutoLoginSubregistrant: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-
-      // Dynamic Next Window
-      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
-         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
-         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
-         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
-         strURL = response.encodeRedirectURL( strNextJSP_Name );
-         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
-         else
-            strFunctionCall = "";
-
-         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
-         {
-            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
-            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wSPLDSubregLogin" );
-         }
-
-         nRC = 1;  // do the redirection
-         break;
-      }
-
-      break;
-   }
-
    while ( bDone == false && StringUtils.equals( strActionToProcess, "FORGOT_Password" ) )
    {
       bDone = true;
@@ -317,7 +249,84 @@ if ( strActionToProcess != null )
          break;
 
       // Next Window
-      strURL = response.encodeRedirectURL( "wStartUpSecurityValidations.jsp" );
+      strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_StartTopWindow, "wStartUp", "SecurityValidations" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "ExecuteJOE_Test1" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDSubregLogin", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSubregLogin.jsp", "wSPLD.ExecuteJOE_Test1" );
+         nOptRC = wSPLD.ExecuteJOE_Test1( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wSPLD.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_StartTopWindow, "wSPLD", "SubregProductsList" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "ExecuteJOE_Test2" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDSubregLogin", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSubregLogin.jsp", "wSPLD.ExecuteJOE_Test2" );
+         nOptRC = wSPLD.ExecuteJOE_Test2( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wSPLD.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
    }
@@ -335,53 +344,29 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSubregLogin.jsp", "wSPLD.ProcessUserLogin" );
-      try
-      {
          nOptRC = wSPLD.ProcessUserLogin( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation ProcessUserLogin: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
          session.setAttribute( "ZeidonError", "Y" );
          break;
       }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wSPLD.GetWebRedirection( vKZXMLPGO );
+      }
 
       JspWebUtils.createWebSession( session, task, VmlOperation.SfGetUserIdForTask( task ) );  // Post Operation
 
-      // Dynamic Next Window
-      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
+      if ( strNextJSP_Name.equals( "" ) )
       {
-         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
-         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
-         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
-         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
-         strURL = response.encodeRedirectURL( strNextJSP_Name );
-         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
-         else
-            strFunctionCall = "";
-
-         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
-         {
-            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
-            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wSPLDSubregLogin" );
-         }
-
-         nRC = 1;  // do the redirection
-         break;
+         // Next Window
+         strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_StartTopWindow, "wSPLD", "SubregProductsList" );
       }
 
-      // Next Window
-      strURL = response.encodeRedirectURL( "wStartUpePammsPortal.jsp" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
    }
@@ -400,12 +385,319 @@ if ( strActionToProcess != null )
       break;
    }
 
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "mProductManagement" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDSubregLogin", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSubregLogin.jsp", "wStartUp.ProductManagement" );
+         nOptRC = wStartUp.ProductManagement( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wSPLD.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_StartTopWindow, "wSPLD", "SubregProductsList" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "mSubregistrants" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDSubregLogin", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSubregLogin.jsp", "wStartUp.SubregistrantManagement" );
+         nOptRC = wStartUp.SubregistrantManagement( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wSPLD.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_StartTopWindow, "wStartUp", "AdminListSubregistrants" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "mTrackingNotificationCompliance" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDSubregLogin", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSubregLogin.jsp", "wStartUp.TrackingNotificationCompliance" );
+         nOptRC = wStartUp.TrackingNotificationCompliance( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wSPLD.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_StartTopWindow, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "mStateRegistrations" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDSubregLogin", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSubregLogin.jsp", "wStartUp.StateRegistrations" );
+         nOptRC = wStartUp.StateRegistrations( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wSPLD.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_StartTopWindow, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "mMarketingFulfillment" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDSubregLogin", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSubregLogin.jsp", "wStartUp.MarketingFulfillment" );
+         nOptRC = wStartUp.MarketingFulfillment( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wSPLD.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_StartTopWindow, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "mWebDevelopment" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDSubregLogin", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSubregLogin.jsp", "wStartUp.WebDevelopment" );
+         nOptRC = wStartUp.WebDevelopment( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wSPLD.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_StartTopWindow, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "mAdministration" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDSubregLogin", strActionToProcess );
+
+      // Action Operation
+      nRC = 0;
+      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSubregLogin.jsp", "wStartUp.PrimaryRegistrantCompanySetup" );
+         nOptRC = wStartUp.PrimaryRegistrantCompanySetup( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wSPLD.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_StartTopWindow, "wStartUp", "AdminUpdatePrimaryRegistrant" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "mLogin" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDSubregLogin", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSubregLogin.jsp", "wStartUp.ProcessLogin" );
+         nOptRC = wStartUp.ProcessLogin( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wSPLD.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_ResetTopWindow, "wStartUp", "UserLogin" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
    while ( bDone == false && strActionToProcess.equals( "_OnUnload" ) )
    {
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ----------------------------------->>> " + "wSPLDSubregLogin" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wSPLDSubregLogin" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -422,7 +714,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ----------------------------------->>> " + "wSPLDSubregLogin" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ------->>> " + "wSPLDSubregLogin" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -514,6 +806,13 @@ else
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
 
+   wWebXA = task.getViewByName( "wWebXfer" );
+   if ( VmlOperation.isValid( wWebXA ) )
+   {
+      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wSPLD" );
+      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "SubregLogin" );
+   }
+
 %>
 
 <html>
@@ -527,7 +826,6 @@ else
 <%@ include file="./include/timeout.inc" %>
 <link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/validations.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
@@ -543,28 +841,23 @@ else
 
 <jsp:include page='<%=strBannerName %>' />
 
-<div id="maincontent">
-
-<div id="leftcontent">
-
-<!-- Side Navigation *********************** -->
-<div id="sidenavigation">
+<!-- Main Navigation *********************** -->
+<div id="mainnavigation">
    <ul>
-<%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Exit" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li><a href="#"  onclick="mLogout( )">Exit</a></li>
-<%
-   }
-%>
-
+       <li id="lmProductManagement" name="lmProductManagement"><a href="#" onclick="mProductManagement()">Products</a></li>
+       <li id="lmSubregistrants" name="lmSubregistrants"><a href="#" onclick="mSubregistrants()">Subregistrants</a></li>
+       <li id="lmTrackingNotificationCompliance" name="lmTrackingNotificationCompliance"><a href="#" onclick="mTrackingNotificationCompliance()">Tracking/Notification/Compliance</a></li>
+       <li id="lmStateRegistrations" name="lmStateRegistrations"><a href="#" onclick="mStateRegistrations()">State Registrations</a></li>
+       <li id="lmMarketingFulfillment" name="lmMarketingFulfillment"><a href="#" onclick="mMarketingFulfillment()">Marketing/Fulfillment</a></li>
+       <li id="lmWebDevelopment" name="lmWebDevelopment"><a href="#" onclick="mWebDevelopment()">Web Development</a></li>
+       <li id="lmAdministration" name="lmAdministration"><a href="#" onclick="mAdministration()">Company Profile</a></li>
+       <li id="lmLogin" name="lmLogin"><a href="#" onclick="mLogin()">Login</a></li>
+       <li id="lmLogout" name="lmLogout"><a href="#" onclick="mLogout()">Logout</a></li>
    </ul>
-</div> <!-- sidenavigation -->
+</div>  <!-- end Navigation Bar -->
 
-</div>  <!-- leftcontent -->
-
+<%@include file="./include/topmenuend.inc" %>
+<div id="maincontent">
 <div id="contentnosidemenu">
 <!--System Maintenance-->
 
@@ -579,19 +872,17 @@ else
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
-   View lPrimReg = null;
-   View mMasLC = null;
-   View mMasProd = null;
-   View mPrimReg = null;
-   View mSubLC = null;
-   View mSPLDef = null;
+   View lMLC = null;
    View lSPLDLST = null;
-   View mTempl = null;
-   View lTemplLST = null;
-   View lSubLCA = null;
+   View mSPLDefBlock = null;
+   View mLLD_LST = null;
+   View mMasLC = null;
+   View mPrimReg = null;
+   View mSPLDef = null;
+   View mSPLDefPanel = null;
+   View mSubLC = null;
    View mSubProd = null;
    View mSubreg = null;
-   View wMLCList = null;
    View wWebXfer = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
@@ -660,13 +951,27 @@ else
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSPLD", "SubregLogin" );
    strOpenFile = VmlOperation.FindOpenFile( task );
-   strDateFormat = "MM/DD/YYYY";
+   strDateFormat = "YYYY.MM.DD";
 
+   wWebXA = task.getViewByName( "wWebXfer" );
+   if ( VmlOperation.isValid( wWebXA ) )
+   {
+      nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         if ( strKeyRole == null )
+            strKeyRole = "";
+
+         task.log().info( "Root.KeyRole: " + strKeyRole );
+      }
+   }
 %>
 
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
    <input name="zPopupWindowSZX" id="zPopupWindowSZX" type="hidden" value="<%=strPopupWindowSZX%>">
    <input name="zPopupWindowSZY" id="zPopupWindowSZY" type="hidden" value="<%=strPopupWindowSZY%>">
@@ -680,24 +985,33 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:36px;width:100px;"></div>
+<div style="height:14px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox1:GroupBox */ %>
-
-<div id="GroupBox1" name="GroupBox1" style="width:46px;height:166px;float:left;">  <!-- GroupBox1 --> 
-
-
-</div>  <!--  GroupBox1 --> 
-<div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
+<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* WelcomeContainer:GroupBox */ %>
-<fieldset id="WelcomeContainer" name="WelcomeContainer"   style="size:absolute; width:770px; height:146px;">
-<legend>Welcome To ePamms</legend>
+
+<div id="WelcomeContainer" name="WelcomeContainer" class="divborder" style="width:646px;height:230px;float:left;">  <!-- WelcomeContainer --> 
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:26px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox1:GroupBox */ %>
+<div id="GroupBox1" name="GroupBox1" style="float:left;width:410px;" >
+
+<table cols=2 style="width:410px;"  class="grouptable">
+
+<tr>
+<td valign="top"  class="text14bold" style="width:130px;">
 <% /* RegistrantName::Text */ %>
 
-<label class="text14bold"  id="RegistrantName:" name="RegistrantName:" style="width:118px;height:16px;position:absolute;left:16px;top:54px;">Registrant Name:</label>
+<span class="text14bold"  id="RegistrantName:" name="RegistrantName:" style="width:118px;height:16px;">Registrant Name:</span>
 
+</td>
+<td valign="top"  class="text14" style="width:256px;">
 <% /* EBRegistrantName:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "EBRegistrantName", strError );
@@ -724,7 +1038,7 @@ else
             catch (Exception e)
             {
                out.println("There is an error on EBRegistrantName: " + e.getMessage());
-               task.log().info( "*** Error on ctrl EBRegistrantName" + e.getMessage() );
+               task.log().error( "*** Error on ctrl EBRegistrantName", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -737,15 +1051,18 @@ else
    }
 %>
 
-<input class="text14" name="EBRegistrantName" id="EBRegistrantName" style="width:256px;position:absolute;left:146px;top:54px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input class="text14" name="EBRegistrantName" id="EBRegistrantName" style="width:256px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
-<% /* PBLogin:PushBtn */ %>
-<button type="button" class="formStylebutton" name="PBLogin" id="PBLogin" value="" onclick="ProcessUserLogin( )" style="width:140px;height:32px;position:absolute;left:430px;top:54px;">Login</button>
-
+</td>
+</tr>
+<tr>
+<td valign="top"  class="text14bold" style="width:130px;">
 <% /* UserName::Text */ %>
 
-<label class="text14bold"  id="UserName:" name="UserName:" style="width:118px;height:16px;position:absolute;left:16px;top:80px;">User Name:</label>
+<span class="text14bold"  id="UserName:" name="UserName:" style="width:118px;height:16px;">User Name:</span>
 
+</td>
+<td valign="top"  class="text14" style="width:256px;">
 <% /* EBUserName:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "EBUserName", strError );
@@ -772,7 +1089,7 @@ else
             catch (Exception e)
             {
                out.println("There is an error on EBUserName: " + e.getMessage());
-               task.log().info( "*** Error on ctrl EBUserName" + e.getMessage() );
+               task.log().error( "*** Error on ctrl EBUserName", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -785,81 +1102,18 @@ else
    }
 %>
 
-<input class="text14" name="EBUserName" id="EBUserName" style="width:256px;position:absolute;left:146px;top:80px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input class="text14" name="EBUserName" id="EBUserName" style="width:256px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
-<% /* CBRole:ComboBox */ %>
-<% strErrorMapValue = "";  %>
-
-<select  name="CBRole" id="CBRole" size="1" style="width:194px;position:absolute;left:430px;top:88px;" onchange="CBRoleOnChange( )">
-
-<%
-   wWebXfer = task.getViewByName( "wWebXfer" );
-   if ( VmlOperation.isValid( wWebXfer ) )
-   {
-      List<TableEntry> list = JspWebUtils.getTableDomainValues( wWebXfer , "Root", "KeyRole", "" );
-
-      nRC = wWebXfer.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strComboCurrentValue = wWebXfer.cursor( "Root" ).getStringFromAttribute( "KeyRole", "" );
-         if ( strComboCurrentValue == null )
-            strComboCurrentValue = "";
-      }
-      else
-      {
-         strComboCurrentValue = "";
-      }
-
-      // Code for NOT required attribute, which makes sure a blank entry exists.
-      if ( strComboCurrentValue == "" )
-      {
-%>
-         <option selected="selected" value=""></option>
-<%
-      }
-      else
-      {
-%>
-         <option value=""></option>
-<%
-      }
-      for ( TableEntry entry : list )
-      {
-         String internalValue = entry.getInternalValue( );
-         String externalValue = entry.getExternalValue( );
-         // Perhaps getInternalValue and getExternalValue should return an empty string, 
-         // but currently it returns null.  Set to empty string. 
-         if ( externalValue == null )
-         {
-            internalValue = "";
-            externalValue = "";
-         }
-
-         if ( !StringUtils.isBlank( externalValue ) )
-         {
-            if ( StringUtils.equals( strComboCurrentValue, externalValue ) )
-            {
-%>
-               <option selected="selected" value="<%=externalValue%>"><%=externalValue%></option>
-<%
-            }
-            else
-            {
-%>
-               <option value="<%=externalValue%>"><%=externalValue%></option>
-<%
-            }
-         }
-      }  // for ( TableEntry entry
-   }  // if view != null
-%>
-</select>
-
-<input name="hCBRole" id="hCBRole" type="hidden" value="<%=strComboCurrentValue%>" >
+</td>
+</tr>
+<tr>
+<td valign="top"  class="text14bold" style="width:130px;">
 <% /* Password::Text */ %>
 
-<label class="text14bold"  id="Password:" name="Password:" style="width:118px;height:16px;position:absolute;left:16px;top:108px;">Password:</label>
+<span class="text14bold"  id="Password:" name="Password:" style="width:118px;height:16px;">Password:</span>
 
+</td>
+<td valign="top"  class="text14" style="width:256px;">
 <% /* EBPassword:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "EBPassword", strError );
@@ -886,7 +1140,7 @@ else
             catch (Exception e)
             {
                out.println("There is an error on EBPassword: " + e.getMessage());
-               task.log().info( "*** Error on ctrl EBPassword" + e.getMessage() );
+               task.log().error( "*** Error on ctrl EBPassword", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -899,15 +1153,62 @@ else
    }
 %>
 
-<input class="text14" name="EBPassword" id="EBPassword" style="width:256px;position:absolute;left:146px;top:108px;<%=strErrorColor%>" type="password" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input class="text14" name="EBPassword" id="EBPassword" style="width:256px;<%=strErrorColor%>" type="password" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
-<% /* Forget:Text */ %>
+</td>
+</tr>
+</table>
 
-<a href="#" id="Forget" name="Forget"  onclick="FORGOT_Password( );" class="text10" style="width:208px;height:22px;position:absolute;left:430px;top:122px;">Forget Username/Password?</a>
+</div>  <!-- GroupBox1 --> 
 
-</fieldset>  <!-- WelcomeContainer --> 
-<div id='clear'></div>
+<div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox2:GroupBox */ %>
 
+<div id="GroupBox2" name="GroupBox2" style="width:170px;height:110px;float:left;">  <!-- GroupBox2 --> 
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:24px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:32px;">&nbsp&nbsp</span>
+<% /* PBLogin:PushBtn */ %>
+<button type="button" class="formStylebutton" name="PBLogin" id="PBLogin" value="" onclick="ProcessUserLogin( )" style="width:140px;height:32px;">Login</button>
+
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  GroupBox2 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:12px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:32px;">&nbsp&nbsp&nbsp</span>
+<% /* PushBtn1:PushBtn */ %>
+<button type="button" class="formStylebutton" name="PushBtn1" id="PushBtn1" value="" onclick="ExecuteJOE_Test1( )" style="width:140px;height:32px;">Execute JOE Test 1</button>
+
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:4px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:32px;">&nbsp&nbsp&nbsp</span>
+<% /* PushBtn2:PushBtn */ %>
+<button type="button" class="formStylebutton" name="PushBtn2" id="PushBtn2" value="" onclick="ExecuteJOE_Test2( )" style="width:140px;height:32px;">Execute JOE Test 2</button>
+
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  WelcomeContainer --> 
 </div>  <!-- End of a new line -->
 
 

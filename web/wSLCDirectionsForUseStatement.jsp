@@ -60,63 +60,24 @@ public int DoInputMapping( HttpServletRequest request,
    mSubLC = task.getViewByName( "mSubLC" );
    if ( VmlOperation.isValid( mSubLC ) )
    {
-      // MLEdit: NoteToReviewer
-      nRC = mSubLC.cursor( "S_DirectionsForUseStatement" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
+      // Grid: Grid4
+      iTableRowCnt = 0;
+
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
+      vGridTmp = mSubLC.newView( );
+      csrRC = vGridTmp.cursor( "S_DirectionsUsageOrdering" ).setFirst(  );
+      while ( csrRC.isSet() )
       {
-         strMapValue = request.getParameter( "NoteToReviewer" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "NoteToReviewer", "", strMapValue );
-            else
-               mSubLC.cursor( "S_DirectionsForUseStatement" ).setAttribute( "ReviewerNote", strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "NoteToReviewer", e.getReason( ), strMapValue );
-         }
+         lEntityKey = vGridTmp.cursor( "S_DirectionsUsageOrdering" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         iTableRowCnt++;
+
+         csrRC = vGridTmp.cursor( "S_DirectionsUsageOrdering" ).setNextContinue( );
       }
 
-      // MLEdit: NotForUseStmtText
-      nRC = mSubLC.cursor( "S_DirectionsForUseStatement" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
-      {
-         strMapValue = request.getParameter( "NotForUseStmtText" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "NotForUseStmtText", "", strMapValue );
-            else
-               mSubLC.cursor( "S_DirectionsForUseStatement" ).setAttribute( "NotForUseText", strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "NotForUseStmtText", e.getReason( ), strMapValue );
-         }
-      }
-
-      // EditBox: NotForUseType
-      nRC = mSubLC.cursor( "S_DirectionsForUseStatement" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
-      {
-         strMapValue = request.getParameter( "NotForUseType" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "NotForUseType", "", strMapValue );
-            else
-               mSubLC.cursor( "S_DirectionsForUseStatement" ).setAttribute( "NotForUseType", strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "NotForUseType", e.getReason( ), strMapValue );
-         }
-      }
-
+      vGridTmp.drop( );
    }
 
    if ( webMapping == true )
@@ -204,6 +165,7 @@ else
 
 if ( task == null )
 {
+   session.setAttribute( "ZeidonTaskId", null );
     strURL = response.encodeRedirectURL( "logout.jsp" );
     response.sendRedirect( strURL );
    return; // something really bad has happened!!!
@@ -236,7 +198,7 @@ if ( strActionToProcess != null )
 
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "AcceptDirectionsUseStmt" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "AcceptDirectionsStatement" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCDirectionsForUseStatement", strActionToProcess );
@@ -246,100 +208,56 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
-      // Action Operation
+      // Action Auto Object Function
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCDirectionsForUseStatement.jsp", "wSLC.AcceptDirectionsUseStmt" );
-      try
-      {
-         nOptRC = wSLC.AcceptDirectionsUseStmt( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation AcceptDirectionsUseStmt: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
+      View mSubLC = task.getViewByName( "mSubLC" );
+      EntityCursor cursor = mSubLC.cursor( "S_DirectionsForUseStatement" );
+      if ( cursor.isNull() )
+         nRC = 0;
       else
-      if ( nOptRC == 1 )
       {
-         // Dynamic Next Window
-         strNextJSP_Name = wSLC.GetWebRedirection( vKZXMLPGO );
+         if ( cursor.isVersioned( ) )
+         {
+           cursor.acceptSubobject( );
+           nRC = 0;
+         }
       }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReturnToParent, "wSLC", "DirectionsForUseSection" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "ShowHideEditor" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCDirectionsForUseStatement", strActionToProcess );
 
       // Next Window
-      strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReturnToParent, "", "" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelDirectionsUseStmt" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelDirectionsStatement" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCDirectionsForUseStatement", strActionToProcess );
 
-      // Action Operation
+      // Action Auto Object Function
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCDirectionsForUseStatement.jsp", "wSLC.CancelDirectionsUseStmt" );
-      try
-      {
-         nOptRC = wSLC.CancelDirectionsUseStmt( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation CancelDirectionsUseStmt: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
+      View mSubLC = task.getViewByName( "mSubLC" );
+      EntityCursor cursor = mSubLC.cursor( "S_DirectionsForUseStatement" );
+      if ( cursor.isNull() )
+         nRC = 0;
       else
-      if ( nOptRC == 1 )
       {
-         // Dynamic Next Window
-         strNextJSP_Name = wSLC.GetWebRedirection( vKZXMLPGO );
+         if ( cursor.isVersioned( ) )
+         {
+           cursor.cancelSubobject( );
+           nRC = 0;
+         }
       }
 
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReturnToParent, "wSLC", "DirectionsForUseSection" );
-      }
-
+      // Next Window
+      strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReturnToParent, "", "" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "SaveAddNewDirectionsUseStmt" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_SelectRemoveDUEntries" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCDirectionsForUseStatement", strActionToProcess );
@@ -349,39 +267,8 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCDirectionsForUseStatement.jsp", "wSLC.SaveAddNewDirectionsUseStmt" );
-      try
-      {
-         nOptRC = wSLC.SaveAddNewDirectionsUseStmt( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation SaveAddNewDirectionsUseStmt: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StayOnWindowWithRefresh, "wSLC", "DirectionsForUseStatement" );
-      }
-
+      // Next Window
+      strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartModalSubwindow, "wSLC", "DirsForUseUsageSelect" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -401,442 +288,12 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smCancelDirectionsUseStmt" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCDirectionsForUseStatement", strActionToProcess );
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCDirectionsForUseStatement.jsp", "wSLC.CancelDirectionsUseStmt" );
-      try
-      {
-         nOptRC = wSLC.CancelDirectionsUseStmt( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation CancelDirectionsUseStmt: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReturnToParent, "wSLC", "DirectionsForUseSection" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mProductManagement" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCDirectionsForUseStatement", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCDirectionsForUseStatement.jsp", "wStartUp.ProductManagement" );
-      try
-      {
-         nOptRC = wStartUp.ProductManagement( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation ProductManagement: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartTopWindow, "wStartUp", "AdminListPrimaryRegistrants" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mSubregistrants" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCDirectionsForUseStatement", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCDirectionsForUseStatement.jsp", "wStartUp.SubregistrantManagement" );
-      try
-      {
-         nOptRC = wStartUp.SubregistrantManagement( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation SubregistrantManagement: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartTopWindow, "wStartUp", "AdminListSubregistrants" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mTrackingNotificationCompliance" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCDirectionsForUseStatement", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCDirectionsForUseStatement.jsp", "wStartUp.TrackingNotificationCompliance" );
-      try
-      {
-         nOptRC = wStartUp.TrackingNotificationCompliance( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation TrackingNotificationCompliance: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartTopWindow, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mStateRegistrations" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCDirectionsForUseStatement", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCDirectionsForUseStatement.jsp", "wStartUp.StateRegistrations" );
-      try
-      {
-         nOptRC = wStartUp.StateRegistrations( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation StateRegistrations: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartTopWindow, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mMarketingFulfillment" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCDirectionsForUseStatement", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCDirectionsForUseStatement.jsp", "wStartUp.MarketingFulfillment" );
-      try
-      {
-         nOptRC = wStartUp.MarketingFulfillment( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation MarketingFulfillment: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartTopWindow, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mWebDevelopment" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCDirectionsForUseStatement", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCDirectionsForUseStatement.jsp", "wStartUp.WebDevelopment" );
-      try
-      {
-         nOptRC = wStartUp.WebDevelopment( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation WebDevelopment: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartTopWindow, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mAdministration" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCDirectionsForUseStatement", strActionToProcess );
-
-      // Action Operation
-      nRC = 0;
-      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCDirectionsForUseStatement.jsp", "wStartUp.PrimaryRegistrantCompanySetup" );
-      try
-      {
-         nOptRC = wStartUp.PrimaryRegistrantCompanySetup( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation PrimaryRegistrantCompanySetup: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartTopWindow, "wStartUp", "AdminUpdatePrimaryRegistrant" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mLogin" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCDirectionsForUseStatement", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCDirectionsForUseStatement.jsp", "wStartUp.ProcessLogin" );
-      try
-      {
-         nOptRC = wStartUp.ProcessLogin( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation ProcessLogin: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ResetTopWindow, "wStartUp", "UserLogin" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
    while ( bDone == false && strActionToProcess.equals( "_OnUnload" ) )
    {
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ----------------------------------->>> " + "wSLCDirectionsForUseStatement" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wSLCDirectionsForUseStatement" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -853,7 +310,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ----------------------------------->>> " + "wSLCDirectionsForUseStatement" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ------->>> " + "wSLCDirectionsForUseStatement" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -918,7 +375,6 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
 else
 {
 }
-
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSLC", "" );
    if ( csrRC.isSet( ) )
       strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
@@ -946,16 +402,9 @@ else
 <%@ include file="./include/timeout.inc" %>
 <link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/validations.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
-
-<!-- TinyMCE -->
-<script language="JavaScript" type="text/javascript" src="./js/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/TinyMCE.js"></script>
-<!-- /TinyMCE -->
-
 <script language="JavaScript" type="text/javascript" src="./genjs/wSLCDirectionsForUseStatement.js"></script>
 
 </head>
@@ -968,22 +417,6 @@ else
 
 <jsp:include page='<%=strBannerName %>' />
 
-<!-- Main Navigation *********************** -->
-<div id="mainnavigation">
-   <ul>
-       <li id="lmProductManagement" name="lmProductManagement"><a href="#" onclick="mProductManagement()">Products</a></li>
-       <li id="lmSubregistrants" name="lmSubregistrants"><a href="#" onclick="mSubregistrants()">Subregistrants</a></li>
-       <li id="lmTrackingNotificationCompliance" name="lmTrackingNotificationCompliance"><a href="#" onclick="mTrackingNotificationCompliance()">Tracking/Notification/Compliance</a></li>
-       <li id="lmStateRegistrations" name="lmStateRegistrations"><a href="#" onclick="mStateRegistrations()">State Registrations</a></li>
-       <li id="lmMarketingFulfillment" name="lmMarketingFulfillment"><a href="#" onclick="mMarketingFulfillment()">Marketing/Fulfillment</a></li>
-       <li id="lmWebDevelopment" name="lmWebDevelopment"><a href="#" onclick="mWebDevelopment()">Web Development</a></li>
-       <li id="lmAdministration" name="lmAdministration"><a href="#" onclick="mAdministration()">Company Profile</a></li>
-       <li id="lmLogin" name="lmLogin"><a href="#" onclick="mLogin()">Login</a></li>
-       <li id="lmLogout" name="lmLogout"><a href="#" onclick="mLogout()">Logout</a></li>
-   </ul>
-</div>  <!-- end Navigation Bar -->
-
-<%@include file="./include/topmenuend.inc" %>
 <div id="maincontent">
 
 <div id="leftcontent">
@@ -992,11 +425,21 @@ else
 <div id="sidenavigation">
    <ul>
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Return" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "AcceptAndReturn" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smCancelDirectionsUseStmt( )">Return</a></li>
+       <li><a href="#"  onclick="AcceptDirectionsStatement( )">Accept & Return</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "CancelAndReturn" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li><a href="#"  onclick="CancelDirectionsStatement( )">Cancel & Return</a></li>
 <%
    }
 %>
@@ -1007,6 +450,7 @@ else
 </div>  <!-- leftcontent -->
 
 <div id="content">
+
 <!--System Maintenance-->
 
 <%@ include file="./include/systemmaintenance.inc" %>
@@ -1020,17 +464,10 @@ else
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
-   View lPrimReg = null;
-   View lSPLDLST = null;
    View mMasLC = null;
-   View mMasProd = null;
-   View mPrimReg = null;
-   View mSPLDef = null;
    View mSubLC = null;
-   View mSubProd = null;
    View mSubreg = null;
-   View wMLCList = null;
-   View wWebXfer = null;
+   View mSubProd = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";
@@ -1135,7 +572,114 @@ else
 <div style="height:2px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<% /* BreadCrumb: */ %>
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* DirectionsForUseStatementGroup:GroupBox */ %>
+
+<div id="DirectionsForUseStatementGroup" name="DirectionsForUseStatementGroup" class="withborder" style="width:830px;float:left;">  <!-- DirectionsForUseStatementGroup --> 
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:8px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<% /* Text5:Text */ %>
+
+<span class="listheader"  id="Text5" name="Text5" style="width:434px;height:16px;">Directions for Use Statement</span>
+
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox3:GroupBox */ %>
+<div id="GroupBox3" name="GroupBox3" style="float:left;width:814px;" >
+
+<table cols=2 style="width:814px;"  class="grouptable">
+
+<tr>
+<td valign="top" style="width:54px;">
+<% /* Text2:Text */ %>
+
+<span  id="Text2" name="Text2" style="width:46px;height:18px;">Title:</span>
+
+</td>
+<td valign="top" style="width:738px;">
+<% /* Text6:Text */ %>
+<% strTextDisplayValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "Text6" );
+   else
+   {
+      nRC = mSubLC.cursor( "S_DirectionsForUseStatement" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSubLC.cursor( "S_DirectionsForUseStatement" ).getStringFromAttribute( "Title", "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on Text6: " + e.getMessage());
+         task.log().info( "*** Error on ctrl Text6" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<span  id="Text6" name="Text6" style="width:738px;height:34px;"><%=strTextDisplayValue%></span>
+
+</td>
+</tr>
+<tr>
+<td valign="top" style="width:54px;">
+<% /* Text1:Text */ %>
+
+<span  id="Text1" name="Text1" style="width:46px;height:18px;"> Text:</span>
+
+</td>
+<td valign="top" style="width:738px;">
+<% /* Text3:Text */ %>
+<% strTextDisplayValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "Text3" );
+   else
+   {
+      nRC = mSubLC.cursor( "S_DirectionsForUseStatement" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSubLC.cursor( "S_DirectionsForUseStatement" ).getStringFromAttribute( "Text", "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on Text3: " + e.getMessage());
+         task.log().info( "*** Error on ctrl Text3" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<span  id="Text3" name="Text3" style="width:738px;height:176px;"><%=strTextDisplayValue%></span>
+
+</td>
+</tr>
+</table>
+
+</div>  <!-- GroupBox3 --> 
+
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  DirectionsForUseStatementGroup --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -1145,200 +689,133 @@ else
 <div style="height:10px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
-<% /* DirectionsForUseStatement:GroupBox */ %>
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox8:GroupBox */ %>
 
-<div id="DirectionsForUseStatement" name="DirectionsForUseStatement" class="withborder" style="width:738px;height:594px;float:left;">  <!-- DirectionsForUseStatement --> 
-
-<div  id="DirectionsForUseStatement" name="DirectionsForUseStatement" >Directions for Use Statement</div>
-
- <!-- This is added as a line spacer -->
-<div style="height:28px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
-<% /* DirectionsUseTitle::Text */ %>
-
-<span  id="DirectionsUseTitle:" name="DirectionsUseTitle:" style="width:130px;height:16px;">Directions Title:</span>
-
-<span style="height:16px;">&nbsp&nbsp</span>
-<% /* DirectionsUseTitle:Text */ %>
-<% strTextDisplayValue = "";
-   mSubLC = task.getViewByName( "mSubLC" );
-   if ( VmlOperation.isValid( mSubLC ) == false )
-      task.log( ).debug( "Invalid View: " + "DirectionsUseTitle" );
-   else
-   {
-      nRC = mSubLC.cursor( "S_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-      try
-      {
-         strTextDisplayValue = mSubLC.cursor( "S_DirectionsForUseSection" ).getStringFromAttribute( "Title", "" );
-      }
-      catch (Exception e)
-      {
-         out.println("There is an error on DirectionsUseTitle: " + e.getMessage());
-         task.log().info( "*** Error on ctrl DirectionsUseTitle" + e.getMessage() );
-      }
-         if ( strTextDisplayValue == null )
-            strTextDisplayValue = "";
-      }
-   }
-%>
-
-<span  id="DirectionsUseTitle" name="DirectionsUseTitle" style="width:566px;height:16px;"><%=strTextDisplayValue%></span>
-
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+<div id="GroupBox8" name="GroupBox8" style="width:830px;float:left;">  <!-- GroupBox8 --> 
 
 
  <!-- This is added as a line spacer -->
 <div style="height:8px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
-<% /* NoteToReviewer::Text */ %>
+<div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox4:GroupBox */ %>
 
-<span  id="NoteToReviewer:" name="NoteToReviewer:" style="width:130px;height:16px;">Note to Reviewer:</span>
+<div id="GroupBox4" name="GroupBox4"   style="float:left;position:relative; width:686px; height:30px;">  <!-- GroupBox4 --> 
 
-<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GB3:GroupBox */ %>
+<% /* Text4:Text */ %>
 
-<div id="GB3" name="GB3" style="width:584px;height:56px;float:left;">  <!-- GB3 --> 
+<label class="listheader"  id="Text4" name="Text4" style="width:434px;height:16px;position:absolute;left:12px;top:4px;">Usage Entries for Imbedding in Statement Text</label>
 
-
-<div>  <!-- Beginning of a new line -->
-<% /* NoteToReviewer:MLEdit */ %>
-</div>  <!-- End of a new line -->
+<% /* PushBtn3:PushBtn */ %>
+<button type="button" class="newbutton" name="PushBtn3" id="PushBtn3" value="" onclick="GOTO_SelectRemoveDUEntries( )" style="width:118px;height:26px;position:absolute;left:560px;top:4px;">Select/Remove</button>
 
 
-</div>  <!--  GB3 --> 
+</div>  <!--  GroupBox4 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
  <!-- This is added as a line spacer -->
-<div style="height:12px;width:100px;"></div>
+<div style="height:2px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
-<% /* StatementText::Text */ %>
-
-<span  id="StatementText:" name="StatementText:" style="width:130px;height:16px;">Statement Text:</span>
-
-<span style="height:364px;">&nbsp&nbsp</span>
-<% /* StatementText:MLEdit */ %>
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
-<% /* Mandatory:Text */ %>
-
-<span  id="Mandatory" name="Mandatory" style="width:130px;height:16px;">Mandatory</span>
-
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
-<% /* Mutually:Text */ %>
-
-<span  id="Mutually" name="Mutually" style="width:130px;height:16px;">(Mutually</span>
-
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
-<% /* Exclusive:Text */ %>
-
-<span  id="Exclusive" name="Exclusive" style="width:130px;height:16px;">Exclusive</span>
-
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
-<% /* Statements:Text */ %>
-
-<span  id="Statements" name="Statements" style="width:130px;height:16px;">Statements):</span>
-
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GB5:GroupBox */ %>
+<% /* Grid4:Grid */ %>
+<table  cols=2 style=""  name="Grid4" id="Grid4">
 
-<div id="GB5" name="GB5" style="width:566px;height:86px;float:left;">  <!-- GB5 --> 
+<thead><tr>
 
+   <th>Usage Type</th>
+   <th>Usage Name</th>
 
-<div>  <!-- Beginning of a new line -->
-<% /* NotForUseStmtText:MLEdit */ %>
-</div>  <!-- End of a new line -->
+</tr></thead>
 
+<tbody>
 
-</div>  <!--  GB5 --> 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:20px;">&nbsp&nbsp</span>
-<% /* NotForUseType:EditBox */ %>
 <%
-   strErrorMapValue = VmlOperation.CheckError( "NotForUseType", strError );
-   if ( !StringUtils.isBlank( strErrorMapValue ) )
+try
+{
+   iTableRowCnt = 0;
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) )
    {
-      if ( StringUtils.equals( strErrorFlag, "Y" ) )
-         strErrorColor = "color:red;";
-   }
-   else
-   {
-      strErrorColor = "";
-      mSubLC = task.getViewByName( "mSubLC" );
-      if ( VmlOperation.isValid( mSubLC ) == false )
-         task.log( ).debug( "Invalid View: " + "NotForUseType" );
-      else
+      long   lEntityKey;
+      String strEntityKey;
+      String strButtonName;
+      String strOdd;
+      String strTag;
+      String strGridEditCtl4;
+      String strGridEditCtl5;
+      
+      View vGrid4;
+      vGrid4 = mSubLC.newView( );
+      csrRC2 = vGrid4.cursor( "S_DirectionsUsageOrdering" ).setFirst(  );
+      while ( csrRC2.isSet() )
       {
-         nRC = mSubLC.cursor( "S_DirectionsForUseStatement" ).checkExistenceOfEntity( ).toInt();
+         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
+         iTableRowCnt++;
+
+         lEntityKey = vGrid4.cursor( "S_DirectionsUsageOrdering" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         strButtonName = "SelectButton" + strEntityKey;
+
+         strGridEditCtl4 = "";
+         nRC = vGrid4.cursor( "S_DirectionsUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            try
-            {
-            strErrorMapValue = mSubLC.cursor( "S_DirectionsForUseStatement" ).getStringFromAttribute( "NotForUseType", "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on NotForUseType: " + e.getMessage());
-               task.log().error( "*** Error on ctrl NotForUseType", e );
-            }
-            if ( strErrorMapValue == null )
-               strErrorMapValue = "";
+            strGridEditCtl4 = vGrid4.cursor( "S_DirectionsUsage" ).getStringFromAttribute( "UsageType", "" );
 
-            task.log( ).debug( "S_DirectionsForUseStatement.NotForUseType: " + strErrorMapValue );
+            if ( strGridEditCtl4 == null )
+               strGridEditCtl4 = "";
          }
-         else
-            task.log( ).debug( "Entity does not exist: " + "mSubLC.S_DirectionsForUseStatement" );
-      }
-   }
+
+         if ( StringUtils.isBlank( strGridEditCtl4 ) )
+            strGridEditCtl4 = "&nbsp";
+
+         strGridEditCtl5 = "";
+         nRC = vGrid4.cursor( "S_DirectionsUsage" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strGridEditCtl5 = vGrid4.cursor( "S_DirectionsUsage" ).getStringFromAttribute( "dDisplayUsageName", "" );
+
+            if ( strGridEditCtl5 == null )
+               strGridEditCtl5 = "";
+         }
+
+         if ( StringUtils.isBlank( strGridEditCtl5 ) )
+            strGridEditCtl5 = "&nbsp";
+
 %>
 
-<input name="NotForUseType" id="NotForUseType" style="width:130px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<tr<%=strOdd%>>
+
+   <td><%=strGridEditCtl4%></td>
+   <td><%=strGridEditCtl5%></td>
+
+</tr>
+
+<%
+         csrRC2 = vGrid4.cursor( "S_DirectionsUsageOrdering" ).setNextContinue( );
+      }
+      vGrid4.drop( );
+   }
+}
+catch (Exception e)
+{
+out.println("There is an error in grid: " + e.getMessage());
+task.log().info( "*** Error in grid" + e.getMessage() );
+}
+%>
+</tbody>
+</table>
 
 </div>  <!-- End of a new line -->
 
 
-</div>  <!--  DirectionsForUseStatement --> 
+</div>  <!--  GroupBox8 --> 
 </div>  <!-- End of a new line -->
 
 

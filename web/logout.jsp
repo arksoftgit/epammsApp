@@ -12,7 +12,7 @@
 <%@ page import="com.quinsoft.zeidon.utils.*" %>
 <%@ page import="com.quinsoft.zeidon.vml.*" %>
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
-<%@ page import="com.quinsoft.epamms.*" %>
+<%@ page import="com.arksoft.epamms.*" %>
 <%
 
 ObjectEngine objectEngine = JavaObjectEngine.getInstance();

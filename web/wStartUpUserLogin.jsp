@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 
 <%-- wStartUpUserLogin --%>
 
@@ -15,7 +15,7 @@
 
 <%! 
 
-ObjectEngine objectEngine = JavaObjectEngine.getInstance();
+ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
 public String ReplaceXSSValues( String szFieldValue )
 {
@@ -153,6 +153,7 @@ public int DoInputMapping( HttpServletRequest request,
 
 session = request.getSession( );
 Task task = null;
+View wWebXA = null;
 KZMSGQOO_Object mMsgQ = null; // view to Message Queue
 View vKZXMLPGO = null;
 String strLastPage = "";
@@ -182,6 +183,7 @@ String strOpenPopupWindow = "";
 String strPopupWindowSZX = "";
 String strPopupWindowSZY = "";
 String strDateFormat = "";
+String strKeyRole = "";
 String strDialogName = "";
 String strWindowName = "";
 String strLastWindow;
@@ -198,28 +200,24 @@ if ( StringUtils.isBlank( strLastWindow ) )
 
 strLastAction = (String) session.getAttribute( "ZeidonAction" );
 
-if ( strLastWindow.equals("wStartUpUserLogin") && StringUtils.isBlank( strActionToProcess ) && StringUtils.isBlank( strLastAction ) )
-{
-   strURL = response.encodeRedirectURL( "logout.jsp" );
-   response.sendRedirect( strURL );
-   return;
-}
-
 // Check to see if the Zeidon subtask view already exists.  If not, create
 // it and copy it into the application object.
 String taskId = (String) session.getAttribute( "ZeidonTaskId" );
 if ( StringUtils.isBlank( taskId ) )
 {
-   task = objectEngine.createTask( "epamms", true );
+   task = objectEngine.createTask( "epamms", session.getId() );
    session.setAttribute( "ZeidonTaskId", task.getTaskId() );
 }
 else
 {
-   task = objectEngine.getTaskById( taskId );
+   strURL = response.encodeRedirectURL( "loggedintotask.jsp" );
+   response.sendRedirect( strURL );
+   return;
 }
 
 if ( task == null )
 {
+   session.setAttribute( "ZeidonTaskId", null );
     strURL = response.encodeRedirectURL( "logout.jsp" );
     response.sendRedirect( strURL );
    return; // something really bad has happened!!!
@@ -257,54 +255,55 @@ if ( strActionToProcess != null )
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wStartUpUserLogin", strActionToProcess );
 
+      // Prebuild/Postbuild Operations.
+      // These are called because we Unregister Zeidon when this page is finished loading, so
+      // these operations need to be called before any action code (for recreating objects etc).
+         nOptRC = wStartUp.InitLoginWindow( new zVIEW( vKZXMLPGO ) );
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpUserLogin.jsp", "wStartUp.ProcessAdministratorLogin" );
-      try
-      {
          nOptRC = wStartUp.ProcessAdministratorLogin( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation ProcessAdministratorLogin: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
          session.setAttribute( "ZeidonError", "Y" );
          break;
       }
-
-      // Dynamic Next Window
-      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
+      else
+      if ( nOptRC == 1 )
       {
-         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
-         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
-         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
-         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
-         strURL = response.encodeRedirectURL( strNextJSP_Name );
-         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
-         else
-            strFunctionCall = "";
-
-         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
-         {
-            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
-            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wStartUpUserLogin" );
-         }
-
-         nRC = 1;  // do the redirection
-         break;
+         // Dynamic Next Window
+         strNextJSP_Name = wStartUp.GetWebRedirection( vKZXMLPGO );
       }
 
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_ResetTopWindow, "wStartUp", "AdminNewPrimaryRegistrant" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "FORGOT_Password" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wStartUpUserLogin", strActionToProcess );
+
+      // Prebuild/Postbuild Operations.
+      // These are called because we Unregister Zeidon when this page is finished loading, so
+      // these operations need to be called before any action code (for recreating objects etc).
+         nOptRC = wStartUp.InitLoginWindow( new zVIEW( vKZXMLPGO ) );
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
       // Next Window
-      strURL = response.encodeRedirectURL( "wStartUpAdminNewPrimaryRegistrant.jsp" );
+      strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StartTopWindow, "wStartUp", "SecurityValidations" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
    }
@@ -314,67 +313,34 @@ if ( strActionToProcess != null )
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wStartUpUserLogin", strActionToProcess );
 
+      // Prebuild/Postbuild Operations.
+      // These are called because we Unregister Zeidon when this page is finished loading, so
+      // these operations need to be called before any action code (for recreating objects etc).
+         nOptRC = wStartUp.InitLoginWindow( new zVIEW( vKZXMLPGO ) );
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpUserLogin.jsp", "wStartUp.AutoLoginSubregistrant" );
-      try
-      {
          nOptRC = wStartUp.AutoLoginSubregistrant( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation AutoLoginSubregistrant: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
          session.setAttribute( "ZeidonError", "Y" );
          break;
       }
-
-      // Dynamic Next Window
-      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
+      else
+      if ( nOptRC == 1 )
       {
-         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
-         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
-         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
-         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
-         strURL = response.encodeRedirectURL( strNextJSP_Name );
-         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
-         else
-            strFunctionCall = "";
-
-         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
-         {
-            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
-            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wStartUpUserLogin" );
-         }
-
-         nRC = 1;  // do the redirection
-         break;
+         // Dynamic Next Window
+         strNextJSP_Name = wStartUp.GetWebRedirection( vKZXMLPGO );
       }
 
-      break;
-   }
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "FORGOT_Password" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wStartUpUserLogin", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Next Window
-      strURL = response.encodeRedirectURL( "wStartUpSecurityValidations.jsp" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
    }
@@ -384,6 +350,10 @@ if ( strActionToProcess != null )
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wStartUpUserLogin", strActionToProcess );
 
+      // Prebuild/Postbuild Operations.
+      // These are called because we Unregister Zeidon when this page is finished loading, so
+      // these operations need to be called before any action code (for recreating objects etc).
+         nOptRC = wStartUp.InitLoginWindow( new zVIEW( vKZXMLPGO ) );
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
       if ( nRC < 0 )
@@ -392,309 +362,29 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpUserLogin.jsp", "wStartUp.ProcessUserLogin" );
-      try
-      {
          nOptRC = wStartUp.ProcessUserLogin( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation ProcessUserLogin: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
          session.setAttribute( "ZeidonError", "Y" );
          break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wStartUp.GetWebRedirection( vKZXMLPGO );
       }
 
       JspWebUtils.createWebSession( session, task, VmlOperation.SfGetUserIdForTask( task ) );  // Post Operation
 
-      // Dynamic Next Window
-      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
+      if ( strNextJSP_Name.equals( "" ) )
       {
-         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
-         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
-         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
-         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
-         strURL = response.encodeRedirectURL( strNextJSP_Name );
-         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
-         else
-            strFunctionCall = "";
-
-         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
-         {
-            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
-            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wStartUpUserLogin" );
-         }
-
-         nRC = 1;  // do the redirection
-         break;
+         // Next Window
+         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StartTopWindow, "wStartUp", "ePammsPortal" );
       }
 
-      // Next Window
-      strURL = response.encodeRedirectURL( "wStartUpePammsPortal.jsp" );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "TestFullSLC_Select" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wStartUpUserLogin", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpUserLogin.jsp", "wStartUp.TestFullSLC_Select" );
-      try
-      {
-         nOptRC = wStartUp.TestFullSLC_Select( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation TestFullSLC_Select: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-
-      // Dynamic Next Window
-      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
-         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
-         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
-         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
-         strURL = response.encodeRedirectURL( strNextJSP_Name );
-         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
-         else
-            strFunctionCall = "";
-
-         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
-         {
-            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
-            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wStartUpUserLogin" );
-         }
-
-         nRC = 1;  // do the redirection
-         break;
-      }
-
-      // Next Window
-      strURL = response.encodeRedirectURL( "wSPLD2SubregProductSLC_Update.jsp" );
-      vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
-      vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wStartUpUserLogin" );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "TestMasterProducts" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wStartUpUserLogin", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpUserLogin.jsp", "wStartUp.TestMasterProducts" );
-      try
-      {
-         nOptRC = wStartUp.TestMasterProducts( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation TestMasterProducts: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-
-      // Dynamic Next Window
-      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
-         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
-         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
-         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
-         strURL = response.encodeRedirectURL( strNextJSP_Name );
-         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
-         else
-            strFunctionCall = "";
-
-         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
-         {
-            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
-            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wStartUpUserLogin" );
-         }
-
-         nRC = 1;  // do the redirection
-         break;
-      }
-
-      // Next Window
-      strURL = response.encodeRedirectURL( "wMLC2ListMasterProducts.jsp" );
-      vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
-      vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wStartUpUserLogin" );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "TestSLC_Select" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wStartUpUserLogin", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpUserLogin.jsp", "wStartUp.TestSLC_Select" );
-      try
-      {
-         nOptRC = wStartUp.TestSLC_Select( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation TestSLC_Select: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-
-      // Dynamic Next Window
-      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
-         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
-         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
-         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
-         strURL = response.encodeRedirectURL( strNextJSP_Name );
-         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
-         else
-            strFunctionCall = "";
-
-         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
-         {
-            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
-            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wStartUpUserLogin" );
-         }
-
-         nRC = 1;  // do the redirection
-         break;
-      }
-
-      // Next Window
-      strURL = response.encodeRedirectURL( "wSPLD2SubregProductSLC_Update.jsp" );
-      vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
-      vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wStartUpUserLogin" );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "TestSubregProducts" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wStartUpUserLogin", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpUserLogin.jsp", "wStartUp.TestSubregProducts" );
-      try
-      {
-         nOptRC = wStartUp.TestSubregProducts( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation TestSubregProducts: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-
-      // Dynamic Next Window
-      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
-         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
-         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
-         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
-         strURL = response.encodeRedirectURL( strNextJSP_Name );
-         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
-         else
-            strFunctionCall = "";
-
-         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
-         {
-            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
-            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wStartUpUserLogin" );
-         }
-
-         nRC = 1;  // do the redirection
-         break;
-      }
-
-      // Next Window
-      strURL = response.encodeRedirectURL( "wStartUpListSubregProducts.jsp" );
-      vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
-      vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wStartUpUserLogin" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
    }
@@ -718,7 +408,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ----------------------------------->>> " + "wStartUpUserLogin" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wStartUpUserLogin" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -735,7 +425,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ----------------------------------->>> " + "wStartUpUserLogin" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ------->>> " + "wStartUpUserLogin" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -827,6 +517,13 @@ else
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
 
+   wWebXA = task.getViewByName( "wWebXfer" );
+   if ( VmlOperation.isValid( wWebXA ) )
+   {
+      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wStartUp" );
+      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "UserLogin" );
+   }
+
 %>
 
 <html>
@@ -840,7 +537,6 @@ else
 <%@ include file="./include/timeout.inc" %>
 <link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/validations.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
@@ -886,14 +582,12 @@ else
    View mPerson = null;
    View mPrimReg = null;
    View mSubreg = null;
-   View mSubreg2 = null;
    View mUser = null;
    View qOrganiz = null;
    View qOrganizLogin = null;
    View qPrimReg = null;
    View qSubreg = null;
    View wWebXfer = null;
-   View mMasProd = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";
@@ -955,108 +649,61 @@ else
                nPos = -1;
          }
       }
+      // Setting strActionToProcess = null because this is an "Unregister App" page, if an error occurs on the page, we still unregister.
+      strActionToProcess = null;
    }
 
    strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wStartUp", "UserLogin" );
    strOpenFile = VmlOperation.FindOpenFile( task );
-   strDateFormat = "MM/DD/YYYY";
+   strDateFormat = "YYYY.MM.DD";
 
+   wWebXA = task.getViewByName( "wWebXfer" );
+   if ( VmlOperation.isValid( wWebXA ) )
+   {
+      nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         if ( strKeyRole == null )
+            strKeyRole = "";
+
+         task.log().info( "Root.KeyRole: " + strKeyRole );
+      }
+   }
 %>
 
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
    <input name="zPopupWindowSZX" id="zPopupWindowSZX" type="hidden" value="<%=strPopupWindowSZX%>">
    <input name="zPopupWindowSZY" id="zPopupWindowSZY" type="hidden" value="<%=strPopupWindowSZY%>">
    <input name="zErrorFlag" id="zErrorFlag" type="hidden" value="<%=strErrorFlag%>">
-   <input name="zTimeout" id="zTimeout" type="hidden" value="10">
+   <input name="zTimeout" id="zTimeout" type="hidden" value="20">
    <input name="zSolicitSave" id="zSolicitSave" type="hidden" value="<%=strSolicitSave%>">
 
    <div name="ShowVMLError" id="ShowVMLError" class="ShowVMLError">
       <%=strVMLError%>
    </div>
 
+<% /* GroupBox1:GroupBox */ %>
 
- <!-- This is added as a line spacer -->
-<div style="height:18px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:18px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox2:GroupBox */ %>
-
-<div id="GroupBox2" name="GroupBox2" style="width:188px;height:200px;float:left;">  <!-- GroupBox2 --> 
+<div id="GroupBox1" name="GroupBox1" style="width:46px;height:166px;position:absolute;left:6px;top:36px;">  <!-- GroupBox1 --> 
 
 
- <!-- This is added as a line spacer -->
-<div style="height:22px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:32px;">&nbsp&nbsp</span>
-<% /* PushBtn1:PushBtn */ %>
-<button type="button" class="formStylebutton" name="PushBtn1" id="PushBtn1" value="" onclick="TestSubregProducts( )" style="width:140px;height:32px;">Subreg Products</button>
-
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:32px;">&nbsp&nbsp</span>
-<% /* PushBtn2:PushBtn */ %>
-<button type="button" class="formStylebutton" name="PushBtn2" id="PushBtn2" value="" onclick="TestMasterProducts( )" style="width:140px;height:32px;">Master Products</button>
-
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:32px;">&nbsp&nbsp</span>
-<% /* PushBtn3:PushBtn */ %>
-<button type="button" class="formStylebutton" name="PushBtn3" id="PushBtn3" value="" onclick="TestSLC_Select( )" style="width:140px;height:32px;">Test SLC Select</button>
-
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:8px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:32px;">&nbsp&nbsp</span>
-<% /* PushBtn4:PushBtn */ %>
-<button type="button" class="formStylebutton" name="PushBtn4" id="PushBtn4" value="" onclick="TestFullSLC_Select( )" style="width:140px;height:32px;">Test Full SLC Select</button>
-
-</div>  <!-- End of a new line -->
-
-
-</div>  <!--  GroupBox2 --> 
+</div>  <!--  GroupBox1 --> 
 <% /* WelcomeContainer:GroupBox */ %>
 
-<div id="WelcomeContainer" name="WelcomeContainer" class="divborder" style="width:752px;height:198px;float:left;">  <!-- WelcomeContainer --> 
+<div id="WelcomeContainer" name="WelcomeContainer" class="divborder" style="width:770px;height:166px;position:absolute;left:60px;top:36px;">  <!-- WelcomeContainer --> 
 
 <div  id="WelcomeContainer" name="WelcomeContainer" >Welcome To ePamms</div>
-
- <!-- This is added as a line spacer -->
-<div style="height:54px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp&nbsp</span>
 <% /* RegistrantName::Text */ %>
 
-<span class="text14bold"  id="RegistrantName:" name="RegistrantName:" style="width:118px;height:16px;">Registrant Name:</span>
+<label class="text14bold"  id="RegistrantName:" name="RegistrantName:" style="width:118px;height:16px;position:absolute;left:16px;top:54px;">Registrant Name:</label>
 
-<span style="height:16px;">&nbsp&nbsp</span>
 <% /* EBRegistrantName:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "EBRegistrantName", strError );
@@ -1083,7 +730,7 @@ else
             catch (Exception e)
             {
                out.println("There is an error on EBRegistrantName: " + e.getMessage());
-               task.log().info( "*** Error on ctrl EBRegistrantName" + e.getMessage() );
+               task.log().error( "*** Error on ctrl EBRegistrantName", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -1096,28 +743,18 @@ else
    }
 %>
 
-<input class="text14" name="EBRegistrantName" id="EBRegistrantName" style="width:256px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input class="text14" name="EBRegistrantName" id="EBRegistrantName" style="width:256px;position:absolute;left:146px;top:54px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
-<span style="height:32px;">&nbsp&nbsp&nbsp&nbsp&nbsp</span>
 <% /* PBLogin:PushBtn */ %>
-<button type="button" class="formStylebutton" name="PBLogin" id="PBLogin" value="" onclick="ProcessUserLogin( )" style="width:140px;height:32px;">Login</button>
+<button type="button" class="formStylebutton" name="PBLogin" id="PBLogin" value="" onclick="ProcessUserLogin( )" style="width:140px;height:32px;position:absolute;left:430px;top:54px;">Login</button>
 
-<span style="height:32px;">&nbsp&nbsp&nbsp</span>
 <% /* PBSetupAdmin:PushBtn */ %>
-<button type="button" class="formStylebutton" name="PBSetupAdmin" id="PBSetupAdmin" value="" onclick="AdministratorLogin( )" style="width:140px;height:32px;">Setup Admin</button>
+<button type="button" class="formStylebutton" name="PBSetupAdmin" id="PBSetupAdmin" value="" onclick="AdministratorLogin( )" style="width:140px;height:32px;position:absolute;left:586px;top:54px;">Setup Admin</button>
 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp&nbsp</span>
 <% /* UserName::Text */ %>
 
-<span class="text14bold"  id="UserName:" name="UserName:" style="width:118px;height:16px;">User Name:</span>
+<label class="text14bold"  id="UserName:" name="UserName:" style="width:118px;height:16px;position:absolute;left:16px;top:80px;">User Name:</label>
 
-<span style="height:16px;">&nbsp&nbsp</span>
 <% /* EBUserName:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "EBUserName", strError );
@@ -1144,7 +781,7 @@ else
             catch (Exception e)
             {
                out.println("There is an error on EBUserName: " + e.getMessage());
-               task.log().info( "*** Error on ctrl EBUserName" + e.getMessage() );
+               task.log().error( "*** Error on ctrl EBUserName", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -1157,21 +794,16 @@ else
    }
 %>
 
-<input class="text14" name="EBUserName" id="EBUserName" style="width:256px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input class="text14" name="EBUserName" id="EBUserName" style="width:256px;position:absolute;left:146px;top:80px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:78px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
 <% /* CBRole:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="CBRole" id="CBRole" size="1" style="width:194px;" onchange="CBRoleOnChange( )">
+<select  name="CBRole" id="CBRole" size="1" style="width:194px;position:absolute;left:430px;top:88px;" onchange="CBRoleOnChange( )">
 
 <%
+   boolean inListCBRole = false;
+
    wWebXfer = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXfer ) )
    {
@@ -1192,6 +824,7 @@ else
       // Code for NOT required attribute, which makes sure a blank entry exists.
       if ( strComboCurrentValue == "" )
       {
+         inListCBRole = true;
 %>
          <option selected="selected" value=""></option>
 <%
@@ -1218,6 +851,7 @@ else
          {
             if ( StringUtils.equals( strComboCurrentValue, externalValue ) )
             {
+               inListCBRole = true;
 %>
                <option selected="selected" value="<%=externalValue%>"><%=externalValue%></option>
 <%
@@ -1230,23 +864,22 @@ else
             }
          }
       }  // for ( TableEntry entry
+      // The value from the database isn't in the domain, add it to the list as disabled.
+      if ( !inListCBRole )
+      { 
+%>
+         <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
+<%
+      }  
    }  // if view != null
 %>
 </select>
 
 <input name="hCBRole" id="hCBRole" type="hidden" value="<%=strComboCurrentValue%>" >
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp&nbsp</span>
 <% /* Password::Text */ %>
 
-<span class="text14bold"  id="Password:" name="Password:" style="width:118px;height:16px;">Password:</span>
+<label class="text14bold"  id="Password:" name="Password:" style="width:118px;height:16px;position:absolute;left:16px;top:108px;">Password:</label>
 
-<span style="height:16px;">&nbsp&nbsp</span>
 <% /* EBPassword:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "EBPassword", strError );
@@ -1273,7 +906,7 @@ else
             catch (Exception e)
             {
                out.println("There is an error on EBPassword: " + e.getMessage());
-               task.log().info( "*** Error on ctrl EBPassword" + e.getMessage() );
+               task.log().error( "*** Error on ctrl EBPassword", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -1286,25 +919,14 @@ else
    }
 %>
 
-<input class="text14" name="EBPassword" id="EBPassword" style="width:256px;<%=strErrorColor%>" type="password" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input class="text14" name="EBPassword" id="EBPassword" style="width:256px;position:absolute;left:146px;top:108px;<%=strErrorColor%>" type="password" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:22px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
 <% /* Forget:Text */ %>
 
-<a href="#" id="Forget" name="Forget"  onclick="FORGOT_Password( );" class="text10" style="width:208px;height:22px;">Forget Username/Password?</a>
-
-</div>  <!-- End of a new line -->
+<a href="#" id="Forget" name="Forget"  onclick="FORGOT_Password( );" class="text10" style="width:208px;height:22px;position:absolute;left:430px;top:122px;">Forget Username/Password?</a>
 
 
 </div>  <!--  WelcomeContainer --> 
-</div>  <!-- End of a new line -->
-
 
 <%
    if ( StringUtils.equals( strErrorFlag, "X" ) )
@@ -1336,6 +958,14 @@ else
 <%
    session.setAttribute( "ZeidonWindow", "wStartUpUserLogin" );
    session.setAttribute( "ZeidonAction", null );
+
+   if ( task != null && strActionToProcess == null  )
+   {
+      task.log().info( "After building the page UnregisterZeidonApplication: ------>>> " + "wStartUpUserLogin" );
+      task.dropTask();
+      task = null;
+      session.setAttribute( "ZeidonTaskId", task );
+  }
 
      strActionToProcess = "";
 

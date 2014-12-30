@@ -1,7 +1,7 @@
 $(window).load( function() {
 $(function() {
 
-   $(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
+// $(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
 
    var g_loadedLLD = null;
    var g_updatedLLD = false;
@@ -54,6 +54,12 @@ $(function() {
    $("#page8").data( "z_^depth", 0 );
    $("#page9").data( "z_^depth", 0 );
    $("#zaccordion").accordion( {heightStyle: "fill"} );
+/* $("#zaccordion").accordion({
+      change: function (event, ui) {
+         var active = $( "#zaccordion" ).accordion( "option", "active" );
+         localStorage.setItem( "epamms_graphic_accordion", active ? "Y" : "N" );
+      }
+   }); */
    $(function() {
         var icons = {
             header: "ui-icon-circle-arrow-e",
@@ -132,7 +138,7 @@ $(function() {
                data: {},
             // beforeSend - callback function that is executed before the request is sent
                success: function( data, textStatus, jqXHR ) {
-                           console.log( "setCursorPosition: success status: " + textStatus );
+                           console.log( "setCursorPosition: success status: " + textStatus + "  data: " + data + "  jqXHR: " + jqXHR );
                            GOTO_UpdateBlockComponent();
                         },
                error:   function( jqXHR, textStatus, errorThrown ) {
@@ -144,11 +150,14 @@ $(function() {
       });
    }
 
-   $("#zLLD_Save").click( function() {
+   function saveLabel() {
       if ( g_updatedLLD ) {
          g_loadedLLD = "mSPLDef";
          ConvertWysiwygLabelDesignToZeidonJson( "saveLabel", g_loadedLLD, null, null );
-      }
+      }      
+   }
+   $("#zLLD_Save").click( function() {
+      saveLabel();
       return false;  // prevent default propagation
    });
 
@@ -212,8 +221,8 @@ $(function() {
          }
          setCurrentBlockData( $(el), "on click" );
          clearListAndSelection( el ); // clear the list and set current selection
-         updatePositionStatus( el.offsetTop, el.offsetLeft, "Start yOffset" );
-         updateSizeStatus( el.offsetHeight, el.offsetWidth, "Start yOffset" );
+         updatePositionStatus( el, el.offsetTop, el.offsetLeft, "Start yOffset" );
+         updateSizeStatus( el, el.offsetHeight, el.offsetWidth, "Start yOffset" );
       } else if ( e.ctrlKey ) { // Ctrl + click combo
       // console.log( "Ctrl+Click on canvas-element has been pressed!" );
          var idx = g_selected_list.indexOf( this );
@@ -252,11 +261,13 @@ $(function() {
       return false;  // prevent default propagation (otherwise, the click is propagated to parent elements ... which we do not want!)
    });
 
-   $("#zmenu").on( "click", function(e) {
 // $("#zmenu").click( function(e) {
-      console.log( "menu clicked" );
+   $("#zmenu").on( "click", function(e) {
+      var active = $( "#zaccordion" ).accordion( "option", "active" );
+      console.log( "menu clicked: " + active );
+      localStorage.setItem( "epamms_graphic_accordion", active );
       e.stopPropagation();
-      return false;  // prevent propagation, otherwise the click will be passed on to any element underneath the accordian
+      return false;  // prevent propagation, otherwise the click will be passed on to any element underneath the accordion
    });
 
    // Here is the complete order of events per drag and drop interaction: 
@@ -306,25 +317,25 @@ $(function() {
          }
 
       // console.log( "Start yDragPanel: " + Math.round( ui.offset.top - g_yOffset ).toString() + "  xDragPanel: " + Math.round( ui.offset.left - g_xOffset ).toString() );
-         updatePositionStatus( ui.offset.top - g_yOffset, ui.offset.left - g_xOffset, "Start yDragPanel" );
-         updateSizeStatus( $(this).height(), $(this).width(), "Start yDragPanel" );
+         updatePositionStatus( $(this), ui.offset.top - g_yOffset, ui.offset.left - g_xOffset, "Start yDragPanel" );
+         updateSizeStatus( $(this), $(this).height(), $(this).width(), "Start yDragPanel" );
       },
       drag: function( event, ui ) {
       // console.log( "Drag yDragPanel: " + Math.round( ui.offset.top - g_yOffset ).toString() + "  xDragPanel: " + Math.round( ui.offset.left - g_xOffset ).toString() );
-         updatePositionStatus( ui.offset.top - g_yOffset, ui.offset.left - g_xOffset, "Drag yDragPanel" );
+         updatePositionStatus( $(this), ui.offset.top - g_yOffset, ui.offset.left - g_xOffset, "Drag yDragPanel" );
       },
       stop: function( event, ui ) {
       // $(this).draggable( "option", "zIndex", drag_zIndex );
       // $(this).css( "z-index", 0 );
-      // updatePositionStatus( ui.offset.top - yOffset, ui.offset.left - xOffset );
+      // updatePositionStatus( $(this), ui.offset.top - yOffset, ui.offset.left - xOffset );
       // console.log( "Stop yDrag: " + Math.round( ui.offset.top - g_yOffset ).toString() + "  xDrag: " + Math.round( ui.offset.left - g_xOffset ).toString() );
          console.log( "Scroll #label top: " + $("#label").scrollTop() + "   left: " + $("#label").scrollLeft() );
       // $(this).data( "z_^top", Math.round( ui.offset.top - yOffset ).toString() );    not right ... done later
       // $(this).data( "z_^left", Math.round( ui.offset.left - xOffset ).toString() );  not right ... done later
       // setCurrentBlockData( $(this), "updated 1" );
-         updatePositionStatus( ui.offset.top - g_yOffset, ui.offset.left - g_xOffset, "Stop yDrag" );
-      // updatePositionStatus( -9999, -9999 );
-      // updateSizeStatus( -9999, -9999 );
+         updatePositionStatus( $(this), ui.offset.top - g_yOffset, ui.offset.left - g_xOffset, "Stop yDrag" );
+      // updatePositionStatus( $(this), -9999, -9999 );
+      // updateSizeStatus( $(this), -9999, -9999 );
       }
    });
 
@@ -351,37 +362,37 @@ $(function() {
          // $canvasElement.draggable( "option", "zIndex", 100 );
          // $target.css( "z-index", 10 );
          // console.log( "Start yOffset: " + $canvasElement[0].offsetTop + "  xOffset: " + $canvasElement[0].offsetLeft );
-            updatePositionStatus( $canvasElement[0].offsetTop, $canvasElement[0].offsetLeft, "Start yOffset" );
-            updateSizeStatus( $canvasElement[0].offsetHeight, $canvasElement[0].offsetWidth, "Start yOffset" );
+            updatePositionStatus( $canvasElement[0], $canvasElement[0].offsetTop, $canvasElement[0].offsetLeft, "Start yOffset" );
+            updateSizeStatus( $canvasElement[0], $canvasElement[0].offsetHeight, $canvasElement[0].offsetWidth, "Start yOffset" );
          },
          drag: function( event, ui ) {
          // console.log( "Drag yOffset: " + $canvasElement[0].offsetTop + "  xOffset: " + $canvasElement[0].offsetLeft );
-            updatePositionStatus( $canvasElement[0].offsetTop, $canvasElement[0].offsetLeft, "Drag yOffset" );
+            updatePositionStatus( $canvasElement[0], $canvasElement[0].offsetTop, $canvasElement[0].offsetLeft, "Drag yOffset" );
          },
          stop: function( event, ui ) {
          // $canvasElement.draggable( "option", "zIndex", drag_zIndex );
          // $target.css( "z-index", 0 );
-         // updatePositionStatus( ui.offset.top - yOffset, ui.offset.left - xOffset );
+         // updatePositionStatus( $canvasElement[0], ui.offset.top - yOffset, ui.offset.left - xOffset );
          // console.log( "Stop yOffset: " + $canvasElement[0].offsetTop + "  xOffset: " + $canvasElement[0].offsetLeft );
             g_updatedLLD = true;
             $canvasElement.data( "z_^top", ($canvasElement[0].offsetTop / g_pixelsPerInch).toFixed( 2 ) );
             $canvasElement.data( "z_^left", ($canvasElement[0].offsetLeft / g_pixelsPerInch).toFixed( 2 ) );
             setCurrentBlockData( $canvasElement, "updated 2" );
-            updatePositionStatus( $canvasElement[0].offsetTop, $canvasElement[0].offsetLeft, "Stop yOffset ... z_^top and z_^left" );
-         // updatePositionStatus( -9999, -9999 );
-         // updateSizeStatus( -9999, -9999 );
+            updatePositionStatus( $canvasElement[0], $canvasElement[0].offsetTop, $canvasElement[0].offsetLeft, "Stop yOffset ... z_^top and z_^left" );
+         // updatePositionStatus( $canvasElement[0], -9999, -9999 );
+         // updateSizeStatus( $canvasElement[0], -9999, -9999 );
          }
       });
       $canvasElement.resizable({
          containment: "#page",
          start: function( event, ui ) {   // alert("Top: " +  $target.offset().top);
          // console.log( "Start yResize: " + $canvasElement[0].offsetHeight + "  xResize: " + $canvasElement[0].offsetWidth );
-            updatePositionStatus( $canvasElement[0].offsetTop, $canvasElement[0].offsetLeft, "Start yResize" );
-            updateSizeStatus( $canvasElement[0].offsetHeight, $canvasElement[0].offsetWidth, "Start yResize" );
+            updatePositionStatus( $canvasElement[0], $canvasElement[0].offsetTop, $canvasElement[0].offsetLeft, "Start yResize" );
+            updateSizeStatus( $canvasElement[0], $canvasElement[0].offsetHeight, $canvasElement[0].offsetWidth, "Start yResize" );
          },
          resize: function( event, ui ) {
          // console.log( "Resize yResize: " + $canvasElement[0].offsetHeight + "  xResize: " + $canvasElement[0].offsetWidth );
-            updateSizeStatus( $canvasElement[0].offsetHeight, $canvasElement[0].offsetWidth, "Resize yResize" );
+            updateSizeStatus( $canvasElement[0], $canvasElement[0].offsetHeight, $canvasElement[0].offsetWidth, "Resize yResize" );
          },
          stop: function( event, ui ) {
          // console.log( "Stop yResize: " + $canvasElement[0].offsetHeight + "  xResize: " + $canvasElement[0].offsetWidth );
@@ -389,9 +400,9 @@ $(function() {
             $canvasElement.data( "z_^height", (($canvasElement[0].offsetHeight) / g_pixelsPerInch).toFixed( 2 ) );
             $canvasElement.data( "z_^width", (($canvasElement[0].offsetWidth) / g_pixelsPerInch).toFixed( 2 ) );
             setCurrentBlockData( $canvasElement, "updated 3" );
-            updateSizeStatus( $canvasElement[0].offsetHeight, $canvasElement[0].offsetWidth, "Stop yResize ... z_^height and z_^width" );
-         // updatePositionStatus( -9999, -9999 );
-         // updateSizeStatus( -9999, -9999 );
+            updateSizeStatus( $canvasElement[0], $canvasElement[0].offsetHeight, $canvasElement[0].offsetWidth, "Stop yResize ... z_^height and z_^width" );
+         // updatePositionStatus( $canvasElement[0], -9999, -9999 );
+         // updateSizeStatus( $canvasElement[0], -9999, -9999 );
          }
       });
    }
@@ -562,8 +573,8 @@ $(function() {
       $element.data( "z_^tag", $element.attr( "id" ) );
       $element.data( "z_^top", scalePixel2Inch( $element.css( "top" ), 0, "top" ) );
       $element.data( "z_^left", scalePixel2Inch( $element.css( "left" ), 0, "left" ) );
-      $element.data( "z_^height", scalePixel2Inch( $element.css( "height" ), 4, "height" ) ); // g_pixelsBorder
-      $element.data( "z_^width", scalePixel2Inch( $element.css( "width" ), 4, "width" ) );
+      $element.data( "z_^height", scalePixel2Inch( $element.css( "height" ), 4, "height" ) ); // 2*g_pixelsBorder
+      $element.data( "z_^width", scalePixel2Inch( $element.css( "width" ), 4, "width" ) ); // 2*g_pixelsBorder
       $element.css({ position: "absolute" });
    // displayElementData( "mapUiElementToData: ", $element );
    }
@@ -811,34 +822,44 @@ $(function() {
       return tag;
    }
 
-   function updatePositionStatus( offset_top, offset_left, message ) {
+   function updatePositionStatus( el, offset_top, offset_left, message ) {
       // ... then update the numbers
       var new_position;
       if ( offset_top === -9999 ) {
          new_position = "";
       } else {
-         var x = offset_left / g_pixelsPerInch;  // 1 = g_pixelsBorder/2
-         var y = offset_top / g_pixelsPerInch;
+         var x = offset_left / (g_pixelsPerInch * g_scale);
+         var y = offset_top / (g_pixelsPerInch * g_scale);
          new_position = "Position: " + y.toFixed( 2 ) + "in, " + x.toFixed( 2 ) + "in";
       }
 
-   // console.log( "UpdatePositionStatus " + message + " (" + offset_top + "," + offset_left + ") : " + new_position );
+      console.log( "UpdatePositionStatus " + message + " (" + offset_top + "," + offset_left + ") : " + new_position );
       $("span#zdisplay_position").text( new_position );
+      if ( el ) {
+         $("span#zdisplay_tag").text( el.id  );
+      } else {
+         $("span#zdisplay_tag").text( "" );
+      }
    }
 
-   function updateSizeStatus( height, width, message ) {
+   function updateSizeStatus( el, height, width, message ) {
       // ... then update the numbers
       var new_size;
       if ( height === -9999 ) {
          new_size = "";
       } else {
-         var x = width / g_pixelsPerInch;
-         var y = height / g_pixelsPerInch;
+         var x = width / (g_pixelsPerInch * g_scale);
+         var y = height / (g_pixelsPerInch * g_scale);
          new_size = "Size: " + y.toFixed( 2 ) + "in, " + x.toFixed( 2 ) + "in";
       }
 
-   // console.log( "UpdateSizeStatus " + message + " (" + height + "," + width + ") : " + new_size );
+      console.log( "UpdateSizeStatus " + message + " (" + height + "," + width + ") : " + new_size );
       $("span#zdisplay_size").text( new_size );
+      if ( el ) {
+         $("span#zdisplay_tag").text( el.id  );
+      } else {
+         $("span#zdisplay_tag").text( "" );
+      }
    }
 
    function mapDOM( element, json ) {
@@ -1089,6 +1110,12 @@ $(function() {
          }
       });
 
+   $("#zSectionType")
+      .change( function() {
+      // alert( "Selected value: " + $('#zSectionType').val() );
+         g_$current_block.text( $('#zSectionType').val() );
+      });
+
 // $("#label").niceScroll({touchbehavior:false,cursorcolor:"#00F",cursoropacitymax:0.7,cursorwidth:6,background:"#ccc",autohidemode:false});
    function runSlideToolsEffect( show ) {
       // run the effect
@@ -1106,8 +1133,10 @@ $(function() {
          $("#zmenu").css({ left: left, height: $("#label").height() - g_scrollbar.height });
 
          if ( $(this).is( ":checked" ) ) {
+            localStorage.setItem( "epamms_graphic_showtools", "Y" );
             runSlideToolsEffect( true );
          } else {
+            localStorage.setItem( "epamms_graphic_showtools", "N" );
             runSlideToolsEffect( false );
          }
       });
@@ -1361,6 +1390,7 @@ $(function() {
     // Handle the Spinner change event.
    $ZoomSpinner.on( "spinstop", function( event, ui ) {
       g_scale = $ZoomSpinner.spinner( "value" );
+      localStorage.setItem( "epamms_graphic_spinstop", g_scale  );
       resizeImg();
    });
 
@@ -1391,7 +1421,7 @@ $(function() {
          var left = roundInch2Pixel( $this.data( "z_^left" ) || "0" );
          var width = roundInch2Pixel( $this.data( "z_^width" ) || "0" );
          var height = roundInch2Pixel( $this.data( "z_^height" ) || "0" );
-         console.log( "New Tag: " + $this.attr( "id" ) + "  Top: " + top + "  Left: " + left + "  Width: " + width + "  Height: " + height );
+      // console.log( "New Tag: " + $this.attr( "id" ) + "  Top: " + top + "  Left: " + left + "  Width: " + width + "  Height: " + height );
          $this.css({ top: top, left: left, width: width, height: height });
       });
    }
@@ -1558,12 +1588,12 @@ public class FileServer {
    function CaptureZeidonLabelJsonFromDomJson( jsonDom ) {
    // var jsonObj = eval( "[" + json + "]" );
    // console.log( "Dom: " + jsonDom );
-      var jsonObj = jQuery.parseJSON( "[" + jsonDom + "]" );  // this is faster and more secure than eval
+      var jsonObj = jsonStringToJsonObject( jsonDom );
       g_ViewNameMap.setNameForView( jsonObj, "LLD_Dom" );
    // var formattedHtml = renderJsonObjectAsFormattedHtml( jsonObj[0], 0, false, false, false );
    // $id("zFormattedJsonLabel").innerHTML = "<PRE class='CodeContainer'>" + formattedHtml + "</PRE>";
 
-   // once is enough (above)? jsonObj = jQuery.parseJSON( "[" + jsonDom + "]" );  // this is faster and more secure than eval
+   // once is enough (above)? jsonObj = jsonStringToJsonObject( jsonDom );
       var jsonLabel = "{ \".meta\" : { \"version\" : \"" + g_metaVersion + "\", \"date\" : \"" + g_metaDate +
               "\" }, \"OIs\" : [ { \".oimeta\" : { \"application\" : \"" + g_application + "\", \"odName\" : \"mSPLDef\", \"incremental\" : \"true\" }";
       var firstBlock = new Object();
@@ -1571,7 +1601,7 @@ public class FileServer {
       jsonLabel += TranslateWysiwygDesignToJsonLabel( null, -1, jsonObj[0], false, false, false, firstBlock );
       jsonLabel += "} ] }";
       try {
-         jsonObj = jQuery.parseJSON( "[" + jsonLabel + "]" );
+         jsonObj = jsonStringToJsonObject( jsonLabel );
       } catch (e) {
          alert( "Generated JSON Label is not well formatted:\n" + e.message );
          console.log( "JSON Label: " + jsonLabel );
@@ -1950,7 +1980,33 @@ public class FileServer {
          }
       }
    });
-   
+
+   function formatTitle( obj ) {
+      var name;
+      var space;
+      if ( obj["LLD_SectionType"] ) {
+         name = obj["LLD_SectionType"];
+         space = ": ";
+      }
+      else
+      {
+         name = "";
+         space = "";
+      }
+      if ( obj["ContinuationBlockFlag"] ) {
+         name += "[**continued**]";
+         space = ": ";
+      }
+      if ( obj["Name"] ) {
+         name += space + obj["Name"];
+         space = " - ";
+      }
+      if ( obj["ImageName"] ) {
+         name += space + obj["ImageName"];
+      }
+      return name;
+   }
+
    function AddHtmlLabelElementAttributes( $root, $parentElement, obj, entity, depth ) {
       console.log( "AddHtmlLabelElementAttributes processing entity: " + entity );
       var $element;
@@ -1973,6 +2029,7 @@ public class FileServer {
 
       // $(tag).innerHTML = attr + style;
       if ( entity === "block" || entity === "panel" ) {
+         var name = formatTitle( obj );
          var tag = obj["Tag"];
          if ( !tag ) {
             var id = obj["ID"];
@@ -1998,7 +2055,7 @@ public class FileServer {
          var div = "<div " + identity + classes + style + attr + "></div>";
       // console.log( "draggable containment: #" + $root.attr( "id" ) );
       // console.log( "resizeable containment: #" + $root.attr( "id" ) );
-         $element = $(div).text( tag )
+         $element = $(div).text( name )
               .draggable({
                  cancel: "a.ui-icon", // clicking a link with class .ui-icon won't initiate dragging
                  containment: "#" + $root.attr( "id" ),
@@ -2220,7 +2277,7 @@ public class FileServer {
                });
 
             // var jsonObj = eval( "[" + data + "]" );
-               var jsonObj = jQuery.parseJSON( "[" + jsonZeidon + "]" );  // this is faster and more secure than eval
+               var jsonObj = jsonStringToJsonObject( jsonZeidon );
                g_ViewNameMap.setNameForView( jsonObj, "LLD_View" );
                jsonObj = jsonObj[0];
                var jsonMeta = jsonObj[".meta"];
@@ -2234,7 +2291,9 @@ public class FileServer {
 
                // Now actually display the LLD in the designer.
                RenderWysiwygLabelFromZeidonJson( jsonObj, false, false );
-
+               if ( g_scale && g_scale !== 1 ) {
+                  resizeImg();
+               }
             } catch(e) {
                $id("zFormattedJsonLabel").innerHTML = jsonZeidon;
                alert( "JSON is not well formatted:\n" + e.message );
@@ -2339,7 +2398,7 @@ public class FileServer {
          dataType : 'json',
          success : function( data ) {
             console.log( "Return from loadRegisteredViews: " + data );
-            var jsonObj = jQuery.parseJSON( data );  // this is faster and more secure than eval
+            var jsonObj = jsonStringToJsonObject( data );
             simpleTraverseJsonObject( jsonObj, false );
             var $select = $('#selectRegisteredViews').empty();
          // $select.append( "<li class=\"ui-state-default\">Drag registered views...</li>" );
@@ -2423,7 +2482,7 @@ public class FileServer {
          dataType : 'json',
          success : function( data ) {
             console.log( "Return from saveRegisteredViews: " + data );
-            var jsonObj = jQuery.parseJSON( data );  // this is faster and more secure than eval
+            var jsonObj = jsonStringToJsonObject( data );
             simpleTraverseJsonObject( jsonObj, false );
          }
       });
@@ -2771,8 +2830,18 @@ public class FileServer {
    g_loadedLLD = "mSPLDef";
 
    // set initial state.
-   $("#showtools").prop( "checked", false );
-   runSlideToolsEffect( false );
+   var show = localStorage.getItem( "epamms_graphic_showtools" ) === "Y" ? true : false;
+   $("#showtools").prop( "checked", show );
+   runSlideToolsEffect( show );
+
+   var active = parseInt( localStorage.getItem( "epamms_graphic_accordion" ) ); 
+   $("#zaccordion").accordion( "option", "active", active );
+
+   var g_scale = parseFloat( localStorage.getItem( "epamms_graphic_spinstop" ) );
+   if ( g_scale && g_scale !== 1 ) {
+      var spinner = $( "#zZoomSpinner" ).spinner();
+      spinner.spinner( "value", g_scale );
+   }
 
 /**
 var canvas = $('#canvasback')[0];

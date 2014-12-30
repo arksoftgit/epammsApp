@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 
 <%-- wSystemUsersDetailDelete --%>
 
@@ -11,11 +11,11 @@
 <%@ page import="com.quinsoft.zeidon.utils.*" %>
 <%@ page import="com.quinsoft.zeidon.vml.*" %>
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
-<%@ page import=".*" %>
+<%@ page import="com.quinsoft.epamms.*" %>
 
 <%! 
 
-ObjectEngine objectEngine = JavaObjectEngine.getInstance();
+ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
 public String ReplaceXSSValues( String szFieldValue )
 {
@@ -102,7 +102,6 @@ String strPopupWindowSZX = "";
 String strPopupWindowSZY = "";
 String strDateFormat = "";
 String strKeyRole = "";
-String strFeedback = "";
 String strDialogName = "";
 String strWindowName = "";
 String strLastWindow;
@@ -142,6 +141,7 @@ else
 
 if ( task == null )
 {
+   session.setAttribute( "ZeidonTaskId", null );
     strURL = response.encodeRedirectURL( "logout.jsp" );
     response.sendRedirect( strURL );
    return; // something really bad has happened!!!
@@ -172,13 +172,6 @@ if ( strActionToProcess != null )
          vMsgQ.drop( );
       }
 
-      strFeedback = request.getParameter( "zFeedback" );
-      if ( strFeedback != "" )
-      {
-         wSystem.TraceLine( "DoInputMapping Feedback: " + strFeedback );
-         wSystem.SaveFeedback( "mOrganiz", "wSystem", "UsersDetailDelete", strFeedback );
-      }
-
    }
 
    while ( bDone == false && StringUtils.equals( strActionToProcess, "DeleteUser" ) )
@@ -194,17 +187,7 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUsersDetailDelete.jsp", "wSystem.DeleteUser" );
-      try
-      {
          nOptRC = wSystem.DeleteUser( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation DeleteUser: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -260,7 +243,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ----------------------------------->>> " + "wSystemUsersDetailDelete" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wSystemUsersDetailDelete" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -277,7 +260,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ----------------------------------->>> " + "wSystemUsersDetailDelete" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ------->>> " + "wSystemUsersDetailDelete" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -369,7 +352,6 @@ else
 <%@ include file="./include/timeout.inc" %>
 <link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/validations.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
@@ -478,7 +460,7 @@ else
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSystem", "UsersDetailDelete" );
    strOpenFile = VmlOperation.FindOpenFile( task );
-   strDateFormat = "MM/DD/YYYY";
+   strDateFormat = "YYYY.MM.DD";
 
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
@@ -611,11 +593,6 @@ else
 %>
 
    <input name="zError" id="zError" type="hidden" value="<%=strErrorMsg%>">
-
-   <div align="clear:both;center;"><table style="width:750px;background-color:black;color:white;border:none;font-size:8px;"><tr style="background-color:blue;color:white;border:none;">
-   <td nowrap style="background-color:blue;color:white;border:none;padding-top:6px;padding-bottom:6px;font-size:11px;">Feedback: </td>
-   <td nowrap style="background-color:blue;color:white;border:none;padding-top:6px;padding-bottom:6px;font-size:11px;"><input name="zFeedback" id="zFeedback" style="left:4px;width:700px;"></td>
-   </tr></table></div>
 
 </form>
 </div>   <!-- This is the end tag for the div 'content' -->

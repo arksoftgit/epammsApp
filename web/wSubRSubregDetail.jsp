@@ -153,6 +153,7 @@ else
 
 if ( task == null )
 {
+   session.setAttribute( "ZeidonTaskId", null );
     strURL = response.encodeRedirectURL( "logout.jsp" );
     response.sendRedirect( strURL );
    return; // something really bad has happened!!!
@@ -383,17 +384,7 @@ if ( strActionToProcess != null )
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
       VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRSubregDetail.jsp", "wStartUp.ProductManagement" );
-      try
-      {
          nOptRC = wStartUp.ProductManagement( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation ProductManagement: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -410,7 +401,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wSubR.SetWebRedirection( vKZXMLPGO, wSubR.zWAB_StartTopWindow, "wStartUp", "AdminListPrimaryRegistrants" );
+         strNextJSP_Name = wSubR.SetWebRedirection( vKZXMLPGO, wSubR.zWAB_StartTopWindow, "wSPLD", "SubregProductsList" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -432,17 +423,7 @@ if ( strActionToProcess != null )
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
       VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRSubregDetail.jsp", "wStartUp.SubregistrantManagement" );
-      try
-      {
          nOptRC = wStartUp.SubregistrantManagement( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation SubregistrantManagement: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -481,17 +462,7 @@ if ( strActionToProcess != null )
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
       VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRSubregDetail.jsp", "wStartUp.TrackingNotificationCompliance" );
-      try
-      {
          nOptRC = wStartUp.TrackingNotificationCompliance( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation TrackingNotificationCompliance: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -530,17 +501,7 @@ if ( strActionToProcess != null )
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
       VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRSubregDetail.jsp", "wStartUp.StateRegistrations" );
-      try
-      {
          nOptRC = wStartUp.StateRegistrations( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation StateRegistrations: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -579,17 +540,7 @@ if ( strActionToProcess != null )
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
       VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRSubregDetail.jsp", "wStartUp.MarketingFulfillment" );
-      try
-      {
          nOptRC = wStartUp.MarketingFulfillment( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation MarketingFulfillment: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -628,17 +579,7 @@ if ( strActionToProcess != null )
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
       VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRSubregDetail.jsp", "wStartUp.WebDevelopment" );
-      try
-      {
          nOptRC = wStartUp.WebDevelopment( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation WebDevelopment: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -672,17 +613,7 @@ if ( strActionToProcess != null )
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
       VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRSubregDetail.jsp", "wStartUp.PrimaryRegistrantCompanySetup" );
-      try
-      {
          nOptRC = wStartUp.PrimaryRegistrantCompanySetup( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation PrimaryRegistrantCompanySetup: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -721,17 +652,7 @@ if ( strActionToProcess != null )
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
       VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRSubregDetail.jsp", "wStartUp.ProcessLogin" );
-      try
-      {
          nOptRC = wStartUp.ProcessLogin( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation ProcessLogin: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -761,7 +682,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ----------------------------------->>> " + "wSubRSubregDetail" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wSubRSubregDetail" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -778,7 +699,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ----------------------------------->>> " + "wSubRSubregDetail" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ------->>> " + "wSubRSubregDetail" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -890,7 +811,6 @@ else
 <%@ include file="./include/timeout.inc" %>
 <link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/validations.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
@@ -1200,6 +1120,8 @@ else
 <select  name="ExperienceLevel" id="ExperienceLevel" size="1" style="width:318px;"  disabled onchange="ExperienceLevelOnChange( )">
 
 <%
+   boolean inListExperienceLevel = false;
+
    wWebXfer = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXfer ) )
    {
@@ -1220,6 +1142,7 @@ else
       // Code for NOT required attribute, which makes sure a blank entry exists.
       if ( strComboCurrentValue == "" )
       {
+         inListExperienceLevel = true;
 %>
          <option selected="selected" value=""></option>
 <%
@@ -1246,6 +1169,7 @@ else
          {
             if ( StringUtils.equals( strComboCurrentValue, externalValue ) )
             {
+               inListExperienceLevel = true;
 %>
                <option selected="selected" value="<%=externalValue%>"><%=externalValue%></option>
 <%
@@ -1258,6 +1182,13 @@ else
             }
          }
       }  // for ( TableEntry entry
+      // The value from the database isn't in the domain, add it to the list as disabled.
+      if ( !inListExperienceLevel )
+      { 
+%>
+         <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
+<%
+      }  
    }  // if view != null
 %>
 </select>
@@ -1455,6 +1386,8 @@ else
 <select  name="CBPState" id="CBPState" size="1" style="width:174px;"  disabled onchange="CBPStateOnChange( )">
 
 <%
+   boolean inListCBPState = false;
+
    mSubreg = task.getViewByName( "mSubreg" );
    if ( VmlOperation.isValid( mSubreg ) )
    {
@@ -1463,7 +1396,7 @@ else
       nRC = mSubreg.cursor( "PhysicalAddress" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mSubreg.cursor( "PhysicalAddress" ).getStringFromAttribute( "State", "States - Full Name" );
+         strComboCurrentValue = mSubreg.cursor( "PhysicalAddress" ).getStringFromAttribute( "State", "" );
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }
@@ -1475,6 +1408,7 @@ else
       // Code for NOT required attribute, which makes sure a blank entry exists.
       if ( strComboCurrentValue == "" )
       {
+         inListCBPState = true;
 %>
          <option selected="selected" value=""></option>
 <%
@@ -1501,6 +1435,7 @@ else
          {
             if ( StringUtils.equals( strComboCurrentValue, externalValue ) )
             {
+               inListCBPState = true;
 %>
                <option selected="selected" value="<%=externalValue%>"><%=externalValue%></option>
 <%
@@ -1513,6 +1448,13 @@ else
             }
          }
       }  // for ( TableEntry entry
+      // The value from the database isn't in the domain, add it to the list as disabled.
+      if ( !inListCBPState )
+      { 
+%>
+         <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
+<%
+      }  
    }  // if view != null
 %>
 </select>
@@ -1847,6 +1789,8 @@ else
 <select  name="CBState" id="CBState" size="1" style="width:174px;"  disabled onchange="CBStateOnChange( )">
 
 <%
+   boolean inListCBState = false;
+
    mSubreg = task.getViewByName( "mSubreg" );
    if ( VmlOperation.isValid( mSubreg ) )
    {
@@ -1855,7 +1799,7 @@ else
       nRC = mSubreg.cursor( "MailingAddress" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mSubreg.cursor( "MailingAddress" ).getStringFromAttribute( "State", "States - Full Name" );
+         strComboCurrentValue = mSubreg.cursor( "MailingAddress" ).getStringFromAttribute( "State", "" );
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }
@@ -1867,6 +1811,7 @@ else
       // Code for NOT required attribute, which makes sure a blank entry exists.
       if ( strComboCurrentValue == "" )
       {
+         inListCBState = true;
 %>
          <option selected="selected" value=""></option>
 <%
@@ -1893,6 +1838,7 @@ else
          {
             if ( StringUtils.equals( strComboCurrentValue, externalValue ) )
             {
+               inListCBState = true;
 %>
                <option selected="selected" value="<%=externalValue%>"><%=externalValue%></option>
 <%
@@ -1905,6 +1851,13 @@ else
             }
          }
       }  // for ( TableEntry entry
+      // The value from the database isn't in the domain, add it to the list as disabled.
+      if ( !inListCBState )
+      { 
+%>
+         <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
+<%
+      }  
    }  // if view != null
 %>
 </select>

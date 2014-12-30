@@ -36,7 +36,8 @@ public int DoInputMapping( HttpServletRequest request,
    Task task = objectEngine.getTaskById( taskId );
 
    View mSubLC = null;
-   View wWebXfer = null;
+   View mSubreg = null;
+   View mSubProd = null;
    View vGridTmp = null; // temp view to grid view
    View vRepeatingGrp = null; // temp view to repeating group view
    String strDateFormat = "";
@@ -61,110 +62,54 @@ public int DoInputMapping( HttpServletRequest request,
    mSubLC = task.getViewByName( "mSubLC" );
    if ( VmlOperation.isValid( mSubLC ) )
    {
-      // Calendar: ESL_Date
-      nRC = mSubLC.cursor( "SubregLabelContent" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strMapValue = request.getParameter( "ESL_Date" );
-         strDateFormat = request.getParameter( "zDateFormat" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "ESL_Date", "", strMapValue );
-            else
-               mSubLC.cursor( "SubregLabelContent" ).setAttribute( "ESL_Date", strMapValue, strDateFormat );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "ESL_Date", e.getReason( ), strMapValue );
-         }
-      }
-
-
-      // Calendar: DraftLabel
-      nRC = mSubLC.cursor( "SubregLabelContent" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strMapValue = request.getParameter( "DraftLabel" );
-         strDateFormat = request.getParameter( "zDateFormat" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "DraftLabel", "", strMapValue );
-            else
-               mSubLC.cursor( "SubregLabelContent" ).setAttribute( "EPA_DraftLabel", strMapValue, strDateFormat );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "DraftLabel", e.getReason( ), strMapValue );
-         }
-      }
-
-
-      // EditBox: EPA_EstablishmentNumber
+      // EditBox: EditBox2
       nRC = mSubLC.cursor( "SubregLabelContent" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "EPA_EstablishmentNumber" );
+         strMapValue = request.getParameter( "EditBox2" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "EPA_EstablishmentNumber", "", strMapValue );
+               VmlOperation.CreateMessage( task, "EditBox2", "", strMapValue );
             else
-               mSubLC.cursor( "SubregLabelContent" ).setAttribute( "EPA_EstablishmentNumber", strMapValue, "" );
+               mSubLC.cursor( "SubregLabelContent" ).setAttribute( "Description", strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "EPA_EstablishmentNumber", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "EditBox2", e.getReason( ), strMapValue );
+         }
+      }
+
+      // EditBox: EditBox3
+      nRC = mSubLC.cursor( "SubregLabelContent" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "EditBox3" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "EditBox3", "", strMapValue );
+            else
+               mSubLC.cursor( "SubregLabelContent" ).setAttribute( "Version", strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "EditBox3", e.getReason( ), strMapValue );
          }
       }
 
    }
 
-   wWebXfer = task.getViewByName( "wWebXfer" );
-   if ( VmlOperation.isValid( wWebXfer ) )
+   mSubreg = task.getViewByName( "mSubreg" );
+   if ( VmlOperation.isValid( mSubreg ) )
    {
-      // EditBox: Revision Description
-      nRC = wWebXfer.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
-      {
-         strMapValue = request.getParameter( "Revision Description" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "Revision Description", "", strMapValue );
-            else
-               wWebXfer.cursor( "Root" ).setAttribute( "AttemptRevision", strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "Revision Description", e.getReason( ), strMapValue );
-         }
-      }
+   }
 
-      // EditBox: Version
-      nRC = wWebXfer.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
-      {
-         strMapValue = request.getParameter( "Version" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "Version", "", strMapValue );
-            else
-               wWebXfer.cursor( "Root" ).setAttribute( "AttemptContentVersion", strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "Version", e.getReason( ), strMapValue );
-         }
-      }
-
+   mSubProd = task.getViewByName( "mSubProd" );
+   if ( VmlOperation.isValid( mSubProd ) )
+   {
    }
 
    if ( webMapping == true )
@@ -252,6 +197,7 @@ else
 
 if ( task == null )
 {
+   session.setAttribute( "ZeidonTaskId", null );
     strURL = response.encodeRedirectURL( "logout.jsp" );
     response.sendRedirect( strURL );
    return; // something really bad has happened!!!
@@ -284,193 +230,6 @@ if ( strActionToProcess != null )
 
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "AcceptUpdateSubregLabelContent" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCVersionData", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wSLC.AcceptUpdateSubregLabelContent" );
-      try
-      {
-         nOptRC = wSLC.AcceptUpdateSubregLabelContent( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation AcceptUpdateSubregLabelContent: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReturnToParent, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelUpdateSubregLabelContent" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCVersionData", strActionToProcess );
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wSLC.CancelUpdateSubregLabelContent" );
-      try
-      {
-         nOptRC = wSLC.CancelUpdateSubregLabelContent( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation CancelUpdateSubregLabelContent: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReturnToParent, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "CopySLC_ToNewVersion" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCVersionData", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wSLC.CopySLC_ToNewVersion" );
-      try
-      {
-         nOptRC = wSLC.CopySLC_ToNewVersion( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation CopySLC_ToNewVersion: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartModalSubwindow, "wSLC", "UpdateSubregProduct" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "FinalizeSLC" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCVersionData", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wSLC.FinalizeSLC" );
-      try
-      {
-         nOptRC = wSLC.FinalizeSLC( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation FinalizeSLC: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartModalSubwindow, "wSLC", "UpdateSubregProduct" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
    while ( bDone == false && strActionToProcess.equals( "ZEIDON_ComboBoxSubmit" ) )
    {
       bDone = true;
@@ -485,7 +244,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smSubregLabelVersionData" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smSaveAndReturnMLC" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCVersionData", strActionToProcess );
@@ -497,18 +256,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wSLC.EditSubregLabelVersionData" );
-      try
-      {
-         nOptRC = wSLC.EditSubregLabelVersionData( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation EditSubregLabelVersionData: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wSLC.SaveSLC" );
+         nOptRC = wSLC.SaveSLC( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -525,7 +274,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReplaceWindowWithModalWindow, "wSLC", "VersionData" );
+         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReturnToParent, "", "" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -533,7 +282,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smIngredients" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smSaveSLC" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCVersionData", strActionToProcess );
@@ -545,18 +294,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wSLC.EditIngredientsSect" );
-      try
-      {
-         nOptRC = wSLC.EditIngredientsSect( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation EditIngredientsSect: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wSLC.SaveSLC" );
+         nOptRC = wSLC.SaveSLC( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -573,7 +312,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReplaceWindowWithModalWindow, "wSLC", "Ingredients" );
+         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StayOnWindowWithRefresh, "", "" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -581,7 +320,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smStorageDisposal" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smCancelAndReturnSLC" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCVersionData", strActionToProcess );
@@ -593,18 +332,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wSLC.EditStorDispSect" );
-      try
-      {
-         nOptRC = wSLC.EditStorDispSect( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation EditStorDispSect: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wSLC.CancelAndReturnSLC" );
+         nOptRC = wSLC.CancelAndReturnSLC( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -621,7 +350,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReplaceWindowWithModalWindow, "wSLC", "StorageDisposal" );
+         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReturnToParent, "", "" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -629,7 +358,75 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smHumanHazard" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smDisplayVersionData" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCVersionData", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReplaceWindowWithModalWindow, "wSLC", "VersionData" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smDisplayIngredientsSect" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCVersionData", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReplaceWindowWithModalWindow, "wSLC", "Ingredients" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smDisplayStorDispSect" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCVersionData", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReplaceWindowWithModalWindow, "wSLC", "StorageDisposal" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smDisplayHumanHazardSect" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCVersionData", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReplaceWindowWithModalWindow, "wSLC", "HumanHazard" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smDisplayPrecautionarySection" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCVersionData", strActionToProcess );
@@ -641,18 +438,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wSLC.EditHumanHazardSect" );
-      try
-      {
-         nOptRC = wSLC.EditHumanHazardSect( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation EditHumanHazardSect: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wSLC.DisplayPrecautionarySection" );
+         nOptRC = wSLC.DisplayPrecautionarySection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -669,7 +456,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReplaceWindowWithModalWindow, "wSLC", "HumanHazard" );
+         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReplaceWindowWithModalWindow, "wSLC", "PrecautionarySection" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -677,7 +464,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smPrecautionary" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smDisplayFirstAidSection" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCVersionData", strActionToProcess );
@@ -689,18 +476,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wSLC.EditPrecautionarySect" );
-      try
-      {
-         nOptRC = wSLC.EditPrecautionarySect( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation EditPrecautionarySect: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wSLC.DisplayFirstAidSection" );
+         nOptRC = wSLC.DisplayFirstAidSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -717,7 +494,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReplaceWindowWithModalWindow, "wSLC", "Precautionary" );
+         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReplaceWindowWithModalWindow, "wSLC", "FirstAidSection" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -725,7 +502,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smFirstAid" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smDisplayHazardSection" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCVersionData", strActionToProcess );
@@ -737,18 +514,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wSLC.EditFirstAidSect" );
-      try
-      {
-         nOptRC = wSLC.EditFirstAidSect( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation EditFirstAidSect: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wSLC.DisplayHazardsSection" );
+         nOptRC = wSLC.DisplayHazardsSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -765,7 +532,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReplaceWindowWithModalWindow, "wSLC", "FirstAid" );
+         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReplaceWindowWithModalWindow, "wSLC", "HazardsSection" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -773,7 +540,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smHazard" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smDisplayClaimsSection" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCVersionData", strActionToProcess );
@@ -785,66 +552,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wSLC.EditHazardSect" );
-      try
-      {
-         nOptRC = wSLC.EditHazardSect( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation EditHazardSect: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReplaceWindowWithModalWindow, "wSLC", "Hazard" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smClaims" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCVersionData", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wSLC.EditClaimsSect" );
-      try
-      {
-         nOptRC = wSLC.EditClaimsSect( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation EditClaimsSect: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wSLC.DisplayClaimsSection" );
+         nOptRC = wSLC.DisplayClaimsSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -869,7 +578,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smSurfaces" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smDisplaySurfacesSection" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCVersionData", strActionToProcess );
@@ -881,18 +590,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wSLC.EditSurfacesSect" );
-      try
-      {
-         nOptRC = wSLC.EditSurfacesSect( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation EditSurfacesSect: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wSLC.DisplaySurfacesSection" );
+         nOptRC = wSLC.DisplaySurfacesSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -917,7 +616,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smAreasOfUse" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smDisplayAreasOfUseSection" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCVersionData", strActionToProcess );
@@ -929,18 +628,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wSLC.EditAreasOfUseSect" );
-      try
-      {
-         nOptRC = wSLC.EditAreasOfUseSect( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation EditAreasOfUseSect: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wSLC.DisplayAreasOfUseSection" );
+         nOptRC = wSLC.DisplayAreasOfUseSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -965,7 +654,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smApplicationTypes" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smDisplayApplicationTypesSection" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCVersionData", strActionToProcess );
@@ -977,18 +666,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wSLC.EditAppTypesSect" );
-      try
-      {
-         nOptRC = wSLC.EditAppTypesSect( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation EditAppTypesSect: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wSLC.DisplayApplicationTypesSection" );
+         nOptRC = wSLC.DisplayApplicationTypesSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -1013,7 +692,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smDirectionsForUse" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smDisplayDirectionsUseSect" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCVersionData", strActionToProcess );
@@ -1023,45 +702,14 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wSLC.EditDirectionsUseSect" );
-      try
-      {
-         nOptRC = wSLC.EditDirectionsUseSect( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation EditDirectionsUseSect: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReplaceWindowWithModalWindow, "wSLC", "DirectionsForUse" );
-      }
-
+      // Next Window
+      strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReplaceWindowWithModalWindow, "wSLC", "DirectionsForUse" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smMarketing" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smDisplayMarketingSect" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCVersionData", strActionToProcess );
@@ -1071,426 +719,8 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wSLC.EditMarketingSect" );
-      try
-      {
-         nOptRC = wSLC.EditMarketingSect( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation EditMarketingSect: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReplaceWindowWithModalWindow, "wSLC", "Marketing" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mProductManagement" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCVersionData", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wStartUp.ProductManagement" );
-      try
-      {
-         nOptRC = wStartUp.ProductManagement( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation ProductManagement: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartTopWindow, "wStartUp", "AdminListPrimaryRegistrants" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mSubregistrants" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCVersionData", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wStartUp.SubregistrantManagement" );
-      try
-      {
-         nOptRC = wStartUp.SubregistrantManagement( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation SubregistrantManagement: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartTopWindow, "wStartUp", "AdminListSubregistrants" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mTrackingNotificationCompliance" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCVersionData", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wStartUp.TrackingNotificationCompliance" );
-      try
-      {
-         nOptRC = wStartUp.TrackingNotificationCompliance( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation TrackingNotificationCompliance: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartTopWindow, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mStateRegistrations" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCVersionData", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wStartUp.StateRegistrations" );
-      try
-      {
-         nOptRC = wStartUp.StateRegistrations( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation StateRegistrations: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartTopWindow, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mMarketingFulfillment" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCVersionData", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wStartUp.MarketingFulfillment" );
-      try
-      {
-         nOptRC = wStartUp.MarketingFulfillment( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation MarketingFulfillment: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartTopWindow, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mWebDevelopment" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCVersionData", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wStartUp.WebDevelopment" );
-      try
-      {
-         nOptRC = wStartUp.WebDevelopment( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation WebDevelopment: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartTopWindow, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mAdministration" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCVersionData", strActionToProcess );
-
-      // Action Operation
-      nRC = 0;
-      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wStartUp.PrimaryRegistrantCompanySetup" );
-      try
-      {
-         nOptRC = wStartUp.PrimaryRegistrantCompanySetup( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation PrimaryRegistrantCompanySetup: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartTopWindow, "wStartUp", "AdminUpdatePrimaryRegistrant" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mLogin" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCVersionData", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wStartUp.ProcessLogin" );
-      try
-      {
-         nOptRC = wStartUp.ProcessLogin( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation ProcessLogin: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ResetTopWindow, "wStartUp", "UserLogin" );
-      }
-
+      // Next Window
+      strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReplaceWindowWithModalWindow, "wSLC", "Marketing" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -1501,7 +731,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ----------------------------------->>> " + "wSLCVersionData" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wSLCVersionData" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -1518,7 +748,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ----------------------------------->>> " + "wSLCVersionData" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ------->>> " + "wSLCVersionData" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -1582,27 +812,7 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
    session.setAttribute( "ZeidonError", null );
 else
 {
-   VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wSLC.InitSubregLabelContentForUpdate" );
-   nOptRC = wSLC.InitSubregLabelContentForUpdate( new zVIEW( vKZXMLPGO ) );
-   if ( nOptRC == 2 )
-   {
-      View vView;
-      String strMessage;
-      String strURLParameters;
-
-      vView = task.getViewByName( "wXferO" );
-      strMessage = vView.cursor( "Root" ).getStringFromAttribute( "WebReturnMessage" );
-      strURLParameters = "?CallingPage=wSLCVersionData.jsp" +
-                         "&Message=" + strMessage +
-                         "&DialogName=" + "wSLC" +
-                         "&OperationName=" + "InitSubregLabelContentForUpdate";
-      strURL = response.encodeRedirectURL( "MessageDisplay.jsp" + strURLParameters );
-      response.sendRedirect( strURL );
-      task.log().info( "Pre/Post Redirect to: " + strURL );
-      return;
-   }
 }
-
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSLC", "" );
    if ( csrRC.isSet( ) )
       strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
@@ -1630,7 +840,6 @@ else
 <%@ include file="./include/timeout.inc" %>
 <link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/validations.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
@@ -1646,22 +855,6 @@ else
 
 <jsp:include page='<%=strBannerName %>' />
 
-<!-- Main Navigation *********************** -->
-<div id="mainnavigation">
-   <ul>
-       <li id="lmProductManagement" name="lmProductManagement"><a href="#" onclick="mProductManagement()">Products</a></li>
-       <li id="lmSubregistrants" name="lmSubregistrants"><a href="#" onclick="mSubregistrants()">Subregistrants</a></li>
-       <li id="lmTrackingNotificationCompliance" name="lmTrackingNotificationCompliance"><a href="#" onclick="mTrackingNotificationCompliance()">Tracking/Notification/Compliance</a></li>
-       <li id="lmStateRegistrations" name="lmStateRegistrations"><a href="#" onclick="mStateRegistrations()">State Registrations</a></li>
-       <li id="lmMarketingFulfillment" name="lmMarketingFulfillment"><a href="#" onclick="mMarketingFulfillment()">Marketing/Fulfillment</a></li>
-       <li id="lmWebDevelopment" name="lmWebDevelopment"><a href="#" onclick="mWebDevelopment()">Web Development</a></li>
-       <li id="lmAdministration" name="lmAdministration"><a href="#" onclick="mAdministration()">Company Profile</a></li>
-       <li id="lmLogin" name="lmLogin"><a href="#" onclick="mLogin()">Login</a></li>
-       <li id="lmLogout" name="lmLogout"><a href="#" onclick="mLogout()">Logout</a></li>
-   </ul>
-</div>  <!-- end Navigation Bar -->
-
-<%@include file="./include/topmenuend.inc" %>
 <div id="maincontent">
 
 <div id="leftcontent">
@@ -1670,11 +863,41 @@ else
 <div id="sidenavigation">
    <ul>
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "ProductLabelVersionData" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New4" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#" class="sideselected"  onclick="smSubregLabelVersionData( )">Version Data</a></li>
+       <li><a href="#"  onclick="smSaveAndReturnMLC( )">Save & Return</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New6" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li><a href="#"  onclick="smSaveSLC( )">Save</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New5" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li><a href="#"  onclick="smCancelAndReturnSLC( )">Cancel & Return</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New1" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li><a href="#" class="sideselected"  onclick="smDisplayVersionData( )">Version Data</a></li>
 <%
    }
 %>
@@ -1684,7 +907,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smIngredients( )">Ingredients</a></li>
+       <li><a href="#"  onclick="smDisplayIngredientsSect( )">Ingredients</a></li>
 <%
    }
 %>
@@ -1694,7 +917,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smStorageDisposal( )">Storage and Disposal</a></li>
+       <li><a href="#"  onclick="smDisplayStorDispSect( )">Storage and Disposal</a></li>
 <%
    }
 %>
@@ -1704,7 +927,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smHumanHazard( )">Human Hazard</a></li>
+       <li><a href="#"  onclick="smDisplayHumanHazardSect( )">Human Hazard</a></li>
 <%
    }
 %>
@@ -1714,7 +937,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smPrecautionary( )">Precautionary</a></li>
+       <li><a href="#"  onclick="smDisplayPrecautionarySection( )">Precautionary</a></li>
 <%
    }
 %>
@@ -1724,17 +947,17 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smFirstAid( )">First Aid</a></li>
+       <li><a href="#"  onclick="smDisplayFirstAidSection( )">First Aid</a></li>
 <%
    }
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Hazard" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "OtherHazard" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smHazard( )">Other Hazard</a></li>
+       <li><a href="#"  onclick="smDisplayHazardSection( )">Other Hazard</a></li>
 <%
    }
 %>
@@ -1744,7 +967,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smClaims( )">Organism Claims</a></li>
+       <li><a href="#"  onclick="smDisplayClaimsSection( )">Organism Claims</a></li>
 <%
    }
 %>
@@ -1754,7 +977,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smSurfaces( )">Types of Surfaces</a></li>
+       <li><a href="#"  onclick="smDisplaySurfacesSection( )">Types of Surfaces</a></li>
 <%
    }
 %>
@@ -1764,17 +987,17 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smAreasOfUse( )">Areas of Use</a></li>
+       <li><a href="#"  onclick="smDisplayAreasOfUseSection( )">Areas of Use</a></li>
 <%
    }
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "ApplicationTypes" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "AppTypes" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smApplicationTypes( )">Application Types</a></li>
+       <li><a href="#"  onclick="smDisplayApplicationTypesSection( )">Application Types</a></li>
 <%
    }
 %>
@@ -1784,7 +1007,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smDirectionsForUse( )">Directions for Use</a></li>
+       <li><a href="#"  onclick="smDisplayDirectionsUseSect( )">Directions for Use</a></li>
 <%
    }
 %>
@@ -1794,27 +1017,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smMarketing( )">Marketing</a></li>
-<%
-   }
-%>
-
-<%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "SaveAndReturn" );
-   if ( !csrRC.isSet( ) )
-   {
-%>
-       <li><a href="#"  onclick="AcceptUpdateSubregLabelContent( )">Save and Return</a></li>
-<%
-   }
-%>
-
-<%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "CancelAndReturn" );
-   if ( !csrRC.isSet( ) )
-   {
-%>
-       <li><a href="#"  onclick="CancelUpdateSubregLabelContent( )">Cancel and Return</a></li>
+       <li><a href="#"  onclick="smDisplayMarketingSect( )">Marketing</a></li>
 <%
    }
 %>
@@ -1825,6 +1028,7 @@ else
 </div>  <!-- leftcontent -->
 
 <div id="content">
+
 <!--System Maintenance-->
 
 <%@ include file="./include/systemmaintenance.inc" %>
@@ -1838,17 +1042,10 @@ else
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
-   View lPrimReg = null;
-   View lSPLDLST = null;
    View mMasLC = null;
-   View mMasProd = null;
-   View mPrimReg = null;
-   View mSPLDef = null;
    View mSubLC = null;
-   View mSubProd = null;
    View mSubreg = null;
-   View wMLCList = null;
-   View wWebXfer = null;
+   View mSubProd = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";
@@ -1950,306 +1147,277 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
+<div style="height:6px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<% /* BreadCrumb: */ %>
+<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GBStorDispSections1:GroupBox */ %>
+
+<div id="GBStorDispSections1" name="GBStorDispSections1" class="listgroup"   style="float:left;position:relative; width:534px; height:36px;">  <!-- GBStorDispSections1 --> 
+
+<% /* OrganismClaimsStatements2:Text */ %>
+
+<label class="groupbox"  id="OrganismClaimsStatements2" name="OrganismClaimsStatements2" style="width:238px;height:16px;position:absolute;left:2px;top:12px;">Registrant Product</label>
+
+
+</div>  <!--  GBStorDispSections1 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
- <!-- This is added as a line spacer -->
-<div style="height:12px;width:100px;"></div>
-
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GBProductLabelContent:GroupBox */ %>
+<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox7:GroupBox */ %>
 
-<div id="GBProductLabelContent" name="GBProductLabelContent" class="withborder" style="width:734px;height:180px;float:left;">  <!-- GBProductLabelContent --> 
+<div id="GroupBox7" name="GroupBox7"   style="float:left;position:relative; width:534px; height:76px;">  <!-- GroupBox7 --> 
 
+<% /* PrimaryRegistrantName:3:Text */ %>
 
- <!-- This is added as a line spacer -->
-<div style="height:26px;width:100px;"></div>
+<label  id="PrimaryRegistrantName:3" name="PrimaryRegistrantName:3" style="width:158px;height:18px;position:absolute;left:16px;top:0px;">Primary Registrant:</label>
 
-<div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox2:GroupBox */ %>
-<div id="GroupBox2" name="GroupBox2" style="float:left;width:706px;" >
-
-<table cols=2 style="width:706px;"  class="grouptable">
-
-<tr>
-<td valign="top" style="width:114px;">
-<% /* ProductName::Text */ %>
-
-<span  id="ProductName:" name="ProductName:" style="width:106px;height:16px;">Product Name:</span>
-
-</td>
-<td valign="top" style="width:582px;">
-<% /* Revision Description:EditBox */ %>
-<%
-   strErrorMapValue = VmlOperation.CheckError( "Revision Description", strError );
-   if ( !StringUtils.isBlank( strErrorMapValue ) )
-   {
-      if ( StringUtils.equals( strErrorFlag, "Y" ) )
-         strErrorColor = "color:red;";
-   }
+<% /* TXName3:Text */ %>
+<% strTextDisplayValue = "";
+   mSubreg = task.getViewByName( "mSubreg" );
+   if ( VmlOperation.isValid( mSubreg ) == false )
+      task.log( ).debug( "Invalid View: " + "TXName3" );
    else
    {
-      strErrorColor = "";
-      wWebXfer = task.getViewByName( "wWebXfer" );
-      if ( VmlOperation.isValid( wWebXfer ) == false )
-         task.log( ).debug( "Invalid View: " + "Revision Description" );
-      else
+      nRC = mSubreg.cursor( "PrimaryRegistrant" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         nRC = wWebXfer.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            try
-            {
-            strErrorMapValue = wWebXfer.cursor( "Root" ).getStringFromAttribute( "AttemptRevision", "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on Revision Description: " + e.getMessage());
-               task.log().error( "*** Error on ctrl Revision Description", e );
-            }
-            if ( strErrorMapValue == null )
-               strErrorMapValue = "";
-
-            task.log( ).debug( "Root.AttemptRevision: " + strErrorMapValue );
-         }
-         else
-            task.log( ).debug( "Entity does not exist: " + "wWebXfer.Root" );
+      try
+      {
+         strTextDisplayValue = mSubreg.cursor( "PrimaryRegistrant" ).getStringFromAttribute( "dNameEPA_Number", "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on TXName3: " + e.getMessage());
+         task.log().info( "*** Error on ctrl TXName3" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
       }
    }
 %>
 
-<input name="Revision Description" id="Revision Description" style="width:582px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<label class="text14bold"  id="TXName3" name="TXName3" style="width:356px;height:16px;position:absolute;left:166px;top:0px;"><%=strTextDisplayValue%></label>
 
-</td>
-</tr>
-<tr>
-<td valign="top" style="width:114px;">
-<% /* Version::Text */ %>
+<% /* Subregistrant:3:Text */ %>
 
-<span  id="Version:" name="Version:" style="width:106px;height:16px;">Version:</span>
+<label  id="Subregistrant:3" name="Subregistrant:3" style="width:158px;height:18px;position:absolute;left:16px;top:16px;">Subregistrant:</label>
 
-</td>
-<td valign="top" style="width:582px;">
-<% /* Version:EditBox */ %>
-<%
-   strErrorMapValue = VmlOperation.CheckError( "Version", strError );
-   if ( !StringUtils.isBlank( strErrorMapValue ) )
-   {
-      if ( StringUtils.equals( strErrorFlag, "Y" ) )
-         strErrorColor = "color:red;";
-   }
+<% /* Text4:Text */ %>
+<% strTextDisplayValue = "";
+   mSubreg = task.getViewByName( "mSubreg" );
+   if ( VmlOperation.isValid( mSubreg ) == false )
+      task.log( ).debug( "Invalid View: " + "Text4" );
    else
    {
-      strErrorColor = "";
-      wWebXfer = task.getViewByName( "wWebXfer" );
-      if ( VmlOperation.isValid( wWebXfer ) == false )
-         task.log( ).debug( "Invalid View: " + "Version" );
-      else
+      nRC = mSubreg.cursor( "Subregistrant" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         nRC = wWebXfer.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            try
-            {
-            strErrorMapValue = wWebXfer.cursor( "Root" ).getStringFromAttribute( "AttemptContentVersion", "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on Version: " + e.getMessage());
-               task.log().error( "*** Error on ctrl Version", e );
-            }
-            if ( strErrorMapValue == null )
-               strErrorMapValue = "";
-
-            task.log( ).debug( "Root.AttemptContentVersion: " + strErrorMapValue );
-         }
-         else
-            task.log( ).debug( "Entity does not exist: " + "wWebXfer.Root" );
+      try
+      {
+         strTextDisplayValue = mSubreg.cursor( "Subregistrant" ).getStringFromAttribute( "dNameEPA_Number", "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on Text4: " + e.getMessage());
+         task.log().info( "*** Error on ctrl Text4" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
       }
    }
 %>
 
-<input name="Version" id="Version" style="width:582px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<label  id="Text4" name="Text4" style="width:356px;height:16px;position:absolute;left:166px;top:16px;"><%=strTextDisplayValue%></label>
 
-</td>
-</tr>
-<tr>
-<td valign="top" style="width:114px;">
-<% /* ESL_Date::Text */ %>
+<% /* Text5:Text */ %>
 
-<span  id="ESL_Date:" name="ESL_Date:" style="width:106px;height:16px;">ESL Date:</span>
+<label  id="Text5" name="Text5" style="width:158px;height:20px;position:absolute;left:16px;top:32px;">Registrant Product:</label>
 
-</td>
-<td valign="top" style="width:218px;">
-<% /* ESL_Date:Calendar */ %>
-<%
-   strErrorMapValue = VmlOperation.CheckError( "ESL_Date", strError );
-   if ( !StringUtils.isBlank( strErrorMapValue ) )
-   {
-      if ( StringUtils.equals( strErrorFlag, "Y" ) )
-         strErrorColor = "color:red;";
-   }
+<% /* Subregistrant3:Text */ %>
+<% strTextDisplayValue = "";
+   mSubProd = task.getViewByName( "mSubProd" );
+   if ( VmlOperation.isValid( mSubProd ) == false )
+      task.log( ).debug( "Invalid View: " + "Subregistrant3" );
    else
    {
-      strErrorColor = "";
-      mSubLC = task.getViewByName( "mSubLC" );
-      if ( VmlOperation.isValid( mSubLC ) == false )
-         task.log( ).debug( "Invalid View: " + "ESL_Date" );
-      else
+      nRC = mSubProd.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         nRC = mSubLC.cursor( "SubregLabelContent" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strErrorMapValue = mSubLC.cursor( "SubregLabelContent" ).getStringFromAttribute( "ESL_Date", strDateFormat );
-            if ( strErrorMapValue == null )
-               strErrorMapValue = "";
-
-            task.log( ).debug( "SubregLabelContent.ESL_Date: " + strErrorMapValue );
-         }
-         else
-            task.log( ).debug( "Entity does not exist: " + "mSubLC.SubregLabelContent" );
+      try
+      {
+         strTextDisplayValue = mSubProd.cursor( "MasterProduct" ).getStringFromAttribute( "Name", "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on Subregistrant3: " + e.getMessage());
+         task.log().info( "*** Error on ctrl Subregistrant3" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
       }
    }
 %>
 
-<span style="width:218px;height:32px;" >
-   <input name="ESL_Date" id="ESL_Date"  style="width:80px" type="text" value="<%=strErrorMapValue%>"  />
-   <img src="images/scw.gif" title="Select Date" alt="Select Date"
-        onclick="scwShow( document.getElementById( 'ESL_Date' ), this );"  />
-</span>
+<label  id="Subregistrant3" name="Subregistrant3" style="width:356px;height:16px;position:absolute;left:166px;top:32px;"><%=strTextDisplayValue%></label>
 
-</td>
-</tr>
-<tr>
-<td valign="top" style="width:114px;">
-<% /* DraftLabel::Text */ %>
+<% /* Text6:Text */ %>
 
-<span  id="DraftLabel:" name="DraftLabel:" style="width:106px;height:16px;">Draft Label:</span>
+<label  id="Text6" name="Text6" style="width:158px;height:20px;position:absolute;left:16px;top:50px;">Subreg Product:</label>
 
-</td>
-<td valign="top" style="width:218px;">
-<% /* DraftLabel:Calendar */ %>
-<%
-   strErrorMapValue = VmlOperation.CheckError( "DraftLabel", strError );
-   if ( !StringUtils.isBlank( strErrorMapValue ) )
-   {
-      if ( StringUtils.equals( strErrorFlag, "Y" ) )
-         strErrorColor = "color:red;";
-   }
+<% /* Text7:Text */ %>
+<% strTextDisplayValue = "";
+   mSubProd = task.getViewByName( "mSubProd" );
+   if ( VmlOperation.isValid( mSubProd ) == false )
+      task.log( ).debug( "Invalid View: " + "Text7" );
    else
    {
-      strErrorColor = "";
-      mSubLC = task.getViewByName( "mSubLC" );
-      if ( VmlOperation.isValid( mSubLC ) == false )
-         task.log( ).debug( "Invalid View: " + "DraftLabel" );
-      else
+      nRC = mSubProd.cursor( "SubregProduct" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         nRC = mSubLC.cursor( "SubregLabelContent" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strErrorMapValue = mSubLC.cursor( "SubregLabelContent" ).getStringFromAttribute( "EPA_DraftLabel", strDateFormat );
-            if ( strErrorMapValue == null )
-               strErrorMapValue = "";
-
-            task.log( ).debug( "SubregLabelContent.EPA_DraftLabel: " + strErrorMapValue );
-         }
-         else
-            task.log( ).debug( "Entity does not exist: " + "mSubLC.SubregLabelContent" );
+      try
+      {
+         strTextDisplayValue = mSubProd.cursor( "SubregProduct" ).getStringFromAttribute( "Name", "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on Text7: " + e.getMessage());
+         task.log().info( "*** Error on ctrl Text7" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
       }
    }
 %>
 
-<span style="width:218px;height:32px;" >
-   <input name="DraftLabel" id="DraftLabel"  style="width:80px" type="text" value="<%=strErrorMapValue%>"  />
-   <img src="images/scw.gif" title="Select Date" alt="Select Date"
-        onclick="scwShow( document.getElementById( 'DraftLabel' ), this );"  />
-</span>
-
-</td>
-</tr>
-<tr>
-<td valign="top" style="width:114px;">
-<% /* Est. No.::Text */ %>
-
-<span  id="Est. No.:" name="Est. No.:" style="width:106px;height:16px;">Est. No.:</span>
-
-</td>
-<td valign="top" style="width:218px;">
-<% /* EPA_EstablishmentNumber:EditBox */ %>
-<%
-   strErrorMapValue = VmlOperation.CheckError( "EPA_EstablishmentNumber", strError );
-   if ( !StringUtils.isBlank( strErrorMapValue ) )
-   {
-      if ( StringUtils.equals( strErrorFlag, "Y" ) )
-         strErrorColor = "color:red;";
-   }
-   else
-   {
-      strErrorColor = "";
-      mSubLC = task.getViewByName( "mSubLC" );
-      if ( VmlOperation.isValid( mSubLC ) == false )
-         task.log( ).debug( "Invalid View: " + "EPA_EstablishmentNumber" );
-      else
-      {
-         nRC = mSubLC.cursor( "SubregLabelContent" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            try
-            {
-            strErrorMapValue = mSubLC.cursor( "SubregLabelContent" ).getStringFromAttribute( "EPA_EstablishmentNumber", "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on EPA_EstablishmentNumber: " + e.getMessage());
-               task.log().error( "*** Error on ctrl EPA_EstablishmentNumber", e );
-            }
-            if ( strErrorMapValue == null )
-               strErrorMapValue = "";
-
-            task.log( ).debug( "SubregLabelContent.EPA_EstablishmentNumber: " + strErrorMapValue );
-         }
-         else
-            task.log( ).debug( "Entity does not exist: " + "mSubLC.SubregLabelContent" );
-      }
-   }
-%>
-
-<input name="EPA_EstablishmentNumber" id="EPA_EstablishmentNumber" style="width:218px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
-
-</td>
-</tr>
-</table>
-
-</div>  <!-- GroupBox2 --> 
-
-</div>  <!-- End of a new line -->
+<label  id="Text7" name="Text7" style="width:356px;height:18px;position:absolute;left:166px;top:50px;"><%=strTextDisplayValue%></label>
 
 
-</div>  <!--  GBProductLabelContent --> 
+</div>  <!--  GroupBox7 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
- <!-- This is added as a line spacer -->
-<div style="height:12px;width:100px;"></div>
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox1:GroupBox */ %>
+
+<div id="GroupBox1" name="GroupBox1" class="listgroup"   style="float:left;position:relative; width:534px; height:26px;">  <!-- GroupBox1 --> 
+
+<% /* Text1:Text */ %>
+
+<label class="groupbox"  id="Text1" name="Text1" style="width:238px;height:16px;position:absolute;left:2px;top:10px;">Subreg Label Content</label>
+
+
+</div>  <!--  GroupBox1 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox3:GroupBox */ %>
+<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox8:GroupBox */ %>
 
-<div id="GroupBox3" name="GroupBox3" style="width:18px;height:44px;float:left;">  <!-- GroupBox3 --> 
+<div id="GroupBox8" name="GroupBox8"   style="float:left;position:relative; width:534px; height:52px;">  <!-- GroupBox8 --> 
+
+<% /* Text8:Text */ %>
+
+<label  id="Text8" name="Text8" style="width:130px;height:18px;position:absolute;left:16px;top:4px;">SLC Name:</label>
+
+<% /* EditBox2:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "EditBox2", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mSubLC = task.getViewByName( "mSubLC" );
+      if ( VmlOperation.isValid( mSubLC ) == false )
+         task.log( ).debug( "Invalid View: " + "EditBox2" );
+      else
+      {
+         nRC = mSubLC.cursor( "SubregLabelContent" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+            strErrorMapValue = mSubLC.cursor( "SubregLabelContent" ).getStringFromAttribute( "Description", "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on EditBox2: " + e.getMessage());
+               task.log().error( "*** Error on ctrl EditBox2", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "SubregLabelContent.Description: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist: " + "mSubLC.SubregLabelContent" );
+      }
+   }
+%>
+
+<input name="EditBox2" id="EditBox2" style="width:338px;position:absolute;left:166px;top:4px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
+<% /* Text9:Text */ %>
+
+<label  id="Text9" name="Text9" style="width:130px;height:18px;position:absolute;left:16px;top:22px;">SLC Version:</label>
+
+<% /* EditBox3:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "EditBox3", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mSubLC = task.getViewByName( "mSubLC" );
+      if ( VmlOperation.isValid( mSubLC ) == false )
+         task.log( ).debug( "Invalid View: " + "EditBox3" );
+      else
+      {
+         nRC = mSubLC.cursor( "SubregLabelContent" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+            strErrorMapValue = mSubLC.cursor( "SubregLabelContent" ).getStringFromAttribute( "Version", "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on EditBox3: " + e.getMessage());
+               task.log().error( "*** Error on ctrl EditBox3", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "SubregLabelContent.Version: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist: " + "mSubLC.SubregLabelContent" );
+      }
+   }
+%>
+
+<input name="EditBox3" id="EditBox3" style="width:338px;position:absolute;left:166px;top:22px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 
-</div>  <!--  GroupBox3 --> 
+</div>  <!--  GroupBox8 --> 
 </div>  <!-- End of a new line -->
 
 

@@ -741,7 +741,7 @@ table.tableStyle1 tr{
 	}
 
 .budget tfoot td{
-   /*border-top: 1px solid #ccc;*/border: 1px solid #ccc;z
+   /*border-top: 1px solid #ccc;*/border: 1px solid #ccc;
 	}
 
 .budget tbody td{
@@ -1477,7 +1477,7 @@ img {
 tablemargin{
    width: 80%;
    margin-top: 1em;
-   margin-right;
+   margin-right: 1em;
 	}
 
 underlinetext a{

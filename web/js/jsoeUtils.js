@@ -1,39 +1,3 @@
-/*
- * Collapsible JSON Formatter - Formatter and colorer of raw JSON code
- * 
- * jQuery Json Formatter plugin v0.1.3
- * 
- * Usage
- * -----
- * 
- * $('#target').jsonFormat('#source'); // or
- * $('#target').jsonFormat('#source', {options override defaults}); // see jf.config
- * #target {
- *     font-family: monospace;
- *     white-space: pre; // or pre-wrap // All fails without this one!
- * }
- * 
- * License
- * -------
- * 
- * Copyright (c) 2008-2009 Vladimir Bodurov
- * http://quickjsonformatter.codeplex.com/
- * 
- * Copyright (c) 2012 Redsandro - Made jQuery plugin
- * http://www.redsandro.com/
- * 
- * The MIT License (MIT)
- * 
- * Permission is hereby granted, free of charge, to any person obtaining 
- * a copy of this software and associated documentation files (the "Software"), 
- * to deal in the Software without restriction, including without limitation 
- * the rights to use, copy, modify, merge, publish, distribute, sublicense, 
- * and/or sell copies of the Software, and to permit persons to whom the 
- * Software is furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included 
- * in all copies or substantial portions of the Software.
- */
 "use strict";
 // we need tabs as spaces and not CSS magin-left in order to retain format when copying and pasting the code
 window.SINGLE_TAB = "  ";
@@ -100,7 +64,8 @@ function deepEqual( a, b ) {
 }
 
 function jsonStringToJsonObject( jsonString ) {
-   var jsonObject = jQuery.parseJSON( "[" + jsonString + "]" );  // this is faster and more secure than eval
+   // var jsonObject = eval( "[" + jsonString + "]" );
+   var jsonObject = jQuery.parseJSON( "[" + jsonString + "]" );  // this is faster and more secure than eval (above)
    return jsonObject;
 }
 
@@ -538,3 +503,106 @@ function addZeidonAttributeToElement( $element, attribute, value ) {
    }
 }
 
+function mapUiDataToElementData( $current_element ) {
+   if ( $current_element ) {
+   // displayElementData( "mapUiDataToElementData (before)", $current_element );
+      var entityAttr;
+      var n;
+      var entity;
+      var key;
+      var element_id = $current_element.attr( "id" );
+      if ( element_id !== "label" && element_id !== "page" ) {
+         element_id = "block";
+      }
+      $("input.zeidon, select.zeidon").each( function() {
+         entityAttr = $(this).data( "zmap" );
+         if ( entityAttr ) {
+            n = entityAttr.indexOf( ".z_" );
+            entity = entityAttr.substring( 0, n );
+            key = entityAttr.substring( n + 1 );
+            if ( entity === element_id ) {
+               $current_element.data( key, this.type === "checkbox" ? (this.checked === true ? "Y" : "") : $(this).val() );
+            }
+         }
+      });
+   // displayElementData( "mapUiDataToElementData (after)", $current_element );
+   }
+}
+
+function mapElementDataToUiData( $current_element ) {
+   if ( $current_element ) {
+   // displayElementData( "mapElementDataToUiData", $current_element );
+      var entityAttr;
+      var n;
+      var entity;
+      var key;
+      var value;
+      var element_id = $current_element.attr( "id" );
+      if ( element_id !== "label" && element_id !== "page" ) {
+         element_id = "block";
+      }
+      $("input.zeidon, select.zeidon").each( function() {
+         entityAttr = $(this).data( "zmap" );
+         if ( entityAttr ) {
+            n = entityAttr.indexOf( ".z_" );
+            entity = entityAttr.substring( 0, n );
+            key = entityAttr.substring( n + 1 );
+            if ( entity === element_id ) {
+               value = $current_element.data( key );
+               if ( ! value ) {
+                  value = "";
+               }
+               if ( $(this).hasClass( "colorwell" ) ) {
+                  if ( value.indexOf( '#' ) !== 0 ) {
+                     value = "#ffffff";
+                  }
+                  var colorPicker = $.farbtastic( "#" + $(this).attr( "id" ) );
+                  colorPicker.setColor( value );
+               }
+               this.type === "checkbox" ? (value === "Y" ? this.checked = true : this.checked = false) : $(this).val( value );
+            }
+         }
+      });
+   } else {
+      $("input.zeidon, select.zeidon").each( function() {
+         this.type === "checkbox" ? this.checked = false : $(this).val( "" );
+      });
+   }
+}
+
+$("input.zeidon, select.zeidon")
+   .blur( function () {
+      console.log( "updated zeidon block attributes" );
+   // var jsonObj = null;
+      var entityAttr = $(this).data( "zmap" );
+      if ( entityAttr ) {
+         var n = entityAttr.indexOf( ".z_" );
+         var entity = entityAttr.substring( 0, n );
+         var key = entityAttr.substring( n + 1 );
+         var value = $(this).is( ":checkbox" ) ? $(this)[0].checked ? "Y" : "N" : $(this).val();
+         if ( entity === "block" ) {
+            if ( g_$current_block ) {
+               g_updatedLLD = true;
+               console.log( "updated block attribute: " + key + "  value: " + value );
+               g_$current_block.data( key, value );
+            }
+         // jsonObj = dataToJSON( $current_block );
+         } else if ( entity === "page" ) {
+            g_updatedLLD = true;
+            console.log( "updated page attribute: " + key + "  value: " + value );
+            $("#page").data( key, value );
+         // jsonObj = dataToJSON( $("#page") );
+         } else if ( entity === "label" ) {
+            g_updatedLLD = true;
+            console.log( "updated label attribute: " + key + "  value: " + value );
+            $("#label").data( key, value );
+         }
+         /*
+         var jsonOut = "jsonOut: \n";
+         jQuery.each( jsonObj, function(i, val) {
+            jsonOut += "  ==> " + i + " - " + val + "\n";
+         });
+         alert( "jsonOut: " + jsonOut );
+         */
+      }
+   });

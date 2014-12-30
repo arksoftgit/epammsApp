@@ -185,6 +185,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var keyRole = document.wMLCAreasOfUse.zKeyRole.value;
    document.wMLCAreasOfUse.zError.value = "";
    document.wMLCAreasOfUse.zOpenFile.value = "";
 
@@ -222,7 +223,7 @@ function CheckAllInGrid(id, CheckBoxName)
    }
 }
 
-function AcceptAreasOfUseSect( )
+function ADD_AreasOfUseStatement( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -232,12 +233,12 @@ function AcceptAreasOfUseSect( )
    {
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUse.zAction.value = "AcceptAreasOfUseSect";
+      document.wMLCAreasOfUse.zAction.value = "ADD_AreasOfUseStatement";
       document.wMLCAreasOfUse.submit( );
    }
 }
 
-function AddNewAreasOfUseStmt( )
+function GOTO_DeleteSelectedEntries( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -247,135 +248,12 @@ function AddNewAreasOfUseStmt( )
    {
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUse.zAction.value = "AddNewAreasOfUseStmt";
+      document.wMLCAreasOfUse.zAction.value = "GOTO_DeleteSelectedEntries";
       document.wMLCAreasOfUse.submit( );
    }
 }
 
-function BulkAreasOfUseListMaintenance( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCAreasOfUse.zAction.value = "BulkAreasOfUseListMaintenance";
-      document.wMLCAreasOfUse.submit( );
-   }
-}
-
-function CancelAreasOfUseSect( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCAreasOfUse.zAction.value = "CancelAreasOfUseSect";
-      document.wMLCAreasOfUse.submit( );
-   }
-}
-
-function ClearSelectedAreasOfUse( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      // Javascript code entered by user.
-
-      var theForm;
-      var type;
-      var name;
-      var str;
-      var j;
-      var k;
-
-      for ( j = 0; j < document.forms.length; j++ )
-      {
-         theForm = document.forms[ j ];
-         for ( k = 0; k < theForm.length; k++ )
-         {
-            type = theForm.elements[ k ].type;
-
-            if ( type == "checkbox" )
-            {
-               name = theForm.elements[ k ].name;
-               str = name.substr( 0, 9 );
-               if ( str.match("GS_Select") )
-               {
-                  theForm.elements[ k ].checked = false;
-               }
-            }
-         }
-      }
-
-      return;
-
-
-      // END of Javascript code entered by user.
-
-   }
-}
-
-function DeleteSelectedAreasOfUse( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCAreasOfUse.zAction.value = "DeleteSelectedAreasOfUse";
-      document.wMLCAreasOfUse.submit( );
-   }
-}
-
-function InitAreasOfUseSect( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      // Javascript code entered by user.
-
-   var thisLi;
-
-// if ( keyRole == "P" || keyRole == "N" ) // If we are here, we have to be a Primary.
-   // We knock out Login and Template as options.
-   thisLi = document.getElementById( "lmLogin" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   thisLi = document.getElementById( "lmStateRegistrations" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   // Cannot go to product management if already there.
-   thisLi = document.getElementById( "lmProductManagement" );
-   thisLi.disabled = true;
-
-      // END of Javascript code entered by user.
-
-   }
-}
-
-function MoveAreasOfUseStmtDown( strTagEntityKey )
+function GOTO_UpdateAreasOfUseStatement( strTagEntityKey )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -389,118 +267,52 @@ function MoveAreasOfUseStmtDown( strTagEntityKey )
       document.wMLCAreasOfUse.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUse.zAction.value = "MoveAreasOfUseStmtDown";
+      document.wMLCAreasOfUse.zAction.value = "GOTO_UpdateAreasOfUseStatement";
       document.wMLCAreasOfUse.submit( );
    }
 }
 
-function MoveAreasOfUseStmtUp( strTagEntityKey )
+function smSaveAndReturnMLC( )
 {
 
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
+      // This is for indicating whether the user hit the window close box.
+      isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCAreasOfUse.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUse.zAction.value = "MoveAreasOfUseStmtUp";
+      document.wMLCAreasOfUse.zAction.value = "smSaveAndReturnMLC";
       document.wMLCAreasOfUse.submit( );
    }
 }
 
-function SelectAllAreasOfUse( )
+function smSaveMLC( )
 {
 
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
+      // This is for indicating whether the user hit the window close box.
+      isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
-      // Javascript code entered by user.
-
-      var theForm;
-      var type;
-      var name;
-      var str;
-      var j;
-      var k;
-
-      for ( j = 0; j < document.forms.length; j++ )
-      {
-         theForm = document.forms[ j ];
-         for ( k = 0; k < theForm.length; k++ )
-         {
-            type = theForm.elements[ k ].type;
-
-            if ( type == "checkbox" )
-            {
-               name = theForm.elements[ k ].name;
-               str = name.substr( 0, 9 );
-               if ( str.match("GS_Select") )
-               {
-                  theForm.elements[ k ].checked = true;
-               }
-            }
-         }
-      }
-
-      return;
-
-
-      // END of Javascript code entered by user.
-
-   }
-}
-
-function SelectAreasOfUseStmtForDelete( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCAreasOfUse.zTableRowSelect.value = strEntityKey;
-      // Javascript code entered by user.
-
-   var gridEName = "GEName::" + strEntityKey;
-   var tempField = document.getElementById( gridEName  );
-   var r = confirm( "Delete Area of Use Statement: " + tempField.innerText + "?" );
-   if ( r != true )
-      return;
-
-      // END of Javascript code entered by user.
-
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUse.zAction.value = "SelectAreasOfUseStmtForDelete";
+      document.wMLCAreasOfUse.zAction.value = "smSaveMLC";
       document.wMLCAreasOfUse.submit( );
    }
 }
 
-function SelectAreasOfUseStmtForUpdate( strTagEntityKey )
+function smCancelAndReturnMLC( )
 {
 
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
+      // This is for indicating whether the user hit the window close box.
+      isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCAreasOfUse.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUse.zAction.value = "SelectAreasOfUseStmtForUpdate";
+      document.wMLCAreasOfUse.zAction.value = "smCancelAndReturnMLC";
       document.wMLCAreasOfUse.submit( );
    }
 }
@@ -565,7 +377,7 @@ function smEditHumanHazardSect( )
    }
 }
 
-function smEditPrecautionarySect( )
+function smEditPrecautionarySection( )
 {
 
       // This is for indicating whether the user hit the window close box.
@@ -575,7 +387,7 @@ function smEditPrecautionarySect( )
    {
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUse.zAction.value = "smEditPrecautionarySect";
+      document.wMLCAreasOfUse.zAction.value = "smEditPrecautionarySection";
       document.wMLCAreasOfUse.submit( );
    }
 }
@@ -595,7 +407,7 @@ function smEditFirstAidSect( )
    }
 }
 
-function smEditHazardSect( )
+function smEditHazardSection( )
 {
 
       // This is for indicating whether the user hit the window close box.
@@ -605,12 +417,12 @@ function smEditHazardSect( )
    {
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUse.zAction.value = "smEditHazardSect";
+      document.wMLCAreasOfUse.zAction.value = "smEditHazardSection";
       document.wMLCAreasOfUse.submit( );
    }
 }
 
-function smEditClaimsSect( )
+function smGOTO_DilutionEntries( )
 {
 
       // This is for indicating whether the user hit the window close box.
@@ -620,12 +432,12 @@ function smEditClaimsSect( )
    {
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUse.zAction.value = "smEditClaimsSect";
+      document.wMLCAreasOfUse.zAction.value = "smGOTO_DilutionEntries";
       document.wMLCAreasOfUse.submit( );
    }
 }
 
-function smEditSurfacesSect( )
+function smEditClaimsSection( )
 {
 
       // This is for indicating whether the user hit the window close box.
@@ -635,12 +447,12 @@ function smEditSurfacesSect( )
    {
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUse.zAction.value = "smEditSurfacesSect";
+      document.wMLCAreasOfUse.zAction.value = "smEditClaimsSection";
       document.wMLCAreasOfUse.submit( );
    }
 }
 
-function smEditAreasOfUseSect( )
+function smEditSurfacesSection( )
 {
 
       // This is for indicating whether the user hit the window close box.
@@ -650,12 +462,12 @@ function smEditAreasOfUseSect( )
    {
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUse.zAction.value = "smEditAreasOfUseSect";
+      document.wMLCAreasOfUse.zAction.value = "smEditSurfacesSection";
       document.wMLCAreasOfUse.submit( );
    }
 }
 
-function smEditAppTypesSect( )
+function smEditAreasOfUseSection( )
 {
 
       // This is for indicating whether the user hit the window close box.
@@ -665,7 +477,37 @@ function smEditAppTypesSect( )
    {
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUse.zAction.value = "smEditAppTypesSect";
+      document.wMLCAreasOfUse.zAction.value = "smEditAreasOfUseSection";
+      document.wMLCAreasOfUse.submit( );
+   }
+}
+
+function smEditApplicationTypesSection( )
+{
+
+      // This is for indicating whether the user hit the window close box.
+      isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCAreasOfUse.zAction.value = "smEditApplicationTypesSection";
+      document.wMLCAreasOfUse.submit( );
+   }
+}
+
+function smGOTO_ClaimsFootnote( )
+{
+
+      // This is for indicating whether the user hit the window close box.
+      isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCAreasOfUse.zAction.value = "smGOTO_ClaimsFootnote";
       document.wMLCAreasOfUse.submit( );
    }
 }
@@ -696,267 +538,6 @@ function smEditMarketingSect( )
       _DisableFormElements( true );
 
       document.wMLCAreasOfUse.zAction.value = "smEditMarketingSect";
-      document.wMLCAreasOfUse.submit( );
-   }
-}
-
-function smGOTO_ListUsageEntries( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCAreasOfUse.zAction.value = "smGOTO_ListUsageEntries";
-      document.wMLCAreasOfUse.submit( );
-   }
-}
-
-function smGOTO_CompositeEntries( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCAreasOfUse.zAction.value = "smGOTO_CompositeEntries";
-      document.wMLCAreasOfUse.submit( );
-   }
-}
-
-function smGOTO_CompositeWO_Usage( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCAreasOfUse.zAction.value = "smGOTO_CompositeWO_Usage";
-      document.wMLCAreasOfUse.submit( );
-   }
-}
-
-function mProductManagement( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmProductManagement" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wMLCAreasOfUse.zAction.value = "mProductManagement";
-      document.wMLCAreasOfUse.submit( );
-   }
-}
-
-function mSubregistrants( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmSubregistrants" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wMLCAreasOfUse.zAction.value = "mSubregistrants";
-      document.wMLCAreasOfUse.submit( );
-   }
-}
-
-function mTrackingNotificationCompliance( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmTrackingNotificationCompliance" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wMLCAreasOfUse.zAction.value = "mTrackingNotificationCompliance";
-      document.wMLCAreasOfUse.submit( );
-   }
-}
-
-function mStateRegistrations( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmStateRegistrations" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wMLCAreasOfUse.zAction.value = "mStateRegistrations";
-      document.wMLCAreasOfUse.submit( );
-   }
-}
-
-function mMarketingFulfillment( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmMarketingFulfillment" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wMLCAreasOfUse.zAction.value = "mMarketingFulfillment";
-      document.wMLCAreasOfUse.submit( );
-   }
-}
-
-function mWebDevelopment( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmWebDevelopment" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wMLCAreasOfUse.zAction.value = "mWebDevelopment";
-      document.wMLCAreasOfUse.submit( );
-   }
-}
-
-function mAdministration( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmAdministration" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wMLCAreasOfUse.zAction.value = "mAdministration";
-      document.wMLCAreasOfUse.submit( );
-   }
-}
-
-function mLogin( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmLogin" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wMLCAreasOfUse.zAction.value = "mLogin";
-      document.wMLCAreasOfUse.submit( );
-   }
-}
-
-function mLogout( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmLogout" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wMLCAreasOfUse.zAction.value = "_OnUnload";
       document.wMLCAreasOfUse.submit( );
    }
 }
