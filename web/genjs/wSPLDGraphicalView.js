@@ -238,7 +238,7 @@ function GOTO_UpdateBlockComponent()
    }
 }
 
-function CancelAndReturn( )
+function ReturnUpdateLLD( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -248,7 +248,7 @@ function CancelAndReturn( )
    {
       _DisableFormElements( true );
 
-      document.wSPLDGraphicalView.zAction.value = "CancelAndReturn";
+      document.wSPLDGraphicalView.zAction.value = "ReturnUpdateLLD";
       document.wSPLDGraphicalView.submit( );
    }
 }
@@ -411,21 +411,6 @@ function GOTO_UpdatePanelEntry( strTagEntityKey )
       _DisableFormElements( true );
 
       document.wSPLDGraphicalView.zAction.value = "GOTO_UpdatePanelEntry";
-      document.wSPLDGraphicalView.submit( );
-   }
-}
-
-function SaveAndReturn( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) === false )
-   {
-      _DisableFormElements( true );
-      saveLabel();
-      document.wSPLDGraphicalView.zAction.value = "SaveAndReturn";
       document.wSPLDGraphicalView.submit( );
    }
 }

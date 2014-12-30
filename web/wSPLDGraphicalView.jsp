@@ -225,93 +225,18 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelAndReturn" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "ReturnUpdateLLD" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDGraphicalView", strActionToProcess );
 
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDGraphicalView.jsp", "wSPLD.CancelSPLD" );
-      try
-      {
-      // nOptRC = wSPLD.CancelSPLD( new zVIEW( vKZXMLPGO ) ); // nothing to do ... all done in .js ... really nothing there.
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation CancelSPLD: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSPLD.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_ReturnToParent, "", "" );
-      }
+      // Next Window
+      strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_ReturnToParent, "", "" );
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
    }
-
-
-while ( bDone == false && StringUtils.equals( strActionToProcess, "SaveAndReturn" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDGraphicalView", strActionToProcess );
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDGraphicalView.jsp", "wSPLD.SaveSPLD" );
-      try
-      {
-      // nOptRC = wSPLD.SaveSPLD( new zVIEW( vKZXMLPGO ) ); // nothing to do ... all done in .js
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation CancelSPLD: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSPLD.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_ReturnToParent, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
 
    while ( bDone == false && StringUtils.equals( strActionToProcess, "GENERATE_SPLD_Label" ) )
    {
@@ -1117,8 +1042,7 @@ function CheckAllInGrid(id, CheckBoxName)
                   <label for="zZoomSpinner">Zoom:</label>
                   <input type="text" id="zZoomSpinner" value="1.0" style="width:20px;"/>
                </span>
-               <button id="CancelAndReturn" class="zalign">Cancel and Return</button>
-               <button id="SaveAndReturn" class="zalign">Save and Return</button>
+               <button id="ReturnUpdateLLD" class="zalign">Return</button>
             </div> <!-- ztoolbar -->
             <img src="./images/epamms.jpg" width="64" height="25" alt="ePamms" style="margin:5px; float:right; border-style:double;">
             &nbsp;&nbsp;

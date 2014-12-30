@@ -623,6 +623,13 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                }
                mSPLDefBlock.setName( "mSPLDefBlock", Level.TASK );
                mSPLDefBlock.resetSubobjectTop();
+               View mSPLDefPanel = epamms.getViewByName( "mSPLDefPanel" );;
+               if ( mSPLDefPanel == null ) {
+                  mSPLDefPanel = mSPLDefBlock.newView( );
+                  mSPLDefPanel.setName( "mSPLDefPanel", Level.TASK );
+               } else {
+                  mSPLDefPanel.resetSubobjectTop();
+               }
                String viewPath = request.getParameter( "viewPath" );
                logger.debug( "Setting view path: " + viewPath );
                setPathCursorPosition( mSPLDefBlock, viewPath, 0, 0 );
@@ -643,6 +650,8 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
          // jsonLabel = request.getParameter( "jsonLabel" );
             try {
                applyJsonLabelToView( vLLD, jsonPost, "", -2, null );  // OIs, SPLD_LLD, depth == 0 for LLD_Page
+               logger.debug( "Saved JSON to OI" );
+               vLLD.logObjectInstance();
                vLLD.commit();
             } catch( ZeidonException ze ) {
                logger.debug( "Error processing Json Label: " + ze.getMessage() );

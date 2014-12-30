@@ -1437,12 +1437,8 @@ $(function() {
       return myWindow;
    }
 
-   $("#SaveAndReturn").click( function() {
-      SaveAndReturn( );
-   });
-
-   $("#CancelAndReturn").click( function() {
-      CancelAndReturn( );
+   $("#ReturnUpdateLLD").click( function() {
+      ReturnUpdateLLD();
    });
 
    var $ZoomSpinner = $("#zZoomSpinner").spinner();
@@ -2327,9 +2323,9 @@ public class FileServer {
 
                // Now actually display the LLD in the designer.
                RenderWysiwygLabelFromZeidonJson( jsonObj, false, false );
-               if ( g_scale && g_scale !== 1 ) {
+            // if ( g_scale && g_scale !== 1 ) {
                   resizeImg();
-               }
+            // }
             } catch(e) {
                $id("zFormattedJsonLabel").innerHTML = jsonZeidon;
                alert( "JSON is not well formatted:\n" + e.message );
@@ -2873,10 +2869,11 @@ public class FileServer {
    $("#zaccordion").accordion( "option", "active", active );
 
    var g_scale = parseFloat( localStorage.getItem( "epamms_graphic_spinstop" ) );
-   if ( g_scale && g_scale !== 1 ) {
-      var spinner = $( "#zZoomSpinner" ).spinner();
-      spinner.spinner( "value", g_scale );
+   if ( ! g_scale ) {
+      g_scale = 1;
    }
+   var spinner = $( "#zZoomSpinner" ).spinner();
+   spinner.spinner( "value", g_scale );
 
 /**
 var canvas = $('#canvasback')[0];
