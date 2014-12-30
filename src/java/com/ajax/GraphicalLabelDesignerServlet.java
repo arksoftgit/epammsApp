@@ -383,11 +383,11 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                            ei = ec.createEntity( CursorPosition.NEXT );
                         }
                      } else {
-                        if ( ID.compareTo( "626" ) == 0 ) {
-                           logger.debug( "Processing Entity: " + entity + "  ID: " + ID + "  Depth: " + depth );
-                        } else {
-                           logger.debug( "Processing Entity: " + entity + "  ID: " + ID + "  Depth: " + depth );
-                        }
+                     // if ( ID.compareTo( "626" ) == 0 ) {
+                     //    logger.debug( "Processing Entity: " + entity + "  ID: " + ID + "  Depth: " + depth );
+                     // } else {
+                     //    logger.debug( "Processing Entity: " + entity + "  ID: " + ID + "  Depth: " + depth );
+                     // }
                         CursorResult cr = ec.setFirst( "ID", ID );
                         if ( cr == CursorResult.UNCHANGED ) {
                            logger.debug( "Entity NOT FOUND: " + entity + "  ID: " + ID + "  Depth: " + depth );
@@ -406,7 +406,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                         if ( entity.compareTo( "LLD_SubBlock" ) == 0 ) {
                            EntityCursor cursor = vLLD.getCursor( entity );
                            if ( cursor.isNull() == false && cursor.setToSubobject() ) {
-                              logger.debug( "SetToSubobject Entity: " + entity + "  Depth: " + depth );
+                           // logger.debug( "SetToSubobject Entity: " + entity + "  Depth: " + depth );
                               recurse = true;
                            // entity = "LLD_Block"; entity has to stay as LLD_Block for ei.getEntityDef().getName() check later on!!!
                               cursor = vLLD.getCursor( "LLD_Block" );
@@ -416,21 +416,21 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                      }
                   // if ( ei != null ) {
                   //    logger.debug( "Entity Instance Before: " + entity + "  ID: " + ID + "  Depth: " + depth );
-                  //    ei.displayEntity( false );
+                  //    ei.logEntity( false );
                   // }
                      applyJsonLabelToView( vLLD, (JSONObject)obj, entity, depth + 1, ei );
                   // if ( ei != null ) {
                   //    logger.debug( "Entity Instance After: " + entity + "  ID: " + ID + "  Depth: " + depth );
-                  //    ei.displayEntity( false );
+                  //    ei.logEntity( false );
                   // }
                   } catch ( ZeidonException ze ) {
                     logger.debug( "Failed to process entity: " + entity + "  Depth: " + depth + "   ID: " + ID );
                   } finally {
                      if ( recurse ) {
-                     // recurse = false;
-                        logger.debug( "ResetFromSubobject Entity: " + entity + "  Depth: " + depth + "   ID: " + ID );
+                     // recurse = false; // not used
+                     // logger.debug( "ResetFromSubobject Entity: " + entity + "  Depth: " + depth + "   ID: " + ID );
                         vLLD.resetSubobject();
-                     // entity = "LLD_SubBlock";
+                     // entity = "LLD_SubBlock"; not needed since left alone after cursor.setToSubobject()
                      }
                   }
                }
@@ -447,26 +447,36 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
    private String applyJsonLabelToView( View vLLD, JSONObject jsonObject, String entity, int depth, EntityInstance ei ) {
       Set<String> keys = jsonObject.keySet();
       String indent = StringUtils.repeat( " ", (depth + 2) * 3 );
+// start debug code
+      boolean log = false;
+      if ( ei != null ) {
+         Object o = jsonObject.get( "ID" );
+         if ( o instanceof String ) {
+            String ID = (String)o;
+            if ( ID.compareTo( "626" ) == 0 ) {
+               log = true;
+               logger.debug( "Before Setting entity: " + entity + "  ID: " + ID );
+               ei.logEntity( false );
+            }
+         }
+      }
+// end debug code
       for ( String key : keys ) {
-         logger.debug( "OTag: " + entity + "   Key: " + key + "   Depth: " + depth );
+      // logger.debug( "OTag: " + entity + "   Key: " + key + "   Depth: " + depth );
          Object obj = jsonObject.get( key );
          if ( obj instanceof String ) {
             String value = (String)obj;
-            logger.debug( indent + "E.Attr: " + entity + "." + key + " : " + value );
+         // logger.debug( indent + "E.Attr: " + entity + "." + key + " : " + value );
             if ( ei != null ) {
                if ( entity.equals( ei.getEntityDef().getName() ) ) {
                   if ( key.compareTo( "ID" ) != 0 ) {
                      String oldValue = ei.getStringFromAttribute( key );
                      if ( oldValue.equals( value ) == false ) {
-                        if ( key.contains( "Color" ) ) {
-                        // logger.debug( "Color: " + key + ":" + value );
-                        }
+                     // if ( key.contains( "Color" ) ) {
+                     //    logger.debug( "Color: " + key + ":" + value );
+                     // }
                         try {
-                           logger.debug( "Before Setting entity: " + entity + "  key: " + key + "   value: '" + value + "'   from: '" + oldValue + "'" );
-                           ei.logEntity( false );
                            ei.setAttribute( key, value );
-                           logger.debug( "After Setting entity: " + entity + "  key: " + key + "   value: " + value );
-                           ei.logEntity( false );
                         } catch ( ZeidonException ze ) {
                            if ( key.startsWith( "FK_ID_" ) || key.startsWith( "FKID" ) || key.startsWith( "AUTOSEQ" ) ) {
                               String v = ei.getStringFromAttribute( key );
@@ -499,9 +509,15 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
          // logger.debug( indent + "MetaOI: " + key + " Skipped!" );
          // applyJsonLabelToView( vLLD, (JSONObject)obj, key, depth + 1, null );
          } else {
-            logger.debug( indent + "OKey: " + key + "  Unknown type: " + obj.getClass().getName() );
+            logger.debug( indent + "Key: " + key + "  Unknown type: " + obj.getClass().getName() );
          }
       }
+// start debug code
+      if ( log ) {
+         logger.debug( "After Setting entity: " + entity + "  ID: " + "626" );
+         ei.logEntity( false );
+      }
+// end debug code
       return "";
    }
 

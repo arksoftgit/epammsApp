@@ -1,0 +1,225 @@
+z1000-Zeidon    WMLCLIST TZZOLODO 08/16/11   22:58:49 1.0a2    
+eLOD       1
+aZKey      1182246
+aName      wMLCList
+aDesc      Work Master Label Content
+
+eLOD_EntityParent 2
+aName      wMLCList
+aIndentName wMLCList
+aIndentLvl 0
+aZKey      1182247
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aWork      Y
+aParentDeleteBehave D
+
+eLOD_EntityChild 3
+aName      SectionStatement
+aIndentName    SectionStatement
+aIndentLvl 3
+aZKey      1182255
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aWork      Y
+aParentDeleteBehave D
+aDupEntityInstance N
+aDupRelationshipInstance N
+
+eLOD_AttributeRec 4
+aZKey      1182256
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 5
+aName      SectionTitle
+aZKey      1182257
+
+eDomainRec 6
+aZKey      68568081
+aName      Text
+aDomainType E
+aDataType  S
+aMaxStringLth 254
+aDesc      Any Character String
+aContextRestriction N
+
+eLOD_AttributeRec 4
+aZKey      1182272
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 5
+aName      Text
+aZKey      1182273
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      1182260
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 5
+aName      Entity
+aZKey      1182261
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      1182258
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 5
+aName      Key
+aZKey      1182259
+aDesc      Entity Key
+
+eDomainRec 6
+aZKey      68568083
+aName      Integer
+aDomainType E
+aDataType  L
+aMaxStringLth 4
+aDecimalFormat 0
+aDesc      Integer numbers from -lots to +lots
+aContextRestriction N
+
+eLOD_AttributeRec 3
+aZKey      1182248
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 4
+aName      Name
+aZKey      1182249
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      1182251
+aWork      Y
+aUpdate    Y
+aSeqOrder  A
+
+eER_AttributeRec 4
+aName      Version
+aZKey      1182252
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      1182253
+aWork      Y
+aUpdate    Y
+aSeqOrder  A
+
+eER_AttributeRec 4
+aName      RevisionDate
+aZKey      1182254
+aLth       9
+aDesc      This is the date that any change is made to the artwork. The date format is the same as the ESL date:  REV112203 (This means Revision date: Novem ber 22, 2003).  The Revision date must be updated each and every time a change is made to the artwork!
+
+eDomainRec 5
+
+eLOD_Entity 2
+awkSelectedAttributeForDragSort 2
+
+eLOD_Attribute 3
+awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 2
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Entity 2
+awkSelectedAttributeForDragSort 3
+
+eLOD_Attribute 3
+awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 2
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 4
+
+eER_Attribute 4
+
+eDomain    5
+
+i8         5
+i11        5
+i17        5
+i20        5
+i23        5
+i24        1
+i25        15
+i26        16
+i27        5
+i28        18
+i29        19
+i30        5
+i31        21
+i32        22
+i33        5
+i34        2
+i35        3
+i36        4
+i37        5
+i38        6
+i39        7
+i40        5
+i41        9
+i42        10
+i43        5
+i44        12
+i45        13
+i46        14

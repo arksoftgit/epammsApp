@@ -1,0 +1,1148 @@
+z1000-Zeidon    DOMAINT  TZZOLODO 08/16/11   22:57:39 1.0a2    
+eLOD       1
+aZKey      68568671
+aName      DOMAINT
+aDesc      Zeidon Dynamic Table Domain Object
+aDLL_Name  LODOPSYS
+
+eLOD_EntityParent 2
+aName      Domain
+aIndentName Domain
+aIndentLvl 0
+aZKey      68568766
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aWork      N
+aParentDeleteBehave D
+aDupEntityInstance N
+aDupRelationshipInstance N
+aDesc      One instance exists for each Dynamic Domain Table.
+
+eLOD_EntityChild 3
+aName      DomainValue
+aIndentName    DomainValue
+aIndentLvl 3
+aZKey      68568767
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aWork      N
+aParentDeleteBehave D
+aDupEntityInstance N
+aDupRelationshipInstance N
+aRelLinkIndicator L
+aDesc      One instance exists for each Dynamic Domain Table.
+aAcceptConstraint Y
+
+eLOD_AttributeRec 4
+aZKey      68568768
+aUpdate    Y
+aSeqOrder  A
+
+eER_AttributeRec 5
+aName      InternalIntegerValue
+aZKey      68568470
+
+eDomainRec 6
+aZKey      68568083
+aName      Integer
+aDomainType E
+aDataType  L
+aMaxStringLth 4
+aDecimalFormat 0
+aDesc      Integer numbers from -lots to +lots
+aContextRestriction N
+
+eLOD_AttributeRec 4
+aZKey      68568769
+aUpdate    Y
+aSeqOrder  A
+
+eER_AttributeRec 5
+aName      InternalStringValue
+aZKey      68568471
+
+eDomainRec 6
+aZKey      68568049
+aName      ShortDescription
+aDomainType E
+aDataType  S
+aMaxStringLth 128
+aContextRestriction N
+
+eLOD_AttributeRec 4
+aZKey      68568770
+aUpdate    Y
+aSeqOrder  A
+
+eER_AttributeRec 5
+aName      ExternalDescription
+aZKey      68568473
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      68568771
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 5
+aName      WorkDecimal
+aZKey      68568772
+
+eDomainRec 6
+aZKey      68568227
+aName      Decimal5
+aDomainType E
+aDataType  M
+aDecimalFormat 5
+aDesc      Characters '0-9' precision ( 0.00000 )  Max 15 digits
+aContextRestriction N
+
+eLOD_AttributeRec 4
+aZKey      68568773
+aUpdate    Y
+
+eER_AttributeRec 5
+aName      SystemRequired
+aZKey      68568472
+
+eDomainRec 6
+aZKey      68567482
+aName      Y/N
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aDesc      Yes or No
+aContextRestriction N
+
+eER_EntityRec 4
+aName      DomainValue
+aZKey      68568469
+aPurpose   A
+aDesc      Individual table values
+aER_DiagramPosX 123
+aER_DiagramPosY 1
+
+eER_RelLinkRec 4
+aName      has
+aAutoSeq   Y
+aHangingForeignKeyEntity N
+aZKey      68568484
+aCardMin   0
+aCardMax   m
+aTE_NoForeignKeyPrefix N
+
+eER_RelTypeRec 5
+aZKey      68568483
+aFact      Added automatically.
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
+aER_DiagramE1PosX 116
+aER_DiagramE1PosY 3
+aER_DiagramE2PosX 122
+aER_DiagramE2PosY 3
+
+eLOD_AttributeRec 3
+aZKey      68568775
+
+eER_AttributeRec 4
+aName      Name
+aZKey      68568466
+aNotNull   Y
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      68568776
+aUpdate    Y
+
+eER_AttributeRec 4
+aName      ID
+aZKey      68568465
+aNotNull   Y
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      68568777
+aUpdate    Y
+
+eER_AttributeRec 4
+aName      SystemRequired
+aZKey      68568468
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      68568778
+
+eER_AttributeRec 4
+aName      Desc
+aZKey      68568467
+
+eDomainRec 5
+aZKey      68568081
+aName      Text
+aDomainType E
+aDataType  S
+aMaxStringLth 254
+aDesc      Any Character String
+aContextRestriction N
+
+eER_EntityRec 3
+aName      Domain
+aZKey      68568464
+aPurpose   F
+aDesc      Domain table for dynamic Table Domains
+aER_DiagramPosX 107
+aER_DiagramPosY 1
+
+eLOD_Entity 2
+
+eLOD_Attribute 3
+awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 2
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 4
+
+eER_Attribute 4
+
+eDomain    5
+
+eER_Entity 3
+
+eLOD_Entity 2
+
+eLOD_Attribute 3
+awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 2
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 4
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 5
+
+eER_Attribute 4
+
+eDomain    5
+
+eER_Entity 3
+
+eER_RelLink 3
+
+eER_RelType 4
+
+eSourceFile 2
+aZKey      68568672
+aName      DOMAINT
+aExtension VML
+aLanguageType V
+
+eOperation 3
+aName      ActivateDomainList
+aZKey      68568673
+aType      T
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc View To Instance
+aDataType  V
+aPFlag     Y
+aUFlag     N
+aZKey      68568674
+
+eParameter 4
+aShortDesc ViewToWindow
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      68568675
+
+eOperation 3
+aName      PreloadSystemDomainsR
+aZKey      68568676
+aType      T
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc View To Instance
+aDataType  V
+aPFlag     Y
+aUFlag     N
+aZKey      68568677
+
+eParameter 4
+aShortDesc AnyReferenceView
+aDataType  V
+aZKey      68568678
+
+eParameter 4
+aShortDesc InstallApp
+aDataType  S
+aZKey      68568679
+
+eOperation 3
+aName      PreloadSystemDomainsO
+aZKey      68568680
+aType      T
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc View To Instance
+aDataType  V
+aPFlag     Y
+aUFlag     N
+aZKey      68568681
+
+eParameter 4
+aShortDesc AnyReferenceView
+aDataType  V
+aZKey      68568682
+
+eParameter 4
+aShortDesc InstallApp
+aDataType  S
+aZKey      68568683
+
+eOperation 3
+aName      LoadActivityStatus
+aZKey      68568684
+aType      L
+aClass     0
+
+eParameter 4
+aShortDesc DOMAINLST
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      68568685
+
+eOperation 3
+aName      LoadActivityType
+aZKey      68568686
+aType      L
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc DOMAINTLST
+aDataType  V
+aZKey      68568687
+
+eOperation 3
+aName      LoadDenomination
+aZKey      68568688
+aType      L
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc DOMAINTLST
+aDataType  V
+aZKey      68568689
+
+eOperation 3
+aName      LoadChurchRelatedRole
+aZKey      68568690
+aType      L
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc DOMAINTLST
+aDataType  V
+aZKey      68568691
+
+eOperation 3
+aName      Load
+aZKey      68568692
+aType      L
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc DOMAINTLST
+aDataType  V
+aZKey      68568693
+
+eOperation 3
+aName      LoadCommPlanType
+aZKey      68568694
+aType      L
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc DOMAINTLST
+aDataType  V
+aZKey      68568695
+
+eOperation 3
+aName      LoadContactActType
+aZKey      68568696
+aType      L
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc DOMAINTLST
+aDataType  V
+aZKey      68568697
+
+eOperation 3
+aName      LoadDegreeEarned
+aZKey      68568698
+aType      L
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc DOMAINTLST
+aDataType  V
+aZKey      68568699
+
+eOperation 3
+aName      LoadDistrictCode
+aZKey      68568700
+aType      L
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc DOMAINTLST
+aDataType  V
+aZKey      68568701
+
+eOperation 3
+aName      LoadEventCode
+aZKey      68568702
+aType      L
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc DOMAINTLST
+aDataType  V
+aZKey      68568703
+
+eOperation 3
+aName      LoadExamType
+aZKey      68568704
+aType      L
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc DOMAINTLST
+aDataType  V
+aZKey      68568705
+
+eOperation 3
+aName      LoadFacultyStatus
+aZKey      68568706
+aType      L
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc DOMAINTLST
+aDataType  V
+aZKey      68568707
+
+eOperation 3
+aName      LoadFacultyType
+aZKey      68568708
+aType      L
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc DOMAINTLST
+aDataType  V
+aZKey      68568709
+
+eOperation 3
+aName      LoadFundRestrictions
+aZKey      68568710
+aType      L
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc DOMAINTLST
+aDataType  V
+aZKey      68568711
+
+eOperation 3
+aName      LoadIndustry
+aZKey      68568712
+aType      L
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc DOMAINTLST
+aDataType  V
+aZKey      68568713
+
+eOperation 3
+aName      LoadInfluencerType
+aZKey      68568714
+aType      L
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc DOMAINTLST
+aDataType  V
+aZKey      68568715
+
+eOperation 3
+aName      LoadInterestType
+aZKey      68568716
+aType      L
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc DOMAINTLST
+aDataType  V
+aZKey      68568717
+
+eOperation 3
+aName      LoadOrgRelatedRole
+aZKey      68568718
+aType      L
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc DOMAINTLST
+aDataType  V
+aZKey      68568719
+
+eOperation 3
+aName      LoadParentGuardianRole
+aZKey      68568720
+aType      L
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc DOMAINTLST
+aDataType  V
+aZKey      68568721
+
+eOperation 3
+aName      LoadProspectStatus
+aZKey      68568722
+aType      L
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc DOMAINTLST
+aDataType  V
+aZKey      68568723
+
+eOperation 3
+aName      LoadProspectType
+aZKey      68568724
+aType      L
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc DOMAINTLST
+aDataType  V
+aZKey      68568725
+
+eOperation 3
+aName      LoadSchoolCategory
+aZKey      68568726
+aType      L
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc DOMAINTLST
+aDataType  V
+aZKey      68568727
+
+eOperation 3
+aName      LoadSchoolRelatedRole
+aZKey      68568728
+aType      L
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc DOMAINTLST
+aDataType  V
+aZKey      68568729
+
+eOperation 3
+aName      LoadStaffStatus
+aZKey      68568730
+aType      L
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc DOMAINTLST
+aDataType  V
+aZKey      68568731
+
+eOperation 3
+aName      LoadStaffType
+aZKey      68568732
+aType      L
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc DOMAINTLST
+aDataType  V
+aZKey      68568733
+
+eOperation 3
+aName      LoadCountry
+aZKey      68568734
+aType      L
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc DOMAINTLST
+aDataType  V
+aZKey      68568735
+
+eOperation 3
+aName      PreloadSystemDomains
+aZKey      68568736
+aType      T
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc View To Instance
+aDataType  V
+aZKey      68568737
+
+eParameter 4
+aShortDesc AnyRefView
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      68568738
+
+eParameter 4
+aShortDesc InstallApp
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      68568739
+
+eOperation 3
+aName      fnLocalBuildQual_0
+aZKey      10000
+aType      L
+aReturnDataType N
+aClass     1
+
+eOperation 3
+aName      fnLocalBuildQual_1
+aZKey      10001
+aType      L
+aReturnDataType N
+aClass     1
+
+eOperation 3
+aName      fnLocalBuildQual_2
+aZKey      10002
+aType      L
+aReturnDataType N
+aClass     1
+
+eOperation 3
+aName      fnLocalBuildQual_3
+aZKey      10003
+aType      L
+aReturnDataType N
+aClass     1
+
+eOperation 3
+aName      fnLocalBuildQual_4
+aZKey      10004
+aType      L
+aReturnDataType N
+aClass     1
+
+eOperation 3
+aName      fnLocalBuildQual_5
+aZKey      10005
+aType      L
+aReturnDataType N
+aClass     1
+
+eOperation 3
+aName      fnLocalBuildQual_6
+aZKey      10006
+aType      L
+aReturnDataType N
+aClass     1
+
+eOperation 3
+aName      fnLocalBuildQual_7
+aZKey      10007
+aType      L
+aReturnDataType N
+aClass     1
+
+eOperation 3
+aName      fnLocalBuildQual_8
+aZKey      10008
+aType      L
+aReturnDataType N
+aClass     1
+
+eOperation 3
+aName      fnLocalBuildQual_9
+aZKey      10009
+aType      L
+aReturnDataType N
+aClass     1
+
+eOperation 3
+aName      fnLocalBuildQual_10
+aZKey      10010
+aType      L
+aReturnDataType N
+aClass     1
+
+eOperation 3
+aName      fnLocalBuildQual_11
+aZKey      10011
+aType      L
+aReturnDataType N
+aClass     1
+
+eOperation 3
+aName      fnLocalBuildQual_12
+aZKey      10012
+aType      L
+aReturnDataType N
+aClass     1
+
+eOperation 3
+aName      fnLocalBuildQual_13
+aZKey      10013
+aType      L
+aReturnDataType N
+aClass     1
+
+eOperation 3
+aName      fnLocalBuildQual_14
+aZKey      10014
+aType      L
+aReturnDataType N
+aClass     1
+
+eOperation 3
+aName      fnLocalBuildQual_15
+aZKey      10015
+aType      L
+aReturnDataType N
+aClass     1
+
+eOperation 3
+aName      fnLocalBuildQual_16
+aZKey      10016
+aType      L
+aReturnDataType N
+aClass     1
+
+eOperation 3
+aName      fnLocalBuildQual_17
+aZKey      10017
+aType      L
+aReturnDataType N
+aClass     1
+
+eOperation 3
+aName      fnLocalBuildQual_18
+aZKey      10018
+aType      L
+aReturnDataType N
+aClass     1
+
+eOperation 3
+aName      fnLocalBuildQual_19
+aZKey      10019
+aType      L
+aReturnDataType N
+aClass     1
+
+eOperation 3
+aName      fnLocalBuildQual_20
+aZKey      10020
+aType      L
+aReturnDataType N
+aClass     1
+
+eOperation 3
+aName      fnLocalBuildQual_21
+aZKey      10021
+aType      L
+aReturnDataType N
+aClass     1
+
+eOperation 3
+aName      fnLocalBuildQual_22
+aZKey      10022
+aType      L
+aReturnDataType N
+aClass     1
+
+eOperation 3
+aName      fnLocalBuildQual_23
+aZKey      10023
+aType      L
+aReturnDataType N
+aClass     1
+
+eOperation 3
+aName      fnLocalBuildQual_24
+aZKey      10024
+aType      L
+aReturnDataType N
+aClass     1
+
+eOperation 3
+aName      fnLocalBuildQual_25
+aZKey      10025
+aType      L
+aReturnDataType N
+aClass     1
+
+ePOD       2
+aNAME      DOMAINT
+aZKey      1157824
+aTE_SourceZKey 4121658
+
+eTE_DB_Environ 3
+aName      ePamms
+aZKey      68568367
+aDesc      ePamms Application
+aType      P
+
+eTE_DBMS_Source 4
+aName      ePammsA
+aZKey      1156756
+aDesc      ePamms access
+aParadigm  R
+aDBMS      MS Access via ODBC
+aGenerateExecutable kzhsqlab
+aExecutable kzhsqloa
+aGenKeyExecutable kzhgenky
+aDisplayOwner Y
+aDisplayDBMS_ID N
+
+eTE_DBMS_Source 4
+aName      ePammsM
+aZKey      4121658
+aDesc      MySQL ePamms database
+aParadigm  R
+aDBMS      MySQL 5.1 via ODBC
+aGenerateExecutable kzhsqlmb
+aExecutable kzhsqloa
+aGenKeyExecutable kzhgenky
+aDisplayOwner Y
+aDisplayDBMS_ID N
+aDBH_Data  376
+TZDBHODO ********************************************************************************************************************************z1000-Zeidon    ZTF_12C4_TZDBHODO 05/07/10   14:07:31 1.0a2    
+eODBC      1
+aTimestampPrecision 3
+aTimestampAsString N
+aBlobsLast N
+aDropTables Y
+aAddTableNameToFK_Override Y
+aGenCreateIdxs Y
+aGenDropIdxs N
+aGenCreateTables Y
+
+
+
+eOperationList 2
+
+eOperSourceFile 3
+
+eOperationList 2
+
+eOperSourceFile 3
+
+eOperationList 2
+
+eOperSourceFile 3
+
+eOperationList 2
+
+eOperSourceFile 3
+
+eOperationList 2
+
+eOperSourceFile 3
+
+eOperationList 2
+
+eOperSourceFile 3
+
+eOperationList 2
+
+eOperSourceFile 3
+
+eOperationList 2
+
+eOperSourceFile 3
+
+eOperationList 2
+
+eOperSourceFile 3
+
+eOperationList 2
+
+eOperSourceFile 3
+
+eOperationList 2
+
+eOperSourceFile 3
+
+eOperationList 2
+
+eOperSourceFile 3
+
+eOperationList 2
+
+eOperSourceFile 3
+
+eOperationList 2
+
+eOperSourceFile 3
+
+eOperationList 2
+
+eOperSourceFile 3
+
+eOperationList 2
+
+eOperSourceFile 3
+
+eOperationList 2
+
+eOperSourceFile 3
+
+eOperationList 2
+
+eOperSourceFile 3
+
+eOperationList 2
+
+eOperSourceFile 3
+
+eOperationList 2
+
+eOperSourceFile 3
+
+eOperationList 2
+
+eOperSourceFile 3
+
+eOperationList 2
+
+eOperSourceFile 3
+
+eOperationList 2
+
+eOperSourceFile 3
+
+eOperationList 2
+
+eOperSourceFile 3
+
+eOperationList 2
+
+eOperSourceFile 3
+
+eOperationList 2
+
+eOperSourceFile 3
+
+eOperationList 2
+
+eOperSourceFile 3
+
+eOperationList 2
+
+eOperSourceFile 3
+
+eOperationList 2
+
+eOperSourceFile 3
+
+eOperationList 2
+
+eOperSourceFile 3
+
+i11        8
+i23        8
+i26        5
+i29        17
+i34        1
+i35        21
+i36        22
+i37        8
+i38        24
+i39        25
+i40        5
+i41        27
+i42        28
+i43        17
+i44        30
+i45        31
+i46        32
+i47        33
+i48        2
+i49        3
+i50        4
+i51        5
+i52        6
+i53        7
+i54        8
+i55        9
+i56        10
+i57        8
+i58        12
+i59        13
+i60        14
+i61        15
+i62        16
+i63        17
+i64        18
+i65        19
+i66        20
+i165       68
+i166       67
+i167       87
+i168       67
+i169       79
+i170       67
+i171       81
+i172       67
+i173       85
+i174       67
+i175       89
+i176       67
+i177       91
+i178       67
+i179       129
+i180       67
+i181       93
+i182       67
+i183       83
+i184       67
+i185       95
+i186       67
+i187       97
+i188       67
+i189       99
+i190       67
+i191       101
+i192       67
+i193       103
+i194       67
+i195       105
+i196       67
+i197       107
+i198       67
+i199       109
+i200       67
+i201       111
+i202       67
+i203       113
+i204       67
+i205       115
+i206       67
+i207       117
+i208       67
+i209       119
+i210       67
+i211       121
+i212       67
+i213       123
+i214       67
+i215       125
+i216       67
+i217       127
+i218       67
+i219       131
+i220       67
+i221       75
+i222       67
+i223       71
+i224       67

@@ -1,0 +1,35 @@
+#include <kzoegdef.h>
+
+#if defined (I370) || defined (TB_AIX)
+extern char * szlApplicationLogicError;
+extern char * szlDataValidationError;
+
+extern zPCHAR lpNullP;
+extern zLONG lNullInteger;
+extern zDECIMAL dNullDecimal;
+
+extern char szNullS[8];
+
+#else
+mGLOBAL_DECLARE( char, *szlApplicationLogicError, "Application Logic Error" );
+mGLOBAL_DECLARE( char, *szlDataValidationError, "Data Validation Error" );
+
+mGLOBAL_DECLARE( zPCHAR, lpNullP, 0 );
+mGLOBAL_DECLARE( zLONG, lNullInteger, -2147483647 - 1 );  /* to avoid warnings*/
+
+// DGC 1998/02/12
+// Taken out--do we need dNullDecimal?
+//mGLOBAL_DECLARE( zDECIMAL, dNullDecimal, -99999999999999.9 );
+
+zEXTERN char      szNullS[ 8 ]
+#ifdef zGLOBAL_DATA
+      =  "\0\0\0\0\0\0\0";
+#else
+      ;
+#endif
+
+#endif
+
+mGLOBAL_DECLARE( char, *szlDecimalFraction, "DecimalFraction" );
+mGLOBAL_DECLARE( char, *szlDecimalInteger, "DecimalInteger" );
+mGLOBAL_DECLARE( char, *szlDecimalIntegerRounded, "DecimalIntegerRounded" );

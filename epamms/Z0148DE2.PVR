@@ -1,0 +1,12 @@
+z1000-Zeidon    Z0148DE2 TZWDVORO 04/14/08   10:39:30 1.0a2    
+eViewObjRef 1
+aZKey      1347042
+aName      mSPLDef
+aDesc      VOR automatically built from LOD Dialog
+
+eLOD       2
+aZKey      69082112
+aName      mSPLDef
+aDesc      Subregistrant Physical Label Maintenance
+aDLL_Name  Template
+

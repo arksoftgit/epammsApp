@@ -1,0 +1,579 @@
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: CancelAndReturnSLC
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+CancelAndReturnSLC( VIEW ViewToWindow )
+
+   VIEW mSubLC   REGISTERED AS mSubLC
+
+   // Drop current SLC.
+   DropObjectInstance( mSubLC )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: SaveSLC
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+SaveSLC( VIEW ViewToWindow )
+
+   VIEW mSubLC REGISTERED AS mSubLC
+   
+   COMMIT mSubLC
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: DisplaySurfacesSection
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+DisplaySurfacesSection( VIEW ViewToWindow )
+
+   VIEW mSubLC REGISTERED AS mSubLC
+   
+   // Position on Claims Usage Type.
+   SET CURSOR FIRST mSubLC.S_UsageType WHERE mSubLC.S_UsageType.UsageType = "S" 
+   IF RESULT < zCURSOR_SET
+      CREATE ENTITY mSubLC.S_UsageType 
+      mSubLC.S_UsageType.UsageType = "S" 
+   END
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: DisplayPrecautionarySection
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+DisplayPrecautionarySection( VIEW ViewToWindow )
+
+   VIEW mSubLC REGISTERED AS mSubLC
+   
+   // Position on "Precautionary" General Statement.
+   SET CURSOR FIRST mSubLC.S_GeneralSection WHERE mSubLC.S_GeneralSection.SectionType = "P"
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: DisplayHazardsSection
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+DisplayHazardsSection( VIEW ViewToWindow )
+
+   VIEW mSubLC REGISTERED AS mSubLC
+   
+   // Position on "Hazards" General Statement.
+   SET CURSOR FIRST mSubLC.S_GeneralSection WHERE mSubLC.S_GeneralSection.SectionType = "E"
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: DisplayFirstAidSection
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+DisplayFirstAidSection( VIEW ViewToWindow )
+
+   VIEW mSubLC REGISTERED AS mSubLC
+   
+   // Position on "First Aid" General Statement.
+   SET CURSOR FIRST mSubLC.S_GeneralSection WHERE mSubLC.S_GeneralSection.SectionType = "F"
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: DisplayClaimsSection
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+DisplayClaimsSection( VIEW ViewToWindow )
+
+   VIEW mSubLC REGISTERED AS mSubLC
+   
+   // Position on Claims Usage Type.
+   SET CURSOR FIRST mSubLC.S_UsageType WHERE mSubLC.S_UsageType.UsageType = "C" 
+   IF RESULT < zCURSOR_SET
+      CREATE ENTITY mSubLC.S_UsageType 
+      mSubLC.S_UsageType.UsageType = "C" 
+   END
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: DisplayAreasOfUseSection
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+DisplayAreasOfUseSection( VIEW ViewToWindow )
+
+   VIEW mSubLC REGISTERED AS mSubLC
+   
+   // Position on Claims Usage Type.
+   SET CURSOR FIRST mSubLC.S_UsageType WHERE mSubLC.S_UsageType.UsageType = "U" 
+   IF RESULT < zCURSOR_SET
+      CREATE ENTITY mSubLC.S_UsageType 
+      mSubLC.S_UsageType.UsageType = "U" 
+   END
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: DisplayApplicationTypesSection
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+DisplayApplicationTypesSection( VIEW ViewToWindow )
+
+   VIEW mSubLC REGISTERED AS mSubLC
+   
+   // Position on Claims Usage Type.
+   SET CURSOR FIRST mSubLC.S_UsageType WHERE mSubLC.S_UsageType.UsageType = "T" 
+   IF RESULT < zCURSOR_SET
+      CREATE ENTITY mSubLC.S_UsageType 
+      mSubLC.S_UsageType.UsageType = "T" 
+   END
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: SelectMLC_UsageEntries
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+SelectMLC_UsageEntries( VIEW ViewToWindow )
+
+   VIEW mSubLC REGISTERED AS mSubLC
+   VIEW mMasLC REGISTERED AS mMasLC
+   
+   // Include each selected Usage Source entry in the Target subobject, S_Usage.
+   FOR EACH mMasLC.M_Usage 
+      IF mMasLC.M_Usage.wSelected = "Y"
+         SET CURSOR FIRST mSubLC.S_Usage WHERE mSubLC.S_Usage.ID = mMasLC.M_Usage.ID 
+         IF RESULT < zCURSOR_SET
+            CREATE ENTITY mSubLC.S_Usage 
+            SetMatchingAttributesByName( mSubLC, "S_Usage", mMasLC, "M_Usage", zSET_NULL ) 
+            mSubLC.S_Usage.wSelected = ""
+            INCLUDE mSubLC.M_Usage FROM mMasLC.M_Usage 
+         END 
+         mMasLC.M_Usage.wSelected = ""
+      END
+   END
+   OrderEntityForView( mSubLC, "S_Usage", "dDisplayUsageName A" )
+   SET CURSOR FIRST mSubLC.S_Usage  
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: RemoveSLC_UsageEntries
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+RemoveSLC_UsageEntries( VIEW ViewToWindow )
+
+   VIEW mSubLC REGISTERED AS mSubLC
+   
+   // Remove each selected S_Usage entry.
+   FOR EACH mSubLC.S_Usage 
+      IF mSubLC.S_Usage.wSelected = "Y"
+         DELETE ENTITY mSubLC.S_Usage NONE 
+      END
+   END
+   SET CURSOR FIRST mSubLC.S_Usage 
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_SelectClaimsUsageEntries
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_SelectClaimsUsageEntries( VIEW ViewToWindow )
+
+   VIEW mSubLC REGISTERED AS mSubLC
+   VIEW mMasLC REGISTERED AS mMasLC
+   
+   // Give Error Message if MLC doesn't have Claims Usage Types.
+   SET CURSOR FIRST mMasLC.M_UsageType WHERE mMasLC.M_UsageType.UsageType = "C"
+   IF RESULT < zCURSOR_SET
+      MessageSend( ViewToWindow, "", "Select MLC Claims Entries",
+                   "The Master Product does not have any Claims entries.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END 
+   
+   // Position on SLC and MLC Claims Usage Type.
+   SET CURSOR FIRST mSubLC.S_UsageType WHERE mSubLC.S_UsageType.UsageType = "C"
+   IF RESULT < zCURSOR_SET
+      CREATE ENTITY mSubLC.S_UsageType 
+      mSubLC.S_UsageType.UsageType = "C"
+   END
+   CreateTemporalSubobjectVersion( mSubLC, "S_UsageType" )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_SelectApplsUsageEntries
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_SelectApplsUsageEntries( VIEW ViewToWindow )
+
+   VIEW mSubLC REGISTERED AS mSubLC
+   VIEW mMasLC REGISTERED AS mMasLC
+   
+   // Give Error Message if MLC doesn't have Claims Usage Types.
+   SET CURSOR FIRST mMasLC.M_UsageType WHERE mMasLC.M_UsageType.UsageType = "T"
+   IF RESULT < zCURSOR_SET
+      MessageSend( ViewToWindow, "", "Select MLC Claims Entries",
+                   "The Master Product does not have any Claims entries.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      RETURN 2
+   END 
+   
+   // Position on SLC and MLC Claims Usage Type.
+   SET CURSOR FIRST mSubLC.S_UsageType WHERE mSubLC.S_UsageType.UsageType = "T"
+   IF RESULT < zCURSOR_SET
+      CREATE ENTITY mSubLC.S_UsageType 
+      mSubLC.S_UsageType.UsageType = "T"
+   END
+   CreateTemporalSubobjectVersion( mSubLC, "S_UsageType" )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_SelectSurfacesUsageEntries
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_SelectSurfacesUsageEntries( VIEW ViewToWindow )
+
+   VIEW mSubLC REGISTERED AS mSubLC
+   VIEW mMasLC REGISTERED AS mMasLC
+   
+   // Give Error Message if MLC doesn't have Claims Usage Types.
+   SET CURSOR FIRST mMasLC.M_UsageType WHERE mMasLC.M_UsageType.UsageType = "S"
+   IF RESULT < zCURSOR_SET
+      MessageSend( ViewToWindow, "", "Select MLC Claims Entries",
+                   "The Master Product does not have any Claims entries.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      RETURN 2
+   END 
+   
+   // Position on SLC and MLC Claims Usage Type.
+   SET CURSOR FIRST mSubLC.S_UsageType WHERE mSubLC.S_UsageType.UsageType = "S"
+   IF RESULT < zCURSOR_SET
+      CREATE ENTITY mSubLC.S_UsageType 
+      mSubLC.S_UsageType.UsageType = "S"
+   END
+   CreateTemporalSubobjectVersion( mSubLC, "S_UsageType" )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_SelectAreasUsageEntries
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_SelectAreasUsageEntries( VIEW ViewToWindow )
+
+   VIEW mSubLC REGISTERED AS mSubLC
+   VIEW mMasLC REGISTERED AS mMasLC
+   
+   // Give Error Message if MLC doesn't have Claims Usage Types.
+   SET CURSOR FIRST mMasLC.M_UsageType WHERE mMasLC.M_UsageType.UsageType = "U"
+   IF RESULT < zCURSOR_SET
+      MessageSend( ViewToWindow, "", "Select MLC Claims Entries",
+                   "The Master Product does not have any Claims entries.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      RETURN 2
+   END 
+   
+   // Position on SLC and MLC Claims Usage Type.
+   SET CURSOR FIRST mSubLC.S_UsageType WHERE mSubLC.S_UsageType.UsageType = "U"
+   IF RESULT < zCURSOR_SET
+      CREATE ENTITY mSubLC.S_UsageType 
+      mSubLC.S_UsageType.UsageType = "U"
+   END
+   CreateTemporalSubobjectVersion( mSubLC, "S_UsageType" )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_SelectRemoveDUEntries
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_SelectRemoveDUEntries( VIEW ViewToWindow )
+
+   VIEW mSubLC REGISTERED AS mSubLC
+   VIEW mMasLC  REGISTERED AS mMasLC
+   
+   // Position on corresponding DirectionsForUseStatement entity in MLC to get list of potential Usage entries.
+   SET CURSOR FIRST mMasLC.M_DirectionsForUseStatement 
+              WHERE mMasLC.M_DirectionsForUseStatement.ID = mSubLC.M_DirectionsForUseStatement.ID 
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: SelectDirsForUseUsageEntries
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+SelectDirsForUseUsageEntries( VIEW ViewToWindow )
+
+   VIEW mSubLC REGISTERED AS mSubLC
+   
+   // Include each selected Usage Source entry in the Target subobject.
+   FOR EACH mSubLC.S_SelectableDirsForUseUsage 
+      IF mSubLC.S_SelectableDirsForUseUsage.wSelected = "Y"
+         SET CURSOR FIRST mSubLC.S_DirectionsUsage WITHIN mSubLC.S_DirectionsForUseStatement 
+                    WHERE mSubLC.S_DirectionsUsage.ID = mSubLC.S_SelectableDirsForUseUsage.ID 
+         IF RESULT < zCURSOR_SET
+            CREATE ENTITY mSubLC.S_DirectionsUsageOrdering 
+            INCLUDE mSubLC.S_DirectionsUsage FROM mSubLC.S_SelectableDirsForUseUsage 
+         END 
+         mSubLC.S_SelectableDirsForUseUsage.wSelected = ""
+      END
+   END
+   SET CURSOR FIRST mSubLC.S_DirectionsUsageOrdering 
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: RemoveSLC_UsageEntries
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+RemoveDirsForUseUsageEntries( VIEW ViewToWindow )
+
+   VIEW mSubLC REGISTERED AS mSubLC
+   
+   // Remove each selected Usage entry.
+   FOR EACH mSubLC.S_DirectionsUsageOrdering 
+      IF mSubLC.S_DirectionsUsageOrdering.wSelected = "Y"
+         DELETE ENTITY mSubLC.S_DirectionsUsageOrdering NONE 
+      END
+   END
+   SET CURSOR FIRST mSubLC.S_DirectionsUsageOrdering 
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: SelectMarketingUsageEntries
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+SelectMarketingUsageEntries( VIEW ViewToWindow )
+
+   VIEW mSubLC REGISTERED AS mSubLC
+   
+   // Include each selected Usage Source entry in the Target subobject.
+   FOR EACH mSubLC.S_SelectableMarketingUsage 
+      IF mSubLC.S_SelectableMarketingUsage.wSelected = "Y"
+         SET CURSOR FIRST mSubLC.S_MarketingUsage WITHIN mSubLC.S_MarketingStatement 
+                    WHERE mSubLC.S_MarketingUsage.ID = mSubLC.S_SelectableMarketingUsage.ID 
+         IF RESULT < zCURSOR_SET
+            CREATE ENTITY mSubLC.S_MarketingUsageOrdering 
+            INCLUDE mSubLC.S_MarketingUsage FROM mSubLC.S_SelectableMarketingUsage 
+         END 
+         mSubLC.S_SelectableMarketingUsage.wSelected = ""
+      END
+   END
+   SET CURSOR FIRST mSubLC.S_MarketingUsageOrdering 
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: RemoveSLC_UsageEntries
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+RemoveMarketingUsageEntries( VIEW ViewToWindow )
+
+   VIEW mSubLC REGISTERED AS mSubLC
+   
+   // Remove each selected Usage entry.
+   FOR EACH mSubLC.S_MarketingUsageOrdering 
+      IF mSubLC.S_MarketingUsageOrdering.wSelected = "Y"
+         DELETE ENTITY mSubLC.S_MarketingUsageOrdering NONE 
+      END
+   END
+   SET CURSOR FIRST mSubLC.S_MarketingUsageOrdering 
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_SelectMarketingUsageEntries
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_SelectMarketingUsageEntries( VIEW ViewToWindow )
+
+   VIEW mSubLC REGISTERED AS mSubLC
+   VIEW mMasLC REGISTERED AS mMasLC
+   
+   // Set up the list of selectable Usage Statements. This is the subset of MLC Usage Statements tied
+   // to the corresponding MLC Statement is ARE ALSO IN the list of Usage Statements selected for this SLC.
+   SET CURSOR FIRST mMasLC.M_MarketingStatement WITHIN mMasLC.MasterLabelContent 
+              WHERE mMasLC.M_MarketingStatement.ID = mSubLC.M_MarketingStatement.ID 
+   FOR EACH mMasLC.M_MarketingUsageOrdering 
+      SET CURSOR FIRST mSubLC.M_Usage WITHIN mSubLC.SubregLabelContent 
+                 WHERE mSubLC.M_Usage.ID = mMasLC.M_MarketingUsage.ID  
+      IF RESULT >= zCURSOR_SET
+         // An SLC Usage entry exists for the MLC Statement Usage entry.
+         INCLUDE mSubLC.S_SelectableMarketingUsage FROM mSubLC.S_Usage 
+      END
+   END
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: DeleteMLC_ComponentsForSLC
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+DeleteMLC_ComponentsForSLC( VIEW ViewToWindow )
+
+   VIEW mSubLC  REGISTERED AS mSubLC
+   VIEW mMasLC  REGISTERED AS mMasLC
+   
+   // For each selected Marketing Statement from the Components subobject, delete the corresponding
+   // S_MarketingStatement entity. 
+   // Then delete any Marketing Section entities without a MarketStatement subobject.
+   // Finally, rebuild the Components subobject.
+   
+   // Delete selected Marketing Statement entries.
+   FOR EACH mSubLC.CompositeComponentList 
+      IF mSubLC.CompositeComponentList.Selected = "Y" AND 
+         mSubLC.CompositeComponentList.Type = "M_MarketingStatement"
+         
+         SET CURSOR FIRST mSubLC.S_MarketingStatement WITHIN mSubLC.SubregLabelContent 
+                    WHERE mSubLC.S_MarketingStatement.ID = mSubLC.CompositeComponentList.SLC_OriginalTypeID 
+         DELETE ENTITY mSubLC.S_MarketingStatement   
+      END
+   END
+   
+   // Delete Marketing Sections without Marketing Statements.
+   FOR EACH mSubLC.S_MarketingSection 
+      IF mSubLC.S_MarketingStatement DOES NOT EXIST
+         DELETE ENTITY mSubLC.S_MarketingSection  
+      END
+   END
+   
+   // Rebuild the Marketing Components.
+   BuildCompositeEntries( mSubLC )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: SelectMLC_ComponentsForSLC
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+SelectMLC_ComponentsForSLC( VIEW ViewToWindow )
+
+   VIEW mSubLC REGISTERED AS mSubLC
+   VIEW mMasLC REGISTERED AS mMasLC
+   
+   // For each selected MLC Marketing Statement, add the corresponding SLC Marketing Statement, along
+   // with the Marketing Section parent, if necessary.
+   // Then rebuild the SLC Component entries.
+   
+   // Create SLC Maketing Statements and necessary parent Marketing Sections.
+   FOR EACH mMasLC.CompositeComponentList 
+      IF mMasLC.CompositeComponentList.Selected = "Y" AND 
+         mMasLC.CompositeComponentList.Type = "M_MarketingStatement"
+         
+         SET CURSOR FIRST mMasLC.M_MarketingStatement WITHIN mMasLC.MasterLabelContent 
+                    WHERE mMasLC.M_MarketingStatement.ID = mMasLC.CompositeComponentList.OriginalTypeID 
+         SET CURSOR FIRST mSubLC.M_MarketingSection WITHIN mSubLC.SubregLabelContent 
+                    WHERE mSubLC.M_MarketingSection.ID = mMasLC.M_MarketingSection.ID 
+         IF RESULT < zCURSOR_SET
+            CREATE ENTITY mSubLC.S_MarketingSection 
+            SetMatchingAttributesByName( mSubLC, "S_MarketingSection", mMasLC, "M_MarketingSection", zSET_NULL )
+            INCLUDE mSubLC.M_MarketingSection FROM mMasLC.M_MarketingSection  
+         END
+         SET CURSOR FIRST mSubLC.M_MarketingStatement WITHIN mSubLC.S_MarketingSection 
+                    WHERE mSubLC.M_MarketingStatement.ID = mMasLC.M_MarketingStatement.ID 
+         IF RESULT < zCURSOR_SET
+            CREATE ENTITY mSubLC.S_MarketingStatement 
+            SetMatchingAttributesByName( mSubLC, "S_MarketingStatement", mMasLC, "M_MarketingStatement", zSET_NULL )
+            INCLUDE mSubLC.M_MarketingStatement FROM mMasLC.M_MarketingStatement  
+         END
+      END
+   END
+   
+   // Rebuild the Marketing Components.
+   BuildCompositeEntries( mSubLC )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_MarketingStatementDetail
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_MarketingStatementDetail( VIEW ViewToWindow )
+
+   VIEW mSubLC REGISTERED AS mSubLC
+   
+   // Position on the correct Marketing Statement based on position on the corresponding Components entry.
+   // If we're positioned on a Marketing Section component, give error.
+   IF mSubLC.CompositeComponentList.Type = "M_MarketingSection"
+      MessageSend( ViewToWindow, "", "Marketing Statement Detail",
+                   "Only a Marketing Section can be selected.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   ELSE
+      SET CURSOR FIRST mSubLC.S_MarketingStatement WITHIN mSubLC.SubregLabelContent 
+                 WHERE mSubLC.S_MarketingStatement.ID = mSubLC.CompositeComponentList.SLC_OriginalTypeID 
+   END
+
+END
+
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_SelectRemoveMktgStatements
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_SelectRemoveMktgStatements( VIEW ViewToWindow )
+
+   VIEW mSubLC REGISTERED AS mSubLC
+   
+   // Make sure the SLC Components are built.
+   BuildCompositeEntries( mSubLC )
+
+END

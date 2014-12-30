@@ -1,0 +1,3275 @@
+<zOI zObjectName="mSubLC" zAppName="epamms" zIncreFlags="N">
+  <SubregLabelContent>
+    <ID>1</ID>
+    <Description>One-Step DisinfectantGermicidal Detergent and Deodorant</Description>
+    <EPA_EstablishmentNumber>04/26/07 </EPA_EstablishmentNumber>
+    <Version>1.1</Version>
+    <RevisionDate>20110825</RevisionDate>
+    <CreatedDateTime>20110825</CreatedDateTime>
+    <FK_ID_SUBREGPRODUC>1</FK_ID_SUBREGPRODUC>
+    <FKIDMASTERLABELCON>1</FKIDMASTERLABELCON>
+
+    <SubregProduct>
+      <ID>1</ID>
+      <Name>KennelSol</Name>
+      <Number>10634-MA-1</Number>
+      <Description>Germicidal Detergent &amp; Deodorant</Description>
+      <ChemicalFamily>DQ</ChemicalFamily>
+      <EPA_RegistrationNumber>62472-1</EPA_RegistrationNumber>
+      <ESL_Date>20111225</ESL_Date>
+      <FK_ID_MASTERPRODUC>1</FK_ID_MASTERPRODUC>
+      <FK_ID_SUBREGISTRAN>1</FK_ID_SUBREGISTRAN>
+
+      <Subregistrant>
+        <ID>1</ID>
+        <FK_ID_ORGANIZATION>5</FK_ID_ORGANIZATION>
+
+        <SubregOrganization>
+          <ID>5</ID>
+          <LoginName>ATP</LoginName>
+          <Name>Alpha Tech Pet, Inc.</Name>
+          <Description>Veterinary Products Supplier</Description>
+          <AdministratorPassword>zPrefixwbGCLcTEc1awjOg1uMX9Wv49CifkDp+PQBKjTWS4HPpFQWUw5KuxYQ==</AdministratorPassword>
+          <Role>S</Role>
+        </SubregOrganization>
+      </Subregistrant>
+      <MasterProduct>
+        <ID>1</ID>
+        <Name>FORMULATION HWS-256</Name>
+        <ChemicalFamily>DQ</ChemicalFamily>
+        <Number>129</Number>
+        <Description>One-Step Disinfectant
+Germicidal Detergent and Deodorant</Description>
+        <EPA_EstablishmentNumber>04/26/07 </EPA_EstablishmentNumber>
+        <EPA_ToxicityCategory>2</EPA_ToxicityCategory>
+        <FKIDPRIMARYREGISTR>2</FKIDPRIMARYREGISTR>
+
+        <PrimaryRegistrant>
+          <ID>2</ID>
+          <EPA_CompanyNumber>47371</EPA_CompanyNumber>
+          <FK_ID_ORGANIZATION>3</FK_ID_ORGANIZATION>
+
+          <Organization>
+            <ID>3</ID>
+            <LoginName>Lonza</LoginName>
+            <Name>Lonza, Inc.</Name>
+            <Description>H&amp;S Chemicals Division</Description>
+            <AdministratorPassword>zPrefix+NSjqNyfq+Y8Iv8aG93TX70Ahj5/wDMmOD7x1/qp9G5WPTOCoGFF2A==</AdministratorPassword>
+            <Role>P</Role>
+          </Organization>
+        </PrimaryRegistrant>
+      </MasterProduct>
+    </SubregProduct>
+    <MasterLabelContent>
+      <ID>1</ID>
+      <Version>1.1</Version>
+      <RevisionDate>20110825</RevisionDate>
+      <CreatedDateTime>20110825</CreatedDateTime>
+      <Finalized>N</Finalized>
+      <FK_ID_MASTERPRODUC>1</FK_ID_MASTERPRODUC>
+    </MasterLabelContent>
+    <S_GeneralSection>
+      <ID>1</ID>
+      <Title>PRECAUTIONARY STATEMENTS</Title>
+      <Subtitle>HAZARDS TO HUMANS AND DOMESTIC ANIMALS</Subtitle>
+      <BoldItalic>R</BoldItalic>
+      <SectionType>P</SectionType>
+      <AUTOSEQ>1</AUTOSEQ>
+      <FKIDMGENERALSECTIO>1</FKIDMGENERALSECTIO>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+
+      <S_GeneralStatement>
+        <ID>1</ID>
+        <Text>&lt;p&gt;&lt;strong&gt;DANGER&lt;/strong&gt;. CORROSIVE. Causes irreversible eye damage and skin burns. Harmful if swallowed. Do not get in eyes, on skin, or on clothing. Wear protective eyewear (goggles, face shield or safety glasses), protective clothing and protective gloves (rubber or chemical resistant). Harmful if inhaled. Wash thoroughly with soap and water after handling. Remove contaminated clothing and wash clothing before reuse.&lt;/p&gt;</Text>
+        <BoldItalic>R</BoldItalic>
+        <FKIDMGENERALSTATEM>5</FKIDMGENERALSTATEM>
+        <FKIDSGENERALSECTIO>1</FKIDSGENERALSECTIO>
+
+        <M_GeneralStatement>
+          <ID>5</ID>
+          <FKIDMGENERALSECTIO>1</FKIDMGENERALSECTIO>
+        </M_GeneralStatement>
+      </S_GeneralStatement>
+      <M_GeneralSection>
+        <ID>1</ID>
+        <FKIDMASTERLABELCON>1</FKIDMASTERLABELCON>
+      </M_GeneralSection>
+    </S_GeneralSection>
+    <S_GeneralSection>
+      <ID>2</ID>
+      <Title>FIRST AID</Title>
+      <BoldItalic>R</BoldItalic>
+      <SectionType>F</SectionType>
+      <ContactNote>&lt;p&gt;Call a poison control center or doctor for treatment advice.&lt;/p&gt;
+&lt;p&gt;Have the product container or label with you when calling a poison control center or doctor, or going for treatment.&lt;/p&gt;</ContactNote>
+      <NoteToPhysician>&lt;p&gt;Probable mucosal damage may contraindicate the use of gastric lavage. Measures against circulatory shock, respiratory depressioin and convulsion may be needed.&lt;/p&gt;</NoteToPhysician>
+      <AUTOSEQ>2</AUTOSEQ>
+      <FKIDMGENERALSECTIO>2</FKIDMGENERALSECTIO>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+
+      <S_GeneralStatement>
+        <ID>2</ID>
+        <Text>If on skin or clothing
+   - Take off contaminated clothing.
+   - Rinse skin immediately with plenty of water for 15-20 minutes.</Text>
+        <AUTOSEQ>1</AUTOSEQ>
+        <FKIDMGENERALSTATEM>3</FKIDMGENERALSTATEM>
+        <FKIDSGENERALSECTIO>2</FKIDSGENERALSECTIO>
+
+        <M_GeneralStatement>
+          <ID>3</ID>
+          <FKIDMGENERALSECTIO>2</FKIDMGENERALSECTIO>
+        </M_GeneralStatement>
+      </S_GeneralStatement>
+      <S_GeneralStatement>
+        <ID>3</ID>
+        <Text>If in eyes
+   - Hold eye open and rinse slowly and gently with water for 15-20 minutes.
+   - Remove contact lenses, if present, after the first 5 minutes, then continue rinsing eye.</Text>
+        <AUTOSEQ>2</AUTOSEQ>
+        <FKIDMGENERALSTATEM>1</FKIDMGENERALSTATEM>
+        <FKIDSGENERALSECTIO>2</FKIDSGENERALSECTIO>
+
+        <M_GeneralStatement>
+          <ID>1</ID>
+          <FKIDMGENERALSECTIO>2</FKIDMGENERALSECTIO>
+        </M_GeneralStatement>
+      </S_GeneralStatement>
+      <S_GeneralStatement>
+        <ID>4</ID>
+        <Text>If inhaled
+   - Move person to fresh air.
+   - If person is not breathing, call 911 or an ambulance, then give artificial respiration, preferably by mouth-to-mouth, if possible.</Text>
+        <AUTOSEQ>3</AUTOSEQ>
+        <FKIDMGENERALSTATEM>4</FKIDMGENERALSTATEM>
+        <FKIDSGENERALSECTIO>2</FKIDSGENERALSECTIO>
+
+        <M_GeneralStatement>
+          <ID>4</ID>
+          <FKIDMGENERALSECTIO>2</FKIDMGENERALSECTIO>
+        </M_GeneralStatement>
+      </S_GeneralStatement>
+      <S_GeneralStatement>
+        <ID>5</ID>
+        <Text>If swallowed
+   - Call a poison control center or doctor immediately for treatment advice.
+   - Have person sip a glass of water if able to swallow.
+   - Do not induce vomiting unless told to do so by the poison control center or doctor.
+   - Do not give anything by mouth to an unconscious person.</Text>
+        <AUTOSEQ>4</AUTOSEQ>
+        <FKIDMGENERALSTATEM>2</FKIDMGENERALSTATEM>
+        <FKIDSGENERALSECTIO>2</FKIDSGENERALSECTIO>
+
+        <M_GeneralStatement>
+          <ID>2</ID>
+          <FKIDMGENERALSECTIO>2</FKIDMGENERALSECTIO>
+        </M_GeneralStatement>
+      </S_GeneralStatement>
+      <M_GeneralSection>
+        <ID>2</ID>
+        <FKIDMASTERLABELCON>1</FKIDMASTERLABELCON>
+      </M_GeneralSection>
+    </S_GeneralSection>
+    <S_GeneralSection>
+      <ID>3</ID>
+      <Title>ENVIRONMENTAL HAZARDS</Title>
+      <BoldItalic>R</BoldItalic>
+      <SectionType>E</SectionType>
+      <ReviewerNote>(Note to reviewer: If container size is 5 gallons or greater, the following Environmental Hazards statements will be used:)</ReviewerNote>
+      <AUTOSEQ>3</AUTOSEQ>
+      <FKIDMGENERALSECTIO>3</FKIDMGENERALSECTIO>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+
+      <S_GeneralStatement>
+        <ID>6</ID>
+        <Text>Do not discharge effluent containing this product into lakes, streams, ponds, estuaries, oceans, or other waters unless in accordance with the requirements of a National Pollutant Discharge Elimination System (NPDES) permit and the permitting authority has been notified in writing prior to discharge.  Do not discharge effluent containing this product to sewer systems without previously notifying the local sewage treatment plant authority.  For guidance contact your State Water Board or Regional Office of the EPA.
+</Text>
+        <BoldItalic>R</BoldItalic>
+        <FKIDMGENERALSTATEM>6</FKIDMGENERALSTATEM>
+        <FKIDSGENERALSECTIO>3</FKIDSGENERALSECTIO>
+
+        <M_GeneralStatement>
+          <ID>6</ID>
+          <FKIDMGENERALSECTIO>3</FKIDMGENERALSECTIO>
+        </M_GeneralStatement>
+      </S_GeneralStatement>
+      <M_GeneralSection>
+        <ID>3</ID>
+        <FKIDMASTERLABELCON>1</FKIDMASTERLABELCON>
+      </M_GeneralSection>
+    </S_GeneralSection>
+    <S_IngredientsSection>
+      <ID>1</ID>
+      <ActiveTitle>Active Ingredients</ActiveTitle>
+      <ActiveBoldItalic>R</ActiveBoldItalic>
+      <InertTitle>Inert Ingredients</InertTitle>
+      <GeneralInactivePercent>83.1</GeneralInactivePercent>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+      <FKIDMINGREDIENTSSE>1</FKIDMINGREDIENTSSE>
+
+      <S_IngredientsStatement>
+        <ID>1</ID>
+        <ChemicalName>&lt;p style=&quot;margin-bottom: 0in;&quot; align=&quot;JUSTIFY&quot;&gt;&lt;font face=&quot;Arial, sans-serif&quot;&gt;Didecyl dimethyl ammonium chloride&lt;/font&gt;&lt;/p&gt;</ChemicalName>
+        <BoldItalic>R</BoldItalic>
+        <Active>A</Active>
+        <Percent>10.14</Percent>
+        <AUTOSEQ>1</AUTOSEQ>
+        <FKIDSINGREDIENTSSE>1</FKIDSINGREDIENTSSE>
+        <FKIDMINGREDIENTSST>1</FKIDMINGREDIENTSST>
+
+        <M_IngredientsStatement>
+          <ID>1</ID>
+          <FKIDMINGREDIENTSSE>1</FKIDMINGREDIENTSSE>
+        </M_IngredientsStatement>
+      </S_IngredientsStatement>
+      <S_IngredientsStatement>
+        <ID>2</ID>
+        <ChemicalName>&lt;p&gt;n-Alkyl (C&lt;sub&gt;14&lt;/sub&gt; 50%, C&lt;sub&gt;12&lt;/sub&gt; 40%, C&lt;sub&gt;16&lt;/sub&gt; 10%) dimethyl benzyl ammonium chloride&lt;/p&gt;</ChemicalName>
+        <BoldItalic>R</BoldItalic>
+        <Active>A</Active>
+        <Percent>6.76</Percent>
+        <AUTOSEQ>2</AUTOSEQ>
+        <FKIDSINGREDIENTSSE>1</FKIDSINGREDIENTSSE>
+        <FKIDMINGREDIENTSST>9</FKIDMINGREDIENTSST>
+
+        <M_IngredientsStatement>
+          <ID>9</ID>
+          <FKIDMINGREDIENTSSE>1</FKIDMINGREDIENTSSE>
+        </M_IngredientsStatement>
+      </S_IngredientsStatement>
+      <M_IngredientsSection>
+        <ID>1</ID>
+        <FKIDMASTERLABELCON>1</FKIDMASTERLABELCON>
+      </M_IngredientsSection>
+    </S_IngredientsSection>
+    <S_StorageDisposalSection>
+      <ID>1</ID>
+      <ContainerVolume>1</ContainerVolume>
+      <SDSectionType>StorageDisposal1</SDSectionType>
+      <Title>STORAGE AND DISPOSAL</Title>
+      <BoldItalic>R</BoldItalic>
+      <ReviewerNote>(Note to reviewer: If the container size is one gallon or less, the following Storage and Disposal directions will be used:)</ReviewerNote>
+      <AUTOSEQ>1</AUTOSEQ>
+      <FKIDMSTORAGEDISPOS>1</FKIDMSTORAGEDISPOS>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+
+      <S_StorageDisposalStatement>
+        <ID>1</ID>
+        <Title>this is a another test</Title>
+        <BoldItalic>R</BoldItalic>
+        <Text>Store in original container in areas inaccessible to children. Do not reuse empty container.  (Wrap and) Discard in trash or recycle.</Text>
+        <FKIDMSTORAGEDISPOS>25</FKIDMSTORAGEDISPOS>
+        <FKIDSSTORAGEDISPOS>1</FKIDSSTORAGEDISPOS>
+
+        <M_StorageDisposalStatement>
+          <ID>25</ID>
+          <FKIDMSTORAGEDISPOS>1</FKIDMSTORAGEDISPOS>
+        </M_StorageDisposalStatement>
+      </S_StorageDisposalStatement>
+      <M_StorageDisposalSection>
+        <ID>1</ID>
+        <FKIDMASTERLABELCON>1</FKIDMASTERLABELCON>
+      </M_StorageDisposalSection>
+    </S_StorageDisposalSection>
+    <S_StorageDisposalSection>
+      <ID>2</ID>
+      <ContainerVolume>5</ContainerVolume>
+      <SDSectionType>StorageDisposal2</SDSectionType>
+      <Title>STORAGE AND DISPOSAL</Title>
+      <Subtitle>Do not contaminate water, food, or feed by storage or disposal. </Subtitle>
+      <BoldItalic>R</BoldItalic>
+      <ReviewerNote>(Note to reviewer: If the container size is greater than one gallon, the following Storage and Disposal directions will be used:)</ReviewerNote>
+      <AUTOSEQ>2</AUTOSEQ>
+      <FKIDMSTORAGEDISPOS>2</FKIDMSTORAGEDISPOS>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+
+      <S_StorageDisposalStatement>
+        <ID>2</ID>
+        <BoldItalic>R</BoldItalic>
+        <Text>Pesticide Storage
+Store in original container in areas inaccessible to children. Open dumping is prohibited.  Do not reuse empty container.</Text>
+        <AUTOSEQ>1</AUTOSEQ>
+        <FKIDMSTORAGEDISPOS>26</FKIDMSTORAGEDISPOS>
+        <FKIDSSTORAGEDISPOS>2</FKIDSSTORAGEDISPOS>
+
+        <M_StorageDisposalStatement>
+          <ID>26</ID>
+          <FKIDMSTORAGEDISPOS>2</FKIDMSTORAGEDISPOS>
+        </M_StorageDisposalStatement>
+      </S_StorageDisposalStatement>
+      <S_StorageDisposalStatement>
+        <ID>3</ID>
+        <BoldItalic>R</BoldItalic>
+        <Text>Pesticide Disposal
+Pesticide wastes are acutely hazardous.  Improper disposal of excess pesticide, spray mixture, or rinsate is a violation of Federal law.  If these wastes cannot be disposed of by use according to label instructions, contact your State Pesticide or Environmental Control Agency, or the Hazardous Waste representative at the nearest EPA Regional Office for guidance.</Text>
+        <AUTOSEQ>2</AUTOSEQ>
+        <FKIDMSTORAGEDISPOS>27</FKIDMSTORAGEDISPOS>
+        <FKIDSSTORAGEDISPOS>2</FKIDSSTORAGEDISPOS>
+
+        <M_StorageDisposalStatement>
+          <ID>27</ID>
+          <FKIDMSTORAGEDISPOS>2</FKIDMSTORAGEDISPOS>
+        </M_StorageDisposalStatement>
+      </S_StorageDisposalStatement>
+      <S_StorageDisposalStatement>
+        <ID>4</ID>
+        <BoldItalic>R</BoldItalic>
+        <Text>Container Disposal
+(Plastic containers:) Triple rinse (or equivalent).  Then offer for recycling or reconditioning, or puncture and dispose of in a sanitary landfill, or incinerate, or if allowed by state and local authorities, burn.  If burned, stay out of smoke.
+(Fiber Drums With Liner:) Completely empty liner by shaking and tapping sides and bottom to loosen clinging particles.  Empty residue into application equipment.  Then dispose of liner in a sanitary landfill or by incineration if allowed by state and local authorities.  If drum is contaminated and cannot by reused, dispose of in the same manner.
+(Metal Container:) Triple rinse (or equivalent).  Then offer for recycling or reconditioning or puncture and dispose of in a sanitary landfill, or dispose of by other procedures approved by state and local authorities.
+(For Bag-in-Box Containers:) Completely empty bag into application equipment. Dispose of empty bag in a sanitary landfill or by incineration, or if allowed by state and local authorities by burning or dispose of by other procedures approved by state and local authorities.  If burned, stay out of smoke.</Text>
+        <AUTOSEQ>3</AUTOSEQ>
+        <FKIDMSTORAGEDISPOS>28</FKIDMSTORAGEDISPOS>
+        <FKIDSSTORAGEDISPOS>2</FKIDSSTORAGEDISPOS>
+
+        <M_StorageDisposalStatement>
+          <ID>28</ID>
+          <FKIDMSTORAGEDISPOS>2</FKIDMSTORAGEDISPOS>
+        </M_StorageDisposalStatement>
+      </S_StorageDisposalStatement>
+      <M_StorageDisposalSection>
+        <ID>2</ID>
+        <FKIDMASTERLABELCON>1</FKIDMASTERLABELCON>
+      </M_StorageDisposalSection>
+    </S_StorageDisposalSection>
+    <S_MarketingSection>
+      <ID>1</ID>
+      <Title>ONE-STEP DISINFECTANT</Title>
+      <Subtitle>GERMICIDAL DETERGENT AND DEODORANT</Subtitle>
+      <BoldItalic>R</BoldItalic>
+      <FKIDMMARKETINGSECT>25</FKIDMMARKETINGSECT>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+
+      <S_MarketingStatement>
+        <ID>1</ID>
+        <Text>&lt;table style=&quot;margin-right: auto; margin-left: auto;&quot;&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Disinfectant&lt;/td&gt;
+&lt;td&gt;Pseudomonacidal&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Staphylocidal&lt;/td&gt;
+&lt;td&gt;Salmonellacidal&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Bactericidal&lt;/td&gt;
+&lt;td&gt;Fungicidal&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Mildewstatic&lt;/td&gt;
+&lt;td&gt;*Virucidal&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;FLORAL / CITRUS / FRESH / CLEAN / LEMON / PINE / MINT [scent] [fragrance] [odor] [scented]&lt;/p&gt;Updated</Text>
+        <BoldItalic>R</BoldItalic>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+        <FKIDMMARKETINGSTAT>1</FKIDMMARKETINGSTAT>
+
+        <M_MarketingStatement>
+          <ID>1</ID>
+          <Text>&lt;table style=&quot;margin-right: auto; margin-left: auto;&quot;&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Disinfectant&lt;/td&gt;
+&lt;td&gt;Pseudomonacidal&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Staphylocidal&lt;/td&gt;
+&lt;td&gt;Salmonellacidal&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Bactericidal&lt;/td&gt;
+&lt;td&gt;Fungicidal&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Mildewstatic&lt;/td&gt;
+&lt;td&gt;*Virucidal&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;FLORAL / CITRUS / FRESH / CLEAN / LEMON / PINE / MINT [scent] [fragrance] [odor] [scented]&lt;/p&gt;Updated</Text>
+          <BoldItalic>R</BoldItalic>
+          <FKIDMMARKETINGSECT>25</FKIDMMARKETINGSECT>
+        </M_MarketingStatement>
+      </S_MarketingStatement>
+      <S_MarketingUsageOrdering>
+        <ID>1</ID>
+        <AUTOSEQ03>1</AUTOSEQ03>
+        <FK_ID_S_USAGE>1</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>1</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>&lt;p&gt;Enterococcus faecalis- Vancomycin Resistant (VRE)&lt;/p&gt;</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>2</ID>
+        <AUTOSEQ03>2</AUTOSEQ03>
+        <FK_ID_S_USAGE>2</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>2</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>&lt;p&gt;Escherichia coli &lt;sup&gt;&lt;sub&gt;1&lt;/sub&gt;&lt;/sup&gt;&lt;/p&gt;</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>3</ID>
+        <AUTOSEQ03>3</AUTOSEQ03>
+        <FK_ID_S_USAGE>3</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>3</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>Fusobacterium necrophorum</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>4</ID>
+        <AUTOSEQ03>4</AUTOSEQ03>
+        <FK_ID_S_USAGE>4</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>4</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>&lt;p&gt;Kiebsiella pneumoniae&lt;sup&gt; &lt;sub&gt;1&lt;/sub&gt;&lt;/sup&gt;&lt;/p&gt;</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>5</ID>
+        <AUTOSEQ03>5</AUTOSEQ03>
+        <FK_ID_S_USAGE>5</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>5</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>Legionella pneumophilia</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>6</ID>
+        <AUTOSEQ03>6</AUTOSEQ03>
+        <FK_ID_S_USAGE>6</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>6</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>Listeria monocytogenes</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>7</ID>
+        <AUTOSEQ03>7</AUTOSEQ03>
+        <FK_ID_S_USAGE>7</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>7</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>Pasteurella multocida </Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>8</ID>
+        <AUTOSEQ03>8</AUTOSEQ03>
+        <FK_ID_S_USAGE>8</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>8</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>Proteus mirabilis</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>9</ID>
+        <AUTOSEQ03>9</AUTOSEQ03>
+        <FK_ID_S_USAGE>9</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>9</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>Proteus vulgaris</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>10</ID>
+        <AUTOSEQ03>10</AUTOSEQ03>
+        <FK_ID_S_USAGE>10</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>10</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>Salmonella enteritidis</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>11</ID>
+        <AUTOSEQ03>11</AUTOSEQ03>
+        <FK_ID_S_USAGE>11</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>11</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>Salmonella typhi</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>12</ID>
+        <AUTOSEQ03>12</AUTOSEQ03>
+        <FK_ID_S_USAGE>12</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>12</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>Salmonella typhimurium</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>13</ID>
+        <AUTOSEQ03>13</AUTOSEQ03>
+        <FK_ID_S_USAGE>13</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>13</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>Serratia marcescens</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>14</ID>
+        <AUTOSEQ03>14</AUTOSEQ03>
+        <FK_ID_S_USAGE>14</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>14</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>Shigella fiexneri</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>15</ID>
+        <AUTOSEQ03>15</AUTOSEQ03>
+        <FK_ID_S_USAGE>15</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>15</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>Shigella sonnei</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>16</ID>
+        <AUTOSEQ03>16</AUTOSEQ03>
+        <FK_ID_S_USAGE>16</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>16</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>Staphylococcus aureus- Methicillin resistant (MRSA)</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>17</ID>
+        <AUTOSEQ03>17</AUTOSEQ03>
+        <FK_ID_S_USAGE>17</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>17</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>Staphylococcus aureus- Vancomycin Intermediate Resistant (VISA)</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>18</ID>
+        <AUTOSEQ03>18</AUTOSEQ03>
+        <FK_ID_S_USAGE>18</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>18</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>&lt;p&gt;Staphylococcus epidermidis&lt;sup&gt; &lt;sub&gt;2&lt;/sub&gt;&lt;/sup&gt;&lt;/p&gt;</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>19</ID>
+        <AUTOSEQ03>19</AUTOSEQ03>
+        <FK_ID_S_USAGE>19</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>19</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>&lt;p&gt;Streptococcus faecalis&lt;sup&gt; &lt;sub&gt;1&lt;/sub&gt;&lt;/sup&gt;&lt;/p&gt;</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>20</ID>
+        <AUTOSEQ03>20</AUTOSEQ03>
+        <FK_ID_S_USAGE>20</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>20</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>Steptococcus pyogenes [cause of Scarlet fever]</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>21</ID>
+        <AUTOSEQ03>21</AUTOSEQ03>
+        <FK_ID_S_USAGE>21</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>21</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>&lt;p&gt;&lt;sup&gt;1&lt;/sup&gt; ATCC &amp;amp; antibiotic-resistant strain&lt;/p&gt;</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>22</ID>
+        <AUTOSEQ03>22</AUTOSEQ03>
+        <FK_ID_S_USAGE>22</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>22</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>&lt;p&gt;&lt;sup&gt;2&lt;/sup&gt; antibiotic-resistant strain only&lt;/p&gt;</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>23</ID>
+        <AUTOSEQ03>23</AUTOSEQ03>
+        <FK_ID_S_USAGE>23</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>23</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Fungi</ClaimsClassification>
+          <Name>Aspergillus niger</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>24</ID>
+        <AUTOSEQ03>24</AUTOSEQ03>
+        <FK_ID_S_USAGE>24</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>24</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Fungi</ClaimsClassification>
+          <Name>Candida albicans</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>25</ID>
+        <AUTOSEQ03>25</AUTOSEQ03>
+        <FK_ID_S_USAGE>25</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>25</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Fungi</ClaimsClassification>
+          <Name>Trichophyton mentagrophytes [Athlete&apos;s Foot Fungus]</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>26</ID>
+        <AUTOSEQ03>26</AUTOSEQ03>
+        <FK_ID_S_USAGE>26</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>26</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Fungi</ClaimsClassification>
+          <Name>[a cause of Ringworm] [a cause of Ringworm of the foot]</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>27</ID>
+        <AUTOSEQ03>27</AUTOSEQ03>
+        <FK_ID_S_USAGE>27</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>27</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Adenovirus Type 4</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>28</ID>
+        <AUTOSEQ03>28</AUTOSEQ03>
+        <FK_ID_S_USAGE>28</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>28</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Hepatitis B Virus (HBV)</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>29</ID>
+        <AUTOSEQ03>29</AUTOSEQ03>
+        <FK_ID_S_USAGE>29</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>29</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Hepatitis C Virus (HCV)</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>30</ID>
+        <AUTOSEQ03>30</AUTOSEQ03>
+        <FK_ID_S_USAGE>30</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>30</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Herpes Simplex Type 1</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>31</ID>
+        <AUTOSEQ03>31</AUTOSEQ03>
+        <FK_ID_S_USAGE>31</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>31</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Herpes Simplex Type 2</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>32</ID>
+        <AUTOSEQ03>32</AUTOSEQ03>
+        <FK_ID_S_USAGE>32</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>32</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Human coronavirus </Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>33</ID>
+        <AUTOSEQ03>33</AUTOSEQ03>
+        <FK_ID_S_USAGE>33</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>33</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*HIV-1 (AIDS virus)</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>34</ID>
+        <AUTOSEQ03>34</AUTOSEQ03>
+        <FK_ID_S_USAGE>34</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>34</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Influenza A/ Hong Kong</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>35</ID>
+        <AUTOSEQ03>35</AUTOSEQ03>
+        <FK_ID_S_USAGE>35</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>35</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Respiratory Syncytial Virus (RSV)</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>36</ID>
+        <AUTOSEQ03>36</AUTOSEQ03>
+        <FK_ID_S_USAGE>36</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>36</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Rubella (German Measles)</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>37</ID>
+        <AUTOSEQ03>37</AUTOSEQ03>
+        <FK_ID_S_USAGE>37</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>37</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Vaccinia [Pox virus]</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>38</ID>
+        <AUTOSEQ03>38</AUTOSEQ03>
+        <FK_ID_S_USAGE>38</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>38</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Avian polyomavirus</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>39</ID>
+        <AUTOSEQ03>39</AUTOSEQ03>
+        <FK_ID_S_USAGE>39</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>39</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Canine distemper</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>40</ID>
+        <AUTOSEQ03>40</AUTOSEQ03>
+        <FK_ID_S_USAGE>40</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>40</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Canine parvovirus- at 2 oz. per gallon</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>41</ID>
+        <AUTOSEQ03>41</AUTOSEQ03>
+        <FK_ID_S_USAGE>41</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>41</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Feline leukemia</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>42</ID>
+        <AUTOSEQ03>42</AUTOSEQ03>
+        <FK_ID_S_USAGE>42</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>42</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Feline picomavirus</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>43</ID>
+        <AUTOSEQ03>43</AUTOSEQ03>
+        <FK_ID_S_USAGE>43</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>43</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Infectious bovine rhinotracheitis</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>44</ID>
+        <AUTOSEQ03>44</AUTOSEQ03>
+        <FK_ID_S_USAGE>44</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>44</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Infectious bronchitis (Avian IBV)</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>45</ID>
+        <AUTOSEQ03>45</AUTOSEQ03>
+        <FK_ID_S_USAGE>45</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>45</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Pseudorabies (PRV)</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>46</ID>
+        <AUTOSEQ03>46</AUTOSEQ03>
+        <FK_ID_S_USAGE>46</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>46</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Rabies</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>47</ID>
+        <AUTOSEQ03>47</AUTOSEQ03>
+        <FK_ID_S_USAGE>47</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>47</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Transmissible gastroenteritis virus (TGE)</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>48</ID>
+        <AUTOSEQ03>48</AUTOSEQ03>
+        <FK_ID_S_USAGE>48</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>48</ID>
+          <UsageType>T</UsageType>
+          <Name>Disinfectant</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>49</ID>
+        <AUTOSEQ03>49</AUTOSEQ03>
+        <FK_ID_S_USAGE>49</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>49</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>&lt;p&gt;Pseudomonas aeruginosa&lt;sup&gt; &lt;sub&gt;1&lt;/sub&gt;&lt;/sup&gt;&lt;/p&gt;</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>50</ID>
+        <AUTOSEQ03>50</AUTOSEQ03>
+        <FK_ID_S_USAGE>50</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>50</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>&lt;p&gt;Staphylococcus aureus&lt;sup&gt; &lt;sub&gt;1&lt;/sub&gt;&lt;/sup&gt;&lt;/p&gt;</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>51</ID>
+        <AUTOSEQ03>51</AUTOSEQ03>
+        <FK_ID_S_USAGE>51</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>51</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>Salmonella choleraesuis</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>52</ID>
+        <AUTOSEQ03>52</AUTOSEQ03>
+        <FK_ID_S_USAGE>52</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>52</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>&lt;p&gt;Acinetobacter calcoaceticus&lt;/p&gt;</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>53</ID>
+        <AUTOSEQ03>53</AUTOSEQ03>
+        <FK_ID_S_USAGE>53</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>53</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>&lt;p&gt;Bordetella bronchiseptica&lt;/p&gt;</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>54</ID>
+        <AUTOSEQ03>54</AUTOSEQ03>
+        <FK_ID_S_USAGE>54</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>54</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>Chlamydia psittaci</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>55</ID>
+        <AUTOSEQ03>55</AUTOSEQ03>
+        <FK_ID_S_USAGE>55</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>55</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>Enterobacter aerogenes</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_MarketingUsageOrdering>
+        <ID>56</ID>
+        <AUTOSEQ03>56</AUTOSEQ03>
+        <FK_ID_S_USAGE>56</FK_ID_S_USAGE>
+        <FKIDSMARKETINGSECT>1</FKIDSMARKETINGSECT>
+
+        <S_MarketingUsage>
+          <ID>56</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>Enterobacter cloacae</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_MarketingUsage>
+      </S_MarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>57</ID>
+        <AUTOSEQ>1</AUTOSEQ>
+        <FK_ID_S_USAGE>1</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>1</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>&lt;p&gt;Enterococcus faecalis- Vancomycin Resistant (VRE)&lt;/p&gt;</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>58</ID>
+        <AUTOSEQ>2</AUTOSEQ>
+        <FK_ID_S_USAGE>2</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>2</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>&lt;p&gt;Escherichia coli &lt;sup&gt;&lt;sub&gt;1&lt;/sub&gt;&lt;/sup&gt;&lt;/p&gt;</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>59</ID>
+        <AUTOSEQ>3</AUTOSEQ>
+        <FK_ID_S_USAGE>3</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>3</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>Fusobacterium necrophorum</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>60</ID>
+        <AUTOSEQ>4</AUTOSEQ>
+        <FK_ID_S_USAGE>4</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>4</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>&lt;p&gt;Kiebsiella pneumoniae&lt;sup&gt; &lt;sub&gt;1&lt;/sub&gt;&lt;/sup&gt;&lt;/p&gt;</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>61</ID>
+        <AUTOSEQ>5</AUTOSEQ>
+        <FK_ID_S_USAGE>5</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>5</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>Legionella pneumophilia</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>62</ID>
+        <AUTOSEQ>6</AUTOSEQ>
+        <FK_ID_S_USAGE>6</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>6</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>Listeria monocytogenes</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>63</ID>
+        <AUTOSEQ>7</AUTOSEQ>
+        <FK_ID_S_USAGE>7</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>7</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>Pasteurella multocida </Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>64</ID>
+        <AUTOSEQ>8</AUTOSEQ>
+        <FK_ID_S_USAGE>8</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>8</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>Proteus mirabilis</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>65</ID>
+        <AUTOSEQ>9</AUTOSEQ>
+        <FK_ID_S_USAGE>9</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>9</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>Proteus vulgaris</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>66</ID>
+        <AUTOSEQ>10</AUTOSEQ>
+        <FK_ID_S_USAGE>10</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>10</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>Salmonella enteritidis</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>67</ID>
+        <AUTOSEQ>11</AUTOSEQ>
+        <FK_ID_S_USAGE>11</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>11</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>Salmonella typhi</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>68</ID>
+        <AUTOSEQ>12</AUTOSEQ>
+        <FK_ID_S_USAGE>12</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>12</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>Salmonella typhimurium</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>69</ID>
+        <AUTOSEQ>13</AUTOSEQ>
+        <FK_ID_S_USAGE>13</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>13</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>Serratia marcescens</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>70</ID>
+        <AUTOSEQ>14</AUTOSEQ>
+        <FK_ID_S_USAGE>14</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>14</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>Shigella fiexneri</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>71</ID>
+        <AUTOSEQ>15</AUTOSEQ>
+        <FK_ID_S_USAGE>15</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>15</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>Shigella sonnei</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>72</ID>
+        <AUTOSEQ>16</AUTOSEQ>
+        <FK_ID_S_USAGE>16</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>16</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>Staphylococcus aureus- Methicillin resistant (MRSA)</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>73</ID>
+        <AUTOSEQ>17</AUTOSEQ>
+        <FK_ID_S_USAGE>17</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>17</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>Staphylococcus aureus- Vancomycin Intermediate Resistant (VISA)</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>74</ID>
+        <AUTOSEQ>18</AUTOSEQ>
+        <FK_ID_S_USAGE>18</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>18</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>&lt;p&gt;Staphylococcus epidermidis&lt;sup&gt; &lt;sub&gt;2&lt;/sub&gt;&lt;/sup&gt;&lt;/p&gt;</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>75</ID>
+        <AUTOSEQ>19</AUTOSEQ>
+        <FK_ID_S_USAGE>19</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>19</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>&lt;p&gt;Streptococcus faecalis&lt;sup&gt; &lt;sub&gt;1&lt;/sub&gt;&lt;/sup&gt;&lt;/p&gt;</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>76</ID>
+        <AUTOSEQ>20</AUTOSEQ>
+        <FK_ID_S_USAGE>20</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>20</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>Steptococcus pyogenes [cause of Scarlet fever]</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>77</ID>
+        <AUTOSEQ>21</AUTOSEQ>
+        <FK_ID_S_USAGE>21</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>21</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>&lt;p&gt;&lt;sup&gt;1&lt;/sup&gt; ATCC &amp;amp; antibiotic-resistant strain&lt;/p&gt;</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>78</ID>
+        <AUTOSEQ>22</AUTOSEQ>
+        <FK_ID_S_USAGE>22</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>22</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>&lt;p&gt;&lt;sup&gt;2&lt;/sup&gt; antibiotic-resistant strain only&lt;/p&gt;</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>79</ID>
+        <AUTOSEQ>23</AUTOSEQ>
+        <FK_ID_S_USAGE>23</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>23</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Fungi</ClaimsClassification>
+          <Name>Aspergillus niger</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>80</ID>
+        <AUTOSEQ>24</AUTOSEQ>
+        <FK_ID_S_USAGE>24</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>24</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Fungi</ClaimsClassification>
+          <Name>Candida albicans</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>81</ID>
+        <AUTOSEQ>25</AUTOSEQ>
+        <FK_ID_S_USAGE>25</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>25</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Fungi</ClaimsClassification>
+          <Name>Trichophyton mentagrophytes [Athlete&apos;s Foot Fungus]</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>82</ID>
+        <AUTOSEQ>26</AUTOSEQ>
+        <FK_ID_S_USAGE>26</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>26</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Fungi</ClaimsClassification>
+          <Name>[a cause of Ringworm] [a cause of Ringworm of the foot]</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>83</ID>
+        <AUTOSEQ>27</AUTOSEQ>
+        <FK_ID_S_USAGE>27</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>27</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Adenovirus Type 4</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>84</ID>
+        <AUTOSEQ>28</AUTOSEQ>
+        <FK_ID_S_USAGE>28</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>28</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Hepatitis B Virus (HBV)</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>85</ID>
+        <AUTOSEQ>29</AUTOSEQ>
+        <FK_ID_S_USAGE>29</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>29</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Hepatitis C Virus (HCV)</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>86</ID>
+        <AUTOSEQ>30</AUTOSEQ>
+        <FK_ID_S_USAGE>30</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>30</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Herpes Simplex Type 1</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>87</ID>
+        <AUTOSEQ>31</AUTOSEQ>
+        <FK_ID_S_USAGE>31</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>31</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Herpes Simplex Type 2</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>88</ID>
+        <AUTOSEQ>32</AUTOSEQ>
+        <FK_ID_S_USAGE>32</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>32</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Human coronavirus </Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>89</ID>
+        <AUTOSEQ>33</AUTOSEQ>
+        <FK_ID_S_USAGE>33</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>33</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*HIV-1 (AIDS virus)</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>90</ID>
+        <AUTOSEQ>34</AUTOSEQ>
+        <FK_ID_S_USAGE>34</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>34</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Influenza A/ Hong Kong</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>91</ID>
+        <AUTOSEQ>35</AUTOSEQ>
+        <FK_ID_S_USAGE>35</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>35</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Respiratory Syncytial Virus (RSV)</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>92</ID>
+        <AUTOSEQ>36</AUTOSEQ>
+        <FK_ID_S_USAGE>36</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>36</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Rubella (German Measles)</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>93</ID>
+        <AUTOSEQ>37</AUTOSEQ>
+        <FK_ID_S_USAGE>37</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>37</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Vaccinia [Pox virus]</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>94</ID>
+        <AUTOSEQ>38</AUTOSEQ>
+        <FK_ID_S_USAGE>38</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>38</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Avian polyomavirus</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>95</ID>
+        <AUTOSEQ>39</AUTOSEQ>
+        <FK_ID_S_USAGE>39</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>39</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Canine distemper</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>96</ID>
+        <AUTOSEQ>40</AUTOSEQ>
+        <FK_ID_S_USAGE>40</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>40</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Canine parvovirus- at 2 oz. per gallon</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>97</ID>
+        <AUTOSEQ>41</AUTOSEQ>
+        <FK_ID_S_USAGE>41</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>41</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Feline leukemia</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>98</ID>
+        <AUTOSEQ>42</AUTOSEQ>
+        <FK_ID_S_USAGE>42</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>42</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Feline picomavirus</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>99</ID>
+        <AUTOSEQ>43</AUTOSEQ>
+        <FK_ID_S_USAGE>43</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>43</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Infectious bovine rhinotracheitis</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>100</ID>
+        <AUTOSEQ>44</AUTOSEQ>
+        <FK_ID_S_USAGE>44</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>44</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Infectious bronchitis (Avian IBV)</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>101</ID>
+        <AUTOSEQ>45</AUTOSEQ>
+        <FK_ID_S_USAGE>45</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>45</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Pseudorabies (PRV)</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>102</ID>
+        <AUTOSEQ>46</AUTOSEQ>
+        <FK_ID_S_USAGE>46</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>46</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Rabies</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>103</ID>
+        <AUTOSEQ>47</AUTOSEQ>
+        <FK_ID_S_USAGE>47</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>47</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Viruses</ClaimsClassification>
+          <Name>*Transmissible gastroenteritis virus (TGE)</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>104</ID>
+        <AUTOSEQ>48</AUTOSEQ>
+        <FK_ID_S_USAGE>48</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>48</ID>
+          <UsageType>T</UsageType>
+          <Name>Disinfectant</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>105</ID>
+        <AUTOSEQ>49</AUTOSEQ>
+        <FK_ID_S_USAGE>49</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>49</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>&lt;p&gt;Pseudomonas aeruginosa&lt;sup&gt; &lt;sub&gt;1&lt;/sub&gt;&lt;/sup&gt;&lt;/p&gt;</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>106</ID>
+        <AUTOSEQ>50</AUTOSEQ>
+        <FK_ID_S_USAGE>50</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>50</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>&lt;p&gt;Staphylococcus aureus&lt;sup&gt; &lt;sub&gt;1&lt;/sub&gt;&lt;/sup&gt;&lt;/p&gt;</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>107</ID>
+        <AUTOSEQ>51</AUTOSEQ>
+        <FK_ID_S_USAGE>51</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>51</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>Salmonella choleraesuis</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>108</ID>
+        <AUTOSEQ>52</AUTOSEQ>
+        <FK_ID_S_USAGE>52</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>52</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>&lt;p&gt;Acinetobacter calcoaceticus&lt;/p&gt;</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>109</ID>
+        <AUTOSEQ>53</AUTOSEQ>
+        <FK_ID_S_USAGE>53</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>53</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>&lt;p&gt;Bordetella bronchiseptica&lt;/p&gt;</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>110</ID>
+        <AUTOSEQ>54</AUTOSEQ>
+        <FK_ID_S_USAGE>54</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>54</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>Chlamydia psittaci</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>111</ID>
+        <AUTOSEQ>55</AUTOSEQ>
+        <FK_ID_S_USAGE>55</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>55</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>Enterobacter aerogenes</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <S_OriginalMarketingUsageOrdering>
+        <ID>112</ID>
+        <AUTOSEQ>56</AUTOSEQ>
+        <FK_ID_S_USAGE>56</FK_ID_S_USAGE>
+        <FKOIDSMARKETINGSEC>1</FKOIDSMARKETINGSEC>
+
+        <S_OriginalMarketingUsage>
+          <ID>56</ID>
+          <UsageType>C</UsageType>
+          <ClaimsClassification>Bacteria</ClaimsClassification>
+          <Name>Enterobacter cloacae</Name>
+          <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+        </S_OriginalMarketingUsage>
+      </S_OriginalMarketingUsageOrdering>
+      <M_MarketingSection>
+        <ID>25</ID>
+        <FKIDMASTERLABELCON>1</FKIDMASTERLABELCON>
+      </M_MarketingSection>
+    </S_MarketingSection>
+    <S_HumanHazardSection>
+      <ID>1</ID>
+      <EPA_SignalWord>DANGER</EPA_SignalWord>
+      <EPA_ChildHazardWarning>U</EPA_ChildHazardWarning>
+      <PrecautionaryStatement>See {{Precautionary Position}} panel for Precautionary Statements and First Aid</PrecautionaryStatement>
+      <BoldItalic>R</BoldItalic>
+      <Location1>right</Location1>
+      <Location2>left</Location2>
+      <Location3>side</Location3>
+      <Location4>back</Location4>
+      <FKIDMHUMANHAZARDSE>1</FKIDMHUMANHAZARDSE>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+
+      <M_HumanHazardSection>
+        <ID>1</ID>
+        <FKIDMASTERLABELCON>1</FKIDMASTERLABELCON>
+      </M_HumanHazardSection>
+    </S_HumanHazardSection>
+    <S_Usage>
+      <ID>1</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Bacteria</ClaimsClassification>
+      <Name>&lt;p&gt;Enterococcus faecalis- Vancomycin Resistant (VRE)&lt;/p&gt;</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>2</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Bacteria</ClaimsClassification>
+      <Name>&lt;p&gt;Escherichia coli &lt;sup&gt;&lt;sub&gt;1&lt;/sub&gt;&lt;/sup&gt;&lt;/p&gt;</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>3</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Bacteria</ClaimsClassification>
+      <Name>Fusobacterium necrophorum</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>4</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Bacteria</ClaimsClassification>
+      <Name>&lt;p&gt;Kiebsiella pneumoniae&lt;sup&gt; &lt;sub&gt;1&lt;/sub&gt;&lt;/sup&gt;&lt;/p&gt;</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>5</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Bacteria</ClaimsClassification>
+      <Name>Legionella pneumophilia</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>6</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Bacteria</ClaimsClassification>
+      <Name>Listeria monocytogenes</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>7</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Bacteria</ClaimsClassification>
+      <Name>Pasteurella multocida </Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>8</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Bacteria</ClaimsClassification>
+      <Name>Proteus mirabilis</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>9</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Bacteria</ClaimsClassification>
+      <Name>Proteus vulgaris</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>10</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Bacteria</ClaimsClassification>
+      <Name>Salmonella enteritidis</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>11</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Bacteria</ClaimsClassification>
+      <Name>Salmonella typhi</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>12</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Bacteria</ClaimsClassification>
+      <Name>Salmonella typhimurium</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>13</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Bacteria</ClaimsClassification>
+      <Name>Serratia marcescens</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>14</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Bacteria</ClaimsClassification>
+      <Name>Shigella fiexneri</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>15</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Bacteria</ClaimsClassification>
+      <Name>Shigella sonnei</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>16</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Bacteria</ClaimsClassification>
+      <Name>Staphylococcus aureus- Methicillin resistant (MRSA)</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>17</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Bacteria</ClaimsClassification>
+      <Name>Staphylococcus aureus- Vancomycin Intermediate Resistant (VISA)</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>18</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Bacteria</ClaimsClassification>
+      <Name>&lt;p&gt;Staphylococcus epidermidis&lt;sup&gt; &lt;sub&gt;2&lt;/sub&gt;&lt;/sup&gt;&lt;/p&gt;</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>19</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Bacteria</ClaimsClassification>
+      <Name>&lt;p&gt;Streptococcus faecalis&lt;sup&gt; &lt;sub&gt;1&lt;/sub&gt;&lt;/sup&gt;&lt;/p&gt;</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>20</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Bacteria</ClaimsClassification>
+      <Name>Steptococcus pyogenes [cause of Scarlet fever]</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>21</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Bacteria</ClaimsClassification>
+      <Name>&lt;p&gt;&lt;sup&gt;1&lt;/sup&gt; ATCC &amp;amp; antibiotic-resistant strain&lt;/p&gt;</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>22</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Bacteria</ClaimsClassification>
+      <Name>&lt;p&gt;&lt;sup&gt;2&lt;/sup&gt; antibiotic-resistant strain only&lt;/p&gt;</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>23</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Fungi</ClaimsClassification>
+      <Name>Aspergillus niger</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>24</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Fungi</ClaimsClassification>
+      <Name>Candida albicans</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>25</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Fungi</ClaimsClassification>
+      <Name>Trichophyton mentagrophytes [Athlete&apos;s Foot Fungus]</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>26</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Fungi</ClaimsClassification>
+      <Name>[a cause of Ringworm] [a cause of Ringworm of the foot]</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>27</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Viruses</ClaimsClassification>
+      <Name>*Adenovirus Type 4</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>28</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Viruses</ClaimsClassification>
+      <Name>*Hepatitis B Virus (HBV)</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>29</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Viruses</ClaimsClassification>
+      <Name>*Hepatitis C Virus (HCV)</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>30</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Viruses</ClaimsClassification>
+      <Name>*Herpes Simplex Type 1</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>31</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Viruses</ClaimsClassification>
+      <Name>*Herpes Simplex Type 2</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>32</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Viruses</ClaimsClassification>
+      <Name>*Human coronavirus </Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>33</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Viruses</ClaimsClassification>
+      <Name>*HIV-1 (AIDS virus)</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>34</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Viruses</ClaimsClassification>
+      <Name>*Influenza A/ Hong Kong</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>35</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Viruses</ClaimsClassification>
+      <Name>*Respiratory Syncytial Virus (RSV)</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>36</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Viruses</ClaimsClassification>
+      <Name>*Rubella (German Measles)</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>37</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Viruses</ClaimsClassification>
+      <Name>*Vaccinia [Pox virus]</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>38</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Viruses</ClaimsClassification>
+      <Name>*Avian polyomavirus</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>39</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Viruses</ClaimsClassification>
+      <Name>*Canine distemper</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>40</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Viruses</ClaimsClassification>
+      <Name>*Canine parvovirus- at 2 oz. per gallon</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>41</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Viruses</ClaimsClassification>
+      <Name>*Feline leukemia</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>42</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Viruses</ClaimsClassification>
+      <Name>*Feline picomavirus</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>43</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Viruses</ClaimsClassification>
+      <Name>*Infectious bovine rhinotracheitis</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>44</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Viruses</ClaimsClassification>
+      <Name>*Infectious bronchitis (Avian IBV)</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>45</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Viruses</ClaimsClassification>
+      <Name>*Pseudorabies (PRV)</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>46</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Viruses</ClaimsClassification>
+      <Name>*Rabies</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>47</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Viruses</ClaimsClassification>
+      <Name>*Transmissible gastroenteritis virus (TGE)</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>48</ID>
+      <UsageType>T</UsageType>
+      <Name>Disinfectant</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>49</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Bacteria</ClaimsClassification>
+      <Name>&lt;p&gt;Pseudomonas aeruginosa&lt;sup&gt; &lt;sub&gt;1&lt;/sub&gt;&lt;/sup&gt;&lt;/p&gt;</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>50</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Bacteria</ClaimsClassification>
+      <Name>&lt;p&gt;Staphylococcus aureus&lt;sup&gt; &lt;sub&gt;1&lt;/sub&gt;&lt;/sup&gt;&lt;/p&gt;</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>51</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Bacteria</ClaimsClassification>
+      <Name>Salmonella choleraesuis</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>52</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Bacteria</ClaimsClassification>
+      <Name>&lt;p&gt;Acinetobacter calcoaceticus&lt;/p&gt;</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>53</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Bacteria</ClaimsClassification>
+      <Name>&lt;p&gt;Bordetella bronchiseptica&lt;/p&gt;</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>54</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Bacteria</ClaimsClassification>
+      <Name>Chlamydia psittaci</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>55</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Bacteria</ClaimsClassification>
+      <Name>Enterobacter aerogenes</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>56</ID>
+      <UsageType>C</UsageType>
+      <ClaimsClassification>Bacteria</ClaimsClassification>
+      <Name>Enterobacter cloacae</Name>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>57</ID>
+      <UsageType>S</UsageType>
+      <Name>Glazed ceramic</Name>
+      <AUTOSEQ>1</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>58</ID>
+      <UsageType>U</UsageType>
+      <Name>Airplanes</Name>
+      <AUTOSEQ>2</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>59</ID>
+      <UsageType>U</UsageType>
+      <Name>Airports</Name>
+      <AUTOSEQ>3</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>60</ID>
+      <UsageType>U</UsageType>
+      <Name>Animal Laboratories</Name>
+      <AUTOSEQ>4</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>61</ID>
+      <UsageType>U</UsageType>
+      <Name>Animal Life Science Laboratories</Name>
+      <AUTOSEQ>5</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>62</ID>
+      <UsageType>U</UsageType>
+      <Name>Athletic Facilities</Name>
+      <AUTOSEQ>6</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>63</ID>
+      <UsageType>U</UsageType>
+      <Name>Barber Shops</Name>
+      <AUTOSEQ>9</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>64</ID>
+      <UsageType>U</UsageType>
+      <Name>Bars</Name>
+      <AUTOSEQ>10</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>65</ID>
+      <UsageType>U</UsageType>
+      <Name>Bathrooms</Name>
+      <AUTOSEQ>11</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>66</ID>
+      <UsageType>U</UsageType>
+      <Name>Beverage Plants</Name>
+      <AUTOSEQ>12</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>67</ID>
+      <UsageType>U</UsageType>
+      <Name>Boats</Name>
+      <AUTOSEQ>13</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>68</ID>
+      <UsageType>U</UsageType>
+      <Name>Breeding and Grooming Establishments</Name>
+      <AUTOSEQ>14</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>69</ID>
+      <UsageType>U</UsageType>
+      <Name>Breweries</Name>
+      <AUTOSEQ>15</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>70</ID>
+      <UsageType>U</UsageType>
+      <Name>Buses</Name>
+      <AUTOSEQ>16</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>71</ID>
+      <UsageType>U</UsageType>
+      <Name>Business and Office Buildings</Name>
+      <AUTOSEQ>17</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>72</ID>
+      <UsageType>U</UsageType>
+      <Name>Cafeterias</Name>
+      <AUTOSEQ>18</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>73</ID>
+      <UsageType>U</UsageType>
+      <Name>Camp Grounds</Name>
+      <AUTOSEQ>19</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>74</ID>
+      <UsageType>U</UsageType>
+      <Name>Campers</Name>
+      <AUTOSEQ>20</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>75</ID>
+      <UsageType>U</UsageType>
+      <Name>Carpeting</Name>
+      <AUTOSEQ>21</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>76</ID>
+      <UsageType>U</UsageType>
+      <Name>Cars</Name>
+      <AUTOSEQ>22</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>77</ID>
+      <UsageType>U</UsageType>
+      <Name>Citus Plants </Name>
+      <AUTOSEQ>23</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>78</ID>
+      <UsageType>U</UsageType>
+      <Name>Colleges</Name>
+      <AUTOSEQ>24</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>79</ID>
+      <UsageType>U</UsageType>
+      <Name>Commercial Institutions</Name>
+      <AUTOSEQ>25</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>80</ID>
+      <UsageType>U</UsageType>
+      <Name>Convenience Stores</Name>
+      <AUTOSEQ>26</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>81</ID>
+      <UsageType>U</UsageType>
+      <Name>Correctional Facilities</Name>
+      <AUTOSEQ>27</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>82</ID>
+      <UsageType>U</UsageType>
+      <Name>Dairy Farms</Name>
+      <AUTOSEQ>28</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>83</ID>
+      <UsageType>U</UsageType>
+      <Name>Day Care Centers</Name>
+      <AUTOSEQ>29</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>84</ID>
+      <UsageType>U</UsageType>
+      <Name>Dental Offices</Name>
+      <AUTOSEQ>30</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>85</ID>
+      <UsageType>U</UsageType>
+      <Name>Emergency Vehicles</Name>
+      <AUTOSEQ>31</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>86</ID>
+      <UsageType>U</UsageType>
+      <Name>Equine Farms</Name>
+      <AUTOSEQ>32</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>87</ID>
+      <UsageType>U</UsageType>
+      <Name>Factories</Name>
+      <AUTOSEQ>33</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>88</ID>
+      <UsageType>U</UsageType>
+      <Name>Farms</Name>
+      <AUTOSEQ>34</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>89</ID>
+      <UsageType>U</UsageType>
+      <Name>Federally Inspected Meat and Poultry Plants</Name>
+      <AUTOSEQ>35</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>90</ID>
+      <UsageType>U</UsageType>
+      <Name>Food Processing Plants</Name>
+      <AUTOSEQ>36</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>91</ID>
+      <UsageType>U</UsageType>
+      <Name>Food Storage Areas</Name>
+      <AUTOSEQ>37</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>92</ID>
+      <UsageType>U</UsageType>
+      <Name>Funeral Homes</Name>
+      <AUTOSEQ>38</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>93</ID>
+      <UsageType>U</UsageType>
+      <Name>Health Care Facilities</Name>
+      <AUTOSEQ>39</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>94</ID>
+      <UsageType>U</UsageType>
+      <Name>Hog Farms</Name>
+      <AUTOSEQ>40</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>95</ID>
+      <UsageType>U</UsageType>
+      <Name>Homes (Households)</Name>
+      <AUTOSEQ>41</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>96</ID>
+      <UsageType>U</UsageType>
+      <Name>Hospitals</Name>
+      <AUTOSEQ>42</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>97</ID>
+      <UsageType>U</UsageType>
+      <Name>Hotels</Name>
+      <AUTOSEQ>43</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>98</ID>
+      <UsageType>U</UsageType>
+      <Name>Industrial Institutions</Name>
+      <AUTOSEQ>44</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>99</ID>
+      <UsageType>U</UsageType>
+      <Name>Institutional Facilities</Name>
+      <AUTOSEQ>45</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>100</ID>
+      <UsageType>U</UsageType>
+      <Name>Institutional Kitchens</Name>
+      <AUTOSEQ>46</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>101</ID>
+      <UsageType>U</UsageType>
+      <Name>Institutions</Name>
+      <AUTOSEQ>47</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>102</ID>
+      <UsageType>U</UsageType>
+      <Name>Kennels</Name>
+      <AUTOSEQ>48</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>103</ID>
+      <UsageType>U</UsageType>
+      <Name>Kitchens</Name>
+      <AUTOSEQ>49</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>104</ID>
+      <UsageType>U</UsageType>
+      <Name>Laundry Industry</Name>
+      <AUTOSEQ>50</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>105</ID>
+      <UsageType>U</UsageType>
+      <Name>Locker Rooms</Name>
+      <AUTOSEQ>51</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>106</ID>
+      <UsageType>U</UsageType>
+      <Name>Medical Clinics</Name>
+      <AUTOSEQ>52</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>107</ID>
+      <UsageType>U</UsageType>
+      <Name>Medical Offices</Name>
+      <AUTOSEQ>53</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>108</ID>
+      <UsageType>U</UsageType>
+      <Name>Mobile Homes</Name>
+      <AUTOSEQ>54</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>109</ID>
+      <UsageType>U</UsageType>
+      <Name>Morgues</Name>
+      <AUTOSEQ>55</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>110</ID>
+      <UsageType>U</UsageType>
+      <Name>Mortuaries</Name>
+      <AUTOSEQ>56</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>111</ID>
+      <UsageType>U</UsageType>
+      <Name>Motels</Name>
+      <AUTOSEQ>57</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>112</ID>
+      <UsageType>U</UsageType>
+      <Name>Mushroom Farms</Name>
+      <AUTOSEQ>58</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>113</ID>
+      <UsageType>U</UsageType>
+      <Name>Nurseries</Name>
+      <AUTOSEQ>59</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>114</ID>
+      <UsageType>U</UsageType>
+      <Name>Nursing Homes</Name>
+      <AUTOSEQ>60</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>115</ID>
+      <UsageType>U</UsageType>
+      <Name>Office Buildings</Name>
+      <AUTOSEQ>61</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>116</ID>
+      <UsageType>U</UsageType>
+      <Name>Pet Animal Quarters</Name>
+      <AUTOSEQ>62</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>117</ID>
+      <UsageType>U</UsageType>
+      <Name>Pet Shops</Name>
+      <AUTOSEQ>63</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>118</ID>
+      <UsageType>U</UsageType>
+      <Name>Playground Equipment</Name>
+      <AUTOSEQ>64</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>119</ID>
+      <UsageType>U</UsageType>
+      <Name>Poultry Farms</Name>
+      <AUTOSEQ>65</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>120</ID>
+      <UsageType>U</UsageType>
+      <Name>Prisons</Name>
+      <AUTOSEQ>66</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>121</ID>
+      <UsageType>U</UsageType>
+      <Name>Protective Safety Gear</Name>
+      <AUTOSEQ>67</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>122</ID>
+      <UsageType>U</UsageType>
+      <Name>Public Facilities</Name>
+      <AUTOSEQ>68</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>123</ID>
+      <UsageType>U</UsageType>
+      <Name>Public Rest Rooms</Name>
+      <AUTOSEQ>69</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>124</ID>
+      <UsageType>U</UsageType>
+      <Name>Recreational Vehicle Use</Name>
+      <AUTOSEQ>70</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>125</ID>
+      <UsageType>U</UsageType>
+      <Name>Restaurants</Name>
+      <AUTOSEQ>71</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>126</ID>
+      <UsageType>U</UsageType>
+      <Name>Salons (Beauty)</Name>
+      <AUTOSEQ>72</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>127</ID>
+      <UsageType>U</UsageType>
+      <Name>Schools</Name>
+      <AUTOSEQ>73</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>128</ID>
+      <UsageType>U</UsageType>
+      <Name>Ships</Name>
+      <AUTOSEQ>74</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>129</ID>
+      <UsageType>U</UsageType>
+      <Name>Shower and Bath Areas</Name>
+      <AUTOSEQ>75</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>130</ID>
+      <UsageType>U</UsageType>
+      <Name>Tack Shops</Name>
+      <AUTOSEQ>76</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>131</ID>
+      <UsageType>U</UsageType>
+      <Name>Tanning Salons</Name>
+      <AUTOSEQ>77</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>132</ID>
+      <UsageType>U</UsageType>
+      <Name>Taxis</Name>
+      <AUTOSEQ>78</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>133</ID>
+      <UsageType>U</UsageType>
+      <Name>Trailers</Name>
+      <AUTOSEQ>79</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>134</ID>
+      <UsageType>U</UsageType>
+      <Name>Trains</Name>
+      <AUTOSEQ>80</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>135</ID>
+      <UsageType>U</UsageType>
+      <Name>Transportation Terminals</Name>
+      <AUTOSEQ>81</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>136</ID>
+      <UsageType>U</UsageType>
+      <Name>Turkey Farms</Name>
+      <AUTOSEQ>82</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>137</ID>
+      <UsageType>U</UsageType>
+      <Name>USDA Inspected Food Processing Facilities</Name>
+      <AUTOSEQ>83</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>138</ID>
+      <UsageType>U</UsageType>
+      <Name>Verterinary Clinics</Name>
+      <AUTOSEQ>84</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>139</ID>
+      <UsageType>U</UsageType>
+      <Name>Whirlpool and Foot Spa Use</Name>
+      <AUTOSEQ>85</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>140</ID>
+      <UsageType>U</UsageType>
+      <Name>Zoos</Name>
+      <AUTOSEQ>86</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>141</ID>
+      <UsageType>S</UsageType>
+      <Name>Appliances</Name>
+      <AUTOSEQ>140</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>142</ID>
+      <UsageType>S</UsageType>
+      <Name>Bathroom fixtures</Name>
+      <AUTOSEQ>141</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>143</ID>
+      <UsageType>S</UsageType>
+      <Name>Bathtubs (Fiberglass)</Name>
+      <AUTOSEQ>142</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>144</ID>
+      <UsageType>S</UsageType>
+      <Name>Cabinets</Name>
+      <AUTOSEQ>143</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>145</ID>
+      <UsageType>S</UsageType>
+      <Name>Cages</Name>
+      <AUTOSEQ>144</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>146</ID>
+      <UsageType>S</UsageType>
+      <Name>Chairs</Name>
+      <AUTOSEQ>145</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>147</ID>
+      <UsageType>S</UsageType>
+      <Name>Coils and drain pans of air conditioning and refrigeration equipment and heat pumps</Name>
+      <AUTOSEQ>146</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>148</ID>
+      <UsageType>S</UsageType>
+      <Name>Conductive flooring</Name>
+      <AUTOSEQ>147</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>149</ID>
+      <UsageType>S</UsageType>
+      <Name>Counters (countertops)</Name>
+      <AUTOSEQ>148</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>150</ID>
+      <UsageType>S</UsageType>
+      <Name>Countertop laminates</Name>
+      <AUTOSEQ>149</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>151</ID>
+      <UsageType>S</UsageType>
+      <Name>Desks</Name>
+      <AUTOSEQ>150</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>152</ID>
+      <UsageType>S</UsageType>
+      <Name>Doorknobs</Name>
+      <AUTOSEQ>151</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>153</ID>
+      <UsageType>S</UsageType>
+      <Name>Floors</Name>
+      <AUTOSEQ>152</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>154</ID>
+      <UsageType>S</UsageType>
+      <Name>Garbage cans</Name>
+      <AUTOSEQ>153</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>155</ID>
+      <UsageType>S</UsageType>
+      <Name>Highchairs</Name>
+      <AUTOSEQ>154</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>156</ID>
+      <UsageType>S</UsageType>
+      <Name>Kennel runs</Name>
+      <AUTOSEQ>155</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>157</ID>
+      <UsageType>S</UsageType>
+      <Name>Microwave ovens</Name>
+      <AUTOSEQ>156</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>158</ID>
+      <UsageType>S</UsageType>
+      <Name>Outdoor furniture</Name>
+      <AUTOSEQ>157</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>159</ID>
+      <UsageType>S</UsageType>
+      <Name>Refrigerators</Name>
+      <AUTOSEQ>158</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>160</ID>
+      <UsageType>S</UsageType>
+      <Name>Refrigerated storage and display equipment</Name>
+      <AUTOSEQ>159</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>161</ID>
+      <UsageType>S</UsageType>
+      <Name>Tanning Beds</Name>
+      <AUTOSEQ>160</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>162</ID>
+      <UsageType>S</UsageType>
+      <Name>Tanning Equipment</Name>
+      <AUTOSEQ>161</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>163</ID>
+      <UsageType>S</UsageType>
+      <Name>Telephones</Name>
+      <AUTOSEQ>162</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>164</ID>
+      <UsageType>S</UsageType>
+      <Name>Other hard nonporous surfaces made of:</Name>
+      <AUTOSEQ>163</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>165</ID>
+      <UsageType>S</UsageType>
+      <Name>Glazed enameled surfaces</Name>
+      <AUTOSEQ>164</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>166</ID>
+      <UsageType>S</UsageType>
+      <Name>Laminated surfaces</Name>
+      <AUTOSEQ>165</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>167</ID>
+      <UsageType>S</UsageType>
+      <Name>Metal</Name>
+      <AUTOSEQ>166</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>168</ID>
+      <UsageType>S</UsageType>
+      <Name>Plastic (such as polystyrene or polypropylene)</Name>
+      <AUTOSEQ>167</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>169</ID>
+      <UsageType>S</UsageType>
+      <Name>Sealed granite</Name>
+      <AUTOSEQ>168</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>170</ID>
+      <UsageType>S</UsageType>
+      <Name>Sealed limestone</Name>
+      <AUTOSEQ>169</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>171</ID>
+      <UsageType>S</UsageType>
+      <Name>Sealed marble</Name>
+      <AUTOSEQ>170</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>172</ID>
+      <UsageType>S</UsageType>
+      <Name>Sealed slate</Name>
+      <AUTOSEQ>171</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>173</ID>
+      <UsageType>S</UsageType>
+      <Name>Sealed stone</Name>
+      <AUTOSEQ>172</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>174</ID>
+      <UsageType>S</UsageType>
+      <Name>Sealed terra cotta</Name>
+      <AUTOSEQ>173</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>175</ID>
+      <UsageType>S</UsageType>
+      <Name>Sealed terrazzo</Name>
+      <AUTOSEQ>174</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>176</ID>
+      <UsageType>S</UsageType>
+      <Name>Stainless steel</Name>
+      <AUTOSEQ>175</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>177</ID>
+      <UsageType>S</UsageType>
+      <Name>Upholstery</Name>
+      <AUTOSEQ>176</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>178</ID>
+      <UsageType>S</UsageType>
+      <Name>Woodwork</Name>
+      <AUTOSEQ>177</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>179</ID>
+      <UsageType>T</UsageType>
+      <Name>Sanitizer</Name>
+      <AUTOSEQ>179</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>180</ID>
+      <UsageType>T</UsageType>
+      <Name>Viruscide</Name>
+      <AUTOSEQ>180</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>181</ID>
+      <UsageType>T</UsageType>
+      <Name>Fungicide</Name>
+      <AUTOSEQ>181</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>182</ID>
+      <UsageType>T</UsageType>
+      <Name>Algaecide</Name>
+      <AUTOSEQ>182</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>183</ID>
+      <UsageType>T</UsageType>
+      <Name>General Purpose Anti-microbial</Name>
+      <AUTOSEQ>183</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+    <S_Usage>
+      <ID>184</ID>
+      <UsageType>T</UsageType>
+      <Name>Tuberculocide</Name>
+      <AUTOSEQ>184</AUTOSEQ>
+      <FKIDSUBREGLABELCON>1</FKIDSUBREGLABELCON>
+    </S_Usage>
+  </SubregLabelContent>
+  </zOI>

@@ -1,0 +1,11 @@
+z1000-Zeidon    Z011C063 TZWDVORO 03/14/08   18:53:25 1.0a2    
+eViewObjRef 1
+aZKey      1163363
+aName      rPrimReg
+aDesc      VOR automatically built from LOD Dialog
+
+eLOD       2
+aZKey      1157074
+aName      rPrimReg
+aDesc      Read only Primary Registrant (used for existence checking)
+

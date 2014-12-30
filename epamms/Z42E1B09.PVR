@@ -1,0 +1,11 @@
+z1000-Zeidon    Z42E1B09 TZWDVORO 11/24/08   10:56:27 1.0a2    
+eViewObjRef 1
+aZKey      70130441
+aName      lSLC
+aDesc      VOR automatically built from LOD Dialog
+
+eLOD       2
+aZKey      70130418
+aName      lSLC
+aDesc      Read only SLC for lists, etc.
+

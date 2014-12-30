@@ -1,0 +1,220 @@
+z1000-Zeidon    ZPLOCKO  TZZOLODO 08/16/11   22:58:55 1.0a2    
+eLOD       1
+aZKey      68568663
+aName      ZPLOCKO
+aDesc      Zeidon Locking Object
+
+eLOD_EntityParent 2
+aName      ZeidonLock
+aIndentName ZeidonLock
+aZKey      68568664
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aWork      N
+aParentDeleteBehave D
+aDesc      Used for Automatic locking.
+
+eLOD_AttributeRec 3
+aZKey      68568665
+
+eER_AttributeRec 4
+aName      LOD_Name
+aZKey      68568654
+aLth       35
+aNotNull   Y
+
+eDomainRec 5
+aZKey      68568081
+aName      Text
+aDomainType E
+aDataType  S
+aMaxStringLth 254
+aDesc      Any Character String
+aContextRestriction N
+
+eLOD_AttributeRec 3
+aZKey      68568666
+
+eER_AttributeRec 4
+aName      KeyValue
+aZKey      68568657
+aLth       200
+aNotNull   Y
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      68568667
+
+eER_AttributeRec 4
+aName      UserName
+aZKey      68568659
+aLth       32
+aNotNull   Y
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      68568668
+
+eER_AttributeRec 4
+aName      AllowRead
+aZKey      68568660
+aLth       1
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      68568669
+
+eER_AttributeRec 4
+aName      Timestamp
+aZKey      68568661
+aNotNull   Y
+
+eDomainRec 5
+aZKey      68568141
+aName      DateTime
+aDomainType A
+aDataType  T
+aMaxStringLth 20
+aDesc      Basic Timestamp Domain
+aContextRestriction N
+
+eLOD_AttributeRec 3
+aZKey      68568670
+
+eER_AttributeRec 4
+aName      ID
+aZKey      68568662
+
+eDomainRec 5
+aZKey      68568083
+aName      Integer
+aDomainType E
+aDataType  L
+aMaxStringLth 4
+aDecimalFormat 0
+aDesc      Integer numbers from -lots to +lots
+aContextRestriction N
+
+eER_EntityRec 3
+aName      ZeidonLocking
+aZKey      68568653
+aPurpose   F
+aDesc      Used for Automatic database locking
+aER_DiagramPosX 83
+aER_DiagramPosY 1
+
+eLOD_Entity 2
+awkSelectedAttributeForDragSort 4
+
+eLOD_Attribute 3
+awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 2
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 4
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 5
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 6
+
+eER_Attribute 4
+
+eDomain    5
+
+eER_Entity 3
+
+ePOD       2
+aNAME      ZPLOCKO
+aZKey      1157826
+aTE_SourceZKey 4121658
+
+eTE_DB_Environ 3
+aName      ePamms
+aZKey      68568367
+aDesc      ePamms Application
+aType      P
+
+eTE_DBMS_Source 4
+aName      ePammsM
+aZKey      4121658
+aDesc      MySQL ePamms database
+aParadigm  R
+aDBMS      MySQL 5.1 via ODBC
+aGenerateExecutable kzhsqlmb
+aExecutable kzhsqloa
+aGenKeyExecutable kzhgenky
+aDisplayOwner Y
+aDisplayDBMS_ID N
+aDBH_Data  376
+TZDBHODO·********************************************************************************************************************************z1000-Zeidon    ZTF_12C4_TZDBHODO 05/07/10   14:07:31 1.0a2    
+eODBC      1
+aTimestampPrecision 3
+aTimestampAsString N
+aBlobsLast N
+aDropTables Y
+aAddTableNameToFK_Override Y
+aGenCreateIdxs Y
+aGenDropIdxs N
+aGenCreateTables Y
+
+
+
+i7         4
+i10        4
+i13        4
+i21        1
+i22        2
+i23        3
+i24        4
+i25        5
+i26        6
+i27        4
+i28        8
+i29        9
+i30        4
+i31        11
+i32        12
+i33        4
+i34        14
+i35        15
+i36        16
+i37        17
+i38        18
+i39        19
+i40        20

@@ -138,14 +138,14 @@ $(function() {
                data: {},
             // beforeSend - callback function that is executed before the request is sent
                success: function( data, textStatus, jqXHR ) {
-                           console.log( "setCursorPosition: success status: " + textStatus + "  data: " + data + "  jqXHR: " + jqXHR );
+                        // console.log( "setCursorPosition: success status: " + textStatus + "  data: " + data + "  jqXHR: " + jqXHR );
                            GOTO_UpdateBlockComponent();
                         },
                error:   function( jqXHR, textStatus, errorThrown ) {
-                           console.log( "setCursorPosition: error xhr response: " + jqXHR.responseText + "  status: " + textStatus + "  error: " + errorThrown );
+                        // console.log( "setCursorPosition: error xhr response: " + jqXHR.responseText + "  status: " + textStatus + "  error: " + errorThrown );
                         },
                complete: function( jqXHR, textStatus ) { // callback function that executes whenever the request finishes
-                           console.log( "setCursorPosition: complete status: " + textStatus + "  response: " + jqXHR.responseText );
+                        // console.log( "setCursorPosition: complete status: " + textStatus + "  response: " + jqXHR.responseText );
                         }
       });
    }
@@ -185,7 +185,7 @@ $(function() {
    //        - if there is a parent of the selected element, select the parent
    //        - set the element as the first selected and add as the only element in the selected list
    $("body").on( "dblclick", ".canvas-element", function(e) {
-      console.log( "Double Click on canvas-element: " + this.id + " has been pressed!" );
+   // console.log( "Double Click on canvas-element: " + this.id + " has been pressed!" );
       g_loadedLLD = "mSPLDef";
       if ( g_updatedLLD ) {
          ConvertWysiwygLabelDesignToZeidonJson( "saveLabel", g_loadedLLD, saveLabelCallback, this );
@@ -264,7 +264,7 @@ $(function() {
 // $("#zmenu").click( function(e) {
    $("#zmenu").on( "click", function(e) {
       var active = $( "#zaccordion" ).accordion( "option", "active" );
-      console.log( "menu clicked: " + active );
+   // console.log( "menu clicked: " + active );
       localStorage.setItem( "epamms_graphic_accordion", active );
       e.stopPropagation();
       return false;  // prevent propagation, otherwise the click will be passed on to any element underneath the accordion
@@ -329,7 +329,7 @@ $(function() {
       // $(this).css( "z-index", 0 );
       // updatePositionStatus( $(this), ui.offset.top - yOffset, ui.offset.left - xOffset );
       // console.log( "Stop yDrag: " + Math.round( ui.offset.top - g_yOffset ).toString() + "  xDrag: " + Math.round( ui.offset.left - g_xOffset ).toString() );
-         console.log( "Scroll #label top: " + $("#label").scrollTop() + "   left: " + $("#label").scrollLeft() );
+      // console.log( "Scroll #label top: " + $("#label").scrollTop() + "   left: " + $("#label").scrollLeft() );
       // $(this).data( "z_^top", Math.round( ui.offset.top - yOffset ).toString() );    not right ... done later
       // $(this).data( "z_^left", Math.round( ui.offset.left - xOffset ).toString() );  not right ... done later
       // setCurrentBlockData( $(this), "updated 1" );
@@ -350,7 +350,7 @@ $(function() {
    // In the 'drop' event handler function for droppable, the dropped element is: ui.draggable
 
    function setBlockDraggableResizable( $canvas, $canvasElement, $target ) {
-      console.log( "Canvas: " + $canvas.attr( "id" ) + "  canvasElement: " + $canvasElement.attr( "id" ) + "  target: " + $target.attr( "id" ) );
+   // console.log( "Canvas: " + $canvas.attr( "id" ) + "  canvasElement: " + $canvasElement.attr( "id" ) + "  target: " + $target.attr( "id" ) );
       $canvasElement.draggable({
          cancel: "a.ui-icon", // clicking a link with class .ui-icon won't initiate dragging
          containment: "#page",
@@ -437,7 +437,7 @@ $(function() {
                }
                var top = Math.round( top );
                var left = Math.round( left );
-               console.log( ".page, .block-element top:" + top + "  left: " + left );
+            // console.log( ".page, .block-element top:" + top + "  left: " + left );
                $canvasElement.offset({ top: top, left: left });
                $canvas.append( $canvasElement );
                g_updatedLLD = true;
@@ -450,8 +450,8 @@ $(function() {
             clearListAndSelection( $canvasElement[0] ); // clear the list and set current selection
          } else {
             var $canvasElement = $(ui.helper).clone(); // ui.draggable.clone();  dragging new block
-            console.log( ".page, .block-element new block top:" + event.pageY + "  left: " + event.pageX +
-                         "   height: " + $(ui.helper).height() + "   width: " + $(ui.helper).width() );
+         // console.log( ".page, .block-element new block top:" + event.pageY + "  left: " + event.pageX +
+         //              "   height: " + $(ui.helper).height() + "   width: " + $(ui.helper).width() );
                       // "   height: " + ($(ui.helper).height() + g_pixelsBorder) + "   width: " + ($(ui.helper).width() + g_pixelsBorder) );
             $canvasElement.height( $(ui.helper).height() ).width( $(ui.helper).width() );
             $canvasElement.css({ top: event.pageY, left: event.pageX });
@@ -475,23 +475,23 @@ $(function() {
             }
 
             setChildrenDepth( $canvas, $canvasElement );
-            console.log( ".page, .block-element new block2 top:" + Math.floor( ui.position.top - $canvas.offset().top ).toString() + "px" +
-                         "   left: " + Math.floor( ui.position.left - $canvas.offset().left ).toString() + "px"  +
-                         "   height: 81px   width: 81px" );
+         // console.log( ".page, .block-element new block2 top:" + Math.floor( ui.position.top - $canvas.offset().top ).toString() + "px" +
+         //              "   left: " + Math.floor( ui.position.left - $canvas.offset().left ).toString() + "px"  +
+         //              "   height: 81px   width: 81px" );
             $canvasElement.css({
                position: "absolute",
                top: Math.floor( ui.position.top - $canvas.offset().top ).toString() + "px",
                left: Math.floor( ui.position.left - $canvas.offset().left ).toString() + "px",
-               height: pixel2Scale( "81px" ), // pixelsPerInch
-               width: pixel2Scale( "81px" ) // pixelsPerInch
+               height: pixel2Scale( "81px", 4 ), // pixelsPerInch ... 2*g_pixelsBorder
+               width: pixel2Scale( "81px", 4 ) // pixelsPerInch ... 2*g_pixelsBorder
             });
             g_updatedLLD = true;
             var top = Math.floor( ui.position.top - $canvas.offset().top );
             var left = Math.floor( ui.position.left - $canvas.offset().left );
             var scale = g_pixelsPerInch * g_scale;
-            console.log( ".page, .block-element new block data z_^top:" + (top / scale).toFixed( 2 ) +
-                         "  z_^left: " + (left / scale).toFixed( 2 ) +
-                         "   z_^height: " +  "1.00" + "   z_^width: " +  "1.00" );
+         // console.log( ".page, .block-element new block data z_^top:" + (top / scale).toFixed( 2 ) +
+         //              "  z_^left: " + (left / scale).toFixed( 2 ) +
+         //              "   z_^height: " +  "1.00" + "   z_^width: " +  "1.00" );
             $canvasElement.data( "z_^top", (top / scale).toFixed( 2 ) );
             $canvasElement.data( "z_^left", (left / scale).toFixed( 2 ) );
             $canvasElement.data( "z_^height", "1.00" );
@@ -508,9 +508,10 @@ $(function() {
    }
 */
 
+   // this scales pixels with respect to the current zoom
    function pixel2Scale( attr ) {
       if ( g_scale === 1 ) {
-         console.log( "pixel2Scale attr: " + attr + " ==> " + attr );
+      // console.log( "pixel2Scale: " + attr + " ==> " + attr );
          return attr;
       } else {
          var idx = attr.indexOf( "px" );
@@ -522,15 +523,15 @@ $(function() {
             pixels = 0;
          }
          var n = Math.round( pixels * g_scale );
-         console.log( "pixel2Scale attr: " + attr + " ==> " + n.toString() + "px" );
+      // console.log( "pixel2Scale: " + attr + " ==> " + n.toString() + "px" );
          return n.toString() + "px";
       }
    }
 
    function setCurrentBlockData( $element, message ) {
-      console.log( "setCurrentBlockData: " + message );
+   // console.log( "setCurrentBlockData: " + message );
    // g_updatedLLD = true; this should be set prior to calling this function as necessary
-      mapUiElementToData( $element );
+      mapElementCssToElementData( $element );
       if ( g_$current_block && g_$current_block.attr( "id" ) !== $element.attr( "id" ) ) {
          mapUiDataToElementData( g_$current_block );
       }
@@ -539,16 +540,55 @@ $(function() {
       $("#zBlockTag").val( $element.attr( "id" ) );
    }
 
-   function inch2px( attr ) {
+   // this is used to get the number of pixels from the inches value without respect to scale
+   function inch2px( attr, border ) {
       var idx = attr.indexOf( "in" );
       if ( idx >= 0 ) {
          attr = attr.substring( 0, idx );
       }
-      var pixels = Math.round( parseFloat( attr ) * g_pixelsPerInch );
+      var pixels = Math.round( parseFloat( attr ) * g_pixelsPerInch ) + border;
       if ( pixels < 0 ) {
          pixels = 0;
       }
+   // console.log( "inch2px attr: " + attr + "  px: " + pixels );
       return( pixels + "px" );      
+   }
+
+   // this is used to get the number of pixels from the inches value respecting to scale
+   function scaledInch2Pixel( attr, border ) {
+      var idx = attr.indexOf( "in" );
+      if ( idx >= 0 ) {
+         attr = attr.substring( 0, idx );
+      }
+      var inches = parseFloat( attr );
+      if ( inches < 0 ) {
+         inches = 0;
+      }
+      var pixels = Math.round( inches * g_pixelsPerInch * g_scale ) + border;
+   // console.log( "scaledInch2Pixel attr: " + attr + "  px: " + pixels );
+      return pixels;
+   }
+
+   function resizeImg() {
+      $( "div.page" ).each( function() {
+         var $this = $(this);
+      // console.log( "Scaling page: " + $this.attr( "id" ) );
+         var scale = Math.floor( g_scale * 81 );
+         $this.css( 'background-size', scale + "px " + scale + "px" );
+      });
+      $( ".canvas-element" ).each( function() {
+         var $this = $(this);
+         var top = scaledInch2Pixel( $this.data( "z_^top" ) || "0", 0 );
+         var left = scaledInch2Pixel( $this.data( "z_^left" ) || "0", 0 );
+         var height = scaledInch2Pixel( $this.data( "z_^height" ) || "0", 4 ); // 2*g_pixelsBorder
+         var width = scaledInch2Pixel( $this.data( "z_^width" ) || "0", 4 ); // 2*g_pixelsBorder
+      // console.log( "Resize Tag: " + $this.attr( "id" ) +
+      //                "  Top: " + $this.data( "z_^top" ) + "in ~ " + top + "px" +
+      //                "  Left: " + $this.data( "z_^left" ) + "in ~ " + left + "px" +
+      //                "  Height: " + $this.data( "z_^height" ) + "in ~ " + height + "px" +
+      //                "  Width: " + $this.data( "z_^width" ) ) + "in ~ " + width + "px";
+         $this.css({ top: top, left: left, height: height, width: width });
+      });
    }
 
    function scalePixel2Inch( attr, border, message ) {  // "message" for debugging only
@@ -560,27 +600,30 @@ $(function() {
       if ( pixels < 0 ) {
          pixels = 0;
       }
-      var n = (pixels + border) / (g_pixelsPerInch * g_scale);
-      console.log( "scalePixel2Inch attr: " + attr + "   " + message + ": " + n.toFixed( 2 ).toString() + "in" );
-      return n.toFixed( 2 );
+      var n = (pixels - border) / (g_pixelsPerInch * g_scale);
+      n = n.toFixed( 2 );
+   // console.log( "scalePixel2Inch attr: " + attr + "   " + message + ": " + n.toString() + "in" );
+      return n;
    }
 
-   function mapUiElementToData( $element ) {
+   function mapElementCssToElementData( $element ) {
    // $item.data( "z_^top", $item.position().top );  these don't have units (e.g. px)
    // $item.data( "z_^left", $item.position().left );
       var id = $element.parent().attr( "id" );
       $element.data( "rparent", id );
       $element.data( "z_^tag", $element.attr( "id" ) );
-      $element.data( "z_^top", scalePixel2Inch( $element.css( "top" ), 0, "top" ) );
-      $element.data( "z_^left", scalePixel2Inch( $element.css( "left" ), 0, "left" ) );
-      $element.data( "z_^height", scalePixel2Inch( $element.css( "height" ), 4, "height" ) ); // 2*g_pixelsBorder
-      $element.data( "z_^width", scalePixel2Inch( $element.css( "width" ), 4, "width" ) ); // 2*g_pixelsBorder
+      // We can only mess with the position/size attributes when on a graphical resize or reposition.  So we cannot
+      // set top/left/height/width from the css values when we are only changing which block/panel is being selected.
+   // $element.data( "z_^top", scalePixel2Inch( $element.css( "top" ), 0, "top" ) );
+   // $element.data( "z_^left", scalePixel2Inch( $element.css( "left" ), 0, "left" ) );
+   // $element.data( "z_^height", scalePixel2Inch( $element.css( "height" ), 4, "height" ) ); // 2*g_pixelsBorder
+   // $element.data( "z_^width", scalePixel2Inch( $element.css( "width" ), 4, "width" ) ); // 2*g_pixelsBorder
       $element.css({ position: "absolute" });
-   // displayElementData( "mapUiElementToData: ", $element );
+   // displayElementData( "mapElementCssToElementData: ", $element );
    }
 
-   // <div id="label" name="label" class="label" style="top:0px;left:0px;width:8.5in;height:9in;float:left;position:absolute;">Drop area ...     <!-- without position:relative, target position is off -->
-   // <div id="page" name="page" class="page" style="background-color:#f5f5fa;top:0px;left:0px;width:8.5in;height:9in;float:left;position:absolute;">1
+   // <div id="label" name="label" class="label" style="top:0px;left:0px;height:9in;width:8.5in;float:left;position:absolute;">Drop area ...     <!-- without position:relative, target position is off -->
+   // <div id="page" name="page" class="page" style="background-color:#f5f5fa;top:0px;left:0px;height:9in;width:8.5in;float:left;position:absolute;">1
    // <div class="block draggable canvas-element block-element ui-draggable ui-resizable" style="position:absolute;top:-0.78125px;height:253px;width:266px;left:0px;background-color: #ccffcc; display: block; float: left; color: red; border: 2px solid;" id="Tag100" name="Tag100">
    // <input type="text" id="zLabelBackgroundColor" name="zLabelBackgroundColor" class="zeidon" data-zmap="label.z_^background^color"  value="#ffffed" />
    function mapUiDataToElementData( $current_element ) {
@@ -650,12 +693,26 @@ $(function() {
       }
    }
 
+/* 1 ELEMENT_NODE
+   2 ATTRIBUTE_NODE
+   3 TEXT_NODE
+   4 CDATA_SECTION_NODE
+   5 ENTITY_REFERENCE_NODE
+   6 ENTITY_NODE
+   7 PROCESSING_INSTRUCTION_NODE
+   8 COMMENT_NODE
+   9 DOCUMENT_NODE
+   10 DOCUMENT_TYPE_NODE
+   11 DOCUMENT_FRAGMENT_NODE
+   12 NOTATION_NODE
+*/
    $("#zBlockTag").blur( function() {
       if ( g_$current_block ) {
          var newText = $(this).val();
          g_$current_block.attr( "id", newText );
          g_$current_block.attr( "name", newText );
-      // $current_block.text( newText );  this wipes out all child nodes of the div ... but the complicated next line works.
+      // $current_block.text( newText );  this wipes out all child nodes of the div ... but the complicated next line works where
+      // nodeType === 3 restricts this to TEXT_NODE.
          g_$current_block.contents().filter( function() { return this.nodeType === 3; }).replaceWith( newText );
       }
       return false;  // prevent default propagation
@@ -800,7 +857,7 @@ $(function() {
          }
       }
 
-      console.log( "Target of drop: " + $target[0].id );
+   // console.log( "Target of drop: " + $target[0].id );
       return $target;
    }
 
@@ -818,7 +875,7 @@ $(function() {
       } while ( stopLoop++ < 100 )
 
       var tag = "Tag" + g_generateTag;
-      console.log( "getUniqueId: " + tag );
+   // console.log( "getUniqueId: " + tag );
       return tag;
    }
 
@@ -833,7 +890,7 @@ $(function() {
          new_position = "Position: " + y.toFixed( 2 ) + "in, " + x.toFixed( 2 ) + "in";
       }
 
-      console.log( "UpdatePositionStatus " + message + " (" + offset_top + "," + offset_left + ") : " + new_position );
+   // console.log( "UpdatePositionStatus " + message + " (" + offset_top + "," + offset_left + ") : " + new_position );
       $("span#zdisplay_position").text( new_position );
       if ( el ) {
          $("span#zdisplay_tag").text( el.id  );
@@ -853,7 +910,7 @@ $(function() {
          new_size = "Size: " + y.toFixed( 2 ) + "in, " + x.toFixed( 2 ) + "in";
       }
 
-      console.log( "UpdateSizeStatus " + message + " (" + height + "," + width + ") : " + new_size );
+   // console.log( "UpdateSizeStatus " + message + " (" + height + "," + width + ") : " + new_size );
       $("span#zdisplay_size").text( new_size );
       if ( el ) {
          $("span#zdisplay_tag").text( el.id  );
@@ -1047,35 +1104,43 @@ $(function() {
 
    $("#zBlockTop")
       .blur( function () {
-         var top = pixel2Scale( inch2px( $(this).val() ) );
-         console.log( "block top attribute: " + $(this).val() + " ==> " + top );
-         g_$current_block.css({ top : top });
+         var top = pixel2Scale( inch2px( $(this).val(), 0 ) );
+      // console.log( "block top attribute: " + $(this).val() + " ==> " + top );
+         top = scaledInch2Pixel( $(this).val(), 0 );
+      // console.log( "scaled block top attribute: " + $(this).val() + " ==> " + top );
+          g_$current_block.css({ top : top });
    });
    
    $("#zBlockLeft")
       .blur( function () {
-         var left = pixel2Scale( inch2px( $(this).val() ) );
-         console.log( "block left attribute: " + $(this).val() + " ==> " + left );
+         var left = pixel2Scale( inch2px( $(this).val(), 0 ) );
+      // console.log( "block left attribute: " + $(this).val() + " ==> " + left );
+         left = scaledInch2Pixel( $(this).val(), 0 );
+      // console.log( "scaled block left attribute: " + $(this).val() + " ==> " + left );
          g_$current_block.css({ left : left });
    });
    
    $("#zBlockHeight")
       .blur( function () {
-         var height = pixel2Scale( inch2px( $(this).val() ) );
-         console.log( "block height attribute: " + $(this).val() + " ==> " + height );
+         var height = pixel2Scale( inch2px( $(this).val(), 4 ) ); // 2*g_pixelsBorder
+      // console.log( "block height attribute: " + $(this).val() + " ==> " + height );
+         height = scaledInch2Pixel( $(this).val(), 0 );
+      // console.log( "scaled block height attribute: " + $(this).val() + " ==> " + height );
          g_$current_block.css({ height : height });
    });
    
    $("#zBlockWidth")
       .blur( function () {
-         var width = pixel2Scale( inch2px( $(this).val() ) );
-         console.log( "block width attribute: " + $(this).val() + " ==> " + width );
+         var width = pixel2Scale( inch2px( $(this).val(), 4 ) ); // 2*g_pixelsBorder
+      // console.log( "block width attribute: " + $(this).val() + " ==> " + width );
+         width = scaledInch2Pixel( $(this).val(), 0 );
+      // console.log( "scaled block width attribute: " + $(this).val() + " ==> " + width );
          g_$current_block.css({ width : width });
    });
    
    $("input.zeidon, select.zeidon")
       .blur( function () {
-         console.log( "updated zeidon block attributes" );
+      // console.log( "updated zeidon block attributes" );
       // var jsonObj = null;
          var entityAttr = $(this).data( "zmap" );
          if ( entityAttr ) {
@@ -1086,18 +1151,18 @@ $(function() {
             if ( entity === "block" ) {
                if ( g_$current_block ) {
                   g_updatedLLD = true;
-                  console.log( "updated block attribute: " + key + "  value: " + value );
+               // console.log( "updated block attribute: " + key + "  value: " + value );
                   g_$current_block.data( key, value );
                }
             // jsonObj = dataToJSON( $current_block );
             } else if ( entity === "page" ) {
                g_updatedLLD = true;
-               console.log( "updated page attribute: " + key + "  value: " + value );
+            // console.log( "updated page attribute: " + key + "  value: " + value );
                $("#page").data( key, value );
             // jsonObj = dataToJSON( $("#page") );
             } else if ( entity === "label" ) {
                g_updatedLLD = true;
-               console.log( "updated label attribute: " + key + "  value: " + value );
+            // console.log( "updated label attribute: " + key + "  value: " + value );
                $("#label").data( key, value );
             }
             /*
@@ -1108,6 +1173,7 @@ $(function() {
             alert( "jsonOut: " + jsonOut );
             */
          }
+      // displayElementData( "zeidon blur (after)", $(this) );
       });
 
    $("#zSectionType")
@@ -1261,16 +1327,16 @@ $(function() {
                   data: jsonLabel,
                // beforeSend - callback function that is executed before the request is sent
                   success: function( data, textStatus, jqXHR ) {
-                              console.log( "ConvertWysiwygLabelDesignToZeidonJson: success status: " + textStatus );
+                           // console.log( "ConvertWysiwygLabelDesignToZeidonJson: success status: " + textStatus );
                               if ( callback_func ) {
                                  callback_func( element );
                               }
                            },
                   error:   function( jqXHR, textStatus, errorThrown ) {
-                              console.log( "ConvertWysiwygLabelDesignToZeidonJson: error xhr response: " + jqXHR.responseText + "  status: " + textStatus + "  error: " + errorThrown );
+                           // console.log( "ConvertWysiwygLabelDesignToZeidonJson: error xhr response: " + jqXHR.responseText + "  status: " + textStatus + "  error: " + errorThrown );
                            },
                   complete: function( jqXHR, textStatus ) { // callback function that executes whenever the request finishes
-                              console.log( "ConvertWysiwygLabelDesignToZeidonJson: complete status: " + textStatus + "  response: " + jqXHR.responseText );
+                           // console.log( "ConvertWysiwygLabelDesignToZeidonJson: complete status: " + textStatus + "  response: " + jqXHR.responseText );
                            }
          });
       } catch(e) {
@@ -1286,8 +1352,8 @@ $(function() {
    function openWin()
    {
    // var myWindow = window.open();
-   // var myWindow = window.open("","myWindow","width=200,height=100");
-      var myWindow = window.open( "xyz", "_blank", "toolbar=yes, menubar=yes scrollbars=yes, resizable=yes, top=300, left=600, width=1000, height=800" );
+   // var myWindow = window.open("","myWindow","height=100,width=200");
+      var myWindow = window.open( "xyz", "_blank", "toolbar=yes, menubar=yes scrollbars=yes, resizable=yes, top=300, left=600, height=800, width=1000" );
       var myDocument = myWindow.document;
       var HTMLstring="<html>\n<head>\n<title>ZeidonX JSON</title>\n" +
          "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/json.css\">\n" +
@@ -1393,38 +1459,6 @@ $(function() {
       localStorage.setItem( "epamms_graphic_spinstop", g_scale  );
       resizeImg();
    });
-
-   function roundInch2Pixel( attr ) {
-      var idx = attr.indexOf( "in" );
-      if ( idx >= 0 ) {
-         attr = attr.substring( 0, idx );
-      }
-      var inches = parseFloat( attr );
-      if ( inches < 0 ) {
-         inches = 0;
-      }
-      return Math.round( inches * g_pixelsPerInch * g_scale );
-   }
-
-   function resizeImg() {
-      $( "div.page" ).each( function() {
-         var $this = $(this);
-         console.log( "Scaling page: " + $this.attr( "id" ) );
-         var scale = Math.floor( g_scale * 81 );
-         $this.css( 'background-size', scale + "px " + scale + "px" );
-      });
-      $( ".canvas-element" ).each( function() {
-         var $this = $(this);
-         console.log( "Tag: " + $this.attr( "id" ) + "  Top: " + $this.data( "z_^top" ) + "  Left: " + $this.data( "z_^left" ) +
-                      "  Width: " + $this.data( "z_^width" ) + "  Height: " + $this.data( "z_^height" ) );
-         var top = roundInch2Pixel( $this.data( "z_^top" ) || "0" );
-         var left = roundInch2Pixel( $this.data( "z_^left" ) || "0" );
-         var width = roundInch2Pixel( $this.data( "z_^width" ) || "0" );
-         var height = roundInch2Pixel( $this.data( "z_^height" ) || "0" );
-      // console.log( "New Tag: " + $this.attr( "id" ) + "  Top: " + top + "  Left: " + left + "  Width: " + width + "  Height: " + height );
-         $this.css({ top: top, left: left, width: width, height: height });
-      });
-   }
 
 /* FTP Client
 
@@ -1866,7 +1900,7 @@ public class FileServer {
                   }
                } else if ( type === false ) {
                   // we're looking at attributes
-                  console.log( "Looking for attributes in: " + obj['id'] );
+               // console.log( "Looking for attributes in: " + obj['id'] );
                   for ( var prop in obj ) {
                   // console.log( obj[prop] );
                      if ( prop === "id" ) {
@@ -2008,17 +2042,19 @@ public class FileServer {
    }
 
    function AddHtmlLabelElementAttributes( $root, $parentElement, obj, entity, depth ) {
-      console.log( "AddHtmlLabelElementAttributes processing entity: " + entity );
+   // console.log( "AddHtmlLabelElementAttributes processing entity: " + entity );
       var $element;
       var attr = "";
       var style = "style=\"position:absolute;";
       for ( var prop in obj ) {
          if ( typeof obj[prop] === "string" ) {
-            console.log ( "Property for entity: " + entity + " prop: " + prop + ": " + obj[prop] );
+         // console.log ( "Property for entity: " + entity + " prop: " + prop + ": " + obj[prop] );
             if ( prop === "Tag" ) {
                continue;
-            } else if ( prop === "Top" || prop === "Left" || prop === "Width" || prop === "Height" ) {
-               style += prop.toLowerCase() + ":" + inch2px( obj[prop] ) + ";";
+            } else if ( prop === "Top" || prop === "Left" ) {
+               style += prop.toLowerCase() + ":" + scaledInch2Pixel( obj[prop], 0 ) + ";";
+            } else if ( prop === "Height" || prop === "Width" ) {
+               style += prop.toLowerCase() + ":" + scaledInch2Pixel( obj[prop], 4 ) + ";"; // 2*g_pixelsBorder
             } else {
                if ( prop === "Depth" ) {
                   depth = parseInt( obj[prop] );
@@ -2080,9 +2116,9 @@ public class FileServer {
          addZeidonAttributeToElement( $element, "Tag", tag );
       // addZeidonAttributeToElement( $element, "DebugEntity", entity );  // add this for debugging purposes
 /*
-         <div class=\"block draggable ui-widget-content ui-draggable canvas-element block-element ui-resizable\" style=\"position: absolute; top: 51px; left: 212px; width: 100px; height: 100px; background-color: rgb(204, 255, 204); display: block; float: left; color: rgb(255, 0, 0); border: 2px solid; background-position: initial initial; background-repeat: initial initial;\" id=\"Tag110\" name=\"Tag110\" z_^depth=\"1\">
+         <div class=\"block draggable ui-widget-content ui-draggable canvas-element block-element ui-resizable\" style=\"position: absolute; top: 51px; left: 212px; height: 100px; width: 100px; background-color: rgb(204, 255, 204); display: block; float: left; color: rgb(255, 0, 0); border: 2px solid; background-position: initial initial; background-repeat: initial initial;\" id=\"Tag110\" name=\"Tag110\" z_^depth=\"1\">
 
-         <div class=\"block draggable ui-widget-content ui-draggable canvas-element block-element ui-resizable\" style=\"position: absolute; top: 52px; left: 219px; width: 100px; height: 100px; background-color: rgb(204, 255, 204); display: block; float: left; color: rgb(255, 0, 0); border: 2px solid; background-position: initial initial; background-repeat: initial initial;\" id=\"Tag110\" name=\"Tag110\" z_^depth=\"1\">
+         <div class=\"block draggable ui-widget-content ui-draggable canvas-element block-element ui-resizable\" style=\"position: absolute; top: 52px; left: 219px; height: 100px; width: 100px; background-color: rgb(204, 255, 204); display: block; float: left; color: rgb(255, 0, 0); border: 2px solid; background-position: initial initial; background-repeat: initial initial;\" id=\"Tag110\" name=\"Tag110\" z_^depth=\"1\">
             <div style=\"float:bottom\">
             </div>Tag110
             <div class=\"ui-resizable-handle ui-resizable-e\" style=\"z-index: 90; display: block;\"></div>
@@ -2124,7 +2160,7 @@ public class FileServer {
 
    function AddHtmlWysiwygLabelElements( $root, $parentElement, obj, div, depth ) {
       if ( div === "block" || div === "panel" || div === "page" || div === "label" ) {
-         console.log( "Processing div: " + div );
+      // console.log( "Processing div: " + div );
          var $el = AddHtmlLabelElementAttributes( $root, $parentElement, obj, div, depth );
       // displayElementData( "AddHtmlWysiwygLabelElements", $parentElement );
          $parentElement = $el;
@@ -2344,20 +2380,20 @@ public class FileServer {
          var url = "labeldesigner?action=loadLabel&viewName=" + escape( name );
          var jqxhr = $.post( url, LoadZeidonJsonFromLLD_Callback ) // url + the function to run if the request succeeds
             .done( function() {
-               console.log( "Load Zeidon From LLD: second success" );
+            // console.log( "Load Zeidon From LLD: second success" );
             })
             .fail( function() {
                alert( "error " + jqxhr.responseText );
             })
             .always( function() {
-               console.log( "Load Zeidon From LLD: always finished" );
+            // console.log( "Load Zeidon From LLD: always finished" );
          });
 
          // Perform other work here ...
 
          // Set another completion function for the request above
          jqxhr.always( function() {
-            console.log( "Load Zeidon From LLD: second always finished" );
+         // console.log( "Load Zeidon From LLD: second always finished" );
          });
 
       } catch(e) {
@@ -2521,7 +2557,7 @@ public class FileServer {
          children.splice( 0, 1 );
          recurseUndo( $(child) );
       }
-      console.log( "Undoing Delete: " + $item[0].id );
+   // console.log( "Undoing Delete: " + $item[0].id );
       $item.data( "z__^delete", "" ).addClass( "canvas-element" ).show();
    }
 
@@ -2532,7 +2568,7 @@ public class FileServer {
          children.splice( 0, 1 );
          recurseDelete( $(child) );
       }
-      console.log( "Deleting: " + $item[0].id );
+   // console.log( "Deleting: " + $item[0].id );
       $item.css( "border", "2px solid #000" ).data( "z__^delete", "Y" ).removeClass( "canvas-element" ).hide();
    }
 
@@ -2544,7 +2580,7 @@ public class FileServer {
                                               // To remove the last item of an array, use the pop() method.
                while ( undo.length > 0 ) {
                   var item = undo[0];
-                  console.log( item.id );
+               // console.log( item.id );
                   undo.splice( 0, 1 );
                   recurseUndo($(item) );
                   g_updatedLLD = true;
@@ -2577,23 +2613,22 @@ public class FileServer {
       }
    });
 
-   function scrollbarWidthHeight() {
+   function scrollbarHeightWidth() {
       if ( g_scrollbar === null ) {
          var div = document.createElement("div");
          div.style.overflow = "scroll";
          div.style.visibility = "hidden";
          div.style.position = 'absolute';
-         div.style.width = '100px';
          div.style.height = '100px';
+         div.style.width = '100px';
          document.body.appendChild(div);
-         var scrollWidth = div.offsetWidth - div.clientWidth;
          var scrollHeight = div.offsetHeight - div.clientHeight;
+         var scrollWidth = div.offsetWidth - div.clientWidth;
          document.body.removeChild(div);
-         g_scrollbar = { width: scrollWidth, height: scrollHeight };
+         g_scrollbar = { height: scrollHeight, width: scrollWidth };
       }
 
-      console.log( "ScrollBar width: " + g_scrollbar.width );
-      console.log( "ScrollBar height: " + g_scrollbar.height );
+   // console.log( "ScrollBar height: " + g_scrollbar.height + "  ScrollBar width: " + g_scrollbar.width );
    // return g_scrollbar;
    };
 
@@ -2622,12 +2657,12 @@ public class FileServer {
 
          var realWindowHeight = g_windowHeight - g_scrollbar.height;
          var realWindowWidth = g_windowWidth - 2*g_scrollbar.width;
-         $("#zcontainer").css({ width: realWindowWidth, height: realWindowHeight });
-         $("#zviewport").css({ width: realWindowWidth - g_scrollbar.width, height: realWindowHeight - 3*g_scrollbar.height });
-         $("#zclient").css({ width: realWindowWidth, height: g_windowHeight - $("#zheader").height() - $("#zfooter").height() });
+         $("#zcontainer").css({ height: realWindowHeight, width: realWindowWidth });
+         $("#zviewport").css({ height: realWindowHeight - 3*g_scrollbar.height, width: realWindowWidth - g_scrollbar.width });
+         $("#zclient").css({ height: g_windowHeight - $("#zheader").height() - $("#zfooter").height(), width: realWindowWidth });
 
-         $("#label").css({ width: realWindowWidth - g_scrollbar.width, height: realWindowHeight - $("#zheader").height() - $("#zfooter").height() - g_scrollbar.height });
-         $("#zfooter").css({ width: realWindowWidth - g_scrollbar.width, top: realWindowHeight - $("#zfooter").height() });
+         $("#label").css({ height: realWindowHeight - $("#zheader").height() - $("#zfooter").height() - g_scrollbar.height, width: realWindowWidth - g_scrollbar.width });
+         $("#zfooter").css({ top: realWindowHeight - $("#zfooter").height(), width: realWindowWidth - g_scrollbar.width });
 
       // var left = $(window).width() - $("#zmenu").width() - (4 * g_scrollbar.width) - 2;
          var left = realWindowWidth - $("#zmenu").width() - 3*g_scrollbar.width - 2;
@@ -2642,7 +2677,7 @@ public class FileServer {
       }
    }
 /*
-<div id="zcontainer" name="zcontainer" style="width:12in; height:9in;">
+<div id="zcontainer" name="zcontainer" style="height:9in; width:12in;">
    <div id="zviewport" name="zviewport" style="background-color:#00A5FF; height:0.4in;">
       <span>
          <div id="zheader" style="display: block; font-size: 1em; font-weight: bold;">
@@ -2650,7 +2685,7 @@ public class FileServer {
             <div id="ztoolbar" class="ui-widget-header ui-corner-all">
                ...  
             </div> // ztoolbar
-            <img src="./images/epamms.jpg" width="64" height="25" alt="ePamms" style="margin:5px; float:right; border-style:double;">
+            <img src="./images/epamms.jpg" height="25" width="64" alt="ePamms" style="margin:5px; float:right; border-style:double;">
          </div> // zheader
       </span>
       <div id="zclient" name="zclient" style="margin:0"> <!-- client area -->
@@ -2658,7 +2693,7 @@ public class FileServer {
             <div id="label" name="label" class="label" style="top:0px;left:0px;float:left;position:absolute;">Drop area ...    // without position:relative, target position is off
                <div id="page"   name="page" class="page" style="display:block;">1</div> // page
             </div> // label
-            <div id="zmenu" name="zmenu" class="toggler" style="background-color:#00D7FF;top:0px;width:3.5in;height:9in;float:right;position:absolute;">   // without position:relative, clone position is off
+            <div id="zmenu" name="zmenu" class="toggler" style="background-color:#00D7FF;top:0px;height:9in;width:3.5in;float:right;position:absolute;">   // without position:relative, clone position is off
                <div id="zaccordion" name="zaccordion" style="margin-left:0;padding-left:0">
                   ...            
                </div> // zaccordion
@@ -2775,7 +2810,7 @@ public class FileServer {
                var coord;
                var $item;
                g_selected_list.forEach( function( item ) {
-                  console.log( item.id );
+               // console.log( item.id );
                   if ( g_selected_first.id !== item.id ) {
                      $item = $(item);
                      switch ( button.id ) {
@@ -2823,7 +2858,7 @@ public class FileServer {
       }
    }
 
-   scrollbarWidthHeight();  // call the function to set g_scrollbar
+   scrollbarHeightWidth();  // call the function to set g_scrollbar
    setLLD_sizes();
 
    LoadZeidonJsonFromLLD( "mSPLDef" );
@@ -2856,7 +2891,7 @@ function assignToDiv() { // this kind of function you are looking for
 }
 
 function draw() { // replace with your logic
-// width:8.5in;height:9in;
+// height:9in;width:8.5in;
    var k;
    for ( k = g_ppiX; k < 8.5 * g_ppiX; k += g_ppiX ) {
       ctx.moveTo( k, 0 );
@@ -2890,10 +2925,10 @@ assignToDiv();
          var DOM_body = document.getElementsByTagName( 'body' )[0];	
          var DOM_divI = document.createElement( 'div' );
       // var DOM_divM = document.createElement( 'div' );
-         DOM_divI.style.width = "1in";
          DOM_divI.style.height = "1in";
-      // DOM_divM.style.width = "1cm";
+         DOM_divI.style.width = "1in";
       // DOM_divM.style.height = "1cm";
+      // DOM_divM.style.width = "1cm";
          DOM_body.appendChild( DOM_divI );
       // DOM_body.appendChild( DOM_divM );
          var ppiX = document.defaultView.getComputedStyle( DOM_divI, null ).getPropertyValue( "width" );

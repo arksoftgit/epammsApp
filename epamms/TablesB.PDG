@@ -1,0 +1,45 @@
+z1000-Zeidon    TABLESA  TZDGSRCO 11/06/07   15:59:28 1.0a2    
+eDomainGroup 1
+aZKey      1160418
+aName      TablesA
+
+eDomain    2
+aZKey      1160409
+aName      States
+aDesc      USA states including DC and PR
+aDomainType T
+aDataType  S
+aMaxStringLth 2
+aContextRestriction N
+
+eContext   3
+aZKey      1160420
+aDesc      USA states - full name
+aName      StateFullName
+
+eTableEntry 4
+aZKey      1160421
+aExternalValue Arizona
+aInternalValue AZ
+
+eTableEntry 4
+aZKey      1160422
+aExternalValue Pennsylvania
+aInternalValue PA
+
+eContext   3
+aZKey      1160423
+aDesc      State abbreviations
+aName      States
+aIsDefault Y
+
+eTableEntry 4
+aZKey      1160424
+aExternalValue AZ
+aInternalValue AZ
+
+eTableEntry 4
+aZKey      1160425
+aExternalValue PA
+aInternalValue PA
+

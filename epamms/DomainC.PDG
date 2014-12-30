@@ -1,0 +1,81 @@
+z1000-Zeidon    DOMAINC  TZDGSRCO 04/11/14   17:10:37 1.0a2    
+eDomainGroup 1
+aZKey      68567489
+aName      DomainC
+aExtension C
+aLanguageType C
+aDomainAndGlobalOpGroupName domainc
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.DoubleDomain
+aZKey      68567496
+aName      Revenue
+aDesc      Dollar amounts, etc.
+aDomainType E
+aDataType  M
+aContextRestriction N
+aDecimalFormat 2
+
+eContext   3
+aZKey      68567497
+aName      Revenue
+aDecimalFormat 2
+aIsDefault Y
+
+eContext   3
+aZKey      68567498
+aName      RevenueText
+aDecimalFormat 2
+
+eContext   3
+aZKey      68567499
+aName      RevenueWithDollarSign
+aDecimalFormat 2
+
+eContext   3
+aZKey      68567500
+aName      RevenueWithDollarSignCR
+aDecimalFormat 2
+
+eSelectedOperation 3
+aName      Revenue
+aZKey      68567493
+aType      M
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      68567505
+aName      AlphaNumericUpperStrip
+aDesc      Strip all non-alphanumerics and upper case all characters
+aDomainType E
+aDataType  S
+aMaxStringLth 254
+aContextRestriction N
+
+eContext   3
+aZKey      68567506
+aName      AlphaNumericUpperStrip
+aIsDefault Y
+
+eSelectedOperation 3
+aName      AlphaNumericUpperStrip
+aZKey      68567495
+aDesc      Strip all non-alphanumerics and upper case all characters
+aType      M
+
+eOperation 2
+aName      RevenueText
+aZKey      68567490
+aType      M
+
+eOperation 2
+
+eOperation 2
+aName      zdmDecimal
+aZKey      68567494
+aType      M
+
+eOperation 2
+
+i11        6
+i13        9

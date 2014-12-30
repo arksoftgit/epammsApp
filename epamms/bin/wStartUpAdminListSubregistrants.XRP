@@ -1,0 +1,162 @@
+z1000-Zeidon    WSTARTUPATZRPSRCO 10/05/08 AN21:24:45 1.0a2    
+eReport    1
+aZKey      1667938
+aTag       wStartUp
+aWebPrintPageEntity Registrant
+aReportTextSize 100
+
+ePage      2
+aZKey      1667939
+aTag       wStartUpAdminListSubregistrants
+aSizeX     2176
+aSizeY     2816
+
+eGroupSet  3
+aZKey      1667940
+aTag       Registrant
+aType      E
+aPSDLG_X   0
+aPSDLG_Y   0
+aSZDLG_X   2176
+aSZDLG_Y   0
+
+eGroup     4
+aZKey      1667941
+aTag       Detail
+aType      ga
+aPSDLG_X   0
+aPSDLG_Y   0
+aSZDLG_X   2176
+aSZDLG_Y   86
+
+eControl   5
+aTag       BreadCrumb
+aZKey      1667942
+aType      10
+aPSDLG_X   0
+aPSDLG_Y   1
+aSZDLG_X   331
+aSZDLG_Y   37
+
+eControlDef 6
+aZKey      3020
+aKey       3020
+aTag       Rpt_Text
+aId        1
+aRT_DLL_Name n/a
+aPainterDLL_Name TZCTL
+aPainterC_OperationName TZTextMsg
+aPainterBitmap TEXT
+aMaintenanceDialog TZRPUPZD
+aMaintenanceWindow UPD_TEXT
+aRequiresParent Y
+aInvisible -2
+
+eControl   5
+aTag       PrimaryRegistrant:
+aZKey      1667943
+aType      20
+aPSDLG_X   8
+aPSDLG_Y   21
+aSZDLG_X   79
+aSZDLG_Y   37
+
+eControlDef 6
+
+eCtrlMap   6
+aZKey      1667944
+
+eCtrlMapLOD_Attribute 7
+aZKey      1166222
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eCtrlMapRelatedEntity 8
+aName      Registrant
+aIndentName Registrant
+aIndentLvl 0
+aZKey      1158610
+aCreate    N
+aDelete    N
+aUpdate    N
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aWork      N
+aParentDeleteBehave -
+aDupEntityInstance N
+aDupRelationshipInstance N
+
+eCtrlMapER_Attribute 8
+aName      dRegistrantNameID
+aZKey      1166223
+aDesc      Company Name + EPA Company Number
+
+eCtrlMapER_Domain 9
+aZKey      68568081
+aName      Text
+aDesc      Any Character String
+aDomainType E
+aDataType  S
+aMaxStringLth 254
+aContextRestriction N
+
+eCtrlMapView 7
+aZKey      1158616
+aName      lPrimReg
+aDesc      VOR automatically built from LOD Dialog
+
+eControl   5
+aTag       TXName
+aZKey      1667945
+aType      20
+aPSDLG_X   91
+aPSDLG_Y   21
+aSZDLG_X   315
+aSZDLG_Y   37
+
+eControlDef 6
+
+eCtrlMap   6
+aZKey      1667946
+
+eControl   5
+aTag       HTSelectAll
+aZKey      1667947
+aType      10
+aPSDLG_X   70
+aPSDLG_Y   49
+aSZDLG_X   54
+aSZDLG_Y   37
+
+eControlDef 6
+
+eControl   5
+aTag       HTClearSelected
+aZKey      1667948
+aType      10
+aPSDLG_X   125
+aPSDLG_Y   49
+aSZDLG_X   54
+aSZDLG_Y   37
+
+eControlDef 6
+
+eViewObjRef 2
+aZKey      1158616
+aName      lPrimReg
+aDesc      VOR automatically built from LOD Dialog
+
+eLOD       3
+aZKey      1158609
+aDLL_Name  lPrimReg
+aName      lPrimReg
+aDesc      List Primary Registrants
+
+i7         5
+i15        5
+i18        5
+i20        5

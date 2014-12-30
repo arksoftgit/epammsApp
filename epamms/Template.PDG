@@ -1,0 +1,652 @@
+z1000-Zeidon    TEMPLATE TZDGSRCO 06/10/14   09:15:42 1.0a2    
+eDomainGroup 1
+aZKey      69081339
+aName      Template
+aExtension C
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      69081340
+aName      TemplateTitlePosition
+aDesc      Where the Title is to be formatted for a Section
+aDomainType T
+aDataType  S
+aMaxStringLth 5
+aContextRestriction N
+
+eContext   3
+aZKey      69081341
+aName      TemplateTitlePosition
+
+eTableEntry 4
+aZKey      120190103
+
+eTableEntry 4
+aZKey      69081343
+aExternalValue Separate Line
+aInternalValue SL
+
+eTableEntry 4
+aZKey      69081344
+aExternalValue Combined with First Paragraph
+aInternalValue CF
+
+eTableEntry 4
+aZKey      4084753
+aExternalValue Skip Title
+aInternalValue SK
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      120154151
+aName      ContinuationBreakFlag
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      120154152
+aName      ContinuationBreakFlag
+aIsDefault Y
+
+eTableEntry 4
+aZKey      120155668
+
+eTableEntry 4
+aZKey      120154153
+aExternalValue Full-Text Continuation
+aInternalValue B
+
+eTableEntry 4
+aZKey      120154154
+aExternalValue Partial-Text Continuation
+aInternalValue M
+
+eContext   3
+aZKey      120155665
+aName      ShortName
+
+eTableEntry 4
+aZKey      120155669
+
+eTableEntry 4
+aZKey      120155666
+aExternalValue Full
+aInternalValue B
+
+eTableEntry 4
+aZKey      120155667
+aExternalValue Part
+aInternalValue M
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      120150076
+aName      LLD_ColumnListType
+aDomainType T
+aDataType  S
+aMaxStringLth 2
+aContextRestriction N
+
+eContext   3
+aZKey      120150077
+aName      LLD_ColumnListType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      120150078
+aExternalValue Usage List - 2 Column
+aInternalValue C2
+
+eTableEntry 4
+aZKey      120150079
+aExternalValue Usage List - 3 Column
+aInternalValue C3
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      120129882
+aName      SelectUsageType
+aDomainType T
+aDataType  S
+aMaxStringLth 2
+aContextRestriction N
+
+eContext   3
+aZKey      120129883
+aName      SelectUsageType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      120129884
+aExternalValue Areas of Use
+aInternalValue U
+
+eTableEntry 4
+aZKey      120129885
+aExternalValue Surfaces
+aInternalValue S
+
+eTableEntry 4
+aZKey      120129886
+aExternalValue Application Types
+aInternalValue T
+
+eTableEntry 4
+aZKey      120129887
+aExternalValue Claims Bacteria
+aInternalValue CB
+
+eTableEntry 4
+aZKey      120129888
+aExternalValue Claims Fungi
+aInternalValue CF
+
+eTableEntry 4
+aZKey      120129889
+aExternalValue Claims Viruses
+aInternalValue CV
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      4322672
+aName      TextAlign
+aDomainType T
+aDataType  S
+aMaxStringLth 20
+aContextRestriction N
+
+eContext   3
+aZKey      4322673
+aName      TextAlign
+aIsDefault Y
+
+eTableEntry 4
+aZKey      4322674
+aExternalValue Left
+aInternalValue left
+
+eTableEntry 4
+aZKey      4322675
+aExternalValue Right
+aInternalValue right
+
+eTableEntry 4
+aZKey      120161760
+aExternalValue Center
+aInternalValue center
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      4322656
+aName      FontSize
+aDomainType T
+aDataType  S
+aMaxStringLth 20
+aContextRestriction N
+
+eContext   3
+aZKey      4322657
+aName      FontSize
+aIsDefault Y
+
+eTableEntry 4
+aZKey      120178057
+
+eTableEntry 4
+aZKey      4322658
+aExternalValue 3pt
+aInternalValue 3pt
+
+eTableEntry 4
+aZKey      4322659
+aExternalValue 4pt
+aInternalValue 4pt
+
+eTableEntry 4
+aZKey      4322660
+aExternalValue 5pt
+aInternalValue 5pt
+
+eTableEntry 4
+aZKey      4322661
+aExternalValue 6pt
+aInternalValue 6pt
+
+eTableEntry 4
+aZKey      4322662
+aExternalValue 7pt
+aInternalValue 7pt
+
+eTableEntry 4
+aZKey      4322663
+aExternalValue 8pt
+aInternalValue 8pt
+
+eTableEntry 4
+aZKey      4322664
+aExternalValue 9pt
+aInternalValue 9pt
+
+eTableEntry 4
+aZKey      4322665
+aExternalValue 10pt
+aInternalValue 10pt
+
+eTableEntry 4
+aZKey      4322666
+aExternalValue 11pt
+aInternalValue 11pt
+
+eTableEntry 4
+aZKey      4322667
+aExternalValue 12pt
+aInternalValue 12pt
+
+eTableEntry 4
+aZKey      4322668
+aExternalValue 13pt
+aInternalValue 13pt
+
+eTableEntry 4
+aZKey      4322669
+aExternalValue 14pt
+aInternalValue 14pt
+
+eTableEntry 4
+aZKey      4322670
+aExternalValue 16pt
+aInternalValue 16pt
+
+eTableEntry 4
+aZKey      120178052
+aExternalValue 18pt
+aInternalValue 18pt
+
+eTableEntry 4
+aZKey      120178053
+aExternalValue 20pt
+aInternalValue 20pt
+
+eTableEntry 4
+aZKey      120178054
+aExternalValue 22pt
+aInternalValue 22pt
+
+eTableEntry 4
+aZKey      120178055
+aExternalValue 24pt
+aInternalValue 24pt
+
+eTableEntry 4
+aZKey      120178056
+aExternalValue 26pt
+aInternalValue 26pt
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      4322651
+aName      FontWeight
+aDomainType T
+aDataType  S
+aMaxStringLth 20
+aContextRestriction N
+
+eContext   3
+aZKey      4322652
+aName      FontWeight
+aIsDefault Y
+
+eTableEntry 4
+aZKey      4322653
+aExternalValue Bold
+aInternalValue bold
+
+eTableEntry 4
+aZKey      4322654
+aExternalValue Normal
+aInternalValue normal
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      4322644
+aName      FontFamily
+aDomainType T
+aDataType  S
+aMaxStringLth 20
+aContextRestriction N
+
+eContext   3
+aZKey      4322645
+aName      FontFamily
+aIsDefault Y
+
+eTableEntry 4
+aZKey      4322646
+aExternalValue Arial
+aInternalValue arial
+
+eTableEntry 4
+aZKey      4322647
+aExternalValue Verdana
+aInternalValue verdana
+
+eTableEntry 4
+aZKey      4322648
+aExternalValue Serif
+aInternalValue serif
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      4322642
+aName      Color
+aDomainType T
+aDataType  S
+aMaxStringLth 20
+aContextRestriction N
+
+eContext   3
+aZKey      4322643
+aName      Color
+aIsDefault Y
+
+eTableEntry 4
+aZKey      120162451
+
+eTableEntry 4
+aZKey      120161754
+aExternalValue Red
+aInternalValue red
+
+eTableEntry 4
+aZKey      120161755
+aExternalValue Blue
+aInternalValue blue
+
+eTableEntry 4
+aZKey      120161756
+aExternalValue Green
+aInternalValue green
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      4322633
+aName      BorderStyle
+aDomainType T
+aDataType  S
+aMaxStringLth 20
+aContextRestriction N
+
+eContext   3
+aZKey      4322634
+aName      BorderStyle
+aIsDefault Y
+
+eTableEntry 4
+aZKey      120162452
+
+eTableEntry 4
+aZKey      4322635
+aExternalValue Solid
+aInternalValue solid
+
+eTableEntry 4
+aZKey      4322637
+aExternalValue Dotted
+aInternalValue dotted
+
+eTableEntry 4
+aZKey      4322638
+aExternalValue Dashed
+aInternalValue dashed
+
+eTableEntry 4
+aZKey      4322639
+aExternalValue Double
+aInternalValue double
+
+eTableEntry 4
+aZKey      4322640
+aExternalValue Groove
+aInternalValue groove
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      1181561
+aName      UsageType
+aDesc      Claim, Surface, Application Type, Area of Use (C,S,T,U)
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      69081369
+aDesc      Claim, Surface, Application Type, Area of Use (C,S,T,U)
+aName      FullUsageType
+
+eTableEntry 4
+aZKey      69081371
+aExternalValue Claim
+aInternalValue C
+
+eTableEntry 4
+aZKey      69081372
+aExternalValue Surface
+aInternalValue S
+
+eTableEntry 4
+aZKey      69081373
+aExternalValue Application Type
+aInternalValue T
+
+eTableEntry 4
+aZKey      69081374
+aExternalValue Area of Use
+aInternalValue U
+
+eContext   3
+aZKey      4321553
+aDesc      Claim, Surface, Application Type, Area of Use (C,S,T,U)
+aName      UsageType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      4321554
+aExternalValue C
+aInternalValue C
+
+eTableEntry 4
+aZKey      4321555
+aExternalValue S
+aInternalValue S
+
+eTableEntry 4
+aZKey      4321556
+aExternalValue T
+aInternalValue T
+
+eTableEntry 4
+aZKey      4321557
+aExternalValue U
+aInternalValue U
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      69080530
+aName      TemplateUsageFormatType
+aDesc      How any related Usage entries will be formatted for the Section.
+aDomainType T
+aDataType  S
+aMaxStringLth 2
+aContextRestriction N
+
+eContext   3
+aZKey      69081363
+aName      TemplateUsageFormatType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      69081364
+aExternalValue Juxtapositioned in Paragraph
+aInternalValue JP
+
+eTableEntry 4
+aZKey      69081365
+aExternalValue Juxtapostioned in Title
+aInternalValue JT
+
+eTableEntry 4
+aZKey      69081366
+aExternalValue Listed in a Single Column
+aInternalValue C1
+
+eTableEntry 4
+aZKey      69081367
+aExternalValue Listed in 2 Columns
+aInternalValue C2
+
+eTableEntry 4
+aZKey      69081368
+aExternalValue Listed in 3 Columns
+aInternalValue C3
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      69080546
+aName      TemplateStatementFormat
+aDesc      How Statements for a Section will be formatted.
+aDomainType T
+aDataType  S
+aMaxStringLth 5
+aContextRestriction N
+
+eContext   3
+aZKey      69081356
+aName      TemplateStatementFormat
+aIsDefault Y
+
+eTableEntry 4
+aZKey      69081358
+aExternalValue Separate Paragraph
+aInternalValue SP
+
+eTableEntry 4
+aZKey      69081359
+aExternalValue Separate Numbered Paragraph
+aInternalValue SPN
+
+eTableEntry 4
+aZKey      69081360
+aExternalValue Separate Bulleted Paragraph
+aInternalValue SPB
+
+eTableEntry 4
+aZKey      69081361
+aExternalValue Paragraph with Usage Statements
+aInternalValue SPU
+
+eTableEntry 4
+aZKey      69229445
+aExternalValue 2 Column Usage List
+aInternalValue L2
+
+eTableEntry 4
+aZKey      69229446
+aExternalValue 3 Column Usage List
+aInternalValue L3
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      69080516
+aName      LLD_SectionType
+aDesc      Template Section Types are usually the same as regular Section Types.
+aDomainType T
+aDataType  S
+aMaxStringLth 20
+aContextRestriction N
+
+eContext   3
+aZKey      69081346
+aName      LLD_SectionType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      120180211
+
+eTableEntry 4
+aZKey      69081348
+aExternalValue Ingredients
+aInternalValue Ingredients
+
+eTableEntry 4
+aZKey      69081349
+aExternalValue First Aid
+aInternalValue FirstAid
+
+eTableEntry 4
+aZKey      69085283
+aExternalValue Hazards
+aInternalValue Hazards
+
+eTableEntry 4
+aZKey      69081350
+aExternalValue Physical Hazard
+aInternalValue PhysicalHazard
+
+eTableEntry 4
+aZKey      3911627
+aExternalValue Container Disposal
+aInternalValue ContainerDisposal
+
+eTableEntry 4
+aZKey      69081351
+aExternalValue Storage and Disposal
+aInternalValue StorageDisposal
+
+eTableEntry 4
+aZKey      69081352
+aExternalValue Precautionary
+aInternalValue Precautionary
+
+eTableEntry 4
+aZKey      69081353
+aExternalValue Directions For Use
+aInternalValue DirectionsForUse
+
+eTableEntry 4
+aZKey      69081354
+aExternalValue Marketing
+aInternalValue Marketing
+
+eTableEntry 4
+aZKey      69081355
+aExternalValue Human Hazard
+aInternalValue HumanHazard
+
+eTableEntry 4
+aZKey      69765626
+aExternalValue Graphic
+aInternalValue Graphic
+
+eTableEntry 4
+aZKey      69765630
+aExternalValue Net Contents
+aInternalValue NetContents
+
+eTableEntry 4
+aZKey      3911629
+aExternalValue EPA Reg. No. - EPA Est. No.
+aInternalValue EPA_RegAndEstNbr
+
+eTableEntry 4
+aZKey      4043314
+aExternalValue Product Name
+aInternalValue Product Name
+
+eTableEntry 4
+aZKey      120180210
+aExternalValue Product Description
+aInternalValue Product Description
+

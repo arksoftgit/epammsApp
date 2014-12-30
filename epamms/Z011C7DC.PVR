@@ -1,0 +1,11 @@
+z1000-Zeidon    Z011C7DC TZWDVORO 11/19/07   13:10:46 1.0a2    
+eViewObjRef 1
+aZKey      1165276
+aName      lSubreg
+aDesc      VOR automatically built from LOD Dialog
+
+eLOD       2
+aZKey      1165267
+aName      lSubreg
+aDesc      List Subregistrants for a specified Primary Registrant
+

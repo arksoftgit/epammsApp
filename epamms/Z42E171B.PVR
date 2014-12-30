@@ -1,0 +1,12 @@
+z1000-Zeidon    Z42E171B TZWDVORO 11/22/08   14:34:12 1.0a2    
+eViewObjRef 1
+aZKey      70129435
+aName      lMLCASrc
+aDesc      VOR automatically built from LOD Dialog
+
+eLOD       2
+aZKey      70129221
+aName      lMLCASrc
+aDesc      MLC Analysis Source
+aDLL_Name  lMLCASrc
+

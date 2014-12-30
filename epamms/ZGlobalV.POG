@@ -1,0 +1,301 @@
+z1000-Zeidon    ZGLOBALV TZOGSRCO 03/26/14   19:06:58 1.0a2    
+eGlobalOperationGroup 1
+aZKey      1399843
+aName      ZGlobalV
+aDesc      VML operations
+aExtension VML
+aLanguageType V
+aDomainAndGlobalOpGroupName ZGlobal1
+
+eOperation 2
+aName      InitializeSLC_FromMLC
+aZKey      1399844
+aType      G
+aReturnDataType N
+
+eParameter 3
+aShortDesc MasLC
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      1399845
+
+eParameter 3
+aShortDesc SubLC
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      1399846
+
+eOperation 2
+aName      InsertMappingWordsIntoString
+aZKey      69087046
+aType      G
+aReturnDataType N
+
+eParameter 3
+aShortDesc mSPLDef
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      120103592
+
+eParameter 3
+aShortDesc szString
+aDataType  S
+aPFlag     Y
+aUFlag     N
+aZKey      120103593
+
+eParameter 3
+aShortDesc szUsageEntityName
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      120103597
+
+eParameter 3
+aShortDesc szUsageNameScope
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      120103598
+
+eParameter 3
+aShortDesc szSeparaterCharacters
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      120103599
+
+eOperation 2
+aName      SyncPhysicalLabel
+aZKey      1664968
+aType      G
+
+eParameter 3
+aShortDesc mSPLDef
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      1664969
+
+eParameter 3
+aShortDesc mSubLC
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      1664970
+
+eParameter 3
+aShortDesc Flag
+aDataType  N
+aPFlag     N
+aUFlag     N
+aZKey      1664971
+
+eOperation 2
+aName      CreateCurrentTemporalVersion
+aZKey      1662531
+aDesc      CreateTemporalSubobject or CreateTemporalEntity
+aType      G
+
+eParameter 3
+aShortDesc ViewToWindow
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      1662532
+
+eParameter 3
+aShortDesc Position
+aDataType  N
+aPFlag     N
+aUFlag     N
+aZKey      1662533
+
+eParameter 3
+aShortDesc ViewName
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      1662536
+
+eParameter 3
+aShortDesc EntityName
+aDataType  E
+aPFlag     N
+aUFlag     N
+aZKey      1662534
+
+eParameter 3
+aShortDesc Comment
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      1662535
+
+eOperation 2
+aName      AcceptCurrentTemporalSubobject
+aZKey      1662527
+aType      G
+aReturnDesc 0 - OK; 1 - nothing to accept
+aReturnDataType N
+
+eParameter 3
+aShortDesc ViewToWindow
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      1662528
+
+eParameter 3
+aShortDesc Commit
+aDataType  N
+aPFlag     N
+aUFlag     N
+aZKey      1662529
+
+eParameter 3
+aShortDesc Comment
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      1662530
+
+eOperation 2
+aName      CancelCurrentTemporalSubobject
+aZKey      1662524
+aType      G
+aReturnDesc 0 - OK; 1 - nothing to cancel
+aReturnDataType N
+
+eParameter 3
+aShortDesc ViewToWindow
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      1662525
+
+eParameter 3
+aShortDesc Comment
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      1662526
+
+eOperation 2
+aName      SetDynamicBannerName
+aZKey      1511099
+aType      G
+aReturnDataType N
+
+eParameter 3
+aShortDesc ViewToWindow
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      1511100
+
+eParameter 3
+aShortDesc DialogName
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      1511101
+
+eParameter 3
+aShortDesc BannerName
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      1511102
+
+eOperation 2
+aName      InitializeSPLD_FromSLC
+aZKey      1408202
+aType      G
+aReturnDataType N
+
+eParameter 3
+aShortDesc mSubLC
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      1408203
+
+eParameter 3
+aShortDesc mSPLDef
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      1408204
+
+eOperation 2
+aName      CopySLC_EntityToSPLD
+aZKey      1408197
+aType      G
+aReturnDataType N
+
+eParameter 3
+aShortDesc vSLC
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      1408198
+
+eParameter 3
+aShortDesc mSPLD
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      1408199
+
+eParameter 3
+aShortDesc Entity
+aDataType  E
+aPFlag     N
+aUFlag     N
+aZKey      1408200
+
+eParameter 3
+aShortDesc Flag
+aDataType  N
+aPFlag     N
+aUFlag     N
+aZKey      1408201
+
+eOperation 2
+aName      CopyMLC_EntityToSLC
+aZKey      1399847
+aType      G
+aReturnDataType N
+
+eParameter 3
+aShortDesc MasLC
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      1399848
+
+eParameter 3
+aShortDesc SubLC
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      1399849
+
+eParameter 3
+aShortDesc Entity
+aDataType  E
+aPFlag     N
+aUFlag     N
+aZKey      1399850
+
+eParameter 3
+aShortDesc Flag
+aDataType  N
+aPFlag     N
+aUFlag     N
+aZKey      1399851
+

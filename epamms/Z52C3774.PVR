@@ -1,0 +1,11 @@
+z1000-Zeidon    Z52C3774 TZWDVORO 02/04/03   13:34:52 1.0a2    
+eViewObjRef 1
+aZKey      86783860
+aName      wXferOLST
+
+eLOD       2
+aZKey      86783389
+aName      wXferO
+aDesc      Work object for transferring data from window to window.
+aDLL_Name  LODOPS
+

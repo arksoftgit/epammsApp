@@ -1,0 +1,11 @@
+z1000-Zeidon    Z011BEF9 TZWDVORO 11/12/07   19:19:16 1.0a2    
+eViewObjRef 1
+aZKey      1163001
+aName      lSubLDD
+aDesc      VOR automatically built from LOD Dialog
+
+eLOD       2
+aZKey      1162991
+aName      lSubLDD
+aDesc      List Sub-Registrant Label Data Definitions (LDDs)
+

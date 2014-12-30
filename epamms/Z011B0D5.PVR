@@ -1,0 +1,11 @@
+z1000-Zeidon    Z011B0D5 TZWDVORO 10/30/07   18:28:06 1.0a2    
+eViewObjRef 1
+aZKey      1159381
+aName      qSubreg
+aDesc      VOR automatically built from LOD Dialog
+
+eLOD       2
+aZKey      1159375
+aName      qSubreg
+aDesc      Read only Subregistrant (use only for existence check)
+

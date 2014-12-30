@@ -1,0 +1,11 @@
+z1000-Zeidon    Z01BAC08 TZWDVORO 12/03/08   10:13:23 1.0a2    
+eViewObjRef 1
+aZKey      1813512
+aName      lUserLST
+
+eLOD       2
+aZKey      1157571
+aName      mUser
+aDesc      User Maintenance
+aDLL_Name  mUser
+

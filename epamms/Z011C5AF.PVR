@@ -1,0 +1,11 @@
+z1000-Zeidon    Z011C5AF TZWDVORO 11/15/07   13:26:04 1.0a2    
+eViewObjRef 1
+aZKey      1164719
+aName      mPerson
+aDesc      VOR automatically built from LOD Dialog
+
+eLOD       2
+aZKey      1164671
+aName      mPerson
+aDesc      Person object to be included in the User object
+

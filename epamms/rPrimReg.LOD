@@ -1,0 +1,1118 @@
+z1000-Zeidon    RPRIMREG TZZOLODO 08/16/11   22:58:46 1.0a2    
+eLOD       1
+aZKey      1157074
+aName      rPrimReg
+aDesc      Read only Primary Registrant (used for existence checking)
+aDLL_Name  rPrimReg
+
+eLOD_EntityParent 2
+aName      PrimaryRegistrant
+aIndentName PrimaryRegistrant
+aIndentLvl 0
+aZKey      1158075
+aCreate    Y
+aDelete    Y
+aUpdate    N
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aWork      N
+aParentDeleteBehave D
+aDupEntityInstance N
+aDupRelationshipInstance N
+
+eLOD_EntityChild 3
+aName      PrimarySub
+aIndentName    PrimarySub
+aIndentLvl 3
+aZKey      1164370
+aCreate    N
+aDelete    N
+aUpdate    N
+aInclude   Y
+aInclSrc   Y
+aExclude   Y
+aRecursive N
+aDerived   N
+aParentDeleteBehave E
+aRelLinkIndicator L
+aDesc      Used to carry intersection data between Primary and Subregistrants
+aSeqNo     0
+
+eLOD_AttributeRec 4
+aZKey      1164371
+
+eER_AttributeRec 5
+aName      ID
+aZKey      68568365
+aNotNull   Y
+aDesc      Generated ID
+
+eDomainRec 6
+aZKey      68568083
+aName      Integer
+aDomainType E
+aDataType  L
+aMaxStringLth 4
+aDecimalFormat 0
+aDesc      Integer numbers from -lots to +lots
+aContextRestriction N
+
+eER_EntityRec 4
+aName      PrimarySub
+aZKey      68568356
+aPurpose   S
+aDesc      Used to carry intersection data between Primary and Subregistrants
+aER_DiagramPosX 68
+aER_DiagramPosY 17
+
+eER_RelLinkRec 4
+aName      has
+aZKey      68568358
+aCardMin   0
+aCardMax   m
+
+eER_RelTypeRec 5
+aZKey      68568357
+aFact      Added thru ER Dialog
+aER_DiagramBendPosX 38
+aER_DiagramBendPosY 19
+aER_DiagramE1PosX 38
+aER_DiagramE1PosY 36
+aER_DiagramE2PosX 67
+aER_DiagramE2PosY 19
+
+eLOD_EntityChild 3
+aName      Organization
+aIndentName    Organization
+aIndentLvl 3
+aZKey      1656192
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aParentDeleteBehave D
+aRelLinkIndicator H
+
+eLOD_AttributeRec 4
+aZKey      1656193
+
+eER_AttributeRec 5
+aName      ID
+aZKey      1653223
+aNotNull   Y
+aDesc      Generated ID
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      1656194
+
+eER_AttributeRec 5
+aName      LoginName
+aZKey      1653224
+aNotNull   Y
+aDesc      Short nickname of the corporation for login purposes (e.g. Mason or Lonza or Stepan)
+
+eDomainRec 6
+aZKey      68568065
+aName      GeneralName_Address
+aDomainType E
+aDataType  S
+aMaxStringLth 128
+aDesc      General Text (names, streets, cities, etc.)
+aContextRestriction N
+
+eLOD_AttributeRec 4
+aZKey      1656195
+
+eER_AttributeRec 5
+aName      Name
+aZKey      1653225
+aNotNull   Y
+aDesc      e.g. MASON Chemical Company or Lonza Inc. or Stepan Company
+aCaseSens  Y
+
+eDomainRec 6
+aZKey      68568081
+aName      Text
+aDomainType E
+aDataType  S
+aMaxStringLth 254
+aDesc      Any Character String
+aContextRestriction N
+
+eLOD_AttributeRec 4
+aZKey      1661370
+aUpdate    Y
+
+eER_AttributeRec 5
+aName      Description
+aZKey      1660582
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      1656196
+
+eER_AttributeRec 5
+aName      AdministratorPassword
+aZKey      1653228
+aDesc      Administrator's logon password
+
+eDomainRec 6
+aZKey      68568075
+aName      PasswordUL
+aDomainType A
+aDataType  S
+aMaxStringLth 128
+aDesc      Password in Upper and Lower case
+aContextRestriction N
+
+eLOD_AttributeRec 4
+aZKey      1660046
+aUpdate    Y
+
+eER_AttributeRec 5
+aName      Role
+aZKey      1659262
+
+eDomainRec 6
+aZKey      1639285
+aName      CompanyRole
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aDesc      Primary Registrant, Subregistrant, Dual Registrant, Non-EPA
+aContextRestriction N
+
+eER_EntityRec 4
+aName      Organization
+aZKey      1653216
+aPurpose   F
+aER_DiagramPosX 66
+aER_DiagramPosY 37
+
+eER_RelLinkRec 4
+aName      for
+aAutoSeq   N
+aHangingForeignKeyEntity N
+aZKey      1653219
+aCardMin   1
+aCardMax   1
+aTE_NoForeignKeyPrefix N
+
+eER_RelTypeRec 5
+aZKey      1653217
+aFact      Added thru ER Dialog
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
+aER_DiagramE1PosX 65
+aER_DiagramE1PosY 41
+aER_DiagramE2PosX 43
+aER_DiagramE2PosY 41
+
+eLOD_EntityChild 3
+aName      MasterProduct
+aIndentName    MasterProduct
+aIndentLvl 3
+aZKey      1163348
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aParentDeleteBehave D
+aRelLinkIndicator L
+aSeqNo     0
+
+eLOD_EntityChild 4
+aName      MasterLabelContent
+aIndentName       MasterLabelContent
+aIndentLvl 6
+aZKey      1163358
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aParentDeleteBehave D
+aRelLinkIndicator L
+
+eLOD_AttributeRec 5
+aZKey      1163359
+
+eER_AttributeRec 6
+aName      ID
+aZKey      68568609
+aNotNull   Y
+aDesc      Generated ID
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      1163360
+
+eER_AttributeRec 6
+aName      Version
+aZKey      1165284
+aNotNull   Y
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      1163361
+
+eER_AttributeRec 6
+aName      RevisionDate
+aZKey      1160370
+aNotNull   Y
+aDesc      This is the date that any change is made to the artwork. The date format is the same as the ESL date:  REV112203 (This means Revision date: November 22, 2003).  The Revision date must be updated each and every time a change is made to the artwork!
+
+eDomainRec 7
+aZKey      68568090
+aName      Date
+aDomainType A
+aDataType  D
+aDesc      This domain manipulates the date portion of DateTime
+aContextRestriction N
+
+eLOD_AttributeRec 5
+aZKey      1810062
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      CreatedDateTime
+aZKey      1809245
+aDesc      date and time the activity was created in the sytem
+
+eDomainRec 7
+aZKey      68568141
+aName      DateTime
+aDomainType A
+aDataType  T
+aMaxStringLth 20
+aDesc      Basic Timestamp Domain
+aContextRestriction N
+
+eLOD_AttributeRec 5
+aZKey      3961575
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      ModifiedDateTime
+aZKey      2553874
+aDesc      date this record was modified
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      1163362
+
+eER_AttributeRec 6
+aName      Finalized
+aZKey      1179769
+
+eDomainRec 7
+aZKey      68567482
+aName      Y/N
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aDesc      Yes or No
+aContextRestriction N
+
+eER_EntityRec 5
+aName      MasterLabelContent
+aZKey      68568593
+aPurpose   F
+aER_DiagramPosX 51
+aER_DiagramPosY 64
+
+eER_RelLinkRec 5
+aName      has
+aAutoSeq   Y
+aHangingForeignKeyEntity N
+aZKey      69031550
+aCardMin   0
+aCardMax   m
+aTE_NoForeignKeyPrefix N
+
+eER_RelTypeRec 6
+aZKey      69031549
+aFact      Added thru ER Dialog
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
+aER_DiagramE1PosX 55
+aER_DiagramE1PosY 58
+aER_DiagramE2PosX 55
+aER_DiagramE2PosY 63
+
+eLOD_AttributeRec 4
+aZKey      1163349
+
+eER_AttributeRec 5
+aName      ID
+aZKey      69031555
+aNotNull   Y
+aDesc      Generated ID
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      1163350
+
+eER_AttributeRec 5
+aName      Name
+aZKey      69031556
+aNotNull   Y
+aDesc      e.g.  MAQUAT 256-NHQ for Mason or HWS-256 for Lonza or ? for Stepan?
+aCaseSens  Y
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      1163351
+
+eER_AttributeRec 5
+aName      Number
+aZKey      69031557
+aNotNull   Y
+aDesc      e.g. 141 for Mason MAQUAT 256-NHQ or 129 for Lonza HWS-256 or 83 for Stepan?
+aCaseSens  Y
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      1163352
+
+eER_AttributeRec 5
+aName      Description
+aZKey      69031560
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      3961574
+aUpdate    Y
+
+eER_AttributeRec 5
+aName      ChemicalFamily
+aZKey      1942093
+aNotNull   Y
+aDesc      Chemical Family (e.g. Pesticide, Quat Disinfectant, Iodine Disinfectant)
+
+eDomainRec 6
+aZKey      1178519
+aName      ChemicalFamily
+aDomainType T
+aDataType  S
+aMaxStringLth 2
+aDesc      Pesticide, Quat Disinfectant, Iodine Disinfectant, etc.
+aContextRestriction N
+
+eLOD_AttributeRec 4
+aZKey      1163353
+
+eER_AttributeRec 5
+aName      EPA_RegistrationNumber
+aZKey      69031561
+
+eDomainRec 6
+aZKey      68568049
+aName      ShortDescription
+aDomainType E
+aDataType  S
+aMaxStringLth 128
+aContextRestriction N
+
+eLOD_AttributeRec 4
+aZKey      1163354
+
+eER_AttributeRec 5
+aName      EPA_EstablishmentNumber
+aZKey      69031562
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      1163355
+
+eER_AttributeRec 5
+aName      EPA_DraftLabel
+aZKey      69031563
+aDesc      Version date
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      1163356
+
+eER_AttributeRec 5
+aName      ESL_Date
+aZKey      69031564
+aDesc      321
+EPA Stamped Label Date - The ESL Date used for the setup and review is to be on the label. It is for easy regulatory identification and production quality control purposes. The format for the ESL date is: ESL051203 (This means ESL dated May 12, 2003) . Use zero’s for place keepers if no ESL has been received: ESL000000 
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      1163357
+
+eER_AttributeRec 5
+aName      EPA_ToxicityCategory
+aZKey      69031565
+
+eDomainRec 6
+aZKey      1178527
+aName      ToxicityCategory
+aDomainType T
+aDataType  L
+aContextRestriction N
+
+eLOD_AttributeRec 4
+aZKey      1695881
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 5
+aName      dMasterProductNameNbr
+aZKey      1695882
+
+eDomainRec 6
+
+eLOD_AttrDerivationOperRec 5
+aName      dMasterProductNameNbr
+aClass     0
+aZKey      1695418
+aType      A
+aReturnDataType N
+
+eSourceFileForDARec 6
+aZKey      1166239
+aName      rPrimReg
+aLanguageType V
+aExtension VML
+
+eER_EntityRec 4
+aName      MasterProduct
+aZKey      69031545
+aPurpose   F
+aER_DiagramPosX 51
+aER_DiagramPosY 53
+
+eER_RelLinkRec 4
+aName      has
+aAutoSeq   Y
+aHangingForeignKeyEntity N
+aZKey      69031570
+aCardMin   0
+aCardMax   m
+aTE_NoForeignKeyPrefix N
+
+eER_RelTypeRec 5
+aZKey      69031569
+aFact      Added thru ER Dialog
+aER_DiagramBendPosX 38
+aER_DiagramBendPosY 55
+aER_DiagramE1PosX 38
+aER_DiagramE1PosY 42
+aER_DiagramE2PosX 50
+aER_DiagramE2PosY 55
+
+eLOD_AttributeRec 3
+aZKey      1158076
+
+eER_AttributeRec 4
+aName      ID
+aZKey      68568364
+aNotNull   Y
+aDesc      Generated ID
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      1160779
+aUpdate    Y
+
+eER_AttributeRec 4
+aName      EPA_CompanyNumber
+aZKey      1654858
+aDesc      e.g. 10324 for MASON, 47371 for LONZA, 1839 for STEPAN
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      1166288
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 4
+aName      dNameEPA_Number
+aZKey      1166289
+aDesc      Company Name + EPA Company Number
+
+eDomainRec 5
+
+eLOD_AttrDerivationOperRec 4
+aName      dRegistrantNameID
+aClass     0
+aZKey      1166241
+aType      A
+aReturnDataType N
+
+eSourceFileForDARec 5
+
+eER_EntityRec 3
+aName      PrimaryRegistrant
+aZKey      68568354
+aPurpose   F
+aER_DiagramPosX 34
+aER_DiagramPosY 37
+
+eLOD_Entity 2
+awkSelectedAttributeForDragSort 8
+
+eLOD_Attribute 3
+awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 2
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_AttrDerivationOper 4
+
+eSourceFileForDA 5
+
+eER_Entity 3
+
+eLOD_Entity 2
+
+eLOD_Attribute 3
+awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eER_Entity 3
+
+eER_RelLink 3
+
+eER_RelType 4
+
+eLOD_Entity 2
+awkSelectedAttributeForDragSort 3
+
+eLOD_Attribute 3
+awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 2
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 4
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 5
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 6
+
+eER_Attribute 4
+
+eDomain    5
+
+eER_Entity 3
+
+eER_RelLink 3
+
+eER_RelType 4
+
+eLOD_Entity 2
+awkSelectedAttributeForDragSort 11
+
+eLOD_Attribute 3
+awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 2
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 4
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 5
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 6
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 7
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 8
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 9
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 10
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 11
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_AttrDerivationOper 4
+
+eSourceFileForDA 5
+
+eER_Entity 3
+
+eER_RelLink 3
+
+eER_RelType 4
+
+eLOD_Entity 2
+awkSelectedAttributeForDragSort 4
+
+eLOD_Attribute 3
+awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 2
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 4
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 5
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 6
+
+eER_Attribute 4
+
+eDomain    5
+
+eER_Entity 3
+
+eER_RelLink 3
+
+eER_RelType 4
+
+eSourceFile 2
+
+eOperation 3
+
+eParameter 4
+aShortDesc View to Instance
+aDataType  V
+aZKey      1166242
+
+eParameter 4
+aShortDesc Internal Entity Structure
+aDataType  S
+aZKey      1166243
+
+eParameter 4
+aShortDesc Internal Attrib Structure
+aDataType  S
+aZKey      1166244
+
+eParameter 4
+aShortDesc Get Or Set Flag
+aDataType  N
+aZKey      1166245
+
+eOperation 3
+aName      dFullNameLFM
+aZKey      1166246
+aType      A
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc rPrimReg
+aDataType  V
+aZKey      1166247
+
+eParameter 4
+aShortDesc InternalEntityStructure
+aDataType  S
+aZKey      1166248
+
+eParameter 4
+aShortDesc InternalAttribStructure
+aDataType  S
+aZKey      1166249
+
+eParameter 4
+aShortDesc GetOrSetFlag
+aDataType  N
+aZKey      1166250
+
+eOperation 3
+aName      dFullNameFML
+aZKey      1166251
+aType      A
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc rPrimReg
+aDataType  V
+aZKey      1166252
+
+eParameter 4
+aShortDesc InternalEntityStructure
+aDataType  S
+aZKey      1166253
+
+eParameter 4
+aShortDesc InternalAttribStructure
+aDataType  S
+aZKey      1166254
+
+eParameter 4
+aShortDesc GetOrSetFlag
+aDataType  N
+aZKey      1166255
+
+eOperation 3
+
+eParameter 4
+aShortDesc View to Instance
+aDataType  V
+aZKey      1695419
+
+eParameter 4
+aShortDesc Internal Entity Structure
+aDataType  S
+aZKey      1695420
+
+eParameter 4
+aShortDesc Internal Attrib Structure
+aDataType  S
+aZKey      1695421
+
+eParameter 4
+aShortDesc Get Or Set Flag
+aDataType  N
+aZKey      1695422
+
+ePOD       2
+aNAME      rPrimReg
+aZKey      1158330
+aTE_SourceZKey 4121658
+
+eTE_DB_Environ 3
+aName      ePamms
+aZKey      68568367
+aDesc      ePamms Application
+aType      P
+
+eTE_DBMS_Source 4
+aName      ePammsA
+aZKey      1156756
+aDesc      ePamms access
+aParadigm  R
+aDBMS      MS Access via ODBC
+aGenerateExecutable kzhsqlab
+aExecutable kzhsqloa
+aGenKeyExecutable kzhgenky
+aDisplayOwner Y
+aDisplayDBMS_ID N
+
+eTE_DBMS_Source 4
+aName      ePammsM
+aZKey      4121658
+aDesc      MySQL ePamms database
+aParadigm  R
+aDBMS      MySQL 5.1 via ODBC
+aGenerateExecutable kzhsqlmb
+aExecutable kzhsqloa
+aGenKeyExecutable kzhgenky
+aDisplayOwner Y
+aDisplayDBMS_ID N
+aDBH_Data  376
+TZDBHODO ********************************************************************************************************************************z1000-Zeidon    ZTF_12C4_TZDBHODO 05/07/10   14:07:31 1.0a2    
+eODBC      1
+aTimestampPrecision 3
+aTimestampAsString N
+aBlobsLast N
+aDropTables Y
+aAddTableNameToFK_Override Y
+aGenCreateIdxs Y
+aGenDropIdxs N
+aGenCreateTables Y
+
+
+
+eOperationList 2
+
+eOperSourceFile 3
+
+eOperationList 2
+
+eOperSourceFile 3
+
+eOperationList 2
+
+eOperSourceFile 3
+
+eOperationList 2
+
+eOperSourceFile 3
+
+i12        5
+i21        18
+i35        5
+i38        18
+i47        44
+i56        5
+i59        18
+i62        15
+i65        18
+i74        71
+i77        41
+i80        41
+i86        18
+i94        5
+i97        71
+i100       18
+i102       88
+i104       1
+i105       92
+i106       93
+i107       5
+i108       95
+i109       96
+i110       71
+i111       98
+i112       99
+i113       18
+i114       101
+i115       88
+i116       103
+i117       2
+i118       3
+i119       4
+i120       5
+i121       6
+i122       7
+i123       8
+i124       9
+i125       10
+i126       11
+i127       5
+i128       13
+i129       14
+i130       15
+i131       16
+i132       17
+i133       18
+i134       19
+i135       20
+i136       18
+i137       22
+i138       23
+i139       24
+i140       25
+i141       26
+i142       27
+i143       28
+i144       29
+i145       30
+i146       31
+i147       54
+i148       55
+i149       5
+i150       57
+i151       58
+i152       18
+i153       60
+i154       61
+i155       15
+i156       63
+i157       64
+i158       18
+i159       66
+i160       67
+i161       68
+i162       69
+i163       70
+i164       71
+i165       72
+i166       73
+i167       71
+i168       75
+i169       76
+i170       41
+i171       78
+i172       79
+i173       41
+i174       81
+i175       82
+i176       83
+i177       84
+i178       85
+i179       18
+i180       87
+i181       88
+i182       89
+i183       90
+i184       91
+i185       32
+i186       33
+i187       34
+i188       5
+i189       36
+i190       37
+i191       18
+i192       39
+i193       40
+i194       41
+i195       42
+i196       43
+i197       44
+i198       45
+i199       46
+i200       44
+i201       48
+i202       49
+i203       50
+i204       51
+i205       52
+i206       53
+i207       88
+i208       101
+i223       87
+i232       218
+i233       88
+i234       213
+i235       88
+i236       87
+i237       88
+i238       101
+i239       88

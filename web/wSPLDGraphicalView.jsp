@@ -1209,20 +1209,20 @@ function CheckAllInGrid(id, CheckBoxName)
                        <label>Section Type: </label>
                        <select id="zSectionType" class="zeidon" data-zmap="block.z_^l^l^d_^section^type" style="float:right">
                          <option value="">Select Section Type...</option>
-                         <option value="Ingredients">Ingredients</option>
-                         <option value="FirstAid">First Aid</option>
-                         <option value="Hazards">Hazards</option>
-                         <option value="PhysicalHazard">Physical Hazard</option>
                          <option value="ContainerDisposal">Container Disposal</option>
-                         <option value="StorageDisposal">Storage and Disposal</option>
-                         <option value="Precautionary">Precautionary</option>
                          <option value="DirectionsForUse">Directions For Use</option>
-                         <option value="Marketing">Marketing</option>
-                         <option value="HumanHazard">Human Hazard</option>
-                         <option value="Graphic">Graphic</option>
-                         <option value="NetContents">Net Contents</option>
                          <option value="EPA_RegAndEstNbr">EPA Reg. No. - EPA Est. No.</option>
+                         <option value="FirstAid">First Aid</option>
+                         <option value="Graphic">Graphic</option>
+                         <option value="Hazards">Hazards</option>
+                         <option value="HumanHazard">Human Hazard</option>
+                         <option value="Ingredients">Ingredients</option>
+                         <option value="Marketing">Marketing</option>
+                         <option value="NetContents">Net Contents</option>
+                         <option value="PhysicalHazard">Physical Hazard</option>
+                         <option value="Precautionary">Precautionary</option>
                          <option value="Product">Product Specific</option>
+                         <option value="StorageDisposal">Storage and Disposal</option>
                         </select>
                      </div>
                      &nbsp;

@@ -1,0 +1,646 @@
+z1000-Zeidon    TZAPDMAB TZDGSRCO 09/26/14   12:55:05 1.0a2    
+eDomainGroup 1
+aZKey      68568086
+aName      TZAPDMAB
+aExtension C
+aLanguageType C
+aDomainAndGlobalOpGroupName TZAPDMAA
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.DateDomain
+aZKey      68568090
+aName      Date
+aDesc      This domain manipulates the date portion of DateTime
+aDomainType A
+aDataType  D
+aContextRestriction N
+
+eContext   3
+aZKey      68568091
+aName      Date
+aEditString yyyyMMdd
+aJavaEditString yyyyMMdd
+
+eContext   3
+aZKey      68568092
+aDesc      Arithmetic operations on day portion of DateTime
+aName      Day
+aEditString DDD
+aJavaEditString DDD
+
+eContext   3
+aZKey      68568093
+aName      DayOfMonth
+aEditString DD
+aJavaEditString dd
+
+eContext   3
+aZKey      68568094
+aName      DayOfWeek
+aEditString Dddd
+aJavaEditString E
+
+eContext   3
+aZKey      68568095
+aName      DayOfYear
+aEditString jjj
+aJavaEditString DDD
+
+eContext   3
+aZKey      68568096
+aName      DD-MM-YY
+aEditString dd-mm-YY
+aJavaEditString dd-MM-yy
+
+eContext   3
+aZKey      68568097
+aName      DD-MM-YYYY
+aEditString dd-mm-YYYY
+aJavaEditString dd-MM-yyyy
+
+eContext   3
+aZKey      68568098
+aName      DD/MM/YY
+aEditString dd/mm/YY
+aJavaEditString dd/MM/yy
+
+eContext   3
+aZKey      68568099
+aName      DD/MM/YYYY
+aEditString dd/mm/YYYY
+aJavaEditString dd/MM/yyyy
+aDIL_Text  DD/MM/YYYY Format
+
+eContext   3
+aZKey      68568100
+aName      DDMonthYYYY
+aEditString dd Mmmm YYYY
+aJavaEditString dd MMM yyyy
+
+eContext   3
+aZKey      68568101
+aName      DDMonYYYY
+aEditString dd Mmm YYYY
+aJavaEditString dd MMM yyyy
+
+eContext   3
+aZKey      3394649
+aName      ESLMMDDYY
+aEditString ESLMMDDYY
+aJavaEditString 'ESL'MMddyy
+
+eContext   3
+aZKey      68568102
+aName      M/D/YYYY
+aEditString m/d/YYYY
+aJavaEditString M/d/yyyy
+
+eContext   3
+aZKey      68568103
+aName      MM-DD-YY
+aEditString mm-dd-YY
+aJavaEditString MM-dd-yy
+
+eContext   3
+aZKey      68568104
+aName      MM-DD-YYYY
+aEditString mm-dd-YYYY
+aJavaEditString MM-dd-yyyy
+
+eContext   3
+aZKey      68568105
+aName      MM/DD/YY
+aEditString mm/dd/YY
+aJavaEditString MM/dd/yy
+
+eContext   3
+aZKey      68568106
+aName      MM/DD/YYYY
+aEditString MM/DD/YYYY
+aJavaEditString MM/dd/yyyy
+
+eContext   3
+aZKey      3466164
+aName      MMDDYY
+aEditString MMDDYY
+aJavaEditString MMddyy
+
+eContext   3
+aZKey      68568107
+aName      MMDDYYYY
+aEditString MMDDYYYY
+aJavaEditString MMddyyyy
+
+eContext   3
+aZKey      68568108
+aName      MonDDYYYY
+aEditString Mmm dd, YYYY
+aJavaEditString MMM dd, yyyy
+
+eContext   3
+aZKey      68568109
+aDesc      Arithmetic operations against Month portion of DateTime
+aName      Month
+aEditString MM
+aJavaEditString MM
+
+eContext   3
+aZKey      68568110
+aName      MonthDDYYYY
+aEditString Mmmm d, YYYY
+aJavaEditString MMM d, yyyy
+
+eContext   3
+aZKey      68568111
+aName      MonthOfYear
+aEditString Mmmm
+aJavaEditString MMMM
+
+eContext   3
+aZKey      68568112
+aDesc      Use LongDate format from Windows
+aName      MSWindowsLongSetting
+aEditString yyyy.MM.dd HH:mm:ss.SSS
+aJavaEditString yyyy.MM.dd HH:mm:ss.SSS
+
+eContext   3
+aZKey      68568113
+aDesc      Use ShortDate format from Windows
+aName      MSWindowsShortSetting
+aEditString yyyy-MM-dd HH:mm:ss.SSS
+aJavaEditString yyyy-MM-dd HH:mm:ss.SSS
+
+eContext   3
+aZKey      3394648
+aName      REVMMDDYY
+aEditString REVMMDDYY
+aJavaEditString 'REV'MMddyy
+
+eContext   3
+aZKey      68568114
+aDesc      Return the week within the year
+aName      WeekOfYear
+aEditString ww
+aJavaEditString ww
+
+eContext   3
+aZKey      68568115
+aDesc      Arithmetic operations against year protion of DateTime
+aName      Year
+aEditString yyyy
+aJavaEditString yyyy
+
+eContext   3
+aZKey      68568116
+aName      YY
+aEditString YY
+aJavaEditString yy
+
+eContext   3
+aZKey      68568117
+aDesc      Julian Date
+aName      YYJJJ
+aEditString YYjjj
+aJavaEditString yyDDD
+
+eContext   3
+aZKey      68568118
+aName      YYYY
+aEditString YYYY
+aJavaEditString yyyy
+
+eContext   3
+aZKey      68568119
+aName      YYYY.MM.DD
+aEditString YYYY.MM.DD
+aJavaEditString yyyy.MM.dd
+
+eContext   3
+aZKey      68568120
+aDesc      Julian Date
+aName      YYYYJJJ
+aEditString YYYYjjj
+aJavaEditString yyyyDDD
+
+eContext   3
+aZKey      68568121
+aName      YYYYMM
+aEditString YYYYMM
+aJavaEditString yyyyMM
+
+eContext   3
+aZKey      4894999
+aName      yyyyMMdd
+aEditString YYYYMMDD
+aJavaEditString yyyyMMdd
+aIsDefault Y
+
+eContext   3
+aZKey      68568122
+aName      YYYYMonDD
+aEditString YYYY Mmm dd
+aJavaEditString yyyy MMM dd
+
+eContext   3
+aZKey      68568123
+aName      YYYYMonthDD
+aEditString YYYY Mmmm dd
+aJavaEditString yyyy MMMM dd
+
+eSelectedOperation 3
+aName      zdmDate
+aZKey      68568087
+aDesc      Date Algorithm
+aType      M
+aReturnDataType N
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.DateDomain
+aZKey      68568124
+aName      YearMonth
+aDesc      Year and Month of the form: YYYYMM
+aDomainType F
+aDataType  S
+aMaxStringLth 6
+aContextRestriction N
+
+eContext   3
+aZKey      68568125
+aName      YearMonth
+aEditString 999999
+aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.IntegerDomain
+aZKey      68568126
+aName      MonthDay
+aDomainType F
+aDataType  S
+aMaxStringLth 4
+aContextRestriction N
+
+eContext   3
+aZKey      68568127
+aName      MonthDay
+aEditString 99/99
+aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.DateDomain
+aZKey      68568128
+aName      ExpirationDate
+aDesc      Expiration Date on a Credit Card - mm/yy
+aDomainType A
+aDataType  D
+aContextRestriction N
+
+eContext   3
+aZKey      68568129
+aName      ExpirationDate
+aEditString mm/dd/YYYY
+aIsDefault Y
+aDIL_Text  mm/dd/YYYY
+
+eSelectedOperation 3
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.DateDomain
+aZKey      68568130
+aName      Time
+aDomainType A
+aDataType  T
+aMaxStringLth 32
+aContextRestriction N
+
+eContext   3
+aZKey      68568131
+aName      HH:MM:SS.S
+aEditString HH:MI:SS.9
+
+eContext   3
+aZKey      68568132
+aName      HH:MM:SS.S AM
+aEditString HH:MI:SS.9 AM
+
+eContext   3
+aZKey      68568133
+aName      Hour
+aEditString HH
+
+eContext   3
+aZKey      68568134
+aName      Minute
+aEditString MI
+
+eContext   3
+aZKey      68568136
+aName      MSWindowsSetting
+aIsDefault Y
+
+eContext   3
+aZKey      68568138
+aName      Second
+aEditString SS
+
+eContext   3
+aZKey      68568140
+aName      Time
+aEditString HHMISS999
+
+eSelectedOperation 3
+aName      zdmTime
+aZKey      68568089
+aDesc      Time Algorithm
+aType      M
+aReturnDataType N
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.DateDomain
+aZKey      68568141
+aName      DateTime
+aDesc      Basic Timestamp Domain
+aDomainType A
+aDataType  T
+aMaxStringLth 20
+aContextRestriction N
+
+eContext   3
+aZKey      68568142
+aName      Date
+aEditString YYYYmmdd
+aJavaEditString yyyyMMdd
+
+eContext   3
+aZKey      68568143
+aName      DateTime
+aEditString YYYYmmddHHMISS999
+aJavaEditString yyyyMMddHHmmssSSS
+aDIL_Text  Basic Timestamp Domain
+
+eContext   3
+aZKey      68568144
+aName      Day
+aEditString E
+aJavaEditString E
+
+eContext   3
+aZKey      68568145
+aName      DayOfMonth
+aEditString D
+aJavaEditString d
+
+eContext   3
+aZKey      68568146
+aName      DayOfWeek
+aEditString Dddd
+aJavaEditString E
+
+eContext   3
+aZKey      68568147
+aName      DayOfYear
+aEditString jjj
+aJavaEditString DDD
+
+eContext   3
+aZKey      68568148
+aName      DD-MM-YY
+aEditString dd-mm-YY
+aJavaEditString dd-MM-yy
+
+eContext   3
+aZKey      68568149
+aName      DD-MM-YYYY
+aEditString dd-mm-YYYY
+aJavaEditString dd-MM-yyyy
+
+eContext   3
+aZKey      68568150
+aName      DD/MM/YY
+aEditString dd/mm/YY
+aJavaEditString dd/MM/yy
+
+eContext   3
+aZKey      68568151
+aName      DD/MM/YYYY
+aEditString dd/mm/YYYY
+aJavaEditString dd/MM/yyyy
+
+eContext   3
+aZKey      68568152
+aName      DD/MM/YYYY HH:MM:SS.S
+aEditString dd/mm/YYYY HH:MI:SS.9
+aJavaEditString dd/MM/yyyy HH:mm:ss:SSS
+
+eContext   3
+aZKey      68568153
+aName      DD/MM/YYYY HH:MM:SS.S AM
+aEditString dd/mm/YYYY HH:MI:SS.9 AM
+aJavaEditString dd/MM/yyyy HH:mm:ss:SSS aa
+
+eContext   3
+aZKey      68568154
+aName      DDMonthYYYY
+aEditString dd Mmmm, YYYY
+aJavaEditString dd MMMM, yyyy
+
+eContext   3
+aZKey      68568155
+aName      DDMonYYYY
+aEditString dd Mmm YYYY
+aJavaEditString dd MMM yyyy
+
+eContext   3
+aZKey      68568156
+aName      HH:MM:SS.S
+aEditString HH:MI:SS.9
+aJavaEditString HH:mm:ss:S
+
+eContext   3
+aZKey      68568157
+aName      HH:MM:SS.S AM
+aEditString HH:MI:SS.9 AM
+aJavaEditString HH:mm:ss:S aa
+
+eContext   3
+aZKey      68568158
+aName      Hour
+aEditString HH
+aJavaEditString HH
+
+eContext   3
+aZKey      68568159
+aName      ListDisplay
+aEditString DD Mmm YY (HH:MI AM)
+aJavaEditString dd MMM yy (HH:mm a)
+aDIL_Text  Basic Timestamp Domain
+
+eContext   3
+aZKey      68568160
+aDesc      Date display YY/MM/DD HH:mm
+aName      ListDisplayNumeric
+aEditString YY/MM/DD - HH:MI
+aJavaEditString yy/MM/dd - HH:mm
+
+eContext   3
+aZKey      68568161
+aName      Minute
+aEditString MI
+aJavaEditString mm
+
+eContext   3
+aZKey      68568162
+aName      MM-DD-YY
+aEditString mm-dd-YY
+aJavaEditString MM-dd-yy
+
+eContext   3
+aZKey      68568163
+aName      MM-DD-YYYY
+aEditString mm-dd-YYYY
+aJavaEditString MM-dd-yyyy
+
+eContext   3
+aZKey      68568164
+aName      MM/DD/YY
+aEditString mm/dd/YY
+aJavaEditString MM/dd/yy
+
+eContext   3
+aZKey      68568165
+aName      MM/DD/YYYY
+aEditString mm/dd/YYYY
+aJavaEditString MM/dd/yyyy
+
+eContext   3
+aZKey      68568166
+aName      MM/DD/YYYY HH:MM:SS.S
+aEditString mm/dd/YYYY HH:MI:SS.9
+aJavaEditString MM/dd/yyyy HH:mm:ss:SSS
+
+eContext   3
+aZKey      68568168
+aName      MMDDYYYY
+aEditString MMDDYYYY
+aJavaEditString MMddyyyy
+
+eContext   3
+aZKey      68568169
+aName      MonDDYYYY
+aEditString Mmm dd, YYYY
+aJavaEditString MMM dd, yyyy
+
+eContext   3
+aZKey      68568170
+aName      Month
+aEditString MMM
+aJavaEditString MMM
+
+eContext   3
+aZKey      68568171
+aName      MonthDDYYYY
+aEditString Mmmm dd, YYYY
+aJavaEditString MMMM dd, yyyy
+
+eContext   3
+aZKey      68568172
+aName      MonthOfYear
+aEditString Mmmm
+aJavaEditString MMMM
+
+eContext   3
+aZKey      68568173
+aName      MSWindowsLongSetting
+aEditString dd/MM/yyyy HH:mm:ss:SSS aa
+aJavaEditString dd/MM/yyyy HH:mm:ss:SSS aa
+
+eContext   3
+aZKey      68568174
+aName      MSWindowsSetting
+aEditString dd/MM/yyyy
+aJavaEditString dd/MM/yyyy
+
+eContext   3
+aZKey      68568175
+aName      MSWindowsShortSetting
+aEditString dd/MM/yyyy
+aJavaEditString dd/MM/yyyy
+
+eContext   3
+aZKey      68568176
+aName      Second
+aEditString SS
+aJavaEditString ss
+
+eContext   3
+aZKey      68568177
+aName      Time
+aEditString HHMISS999
+aJavaEditString HHmmssSSS
+
+eContext   3
+aZKey      68568178
+aName      WeekOfYear
+aEditString w
+aJavaEditString w
+
+eContext   3
+aZKey      68568179
+aName      Year
+aEditString YYYY
+aJavaEditString yyyy
+
+eContext   3
+aZKey      68568180
+aName      YY
+aEditString YY
+aJavaEditString yy
+
+eContext   3
+aZKey      68568181
+aName      YYJJJ
+aEditString YYjjj
+aJavaEditString yyDDD
+
+eContext   3
+aZKey      68568182
+aName      YYYY
+aEditString YYYY
+aJavaEditString yyyy
+
+eContext   3
+aZKey      68568183
+aDesc      access return
+aName      YYYY-MM-DD
+aEditString YYYY-MM-DD
+aJavaEditString yyyy-MM-dd
+
+eContext   3
+aZKey      68568167
+aName      YYYY/MM/DD HH:MM:SS.S AM
+aEditString YYYY/mm/dd HH:MI:SS.9 AM
+aJavaEditString yyyy/MM/dd HH:mm:ss:SSS aa
+aIsDefault Y
+
+eContext   3
+aZKey      68568184
+aName      YYYYJJJ
+aEditString YYYYjjj
+aJavaEditString yyyyDDD
+
+eSelectedOperation 3
+aName      zdmDateTime
+aZKey      68568088
+aDesc      Date and Time Algorithm
+aType      M
+aReturnDataType N
+
+eOperation 2
+
+eOperation 2
+
+eOperation 2
+
+i46        39
+i101       39
+i102       100
+i103       55

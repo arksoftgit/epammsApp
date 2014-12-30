@@ -1,0 +1,11 @@
+z1000-Zeidon    Z0196CD1 TZWDVORO 09/29/08   10:52:15 1.0a2    
+eViewObjRef 1
+aZKey      1666257
+aName      qOrganizLogin
+
+eLOD       2
+aZKey      1658404
+aName      qOrganiz
+aDesc      Query Organization (used for logon and existence checking)
+aDLL_Name  qOrganiz
+

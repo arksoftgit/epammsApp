@@ -1,0 +1,12 @@
+z1000-Zeidon    Z42E1644 TZWDVORO 11/22/08   14:33:22 1.0a2    
+eViewObjRef 1
+aZKey      70129220
+aName      lMLCATgt
+aDesc      VOR automatically built from LOD Dialog
+
+eLOD       2
+aZKey      70129006
+aName      lMLCATgt
+aDesc      MLC Analysis Target
+aDLL_Name  lMLCATgt
+

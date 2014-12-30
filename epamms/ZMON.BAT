@@ -1,0 +1,9 @@
+del zmonitor.idb /s 
+del zmonitor.ilk /s 
+del zmonitor.pdb /s 
+del zmonitor.obj /s 
+del zmonitor.exp /s 
+del zmonitor.map /s 
+del zmonitor.res /s 
+del zmonitor.dll /s 
+nmake -f zmonitor.mak

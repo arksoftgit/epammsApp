@@ -1,0 +1,3369 @@
+z1000-Zeidon    EPAMMS   TZCMLPLO 12/29/14   21:34:34 1.0a2    
+eLPLR      1
+aName      epamms
+aDesc      ePamms Application
+aZKey      4324720
+aPgmSrcDir %kzd%:\lplr\epamms
+aExecDir   %kzd%:\lplr\epamms\bin
+aMetaSrcDir %kzd%:\lplr\epamms
+aTaskUseCount 1
+aLPLR_Type 2
+aCurrentCompilerSpec DKS
+aTempDesc  ePamms Application
+aCurrentDateTime 20071026104553250
+aJavaPackageName com\quinsoft\epamms
+awFullyQualifiedFileName %kzd%:\lplr\epamms\back
+awFullyQualifiedDirectoryName %kzd%:\lplr\epamms\back
+
+eW_MetaType 2
+aType      0
+
+eW_MetaType 2
+aType      1
+
+eW_MetaType 2
+aType      2
+
+eW_MetaDef 3
+aCPLR_ZKey 1662527
+aStatus    1
+aUpdateInd 2
+aName      AcceptCurrentTemporalSubobject
+
+eW_MetaDef 3
+aCPLR_ZKey 89816628
+aStatus    1
+aUpdateInd 2
+aName      ActivateWorkObjectFromFile
+
+eW_MetaDef 3
+aCPLR_ZKey 89816623
+aStatus    1
+aUpdateInd 2
+aName      AddDaysToDate
+
+eW_MetaDef 3
+aCPLR_ZKey 89816557
+aStatus    1
+aUpdateInd 2
+aName      AddMonthsToDate
+
+eW_MetaDef 3
+aCPLR_ZKey 89816593
+aStatus    1
+aUpdateInd 2
+aName      AddressFormatToMultiLine
+
+eW_MetaDef 3
+aCPLR_ZKey 89816515
+aStatus    1
+aUpdateInd 2
+aName      AddSpacesToString
+
+eW_MetaDef 3
+aCPLR_ZKey 89816681
+aStatus    1
+aUpdateInd 2
+aName      AddToAttrFromIntByContext
+
+eW_MetaDef 3
+aCPLR_ZKey 89816638
+aStatus    1
+aUpdateInd 2
+aName      AddWorkingDaysToDate
+
+eW_MetaDef 3
+aCPLR_ZKey 89816539
+aStatus    1
+aUpdateInd 2
+aName      AGetRegistryValue
+
+eW_MetaDef 3
+aCPLR_ZKey 89816542
+aStatus    1
+aUpdateInd 2
+aName      CallObjectOperation
+
+eW_MetaDef 3
+aCPLR_ZKey 1662524
+aStatus    1
+aUpdateInd 2
+aName      CancelCurrentTemporalSubobject
+
+eW_MetaDef 3
+aCPLR_ZKey 89816651
+aStatus    1
+aUpdateInd 2
+aName      CharToCode
+
+eW_MetaDef 3
+aCPLR_ZKey 89816653
+aStatus    1
+aUpdateInd 2
+aName      CodeToChar
+
+eW_MetaDef 3
+aCPLR_ZKey 89816633
+aStatus    1
+aUpdateInd 2
+aName      CompareAttributeByShortString
+
+eW_MetaDef 3
+aCPLR_ZKey 89816522
+aStatus    1
+aUpdateInd 2
+aName      ConvertExternalValueOfAttribute
+
+eW_MetaDef 3
+aCPLR_ZKey 89816453
+aStatus    1
+aUpdateInd 2
+aName      ConvertLineToEntity
+
+eW_MetaDef 3
+aCPLR_ZKey 1399847
+aStatus    1
+aUpdateInd 2
+aName      CopyMLC_EntityToSLC
+
+eW_MetaDef 3
+aCPLR_ZKey 1408197
+aStatus    1
+aUpdateInd 2
+aName      CopySLC_EntityToSPLD
+
+eW_MetaDef 3
+aCPLR_ZKey 1662531
+aStatus    1
+aUpdateInd 2
+aName      CreateCurrentTemporalVersion
+
+eW_MetaDef 3
+aCPLR_ZKey 89816585
+aStatus    1
+aUpdateInd 2
+aName      dAdressLabel
+
+eW_MetaDef 3
+aCPLR_ZKey 89816580
+aStatus    1
+aUpdateInd 2
+aName      dAdressLabelFull
+
+eW_MetaDef 3
+aCPLR_ZKey 89816488
+aStatus    1
+aUpdateInd 2
+aName      DBQualEntityByString
+
+eW_MetaDef 3
+aCPLR_ZKey 89816658
+aStatus    1
+aUpdateInd 2
+aName      DecimalSumOf
+
+eW_MetaDef 3
+aCPLR_ZKey 2196645
+aStatus    1
+aUpdateInd 2
+aName      DetermineNextVersion
+
+eW_MetaDef 3
+aCPLR_ZKey 89816517
+aStatus    1
+aUpdateInd 2
+aName      FindStringInAttribute
+
+eW_MetaDef 3
+aCPLR_ZKey 89816577
+aStatus    1
+aUpdateInd 2
+aName      GetAttribNameFromStructure
+
+eW_MetaDef 3
+aCPLR_ZKey 89816554
+aStatus    1
+aUpdateInd 2
+aName      GetButtonHeaderName
+
+eW_MetaDef 3
+aCPLR_ZKey 89816495
+aStatus    1
+aUpdateInd 2
+aName      GetCurrentApplicationName
+
+eW_MetaDef 3
+aCPLR_ZKey 89816510
+aStatus    1
+aUpdateInd 2
+aName      GetDataTypeForAttribute
+
+eW_MetaDef 3
+aCPLR_ZKey 89816643
+aStatus    1
+aUpdateInd 2
+aName      GetDateAttributeDifferenceInDays
+
+eW_MetaDef 3
+aCPLR_ZKey 89816590
+aStatus    1
+aUpdateInd 2
+aName      GetEntityNameFromStructure
+
+eW_MetaDef 3
+aCPLR_ZKey 89816665
+aStatus    1
+aUpdateInd 2
+aName      GetEnvVariable
+
+eW_MetaDef 3
+aCPLR_ZKey 89816483
+aStatus    1
+aUpdateInd 2
+aName      GetGeneralPath
+
+eW_MetaDef 3
+aCPLR_ZKey 89816528
+aStatus    1
+aUpdateInd 2
+aName      GetHTMLPath
+
+eW_MetaDef 3
+aCPLR_ZKey 89816535
+aStatus    1
+aUpdateInd 2
+aName      GetImagingPath
+
+eW_MetaDef 3
+aCPLR_ZKey 89816694
+aStatus    1
+aUpdateInd 2
+aName      GetIntFromAttrByContext
+
+eW_MetaDef 3
+aCPLR_ZKey 89816532
+aStatus    1
+aUpdateInd 2
+aName      GetRegistryCLSID
+
+eW_MetaDef 3
+aCPLR_ZKey 89816472
+aStatus    1
+aUpdateInd 2
+aName      GetRTFPath
+
+eW_MetaDef 3
+aCPLR_ZKey 89816687
+aStatus    1
+aUpdateInd 2
+aName      GetStrFromAttrByContext
+
+eW_MetaDef 3
+aCPLR_ZKey 89816601
+aStatus    1
+aUpdateInd 2
+aName      GetViewFromBlobAttribute
+
+eW_MetaDef 3
+aCPLR_ZKey 89816547
+aStatus    1
+aUpdateInd 2
+aName      GetWindowsUserName
+
+eW_MetaDef 3
+aCPLR_ZKey 1399844
+aStatus    1
+aUpdateInd 2
+aName      InitializeSLC_FromMLC
+
+eW_MetaDef 3
+aCPLR_ZKey 1408202
+aStatus    1
+aUpdateInd 2
+aName      InitializeSPLD_FromSLC
+
+eW_MetaDef 3
+aCPLR_ZKey 69087046
+aStatus    1
+aUpdateInd 2
+aName      InsertMappingWordsIntoString
+
+eW_MetaDef 3
+aCPLR_ZKey 89816459
+aStatus    1
+aUpdateInd 2
+aName      InsertOI_DataIntoEmailTemplate
+
+eW_MetaDef 3
+aCPLR_ZKey 89816503
+aStatus    1
+aUpdateInd 2
+aName      InsertOI_DataIntoTemplateFile
+
+eW_MetaDef 3
+aCPLR_ZKey 89816476
+aStatus    1
+aUpdateInd 2
+aName      ParseBooleanExpression
+
+eW_MetaDef 3
+aCPLR_ZKey 89816567
+aStatus    1
+aUpdateInd 2
+aName      PersonName_FirstMiddleLast
+
+eW_MetaDef 3
+aCPLR_ZKey 89816572
+aStatus    1
+aUpdateInd 2
+aName      PersonName_LastFirstMiddle
+
+eW_MetaDef 3
+aCPLR_ZKey 1178394
+aStatus    1
+aUpdateInd 2
+aName      PositionOnEntityByZID
+
+eW_MetaDef 3
+aCPLR_ZKey 89816499
+aStatus    1
+aUpdateInd 2
+aName      ReadLine5000
+
+eW_MetaDef 3
+aCPLR_ZKey 89816615
+aStatus    1
+aUpdateInd 2
+aName      ReadLineIntoGlobalBuffer
+
+eW_MetaDef 3
+aCPLR_ZKey 89816550
+aStatus    1
+aUpdateInd 2
+aName      RemoveLeadingBlanksFromAttrib
+
+eW_MetaDef 3
+aCPLR_ZKey 89816611
+aStatus    1
+aUpdateInd 2
+aName      SeparateName
+
+eW_MetaDef 3
+aCPLR_ZKey 69214769
+aStatus    1
+aUpdateInd 2
+aName      SeparateNumberedStatement
+
+eW_MetaDef 3
+aCPLR_ZKey 89816675
+aStatus    1
+aUpdateInd 2
+aName      SetAttrFromIntByContext
+
+eW_MetaDef 3
+aCPLR_ZKey 89816669
+aStatus    1
+aUpdateInd 2
+aName      SetAttrFromStrByContext
+
+eW_MetaDef 3
+aCPLR_ZKey 89816704
+aStatus    1
+aUpdateInd 2
+aName      SetAttributeFromCurrentDateTime
+
+eW_MetaDef 3
+aCPLR_ZKey 89816618
+aStatus    1
+aUpdateInd 2
+aName      SetAttributeFromTabField
+
+eW_MetaDef 3
+aCPLR_ZKey 89816606
+aStatus    1
+aUpdateInd 2
+aName      SetBlobAttributeFromView
+
+eW_MetaDef 3
+aCPLR_ZKey 89816700
+aStatus    1
+aUpdateInd 2
+aName      SetCursorLatestEntity
+
+eW_MetaDef 3
+aCPLR_ZKey 89816562
+aStatus    1
+aUpdateInd 2
+aName      SetDecimalPrecisionRounded
+
+eW_MetaDef 3
+aCPLR_ZKey 1511099
+aStatus    1
+aUpdateInd 2
+aName      SetDynamicBannerName
+
+eW_MetaDef 3
+aCPLR_ZKey 89816656
+aStatus    1
+aUpdateInd 2
+aName      StrToDecimal
+
+eW_MetaDef 3
+aCPLR_ZKey 89816663
+aStatus    1
+aUpdateInd 2
+aName      StrToInt
+
+eW_MetaDef 3
+aCPLR_ZKey 1664968
+aStatus    1
+aUpdateInd 2
+aName      SyncPhysicalLabel
+
+eW_MetaDef 3
+aCPLR_ZKey 89816478
+aStatus    1
+aUpdateInd 2
+aName      WinShellExecute
+
+eW_MetaDef 3
+aCPLR_ZKey 69086455
+aStatus    1
+aUpdateInd 2
+aName      WL_QC
+
+eW_MetaDef 3
+aCPLR_ZKey 89816565
+aStatus    1
+aUpdateInd 2
+aName      zTrim
+
+eW_MetaType 2
+aType      3
+
+eW_MetaDef 3
+aCPLR_ZKey 68567480
+aStatus    1
+aUpdateInd 2
+aName      Blob
+aLastUpdateDate 20140909012210462
+
+eW_MetaDef 3
+aCPLR_ZKey 68568187
+aStatus    1
+aUpdateInd 2
+aName      Decimal
+aLastUpdateDate 20140610131530000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568211
+aStatus    1
+aUpdateInd 2
+aName      Percent
+aLastUpdateDate 20140610131530000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568213
+aStatus    1
+aUpdateInd 2
+aName      DecimalKey0
+aLastUpdateDate 20140610131530000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568215
+aStatus    1
+aUpdateInd 2
+aName      Decimal9
+aLastUpdateDate 20140610131530000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568218
+aStatus    1
+aUpdateInd 2
+aName      Decimal8
+aLastUpdateDate 20140610131530000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568221
+aStatus    1
+aUpdateInd 2
+aName      Decimal7
+aLastUpdateDate 20140610131530000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568224
+aStatus    1
+aUpdateInd 2
+aName      Decimal6
+aLastUpdateDate 20140610131530000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568227
+aStatus    1
+aUpdateInd 2
+aName      Decimal5
+aLastUpdateDate 20140610131530000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568233
+aStatus    1
+aUpdateInd 2
+aName      Decimal4
+aLastUpdateDate 20140610131530000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568257
+aStatus    1
+aUpdateInd 2
+aName      Decimal3
+aLastUpdateDate 20140610131530000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568281
+aStatus    1
+aUpdateInd 2
+aName      Decimal2
+aLastUpdateDate 20140610131530000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568305
+aStatus    1
+aUpdateInd 2
+aName      Decimal1
+aLastUpdateDate 20140610131530000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568329
+aStatus    1
+aUpdateInd 2
+aName      Decimal0
+aLastUpdateDate 20140610131530000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568090
+aStatus    1
+aUpdateInd 2
+aName      Date
+aLastUpdateDate 20140926165505781
+
+eW_MetaDef 3
+aCPLR_ZKey 68568124
+aStatus    1
+aUpdateInd 2
+aName      YearMonth
+aLastUpdateDate 20140926165505781
+
+eW_MetaDef 3
+aCPLR_ZKey 68568126
+aStatus    1
+aUpdateInd 2
+aName      MonthDay
+aLastUpdateDate 20140926165505781
+
+eW_MetaDef 3
+aCPLR_ZKey 68568128
+aStatus    1
+aUpdateInd 2
+aName      ExpirationDate
+aLastUpdateDate 20140926165505781
+
+eW_MetaDef 3
+aCPLR_ZKey 68568130
+aStatus    1
+aUpdateInd 2
+aName      Time
+aLastUpdateDate 20140926165505781
+
+eW_MetaDef 3
+aCPLR_ZKey 68568141
+aStatus    1
+aUpdateInd 2
+aName      DateTime
+aLastUpdateDate 20140926165505781
+
+eW_MetaDef 3
+aCPLR_ZKey 68568073
+aStatus    1
+aUpdateInd 2
+aName      AlphaNumeric
+aLastUpdateDate 20140507141214000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568051
+aStatus    1
+aUpdateInd 2
+aName      Note
+aLastUpdateDate 20140507141214000
+
+eW_MetaDef 3
+aCPLR_ZKey 1763284
+aStatus    1
+aUpdateInd 2
+aName      FileName
+aLastUpdateDate 20140507141214000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568075
+aStatus    1
+aUpdateInd 2
+aName      PasswordUL
+aLastUpdateDate 20140507141214000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568077
+aStatus    1
+aUpdateInd 2
+aName      Password
+aLastUpdateDate 20140507141214000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568079
+aStatus    1
+aUpdateInd 2
+aName      Day
+aLastUpdateDate 20140507141214000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568081
+aStatus    1
+aUpdateInd 2
+aName      Text
+aLastUpdateDate 20140507141214000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568083
+aStatus    1
+aUpdateInd 2
+aName      Integer
+aLastUpdateDate 20140507141214000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568041
+aStatus    1
+aUpdateInd 2
+aName      MiddleName
+aLastUpdateDate 20140411211104000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568043
+aStatus    1
+aUpdateInd 2
+aName      FirstName
+aLastUpdateDate 20140411211104000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568045
+aStatus    1
+aUpdateInd 2
+aName      LastName
+aLastUpdateDate 20140411211104000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568047
+aStatus    1
+aUpdateInd 2
+aName      SIC_Code
+aLastUpdateDate 20140411211104000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568049
+aStatus    1
+aUpdateInd 2
+aName      ShortDescription
+aLastUpdateDate 20140411211104000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568053
+aStatus    1
+aUpdateInd 2
+aName      EMailAddress
+aLastUpdateDate 20140411211104000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568055
+aStatus    1
+aUpdateInd 2
+aName      ZipCode
+aLastUpdateDate 20140411211104000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568058
+aStatus    1
+aUpdateInd 2
+aName      Gender
+aLastUpdateDate 20140411211104000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568062
+aStatus    1
+aUpdateInd 2
+aName      PhoneNumber
+aLastUpdateDate 20140411211104000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568065
+aStatus    1
+aUpdateInd 2
+aName      GeneralName_Address
+aLastUpdateDate 20140411211104000
+
+eW_MetaDef 3
+aCPLR_ZKey 69081340
+aStatus    1
+aUpdateInd 2
+aName      TemplateTitlePosition
+aLastUpdateDate 20140610131544000
+
+eW_MetaDef 3
+aCPLR_ZKey 120154151
+aStatus    1
+aUpdateInd 2
+aName      ContinuationBreakFlag
+aLastUpdateDate 20140610131544000
+
+eW_MetaDef 3
+aCPLR_ZKey 120150076
+aStatus    1
+aUpdateInd 2
+aName      LLD_ColumnListType
+aLastUpdateDate 20140610131544000
+
+eW_MetaDef 3
+aCPLR_ZKey 120129882
+aStatus    1
+aUpdateInd 2
+aName      SelectUsageType
+aLastUpdateDate 20140610131544000
+
+eW_MetaDef 3
+aCPLR_ZKey 4322672
+aStatus    1
+aUpdateInd 2
+aName      TextAlign
+aLastUpdateDate 20140610131544000
+
+eW_MetaDef 3
+aCPLR_ZKey 4322656
+aStatus    1
+aUpdateInd 2
+aName      FontSize
+aLastUpdateDate 20140610131544000
+
+eW_MetaDef 3
+aCPLR_ZKey 4322651
+aStatus    1
+aUpdateInd 2
+aName      FontWeight
+aLastUpdateDate 20140610131544000
+
+eW_MetaDef 3
+aCPLR_ZKey 4322644
+aStatus    1
+aUpdateInd 2
+aName      FontFamily
+aLastUpdateDate 20140610131544000
+
+eW_MetaDef 3
+aCPLR_ZKey 4322642
+aStatus    1
+aUpdateInd 2
+aName      Color
+aLastUpdateDate 20140610131544000
+
+eW_MetaDef 3
+aCPLR_ZKey 4322633
+aStatus    1
+aUpdateInd 2
+aName      BorderStyle
+aLastUpdateDate 20140610131544000
+
+eW_MetaDef 3
+aCPLR_ZKey 1181561
+aStatus    1
+aUpdateInd 2
+aName      UsageType
+aLastUpdateDate 20140610131544000
+
+eW_MetaDef 3
+aCPLR_ZKey 69080530
+aStatus    1
+aUpdateInd 2
+aName      TemplateUsageFormatType
+aLastUpdateDate 20140610131544000
+
+eW_MetaDef 3
+aCPLR_ZKey 69080546
+aStatus    1
+aUpdateInd 2
+aName      TemplateStatementFormat
+aLastUpdateDate 20140610131544000
+
+eW_MetaDef 3
+aCPLR_ZKey 69080516
+aStatus    1
+aUpdateInd 2
+aName      LLD_SectionType
+aLastUpdateDate 20140610131544000
+
+eW_MetaDef 3
+aCPLR_ZKey 1160409
+aStatus    1
+aUpdateInd 2
+aName      States
+aLastUpdateDate 20140411211052000
+
+eW_MetaDef 3
+aCPLR_ZKey 68567496
+aStatus    1
+aUpdateInd 2
+aName      Revenue
+aLastUpdateDate 20140411211038000
+
+eW_MetaDef 3
+aCPLR_ZKey 68567505
+aStatus    1
+aUpdateInd 2
+aName      AlphaNumericUpperStrip
+aLastUpdateDate 20140411211038000
+
+eW_MetaDef 3
+aCPLR_ZKey 130001702
+aStatus    1
+aUpdateInd 2
+aName      DonTest
+aLastUpdateDate 20140909012210462
+
+eW_MetaDef 3
+aCPLR_ZKey 4730208
+aStatus    1
+aUpdateInd 2
+aName      DirectionsNotForUseType
+aLastUpdateDate 20140909012210462
+
+eW_MetaDef 3
+aCPLR_ZKey 1186473
+aStatus    1
+aUpdateInd 2
+aName      BoldItalic
+aLastUpdateDate 20140909012210462
+
+eW_MetaDef 3
+aCPLR_ZKey 3934625
+aStatus    1
+aUpdateInd 2
+aName      StorageDisposalSectionType
+aLastUpdateDate 20140909012210462
+
+eW_MetaDef 3
+aCPLR_ZKey 3898401
+aStatus    1
+aUpdateInd 2
+aName      HazardPanel
+aLastUpdateDate 20140909012210462
+
+eW_MetaDef 3
+aCPLR_ZKey 3785525
+aStatus    1
+aUpdateInd 2
+aName      HTML Units
+aLastUpdateDate 20140909012210462
+
+eW_MetaDef 3
+aCPLR_ZKey 2838041
+aStatus    1
+aUpdateInd 2
+aName      ContainerVolume
+aLastUpdateDate 20140909012210462
+
+eW_MetaDef 3
+aCPLR_ZKey 2294674
+aStatus    1
+aUpdateInd 2
+aName      REVDate
+aLastUpdateDate 20140909012210462
+
+eW_MetaDef 3
+aCPLR_ZKey 2294672
+aStatus    1
+aUpdateInd 2
+aName      ESLDate
+aLastUpdateDate 20140909012210462
+
+eW_MetaDef 3
+aCPLR_ZKey 70220060
+aStatus    1
+aUpdateInd 2
+aName      ClaimsClassification
+aLastUpdateDate 20140909012210462
+
+eW_MetaDef 3
+aCPLR_ZKey 1639285
+aStatus    1
+aUpdateInd 2
+aName      CompanyRole
+aLastUpdateDate 20140909012210462
+
+eW_MetaDef 3
+aCPLR_ZKey 1266501
+aStatus    1
+aUpdateInd 2
+aName      ActiveInert
+aLastUpdateDate 20140909012210462
+
+eW_MetaDef 3
+aCPLR_ZKey 1206938
+aStatus    1
+aUpdateInd 2
+aName      ContentSectionType
+aLastUpdateDate 20140909012210462
+
+eW_MetaDef 3
+aCPLR_ZKey 1164066
+aStatus    1
+aUpdateInd 2
+aName      ExperienceLevel
+aLastUpdateDate 20140909012210462
+
+eW_MetaDef 3
+aCPLR_ZKey 69055597
+aStatus    1
+aUpdateInd 2
+aName      GeneralSectionType
+aLastUpdateDate 20140909012210462
+
+eW_MetaDef 3
+aCPLR_ZKey 1178868
+aStatus    1
+aUpdateInd 2
+aName      EPA_StatementType
+aLastUpdateDate 20140909012210462
+
+eW_MetaDef 3
+aCPLR_ZKey 1178527
+aStatus    1
+aUpdateInd 2
+aName      ToxicityCategory
+aLastUpdateDate 20140909012210462
+
+eW_MetaDef 3
+aCPLR_ZKey 1178519
+aStatus    1
+aUpdateInd 2
+aName      ChemicalFamily
+aLastUpdateDate 20140909012210462
+
+eW_MetaDef 3
+aCPLR_ZKey 1178421
+aStatus    1
+aUpdateInd 2
+aName      ChildHazardWarning
+aLastUpdateDate 20140909012210462
+
+eW_MetaDef 3
+aCPLR_ZKey 1178406
+aStatus    1
+aUpdateInd 2
+aName      SignalWord
+aLastUpdateDate 20140909012210462
+
+eW_MetaDef 3
+aCPLR_ZKey 68567482
+aStatus    1
+aUpdateInd 2
+aName      Y/N
+aLastUpdateDate 20140909012210462
+
+eW_MetaType 2
+aType      4
+
+eW_MetaDef 3
+aCPLR_ZKey 68568353
+aStatus    1
+aUpdateInd 2
+aName      epamms
+aDesc      255
+ePamms Application
+
+Additions:
+1. Added a relationship between M_UsageOrdering, S_UsageOrdering and SPLD_UsageOrdering and their corresponding DirectionsForUse and Marketing Statement entities.
+2. Added Default attributes to LLD and SPLD_LLD.
+3. Add 
+aLastSyncDate 20141229213227491
+aLastUpdateDate 20141229213227491
+
+eW_MetaType 2
+aType      5
+
+eW_MetaDef 3
+aCPLR_ZKey 68568519
+aStatus    1
+aUpdateInd 2
+aName      Migrate
+aDesc      Entities to migrate
+aLastSyncDate 20130702023520000
+aLastUpdateDate 20130702023520000
+
+eW_MetaType 2
+aType      6
+
+eW_MetaDef 3
+aCPLR_ZKey 68568367
+aStatus    1
+aUpdateInd 2
+aName      ePamms
+aDesc      ePamms Application
+aLastSyncDate 20141229213434138
+aLastUpdateDate 20141229213434138
+
+eW_MetaType 2
+aType      7
+
+eW_MetaDef 3
+aCPLR_ZKey 68568671
+aStatus    1
+aUpdateInd 2
+aName      DOMAINT
+aDesc      Zeidon Dynamic Table Domain Object
+aLastSyncDate 20130702023518000
+aLastUpdateDate 20130702023518000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568781
+aStatus    1
+aUpdateInd 2
+aName      DOMAINTL
+aDesc      Dynamic Domain List
+aLastSyncDate 20130702023518000
+aLastUpdateDate 20130702023518000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568789
+aStatus    1
+aUpdateInd 2
+aName      GENKEYWO
+aDesc      Zeidon Genkey Object
+aLastSyncDate 20130702023520000
+aLastUpdateDate 20130702023520000
+
+eW_MetaDef 3
+aCPLR_ZKey 86699273
+aStatus    1
+aUpdateInd 2
+aName      KZMSGQOO
+aDesc      Message Queue Handler
+aLastSyncDate 20141028075447307
+aLastUpdateDate 20141028075447307
+
+eW_MetaDef 3
+aCPLR_ZKey 69035457
+aStatus    1
+aUpdateInd 2
+aName      lMasLCA
+aDesc      Master Label Content Change Analysis
+aLastSyncDate 20130702023520000
+aLastUpdateDate 20130702023520000
+
+eW_MetaDef 3
+aCPLR_ZKey 70129551
+aStatus    1
+aUpdateInd 2
+aName      lMLC
+aDesc      MLC List
+aLastSyncDate 20140311210706000
+aLastUpdateDate 20140311210706000
+
+eW_MetaDef 3
+aCPLR_ZKey 70129221
+aStatus    1
+aUpdateInd 2
+aName      lMLCASrc
+aDesc      MLC Analysis Source
+aLastSyncDate 20141023220255927
+aLastUpdateDate 20141023220255927
+
+eW_MetaDef 3
+aCPLR_ZKey 70129006
+aStatus    1
+aUpdateInd 2
+aName      lMLCATgt
+aDesc      MLC Analysis Target
+aLastSyncDate 20141023220304433
+aLastUpdateDate 20141023220304433
+
+eW_MetaDef 3
+aCPLR_ZKey 1162962
+aStatus    1
+aUpdateInd 2
+aName      lPrimLDD
+aDesc      List Primary Registrant Label Data Definitions (LDDs)
+aLastSyncDate 20130702023520000
+aLastUpdateDate 20130702023520000
+
+eW_MetaDef 3
+aCPLR_ZKey 1158609
+aStatus    1
+aUpdateInd 2
+aName      lPrimReg
+aDesc      List Primary Registrants
+aLastSyncDate 20140109220716000
+aLastUpdateDate 20140109220716000
+
+eW_MetaDef 3
+aCPLR_ZKey 70130418
+aStatus    1
+aUpdateInd 2
+aName      lSLC
+aDesc      Read only SLC for lists, etc.
+aLastSyncDate 20130702023520000
+aLastUpdateDate 20130702023520000
+
+eW_MetaDef 3
+aCPLR_ZKey 70129897
+aStatus    1
+aUpdateInd 2
+aName      lSLCAnal
+aDesc      SLC Analysis
+aLastSyncDate 20141023220312391
+aLastUpdateDate 20141023220312391
+
+eW_MetaDef 3
+aCPLR_ZKey 69055438
+aStatus    1
+aUpdateInd 2
+aName      lSPLA
+aDesc      Sub Registrant Physical Label Maintenance
+aLastSyncDate 20130702023520000
+aLastUpdateDate 20130702023520000
+
+eW_MetaDef 3
+aCPLR_ZKey 69783425
+aStatus    1
+aUpdateInd 2
+aName      lSPLDLST
+aDesc      List SPLD entries
+aLastSyncDate 20140317173838000
+aLastUpdateDate 20140317173838000
+
+eW_MetaDef 3
+aCPLR_ZKey 69035656
+aStatus    1
+aUpdateInd 2
+aName      lSubLCA
+aDesc      Subregistrant Label Content Change Analysis
+aLastSyncDate 20130702023520000
+aLastUpdateDate 20130702023520000
+
+eW_MetaDef 3
+aCPLR_ZKey 1162991
+aStatus    1
+aUpdateInd 2
+aName      lSubLDD
+aDesc      List Sub-Registrant Label Data Definitions (LDDs)
+aLastSyncDate 20130702023520000
+aLastUpdateDate 20130702023520000
+
+eW_MetaDef 3
+aCPLR_ZKey 1165267
+aStatus    1
+aUpdateInd 2
+aName      lSubreg
+aDesc      List Subregistrants for a specified Primary Registrant
+aLastSyncDate 20130702023520000
+aLastUpdateDate 20130702023520000
+
+eW_MetaDef 3
+aCPLR_ZKey 1178878
+aStatus    1
+aUpdateInd 2
+aName      mEPA
+aDesc      EPA statements and definitions
+aLastSyncDate 20130702023520000
+aLastUpdateDate 20130702023520000
+
+eW_MetaDef 3
+aCPLR_ZKey 3
+aStatus    1
+aUpdateInd 2
+aName      mLLD
+aLastSyncDate 20140911194124019
+aLastUpdateDate 20140911194124019
+
+eW_MetaDef 3
+aCPLR_ZKey 69033382
+aStatus    1
+aUpdateInd 2
+aName      mMasLC
+aDesc      Master Label Content Maintenance
+aLastSyncDate 20141023220401634
+aLastUpdateDate 20141023220401634
+
+eW_MetaDef 3
+aCPLR_ZKey 69033348
+aStatus    1
+aUpdateInd 2
+aName      mMasProd
+aDesc      Master Product Maintenance
+aLastSyncDate 20141023220412171
+aLastUpdateDate 20141023220412171
+
+eW_MetaDef 3
+aCPLR_ZKey 3322332
+aStatus    1
+aUpdateInd 2
+aName      mOrganiz
+aLastSyncDate 20141110150552004
+aLastUpdateDate 20141110150552004
+
+eW_MetaDef 3
+aCPLR_ZKey 1164671
+aStatus    1
+aUpdateInd 2
+aName      mPerson
+aDesc      Person object to be included in the User object
+aLastSyncDate 20130702023520000
+aLastUpdateDate 20130702023520000
+
+eW_MetaDef 3
+aCPLR_ZKey 1156951
+aStatus    1
+aUpdateInd 2
+aName      mPrimLDD
+aDesc      Primary Registrant Master Label Definition Maintenance
+aLastSyncDate 20130702023520000
+aLastUpdateDate 20130702023520000
+
+eW_MetaDef 3
+aCPLR_ZKey 1156968
+aStatus    1
+aUpdateInd 2
+aName      mPrimReg
+aDesc      Primary Registrant Maintenance
+aLastSyncDate 20141110170251745
+aLastUpdateDate 20141110170251745
+
+eW_MetaDef 3
+aCPLR_ZKey 69055287
+aStatus    1
+aUpdateInd 2
+aName      mSPL
+aDesc      Sub Registrant Physical Label Maintenance
+aLastSyncDate 20141023220423355
+aLastUpdateDate 20141023220423355
+
+eW_MetaDef 3
+aCPLR_ZKey 69082112
+aStatus    1
+aUpdateInd 2
+aName      mSPLDef
+aDesc      Subregistrant Physical Label Maintenance
+aLastSyncDate 20141229213342517
+aLastUpdateDate 20141229213342517
+
+eW_MetaDef 3
+aCPLR_ZKey 69035258
+aStatus    1
+aUpdateInd 2
+aName      mSubLC
+aDesc      Subregistrant Label Content Maintenance
+aLastSyncDate 20141023220555313
+aLastUpdateDate 20141023220555313
+
+eW_MetaDef 3
+aCPLR_ZKey 1157934
+aStatus    1
+aUpdateInd 2
+aName      mSubLDD
+aDesc      Sub Registrant Label Definition Maintenance
+aLastSyncDate 20130702023520000
+aLastUpdateDate 20130702023520000
+
+eW_MetaDef 3
+aCPLR_ZKey 1357802
+aStatus    1
+aUpdateInd 2
+aName      mSubProd
+aDesc      Maintain Subregistrant Products
+aLastSyncDate 20140317182758000
+aLastUpdateDate 20140317182758000
+
+eW_MetaDef 3
+aCPLR_ZKey 1157860
+aStatus    1
+aUpdateInd 2
+aName      mSubreg
+aDesc      Subregistrant Maintenance
+aLastSyncDate 20141112102121281
+aLastUpdateDate 20141112102121281
+
+eW_MetaDef 3
+aCPLR_ZKey 10948
+aStatus    1
+aUpdateInd 2
+aName      mSubreg2
+aDesc      Subregistrant Maintenance
+aLastSyncDate 20131227170420000
+aLastUpdateDate 20131227170420000
+
+eW_MetaDef 3
+aCPLR_ZKey 1157571
+aStatus    1
+aUpdateInd 2
+aName      mUser
+aDesc      User Maintenance
+aLastSyncDate 20141110150434988
+aLastUpdateDate 20141110150434988
+
+eW_MetaDef 3
+aCPLR_ZKey 1658404
+aStatus    1
+aUpdateInd 2
+aName      qOrganiz
+aDesc      Query Organization (used for logon and existence checking)
+aLastSyncDate 20141110150537831
+aLastUpdateDate 20141110150537831
+
+eW_MetaDef 3
+aCPLR_ZKey 1157075
+aStatus    1
+aUpdateInd 2
+aName      qPrimReg
+aDesc      Query Primary Registrant (used for existence checking)
+aLastSyncDate 20130702023520000
+aLastUpdateDate 20130702023520000
+
+eW_MetaDef 3
+aCPLR_ZKey 1159375
+aStatus    1
+aUpdateInd 2
+aName      qSubreg
+aDesc      Query Subregistrant (used only for existence checking)
+aLastSyncDate 20141218172757847
+aLastUpdateDate 20141218172757847
+
+eW_MetaDef 3
+aCPLR_ZKey 1157074
+aStatus    1
+aUpdateInd 2
+aName      rPrimReg
+aDesc      Read only Primary Registrant (used for existence checking)
+aLastSyncDate 20130702023520000
+aLastUpdateDate 20130702023520000
+
+eW_MetaDef 3
+aCPLR_ZKey 1159374
+aStatus    1
+aUpdateInd 2
+aName      rSubreg
+aDesc      Read only Subregistrant (use only for existence checking)
+aLastSyncDate 20130702023520000
+aLastUpdateDate 20130702023520000
+
+eW_MetaDef 3
+aCPLR_ZKey 1182246
+aStatus    1
+aUpdateInd 2
+aName      wMLCList
+aDesc      Work Master Label Content
+aLastSyncDate 20130702023520000
+aLastUpdateDate 20130702023520000
+
+eW_MetaDef 3
+aCPLR_ZKey 1157145
+aStatus    1
+aUpdateInd 2
+aName      wWebXfer
+aDesc      Web Work/Transfer object
+aLastSyncDate 20141110150712334
+aLastUpdateDate 20141110150712334
+
+eW_MetaDef 3
+aCPLR_ZKey 68568663
+aStatus    1
+aUpdateInd 2
+aName      ZPLOCKO
+aDesc      Zeidon Locking Object
+aLastSyncDate 20141023215426313
+aLastUpdateDate 20141023215426313
+
+eW_MetaType 2
+aType      8
+
+eW_MetaType 2
+aType      9
+
+eW_MetaDef 3
+aCPLR_ZKey 68568779
+aStatus    1
+aUpdateInd 2
+aName      DOMAINT
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568788
+aStatus    1
+aUpdateInd 2
+aName      DOMAINTL
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568780
+aStatus    1
+aUpdateInd 2
+aName      DOMAINTLST
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568793
+aStatus    1
+aUpdateInd 2
+aName      GENKEYWO
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568794
+aStatus    1
+aUpdateInd 2
+aName      GENKEYWOLST
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568831
+aStatus    1
+aUpdateInd 2
+aName      KZMSGQOO
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568832
+aStatus    1
+aUpdateInd 2
+aName      KZMSGQOOLST
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 69035531
+aStatus    1
+aUpdateInd 2
+aName      lMasLCA
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 70129561
+aStatus    1
+aUpdateInd 2
+aName      lMLC
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 70129435
+aStatus    1
+aUpdateInd 2
+aName      lMLCASrc
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 70129220
+aStatus    1
+aUpdateInd 2
+aName      lMLCATgt
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1813276
+aStatus    1
+aUpdateInd 2
+aName      lPersonLST
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1162969
+aStatus    1
+aUpdateInd 2
+aName      lPrimLDD
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1158616
+aStatus    1
+aUpdateInd 2
+aName      lPrimReg
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 70130441
+aStatus    1
+aUpdateInd 2
+aName      lSLC
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 70130057
+aStatus    1
+aUpdateInd 2
+aName      lSLCAnal
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 70226251
+aStatus    1
+aUpdateInd 2
+aName      lSLCAnal
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 69055561
+aStatus    1
+aUpdateInd 2
+aName      lSPLA
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 69783441
+aStatus    1
+aUpdateInd 2
+aName      lSPLDLST
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 69035750
+aStatus    1
+aUpdateInd 2
+aName      lSubLCA
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1163001
+aStatus    1
+aUpdateInd 2
+aName      lSubLDD
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1165276
+aStatus    1
+aUpdateInd 2
+aName      lSubreg
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1813512
+aStatus    1
+aUpdateInd 2
+aName      lUserLST
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1157616
+aStatus    1
+aUpdateInd 2
+aName      mCurrentUser
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1178913
+aStatus    1
+aUpdateInd 2
+aName      mEPA
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 2348802
+aStatus    1
+aUpdateInd 2
+aName      mEPAx
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 114
+aStatus    1
+aUpdateInd 2
+aName      mLLD
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20131220164252000
+aLastUpdateDate 20131220164252000
+
+eW_MetaDef 3
+aCPLR_ZKey 120134912
+aStatus    1
+aUpdateInd 2
+aName      mLLD_LST
+aLastSyncDate 20140415202918000
+aLastUpdateDate 20140415202918000
+
+eW_MetaDef 3
+aCPLR_ZKey 69033387
+aStatus    1
+aUpdateInd 2
+aName      mMasLC
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 69033381
+aStatus    1
+aUpdateInd 2
+aName      mMasProd
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 120233879
+aStatus    1
+aUpdateInd 2
+aName      mMasProdLST
+aLastSyncDate 20140702141844000
+aLastUpdateDate 20140702141844000
+
+eW_MetaDef 3
+aCPLR_ZKey 3322346
+aStatus    1
+aUpdateInd 2
+aName      mOrganiz
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1164719
+aStatus    1
+aUpdateInd 2
+aName      mPerson
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1156964
+aStatus    1
+aUpdateInd 2
+aName      mPrimLDD
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1157023
+aStatus    1
+aUpdateInd 2
+aName      mPrimReg
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 69055383
+aStatus    1
+aUpdateInd 2
+aName      mSPL
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1347042
+aStatus    1
+aUpdateInd 2
+aName      mSPLDef
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 110000349
+aStatus    1
+aUpdateInd 2
+aName      mSPLDefBlock
+aDesc      Navigate to correct Block/SubBlock
+aLastSyncDate 20141222104511772
+aLastUpdateDate 20141222104511772
+
+eW_MetaDef 3
+aCPLR_ZKey 4326824
+aStatus    1
+aUpdateInd 2
+aName      mSPLDefPanel
+aLastSyncDate 20131125200150000
+aLastUpdateDate 20131125200150000
+
+eW_MetaDef 3
+aCPLR_ZKey 69035325
+aStatus    1
+aUpdateInd 2
+aName      mSubLC
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1157941
+aStatus    1
+aUpdateInd 2
+aName      mSubLDD
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1357813
+aStatus    1
+aUpdateInd 2
+aName      mSubProd
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1157864
+aStatus    1
+aUpdateInd 2
+aName      mSubreg
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 11200
+aStatus    1
+aUpdateInd 2
+aName      mSubreg2
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20131226175436000
+aLastUpdateDate 20131226175436000
+
+eW_MetaDef 3
+aCPLR_ZKey 1157615
+aStatus    1
+aUpdateInd 2
+aName      mUser
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1658420
+aStatus    1
+aUpdateInd 2
+aName      qOrganiz
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1666257
+aStatus    1
+aUpdateInd 2
+aName      qOrganizLogin
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1158114
+aStatus    1
+aUpdateInd 2
+aName      qPrimReg
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1159381
+aStatus    1
+aUpdateInd 2
+aName      qSubreg
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1163363
+aStatus    1
+aUpdateInd 2
+aName      rPrimReg
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1179336
+aStatus    1
+aUpdateInd 2
+aName      rSubreg
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1182250
+aStatus    1
+aUpdateInd 2
+aName      wMLCList
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1157147
+aStatus    1
+aUpdateInd 2
+aName      wWebXfer
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 86783859
+aStatus    1
+aUpdateInd 2
+aName      wXferO
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 86783860
+aStatus    1
+aUpdateInd 2
+aName      wXferOLST
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1157825
+aStatus    1
+aUpdateInd 2
+aName      ZPLOCKO
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaType 2
+aType      10
+
+eW_MetaType 2
+aType      11
+
+eW_MetaDef 3
+aCPLR_ZKey 89838717
+aStatus    1
+aUpdateInd 2
+aName      wePamms
+aDesc      ePamms menus
+aLastSyncDate 20130702023520000
+aLastUpdateDate 20130702023520000
+
+eW_MetaDef 3
+aCPLR_ZKey 120229917
+aStatus    1
+aUpdateInd 2
+aName      wMLC
+aDesc      2nd Version of wMLC
+aLastSyncDate 20141217124728394
+aLastUpdateDate 20141217124728394
+
+eW_MetaDef 3
+aCPLR_ZKey 1158563
+aStatus    1
+aUpdateInd 2
+aName      wPrimR
+aDesc      Maintain Primary Registrants
+aLastSyncDate 20130702023520000
+aLastUpdateDate 20130702023520000
+
+eW_MetaDef 3
+aCPLR_ZKey 120336464
+aStatus    1
+aUpdateInd 2
+aName      wSLC
+aLastSyncDate 20141027145500597
+aLastUpdateDate 20141027145500597
+
+eW_MetaDef 3
+aCPLR_ZKey 11205
+aStatus    1
+aUpdateInd 2
+aName      wSPLD
+aLastSyncDate 20141222113251958
+aLastUpdateDate 20141222113251958
+
+eW_MetaDef 3
+aCPLR_ZKey 93086489
+aStatus    1
+aUpdateInd 2
+aName      wStart
+aDesc      Starting Up Pages
+aLastSyncDate 20130702023520000
+aLastUpdateDate 20130702023520000
+
+eW_MetaDef 3
+aCPLR_ZKey 1157044
+aStatus    1
+aUpdateInd 2
+aName      wStartUp
+aDesc      Login and Administration
+aLastSyncDate 20141218144703612
+aLastUpdateDate 20141218144703612
+
+eW_MetaDef 3
+aCPLR_ZKey 1158869
+aStatus    1
+aUpdateInd 2
+aName      wSubR
+aDesc      Maintain Subregistrants
+aLastSyncDate 20141219103659751
+aLastUpdateDate 20141219103659751
+
+eW_MetaDef 3
+aCPLR_ZKey 89848293
+aStatus    1
+aUpdateInd 2
+aName      wSystem
+aDesc      ePamms System Settings
+aLastSyncDate 20130702023520000
+aLastUpdateDate 20130702023520000
+
+eW_MetaType 2
+aType      12
+
+eW_MetaType 2
+aType      13
+
+eW_MetaDef 3
+aCPLR_ZKey 68567479
+aStatus    1
+aUpdateInd 2
+aName      Base
+aLastSyncDate 20140909012210462
+aLastUpdateDate 20140909012210462
+
+eW_MetaDef 3
+aCPLR_ZKey 68567489
+aStatus    1
+aUpdateInd 2
+aName      DomainC
+aLastSyncDate 20140411211038000
+aLastUpdateDate 20140411211038000
+
+eW_MetaDef 3
+aCPLR_ZKey 1160418
+aStatus    1
+aUpdateInd 2
+aName      TablesA
+aDesc      Initial grouping of simple Tables
+aLastSyncDate 20141216125621889
+aLastUpdateDate 20141216125621889
+
+eW_MetaDef 3
+aCPLR_ZKey 69081339
+aStatus    1
+aUpdateInd 2
+aName      Template
+aLastSyncDate 20140610131544000
+aLastUpdateDate 20140610131544000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568034
+aStatus    1
+aUpdateInd 2
+aName      TextsA
+aDesc      Initial grouping of simple Text data
+aLastSyncDate 20140411211104000
+aLastUpdateDate 20140411211104000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568067
+aStatus    1
+aUpdateInd 2
+aName      TZAPDMAA
+aLastSyncDate 20140507141214000
+aLastUpdateDate 20140507141214000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568086
+aStatus    1
+aUpdateInd 2
+aName      TZAPDMAB
+aLastSyncDate 20140926165505781
+aLastUpdateDate 20140926165505781
+
+eW_MetaDef 3
+aCPLR_ZKey 68568185
+aStatus    1
+aUpdateInd 2
+aName      TZAPDMAC
+aLastSyncDate 20140610131530000
+aLastUpdateDate 20140610131530000
+
+eW_MetaType 2
+aType      14
+
+eW_MetaDef 3
+aCPLR_ZKey 89816452
+aStatus    1
+aUpdateInd 2
+aName      ZGlobal1
+aDesc      Global Operations in C
+aLastSyncDate 20140326183956000
+aLastUpdateDate 20140326183956000
+
+eW_MetaDef 3
+aCPLR_ZKey 1399843
+aStatus    1
+aUpdateInd 2
+aName      ZGlobalV
+aDesc      VML operations
+aLastSyncDate 20140326230700000
+aLastUpdateDate 20140326230700000
+
+eW_MetaType 2
+aType      15
+
+eW_MetaType 2
+aType      16
+
+eW_MetaType 2
+aType      2000
+
+eW_MetaType 2
+aType      2001
+
+eW_MetaType 2
+aType      2002
+
+eW_MetaDef 3
+aGroupName ZGlobalV
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobalV
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobalV
+
+eW_MetaDef 3
+aGroupName ZGlobalV
+
+eW_MetaDef 3
+aGroupName ZGlobalV
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobalV
+
+eW_MetaDef 3
+aGroupName ZGlobalV
+
+eW_MetaDef 3
+aGroupName ZGlobalV
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobalV
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobalV
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaDef 3
+aGroupName ZGlobal1
+
+eW_MetaType 2
+aType      2003
+
+eW_MetaDef 3
+aGroupName Base
+
+eW_MetaDef 3
+aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aGroupName DomainC
+
+eW_MetaDef 3
+aGroupName Base
+
+eW_MetaDef 3
+aGroupName Base
+
+eW_MetaDef 3
+aGroupName Template
+
+eW_MetaDef 3
+aGroupName Base
+
+eW_MetaDef 3
+aGroupName Base
+
+eW_MetaDef 3
+aGroupName Base
+
+eW_MetaDef 3
+aGroupName Template
+
+eW_MetaDef 3
+aGroupName Base
+
+eW_MetaDef 3
+aGroupName Base
+
+eW_MetaDef 3
+aGroupName Base
+
+eW_MetaDef 3
+aGroupName Template
+
+eW_MetaDef 3
+aGroupName TZAPDMAB
+
+eW_MetaDef 3
+aGroupName TZAPDMAB
+
+eW_MetaDef 3
+aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aGroupName TZAPDMAC
+
+eW_MetaDef 3
+aGroupName TZAPDMAC
+
+eW_MetaDef 3
+aGroupName TZAPDMAC
+
+eW_MetaDef 3
+aGroupName TZAPDMAC
+
+eW_MetaDef 3
+aGroupName TZAPDMAC
+
+eW_MetaDef 3
+aGroupName TZAPDMAC
+
+eW_MetaDef 3
+aGroupName TZAPDMAC
+
+eW_MetaDef 3
+aGroupName TZAPDMAC
+
+eW_MetaDef 3
+aGroupName TZAPDMAC
+
+eW_MetaDef 3
+aGroupName TZAPDMAC
+
+eW_MetaDef 3
+aGroupName TZAPDMAC
+
+eW_MetaDef 3
+aGroupName TZAPDMAC
+
+eW_MetaDef 3
+aGroupName Base
+
+eW_MetaDef 3
+aGroupName Base
+
+eW_MetaDef 3
+aGroupName TextsA
+
+eW_MetaDef 3
+aGroupName Base
+
+eW_MetaDef 3
+aGroupName Base
+
+eW_MetaDef 3
+aGroupName Base
+
+eW_MetaDef 3
+aGroupName TZAPDMAB
+
+eW_MetaDef 3
+aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aGroupName TextsA
+
+eW_MetaDef 3
+aGroupName Template
+
+eW_MetaDef 3
+aGroupName Template
+
+eW_MetaDef 3
+aGroupName Template
+
+eW_MetaDef 3
+aGroupName TextsA
+
+eW_MetaDef 3
+aGroupName TextsA
+
+eW_MetaDef 3
+aGroupName Base
+
+eW_MetaDef 3
+aGroupName Base
+
+eW_MetaDef 3
+aGroupName Base
+
+eW_MetaDef 3
+aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aGroupName TextsA
+
+eW_MetaDef 3
+aGroupName Template
+
+eW_MetaDef 3
+aGroupName Template
+
+eW_MetaDef 3
+aGroupName TextsA
+
+eW_MetaDef 3
+aGroupName TZAPDMAB
+
+eW_MetaDef 3
+aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aGroupName TZAPDMAC
+
+eW_MetaDef 3
+aGroupName TextsA
+
+eW_MetaDef 3
+aGroupName Base
+
+eW_MetaDef 3
+aGroupName DomainC
+
+eW_MetaDef 3
+aGroupName Template
+
+eW_MetaDef 3
+aGroupName TextsA
+
+eW_MetaDef 3
+aGroupName TextsA
+
+eW_MetaDef 3
+aGroupName Base
+
+eW_MetaDef 3
+aGroupName TablesA
+
+eW_MetaDef 3
+aGroupName Base
+
+eW_MetaDef 3
+aGroupName Template
+
+eW_MetaDef 3
+aGroupName Template
+
+eW_MetaDef 3
+aGroupName Template
+
+eW_MetaDef 3
+aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aGroupName Template
+
+eW_MetaDef 3
+aGroupName TZAPDMAB
+
+eW_MetaDef 3
+aGroupName Base
+
+eW_MetaDef 3
+aGroupName Template
+
+eW_MetaDef 3
+aGroupName Base
+
+eW_MetaDef 3
+aGroupName TZAPDMAB
+
+eW_MetaDef 3
+aGroupName TextsA
+
+eW_MetaType 2
+aType      2004
+
+eW_MetaDef 3
+
+eW_MetaType 2
+aType      2005
+
+eW_MetaDef 3
+
+eW_MetaType 2
+aType      2006
+
+eW_MetaDef 3
+
+eW_MetaType 2
+aType      2007
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+aCPLR_ZKey 70129897
+aStatus    1
+aUpdateInd 2
+aName      lSLCAnlz
+aDesc      SLC Analysis
+aLastSyncDate 20130702023520000
+aLastUpdateDate 20130702023520000
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaType 2
+aType      2008
+
+eW_MetaType 2
+aType      2009
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaType 2
+aType      2010
+
+eW_MetaType 2
+aType      2011
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaType 2
+aType      2012
+
+eW_MetaType 2
+aType      2013
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaType 2
+aType      2014
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaType 2
+aType      2015
+
+eW_MetaType 2
+aType      2016
+
+eCompiler  2
+aName      AutoGen
+aMakeOption 1
+aCurrentCompilerSpec N
+aCreateExternalList 0
+aBrowseInfo N
+
+eCompiler  2
+aName      DKS
+aDescription MS Visual C++ 6.0
+aTargetExecutableDir c:\lplr\epamms\bin
+aTargetObjectDir c:\lplr\epamms\objlib
+aCompilerName MSC 1.5
+aCompileWithDebug A
+aCompilerDir c:\msvc32\bin
+aMakefileDir c:\lplr\epamms
+aEnvironmentDir c:\lplr\epamms\objlib
+aCloseWindowAfterCompile N
+aMakeOption 7
+aPath      551
+C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\Program Files\ATI Technologies\ATI Control Panel;C:\Program Files\Microsoft SQL Server\80\Tools\Binn\;c:\b\bat;c:\b\bin;c:\10e\w\bin;C:\Program Files\Java\jdk1.6.0_16\bin;C:\Program Files\DataDirect\ODBC32v52\Drivers;C:\Program Files\Common Files\Compuware\NMShared;C:\Program Files\QuickTime\QTSystem\;C:\Program Files\Microsoft Visual Studio\Common\Tools\WinNT;C:\Program Files\Microsoft Visual Studio\Common\MSDev98\Bin;C:\Program Files\Microsoft Visual Studio\Common\Tools;C:\MSVC32\bin; 
+aCurrentCompilerSpec Y
+aCreateExternalList 0
+aBrowseInfo N
+
+eInclude   3
+aIncludeDir c:\lplr\epamms
+
+eInclude   3
+aIncludeDir c:\10c\w\incz
+
+eInclude   3
+aIncludeDir c:\msvc32\include
+
+eInclude   3
+aIncludeDir c:\10c\a\incz
+
+eInclude   3
+aIncludeDir c:\10c\w\incr
+
+eInclude   3
+aIncludeDir c:\10c\a\incr
+
+eLib       3
+aLibDir    c:\lplr\epamms
+
+eLib       3
+aLibDir    c:\10c\w\libz
+
+eLib       3
+aLibDir    c:\10c\w\libr
+
+eLib       3
+aLibDir    c:\msvc32\lib
+
+eLib       3
+aLibDir    c:\msvc32\mfc\lib
+
+eExternalTarget 3
+aName      domainc
+aExternalExists N
+
+eTargetExecutable 2
+aName      domainc
+
+eMeta      3
+aName      DomainC
+aZKey      68567489
+aMetaType  2013
+
+eTargetExecutable 2
+aName      lMLCATgt
+
+eMeta      3
+aName      lMLCATgt
+aZKey      70129006
+aMetaType  2007
+
+eTargetExecutable 2
+aName      LODOPSYS
+
+eMeta      3
+aName      DOMAINT
+aZKey      68568671
+aMetaType  2007
+
+eTargetExecutable 2
+aName      lPrimReg
+
+eMeta      3
+aName      lPrimReg
+aZKey      1158609
+aMetaType  2007
+
+eTargetExecutable 2
+aName      lSubReg
+
+eMeta      3
+aName      lSubreg
+aZKey      1165267
+aMetaType  2007
+
+eTargetExecutable 2
+aName      mMasLC
+
+eMeta      3
+aName      mMasLC
+aZKey      69033382
+aMetaType  2007
+
+eTargetExecutable 2
+aName      mMasProd
+
+eMeta      3
+aName      mMasProd
+aZKey      69033348
+aMetaType  2007
+
+eTargetExecutable 2
+aName      mPerson
+
+eMeta      3
+aName      mPerson
+aZKey      1164671
+aMetaType  2007
+
+eTargetExecutable 2
+aName      mPrimReg
+
+eMeta      3
+aName      mPrimReg
+aZKey      1156968
+aMetaType  2007
+
+eTargetExecutable 2
+aName      mSPLDef
+
+eMeta      3
+aName      mSPLDef
+aZKey      69082112
+aMetaType  2007
+
+eTargetExecutable 2
+aName      mSubLC
+
+eMeta      3
+aName      mSubLC
+aZKey      69035258
+aMetaType  2007
+
+eTargetExecutable 2
+aName      mSubProd
+
+eMeta      3
+aName      mSubProd
+aZKey      1357802
+aMetaType  2007
+
+eTargetExecutable 2
+aName      mSubreg
+
+eMeta      3
+aName      mSubreg
+aZKey      1157860
+aMetaType  2007
+
+eTargetExecutable 2
+aName      mUser
+
+eMeta      3
+aName      mUser
+aZKey      1157571
+aMetaType  2007
+
+eTargetExecutable 2
+aName      qOrganiz
+
+eMeta      3
+aName      qOrganiz
+aZKey      1658404
+aMetaType  2007
+
+eTargetExecutable 2
+aName      qPrimReg
+
+eMeta      3
+aName      qPrimReg
+aZKey      1157075
+aMetaType  2007
+
+eTargetExecutable 2
+aName      qSubreg
+
+eMeta      3
+aName      qSubreg
+aZKey      1159375
+aMetaType  2007
+
+eTargetExecutable 2
+aName      rPrimReg
+
+eMeta      3
+aName      rPrimReg
+aZKey      1157074
+aMetaType  2007
+
+eTargetExecutable 2
+aName      rSubreg
+
+eMeta      3
+aName      rSubreg
+aZKey      1159374
+aMetaType  2007
+
+eTargetExecutable 2
+aName      wePamms
+
+eMeta      3
+aName      wePamms
+aZKey      89838717
+aMetaType  2011
+
+eTargetExecutable 2
+aName      wMLC
+
+eMeta      3
+aName      wMLC
+aZKey      120229917
+aMetaType  2011
+
+eTargetExecutable 2
+aName      wPrimR
+
+eMeta      3
+aName      wPrimR
+aZKey      1158563
+aMetaType  2011
+
+eTargetExecutable 2
+aName      wSLC
+
+eMeta      3
+aName      wSLC
+aZKey      120336464
+aMetaType  2011
+
+eTargetExecutable 2
+aName      wSPLD
+
+eMeta      3
+aName      wSPLD
+aZKey      11205
+aMetaType  2011
+
+eTargetExecutable 2
+aName      wStart
+
+eMeta      3
+aName      wStart
+aZKey      93086489
+aMetaType  2011
+
+eTargetExecutable 2
+aName      wStartUp
+
+eMeta      3
+aName      wStartUp
+aZKey      1157044
+aMetaType  2011
+
+eTargetExecutable 2
+aName      wSubR
+
+eMeta      3
+aName      wSubR
+aZKey      1158869
+aMetaType  2011
+
+eTargetExecutable 2
+aName      wSystem
+
+eMeta      3
+aName      wSystem
+aZKey      89848293
+aMetaType  2011
+
+eTargetExecutable 2
+aName      wWebXfer
+
+eMeta      3
+aName      wWebXfer
+aZKey      1157145
+aMetaType  2007
+
+eTargetExecutable 2
+aName      ZGlobal1
+
+eMeta      3
+aName      ZGlobal1
+aZKey      89816452
+aMetaType  2014
+
+eMeta      3
+aName      ZGlobalV
+aZKey      1399843
+aMetaType  2014
+
+i285       4
+i286       5
+i287       6
+i288       7
+i289       8
+i290       9
+i291       10
+i292       11
+i293       12
+i294       13
+i295       14
+i296       15
+i297       16
+i298       17
+i299       18
+i300       19
+i301       20
+i302       21
+i303       22
+i304       23
+i305       24
+i306       25
+i307       26
+i308       27
+i309       28
+i310       29
+i311       30
+i312       31
+i313       32
+i314       33
+i315       34
+i316       35
+i317       36
+i318       37
+i319       38
+i320       39
+i321       40
+i322       41
+i323       42
+i324       43
+i325       44
+i326       45
+i327       46
+i328       47
+i329       48
+i330       49
+i331       50
+i332       51
+i333       52
+i334       53
+i335       54
+i336       55
+i337       56
+i338       57
+i339       58
+i340       59
+i341       60
+i342       61
+i343       62
+i344       63
+i345       64
+i346       65
+i347       66
+i348       67
+i349       68
+i350       69
+i351       70
+i352       71
+i353       72
+i355       140
+i356       94
+i357       128
+i358       74
+i359       131
+i360       121
+i361       146
+i362       147
+i363       138
+i364       120
+i365       139
+i366       135
+i367       141
+i368       113
+i369       88
+i370       93
+i371       99
+i372       75
+i373       87
+i374       86
+i375       85
+i376       84
+i377       83
+i378       82
+i379       81
+i380       80
+i381       79
+i382       78
+i383       77
+i384       130
+i385       129
+i386       107
+i387       144
+i388       137
+i389       142
+i390       91
+i391       96
+i392       103
+i393       119
+i394       117
+i395       118
+i396       109
+i397       111
+i398       143
+i399       133
+i400       134
+i401       101
+i402       104
+i403       114
+i404       125
+i405       102
+i406       90
+i407       95
+i408       98
+i409       97
+i410       76
+i411       110
+i412       136
+i413       127
+i414       115
+i415       106
+i416       105
+i417       148
+i418       126
+i419       132
+i420       124
+i421       112
+i422       123
+i423       100
+i424       116
+i425       92
+i426       145
+i427       122
+i428       149
+i429       89
+i430       108
+i432       151
+i434       153
+i436       155
+i438       157
+i439       158
+i440       159
+i441       160
+i442       161
+i443       162
+i444       163
+i445       164
+i446       165
+i447       166
+i448       167
+i449       168
+i451       169
+i452       170
+i453       171
+i454       172
+i455       173
+i456       174
+i457       175
+i458       176
+i459       177
+i460       178
+i461       179
+i462       180
+i463       181
+i464       182
+i465       183
+i466       184
+i467       185
+i468       186
+i469       187
+i470       188
+i471       189
+i472       190
+i473       191
+i474       192
+i475       193
+i476       194
+i477       195
+i478       196
+i479       197
+i482       200
+i483       201
+i484       202
+i485       203
+i486       204
+i487       205
+i488       206
+i489       207
+i490       208
+i491       209
+i492       210
+i493       211
+i494       212
+i495       213
+i496       214
+i497       216
+i498       215
+i499       217
+i500       218
+i501       219
+i502       220
+i503       221
+i504       222
+i505       223
+i506       224
+i507       225
+i508       226
+i509       227
+i510       228
+i511       229
+i512       230
+i513       231
+i514       232
+i515       233
+i516       234
+i517       235
+i518       236
+i519       237
+i520       238
+i521       239
+i522       240
+i523       241
+i524       242
+i525       243
+i526       244
+i527       245
+i528       246
+i529       247
+i530       248
+i531       249
+i532       250
+i533       251
+i534       252
+i535       253
+i536       254
+i537       255
+i540       262
+i541       265
+i542       264
+i543       259
+i544       261
+i545       263
+i546       258
+i547       266
+i548       260
+i551       269
+i552       270
+i553       271
+i554       272
+i555       273
+i556       274
+i557       275
+i558       276
+i560       278
+i561       279

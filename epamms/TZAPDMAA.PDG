@@ -1,0 +1,192 @@
+z1000-Zeidon    TZAPDMAA TZDGSRCO 05/07/14   10:12:13 1.0a2    
+eDomainGroup 1
+aZKey      68568067
+aName      TZAPDMAA
+aExtension C
+aLanguageType C
+aDomainAndGlobalOpGroupName TZAPDMAA
+aWorkNumeric 12
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      68568073
+aName      AlphaNumeric
+aDesc      Characters 'a-z', 'A-Z', '0-9'
+aDomainType E
+aDataType  S
+aMaxStringLth 254
+aContextRestriction N
+aDecimalFormat 1234
+
+eContext   3
+aZKey      68568074
+aName      ALPHANUMERIC
+
+eSelectedOperation 3
+aName      zdmText
+aZKey      68568072
+aDesc      Text Algorithm
+aType      M
+aReturnDataType N
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      68568051
+aName      Note
+aDomainType A
+aDataType  S
+aMaxStringLth 32000
+aContextRestriction N
+
+eContext   3
+aZKey      3752336
+aName      Note
+aIsDefault Y
+
+eSelectedOperation 3
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      1763284
+aName      FileName
+aDomainType A
+aDataType  S
+aMaxStringLth 254
+aContextRestriction N
+
+eContext   3
+aZKey      1763285
+aName      FileName
+aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      68568075
+aName      PasswordUL
+aDesc      Password in Upper and Lower case
+aDomainType A
+aDataType  S
+aMaxStringLth 128
+aContextRestriction N
+
+eContext   3
+aZKey      68568076
+aName      PasswordUL
+aIsDefault Y
+
+eSelectedOperation 3
+aName      zdmPasswordUL
+aZKey      68568070
+aType      M
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.PasswordDomain
+aZKey      68568077
+aName      Password
+aDomainType A
+aDataType  S
+aMaxStringLth 128
+aContextRestriction N
+
+eContext   3
+aZKey      68568078
+aName      Password
+aIsDefault Y
+
+eSelectedOperation 3
+aName      zdmPassword
+aZKey      68568069
+aDesc      Password Algorithm
+aType      M
+aReturnDataType N
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.IntegerDomain
+aZKey      68568079
+aName      Day
+aDesc      Number of day in month
+aDomainType A
+aDataType  L
+aContextRestriction N
+
+eContext   3
+aZKey      68568080
+aName      Day
+aEditString <= 31
+aIsDefault Y
+
+eSelectedOperation 3
+aName      zdmInteger
+aZKey      68568068
+aDesc      Integer Algorithm
+aType      M
+aReturnDataType N
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      68568081
+aName      Text
+aDesc      Any Character String
+aDomainType E
+aDataType  S
+aMaxStringLth 254
+aContextRestriction N
+
+eContext   3
+aZKey      68568082
+aName      TEXT
+
+eSelectedOperation 3
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.IntegerDomain
+aZKey      68568083
+aName      Integer
+aDesc      Integer numbers from -lots to +lots
+aDomainType E
+aDataType  L
+aMaxStringLth 4
+aContextRestriction N
+aDecimalFormat 0
+
+eContext   3
+aZKey      68568084
+aDesc      0-F ( only Hex digits)
+aName      Hex
+
+eContext   3
+aZKey      68568085
+aName      INTEGER
+aIsDefault Y
+aDIL_Text  Integer > 32K
+
+eSelectedOperation 3
+
+eOperation 2
+
+eOperation 2
+
+eOperation 2
+
+eOperation 2
+aName      zdmQSNameLJNS
+aZKey      68568071
+aDesc      QuinSoft Name - left justified, no spaces
+aType      M
+aReturnDataType N
+
+eOperation 2
+
+eOperation 2
+aName      zdmHTML
+aZKey      3750104
+aDesc      Remove all HTML except a select set (effectively trying to remove Microsoft Word stuff)
+aType      M
+
+i6         3
+i20        3
+i24        17
+i25        17
+i26        14
+i27        11
+i29        3

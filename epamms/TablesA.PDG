@@ -1,0 +1,551 @@
+z1000-Zeidon    TABLESA  TZDGSRCO 12/16/14   12:56:21 1.0a2    
+eDomainGroup 1
+aZKey      1160418
+aName      TablesA
+aDesc      Initial grouping of simple Tables
+aExtension C
+aLanguageType C
+aDomainAndGlobalOpGroupName TZAPDMAA
+aWorkNumeric 7
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      1160409
+aName      States
+aDesc      USA states including DC and PR
+aDomainType T
+aDataType  S
+aMaxStringLth 2
+aContextRestriction N
+
+eContext   3
+aZKey      1160423
+aDesc      State abbreviations
+aName      States
+
+eTableEntry 4
+aZKey      86698070
+aExternalValue AK
+aInternalValue AK
+
+eTableEntry 4
+aZKey      86698071
+aExternalValue AL
+aInternalValue AL
+
+eTableEntry 4
+aZKey      86698073
+aExternalValue AR
+aInternalValue AR
+
+eTableEntry 4
+aZKey      86698072
+aExternalValue AZ
+aInternalValue AZ
+
+eTableEntry 4
+aZKey      86698075
+aExternalValue CA
+aInternalValue CA
+
+eTableEntry 4
+aZKey      86698076
+aExternalValue CO
+aInternalValue CO
+
+eTableEntry 4
+aZKey      86698077
+aExternalValue CT
+aInternalValue CT
+
+eTableEntry 4
+aZKey      86698079
+aExternalValue DC
+aInternalValue DC
+
+eTableEntry 4
+aZKey      86698078
+aExternalValue DE
+aInternalValue DE
+
+eTableEntry 4
+aZKey      86698080
+aExternalValue FL
+aInternalValue FL
+
+eTableEntry 4
+aZKey      86698081
+aExternalValue GA
+aInternalValue GA
+
+eTableEntry 4
+aZKey      86698082
+aExternalValue HI
+aInternalValue HI
+
+eTableEntry 4
+aZKey      86698086
+aExternalValue IA
+aInternalValue IA
+
+eTableEntry 4
+aZKey      86698083
+aExternalValue ID
+aInternalValue ID
+
+eTableEntry 4
+aZKey      86698084
+aExternalValue IL
+aInternalValue IL
+
+eTableEntry 4
+aZKey      86698085
+aExternalValue IN
+aInternalValue IN
+
+eTableEntry 4
+aZKey      86698087
+aExternalValue KS
+aInternalValue KS
+
+eTableEntry 4
+aZKey      86698088
+aExternalValue KY
+aInternalValue KY
+
+eTableEntry 4
+aZKey      86698089
+aExternalValue LA
+aInternalValue LA
+
+eTableEntry 4
+aZKey      86698093
+aExternalValue MA
+aInternalValue MA
+
+eTableEntry 4
+aZKey      86698092
+aExternalValue MD
+aInternalValue MD
+
+eTableEntry 4
+aZKey      86698091
+aExternalValue ME
+aInternalValue ME
+
+eTableEntry 4
+aZKey      86698094
+aExternalValue MI
+aInternalValue MI
+
+eTableEntry 4
+aZKey      86698095
+aExternalValue MN
+aInternalValue MN
+
+eTableEntry 4
+aZKey      86698097
+aExternalValue MO
+aInternalValue MO
+
+eTableEntry 4
+aZKey      86698096
+aExternalValue MS
+aInternalValue MS
+
+eTableEntry 4
+aZKey      86698098
+aExternalValue MT
+aInternalValue MT
+
+eTableEntry 4
+aZKey      86698109
+aExternalValue NC
+aInternalValue NC
+
+eTableEntry 4
+aZKey      86698110
+aExternalValue ND
+aInternalValue ND
+
+eTableEntry 4
+aZKey      86698100
+aExternalValue NE
+aInternalValue NE
+
+eTableEntry 4
+aZKey      86698105
+aExternalValue NH
+aInternalValue NH
+
+eTableEntry 4
+aZKey      86698106
+aExternalValue NJ
+aInternalValue NJ
+
+eTableEntry 4
+aZKey      86698107
+aExternalValue NM
+aInternalValue NM
+
+eTableEntry 4
+aZKey      86698104
+aExternalValue NV
+aInternalValue NV
+
+eTableEntry 4
+aZKey      86698108
+aExternalValue NY
+aInternalValue NY
+
+eTableEntry 4
+aZKey      86698111
+aExternalValue OH
+aInternalValue OH
+
+eTableEntry 4
+aZKey      86698112
+aExternalValue OK
+aInternalValue OK
+
+eTableEntry 4
+aZKey      86698114
+aExternalValue OR
+aInternalValue OR
+
+eTableEntry 4
+aZKey      86698115
+aExternalValue PA
+aInternalValue PA
+
+eTableEntry 4
+aZKey      87266212
+aExternalValue PR
+aInternalValue PR
+
+eTableEntry 4
+aZKey      86698118
+aExternalValue RI
+aInternalValue RI
+
+eTableEntry 4
+aZKey      86698119
+aExternalValue SC
+aInternalValue SC
+
+eTableEntry 4
+aZKey      86698120
+aExternalValue SD
+aInternalValue SD
+
+eTableEntry 4
+aZKey      86698122
+aExternalValue TN
+aInternalValue TN
+
+eTableEntry 4
+aZKey      86698123
+aExternalValue TX
+aInternalValue TX
+
+eTableEntry 4
+aZKey      86698124
+aExternalValue UT
+aInternalValue UT
+
+eTableEntry 4
+aZKey      86698126
+aExternalValue VA
+aInternalValue VA
+
+eTableEntry 4
+aZKey      86698125
+aExternalValue VT
+aInternalValue VT
+
+eTableEntry 4
+aZKey      86698127
+aExternalValue WA
+aInternalValue WA
+
+eTableEntry 4
+aZKey      86698129
+aExternalValue WI
+aInternalValue WI
+
+eTableEntry 4
+aZKey      86698128
+aExternalValue WV
+aInternalValue WV
+
+eTableEntry 4
+aZKey      86698130
+aExternalValue WY
+aInternalValue WY
+
+eContext   3
+aZKey      1160420
+aDesc      USA states - full name
+aName      States - Full Name
+aIsDefault Y
+
+eTableEntry 4
+aZKey      85698070
+aExternalValue Alaska
+aInternalValue AK
+
+eTableEntry 4
+aZKey      85698071
+aExternalValue Alabama
+aInternalValue AL
+
+eTableEntry 4
+aZKey      85698073
+aExternalValue Arkansas
+aInternalValue AR
+
+eTableEntry 4
+aZKey      85698072
+aExternalValue Arizona
+aInternalValue AZ
+
+eTableEntry 4
+aZKey      85698075
+aExternalValue California
+aInternalValue CA
+
+eTableEntry 4
+aZKey      85698076
+aExternalValue Colorado
+aInternalValue CO
+
+eTableEntry 4
+aZKey      85698077
+aExternalValue Connecticut
+aInternalValue CT
+
+eTableEntry 4
+aZKey      85698079
+aExternalValue District of Columbia
+aInternalValue DC
+
+eTableEntry 4
+aZKey      85698078
+aExternalValue Delaware
+aInternalValue DE
+
+eTableEntry 4
+aZKey      85698080
+aExternalValue Florida
+aInternalValue FL
+
+eTableEntry 4
+aZKey      85698081
+aExternalValue Georgia
+aInternalValue GA
+
+eTableEntry 4
+aZKey      85698082
+aExternalValue Hawaii
+aInternalValue HI
+
+eTableEntry 4
+aZKey      85698086
+aExternalValue Iowa
+aInternalValue IA
+
+eTableEntry 4
+aZKey      85698083
+aExternalValue Idaho
+aInternalValue ID
+
+eTableEntry 4
+aZKey      85698084
+aExternalValue Illinois
+aInternalValue IL
+
+eTableEntry 4
+aZKey      85698085
+aExternalValue Indiana
+aInternalValue IN
+
+eTableEntry 4
+aZKey      85698087
+aExternalValue Kansas
+aInternalValue KS
+
+eTableEntry 4
+aZKey      85698088
+aExternalValue Kentucky
+aInternalValue KY
+
+eTableEntry 4
+aZKey      85698089
+aExternalValue Louisiana
+aInternalValue LA
+
+eTableEntry 4
+aZKey      85698093
+aExternalValue Massachusetts
+aInternalValue MA
+
+eTableEntry 4
+aZKey      85698092
+aExternalValue Maryland
+aInternalValue MD
+
+eTableEntry 4
+aZKey      85698091
+aExternalValue Maine
+aInternalValue ME
+
+eTableEntry 4
+aZKey      85698094
+aExternalValue Michigan
+aInternalValue MI
+
+eTableEntry 4
+aZKey      85698095
+aExternalValue Minnesota
+aInternalValue MN
+
+eTableEntry 4
+aZKey      85698097
+aExternalValue Missouri
+aInternalValue MO
+
+eTableEntry 4
+aZKey      85698096
+aExternalValue Mississippi
+aInternalValue MS
+
+eTableEntry 4
+aZKey      85698098
+aExternalValue Montana
+aInternalValue MT
+
+eTableEntry 4
+aZKey      85698109
+aExternalValue North Carolina
+aInternalValue NC
+
+eTableEntry 4
+aZKey      85698110
+aExternalValue North Dakota
+aInternalValue ND
+
+eTableEntry 4
+aZKey      85698100
+aExternalValue Nebraska
+aInternalValue NE
+
+eTableEntry 4
+aZKey      85698105
+aExternalValue New Hampshire
+aInternalValue NH
+
+eTableEntry 4
+aZKey      85698106
+aExternalValue New Jersey
+aInternalValue NJ
+
+eTableEntry 4
+aZKey      85698107
+aExternalValue New Mexico
+aInternalValue NM
+
+eTableEntry 4
+aZKey      85698104
+aExternalValue Nevada
+aInternalValue NV
+
+eTableEntry 4
+aZKey      85698108
+aExternalValue New York
+aInternalValue NY
+
+eTableEntry 4
+aZKey      85698111
+aExternalValue Ohio
+aInternalValue OH
+
+eTableEntry 4
+aZKey      85698112
+aExternalValue Oklahoma
+aInternalValue OK
+
+eTableEntry 4
+aZKey      85698114
+aExternalValue Oregon
+aInternalValue OR
+
+eTableEntry 4
+aZKey      85698115
+aExternalValue Pennsylvania
+aInternalValue PA
+
+eTableEntry 4
+aZKey      85666212
+aExternalValue Puerto Rico
+aInternalValue PR
+
+eTableEntry 4
+aZKey      85698118
+aExternalValue Rhode Island
+aInternalValue RI
+
+eTableEntry 4
+aZKey      85698119
+aExternalValue South Carolina
+aInternalValue SC
+
+eTableEntry 4
+aZKey      85698120
+aExternalValue South Dakota
+aInternalValue SD
+
+eTableEntry 4
+aZKey      85698122
+aExternalValue Tennessee
+aInternalValue TN
+
+eTableEntry 4
+aZKey      85698123
+aExternalValue Texas
+aInternalValue TX
+
+eTableEntry 4
+aZKey      85698124
+aExternalValue Utah
+aInternalValue UT
+
+eTableEntry 4
+aZKey      85698126
+aExternalValue Virginia
+aInternalValue VA
+
+eTableEntry 4
+aZKey      85698125
+aExternalValue Vermont
+aInternalValue VT
+
+eTableEntry 4
+aZKey      85698127
+aExternalValue Washington
+aInternalValue WA
+
+eTableEntry 4
+aZKey      85698129
+aExternalValue Wisconsin
+aInternalValue WI
+
+eTableEntry 4
+aZKey      85698128
+aExternalValue West Virginia
+aInternalValue WV
+
+eTableEntry 4
+aZKey      85698130
+aExternalValue Wyoming
+aInternalValue WY
+

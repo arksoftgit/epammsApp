@@ -1,0 +1,343 @@
+z1000-Zeidon    MIGRATE  TZERSASO 09/08/07   15:13:41 1.0a2    
+eSubjectArea 1
+aName      Migrate
+aZKey      68568519
+aDesc      Entities to migrate
+
+eSA_Entity 2
+aZKey      68568520
+aER_DiagramPosX 61
+aER_DiagramPosY 21
+
+eER_Entity 3
+aName      ZeidonGenkeyTable
+aZKey      68568388
+aPurpose   F
+aDesc      Used for System Generated Keys
+aER_DiagramPosX 264
+aER_DiagramPosY 2
+
+eSA_Entity 2
+aZKey      68568521
+aER_DiagramPosX 12
+aER_DiagramPosY 18
+
+eER_Entity 3
+aName      Address
+aZKey      68568391
+aPurpose   A
+aDesc      Address Information
+aER_DiagramPosX 5
+aER_DiagramPosY 109
+
+eER_RelLink 4
+aName      is a location for a
+aZKey      68568475
+aCardMin   0
+aCardMax   1
+aAutoSeq   N
+aTE_NoForeignKeyPrefix N
+aHangingForeignKeyEntity N
+
+eER_RelType_1 5
+aZKey      68568474
+aFact      Added thru ER Dialog
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
+aER_DiagramE1PosX 14
+aER_DiagramE1PosY 111
+aER_DiagramE2PosX 47
+aER_DiagramE2PosY 111
+
+eER_RelLink_Other 6
+aName      may be at
+aZKey      68568476
+aCardMin   0
+aCardMax   m
+aAutoSeq   N
+aTE_NoForeignKeyPrefix N
+aHangingForeignKeyEntity N
+
+eER_Entity_Other 7
+aName      Person
+aZKey      68568419
+aPurpose   F
+aER_DiagramPosX 48
+aER_DiagramPosY 110
+
+eER_RelLink 4
+aName      is primary for
+aZKey      68568482
+aCardMin   0
+aCardMax   1
+aAutoSeq   N
+aTE_NoForeignKeyPrefix N
+aHangingForeignKeyEntity N
+
+eER_RelType_1 5
+aZKey      68568480
+aFact      Added thru ER Dialog
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
+aER_DiagramE1PosX 0
+aER_DiagramE1PosY 0
+aER_DiagramE2PosX 0
+aER_DiagramE2PosY 0
+
+eER_RelLink_Other 6
+aName      has a primary
+aZKey      68568481
+aCardMin   0
+aCardMax   1
+aAutoSeq   N
+aTE_NoForeignKeyPrefix N
+aHangingForeignKeyEntity N
+
+eER_Entity_Other 7
+
+eSA_Entity 2
+aZKey      68568522
+aER_DiagramPosX 37
+aER_DiagramPosY 18
+
+eER_Entity 3
+
+eER_RelLink 4
+
+eER_RelType_1 5
+
+eER_RelLink_Other 6
+
+eER_Entity_Other 7
+
+eER_RelLink 4
+aName      is the primary mailing for
+aZKey      68568478
+aCardMin   0
+aCardMax   m
+aAutoSeq   N
+aTE_NoForeignKeyPrefix N
+aHangingForeignKeyEntity N
+
+eER_RelType_1 5
+aZKey      68568477
+aFact      Added thru ER Dialog
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
+aER_DiagramE1PosX 0
+aER_DiagramE1PosY 0
+aER_DiagramE2PosX 0
+aER_DiagramE2PosY 0
+
+eER_RelLink_Other 6
+aName      has a mailing person of
+aZKey      68568479
+aCardMin   0
+aCardMax   1
+aAutoSeq   N
+aTE_NoForeignKeyPrefix N
+aHangingForeignKeyEntity N
+
+eER_Entity_Other 7
+
+eER_RelLink 4
+
+eER_RelType_1 5
+
+eER_RelLink_Other 6
+
+eER_Entity_Other 7
+
+eER_RelLink 4
+
+eER_RelType_1 5
+
+eER_RelLink_Other 6
+
+eER_Entity_Other 7
+
+eSA_Entity 2
+aZKey      68568523
+aER_DiagramPosX 16
+aER_DiagramPosY 26
+
+eER_Entity 3
+aName      Domain
+aZKey      68568464
+aPurpose   F
+aDesc      Domain table for dynamic Table Domains
+aER_DiagramPosX 200
+aER_DiagramPosY 135
+
+eER_RelLink 4
+aName      has
+aZKey      68568484
+aCardMin   0
+aCardMax   m
+aAutoSeq   Y
+aTE_NoForeignKeyPrefix N
+aHangingForeignKeyEntity N
+
+eER_RelType_1 5
+aZKey      68568483
+aFact      Added automatically.
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
+aER_DiagramE1PosX 204
+aER_DiagramE1PosY 140
+aER_DiagramE2PosX 204
+aER_DiagramE2PosY 145
+
+eER_RelLink_Other 6
+aName      for
+aZKey      68568485
+aCardMin   1
+aCardMax   1
+aAutoSeq   N
+aTE_NoForeignKeyPrefix N
+aHangingForeignKeyEntity N
+
+eER_Entity_Other 7
+aName      DomainValue
+aZKey      68568469
+aPurpose   A
+aDesc      Individual table values
+aER_DiagramPosX 200
+aER_DiagramPosY 146
+
+eSA_Entity 2
+aZKey      68568524
+aER_DiagramPosX 38
+aER_DiagramPosY 26
+
+eER_Entity 3
+
+eER_RelLink 4
+
+eER_RelType_1 5
+
+eER_RelLink_Other 6
+
+eER_Entity_Other 7
+
+eSA_RelType 2
+aZKey      68568525
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
+aER_DiagramE1PosX 21
+aER_DiagramE1PosY 20
+aER_DiagramE2PosX 36
+aER_DiagramE2PosY 20
+
+eER_RelType 3
+
+eER_RelLink_2 4
+
+eER_Entity_2 5
+
+eER_RelLink_2 4
+
+eER_Entity_2 5
+
+eSA_RelType 2
+aZKey      68568526
+aER_DiagramBendPosX 33
+aER_DiagramBendPosY 14
+aER_DiagramE1PosX 39
+aER_DiagramE1PosY 17
+aER_DiagramE2PosX 36
+aER_DiagramE2PosY 18
+
+eER_RelType 3
+
+eER_RelLink_2 4
+
+eER_Entity_2 5
+
+eER_RelLink_2 4
+
+eER_Entity_2 5
+
+eSA_RelType 2
+aZKey      68568527
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
+aER_DiagramE1PosX 36
+aER_DiagramE1PosY 22
+aER_DiagramE2PosX 21
+aER_DiagramE2PosY 22
+
+eER_RelType 3
+
+eER_RelLink_2 4
+
+eER_Entity_2 5
+
+eER_RelLink_2 4
+
+eER_Entity_2 5
+
+eSA_RelType 2
+aZKey      68568528
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
+aER_DiagramE1PosX 25
+aER_DiagramE1PosY 28
+aER_DiagramE2PosX 37
+aER_DiagramE2PosY 28
+
+eER_RelType 3
+
+eER_RelLink_2 4
+
+eER_Entity_2 5
+
+eER_RelLink_2 4
+
+eER_Entity_2 5
+
+eEntpER_Model 2
+aName      ePamms
+aZKey      68568353
+aDesc      ePamms Application
+
+i12        8
+i14        8
+i15        7
+i16        6
+i17        5
+i18        4
+i22        8
+i23        21
+i24        20
+i25        19
+i26        8
+i27        11
+i28        10
+i29        9
+i30        4
+i38        36
+i39        35
+i40        34
+i41        33
+i42        32
+i44        6
+i45        5
+i46        4
+i47        7
+i48        8
+i50        20
+i51        19
+i52        8
+i53        21
+i54        8
+i56        10
+i57        11
+i58        8
+i59        9
+i60        4
+i62        34
+i63        33
+i64        32
+i65        35
+i66        36

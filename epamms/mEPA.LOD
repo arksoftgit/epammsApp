@@ -1,0 +1,1271 @@
+z1000-Zeidon    MEPA     TZZOLODO 11/14/11   11:49:02 1.0a2    
+eLOD       1
+aZKey      1178878
+aName      mEPA
+aDesc      EPA statements and definitions
+
+eLOD_EntityParent 2
+aName      ePamms
+aIndentName ePamms
+aIndentLvl 0
+aZKey      2348763
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aWork      N
+aParentDeleteBehave D
+aDupEntityInstance N
+aDupRelationshipInstance N
+
+eLOD_EntityChild 3
+aName      Keyword
+aIndentName    Keyword
+aIndentLvl 3
+aZKey      2348766
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aWork      N
+aParentDeleteBehave D
+aDupEntityInstance N
+aDupRelationshipInstance N
+aRelLinkIndicator L
+aDesc      Double Brace{{ ... }} enclosed replacable keyword:  Usage, Claim, Surface, AreaOfUse, ApplicationType
+
+eLOD_AttributeRec 4
+aZKey      2348767
+
+eER_AttributeRec 5
+aName      ID
+aZKey      2346184
+aNotNull   Y
+aDesc      Generated ID
+
+eDomainRec 6
+aZKey      68568083
+aName      Integer
+aDomainType E
+aDataType  L
+aMaxStringLth 4
+aDecimalFormat 0
+aDesc      Integer numbers from -lots to +lots
+aContextRestriction N
+
+eLOD_AttributeRec 4
+aZKey      2348768
+
+eER_AttributeRec 5
+aName      Name
+aZKey      2346190
+aNotNull   Y
+aCaseSens  Y
+
+eDomainRec 6
+aZKey      68568081
+aName      Text
+aDomainType E
+aDataType  S
+aMaxStringLth 254
+aDesc      Any Character String
+aContextRestriction N
+
+eER_EntityRec 4
+aName      Keyword
+aZKey      2344470
+aPurpose   F
+aDesc      Double Brace{{ ... }} enclosed replacable keyword:  Usage, Claim, Surface, AreaOfUse, ApplicationType
+aER_DiagramPosX 19
+aER_DiagramPosY 11
+
+eER_RelLinkRec 4
+aName      has
+aAutoSeq   N
+aHangingForeignKeyEntity N
+aZKey      2344472
+aCardMin   0
+aCardMax   m
+aTE_NoForeignKeyPrefix N
+
+eER_RelTypeRec 5
+aZKey      2344471
+aFact      Added thru ER Dialog
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
+aER_DiagramE1PosX 11
+aER_DiagramE1PosY 13
+aER_DiagramE2PosX 18
+aER_DiagramE2PosY 13
+
+eLOD_EntityChild 3
+aName      EPA_ChemicalFamily
+aIndentName    EPA_ChemicalFamily
+aIndentLvl 3
+aZKey      2348769
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aWork      N
+aParentDeleteBehave D
+aDupEntityInstance N
+aDupRelationshipInstance N
+aRelLinkIndicator L
+aDesc      Disinfectants, Pesticides, ...
+
+eLOD_EntityChild 4
+aName      EPA_StorageDisposal
+aIndentName       EPA_StorageDisposal
+aIndentLvl 6
+aZKey      2348774
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aWork      N
+aParentDeleteBehave D
+aDupEntityInstance N
+aDupRelationshipInstance N
+aRelLinkIndicator L
+
+eLOD_AttributeRec 5
+aZKey      2348775
+
+eER_AttributeRec 6
+aName      ID
+aZKey      1178433
+aNotNull   Y
+aDesc      Generated ID
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      2348776
+
+eER_AttributeRec 6
+aName      Name
+aZKey      1178434
+aNotNull   Y
+aCaseSens  Y
+
+eDomainRec 7
+aZKey      68568051
+aName      Note
+aDomainType A
+aDataType  S
+aMaxStringLth 32000
+aContextRestriction N
+
+eLOD_AttributeRec 5
+aZKey      2348777
+
+eER_AttributeRec 6
+aName      Description
+aZKey      1178435
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      2348778
+
+eER_AttributeRec 6
+aName      Volume
+aZKey      1178914
+
+eDomainRec 7
+aZKey      68568281
+aName      Decimal2
+aDomainType E
+aDataType  M
+aDecimalFormat 2
+aDesc      Characters '0-9' precision ( 0.00 )
+aContextRestriction N
+
+eLOD_AttributeRec 5
+aZKey      2348779
+
+eER_AttributeRec 6
+aName      Units
+aZKey      1178915
+aDesc      Gallons, Ounces, Pounds ... Should be a domain
+
+eDomainRec 7
+
+eER_EntityRec 5
+aName      EPA_StorageDisposal
+aZKey      1178416
+aPurpose   F
+aER_DiagramPosX 2
+aER_DiagramPosY 44
+
+eER_RelLinkRec 5
+aName      has
+aAutoSeq   Y
+aHangingForeignKeyEntity N
+aZKey      1178446
+aCardMin   0
+aCardMax   m
+aTE_NoForeignKeyPrefix N
+
+eER_RelTypeRec 6
+aZKey      1178445
+aFact      Added thru ER Dialog
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
+aER_DiagramE1PosX 6
+aER_DiagramE1PosY 33
+aER_DiagramE2PosX 6
+aER_DiagramE2PosY 43
+
+eLOD_EntityChild 4
+aName      EPA_AreaOfUse
+aIndentName       EPA_AreaOfUse
+aIndentLvl 6
+aZKey      2348780
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aWork      N
+aParentDeleteBehave D
+aDupEntityInstance N
+aDupRelationshipInstance N
+aRelLinkIndicator L
+
+eLOD_AttributeRec 5
+aZKey      2348781
+
+eER_AttributeRec 6
+aName      ID
+aZKey      1178455
+aNotNull   Y
+aDesc      Generated ID
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      2348782
+
+eER_AttributeRec 6
+aName      Name
+aZKey      1178456
+aNotNull   Y
+aCaseSens  Y
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      2348783
+
+eER_AttributeRec 6
+aName      BoldItalic
+aZKey      1178457
+
+eDomainRec 7
+aZKey      1186473
+aName      BoldItalic
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aDesc      Bold and/or Italic flag
+aContextRestriction N
+
+eLOD_AttributeRec 5
+aZKey      2349279
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 6
+aName      wkSelected
+aZKey      2349280
+
+eDomainRec 7
+aZKey      68567482
+aName      Y/N
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aDesc      Yes or No
+aContextRestriction N
+
+eER_EntityRec 5
+aName      EPA_AreaOfUse
+aZKey      1178451
+aPurpose   F
+aER_DiagramPosX 19
+aER_DiagramPosY 18
+
+eER_RelLinkRec 5
+aName      has
+aAutoSeq   Y
+aHangingForeignKeyEntity N
+aZKey      1178453
+aCardMin   0
+aCardMax   m
+aTE_NoForeignKeyPrefix N
+
+eER_RelTypeRec 6
+aZKey      1178452
+aFact      Added thru ER Dialog
+aER_DiagramBendPosX 9
+aER_DiagramBendPosY 20
+aER_DiagramE1PosX 9
+aER_DiagramE1PosY 27
+aER_DiagramE2PosX 18
+aER_DiagramE2PosY 20
+
+eLOD_EntityChild 4
+aName      EPA_Surface
+aIndentName       EPA_Surface
+aIndentLvl 6
+aZKey      2348784
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aParentDeleteBehave D
+aRelLinkIndicator L
+
+eLOD_AttributeRec 5
+aZKey      2348785
+
+eER_AttributeRec 6
+aName      ID
+aZKey      1178465
+aNotNull   Y
+aDesc      Generated ID
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      2348786
+
+eER_AttributeRec 6
+aName      Name
+aZKey      1178466
+aNotNull   Y
+aCaseSens  Y
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      2348787
+
+eER_AttributeRec 6
+aName      BoldItalic
+aZKey      1178467
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      2349281
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 6
+aName      wkSelected
+aZKey      2349282
+
+eDomainRec 7
+
+eER_EntityRec 5
+aName      EPA_Surface
+aZKey      1178458
+aPurpose   F
+aER_DiagramPosX 19
+aER_DiagramPosY 25
+
+eER_RelLinkRec 5
+aName      has
+aAutoSeq   Y
+aHangingForeignKeyEntity N
+aZKey      1178460
+aCardMin   0
+aCardMax   m
+aTE_NoForeignKeyPrefix N
+
+eER_RelTypeRec 6
+aZKey      1178459
+aFact      Added thru ER Dialog
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
+aER_DiagramE1PosX 11
+aER_DiagramE1PosY 29
+aER_DiagramE2PosX 18
+aER_DiagramE2PosY 29
+
+eLOD_EntityChild 4
+aName      EPA_ApplicationType
+aIndentName       EPA_ApplicationType
+aIndentLvl 6
+aZKey      2348788
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aParentDeleteBehave D
+aRelLinkIndicator L
+aDesc      Disinfectant, Sanitizer, Fungicide, Virucide
+
+eLOD_AttributeRec 5
+aZKey      2348789
+
+eER_AttributeRec 6
+aName      ID
+aZKey      2344454
+aNotNull   Y
+aDesc      Generated ID
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      2348790
+
+eER_AttributeRec 6
+aName      Name
+aZKey      2344456
+aNotNull   Y
+aCaseSens  Y
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      2348791
+
+eER_AttributeRec 6
+aName      BoldItalic
+aZKey      2344457
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      2349283
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 6
+aName      wkSelected
+aZKey      2349284
+
+eDomainRec 7
+
+eER_EntityRec 5
+aName      EPA_ApplicationType
+aZKey      2344453
+aPurpose   F
+aDesc      Disinfectant, Sanitizer, Fungicide, Virucide
+aER_DiagramPosX 19
+aER_DiagramPosY 32
+
+eER_RelLinkRec 5
+aName      has
+aAutoSeq   Y
+aHangingForeignKeyEntity N
+aZKey      2344459
+aCardMin   0
+aCardMax   m
+aTE_NoForeignKeyPrefix N
+
+eER_RelTypeRec 6
+aZKey      2344458
+aFact      Added thru ER Dialog
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
+aER_DiagramE1PosX 11
+aER_DiagramE1PosY 32
+aER_DiagramE2PosX 18
+aER_DiagramE2PosY 32
+
+eLOD_EntityChild 4
+aName      EPA_Claim
+aIndentName       EPA_Claim
+aIndentLvl 6
+aZKey      2348792
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aWork      N
+aParentDeleteBehave D
+aDupEntityInstance N
+aDupRelationshipInstance N
+aRelLinkIndicator L
+aDesc      Pathogens: Bacteria, Viruses, Fungi
+
+eLOD_EntityChild 5
+aName      Bacteria
+aIndentName          Bacteria
+aIndentLvl 9
+aZKey      2348799
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aWork      Y
+aParentDeleteBehave D
+aDupEntityInstance N
+aDupRelationshipInstance N
+
+eLOD_EntityChild 5
+aName      Fungi
+aIndentName          Fungi
+aIndentLvl 9
+aZKey      2348800
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aWork      Y
+aParentDeleteBehave D
+aDupEntityInstance N
+aDupRelationshipInstance N
+
+eLOD_EntityChild 5
+aName      Viruses
+aIndentName          Viruses
+aIndentLvl 9
+aZKey      2348801
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aWork      Y
+aParentDeleteBehave D
+aDupEntityInstance N
+aDupRelationshipInstance N
+
+eLOD_EntityChild 5
+aName      Protozoa
+aIndentName          Protozoa
+aIndentLvl 9
+aZKey      2379444
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aWork      Y
+aParentDeleteBehave D
+aDupEntityInstance N
+aDupRelationshipInstance N
+
+eLOD_AttributeRec 5
+aZKey      2348793
+
+eER_AttributeRec 6
+aName      ID
+aZKey      1178513
+aNotNull   Y
+aDesc      Generated ID
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      2348794
+aUpdate    Y
+aSeqOrder  A
+
+eER_AttributeRec 6
+aName      ClaimsClassification
+aZKey      2079837
+
+eDomainRec 7
+aZKey      70220060
+aName      ClaimsClassification
+aDomainType T
+aDataType  S
+aMaxStringLth 16
+aContextRestriction N
+
+eLOD_AttributeRec 5
+aZKey      2348795
+
+eER_AttributeRec 6
+aName      Name
+aZKey      2091774
+aNotNull   Y
+aCaseSens  Y
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      2348796
+
+eER_AttributeRec 6
+aName      BoldItalic
+aZKey      2091775
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      2349285
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 6
+aName      wkSelected
+aZKey      2349286
+
+eDomainRec 7
+
+eER_EntityRec 5
+aName      EPA_Claim
+aZKey      1178468
+aPurpose   F
+aDesc      Pathogens: Bacteria, Viruses, Fungi
+aER_DiagramPosX 19
+aER_DiagramPosY 39
+
+eER_RelLinkRec 5
+aName      has
+aAutoSeq   Y
+aHangingForeignKeyEntity N
+aZKey      1178470
+aCardMin   0
+aCardMax   m
+aTE_NoForeignKeyPrefix N
+
+eER_RelTypeRec 6
+aZKey      1178469
+aFact      Added thru ER Dialog
+aER_DiagramBendPosX 9
+aER_DiagramBendPosY 41
+aER_DiagramE1PosX 9
+aER_DiagramE1PosY 33
+aER_DiagramE2PosX 18
+aER_DiagramE2PosY 41
+
+eLOD_AttributeRec 4
+aZKey      2348770
+
+eER_AttributeRec 5
+aName      ID
+aZKey      1178448
+aNotNull   Y
+aDesc      Generated ID
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      2348771
+
+eER_AttributeRec 5
+aName      Name
+aZKey      1178463
+aNotNull   Y
+aCaseSens  Y
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      2348772
+
+eER_AttributeRec 5
+aName      Description
+aZKey      1178464
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      2348773
+
+eER_AttributeRec 5
+aName      ChemicalFamily
+aZKey      1178512
+aNotNull   Y
+aDesc      Chemical Family (e.g. Pesticide, Quat Disinfectant, Iodine Disinfectant)
+
+eDomainRec 6
+aZKey      1178519
+aName      ChemicalFamily
+aDomainType T
+aDataType  S
+aMaxStringLth 2
+aDesc      Pesticide, Quat Disinfectant, Iodine Disinfectant, etc.
+aContextRestriction N
+
+eER_EntityRec 4
+aName      EPA_ChemicalFamily
+aZKey      1178444
+aPurpose   F
+aDesc      Disinfectants, Pesticides, ...
+aER_DiagramPosX 2
+aER_DiagramPosY 28
+
+eER_RelLinkRec 4
+aName      has
+aZKey      2344468
+aCardMin   0
+aCardMax   m
+
+eER_RelTypeRec 5
+aZKey      2344467
+aFact      Added thru ER Dialog
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
+aER_DiagramE1PosX 6
+aER_DiagramE1PosY 16
+aER_DiagramE2PosX 6
+aER_DiagramE2PosY 27
+
+eLOD_AttributeRec 3
+aZKey      2348764
+
+eER_AttributeRec 4
+aName      ID
+aZKey      2346185
+aNotNull   Y
+aDesc      Generated ID
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      2348765
+
+eER_AttributeRec 4
+aName      Name
+aZKey      2346191
+aNotNull   Y
+aCaseSens  Y
+
+eDomainRec 5
+
+eER_EntityRec 3
+aName      ePamms
+aZKey      2344466
+aPurpose   F
+aER_DiagramPosX 2
+aER_DiagramPosY 11
+
+eLOD_Entity 2
+awkSelectedAttributeForDragSort 2
+
+eLOD_Attribute 3
+awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 2
+
+eER_Attribute 4
+
+eDomain    5
+
+eER_Entity 3
+
+eLOD_Entity 2
+awkSelectedAttributeForDragSort 2
+
+eLOD_Attribute 3
+awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 2
+
+eER_Attribute 4
+
+eDomain    5
+
+eER_Entity 3
+
+eER_RelLink 3
+
+eER_RelType 4
+
+eLOD_Entity 2
+awkSelectedAttributeForDragSort 4
+
+eLOD_Attribute 3
+awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 2
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 4
+
+eER_Attribute 4
+
+eDomain    5
+
+eER_Entity 3
+
+eER_RelLink 3
+
+eER_RelType 4
+
+eLOD_Entity 2
+awkSelectedAttributeForDragSort 5
+
+eLOD_Attribute 3
+awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 2
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 4
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 5
+
+eER_Attribute 4
+
+eDomain    5
+
+eER_Entity 3
+
+eER_RelLink 3
+
+eER_RelType 4
+
+eLOD_Entity 2
+awkSelectedAttributeForDragSort 4
+
+eLOD_Attribute 3
+awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 2
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 4
+
+eER_Attribute 4
+
+eDomain    5
+
+eER_Entity 3
+
+eER_RelLink 3
+
+eER_RelType 4
+
+eLOD_Entity 2
+awkSelectedAttributeForDragSort 4
+
+eLOD_Attribute 3
+awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 2
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 4
+
+eER_Attribute 4
+
+eDomain    5
+
+eER_Entity 3
+
+eER_RelLink 3
+
+eER_RelType 4
+
+eLOD_Entity 2
+awkSelectedAttributeForDragSort 3
+
+eLOD_Attribute 3
+awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 2
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 4
+
+eER_Attribute 4
+
+eDomain    5
+
+eER_Entity 3
+
+eER_RelLink 3
+
+eER_RelType 4
+
+eLOD_Entity 2
+awkSelectedAttributeForDragSort 5
+
+eLOD_Attribute 3
+awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 2
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 4
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 5
+
+eER_Attribute 4
+
+eDomain    5
+
+eER_Entity 3
+
+eER_RelLink 3
+
+eER_RelType 4
+
+eLOD_Entity 2
+
+eLOD_Entity 2
+
+eLOD_Entity 2
+
+eLOD_Entity 2
+
+ePOD       2
+aNAME      mEPA
+aZKey      2067530
+aTE_SourceZKey 4121658
+
+eTE_DB_Environ 3
+aName      ePamms
+aZKey      68568367
+aDesc      ePamms Application
+aType      P
+
+eTE_DBMS_Source 4
+aName      ePammsA
+aZKey      1156756
+aDesc      ePamms access
+aParadigm  R
+aDBMS      MS Access via ODBC
+aGenerateExecutable kzhsqlab
+aExecutable kzhsqloa
+aGenKeyExecutable kzhgenky
+aDisplayOwner Y
+aDisplayDBMS_ID N
+
+eTE_DBMS_Source 4
+aName      ePammsM
+aZKey      4121658
+aDesc      MySQL ePamms database
+aParadigm  R
+aDBMS      MySQL 5.1 via ODBC
+aGenerateExecutable kzhsqlmb
+aExecutable kzhsqloa
+aGenKeyExecutable kzhgenky
+aDisplayOwner Y
+aDisplayDBMS_ID N
+aDBH_Data  376
+TZDBHODO *********************** ********************************************************************************************************z1000-Zeidon    ZTF_12C4_TZDBHODO 05/07/10   14:07:31 1.0a2    
+eODBC      1
+aTimestampPrecision 3
+aTimestampAsString N
+aBlobsLast N
+aDropTables Y
+aAddTableNameToFK_Override Y
+aGenCreateIdxs Y
+aGenDropIdxs N
+aGenCreateTables Y
+
+
+
+i16        5
+i22        19
+i28        8
+i35        5
+i38        8
+i51        5
+i54        8
+i57        41
+i60        44
+i67        5
+i70        8
+i73        41
+i76        44
+i87        5
+i93        8
+i96        41
+i99        44
+i105       5
+i108       8
+i111       8
+i120       5
+i123       8
+i125       1
+i126       118
+i127       119
+i128       5
+i129       121
+i130       122
+i131       8
+i132       124
+i133       2
+i134       3
+i135       4
+i136       5
+i137       6
+i138       7
+i139       8
+i140       9
+i141       10
+i142       11
+i143       12
+i144       103
+i145       104
+i146       5
+i147       106
+i148       107
+i149       8
+i150       109
+i151       110
+i152       8
+i153       112
+i154       113
+i155       114
+i156       115
+i157       116
+i158       117
+i159       13
+i160       14
+i161       15
+i162       5
+i163       17
+i164       18
+i165       19
+i166       20
+i167       21
+i168       19
+i169       23
+i170       24
+i171       25
+i172       26
+i173       27
+i174       8
+i175       29
+i176       30
+i177       31
+i178       32
+i179       33
+i180       34
+i181       5
+i182       36
+i183       37
+i184       8
+i185       39
+i186       40
+i187       41
+i188       42
+i189       43
+i190       44
+i191       45
+i192       46
+i193       47
+i194       48
+i195       49
+i196       50
+i197       5
+i198       52
+i199       53
+i200       8
+i201       55
+i202       56
+i203       41
+i204       58
+i205       59
+i206       44
+i207       61
+i208       62
+i209       63
+i210       64
+i211       65
+i212       66
+i213       5
+i214       68
+i215       69
+i216       8
+i217       71
+i218       72
+i219       41
+i220       74
+i221       75
+i222       44
+i223       77
+i224       78
+i225       79
+i226       80
+i227       85
+i228       86
+i229       5
+i230       88
+i231       89
+i232       90
+i233       91
+i234       92
+i235       8
+i236       94
+i237       95
+i238       41
+i239       97
+i240       98
+i241       44
+i242       100
+i243       101
+i244       102
+i245       81
+i246       82
+i247       83
+i248       84

@@ -1,0 +1,778 @@
+z1000-Zeidon    KZMSGQOO TZZOLODO 10/28/14   07:54:47 1.0a2    
+eLOD       1
+aZKey      86699273
+aName      KZMSGQOO
+aDesc      Message Queue Handler
+aDLL_Name  KZMSGQAA
+
+eLOD_EntityParent 2
+aName      Task
+aIndentName Task
+aIndentLvl 0
+aZKey      86699274
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aHidden    N
+aRecursive N
+aAutoCreate N
+aDerived   N
+aWork      Y
+aParentDeleteBehave D
+aDupEntityInstance N
+aDupRelationshipInstance N
+aDesc      Task separates errors within the same application
+
+eLOD_EntityChild 3
+aName      QMsg
+aIndentName    QMsg
+aIndentLvl 3
+aZKey      86699275
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aHidden    N
+aRecursive N
+aAutoCreate N
+aDerived   N
+aWork      Y
+aParentDeleteBehave D
+aDupEntityInstance N
+aDupRelationshipInstance N
+aDesc      Queued messages
+aSeqNo     1
+
+eLOD_AttributeRec 4
+aZKey      86699276
+aWork      Y
+aUpdate    N
+aSeqNo_LOD_Entity 1
+
+eER_AttributeRec 5
+aName      Id
+aZKey      86699277
+aLth       32
+aDesc      Message Identifier
+
+eDomainRec 6
+aZKey      68568081
+aName      Text
+aDomainType E
+aDataType  S
+aMaxStringLth 254
+aDesc      Any Character String
+aContextRestriction N
+
+eLOD_AttributeRec 4
+aZKey      86699278
+aWork      Y
+aUpdate    N
+aSeqOrder  A
+aSeqNo_LOD_Entity 2
+
+eER_AttributeRec 5
+aName      Text
+aZKey      86699279
+aDesc      Message text
+
+eDomainRec 6
+aZKey      68568051
+aName      Note
+aDomainType A
+aDataType  S
+aMaxStringLth 32000
+aContextRestriction N
+
+eLOD_AttributeRec 4
+aZKey      86699280
+aWork      Y
+aUpdate    N
+aSeqOrder  A
+aSeqNo_LOD_Entity 3
+
+eER_AttributeRec 5
+aName      Type
+aZKey      86699281
+aDesc      Type of message as specified in OperatorMessage (e.g. Domain, Constraint Error, Constraint Warning)
+
+eDomainRec 6
+aZKey      68568083
+aName      Integer
+aDomainType E
+aDataType  L
+aMaxStringLth 4
+aDecimalFormat 0
+aDesc      Integer numbers from -lots to +lots
+aContextRestriction N
+
+eLOD_AttributeRec 4
+aZKey      86699282
+aWork      Y
+aUpdate    N
+aSeqOrder  A
+aSeqNo_LOD_Entity 4
+
+eER_AttributeRec 5
+aName      View
+aZKey      86699283
+aDesc      View Id of the object instance involved in the error
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      86699284
+aWork      Y
+aUpdate    N
+aSeqOrder  A
+aSeqNo_LOD_Entity 5
+
+eER_AttributeRec 5
+aName      Title
+aZKey      86699285
+aDesc      Title to be presented with the message
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      86699286
+aWork      Y
+aUpdate    N
+aSeqOrder  A
+aSeqNo_LOD_Entity 6
+
+eER_AttributeRec 5
+aName      Status
+aZKey      86699287
+aDesc      Client status (when this message was queued)
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      86699288
+aWork      Y
+aUpdate    N
+aSeqOrder  A
+aSeqNo_LOD_Entity 7
+
+eER_AttributeRec 5
+aName      Beep
+aZKey      86699289
+aDesc      Beep (hint from the application to the message handler as to whether or not to beep)
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      92038587
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 5
+aName      ErrorMapValue
+aZKey      92038588
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      91725511
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 5
+aName      ControlTag
+aZKey      91725512
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      91725509
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 5
+aName      ErrorMsg
+aZKey      91725510
+
+eDomainRec 6
+
+eLOD_EntityChild 3
+aName      OverrideMsg
+aIndentName    OverrideMsg
+aIndentLvl 3
+aZKey      86699290
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aWork      Y
+aParentDeleteBehave D
+aDupEntityInstance N
+aDupRelationshipInstance N
+aDesc      Overrides for messages from MessageSend, MessagePrompt, etc.
+
+eLOD_AttributeRec 4
+aZKey      86699291
+aWork      Y
+aUpdate    Y
+aSeqOrder  A
+
+eER_AttributeRec 5
+aName      Id
+aZKey      86699292
+aLth       32
+aDesc      MsgId from MessageSend
+
+eDomainRec 6
+aZKey      68568073
+aName      AlphaNumeric
+aDomainType E
+aDataType  S
+aMaxStringLth 254
+aDecimalFormat 1234
+aDesc      Characters 'a-z', 'A-Z', '0-9'
+aContextRestriction N
+
+eLOD_AttributeRec 4
+aZKey      86699293
+aWork      Y
+aUpdate    Y
+aSeqOrder  A
+
+eER_AttributeRec 5
+aName      Title
+aZKey      86699294
+aDesc      Title from MessageSend
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      86699295
+aWork      Y
+aUpdate    Y
+aSeqOrder  A
+
+eER_AttributeRec 5
+aName      Text
+aZKey      86699296
+aDesc      Text from MessageSend
+
+eDomainRec 6
+
+eLOD_EntityChild 3
+aName      WebMsg
+aIndentName    WebMsg
+aIndentLvl 3
+aZKey      91725513
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aWork      Y
+aParentDeleteBehave D
+aDupEntityInstance N
+aDupRelationshipInstance N
+
+eLOD_AttributeRec 4
+aZKey      91725514
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 5
+aName      ControlTag
+aZKey      91725515
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      4265485
+aWork      Y
+aUpdate    N
+aSeqNo_LOD_Entity 1
+
+eER_AttributeRec 5
+aName      Id
+aZKey      4265486
+aLth       32
+aDesc      Message Identifier
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      4265483
+aWork      Y
+aUpdate    N
+aSeqOrder  A
+aSeqNo_LOD_Entity 5
+
+eER_AttributeRec 5
+aName      Title
+aZKey      4265484
+aDesc      Title to be presented with the message
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      4265487
+aWork      Y
+aUpdate    N
+aSeqOrder  A
+aSeqNo_LOD_Entity 3
+
+eER_AttributeRec 5
+aName      Type
+aZKey      4265488
+aDesc      Type of message as specified in OperatorMessage (e.g. Domain, Constraint Error, Constraint Warning)
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      91725516
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 5
+aName      ErrorMsg
+aZKey      91725517
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      4261955
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 5
+aName      ErrorMapValue
+aZKey      4261956
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      4265481
+aWork      Y
+aUpdate    N
+aSeqOrder  A
+aSeqNo_LOD_Entity 7
+
+eER_AttributeRec 5
+aName      Beep
+aZKey      4265482
+aDesc      Beep (hint from the application to the message handler as to whether or not to beep)
+
+eDomainRec 6
+
+eLOD_AttributeRec 3
+aZKey      86699297
+aWork      Y
+aUpdate    Y
+aSeqNo_LOD_Entity 1
+
+eER_AttributeRec 4
+aName      Client
+aZKey      86699298
+aLth       32
+aDesc      Who created the error handler instance
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      86699299
+aWork      Y
+aUpdate    Y
+aSeqOrder  A
+aSeqNo_LOD_Entity 2
+
+eER_AttributeRec 4
+aName      Id
+aZKey      86699300
+aDesc      Task Id - used to separate messages for an application based on task
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      86699301
+aWork      Y
+aUpdate    N
+aSeqOrder  A
+aSeqNo_LOD_Entity 3
+
+eER_AttributeRec 4
+aName      Status
+aZKey      86699302
+aDesc      Client status stack (when the message was queued)
+
+eDomainRec 5
+aZKey      68567480
+aName      Blob
+aDomainType E
+aDataType  B
+aDesc      A do nothing domain for blobs
+aContextRestriction N
+
+eLOD_AttributeRec 3
+aZKey      86699303
+aWork      Y
+aUpdate    Y
+aSeqOrder  A
+
+eER_AttributeRec 4
+aName      Desc
+aZKey      86699304
+aDesc      Description for Message OIs
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      86699305
+aWork      Y
+aUpdate    Y
+aSeqOrder  A
+
+eER_AttributeRec 4
+aName      TemporaryWorkText
+aZKey      86699306
+aDesc      Temporary text work area
+
+eDomainRec 5
+
+eLOD_Entity 2
+awkSelectedAttributeForDragSort 2
+
+eLOD_Attribute 3
+awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 2
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 4
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 5
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Entity 2
+awkSelectedAttributeForDragSort 3
+
+eLOD_Attribute 3
+awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 2
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 4
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 5
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 6
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 7
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 8
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 9
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 10
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Entity 2
+awkSelectedAttributeForDragSort 1
+
+eLOD_Attribute 3
+awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 2
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Entity 2
+awkSelectedAttributeForDragSort 3
+
+eLOD_Attribute 3
+awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 2
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 4
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 5
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 6
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 7
+
+eER_Attribute 4
+
+eDomain    5
+
+ePOD       2
+aNAME      KZMSGQOO
+aZKey      89233476
+aTE_SourceZKey 4121658
+
+eTE_DB_Environ 3
+aName      ePamms
+aZKey      68568367
+aDesc      ePamms Application
+aType      P
+
+eTE_DBMS_Source 4
+aName      ePammsM
+aZKey      4121658
+aDesc      MySQL ePamms database
+aParadigm  R
+aDBMS      MySQL 5.1 via ODBC
+aGenerateExecutable kzhsqlmb
+aExecutable kzhsqloa
+aGenKeyExecutable kzhgenky
+aDisplayOwner Y
+aDisplayDBMS_ID N
+aDBH_Data  376
+TZDBHODO *********************** ********************************************************************************************************z1000-Zeidon    ZTF_12C4_TZDBHODO 05/07/10   14:07:31 1.0a2    
+eODBC      1
+aTimestampPrecision 3
+aTimestampAsString N
+aBlobsLast N
+aDropTables Y
+aAddTableNameToFK_Override Y
+aGenCreateIdxs Y
+aGenDropIdxs N
+aGenCreateTables Y
+
+
+
+i14        11
+i17        5
+i20        11
+i23        11
+i26        8
+i29        5
+i32        8
+i39        5
+i42        8
+i46        5
+i49        5
+i52        5
+i55        11
+i58        8
+i61        8
+i64        11
+i67        5
+i70        5
+i76        5
+i79        5
+i80        1
+i81        65
+i82        66
+i83        5
+i84        68
+i85        69
+i86        5
+i87        71
+i88        72
+i89        73
+i90        74
+i91        75
+i92        5
+i93        77
+i94        78
+i95        5
+i96        2
+i97        3
+i98        4
+i99        5
+i100       6
+i101       7
+i102       8
+i103       9
+i104       10
+i105       11
+i106       12
+i107       13
+i108       11
+i109       15
+i110       16
+i111       5
+i112       18
+i113       19
+i114       11
+i115       21
+i116       22
+i117       11
+i118       27
+i119       28
+i120       5
+i121       30
+i122       31
+i123       8
+i124       24
+i125       25
+i126       8
+i127       33
+i128       34
+i129       35
+i130       36
+i131       37
+i132       38
+i133       5
+i134       40
+i135       41
+i136       8
+i137       43
+i138       44
+i139       45
+i140       5
+i141       47
+i142       48
+i143       5
+i144       50
+i145       51
+i146       5
+i147       53
+i148       54
+i149       11
+i150       56
+i151       57
+i152       8
+i153       59
+i154       60
+i155       8
+i156       62
+i157       63
+i158       11

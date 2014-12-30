@@ -1,0 +1,11 @@
+z1000-Zeidon    Z72A9F97 TZWDVORO 07/02/14   10:18:42 1.0a2    
+eViewObjRef 1
+aZKey      120233879
+aName      mMasProdLST
+
+eLOD       2
+aZKey      69033348
+aName      mMasProd
+aDesc      Master Product Maintenance
+aDLL_Name  mMasProd
+
