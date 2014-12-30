@@ -1,2 +1,5 @@
 /build/
 /dist/
+/epamms/JavaProject/build/
+/epamms/JavaProject/dist/
+/epamms/JavaProject/nbproject/private/
