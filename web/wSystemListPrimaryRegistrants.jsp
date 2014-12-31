@@ -60,7 +60,7 @@ public int DoInputMapping( HttpServletRequest request,
    lPrimReg = task.getViewByName( "lPrimReg" );
    if ( VmlOperation.isValid( lPrimReg ) )
    {
-      // Grid: GridPrimaryRegistrant
+      // Grid: SortableGridPrimaryRegistrant
       iTableRowCnt = 0;
 
       // We are creating a temp view to the grid view so that if there are 
@@ -569,7 +569,7 @@ else
 <html>
 <head>
 
-<title>Primary Registrant List</title>
+<title>Sortable Primary Registrant List</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
@@ -579,10 +579,89 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/css.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/sts.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/validations.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSystemListPrimaryRegistrants.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+  
+  <style>
+  body {  // <link rel="stylesheet" href="/resources/demos/style.css">
+     font-size: 62.5%;
+     font-family: "Trebuchet MS", "Arial", "Helvetica", "Verdana", "sans-serif";
+  }
+
+  //#SortableGridPrimaryRegistrant { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+  //#SortableGridPrimaryRegistrant li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
+  //#SortableGridPrimaryRegistrant li span { position: absolute; margin-left: -1.3em; }
+  </style>
+  <script>
+  $(function() {
+    $( "#SortableGridPrimaryRegistrant" ).sortable();
+    $( "#SortableGridPrimaryRegistrant" ).disableSelection();
+    
+    
+var fixHelperModified = function(e, tr) {
+    var $originals = tr.children();
+    var $helper = tr.clone();
+    $helper.children().each(function(index) {
+        $(this).width($originals.eq(index).width())
+    });
+    return $helper;
+},
+    updateIndex = function(e, ui) {
+        $('td.index', ui.item.parent()).each(function (k) {
+            $(this).html(k + 1);
+            if ( k % 2 ) {
+            // console.log( "adding class odd at: " + k );
+               $(this).closest("tr").addClass( "odd" );
+            }
+            else {
+            // console.log( "removing class odd at: " + k );
+               $(this).closest("tr").removeClass( "odd" );
+            }
+        });
+    };
+
+$("#SortableGridPrimaryRegistrant tbody").sortable({
+    helper: fixHelperModified,
+    stop: updateIndex
+}).disableSelection();    
+    
+  });
+  </script>
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
 
 </head>
 
@@ -592,6 +671,7 @@ else
 // In the Standardista code (sts.js) there is an addEvent that will call _AfterPageLoaded. 
 --> 
 <body onSubmit="_DisableFormElements( true )" onBeforeUnload="_BeforePageUnload( )">
+
 
 <%@ include file="./include/pagebackground.inc" %>  <!-- just temporary until we get the painter dialog updates from Kelly ... 2011.10.08 dks -->
 
@@ -777,11 +857,12 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:54px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GridPrimaryRegistrant:Grid */ %>
-<table class="sortable listheader"  cols=5 style=""  name="GridPrimaryRegistrant" id="GridPrimaryRegistrant">
+<% /* SortableGridPrimaryRegistrant:Grid */ %>
+<table cols=6 style="" id="SortableGridPrimaryRegistrant">
 
 <thead bgcolor=green><tr>
 
+   <th>Order</th>
    <th>Name</th>
    <th>Login</th>
    <th>Description</th>
@@ -865,11 +946,12 @@ try
 
 <tr<%=strOdd%>>
 
-   <td nowrap><a href="#" onclick="AdminUpdatePrimaryRegistrant( this.id )" id="GEPrimaryRegistrantName::<%=strEntityKey%>"><%=strGEPrimaryRegistrantName%></a></td>
-   <td nowrap><a href="#" onclick="AdminUpdatePrimaryRegistrant( this.id )" id="GEPrimaryRegistrantLoginName::<%=strEntityKey%>"><%=strGEPrimaryRegistrantLoginName%></a></td>
-   <td nowrap><a href="#" onclick="AdminUpdatePrimaryRegistrant( this.id )" id="GEPrimaryRegistrantDescription::<%=strEntityKey%>"><%=strGEPrimaryRegistrantDescription%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdatePrimaryRegistrantDetail" onclick="AdminUpdatePrimaryRegistrant( this.id )" id="BMBUpdatePrimaryRegistrantDetail::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Detail"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBAdminDeletePrimaryRegistrant" onclick="AdminDeletePrimaryRegistrant( this.id )" id="BMBAdminDeletePrimaryRegistrant::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
+   <td class="index" nowrap><a href="#" id="Order::<%=strEntityKey%>"><%=iTableRowCnt%></a></td>
+   <td nowrap><a href="#" id="GEPrimaryRegistrantName::<%=strEntityKey%>"><%=strGEPrimaryRegistrantName%></a></td>
+   <td nowrap><a href="#" id="GEPrimaryRegistrantLoginName::<%=strEntityKey%>"><%=strGEPrimaryRegistrantLoginName%></a></td>
+   <td nowrap><a href="#" id="GEPrimaryRegistrantDescription::<%=strEntityKey%>"><%=strGEPrimaryRegistrantDescription%></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdatePrimaryRegistrantDetail" id="BMBUpdatePrimaryRegistrantDetail::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Detail"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBAdminDeletePrimaryRegistrant" id="BMBAdminDeletePrimaryRegistrant::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
 
 </tr>
 
