@@ -921,9 +921,9 @@ else
 
 <input class="text14" name="EBPassword" id="EBPassword" style="width:256px;position:absolute;left:146px;top:108px;<%=strErrorColor%>" type="password" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
-<% /* Forget:Text */ %>
+<% /* Forgot:Text */ %>
 
-<a href="#" id="Forget" name="Forget"  onclick="FORGOT_Password( );" class="text10" style="width:208px;height:22px;position:absolute;left:430px;top:122px;">Forget Username/Password?</a>
+<a href="#" id="Forgot" name="Forgot"  onclick="FORGOT_Password( );" class="text10" style="width:208px;height:22px;position:absolute;left:430px;top:122px;">Forgot Username/Password?</a>
 
 
 </div>  <!--  WelcomeContainer --> 
