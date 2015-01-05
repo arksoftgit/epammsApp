@@ -672,7 +672,6 @@ $("#SortableGridPrimaryRegistrant tbody").sortable({
 --> 
 <body onSubmit="_DisableFormElements( true )" onBeforeUnload="_BeforePageUnload( )">
 
-
 <%@ include file="./include/pagebackground.inc" %>  <!-- just temporary until we get the painter dialog updates from Kelly ... 2011.10.08 dks -->
 
 <div id="wrapper">

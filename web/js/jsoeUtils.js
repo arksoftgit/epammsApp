@@ -253,6 +253,151 @@ SimpleHashMap.prototype.randomize = function () {
 }
 */
 
+SimpleHashMap.prototype.swapItems = function( idx1, idx2 ) {
+   if ( idx1 >= 0 && idx1 < this._db.length && idx2 >= 0 && idx2 < this._db.length  ) {
+      var item = this._db[idx1];
+      this._db[idx1] = this._db[idx2];
+      this._db[idx2] = item;
+      return true;
+   } else {
+      return false;
+   }
+};
+
+/* Selection sort pseudo code
+for i = 1:n,
+    k = i
+    for j = i+1:n,
+     if a[j] < a[k],
+      k = j
+    → invariant: a[k] smallest of a[i..n]
+      swap a[i,k]
+    → invariant: a[1..i] in final position
+*/
+
+var arrayOriginal = [ "A", "B", "C", "D", "E", "F", "G" ];
+var arrayOrderIndex0 = [ 1, 2, 4, 3, 5, 6, 0 ];
+var arrayOriginal0 = [ "A", "B", "C", "D", "E", "F", "G" ];
+var arrayOrderIndex1 = [ 6, 0, 1, 2, 3, 4, 5 ];
+var arrayOriginal1 = [ "A", "B", "C", "D", "E", "F", "G" ];
+var arrayOrderIndex2 = [ 1, 2, 3, 4, 5, 6, 0 ];
+var arrayOriginal2 = [ "A", "B", "C", "D", "E", "F", "G" ];
+var arrayOrderIndex3 = [ 0, 1, 3, 2, 4, 6, 5 ];
+var arrayOriginal3 = [ "A", "B", "C", "D", "E", "F", "G" ];
+
+SimpleHashMap.prototype.move = function( oldIdx, newIdx, arr ) {
+   var n = arr.length;
+   if ( oldIdx >= 0 && oldIdx < n && newIdx >= 0 && newIdx < n ) {
+      var k;
+   // var item = arr.slice( oldIdx, 1 ); // to remove one element without leaving "holes" in the array:
+
+   // delete arr[oldIdx]; // changes the element to undefined ... we want the hole ... will fill it back up.
+      var item = arr[oldIdx];
+      if ( oldIdx < newIdx ) {
+         for ( k = oldIdx; k < newIdx; k++ ) {
+            arr[k] = arr[k + 1];
+         }
+      } else {
+         for ( k = oldIdx; k > newIdx; k-- ) {
+            arr[k] = arr[k - 1];
+         }
+      }
+      arr[newIdx] = item;
+   }
+};
+
+SimpleHashMap.prototype.orderByNewIndex = function( arrIdx, arrayOrig ) {
+   var swaps = 0;
+   var n = arrIdx.length;
+   var arrShift = []; // new Array( arrIdx.length );
+   var shiftMax = 0;
+   var shifts;
+   var k, j;
+   console.log( "Order index: " + arrIdx[0] + ", " +
+                                    arrIdx[1] + ", " +
+                                    arrIdx[2] + ", " +
+                                    arrIdx[3] + ", " +
+                                    arrIdx[4] + ", " +
+                                    arrIdx[5] + ", " +
+                                    arrIdx[6] );
+   console.log( "Original array: " + arrayOrig[0] + ", " +
+                                       arrayOrig[1] + ", " +
+                                       arrayOrig[2] + ", " +
+                                       arrayOrig[3] + ", " +
+                                       arrayOrig[4] + ", " +
+                                       arrayOrig[5] + ", " +
+                                       arrayOrig[6] );
+   for ( k = 0; k < n - 1; k++ ) {
+      // find the number of times we have shifted the current index because of a move
+      shifts = 0;
+      for ( j = 0; j < shiftMax; j++ ) {
+         if ( k < arrShift[j] ) {
+            shifts++;
+         }
+      }
+      // var arrayOrderIndex = [ 0, 1, 3, 2, 4, 6, 5 ];
+      if ( arrIdx[k] + shifts > k ) {
+         if ( arrIdx[k] + shifts >= 0 && arrIdx[k] + shifts < n ) {
+            if ( arrIdx[k] + shifts > k + 1 ) {
+               arrShift[shiftMax++] = arrIdx[k];
+            }
+            move( arrIdx[k] + shifts, k, arrayOrig );
+            console.log( "After move (with shift: " + shifts + ") from: " + arrIdx[k] + " to: " + k + "   " +
+                                                arrayOrig[0] + ", " +
+                                                arrayOrig[1] + ", " +
+                                                arrayOrig[2] + ", " +
+                                                arrayOrig[3] + ", " +
+                                                arrayOrig[4] + ", " +
+                                                arrayOrig[5] + ", " +
+                                                arrayOrig[6] );
+            swaps++;
+         } else {
+            break; // error???
+         }
+      }
+   }
+   console.log( "Swaps: " + swaps + "  final array: " +
+                        arrayOrig[0] + ", " +
+                        arrayOrig[1] + ", " +
+                        arrayOrig[2] + ", " +
+                        arrayOrig[3] + ", " +
+                        arrayOrig[4] + ", " +
+                        arrayOrig[5] + ", " +
+                        arrayOrig[6] );
+   
+   console.log( "Expected final array: " +
+                        arrayOriginal[arrIdx[0]] + ", " +
+                        arrayOriginal[arrIdx[1]] + ", " +
+                        arrayOriginal[arrIdx[2]] + ", " +
+                        arrayOriginal[arrIdx[3]] + ", " +
+                        arrayOriginal[arrIdx[4]] + ", " +
+                        arrayOriginal[arrIdx[5]] + ", " +
+                        arrayOriginal[arrIdx[6]] );
+};
+
+SimpleHashMap.prototype.orderByNewIndexDeprecated = function( arrIdx, arrayOrig ) {
+   var i, j, k;
+   var swaps = 0;
+   var n = arrIdx.length;
+   for ( i = 0; i < n; i++ ) {
+      k = i;
+      for ( j = i + 1; j < n; j++ ) {
+         if ( arrIdx[j] < arrIdx[k] ) {
+            k = j; // → invariant: a[k] smallest of a[i..n]
+            swaps++;
+         // swapItems( i, k ); //→ invariant: a[1..i] in final position
+            var temp = arrayOrig[i];
+            arrayOrig[i] = arrayOrig[k];
+            arrayOrig[k] = temp;
+         }
+      }
+   }
+   console.log( "Swaps: " + swaps );
+   for ( i = 0; i < n; i++ ) {
+      console.log( (i + 1) + "==> " + arrayOrig[i] );
+   }
+};
+
 SimpleHashMap.prototype.removeItem = function( key ) {
    var item = null;
    var k = this.getIndexOfKey( key );
