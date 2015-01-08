@@ -364,10 +364,10 @@ public int DoInputMapping( HttpServletRequest request,
                nRelPos = java.lang.Integer.parseInt( strMapValue );
                mSPLDefPanel.cursor( "SpecialFormattingSelectEntry" ).setPosition( nRelPos, "" );
             }
-         }  // checkExistenceofEntity
       }
 
-   }
+         }  // checkExistenceofEntity
+      }
 
    if ( webMapping == true )
       return 2;

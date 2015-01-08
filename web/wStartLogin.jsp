@@ -135,9 +135,7 @@ if ( StringUtils.isBlank( taskId ) )
 }
 else
 {
-   strURL = response.encodeRedirectURL( "loggedintotask.jsp" );
-   response.sendRedirect( strURL );
-   return;
+   task = objectEngine.getTaskById( taskId );
 }
 
 if ( task == null )

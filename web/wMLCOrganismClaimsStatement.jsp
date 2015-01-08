@@ -112,7 +112,6 @@ public int DoInputMapping( HttpServletRequest request,
             nRelPos--;    // For Auto Include combos, we need to decrement for the blank entry.
                mMasLC.cursor( "M_UsageFootnote" ).setPosition( nRelPos, "" );
             }
-         }  // checkExistenceofEntity
  
          // Auto Include Code 
          // If the value is "0" then the user has selected the null entry, we do not want to do an include.
@@ -143,6 +142,7 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
+         }  // checkExistenceofEntity
    }
 
    if ( webMapping == true )

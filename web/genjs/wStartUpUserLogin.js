@@ -409,6 +409,8 @@ function FORGOT_Password( )
    orderbyIndex( arrayOrderIndex3, arrayOriginal3 );
    korderbyIndex( karrayOrderIndex3, karrayOriginal3 );
 
+   var arrHeader = [ "NickName", "ProperName", "Description" ];
+   var myWindow = openSortWin( "Nick Names", "viewName", "entityName", arrHeader, null );
 
 /*
 Order index: 1, 2, 4, 3, 5, 6, 0

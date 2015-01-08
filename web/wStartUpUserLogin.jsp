@@ -210,9 +210,7 @@ if ( StringUtils.isBlank( taskId ) )
 }
 else
 {
-   strURL = response.encodeRedirectURL( "loggedintotask.jsp" );
-   response.sendRedirect( strURL );
-   return;
+   task = objectEngine.getTaskById( taskId );
 }
 
 if ( task == null )
@@ -529,7 +527,7 @@ else
 <html>
 <head>
 
-<title>User Login</title>
+<title>User LoginYZ</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
@@ -540,6 +538,12 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/labeldesigner.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jsonpath-0.8.0.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jsoeTestData.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jsoeUtils.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jsoe.js"></script>
+<<script language="JavaScript" type="text/javascript" src="./js/jsoeObjectBrowser.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wStartUpUserLogin.js"></script>
 
 </head>

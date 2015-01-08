@@ -1109,7 +1109,7 @@ $(function() {
          top = scaledInch2Pixel( $(this).val(), 0 );
       // console.log( "scaled block top attribute: " + $(this).val() + " ==> " + top );
           g_$current_block.css({ top : top });
-   });
+      });
    
    $("#zBlockLeft")
       .blur( function () {
@@ -1118,7 +1118,7 @@ $(function() {
          left = scaledInch2Pixel( $(this).val(), 0 );
       // console.log( "scaled block left attribute: " + $(this).val() + " ==> " + left );
          g_$current_block.css({ left : left });
-   });
+      });
    
    $("#zBlockHeight")
       .blur( function () {
@@ -1127,7 +1127,7 @@ $(function() {
          height = scaledInch2Pixel( $(this).val(), 0 );
       // console.log( "scaled block height attribute: " + $(this).val() + " ==> " + height );
          g_$current_block.css({ height : height });
-   });
+      });
    
    $("#zBlockWidth")
       .blur( function () {
@@ -1136,7 +1136,7 @@ $(function() {
          width = scaledInch2Pixel( $(this).val(), 0 );
       // console.log( "scaled block width attribute: " + $(this).val() + " ==> " + width );
          g_$current_block.css({ width : width });
-   });
+      });
    
    $("input.zeidon, select.zeidon")
       .blur( function () {
@@ -1347,94 +1347,6 @@ $(function() {
 
          // TODO: display the label/page/block properties
       }
-   }
-
-   function openWin()
-   {
-   // var myWindow = window.open();
-   // var myWindow = window.open("","myWindow","height=100,width=200");
-      var myWindow = window.open( "xyz", "_blank", "toolbar=yes, menubar=yes scrollbars=yes, resizable=yes, top=300, left=600, height=800, width=1000" );
-      var myDocument = myWindow.document;
-      var HTMLstring="<html>\n<head>\n<title>ZeidonX JSON</title>\n" +
-         "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/json.css\">\n" +
-         "<script src=\"http://code.jquery.com/jquery-1.10.2.min.js\"></script>\n" +
-         "<script src=\"http://code.jquery.com/ui/1.10.3/jquery-ui.js\"></script>\n" +
-         "<script src=\"js/jquery.blockUI.js\"></script>\n" +
-         "<script src=\"js/jsoeUtils.js\"></script>\n" +
-         "<script src=\"js/jsoe.js\"></script>\n" +
-         "<script src=\"js/jsoeObjectBrowser.js\"></script>\n" +
-         "<script>\n" +
-            "$(document).ready( function() { // Once the page has loaded and is ready, the alert below will fire.\n" +
-               "loadViewNames();\n" +
-            // "alert('Your page has loaded - and Now this alert appears!');\n" +
-            "});\n" +
-         "</script>" +
-         "</head><body onload=\"loadViewNames()\">\n" +
-         "<textarea id=\"RawJson\" style=\"display:none;\"></textarea>\n" +
-                "<div id=\"ControlsRow\">\n" +
-                  "<input type=\"Button\" value=\"Format\" onClick=\"Process()\"/>\n" +
-                  "<span id=\"ViewNamesHolder\">View Names:\n" +
-                    "<select id=\"ViewNames\" onChange=\"ViewNameChanged()\">\n" +
-                    "</select>\n" +
-                  "</span>&nbsp;&nbsp;\n" +
-                  "<span id=\"TabSizeHolder\">Tab Size:\n" +
-                    "<select id=\"TabSize\" onChange=\"TabSizeChanged()\">\n" +
-                      "<option value=\"1\">1</option>\n" +
-                      "<option value=\"2\">2</option>\n" +
-                      "<option value=\"3\" selected=\"true\">3</option>\n" +
-                      "<option value=\"4\">4</option>\n" +
-                      "<option value=\"5\">5</option>\n" +
-                      "<option value=\"6\">6</option>\n" + 
-                    "</select>\n" +
-                  "</span>&nbsp;&nbsp;\n" +
-                  "<span id=\"CollapsibleViewHolder\" >\n" +
-                      "<label for=\"CollapsibleView\">\n" +
-                        "<input type=\"checkbox\" id=\"CollapsibleView\" onClick=\"CollapsibleViewClicked()\" checked/>Collapsible View\n" +
-                      "</label>\n" +
-                  "</span>&nbsp;&nbsp;\n" +
-                  "<span id=\"ViewMetaHolder\" >\n" +
-                      "<label for=\"ViewMeta\">\n" +
-                        "<input type=\"checkbox\" id=\"ViewMeta\" onClick=\"ViewMetaClicked()\"/>View Meta\n" +
-                      "</label>\n" +
-                  "</span>&nbsp;&nbsp;\n" +
-                  "<span id=\"CollapsibleViewDetail\">Expand:\n" +
-                    "<select id=\"CollapseLevel\" onChange=\"CollapseLevel()\">\n" +
-                      "<option value=\"-1\">none</option>\n" +
-                      "<option value=\"0\" selected=\"true\">all</option>\n" +
-                      "<option value=\"1\">1</option>\n" +
-                      "<option value=\"2\">2</option>\n" +
-                      "<option value=\"3\">3</option>\n" +
-                      "<option value=\"4\">4</option>\n" +
-                      "<option value=\"5\">5</option>\n" +
-                      "<option value=\"6\">6</option>\n" + 
-                      "<option value=\"7\">7</option>\n" + 
-                      "<option value=\"8\">8</option>\n" + 
-                      "<option value=\"9\">9</option>\n" + 
-                      "<option value=\"10\">10</option>\n" + 
-                      "<option value=\"11\">11</option>\n" + 
-                      "<option value=\"12\">12</option>\n" + 
-                      "<option value=\"12\">13</option>\n" + 
-                      "<option value=\"14\">14</option>\n" + 
-                      "<option value=\"15\">15</option>\n" + 
-                      "<option value=\"16\">16</option>\n" + 
-                    "</select>\n" +
-                  "</span>\n" +
-                "</div>\n" +
-                "<div id=\"zFormattedJsonLabel\" class=\"zFormattedJsonLabel\"></div>\n" +
-                "<form id=\"InvisibleLink\" target=\"_blank\">\n" +
-                  "<input type=\"hidden\" id=\"InvisibleLinkUrl\" name=\"json\" value=\"\" />\n" +
-                "</form>\n" +
-                "</body></html>";
-   // console.log( HTMLstring );
-      myDocument.write( HTMLstring );
- //   myWindow.document.getElementById("RawJson").value = g_JsonNewLabelA; // jsonStringToJsonObject( g_JsonNewLabel );
- //   var rawJson = myDocument.getElementById("RawJson")
- //   rawJason.outerHTML = jsonStringToJsonObject( g_JsonNewLabel );
-      myDocument.close();
- /*   myWindow.onload = function() {
-         alert( "On Load" );
-      }; */
-      return myWindow;
    }
 
    $("#ReturnUpdateLLD").click( function() {
@@ -2590,7 +2502,9 @@ public class FileServer {
             g_ViewNameMap.setNameForView( g_jsonLabel2, "dks2_viewname" );
          // var cursorsLabel = g_ViewNameMap.getViewByName( "dks1_viewname" );
          // console.log( "getViewByName found: " + cursorsLabel );
-            var myWindow = openWin();
+            var myWindow = openDebugWin();
+         // var arrHeader = [ "NickName, ProperName, Description" ];
+         // var myWindow = openSortWin( "Nick Names", "viewName", "entityName", arrHeader, null );
          }
       } else if ( e.keyCode === 46 ) { // Delete keydown
       // alert( "Document Delete Key Pressed" );

@@ -113,9 +113,9 @@ public int DoInputMapping( HttpServletRequest request,
                nRelPos = java.lang.Integer.parseInt( strMapValue );
                mMasLC.cursor( "M_UsageType" ).setPosition( nRelPos, "MasterLabelContent" );
             }
-         }  // checkExistenceofEntity
       }
 
+         }  // checkExistenceofEntity
       // Grid: Grid2
       iTableRowCnt = 0;
 

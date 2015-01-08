@@ -586,22 +586,10 @@ else
 <script language="JavaScript" type="text/javascript" src="./genjs/wSystemListPrimaryRegistrants.js"></script>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
-  
+
   <style>
   body {  // <link rel="stylesheet" href="/resources/demos/style.css">
      font-size: 62.5%;
@@ -616,19 +604,19 @@ else
   $(function() {
     $( "#SortableGridPrimaryRegistrant" ).sortable();
     $( "#SortableGridPrimaryRegistrant" ).disableSelection();
-    
-    
+
+
 var fixHelperModified = function(e, tr) {
     var $originals = tr.children();
     var $helper = tr.clone();
     $helper.children().each(function(index) {
-        $(this).width($originals.eq(index).width())
+        $(this).width($originals.eq(index).width());
     });
     return $helper;
 },
     updateIndex = function(e, ui) {
         $('td.index', ui.item.parent()).each(function (k) {
-            $(this).html(k + 1);
+         // $(this).html(k + 1);
             if ( k % 2 ) {
             // console.log( "adding class odd at: " + k );
                $(this).closest("tr").addClass( "odd" );
@@ -644,23 +632,9 @@ $("#SortableGridPrimaryRegistrant tbody").sortable({
     helper: fixHelperModified,
     stop: updateIndex
 }).disableSelection();    
-    
+
   });
   </script>
-  
-  
-  
-  
-  
-  
-
-
-
-
-
-
-
-
 
 
 </head>
@@ -704,28 +678,10 @@ $("#SortableGridPrimaryRegistrant tbody").sortable({
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
-   View DOMAINT = null;
-   View DOMAINTLST = null;
-   View lMLCATgt = null;
-   View lPersonLST = null;
+
    View lPrimReg = null;
-   View lUserLST = null;
-   View mCurrentUser = null;
-   View mEPA = null;
-   View mOrganiz = null;
-   View mUser = null;
-   View wWebXfer = null;
-   String strRadioGroupValue = "";
-   String strComboCurrentValue = "";
-   String strAutoComboBoxExternalValue = "";
-   String strComboSelectedValue = "0";
-   String strErrorColor = "";
    String strErrorMapValue = "";
-   String strTextDisplayValue = "";
-   String strTextURL_Value = "";
    String strSolicitSave = "";
-   String strTblOutput = "";
-   int    ComboCount = 0;
    int    iTableRowCnt = 0;
    CursorResult csrRC2 = null;
    nRC = 0;
@@ -807,7 +763,7 @@ $("#SortableGridPrimaryRegistrant tbody").sortable({
    <input name="zPopupWindowSZX" id="zPopupWindowSZX" type="hidden" value="<%=strPopupWindowSZX%>">
    <input name="zPopupWindowSZY" id="zPopupWindowSZY" type="hidden" value="<%=strPopupWindowSZY%>">
    <input name="zErrorFlag" id="zErrorFlag" type="hidden" value="<%=strErrorFlag%>">
-   <input name="zTimeout" id="zTimeout" type="hidden" value="<%=nTimeout%>">
+   <input name="zTimeout" id="zTimeout" type="hidden" value="<%=300%>">
    <input name="zSolicitSave" id="zSolicitSave" type="hidden" value="<%=strSolicitSave%>">
 
    <div name="ShowVMLError" id="ShowVMLError" class="ShowVMLError">
@@ -865,8 +821,6 @@ $("#SortableGridPrimaryRegistrant tbody").sortable({
    <th>Name</th>
    <th>Login</th>
    <th>Description</th>
-   <th>Detail</th>
-   <th>Delete</th>
 
 </tr></thead>
 
@@ -887,8 +841,6 @@ try
       String strGEPrimaryRegistrantName;
       String strGEPrimaryRegistrantLoginName;
       String strGEPrimaryRegistrantDescription;
-      String strBMBUpdatePrimaryRegistrantDetail;
-      String strBMBAdminDeletePrimaryRegistrant;
       
       View vGridPrimaryRegistrant;
       vGridPrimaryRegistrant = lPrimReg.newView( );
@@ -949,8 +901,6 @@ try
    <td nowrap><a href="#" id="GEPrimaryRegistrantName::<%=strEntityKey%>"><%=strGEPrimaryRegistrantName%></a></td>
    <td nowrap><a href="#" id="GEPrimaryRegistrantLoginName::<%=strEntityKey%>"><%=strGEPrimaryRegistrantLoginName%></a></td>
    <td nowrap><a href="#" id="GEPrimaryRegistrantDescription::<%=strEntityKey%>"><%=strGEPrimaryRegistrantDescription%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdatePrimaryRegistrantDetail" id="BMBUpdatePrimaryRegistrantDetail::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Detail"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBAdminDeletePrimaryRegistrant" id="BMBAdminDeletePrimaryRegistrant::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
 
 </tr>
 

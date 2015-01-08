@@ -73,9 +73,9 @@ public int DoInputMapping( HttpServletRequest request,
                nRelPos = java.lang.Integer.parseInt( strMapValue );
                mUser.cursor( "User" ).setPosition( nRelPos, "" );
             }
-         }  // checkExistenceofEntity
       }
 
+         }  // checkExistenceofEntity
    }
 
    if ( webMapping == true )

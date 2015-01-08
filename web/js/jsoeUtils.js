@@ -156,6 +156,107 @@ function buildTab( indent, file ) {
    return tab;
 }
 
+// sort attempting to minimize moves.
+var arrayOriginal = [ "A", "B", "C", "D", "E", "F", "G" ];
+var arrayOrderIndex0 = [ 1, 2, 4, 3, 5, 6, 0 ];
+var arrayOriginal0 = [ "A", "B", "C", "D", "E", "F", "G" ];
+var arrayOrderIndex1 = [ 6, 0, 1, 2, 3, 4, 5 ];
+var arrayOriginal1 = [ "A", "B", "C", "D", "E", "F", "G" ];
+var arrayOrderIndex2 = [ 1, 2, 3, 4, 5, 6, 0 ];
+var arrayOriginal2 = [ "A", "B", "C", "D", "E", "F", "G" ];
+var arrayOrderIndex3 = [ 0, 1, 3, 2, 4, 6, 5 ];
+var arrayOriginal3 = [ "A", "B", "C", "D", "E", "F", "G" ];
+
+function moveItem( oldIdx, newIdx, arr ) {
+   var n = arr.length;
+   if ( oldIdx >= 0 && oldIdx < n && newIdx >= 0 && newIdx < n ) {
+      var k;
+   // var item = arr.slice( oldIdx, 1 ); // to remove one element without leaving "holes" in the array:
+
+   // delete arr[oldIdx]; // changes the element to undefined ... we want the hole ... will fill it back up.
+      var item = arr[oldIdx];
+      if ( oldIdx < newIdx ) {
+         for ( k = oldIdx; k < newIdx; k++ ) {
+            arr[k] = arr[k + 1];
+         }
+      } else {
+         for ( k = oldIdx; k > newIdx; k-- ) {
+            arr[k] = arr[k - 1];
+         }
+      }
+      arr[newIdx] = item;
+   }
+};
+
+function orderByNewIndex( arrIdx, arrayOrig ) {
+   var swaps = 0;
+   var n = arrIdx.length;
+   var arrShift = []; // new Array( arrIdx.length );
+   var shiftMax = 0;
+   var shifts;
+   var k, j;
+   console.log( "Order index: " + arrIdx[0] + ", " +
+                                    arrIdx[1] + ", " +
+                                    arrIdx[2] + ", " +
+                                    arrIdx[3] + ", " +
+                                    arrIdx[4] + ", " +
+                                    arrIdx[5] + ", " +
+                                    arrIdx[6] );
+   console.log( "Original array: " + arrayOrig[0] + ", " +
+                                       arrayOrig[1] + ", " +
+                                       arrayOrig[2] + ", " +
+                                       arrayOrig[3] + ", " +
+                                       arrayOrig[4] + ", " +
+                                       arrayOrig[5] + ", " +
+                                       arrayOrig[6] );
+   for ( k = 0; k < n - 1; k++ ) {
+      // find the number of times we have shifted the current index because of a move
+      shifts = 0;
+      for ( j = 0; j < shiftMax; j++ ) {
+         if ( k < arrShift[j] ) {
+            shifts++;
+         }
+      }
+      // var arrayOrderIndex = [ 0, 1, 3, 2, 4, 6, 5 ];
+      if ( arrIdx[k] + shifts > k ) {
+         if ( arrIdx[k] + shifts >= 0 && arrIdx[k] + shifts < n ) {
+            if ( arrIdx[k] + shifts > k + 1 ) {
+               arrShift[shiftMax++] = arrIdx[k];
+            }
+            moveItem( arrIdx[k] + shifts, k, arrayOrig );
+            console.log( "After move (with shift: " + shifts + ") from: " + arrIdx[k] + " to: " + k + "   " +
+                                                arrayOrig[0] + ", " +
+                                                arrayOrig[1] + ", " +
+                                                arrayOrig[2] + ", " +
+                                                arrayOrig[3] + ", " +
+                                                arrayOrig[4] + ", " +
+                                                arrayOrig[5] + ", " +
+                                                arrayOrig[6] );
+            swaps++;
+         } else {
+            break; // error???
+         }
+      }
+   }
+   console.log( "Swaps: " + swaps + "  final array: " +
+                        arrayOrig[0] + ", " +
+                        arrayOrig[1] + ", " +
+                        arrayOrig[2] + ", " +
+                        arrayOrig[3] + ", " +
+                        arrayOrig[4] + ", " +
+                        arrayOrig[5] + ", " +
+                        arrayOrig[6] );
+   
+   console.log( "Expected final array: " +
+                        arrayOriginal[arrIdx[0]] + ", " +
+                        arrayOriginal[arrIdx[1]] + ", " +
+                        arrayOriginal[arrIdx[2]] + ", " +
+                        arrayOriginal[arrIdx[3]] + ", " +
+                        arrayOriginal[arrIdx[4]] + ", " +
+                        arrayOriginal[arrIdx[5]] + ", " +
+                        arrayOriginal[arrIdx[6]] );
+}
+
 // SimpleHashMap - superclass
 var SimpleHashMap = function( keyType, valueType ) {
    this._db = [];
@@ -261,140 +362,6 @@ SimpleHashMap.prototype.swapItems = function( idx1, idx2 ) {
       return true;
    } else {
       return false;
-   }
-};
-
-/* Selection sort pseudo code
-for i = 1:n,
-    k = i
-    for j = i+1:n,
-     if a[j] < a[k],
-      k = j
-    → invariant: a[k] smallest of a[i..n]
-      swap a[i,k]
-    → invariant: a[1..i] in final position
-*/
-
-var arrayOriginal = [ "A", "B", "C", "D", "E", "F", "G" ];
-var arrayOrderIndex0 = [ 1, 2, 4, 3, 5, 6, 0 ];
-var arrayOriginal0 = [ "A", "B", "C", "D", "E", "F", "G" ];
-var arrayOrderIndex1 = [ 6, 0, 1, 2, 3, 4, 5 ];
-var arrayOriginal1 = [ "A", "B", "C", "D", "E", "F", "G" ];
-var arrayOrderIndex2 = [ 1, 2, 3, 4, 5, 6, 0 ];
-var arrayOriginal2 = [ "A", "B", "C", "D", "E", "F", "G" ];
-var arrayOrderIndex3 = [ 0, 1, 3, 2, 4, 6, 5 ];
-var arrayOriginal3 = [ "A", "B", "C", "D", "E", "F", "G" ];
-
-SimpleHashMap.prototype.move = function( oldIdx, newIdx, arr ) {
-   var n = arr.length;
-   if ( oldIdx >= 0 && oldIdx < n && newIdx >= 0 && newIdx < n ) {
-      var k;
-   // var item = arr.slice( oldIdx, 1 ); // to remove one element without leaving "holes" in the array:
-
-   // delete arr[oldIdx]; // changes the element to undefined ... we want the hole ... will fill it back up.
-      var item = arr[oldIdx];
-      if ( oldIdx < newIdx ) {
-         for ( k = oldIdx; k < newIdx; k++ ) {
-            arr[k] = arr[k + 1];
-         }
-      } else {
-         for ( k = oldIdx; k > newIdx; k-- ) {
-            arr[k] = arr[k - 1];
-         }
-      }
-      arr[newIdx] = item;
-   }
-};
-
-SimpleHashMap.prototype.orderByNewIndex = function( arrIdx, arrayOrig ) {
-   var swaps = 0;
-   var n = arrIdx.length;
-   var arrShift = []; // new Array( arrIdx.length );
-   var shiftMax = 0;
-   var shifts;
-   var k, j;
-   console.log( "Order index: " + arrIdx[0] + ", " +
-                                    arrIdx[1] + ", " +
-                                    arrIdx[2] + ", " +
-                                    arrIdx[3] + ", " +
-                                    arrIdx[4] + ", " +
-                                    arrIdx[5] + ", " +
-                                    arrIdx[6] );
-   console.log( "Original array: " + arrayOrig[0] + ", " +
-                                       arrayOrig[1] + ", " +
-                                       arrayOrig[2] + ", " +
-                                       arrayOrig[3] + ", " +
-                                       arrayOrig[4] + ", " +
-                                       arrayOrig[5] + ", " +
-                                       arrayOrig[6] );
-   for ( k = 0; k < n - 1; k++ ) {
-      // find the number of times we have shifted the current index because of a move
-      shifts = 0;
-      for ( j = 0; j < shiftMax; j++ ) {
-         if ( k < arrShift[j] ) {
-            shifts++;
-         }
-      }
-      // var arrayOrderIndex = [ 0, 1, 3, 2, 4, 6, 5 ];
-      if ( arrIdx[k] + shifts > k ) {
-         if ( arrIdx[k] + shifts >= 0 && arrIdx[k] + shifts < n ) {
-            if ( arrIdx[k] + shifts > k + 1 ) {
-               arrShift[shiftMax++] = arrIdx[k];
-            }
-            move( arrIdx[k] + shifts, k, arrayOrig );
-            console.log( "After move (with shift: " + shifts + ") from: " + arrIdx[k] + " to: " + k + "   " +
-                                                arrayOrig[0] + ", " +
-                                                arrayOrig[1] + ", " +
-                                                arrayOrig[2] + ", " +
-                                                arrayOrig[3] + ", " +
-                                                arrayOrig[4] + ", " +
-                                                arrayOrig[5] + ", " +
-                                                arrayOrig[6] );
-            swaps++;
-         } else {
-            break; // error???
-         }
-      }
-   }
-   console.log( "Swaps: " + swaps + "  final array: " +
-                        arrayOrig[0] + ", " +
-                        arrayOrig[1] + ", " +
-                        arrayOrig[2] + ", " +
-                        arrayOrig[3] + ", " +
-                        arrayOrig[4] + ", " +
-                        arrayOrig[5] + ", " +
-                        arrayOrig[6] );
-   
-   console.log( "Expected final array: " +
-                        arrayOriginal[arrIdx[0]] + ", " +
-                        arrayOriginal[arrIdx[1]] + ", " +
-                        arrayOriginal[arrIdx[2]] + ", " +
-                        arrayOriginal[arrIdx[3]] + ", " +
-                        arrayOriginal[arrIdx[4]] + ", " +
-                        arrayOriginal[arrIdx[5]] + ", " +
-                        arrayOriginal[arrIdx[6]] );
-};
-
-SimpleHashMap.prototype.orderByNewIndexDeprecated = function( arrIdx, arrayOrig ) {
-   var i, j, k;
-   var swaps = 0;
-   var n = arrIdx.length;
-   for ( i = 0; i < n; i++ ) {
-      k = i;
-      for ( j = i + 1; j < n; j++ ) {
-         if ( arrIdx[j] < arrIdx[k] ) {
-            k = j; // → invariant: a[k] smallest of a[i..n]
-            swaps++;
-         // swapItems( i, k ); //→ invariant: a[1..i] in final position
-            var temp = arrayOrig[i];
-            arrayOrig[i] = arrayOrig[k];
-            arrayOrig[k] = temp;
-         }
-      }
-   }
-   console.log( "Swaps: " + swaps );
-   for ( i = 0; i < n; i++ ) {
-      console.log( (i + 1) + "==> " + arrayOrig[i] );
    }
 };
 
@@ -597,6 +564,276 @@ function testJsonHashMap() {
    a.iterate( function( key, value ) { console.log( "a[" + key + "]=" + value ); } );
 }
 */
+
+function openDebugWin()
+{
+// var myDebugWindow = window.open();
+// var myDebugWindow = window.open("","myDebugWindow","height=100,width=200");
+   var myDebugWindow = window.open( "xyz", "_blank", "toolbar=yes, menubar=yes scrollbars=yes, resizable=yes, top=300, left=600, height=800, width=1000" );
+   var myDocument = myDebugWindow.document;
+   var HTMLstring="<html>\n" +
+      "<head>\n<title>Zeidon View JSON</title>\n" +
+      "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/json.css\">\n" +
+      "<script src=\"http://code.jquery.com/jquery-1.10.2.min.js\"></script>\n" +
+      "<script src=\"http://code.jquery.com/ui/1.10.3/jquery-ui.js\"></script>\n" +
+      "<script src=\"js/jquery.blockUI.js\"></script>\n" +
+      "<script src=\"js/jsoeUtils.js\"></script>\n" +
+      "<script src=\"js/jsoe.js\"></script>\n" +
+      "<script src=\"js/jsoeObjectBrowser.js\"></script>\n" +
+      "<script>\n" +
+         "$(document).ready( function() { // Once the page has loaded and is ready, the alert below will fire.\n" +
+            "loadViewNames();\n" +
+            "alert('Your page has loaded - and Now this alert appears!');\n" +
+         "});\n" +
+      "</script>\n" +
+      "</head>\n" +
+      "<body onload=\"loadViewNames()\">\n" +
+      "<textarea id=\"RawJson\" style=\"display:none;\"></textarea>\n" +
+             "<div id=\"ControlsRow\">\n" +
+               "<input type=\"Button\" value=\"Format\" onClick=\"Process()\"/>\n" +
+               "<span id=\"ViewNamesHolder\">View Names:\n" +
+                 "<select id=\"ViewNames\" onChange=\"ViewNameChanged()\">\n" +
+                 "</select>\n" +
+               "</span>&nbsp;&nbsp;\n" +
+               "<span id=\"TabSizeHolder\">Tab Size:\n" +
+                 "<select id=\"TabSize\" onChange=\"TabSizeChanged()\">\n" +
+                   "<option value=\"1\">1</option>\n" +
+                   "<option value=\"2\">2</option>\n" +
+                   "<option value=\"3\" selected=\"true\">3</option>\n" +
+                   "<option value=\"4\">4</option>\n" +
+                   "<option value=\"5\">5</option>\n" +
+                   "<option value=\"6\">6</option>\n" + 
+                 "</select>\n" +
+               "</span>&nbsp;&nbsp;\n" +
+               "<span id=\"CollapsibleViewHolder\" >\n" +
+                   "<label for=\"CollapsibleView\">\n" +
+                     "<input type=\"checkbox\" id=\"CollapsibleView\" onClick=\"CollapsibleViewClicked()\" checked/>Collapsible View\n" +
+                   "</label>\n" +
+               "</span>&nbsp;&nbsp;\n" +
+               "<span id=\"ViewMetaHolder\" >\n" +
+                   "<label for=\"ViewMeta\">\n" +
+                     "<input type=\"checkbox\" id=\"ViewMeta\" onClick=\"ViewMetaClicked()\"/>View Meta\n" +
+                   "</label>\n" +
+               "</span>&nbsp;&nbsp;\n" +
+               "<span id=\"CollapsibleViewDetail\">Expand:\n" +
+                 "<select id=\"CollapseLevel\" onChange=\"CollapseLevel()\">\n" +
+                   "<option value=\"-1\">none</option>\n" +
+                   "<option value=\"0\" selected=\"true\">all</option>\n" +
+                   "<option value=\"1\">1</option>\n" +
+                   "<option value=\"2\">2</option>\n" +
+                   "<option value=\"3\">3</option>\n" +
+                   "<option value=\"4\">4</option>\n" +
+                   "<option value=\"5\">5</option>\n" +
+                   "<option value=\"6\">6</option>\n" + 
+                   "<option value=\"7\">7</option>\n" + 
+                   "<option value=\"8\">8</option>\n" + 
+                   "<option value=\"9\">9</option>\n" + 
+                   "<option value=\"10\">10</option>\n" + 
+                   "<option value=\"11\">11</option>\n" + 
+                   "<option value=\"12\">12</option>\n" + 
+                   "<option value=\"12\">13</option>\n" + 
+                   "<option value=\"14\">14</option>\n" + 
+                   "<option value=\"15\">15</option>\n" + 
+                   "<option value=\"16\">16</option>\n" + 
+                 "</select>\n" +
+               "</span>\n" +
+             "</div>\n" +
+             "<div id=\"zFormattedJsonLabel\" class=\"zFormattedJsonLabel\"></div>\n" +
+             "<form id=\"InvisibleLink\" target=\"_blank\">\n" +
+               "<input type=\"hidden\" id=\"InvisibleLinkUrl\" name=\"json\" value=\"\" />\n" +
+             "</form>\n" +
+             "</body></html>";
+// console.log( HTMLstring );
+   myDocument.write( HTMLstring );
+//   myDebugWindow.document.getElementById("RawJson").value = g_JsonNewLabelA; // jsonStringToJsonObject( g_JsonNewLabel );
+//   var rawJson = myDocument.getElementById("RawJson")
+//   rawJason.outerHTML = jsonStringToJsonObject( g_JsonNewLabel );
+   myDocument.close();
+/*   myDebugWindow.onload = function() {
+      alert( "On Load" );
+   }; */
+   return myDebugWindow;
+}
+
+function openSortWin( title, viewName, entityName, arrColumnTitles, arrAttributes )
+{
+   var k, row, rc;
+   var strOdd;
+   if ( title === "" ) {
+      title = "Drag Sort";
+   }
+   var table = "<table cols=" + arrColumnTitles.length + " style=\"\" id=\"DraggableSortTable\">\n" +
+               "<thead bgcolor=green><tr>\n<th>Order</th>\n";
+   for ( k = 0; k < arrColumnTitles.length; k++ ) {
+      table += "<th>" + arrColumnTitles[k] + "</th>\n";
+   }
+   table += "</tr></thead><tbody>";
+// var view = g_ViewNameMap.getViewByName( viewName );
+// var entityCursor = cursors.get( entityName );
+// rc = entityCursor.setFirst( entityName );
+   row = 0;
+// while ( rc >= 0 ) {
+      strOdd = (row % 2) != 0 ? " class='odd'" : "";
+      table += "<tr" + strOdd + ">\n";
+   // for ( k = 0; k < arrAttributes.length; k++ ) {
+   //    table += "<th>" + arrColumnTitles[k] + "</th>\n";
+   // }
+         table += "<td class=\"index\" nowrap><a href=\"#\" id=\"Order::" + row + "\">" + row + "</a></td>\n";
+         table += "<td nowrap><a href=\"#\" id=\"Name::" + row + "\">Tom</a></td>\n";
+         table += "<td nowrap><a href=\"#\" id=\"LoginName::" + row + "\">thomas</a></td>\n";
+         table += "<td nowrap><a href=\"#\" id=\"Description::" + row + "\">doubting</a></td>\n";
+      table += "</tr>\n";
+      row++;
+      strOdd = (row % 2) != 0 ? " class='odd'" : "";
+      table += "<tr" + strOdd + ">\n";
+   // for ( k = 0; k < arrAttributes.length; k++ ) {
+   //    table += "<th>" + arrColumnTitles[k] + "</th>\n";
+   // }
+         table += "<td class=\"index\" nowrap><a href=\"#\" id=\"Order::" + row + "\">" + row + "</a></td>\n";
+         table += "<td nowrap><a href=\"#\" id=\"Name::" + row + "\">Dick</a></td>\n";
+         table += "<td nowrap><a href=\"#\" id=\"LoginName::" + row + "\">richard</a></td>\n";
+         table += "<td nowrap><a href=\"#\" id=\"Description::" + row + "\">lionhearted</a></td>\n";
+      table += "</tr>\n";
+      row++;
+      strOdd = (row % 2) != 0 ? " class='odd'" : "";
+      table += "<tr" + strOdd + ">\n";
+   // for ( k = 0; k < arrAttributes.length; k++ ) {
+   //    table += "<th>" + arrColumnTitles[k] + "</th>\n";
+   // }
+         table += "<td class=\"index\" nowrap><a href=\"#\" id=\"Order::" + row + "\">" + row + "</a></td>\n";
+         table += "<td nowrap><a href=\"#\" id=\"Name::" + row + "\">Harry</a></td>\n";
+         table += "<td nowrap><a href=\"#\" id=\"LoginName::" + row + "\">harold</a></td>\n";
+         table += "<td nowrap><a href=\"#\" id=\"Description::" + row + "\">reached the top</a></td>\n";
+      table += "</tr>\n";
+// }
+   table += "</tbody>\n";
+   table += "</table>\n";
+
+   var HTMLstring =
+   "<html>\n" +
+      "<head>\n<title>" + title + "</title>\n" +
+      "<link href=\"./css/zeidon_allrelative.css\" rel=\"stylesheet\" type=\"text/css\">\n" +
+      "<link href=\"./css/zeidon.css\" rel=\"stylesheet\" type=\"text/css\">\n" +
+      "<link href=\"./css/main.css\" rel=\"stylesheet\" type=\"text/css\">\n" +
+      "<script language=\"JavaScript\" type=\"text/javascript\" src=\"./js/common.js\"></script>\n" +
+      "<script language=\"JavaScript\" type=\"text/javascript\" src=\"./js/css.js\"></script>\n" +
+      "<script language=\"JavaScript\" type=\"text/javascript\" src=\"./js/validations.js\"></script>\n" +
+      "<script language=\"JavaScript\" type=\"text/javascript\" src=\"./js/scw.js\"></script>\n" +
+      "<script language=\"JavaScript\" type=\"text/javascript\" src=\"./js/animatedcollapse.js\"></script>\n" +
+      "<script language=\"JavaScript\" type=\"text/javascript\" src=\"./js/md5.js\"></script>\n" +
+
+      "<style>\n" +
+      "body {  // <link rel=\"stylesheet\" href=\"/resources/demos/style.css\">\n" +
+      "   font-size: 62.5%;\n" +
+      "   font-family: \"Trebuchet MS\", \"Arial\", \"Helvetica\", \"Verdana\", \"sans-serif\";\n" +
+      "}\n" +
+      "//#DraggableSortTable { list-style-type: none; margin: 0; padding: 0; width: 60%; }\n" +
+      "//#DraggableSortTable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }\n" +
+      "//#DraggableSortTable li span { position: absolute; margin-left: -1.3em; }\n" +
+      "<script src=\"http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css\"></script>\n" +
+      "</style>\n" +
+      "<script src=\"http://code.jquery.com/jquery-1.10.2.min.js\"></script>\n" +
+      "<script src=\"http://code.jquery.com/ui/1.11.0/jquery-ui.js\"></script>\n" +
+      "<script src=\"js/jquery.blockUI.js\"></script>\n" +
+      "<script src=\"js/jsoeUtils.js\"></script>\n" +
+      "<script src=\"js/jsoe.js\"></script>\n" +
+      "<script>\n" +
+         "function loadSortableList() {\n" +
+            "alert('loadSortableList has fired!');\n" +
+         "}\n" +
+         "function SaveOrder() { alert( 'Save Order' ); };\n" +
+         "function CancelOrder() { alert( 'Cancel Order' ); }\n" +
+      "</script>\n" +
+      "<script>\n" +
+         "$(document).ready( function() { // Once the page has loaded and is ready, the alert below will fire.\n" +
+            "loadSortableList();\n" +
+            "alert('Your page has loaded - and Now this alert appears!');\n" +
+         "});\n" +
+         
+      "</script>\n" +
+      "<script>\n" +
+
+         "$(function() {\n" +
+            "$( \"#DraggableSortTable\" ).sortable();\n" +
+            "$( \"#DraggableSortTable\" ).disableSelection();\n" +
+
+            "var fixHelperModified = function(e, tr) {\n" +
+               "var $originals = tr.children();\n" +
+               "var $helper = tr.clone();\n" +
+               "$helper.children().each(function(index) {\n" +
+                  "$(this).width($originals.eq(index).width());\n" +
+               "});\n" +
+               "return $helper;\n" +
+            "},\n" +
+            "updateIndex = function(e, ui) {\n" +
+               "$('td.index', ui.item.parent()).each(function (k) {\n" +
+                  "// $(this).html(k + 1);\n" +
+                  "if ( k % 2 ) {\n" +
+                     "// console.log( \"adding class odd at: \" + k );\n" +
+                     "$(this).closest(\"tr\").addClass( \"odd\" );\n" +
+                  "} else {\n" +
+                     "// console.log( \"removing class odd at: \" + k );\n" +
+                     "$(this).closest(\"tr\").removeClass( \"odd\" );\n" +
+                  "}\n" +
+               "});\n" +
+            "};\n" +
+
+            "$(\"#DraggableSortTable tbody\").sortable({\n" +
+               "helper: fixHelperModified,\n" +
+               "stop: updateIndex\n" +
+            "}).disableSelection();    \n" +
+
+         "});\n" +
+      "</script>\n" +
+      "</head>\n" +
+      "<body onload=\"loadSortableList()\">\n" +
+         "<div id=\"water\"></div>\n" +
+         "<div id=\"maincontent\">\n" +
+         "<div id=\"contentnosidemenu\">\n" +
+
+         "<textarea id=\"SortableList\" style=\"display:none;\"></textarea>\n" +
+         "<div id=\"ControlsRow\">\n" +
+
+         "<!-- This is added as a line spacer -->\n" +
+         "<div style=\"height:12px;width:100px;\"></div>\n" +
+         "<div>  <!-- Beginning of a new line -->\n" +
+         "</div>  <!-- End of a new line -->\n" +
+         
+         "<div style=\"clear:both;\"></div>  <!-- Moving to a new line, so do a clear -->\n" +
+            "<input type=\"Button\" value=\"Save Order\" onClick=\"SaveOrder()\"/>\n" +
+            "<input type=\"Button\" value=\"Cancel\" onClick=\"CancelOrder()\"/>\n" +
+         "</div>\n" +
+
+         "<!-- This is added as a line spacer -->\n" +
+         "<div style=\"height:20px;width:100px;\"></div>\n" +
+         "<div>  <!-- Beginning of a new line -->\n" +
+         "</div>  <!-- End of a new line -->\n" +
+         "<div style=\"clear:both;\"></div>  <!-- Moving to a new line, so do a clear -->\n" +
+
+         "<div id=\"zDontKnowWhyThisIsHere\" class=\"zDontKnowWhyThisIsHere\"></div>\n" +
+         "<form id=\"InvisibleLink\" target=\"_blank\">\n" +
+            table + 
+         "</form>\n" +
+         "</div>   <!-- This is the end tag for the div 'contentnosidemenu' -->\n" +
+         "</div>   <!-- This is the end tag for the div 'maincontent' -->\n" +
+      "</body>\n" +
+   "</html>";
+   console.log( HTMLstring );
+   
+// var mySortWindow = window.open();
+// var mySortWindow = window.open("","mySortWindow","height=100,width=200");
+   var mySortWindow = window.open( "xyz", "_self", "toolbar=yes, menubar=yes scrollbars=yes, resizable=yes, top=300, left=600, height=800, width=1000" );
+   var myDocument = mySortWindow.document;
+   myDocument.write( HTMLstring );
+// mySortWindow.document.getElementById("RawJson").value = g_JsonNewLabelA; // jsonStringToJsonObject( g_JsonNewLabel );
+// var rawJson = myDocument.getElementById("RawJson")
+// rawJason.outerHTML = jsonStringToJsonObject( g_JsonNewLabel );
+   myDocument.close();
+// mySortWindow.onload = function() {
+//   alert( "On Load" );
+// };
+   return mySortWindow;
+}
 
 function testJsonPath() {
    var jsonObject = jsonStringToJsonObject( g_JsonStore );

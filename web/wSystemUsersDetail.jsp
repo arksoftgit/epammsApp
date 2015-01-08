@@ -111,9 +111,9 @@ public int DoInputMapping( HttpServletRequest request,
                nRelPos = java.lang.Integer.parseInt( strMapValue );
                mUser.cursor( "UserGroup" ).setPosition( nRelPos, "" );
             }
-         }  // checkExistenceofEntity
       }
 
+         }  // checkExistenceofEntity
       // ComboBox: ComboBox1
       nRC = mUser.cursor( "User" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
