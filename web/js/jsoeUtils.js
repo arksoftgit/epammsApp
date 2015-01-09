@@ -246,7 +246,7 @@ function orderByNewIndex( arrIdx, arrayOrig ) {
                         arrayOrig[4] + ", " +
                         arrayOrig[5] + ", " +
                         arrayOrig[6] );
-   
+
    console.log( "Expected final array: " +
                         arrayOriginal[arrIdx[0]] + ", " +
                         arrayOriginal[arrIdx[1]] + ", " +
@@ -675,7 +675,7 @@ function openDebugWin()
                    "<option value=\"3\" selected=\"true\">3</option>\n" +
                    "<option value=\"4\">4</option>\n" +
                    "<option value=\"5\">5</option>\n" +
-                   "<option value=\"6\">6</option>\n" + 
+                   "<option value=\"6\">6</option>\n" +
                  "</select>\n" +
                "</span>&nbsp;&nbsp;\n" +
                "<span id=\"CollapsibleViewHolder\" >\n" +
@@ -697,17 +697,17 @@ function openDebugWin()
                    "<option value=\"3\">3</option>\n" +
                    "<option value=\"4\">4</option>\n" +
                    "<option value=\"5\">5</option>\n" +
-                   "<option value=\"6\">6</option>\n" + 
-                   "<option value=\"7\">7</option>\n" + 
-                   "<option value=\"8\">8</option>\n" + 
-                   "<option value=\"9\">9</option>\n" + 
-                   "<option value=\"10\">10</option>\n" + 
-                   "<option value=\"11\">11</option>\n" + 
-                   "<option value=\"12\">12</option>\n" + 
-                   "<option value=\"12\">13</option>\n" + 
-                   "<option value=\"14\">14</option>\n" + 
-                   "<option value=\"15\">15</option>\n" + 
-                   "<option value=\"16\">16</option>\n" + 
+                   "<option value=\"6\">6</option>\n" +
+                   "<option value=\"7\">7</option>\n" +
+                   "<option value=\"8\">8</option>\n" +
+                   "<option value=\"9\">9</option>\n" +
+                   "<option value=\"10\">10</option>\n" +
+                   "<option value=\"11\">11</option>\n" +
+                   "<option value=\"12\">12</option>\n" +
+                   "<option value=\"12\">13</option>\n" +
+                   "<option value=\"14\">14</option>\n" +
+                   "<option value=\"15\">15</option>\n" +
+                   "<option value=\"16\">16</option>\n" +
                  "</select>\n" +
                "</span>\n" +
              "</div>\n" +
@@ -822,7 +822,7 @@ function openSortWin( title, viewName, entityName, arrColumnTitles, arrAttribute
             "loadSortableList();\n" +
             "alert('Your page has loaded - and Now this alert appears!');\n" +
          "});\n" +
-         
+
       "</script>\n" +
       "<script>\n" +
 
@@ -871,7 +871,7 @@ function openSortWin( title, viewName, entityName, arrColumnTitles, arrAttribute
          "<div style=\"height:12px;width:100px;\"></div>\n" +
          "<div>  <!-- Beginning of a new line -->\n" +
          "</div>  <!-- End of a new line -->\n" +
-         
+
          "<div style=\"clear:both;\"></div>  <!-- Moving to a new line, so do a clear -->\n" +
             "<input type=\"Button\" value=\"Save Order\" onClick=\"SaveOrder()\"/>\n" +
             "<input type=\"Button\" value=\"Cancel\" onClick=\"CancelOrder()\"/>\n" +
@@ -885,14 +885,14 @@ function openSortWin( title, viewName, entityName, arrColumnTitles, arrAttribute
 
          "<div id=\"zDontKnowWhyThisIsHere\" class=\"zDontKnowWhyThisIsHere\"></div>\n" +
          "<form id=\"InvisibleLink\" target=\"_blank\">\n" +
-            table + 
+            table +
          "</form>\n" +
          "</div>   <!-- This is the end tag for the div 'contentnosidemenu' -->\n" +
          "</div>   <!-- This is the end tag for the div 'maincontent' -->\n" +
       "</body>\n" +
    "</html>";
    console.log( HTMLstring );
-   
+
 // var mySortWindow = window.open();
 // var mySortWindow = window.open("","mySortWindow","height=100,width=200");
    var mySortWindow = window.open( "xyz", "_self", "toolbar=yes, menubar=yes scrollbars=yes, resizable=yes, top=300, left=600, height=800, width=1000" );
@@ -992,7 +992,7 @@ function buildSortWindow( title, arrColumnTitles, tableId )
             "loadSortableList();\n" +
             "alert('Your page has loaded - and Now this alert appears!');\n" +
          "});\n" +
-         
+
       "</script>\n" +
       "<script>\n" +
 
@@ -1041,7 +1041,7 @@ function buildSortWindow( title, arrColumnTitles, tableId )
          "<div style=\"height:12px;width:100px;\"></div>\n" +
          "<div>  <!-- Beginning of a new line -->\n" +
          "</div>  <!-- End of a new line -->\n" +
-         
+
          "<div style=\"clear:both;\"></div>  <!-- Moving to a new line, so do a clear -->\n" +
             "<input type=\"Button\" value=\"Save Order\" onClick=\"SaveOrder()\"/>\n" +
             "<input type=\"Button\" value=\"Cancel\" onClick=\"CancelOrder()\"/>\n" +
@@ -1055,14 +1055,14 @@ function buildSortWindow( title, arrColumnTitles, tableId )
 
          "<div id=\"zDontKnowWhyThisIsHere\" class=\"zDontKnowWhyThisIsHere\"></div>\n" +
          "<form id=\"InvisibleLink\" target=\"_blank\">\n" +
-            table + 
+            table +
          "</form>\n" +
          "</div>   <!-- This is the end tag for the div 'contentnosidemenu' -->\n" +
          "</div>   <!-- This is the end tag for the div 'maincontent' -->\n" +
       "</body>\n" +
    "</html>";
    console.log( HTMLstring );
-   
+
 // var mySortWindow = window.open();
 // var mySortWindow = window.open("","mySortWindow","height=100,width=200");
    var mySortWindow = window.open( "xyz", "_self", "toolbar=yes, menubar=yes scrollbars=yes, resizable=yes, top=300, left=600, height=800, width=1000" );
