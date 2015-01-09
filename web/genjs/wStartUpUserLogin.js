@@ -265,148 +265,15 @@ function AdministratorLogin( )
    }
 }
 
-var arrayOriginal = [ "A", "B", "C", "D", "E", "F", "G" ];
-var arrayOrderIndex0 = [ 1, 2, 4, 3, 5, 6, 0 ];
-var arrayOriginal0 = [ "A", "B", "C", "D", "E", "F", "G" ];
-var arrayOrderIndex1 = [ 6, 0, 1, 2, 3, 4, 5 ];
-var arrayOriginal1 = [ "A", "B", "C", "D", "E", "F", "G" ];
-var arrayOrderIndex2 = [ 1, 2, 3, 4, 5, 6, 0 ];
-var arrayOriginal2 = [ "A", "B", "C", "D", "E", "F", "G" ];
-var arrayOrderIndex3 = [ 0, 1, 3, 2, 4, 6, 5 ];
-var arrayOriginal3 = [ "A", "B", "C", "D", "E", "F", "G" ];
-
-function move( oldIdx, newIdx, arr ) {
-   var n = arr.length;
-   if ( oldIdx >= 0 && oldIdx < n && newIdx >= 0 && newIdx < n ) {
-      var k;
-   // var item = arr.slice( oldIdx, 1 ); // to remove one element without leaving "holes" in the array:
-
-   // delete arr[oldIdx]; // changes the element to undefined ... we want the hole ... will fill it back up.
-      var item = arr[oldIdx];
-      if ( oldIdx < newIdx ) {
-         for ( k = oldIdx; k < newIdx; k++ ) {
-            arr[k] = arr[k + 1];
-         }
-      } else {
-         for ( k = oldIdx; k > newIdx; k-- ) {
-            arr[k] = arr[k - 1];
-         }
-      }
-      arr[newIdx] = item;
-   }
-}
-
-function orderbyIndex( arrIdx, arrayOrig ) {
-   var swaps = 0;
-   var n = arrIdx.length;
-   var arrShift = []; // new Array( arrIdx.length );
-   var shiftMax = 0;
-   var shifts;
-   var k, j;
-   console.log( "Order index: " + arrIdx[0] + ", " +
-                                    arrIdx[1] + ", " +
-                                    arrIdx[2] + ", " +
-                                    arrIdx[3] + ", " +
-                                    arrIdx[4] + ", " +
-                                    arrIdx[5] + ", " +
-                                    arrIdx[6] );
-   console.log( "Original array: " + arrayOrig[0] + ", " +
-                                       arrayOrig[1] + ", " +
-                                       arrayOrig[2] + ", " +
-                                       arrayOrig[3] + ", " +
-                                       arrayOrig[4] + ", " +
-                                       arrayOrig[5] + ", " +
-                                       arrayOrig[6] );
-   for ( k = 0; k < n - 1; k++ ) {
-      // find the number of times we have shifted the current index because of a move
-      shifts = 0;
-      for ( j = 0; j < shiftMax; j++ ) {
-         if ( k < arrShift[j] ) {
-            shifts++;
-         }
-      }
-      // var arrayOrderIndex = [ 0, 1, 3, 2, 4, 6, 5 ];
-      if ( arrIdx[k] + shifts > k ) {
-         if ( arrIdx[k] + shifts >= 0 && arrIdx[k] + shifts < n ) {
-            if ( arrIdx[k] + shifts > k + 1 ) {
-               arrShift[shiftMax++] = arrIdx[k];
-            }
-            move( arrIdx[k] + shifts, k, arrayOrig );
-            console.log( "After move (with shift: " + shifts + ") from: " + arrIdx[k] + " to: " + k + "   " +
-                                                arrayOrig[0] + ", " +
-                                                arrayOrig[1] + ", " +
-                                                arrayOrig[2] + ", " +
-                                                arrayOrig[3] + ", " +
-                                                arrayOrig[4] + ", " +
-                                                arrayOrig[5] + ", " +
-                                                arrayOrig[6] );
-            swaps++;
-         } else {
-            break; // error???
-         }
-      }
-   }
-   console.log( "Swaps: " + swaps + "  final array: " +
-                        arrayOrig[0] + ", " +
-                        arrayOrig[1] + ", " +
-                        arrayOrig[2] + ", " +
-                        arrayOrig[3] + ", " +
-                        arrayOrig[4] + ", " +
-                        arrayOrig[5] + ", " +
-                        arrayOrig[6] );
-   
-   console.log( "Expected final array: " +
-                        arrayOriginal[arrIdx[0]] + ", " +
-                        arrayOriginal[arrIdx[1]] + ", " +
-                        arrayOriginal[arrIdx[2]] + ", " +
-                        arrayOriginal[arrIdx[3]] + ", " +
-                        arrayOriginal[arrIdx[4]] + ", " +
-                        arrayOriginal[arrIdx[5]] + ", " +
-                        arrayOriginal[arrIdx[6]] );
-}
-
-var karrayOriginal0 = [ 0, 1, 2, 3, 4, 5, 6];
-var karrayOrderIndex0 = [ 1, 2, 4, 3, 5, 6, 0 ];
-var karrayOriginal1 = [ 0, 1, 2, 3, 4, 5, 6];
-var karrayOrderIndex1 = [ 6, 0, 1, 2, 3, 4, 5 ];
-var karrayOriginal2 = [ 0, 1, 2, 3, 4, 5, 6];
-var karrayOrderIndex2 = [ 1, 2, 3, 4, 5, 6, 0 ];
-var karrayOriginal3 = [ 0, 1, 2, 3, 4, 5, 6];
-var karrayOrderIndex3 = [ 0, 1, 3, 2, 4, 6, 5 ];
-
-function korderbyIndex( arrIdx, arrayOrig ) {
-   var k = 0;
-   var swaps = 0;
-   while( k < arrayOrig.length )
-   {
-      if ( arrayOrig[k] === arrIdx[k] )
-         k++;
-      else
-      {
-         swaps++;
-         move( arrayOrig.length - 1, k, arrayOrig );
-         // arrayOrig.move(i, arrayOrig.length()-1);
-      }
-   }
-   console.log( "final karray swaps(" + swaps + "): " +
-           arrayOriginal[arrayOrig[0]] + ", " +
-           arrayOriginal[arrayOrig[1]] + ", " +
-           arrayOriginal[arrayOrig[2]] + ", " +
-           arrayOriginal[arrayOrig[3]] + ", " +
-           arrayOriginal[arrayOrig[4]] + ", " +
-           arrayOriginal[arrayOrig[5]] + ", " +
-           arrayOriginal[arrayOrig[6]] );
-}
-
 function FORGOT_Password( )
 {
-   orderbyIndex( arrayOrderIndex0, arrayOriginal0 );
+   orderByNewIndex( arrayOrderIndex0, arrayOriginal0 );
    korderbyIndex( karrayOrderIndex0, karrayOriginal0 );
-   orderbyIndex( arrayOrderIndex1, arrayOriginal1 );
+   orderByNewIndex( arrayOrderIndex1, arrayOriginal1 );
    korderbyIndex( karrayOrderIndex1, karrayOriginal1 );
-   orderbyIndex( arrayOrderIndex2, arrayOriginal2 );
+   orderByNewIndex( arrayOrderIndex2, arrayOriginal2 );
    korderbyIndex( karrayOrderIndex2, karrayOriginal2 );
-   orderbyIndex( arrayOrderIndex3, arrayOriginal3 );
+   orderByNewIndex( arrayOrderIndex3, arrayOriginal3 );
    korderbyIndex( karrayOrderIndex3, karrayOriginal3 );
 
    var arrHeader = [ "NickName", "ProperName", "Description" ];

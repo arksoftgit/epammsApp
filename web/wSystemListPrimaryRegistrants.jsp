@@ -60,7 +60,7 @@ public int DoInputMapping( HttpServletRequest request,
    lPrimReg = task.getViewByName( "lPrimReg" );
    if ( VmlOperation.isValid( lPrimReg ) )
    {
-      // Grid: SortableGridPrimaryRegistrant
+      // Grid: GridPrimaryRegistrant
       iTableRowCnt = 0;
 
       // We are creating a temp view to the grid view so that if there are 
@@ -258,6 +258,23 @@ if ( strActionToProcess != null )
          strNextJSP_Name = wSystem.SetWebRedirection( vKZXMLPGO, wSystem.zWAB_StartModalSubwindow, "wStartUp", "AdminDeletePrimaryRegistrant" );
       }
 
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "SortPrimaryRegistrant" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemListPrimaryRegistrants", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      strNextJSP_Name = wSystem.SetWebRedirection( vKZXMLPGO, wSystem.zWAB_StayOnWindowWithRefresh, "", "" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -569,7 +586,7 @@ else
 <html>
 <head>
 
-<title>Sortable Primary Registrant List</title>
+<title>Primary Registrant List</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
@@ -586,56 +603,13 @@ else
 <script language="JavaScript" type="text/javascript" src="./genjs/wSystemListPrimaryRegistrants.js"></script>
 
 
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
-  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-  <script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="./css/style.css" />
 
-  <style>
-  body {  // <link rel="stylesheet" href="/resources/demos/style.css">
-     font-size: 62.5%;
-     font-family: "Trebuchet MS", "Arial", "Helvetica", "Verdana", "sans-serif";
-  }
-
-  //#SortableGridPrimaryRegistrant { list-style-type: none; margin: 0; padding: 0; width: 60%; }
-  //#SortableGridPrimaryRegistrant li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
-  //#SortableGridPrimaryRegistrant li span { position: absolute; margin-left: -1.3em; }
-  </style>
-  <script>
-  $(function() {
-    $( "#SortableGridPrimaryRegistrant" ).sortable();
-    $( "#SortableGridPrimaryRegistrant" ).disableSelection();
-
-
-var fixHelperModified = function(e, tr) {
-    var $originals = tr.children();
-    var $helper = tr.clone();
-    $helper.children().each(function(index) {
-        $(this).width($originals.eq(index).width());
-    });
-    return $helper;
-},
-    updateIndex = function(e, ui) {
-        $('td.index', ui.item.parent()).each(function (k) {
-         // $(this).html(k + 1);
-            if ( k % 2 ) {
-            // console.log( "adding class odd at: " + k );
-               $(this).closest("tr").addClass( "odd" );
-            }
-            else {
-            // console.log( "removing class odd at: " + k );
-               $(this).closest("tr").removeClass( "odd" );
-            }
-        });
-    };
-
-$("#SortableGridPrimaryRegistrant tbody").sortable({
-    helper: fixHelperModified,
-    stop: updateIndex
-}).disableSelection();    
-
-  });
-  </script>
-
+<script language="JavaScript" type="text/javascript" src="./js/jsoe.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jsoeUtils.js"></script>
 
 </head>
 
@@ -647,6 +621,14 @@ $("#SortableGridPrimaryRegistrant tbody").sortable({
 <body onSubmit="_DisableFormElements( true )" onBeforeUnload="_BeforePageUnload( )">
 
 <%@ include file="./include/pagebackground.inc" %>  <!-- just temporary until we get the painter dialog updates from Kelly ... 2011.10.08 dks -->
+
+
+<div id="sortWrapper" style="display:none;">
+<% /* SortableGridPrimaryRegistrant:Grid */ %>
+
+<input name="zFocusCtrl" id="zFocusCtrl" value="Test DKS">
+
+</div>  <!-- end sortWrapper -->
 
 <div id="wrapper">
 
@@ -678,10 +660,28 @@ $("#SortableGridPrimaryRegistrant tbody").sortable({
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
-
+   View DOMAINT = null;
+   View DOMAINTLST = null;
+   View lMLCATgt = null;
+   View lPersonLST = null;
    View lPrimReg = null;
+   View lUserLST = null;
+   View mCurrentUser = null;
+   View mEPA = null;
+   View mOrganiz = null;
+   View mUser = null;
+   View wWebXfer = null;
+   String strRadioGroupValue = "";
+   String strComboCurrentValue = "";
+   String strAutoComboBoxExternalValue = "";
+   String strComboSelectedValue = "0";
+   String strErrorColor = "";
    String strErrorMapValue = "";
+   String strTextDisplayValue = "";
+   String strTextURL_Value = "";
    String strSolicitSave = "";
+   String strTblOutput = "";
+   int    ComboCount = 0;
    int    iTableRowCnt = 0;
    CursorResult csrRC2 = null;
    nRC = 0;
@@ -763,7 +763,7 @@ $("#SortableGridPrimaryRegistrant tbody").sortable({
    <input name="zPopupWindowSZX" id="zPopupWindowSZX" type="hidden" value="<%=strPopupWindowSZX%>">
    <input name="zPopupWindowSZY" id="zPopupWindowSZY" type="hidden" value="<%=strPopupWindowSZY%>">
    <input name="zErrorFlag" id="zErrorFlag" type="hidden" value="<%=strErrorFlag%>">
-   <input name="zTimeout" id="zTimeout" type="hidden" value="<%=300%>">
+   <input name="zTimeout" id="zTimeout" type="hidden" value="300">
    <input name="zSolicitSave" id="zSolicitSave" type="hidden" value="<%=strSolicitSave%>">
 
    <div name="ShowVMLError" id="ShowVMLError" class="ShowVMLError">
@@ -787,14 +787,19 @@ $("#SortableGridPrimaryRegistrant tbody").sortable({
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:50px;float:left;"></div>   <!-- Width Spacer -->
 <% /* PrimaryRegistrants:GroupBox */ %>
-<div id="PrimaryRegistrants" name="PrimaryRegistrants" style="float:left;width:556px;"  class="listgroup">
+<div id="PrimaryRegistrants" name="PrimaryRegistrants" style="float:left;width:692px;"  class="listgroup">
 
-<table cols=0 style="width:556px;"  class="grouptable">
+<table cols=0 style="width:692px;"  class="grouptable">
 
 <tr>
-<td valign="top"  class="newbutton" style="width:78px;">
+<td valign="top"  class="newbutton" style="width:118px;">
 <% /* PBAdminNewPrimaryRegistrant:PushBtn */ %>
 <button type="button" class="newbutton"  id="PBAdminNewPrimaryRegistrant" name="PBAdminNewPrimaryRegistrant" value="New" onclick="AdminNewPrimaryRegistrant( )"  style="width:78px;height:26px;">New</button>
+
+</td>
+<td valign="top"  class="newbutton" style="width:78px;">
+<% /* PBSort:PushBtn */ %>
+<button type="button" class="newbutton"  id="PBSort" name="PBSort" value="Sort" onclick="SortPrimaryRegistrant( )"  style="width:78px;height:26px;">Sort</button>
 
 </td>
 </tr>
@@ -812,15 +817,16 @@ $("#SortableGridPrimaryRegistrant tbody").sortable({
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:54px;float:left;"></div>   <!-- Width Spacer -->
-<% /* SortableGridPrimaryRegistrant:Grid */ %>
-<table cols=6 style="" id="SortableGridPrimaryRegistrant">
+<% /* GridPrimaryRegistrant:Grid */ %>
+<table class="sortable listheader"  cols=5 style=""  name="GridPrimaryRegistrant" id="GridPrimaryRegistrant">
 
 <thead bgcolor=green><tr>
 
-   <th>Order</th>
    <th>Name</th>
    <th>Login</th>
    <th>Description</th>
+   <th>Detail</th>
+   <th>Delete</th>
 
 </tr></thead>
 
@@ -841,6 +847,8 @@ try
       String strGEPrimaryRegistrantName;
       String strGEPrimaryRegistrantLoginName;
       String strGEPrimaryRegistrantDescription;
+      String strBMBUpdatePrimaryRegistrantDetail;
+      String strBMBAdminDeletePrimaryRegistrant;
       
       View vGridPrimaryRegistrant;
       vGridPrimaryRegistrant = lPrimReg.newView( );
@@ -897,10 +905,11 @@ try
 
 <tr<%=strOdd%>>
 
-   <td class="index" nowrap><a href="#" id="Order::<%=strEntityKey%>"><%=iTableRowCnt%></a></td>
-   <td nowrap><a href="#" id="GEPrimaryRegistrantName::<%=strEntityKey%>"><%=strGEPrimaryRegistrantName%></a></td>
-   <td nowrap><a href="#" id="GEPrimaryRegistrantLoginName::<%=strEntityKey%>"><%=strGEPrimaryRegistrantLoginName%></a></td>
-   <td nowrap><a href="#" id="GEPrimaryRegistrantDescription::<%=strEntityKey%>"><%=strGEPrimaryRegistrantDescription%></a></td>
+   <td nowrap><a href="#" onclick="AdminUpdatePrimaryRegistrant( this.id )" id="GEPrimaryRegistrantName::<%=strEntityKey%>"><%=strGEPrimaryRegistrantName%></a></td>
+   <td nowrap><a href="#" onclick="AdminUpdatePrimaryRegistrant( this.id )" id="GEPrimaryRegistrantLoginName::<%=strEntityKey%>"><%=strGEPrimaryRegistrantLoginName%></a></td>
+   <td nowrap><a href="#" onclick="AdminUpdatePrimaryRegistrant( this.id )" id="GEPrimaryRegistrantDescription::<%=strEntityKey%>"><%=strGEPrimaryRegistrantDescription%></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdatePrimaryRegistrantDetail" onclick="AdminUpdatePrimaryRegistrant( this.id )" id="BMBUpdatePrimaryRegistrantDetail::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Detail"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBAdminDeletePrimaryRegistrant" onclick="AdminDeletePrimaryRegistrant( this.id )" id="BMBAdminDeletePrimaryRegistrant::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
 
 </tr>
 

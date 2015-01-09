@@ -155,7 +155,7 @@ function buildTab( indent, file ) {
    }
    return tab;
 }
-
+/*
 // sort attempting to minimize moves.
 var arrayOriginal = [ "A", "B", "C", "D", "E", "F", "G" ];
 var arrayOrderIndex0 = [ 1, 2, 4, 3, 5, 6, 0 ];
@@ -166,7 +166,7 @@ var arrayOrderIndex2 = [ 1, 2, 3, 4, 5, 6, 0 ];
 var arrayOriginal2 = [ "A", "B", "C", "D", "E", "F", "G" ];
 var arrayOrderIndex3 = [ 0, 1, 3, 2, 4, 6, 5 ];
 var arrayOriginal3 = [ "A", "B", "C", "D", "E", "F", "G" ];
-
+*/
 function moveItem( oldIdx, newIdx, arr ) {
    var n = arr.length;
    if ( oldIdx >= 0 && oldIdx < n && newIdx >= 0 && newIdx < n ) {
@@ -186,7 +186,7 @@ function moveItem( oldIdx, newIdx, arr ) {
       }
       arr[newIdx] = item;
    }
-};
+}
 
 function orderByNewIndex( arrIdx, arrayOrig ) {
    var swaps = 0;
@@ -256,6 +256,79 @@ function orderByNewIndex( arrIdx, arrayOrig ) {
                         arrayOriginal[arrIdx[5]] + ", " +
                         arrayOriginal[arrIdx[6]] );
 }
+
+var karrayOriginal0 = [ 0, 1, 2, 3, 4, 5, 6];
+var karrayOrderIndex0 = [ 1, 2, 4, 3, 5, 6, 0 ];
+var karrayOriginal1 = [ 0, 1, 2, 3, 4, 5, 6];
+var karrayOrderIndex1 = [ 6, 0, 1, 2, 3, 4, 5 ];
+var karrayOriginal2 = [ 0, 1, 2, 3, 4, 5, 6];
+var karrayOrderIndex2 = [ 1, 2, 3, 4, 5, 6, 0 ];
+var karrayOriginal3 = [ 0, 1, 2, 3, 4, 5, 6];
+var karrayOrderIndex3 = [ 0, 1, 3, 2, 4, 6, 5 ];
+
+function korderbyIndex( arrIdx, arrayOrig ) {
+   var k = 0;
+   var swaps = 0;
+   while( k < arrayOrig.length )
+   {
+      if ( arrayOrig[k] === arrIdx[k] )
+         k++;
+      else
+      {
+         swaps++;
+         moveItem( arrayOrig.length - 1, k, arrayOrig );
+         // arrayOrig.move(i, arrayOrig.length()-1);
+      }
+   }
+   console.log( "final karray swaps(" + swaps + "): " +
+           arrayOriginal[arrayOrig[0]] + ", " +
+           arrayOriginal[arrayOrig[1]] + ", " +
+           arrayOriginal[arrayOrig[2]] + ", " +
+           arrayOriginal[arrayOrig[3]] + ", " +
+           arrayOriginal[arrayOrig[4]] + ", " +
+           arrayOriginal[arrayOrig[5]] + ", " +
+           arrayOriginal[arrayOrig[6]] );
+}
+
+// </style>
+// #DragDropSortableGrid { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+// #DragDropSortableGrid li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
+// #DragDropSortableGrid li span { position: absolute; margin-left: -1.3em; }
+// </style>
+// <script>
+   $(function() {
+      $( "#DragDropSortableGrid" ).sortable();
+      $( "#DragDropSortableGrid" ).disableSelection();
+
+
+      var fixHelperModified = function(e, tr) {
+         var $originals = tr.children();
+         var $helper = tr.clone();
+         $helper.children().each(function(index) {
+            $(this).width($originals.eq(index).width());
+         });
+         return $helper;
+      },
+      updateIndex = function(e, ui) {
+         $('td.index', ui.item.parent()).each(function (k) {
+            // $(this).html(k + 1);
+            if ( k % 2 ) {
+               // console.log( "adding class odd at: " + k );
+               $(this).closest("tr").addClass( "odd" );
+            } else {
+               // console.log( "removing class odd at: " + k );
+               $(this).closest("tr").removeClass( "odd" );
+            }
+         });
+      };
+
+      $("#DragDropSortableGrid tbody").sortable({
+         helper: fixHelperModified,
+         stop: updateIndex
+      }).disableSelection();
+
+   });
+// </script>
 
 // SimpleHashMap - superclass
 var SimpleHashMap = function( keyType, valueType ) {
@@ -706,6 +779,178 @@ function openSortWin( title, viewName, entityName, arrColumnTitles, arrAttribute
          table += "<td nowrap><a href=\"#\" id=\"Description::" + row + "\">reached the top</a></td>\n";
       table += "</tr>\n";
 // }
+   table += "</tbody>\n";
+   table += "</table>\n";
+
+   var HTMLstring =
+   "<html>\n" +
+      "<head>\n<title>" + title + "</title>\n" +
+      "<link href=\"./css/zeidon_allrelative.css\" rel=\"stylesheet\" type=\"text/css\">\n" +
+      "<link href=\"./css/zeidon.css\" rel=\"stylesheet\" type=\"text/css\">\n" +
+      "<link href=\"./css/main.css\" rel=\"stylesheet\" type=\"text/css\">\n" +
+      "<script language=\"JavaScript\" type=\"text/javascript\" src=\"./js/common.js\"></script>\n" +
+      "<script language=\"JavaScript\" type=\"text/javascript\" src=\"./js/css.js\"></script>\n" +
+      "<script language=\"JavaScript\" type=\"text/javascript\" src=\"./js/validations.js\"></script>\n" +
+      "<script language=\"JavaScript\" type=\"text/javascript\" src=\"./js/scw.js\"></script>\n" +
+      "<script language=\"JavaScript\" type=\"text/javascript\" src=\"./js/animatedcollapse.js\"></script>\n" +
+      "<script language=\"JavaScript\" type=\"text/javascript\" src=\"./js/md5.js\"></script>\n" +
+
+      "<style>\n" +
+      "body {  // <link rel=\"stylesheet\" href=\"/resources/demos/style.css\">\n" +
+      "   font-size: 62.5%;\n" +
+      "   font-family: \"Trebuchet MS\", \"Arial\", \"Helvetica\", \"Verdana\", \"sans-serif\";\n" +
+      "}\n" +
+      "//#DraggableSortTable { list-style-type: none; margin: 0; padding: 0; width: 60%; }\n" +
+      "//#DraggableSortTable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }\n" +
+      "//#DraggableSortTable li span { position: absolute; margin-left: -1.3em; }\n" +
+      "<script src=\"http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css\"></script>\n" +
+      "</style>\n" +
+      "<script src=\"http://code.jquery.com/jquery-1.10.2.min.js\"></script>\n" +
+      "<script src=\"http://code.jquery.com/ui/1.11.0/jquery-ui.js\"></script>\n" +
+      "<script src=\"js/jquery.blockUI.js\"></script>\n" +
+      "<script src=\"js/jsoeUtils.js\"></script>\n" +
+      "<script src=\"js/jsoe.js\"></script>\n" +
+      "<script>\n" +
+         "function loadSortableList() {\n" +
+            "alert('loadSortableList has fired!');\n" +
+         "}\n" +
+         "function SaveOrder() { alert( 'Save Order' ); };\n" +
+         "function CancelOrder() { alert( 'Cancel Order' ); }\n" +
+      "</script>\n" +
+      "<script>\n" +
+         "$(document).ready( function() { // Once the page has loaded and is ready, the alert below will fire.\n" +
+            "loadSortableList();\n" +
+            "alert('Your page has loaded - and Now this alert appears!');\n" +
+         "});\n" +
+         
+      "</script>\n" +
+      "<script>\n" +
+
+         "$(function() {\n" +
+            "$( \"#DraggableSortTable\" ).sortable();\n" +
+            "$( \"#DraggableSortTable\" ).disableSelection();\n" +
+
+            "var fixHelperModified = function(e, tr) {\n" +
+               "var $originals = tr.children();\n" +
+               "var $helper = tr.clone();\n" +
+               "$helper.children().each(function(index) {\n" +
+                  "$(this).width($originals.eq(index).width());\n" +
+               "});\n" +
+               "return $helper;\n" +
+            "},\n" +
+            "updateIndex = function(e, ui) {\n" +
+               "$('td.index', ui.item.parent()).each(function (k) {\n" +
+                  "// $(this).html(k + 1);\n" +
+                  "if ( k % 2 ) {\n" +
+                     "// console.log( \"adding class odd at: \" + k );\n" +
+                     "$(this).closest(\"tr\").addClass( \"odd\" );\n" +
+                  "} else {\n" +
+                     "// console.log( \"removing class odd at: \" + k );\n" +
+                     "$(this).closest(\"tr\").removeClass( \"odd\" );\n" +
+                  "}\n" +
+               "});\n" +
+            "};\n" +
+
+            "$(\"#DraggableSortTable tbody\").sortable({\n" +
+               "helper: fixHelperModified,\n" +
+               "stop: updateIndex\n" +
+            "}).disableSelection();    \n" +
+
+         "});\n" +
+      "</script>\n" +
+      "</head>\n" +
+      "<body onload=\"loadSortableList()\">\n" +
+         "<div id=\"water\"></div>\n" +
+         "<div id=\"maincontent\">\n" +
+         "<div id=\"contentnosidemenu\">\n" +
+
+         "<textarea id=\"SortableList\" style=\"display:none;\"></textarea>\n" +
+         "<div id=\"ControlsRow\">\n" +
+
+         "<!-- This is added as a line spacer -->\n" +
+         "<div style=\"height:12px;width:100px;\"></div>\n" +
+         "<div>  <!-- Beginning of a new line -->\n" +
+         "</div>  <!-- End of a new line -->\n" +
+         
+         "<div style=\"clear:both;\"></div>  <!-- Moving to a new line, so do a clear -->\n" +
+            "<input type=\"Button\" value=\"Save Order\" onClick=\"SaveOrder()\"/>\n" +
+            "<input type=\"Button\" value=\"Cancel\" onClick=\"CancelOrder()\"/>\n" +
+         "</div>\n" +
+
+         "<!-- This is added as a line spacer -->\n" +
+         "<div style=\"height:20px;width:100px;\"></div>\n" +
+         "<div>  <!-- Beginning of a new line -->\n" +
+         "</div>  <!-- End of a new line -->\n" +
+         "<div style=\"clear:both;\"></div>  <!-- Moving to a new line, so do a clear -->\n" +
+
+         "<div id=\"zDontKnowWhyThisIsHere\" class=\"zDontKnowWhyThisIsHere\"></div>\n" +
+         "<form id=\"InvisibleLink\" target=\"_blank\">\n" +
+            table + 
+         "</form>\n" +
+         "</div>   <!-- This is the end tag for the div 'contentnosidemenu' -->\n" +
+         "</div>   <!-- This is the end tag for the div 'maincontent' -->\n" +
+      "</body>\n" +
+   "</html>";
+   console.log( HTMLstring );
+   
+// var mySortWindow = window.open();
+// var mySortWindow = window.open("","mySortWindow","height=100,width=200");
+   var mySortWindow = window.open( "xyz", "_self", "toolbar=yes, menubar=yes scrollbars=yes, resizable=yes, top=300, left=600, height=800, width=1000" );
+   var myDocument = mySortWindow.document;
+   myDocument.write( HTMLstring );
+// mySortWindow.document.getElementById("RawJson").value = g_JsonNewLabelA; // jsonStringToJsonObject( g_JsonNewLabel );
+// var rawJson = myDocument.getElementById("RawJson")
+// rawJason.outerHTML = jsonStringToJsonObject( g_JsonNewLabel );
+   myDocument.close();
+// mySortWindow.onload = function() {
+//   alert( "On Load" );
+// };
+   return mySortWindow;
+}
+
+// buildSortHtml( "List Primary Registrants",  [ "Name", "Login", "Description" ], "GEPrimaryRegistrant" );
+
+function buildSortHtml( title, arrColumnTitles, tableId )
+{
+   var k, col, row, rc;
+   var strOdd;
+   if ( title === "" ) {
+      title = "Drag Sort";
+   }
+   var table = "<table cols=" + arrColumnTitles.length + " style=\"\" id=\"DraggableSortTable\">\n" +
+               "<thead bgcolor=green><tr>\n<th>Order</th>\n";
+   for ( k = 0; k < arrColumnTitles.length; k++ ) {
+      table += "<th>" + arrColumnTitles[k] + "</th>\n";
+   }
+   table += "</tr></thead><tbody>";
+
+   var elTable = document.getElementById( tableId );
+   var txt;
+   var arrColIdx = new Array( arrColumnTitles.length );
+   for ( col = 0; col < elTable.rows[0].cells.length; col++ ) {
+      txt = elTable.rows[0].cells[col].innerText
+      for ( k = 0; k < arrColumnTitles.length; k++ ) {
+         if ( txt === arrColumnTitles[k] ) {
+            arrColIdx[k] = col;
+            break; // inside only
+         }
+      }
+   }
+   // we have the columns we are displaying in arrColIdx
+// for ( k = 0; k < arrColIdx.length; k++ ) {
+//    txt += " " + arrColIdx[k];
+// }
+
+   // now build the table data
+   for ( row = 1; row < elTable.rows.length; row++ ) {
+      strOdd = (row % 2) != 0 ? " class='odd'" : "";
+      table += "<tr" + strOdd + ">\n";
+      table += "<td class=\"index\" nowrap><a href=\"#\" id=\"Order::" + row + "\">" + row + "</a></td>\n";
+      for ( col = 0; col < arrColIdx.length; col++ ) {
+         table += "<td nowrap><a href=\"#\" id=\"" + arrColumnTitles[col] + "::" + row + "\">" + elTable.rows[row].cells[arrColIdx[col]].innerText + "</a></td>\n";
+      }
+      table += "</tr>\n";
+   }
    table += "</tbody>\n";
    table += "</table>\n";
 
