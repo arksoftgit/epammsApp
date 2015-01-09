@@ -908,9 +908,7 @@ function openSortWin( title, viewName, entityName, arrColumnTitles, arrAttribute
    return mySortWindow;
 }
 
-// buildSortHtml( "List Primary Registrants",  [ "Name", "Login", "Description" ], "GEPrimaryRegistrant" );
-
-function buildSortHtml( title, arrColumnTitles, tableId )
+function buildSortWindow( title, arrColumnTitles, tableId )
 {
    var k, col, row, rc;
    var strOdd;
@@ -928,7 +926,7 @@ function buildSortHtml( title, arrColumnTitles, tableId )
    var txt;
    var arrColIdx = new Array( arrColumnTitles.length );
    for ( col = 0; col < elTable.rows[0].cells.length; col++ ) {
-      txt = elTable.rows[0].cells[col].innerText
+      txt = elTable.rows[0].cells[col].innerText;
       for ( k = 0; k < arrColumnTitles.length; k++ ) {
          if ( txt === arrColumnTitles[k] ) {
             arrColIdx[k] = col;
@@ -1078,6 +1076,54 @@ function buildSortHtml( title, arrColumnTitles, tableId )
 //   alert( "On Load" );
 // };
    return mySortWindow;
+}
+
+// buildSortHtml( "List Primary Registrants",  [ "Name", "Login", "Description" ], "GEPrimaryRegistrant" );
+
+function buildSortHtml( title, arrColumnTitles, tableId )
+{
+   var k, col, row, rc;
+   var strOdd;
+   if ( title === "" ) {
+      title = "Drag Sort";
+   }
+   var table = "<table cols=" + arrColumnTitles.length + " style=\"\" id=\"DraggableSortTable\">\n" +
+               "<thead bgcolor=green><tr>\n<th>Order</th>\n";
+   for ( k = 0; k < arrColumnTitles.length; k++ ) {
+      table += "<th>" + arrColumnTitles[k] + "</th>\n";
+   }
+   table += "</tr></thead><tbody>";
+
+   var elTable = document.getElementById( tableId );
+   var txt;
+   var arrColIdx = new Array( arrColumnTitles.length );
+   for ( col = 0; col < elTable.rows[0].cells.length; col++ ) {
+      txt = elTable.rows[0].cells[col].innerText;
+      for ( k = 0; k < arrColumnTitles.length; k++ ) {
+         if ( txt === arrColumnTitles[k] ) {
+            arrColIdx[k] = col;
+            break; // inside only
+         }
+      }
+   }
+   // we have the columns we are displaying in arrColIdx
+
+   // now build the table data
+   for ( row = 1; row < elTable.rows.length; row++ ) {
+      strOdd = (row % 2) != 0 ? " class='odd'" : "";
+      table += "<tr" + strOdd + ">\n";
+      table += "<td class=\"index\" nowrap><a href=\"#\" id=\"Order::" + row + "\">" + row + "</a></td>\n";
+      for ( col = 0; col < arrColIdx.length; col++ ) {
+         table += "<td nowrap><a href=\"#\" id=\"" + arrColumnTitles[col] + "::" + row + "\">" + elTable.rows[row].cells[arrColIdx[col]].innerText + "</a></td>\n";
+      }
+      table += "</tr>\n";
+   }
+   table += "</tbody>\n";
+   table += "</table>\n";
+
+   var HTMLstring = "<div>" + table + "</div>";
+   console.log( HTMLstring );
+   return HTMLstring;
 }
 
 function testJsonPath() {

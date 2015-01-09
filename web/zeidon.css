@@ -543,6 +543,11 @@ table tr:hover td {
 .relposTable table{
 	}
 
+tr.odd{
+   border: 1px solid #ccc;  /* light gray */
+   background-color: #fdf;
+   }
+
 /************ Table Sort styles ************/
 table{
    width: 80%;

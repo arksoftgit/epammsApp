@@ -297,8 +297,6 @@ cursor: pointer;
 
 }
 
-
-
 #sidenavigation ul{
    list-style: none;
    margin: 0;
@@ -346,6 +344,7 @@ cursor: pointer;
    background-repeat:repeat-x;  
 }
 
+/** widget **/
 
 #widgetbox{
 			font-size:11px;

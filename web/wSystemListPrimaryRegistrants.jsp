@@ -622,14 +622,6 @@ else
 
 <%@ include file="./include/pagebackground.inc" %>  <!-- just temporary until we get the painter dialog updates from Kelly ... 2011.10.08 dks -->
 
-
-<div id="sortWrapper" style="display:none;">
-<% /* SortableGridPrimaryRegistrant:Grid */ %>
-
-<input name="zFocusCtrl" id="zFocusCtrl" value="Test DKS">
-
-</div>  <!-- end sortWrapper -->
-
 <div id="wrapper">
 
 <jsp:include page='<%=strBannerName %>' />

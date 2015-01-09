@@ -252,7 +252,7 @@ function SortPrimaryRegistrant( )
    {
       // Javascript code entered by user.
 
-      buildSortHtml( "Sort Primary Registrants List",  [ "Name", "Login", "Description" ], "GridPrimaryRegistrant" );
+      buildSortWindow( "Sort Primary Registrants List",  [ "Name", "Login", "Description" ], "GridPrimaryRegistrant" );
 
       // END of Javascript code entered by user.
 
