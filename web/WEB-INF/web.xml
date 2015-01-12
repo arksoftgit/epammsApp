@@ -8,6 +8,14 @@
         <servlet-name>GraphicalLabelDesignerServlet</servlet-name>
         <url-pattern>/labeldesigner</url-pattern>
     </servlet-mapping>
+    <servlet>
+       <servlet-name>SortOrderServlet</servlet-name>
+       <servlet-class>com.ajax.SortOrderServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+       <servlet-name>SortOrderServlet</servlet-name>
+       <url-pattern>/sortorder</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
          30

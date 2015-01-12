@@ -728,6 +728,7 @@ function openDebugWin()
    return myDebugWindow;
 }
 
+/*
 function openSortWin( title, viewName, entityName, arrColumnTitles, arrAttributes )
 {
    var k, row, rc;
@@ -907,15 +908,51 @@ function openSortWin( title, viewName, entityName, arrColumnTitles, arrAttribute
 // };
    return mySortWindow;
 }
+*/
 
-function buildSortWindow( title, arrColumnTitles, tableId )
+function getSortOrder( tableId ) {
+   var elTable = document.getElementById( tableId );
+   var elView = document.getElementById( "zView" );
+   var viewName = elView.value;
+   var elEntity = document.getElementById( "zEntity" );
+   var entityName = elEntity.value;
+   var arrRowOrderIdx = new Array( elTable.rows.length - 1 );
+   for ( var row = 0; row < arrRowOrderIdx.length; row++ ) {
+      arrRowOrderIdx[row] = elTable.rows[row + 1].cells[0].innerText;
+   }
+
+   var url = "sortorder?taskID=" + window.TaskId + "&action=reorder&viewName=" + viewName + "&entityName=" + entityName;
+   $.ajax({ url: url,
+            type: "post", // string defining the HTTP method to use for the request: GET (default) or POST
+            contentType: "application/json; charset=utf-8",
+            dataType: "json", // defines the type of data expected back from the server (xml, html, json, or script)
+            processData: true, // boolean (default:true) indicating whether to convert the submitted data from an object form into a query-string form
+            data: "{\"array\":[" + arrRowOrderIdx + "]}",
+         // beforeSend - callback function that is executed before the request is sent
+            success: function( data, textStatus, jqXHR ) {
+                        console.log( "reorder: success status: " + textStatus + "  data: " + data + "  jqXHR: " + jqXHR );
+                        GOTO_SystemListPrimaryRegistrants();
+                     },
+            error:   function( jqXHR, textStatus, errorThrown ) {
+                        console.log( "reorder: error xhr response: " + jqXHR.responseText + "  status: " + textStatus + "  error: " + errorThrown );
+                     },
+            complete: function( jqXHR, textStatus ) { // callback function that executes whenever the request finishes
+                        console.log( "reorder: complete status: " + textStatus + "  response: " + jqXHR.responseText );
+                     }
+   });
+
+
+   return arrRowOrderIdx;
+}
+   
+function buildSortWindow( taskId, viewName, entityName, title, arrColumnTitles, tableId )
 {
    var k, col, row, rc;
    var strOdd;
    if ( title === "" ) {
       title = "Drag Sort";
    }
-   var table = "<table cols=" + arrColumnTitles.length + " style=\"\" id=\"DraggableSortTable\">\n" +
+   var table = "<table cols=" + arrColumnTitles.length + " style=\"margin-left:100;padding-left:0;border-left:0\" id=\"DraggableSortTable\">\n" +
                "<thead bgcolor=green><tr>\n<th>Order</th>\n";
    for ( k = 0; k < arrColumnTitles.length; k++ ) {
       table += "<th>" + arrColumnTitles[k] + "</th>\n";
@@ -981,16 +1018,17 @@ function buildSortWindow( title, arrColumnTitles, tableId )
       "<script src=\"js/jsoeUtils.js\"></script>\n" +
       "<script src=\"js/jsoe.js\"></script>\n" +
       "<script>\n" +
+         "window.TaskId = " + taskId + ";\n" +
          "function loadSortableList() {\n" +
-            "alert('loadSortableList has fired!');\n" +
+         // "alert('loadSortableList has fired!');\n" +
          "}\n" +
-         "function SaveOrder() { alert( 'Save Order' ); };\n" +
+         "function SaveOrder() { var arrRowOrderIdx = getSortOrder( \"DraggableSortTable\" ); alert( 'Save Order: ' + arrRowOrderIdx.toString() ); };\n" +
          "function CancelOrder() { alert( 'Cancel Order' ); }\n" +
       "</script>\n" +
       "<script>\n" +
          "$(document).ready( function() { // Once the page has loaded and is ready, the alert below will fire.\n" +
             "loadSortableList();\n" +
-            "alert('Your page has loaded - and Now this alert appears!');\n" +
+         // "alert('Your page has loaded - and Now this alert appears!');\n" +
          "});\n" +
 
       "</script>\n" +
@@ -1031,22 +1069,22 @@ function buildSortWindow( title, arrColumnTitles, tableId )
       "</head>\n" +
       "<body onload=\"loadSortableList()\">\n" +
          "<div id=\"water\"></div>\n" +
-         "<div id=\"maincontent\">\n" +
+         "<div id=\"maincontent\" style=\"margin-left:200;padding-left:0;border-left:0\">\n" +
          "<div id=\"contentnosidemenu\">\n" +
 
          "<textarea id=\"SortableList\" style=\"display:none;\"></textarea>\n" +
-         "<div id=\"ControlsRow\">\n" +
 
          "<!-- This is added as a line spacer -->\n" +
          "<div style=\"height:12px;width:100px;\"></div>\n" +
          "<div>  <!-- Beginning of a new line -->\n" +
          "</div>  <!-- End of a new line -->\n" +
-
          "<div style=\"clear:both;\"></div>  <!-- Moving to a new line, so do a clear -->\n" +
-            "<input type=\"Button\" value=\"Save Order\" onClick=\"SaveOrder()\"/>\n" +
-            "<input type=\"Button\" value=\"Cancel\" onClick=\"CancelOrder()\"/>\n" +
-         "</div>\n" +
-
+         "<div id=\"ControlsRow\" style=\"margin-left:100;padding-left:0;border-left:0\">\n" +
+            "<span>\n" +
+               "<button type=\"button\" class=\"newbutton\" value=\"Save Order\" onClick=\"SaveOrder()\" style=\"float:left;width:78px;height:20px;\">Save Order</button>\n" +
+               "<button type=\"button\" class=\"newbutton\" value=\"Cancel\" onClick=\"CancelOrder()\" style=\"float:left;margin-left:20;width:78px;height:20px;\">Cancel</button>\n" +
+            "</span>\n" +
+         "</div>&nbsp;&nbsp;&nbsp;&nbsp;\n" +
          "<!-- This is added as a line spacer -->\n" +
          "<div style=\"height:20px;width:100px;\"></div>\n" +
          "<div>  <!-- Beginning of a new line -->\n" +
@@ -1056,6 +1094,10 @@ function buildSortWindow( title, arrColumnTitles, tableId )
          "<div id=\"zDontKnowWhyThisIsHere\" class=\"zDontKnowWhyThisIsHere\"></div>\n" +
          "<form id=\"InvisibleLink\" target=\"_blank\">\n" +
             table +
+            
+         "<input name=\"zView\" id=\"zView\" type=\"hidden\" value=\"" + viewName + "\">\n" +
+         "<input name=\"zEntity\" id=\"zEntity\" type=\"hidden\" value=\"" + entityName + "\">\n" +
+            
          "</form>\n" +
          "</div>   <!-- This is the end tag for the div 'contentnosidemenu' -->\n" +
          "</div>   <!-- This is the end tag for the div 'maincontent' -->\n" +
@@ -1080,15 +1122,15 @@ function buildSortWindow( title, arrColumnTitles, tableId )
 
 // buildSortHtml( "List Primary Registrants",  [ "Name", "Login", "Description" ], "GEPrimaryRegistrant" );
 
-function buildSortHtml( title, arrColumnTitles, tableId )
+function buildSortHtml( taskId, title, arrColumnTitles, tableId )
 {
    var k, col, row, rc;
    var strOdd;
    if ( title === "" ) {
       title = "Drag Sort";
    }
-   var table = "<table cols=" + arrColumnTitles.length + " style=\"\" id=\"DraggableSortTable\">\n" +
-               "<thead bgcolor=green><tr>\n<th>Order</th>\n";
+   var table = "<table style=\"\" id=\"DraggableSortTable\">\n" +
+               "<thead><tr>\n<th>Order</th>\n";
    for ( k = 0; k < arrColumnTitles.length; k++ ) {
       table += "<th>" + arrColumnTitles[k] + "</th>\n";
    }
