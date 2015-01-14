@@ -16,7 +16,6 @@
 
     Copyright 2009-2010 QuinSoft
 **/
-
 package com.quinsoft.epamms;
 
 import com.quinsoft.zeidon.ActivateFlags;
@@ -6873,8 +6872,10 @@ InitLoginWindow( View     ViewToWindow )
    SetAttributeFromString( wWebXfer, "Root", "Banner6", "" );
 
    //:// Remove these lines prior to deployment!!!
-   //:wWebXfer.Root.AttemptLoginName = "Lonza"
-   SetAttributeFromString( wWebXfer, "Root", "AttemptLoginName", "Lonza" );
+// //:wWebXfer.Root.AttemptLoginName = "Lonza"
+   //:wWebXfer.Root.AttemptLoginName = "Admin"
+// SetAttributeFromString( wWebXfer, "Root", "AttemptLoginName", "Lonza" );
+   SetAttributeFromString( wWebXfer, "Root", "AttemptLoginName", "Admin" );
    //:wWebXfer.Root.AttemptUserName = "Admin"
    SetAttributeFromString( wWebXfer, "Root", "AttemptUserName", "Admin" );
    //:wWebXfer.Root.AttemptPassword = "xxxxxxxx"

@@ -15,6 +15,64 @@ window.ViewMeta = true;
 // So the screen.availWidth/screen.DeviceXDPI will give you the width in inches
 // and screen.availHeight/screen.DeviceYDPI gives you the height in inches.
 
+// From http://www.whatwg.org/specs/web-apps/current-work/multipage/states-of-the-type-attribute.html#e-mail-state-%28type=email%29
+var emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+function updateTips( t ) {
+/*
+   allFields = $( [] ).add( name ).add( email ).add( password ),
+   tips
+      .text( t )
+      .addClass( "ui-state-highlight" );
+   setTimeout(function() {
+      tips.removeClass( "ui-state-highlight", 1500 );
+   }, 500 );
+*/
+}
+
+function checkLength( o, n, min, max ) {
+   if ( o.val().length > max || o.val().length < min ) {
+      o.addClass( "ui-state-error" );
+      updateTips( "Length of " + n + " must be between " + min + " and " + max + "." );
+      return false;
+   } else {
+      return true;
+   }
+}
+
+function checkRegexp( o, regexp, n ) {
+   if ( !( regexp.test( o.val() ) ) ) {
+      o.addClass( "ui-state-error" );
+      updateTips( n );
+      return false;
+   } else {
+      return true;
+   }
+}
+/*
+function addUser() {
+   var valid = true;
+   allFields.removeClass( "ui-state-error" );
+
+   valid = valid && checkLength( name, "username", 3, 16 );
+   valid = valid && checkLength( email, "email", 6, 80 );
+   valid = valid && checkLength( password, "password", 5, 16 );
+
+   valid = valid && checkRegexp( name, /^[a-z]([0-9a-z_\s])+$/i, "Username may consist of a-z, 0-9, underscores, spaces and must begin with a letter." );
+   valid = valid && checkRegexp( email, emailRegex, "eg. ui@jquery.com" );
+   valid = valid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
+ 
+   if ( valid ) {
+      $( "#users tbody" ).append( "<tr>" +
+         "<td>" + name.val() + "</td>" +
+         "<td>" + email.val() + "</td>" +
+         "<td>" + password.val() + "</td>" +
+      "</tr>" );
+      dialog.dialog( "close" );
+   }
+   return valid;
+}
+*/
+
 // metacharacters are: <([{\^-=$!|]})?*+.>
 // ^[a-zA-Z]*[a-zA-Z0-9].\D[a-zA-Z0-9].\D[a-zA-Z0-9]
 
@@ -728,200 +786,20 @@ function openDebugWin()
    return myDebugWindow;
 }
 
-/*
-function openSortWin( title, viewName, entityName, arrColumnTitles, arrAttributes )
-{
-   var k, row, rc;
-   var strOdd;
-   if ( title === "" ) {
-      title = "Drag Sort";
-   }
-   var table = "<table cols=" + arrColumnTitles.length + " style=\"\" id=\"DraggableSortTable\">\n" +
-               "<thead bgcolor=green><tr>\n<th>Order</th>\n";
-   for ( k = 0; k < arrColumnTitles.length; k++ ) {
-      table += "<th>" + arrColumnTitles[k] + "</th>\n";
-   }
-   table += "</tr></thead><tbody>";
-// var view = g_ViewNameMap.getViewByName( viewName );
-// var entityCursor = cursors.get( entityName );
-// rc = entityCursor.setFirst( entityName );
-   row = 0;
-// while ( rc >= 0 ) {
-      strOdd = (row % 2) != 0 ? " class='odd'" : "";
-      table += "<tr" + strOdd + ">\n";
-   // for ( k = 0; k < arrAttributes.length; k++ ) {
-   //    table += "<th>" + arrColumnTitles[k] + "</th>\n";
-   // }
-         table += "<td class=\"index\" nowrap><a href=\"#\" id=\"Order::" + row + "\">" + row + "</a></td>\n";
-         table += "<td nowrap><a href=\"#\" id=\"Name::" + row + "\">Tom</a></td>\n";
-         table += "<td nowrap><a href=\"#\" id=\"LoginName::" + row + "\">thomas</a></td>\n";
-         table += "<td nowrap><a href=\"#\" id=\"Description::" + row + "\">doubting</a></td>\n";
-      table += "</tr>\n";
-      row++;
-      strOdd = (row % 2) != 0 ? " class='odd'" : "";
-      table += "<tr" + strOdd + ">\n";
-   // for ( k = 0; k < arrAttributes.length; k++ ) {
-   //    table += "<th>" + arrColumnTitles[k] + "</th>\n";
-   // }
-         table += "<td class=\"index\" nowrap><a href=\"#\" id=\"Order::" + row + "\">" + row + "</a></td>\n";
-         table += "<td nowrap><a href=\"#\" id=\"Name::" + row + "\">Dick</a></td>\n";
-         table += "<td nowrap><a href=\"#\" id=\"LoginName::" + row + "\">richard</a></td>\n";
-         table += "<td nowrap><a href=\"#\" id=\"Description::" + row + "\">lionhearted</a></td>\n";
-      table += "</tr>\n";
-      row++;
-      strOdd = (row % 2) != 0 ? " class='odd'" : "";
-      table += "<tr" + strOdd + ">\n";
-   // for ( k = 0; k < arrAttributes.length; k++ ) {
-   //    table += "<th>" + arrColumnTitles[k] + "</th>\n";
-   // }
-         table += "<td class=\"index\" nowrap><a href=\"#\" id=\"Order::" + row + "\">" + row + "</a></td>\n";
-         table += "<td nowrap><a href=\"#\" id=\"Name::" + row + "\">Harry</a></td>\n";
-         table += "<td nowrap><a href=\"#\" id=\"LoginName::" + row + "\">harold</a></td>\n";
-         table += "<td nowrap><a href=\"#\" id=\"Description::" + row + "\">reached the top</a></td>\n";
-      table += "</tr>\n";
-// }
-   table += "</tbody>\n";
-   table += "</table>\n";
-
-   var HTMLstring =
-   "<html>\n" +
-      "<head>\n<title>" + title + "</title>\n" +
-      "<link href=\"./css/zeidon_allrelative.css\" rel=\"stylesheet\" type=\"text/css\">\n" +
-      "<link href=\"./css/zeidon.css\" rel=\"stylesheet\" type=\"text/css\">\n" +
-      "<link href=\"./css/main.css\" rel=\"stylesheet\" type=\"text/css\">\n" +
-      "<script language=\"JavaScript\" type=\"text/javascript\" src=\"./js/common.js\"></script>\n" +
-      "<script language=\"JavaScript\" type=\"text/javascript\" src=\"./js/css.js\"></script>\n" +
-      "<script language=\"JavaScript\" type=\"text/javascript\" src=\"./js/validations.js\"></script>\n" +
-      "<script language=\"JavaScript\" type=\"text/javascript\" src=\"./js/scw.js\"></script>\n" +
-      "<script language=\"JavaScript\" type=\"text/javascript\" src=\"./js/animatedcollapse.js\"></script>\n" +
-      "<script language=\"JavaScript\" type=\"text/javascript\" src=\"./js/md5.js\"></script>\n" +
-
-      "<style>\n" +
-      "body {  // <link rel=\"stylesheet\" href=\"/resources/demos/style.css\">\n" +
-      "   font-size: 62.5%;\n" +
-      "   font-family: \"Trebuchet MS\", \"Arial\", \"Helvetica\", \"Verdana\", \"sans-serif\";\n" +
-      "}\n" +
-      "//#DraggableSortTable { list-style-type: none; margin: 0; padding: 0; width: 60%; }\n" +
-      "//#DraggableSortTable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }\n" +
-      "//#DraggableSortTable li span { position: absolute; margin-left: -1.3em; }\n" +
-      "<script src=\"http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css\"></script>\n" +
-      "</style>\n" +
-      "<script src=\"http://code.jquery.com/jquery-1.10.2.min.js\"></script>\n" +
-      "<script src=\"http://code.jquery.com/ui/1.11.0/jquery-ui.js\"></script>\n" +
-      "<script src=\"js/jquery.blockUI.js\"></script>\n" +
-      "<script src=\"js/jsoeUtils.js\"></script>\n" +
-      "<script src=\"js/jsoe.js\"></script>\n" +
-      "<script>\n" +
-         "function loadSortableList() {\n" +
-            "alert('loadSortableList has fired!');\n" +
-         "}\n" +
-         "function SaveOrder() { alert( 'Save Order' ); };\n" +
-         "function CancelOrder() { alert( 'Cancel Order' ); }\n" +
-      "</script>\n" +
-      "<script>\n" +
-         "$(document).ready( function() { // Once the page has loaded and is ready, the alert below will fire.\n" +
-            "loadSortableList();\n" +
-            "alert('Your page has loaded - and Now this alert appears!');\n" +
-         "});\n" +
-
-      "</script>\n" +
-      "<script>\n" +
-
-         "$(function() {\n" +
-            "$( \"#DraggableSortTable\" ).sortable();\n" +
-            "$( \"#DraggableSortTable\" ).disableSelection();\n" +
-
-            "var fixHelperModified = function(e, tr) {\n" +
-               "var $originals = tr.children();\n" +
-               "var $helper = tr.clone();\n" +
-               "$helper.children().each(function(index) {\n" +
-                  "$(this).width($originals.eq(index).width());\n" +
-               "});\n" +
-               "return $helper;\n" +
-            "},\n" +
-            "updateIndex = function(e, ui) {\n" +
-               "$('td.index', ui.item.parent()).each(function (k) {\n" +
-                  "// $(this).html(k + 1);\n" +
-                  "if ( k % 2 ) {\n" +
-                     "// console.log( \"adding class odd at: \" + k );\n" +
-                     "$(this).closest(\"tr\").addClass( \"odd\" );\n" +
-                  "} else {\n" +
-                     "// console.log( \"removing class odd at: \" + k );\n" +
-                     "$(this).closest(\"tr\").removeClass( \"odd\" );\n" +
-                  "}\n" +
-               "});\n" +
-            "};\n" +
-
-            "$(\"#DraggableSortTable tbody\").sortable({\n" +
-               "helper: fixHelperModified,\n" +
-               "stop: updateIndex\n" +
-            "}).disableSelection();    \n" +
-
-         "});\n" +
-      "</script>\n" +
-      "</head>\n" +
-      "<body onload=\"loadSortableList()\">\n" +
-         "<div id=\"water\"></div>\n" +
-         "<div id=\"maincontent\">\n" +
-         "<div id=\"contentnosidemenu\">\n" +
-
-         "<textarea id=\"SortableList\" style=\"display:none;\"></textarea>\n" +
-         "<div id=\"ControlsRow\">\n" +
-
-         "<!-- This is added as a line spacer -->\n" +
-         "<div style=\"height:12px;width:100px;\"></div>\n" +
-         "<div>  <!-- Beginning of a new line -->\n" +
-         "</div>  <!-- End of a new line -->\n" +
-
-         "<div style=\"clear:both;\"></div>  <!-- Moving to a new line, so do a clear -->\n" +
-            "<input type=\"Button\" value=\"Save Order\" onClick=\"SaveOrder()\"/>\n" +
-            "<input type=\"Button\" value=\"Cancel\" onClick=\"CancelOrder()\"/>\n" +
-         "</div>\n" +
-
-         "<!-- This is added as a line spacer -->\n" +
-         "<div style=\"height:20px;width:100px;\"></div>\n" +
-         "<div>  <!-- Beginning of a new line -->\n" +
-         "</div>  <!-- End of a new line -->\n" +
-         "<div style=\"clear:both;\"></div>  <!-- Moving to a new line, so do a clear -->\n" +
-
-         "<div id=\"zDontKnowWhyThisIsHere\" class=\"zDontKnowWhyThisIsHere\"></div>\n" +
-         "<form id=\"InvisibleLink\" target=\"_blank\">\n" +
-            table +
-         "</form>\n" +
-         "</div>   <!-- This is the end tag for the div 'contentnosidemenu' -->\n" +
-         "</div>   <!-- This is the end tag for the div 'maincontent' -->\n" +
-      "</body>\n" +
-   "</html>";
-   console.log( HTMLstring );
-
-// var mySortWindow = window.open();
-// var mySortWindow = window.open("","mySortWindow","height=100,width=200");
-   var mySortWindow = window.open( "xyz", "_self", "toolbar=yes, menubar=yes scrollbars=yes, resizable=yes, top=300, left=600, height=800, width=1000" );
-   var myDocument = mySortWindow.document;
-   myDocument.write( HTMLstring );
-// mySortWindow.document.getElementById("RawJson").value = g_JsonNewLabelA; // jsonStringToJsonObject( g_JsonNewLabel );
-// var rawJson = myDocument.getElementById("RawJson")
-// rawJason.outerHTML = jsonStringToJsonObject( g_JsonNewLabel );
-   myDocument.close();
-// mySortWindow.onload = function() {
-//   alert( "On Load" );
-// };
-   return mySortWindow;
-}
-*/
-
 function getSortOrder( tableId ) {
    var elTable = document.getElementById( tableId );
    var elView = document.getElementById( "zView" );
    var viewName = elView.value;
    var elEntity = document.getElementById( "zEntity" );
    var entityName = elEntity.value;
+   var elNextJsp = document.getElementById( "zNextJsp" );
+   var nextJsp = elNextJsp.value;
    var arrRowOrderIdx = new Array( elTable.rows.length - 1 );
    for ( var row = 0; row < arrRowOrderIdx.length; row++ ) {
       arrRowOrderIdx[row] = elTable.rows[row + 1].cells[0].innerText;
    }
 
-   var url = "sortorder?taskID=" + window.TaskId + "&action=reorder&viewName=" + viewName + "&entityName=" + entityName;
+   var url = "sortorder?taskID=" + window.TaskId + "&action=reorder&viewName=" + viewName + "&entityName=" + entityName + "&nextJsp=" + nextJsp;
    $.ajax({ url: url,
             type: "post", // string defining the HTTP method to use for the request: GET (default) or POST
             contentType: "application/json; charset=utf-8",
@@ -931,7 +809,17 @@ function getSortOrder( tableId ) {
          // beforeSend - callback function that is executed before the request is sent
             success: function( data, textStatus, jqXHR ) {
                         console.log( "reorder: success status: " + textStatus + "  data: " + data + "  jqXHR: " + jqXHR );
-                        GOTO_SystemListPrimaryRegistrants();
+                     // document.wSystemListPrimaryRegistrants.zAction.value = "AdminDeletePrimaryRegistrant";
+                     // document.wSystemListPrimaryRegistrants.submit( ); somewhere???
+                        var jsonObj = jsonStringToJsonObject( data );
+                        var nextJsp = jsonObj[0]["nextJsp"];
+                     // alert( "Next JSP: " + nextJsp );
+                     // window.location.replace( "/" + nextJsp );
+                     // window.navigate( nextJsp );
+                     // window.location.assign( "/" + nextJsp );
+                     // window.location.reload();
+                     // window.parent.location = window.parent.location.href;
+                        ReturnToJsp();
                      },
             error:   function( jqXHR, textStatus, errorThrown ) {
                         console.log( "reorder: error xhr response: " + jqXHR.responseText + "  status: " + textStatus + "  error: " + errorThrown );
@@ -940,20 +828,16 @@ function getSortOrder( tableId ) {
                         console.log( "reorder: complete status: " + textStatus + "  response: " + jqXHR.responseText );
                      }
    });
-
-
+   
    return arrRowOrderIdx;
 }
-   
-function buildSortWindow( taskId, viewName, entityName, title, arrColumnTitles, tableId )
+
+function buildSortTableHtml( arrColumnTitles, tableId )
 {
-   var k, col, row, rc;
+   var k, col, row;
    var strOdd;
-   if ( title === "" ) {
-      title = "Drag Sort";
-   }
-   var table = "<table cols=" + arrColumnTitles.length + " style=\"margin-left:100;padding-left:0;border-left:0\" id=\"DraggableSortTable\">\n" +
-               "<thead bgcolor=green><tr>\n<th>Order</th>\n";
+   var table = "<table style=\"margin-left:100;padding-left:0;border-left:0\" id=\"DraggableSortTable\">\n" +
+               "<thead><tr>\n<th>Order</th>\n";
    for ( k = 0; k < arrColumnTitles.length; k++ ) {
       table += "<th>" + arrColumnTitles[k] + "</th>\n";
    }
@@ -972,13 +856,10 @@ function buildSortWindow( taskId, viewName, entityName, title, arrColumnTitles, 
       }
    }
    // we have the columns we are displaying in arrColIdx
-// for ( k = 0; k < arrColIdx.length; k++ ) {
-//    txt += " " + arrColIdx[k];
-// }
 
    // now build the table data
    for ( row = 1; row < elTable.rows.length; row++ ) {
-      strOdd = (row % 2) != 0 ? " class='odd'" : "";
+      strOdd = (row % 2) !== 0 ? " class='odd'" : "";
       table += "<tr" + strOdd + ">\n";
       table += "<td class=\"index\" nowrap><a href=\"#\" id=\"Order::" + row + "\">" + row + "</a></td>\n";
       for ( col = 0; col < arrColIdx.length; col++ ) {
@@ -988,7 +869,22 @@ function buildSortWindow( taskId, viewName, entityName, title, arrColumnTitles, 
    }
    table += "</tbody>\n";
    table += "</table>\n";
+   return table;
+/* var HTMLstring = "<div>" + table + "</div>";
+   console.log( HTMLstring );
+   return HTMLstring;
+*/
+}
 
+function buildSortWindow( taskId, viewName, entityName, nextJsp, title, arrColumnTitles, tableId )
+{
+// var mySortWindow = window.open();
+// var mySortWindow = window.open("","mySortWindow","height=100,width=200");
+   var mySortWindow = window.open( "xyz", "_self", "toolbar=yes, menubar=yes scrollbars=yes, resizable=yes, top=300, left=600, height=800, width=1000" );
+   if ( title === "" ) {
+      title = "Drag Sort";
+   }
+   var table = buildSortTableHtml( arrColumnTitles, tableId );
    var HTMLstring =
    "<html>\n" +
       "<head>\n<title>" + title + "</title>\n" +
@@ -1022,8 +918,27 @@ function buildSortWindow( taskId, viewName, entityName, title, arrColumnTitles, 
          "function loadSortableList() {\n" +
          // "alert('loadSortableList has fired!');\n" +
          "}\n" +
-         "function SaveOrder() { var arrRowOrderIdx = getSortOrder( \"DraggableSortTable\" ); alert( 'Save Order: ' + arrRowOrderIdx.toString() ); };\n" +
-         "function CancelOrder() { alert( 'Cancel Order' ); }\n" +
+         "function SaveOrder() {\n" +
+            "var arrRowOrderIdx = getSortOrder( \"DraggableSortTable\" );\n" +
+         // "alert( 'Save Order: ' + arrRowOrderIdx.toString() );\n" +
+         "};\n" +
+         "function CancelOrder() {\n" +
+         // "alert( 'Cancel Order' );\n" +
+            "open( location, '_self' ).close();\n" +
+         "}\n" +
+         "function ReturnToJsp() {\n" +
+         // "alert( 'ReturnToJsp' );\n" +
+            "var sortWindow = document.getElementById( \"zSortWindow\" ).value;\n" +
+            "var sortWindow2 = window.sortWindow;\n" +
+            "alert( \"Sort Window: \" + sortWindow );\n" +
+            "alert( \"Sort Window2: \" + sortWindow2 );\n" +
+         // "var x = document.getElementsByTagName(\"form\");\n" +
+         // "alert( \"Form Id: \" + x[0].id );\n" +
+            "document.InvisibleLink.zAction.value = \"SystemListPrimaryRegistrants\";\n" +
+            "document.InvisibleLink.submit();\n" +
+            "open( location, '_self' ).close();\n" +
+         // "sortWindow.close();\n" +
+         "}\n" +
       "</script>\n" +
       "<script>\n" +
          "$(document).ready( function() { // Once the page has loaded and is ready, the alert below will fire.\n" +
@@ -1092,22 +1007,20 @@ function buildSortWindow( taskId, viewName, entityName, title, arrColumnTitles, 
          "<div style=\"clear:both;\"></div>  <!-- Moving to a new line, so do a clear -->\n" +
 
          "<div id=\"zDontKnowWhyThisIsHere\" class=\"zDontKnowWhyThisIsHere\"></div>\n" +
-         "<form id=\"InvisibleLink\" target=\"_blank\">\n" +
+         "<form id=\"InvisibleLink\" name=\"InvisibleLink\" target=\"_blank\">\n" +
             table +
-            
+         "<input name=\"zSortWindow\" id=\"zSortWindow\" type=\"hidden\" value=\"" + mySortWindow + "\">\n" +
+         "<input name=\"zAction\" id=\"zAction\" type=\"hidden\" value=\"NOVALUE\">\n" +
          "<input name=\"zView\" id=\"zView\" type=\"hidden\" value=\"" + viewName + "\">\n" +
          "<input name=\"zEntity\" id=\"zEntity\" type=\"hidden\" value=\"" + entityName + "\">\n" +
-            
+         "<input name=\"zNextJsp\" id=\"zNextJsp\" type=\"hidden\" value=\"" + nextJsp + "\">\n" +
          "</form>\n" +
          "</div>   <!-- This is the end tag for the div 'contentnosidemenu' -->\n" +
          "</div>   <!-- This is the end tag for the div 'maincontent' -->\n" +
       "</body>\n" +
    "</html>";
-   console.log( HTMLstring );
+   console.log( "Generated HTML: " + HTMLstring );
 
-// var mySortWindow = window.open();
-// var mySortWindow = window.open("","mySortWindow","height=100,width=200");
-   var mySortWindow = window.open( "xyz", "_self", "toolbar=yes, menubar=yes scrollbars=yes, resizable=yes, top=300, left=600, height=800, width=1000" );
    var myDocument = mySortWindow.document;
    myDocument.write( HTMLstring );
 // mySortWindow.document.getElementById("RawJson").value = g_JsonNewLabelA; // jsonStringToJsonObject( g_JsonNewLabel );
@@ -1121,53 +1034,26 @@ function buildSortWindow( taskId, viewName, entityName, title, arrColumnTitles, 
 }
 
 // buildSortHtml( "List Primary Registrants",  [ "Name", "Login", "Description" ], "GEPrimaryRegistrant" );
-
-function buildSortHtml( taskId, title, arrColumnTitles, tableId )
-{
-   var k, col, row, rc;
-   var strOdd;
-   if ( title === "" ) {
-      title = "Drag Sort";
-   }
-   var table = "<table style=\"\" id=\"DraggableSortTable\">\n" +
-               "<thead><tr>\n<th>Order</th>\n";
-   for ( k = 0; k < arrColumnTitles.length; k++ ) {
-      table += "<th>" + arrColumnTitles[k] + "</th>\n";
-   }
-   table += "</tr></thead><tbody>";
-
-   var elTable = document.getElementById( tableId );
-   var txt;
-   var arrColIdx = new Array( arrColumnTitles.length );
-   for ( col = 0; col < elTable.rows[0].cells.length; col++ ) {
-      txt = elTable.rows[0].cells[col].innerText;
-      for ( k = 0; k < arrColumnTitles.length; k++ ) {
-         if ( txt === arrColumnTitles[k] ) {
-            arrColIdx[k] = col;
-            break; // inside only
-         }
+/*
+    dialog = $( "#dialog-form" ).dialog({
+      autoOpen: false,
+      height: 300,
+      width: 350,
+      modal: true,
+      buttons: {
+        "Create an account": function() {
+           // addUser
+        },
+        Cancel: function() {
+          dialog.dialog( "close" );
+        }
+      },
+      close: function() {
+        form[ 0 ].reset();
+        allFields.removeClass( "ui-state-error" );
       }
-   }
-   // we have the columns we are displaying in arrColIdx
-
-   // now build the table data
-   for ( row = 1; row < elTable.rows.length; row++ ) {
-      strOdd = (row % 2) != 0 ? " class='odd'" : "";
-      table += "<tr" + strOdd + ">\n";
-      table += "<td class=\"index\" nowrap><a href=\"#\" id=\"Order::" + row + "\">" + row + "</a></td>\n";
-      for ( col = 0; col < arrColIdx.length; col++ ) {
-         table += "<td nowrap><a href=\"#\" id=\"" + arrColumnTitles[col] + "::" + row + "\">" + elTable.rows[row].cells[arrColIdx[col]].innerText + "</a></td>\n";
-      }
-      table += "</tr>\n";
-   }
-   table += "</tbody>\n";
-   table += "</table>\n";
-
-   var HTMLstring = "<div>" + table + "</div>";
-   console.log( HTMLstring );
-   return HTMLstring;
-}
-
+    });
+*/
 function testJsonPath() {
    var jsonObject = jsonStringToJsonObject( g_JsonStore );
    var arg1 = "$..author";

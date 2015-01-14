@@ -23,6 +23,7 @@ import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.Iterator;
 import java.util.Set;
+//import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -134,6 +135,7 @@ public class SortOrderServlet extends HttpServlet {
       logger.debug( "Order JSON view name: " + viewName + "  entity name: " + entityName );
       logger.debug( "Order JSON: " + strJson );
       if ( action.compareTo( "reorder" ) == 0 ) {
+         String nextJsp = request.getParameter( "nextJsp" );
          if ( v != null ) {
             try {
                View v2 = v.newView( );
@@ -151,165 +153,18 @@ public class SortOrderServlet extends HttpServlet {
                // I think this means we are at the top
                logger.debug( "reorder error: " + ze.getMessage() );
             }
-            response.setContentType( "text/json" );
-            response.getWriter().write( new Gson().toJson( strJson ) );
          }
+         response.setContentType( "text/json" );
+         response.getWriter().write( new Gson().toJson( "{ \"nextJsp\" : \"" + nextJsp + "\" }" ) );
+      // RequestDispatcher dispatcher = context.getRequestDispatcher( "/" + nextJsp );
+      // dispatcher.forward( request, response );
+      // String strURL = response.encodeRedirectURL( nextJsp );
+      // response.sendRedirect( strURL );
       } else {
          //nothing to show
          response.setStatus( HttpServletResponse.SC_NO_CONTENT );
       }
    }
-
-/*
-       put( zREPOS_NONE,  CursorPosition.NONE  );
-       put( zREPOS_FIRST, CursorPosition.FIRST );
-       put( zREPOS_LAST,  CursorPosition.LAST  );
-       put( zREPOS_NEXT,  CursorPosition.NEXT  );
-       put( zREPOS_PREV,  CursorPosition.PREV  );
-   protected int MoveSubobject( View tgtView, String tgtEntityName,
-                                View srcView, String srcEntityName, int pos, int repos )
-   {
-      EntityCursor tgtCursor = tgtView.cursor( tgtEntityName );
-      EntityCursor srcCursor = srcView.cursor( srcEntityName );
-      int  nRC = tgtCursor.moveSubobject( CURSOR_POS.get( pos ), srcCursor, CURSOR_POS.get( repos ) ).toInt();
-
-      return nRC;
-   }
-
-
-public int 
-MoveMasterProductUp( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW mPrimReg REGISTERED AS mPrimReg
-   zVIEW    mPrimReg = new zVIEW( );
-   //:VIEW mTempReg BASED ON LOD  mPrimReg
-   zVIEW    mTempReg = new zVIEW( );
-   //:INTEGER lMove
-   int      lMove = 0;
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mPrimReg, "mPrimReg", ViewToWindow, zLEVEL_TASK );
-
-   //:CreateViewFromView( mTempReg, mPrimReg )
-   CreateViewFromView( mTempReg, mPrimReg );
-   //:lMove = wWebXfer.Root.MoveIncrement
-   {MutableInt mi_lMove = new MutableInt( lMove );
-       GetIntegerFromAttribute( mi_lMove, wWebXfer, "Root", "MoveIncrement" );
-   lMove = mi_lMove.intValue( );}
-   //:IF lMove <= 0
-   if ( lMove <= 0 )
-   { 
-      //:lMove = 1
-      lMove = 1;
-   } 
-
-   //:END
-
-   //:LOOP WHILE lMove > 0
-   while ( lMove > 0 )
-   { 
-      //:SET CURSOR PREVIOUS mTempReg.MasterProduct
-      RESULT = SetCursorPrevEntity( mTempReg, "MasterProduct", "" );
-      //:lMove = lMove - 1
-      lMove = lMove - 1;
-   } 
-
-   //:END
-
-   //:MoveSubobject( mTempReg, "MasterProduct",
-   //:               mPrimReg, "MasterProduct",
-   //:               zPOS_PREV, zREPOS_PREV )
-   MoveSubobject( mTempReg, "MasterProduct", mPrimReg, "MasterProduct", zPOS_PREV, zREPOS_PREV );
-   //:DropView( mTempReg )
-   DropView( mTempReg );
-
-   //:// We now accept the Master Label to maintain order!
-   //:COMMIT mPrimReg
-   RESULT = CommitObjectInstance( mPrimReg );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:MoveMasterProductDown( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-MoveMasterProductDown( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW mPrimReg REGISTERED AS mPrimReg
-   zVIEW    mPrimReg = new zVIEW( );
-   //:VIEW mTempReg BASED ON LOD  mPrimReg
-   zVIEW    mTempReg = new zVIEW( );
-   //:INTEGER lMove
-   int      lMove = 0;
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mPrimReg, "mPrimReg", ViewToWindow, zLEVEL_TASK );
-
-   //:CreateViewFromView( mTempReg, mPrimReg )
-   CreateViewFromView( mTempReg, mPrimReg );
-   //:lMove = wWebXfer.Root.MoveIncrement
-   {MutableInt mi_lMove = new MutableInt( lMove );
-       GetIntegerFromAttribute( mi_lMove, wWebXfer, "Root", "MoveIncrement" );
-   lMove = mi_lMove.intValue( );}
-   //:IF lMove <= 0
-   if ( lMove <= 0 )
-   { 
-      //:lMove = 1
-      lMove = 1;
-   } 
-
-   //:END
-
-   //:LOOP WHILE lMove > 0
-   while ( lMove > 0 )
-   { 
-      //:SET CURSOR NEXT mTempReg.MasterProduct
-      RESULT = SetCursorNextEntity( mTempReg, "MasterProduct", "" );
-      //:lMove = lMove - 1
-      lMove = lMove - 1;
-   } 
-
-   //:END
-
-   //:MoveSubobject( mTempReg, "MasterProduct",
-   //:               mPrimReg, "MasterProduct",
-   //:               zPOS_NEXT, zREPOS_NEXT )
-   MoveSubobject( mTempReg, "MasterProduct", mPrimReg, "MasterProduct", zPOS_NEXT, zREPOS_NEXT );
-   //:DropView( mTempReg )
-   DropView( mTempReg );
-
-   //:// We now accept the Master Label to maintain order!
-   //:COMMIT mPrimReg
-   RESULT = CommitObjectInstance( mPrimReg );
-   return( 0 );
-// END
-} 
-
-   
-   private void moveItem( int oldIdx, int newIdx, EntityCursor ec1, EntityCursor ec2 ) {
-      int k;
-
-      ec2.setFirst();
-      int item = arr[oldIdx];
-      if ( oldIdx < newIdx ) {
-         for ( k = oldIdx; k < newIdx; k++ ) {
-            arr[k] = arr[k + 1];
-         }
-      } else {
-         for ( k = oldIdx; k > newIdx; k-- ) {
-            arr[k] = arr[k - 1];
-         }
-      }
-      arr[newIdx] = item;
-   }
-*/
 
    private void displayEntity( View v, String entityName1, String attrName1, String entityName2, String attrName2, String entityName3, String attrName3, String msg ) {
       EntityCursor ec1 = v.getCursor( entityName1 );
@@ -359,18 +214,15 @@ MoveMasterProductDown( View     ViewToWindow )
                   shifts++;
                }
             }
-            // int arrayOrderIndex = [ 0, 1, 3, 2, 4, 6, 5 ];
             if ( arrIdx[k] + shifts > k ) {
                if ( arrIdx[k] + shifts >= 0 && arrIdx[k] + shifts < n ) {
                   if ( arrIdx[k] + shifts > k + 1 ) {
                      arrShift[shiftMax++] = arrIdx[k];
                   }
                   ecWork.setFirst();
-               // moveItem( arrIdx[k] + shifts, k, ecOrig, ecWork );
                   for ( j = 0; j < arrIdx[k] + shifts; j++ ) {
                      ecWork.setNext();
                   }
-               // ecWork.moveSubobject( CursorPosition.PREV, ecOrig, CursorPosition.NEXT );
                   if ( k == 0 ) {
                      ecOrig.moveSubobject( CursorPosition.PREV, ecWork, CursorPosition.NONE );
                   } else {

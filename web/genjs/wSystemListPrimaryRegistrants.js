@@ -252,8 +252,9 @@ function SortPrimaryRegistrant( )
    {
       // Javascript code entered by user.
 
-      buildSortWindow( window.TaskId, "lPrimReg", "PrimaryRegistrant", "Sort Primary Registrants List",
-                       ["Name","Login","Description"], "GridPrimaryRegistrant" );
+      var sortWindow = buildSortWindow( window.TaskId, "lPrimReg", "PrimaryRegistrant", "wSystemListPrimaryRegistrants.jsp",
+                                        "Sort Primary Registrants List", ["Name","Login","Description"], "GridPrimaryRegistrant" );
+      window.sortWindow = sortWindow;
 
       // END of Javascript code entered by user.
 
