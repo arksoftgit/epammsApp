@@ -86,7 +86,7 @@ private void displayEntity( View v, String entityName1, String attrName1, String
 }
 
 private boolean orderByNewIndex( String arr, View vOrig, String entityName ) {
-   vOrig.log().info( "Order Array subscript: " + arr );
+// vOrig.log().info( "Order Array subscript: " + arr );
 // vOrig.logObjectInstance();
    int n = arr.length();
    int [] arrIdx = new int[n];
@@ -94,23 +94,27 @@ private boolean orderByNewIndex( String arr, View vOrig, String entityName ) {
    int pos = 0;
    int commaIdx = arr.indexOf( ",", pos );
    while ( commaIdx >= 0 ) {
-      vOrig.log().info( "Position: " + pos + "Comma index: " + commaIdx );
+   // vOrig.log().info( "Position: " + pos + "  Comma index: " + commaIdx );
       arrIdx[maxIdx++] = (Integer.parseInt( arr.substring( pos, commaIdx ).toString() )) - 1; // change from subsript to zero-based index
       pos = commaIdx + 1;
       commaIdx = arr.indexOf( ",", pos );
    }
    if ( pos < n ) {
-      arrIdx[maxIdx] = (Integer.parseInt( arr.substring(pos).toString())) - 1; // change from subsript to zero-based index
+      arrIdx[maxIdx++] = (Integer.parseInt( arr.substring(pos).toString())) - 1; // change from subsript to zero-based index
    }
-   vOrig.log().info( "Order array index: " + arrIdx.toString() );
+   n = maxIdx;
+// vOrig.log().info( "Order array index length: " + n );
+// for ( pos = 0; pos < n; pos++ ) {
+//    vOrig.log().info( "Order array index[" + pos + "] = " + arrIdx[pos] );
+// }
    View v = vOrig.newView( );
    v.copyCursors( vOrig );
-   displayEntity( v, "PrimaryRegistrant", "dRegistrantNameID",
-                     "Organization", "LoginName",
-                     "Organization", "Description", "Before orderByNewIndex" );
+// displayEntity( v, "PrimaryRegistrant", "dRegistrantNameID",
+//                   "Organization", "LoginName",
+//                  "Organization", "Description", "Before orderByNewIndex" );
    EntityCursor ecOrig = vOrig.getCursor( entityName );
    if ( ecOrig.isNull() == false ) {
-      n = arrIdx.length;
+      
       int swaps = 0;
       int[] arrShift = new int[n];
       int shiftMax = 0;
@@ -144,18 +148,18 @@ private boolean orderByNewIndex( String arr, View vOrig, String entityName ) {
                   ecOrig.moveSubobject( CursorPosition.NEXT, ecWork, CursorPosition.NEXT );
                }
                swaps++;
-               displayEntity( v, "PrimaryRegistrant", "dRegistrantNameID",
-                                 "Organization", "LoginName",
-                                 "Organization", "Description", "After swap (" + swaps + ")" );
+            // displayEntity( v, "PrimaryRegistrant", "dRegistrantNameID",
+            //                   "Organization", "LoginName",
+            //                   "Organization", "Description", "After swap (" + swaps + ")" );
             } else {
                break; // error???
             }
          }
       }
-      displayEntity( v, "PrimaryRegistrant", "dRegistrantNameID",
-                        "Organization", "LoginName",
-                        "Organization", "Description", "After orderByNewIndex Swaps: " + swaps );
-      vOrig.logObjectInstance();
+   // displayEntity( v, "PrimaryRegistrant", "dRegistrantNameID",
+   //                   "Organization", "LoginName",
+   //                   "Organization", "Description", "After orderByNewIndex Swaps: " + swaps );
+   // vOrig.logObjectInstance();
       return true;
    } else {
       return false;
