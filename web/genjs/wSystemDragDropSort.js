@@ -268,6 +268,9 @@ function ApplySortOrder( )
       // Javascript code entered by user.
 
       // Need some javascript here to apply the sort order
+      var arrRowOrderIdx = getSortOrderArray( "DraggableSortTable" );
+      document.wSystemDragDropSort.zOrderArray.value = arrRowOrderIdx.toString();
+
 
       // END of Javascript code entered by user.
 
@@ -328,6 +331,8 @@ function mApplySortOrder( )
       // Need some javascript here to apply the sort order
       var arrRowOrderIdx = getSortOrderArray( "DraggableSortTable" );
       document.wSystemDragDropSort.zOrderArray.value = arrRowOrderIdx.toString();
+
+
       // END of Javascript code entered by user.
 
       _DisableFormElements( true );
