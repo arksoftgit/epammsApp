@@ -786,18 +786,23 @@ function openDebugWin()
    return myDebugWindow;
 }
 
-function getSortOrder( tableId ) {
+function getSortOrderArray( tableId ) {
    var elTable = document.getElementById( tableId );
+   var arrRowOrderIdx = new Array( elTable.rows.length - 1 );
+   for ( var row = 0; row < arrRowOrderIdx.length; row++ ) {
+      arrRowOrderIdx[row] = elTable.rows[row + 1].cells[0].innerText;
+   }
+   return arrRowOrderIdx;
+}
+
+function getSortOrder( tableId ) {
    var elView = document.getElementById( "zView" );
    var viewName = elView.value;
    var elEntity = document.getElementById( "zEntity" );
    var entityName = elEntity.value;
    var elNextJsp = document.getElementById( "zNextJsp" );
    var nextJsp = elNextJsp.value;
-   var arrRowOrderIdx = new Array( elTable.rows.length - 1 );
-   for ( var row = 0; row < arrRowOrderIdx.length; row++ ) {
-      arrRowOrderIdx[row] = elTable.rows[row + 1].cells[0].innerText;
-   }
+   var arrRowOrderIdx = getSortOrderArray( tableId );
 
    var url = "sortorder?taskID=" + window.TaskId + "&action=reorder&viewName=" + viewName + "&entityName=" + entityName + "&nextJsp=" + nextJsp;
    $.ajax({ url: url,
@@ -832,11 +837,11 @@ function getSortOrder( tableId ) {
    return arrRowOrderIdx;
 }
 
-function buildSortTableHtml( arrColumnTitles, tableId )
+function buildSortTableHtml( viewName, entityName, arrColumnTitles, tableId )
 {
    var k, col, row;
    var strOdd;
-   var table = "<table style=\"margin-left:100;padding-left:0;border-left:0\" id=\"DraggableSortTable\">\n" +
+   var table = "<table style=\"margin:100;padding-left:0;border-left:0\" id=\"DraggableSortTable\">\n" +
                "<thead><tr>\n<th>Order</th>\n";
    for ( k = 0; k < arrColumnTitles.length; k++ ) {
       table += "<th>" + arrColumnTitles[k] + "</th>\n";
@@ -867,8 +872,11 @@ function buildSortTableHtml( arrColumnTitles, tableId )
       }
       table += "</tr>\n";
    }
-   table += "</tbody>\n";
-   table += "</table>\n";
+   table += "</tbody>\n</table>\n" +
+      "<input name=\"zView\" id=\"zView\" type=\"hidden\" value=\"" + viewName + "\">\n" +
+      "<input name=\"zEntity\" id=\"zEntity\" type=\"hidden\" value=\"" + entityName + "\">\n" +
+      "<input name=\"zOrderArray\" id=\"zOrderArray\" type=\"hidden\" value=\"NOVALUE\">\n";
+
    return table;
 /* var HTMLstring = "<div>" + table + "</div>";
    console.log( HTMLstring );
@@ -884,7 +892,7 @@ function buildSortWindow( taskId, viewName, entityName, nextJsp, title, arrColum
    if ( title === "" ) {
       title = "Drag Sort";
    }
-   var table = buildSortTableHtml( arrColumnTitles, tableId );
+   var table = buildSortTableHtml( viewName, entityName, arrColumnTitles, tableId );
    var HTMLstring =
    "<html>\n" +
       "<head>\n<title>" + title + "</title>\n" +
@@ -1011,8 +1019,6 @@ function buildSortWindow( taskId, viewName, entityName, nextJsp, title, arrColum
             table +
          "<input name=\"zSortWindow\" id=\"zSortWindow\" type=\"hidden\" value=\"" + mySortWindow + "\">\n" +
          "<input name=\"zAction\" id=\"zAction\" type=\"hidden\" value=\"NOVALUE\">\n" +
-         "<input name=\"zView\" id=\"zView\" type=\"hidden\" value=\"" + viewName + "\">\n" +
-         "<input name=\"zEntity\" id=\"zEntity\" type=\"hidden\" value=\"" + entityName + "\">\n" +
          "<input name=\"zNextJsp\" id=\"zNextJsp\" type=\"hidden\" value=\"" + nextJsp + "\">\n" +
          "</form>\n" +
          "</div>   <!-- This is the end tag for the div 'contentnosidemenu' -->\n" +

@@ -252,12 +252,18 @@ function SortPrimaryRegistrant( )
    {
       // Javascript code entered by user.
 
-      var sortWindow = buildSortWindow( window.TaskId, "lPrimReg", "PrimaryRegistrant", "wSystemListPrimaryRegistrants.jsp",
-                                        "Sort Primary Registrants List", ["Name","Login","Description"], "GridPrimaryRegistrant" );
-      window.sortWindow = sortWindow;
+   // var sortWindow = buildSortWindow( window.TaskId, "lPrimReg", "PrimaryRegistrant", "wSystemListPrimaryRegistrants.jsp",
+   //                                   "Sort Primary Registrants List", ["Name","Login","Description"], "GridPrimaryRegistrant" );
+   // window.sortWindow = sortWindow;
+
+      document.wSystemListPrimaryRegistrants.zTableRowSelect.value = buildSortTableHtml( "lPrimReg", "PrimaryRegistrant", ["Name","Login","Description"], "GridPrimaryRegistrant" );
 
       // END of Javascript code entered by user.
 
+      _DisableFormElements( true );
+
+      document.wSystemListPrimaryRegistrants.zAction.value = "SortPrimaryRegistrant";
+      document.wSystemListPrimaryRegistrants.submit( );
    }
 }
 

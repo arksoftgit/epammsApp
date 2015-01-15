@@ -273,8 +273,14 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
+      // We are borrowing zTableRowSelect for the moment and this code is hardwired for the moment
+      wWebXA = task.getViewByName( "wWebXfer" );
+      String strHtml = (String) request.getParameter( "zTableRowSelect" );
+      wWebXA.cursor( "Root" ).setAttribute( "HTML", strHtml, "" );
+      // We are borrowing zTableRowSelect for the moment and this code is hardwired for the moment
+
       // Next Window
-      strNextJSP_Name = wSystem.SetWebRedirection( vKZXMLPGO, wSystem.zWAB_StayOnWindowWithRefresh, "", "" );
+      strNextJSP_Name = wSystem.SetWebRedirection( vKZXMLPGO, wSystem.zWAB_StartModalSubwindow, "wSystem", "DragDropSort" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -596,7 +602,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/css.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/sts.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/validations.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
@@ -755,7 +760,7 @@ else
    <input name="zPopupWindowSZX" id="zPopupWindowSZX" type="hidden" value="<%=strPopupWindowSZX%>">
    <input name="zPopupWindowSZY" id="zPopupWindowSZY" type="hidden" value="<%=strPopupWindowSZY%>">
    <input name="zErrorFlag" id="zErrorFlag" type="hidden" value="<%=strErrorFlag%>">
-   <input name="zTimeout" id="zTimeout" type="hidden" value="300">
+   <input name="zTimeout" id="zTimeout" type="hidden" value="<%=nTimeout%>">
    <input name="zSolicitSave" id="zSolicitSave" type="hidden" value="<%=strSolicitSave%>">
 
    <div name="ShowVMLError" id="ShowVMLError" class="ShowVMLError">
