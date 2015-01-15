@@ -6875,7 +6875,8 @@ InitLoginWindow( View     ViewToWindow )
 // //:wWebXfer.Root.AttemptLoginName = "Lonza"
    //:wWebXfer.Root.AttemptLoginName = "Admin"
 // SetAttributeFromString( wWebXfer, "Root", "AttemptLoginName", "Lonza" );
-   SetAttributeFromString( wWebXfer, "Root", "AttemptLoginName", "Admin" );
+// SetAttributeFromString( wWebXfer, "Root", "AttemptLoginName", "Admin" );
+   SetAttributeFromString( wWebXfer, "Root", "AttemptLoginName", "atp" );
    //:wWebXfer.Root.AttemptUserName = "Admin"
    SetAttributeFromString( wWebXfer, "Root", "AttemptUserName", "Admin" );
    //:wWebXfer.Root.AttemptPassword = "xxxxxxxx"

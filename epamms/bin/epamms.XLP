@@ -1,4 +1,4 @@
-z1000-Zeidon    EPAMMS   TZCMLPLO 01/09/15   20:37:33 1.0a2    
+z1000-Zeidon    EPAMMS   TZCMLPLO 01/15/15   17:03:47 1.0a2    
 eLPLR      1
 aName      epamms
 aDesc      ePamms Application
@@ -1373,8 +1373,8 @@ aStatus    1
 aUpdateInd 2
 aName      wWebXfer
 aDesc      Web Work/Transfer object
-aLastSyncDate 20141110150712334
-aLastUpdateDate 20141110150712334
+aLastSyncDate 20150115113038828
+aLastUpdateDate 20150115113038828
 
 eW_MetaDef 3
 aCPLR_ZKey 68568663
@@ -1961,8 +1961,8 @@ aStatus    1
 aUpdateInd 2
 aName      wSystem
 aDesc      ePamms System Settings
-aLastSyncDate 20150109203733462
-aLastUpdateDate 20150109203733462
+aLastSyncDate 20150115170347565
+aLastUpdateDate 20150115170347565
 
 eW_MetaType 2
 aType      12
