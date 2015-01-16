@@ -111,7 +111,7 @@ private boolean orderByNewIndex( String arr, View vOrig, String entityName ) {
    v.copyCursors( vOrig );
 // displayEntity( v, "PrimaryRegistrant", "dRegistrantNameID",
 //                   "Organization", "LoginName",
-//                  "Organization", "Description", "Before orderByNewIndex" );
+//                   "Organization", "Description", "Before orderByNewIndex" );
    EntityCursor ecOrig = vOrig.getCursor( entityName );
    if ( ecOrig.isNull() == false ) {
       
@@ -613,6 +613,7 @@ else
    
    // this is hand coded!!!
    strTextDisplayValue = wWebXA.cursor( "Root" ).getAttribute( "HTML" ).getString();
+   wWebXA.cursor( "Root" ).setAttribute( "HTML", "" ); // done with it
    // this is hand coded!!!
 
    if ( VmlOperation.isValid( wWebXA ) )
