@@ -961,7 +961,7 @@ function buildSortWindow( taskId, viewName, entityName, nextJsp, title, arrColum
             "$( \"#DraggableSortTable\" ).sortable();\n" +
             "$( \"#DraggableSortTable\" ).disableSelection();\n" +
 
-            "var fixHelperModified = function(e, tr) {\n" +
+            "var fixCloneColumnWidth = function(e, tr) { // when dragging the row, maintains widths of columns within clone\n" +
                "var $originals = tr.children();\n" +
                "var $helper = tr.clone();\n" +
                "$helper.children().each(function(index) {\n" +
@@ -969,9 +969,9 @@ function buildSortWindow( taskId, viewName, entityName, nextJsp, title, arrColum
                "});\n" +
                "return $helper;\n" +
             "},\n" +
-            "updateIndex = function(e, ui) {\n" +
+            "updateOddEven = function(e, ui) { // reset the odd/even row class\n" +
                "$('td.index', ui.item.parent()).each(function (k) {\n" +
-                  "// $(this).html(k + 1);\n" +
+                  "// $(this).html(k + 1);\n" + // uncomment to have row index change to new order
                   "if ( k % 2 ) {\n" +
                      "// console.log( \"adding class odd at: \" + k );\n" +
                      "$(this).closest(\"tr\").addClass( \"odd\" );\n" +
@@ -983,8 +983,8 @@ function buildSortWindow( taskId, viewName, entityName, nextJsp, title, arrColum
             "};\n" +
 
             "$(\"#DraggableSortTable tbody\").sortable({\n" +
-               "helper: fixHelperModified,\n" +
-               "stop: updateIndex\n" +
+               "helper: fixCloneColumnWidth,\n" +
+               "stop: updateOddEven\n" +
             "}).disableSelection();    \n" +
 
          "});\n" +

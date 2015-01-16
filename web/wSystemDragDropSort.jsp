@@ -86,7 +86,7 @@ private void displayEntity( View v, String entityName1, String attrName1, String
 }
 
 private boolean orderByNewIndex( String arr, View vOrig, String entityName ) {
-// vOrig.log().info( "Order Array subscript: " + arr );
+   vOrig.log().info( "Order Array subscript: " + arr );
 // vOrig.logObjectInstance();
    int n = arr.length();
    int [] arrIdx = new int[n];

@@ -209,17 +209,17 @@ function _AfterPageLoaded( )
       $( "#DraggableSortTable" ).sortable();
       $( "#DraggableSortTable" ).disableSelection();
 
-      var fixHelperModified = function(e, tr) {
+      var fixCloneColumnWidth = function(e, tr) {
          var $originals = tr.children();
          var $helper = tr.clone();
-         $helper.children().each(function(index) {
+         $helper.children().each(function(index) { // when dragging the row, maintains widths of columns within clone
             $(this).width($originals.eq(index).width());
          });
          return $helper;
       },
-      updateIndex = function(e, ui) {
+      updateOddEven = function(e, ui) { // reset the odd/even row class
          $('td.index', ui.item.parent()).each(function (k) {
-            // $(this).html(k + 1);
+            // $(this).html(k + 1); // uncomment to have row index change to new order
             if ( k % 2 ) {
                // console.log( "adding class odd at: " + k );
                $(this).closest("tr").addClass( "odd" );
@@ -231,8 +231,8 @@ function _AfterPageLoaded( )
       };
 
       $("#DraggableSortTable tbody").sortable({
-         helper: fixHelperModified,
-         stop: updateIndex
+         helper: fixCloneColumnWidth,
+         stop: updateOddEven
       }).disableSelection();    
 
    });
