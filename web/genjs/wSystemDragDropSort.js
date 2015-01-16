@@ -209,7 +209,7 @@ function _AfterPageLoaded( )
       $( "#DraggableSortTable" ).sortable();
       $( "#DraggableSortTable" ).disableSelection();
 
-      var fixCloneColumnWidth = function(e, tr) {
+      var fixCloneColumnWidths = function(e, tr) {
          var $originals = tr.children();
          var $helper = tr.clone();
          $helper.children().each(function(index) { // when dragging the row, maintains widths of columns within clone
@@ -231,7 +231,7 @@ function _AfterPageLoaded( )
       };
 
       $("#DraggableSortTable tbody").sortable({
-         helper: fixCloneColumnWidth,
+         helper: fixCloneColumnWidths,
          stop: updateOddEven
       }).disableSelection();    
 

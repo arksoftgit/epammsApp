@@ -341,6 +341,7 @@ if ( strActionToProcess != null )
       View vOrig = task.getViewByName( strView );
       String arr = (String) request.getParameter( "zOrderArray" );
       orderByNewIndex( arr, vOrig, strEntity );
+   // vOrig.commit(); required when doing a real sort ... bombs here because lPrimReg cannot be committed
       // This is hand coded.
 
       // Next Window

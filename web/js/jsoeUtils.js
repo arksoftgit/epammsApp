@@ -961,7 +961,7 @@ function buildSortWindow( taskId, viewName, entityName, nextJsp, title, arrColum
             "$( \"#DraggableSortTable\" ).sortable();\n" +
             "$( \"#DraggableSortTable\" ).disableSelection();\n" +
 
-            "var fixCloneColumnWidth = function(e, tr) { // when dragging the row, maintains widths of columns within clone\n" +
+            "var fixCloneColumnWidths = function(e, tr) { // when dragging the row, maintains widths of columns within clone\n" +
                "var $originals = tr.children();\n" +
                "var $helper = tr.clone();\n" +
                "$helper.children().each(function(index) {\n" +
@@ -983,7 +983,7 @@ function buildSortWindow( taskId, viewName, entityName, nextJsp, title, arrColum
             "};\n" +
 
             "$(\"#DraggableSortTable tbody\").sortable({\n" +
-               "helper: fixCloneColumnWidth,\n" +
+               "helper: fixCloneColumnWidths,\n" +
                "stop: updateOddEven\n" +
             "}).disableSelection();    \n" +
 
