@@ -527,9 +527,9 @@ else
 <html>
 <head>
 
-<title>User LoginYZ</title>
+<title>User Login</title>
 
-<%@ include file="./include/head.inc" %>
+<%@ include file="./include/myheader.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
 <!-- log a user out.  Timeout.inc is not used if the dialog or window has a timeout value set. -->
 <%@ include file="./include/timeout.inc" %>
@@ -538,12 +538,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/labeldesigner.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/jsonpath-0.8.0.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/jsoeTestData.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/jsoeUtils.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/jsoe.js"></script>
-<<script language="JavaScript" type="text/javascript" src="./js/jsoeObjectBrowser.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wStartUpUserLogin.js"></script>
 
 </head>
@@ -952,8 +946,6 @@ else
 </div>   <!-- This is the end tag for the div 'contentnosidemenu' -->
 
 </div>   <!-- This is the end tag for the div 'maincontent' -->
-
-<%@ include file="./include/footer.inc" %>
 
 </div>  <!-- This is the end tag for wrapper -->
 
