@@ -529,7 +529,7 @@ else
 
 <title>User Login</title>
 
-<%@ include file="./include/myheader.inc" %>
+<%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
 <!-- log a user out.  Timeout.inc is not used if the dialog or window has a timeout value set. -->
 <%@ include file="./include/timeout.inc" %>
