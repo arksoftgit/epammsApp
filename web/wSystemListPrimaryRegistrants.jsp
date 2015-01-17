@@ -263,29 +263,6 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "SortPrimaryRegistrant" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemListPrimaryRegistrants", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // We are borrowing zTableRowSelect for the moment and this code is hardwired for the moment
-      wWebXA = task.getViewByName( "wWebXfer" );
-      String strHtml = (String) request.getParameter( "zTableRowSelect" );
-      wWebXA.cursor( "Root" ).setAttribute( "HTML", strHtml, "" );
-      // We are borrowing zTableRowSelect for the moment and this code is hardwired for the moment
-
-      // Next Window
-      strNextJSP_Name = wSystem.SetWebRedirection( vKZXMLPGO, wSystem.zWAB_StartModalSubwindow, "wSystem", "DragDropSort" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
    while ( bDone == false && StringUtils.equals( strActionToProcess, "AdminNewPrimaryRegistrant" ) )
    {
       bDone = true;
@@ -607,10 +584,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSystemListPrimaryRegistrants.js"></script>
 
-
-<script language="JavaScript" type="text/javascript" src="./js/jsoe.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/jsoeUtils.js"></script>
-
 </head>
 
 <!-- 
@@ -784,14 +757,9 @@ else
 <table cols=0 style="width:692px;"  class="grouptable">
 
 <tr>
-<td valign="top"  class="newbutton" style="width:118px;">
+<td valign="top"  class="newbutton" style="width:78px;">
 <% /* PBAdminNewPrimaryRegistrant:PushBtn */ %>
 <button type="button" class="newbutton"  id="PBAdminNewPrimaryRegistrant" name="PBAdminNewPrimaryRegistrant" value="New" onclick="AdminNewPrimaryRegistrant( )"  style="width:78px;height:26px;">New</button>
-
-</td>
-<td valign="top"  class="newbutton" style="width:78px;">
-<% /* PBSort:PushBtn */ %>
-<button type="button" class="newbutton"  id="PBSort" name="PBSort" value="Sort" onclick="SortPrimaryRegistrant( )"  style="width:78px;height:26px;">Sort</button>
 
 </td>
 </tr>

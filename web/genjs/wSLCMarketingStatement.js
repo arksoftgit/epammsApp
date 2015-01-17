@@ -238,6 +238,28 @@ function AcceptMarketingStatement( )
    }
 }
 
+function SortMarketingStatements( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+       document.wSLCMarketingStatement.zTableRowSelect.value = buildSortTableHtml( "mSubLC", "S_MarketingUsageOrdering", ["Usage Type","Usage Name"], "GridMarketingUsage" );
+
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wSLCMarketingStatement.zAction.value = "SortMarketingStatements";
+      document.wSLCMarketingStatement.submit( );
+   }
+}
+
 function CancelMarketingStatement( )
 {
 

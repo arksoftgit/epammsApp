@@ -60,7 +60,7 @@ public int DoInputMapping( HttpServletRequest request,
    mSubLC = task.getViewByName( "mSubLC" );
    if ( VmlOperation.isValid( mSubLC ) )
    {
-      // Grid: Grid4
+      // Grid: GridMarketingUsage
       iTableRowCnt = 0;
 
       // We are creating a temp view to the grid view so that if there are 
@@ -225,6 +225,29 @@ if ( strActionToProcess != null )
 
       // Next Window
       strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReturnToParent, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "SortMarketingStatements" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCMarketingStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // We are borrowing zTableRowSelect for the moment and this code is hardwired for the moment
+      wWebXA = task.getViewByName( "wWebXfer" );
+      String strHtml = (String) request.getParameter( "zTableRowSelect" );
+      wWebXA.cursor( "Root" ).setAttribute( "HTML", strHtml, "" );
+      // We are borrowing zTableRowSelect for the moment and this code is hardwired for the moment
+
+      // Next Window
+      strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartModalSubwindow, "wSystem", "DragDropSort" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -427,6 +450,9 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSLCMarketingStatement.js"></script>
+
+<script language="JavaScript" type="text/javascript" src="./js/jsoe.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jsoeUtils.js"></script>
 
 </head>
 
@@ -723,14 +749,17 @@ else
 <div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox4:GroupBox */ %>
 
-<div id="GroupBox4" name="GroupBox4"   style="float:left;position:relative; width:686px; height:30px;">  <!-- GroupBox4 --> 
+<div id="GroupBox4" name="GroupBox4"   style="float:left;position:relative; width:798px; height:30px;">  <!-- GroupBox4 --> 
 
 <% /* Text4:Text */ %>
 
-<label class="listheader"  id="Text4" name="Text4" style="width:434px;height:16px;position:absolute;left:12px;top:4px;">Usage Entries for Imbedding in Statement Text</label>
+<label class="listheader"  id="Text4" name="Text4" style="width:434px;height:16px;position:absolute;left:12px;top:4px;">Usage Entries for Embedding in Statement Text</label>
 
 <% /* PushBtn3:PushBtn */ %>
 <button type="button" class="newbutton" name="PushBtn3" id="PushBtn3" value="" onclick="GOTO_SelectMarketingUsageEntries( )" style="width:118px;height:26px;position:absolute;left:560px;top:4px;">Select/Remove</button>
+
+<% /* PBSort:PushBtn */ %>
+<button type="button" class="newbutton" name="PBSort" id="PBSort" value="" onclick="SortMarketingStatements( )" style="width:78px;height:26px;position:absolute;left:698px;top:4px;">Sort</button>
 
 
 </div>  <!--  GroupBox4 --> 
@@ -744,8 +773,8 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* Grid4:Grid */ %>
-<table  cols=2 style=""  name="Grid4" id="Grid4">
+<% /* GridMarketingUsage:Grid */ %>
+<table  cols=2 style=""  name="GridMarketingUsage" id="GridMarketingUsage">
 
 <thead><tr>
 
@@ -771,23 +800,23 @@ try
       String strGridEditCtl4;
       String strGridEditCtl5;
       
-      View vGrid4;
-      vGrid4 = mSubLC.newView( );
-      csrRC2 = vGrid4.cursor( "S_MarketingUsageOrdering" ).setFirst(  );
+      View vGridMarketingUsage;
+      vGridMarketingUsage = mSubLC.newView( );
+      csrRC2 = vGridMarketingUsage.cursor( "S_MarketingUsageOrdering" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGrid4.cursor( "S_MarketingUsageOrdering" ).getEntityKey( );
+         lEntityKey = vGridMarketingUsage.cursor( "S_MarketingUsageOrdering" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          strButtonName = "SelectButton" + strEntityKey;
 
          strGridEditCtl4 = "";
-         nRC = vGrid4.cursor( "S_MarketingUsage" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGridMarketingUsage.cursor( "S_MarketingUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl4 = vGrid4.cursor( "S_MarketingUsage" ).getStringFromAttribute( "UsageType", "FullUsageType" );
+            strGridEditCtl4 = vGridMarketingUsage.cursor( "S_MarketingUsage" ).getStringFromAttribute( "UsageType", "FullUsageType" );
 
             if ( strGridEditCtl4 == null )
                strGridEditCtl4 = "";
@@ -797,10 +826,10 @@ try
             strGridEditCtl4 = "&nbsp";
 
          strGridEditCtl5 = "";
-         nRC = vGrid4.cursor( "S_MarketingUsage" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGridMarketingUsage.cursor( "S_MarketingUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl5 = vGrid4.cursor( "S_MarketingUsage" ).getStringFromAttribute( "dDisplayUsageName", "" );
+            strGridEditCtl5 = vGridMarketingUsage.cursor( "S_MarketingUsage" ).getStringFromAttribute( "dDisplayUsageName", "" );
 
             if ( strGridEditCtl5 == null )
                strGridEditCtl5 = "";
@@ -819,9 +848,9 @@ try
 </tr>
 
 <%
-         csrRC2 = vGrid4.cursor( "S_MarketingUsageOrdering" ).setNextContinue( );
+         csrRC2 = vGridMarketingUsage.cursor( "S_MarketingUsageOrdering" ).setNextContinue( );
       }
-      vGrid4.drop( );
+      vGridMarketingUsage.drop( );
    }
 }
 catch (Exception e)

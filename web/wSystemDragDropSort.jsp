@@ -64,27 +64,23 @@ public int DoInputMapping( HttpServletRequest request,
 
    return nMapError;
 }
-
+/*
 // beginning of:  added by hand
-private void displayEntity( View v, String entityName1, String attrName1, String entityName2, String attrName2, String entityName3, String attrName3, String msg ) {
+private void displayEntity( View v, String entityName1, String attrName1, String entityName2, String attrName2, String msg ) {
    EntityCursor ec1 = v.getCursor( entityName1 );
    CursorResult cr = ec1.setFirst();
    EntityCursor ec2;
-   EntityCursor ec3;
    v.log().info( msg );
    while ( cr == CursorResult.SET ) {
       ec2 = v.getCursor( entityName2 );
-      ec3 = v.getCursor( entityName3 );
       String attr1 = ec1.getStringFromAttribute( "ID" ).toString() + "  " + ec1.getStringFromAttribute( attrName1 ).toString();
       String attr2 = (ec2.isNull()) ? "null" : ec2.getStringFromAttribute( attrName2 ).toString();
-      String attr3 = (ec3.isNull()) ? "null" : ec3.getStringFromAttribute( attrName3 ).toString();
       v.log().info( entityName1 + "." + attrName1 +": " + attr1 + "   " +
-                    entityName2 + "." + attrName2 +": " + attr2 + "   " +
-                    entityName3 + "." + attrName3 +": " + attr3 );
+                    entityName2 + "." + attrName2 +": " + attr2 );
       cr = ec1.setNext();
    }
 }
-
+*/
 private boolean orderByNewIndex( String arr, View vOrig, String entityName ) {
    vOrig.log().info( "Order Array subscript: " + arr );
 // vOrig.logObjectInstance();
@@ -109,9 +105,8 @@ private boolean orderByNewIndex( String arr, View vOrig, String entityName ) {
 // }
    View v = vOrig.newView( );
    v.copyCursors( vOrig );
-// displayEntity( v, "PrimaryRegistrant", "dRegistrantNameID",
-//                   "Organization", "LoginName",
-//                   "Organization", "Description", "Before orderByNewIndex" );
+// displayEntity( v, "S_MarketingUsage", "UsageType",
+//                   "S_MarketingUsage", "dDisplayUsageName", "Before orderByNewIndex" );
    EntityCursor ecOrig = vOrig.getCursor( entityName );
    if ( ecOrig.isNull() == false ) {
       
@@ -148,17 +143,15 @@ private boolean orderByNewIndex( String arr, View vOrig, String entityName ) {
                   ecOrig.moveSubobject( CursorPosition.NEXT, ecWork, CursorPosition.NEXT );
                }
                swaps++;
-            // displayEntity( v, "PrimaryRegistrant", "dRegistrantNameID",
-            //                   "Organization", "LoginName",
-            //                   "Organization", "Description", "After swap (" + swaps + ")" );
+            // displayEntity( v, "S_MarketingUsage", "UsageType",
+            //                "S_MarketingUsage", "dDisplayUsageName", "After swap (" + swaps + ")" );
             } else {
                break; // error???
             }
          }
       }
-   // displayEntity( v, "PrimaryRegistrant", "dRegistrantNameID",
-   //                   "Organization", "LoginName",
-   //                   "Organization", "Description", "After orderByNewIndex Swaps: " + swaps );
+   // displayEntity( v, "S_MarketingUsage", "UsageType",
+   //                "S_MarketingUsage", "dDisplayUsageName", "After orderByNewIndex Swaps: " + swaps );
    // vOrig.logObjectInstance();
       return true;
    } else {
@@ -334,15 +327,15 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
-      // This is hand coded.
+      // This is hand coded!!!
       wWebXA = task.getViewByName( "wWebXfer" );
       String strView = (String) request.getParameter( "zView" );
       String strEntity = (String) request.getParameter( "zEntity" );
       View vOrig = task.getViewByName( strView );
       String arr = (String) request.getParameter( "zOrderArray" );
       orderByNewIndex( arr, vOrig, strEntity );
-   // vOrig.commit(); required when doing a real sort ... bombs here because lPrimReg cannot be committed
-      // This is hand coded.
+      vOrig.commit();
+      // This is hand coded!!!
 
       // Next Window
       strNextJSP_Name = wSystem.SetWebRedirection( vKZXMLPGO, wSystem.zWAB_ReturnToParent, "", "" );
