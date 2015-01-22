@@ -16,6 +16,7 @@
 
     Copyright 2009-2010 QuinSoft
 **/
+
 package com.quinsoft.epamms;
 
 import com.quinsoft.zeidon.ActivateFlags;
@@ -2342,6 +2343,8 @@ SubregistrantManagement( View     ViewToWindow )
    zVIEW    lPrimReg = new zVIEW( );
    //:VIEW lSubreg  BASED ON LOD  lSubreg
    zVIEW    lSubreg = new zVIEW( );
+   //:VIEW wWebXfer REGISTERED AS wWebXfer
+   zVIEW    wWebXfer = new zVIEW( );
    //:INTEGER lID
    int      lID = 0;
    int      lTempInteger_0 = 0;
@@ -2350,6 +2353,23 @@ SubregistrantManagement( View     ViewToWindow )
    zVIEW    vTempViewVar_1 = new zVIEW( );
 
    RESULT = GetViewByName( qOrganiz, "qOrganizLogin", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+
+   //:IF wWebXfer.Root.KeyRole != "P" // Primary registrant
+   if ( CompareAttributeToString( wWebXfer, "Root", "KeyRole", "P" ) != 0 )
+   { 
+      //:MessageSend( ViewToWindow, "", "New Subregistrant",
+      //:             "Must be logged in as a Primary registrant to create new Subregistrants.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "New Subregistrant", "Must be logged in as a Primary registrant to create new Subregistrants.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:   
+   //:END
 
    //:GET VIEW lPrimReg NAMED "lPrimReg"
    RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );

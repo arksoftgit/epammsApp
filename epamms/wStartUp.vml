@@ -144,7 +144,8 @@ InitLoginWindow( VIEW ViewToWindow )
 
    // Remove these lines prior to deployment!!!
 // wWebXfer.Root.AttemptLoginName = "Lonza"
-   wWebXfer.Root.AttemptLoginName = "Admin"
+// wWebXfer.Root.AttemptLoginName = "Admin"
+   wWebXfer.Root.AttemptLoginName = "atp"
    wWebXfer.Root.AttemptUserName = "Admin"
    wWebXfer.Root.AttemptPassword = "xxxxxxxx"
    // End of: Remove these lines prior to deployment!!!
@@ -1631,7 +1632,17 @@ SubregistrantManagement( VIEW ViewToWindow )
    VIEW qOrganiz REGISTERED AS qOrganizLogin
    VIEW lPrimReg BASED ON LOD  lPrimReg
    VIEW lSubreg  BASED ON LOD  lSubreg
+   VIEW wWebXfer REGISTERED AS wWebXfer
    INTEGER lID
+
+   IF wWebXfer.Root.KeyRole != "P" // Primary registrant
+      MessageSend( ViewToWindow, "", "New Subregistrant",
+                   "Must be logged in as a Primary registrant to create new Subregistrants.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      RETURN 2
+      
+   END
 
    GET VIEW lPrimReg NAMED "lPrimReg"
    IF lPrimReg != 0

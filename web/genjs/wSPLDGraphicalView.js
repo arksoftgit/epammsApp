@@ -31,7 +31,7 @@ function msieversion( )
 
 function _OnAlmostTimeout()
 {
-   if ( _IsDocDisabled( ) === false )
+   if ( _IsDocDisabled( ) == false )
    {
       var tStart   = new Date();
 
@@ -55,7 +55,7 @@ function _OnAlmostTimeout()
 
 function _OnTimeout( )
 {
-   if ( _IsDocDisabled( ) === false )
+   if ( _IsDocDisabled( ) == false )
    {
       _DisableFormElements( true );
 
@@ -66,7 +66,7 @@ function _OnTimeout( )
 
 function _BeforePageUnload( )
 {
-   if ( _IsDocDisabled( ) === false )
+   if ( _IsDocDisabled( ) == false )
    {
       // If the user clicked on the window close box, then
       // isWindowClosing will be true.  Otherwise if the user
@@ -91,7 +91,7 @@ function _IsDocDisabled( )
       theForm = document.forms[ j ];
       for ( k = 0; k < theForm.length; k++ )
       {
-         if ( theForm.elements[ k ].name === "zDisable" )
+         if ( theForm.elements[ k ].name == "zDisable" )
             return theForm.elements[ k ].disabled;
       }
    }
@@ -109,7 +109,7 @@ function _DisableFormElements( bDisabled )
    var k;
    var bRC = false;
 
-   if ( bDisabled && timerID !== null )
+   if ( bDisabled && timerID != null )
    {
       clearTimeout( timerID );
       timerID = null;
@@ -123,7 +123,7 @@ function _DisableFormElements( bDisabled )
       theForm = document.forms[ j ];
       for ( k = 0; k < theForm.length; k++ )
       {
-         if (theForm.elements[ k ].disabled === true)
+         if (theForm.elements[ k ].disabled == true)
              theForm.elements[ k ].disabled = false;
       }
    }
@@ -137,12 +137,12 @@ function _DisableFormElements( bDisabled )
       {
          type = theForm.elements[ k ].type;
 
-         if ( type === "button" || type === "submit" || (type !== null && type.indexOf( "select" ) === 0) )
+         if ( type == "button" || type == "submit" || (type != null && type.indexOf( "select" ) == 0) )
          {
             theForm.elements[ k ].disabled = bDisabled;
          }
          else
-         if ( theForm.elements[ k ].name === "zDisable" )
+         if ( theForm.elements[ k ].name == "zDisable" )
          {
             theForm.elements[ k ].disabled = bDisabled;
             bRC = true;
@@ -165,16 +165,16 @@ function _AfterPageLoaded( )
 // _DisableFormElements( false );
 
    var szFocusCtrl = document.wSPLDGraphicalView.zFocusCtrl.value;
-   if ( szFocusCtrl !== "" && szFocusCtrl !== "null" )
+   if ( szFocusCtrl != "" && szFocusCtrl != "null" )
       eval( 'document.wSPLDGraphicalView.' + szFocusCtrl + '.focus( )' );
 
    // This is where we put out a message from the previous iteration on this window
    var szMsg = document.wSPLDGraphicalView.zError.value;
-   if ( szMsg !== "" )
+   if ( szMsg != "" )
       alert( szMsg ); // "Houston ... We have a problem"
 
    szMsg = document.wSPLDGraphicalView.zOpenFile.value;
-   if ( szMsg !== "" )
+   if ( szMsg != "" )
    {
       var NewWin = window.open( szMsg );
       if ( NewWin )
@@ -189,7 +189,7 @@ function _AfterPageLoaded( )
    document.wSPLDGraphicalView.zError.value = "";
    document.wSPLDGraphicalView.zOpenFile.value = "";
 
-   if ( timerID !== null )
+   if ( timerID != null )
    {
       clearTimeout( timerID );
       timerID = null;
@@ -213,10 +213,10 @@ function CheckAllInGrid(id, CheckBoxName)
    var check = id.checked;
    var wcontrol, i = 0;
 
-   while ( (wcontrol = wcontrols[ i++ ]) !== null )
+   while ( (wcontrol = wcontrols[ i++ ]) != null )
    {
       //Check to see if the checkbox belongs to this table then check it.
-      if ( wcontrol.name.indexOf( CheckBoxName ) !== -1 && wcontrol.type === 'checkbox' )
+      if ( wcontrol.name.indexOf( CheckBoxName ) != -1 && wcontrol.type == 'checkbox' )
       {
          wcontrol.checked = check;
       }
@@ -229,7 +229,7 @@ function GOTO_UpdateBlockComponent()
    // This is for indicating whether the user hit the window close box.
    isWindowClosing = false;
 
-   if ( _IsDocDisabled( ) === false )
+   if ( _IsDocDisabled( ) == false )
    {
       _DisableFormElements( true );
 
@@ -244,45 +244,11 @@ function ReturnUpdateLLD( )
    // This is for indicating whether the user hit the window close box.
    isWindowClosing = false;
 
-   if ( _IsDocDisabled( ) === false )
+   if ( _IsDocDisabled( ) == false )
    {
       _DisableFormElements( true );
 
       document.wSPLDGraphicalView.zAction.value = "ReturnUpdateLLD";
-      document.wSPLDGraphicalView.submit( );
-   }
-}
-
-function CLEAN_SPLD_Data( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) === false )
-   {
-      _DisableFormElements( true );
-
-      document.wSPLDGraphicalView.zAction.value = "CLEAN_SPLD_Data";
-      document.wSPLDGraphicalView.submit( );
-   }
-}
-
-function DeletePanelEntry( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) === false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wSPLDGraphicalView.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wSPLDGraphicalView.zAction.value = "DeletePanelEntry";
       document.wSPLDGraphicalView.submit( );
    }
 }
@@ -293,7 +259,7 @@ function GENERATE_SPLD_Label( )
    // This is for indicating whether the user hit the window close box.
    isWindowClosing = false;
 
-   if ( _IsDocDisabled( ) === false )
+   if ( _IsDocDisabled( ) == false )
    {
       _DisableFormElements( true );
 
@@ -308,45 +274,11 @@ function GENERATE_SPLD_LabelDottedBorders( )
    // This is for indicating whether the user hit the window close box.
    isWindowClosing = false;
 
-   if ( _IsDocDisabled( ) === false )
+   if ( _IsDocDisabled( ) == false )
    {
       _DisableFormElements( true );
 
       document.wSPLDGraphicalView.zAction.value = "GENERATE_SPLD_LabelDottedBorders";
-      document.wSPLDGraphicalView.submit( );
-   }
-}
-
-function GOTO_AddPanelEntry( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) === false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wSPLDGraphicalView.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wSPLDGraphicalView.zAction.value = "GOTO_AddPanelEntry";
-      document.wSPLDGraphicalView.submit( );
-   }
-}
-
-function GOTO_DeleteSPLD( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) === false )
-   {
-      _DisableFormElements( true );
-
-      document.wSPLDGraphicalView.zAction.value = "GOTO_DeleteSPLD";
       document.wSPLDGraphicalView.submit( );
    }
 }
@@ -357,7 +289,7 @@ function GOTO_DisplaySPLD_Components( )
    // This is for indicating whether the user hit the window close box.
    isWindowClosing = false;
 
-   if ( _IsDocDisabled( ) === false )
+   if ( _IsDocDisabled( ) == false )
    {
       _DisableFormElements( true );
 
@@ -366,66 +298,4 @@ function GOTO_DisplaySPLD_Components( )
    }
 }
 
-function GOTO_GenerateLLD( )
-{
 
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) === false )
-   {
-      _DisableFormElements( true );
-
-      document.wSPLDGraphicalView.zAction.value = "GOTO_GenerateLLD";
-      document.wSPLDGraphicalView.submit( );
-   }
-}
-
-function GOTO_SelectLLD_ForSPLD( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) === false )
-   {
-      _DisableFormElements( true );
-
-      document.wSPLDGraphicalView.zAction.value = "GOTO_SelectLLD_ForSPLD";
-      document.wSPLDGraphicalView.submit( );
-   }
-}
-
-function GOTO_UpdatePanelEntry( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) === false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wSPLDGraphicalView.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wSPLDGraphicalView.zAction.value = "GOTO_UpdatePanelEntry";
-      document.wSPLDGraphicalView.submit( );
-   }
-}
-
-function SaveSPLD( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) === false )
-   {
-      _DisableFormElements( true );
-
-      document.wSPLDGraphicalView.zAction.value = "SaveSPLD";
-      document.wSPLDGraphicalView.submit( );
-   }
-}

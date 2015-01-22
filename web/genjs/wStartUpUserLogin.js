@@ -267,55 +267,7 @@ function AdministratorLogin( )
 
 function FORGOT_Password( )
 {
-   orderByNewIndex( arrayOrderIndex0, arrayOriginal0 );
-   korderbyIndex( karrayOrderIndex0, karrayOriginal0 );
-   orderByNewIndex( arrayOrderIndex1, arrayOriginal1 );
-   korderbyIndex( karrayOrderIndex1, karrayOriginal1 );
-   orderByNewIndex( arrayOrderIndex2, arrayOriginal2 );
-   korderbyIndex( karrayOrderIndex2, karrayOriginal2 );
-   orderByNewIndex( arrayOrderIndex3, arrayOriginal3 );
-   korderbyIndex( karrayOrderIndex3, karrayOriginal3 );
 
-   var arrHeader = [ "NickName", "ProperName", "Description" ];
-   var myWindow = openSortWin( "Nick Names", "viewName", "entityName", arrHeader, null );
-
-/*
-Order index: 1, 2, 4, 3, 5, 6, 0
-wStartUpUserLogin.js:313 Original array: A, B, C, D, E, F, G
-wStartUpUserLogin.js:335 After move (with shift: 0) from: 1 to: 0   B, A, C, D, E, F, G
-wStartUpUserLogin.js:335 After move (with shift: 0) from: 2 to: 1   B, C, A, D, E, F, G
-wStartUpUserLogin.js:335 After move (with shift: 0) from: 4 to: 2   B, C, E, A, D, F, G
-wStartUpUserLogin.js:335 After move (with shift: 1) from: 3 to: 3   B, C, E, D, A, F, G
-wStartUpUserLogin.js:335 After move (with shift: 0) from: 5 to: 4   B, C, E, D, F, A, G
-wStartUpUserLogin.js:335 After move (with shift: 0) from: 6 to: 5   B, C, E, D, F, G, A
-wStartUpUserLogin.js:349 Swaps: 6  final array: B, C, E, D, F, G, A
-wStartUpUserLogin.js:358 Expected final array: B, C, E, D, F, G, A
-wStartUpUserLogin.js:391 final karray swaps(11): B, C, E, D, F, G, A
-wStartUpUserLogin.js:306 Order index: 6, 0, 1, 2, 3, 4, 5
-wStartUpUserLogin.js:313 Original array: A, B, C, D, E, F, G
-wStartUpUserLogin.js:335 After move (with shift: 0) from: 6 to: 0   G, A, B, C, D, E, F
-wStartUpUserLogin.js:349 Swaps: 1  final array: G, A, B, C, D, E, F
-wStartUpUserLogin.js:358 Expected final array: G, A, B, C, D, E, F
-wStartUpUserLogin.js:391 final karray swaps(1): G, A, B, C, D, E, F
-wStartUpUserLogin.js:306 Order index: 1, 2, 3, 4, 5, 6, 0
-wStartUpUserLogin.js:313 Original array: A, B, C, D, E, F, G
-wStartUpUserLogin.js:335 After move (with shift: 0) from: 1 to: 0   B, A, C, D, E, F, G
-wStartUpUserLogin.js:335 After move (with shift: 0) from: 2 to: 1   B, C, A, D, E, F, G
-wStartUpUserLogin.js:335 After move (with shift: 0) from: 3 to: 2   B, C, D, A, E, F, G
-wStartUpUserLogin.js:335 After move (with shift: 0) from: 4 to: 3   B, C, D, E, A, F, G
-wStartUpUserLogin.js:335 After move (with shift: 0) from: 5 to: 4   B, C, D, E, F, A, G
-wStartUpUserLogin.js:335 After move (with shift: 0) from: 6 to: 5   B, C, D, E, F, G, A
-wStartUpUserLogin.js:349 Swaps: 6  final array: B, C, D, E, F, G, A
-wStartUpUserLogin.js:358 Expected final array: B, C, D, E, F, G, A
-wStartUpUserLogin.js:391 final karray swaps(6): B, C, D, E, F, G, A
-wStartUpUserLogin.js:306 Order index: 0, 1, 3, 2, 4, 6, 5
-wStartUpUserLogin.js:313 Original array: A, B, C, D, E, F, G
-wStartUpUserLogin.js:335 After move (with shift: 0) from: 3 to: 2   A, B, D, C, E, F, G
-wStartUpUserLogin.js:335 After move (with shift: 0) from: 6 to: 5   A, B, D, C, E, G, F
-wStartUpUserLogin.js:349 Swaps: 2  final array: A, B, D, C, E, G, F
-wStartUpUserLogin.js:358 Expected final array: A, B, D, C, E, G, F
-wStartUpUserLogin.js:391 final karray swaps(6): A, B, D, C, E, G, F
-*/
    // This is for indicating whether the user hit the window close box.
    isWindowClosing = false;
 
