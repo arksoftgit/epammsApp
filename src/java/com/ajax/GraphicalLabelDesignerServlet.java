@@ -405,7 +405,8 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                         }
                         if ( entity.compareTo( "LLD_SubBlock" ) == 0 ) {
                            EntityCursor cursor = vLLD.getCursor( entity );
-                           if ( cursor.isNull() == false && cursor.setToSubobject() ) {
+                           if ( cursor.isNull() == false ) {
+                              cursor.setToSubobject();
                            // logger.debug( "SetToSubobject Entity: " + entity + "  Depth: " + depth );
                               recurse = true;
                            // entity = "LLD_Block"; entity has to stay as LLD_Block for ei.getEntityDef().getName() check later on!!!

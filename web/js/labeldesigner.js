@@ -1067,8 +1067,8 @@ $(function() {
          $(this).css( "opacity", 0.75 );
       })
       .blur( function() {
-        pBlock.css( "opacity", 0.25 );
-        pBlock.hide();
+         pBlock.css( "opacity", 0.25 );
+         pBlock.hide();
       })
       .focus( function() {
          if ( selectedBlock ) {
@@ -1089,8 +1089,8 @@ $(function() {
          fLLD.linkTo(this); $(this).css( "opacity", 0.75 );
       })
       .blur( function() {
-        pLLD.css( "opacity", 0.25 );
-        pLLD.hide();
+         pLLD.css( "opacity", 0.25 );
+         pLLD.hide();
       })
       .focus( function() {
          if ( selectedLabel ) {
@@ -1132,16 +1132,21 @@ $(function() {
    $("#zBlockWidth")
       .blur( function () {
          var width = pixel2Scale( inch2px( $(this).val(), 4 ) ); // 2*g_pixelsBorder
-      // console.log( "block width attribute: " + $(this).val() + " ==> " + width );
+         // console.log( "block width attribute: " + $(this).val() + " ==> " + width );
          width = scaledInch2Pixel( $(this).val(), 0 );
-      // console.log( "scaled block width attribute: " + $(this).val() + " ==> " + width );
+         // console.log( "scaled block width attribute: " + $(this).val() + " ==> " + width );
          g_$current_block.css({ width : width });
       });
-   
+
    $("input.zeidon, select.zeidon")
+      .change( function(e) {
+         e.stopPropagation();
+         return false;
+      // alert( "Handler for .change() called." );
+      })
       .blur( function () {
-      // console.log( "updated zeidon block attributes" );
-      // var jsonObj = null;
+         // console.log( "updated zeidon block attributes" );
+         // var jsonObj = null;
          var entityAttr = $(this).data( "zmap" );
          if ( entityAttr ) {
             var n = entityAttr.indexOf( ".z_" );
@@ -1151,27 +1156,27 @@ $(function() {
             if ( entity === "block" ) {
                if ( g_$current_block ) {
                   g_updatedLLD = true;
-               // console.log( "updated block attribute: " + key + "  value: " + value );
+                  // console.log( "updated block attribute: " + key + "  value: " + value );
                   g_$current_block.data( key, value );
                }
-            // jsonObj = dataToJSON( $current_block );
+               // jsonObj = dataToJSON( $current_block );
             } else if ( entity === "page" ) {
                g_updatedLLD = true;
-            // console.log( "updated page attribute: " + key + "  value: " + value );
+               // console.log( "updated page attribute: " + key + "  value: " + value );
                $("#page").data( key, value );
-            // jsonObj = dataToJSON( $("#page") );
+               // jsonObj = dataToJSON( $("#page") );
             } else if ( entity === "label" ) {
                g_updatedLLD = true;
-            // console.log( "updated label attribute: " + key + "  value: " + value );
+               // console.log( "updated label attribute: " + key + "  value: " + value );
                $("#label").data( key, value );
             }
-            /*
+         /*
             var jsonOut = "jsonOut: \n";
             jQuery.each( jsonObj, function(i, val) {
-               jsonOut += "  ==> " + i + " - " + val + "\n";
+            jsonOut += "  ==> " + i + " - " + val + "\n";
             });
             alert( "jsonOut: " + jsonOut );
-            */
+         */
          }
       // displayElementData( "zeidon blur (after)", $(this) );
       });
@@ -1269,14 +1274,14 @@ $(function() {
    var isIE = false;
 
    function initRequest() {
-      if (window.XMLHttpRequest) {
-         if (navigator.userAgent.indexOf('MSIE') !== -1) {
+      if ( window.XMLHttpRequest ) {
+         if ( navigator.userAgent.indexOf('MSIE') !== -1 ) {
             isIE = true;
          }
          return new XMLHttpRequest();
-      } else if (window.ActiveXObject) {
+      } else if ( window.ActiveXObject ) {
          isIE = true;
-         return new ActiveXObject("Microsoft.XMLHTTP");
+         return new ActiveXObject( "Microsoft.XMLHTTP" );
       }
    }
 
