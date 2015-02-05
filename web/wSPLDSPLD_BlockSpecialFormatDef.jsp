@@ -35,7 +35,7 @@ public int DoInputMapping( HttpServletRequest request,
    String taskId = (String) session.getAttribute( "ZeidonTaskId" );
    Task task = objectEngine.getTaskById( taskId );
 
-   View mSPLDef = null;
+   View mSPLDefBlock = null;
    View mSPLDefPanel = null;
    View vGridTmp = null; // temp view to grid view
    View vRepeatingGrp = null; // temp view to repeating group view
@@ -58,11 +58,11 @@ public int DoInputMapping( HttpServletRequest request,
    if ( webMapping == false )
       session.setAttribute( "ZeidonError", null );
 
-   mSPLDef = task.getViewByName( "mSPLDef" );
-   if ( VmlOperation.isValid( mSPLDef ) )
+   mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
+   if ( VmlOperation.isValid( mSPLDefBlock ) )
    {
       // EditBox: EditBox6
-      nRC = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
+      nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
          strMapValue = request.getParameter( "EditBox6" );
@@ -71,7 +71,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox6", "", strMapValue );
             else
-               mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "MarginTop", strMapValue, "" );
+               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "MarginTop", strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -81,7 +81,7 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       // EditBox: EditBox7
-      nRC = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
+      nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
          strMapValue = request.getParameter( "EditBox7" );
@@ -90,7 +90,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox7", "", strMapValue );
             else
-               mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "MarginBottom", strMapValue, "" );
+               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "MarginBottom", strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -100,7 +100,7 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       // EditBox: EditBox8
-      nRC = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
+      nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
          strMapValue = request.getParameter( "EditBox8" );
@@ -109,7 +109,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox8", "", strMapValue );
             else
-               mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "MarginLeft", strMapValue, "" );
+               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "MarginLeft", strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -119,7 +119,7 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       // EditBox: EditBox9
-      nRC = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
+      nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
          strMapValue = request.getParameter( "EditBox9" );
@@ -128,7 +128,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox9", "", strMapValue );
             else
-               mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "MarginRight", strMapValue, "" );
+               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "MarginRight", strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -138,7 +138,7 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       // ComboBox: ComboBox2
-      nRC = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
+      nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
          strMapValue = request.getParameter( "hComboBox2" );
@@ -147,7 +147,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "ComboBox2", "", strMapValue );
             else
-               mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "TextAlign", strMapValue, "" );
+               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "TextAlign", strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -157,7 +157,7 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       // ComboBox: ComboBox3
-      nRC = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
+      nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
          strMapValue = request.getParameter( "hComboBox3" );
@@ -166,7 +166,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "ComboBox3", "", strMapValue );
             else
-               mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "FontFamily", strMapValue, "" );
+               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "FontFamily", strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -176,7 +176,7 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       // ComboBox: ComboBox4
-      nRC = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
+      nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
          strMapValue = request.getParameter( "hComboBox4" );
@@ -185,7 +185,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "ComboBox4", "", strMapValue );
             else
-               mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "FontSize", strMapValue, "" );
+               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "FontSize", strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -195,7 +195,7 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       // ComboBox: ComboBox5
-      nRC = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
+      nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
          strMapValue = request.getParameter( "hComboBox5" );
@@ -204,7 +204,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "ComboBox5", "", strMapValue );
             else
-               mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "FontWeight", strMapValue, "" );
+               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "FontWeight", strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -213,27 +213,27 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
-      // ComboBox: ComboBox6
-      nRC = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
+      // EditBox: TextColor
+      nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "hComboBox6" );
+         strMapValue = request.getParameter( "TextColor" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "ComboBox6", "", strMapValue );
+               VmlOperation.CreateMessage( task, "TextColor", "", strMapValue );
             else
-               mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "TextColor", strMapValue, "" );
+               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "TextColor", strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "ComboBox6", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "TextColor", e.getReason( ), strMapValue );
          }
       }
 
       // EditBox: EditBox1
-      nRC = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
+      nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
          strMapValue = request.getParameter( "EditBox1" );
@@ -242,7 +242,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox1", "", strMapValue );
             else
-               mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "TextLineHeight", strMapValue, "" );
+               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "TextLineHeight", strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -252,7 +252,7 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       // ComboBox: ComboBox7
-      nRC = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
+      nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
          strMapValue = request.getParameter( "hComboBox7" );
@@ -261,7 +261,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "ComboBox7", "", strMapValue );
             else
-               mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "BorderStyle", strMapValue, "" );
+               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "BorderStyle", strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -271,7 +271,7 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       // EditBox: EditBox10
-      nRC = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
+      nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
          strMapValue = request.getParameter( "EditBox10" );
@@ -280,7 +280,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox10", "", strMapValue );
             else
-               mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "BorderWidth", strMapValue, "" );
+               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "BorderWidth", strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -289,27 +289,27 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
-      // ComboBox: ComboBox8
-      nRC = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
+      // EditBox: BorderColor
+      nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "hComboBox8" );
+         strMapValue = request.getParameter( "BorderColor" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "ComboBox8", "", strMapValue );
+               VmlOperation.CreateMessage( task, "BorderColor", "", strMapValue );
             else
-               mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "BorderColor", strMapValue, "" );
+               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "BorderColor", strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "ComboBox8", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "BorderColor", e.getReason( ), strMapValue );
          }
       }
 
       // ComboBox: ComboBox10
-      nRC = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
+      nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
          strMapValue = request.getParameter( "hComboBox10" );
@@ -318,7 +318,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "ComboBox10", "", strMapValue );
             else
-               mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "TitlePosition", strMapValue, "" );
+               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "TitlePosition", strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -328,7 +328,7 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       // CheckBox: CheckBox2
-      nRC = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
+      nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
          strMapValue = request.getParameter( "CheckBox2" );
@@ -337,7 +337,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "CheckBox2", "", strMapValue );
             else
-               mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "CapitalizeTitleTextFlag", strMapValue, "" );
+               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "CapitalizeTitleTextFlag", strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -367,7 +367,7 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
          }  // checkExistenceofEntity
-      }
+   }
 
    if ( webMapping == true )
       return 2;
@@ -976,17 +976,17 @@ else
    else
    {
       strErrorColor = "";
-      mSPLDef = task.getViewByName( "mSPLDef" );
-      if ( VmlOperation.isValid( mSPLDef ) == false )
+      mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
+      if ( VmlOperation.isValid( mSPLDefBlock ) == false )
          task.log( ).debug( "Invalid View: " + "EditBox6" );
       else
       {
-         nRC = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
+         nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
             try
             {
-            strErrorMapValue = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "MarginTop", "" );
+            strErrorMapValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "MarginTop", "" );
             }
             catch (Exception e)
             {
@@ -999,7 +999,7 @@ else
             task.log( ).debug( "LLD_SpecialSectionAttrBlock.MarginTop: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSPLDef.LLD_SpecialSectionAttrBlock" );
+            task.log( ).debug( "Entity does not exist: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
       }
    }
 %>
@@ -1033,17 +1033,17 @@ else
    else
    {
       strErrorColor = "";
-      mSPLDef = task.getViewByName( "mSPLDef" );
-      if ( VmlOperation.isValid( mSPLDef ) == false )
+      mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
+      if ( VmlOperation.isValid( mSPLDefBlock ) == false )
          task.log( ).debug( "Invalid View: " + "EditBox7" );
       else
       {
-         nRC = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
+         nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
             try
             {
-            strErrorMapValue = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "MarginBottom", "" );
+            strErrorMapValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "MarginBottom", "" );
             }
             catch (Exception e)
             {
@@ -1056,7 +1056,7 @@ else
             task.log( ).debug( "LLD_SpecialSectionAttrBlock.MarginBottom: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSPLDef.LLD_SpecialSectionAttrBlock" );
+            task.log( ).debug( "Entity does not exist: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
       }
    }
 %>
@@ -1090,17 +1090,17 @@ else
    else
    {
       strErrorColor = "";
-      mSPLDef = task.getViewByName( "mSPLDef" );
-      if ( VmlOperation.isValid( mSPLDef ) == false )
+      mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
+      if ( VmlOperation.isValid( mSPLDefBlock ) == false )
          task.log( ).debug( "Invalid View: " + "EditBox8" );
       else
       {
-         nRC = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
+         nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
             try
             {
-            strErrorMapValue = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "MarginLeft", "" );
+            strErrorMapValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "MarginLeft", "" );
             }
             catch (Exception e)
             {
@@ -1113,7 +1113,7 @@ else
             task.log( ).debug( "LLD_SpecialSectionAttrBlock.MarginLeft: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSPLDef.LLD_SpecialSectionAttrBlock" );
+            task.log( ).debug( "Entity does not exist: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
       }
    }
 %>
@@ -1147,17 +1147,17 @@ else
    else
    {
       strErrorColor = "";
-      mSPLDef = task.getViewByName( "mSPLDef" );
-      if ( VmlOperation.isValid( mSPLDef ) == false )
+      mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
+      if ( VmlOperation.isValid( mSPLDefBlock ) == false )
          task.log( ).debug( "Invalid View: " + "EditBox9" );
       else
       {
-         nRC = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
+         nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
             try
             {
-            strErrorMapValue = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "MarginRight", "" );
+            strErrorMapValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "MarginRight", "" );
             }
             catch (Exception e)
             {
@@ -1170,7 +1170,7 @@ else
             task.log( ).debug( "LLD_SpecialSectionAttrBlock.MarginRight: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSPLDef.LLD_SpecialSectionAttrBlock" );
+            task.log( ).debug( "Entity does not exist: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
       }
    }
 %>
@@ -1201,15 +1201,15 @@ else
 <%
    boolean inListComboBox2 = false;
 
-   mSPLDef = task.getViewByName( "mSPLDef" );
-   if ( VmlOperation.isValid( mSPLDef ) )
+   mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
+   if ( VmlOperation.isValid( mSPLDefBlock ) )
    {
-      List<TableEntry> list = JspWebUtils.getTableDomainValues( mSPLDef , "LLD_SpecialSectionAttrBlock", "TextAlign", "" );
+      List<TableEntry> list = JspWebUtils.getTableDomainValues( mSPLDefBlock , "LLD_SpecialSectionAttrBlock", "TextAlign", "" );
 
-      nRC = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
+      nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "TextAlign", "" );
+         strComboCurrentValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "TextAlign", "" );
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }
@@ -1292,15 +1292,15 @@ else
 <%
    boolean inListComboBox3 = false;
 
-   mSPLDef = task.getViewByName( "mSPLDef" );
-   if ( VmlOperation.isValid( mSPLDef ) )
+   mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
+   if ( VmlOperation.isValid( mSPLDefBlock ) )
    {
-      List<TableEntry> list = JspWebUtils.getTableDomainValues( mSPLDef , "LLD_SpecialSectionAttrBlock", "FontFamily", "" );
+      List<TableEntry> list = JspWebUtils.getTableDomainValues( mSPLDefBlock , "LLD_SpecialSectionAttrBlock", "FontFamily", "" );
 
-      nRC = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
+      nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "FontFamily", "" );
+         strComboCurrentValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "FontFamily", "" );
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }
@@ -1383,15 +1383,15 @@ else
 <%
    boolean inListComboBox4 = false;
 
-   mSPLDef = task.getViewByName( "mSPLDef" );
-   if ( VmlOperation.isValid( mSPLDef ) )
+   mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
+   if ( VmlOperation.isValid( mSPLDefBlock ) )
    {
-      List<TableEntry> list = JspWebUtils.getTableDomainValues( mSPLDef , "LLD_SpecialSectionAttrBlock", "FontSize", "" );
+      List<TableEntry> list = JspWebUtils.getTableDomainValues( mSPLDefBlock , "LLD_SpecialSectionAttrBlock", "FontSize", "" );
 
-      nRC = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
+      nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "FontSize", "" );
+         strComboCurrentValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "FontSize", "" );
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }
@@ -1474,15 +1474,15 @@ else
 <%
    boolean inListComboBox5 = false;
 
-   mSPLDef = task.getViewByName( "mSPLDef" );
-   if ( VmlOperation.isValid( mSPLDef ) )
+   mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
+   if ( VmlOperation.isValid( mSPLDefBlock ) )
    {
-      List<TableEntry> list = JspWebUtils.getTableDomainValues( mSPLDef , "LLD_SpecialSectionAttrBlock", "FontWeight", "" );
+      List<TableEntry> list = JspWebUtils.getTableDomainValues( mSPLDefBlock , "LLD_SpecialSectionAttrBlock", "FontWeight", "" );
 
-      nRC = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
+      nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "FontWeight", "" );
+         strComboCurrentValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "FontWeight", "" );
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }
@@ -1557,86 +1557,47 @@ else
 
 </td>
 <td valign="top" style="width:98px;">
-<% /* ComboBox6:ComboBox */ %>
-<% strErrorMapValue = "";  %>
-
-<select  name="ComboBox6" id="ComboBox6" size="1" style="width:98px;" onchange="ComboBox6OnChange( )">
-
+<% /* TextColor:EditBox */ %>
 <%
-   boolean inListComboBox6 = false;
-
-   mSPLDef = task.getViewByName( "mSPLDef" );
-   if ( VmlOperation.isValid( mSPLDef ) )
+   strErrorMapValue = VmlOperation.CheckError( "TextColor", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
-      List<TableEntry> list = JspWebUtils.getTableDomainValues( mSPLDef , "LLD_SpecialSectionAttrBlock", "TextColor", "" );
-
-      nRC = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strComboCurrentValue = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "TextColor", "" );
-         if ( strComboCurrentValue == null )
-            strComboCurrentValue = "";
-      }
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
+      if ( VmlOperation.isValid( mSPLDefBlock ) == false )
+         task.log( ).debug( "Invalid View: " + "TextColor" );
       else
       {
-         strComboCurrentValue = "";
-      }
-
-      // Code for NOT required attribute, which makes sure a blank entry exists.
-      if ( strComboCurrentValue == "" )
-      {
-         inListComboBox6 = true;
-%>
-         <option selected="selected" value=""></option>
-<%
-      }
-      else
-      {
-%>
-         <option value=""></option>
-<%
-      }
-      for ( TableEntry entry : list )
-      {
-         String internalValue = entry.getInternalValue( );
-         String externalValue = entry.getExternalValue( );
-         // Perhaps getInternalValue and getExternalValue should return an empty string, 
-         // but currently it returns null.  Set to empty string. 
-         if ( externalValue == null )
+         nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
          {
-            internalValue = "";
-            externalValue = "";
-         }
-
-         if ( !StringUtils.isBlank( externalValue ) )
-         {
-            if ( StringUtils.equals( strComboCurrentValue, externalValue ) )
+            try
             {
-               inListComboBox6 = true;
-%>
-               <option selected="selected" value="<%=externalValue%>"><%=externalValue%></option>
-<%
+            strErrorMapValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "TextColor", "" );
             }
-            else
+            catch (Exception e)
             {
-%>
-               <option value="<%=externalValue%>"><%=externalValue%></option>
-<%
+               out.println("There is an error on TextColor: " + e.getMessage());
+               task.log().error( "*** Error on ctrl TextColor", e );
             }
-         }
-      }  // for ( TableEntry entry
-      // The value from the database isn't in the domain, add it to the list as disabled.
-      if ( !inListComboBox6 )
-      { 
-%>
-         <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
-<%
-      }  
-   }  // if view != null
-%>
-</select>
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
 
-<input name="hComboBox6" id="hComboBox6" type="hidden" value="<%=strComboCurrentValue%>" >
+            task.log( ).debug( "LLD_SpecialSectionAttrBlock.TextColor: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
+      }
+   }
+%>
+
+<input name="TextColor" id="TextColor" style="width:98px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
 </td>
 <td>&nbsp</td>
 </tr>
@@ -1659,17 +1620,17 @@ else
    else
    {
       strErrorColor = "";
-      mSPLDef = task.getViewByName( "mSPLDef" );
-      if ( VmlOperation.isValid( mSPLDef ) == false )
+      mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
+      if ( VmlOperation.isValid( mSPLDefBlock ) == false )
          task.log( ).debug( "Invalid View: " + "EditBox1" );
       else
       {
-         nRC = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
+         nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
             try
             {
-            strErrorMapValue = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "TextLineHeight", "" );
+            strErrorMapValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "TextLineHeight", "" );
             }
             catch (Exception e)
             {
@@ -1682,7 +1643,7 @@ else
             task.log( ).debug( "LLD_SpecialSectionAttrBlock.TextLineHeight: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSPLDef.LLD_SpecialSectionAttrBlock" );
+            task.log( ).debug( "Entity does not exist: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
       }
    }
 %>
@@ -1713,15 +1674,15 @@ else
 <%
    boolean inListComboBox7 = false;
 
-   mSPLDef = task.getViewByName( "mSPLDef" );
-   if ( VmlOperation.isValid( mSPLDef ) )
+   mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
+   if ( VmlOperation.isValid( mSPLDefBlock ) )
    {
-      List<TableEntry> list = JspWebUtils.getTableDomainValues( mSPLDef , "LLD_SpecialSectionAttrBlock", "BorderStyle", "" );
+      List<TableEntry> list = JspWebUtils.getTableDomainValues( mSPLDefBlock , "LLD_SpecialSectionAttrBlock", "BorderStyle", "" );
 
-      nRC = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
+      nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "BorderStyle", "" );
+         strComboCurrentValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "BorderStyle", "" );
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }
@@ -1807,17 +1768,17 @@ else
    else
    {
       strErrorColor = "";
-      mSPLDef = task.getViewByName( "mSPLDef" );
-      if ( VmlOperation.isValid( mSPLDef ) == false )
+      mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
+      if ( VmlOperation.isValid( mSPLDefBlock ) == false )
          task.log( ).debug( "Invalid View: " + "EditBox10" );
       else
       {
-         nRC = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
+         nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
             try
             {
-            strErrorMapValue = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "BorderWidth", "" );
+            strErrorMapValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "BorderWidth", "" );
             }
             catch (Exception e)
             {
@@ -1830,7 +1791,7 @@ else
             task.log( ).debug( "LLD_SpecialSectionAttrBlock.BorderWidth: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSPLDef.LLD_SpecialSectionAttrBlock" );
+            task.log( ).debug( "Entity does not exist: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
       }
    }
 %>
@@ -1853,86 +1814,47 @@ else
 
 </td>
 <td valign="top" style="width:98px;">
-<% /* ComboBox8:ComboBox */ %>
-<% strErrorMapValue = "";  %>
-
-<select  name="ComboBox8" id="ComboBox8" size="1" style="width:98px;" onchange="ComboBox8OnChange( )">
-
+<% /* BorderColor:EditBox */ %>
 <%
-   boolean inListComboBox8 = false;
-
-   mSPLDef = task.getViewByName( "mSPLDef" );
-   if ( VmlOperation.isValid( mSPLDef ) )
+   strErrorMapValue = VmlOperation.CheckError( "BorderColor", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
-      List<TableEntry> list = JspWebUtils.getTableDomainValues( mSPLDef , "LLD_SpecialSectionAttrBlock", "BorderColor", "" );
-
-      nRC = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strComboCurrentValue = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "BorderColor", "" );
-         if ( strComboCurrentValue == null )
-            strComboCurrentValue = "";
-      }
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
+      if ( VmlOperation.isValid( mSPLDefBlock ) == false )
+         task.log( ).debug( "Invalid View: " + "BorderColor" );
       else
       {
-         strComboCurrentValue = "";
-      }
-
-      // Code for NOT required attribute, which makes sure a blank entry exists.
-      if ( strComboCurrentValue == "" )
-      {
-         inListComboBox8 = true;
-%>
-         <option selected="selected" value=""></option>
-<%
-      }
-      else
-      {
-%>
-         <option value=""></option>
-<%
-      }
-      for ( TableEntry entry : list )
-      {
-         String internalValue = entry.getInternalValue( );
-         String externalValue = entry.getExternalValue( );
-         // Perhaps getInternalValue and getExternalValue should return an empty string, 
-         // but currently it returns null.  Set to empty string. 
-         if ( externalValue == null )
+         nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
          {
-            internalValue = "";
-            externalValue = "";
-         }
-
-         if ( !StringUtils.isBlank( externalValue ) )
-         {
-            if ( StringUtils.equals( strComboCurrentValue, externalValue ) )
+            try
             {
-               inListComboBox8 = true;
-%>
-               <option selected="selected" value="<%=externalValue%>"><%=externalValue%></option>
-<%
+            strErrorMapValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "BorderColor", "" );
             }
-            else
+            catch (Exception e)
             {
-%>
-               <option value="<%=externalValue%>"><%=externalValue%></option>
-<%
+               out.println("There is an error on BorderColor: " + e.getMessage());
+               task.log().error( "*** Error on ctrl BorderColor", e );
             }
-         }
-      }  // for ( TableEntry entry
-      // The value from the database isn't in the domain, add it to the list as disabled.
-      if ( !inListComboBox8 )
-      { 
-%>
-         <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
-<%
-      }  
-   }  // if view != null
-%>
-</select>
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
 
-<input name="hComboBox8" id="hComboBox8" type="hidden" value="<%=strComboCurrentValue%>" >
+            task.log( ).debug( "LLD_SpecialSectionAttrBlock.BorderColor: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
+      }
+   }
+%>
+
+<input name="BorderColor" id="BorderColor" style="width:98px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
 </td>
 <td>&nbsp</td>
 </tr>
@@ -1952,15 +1874,15 @@ else
 <%
    boolean inListComboBox10 = false;
 
-   mSPLDef = task.getViewByName( "mSPLDef" );
-   if ( VmlOperation.isValid( mSPLDef ) )
+   mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
+   if ( VmlOperation.isValid( mSPLDefBlock ) )
    {
-      List<TableEntry> list = JspWebUtils.getTableDomainValues( mSPLDef , "LLD_SpecialSectionAttrBlock", "TitlePosition", "" );
+      List<TableEntry> list = JspWebUtils.getTableDomainValues( mSPLDefBlock , "LLD_SpecialSectionAttrBlock", "TitlePosition", "" );
 
-      nRC = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
+      nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "TitlePosition", "" );
+         strComboCurrentValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "TitlePosition", "" );
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }
@@ -2044,14 +1966,14 @@ else
 <% /* CheckBox2:CheckBox */ %>
 <%
    strErrorMapValue = "";
-   mSPLDef = task.getViewByName( "mSPLDef" );
-   if ( VmlOperation.isValid( mSPLDef ) == false )
+   mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
+   if ( VmlOperation.isValid( mSPLDefBlock ) == false )
       task.log( ).debug( "Invalid View: " + "CheckBox2" );
    else
    {
-      nRC = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
+      nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
-         strRadioGroupValue = mSPLDef.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "CapitalizeTitleTextFlag" );
+         strRadioGroupValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "CapitalizeTitleTextFlag" );
    }
 
    if ( StringUtils.equals( strRadioGroupValue, "Y" ) )

@@ -806,7 +806,7 @@ function CheckAllInGrid(id, CheckBoxName)
    <script src="js/jsoeTestData.js"></script>
    <script src="js/jsoeUtils.js"></script>
    <script src="js/jsoe.js"></script>
-   <script src="js/jsoeObjectBrowser.js"></script>
+<!--      <script src="js/jsoeObjectBrowser.js"></script> -->
 
 <!-- the mousewheel plugin - optional to provide mousewheel support -->
    <script src="js/jquery.mousewheel.js"></script>
@@ -1046,7 +1046,7 @@ function CheckAllInGrid(id, CheckBoxName)
             </div> <!-- ztoolbar -->
             <img src="./images/epamms.jpg" width="64" height="25" alt="ePamms" style="margin:5px; float:right; border-style:double;">
             &nbsp;&nbsp;
-            <input type="checkbox" id="showtools" style="margin:5px; float:right;"><label for="showtools" style="margin:5px; float:right;">Show Tools</label>
+            <input type="checkbox" id="showtools" name="showtools" style="margin:5px; float:right;"><label for="showtools" style="margin:5px; float:right;">Show Tools</label>
             &nbsp;&nbsp;
          </div> <!-- zheader -->
       </span>
@@ -1177,19 +1177,19 @@ function CheckAllInGrid(id, CheckBoxName)
                 <!-- <fieldset class="border"><legend>Override CSS</legend> -->
                      <hr>Override CSS<hr>
                        <div><span>
-                          <input type="checkbox" id="zOverrideCSS_Text" class="zeidon" data-zmap="block.z_^text^color^override" /><label for="zOverrideCSS_Text">Text</label>
+                          <input type="checkbox" id="zOverrideCSS_Text" name="zOverrideCSS_Text" class="zeidon" data-zmap="block.z_^text^color^override" /><label for="zOverrideCSS_Text">Text</label>
                           <label for="zBlockTextColor">Color:</label>
                           <input type="text" id="zBlockTextColor" class="colorwell colorwell1 zeidon" data-zmap="block.z_^text^color" value="#ff0000" style="float:right" />
                        </span></div>                  &nbsp;
                        <p style="clear:both;position:relative"></p>
                        <div><span>
-                          <input type="checkbox" id="zOverrideCSS_Background" class="zeidon" data-zmap="block.z_^background^color^override" /><label for="zOverrideCSS_Background">Back</label>
+                          <input type="checkbox" id="zOverrideCSS_Background" name="zOverrideCSS_Background" class="zeidon" data-zmap="block.z_^background^color^override" /><label for="zOverrideCSS_Background">Back</label>
                           <label for="zBlockBackgroundColor">Color:</label>
                           <input type="text" id="zBlockBackgroundColor" class="colorwell colorwell1 zeidon" data-zmap="block.z_^background^color" value="#00ff00" style="float:right" />
                        </span></div>                  &nbsp;
                        <p style="clear:both;position:relative"></p>
                        <div><span>
-                          <input type="checkbox" id="zOverrideCSS_Border" class="zeidon" data-zmap="block.z_^border^color^override" /><label for="zOverrideCSS_Border">Border</label>
+                          <input type="checkbox" id="zOverrideCSS_Border" name="zOverrideCSS_Border" class="zeidon" data-zmap="block.z_^border^color^override" /><label for="zOverrideCSS_Border">Border</label>
                           <label for="zBlockBorderColor">Color:</label>
                           <input type="text" id="zBlockBorderColor" class="colorwell colorwell1 zeidon" data-zmap="block.z_^border^color" value="#0000ff" style="float:right" />
                        </span></div>
@@ -1229,7 +1229,7 @@ function CheckAllInGrid(id, CheckBoxName)
                              <input type="text" id="zMarginRight" class="zeidon" data-zmap="block.z_^margin^right" style="float:right" />
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
-                             <input type="checkbox" id="zMarginOverride" class="zeidon" data-zmap="block.z_^margin^override" /><label for="zMarginOverride">Override CSS</label>
+                             <input type="checkbox" id="zMarginOverride" name="zMarginOverride" class="zeidon" data-zmap="block.z_^margin^override" /><label for="zMarginOverride">Override CSS</label>
                            </div>
                         </div>
                         <div id="zBorders">
@@ -1254,7 +1254,7 @@ function CheckAllInGrid(id, CheckBoxName)
                              <input type="text" id="zBorderRight" class="zeidon" data-zmap="block.z_^border^right" style="float:right" />
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
-                             <input type="checkbox" id="zBorderOverride" class="zeidon" data-zmap="block.z_^border^override" style="float:center" /><label for="zBorderOverride">Override CSS</label>
+                             <input type="checkbox" id="zBorderOverride" name="zBorderOverride" class="zeidon" data-zmap="block.z_^border^override" style="float:center" /><label for="zBorderOverride">Override CSS</label>
                            </div>
                         </div>
                         <div id="zPaddings">
@@ -1279,7 +1279,7 @@ function CheckAllInGrid(id, CheckBoxName)
                              <input type="text" id="zPaddingRight" class="zeidon" data-zmap="block.z_^padding^right" style="float:right" />
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
-                             <input type="checkbox" id="zPaddingOverride" class="zeidon" data-zmap="block.z_^padding^override" /><label for="zPaddingOverride">Override CSS</label>
+                             <input type="checkbox" id="zPaddingOverride" name="zPaddingOverride" class="zeidon" data-zmap="block.z_^padding^override" /><label for="zPaddingOverride">Override CSS</label>
                            </div>
                         </div>
                      </div>
@@ -1287,7 +1287,7 @@ function CheckAllInGrid(id, CheckBoxName)
                      &nbsp;
                      <p style="clear:both;position:relative"></p>
                      <hr>
-                     <input type="checkbox" id="zCheckContinuationBlock" class="zeidon" data-zmap="block.z_^continuation^block^flag" /><label for="zCheckContinuationBlock">Continuation Block</label>
+                     <input type="checkbox" id="zCheckContinuationBlock" name="zCheckContinuationBlock" class="zeidon" data-zmap="block.z_^continuation^block^flag" /><label for="zCheckContinuationBlock">Continuation Block</label>
 
                      <!-- Add a <div> element where the dynatree should appear: -->
                      <hr>
@@ -1446,6 +1446,7 @@ function CheckAllInGrid(id, CheckBoxName)
 </div> <!-- zcontainer -->
 
 
+</div>  <!-- This is the end tag for wrapper -->
 <form name="wSPLDGraphicalView" id="wSPLDGraphicalView" method="post">
    <input name="zAction" id="zAction" type="hidden" value="NOVALUE">
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
@@ -1455,7 +1456,6 @@ function CheckAllInGrid(id, CheckBoxName)
    <input name="zTimeout" id="zTimeout" type="hidden" value="300">
    <input name="zError" id="zError" type="hidden" value="<%=strErrorMsg%>">
 </form>
-</div>  <!-- This is the end tag for wrapper -->
 
 </body>
 </html>

@@ -12,7 +12,7 @@
             <line>1024</line>
         </file>
     </editor-bookmarks>
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="15">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="16">
         <file>
             <url>web/wSPLDSPLD_UpdateLLD.jsp</url>
             <bookmark id="3">
@@ -38,7 +38,7 @@
             <url>src/java/com/ajax/GraphicalLabelDesignerServlet.java</url>
             <bookmark id="13">
                 <name/>
-                <line>483</line>
+                <line>484</line>
                 <key/>
             </bookmark>
         </file>
@@ -57,6 +57,11 @@
             <bookmark id="14">
                 <name/>
                 <line>844</line>
+                <key/>
+            </bookmark>
+            <bookmark id="16">
+                <name/>
+                <line>1140</line>
                 <key/>
             </bookmark>
         </file>
@@ -91,6 +96,7 @@
         <group>
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/genjs/wSPLDGraphicalView.js</file>
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/js/labeldesigner.js</file>
+            <file>file:/C:/workspace/NetBeansProjects/epammsApp/src/java/com/ajax/GraphicalLabelDesignerServlet.java</file>
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/wSPLDGraphicalView.jsp</file>
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/js/jsoeUtils.js</file>
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/js/jsoe.js</file>

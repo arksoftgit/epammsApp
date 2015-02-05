@@ -266,8 +266,8 @@ $(function() {
       var active = $( "#zaccordion" ).accordion( "option", "active" );
    // console.log( "menu clicked: " + active );
       localStorage.setItem( "epamms_graphic_accordion", active );
-      e.stopPropagation();
-      return false;  // prevent propagation, otherwise the click will be passed on to any element underneath the accordion
+   // e.stopPropagation();  if we stop this (return false) check boxes do not stay checked!!!
+   // return false;  // prevent propagation, otherwise the click will be passed on to any element underneath the accordion
    });
 
    // Here is the complete order of events per drag and drop interaction: 
@@ -1140,8 +1140,9 @@ $(function() {
 
    $("input.zeidon, select.zeidon")
       .change( function(e) {
-         e.stopPropagation();
+      // e.stopPropagation();
          return false;
+      // return true;
       // alert( "Handler for .change() called." );
       })
       .blur( function () {
@@ -1355,6 +1356,7 @@ $(function() {
    }
 
    $("#ReturnUpdateLLD").click( function() {
+      saveLabel();
       ReturnUpdateLLD();
    });
 

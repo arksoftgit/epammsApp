@@ -199,9 +199,7 @@ function _AfterPageLoaded( )
    document.wSPLDSPLD_BlockSpecialFormatDef.hComboBox3.value = document.wSPLDSPLD_BlockSpecialFormatDef.ComboBox3.value
    document.wSPLDSPLD_BlockSpecialFormatDef.hComboBox4.value = document.wSPLDSPLD_BlockSpecialFormatDef.ComboBox4.value
    document.wSPLDSPLD_BlockSpecialFormatDef.hComboBox5.value = document.wSPLDSPLD_BlockSpecialFormatDef.ComboBox5.value
-   document.wSPLDSPLD_BlockSpecialFormatDef.hComboBox6.value = document.wSPLDSPLD_BlockSpecialFormatDef.ComboBox6.value
    document.wSPLDSPLD_BlockSpecialFormatDef.hComboBox7.value = document.wSPLDSPLD_BlockSpecialFormatDef.ComboBox7.value
-   document.wSPLDSPLD_BlockSpecialFormatDef.hComboBox8.value = document.wSPLDSPLD_BlockSpecialFormatDef.ComboBox8.value
    document.wSPLDSPLD_BlockSpecialFormatDef.hComboBox10.value = document.wSPLDSPLD_BlockSpecialFormatDef.ComboBox10.value
 
    var varTimeout = document.wSPLDSPLD_BlockSpecialFormatDef.zTimeout.value;
@@ -337,18 +335,6 @@ function ComboBox5OnChange( )
    }
 }
 
-function ComboBox6OnChange( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      document.wSPLDSPLD_BlockSpecialFormatDef.hComboBox6.value = document.wSPLDSPLD_BlockSpecialFormatDef.ComboBox6.value;
-   }
-}
-
 function ComboBox7OnChange( )
 {
 
@@ -358,18 +344,6 @@ function ComboBox7OnChange( )
    if ( _IsDocDisabled( ) == false )
    {
       document.wSPLDSPLD_BlockSpecialFormatDef.hComboBox7.value = document.wSPLDSPLD_BlockSpecialFormatDef.ComboBox7.value;
-   }
-}
-
-function ComboBox8OnChange( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      document.wSPLDSPLD_BlockSpecialFormatDef.hComboBox8.value = document.wSPLDSPLD_BlockSpecialFormatDef.ComboBox8.value;
    }
 }
 
