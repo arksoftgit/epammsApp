@@ -2013,12 +2013,18 @@ GOTO_UpdateBlockComponent( VIEW ViewToWindow )
 
    VIEW mSPLDef      REGISTERED AS mSPLDef
    VIEW mSPLDefPanel BASED ON LOD  mSPLDef
+   VIEW mSPLDefBlock BASED ON LOD  mSPLDef
    
    // Create view, mSPLDefPanel, which will always be pointing at the Panel level, and will not
    // step down to a lower level subobject of LLD_Block.
    GET VIEW mSPLDefPanel NAMED "mSPLDefPanel"
    IF RESULT >= 0
       DropObjectInstance( mSPLDefPanel )
+   END
+   
+   GET VIEW mSPLDefBlock NAMED "mSPLDefBlock"
+   IF RESULT >= 0
+      DropObjectInstance( mSPLDefBlock )
    END
    
    // If the Block/SubBlock is Marketing, redirect to Marketing update window.
@@ -2028,6 +2034,8 @@ GOTO_UpdateBlockComponent( VIEW ViewToWindow )
       //CreateTemporalSubobjectVersion( mSPLDef, "LLD_Block" )
       CreateViewFromView( mSPLDefPanel, mSPLDef )
       NAME VIEW mSPLDefPanel "mSPLDefPanel"
+      CreateViewFromView( mSPLDefBlock, mSPLDef )
+      NAME VIEW mSPLDefBlock "mSPLDefBlock"
  //ELSE
  //   SET CURSOR FIRST mSPLDef.LLD_SubBlock WITHIN mSPLDef.LLD_Panel 
  //              WHERE mSPLDef.LLD_SubBlock.wRelativeBlockNumber = mSPLDef.LLD_Block.wRelativeBlockNumber

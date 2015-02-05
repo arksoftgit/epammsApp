@@ -1,4 +1,4 @@
-z1000-Zeidon    EPAMMS   TZCMLPLO 01/16/15   19:42:27 1.0a2    
+z1000-Zeidon    EPAMMS   TZCMLPLO 02/04/15   18:18:19 1.0a2    
 eLPLR      1
 aName      epamms
 aDesc      ePamms Application
@@ -1925,8 +1925,8 @@ aCPLR_ZKey 11205
 aStatus    1
 aUpdateInd 2
 aName      wSPLD
-aLastSyncDate 20141230195023033
-aLastUpdateDate 20141230195023033
+aLastSyncDate 20150204181819966
+aLastUpdateDate 20150204181819966
 
 eW_MetaDef 3
 aCPLR_ZKey 93086489
@@ -3348,12 +3348,12 @@ i534       252
 i535       253
 i536       254
 i537       255
-i540       261
-i541       266
-i542       264
-i543       262
-i544       265
-i545       259
+i540       262
+i541       259
+i542       261
+i543       266
+i544       264
+i545       265
 i546       258
 i547       263
 i548       260
