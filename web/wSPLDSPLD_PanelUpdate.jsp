@@ -1419,9 +1419,9 @@ try
    <td><%=strGridEditCtl7%></td>
    <td><%=strGridEditCtl8%></td>
    <td><%=strGridEditCtl2%></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="AddBlock" onclick="GOTO_AddBlockComponent( this.id )" id="AddBlock::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Add Block"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="UpdateBlock" onclick="GOTO_UpdateBlockComponent( this.id )" id="UpdateBlock::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="DeleteBlock" onclick="DELETE_BlockComponentEntry( this.id )" id="DeleteBlock::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Delete"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="AddBlock" onclick="GOTO_AddBlockComponent( this.id )" id="AddBlock::<%=strEntityKey%>"><img src="./images/ePammsNew.jpg" alt="Add Block"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="UpdateBlock" onclick="GOTO_UpdateBlockComponent( this.id )" id="UpdateBlock::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="DeleteBlock" onclick="DELETE_BlockComponentEntry( this.id )" id="DeleteBlock::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBMoveMasterProductDown2" onclick="GOTO_AddSubBlockComponent( this.id )" id="BMBMoveMasterProductDown2::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Add Sub"></a></td>
 
 </tr>

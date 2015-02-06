@@ -806,7 +806,7 @@ function CheckAllInGrid(id, CheckBoxName)
    <script src="js/jsoeTestData.js"></script>
    <script src="js/jsoeUtils.js"></script>
    <script src="js/jsoe.js"></script>
-<!--      <script src="js/jsoeObjectBrowser.js"></script> -->
+   <script src="js/jsoeObjectBrowser.js"></script>
 
 <!-- the mousewheel plugin - optional to provide mousewheel support -->
    <script src="js/jquery.mousewheel.js"></script>

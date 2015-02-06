@@ -1897,9 +1897,9 @@ try
    <td><%=strGridEditCtl5%></td>
    <td><%=strGridEditCtl6%></td>
    <td><%=strGridEditCtl7%></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBAddPanel" onclick="GOTO_AddPanelEntry( this.id )" id="BMBAddPanel::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Add Panel"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdatePanel" onclick="GOTO_UpdatePanelEntry( this.id )" id="BMBUpdatePanel::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBMoveMasterProductUp1" onclick="DeletePanelEntry( this.id )" id="BMBMoveMasterProductUp1::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Delete"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBAddPanel" onclick="GOTO_AddPanelEntry( this.id )" id="BMBAddPanel::<%=strEntityKey%>"><img src="./images/ePammsNew.jpg" alt="Add Panel"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdatePanel" onclick="GOTO_UpdatePanelEntry( this.id )" id="BMBUpdatePanel::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBMoveMasterProductUp1" onclick="DeletePanelEntry( this.id )" id="BMBMoveMasterProductUp1::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
 
 </tr>
 

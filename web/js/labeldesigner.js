@@ -1140,7 +1140,7 @@ $(function() {
 
    $("input.zeidon, select.zeidon")
       .change( function(e) {
-      // e.stopPropagation();
+         e.stopPropagation();
          return false;
       // return true;
       // alert( "Handler for .change() called." );
