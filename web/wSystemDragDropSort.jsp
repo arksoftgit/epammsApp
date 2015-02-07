@@ -143,11 +143,7 @@ private boolean orderByNewIndex( String arr, View vOrig, String entityName ) {
                for ( j = 0; j < arrIdx[k] + shifts; j++ ) {
                   ecWork.setNext();
                }
-            // if ( k == 0 ) {
-                  ecOrig.moveSubobject( CursorPosition.PREV, ecWork, CursorPosition.NEXT );
-            // } else {
-            //    ecOrig.moveSubobject( CursorPosition.NEXT, ecWork, CursorPosition.NEXT );
-            // }
+               ecOrig.moveSubobject( CursorPosition.PREV, ecWork, CursorPosition.NEXT );
             // swaps++;
             // displayEntity( v, entityName, "S_MarketingUsage", "UsageType",
             //                "S_MarketingUsage", "dDisplayUsageName", "After swap (" + swaps + ")" );
@@ -346,7 +342,7 @@ if ( strActionToProcess != null )
       View vOrig = task.getViewByName( strView );
       String arr = (String) request.getParameter( "zOrderArray" );
       orderByNewIndex( arr, vOrig, strEntity );
-   // vOrig.commit();
+      vOrig.commit();
       // This is hand coded!!!
 
       // Next Window
