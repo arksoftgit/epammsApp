@@ -66,7 +66,14 @@ public int DoInputMapping( HttpServletRequest request,
 }
 
 // beginning of:  added by hand
-/*
+/* hard-wired debugging code
+private String displayArray( int [] arr, int lth ) {
+   String msg = "";
+   for ( int k = 0; k < lth; k++ ) {
+      msg += "  " + arr[k];
+   }
+   return msg;
+}
 private void displayEntity( View vOrig, String entityName, String entityName1, String attrName1, String entityName2, String attrName2, String msg ) {
    View v = vOrig.newView();
    v.copyCursors( vOrig );
@@ -78,10 +85,9 @@ private void displayEntity( View vOrig, String entityName, String entityName1, S
    while ( cr == CursorResult.SET ) {
       ec1 = v.getCursor( entityName1 );
       ec2 = v.getCursor( entityName2 );
-      String attr1 = ec.getStringFromAttribute( "ID" ).toString() + "  " + ec1.getStringFromAttribute( attrName1 ).toString();
+      String attr1 = ((Integer.parseInt( (ec.getStringFromAttribute( "ID" ).toString()).substring(3) )) - 3) + "  " + ec1.getStringFromAttribute( attrName1 ).toString();
       String attr2 = (ec2.isNull()) ? "null" : ec2.getStringFromAttribute( attrName2 ).toString();
-      v.log().info( entityName1 + "." + attrName1 +": " + attr1 + "   " +
-                    entityName2 + "." + attrName2 +": " + attr2 );
+      v.log().info( entityName1 + "." + attrName1 +": " + attr1 + "   " + entityName2 + "." + attrName2 +": " + attr2 );
       cr = ec.setNext();
    }
 }
@@ -90,25 +96,22 @@ private boolean orderByNewIndex( String arr, View vOrig, String entityName ) {
 // vOrig.log().info( "Order Array Entity: " + entityName );
 // vOrig.logObjectInstance();
 // vOrig.log().info( "Order Array subscript: " + arr );
-   int n = arr.length();
-   int [] arrIdx = new int[n];
+   int lth = arr.length(); // more than enough items for the order array
+   int [] arrOrder = new int[lth];
    int maxIdx = 0;
    int pos = 0;
    int commaIdx = arr.indexOf( ",", pos );
    while ( commaIdx >= 0 ) {
    // vOrig.log().info( "Position: " + pos + "  Comma index: " + commaIdx );
-      arrIdx[maxIdx++] = (Integer.parseInt( arr.substring( pos, commaIdx ).toString() )) - 1; // change from subsript to zero-based index
+      arrOrder[maxIdx++] = (Integer.parseInt( arr.substring( pos, commaIdx ).toString() )) - 1; // change from subsript to zero-based index
       pos = commaIdx + 1;
       commaIdx = arr.indexOf( ",", pos );
    }
-   if ( pos < n ) {
-      arrIdx[maxIdx++] = (Integer.parseInt( arr.substring(pos).toString())) - 1; // change from subsript to zero-based index
+   if ( pos < lth ) {
+      arrOrder[maxIdx++] = (Integer.parseInt( arr.substring(pos).toString())) - 1; // change from subsript to zero-based index
    }
-   n = maxIdx;
-// vOrig.log().info( "Order array index length: " + n );
-// for ( pos = 0; pos < n; pos++ ) {
-//    vOrig.log().info( "Order array index[" + pos + "] = " + arrIdx[pos] );
-// }
+   lth = maxIdx; // setting the correct length
+// vOrig.log().info( "Order array index length: " + lth + "  " + displayArray( arrOrder, lth ) );
    View v = vOrig.newView( );
    v.copyCursors( vOrig );
 // displayEntity( v, entityName, "S_MarketingUsage", "UsageType",
@@ -116,46 +119,45 @@ private boolean orderByNewIndex( String arr, View vOrig, String entityName ) {
    EntityCursor ecOrig = vOrig.getCursor( entityName );
    if ( ecOrig.isNull() == false ) {
       
-   // int swaps = 0;
-      int[] arrShift = new int[n];
-      int shiftMax = 0;
-      int shifts;
-      int k, j;
+      int swaps = 0;
+      int[] arrShift = new int[lth];
+      int k, orderIdx, tempIdx;
 
+      for ( k = 0; k < lth; k++ ) {
+         arrShift[k] = k; // initialize shift array with original order
+      }
+   // vOrig.log().info( "Initialized shift array: " + displayArray( arrShift, lth ) );
       ecOrig.setFirst();
       View vWork = vOrig.newView();
       vWork.copyCursors( vOrig );
       EntityCursor ecWork = vWork.getCursor( entityName );
-      for ( k = 0; k < n - 1; k++ ) {
-         // find the number of times we have shifted the current index because of a move
-         shifts = 0;
-         for ( j = 0; j < shiftMax; j++ ) {
-            if ( k < arrShift[j] ) {
-               shifts++;
+      for ( orderIdx = 0; orderIdx < lth; orderIdx++ ) {
+         if ( arrOrder[orderIdx] > arrShift[orderIdx] ) {
+            tempIdx = arrOrder[orderIdx];
+            for ( k = arrOrder[orderIdx]; k > orderIdx; k-- ) {
+               arrShift[k] = arrShift[k - 1];
             }
-         }
-         if ( arrIdx[k] + shifts > k ) {
-            if ( arrIdx[k] + shifts >= 0 && arrIdx[k] + shifts < n ) {
-               if ( arrIdx[k] + shifts > k + 1 ) {
-                  arrShift[shiftMax++] = arrIdx[k];
-               }
-               ecWork.setFirst();
-               for ( j = 0; j < arrIdx[k] + shifts; j++ ) {
-                  ecWork.setNext();
-               }
-               ecOrig.moveSubobject( CursorPosition.PREV, ecWork, CursorPosition.NEXT );
-            // swaps++;
-            // displayEntity( v, entityName, "S_MarketingUsage", "UsageType",
-            //                "S_MarketingUsage", "dDisplayUsageName", "After swap (" + swaps + ")" );
-            } else {
-            // displayEntity( v, entityName, "S_MarketingUsage", "UsageType",
-            //                "S_MarketingUsage", "dDisplayUsageName", "arrIdx bounds error ???  arrIdx[" + k + "] " + shifts + " (" + (arrIdx[k] + shifts) + ")" );
-               break; // error???
+            arrShift[orderIdx] = tempIdx;
+         // vOrig.log().info( "Modified shift array orderIdx: " + orderIdx + "   " + displayArray( arrShift, lth ) );
+            ecWork.setFirst();
+            for ( k = 0; k < arrOrder[orderIdx]; k++ ) {
+               ecWork.setNext();
             }
+            ecOrig.moveSubobject( CursorPosition.PREV, ecWork, CursorPosition.NEXT );
+            swaps++;
+         // displayEntity( v, entityName, "S_MarketingUsage", "UsageType",
+         //                "S_MarketingUsage", "dDisplayUsageName", "After swap (" + swaps + ")" );
          } else {
-         //displayEntity( v, entityName, "S_MarketingUsage", "UsageType",
-         //                "S_MarketingUsage", "dDisplayUsageName", "No swap (" + swaps + ")" );
-            ecOrig.setNext();
+            while ( orderIdx < lth && arrOrder[orderIdx] == arrShift[orderIdx] ) {
+            // displayEntity( v, entityName, "S_MarketingUsage", "UsageType",
+            //                "S_MarketingUsage", "dDisplayUsageName", "No swap (" + swaps + ")" );
+               ecOrig.setNext();
+               if ( orderIdx < lth - 1 && arrOrder[orderIdx + 1] == arrShift[orderIdx + 1] ) {
+                  orderIdx++;
+               } else {
+                  break; // inner while
+               }
+            }
          }
       }
    // displayEntity( v, entityName, "S_MarketingUsage", "UsageType",
@@ -342,7 +344,7 @@ if ( strActionToProcess != null )
       View vOrig = task.getViewByName( strView );
       String arr = (String) request.getParameter( "zOrderArray" );
       orderByNewIndex( arr, vOrig, strEntity );
-      vOrig.commit();
+   // vOrig.commit();
       // This is hand coded!!!
 
       // Next Window
