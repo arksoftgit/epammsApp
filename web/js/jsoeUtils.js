@@ -837,24 +837,24 @@ function getSortOrder( tableId ) {
    return arrRowOrderIdx;
 }
 
-function buildSortTableHtml( viewName, entityName, arrColumnTitles, tableId )
+function buildSortTableHtml( viewName, entityName, tableId, arrTableColumnTitles )
 {
    var k, col, row;
    var strOdd;
    var table = "<table style=\"margin:100;padding-left:0;border-left:0\" id=\"DraggableSortTable\">\n" +
                "<thead><tr>\n<th>Order</th>\n";
-   for ( k = 0; k < arrColumnTitles.length; k++ ) {
-      table += "<th>" + arrColumnTitles[k] + "</th>\n";
+   for ( k = 0; k < arrTableColumnTitles.length; k++ ) {
+      table += "<th>" + arrTableColumnTitles[k] + "</th>\n";
    }
    table += "</tr></thead><tbody>";
 
    var elTable = document.getElementById( tableId );
    var txt;
-   var arrColIdx = new Array( arrColumnTitles.length );
+   var arrColIdx = new Array( arrTableColumnTitles.length );
    for ( col = 0; col < elTable.rows[0].cells.length; col++ ) {
       txt = elTable.rows[0].cells[col].innerText;
-      for ( k = 0; k < arrColumnTitles.length; k++ ) {
-         if ( txt === arrColumnTitles[k] ) {
+      for ( k = 0; k < arrTableColumnTitles.length; k++ ) {
+         if ( txt === arrTableColumnTitles[k] ) {
             arrColIdx[k] = col;
             break; // inside only
          }
@@ -868,7 +868,7 @@ function buildSortTableHtml( viewName, entityName, arrColumnTitles, tableId )
       table += "<tr" + strOdd + ">\n";
       table += "<td class=\"index\" nowrap><a href=\"#\" id=\"Order::" + row + "\">" + row + "</a></td>\n";
       for ( col = 0; col < arrColIdx.length; col++ ) {
-         table += "<td nowrap><a href=\"#\" id=\"" + arrColumnTitles[col] + "::" + row + "\">" + elTable.rows[row].cells[arrColIdx[col]].innerText + "</a></td>\n";
+         table += "<td nowrap><a href=\"#\" id=\"" + arrTableColumnTitles[col] + "::" + row + "\">" + elTable.rows[row].cells[arrColIdx[col]].innerText + "</a></td>\n";
       }
       table += "</tr>\n";
    }
@@ -884,7 +884,7 @@ function buildSortTableHtml( viewName, entityName, arrColumnTitles, tableId )
 */
 }
 
-function buildSortWindow( taskId, viewName, entityName, nextJsp, title, arrColumnTitles, tableId )
+function buildSortWindow( taskId, viewName, entityName, nextJsp, title, tableId, arrTableColumnTitles )
 {
 // var mySortWindow = window.open();
 // var mySortWindow = window.open("","mySortWindow","height=100,width=200");
@@ -892,7 +892,7 @@ function buildSortWindow( taskId, viewName, entityName, nextJsp, title, arrColum
    if ( title === "" ) {
       title = "Drag Sort";
    }
-   var table = buildSortTableHtml( viewName, entityName, arrColumnTitles, tableId );
+   var table = buildSortTableHtml( viewName, entityName, tableId, arrTableColumnTitles );
    var HTMLstring =
    "<html>\n" +
       "<head>\n<title>" + title + "</title>\n" +
@@ -1039,7 +1039,7 @@ function buildSortWindow( taskId, viewName, entityName, nextJsp, title, arrColum
    return mySortWindow;
 }
 
-// buildSortHtml( "List Primary Registrants",  [ "Name", "Login", "Description" ], "GEPrimaryRegistrant" );
+// buildSortHtml( "List Primary Registrants", "GEPrimaryRegistrant",  [ "Name", "Login", "Description" ] );
 /*
     dialog = $( "#dialog-form" ).dialog({
       autoOpen: false,

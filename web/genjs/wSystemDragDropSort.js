@@ -204,7 +204,6 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
-
    $(function() {
       $( "#DraggableSortTable" ).sortable();
       $( "#DraggableSortTable" ).disableSelection();

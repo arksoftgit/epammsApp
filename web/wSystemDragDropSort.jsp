@@ -64,26 +64,32 @@ public int DoInputMapping( HttpServletRequest request,
 
    return nMapError;
 }
-/*
+
 // beginning of:  added by hand
-private void displayEntity( View v, String entityName1, String attrName1, String entityName2, String attrName2, String msg ) {
-   EntityCursor ec1 = v.getCursor( entityName1 );
-   CursorResult cr = ec1.setFirst();
+/*
+private void displayEntity( View vOrig, String entityName, String entityName1, String attrName1, String entityName2, String attrName2, String msg ) {
+   View v = vOrig.newView();
+   v.copyCursors( vOrig );
+   EntityCursor ec = v.getCursor( entityName );
+   CursorResult cr = ec.setFirst();
+   EntityCursor ec1;
    EntityCursor ec2;
    v.log().info( msg );
    while ( cr == CursorResult.SET ) {
+      ec1 = v.getCursor( entityName1 );
       ec2 = v.getCursor( entityName2 );
-      String attr1 = ec1.getStringFromAttribute( "ID" ).toString() + "  " + ec1.getStringFromAttribute( attrName1 ).toString();
+      String attr1 = ec.getStringFromAttribute( "ID" ).toString() + "  " + ec1.getStringFromAttribute( attrName1 ).toString();
       String attr2 = (ec2.isNull()) ? "null" : ec2.getStringFromAttribute( attrName2 ).toString();
       v.log().info( entityName1 + "." + attrName1 +": " + attr1 + "   " +
                     entityName2 + "." + attrName2 +": " + attr2 );
-      cr = ec1.setNext();
+      cr = ec.setNext();
    }
 }
 */
 private boolean orderByNewIndex( String arr, View vOrig, String entityName ) {
-   vOrig.log().info( "Order Array subscript: " + arr );
+// vOrig.log().info( "Order Array Entity: " + entityName );
 // vOrig.logObjectInstance();
+// vOrig.log().info( "Order Array subscript: " + arr );
    int n = arr.length();
    int [] arrIdx = new int[n];
    int maxIdx = 0;
@@ -105,12 +111,12 @@ private boolean orderByNewIndex( String arr, View vOrig, String entityName ) {
 // }
    View v = vOrig.newView( );
    v.copyCursors( vOrig );
-// displayEntity( v, "S_MarketingUsage", "UsageType",
+// displayEntity( v, entityName, "S_MarketingUsage", "UsageType",
 //                   "S_MarketingUsage", "dDisplayUsageName", "Before orderByNewIndex" );
    EntityCursor ecOrig = vOrig.getCursor( entityName );
    if ( ecOrig.isNull() == false ) {
       
-      int swaps = 0;
+   // int swaps = 0;
       int[] arrShift = new int[n];
       int shiftMax = 0;
       int shifts;
@@ -137,20 +143,26 @@ private boolean orderByNewIndex( String arr, View vOrig, String entityName ) {
                for ( j = 0; j < arrIdx[k] + shifts; j++ ) {
                   ecWork.setNext();
                }
-               if ( k == 0 ) {
-                  ecOrig.moveSubobject( CursorPosition.PREV, ecWork, CursorPosition.NONE );
-               } else {
-                  ecOrig.moveSubobject( CursorPosition.NEXT, ecWork, CursorPosition.NEXT );
-               }
-               swaps++;
-            // displayEntity( v, "S_MarketingUsage", "UsageType",
+            // if ( k == 0 ) {
+                  ecOrig.moveSubobject( CursorPosition.PREV, ecWork, CursorPosition.NEXT );
+            // } else {
+            //    ecOrig.moveSubobject( CursorPosition.NEXT, ecWork, CursorPosition.NEXT );
+            // }
+            // swaps++;
+            // displayEntity( v, entityName, "S_MarketingUsage", "UsageType",
             //                "S_MarketingUsage", "dDisplayUsageName", "After swap (" + swaps + ")" );
             } else {
+            // displayEntity( v, entityName, "S_MarketingUsage", "UsageType",
+            //                "S_MarketingUsage", "dDisplayUsageName", "arrIdx bounds error ???  arrIdx[" + k + "] " + shifts + " (" + (arrIdx[k] + shifts) + ")" );
                break; // error???
             }
+         } else {
+         //displayEntity( v, entityName, "S_MarketingUsage", "UsageType",
+         //                "S_MarketingUsage", "dDisplayUsageName", "No swap (" + swaps + ")" );
+            ecOrig.setNext();
          }
       }
-   // displayEntity( v, "S_MarketingUsage", "UsageType",
+   // displayEntity( v, entityName, "S_MarketingUsage", "UsageType",
    //                "S_MarketingUsage", "dDisplayUsageName", "After orderByNewIndex Swaps: " + swaps );
    // vOrig.logObjectInstance();
       return true;
@@ -334,7 +346,7 @@ if ( strActionToProcess != null )
       View vOrig = task.getViewByName( strView );
       String arr = (String) request.getParameter( "zOrderArray" );
       orderByNewIndex( arr, vOrig, strEntity );
-      vOrig.commit();
+   // vOrig.commit();
       // This is hand coded!!!
 
       // Next Window
