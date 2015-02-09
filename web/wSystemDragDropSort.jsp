@@ -91,7 +91,7 @@ private void displayEntity( View vOrig, String entityName, String entityName1, S
       cr = ec.setNext();
    }
 }
-*/
+ */
 private boolean orderByNewIndex( String arr, View vOrig, String entityName ) {
 // vOrig.log().info( "Order Array Entity: " + entityName );
 // vOrig.logObjectInstance();
@@ -119,9 +119,9 @@ private boolean orderByNewIndex( String arr, View vOrig, String entityName ) {
    EntityCursor ecOrig = vOrig.getCursor( entityName );
    if ( ecOrig.isNull() == false ) {
       
-      int swaps = 0;
+   //int swaps = 0;
       int[] arrShift = new int[lth];
-      int k, orderIdx, tempIdx;
+      int k, orderIdx;
 
       for ( k = 0; k < lth; k++ ) {
          arrShift[k] = k; // initialize shift array with original order
@@ -132,21 +132,33 @@ private boolean orderByNewIndex( String arr, View vOrig, String entityName ) {
       vWork.copyCursors( vOrig );
       EntityCursor ecWork = vWork.getCursor( entityName );
       for ( orderIdx = 0; orderIdx < lth; orderIdx++ ) {
-         if ( arrOrder[orderIdx] > arrShift[orderIdx] ) {
-            tempIdx = arrOrder[orderIdx];
-            for ( k = arrOrder[orderIdx]; k > orderIdx; k-- ) {
-               arrShift[k] = arrShift[k - 1];
+         if ( arrOrder[orderIdx] != arrShift[orderIdx] ) {
+            maxIdx = orderIdx + 1;
+            pos = 1;
+            while ( maxIdx < lth && arrOrder[orderIdx] != arrShift[maxIdx] ) {
+               pos++;
+               maxIdx++;
             }
-            arrShift[orderIdx] = tempIdx;
-         // vOrig.log().info( "Modified shift array orderIdx: " + orderIdx + "   " + displayArray( arrShift, lth ) );
-            ecWork.setFirst();
-            for ( k = 0; k < arrOrder[orderIdx]; k++ ) {
-               ecWork.setNext();
+            if ( maxIdx < lth ) {
+               while ( maxIdx > orderIdx ) {
+                  arrShift[maxIdx] = arrShift[maxIdx - 1];
+                  maxIdx--;
+               }
+               arrShift[orderIdx] = arrOrder[orderIdx];
+            // vOrig.log().info( "Modified shift array orderIdx: " + orderIdx + "   " + displayArray( arrShift, lth ) );
+
+               ecWork.setCursor( ecOrig.getEntityInstance() );
+               for ( k = 0; k < pos; k++ ) {
+                  ecWork.setNext();
+               }
+               ecOrig.moveSubobject( CursorPosition.PREV, ecWork, CursorPosition.NEXT );
+            // swaps++;
+            // displayEntity( v, entityName, "S_MarketingUsage", "UsageType",
+            //                "S_MarketingUsage", "dDisplayUsageName", "After swap (" + swaps + ")" );
+            } else {
+               vOrig.log().info( "Unable to locate shift array index: " + arrOrder[orderIdx] + "  after index: " + orderIdx );
+               return false;
             }
-            ecOrig.moveSubobject( CursorPosition.PREV, ecWork, CursorPosition.NEXT );
-            swaps++;
-         // displayEntity( v, entityName, "S_MarketingUsage", "UsageType",
-         //                "S_MarketingUsage", "dDisplayUsageName", "After swap (" + swaps + ")" );
          } else {
             while ( orderIdx < lth && arrOrder[orderIdx] == arrShift[orderIdx] ) {
             // displayEntity( v, entityName, "S_MarketingUsage", "UsageType",
@@ -344,7 +356,7 @@ if ( strActionToProcess != null )
       View vOrig = task.getViewByName( strView );
       String arr = (String) request.getParameter( "zOrderArray" );
       orderByNewIndex( arr, vOrig, strEntity );
-   // vOrig.commit();
+      vOrig.commit();
       // This is hand coded!!!
 
       // Next Window
