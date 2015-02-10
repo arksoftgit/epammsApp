@@ -1102,10 +1102,18 @@ omSPLDef_GeneratePDF_Label( View     mSPLDef )
       //:NAME VIEW mSPLDefPDF "mSPLDefPDF"
       SetNameForView( mSPLDefPDF, "mSPLDefPDF", null, zLEVEL_TASK );
       //://NAME VIEW mSPLDef "mSPLDef"
-      //:ProcessPDF_Blocks( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer )
-      omSPLDef_ProcessPDF_Blocks( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer );
+      //:nRC = ProcessPDF_Blocks( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer )
+      nRC = omSPLDef_ProcessPDF_Blocks( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer );
       //:DropView( mSPLDefPDF )
       DropView( mSPLDefPDF );
+      //:IF nRC = 2
+      if ( nRC == 2 )
+      { 
+         //:RETURN 2
+         if(8==8)return( 2 );
+      } 
+
+      //:END
 
       //:// Close Panel Container.
       //:szWriteBuffer = "               </fo:block-container>"
@@ -3855,6 +3863,8 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
    String   szTitle = null;
    //:STRING ( 90 ) szMsg
    String   szMsg = null;
+   //:SHORT         nRC
+   int      nRC = 0;
    int      lTempInteger_0 = 0;
    int      RESULT = 0;
    int      lTempInteger_1 = 0;
@@ -3867,6 +3877,10 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
    int      lTempInteger_7 = 0;
    String   szTempString_1 = null;
    int      lTempInteger_8 = 0;
+   String   szTempString_2 = null;
+   int      lTempInteger_9 = 0;
+   String   szTempString_3 = null;
+   int      lTempInteger_10 = 0;
 
 
    //:// Process each LLD_Block Container and subobject data.
@@ -3962,8 +3976,16 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
 
             //:SetViewToSubobject( mSPLDefPDF, "LLD_SubBlock" )
             SetViewToSubobject( mSPLDefPDF, "LLD_SubBlock" );
-            //:ProcessPDF_Blocks( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer )
-            omSPLDef_ProcessPDF_Blocks( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer );
+            //:nRC = ProcessPDF_Blocks( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer )
+            nRC = omSPLDef_ProcessPDF_Blocks( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer );
+            //:IF nRC = 2
+            if ( nRC == 2 )
+            { 
+               //:RETURN 2
+               if(8==8)return( 2 );
+            } 
+
+            //:END
             //:ResetViewFromSubobject( mSPLDefPDF )
             ResetViewFromSubobject( mSPLDefPDF );
 
@@ -5067,8 +5089,70 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
                                                    {
                                                       throw ZeidonException.wrapException( e );
                                                    }
+                                                   //:ELSE
                                                 } 
-
+                                                else
+                                                { 
+                                                   //:// It is an error because there is no processing for the Block.
+                                                   //:szMsg = "The Block is empty for Panel, " + mSPLDefPDF.LLD_Panel.Tag + ", Block " + mSPLDefPDF.LLD_Block.Tag + "."
+                                                   {MutableInt mi_lTempInteger_9 = new MutableInt( lTempInteger_9 );
+                                                   StringBuilder sb_szTempString_2;
+                                                   if ( szTempString_2 == null )
+                                                      sb_szTempString_2 = new StringBuilder( 32 );
+                                                   else
+                                                      sb_szTempString_2 = new StringBuilder( szTempString_2 );
+                                                                                                       GetVariableFromAttribute( sb_szTempString_2, mi_lTempInteger_9, 'S', 65, mSPLDefPDF, "LLD_Panel", "Tag", "", 0 );
+                                                   lTempInteger_9 = mi_lTempInteger_9.intValue( );
+                                                   szTempString_2 = sb_szTempString_2.toString( );}
+                                                    {StringBuilder sb_szMsg;
+                                                   if ( szMsg == null )
+                                                      sb_szMsg = new StringBuilder( 32 );
+                                                   else
+                                                      sb_szMsg = new StringBuilder( szMsg );
+                                                                                                      ZeidonStringCopy( sb_szMsg, 1, 0, "The Block is empty for Panel, ", 1, 0, 91 );
+                                                   szMsg = sb_szMsg.toString( );}
+                                                    {StringBuilder sb_szMsg;
+                                                   if ( szMsg == null )
+                                                      sb_szMsg = new StringBuilder( 32 );
+                                                   else
+                                                      sb_szMsg = new StringBuilder( szMsg );
+                                                                                                      ZeidonStringConcat( sb_szMsg, 1, 0, szTempString_2, 1, 0, 91 );
+                                                   szMsg = sb_szMsg.toString( );}
+                                                    {StringBuilder sb_szMsg;
+                                                   if ( szMsg == null )
+                                                      sb_szMsg = new StringBuilder( 32 );
+                                                   else
+                                                      sb_szMsg = new StringBuilder( szMsg );
+                                                                                                      ZeidonStringConcat( sb_szMsg, 1, 0, ", Block ", 1, 0, 91 );
+                                                   szMsg = sb_szMsg.toString( );}
+                                                   {MutableInt mi_lTempInteger_10 = new MutableInt( lTempInteger_10 );
+                                                   StringBuilder sb_szTempString_3;
+                                                   if ( szTempString_3 == null )
+                                                      sb_szTempString_3 = new StringBuilder( 32 );
+                                                   else
+                                                      sb_szTempString_3 = new StringBuilder( szTempString_3 );
+                                                                                                       GetVariableFromAttribute( sb_szTempString_3, mi_lTempInteger_10, 'S', 65, mSPLDefPDF, "LLD_Block", "Tag", "", 0 );
+                                                   lTempInteger_10 = mi_lTempInteger_10.intValue( );
+                                                   szTempString_3 = sb_szTempString_3.toString( );}
+                                                    {StringBuilder sb_szMsg;
+                                                   if ( szMsg == null )
+                                                      sb_szMsg = new StringBuilder( 32 );
+                                                   else
+                                                      sb_szMsg = new StringBuilder( szMsg );
+                                                                                                      ZeidonStringConcat( sb_szMsg, 1, 0, szTempString_3, 1, 0, 91 );
+                                                   szMsg = sb_szMsg.toString( );}
+                                                    {StringBuilder sb_szMsg;
+                                                   if ( szMsg == null )
+                                                      sb_szMsg = new StringBuilder( 32 );
+                                                   else
+                                                      sb_szMsg = new StringBuilder( szMsg );
+                                                                                                      ZeidonStringConcat( sb_szMsg, 1, 0, ".", 1, 0, 91 );
+                                                   szMsg = sb_szMsg.toString( );}
+                                                   //:MessageSend( mSPLDef, "", "Generate Label", szMsg, zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+                                                   MessageSend( mSPLDef, "", "Generate Label", szMsg, zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+                                                   //:RETURN 2
+                                                   if(8==8)return( 2 );
+                                                } 
 
                                                 //:END
                                              } 
@@ -16094,7 +16178,6 @@ omSPLDef_SetUpFormattingSelect( View     mSPLDef,
                                 String   szSectionType )
 {
    int      RESULT = 0;
-   if ( RESULT != 0 ) {  // skip for now
 
    //:SetUpFormattingSelect( VIEW mSPLDef BASED ON LOD mSPLDef,
    //:                    STRING ( 50 ) szSectionType )
@@ -16248,7 +16331,6 @@ omSPLDef_SetUpFormattingSelect( View     mSPLDef,
    SetAttributeFromString( mSPLDef, "SpecialFormattingSelectEntry", "KeywordName", "Block" );
    //:SET CURSOR FIRST mSPLDef.SpecialFormattingSelectEntry 
    RESULT = SetCursorFirstEntity( mSPLDef, "SpecialFormattingSelectEntry", "" );
-   }
    return( 0 );
 //    
 // END

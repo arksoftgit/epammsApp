@@ -163,8 +163,11 @@ GeneratePDF_Label( VIEW mSPLDef BASED ON LOD mSPLDef )
       CreateViewFromView( mSPLDefPDF, mSPLDef )
       NAME VIEW mSPLDefPDF "mSPLDefPDF"
       //NAME VIEW mSPLDef "mSPLDef"
-      ProcessPDF_Blocks( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer )
+      nRC = ProcessPDF_Blocks( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer )
       DropView( mSPLDefPDF )
+      IF nRC = 2
+         RETURN 2
+      END
       
       // Close Panel Container.
       szWriteBuffer = "               </fo:block-container>"
@@ -642,6 +645,7 @@ ProcessPDF_Blocks( VIEW mSPLDef      BASED ON LOD mSPLDef,
    STRING ( 50 ) szLeft
    STRING ( 90 ) szTitle
    STRING ( 90 ) szMsg
+   SHORT         nRC
    
    // Process each LLD_Block Container and subobject data.
    
@@ -689,7 +693,10 @@ ProcessPDF_Blocks( VIEW mSPLDef      BASED ON LOD mSPLDef,
             CreateViewFromView( mSPLDefTopBlock, mSPLDefPDF )
             
             SetViewToSubobject( mSPLDefPDF, "LLD_SubBlock" )
-            ProcessPDF_Blocks( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer )
+            nRC = ProcessPDF_Blocks( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer )
+            IF nRC = 2
+               RETURN 2
+            END
             ResetViewFromSubobject( mSPLDefPDF )
             
             GET VIEW mSPLDefTopBlock NAMED "mSPLDefTopBlock"
@@ -976,7 +983,11 @@ ProcessPDF_Blocks( VIEW mSPLDef      BASED ON LOD mSPLDef,
                
                szWriteBuffer = szBlockBlanks + "</fo:block>"
                WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-         
+            ELSE
+               // It is an error because there is no processing for the Block.
+               szMsg = "The Block is empty for Panel, " + mSPLDefPDF.LLD_Panel.Tag + ", Block " + mSPLDefPDF.LLD_Block.Tag + "."
+               MessageSend( mSPLDef, "", "Generate Label", szMsg, zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+               RETURN 2
             END
             END
             END
