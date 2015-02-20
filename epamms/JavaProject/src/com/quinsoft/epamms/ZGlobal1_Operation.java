@@ -393,8 +393,8 @@ public class ZGlobal1_Operation extends VmlOperation
        //stringSourceDate = GetStringFromAttribute( stringSourceDate, srcView, srcEntityName, srcAttributeName );
        //stringTargetDate = GetStringFromAttribute( stringTargetDate, tgtView, tgtEntityName, tgtAttributeName );
        
-       DateTime BeginDate = srcView.cursor(srcEntityName).getDateTimeFromAttribute(srcAttributeName);
-       DateTime EndDate = tgtView.cursor(tgtEntityName).getDateTimeFromAttribute(tgtAttributeName);
+       DateTime BeginDate = srcView.cursor(srcEntityName).getAttribute(srcAttributeName).getDateTime();
+       DateTime EndDate = tgtView.cursor(tgtEntityName).getAttribute(tgtAttributeName).getDateTime();
        
        //DateTime BeginDate = new DateTime(stringSourceDate);
        //DateTime EndDate = new DateTime(stringTargetDate);
@@ -3613,10 +3613,8 @@ public class ZGlobal1_Operation extends VmlOperation
 
     public int SetAttrFromStrByContext( View view, String entityName, String attributeName, String value, String context )
     {
-       int      RESULT = 0;
-       view.cursor( entityName ).setAttribute( attributeName, value, context );
-       RESULT = 0;
-       return RESULT;
+       view.getCursor( entityName ).getAttribute( attributeName ).setValue( value, context );
+       return 0;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4570,18 +4568,18 @@ public class ZGlobal1_Operation extends VmlOperation
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     public int
     WL_QC( View vAnyView,
-    	   int    lFile,
+           int    lFile,
            String stringInput,
            String stringTransChar,
            int    nBlankLineCnt ) throws IOException
     {
 
        //stringInput = stringInput.replaceAll( stringTransChar, "\"" );  
-    	stringInput = stringInput.replace( stringTransChar, "\"" ); 
-TraceLineS( "#### WL_QC: ", stringInput );
+       stringInput = stringInput.replace( stringTransChar, "\"" ); 
+    // TraceLineS( "#### WL_QC: ", stringInput );
        m_KZOEP1AA.SysWriteLine( vAnyView, lFile, stringInput );
        while ( nBlankLineCnt-- > 0 )
-       	   m_KZOEP1AA.SysWriteLine( vAnyView, lFile, "" );
+          m_KZOEP1AA.SysWriteLine( vAnyView, lFile, "" );
 
        return 0;
     }

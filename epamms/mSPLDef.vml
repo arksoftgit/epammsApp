@@ -28,6 +28,12 @@ GeneratePDF_Label( VIEW mSPLDef BASED ON LOD mSPLDef )
    SHORT         nRC
    DECIMAL       InterPanelSpace
    DECIMAL       Left
+   STRING ( 32 ) szLPLR_Name
+   STRING ( 64 ) szSystemIniApplName
+   STRING ( 64 ) szLabelName
+   STRING ( 256 ) szXslDirectory
+   STRING ( 256 ) szXmlName
+   STRING ( 256 ) szXslName
    
    // Generate an PDF Label from the SPLD.
    
@@ -36,18 +42,36 @@ GeneratePDF_Label( VIEW mSPLDef BASED ON LOD mSPLDef )
       DELETE ENTITY mSPLDef.DisplaySection NONE 
    END
    
-   // Open the File (use szWriteBuffer to hold FileName).
-   szWriteBuffer = "c:\lplr\epamms\xsl\TestLabel.xsl"
-   TraceLineS( "Output Filename: ", szWriteBuffer )
-   //lFile = SysOpenFile( mSPLDef, szWriteBuffer, COREFILE_DELETE )
-   lFile = SysOpenFile( mSPLDef, szWriteBuffer, COREFILE_WRITE )
+   // Open the File
+// SfGetApplicationForSubtask( szLPLR_Name, mSPLDef )
+// szSystemIniApplName = "[App." + szLPLR_Name + "]"
+// SysReadZeidonIni( -1, szSystemIniApplName, "WebDirectory", szXslDirectory )
+// SysConvertEnvironmentString( szXslDirectory, szXslDirectory )
+// szXslDirectory = "C:/Program Files/Apache Group/tomcat 7.0/webapps/ROOT/epamms/"
+
+   SysGetEnvVar( szXslDirectory, "CATALINA_HOME", 256 )
+// SysAppendcDirSep( szXslDirectory )
+   SysConvertEnvironmentString( szXslDirectory, szXslDirectory )
+   szXslDirectory = szXslDirectory + "/webapps/ROOT/" + mSPLDef.SubregOrganization.LoginName + "/"
+
+   szLabelName = mSPLDef.SubregProduct.Name
+
+
+   szXmlName = szXslDirectory + "xml/"
+   szXslName = szXslDirectory + "xsl/"
+   SysValidDirOrFile( szXmlName, 1, 1, 256 )
+   SysValidDirOrFile( szXslName, 1, 1, 256 )
+   szXmlName = szXmlName + szLabelName + ".xml"
+   szXslName = szXslName + szLabelName + ".xsl"
+   TraceLineS( "Output Xsl Filename: ", szXslName )
+   lFile = SysOpenFile( mSPLDef, szXslName, COREFILE_WRITE )
    IF lFile < 0
       MessageSend( mSPLDef, "", "Generate Label",
                    "Error opening output file.",
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
       RETURN 2
    END
-   TraceLineS( "##### after open", "" )
+   TraceLineS( "##### After open: ", szXslName )
    // Put out header data.
    szWriteBuffer = "<?xml version=@1.0@ encoding='iso-8859-1'?>"
    WL_QC( mSPLDef, lFile, szWriteBuffer, "@", 0 )
@@ -202,7 +226,7 @@ GeneratePDF_Label( VIEW mSPLDef BASED ON LOD mSPLDef )
    szWriteBuffer = "   </xsl:template>"
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    
-      // Bold Template.
+   // Bold Template.
    szWriteBuffer = "   <xsl:template match=^bold^>"
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    szWriteBuffer = "      <fo:inline font-weight=^bold^>"
@@ -224,10 +248,11 @@ GeneratePDF_Label( VIEW mSPLDef BASED ON LOD mSPLDef )
    // Close the file.
    SysCloseFile( mSPLDef, lFile, 0 )
    
-   // Generate XML. We do this at the end because the process above built data (ex., DisplayText attributes) in the mSPLDef object instance.
-   szWriteBuffer = "c:\lplr\epamms\xsl\TestLabel.xml"
-   //CommitOI_ToXML_File( mSPLDef, szWriteBuffer, 0 )
-   GenerateXML_File( mSPLDef, "SubregPhysicalLabelDef", szWriteBuffer )
+   // Generate XML. We do this at the end because the process above built data (e.g.  DisplayText attributes) in the mSPLDef object instance.
+// szWriteBuffer = "c:\lplr\epamms\xsl\TestLabel.xml"
+// CommitOI_ToXML_File( mSPLDef, szWriteBuffer, 0 )
+   TraceLineS( "Output Xml Filename: ", szXmlName )
+   GenerateXML_File( mSPLDef, "SubregPhysicalLabelDef", szXmlName )
 
 END
 
@@ -628,7 +653,7 @@ END
 //
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
-ProcessPDF_Blocks( VIEW mSPLDef      BASED ON LOD mSPLDef,
+ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
                    VIEW mSPLDefPDF BASED ON LOD mSPLDef,
                    INTEGER lFile,
                    STRING ( 50 )    szPassedBlanks,
@@ -748,7 +773,7 @@ ProcessPDF_Blocks( VIEW mSPLDef      BASED ON LOD mSPLDef,
          
             // DIRECTIONS FOR USE
             IF szSectionType = "DirectionsForUse"
-               TraceLineS( "Major Block: ", szSectionType )
+            // TraceLineS( "Major Block: ", szSectionType )
                
                // Check if Title should be converted to upper case.
                szTitle = "Directions for Use"
@@ -782,7 +807,7 @@ ProcessPDF_Blocks( VIEW mSPLDef      BASED ON LOD mSPLDef,
          
             // MARKETING
             IF szSectionType = "Marketing"
-               TraceLineS( "Major Block: ", szSectionType )
+            // TraceLineS( "Major Block: ", szSectionType )
                
                // For Marketing, we will process a Section if it's Name matches the name in the Block.
                SET CURSOR FIRST mSPLDef.SPLD_MarketingSection WHERE mSPLDef.SPLD_MarketingSection.Name = mSPLDefPDF.LLD_Block.Name 
@@ -833,7 +858,7 @@ ProcessPDF_Blocks( VIEW mSPLDef      BASED ON LOD mSPLDef,
          
                // We can get by using the same operation because all 3 Section Types are handled the same way and the child entity,
                // SPLDT_GeneralSection, is pointing to the instance of the correct Type.
-               TraceLineS( "Major Block: ", szSectionType )
+            // TraceLineS( "Major Block: ", szSectionType )
                //FOR EACH mSPLDef.SPLDT_GeneralSection
                   GeneratePDF_General( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer )
                //END
@@ -842,7 +867,7 @@ ProcessPDF_Blocks( VIEW mSPLDef      BASED ON LOD mSPLDef,
             // STORAGE AND DISPOSAL
             IF szSectionType = "StorageDisposal" 
          
-               TraceLineS( "Major Block: ", szSectionType )
+            // TraceLineS( "Major Block: ", szSectionType )
                GeneratePDF_DFU( mSPLDef, mSPLDefPDF, lFile,
                                 "SPLD_StorageDisposalSection",
                                 "SPLD_StorageDisposalStatement",
@@ -856,7 +881,7 @@ ProcessPDF_Blocks( VIEW mSPLDef      BASED ON LOD mSPLDef,
             // PRECAUTIONARY
             IF szSectionType = "Precautionary" 
          
-               TraceLineS( "Major Block: ", szSectionType )
+            // TraceLineS( "Major Block: ", szSectionType )
                SET CURSOR FIRST mSPLDef.SPLD_GeneralSection WHERE mSPLDef.SPLD_GeneralSection.SectionType = "P"  // SectionType of P is Precautionary 
                GeneratePDF_DFU( mSPLDef, mSPLDefPDF, lFile,
                                 "SPLD_GeneralSection",
@@ -871,7 +896,7 @@ ProcessPDF_Blocks( VIEW mSPLDef      BASED ON LOD mSPLDef,
             // FIRST AID
             IF szSectionType = "FirstAid" 
          
-               TraceLineS( "Major Block: ", szSectionType )
+            // TraceLineS( "Major Block: ", szSectionType )
                
                // Check if Title should be converted to upper case.
                szTitle = "First Aid"
@@ -905,7 +930,7 @@ ProcessPDF_Blocks( VIEW mSPLDef      BASED ON LOD mSPLDef,
             // PHYSICAL HAZARD
             IF szSectionType = "PhysicalHazard" 
          
-               TraceLineS( "Major Block: ", szSectionType )
+            // TraceLineS( "Major Block: ", szSectionType )
                SET CURSOR FIRST mSPLDef.SPLD_GeneralSection WHERE mSPLDef.SPLD_GeneralSection.SectionType = "E"  // SectionType of E is Environmental Hazard 
                GeneratePDF_DFU( mSPLDef, mSPLDefPDF, lFile,
                                 "SPLD_GeneralSection",
@@ -921,7 +946,7 @@ ProcessPDF_Blocks( VIEW mSPLDef      BASED ON LOD mSPLDef,
             IF szSectionType = "HumanHazard" 
          
                // Generate the single Hazards entry.
-               TraceLineS( "Major Block: ", szSectionType )
+            // TraceLineS( "Major Block: ", szSectionType )
                GeneratePDF_Hazards( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer )
          
             ELSE
@@ -930,7 +955,7 @@ ProcessPDF_Blocks( VIEW mSPLDef      BASED ON LOD mSPLDef,
             IF szSectionType = "Ingredients" 
          
                // Go to generate Active Ingredients.
-               TraceLineS( "Major Block: ", szSectionType )
+            // TraceLineS( "Major Block: ", szSectionType )
                GeneratePDF_Ingred( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer )
          
             ELSE
@@ -939,7 +964,7 @@ ProcessPDF_Blocks( VIEW mSPLDef      BASED ON LOD mSPLDef,
             IF szSectionType = "NetContents" 
          
                // Go to generate Net Contents.
-               TraceLineS( "Major Block: ", szSectionType )
+            // TraceLineS( "Major Block: ", szSectionType )
                GeneratePDF_Content( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer )
          
             ELSE
@@ -948,7 +973,7 @@ ProcessPDF_Blocks( VIEW mSPLDef      BASED ON LOD mSPLDef,
             IF szSectionType = "EPA_RegAndEstNbr" 
          
                // Go to generate EPA Reg and Est Numbers.
-               TraceLineS( "Major Block: ", szSectionType )
+            // TraceLineS( "Major Block: ", szSectionType )
                GeneratePDF_EPA_Reg( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer )
          
             ELSE
@@ -956,7 +981,7 @@ ProcessPDF_Blocks( VIEW mSPLDef      BASED ON LOD mSPLDef,
             // PRODUCT NAME
             IF szSectionType = "Product Name" 
          
-               TraceLineS( "Major Block: ", szSectionType )
+            // TraceLineS( "Major Block: ", szSectionType )
                szBlockBlanks = szLeadingBlanks + "   "
                szWriteBuffer = szBlockBlanks + "<fo:block "
                AddFormatToSpecialText( mSPLDefPDF, "Text", szWriteBuffer )
@@ -973,7 +998,7 @@ ProcessPDF_Blocks( VIEW mSPLDef      BASED ON LOD mSPLDef,
             // PRODUCT DESCRIPTION
             IF szSectionType = "Product Description" 
          
-               TraceLineS( "Major Block: ", szSectionType )
+            // TraceLineS( "Major Block: ", szSectionType )
                szBlockBlanks = szLeadingBlanks + "   "
                szWriteBuffer = szBlockBlanks + "<fo:block>"
                WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
@@ -985,9 +1010,24 @@ ProcessPDF_Blocks( VIEW mSPLDef      BASED ON LOD mSPLDef,
                WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
             ELSE
                // It is an error because there is no processing for the Block.
-               szMsg = "The Block is empty for Panel, " + mSPLDefPDF.LLD_Panel.Tag + ", Block " + mSPLDefPDF.LLD_Block.Tag + "."
-               MessageSend( mSPLDef, "", "Generate Label", szMsg, zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-               RETURN 2
+
+               szMsg = "Error:  The Block is empty for Panel, " + mSPLDef.LLD_Panel.Tag + ", Block " + mSPLDefPDF.LLD_Block.Tag + "."
+               TraceLineS( szMsg, "" )
+               
+               szTitle = "Error"
+               
+               // Set up Error Title.
+               szWriteBuffer = szLeadingBlanks + "   <fo:block>"
+               WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+               
+               szWriteBuffer = szLeadingBlanks + "      " + szTitle
+               WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+               
+               szWriteBuffer = szLeadingBlanks + "   </fo:block>"
+               WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+
+            // MessageSend( mSPLDef, "", "Generate Label", szMsg, zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+            // RETURN 2
             END
             END
             END
@@ -1324,7 +1364,7 @@ AddFormatToSpecialText( VIEW mSPLDef BASED ON LOD mSPLDef,
    // Skip if the Special Text Attribute hasn't been defined.
    
    NAME VIEW mSPLDef "mSPLDefHazards"
-   TraceLineS( "$$$$ At Hazards: ", "" )
+// TraceLineS( "$$$$ At Hazards: ", "" )
    SET CURSOR FIRST mSPLDef.LLD_SpecialSectionAttribute WHERE mSPLDef.LLD_SpecialSectionAttribute.Name = SpecialTextTitle
    IF RESULT >= zCURSOR_SET 
    
@@ -4198,5 +4238,3 @@ ObjectConstraints( VIEW mSPLDef BASED ON LOD mSPLDef,
    END  /* case */
 
 END
-
-

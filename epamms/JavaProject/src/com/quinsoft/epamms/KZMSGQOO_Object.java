@@ -69,11 +69,11 @@ public class KZMSGQOO_Object extends VmlObjectOperations
             // Get only the first error message for presentation.
             while ( nRC == 0 )
             {
-               String s = vMsgQ.cursor( "WebMsg" ).getStringFromAttribute( "ControlTag" );
+               String s = vMsgQ.cursor( "WebMsg" ).getAttribute( "ControlTag" ).toString();
                String strError = GetStringFromAttribute( vMsgQ, "WebMsg", "ErrorMsg" );
                if ( s == null || s.isEmpty( ) )
                {
-                  s = vMsgQ.cursor( "WebMsg" ).getStringFromAttribute( "Title" );
+                  s = vMsgQ.cursor( "WebMsg" ).getAttribute( "Title" ).toString();
                   if ( s == null || s.isEmpty( ) )
                      s = "Unknown Error Title";
                   
@@ -97,7 +97,7 @@ public class KZMSGQOO_Object extends VmlObjectOperations
                sbError.append( strError );  // things should be good here with single tab separator
 
                // Tab + Newline to separate error message from map value.
-               s = vMsgQ.cursor( "WebMsg" ).getStringFromAttribute( "ErrorMapValue" );
+               s = vMsgQ.cursor( "WebMsg" ).getAttribute( "ErrorMapValue" ).toString();
                sbError.append( "\t\n" );
                sbError.append( s == null || s.isEmpty( ) ? "" : s );
 

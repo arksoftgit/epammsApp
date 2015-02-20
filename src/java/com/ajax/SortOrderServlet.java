@@ -175,9 +175,9 @@ public class SortOrderServlet extends HttpServlet {
       while ( cr == CursorResult.SET ) {
          ec2 = v.getCursor( entityName2 );
          ec3 = v.getCursor( entityName3 );
-         String attr1 = ec1.getStringFromAttribute( "ID" ).toString() + "  " + ec1.getStringFromAttribute( attrName1 ).toString();
-         String attr2 = (ec2.isNull()) ? "null" : ec2.getStringFromAttribute( attrName2 ).toString();
-         String attr3 = (ec3.isNull()) ? "null" : ec3.getStringFromAttribute( attrName3 ).toString();
+         String attr1 = ec1.getAttribute( "ID" ).toString() + "  " + ec1.getAttribute( attrName1 ).toString();
+         String attr2 = (ec2.isNull()) ? "null" : ec2.getAttribute( attrName2 ).toString();
+         String attr3 = (ec3.isNull()) ? "null" : ec3.getAttribute( attrName3 ).toString();
          logger.debug( entityName1 + "." + attrName1 +": " + attr1 + "   " +
                        entityName2 + "." + attrName2 +": " + attr2 + "   " +
                        entityName3 + "." + attrName3 +": " + attr3 );

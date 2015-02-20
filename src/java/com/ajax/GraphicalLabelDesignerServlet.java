@@ -53,7 +53,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
    private ServletContext context;
 
    private static final long serialVersionUID = 1L;
-   private static final Logger logger = Logger.getLogger(GraphicalLabelDesignerServlet.class );
+   private static final Logger logger = Logger.getLogger( GraphicalLabelDesignerServlet.class );
    private static ObjectEngine oe = null;
    private static Integer i = 0;
    private static KZOEP1AA m_KZOEP1AA = null;
@@ -372,7 +372,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
             JSONObject jo = (JSONObject)obj;
             if ( depth >= -1 ) {
                EntityCursor ec = vLLD.getCursor( entity );
-               if ( ec.isNull() == false ) {
+            // if ( ec.isNull() == false ) {  // the ec may be null ==> no entities, but we may want to create one!
                   String ID = (String)jo.get( "ID" );
                   boolean recurse = false;
                   EntityInstance ei = null;
@@ -392,7 +392,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                         if ( cr == CursorResult.UNCHANGED ) {
                            logger.debug( "Entity NOT FOUND: " + entity + "  ID: " + ID + "  Depth: " + depth );
                            ei = ec.createEntity( CursorPosition.NEXT );
-                           ei.setAttribute( "Tag", "Busted" + ID );
+                           ei.getAttribute( "Tag" ).setValue( "Busted" + ID );
                            vLLD.logObjectInstance();
                            throw new ZeidonException( "Entity NOT Found: " + ID + "  Look for Busted" ); 
                         } else if ( cr == CursorResult.SET ) {
@@ -434,7 +434,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                      // entity = "LLD_SubBlock"; not needed since left alone after cursor.setToSubobject()
                      }
                   }
-               }
+            // }
             } else {
                // logger.debug( indent + "Entity: " + entity + "  Depth: " + depth ); 
                applyJsonLabelToView( vLLD, (JSONObject)obj, entity, depth + 1, null );
@@ -470,17 +470,17 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
          // logger.debug( indent + "E.Attr: " + entity + "." + key + " : " + value );
             if ( ei != null ) {
                if ( entity.equals( ei.getEntityDef().getName() ) ) {
-                  if ( key.compareTo( "ID" ) != 0 ) {
-                     String oldValue = ei.getStringFromAttribute( key );
-                     if ( oldValue.equals( value ) == false ) {
+                  if ( key.compareTo( "ID" ) != 0 ) {  // attribute is not ID (which is immutable)
+                     String oldValue = ei.getAttribute( key ).getString();
+                     if ( oldValue.equals( value ) == false ) { // if the value has changed ...
                      // if ( key.contains( "Color" ) ) {
                      //    logger.debug( "Color: " + key + ":" + value );
                      // }
                         try {
-                           ei.setAttribute( key, value );
+                           ei.getAttribute( key ).setValue( value );
                         } catch ( ZeidonException ze ) {
                            if ( key.startsWith( "FK_ID_" ) || key.startsWith( "FKID" ) || key.startsWith( "AUTOSEQ" ) ) {
-                              String v = ei.getStringFromAttribute( key );
+                              String v = ei.getAttribute( key ).getString();
                               if ( v.compareTo( value ) != 0 ) {
                                  logger.debug( "System entity.attribute changed: " + entity + "." + key + "  value: " + value + " ==> " + v );
                               }

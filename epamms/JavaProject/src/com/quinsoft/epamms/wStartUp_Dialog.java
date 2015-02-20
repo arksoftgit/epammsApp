@@ -6892,10 +6892,9 @@ InitLoginWindow( View     ViewToWindow )
    SetAttributeFromString( wWebXfer, "Root", "Banner6", "" );
 
    //:// Remove these lines prior to deployment!!!
-// //:wWebXfer.Root.AttemptLoginName = "Lonza"
-   //:wWebXfer.Root.AttemptLoginName = "Admin"
-// SetAttributeFromString( wWebXfer, "Root", "AttemptLoginName", "Lonza" );
-// SetAttributeFromString( wWebXfer, "Root", "AttemptLoginName", "Admin" );
+   //:// wWebXfer.Root.AttemptLoginName = "Lonza"
+   //:// wWebXfer.Root.AttemptLoginName = "Admin"
+   //:wWebXfer.Root.AttemptLoginName = "atp"
    SetAttributeFromString( wWebXfer, "Root", "AttemptLoginName", "atp" );
    //:wWebXfer.Root.AttemptUserName = "Admin"
    SetAttributeFromString( wWebXfer, "Root", "AttemptUserName", "Admin" );
