@@ -2,7 +2,7 @@
 // Project ePamms
 //
 // This is a part of the ePamms applications package.
-// Copyright © 2007 - 2014 Arksoft, Inc.
+// Copyright © 2007 - 2015 Arksoft, Inc.
 // All Rights Reserved.
 //
 // SUBSYSTEM:    wSPLD         - Subregistrant Physical Label Definition operations
@@ -686,7 +686,7 @@ DeleteMLC_ComponentsForSLC( VIEW ViewToWindow )
    
    // Delete the selected SLC component entries.
    
-   // Make sure that only Marketing Statements Usage entries under Directions for Use and Maketing are marked for removal.
+   // Make sure that only Marketing Statements Usage entries under Directions for Use and Marketing are marked for removal.
    SET CURSOR FIRST mSubLC.CompositeComponentList WHERE mSubLC.CompositeComponentList.Selected = "Y"
                                                     AND mSubLC.CompositeComponentList.Type != "M_DirectionsUsageOrdering"
                                                     AND mSubLC.CompositeComponentList.Type != "M_MarketingUsageOrdering"
@@ -968,7 +968,7 @@ GOTO_UpdateSubregProductSPLD( VIEW ViewToWindow )
 TraceLineS( "$$$$$$ end of oper", "" )
    
    // Also activate the corresponding SLC and build the composite subobject.
-   //ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID =mSPLDef.SubregLabelContent.ID 
+   //ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSPLDef.SubregLabelContent.ID 
    //NAME VIEW mSubLC "mSubLC"
    //BuildCompositeEntries( mSubLC )
 
@@ -1199,7 +1199,8 @@ GENERATE_SPLD_Label( VIEW ViewToWindow )
       NAME VIEW mSPLDefPanel "mSPLDefPanel"
    END
    
-   // Generate the label using LLD and SLC data defined in mSPLDef.
+   // Generate the label using LLD and SLC data defined in mSPLDef. 
+   mSPLDefPanel.SubregPhysicalLabelDef.wFormatWithDottedBorders = ""
    nRC = GeneratePDF_Label( mSPLDefPanel )
    IF nRC = 2
       RETURN 2
@@ -1265,7 +1266,8 @@ GENERATE_SPLD_LabelDottedBorders( VIEW ViewToWindow )
       NAME VIEW mSPLDefPanel "mSPLDefPanel"
    END
    
-   // Generate the label using LLD and SLC data defined in mSPLDef.
+   // Generate the label using LLD and SLC data defined in mSPLDef.	 
+   mSPLDefPanel.SubregPhysicalLabelDef.wFormatWithDottedBorders = "Y"
    nRC = GeneratePDF_Label( mSPLDefPanel )
    IF nRC = 2
       RETURN 2

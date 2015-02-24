@@ -650,7 +650,9 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
             logger.debug( "Save JSON: " + strJson );
          // jsonLabel = request.getParameter( "jsonLabel" );
             try {
-               applyJsonLabelToView( vLLD, jsonPost, "", -2, null );  // OIs, SPLD_LLD, depth == 0 for LLD_Page
+               View v = vLLD.newView();
+               v.reset();
+               applyJsonLabelToView( v, jsonPost, "", -2, null );  // OIs, SPLD_LLD, depth == 0 for LLD_Page
                logger.debug( "Saved JSON to OI" );
                vLLD.logObjectInstance();
                vLLD.commit();

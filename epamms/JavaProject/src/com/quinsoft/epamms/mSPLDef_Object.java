@@ -23,7 +23,6 @@ import com.quinsoft.zeidon.ActivateFlags;
 import com.quinsoft.zeidon.CursorPosition;
 import com.quinsoft.zeidon.TaskQualification;
 import com.quinsoft.zeidon.vml.VmlObjectOperations;
-import com.quinsoft.zeidon.vml.VmlOperation;
 import com.quinsoft.zeidon.View;
 import com.quinsoft.zeidon.ZeidonException;
 import com.quinsoft.zeidon.vml.zVIEW;
@@ -298,7 +297,8 @@ omSPLDef_GeneratePDF_Label( View     mSPLDef )
    //:END
    //:TraceLineS( "##### After open: ", szXslName )
    TraceLineS( "##### After open: ", szXslName );
-   //:// Put out header data.
+
+   //:// Put out XSL header data.
    //:szWriteBuffer = "<?xml version=@1.0@ encoding='iso-8859-1'?>"
     {StringBuilder sb_szWriteBuffer;
    if ( szWriteBuffer == null )
@@ -1609,7 +1609,7 @@ omSPLDef_GeneratePDF_Label( View     mSPLDef )
       throw ZeidonException.wrapException( e );
    }
 
-   //:// Conclude XSLT.
+   //:// Conclude XSL.
    //:szWriteBuffer = ""
     {StringBuilder sb_szWriteBuffer;
    if ( szWriteBuffer == null )
@@ -1654,7 +1654,7 @@ omSPLDef_GeneratePDF_Label( View     mSPLDef )
    }
 
 
-   //:// Close the file.
+   //:// Close the XSL file.
    //:SysCloseFile( mSPLDef, lFile, 0 )
    try
    {
@@ -3073,16 +3073,16 @@ omSPLDef_FormatPrintIcons( View     mSPLDef,
    szDateTime = sb_szDateTime.toString( );}
    //:mSPLDef.SubregPhysicalLabelDef.wDateTime = szDateTime
    SetAttributeFromString( mSPLDef, "SubregPhysicalLabelDef", "wDateTime", szDateTime );
-   //://GetStringFromAttributeByContext( szDateTimeDisplay, mSPLDef, "SubregPhysicalLabelDef", "wDateTime", "DD/MM/YYYY HH:MM:SS.S AM", 30 )
-   //:szDateTimeDisplay = "01/01/2000 00:00:00.0 AM"
-    {StringBuilder sb_szDateTimeDisplay;
+   //:GetStringFromAttributeByContext( szDateTimeDisplay, mSPLDef, "SubregPhysicalLabelDef", "wDateTime", "YYYY/MM/DD HH:MM:SS.S AM", 30 )
+   {StringBuilder sb_szDateTimeDisplay;
    if ( szDateTimeDisplay == null )
       sb_szDateTimeDisplay = new StringBuilder( 32 );
    else
       sb_szDateTimeDisplay = new StringBuilder( szDateTimeDisplay );
-      ZeidonStringCopy( sb_szDateTimeDisplay, 1, 0, "01/01/2000 00:00:00.0 AM", 1, 0, 31 );
+       GetStringFromAttributeByContext( sb_szDateTimeDisplay, mSPLDef, "SubregPhysicalLabelDef", "wDateTime", "YYYY/MM/DD HH:MM:SS.S AM", 30 );
    szDateTimeDisplay = sb_szDateTimeDisplay.toString( );}
-   //:szProductIdentifier = mSPLDef.SubregOrganization.Name + " " + szDateTimeDisplay
+   //://szDateTimeDisplay = "01/01/2000 00:00:00.0 AM"
+   //:szProductIdentifier = mSPLDef.SubregOrganization.Name + "   " + szDateTimeDisplay
    {StringBuilder sb_szProductIdentifier;
    if ( szProductIdentifier == null )
       sb_szProductIdentifier = new StringBuilder( 32 );
@@ -3095,7 +3095,7 @@ omSPLDef_FormatPrintIcons( View     mSPLDef,
       sb_szProductIdentifier = new StringBuilder( 32 );
    else
       sb_szProductIdentifier = new StringBuilder( szProductIdentifier );
-      ZeidonStringConcat( sb_szProductIdentifier, 1, 0, " ", 1, 0, 91 );
+      ZeidonStringConcat( sb_szProductIdentifier, 1, 0, "   ", 1, 0, 91 );
    szProductIdentifier = sb_szProductIdentifier.toString( );}
     {StringBuilder sb_szProductIdentifier;
    if ( szProductIdentifier == null )

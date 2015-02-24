@@ -72,7 +72,8 @@ GeneratePDF_Label( VIEW mSPLDef BASED ON LOD mSPLDef )
       RETURN 2
    END
    TraceLineS( "##### After open: ", szXslName )
-   // Put out header data.
+
+   // Put out XSL header data.
    szWriteBuffer = "<?xml version=@1.0@ encoding='iso-8859-1'?>"
    WL_QC( mSPLDef, lFile, szWriteBuffer, "@", 0 )
    szWriteBuffer = "<xsl:stylesheet version=^1.0^"
@@ -238,14 +239,14 @@ GeneratePDF_Label( VIEW mSPLDef BASED ON LOD mSPLDef )
    szWriteBuffer = "   </xsl:template>"
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    
-   // Conclude XSLT.
+   // Conclude XSL.
    szWriteBuffer = ""
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    szWriteBuffer = "</xsl:stylesheet>"
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    
    
-   // Close the file.
+   // Close the XSL file.
    SysCloseFile( mSPLDef, lFile, 0 )
    
    // Generate XML. We do this at the end because the process above built data (e.g.  DisplayText attributes) in the mSPLDef object instance.
@@ -477,9 +478,9 @@ FormatPrintIcons( VIEW mSPLDef BASED ON LOD mSPLDef,
    
    SysGetDateTime( szDateTime )
    mSPLDef.SubregPhysicalLabelDef.wDateTime = szDateTime
-   //GetStringFromAttributeByContext( szDateTimeDisplay, mSPLDef, "SubregPhysicalLabelDef", "wDateTime", "DD/MM/YYYY HH:MM:SS.S AM", 30 )
-   szDateTimeDisplay = "01/01/2000 00:00:00.0 AM"
-   szProductIdentifier = mSPLDef.SubregOrganization.Name + " " + szDateTimeDisplay
+   GetStringFromAttributeByContext( szDateTimeDisplay, mSPLDef, "SubregPhysicalLabelDef", "wDateTime", "YYYY/MM/DD HH:MM:SS.S AM", 30 )
+   //szDateTimeDisplay = "01/01/2000 00:00:00.0 AM"
+   szProductIdentifier = mSPLDef.SubregOrganization.Name + "   " + szDateTimeDisplay
    szWriteBuffer = "               <fo:block-container position=^absolute^ top=^0.4in^ left=^1.0in^>" 
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    szWriteBuffer = "                  <fo:block font-size=^7pt^ letter-spacing=^.2em^ text-align=^left^>"

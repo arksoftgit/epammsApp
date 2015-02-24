@@ -23,7 +23,6 @@ import com.quinsoft.zeidon.ActivateFlags;
 import com.quinsoft.zeidon.CursorPosition;
 import com.quinsoft.zeidon.Task;
 import com.quinsoft.zeidon.vml.VmlDialog;
-import com.quinsoft.zeidon.vml.VmlOperation;
 import com.quinsoft.zeidon.View;
 import com.quinsoft.zeidon.ZeidonException;
 import com.quinsoft.zeidon.vml.zVIEW;
@@ -545,6 +544,40 @@ o_fnLocalBuildQual_0( View     vSubtask,
    SetAttributeFromString( vQualObject, "QualAttrib", "Value", szTempString_0.toString( ) );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
    return( 0 );
+} 
+
+
+//:DIALOG OPERATION
+//:TestLocking( VIEW ViewToWindow )
+
+//:   VIEW ZPLOCKO BASED ON LOD ZPLOCKO
+public int 
+TestLocking( View     ViewToWindow )
+{
+   zVIEW    ZPLOCKO = new zVIEW( );
+   //:VIEW mSubreg BASED ON LOD mSubreg
+   zVIEW    mSubreg = new zVIEW( );
+   zVIEW    vTempViewVar_0 = new zVIEW( );
+   int      RESULT = 0;
+
+
+   //://ACTIVATE ZPLOCKO Multiple
+   //://NAME VIEW ZPLOCKO "ZPLOCKO1"
+
+   //://ACTIVATE mSPLDef WHERE mSPLDef.SubregPhysicalLabelDef.ID > 0
+   //://NAME VIEW mSPLDef "mSPLDef"
+
+   //:ACTIVATE mSubreg WHERE mSubreg.Subregistrant.ID > 0
+   o_fnLocalBuildQual_23( ViewToWindow, vTempViewVar_0 );
+   RESULT = ActivateObjectInstance( mSubreg, "mSubreg", ViewToWindow, vTempViewVar_0, zSINGLE );
+   DropView( vTempViewVar_0 );
+   //:NAME VIEW mSubreg "mSubreg"
+   SetNameForView( mSubreg, "mSubreg", null, zLEVEL_TASK );
+   return( 0 );
+//    
+//    //ACTIVATE ZPLOCKO Multiple
+//    //NAME VIEW ZPLOCKO "ZPLOCKO2"
+// END
 } 
 
 
@@ -2088,7 +2121,7 @@ DeleteMLC_ComponentsForSLC( View     ViewToWindow )
 
    //:// Delete the selected SLC component entries.
 
-   //:// Make sure that only Marketing Statements Usage entries under Directions for Use and Maketing are marked for removal.
+   //:// Make sure that only Marketing Statements Usage entries under Directions for Use and Marketing are marked for removal.
    //:SET CURSOR FIRST mSubLC.CompositeComponentList WHERE mSubLC.CompositeComponentList.Selected = "Y"
    //:                                                 AND mSubLC.CompositeComponentList.Type != "M_DirectionsUsageOrdering"
    //:                                                 AND mSubLC.CompositeComponentList.Type != "M_MarketingUsageOrdering"
@@ -2750,7 +2783,7 @@ GOTO_UpdateSubregProductSPLD( View     ViewToWindow )
    return( 0 );
 //    
 //    // Also activate the corresponding SLC and build the composite subobject.
-//    //ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID =mSPLDef.SubregLabelContent.ID 
+//    //ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSPLDef.SubregLabelContent.ID 
 //    //NAME VIEW mSubLC "mSubLC"
 //    //BuildCompositeEntries( mSubLC )
 // END
@@ -3017,7 +3050,9 @@ GENERATE_SPLD_Label( View     ViewToWindow )
 
    //:END
 
-   //:// Generate the label using LLD and SLC data defined in mSPLDef.
+   //:// Generate the label using LLD and SLC data defined in mSPLDef. 
+   //:mSPLDefPanel.SubregPhysicalLabelDef.wFormatWithDottedBorders = ""
+   SetAttributeFromString( mSPLDefPanel, "SubregPhysicalLabelDef", "wFormatWithDottedBorders", "" );
    //:nRC = GeneratePDF_Label( mSPLDefPanel )
    {
     mSPLDef_Object m_mSPLDef_Object = new mSPLDef_Object( mSPLDefPanel );
@@ -4427,7 +4462,9 @@ GENERATE_SPLD_LabelDottedBorders( View     ViewToWindow )
 
    //:END
 
-   //:// Generate the label using LLD and SLC data defined in mSPLDef.
+   //:// Generate the label using LLD and SLC data defined in mSPLDef.    
+   //:mSPLDefPanel.SubregPhysicalLabelDef.wFormatWithDottedBorders = "Y"
+   SetAttributeFromString( mSPLDefPanel, "SubregPhysicalLabelDef", "wFormatWithDottedBorders", "Y" );
    //:nRC = GeneratePDF_Label( mSPLDefPanel )
    {
     mSPLDef_Object m_mSPLDef_Object = new mSPLDef_Object( mSPLDefPanel );
@@ -4833,40 +4870,6 @@ DELETE_SpecialFormatDef( View     ViewToWindow )
    //:DELETE ENTITY mSPLDef.LLD_SpecialSectionAttribute  
    RESULT = DeleteEntity( mSPLDef, "LLD_SpecialSectionAttribute", zPOS_NEXT );
    return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:TestLocking( VIEW ViewToWindow )
-
-//:   VIEW ZPLOCKO BASED ON LOD ZPLOCKO
-public int 
-TestLocking( View     ViewToWindow )
-{
-   zVIEW    ZPLOCKO = new zVIEW( );
-   //:VIEW mSubreg BASED ON LOD mSubreg
-   zVIEW    mSubreg = new zVIEW( );
-   zVIEW    vTempViewVar_0 = new zVIEW( );
-   int      RESULT = 0;
-
-
-   //://ACTIVATE ZPLOCKO Multiple
-   //://NAME VIEW ZPLOCKO "ZPLOCKO1"
-
-   //://ACTIVATE mSPLDef WHERE mSPLDef.SubregPhysicalLabelDef.ID > 0
-   //://NAME VIEW mSPLDef "mSPLDef"
-
-   //:ACTIVATE mSubreg WHERE mSubreg.Subregistrant.ID > 0
-   o_fnLocalBuildQual_23( ViewToWindow, vTempViewVar_0 );
-   RESULT = ActivateObjectInstance( mSubreg, "mSubreg", ViewToWindow, vTempViewVar_0, zSINGLE );
-   DropView( vTempViewVar_0 );
-   //:NAME VIEW mSubreg "mSubreg"
-   SetNameForView( mSubreg, "mSubreg", null, zLEVEL_TASK );
-   return( 0 );
-//    
-//    //ACTIVATE ZPLOCKO Multiple
-//    //NAME VIEW ZPLOCKO "ZPLOCKO2"
 // END
 } 
 
