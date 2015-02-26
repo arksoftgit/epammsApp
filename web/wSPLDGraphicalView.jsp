@@ -1063,33 +1063,6 @@ else
                      <hr>
                   </div> <!-- End of: Block Properties -->
 
-                  <h3>Panel Properties</h3>
-                  <div>
-                     <div style="overflow:hidden; white-space:nowrap;">
-                       <label for="zPanelTag">Tag:</label>
-                       <input type="text" id="zPanelTag" class="zeidon" data-zmap="panel.z_^tag" style="float:right" />
-                     </div>
-
-                     <p style="clear:both;position:relative">
-                        <span>
-                           <label for="zPanelTitle">Panel Title:</label>
-                           <input type="text" id="zPanelTitle" class="zeidon" data-zmap="panel.z_^title" value="" style="width:120px;float:right;" />
-                        </span>
-                     </p>
-                     <p style="clear:both;position:relative">
-                        <span>
-                           <label for="zPanelHeight">Panel Height:</label>
-                           <input type="text" id="zPanelHeight" class="zeidon" data-zmap="panel.z_^height" value="11" style="width:30px;float:right;"/>
-                        </span>
-                     </p>
-                     <p style="clear:both;position:relative">
-                        <span>
-                           <label for="zPanelWidth">Panel Width:</label>
-                           <input type="text" id="zPanelWidth" class="zeidon" data-zmap="panel.z_^width" value="8.5" style="width:30px;float:right;"/>
-                        </span>
-                     </p>
-                  </div> <!-- End of: Panel Properties -->
-
                   <h3>Page Properties</h3>
                   <div>
                      <p style="clear:both;position:relative">
