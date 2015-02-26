@@ -446,7 +446,6 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
    }
 
    private String applyJsonLabelToView( View vLLD, JSONObject jsonObject, String entity, int depth, EntityInstance ei ) {
-      Set<String> keys = jsonObject.keySet();
       String indent = StringUtils.repeat( " ", (depth + 2) * 3 );
 // start debug code
       boolean log = false;
@@ -462,7 +461,10 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
          }
       }
 // end debug code
-      for ( String key : keys ) {
+   // Set<String> keys = (Set<String>) jsonObject.keySet(); // these two line work, but cause
+   // for ( String key : keys ) {                           // a warning ... replaced by next two lines
+      for( Iterator iterator = jsonObject.keySet().iterator(); iterator.hasNext(); ) {
+         String key = (String) iterator.next();
       // logger.debug( "OTag: " + entity + "   Key: " + key + "   Depth: " + depth );
          Object obj = jsonObject.get( key );
          if ( obj instanceof String ) {

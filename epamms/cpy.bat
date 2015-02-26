@@ -1,0 +1,1 @@
+copy c:\lplr\epamms\%1 %1

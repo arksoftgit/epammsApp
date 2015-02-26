@@ -54,12 +54,6 @@ $(function() {
    $("#page8").data( "z_^depth", 0 );
    $("#page9").data( "z_^depth", 0 );
    $("#zaccordion").accordion( {heightStyle: "fill"} );
-/* $("#zaccordion").accordion({
-      change: function (event, ui) {
-         var active = $( "#zaccordion" ).accordion( "option", "active" );
-         localStorage.setItem( "epamms_graphic_accordion", active ? "Y" : "N" );
-      }
-   }); */
    $(function() {
         var icons = {
             header: "ui-icon-circle-arrow-e",
@@ -375,8 +369,9 @@ $(function() {
          // updatePositionStatus( $canvasElement[0], ui.offset.top - yOffset, ui.offset.left - xOffset );
          // console.log( "Stop yOffset: " + $canvasElement[0].offsetTop + "  xOffset: " + $canvasElement[0].offsetLeft );
             g_updatedLLD = true;
-            $canvasElement.data( "z_^top", ($canvasElement[0].offsetTop / g_pixelsPerInch).toFixed( 2 ) );
-            $canvasElement.data( "z_^left", ($canvasElement[0].offsetLeft / g_pixelsPerInch).toFixed( 2 ) );
+            var scale = g_pixelsPerInch * g_scale;
+            $canvasElement.data( "z_^top", ($canvasElement[0].offsetTop / scale).toFixed( 2 ) );
+            $canvasElement.data( "z_^left", ($canvasElement[0].offsetLeft / scale).toFixed( 2 ) );
             setCurrentBlockData( $canvasElement, "updated 2" );
             updatePositionStatus( $canvasElement[0], $canvasElement[0].offsetTop, $canvasElement[0].offsetLeft, "Stop yOffset ... z_^top and z_^left" );
          // updatePositionStatus( $canvasElement[0], -9999, -9999 );
@@ -397,8 +392,9 @@ $(function() {
          stop: function( event, ui ) {
          // console.log( "Stop yResize: " + $canvasElement[0].offsetHeight + "  xResize: " + $canvasElement[0].offsetWidth );
             g_updatedLLD = true;
-            $canvasElement.data( "z_^height", (($canvasElement[0].offsetHeight) / g_pixelsPerInch).toFixed( 2 ) );
-            $canvasElement.data( "z_^width", (($canvasElement[0].offsetWidth) / g_pixelsPerInch).toFixed( 2 ) );
+            var scale = g_pixelsPerInch * g_scale;
+            $canvasElement.data( "z_^height", (($canvasElement[0].offsetHeight) / scale).toFixed( 2 ) );
+            $canvasElement.data( "z_^width", (($canvasElement[0].offsetWidth) / scale).toFixed( 2 ) );
             setCurrentBlockData( $canvasElement, "updated 3" );
             updateSizeStatus( $canvasElement[0], $canvasElement[0].offsetHeight, $canvasElement[0].offsetWidth, "Stop yResize ... z_^height and z_^width" );
          // updatePositionStatus( $canvasElement[0], -9999, -9999 );
@@ -1316,6 +1312,7 @@ $(function() {
       var jsonDOM = mapDOM( $initElement[0], true );
    // console.log( "JSON DOM: " + jsonDOM );
       var jsonLabel = CaptureZeidonLabelJsonFromDomJson( jsonDOM );
+
       // Display the resultant JSON that will be passed to Zeidon to be saved as an LLD.
    // console.log( "\nJsonLabel: " + jsonLabel );
 
@@ -1358,6 +1355,16 @@ $(function() {
    $("#ReturnUpdateLLD").click( function() {
       saveLabel();
       ReturnUpdateLLD();
+   });
+
+   $("#GenerateLabel").click( function() {
+      saveLabel();
+      GenerateLabel();
+   });
+
+   $("#GenerateLabelBorders").click( function() {
+      saveLabel();
+      GenerateLabelBorders();
    });
 
    var $ZoomSpinner = $("#zZoomSpinner").spinner();
@@ -2000,7 +2007,7 @@ public class FileServer {
          }
          classes += " draggable canvas-element block-element";
 
-         // var tab = buildTab( indent, false );
+         // var tab = buildTab( depth, false );
          classes += "\" ";
          style += "background-color: " + getBackgroundColorForDepth( depth ) + "; display: block; float: left; color: " + getColorForDepth( depth ) + "; border: 2px solid; background-position: initial initial; background-repeat: initial initial;\"";
          var div = "<div " + identity + classes + style + attr + "></div>";
@@ -2872,6 +2879,7 @@ assignToDiv();
 // console.log( "Round X: " + Math.round( g_ppiX / 2.54 ) + "   Round Y: " + Math.round( g_ppiY / 2.54 ) );
 */
 
+   _AfterPageLoaded();
 });
 });
 
