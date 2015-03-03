@@ -1,4 +1,4 @@
-z1000-Zeidon    EPAMMS   TZCMLPLO 02/25/15   13:30:49 1.0a2    
+z1000-Zeidon    EPAMMS   TZCMLPLO 02/26/15   19:11:58 1.0a2    
 eLPLR      1
 aName      epamms
 aDesc      ePamms Application
@@ -6,7 +6,7 @@ aZKey      4324720
 aPgmSrcDir %kzd%:\lplr\epamms
 aExecDir   %kzd%:\lplr\epamms\bin
 aMetaSrcDir %kzd%:\lplr\epamms
-aTaskUseCount 1
+aTaskUseCount 2
 aLPLR_Type 2
 aCurrentCompilerSpec DKS
 aTempDesc  ePamms Application
@@ -1925,8 +1925,8 @@ aCPLR_ZKey 11205
 aStatus    1
 aUpdateInd 2
 aName      wSPLD
-aLastSyncDate 20150225133049916
-aLastUpdateDate 20150225133049916
+aLastSyncDate 20150226112314640
+aLastUpdateDate 20150226112314640
 
 eW_MetaDef 3
 aCPLR_ZKey 93086489
@@ -1943,8 +1943,8 @@ aStatus    1
 aUpdateInd 2
 aName      wStartUp
 aDesc      Login and Administration
-aLastSyncDate 20150105132329428
-aLastUpdateDate 20150105132329428
+aLastSyncDate 20150226191158538
+aLastUpdateDate 20150226191158538
 
 eW_MetaDef 3
 aCPLR_ZKey 1158869
@@ -3348,15 +3348,15 @@ i534       252
 i535       253
 i536       254
 i537       255
-i540       262
-i541       261
-i542       259
-i543       266
-i544       264
+i540       264
+i541       262
+i542       261
+i543       259
+i544       266
 i545       265
-i546       258
-i547       263
-i548       260
+i546       263
+i547       260
+i548       258
 i551       269
 i552       270
 i553       271

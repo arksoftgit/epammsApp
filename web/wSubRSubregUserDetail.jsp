@@ -798,7 +798,7 @@ else
       String strURLParameters;
 
       vView = task.getViewByName( "wXferO" );
-      strMessage = vView.cursor( "Root" ).getStringFromAttribute( "WebReturnMessage" );
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString();
       strURLParameters = "?CallingPage=wSubRSubregUserDetail.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wSubR" +
@@ -812,7 +812,7 @@ else
 
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSubR", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -820,8 +820,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wSubR" );
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "SubregUserDetail" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSubR" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "SubregUserDetail" );
    }
 
 %>
@@ -840,6 +840,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSubRSubregUserDetail.js"></script>
 
 </head>
@@ -1016,7 +1017,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSubR", "SubregUserDetail" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -1028,7 +1029,7 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
 
@@ -1103,7 +1104,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubreg.cursor( "Subregistrant" ).getStringFromAttribute( "dNameEPA_Number", "" );
+         strTextDisplayValue = mSubreg.cursor( "Subregistrant" ).getAttribute( "dNameEPA_Number" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -1173,7 +1174,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubreg.cursor( "MailingAddress" ).getStringFromAttribute( "Address", "" );
+         strTextDisplayValue = mSubreg.cursor( "MailingAddress" ).getAttribute( "Address" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -1209,7 +1210,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubreg.cursor( "MailingAddress" ).getStringFromAttribute( "AddressLine2", "" );
+         strTextDisplayValue = mSubreg.cursor( "MailingAddress" ).getAttribute( "AddressLine2" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -1248,7 +1249,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubreg.cursor( "MailingAddress" ).getStringFromAttribute( "City", "" );
+         strTextDisplayValue = mSubreg.cursor( "MailingAddress" ).getAttribute( "City" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -1287,7 +1288,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubreg.cursor( "MailingAddress" ).getStringFromAttribute( "State", "" );
+         strTextDisplayValue = mSubreg.cursor( "MailingAddress" ).getAttribute( "State" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -1322,7 +1323,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubreg.cursor( "MailingAddress" ).getStringFromAttribute( "ZipCode", "" );
+         strTextDisplayValue = mSubreg.cursor( "MailingAddress" ).getAttribute( "ZipCode" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -1359,7 +1360,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubreg.cursor( "MailingAddress" ).getStringFromAttribute( "EmergencyPhone", "" );
+         strTextDisplayValue = mSubreg.cursor( "MailingAddress" ).getAttribute( "EmergencyPhone" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -1431,7 +1432,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubreg.cursor( "Employee" ).getStringFromAttribute( "FirstName", "" );
+         strTextDisplayValue = mSubreg.cursor( "Employee" ).getAttribute( "FirstName" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -1468,7 +1469,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubreg.cursor( "Employee" ).getStringFromAttribute( "LastName", "" );
+         strTextDisplayValue = mSubreg.cursor( "Employee" ).getAttribute( "LastName" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -1505,7 +1506,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubreg.cursor( "User" ).getStringFromAttribute( "UserName", "" );
+         strTextDisplayValue = mSubreg.cursor( "User" ).getAttribute( "UserName" ).getString( "" );
       }
       catch (Exception e)
       {

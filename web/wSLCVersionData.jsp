@@ -72,7 +72,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox2", "", strMapValue );
             else
-               mSubLC.cursor( "SubregLabelContent" ).setAttribute( "Description", strMapValue, "" );
+               mSubLC.cursor( "SubregLabelContent" ).getAttribute( "Description" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -91,7 +91,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox3", "", strMapValue );
             else
-               mSubLC.cursor( "SubregLabelContent" ).setAttribute( "Version", strMapValue, "" );
+               mSubLC.cursor( "SubregLabelContent" ).getAttribute( "Version" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -815,7 +815,7 @@ else
 }
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSLC", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -823,8 +823,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wSLC" );
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "VersionData" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSLC" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "VersionData" );
    }
 
 %>
@@ -843,6 +843,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSLCVersionData.js"></script>
 
 </head>
@@ -1109,7 +1110,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSLC", "VersionData" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -1121,7 +1122,7 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
 
@@ -1188,7 +1189,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubreg.cursor( "PrimaryRegistrant" ).getStringFromAttribute( "dNameEPA_Number", "" );
+         strTextDisplayValue = mSubreg.cursor( "PrimaryRegistrant" ).getAttribute( "dNameEPA_Number" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -1219,7 +1220,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubreg.cursor( "Subregistrant" ).getStringFromAttribute( "dNameEPA_Number", "" );
+         strTextDisplayValue = mSubreg.cursor( "Subregistrant" ).getAttribute( "dNameEPA_Number" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -1250,7 +1251,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubProd.cursor( "MasterProduct" ).getStringFromAttribute( "Name", "" );
+         strTextDisplayValue = mSubProd.cursor( "MasterProduct" ).getAttribute( "Name" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -1281,7 +1282,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubProd.cursor( "SubregProduct" ).getStringFromAttribute( "Name", "" );
+         strTextDisplayValue = mSubProd.cursor( "SubregProduct" ).getAttribute( "Name" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -1351,7 +1352,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSubLC.cursor( "SubregLabelContent" ).getStringFromAttribute( "Description", "" );
+            strErrorMapValue = mSubLC.cursor( "SubregLabelContent" ).getAttribute( "Description" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1396,7 +1397,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSubLC.cursor( "SubregLabelContent" ).getStringFromAttribute( "Version", "" );
+            strErrorMapValue = mSubLC.cursor( "SubregLabelContent" ).getAttribute( "Version" ).getString( "" );
             }
             catch (Exception e)
             {

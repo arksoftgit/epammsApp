@@ -70,7 +70,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "MLEdit1", "", strMapValue );
             else
-               mMasLC.cursor( "M_DirectionsForUseStatement" ).setAttribute( "Title", strMapValue, "" );
+               mMasLC.cursor( "M_DirectionsForUseStatement" ).getAttribute( "Title" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -89,7 +89,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "MLEdit2", "", strMapValue );
             else
-               mMasLC.cursor( "M_DirectionsForUseStatement" ).setAttribute( "Text", strMapValue, "" );
+               mMasLC.cursor( "M_DirectionsForUseStatement" ).getAttribute( "Text" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -436,7 +436,7 @@ else
 }
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wMLC", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -444,8 +444,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wMLC" );
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "DirectionsForUseStatement" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wMLC" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "DirectionsForUseStatement" );
    }
 
 %>
@@ -464,6 +464,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wMLCDirectionsForUseStatement.js"></script>
 
 </head>
@@ -591,7 +592,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wMLC", "DirectionsForUseStatement" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -603,7 +604,7 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
 
@@ -690,7 +691,7 @@ else
          nRC = mMasLC.cursor( "M_DirectionsForUseStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strErrorMapValue = mMasLC.cursor( "M_DirectionsForUseStatement" ).getStringFromAttribute( "Title", "" );
+            strErrorMapValue = mMasLC.cursor( "M_DirectionsForUseStatement" ).getAttribute( "Title" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
@@ -734,7 +735,7 @@ else
          nRC = mMasLC.cursor( "M_DirectionsForUseStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strErrorMapValue = mMasLC.cursor( "M_DirectionsForUseStatement" ).getStringFromAttribute( "Text", "" );
+            strErrorMapValue = mMasLC.cursor( "M_DirectionsForUseStatement" ).getAttribute( "Text" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
@@ -844,7 +845,7 @@ try
          nRC = vGrid4.cursor( "M_DirectionsUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl4 = vGrid4.cursor( "M_DirectionsUsage" ).getStringFromAttribute( "UsageType", "FullUsageType" );
+            strGridEditCtl4 = vGrid4.cursor( "M_DirectionsUsage" ).getAttribute( "UsageType" ).getString( "FullUsageType" );
 
             if ( strGridEditCtl4 == null )
                strGridEditCtl4 = "";
@@ -857,7 +858,7 @@ try
          nRC = vGrid4.cursor( "M_DirectionsUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl5 = vGrid4.cursor( "M_DirectionsUsage" ).getStringFromAttribute( "dDisplayUsageName", "" );
+            strGridEditCtl5 = vGrid4.cursor( "M_DirectionsUsage" ).getAttribute( "dDisplayUsageName" ).getString( "" );
 
             if ( strGridEditCtl5 == null )
                strGridEditCtl5 = "";

@@ -70,7 +70,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "MasterLabelContentVersion", "", strMapValue );
             else
-               mMasLC.cursor( "MasterLabelContent" ).setAttribute( "Version", strMapValue, "" );
+               mMasLC.cursor( "MasterLabelContent" ).getAttribute( "Version" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -862,7 +862,7 @@ else
       String strURLParameters;
 
       vView = task.getViewByName( "wXferO" );
-      strMessage = vView.cursor( "Root" ).getStringFromAttribute( "WebReturnMessage" );
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString();
       strURLParameters = "?CallingPage=wMLCVersionData.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wMLC" +
@@ -876,7 +876,7 @@ else
 
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wMLC", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -884,8 +884,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wMLC" );
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "VersionData" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wMLC" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "VersionData" );
    }
 
 %>
@@ -904,6 +904,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wMLCVersionData.js"></script>
 
 </head>
@@ -1200,7 +1201,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wMLC", "VersionData" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -1212,7 +1213,7 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
 
@@ -1268,7 +1269,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mMasLC.cursor( "MasterProduct" ).getStringFromAttribute( "EPA_RegistrationNumber", "" );
+         strTextDisplayValue = mMasLC.cursor( "MasterProduct" ).getAttribute( "EPA_RegistrationNumber" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -1318,7 +1319,7 @@ else
          {
             try
             {
-            strErrorMapValue = mMasLC.cursor( "MasterLabelContent" ).getStringFromAttribute( "Version", "" );
+            strErrorMapValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "Version" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1364,7 +1365,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mMasLC.cursor( "MasterLabelContent" ).getStringFromAttribute( "RevisionDate", "REVMMDDYY" );
+         strTextDisplayValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "RevisionDate" ).getString( "REVMMDDYY" );
       }
       catch (Exception e)
       {
@@ -1405,7 +1406,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mMasLC.cursor( "MasterLabelContent" ).getStringFromAttribute( "Finalized", "" );
+         strTextDisplayValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "Finalized" ).getString( "" );
       }
       catch (Exception e)
       {

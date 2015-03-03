@@ -70,7 +70,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "ComboBox1", "", strMapValue );
             else
-               mSPLDef.cursor( "CompositeComponentList" ).setAttribute( "ContinuationBreakFlag", strMapValue, "" );
+               mSPLDef.cursor( "CompositeComponentList" ).getAttribute( "ContinuationBreakFlag" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -89,7 +89,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "MLEdit2", "", strMapValue );
             else
-               mSPLDef.cursor( "CompositeComponentList" ).setAttribute( "BreakupText", strMapValue, "" );
+               mSPLDef.cursor( "CompositeComponentList" ).getAttribute( "BreakupText" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -108,7 +108,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "MLEdit3", "", strMapValue );
             else
-               mSPLDef.cursor( "CompositeComponentList" ).setAttribute( "ContinuationLeadingText", strMapValue, "" );
+               mSPLDef.cursor( "CompositeComponentList" ).getAttribute( "ContinuationLeadingText" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -127,7 +127,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "MLEdit4", "", strMapValue );
             else
-               mSPLDef.cursor( "CompositeComponentList" ).setAttribute( "ContinuationText", strMapValue, "" );
+               mSPLDef.cursor( "CompositeComponentList" ).getAttribute( "ContinuationText" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -467,7 +467,7 @@ else
 }
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSPLD", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -475,8 +475,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wSPLD" );
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "SPLD_StatementUpdate" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSPLD" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "SPLD_StatementUpdate" );
    }
 
 %>
@@ -495,6 +495,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSPLDSPLD_StatementUpdate.js"></script>
 
 </head>
@@ -629,7 +630,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSPLD", "SPLD_StatementUpdate" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -641,7 +642,7 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
 
@@ -719,7 +720,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSPLDef.cursor( "CompositeComponentList" ).getStringFromAttribute( "Type", "" );
+         strTextDisplayValue = mSPLDef.cursor( "CompositeComponentList" ).getAttribute( "Type" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -760,7 +761,7 @@ else
       nRC = mSPLDef.cursor( "CompositeComponentList" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mSPLDef.cursor( "CompositeComponentList" ).getStringFromAttribute( "ContinuationBreakFlag", "" );
+         strComboCurrentValue = mSPLDef.cursor( "CompositeComponentList" ).getAttribute( "ContinuationBreakFlag" ).getString();
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }
@@ -875,7 +876,7 @@ else
          nRC = mSPLDef.cursor( "CompositeComponentList" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strErrorMapValue = mSPLDef.cursor( "CompositeComponentList" ).getStringFromAttribute( "BreakupText", "" );
+            strErrorMapValue = mSPLDef.cursor( "CompositeComponentList" ).getAttribute( "BreakupText" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
@@ -982,7 +983,7 @@ else
          nRC = mSPLDef.cursor( "CompositeComponentList" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strErrorMapValue = mSPLDef.cursor( "CompositeComponentList" ).getStringFromAttribute( "ContinuationLeadingText", "" );
+            strErrorMapValue = mSPLDef.cursor( "CompositeComponentList" ).getAttribute( "ContinuationLeadingText" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
@@ -1043,7 +1044,7 @@ else
          nRC = mSPLDef.cursor( "CompositeComponentList" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strErrorMapValue = mSPLDef.cursor( "CompositeComponentList" ).getStringFromAttribute( "ContinuationText", "" );
+            strErrorMapValue = mSPLDef.cursor( "CompositeComponentList" ).getAttribute( "ContinuationText" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 

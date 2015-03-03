@@ -127,14 +127,14 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
          sb_szTempString_0 = new StringBuilder( 32 );
       else
          sb_szTempString_0 = new StringBuilder( szTempString_0 );
-            ZeidonStringCopy( sb_szTempString_0, 1, 0, "General: ", 1, 0, 255 );
+            ZeidonStringCopy( sb_szTempString_0, 1, 0, "General: ", 1, 0, 1026 );
       szTempString_0 = sb_szTempString_0.toString( );}
        {StringBuilder sb_szTempString_0;
       if ( szTempString_0 == null )
          sb_szTempString_0 = new StringBuilder( 32 );
       else
          sb_szTempString_0 = new StringBuilder( szTempString_0 );
-            ZeidonStringConcat( sb_szTempString_0, 1, 0, szTempString_1, 1, 0, 255 );
+            ZeidonStringConcat( sb_szTempString_0, 1, 0, szTempString_1, 1, 0, 1026 );
       szTempString_0 = sb_szTempString_0.toString( );}
       SetAttributeFromString( lMLCATgt, "ComparisonDifference", "Title", szTempString_0 );
       //:lMLCATgt.ComparisonDifference.TitleFlag = "Y"

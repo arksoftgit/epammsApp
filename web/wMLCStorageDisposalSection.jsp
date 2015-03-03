@@ -70,7 +70,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "Title", "", strMapValue );
             else
-               mMasLC.cursor( "M_StorageDisposalSection" ).setAttribute( "Title", strMapValue, "" );
+               mMasLC.cursor( "M_StorageDisposalSection" ).getAttribute( "Title" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -89,7 +89,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "Subtitle", "", strMapValue );
             else
-               mMasLC.cursor( "M_StorageDisposalSection" ).setAttribute( "Subtitle", strMapValue, "" );
+               mMasLC.cursor( "M_StorageDisposalSection" ).getAttribute( "Subtitle" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -121,7 +121,7 @@ public int DoInputMapping( HttpServletRequest request,
                if ( webMapping )
                   VmlOperation.CreateMessage( task, "ComboBox1", "", strMapValue );
                else
-                  vGridTmp.cursor( "M_StorageDisposalDrivingConVol" ).setAttribute( "ContainerVolume", strMapValue, "" );
+                  vGridTmp.cursor( "M_StorageDisposalDrivingConVol" ).getAttribute( "ContainerVolume" ).setValue( strMapValue, "" );
             }
             catch ( InvalidAttributeValueException e )
             {
@@ -765,7 +765,7 @@ else
 }
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wMLC", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -773,8 +773,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wMLC" );
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "StorageDisposalSection" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wMLC" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "StorageDisposalSection" );
    }
 
 %>
@@ -793,6 +793,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wMLCStorageDisposalSection.js"></script>
 
 </head>
@@ -919,7 +920,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wMLC", "StorageDisposalSection" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -931,7 +932,7 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
 
@@ -1008,7 +1009,7 @@ else
          {
             try
             {
-            strErrorMapValue = mMasLC.cursor( "M_StorageDisposalSection" ).getStringFromAttribute( "Title", "" );
+            strErrorMapValue = mMasLC.cursor( "M_StorageDisposalSection" ).getAttribute( "Title" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1064,7 +1065,7 @@ else
          {
             try
             {
-            strErrorMapValue = mMasLC.cursor( "M_StorageDisposalSection" ).getStringFromAttribute( "Subtitle", "" );
+            strErrorMapValue = mMasLC.cursor( "M_StorageDisposalSection" ).getAttribute( "Subtitle" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1180,7 +1181,7 @@ try
          nRC = vGrid1.cursor( "M_StorageDisposalDrivingConVol" ).checkExistenceOfEntity().toInt();
          if ( nRC >= 0 )
          {
-            strComboCurrentValue = vGrid1.cursor( "M_StorageDisposalDrivingConVol" ).getStringFromAttribute( "ContainerVolume", "" );
+            strComboCurrentValue = vGrid1.cursor( "M_StorageDisposalDrivingConVol" ).getAttribute( "ContainerVolume" ).getString( "" );
             if ( strComboCurrentValue == null )
                strComboCurrentValue = "";
 
@@ -1340,7 +1341,7 @@ try
          nRC = vGridStorDisp.cursor( "M_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditStorDisp = vGridStorDisp.cursor( "M_StorageDisposalStatement" ).getStringFromAttribute( "dTitleText", "" );
+            strGridEditStorDisp = vGridStorDisp.cursor( "M_StorageDisposalStatement" ).getAttribute( "dTitleText" ).getString( "" );
 
             if ( strGridEditStorDisp == null )
                strGridEditStorDisp = "";

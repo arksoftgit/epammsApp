@@ -82,9 +82,9 @@ public int DoInputMapping( HttpServletRequest request,
                VmlOperation.CreateMessage( task, "CheckBox1", "", strMapValue );
             else
                if ( strMapValue != null )
-                  vGridTmp.cursor( "LLD" ).setAttribute( "wSelected", strMapValue );
+                  vGridTmp.cursor( "LLD" ).getAttribute( "wSelected" ).setValue( strMapValue );
                else
-                  vGridTmp.cursor( "LLD" ).setAttribute( "wSelected", "" );
+                  vGridTmp.cursor( "LLD" ).getAttribute( "wSelected" ).setValue( "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -369,7 +369,7 @@ else
 }
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSPLD", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -377,8 +377,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wSPLD" );
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "SelectLLD_ForSPLD" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSPLD" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "SelectLLD_ForSPLD" );
    }
 
 %>
@@ -397,6 +397,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSPLDSelectLLD_ForSPLD.js"></script>
 
 </head>
@@ -531,7 +532,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSPLD", "SelectLLD_ForSPLD" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -543,7 +544,7 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
 
@@ -631,7 +632,7 @@ try
          nRC = vGrid1.cursor( "LLD" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strCheckBox1 = vGrid1.cursor( "LLD" ).getStringFromAttribute( "wSelected", "" );
+            strCheckBox1 = vGrid1.cursor( "LLD" ).getAttribute( "wSelected" ).getString( "" );
 
             if ( strCheckBox1 == null )
                strCheckBox1 = "";
@@ -652,7 +653,7 @@ try
          nRC = vGrid1.cursor( "LLD" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl1 = vGrid1.cursor( "LLD" ).getStringFromAttribute( "Name", "" );
+            strGridEditCtl1 = vGrid1.cursor( "LLD" ).getAttribute( "Name" ).getString( "" );
 
             if ( strGridEditCtl1 == null )
                strGridEditCtl1 = "";

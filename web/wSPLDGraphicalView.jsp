@@ -119,8 +119,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-   strURL = response.encodeRedirectURL( "logout.jsp" );
-   response.sendRedirect( strURL );
+    strURL = response.encodeRedirectURL( "logout.jsp" );
+    response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -238,17 +238,7 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDGraphicalView.jsp", "wSPLD.GENERATE_SPLD_Label" );
-      try
-      {
          nOptRC = wSPLD.GENERATE_SPLD_Label( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation GENERATE_SPLD_Label: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -286,17 +276,7 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDGraphicalView.jsp", "wSPLD.GENERATE_SPLD_LabelDottedBorders" );
-      try
-      {
          nOptRC = wSPLD.GENERATE_SPLD_LabelDottedBorders( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation GENERATE_SPLD_LabelDottedBorders: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -436,7 +416,7 @@ else
 }
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSPLD", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -444,8 +424,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wSPLD" );
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "GraphicalView" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSPLD" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "GraphicalView" );
    }
 
 %>
@@ -454,7 +434,7 @@ else
 <head>
 
    <meta http-equiv="content-type" content="text/html; charset=utf-8">
-   <title>Graphical View of LLD</title>
+<title>Graphical View of LLD</title>
 
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
 <!-- log a user out.  Timeout.inc is not used if the dialog or window has a timeout value set. -->
@@ -567,8 +547,9 @@ else
    <script src="js/jquery.nicescroll.min.js"></script>
 <!--   <script src="js/evol.colorpicker.js" type="text/javascript"></script>  -->
    <script src="js/farbtastic.js"></script>
-<!--   <script src="js/label.js"></script>
-       <script src="js/jquery.blockUI.js"></script>  -->
+<!--   <script src="js/label.js"></script> -->
+       <script src="js/jquery.blockUI.js"></script>
+
    <script src="js/labeldesigner.js"></script>
    <script src="js/jsonpath-0.8.0.js"></script>
    <script src="js/jsoeTestData.js"></script>
@@ -1191,6 +1172,7 @@ else
 
 <form name="wSPLDGraphicalView" id="wSPLDGraphicalView" method="post">
    <input name="zAction" id="zAction" type="hidden" value="NOVALUE">
+   <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 <%
    strOpenFile = VmlOperation.FindOpenFile( task );
 %>

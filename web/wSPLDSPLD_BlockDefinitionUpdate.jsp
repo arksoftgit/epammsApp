@@ -71,7 +71,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "ComboBox1", "", strMapValue );
             else
-               mSPLDefBlock.cursor( "LLD_Block" ).setAttribute( "LLD_SectionType", strMapValue, "" );
+               mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "LLD_SectionType" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -90,7 +90,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox3", "", strMapValue );
             else
-               mSPLDefBlock.cursor( "LLD_Block" ).setAttribute( "Top", strMapValue, "" );
+               mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "Top" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -109,7 +109,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox2", "", strMapValue );
             else
-               mSPLDefBlock.cursor( "LLD_Block" ).setAttribute( "Left", strMapValue, "" );
+               mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "Left" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -128,7 +128,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox4", "", strMapValue );
             else
-               mSPLDefBlock.cursor( "LLD_Block" ).setAttribute( "Height", strMapValue, "" );
+               mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "Height" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -147,7 +147,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox5", "", strMapValue );
             else
-               mSPLDefBlock.cursor( "LLD_Block" ).setAttribute( "Width", strMapValue, "" );
+               mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "Width" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -166,7 +166,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox1", "", strMapValue );
             else
-               mSPLDefBlock.cursor( "LLD_Block" ).setAttribute( "ImageName", strMapValue, "" );
+               mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "ImageName" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -185,7 +185,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "CheckBox1", "", strMapValue );
             else
-               mSPLDefBlock.cursor( "LLD_Block" ).setAttribute( "ContinuationBlockFlag", strMapValue, "" );
+               mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "ContinuationBlockFlag" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -204,7 +204,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "ComboBox3", "", strMapValue );
             else
-               mSPLDefBlock.cursor( "LLD_Block" ).setAttribute( "LLD_ColumnListType", strMapValue, "" );
+               mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "LLD_ColumnListType" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -776,7 +776,7 @@ else
       String strURLParameters;
 
       vView = task.getViewByName( "wXferO" );
-      strMessage = vView.cursor( "Root" ).getStringFromAttribute( "WebReturnMessage" );
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString();
       strURLParameters = "?CallingPage=wSPLDSPLD_BlockDefinitionUpdate.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wSPLD" +
@@ -790,7 +790,7 @@ else
 
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSPLD", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -798,8 +798,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wSPLD" );
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "SPLD_BlockDefinitionUpdate" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSPLD" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "SPLD_BlockDefinitionUpdate" );
    }
 
 %>
@@ -818,6 +818,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSPLDSPLD_BlockDefinitionUpdate.js"></script>
 
 </head>
@@ -962,7 +963,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSPLD", "SPLD_BlockDefinitionUpdate" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -974,7 +975,7 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
 
@@ -1038,7 +1039,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSPLDefBlock.cursor( "LLD_Block" ).getStringFromAttribute( "Tag", "" );
+            strErrorMapValue = mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "Tag" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1084,7 +1085,7 @@ else
       nRC = mSPLDefBlock.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mSPLDefBlock.cursor( "LLD_Block" ).getStringFromAttribute( "LLD_SectionType", "" );
+         strComboCurrentValue = mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "LLD_SectionType" ).getString();
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }
@@ -1179,7 +1180,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSPLDefBlock.cursor( "LLD_Block" ).getStringFromAttribute( "Top", "" );
+            strErrorMapValue = mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "Top" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1230,7 +1231,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSPLDefBlock.cursor( "LLD_Block" ).getStringFromAttribute( "Left", "" );
+            strErrorMapValue = mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "Left" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1281,7 +1282,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSPLDefBlock.cursor( "LLD_Block" ).getStringFromAttribute( "Height", "" );
+            strErrorMapValue = mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "Height" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1332,7 +1333,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSPLDefBlock.cursor( "LLD_Block" ).getStringFromAttribute( "Width", "" );
+            strErrorMapValue = mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "Width" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1383,7 +1384,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSPLDefBlock.cursor( "LLD_Block" ).getStringFromAttribute( "ImageName", "" );
+            strErrorMapValue = mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "ImageName" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1439,7 +1440,7 @@ else
    {
       nRC = mSPLDefBlock.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
-         strRadioGroupValue = mSPLDefBlock.cursor( "LLD_Block" ).getStringFromAttribute( "ContinuationBlockFlag" );
+         strRadioGroupValue = mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "ContinuationBlockFlag" ).getString();
    }
 
    if ( StringUtils.equals( strRadioGroupValue, "Y" ) )
@@ -1531,7 +1532,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSPLDefPanel.cursor( "LLD_Block" ).getStringFromAttribute( "Name", "" );
+         strTextDisplayValue = mSPLDefPanel.cursor( "LLD_Block" ).getAttribute( "Name" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -1617,7 +1618,7 @@ else
       nRC = mSPLDefBlock.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mSPLDefBlock.cursor( "LLD_Block" ).getStringFromAttribute( "LLD_ColumnListType", "" );
+         strComboCurrentValue = mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "LLD_ColumnListType" ).getString();
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }
@@ -1807,7 +1808,7 @@ try
          nRC = vGrid2.cursor( "LLD_SpecialSectionAttribute" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl2 = vGrid2.cursor( "LLD_SpecialSectionAttribute" ).getStringFromAttribute( "Name", "" );
+            strGridEditCtl2 = vGrid2.cursor( "LLD_SpecialSectionAttribute" ).getAttribute( "Name" ).getString( "" );
 
             if ( strGridEditCtl2 == null )
                strGridEditCtl2 = "";
@@ -1820,7 +1821,7 @@ try
          nRC = vGrid2.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl1 = vGrid2.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "FontSize", "" );
+            strGridEditCtl1 = vGrid2.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "FontSize" ).getString( "" );
 
             if ( strGridEditCtl1 == null )
                strGridEditCtl1 = "";
@@ -1833,7 +1834,7 @@ try
          nRC = vGrid2.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl5 = vGrid2.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "MarginBottom", "" );
+            strGridEditCtl5 = vGrid2.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "MarginBottom" ).getString( "" );
 
             if ( strGridEditCtl5 == null )
                strGridEditCtl5 = "";
@@ -1846,7 +1847,7 @@ try
          nRC = vGrid2.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl3 = vGrid2.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "FontWeight", "" );
+            strGridEditCtl3 = vGrid2.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "FontWeight" ).getString( "" );
 
             if ( strGridEditCtl3 == null )
                strGridEditCtl3 = "";
@@ -1859,7 +1860,7 @@ try
          nRC = vGrid2.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl4 = vGrid2.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "TextColor", "" );
+            strGridEditCtl4 = vGrid2.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "TextColor" ).getString( "" );
 
             if ( strGridEditCtl4 == null )
                strGridEditCtl4 = "";

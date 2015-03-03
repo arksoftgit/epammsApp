@@ -70,7 +70,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "ProductName", "", strMapValue );
             else
-               mSubreg.cursor( "SubregProduct" ).setAttribute( "Name", strMapValue, "" );
+               mSubreg.cursor( "SubregProduct" ).getAttribute( "Name" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -89,7 +89,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "Description", "", strMapValue );
             else
-               mSubreg.cursor( "SubregProduct" ).setAttribute( "Description", strMapValue, "" );
+               mSubreg.cursor( "SubregProduct" ).getAttribute( "Description" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -108,7 +108,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "ProductNumber", "", strMapValue );
             else
-               mSubreg.cursor( "SubregProduct" ).setAttribute( "Number", strMapValue, "" );
+               mSubreg.cursor( "SubregProduct" ).getAttribute( "Number" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -127,7 +127,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EPARegistrationNumber", "", strMapValue );
             else
-               mSubreg.cursor( "SubregProduct" ).setAttribute( "EPA_RegistrationNumber", strMapValue, "" );
+               mSubreg.cursor( "SubregProduct" ).getAttribute( "EPA_RegistrationNumber" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -147,7 +147,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "ESL_Date", "", strMapValue );
             else
-               mSubreg.cursor( "SubregProduct" ).setAttribute( "ESL_Date", strMapValue, strDateFormat );
+               mSubreg.cursor( "SubregProduct" ).getAttribute( "ESL_Date" ).setValue( strMapValue, strDateFormat );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -946,7 +946,7 @@ else
       String strURLParameters;
 
       vView = task.getViewByName( "wXferO" );
-      strMessage = vView.cursor( "Root" ).getStringFromAttribute( "WebReturnMessage" );
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString();
       strURLParameters = "?CallingPage=wSubRUpdateSubregProduct.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wSubR" +
@@ -960,7 +960,7 @@ else
 
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSubR", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -968,8 +968,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wSubR" );
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "UpdateSubregProduct" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSubR" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "UpdateSubregProduct" );
    }
 
 %>
@@ -988,6 +988,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSubRUpdateSubregProduct.js"></script>
 
 </head>
@@ -1134,7 +1135,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSubR", "UpdateSubregProduct" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -1146,7 +1147,7 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
 
@@ -1214,7 +1215,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubreg.cursor( "MasterProduct" ).getStringFromAttribute( "dMasterProductNameNbr", "" );
+         strTextDisplayValue = mSubreg.cursor( "MasterProduct" ).getAttribute( "dMasterProductNameNbr" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -1256,7 +1257,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubreg.cursor( "Subregistrant" ).getStringFromAttribute( "dNameEPA_Number", "" );
+         strTextDisplayValue = mSubreg.cursor( "Subregistrant" ).getAttribute( "dNameEPA_Number" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -1322,7 +1323,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSubreg.cursor( "SubregProduct" ).getStringFromAttribute( "Name", "" );
+            strErrorMapValue = mSubreg.cursor( "SubregProduct" ).getAttribute( "Name" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1378,7 +1379,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSubreg.cursor( "SubregProduct" ).getStringFromAttribute( "Description", "" );
+            strErrorMapValue = mSubreg.cursor( "SubregProduct" ).getAttribute( "Description" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1434,7 +1435,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSubreg.cursor( "SubregProduct" ).getStringFromAttribute( "Number", "" );
+            strErrorMapValue = mSubreg.cursor( "SubregProduct" ).getAttribute( "Number" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1490,7 +1491,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSubreg.cursor( "SubregProduct" ).getStringFromAttribute( "EPA_RegistrationNumber", "" );
+            strErrorMapValue = mSubreg.cursor( "SubregProduct" ).getAttribute( "EPA_RegistrationNumber" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1544,7 +1545,7 @@ else
          nRC = mSubreg.cursor( "SubregProduct" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strErrorMapValue = mSubreg.cursor( "SubregProduct" ).getStringFromAttribute( "ESL_Date", strDateFormat );
+            strErrorMapValue = mSubreg.cursor( "SubregProduct" ).getAttribute( "ESL_Date" ).getString( strDateFormat );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
@@ -1647,7 +1648,7 @@ try
          nRC = vGridLabels.cursor( "SubregLabelContent" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridLabelName = vGridLabels.cursor( "SubregLabelContent" ).getStringFromAttribute( "Version", "" );
+            strGridLabelName = vGridLabels.cursor( "SubregLabelContent" ).getAttribute( "Version" ).getString( "" );
 
             if ( strGridLabelName == null )
                strGridLabelName = "";
@@ -1660,7 +1661,7 @@ try
          nRC = vGridLabels.cursor( "SubregLabelContent" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridContentDescription = vGridLabels.cursor( "SubregLabelContent" ).getStringFromAttribute( "Description", "" );
+            strGridContentDescription = vGridLabels.cursor( "SubregLabelContent" ).getAttribute( "Description" ).getString( "" );
 
             if ( strGridContentDescription == null )
                strGridContentDescription = "";

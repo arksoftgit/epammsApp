@@ -777,7 +777,7 @@ else
       String strURLParameters;
 
       vView = task.getViewByName( "wXferO" );
-      strMessage = vView.cursor( "Root" ).getStringFromAttribute( "WebReturnMessage" );
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString();
       strURLParameters = "?CallingPage=wStartUpAdminListPrimRegUsers.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wStartUp" +
@@ -791,7 +791,7 @@ else
 
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wStartUp", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -799,8 +799,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wStartUp" );
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "AdminListPrimRegUsers" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wStartUp" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "AdminListPrimRegUsers" );
    }
 
 %>
@@ -821,6 +821,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wStartUpAdminListPrimRegUsers.js"></script>
 
 </head>
@@ -966,7 +967,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wStartUp", "AdminListPrimRegUsers" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -978,7 +979,7 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
 
@@ -1035,7 +1036,7 @@ else
       {
       try
       {
-         strTextDisplayValue = lPrimReg.cursor( "PrimaryRegistrant" ).getStringFromAttribute( "dRegistrantNameID", "" );
+         strTextDisplayValue = lPrimReg.cursor( "PrimaryRegistrant" ).getAttribute( "dRegistrantNameID" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -1135,7 +1136,7 @@ try
          nRC = vGridSubregistrant.cursor( "User" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGEPrimaryRegistrantName = vGridSubregistrant.cursor( "User" ).getStringFromAttribute( "UserName", "" );
+            strGEPrimaryRegistrantName = vGridSubregistrant.cursor( "User" ).getAttribute( "UserName" ).getString( "" );
 
             if ( strGEPrimaryRegistrantName == null )
                strGEPrimaryRegistrantName = "";
@@ -1148,7 +1149,7 @@ try
          nRC = vGridSubregistrant.cursor( "Employee" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGEPrimaryRegistrantFirstName = vGridSubregistrant.cursor( "Employee" ).getStringFromAttribute( "FirstName", "" );
+            strGEPrimaryRegistrantFirstName = vGridSubregistrant.cursor( "Employee" ).getAttribute( "FirstName" ).getString( "" );
 
             if ( strGEPrimaryRegistrantFirstName == null )
                strGEPrimaryRegistrantFirstName = "";
@@ -1161,7 +1162,7 @@ try
          nRC = vGridSubregistrant.cursor( "Employee" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGEPrimaryRegistrantLastName = vGridSubregistrant.cursor( "Employee" ).getStringFromAttribute( "LastName", "" );
+            strGEPrimaryRegistrantLastName = vGridSubregistrant.cursor( "Employee" ).getAttribute( "LastName" ).getString( "" );
 
             if ( strGEPrimaryRegistrantLastName == null )
                strGEPrimaryRegistrantLastName = "";

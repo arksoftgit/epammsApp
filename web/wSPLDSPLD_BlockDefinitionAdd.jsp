@@ -70,7 +70,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "ComboBox2", "", strMapValue );
             else
-               mSPLDef.cursor( "LLD_Block" ).setAttribute( "LLD_SectionType", strMapValue, "" );
+               mSPLDef.cursor( "LLD_Block" ).getAttribute( "LLD_SectionType" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -373,7 +373,7 @@ else
 }
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSPLD", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -381,8 +381,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wSPLD" );
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "SPLD_BlockDefinitionAdd" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSPLD" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "SPLD_BlockDefinitionAdd" );
    }
 
 %>
@@ -401,6 +401,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSPLDSPLD_BlockDefinitionAdd.js"></script>
 
 </head>
@@ -525,7 +526,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSPLD", "SPLD_BlockDefinitionAdd" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -537,7 +538,7 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
 
@@ -592,7 +593,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSPLDef.cursor( "LLD_Block" ).getStringFromAttribute( "Name", "" );
+         strTextDisplayValue = mSPLDef.cursor( "LLD_Block" ).getAttribute( "Name" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -633,7 +634,7 @@ else
       nRC = mSPLDef.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mSPLDef.cursor( "LLD_Block" ).getStringFromAttribute( "LLD_SectionType", "" );
+         strComboCurrentValue = mSPLDef.cursor( "LLD_Block" ).getAttribute( "LLD_SectionType" ).getString();
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }

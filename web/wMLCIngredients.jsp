@@ -70,7 +70,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "ActiveTitle", "", strMapValue );
             else
-               mMasLC.cursor( "M_IngredientsSection" ).setAttribute( "ActiveTitle", strMapValue, "" );
+               mMasLC.cursor( "M_IngredientsSection" ).getAttribute( "ActiveTitle" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -89,7 +89,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "InertTitle", "", strMapValue );
             else
-               mMasLC.cursor( "M_IngredientsSection" ).setAttribute( "InertTitle", strMapValue, "" );
+               mMasLC.cursor( "M_IngredientsSection" ).getAttribute( "InertTitle" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -108,7 +108,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "GeneralInertPercentage", "", strMapValue );
             else
-               mMasLC.cursor( "M_IngredientsSection" ).setAttribute( "GeneralInactivePercent", strMapValue, "" );
+               mMasLC.cursor( "M_IngredientsSection" ).getAttribute( "GeneralInactivePercent" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -1017,7 +1017,7 @@ else
       String strURLParameters;
 
       vView = task.getViewByName( "wXferO" );
-      strMessage = vView.cursor( "Root" ).getStringFromAttribute( "WebReturnMessage" );
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString();
       strURLParameters = "?CallingPage=wMLCIngredients.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wMLC" +
@@ -1031,7 +1031,7 @@ else
 
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wMLC", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -1039,8 +1039,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wMLC" );
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "Ingredients" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wMLC" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "Ingredients" );
    }
 
 %>
@@ -1059,6 +1059,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wMLCIngredients.js"></script>
 
 </head>
@@ -1345,7 +1346,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wMLC", "Ingredients" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -1357,7 +1358,7 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
 
@@ -1437,7 +1438,7 @@ else
          {
             try
             {
-            strErrorMapValue = mMasLC.cursor( "M_IngredientsSection" ).getStringFromAttribute( "ActiveTitle", "" );
+            strErrorMapValue = mMasLC.cursor( "M_IngredientsSection" ).getAttribute( "ActiveTitle" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1493,7 +1494,7 @@ else
          {
             try
             {
-            strErrorMapValue = mMasLC.cursor( "M_IngredientsSection" ).getStringFromAttribute( "InertTitle", "" );
+            strErrorMapValue = mMasLC.cursor( "M_IngredientsSection" ).getAttribute( "InertTitle" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1549,7 +1550,7 @@ else
          {
             try
             {
-            strErrorMapValue = mMasLC.cursor( "M_IngredientsSection" ).getStringFromAttribute( "GeneralInactivePercent", "" );
+            strErrorMapValue = mMasLC.cursor( "M_IngredientsSection" ).getAttribute( "GeneralInactivePercent" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1655,7 +1656,7 @@ try
          nRC = vGridIngredients.cursor( "M_IngredientsStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditIngredients = vGridIngredients.cursor( "M_IngredientsStatement" ).getStringFromAttribute( "dIngredientName", "" );
+            strGridEditIngredients = vGridIngredients.cursor( "M_IngredientsStatement" ).getAttribute( "dIngredientName" ).getString( "" );
 
             if ( strGridEditIngredients == null )
                strGridEditIngredients = "";
@@ -1668,7 +1669,7 @@ try
          nRC = vGridIngredients.cursor( "M_IngredientsStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditActiveInert = vGridIngredients.cursor( "M_IngredientsStatement" ).getStringFromAttribute( "Active", "ActiveInert" );
+            strGridEditActiveInert = vGridIngredients.cursor( "M_IngredientsStatement" ).getAttribute( "Active" ).getString( "ActiveInert" );
 
             if ( strGridEditActiveInert == null )
                strGridEditActiveInert = "";
@@ -1681,7 +1682,7 @@ try
          nRC = vGridIngredients.cursor( "M_IngredientsStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditPercent = vGridIngredients.cursor( "M_IngredientsStatement" ).getStringFromAttribute( "Percent", "" );
+            strGridEditPercent = vGridIngredients.cursor( "M_IngredientsStatement" ).getAttribute( "Percent" ).getString( "" );
 
             if ( strGridEditPercent == null )
                strGridEditPercent = "";

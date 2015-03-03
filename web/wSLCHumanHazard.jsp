@@ -782,7 +782,7 @@ else
 }
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSLC", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -790,8 +790,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wSLC" );
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "HumanHazard" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSLC" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "HumanHazard" );
    }
 
 %>
@@ -810,6 +810,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSLCHumanHazard.js"></script>
 
 </head>
@@ -1075,7 +1076,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSLC", "HumanHazard" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -1087,7 +1088,7 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
 
@@ -1153,7 +1154,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubLC.cursor( "S_HumanHazardSection" ).getStringFromAttribute( "EPA_ChildHazardWarning", "" );
+         strTextDisplayValue = mSubLC.cursor( "S_HumanHazardSection" ).getAttribute( "EPA_ChildHazardWarning" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -1193,7 +1194,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubLC.cursor( "S_HumanHazardSection" ).getStringFromAttribute( "EPA_SignalWord", "" );
+         strTextDisplayValue = mSubLC.cursor( "S_HumanHazardSection" ).getAttribute( "EPA_SignalWord" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -1233,7 +1234,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubLC.cursor( "S_HumanHazardSection" ).getStringFromAttribute( "PrecautionaryStatement", "" );
+         strTextDisplayValue = mSubLC.cursor( "S_HumanHazardSection" ).getAttribute( "PrecautionaryStatement" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -1273,7 +1274,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubLC.cursor( "S_HumanHazardSection" ).getStringFromAttribute( "Location1", "" );
+         strTextDisplayValue = mSubLC.cursor( "S_HumanHazardSection" ).getAttribute( "Location1" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -1313,7 +1314,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubLC.cursor( "S_HumanHazardSection" ).getStringFromAttribute( "Location2", "" );
+         strTextDisplayValue = mSubLC.cursor( "S_HumanHazardSection" ).getAttribute( "Location2" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -1353,7 +1354,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubLC.cursor( "S_HumanHazardSection" ).getStringFromAttribute( "Location3", "" );
+         strTextDisplayValue = mSubLC.cursor( "S_HumanHazardSection" ).getAttribute( "Location3" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -1393,7 +1394,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubLC.cursor( "S_HumanHazardSection" ).getStringFromAttribute( "Location4", "" );
+         strTextDisplayValue = mSubLC.cursor( "S_HumanHazardSection" ).getAttribute( "Location4" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -1433,7 +1434,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubLC.cursor( "S_HumanHazardSection" ).getStringFromAttribute( "Location5", "" );
+         strTextDisplayValue = mSubLC.cursor( "S_HumanHazardSection" ).getAttribute( "Location5" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -1520,7 +1521,7 @@ else
          nRC = mSubLC.cursor( "S_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strErrorMapValue = mSubLC.cursor( "S_HumanHazardSection" ).getStringFromAttribute( "dFullStatement", "" );
+            strErrorMapValue = mSubLC.cursor( "S_HumanHazardSection" ).getAttribute( "dFullStatement" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 

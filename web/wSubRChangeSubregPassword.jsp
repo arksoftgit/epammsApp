@@ -76,7 +76,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "Password", "", strMapValue );
             else
-               wWebXfer.cursor( "Root" ).setAttribute( "CurrentPassword", strMapValue, "" );
+               wWebXfer.cursor( "Root" ).getAttribute( "CurrentPassword" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -95,7 +95,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "NewPassword", "", strMapValue );
             else
-               wWebXfer.cursor( "Root" ).setAttribute( "AttemptPassword", strMapValue, "" );
+               wWebXfer.cursor( "Root" ).getAttribute( "AttemptPassword" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -114,7 +114,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "ConfirmPassword", "", strMapValue );
             else
-               wWebXfer.cursor( "Root" ).setAttribute( "ConfirmPassword", strMapValue, "" );
+               wWebXfer.cursor( "Root" ).getAttribute( "ConfirmPassword" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -494,7 +494,7 @@ else
       String strURLParameters;
 
       vView = task.getViewByName( "wXferO" );
-      strMessage = vView.cursor( "Root" ).getStringFromAttribute( "WebReturnMessage" );
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString();
       strURLParameters = "?CallingPage=wSubRChangeSubregPassword.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wSubR" +
@@ -508,7 +508,7 @@ else
 
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSubR", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -516,8 +516,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wSubR" );
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "ChangeSubregPassword" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSubR" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "ChangeSubregPassword" );
    }
 
 %>
@@ -536,6 +536,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSubRChangeSubregPassword.js"></script>
 
 </head>
@@ -666,7 +667,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSubR", "ChangeSubregPassword" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -678,7 +679,7 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
 
@@ -748,7 +749,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubreg.cursor( "Subregistrant" ).getStringFromAttribute( "dNameEPA_Number", "" );
+         strTextDisplayValue = mSubreg.cursor( "Subregistrant" ).getAttribute( "dNameEPA_Number" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -799,7 +800,7 @@ else
          {
             try
             {
-            strErrorMapValue = wWebXfer.cursor( "Root" ).getStringFromAttribute( "CurrentPassword", "" );
+            strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "CurrentPassword" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -855,7 +856,7 @@ else
          {
             try
             {
-            strErrorMapValue = wWebXfer.cursor( "Root" ).getStringFromAttribute( "AttemptPassword", "" );
+            strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "AttemptPassword" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -911,7 +912,7 @@ else
          {
             try
             {
-            strErrorMapValue = wWebXfer.cursor( "Root" ).getStringFromAttribute( "ConfirmPassword", "" );
+            strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "ConfirmPassword" ).getString( "" );
             }
             catch (Exception e)
             {

@@ -70,7 +70,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox3", "", strMapValue );
             else
-               mMasLC.cursor( "M_DilutionGroup" ).setAttribute( "DilutionRatioText", strMapValue, "" );
+               mMasLC.cursor( "M_DilutionGroup" ).getAttribute( "DilutionRatioText" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -89,7 +89,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox2", "", strMapValue );
             else
-               mMasLC.cursor( "M_DilutionGroup" ).setAttribute( "DilutionQuatText", strMapValue, "" );
+               mMasLC.cursor( "M_DilutionGroup" ).getAttribute( "DilutionQuatText" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -535,7 +535,7 @@ else
 }
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wMLC", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -543,8 +543,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wMLC" );
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "DilutionGroup" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wMLC" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "DilutionGroup" );
    }
 
 %>
@@ -563,6 +563,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wMLCDilutionGroup.js"></script>
 
 </head>
@@ -690,7 +691,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wMLC", "DilutionGroup" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -702,7 +703,7 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
 
@@ -787,7 +788,7 @@ else
          {
             try
             {
-            strErrorMapValue = mMasLC.cursor( "M_DilutionGroup" ).getStringFromAttribute( "DilutionRatioText", "" );
+            strErrorMapValue = mMasLC.cursor( "M_DilutionGroup" ).getAttribute( "DilutionRatioText" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -838,7 +839,7 @@ else
          {
             try
             {
-            strErrorMapValue = mMasLC.cursor( "M_DilutionGroup" ).getStringFromAttribute( "DilutionQuatText", "" );
+            strErrorMapValue = mMasLC.cursor( "M_DilutionGroup" ).getAttribute( "DilutionQuatText" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -953,7 +954,7 @@ try
          nRC = vGridDirectionsUse2.cursor( "M_DilutionGroupItem" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditDirectionsUse2 = vGridDirectionsUse2.cursor( "M_DilutionGroupItem" ).getStringFromAttribute( "Text", "" );
+            strGridEditDirectionsUse2 = vGridDirectionsUse2.cursor( "M_DilutionGroupItem" ).getAttribute( "Text" ).getString( "" );
 
             if ( strGridEditDirectionsUse2 == null )
                strGridEditDirectionsUse2 = "";

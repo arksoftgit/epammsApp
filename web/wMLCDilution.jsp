@@ -70,7 +70,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox2", "", strMapValue );
             else
-               mMasLC.cursor( "MasterLabelContent" ).setAttribute( "DilutionChartStrengthTitle", strMapValue, "" );
+               mMasLC.cursor( "MasterLabelContent" ).getAttribute( "DilutionChartStrengthTitle" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -89,7 +89,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox1", "", strMapValue );
             else
-               mMasLC.cursor( "MasterLabelContent" ).setAttribute( "DilutionChartStrengthText", strMapValue, "" );
+               mMasLC.cursor( "MasterLabelContent" ).getAttribute( "DilutionChartStrengthText" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -1147,7 +1147,7 @@ else
 }
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wMLC", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -1155,8 +1155,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wMLC" );
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "Dilution" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wMLC" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "Dilution" );
    }
 
 %>
@@ -1175,6 +1175,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wMLCDilution.js"></script>
 
 </head>
@@ -1462,7 +1463,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wMLC", "Dilution" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -1474,7 +1475,7 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
 
@@ -1559,7 +1560,7 @@ else
          {
             try
             {
-            strErrorMapValue = mMasLC.cursor( "MasterLabelContent" ).getStringFromAttribute( "DilutionChartStrengthTitle", "" );
+            strErrorMapValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "DilutionChartStrengthTitle" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1610,7 +1611,7 @@ else
          {
             try
             {
-            strErrorMapValue = mMasLC.cursor( "MasterLabelContent" ).getStringFromAttribute( "DilutionChartStrengthText", "" );
+            strErrorMapValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "DilutionChartStrengthText" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1727,7 +1728,7 @@ try
          nRC = vGridDirectionsUse1.cursor( "M_DilutionChartEntry" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditDirectionsUse1 = vGridDirectionsUse1.cursor( "M_DilutionChartEntry" ).getStringFromAttribute( "ProductAmountText", "" );
+            strGridEditDirectionsUse1 = vGridDirectionsUse1.cursor( "M_DilutionChartEntry" ).getAttribute( "ProductAmountText" ).getString( "" );
 
             if ( strGridEditDirectionsUse1 == null )
                strGridEditDirectionsUse1 = "";
@@ -1740,7 +1741,7 @@ try
          nRC = vGridDirectionsUse1.cursor( "M_DilutionChartEntry" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl1 = vGridDirectionsUse1.cursor( "M_DilutionChartEntry" ).getStringFromAttribute( "WaterAmountText", "" );
+            strGridEditCtl1 = vGridDirectionsUse1.cursor( "M_DilutionChartEntry" ).getAttribute( "WaterAmountText" ).getString( "" );
 
             if ( strGridEditCtl1 == null )
                strGridEditCtl1 = "";
@@ -1869,7 +1870,7 @@ try
          nRC = vGrid1.cursor( "M_DilutionGroup" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl2 = vGrid1.cursor( "M_DilutionGroup" ).getStringFromAttribute( "DilutionRatioText", "" );
+            strGridEditCtl2 = vGrid1.cursor( "M_DilutionGroup" ).getAttribute( "DilutionRatioText" ).getString( "" );
 
             if ( strGridEditCtl2 == null )
                strGridEditCtl2 = "";
@@ -1882,7 +1883,7 @@ try
          nRC = vGrid1.cursor( "M_DilutionGroup" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl3 = vGrid1.cursor( "M_DilutionGroup" ).getStringFromAttribute( "DilutionQuatText", "" );
+            strGridEditCtl3 = vGrid1.cursor( "M_DilutionGroup" ).getAttribute( "DilutionQuatText" ).getString( "" );
 
             if ( strGridEditCtl3 == null )
                strGridEditCtl3 = "";

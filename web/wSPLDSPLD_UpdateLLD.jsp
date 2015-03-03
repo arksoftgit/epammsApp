@@ -70,7 +70,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox1", "", strMapValue );
             else
-               mSPLDef.cursor( "SubregPhysicalLabelDef" ).setAttribute( "Name", strMapValue, "" );
+               mSPLDef.cursor( "SubregPhysicalLabelDef" ).getAttribute( "Name" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -89,7 +89,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox5", "", strMapValue );
             else
-               mSPLDef.cursor( "SubregPhysicalLabelDef" ).setAttribute( "ProductName", strMapValue, "" );
+               mSPLDef.cursor( "SubregPhysicalLabelDef" ).getAttribute( "ProductName" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -108,7 +108,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox6", "", strMapValue );
             else
-               mSPLDef.cursor( "LLD_Page" ).setAttribute( "Height", strMapValue, "" );
+               mSPLDef.cursor( "LLD_Page" ).getAttribute( "Height" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -127,7 +127,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox7", "", strMapValue );
             else
-               mSPLDef.cursor( "LLD_Page" ).setAttribute( "Width", strMapValue, "" );
+               mSPLDef.cursor( "LLD_Page" ).getAttribute( "Width" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -146,7 +146,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox4", "", strMapValue );
             else
-               mSPLDef.cursor( "SPLD_LLD" ).setAttribute( "ContinuationPreviousPageText", strMapValue, "" );
+               mSPLDef.cursor( "SPLD_LLD" ).getAttribute( "ContinuationPreviousPageText" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -165,7 +165,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox3", "", strMapValue );
             else
-               mSPLDef.cursor( "SPLD_LLD" ).setAttribute( "ContNextPageTextDirForUse", strMapValue, "" );
+               mSPLDef.cursor( "SPLD_LLD" ).getAttribute( "ContNextPageTextDirForUse" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -184,7 +184,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox2", "", strMapValue );
             else
-               mSPLDef.cursor( "SPLD_LLD" ).setAttribute( "ContNextPageTextMarketing", strMapValue, "" );
+               mSPLDef.cursor( "SPLD_LLD" ).getAttribute( "ContNextPageTextMarketing" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -937,7 +937,7 @@ else
 }
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSPLD", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -945,8 +945,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wSPLD" );
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "SPLD_UpdateLLD" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSPLD" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "SPLD_UpdateLLD" );
    }
 
 %>
@@ -965,6 +965,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSPLDSPLD_UpdateLLD.js"></script>
 
 </head>
@@ -1179,7 +1180,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSPLD", "SPLD_UpdateLLD" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -1191,7 +1192,7 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
 
@@ -1255,7 +1256,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSPLDef.cursor( "MasterProduct" ).getStringFromAttribute( "Name", "" );
+         strTextDisplayValue = mSPLDef.cursor( "MasterProduct" ).getAttribute( "Name" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -1292,7 +1293,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSPLDef.cursor( "SubregProduct" ).getStringFromAttribute( "Name", "" );
+         strTextDisplayValue = mSPLDef.cursor( "SubregProduct" ).getAttribute( "Name" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -1329,7 +1330,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSPLDef.cursor( "SubregLabelContent" ).getStringFromAttribute( "Description", "" );
+         strTextDisplayValue = mSPLDef.cursor( "SubregLabelContent" ).getAttribute( "Description" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -1366,7 +1367,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSPLDef.cursor( "SubregLabelContent" ).getStringFromAttribute( "Version", "" );
+         strTextDisplayValue = mSPLDef.cursor( "SubregLabelContent" ).getAttribute( "Version" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -1428,7 +1429,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSPLDef.cursor( "SubregPhysicalLabelDef" ).getStringFromAttribute( "Name", "" );
+            strErrorMapValue = mSPLDef.cursor( "SubregPhysicalLabelDef" ).getAttribute( "Name" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1479,7 +1480,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSPLDef.cursor( "SubregPhysicalLabelDef" ).getStringFromAttribute( "ProductName", "" );
+            strErrorMapValue = mSPLDef.cursor( "SubregPhysicalLabelDef" ).getAttribute( "ProductName" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1530,7 +1531,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSPLDef.cursor( "LLD_Page" ).getStringFromAttribute( "Height", "" );
+            strErrorMapValue = mSPLDef.cursor( "LLD_Page" ).getAttribute( "Height" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1581,7 +1582,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSPLDef.cursor( "LLD_Page" ).getStringFromAttribute( "Width", "" );
+            strErrorMapValue = mSPLDef.cursor( "LLD_Page" ).getAttribute( "Width" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1632,7 +1633,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSPLDef.cursor( "SPLD_LLD" ).getStringFromAttribute( "ContinuationPreviousPageText", "" );
+            strErrorMapValue = mSPLDef.cursor( "SPLD_LLD" ).getAttribute( "ContinuationPreviousPageText" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1683,7 +1684,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSPLDef.cursor( "SPLD_LLD" ).getStringFromAttribute( "ContNextPageTextDirForUse", "" );
+            strErrorMapValue = mSPLDef.cursor( "SPLD_LLD" ).getAttribute( "ContNextPageTextDirForUse" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1734,7 +1735,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSPLDef.cursor( "SPLD_LLD" ).getStringFromAttribute( "ContNextPageTextMarketing", "" );
+            strErrorMapValue = mSPLDef.cursor( "SPLD_LLD" ).getAttribute( "ContNextPageTextMarketing" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1841,7 +1842,7 @@ try
          nRC = vGridPrimaryRegistrant1.cursor( "LLD_Panel" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGEProductName1 = vGridPrimaryRegistrant1.cursor( "LLD_Panel" ).getStringFromAttribute( "Left", "" );
+            strGEProductName1 = vGridPrimaryRegistrant1.cursor( "LLD_Panel" ).getAttribute( "Left" ).getString( "" );
 
             if ( strGEProductName1 == null )
                strGEProductName1 = "";
@@ -1854,7 +1855,7 @@ try
          nRC = vGridPrimaryRegistrant1.cursor( "LLD_Panel" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl5 = vGridPrimaryRegistrant1.cursor( "LLD_Panel" ).getStringFromAttribute( "Top", "" );
+            strGridEditCtl5 = vGridPrimaryRegistrant1.cursor( "LLD_Panel" ).getAttribute( "Top" ).getString( "" );
 
             if ( strGridEditCtl5 == null )
                strGridEditCtl5 = "";
@@ -1867,7 +1868,7 @@ try
          nRC = vGridPrimaryRegistrant1.cursor( "LLD_Panel" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl6 = vGridPrimaryRegistrant1.cursor( "LLD_Panel" ).getStringFromAttribute( "Height", "" );
+            strGridEditCtl6 = vGridPrimaryRegistrant1.cursor( "LLD_Panel" ).getAttribute( "Height" ).getString( "" );
 
             if ( strGridEditCtl6 == null )
                strGridEditCtl6 = "";
@@ -1880,7 +1881,7 @@ try
          nRC = vGridPrimaryRegistrant1.cursor( "LLD_Panel" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl7 = vGridPrimaryRegistrant1.cursor( "LLD_Panel" ).getStringFromAttribute( "Width", "" );
+            strGridEditCtl7 = vGridPrimaryRegistrant1.cursor( "LLD_Panel" ).getAttribute( "Width" ).getString( "" );
 
             if ( strGridEditCtl7 == null )
                strGridEditCtl7 = "";

@@ -70,7 +70,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox1", "", strMapValue );
             else
-               mSPLDef.cursor( "SubregPhysicalLabelDef" ).setAttribute( "Name", strMapValue, "" );
+               mSPLDef.cursor( "SubregPhysicalLabelDef" ).getAttribute( "Name" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -511,7 +511,7 @@ else
 }
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSPLD", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -519,8 +519,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wSPLD" );
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "SPLD_Components" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSPLD" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "SPLD_Components" );
    }
 
 %>
@@ -539,6 +539,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSPLDSPLD_Components.js"></script>
 
 </head>
@@ -693,7 +694,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSPLD", "SPLD_Components" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -705,7 +706,7 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
 
@@ -769,7 +770,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSPLDef.cursor( "MasterProduct" ).getStringFromAttribute( "Name", "" );
+         strTextDisplayValue = mSPLDef.cursor( "MasterProduct" ).getAttribute( "Name" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -806,7 +807,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSPLDef.cursor( "SubregProduct" ).getStringFromAttribute( "Name", "" );
+         strTextDisplayValue = mSPLDef.cursor( "SubregProduct" ).getAttribute( "Name" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -843,7 +844,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSPLDef.cursor( "SubregLabelContent" ).getStringFromAttribute( "Description", "" );
+         strTextDisplayValue = mSPLDef.cursor( "SubregLabelContent" ).getAttribute( "Description" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -880,7 +881,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSPLDef.cursor( "SubregLabelContent" ).getStringFromAttribute( "Version", "" );
+         strTextDisplayValue = mSPLDef.cursor( "SubregLabelContent" ).getAttribute( "Version" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -942,7 +943,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSPLDef.cursor( "SubregPhysicalLabelDef" ).getStringFromAttribute( "Name", "" );
+            strErrorMapValue = mSPLDef.cursor( "SubregPhysicalLabelDef" ).getAttribute( "Name" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1043,7 +1044,7 @@ try
          nRC = vGrid1.cursor( "CompositeComponentList" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl2 = vGrid1.cursor( "CompositeComponentList" ).getStringFromAttribute( "DisplayTypeIndent", "" );
+            strGridEditCtl2 = vGrid1.cursor( "CompositeComponentList" ).getAttribute( "DisplayTypeIndent" ).getString( "" );
 
             if ( strGridEditCtl2 == null )
                strGridEditCtl2 = "";
@@ -1056,7 +1057,7 @@ try
          nRC = vGrid1.cursor( "CompositeComponentList" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl1 = vGrid1.cursor( "CompositeComponentList" ).getStringFromAttribute( "ContinuationBreakFlag", "ShortName" );
+            strGridEditCtl1 = vGrid1.cursor( "CompositeComponentList" ).getAttribute( "ContinuationBreakFlag" ).getString( "ShortName" );
 
             if ( strGridEditCtl1 == null )
                strGridEditCtl1 = "";
@@ -1069,7 +1070,7 @@ try
          nRC = vGrid1.cursor( "CompositeComponentList" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl4 = vGrid1.cursor( "CompositeComponentList" ).getStringFromAttribute( "Value", "" );
+            strGridEditCtl4 = vGrid1.cursor( "CompositeComponentList" ).getAttribute( "Value" ).getString( "" );
 
             if ( strGridEditCtl4 == null )
                strGridEditCtl4 = "";

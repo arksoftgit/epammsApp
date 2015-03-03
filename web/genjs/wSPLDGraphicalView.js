@@ -31,11 +31,11 @@ function msieversion( )
 
 function _OnAlmostTimeout()
 {
-   if ( _IsDocDisabled( ) === false )
+   if ( _IsDocDisabled( ) == false )
    {
       var tStart   = new Date();
 
-      alert( "Your session will timeout in one minute.  Please click 'OK' within that time to continue and save your work if necessary." );
+      alert( "Your session will timeout in one minute.  Please click 'OK' within that time to continue and save your work if necessary." )
 
       var tEnd   = new Date();
       var tDiff = tEnd.getTime() - tStart.getTime();
@@ -55,7 +55,7 @@ function _OnAlmostTimeout()
 
 function _OnTimeout( )
 {
-   if ( _IsDocDisabled( ) === false )
+   if ( _IsDocDisabled( ) == false )
    {
       _DisableFormElements( true );
 
@@ -66,7 +66,7 @@ function _OnTimeout( )
 
 function _BeforePageUnload( )
 {
-   if ( _IsDocDisabled( ) === false )
+   if ( _IsDocDisabled( ) == false )
    {
       // If the user clicked on the window close box, then
       // isWindowClosing will be true.  Otherwise if the user
@@ -82,81 +82,32 @@ function _BeforePageUnload( )
 
 function _IsDocDisabled( )
 {
-   var theForm;
-   var j;
-   var k;
+   var bRC = false;
 
-   for ( j = 0; j < document.forms.length; j++ )
-   {
-      theForm = document.forms[ j ];
-      for ( k = 0; k < theForm.length; k++ )
-      {
-         if ( theForm.elements[ k ].name === "zDisable" )
-            return theForm.elements[ k ].disabled;
-      }
+   var $el = $("#zDisable");
+   if ( $el.length > 0 ) {
+      bRC = $el.attr( "disabled" );
    }
-
-   return false;
+   return bRC ? true : false;
 }
 
 function _DisableFormElements( bDisabled )
 {
-   var theForm;
-   var type;
-   var lis;
-   var thisLi;
-   var j;
-   var k;
    var bRC = false;
 
-   if ( bDisabled && timerID !== null )
+   if ( bDisabled && timerID != null )
    {
       clearTimeout( timerID );
       timerID = null;
    }
 
-   // Controls on the window may have been set as disabled through javascript but
-   // when we try to get the values for these controls in jsp (response.getParameter)
-   // they will always be null.  Set any disabled fields to enabled for this reason.
-   for ( j = 0; j < document.forms.length; j++ )
-   {
-      theForm = document.forms[ j ];
-      for ( k = 0; k < theForm.length; k++ )
-      {
-         if (theForm.elements[ k ].disabled === true)
-             theForm.elements[ k ].disabled = false;
-      }
+   var $el = $("#zDisable");
+   if ( $el.length > 0 ) {
+      $el.attr( "disabled", bDisabled );
+      bRC = true;
    }
 
-   // We want to set some fields as disabled (like buttons and comboboxes) so that
-   // while the jsp code is processing, users can not select these controls.
-   for ( j = 0; j < document.forms.length; j++ )
-   {
-      theForm = document.forms[ j ];
-      for ( k = 0; k < theForm.length; k++ )
-      {
-         type = theForm.elements[ k ].type;
-
-         if ( type === "button" || type === "submit" || (type !== null && type.indexOf( "select" ) === 0) )
-         {
-            theForm.elements[ k ].disabled = bDisabled;
-         }
-         else
-         if ( theForm.elements[ k ].name === "zDisable" )
-         {
-            theForm.elements[ k ].disabled = bDisabled;
-            bRC = true;
-         }
-      }
-   }
-
-   lis = document.getElementsByTagName( "li" );
-   for ( k = 0; k < lis.length; k++ )
-   {
-      thisLi = lis[ k ];
-      thisLi.disabled = bDisabled;
-   }
-
+   $.blockUI({ message: '<h1><img src="./images/busy.gif" /></h1>', overlayCSS: { backgroundColor: '#eee' } });
    return bRC;
 }
 
@@ -165,7 +116,7 @@ function _AfterPageLoaded( )
 // _DisableFormElements( false );
 
    szMsg = document.wSPLDGraphicalView.zOpenFile.value;
-   if ( szMsg !== "" )
+   if ( szMsg != "" )
    {
       var NewWin = window.open( szMsg );
       if ( NewWin )
@@ -185,10 +136,10 @@ function CheckAllInGrid(id, CheckBoxName)
    var check = id.checked;
    var wcontrol, i = 0;
 
-   while ( (wcontrol = wcontrols[ i++ ]) !== null )
+   while ( (wcontrol = wcontrols[ i++ ]) != null )
    {
       //Check to see if the checkbox belongs to this table then check it.
-      if ( wcontrol.name.indexOf( CheckBoxName ) !== -1 && wcontrol.type === 'checkbox' )
+      if ( wcontrol.name.indexOf( CheckBoxName ) != -1 && wcontrol.type == 'checkbox' )
       {
          wcontrol.checked = check;
       }
@@ -201,7 +152,7 @@ function GenerateLabel( )
    // This is for indicating whether the user hit the window close box.
    isWindowClosing = false;
 
-   if ( _IsDocDisabled( ) === false )
+   if ( _IsDocDisabled( ) == false )
    {
       _DisableFormElements( true );
 
@@ -216,7 +167,7 @@ function GenerateLabelBorders( )
    // This is for indicating whether the user hit the window close box.
    isWindowClosing = false;
 
-   if ( _IsDocDisabled( ) === false )
+   if ( _IsDocDisabled( ) == false )
    {
       _DisableFormElements( true );
 
@@ -231,7 +182,7 @@ function ReturnUpdateLLD( )
    // This is for indicating whether the user hit the window close box.
    isWindowClosing = false;
 
-   if ( _IsDocDisabled( ) === false )
+   if ( _IsDocDisabled( ) == false )
    {
       _DisableFormElements( true );
 

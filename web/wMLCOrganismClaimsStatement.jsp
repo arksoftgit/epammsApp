@@ -70,7 +70,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "ComboBox1", "", strMapValue );
             else
-               mMasLC.cursor( "M_Usage" ).setAttribute( "ClaimsClassification", strMapValue, "" );
+               mMasLC.cursor( "M_Usage" ).getAttribute( "ClaimsClassification" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -89,7 +89,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "PrecautionarySubtitle1", "", strMapValue );
             else
-               mMasLC.cursor( "M_Usage" ).setAttribute( "Name", strMapValue, "" );
+               mMasLC.cursor( "M_Usage" ).getAttribute( "Name" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -109,38 +109,38 @@ public int DoInputMapping( HttpServletRequest request,
             if ( strMapValue != null )
             {
                nRelPos = java.lang.Integer.parseInt( strMapValue );
-            nRelPos--;    // For Auto Include combos, we need to decrement for the blank entry.
+               nRelPos--;    // For Auto Include combos, we need to decrement for the blank entry.
                mMasLC.cursor( "M_UsageFootnote" ).setPosition( nRelPos, "" );
             }
  
-         // Auto Include Code 
-         // If the value is "0" then the user has selected the null entry, we do not want to do an include.
-         // If there is an entity, we want to exclude it. 
-         if ( !StringUtils.equals( strMapValue, "0" ) )
-         {
-            nRC = mMasLC.cursor( "M_UsageFootnoteUsed" ).checkExistenceOfEntity( ).toInt();
-            if ( nRC >= 0 )
+            // Auto Include Code 
+            // If the value is "0" then the user has selected the null entry, we do not want to do an include.
+            // If there is an entity, we want to exclude it. 
+            if ( !StringUtils.equals( strMapValue, "0" ) )
             {
-               // Only do the automatic include if this is a different entity
-               strTemp = mMasLC.cursor( "M_UsageFootnoteUsed" ).getStringFromAttribute( "Text" );
-               if ( !StringUtils.equals( strTemp, mMasLC.cursor( "M_UsageFootnote" ).getStringFromAttribute( "Text" ))) 
+               nRC = mMasLC.cursor( "M_UsageFootnoteUsed" ).checkExistenceOfEntity( ).toInt();
+               if ( nRC >= 0 )
                {
-                  mMasLC.cursor( "M_UsageFootnoteUsed" ).excludeEntity( CursorPosition.NONE );
-                  mMasLC.cursor( "M_UsageFootnoteUsed" ).includeSubobject( mMasLC.cursor( "M_UsageFootnote" ), CursorPosition.NEXT );
+                  // Only do the automatic include if this is a different entity
+                  strTemp = mMasLC.cursor( "M_UsageFootnoteUsed" ).getAttribute( "Text" ).getString();
+                  if ( !StringUtils.equals( strTemp, mMasLC.cursor( "M_UsageFootnote" ).getAttribute( "Text" ).getString())) 
+                  {
+                     mMasLC.cursor( "M_UsageFootnoteUsed" ).excludeEntity( CursorPosition.NONE );
+                     mMasLC.cursor( "M_UsageFootnoteUsed" ).includeSubobject( mMasLC.cursor( "M_UsageFootnote" ), CursorPosition.NEXT );
+                  }
                }
+               else
+                     mMasLC.cursor( "M_UsageFootnoteUsed" ).includeSubobject( mMasLC.cursor( "M_UsageFootnote" ), CursorPosition.NEXT );
             }
             else
-                  mMasLC.cursor( "M_UsageFootnoteUsed" ).includeSubobject( mMasLC.cursor( "M_UsageFootnote" ), CursorPosition.NEXT );
-         }
-         else
-         {
-            nRC = mMasLC.cursor( "M_UsageFootnoteUsed" ).checkExistenceOfEntity( ).toInt();
-            if ( nRC >= 0 )
             {
-                  mMasLC.cursor( "M_UsageFootnoteUsed" ).excludeEntity( CursorPosition.NONE );
+               nRC = mMasLC.cursor( "M_UsageFootnoteUsed" ).checkExistenceOfEntity( ).toInt();
+               if ( nRC >= 0 )
+               {
+                     mMasLC.cursor( "M_UsageFootnoteUsed" ).excludeEntity( CursorPosition.NONE );
+               }
             }
          }
-      }
 
          }  // checkExistenceofEntity
    }
@@ -463,7 +463,7 @@ else
 }
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wMLC", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -471,8 +471,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wMLC" );
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "OrganismClaimsStatement" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wMLC" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "OrganismClaimsStatement" );
    }
 
 %>
@@ -491,6 +491,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wMLCOrganismClaimsStatement.js"></script>
 
 </head>
@@ -627,7 +628,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wMLC", "OrganismClaimsStatement" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -639,7 +640,7 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
 
@@ -730,7 +731,7 @@ else
       nRC = mMasLC.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mMasLC.cursor( "M_Usage" ).getStringFromAttribute( "ClaimsClassification", "" );
+         strComboCurrentValue = mMasLC.cursor( "M_Usage" ).getAttribute( "ClaimsClassification" ).getString();
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }
@@ -825,7 +826,7 @@ else
          {
             try
             {
-            strErrorMapValue = mMasLC.cursor( "M_Usage" ).getStringFromAttribute( "Name", "" );
+            strErrorMapValue = mMasLC.cursor( "M_Usage" ).getAttribute( "Name" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -872,7 +873,7 @@ else
          nRC = mMasLC.cursor( "M_UsageFootnoteUsed" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strComboCurrentValue = mMasLC.cursor( "M_UsageFootnoteUsed" ).getStringFromAttribute( "Text", "" );
+            strComboCurrentValue = mMasLC.cursor( "M_UsageFootnoteUsed" ).getAttribute( "Text" ).getString( "" );
             if ( strComboCurrentValue == null )
                strComboCurrentValue = "";
          }
@@ -899,7 +900,7 @@ else
       csrRC = vComboBox2.cursor( "M_UsageFootnote" ).setFirst(  );
       while ( csrRC.isSet() )
       {
-         strErrorMapValue = vComboBox2.cursor( "M_UsageFootnote" ).getStringFromAttribute( "Text", "" );
+         strErrorMapValue = vComboBox2.cursor( "M_UsageFootnote" ).getAttribute( "Text" ).getString( "" );
          if ( strErrorMapValue == null )
             strErrorMapValue = "";
 

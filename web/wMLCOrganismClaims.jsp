@@ -86,9 +86,9 @@ public int DoInputMapping( HttpServletRequest request,
                VmlOperation.CreateMessage( task, "GS_Select", "", strMapValue );
             else
                if ( strMapValue != null )
-                  vGridTmp.cursor( "M_Usage" ).setAttribute( "wSelected", strMapValue );
+                  vGridTmp.cursor( "M_Usage" ).getAttribute( "wSelected" ).setValue( strMapValue );
                else
-                  vGridTmp.cursor( "M_Usage" ).setAttribute( "wSelected", "" );
+                  vGridTmp.cursor( "M_Usage" ).getAttribute( "wSelected" ).setValue( "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -928,7 +928,7 @@ else
 }
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wMLC", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -936,8 +936,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wMLC" );
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "OrganismClaims" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wMLC" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "OrganismClaims" );
    }
 
 %>
@@ -956,6 +956,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wMLCOrganismClaims.js"></script>
 
 </head>
@@ -1242,7 +1243,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wMLC", "OrganismClaims" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -1254,7 +1255,7 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
 
@@ -1369,7 +1370,7 @@ try
          nRC = vGridClaims.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGS_Select = vGridClaims.cursor( "M_Usage" ).getStringFromAttribute( "wSelected", "" );
+            strGS_Select = vGridClaims.cursor( "M_Usage" ).getAttribute( "wSelected" ).getString( "" );
 
             if ( strGS_Select == null )
                strGS_Select = "";
@@ -1390,7 +1391,7 @@ try
          nRC = vGridClaims.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGEClassification = vGridClaims.cursor( "M_Usage" ).getStringFromAttribute( "ClaimsClassification", "" );
+            strGEClassification = vGridClaims.cursor( "M_Usage" ).getAttribute( "ClaimsClassification" ).getString( "" );
 
             if ( strGEClassification == null )
                strGEClassification = "";
@@ -1403,7 +1404,7 @@ try
          nRC = vGridClaims.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGEPathogen = vGridClaims.cursor( "M_Usage" ).getStringFromAttribute( "dDisplayPathogenName", "" );
+            strGEPathogen = vGridClaims.cursor( "M_Usage" ).getAttribute( "dDisplayPathogenName" ).getString( "" );
 
             if ( strGEPathogen == null )
                strGEPathogen = "";

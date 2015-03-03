@@ -71,7 +71,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox6", "", strMapValue );
             else
-               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "MarginTop", strMapValue, "" );
+               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "MarginTop" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -90,7 +90,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox7", "", strMapValue );
             else
-               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "MarginBottom", strMapValue, "" );
+               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "MarginBottom" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -109,7 +109,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox8", "", strMapValue );
             else
-               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "MarginLeft", strMapValue, "" );
+               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "MarginLeft" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -128,7 +128,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox9", "", strMapValue );
             else
-               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "MarginRight", strMapValue, "" );
+               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "MarginRight" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -147,7 +147,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "ComboBox2", "", strMapValue );
             else
-               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "TextAlign", strMapValue, "" );
+               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "TextAlign" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -166,7 +166,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "ComboBox3", "", strMapValue );
             else
-               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "FontFamily", strMapValue, "" );
+               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "FontFamily" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -185,7 +185,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "ComboBox4", "", strMapValue );
             else
-               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "FontSize", strMapValue, "" );
+               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "FontSize" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -204,7 +204,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "ComboBox5", "", strMapValue );
             else
-               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "FontWeight", strMapValue, "" );
+               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "FontWeight" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -223,7 +223,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "TextColor", "", strMapValue );
             else
-               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "TextColor", strMapValue, "" );
+               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "TextColor" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -242,7 +242,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox1", "", strMapValue );
             else
-               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "TextLineHeight", strMapValue, "" );
+               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "TextLineHeight" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -261,7 +261,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "ComboBox7", "", strMapValue );
             else
-               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "BorderStyle", strMapValue, "" );
+               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "BorderStyle" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -280,7 +280,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox10", "", strMapValue );
             else
-               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "BorderWidth", strMapValue, "" );
+               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "BorderWidth" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -299,7 +299,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "BorderColor", "", strMapValue );
             else
-               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "BorderColor", strMapValue, "" );
+               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "BorderColor" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -318,7 +318,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "ComboBox10", "", strMapValue );
             else
-               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "TitlePosition", strMapValue, "" );
+               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "TitlePosition" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -337,7 +337,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "CheckBox2", "", strMapValue );
             else
-               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).setAttribute( "CapitalizeTitleTextFlag", strMapValue, "" );
+               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "CapitalizeTitleTextFlag" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -364,7 +364,7 @@ public int DoInputMapping( HttpServletRequest request,
                nRelPos = java.lang.Integer.parseInt( strMapValue );
                mSPLDefPanel.cursor( "SpecialFormattingSelectEntry" ).setPosition( nRelPos, "" );
             }
-      }
+         }
 
          }  // checkExistenceofEntity
    }
@@ -667,7 +667,7 @@ else
       String strURLParameters;
 
       vView = task.getViewByName( "wXferO" );
-      strMessage = vView.cursor( "Root" ).getStringFromAttribute( "WebReturnMessage" );
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString();
       strURLParameters = "?CallingPage=wSPLDSPLD_BlockSpecialFormatDef.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wSPLD" +
@@ -681,7 +681,7 @@ else
 
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSPLD", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -689,8 +689,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wSPLD" );
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "SPLD_BlockSpecialFormatDef" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSPLD" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "SPLD_BlockSpecialFormatDef" );
    }
 
 %>
@@ -709,6 +709,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSPLDSPLD_BlockSpecialFormatDef.js"></script>
 
 </head>
@@ -843,7 +844,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSPLD", "SPLD_BlockSpecialFormatDef" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -855,7 +856,7 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
 
@@ -915,7 +916,7 @@ else
          nRC = mSPLDefPanel.cursor( "SpecialFormattingSelectEntry" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strComboCurrentValue = mSPLDefPanel.cursor( "SpecialFormattingSelectEntry" ).getStringFromAttribute( "KeywordName", "" );
+            strComboCurrentValue = mSPLDefPanel.cursor( "SpecialFormattingSelectEntry" ).getAttribute( "KeywordName" ).getString( "" );
             if ( strComboCurrentValue == null )
                strComboCurrentValue = "";
          }
@@ -926,7 +927,7 @@ else
       csrRC = vComboBox1.cursor( "SpecialFormattingSelectEntry" ).setFirst(  );
       while ( csrRC.isSet() )
       {
-         strErrorMapValue = vComboBox1.cursor( "SpecialFormattingSelectEntry" ).getStringFromAttribute( "KeywordName", "" );
+         strErrorMapValue = vComboBox1.cursor( "SpecialFormattingSelectEntry" ).getAttribute( "KeywordName" ).getString( "" );
          if ( strErrorMapValue == null )
             strErrorMapValue = "";
 
@@ -986,7 +987,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "MarginTop", "" );
+            strErrorMapValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "MarginTop" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1043,7 +1044,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "MarginBottom", "" );
+            strErrorMapValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "MarginBottom" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1100,7 +1101,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "MarginLeft", "" );
+            strErrorMapValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "MarginLeft" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1157,7 +1158,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "MarginRight", "" );
+            strErrorMapValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "MarginRight" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1209,7 +1210,7 @@ else
       nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "TextAlign", "" );
+         strComboCurrentValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "TextAlign" ).getString();
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }
@@ -1300,7 +1301,7 @@ else
       nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "FontFamily", "" );
+         strComboCurrentValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "FontFamily" ).getString();
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }
@@ -1391,7 +1392,7 @@ else
       nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "FontSize", "" );
+         strComboCurrentValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "FontSize" ).getString();
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }
@@ -1482,7 +1483,7 @@ else
       nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "FontWeight", "" );
+         strComboCurrentValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "FontWeight" ).getString();
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }
@@ -1578,7 +1579,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "TextColor", "" );
+            strErrorMapValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "TextColor" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1630,7 +1631,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "TextLineHeight", "" );
+            strErrorMapValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "TextLineHeight" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1682,7 +1683,7 @@ else
       nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "BorderStyle", "" );
+         strComboCurrentValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "BorderStyle" ).getString();
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }
@@ -1778,7 +1779,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "BorderWidth", "" );
+            strErrorMapValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "BorderWidth" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1835,7 +1836,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "BorderColor", "" );
+            strErrorMapValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "BorderColor" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1882,7 +1883,7 @@ else
       nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "TitlePosition", "" );
+         strComboCurrentValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "TitlePosition" ).getString();
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }
@@ -1973,7 +1974,7 @@ else
    {
       nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
-         strRadioGroupValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getStringFromAttribute( "CapitalizeTitleTextFlag" );
+         strRadioGroupValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "CapitalizeTitleTextFlag" ).getString();
    }
 
    if ( StringUtils.equals( strRadioGroupValue, "Y" ) )

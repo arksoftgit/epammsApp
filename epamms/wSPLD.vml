@@ -322,7 +322,7 @@ SaveSubregProduct( VIEW ViewToWindow )
    DropObjectInstance( mSubProd )
    SubregID = mSubreg.Subregistrant.ID 
    DropObjectInstance( mSubreg )
-   ACTIVATE mSubreg WHERE mSubreg.SubregOrganization.ID = SubregID
+   ACTIVATE mSubreg WHERE mSubreg.Subregistrant.ID = SubregID
    NAME VIEW mSubreg "mSubreg"
 
 END

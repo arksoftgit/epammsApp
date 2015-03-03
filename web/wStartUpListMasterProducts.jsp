@@ -94,7 +94,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "MoveIncrement", "", strMapValue );
             else
-               wWebXfer.cursor( "Root" ).setAttribute( "MoveIncrement", strMapValue, "" );
+               wWebXfer.cursor( "Root" ).getAttribute( "MoveIncrement" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -953,7 +953,7 @@ else
       String strURLParameters;
 
       vView = task.getViewByName( "wXferO" );
-      strMessage = vView.cursor( "Root" ).getStringFromAttribute( "WebReturnMessage" );
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString();
       strURLParameters = "?CallingPage=wStartUpListMasterProducts.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wStartUp" +
@@ -967,7 +967,7 @@ else
 
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wStartUp", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -975,8 +975,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wStartUp" );
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "ListMasterProducts" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wStartUp" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "ListMasterProducts" );
    }
 
 %>
@@ -995,6 +995,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wStartUpListMasterProducts.js"></script>
 
 </head>
@@ -1135,7 +1136,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wStartUp", "ListMasterProducts" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -1147,7 +1148,7 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
 
@@ -1233,7 +1234,7 @@ else
          {
             try
             {
-            strErrorMapValue = wWebXfer.cursor( "Root" ).getStringFromAttribute( "MoveIncrement", "" );
+            strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "MoveIncrement" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1316,7 +1317,7 @@ try
          nRC = vGridPrimaryRegistrant.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGEProductName = vGridPrimaryRegistrant.cursor( "MasterProduct" ).getStringFromAttribute( "Name", "" );
+            strGEProductName = vGridPrimaryRegistrant.cursor( "MasterProduct" ).getAttribute( "Name" ).getString( "" );
 
             if ( strGEProductName == null )
                strGEProductName = "";
@@ -1329,7 +1330,7 @@ try
          nRC = vGridPrimaryRegistrant.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridDescription = vGridPrimaryRegistrant.cursor( "MasterProduct" ).getStringFromAttribute( "Description", "" );
+            strGridDescription = vGridPrimaryRegistrant.cursor( "MasterProduct" ).getAttribute( "Description" ).getString( "" );
 
             if ( strGridDescription == null )
                strGridDescription = "";
@@ -1342,7 +1343,7 @@ try
          nRC = vGridPrimaryRegistrant.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridVersion = vGridPrimaryRegistrant.cursor( "MasterLabelContent" ).getStringFromAttribute( "Version", "" );
+            strGridVersion = vGridPrimaryRegistrant.cursor( "MasterLabelContent" ).getAttribute( "Version" ).getString( "" );
 
             if ( strGridVersion == null )
                strGridVersion = "";

@@ -86,9 +86,9 @@ public int DoInputMapping( HttpServletRequest request,
                VmlOperation.CreateMessage( task, "GridCheckCtl2", "", strMapValue );
             else
                if ( strMapValue != null )
-                  vGridTmp.cursor( "M_DirectionsUsageOrdering" ).setAttribute( "wSelected", strMapValue );
+                  vGridTmp.cursor( "M_DirectionsUsageOrdering" ).getAttribute( "wSelected" ).setValue( strMapValue );
                else
-                  vGridTmp.cursor( "M_DirectionsUsageOrdering" ).setAttribute( "wSelected", "" );
+                  vGridTmp.cursor( "M_DirectionsUsageOrdering" ).getAttribute( "wSelected" ).setValue( "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -113,7 +113,7 @@ public int DoInputMapping( HttpServletRequest request,
                nRelPos = java.lang.Integer.parseInt( strMapValue );
                mMasLC.cursor( "M_UsageType" ).setPosition( nRelPos, "MasterLabelContent" );
             }
-      }
+         }
 
          }  // checkExistenceofEntity
       // Grid: Grid2
@@ -142,9 +142,9 @@ public int DoInputMapping( HttpServletRequest request,
                VmlOperation.CreateMessage( task, "GridCheckCtl1", "", strMapValue );
             else
                if ( strMapValue != null )
-                  vGridTmp.cursor( "M_Usage" ).setAttribute( "wSelected", strMapValue );
+                  vGridTmp.cursor( "M_Usage" ).getAttribute( "wSelected" ).setValue( strMapValue );
                else
-                  vGridTmp.cursor( "M_Usage" ).setAttribute( "wSelected", "" );
+                  vGridTmp.cursor( "M_Usage" ).getAttribute( "wSelected" ).setValue( "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -641,7 +641,7 @@ else
 }
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wMLC", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -649,8 +649,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wMLC" );
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "DirsForUseSelectByType" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wMLC" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "DirsForUseSelectByType" );
    }
 
 %>
@@ -669,6 +669,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wMLCDirsForUseSelectByType.js"></script>
 
 </head>
@@ -786,7 +787,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wMLC", "DirsForUseSelectByType" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -798,7 +799,7 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
 
@@ -953,7 +954,7 @@ try
          nRC = vGrid1.cursor( "M_DirectionsUsageOrdering" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridCheckCtl2 = vGrid1.cursor( "M_DirectionsUsageOrdering" ).getStringFromAttribute( "wSelected", "" );
+            strGridCheckCtl2 = vGrid1.cursor( "M_DirectionsUsageOrdering" ).getAttribute( "wSelected" ).getString( "" );
 
             if ( strGridCheckCtl2 == null )
                strGridCheckCtl2 = "";
@@ -974,7 +975,7 @@ try
          nRC = vGrid1.cursor( "M_DirectionsUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl2 = vGrid1.cursor( "M_DirectionsUsage" ).getStringFromAttribute( "UsageType", "FullUsageType" );
+            strGridEditCtl2 = vGrid1.cursor( "M_DirectionsUsage" ).getAttribute( "UsageType" ).getString( "FullUsageType" );
 
             if ( strGridEditCtl2 == null )
                strGridEditCtl2 = "";
@@ -987,7 +988,7 @@ try
          nRC = vGrid1.cursor( "M_DirectionsUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl3 = vGrid1.cursor( "M_DirectionsUsage" ).getStringFromAttribute( "dDisplayUsageName", "" );
+            strGridEditCtl3 = vGrid1.cursor( "M_DirectionsUsage" ).getAttribute( "dDisplayUsageName" ).getString( "" );
 
             if ( strGridEditCtl3 == null )
                strGridEditCtl3 = "";
@@ -1097,7 +1098,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
          nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strComboCurrentValue = mMasLC.cursor( "M_UsageType" ).getStringFromAttribute( "UsageType", "FullUsageType" );
+            strComboCurrentValue = mMasLC.cursor( "M_UsageType" ).getAttribute( "UsageType" ).getString( "FullUsageType" );
             if ( strComboCurrentValue == null )
                strComboCurrentValue = "";
          }
@@ -1108,7 +1109,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
       csrRC = vComboBox1.cursor( "M_UsageType" ).setFirst( "MasterLabelContent" );
       while ( csrRC.isSet() )
       {
-         strErrorMapValue = vComboBox1.cursor( "M_UsageType" ).getStringFromAttribute( "UsageType", "FullUsageType" );
+         strErrorMapValue = vComboBox1.cursor( "M_UsageType" ).getAttribute( "UsageType" ).getString( "FullUsageType" );
          if ( strErrorMapValue == null )
             strErrorMapValue = "";
 
@@ -1207,7 +1208,7 @@ try
          nRC = vGrid2.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridCheckCtl1 = vGrid2.cursor( "M_Usage" ).getStringFromAttribute( "wSelected", "" );
+            strGridCheckCtl1 = vGrid2.cursor( "M_Usage" ).getAttribute( "wSelected" ).getString( "" );
 
             if ( strGridCheckCtl1 == null )
                strGridCheckCtl1 = "";
@@ -1228,7 +1229,7 @@ try
          nRC = vGrid2.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl1 = vGrid2.cursor( "M_Usage" ).getStringFromAttribute( "dDisplayUsageName", "" );
+            strGridEditCtl1 = vGrid2.cursor( "M_Usage" ).getAttribute( "dDisplayUsageName" ).getString( "" );
 
             if ( strGridEditCtl1 == null )
                strGridEditCtl1 = "";

@@ -89,9 +89,9 @@ public int DoInputMapping( HttpServletRequest request,
                VmlOperation.CreateMessage( task, "GridCheckCtl1", "", strMapValue );
             else
                if ( strMapValue != null )
-                  vGridTmp.cursor( "CompositeComponentList" ).setAttribute( "Selected", strMapValue );
+                  vGridTmp.cursor( "CompositeComponentList" ).getAttribute( "Selected" ).setValue( strMapValue );
                else
-                  vGridTmp.cursor( "CompositeComponentList" ).setAttribute( "Selected", "" );
+                  vGridTmp.cursor( "CompositeComponentList" ).getAttribute( "Selected" ).setValue( "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -118,7 +118,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox1", "", strMapValue );
             else
-               mSubLC.cursor( "SubregLabelContent" ).setAttribute( "Description", strMapValue, "" );
+               mSubLC.cursor( "SubregLabelContent" ).getAttribute( "Description" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -137,7 +137,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox2", "", strMapValue );
             else
-               mSubLC.cursor( "SubregLabelContent" ).setAttribute( "Version", strMapValue, "" );
+               mSubLC.cursor( "SubregLabelContent" ).getAttribute( "Version" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -172,9 +172,9 @@ public int DoInputMapping( HttpServletRequest request,
                VmlOperation.CreateMessage( task, "GridCheckCtl2", "", strMapValue );
             else
                if ( strMapValue != null )
-                  vGridTmp.cursor( "CompositeComponentList" ).setAttribute( "Selected", strMapValue );
+                  vGridTmp.cursor( "CompositeComponentList" ).getAttribute( "Selected" ).setValue( strMapValue );
                else
-                  vGridTmp.cursor( "CompositeComponentList" ).setAttribute( "Selected", "" );
+                  vGridTmp.cursor( "CompositeComponentList" ).getAttribute( "Selected" ).setValue( "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -665,7 +665,7 @@ else
       String strURLParameters;
 
       vView = task.getViewByName( "wXferO" );
-      strMessage = vView.cursor( "Root" ).getStringFromAttribute( "WebReturnMessage" );
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString();
       strURLParameters = "?CallingPage=wSPLDSLC_ComponentsUpdate.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wSPLD" +
@@ -679,7 +679,7 @@ else
 
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSPLD", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -687,8 +687,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wSPLD" );
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "SLC_ComponentsUpdate" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSPLD" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "SLC_ComponentsUpdate" );
    }
 
 %>
@@ -707,6 +707,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSPLDSLC_ComponentsUpdate.js"></script>
 
 </head>
@@ -871,7 +872,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSPLD", "SLC_ComponentsUpdate" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -883,7 +884,7 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
 
@@ -947,7 +948,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubreg.cursor( "PrimaryRegistrant" ).getStringFromAttribute( "dNameEPA_Number", "" );
+         strTextDisplayValue = mSubreg.cursor( "PrimaryRegistrant" ).getAttribute( "dNameEPA_Number" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -984,7 +985,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubreg.cursor( "Subregistrant" ).getStringFromAttribute( "dNameEPA_Number", "" );
+         strTextDisplayValue = mSubreg.cursor( "Subregistrant" ).getAttribute( "dNameEPA_Number" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -1021,7 +1022,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubProd.cursor( "MasterProduct" ).getStringFromAttribute( "Name", "" );
+         strTextDisplayValue = mSubProd.cursor( "MasterProduct" ).getAttribute( "Name" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -1058,7 +1059,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubProd.cursor( "SubregProduct" ).getStringFromAttribute( "Name", "" );
+         strTextDisplayValue = mSubProd.cursor( "SubregProduct" ).getAttribute( "Name" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -1120,7 +1121,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSubLC.cursor( "SubregLabelContent" ).getStringFromAttribute( "Description", "" );
+            strErrorMapValue = mSubLC.cursor( "SubregLabelContent" ).getAttribute( "Description" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1171,7 +1172,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSubLC.cursor( "SubregLabelContent" ).getStringFromAttribute( "Version", "" );
+            strErrorMapValue = mSubLC.cursor( "SubregLabelContent" ).getAttribute( "Version" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1285,7 +1286,7 @@ try
          nRC = vGrid1.cursor( "CompositeComponentList" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridCheckCtl2 = vGrid1.cursor( "CompositeComponentList" ).getStringFromAttribute( "Selected", "" );
+            strGridCheckCtl2 = vGrid1.cursor( "CompositeComponentList" ).getAttribute( "Selected" ).getString( "" );
 
             if ( strGridCheckCtl2 == null )
                strGridCheckCtl2 = "";
@@ -1306,7 +1307,7 @@ try
          nRC = vGrid1.cursor( "CompositeComponentList" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl2 = vGrid1.cursor( "CompositeComponentList" ).getStringFromAttribute( "DisplayTypeIndent", "" );
+            strGridEditCtl2 = vGrid1.cursor( "CompositeComponentList" ).getAttribute( "DisplayTypeIndent" ).getString( "" );
 
             if ( strGridEditCtl2 == null )
                strGridEditCtl2 = "";
@@ -1319,7 +1320,7 @@ try
          nRC = vGrid1.cursor( "CompositeComponentList" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl4 = vGrid1.cursor( "CompositeComponentList" ).getStringFromAttribute( "DisplayValue", "" );
+            strGridEditCtl4 = vGrid1.cursor( "CompositeComponentList" ).getAttribute( "DisplayValue" ).getString( "" );
 
             if ( strGridEditCtl4 == null )
                strGridEditCtl4 = "";
@@ -1463,7 +1464,7 @@ try
          nRC = vGrid2.cursor( "CompositeComponentList" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridCheckCtl1 = vGrid2.cursor( "CompositeComponentList" ).getStringFromAttribute( "Selected", "" );
+            strGridCheckCtl1 = vGrid2.cursor( "CompositeComponentList" ).getAttribute( "Selected" ).getString( "" );
 
             if ( strGridCheckCtl1 == null )
                strGridCheckCtl1 = "";
@@ -1484,7 +1485,7 @@ try
          nRC = vGrid2.cursor( "CompositeComponentList" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl1 = vGrid2.cursor( "CompositeComponentList" ).getStringFromAttribute( "DisplayTypeIndent", "" );
+            strGridEditCtl1 = vGrid2.cursor( "CompositeComponentList" ).getAttribute( "DisplayTypeIndent" ).getString( "" );
 
             if ( strGridEditCtl1 == null )
                strGridEditCtl1 = "";
@@ -1497,7 +1498,7 @@ try
          nRC = vGrid2.cursor( "CompositeComponentList" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl3 = vGrid2.cursor( "CompositeComponentList" ).getStringFromAttribute( "DisplayValue", "" );
+            strGridEditCtl3 = vGrid2.cursor( "CompositeComponentList" ).getAttribute( "DisplayValue" ).getString( "" );
 
             if ( strGridEditCtl3 == null )
                strGridEditCtl3 = "";

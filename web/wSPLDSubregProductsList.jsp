@@ -266,6 +266,18 @@ if ( strActionToProcess != null )
       break;
    }
 
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "ReturnNoRefresh" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDSubregProductsList", strActionToProcess );
+
+      // Next Window
+      strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_ReplaceWindowWithModalWindow, "wStartUp", "ePammsPortal" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
    while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DeleteLLD" ) )
    {
       bDone = true;
@@ -501,7 +513,7 @@ else
       String strURLParameters;
 
       vView = task.getViewByName( "wXferO" );
-      strMessage = vView.cursor( "Root" ).getStringFromAttribute( "WebReturnMessage" );
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString();
       strURLParameters = "?CallingPage=wSPLDSubregProductsList.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wSPLD" +
@@ -515,7 +527,7 @@ else
 
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSPLD", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -523,8 +535,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wSPLD" );
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "SubregProductsList" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSPLD" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "SubregProductsList" );
    }
 
 %>
@@ -543,6 +555,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSPLDSubregProductsList.js"></script>
 
 </head>
@@ -562,6 +575,16 @@ else
 <!-- Side Navigation *********************** -->
 <div id="sidenavigation">
    <ul>
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "ReturnNoRefresh" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li><a href="#"  onclick="ReturnNoRefresh( )">Return</a></li>
+<%
+   }
+%>
+
 <%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Return" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
@@ -666,7 +689,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSPLD", "SubregProductsList" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -678,7 +701,7 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
 
@@ -743,7 +766,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubreg.cursor( "PrimaryRegistrant" ).getStringFromAttribute( "dNameEPA_Number", "" );
+         strTextDisplayValue = mSubreg.cursor( "PrimaryRegistrant" ).getAttribute( "dNameEPA_Number" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -780,7 +803,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubreg.cursor( "Subregistrant" ).getStringFromAttribute( "dNameEPA_Number", "" );
+         strTextDisplayValue = mSubreg.cursor( "Subregistrant" ).getAttribute( "dNameEPA_Number" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -922,7 +945,7 @@ try
          nRC = vGridSubregProducts.cursor( "SubregProduct" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGESubregProductName = vGridSubregProducts.cursor( "SubregProduct" ).getStringFromAttribute( "Name", "" );
+            strGESubregProductName = vGridSubregProducts.cursor( "SubregProduct" ).getAttribute( "Name" ).getString( "" );
 
             if ( strGESubregProductName == null )
                strGESubregProductName = "";
@@ -935,7 +958,7 @@ try
          nRC = vGridSubregProducts.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGEPrimRegProductName = vGridSubregProducts.cursor( "MasterProduct" ).getStringFromAttribute( "Name", "" );
+            strGEPrimRegProductName = vGridSubregProducts.cursor( "MasterProduct" ).getAttribute( "Name" ).getString( "" );
 
             if ( strGEPrimRegProductName == null )
                strGEPrimRegProductName = "";
@@ -948,7 +971,7 @@ try
          nRC = vGridSubregProducts.cursor( "SubregProduct" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridESL_Date = vGridSubregProducts.cursor( "SubregProduct" ).getStringFromAttribute( "ESL_Date", "" );
+            strGridESL_Date = vGridSubregProducts.cursor( "SubregProduct" ).getAttribute( "ESL_Date" ).getString( "" );
 
             if ( strGridESL_Date == null )
                strGridESL_Date = "";
@@ -1083,7 +1106,7 @@ try
          nRC = vGridLLD.cursor( "LLD" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl1 = vGridLLD.cursor( "LLD" ).getStringFromAttribute( "Name", "" );
+            strGridEditCtl1 = vGridLLD.cursor( "LLD" ).getAttribute( "Name" ).getString( "" );
 
             if ( strGridEditCtl1 == null )
                strGridEditCtl1 = "";

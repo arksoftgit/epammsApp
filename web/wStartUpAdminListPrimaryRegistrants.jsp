@@ -786,7 +786,7 @@ else
       String strURLParameters;
 
       vView = task.getViewByName( "wXferO" );
-      strMessage = vView.cursor( "Root" ).getStringFromAttribute( "WebReturnMessage" );
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString();
       strURLParameters = "?CallingPage=wStartUpAdminListPrimaryRegistrants.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wStartUp" +
@@ -800,7 +800,7 @@ else
 
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wStartUp", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -808,8 +808,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wStartUp" );
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "AdminListPrimaryRegistrants" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wStartUp" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "AdminListPrimaryRegistrants" );
    }
 
 %>
@@ -830,6 +830,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wStartUpAdminListPrimaryRegistrants.js"></script>
 
 </head>
@@ -965,7 +966,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wStartUp", "AdminListPrimaryRegistrants" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -977,7 +978,7 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
 
@@ -1092,7 +1093,7 @@ try
          nRC = vGridPrimaryRegistrant.cursor( "PrimaryRegistrant" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGEPrimaryRegistrantName = vGridPrimaryRegistrant.cursor( "PrimaryRegistrant" ).getStringFromAttribute( "dRegistrantNameID", "" );
+            strGEPrimaryRegistrantName = vGridPrimaryRegistrant.cursor( "PrimaryRegistrant" ).getAttribute( "dRegistrantNameID" ).getString( "" );
 
             if ( strGEPrimaryRegistrantName == null )
                strGEPrimaryRegistrantName = "";
@@ -1105,7 +1106,7 @@ try
          nRC = vGridPrimaryRegistrant.cursor( "Organization" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGEPrimaryRegistrantLoginName = vGridPrimaryRegistrant.cursor( "Organization" ).getStringFromAttribute( "LoginName", "" );
+            strGEPrimaryRegistrantLoginName = vGridPrimaryRegistrant.cursor( "Organization" ).getAttribute( "LoginName" ).getString( "" );
 
             if ( strGEPrimaryRegistrantLoginName == null )
                strGEPrimaryRegistrantLoginName = "";
@@ -1118,7 +1119,7 @@ try
          nRC = vGridPrimaryRegistrant.cursor( "Organization" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGEPrimaryRegistrantDescription = vGridPrimaryRegistrant.cursor( "Organization" ).getStringFromAttribute( "Description", "" );
+            strGEPrimaryRegistrantDescription = vGridPrimaryRegistrant.cursor( "Organization" ).getAttribute( "Description" ).getString( "" );
 
             if ( strGEPrimaryRegistrantDescription == null )
                strGEPrimaryRegistrantDescription = "";

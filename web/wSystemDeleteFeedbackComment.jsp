@@ -482,7 +482,7 @@ else
       String strURLParameters;
 
       vView = task.getViewByName( "wXferO" );
-      strMessage = vView.cursor( "Root" ).getStringFromAttribute( "WebReturnMessage" );
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString();
       strURLParameters = "?CallingPage=wSystemDeleteFeedbackComment.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wSystem" +
@@ -496,7 +496,7 @@ else
 
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSystem", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -504,8 +504,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wSystem" );
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "DeleteFeedbackComment" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSystem" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "DeleteFeedbackComment" );
    }
 
 %>
@@ -524,6 +524,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSystemDeleteFeedbackComment.js"></script>
 
 </head>
@@ -667,7 +668,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSystem", "DeleteFeedbackComment" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -679,7 +680,7 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
 
@@ -743,7 +744,7 @@ else
          {
             try
             {
-            strErrorMapValue = mOrganiz.cursor( "Organization" ).getStringFromAttribute( "LoginName", "" );
+            strErrorMapValue = mOrganiz.cursor( "Organization" ).getAttribute( "LoginName" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -794,7 +795,7 @@ else
          {
             try
             {
-            strErrorMapValue = mOrganiz.cursor( "Feedback" ).getStringFromAttribute( "UserId", "" );
+            strErrorMapValue = mOrganiz.cursor( "Feedback" ).getAttribute( "UserId" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -845,7 +846,7 @@ else
          {
             try
             {
-            strErrorMapValue = mOrganiz.cursor( "Feedback" ).getStringFromAttribute( "Dialog", "" );
+            strErrorMapValue = mOrganiz.cursor( "Feedback" ).getAttribute( "Dialog" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -896,7 +897,7 @@ else
          {
             try
             {
-            strErrorMapValue = mOrganiz.cursor( "Feedback" ).getStringFromAttribute( "Window", "" );
+            strErrorMapValue = mOrganiz.cursor( "Feedback" ).getAttribute( "Window" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -947,7 +948,7 @@ else
          {
             try
             {
-            strErrorMapValue = mOrganiz.cursor( "Feedback" ).getStringFromAttribute( "Comment", "" );
+            strErrorMapValue = mOrganiz.cursor( "Feedback" ).getAttribute( "Comment" ).getString( "" );
             }
             catch (Exception e)
             {

@@ -240,12 +240,6 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
-      // We are borrowing zTableRowSelect for the moment and this code is hardwired for the moment
-      wWebXA = task.getViewByName( "wWebXfer" );
-      String strHtml = (String) request.getParameter( "zTableRowSelect" );
-      wWebXA.cursor( "Root" ).setAttribute( "HTML", strHtml, "" );
-      // We are borrowing zTableRowSelect for the moment and this code is hardwired for the moment
-
       // Next Window
       strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartModalSubwindow, "wSystem", "DragDropSort" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -421,7 +415,7 @@ else
 }
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSLC", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -429,8 +423,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wSLC" );
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "MarketingStatement" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSLC" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "MarketingStatement" );
    }
 
 %>
@@ -449,10 +443,8 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSLCMarketingStatement.js"></script>
-
-<script language="JavaScript" type="text/javascript" src="./js/jsoe.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/jsoeUtils.js"></script>
 
 </head>
 
@@ -578,7 +570,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSLC", "MarketingStatement" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -590,7 +582,7 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
 
@@ -665,7 +657,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubLC.cursor( "S_MarketingStatement" ).getStringFromAttribute( "Title", "" );
+         strTextDisplayValue = mSubLC.cursor( "S_MarketingStatement" ).getAttribute( "Title" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -702,7 +694,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubLC.cursor( "S_MarketingStatement" ).getStringFromAttribute( "Text", "" );
+         strTextDisplayValue = mSubLC.cursor( "S_MarketingStatement" ).getAttribute( "Text" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -816,7 +808,7 @@ try
          nRC = vGridMarketingUsage.cursor( "S_MarketingUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl4 = vGridMarketingUsage.cursor( "S_MarketingUsage" ).getStringFromAttribute( "UsageType", "FullUsageType" );
+            strGridEditCtl4 = vGridMarketingUsage.cursor( "S_MarketingUsage" ).getAttribute( "UsageType" ).getString( "FullUsageType" );
 
             if ( strGridEditCtl4 == null )
                strGridEditCtl4 = "";
@@ -829,7 +821,7 @@ try
          nRC = vGridMarketingUsage.cursor( "S_MarketingUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl5 = vGridMarketingUsage.cursor( "S_MarketingUsage" ).getStringFromAttribute( "dDisplayUsageName", "" );
+            strGridEditCtl5 = vGridMarketingUsage.cursor( "S_MarketingUsage" ).getAttribute( "dDisplayUsageName" ).getString( "" );
 
             if ( strGridEditCtl5 == null )
                strGridEditCtl5 = "";

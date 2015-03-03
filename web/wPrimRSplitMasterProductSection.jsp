@@ -70,7 +70,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "TextPrevious", "", strMapValue );
             else
-               wWebXfer.cursor( "Root" ).setAttribute( "SplitHTML_Before", strMapValue, "" );
+               wWebXfer.cursor( "Root" ).getAttribute( "SplitHTML_Before" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -89,7 +89,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "TextNext", "", strMapValue );
             else
-               wWebXfer.cursor( "Root" ).setAttribute( "SplitHTML_After", strMapValue, "" );
+               wWebXfer.cursor( "Root" ).getAttribute( "SplitHTML_After" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -108,7 +108,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "PrevName", "", strMapValue );
             else
-               wWebXfer.cursor( "Root" ).setAttribute( "NameBefore", strMapValue, "" );
+               wWebXfer.cursor( "Root" ).getAttribute( "NameBefore" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -127,7 +127,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "NextName", "", strMapValue );
             else
-               wWebXfer.cursor( "Root" ).setAttribute( "NameAfter", strMapValue, "" );
+               wWebXfer.cursor( "Root" ).getAttribute( "NameAfter" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -799,7 +799,7 @@ else
       String strURLParameters;
 
       vView = task.getViewByName( "wXferO" );
-      strMessage = vView.cursor( "Root" ).getStringFromAttribute( "WebReturnMessage" );
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString();
       strURLParameters = "?CallingPage=wPrimRSplitMasterProductSection.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wPrimR" +
@@ -813,7 +813,7 @@ else
 
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wPrimR", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -821,8 +821,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wPrimR" );
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "SplitMasterProductSection" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wPrimR" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "SplitMasterProductSection" );
    }
 
 %>
@@ -841,6 +841,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wPrimRSplitMasterProductSection.js"></script>
 
 </head>
@@ -1010,7 +1011,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wPrimR", "SplitMasterProductSection" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -1022,7 +1023,7 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
 
@@ -1178,7 +1179,7 @@ else
       {
       try
       {
-         strTextDisplayValue = wWebXfer.cursor( "Root" ).getStringFromAttribute( "AttemptContentVersion", "" );
+         strTextDisplayValue = wWebXfer.cursor( "Root" ).getAttribute( "AttemptContentVersion" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -1235,7 +1236,7 @@ else
          {
             try
             {
-            strErrorMapValue = wWebXfer.cursor( "Root" ).getStringFromAttribute( "SplitHTML_Before", "" );
+            strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "SplitHTML_Before" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1299,7 +1300,7 @@ else
          {
             try
             {
-            strErrorMapValue = wWebXfer.cursor( "Root" ).getStringFromAttribute( "SplitHTML_After", "" );
+            strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "SplitHTML_After" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1383,7 +1384,7 @@ else
          {
             try
             {
-            strErrorMapValue = wWebXfer.cursor( "Root" ).getStringFromAttribute( "NameBefore", "" );
+            strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "NameBefore" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1476,7 +1477,7 @@ else
          {
             try
             {
-            strErrorMapValue = wWebXfer.cursor( "Root" ).getStringFromAttribute( "NameAfter", "" );
+            strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "NameAfter" ).getString( "" );
             }
             catch (Exception e)
             {

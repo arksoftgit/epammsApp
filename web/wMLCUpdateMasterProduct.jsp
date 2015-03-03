@@ -71,7 +71,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "ChemicalFamily", "", strMapValue );
             else
-               mMasProd.cursor( "MasterProduct" ).setAttribute( "ChemicalFamily", strMapValue, "" );
+               mMasProd.cursor( "MasterProduct" ).getAttribute( "ChemicalFamily" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -90,7 +90,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EstablishmentNumber", "", strMapValue );
             else
-               mMasProd.cursor( "MasterProduct" ).setAttribute( "EPA_EstablishmentNumber", strMapValue, "" );
+               mMasProd.cursor( "MasterProduct" ).getAttribute( "EPA_EstablishmentNumber" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -109,7 +109,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "MasterProductDescription", "", strMapValue );
             else
-               mMasProd.cursor( "MasterProduct" ).setAttribute( "Description", strMapValue, "" );
+               mMasProd.cursor( "MasterProduct" ).getAttribute( "Description" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -128,7 +128,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "ToxicityCategory", "", strMapValue );
             else
-               mMasProd.cursor( "MasterProduct" ).setAttribute( "EPA_ToxicityCategory", strMapValue, "" );
+               mMasProd.cursor( "MasterProduct" ).getAttribute( "EPA_ToxicityCategory" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -170,7 +170,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "MasterProductName", "", strMapValue );
             else
-               wWebXfer.cursor( "Root" ).setAttribute( "AttemptProductName", strMapValue, "" );
+               wWebXfer.cursor( "Root" ).getAttribute( "AttemptProductName" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -189,7 +189,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "MasterProductNumber", "", strMapValue );
             else
-               wWebXfer.cursor( "Root" ).setAttribute( "AttemptProductNumber", strMapValue, "" );
+               wWebXfer.cursor( "Root" ).getAttribute( "AttemptProductNumber" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -688,7 +688,7 @@ else
 }
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wMLC", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -696,8 +696,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wMLC" );
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "UpdateMasterProduct" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wMLC" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "UpdateMasterProduct" );
    }
 
 %>
@@ -716,6 +716,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wMLCUpdateMasterProduct.js"></script>
 
 </head>
@@ -842,7 +843,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wMLC", "UpdateMasterProduct" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -854,7 +855,7 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
 
@@ -921,7 +922,7 @@ else
          {
             try
             {
-            strErrorMapValue = wWebXfer.cursor( "Root" ).getStringFromAttribute( "AttemptProductName", "" );
+            strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "AttemptProductName" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -977,7 +978,7 @@ else
          {
             try
             {
-            strErrorMapValue = wWebXfer.cursor( "Root" ).getStringFromAttribute( "AttemptProductNumber", "" );
+            strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "AttemptProductNumber" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1028,7 +1029,7 @@ else
       nRC = mMasProd.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mMasProd.cursor( "MasterProduct" ).getStringFromAttribute( "ChemicalFamily", "" );
+         strComboCurrentValue = mMasProd.cursor( "MasterProduct" ).getAttribute( "ChemicalFamily" ).getString();
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }
@@ -1111,7 +1112,7 @@ else
          {
             try
             {
-            strErrorMapValue = mMasProd.cursor( "MasterProduct" ).getStringFromAttribute( "EPA_EstablishmentNumber", "" );
+            strErrorMapValue = mMasProd.cursor( "MasterProduct" ).getAttribute( "EPA_EstablishmentNumber" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1166,7 +1167,7 @@ else
          nRC = mMasProd.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strErrorMapValue = mMasProd.cursor( "MasterProduct" ).getStringFromAttribute( "Description", "" );
+            strErrorMapValue = mMasProd.cursor( "MasterProduct" ).getAttribute( "Description" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
@@ -1211,7 +1212,7 @@ else
       nRC = mMasProd.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mMasProd.cursor( "MasterProduct" ).getStringFromAttribute( "EPA_ToxicityCategory", "" );
+         strComboCurrentValue = mMasProd.cursor( "MasterProduct" ).getAttribute( "EPA_ToxicityCategory" ).getString();
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }
@@ -1359,7 +1360,7 @@ try
          nRC = vGridMasterLabelContent.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditVersion = vGridMasterLabelContent.cursor( "MasterLabelContent" ).getStringFromAttribute( "Version", "" );
+            strGridEditVersion = vGridMasterLabelContent.cursor( "MasterLabelContent" ).getAttribute( "Version" ).getString( "" );
 
             if ( strGridEditVersion == null )
                strGridEditVersion = "";
@@ -1372,7 +1373,7 @@ try
          nRC = vGridMasterLabelContent.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditRevisionDate = vGridMasterLabelContent.cursor( "MasterLabelContent" ).getStringFromAttribute( "RevisionDate", "REVMMDDYY" );
+            strGridEditRevisionDate = vGridMasterLabelContent.cursor( "MasterLabelContent" ).getAttribute( "RevisionDate" ).getString( "REVMMDDYY" );
 
             if ( strGridEditRevisionDate == null )
                strGridEditRevisionDate = "";
@@ -1385,7 +1386,7 @@ try
          nRC = vGridMasterLabelContent.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditFinalized = vGridMasterLabelContent.cursor( "MasterLabelContent" ).getStringFromAttribute( "Finalized", "Yes/No" );
+            strGridEditFinalized = vGridMasterLabelContent.cursor( "MasterLabelContent" ).getAttribute( "Finalized" ).getString( "Yes/No" );
 
             if ( strGridEditFinalized == null )
                strGridEditFinalized = "";

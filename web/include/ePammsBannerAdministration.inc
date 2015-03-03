@@ -2,7 +2,7 @@
   <div id="loginline"><ul>
 
               <li class="home"><a href="http://www.epa.gov" target="_blank">EPA Home</a></li>
-		<li class="emailicon"><a href=".\wStartupUserLogin.jsp" target="_blank">Login</a></li>
+		<li class="emailicon"><a href=".\wStartUpUserLogin.jsp" target="_blank">Login</a></li>
                  <li class="logoff"><a href="#" onclick="mLogout()">Log Out</a></li>
                 </ul></div>
 </div>

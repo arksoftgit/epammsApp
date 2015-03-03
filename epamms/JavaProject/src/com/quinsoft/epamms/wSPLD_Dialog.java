@@ -406,7 +406,7 @@ o_fnLocalBuildQual_10( View     vSubtask,
    CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
    SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "Subregistrant" );
    CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregOrganization" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "Subregistrant" );
    SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
    SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", SubregID );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
@@ -525,59 +525,6 @@ o_fnLocalBuildQual_16( View     vSubtask,
    SetAttributeFromString( vQualObject, "QualAttrib", "Value", szTempString_0.toString( ) );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
    return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_0( View     vSubtask,
-                      zVIEW    vQualObject,
-                      String   szTempString_0 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "Subregistrant" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregOrganization" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "Name" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Value", szTempString_0.toString( ) );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-//:DIALOG OPERATION
-//:TestLocking( VIEW ViewToWindow )
-
-//:   VIEW ZPLOCKO BASED ON LOD ZPLOCKO
-public int 
-TestLocking( View     ViewToWindow )
-{
-   zVIEW    ZPLOCKO = new zVIEW( );
-   //:VIEW mSubreg BASED ON LOD mSubreg
-   zVIEW    mSubreg = new zVIEW( );
-   zVIEW    vTempViewVar_0 = new zVIEW( );
-   int      RESULT = 0;
-
-
-   //://ACTIVATE ZPLOCKO Multiple
-   //://NAME VIEW ZPLOCKO "ZPLOCKO1"
-
-   //://ACTIVATE mSPLDef WHERE mSPLDef.SubregPhysicalLabelDef.ID > 0
-   //://NAME VIEW mSPLDef "mSPLDef"
-
-   //:ACTIVATE mSubreg WHERE mSubreg.Subregistrant.ID > 0
-   o_fnLocalBuildQual_23( ViewToWindow, vTempViewVar_0 );
-   RESULT = ActivateObjectInstance( mSubreg, "mSubreg", ViewToWindow, vTempViewVar_0, zSINGLE );
-   DropView( vTempViewVar_0 );
-   //:NAME VIEW mSubreg "mSubreg"
-   SetNameForView( mSubreg, "mSubreg", null, zLEVEL_TASK );
-   return( 0 );
-//    
-//    //ACTIVATE ZPLOCKO Multiple
-//    //NAME VIEW ZPLOCKO "ZPLOCKO2"
-// END
 } 
 
 
@@ -1492,7 +1439,7 @@ SaveSubregProduct( View     ViewToWindow )
    SubregID = mi_SubregID.intValue( );}
    //:DropObjectInstance( mSubreg )
    DropObjectInstance( mSubreg );
-   //:ACTIVATE mSubreg WHERE mSubreg.SubregOrganization.ID = SubregID
+   //:ACTIVATE mSubreg WHERE mSubreg.Subregistrant.ID = SubregID
    o_fnLocalBuildQual_10( ViewToWindow, vTempViewVar_0, SubregID );
    RESULT = ActivateObjectInstance( mSubreg, "mSubreg", ViewToWindow, vTempViewVar_0, zSINGLE );
    DropView( vTempViewVar_0 );
@@ -4871,6 +4818,59 @@ DELETE_SpecialFormatDef( View     ViewToWindow )
    RESULT = DeleteEntity( mSPLDef, "LLD_SpecialSectionAttribute", zPOS_NEXT );
    return( 0 );
 // END
+} 
+
+
+//:DIALOG OPERATION
+//:TestLocking( VIEW ViewToWindow )
+
+//:   VIEW ZPLOCKO BASED ON LOD ZPLOCKO
+public int 
+TestLocking( View     ViewToWindow )
+{
+   zVIEW    ZPLOCKO = new zVIEW( );
+   //:VIEW mSubreg BASED ON LOD mSubreg
+   zVIEW    mSubreg = new zVIEW( );
+   zVIEW    vTempViewVar_0 = new zVIEW( );
+   int      RESULT = 0;
+
+
+   //://ACTIVATE ZPLOCKO Multiple
+   //://NAME VIEW ZPLOCKO "ZPLOCKO1"
+
+   //://ACTIVATE mSPLDef WHERE mSPLDef.SubregPhysicalLabelDef.ID > 0
+   //://NAME VIEW mSPLDef "mSPLDef"
+
+   //:ACTIVATE mSubreg WHERE mSubreg.Subregistrant.ID > 0
+   o_fnLocalBuildQual_23( ViewToWindow, vTempViewVar_0 );
+   RESULT = ActivateObjectInstance( mSubreg, "mSubreg", ViewToWindow, vTempViewVar_0, zSINGLE );
+   DropView( vTempViewVar_0 );
+   //:NAME VIEW mSubreg "mSubreg"
+   SetNameForView( mSubreg, "mSubreg", null, zLEVEL_TASK );
+   return( 0 );
+//    
+//    //ACTIVATE ZPLOCKO Multiple
+//    //NAME VIEW ZPLOCKO "ZPLOCKO2"
+// END
+} 
+
+
+private int 
+o_fnLocalBuildQual_0( View     vSubtask,
+                      zVIEW    vQualObject,
+                      String   szTempString_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "Subregistrant" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregOrganization" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "Name" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Value", szTempString_0.toString( ) );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
 } 
 
 

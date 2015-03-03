@@ -70,7 +70,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox2", "", strMapValue );
             else
-               mSPLDef.cursor( "LLD_Panel" ).setAttribute( "Left", strMapValue, "" );
+               mSPLDef.cursor( "LLD_Panel" ).getAttribute( "Left" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -89,7 +89,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox1", "", strMapValue );
             else
-               mSPLDef.cursor( "LLD_Panel" ).setAttribute( "Top", strMapValue, "" );
+               mSPLDef.cursor( "LLD_Panel" ).getAttribute( "Top" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -108,7 +108,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox3", "", strMapValue );
             else
-               mSPLDef.cursor( "LLD_Panel" ).setAttribute( "Height", strMapValue, "" );
+               mSPLDef.cursor( "LLD_Panel" ).getAttribute( "Height" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -127,7 +127,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox4", "", strMapValue );
             else
-               mSPLDef.cursor( "LLD_Panel" ).setAttribute( "Width", strMapValue, "" );
+               mSPLDef.cursor( "LLD_Panel" ).getAttribute( "Width" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -795,7 +795,7 @@ else
 }
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSPLD", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -803,8 +803,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wSPLD" );
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "SPLD_PanelUpdate" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSPLD" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "SPLD_PanelUpdate" );
    }
 
 %>
@@ -823,6 +823,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSPLDSPLD_PanelUpdate.js"></script>
 
 </head>
@@ -967,7 +968,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSPLD", "SPLD_PanelUpdate" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -979,7 +980,7 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
 
@@ -1071,7 +1072,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSPLDef.cursor( "LLD_Panel" ).getStringFromAttribute( "Left", "" );
+            strErrorMapValue = mSPLDef.cursor( "LLD_Panel" ).getAttribute( "Left" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1122,7 +1123,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSPLDef.cursor( "LLD_Panel" ).getStringFromAttribute( "Top", "" );
+            strErrorMapValue = mSPLDef.cursor( "LLD_Panel" ).getAttribute( "Top" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1173,7 +1174,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSPLDef.cursor( "LLD_Panel" ).getStringFromAttribute( "Height", "" );
+            strErrorMapValue = mSPLDef.cursor( "LLD_Panel" ).getAttribute( "Height" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1224,7 +1225,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSPLDef.cursor( "LLD_Panel" ).getStringFromAttribute( "Width", "" );
+            strErrorMapValue = mSPLDef.cursor( "LLD_Panel" ).getAttribute( "Width" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1335,7 +1336,7 @@ try
          nRC = vGridPrimaryRegistrant2.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGEProductName2 = vGridPrimaryRegistrant2.cursor( "LLD_Block" ).getStringFromAttribute( "Name", "" );
+            strGEProductName2 = vGridPrimaryRegistrant2.cursor( "LLD_Block" ).getAttribute( "Name" ).getString( "" );
 
             if ( strGEProductName2 == null )
                strGEProductName2 = "";
@@ -1348,7 +1349,7 @@ try
          nRC = vGridPrimaryRegistrant2.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl1 = vGridPrimaryRegistrant2.cursor( "LLD_Block" ).getStringFromAttribute( "Left", "" );
+            strGridEditCtl1 = vGridPrimaryRegistrant2.cursor( "LLD_Block" ).getAttribute( "Left" ).getString( "" );
 
             if ( strGridEditCtl1 == null )
                strGridEditCtl1 = "";
@@ -1361,7 +1362,7 @@ try
          nRC = vGridPrimaryRegistrant2.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl6 = vGridPrimaryRegistrant2.cursor( "LLD_Block" ).getStringFromAttribute( "Top", "" );
+            strGridEditCtl6 = vGridPrimaryRegistrant2.cursor( "LLD_Block" ).getAttribute( "Top" ).getString( "" );
 
             if ( strGridEditCtl6 == null )
                strGridEditCtl6 = "";
@@ -1374,7 +1375,7 @@ try
          nRC = vGridPrimaryRegistrant2.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl7 = vGridPrimaryRegistrant2.cursor( "LLD_Block" ).getStringFromAttribute( "Height", "" );
+            strGridEditCtl7 = vGridPrimaryRegistrant2.cursor( "LLD_Block" ).getAttribute( "Height" ).getString( "" );
 
             if ( strGridEditCtl7 == null )
                strGridEditCtl7 = "";
@@ -1387,7 +1388,7 @@ try
          nRC = vGridPrimaryRegistrant2.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl8 = vGridPrimaryRegistrant2.cursor( "LLD_Block" ).getStringFromAttribute( "Width", "" );
+            strGridEditCtl8 = vGridPrimaryRegistrant2.cursor( "LLD_Block" ).getAttribute( "Width" ).getString( "" );
 
             if ( strGridEditCtl8 == null )
                strGridEditCtl8 = "";
@@ -1400,7 +1401,7 @@ try
          nRC = vGridPrimaryRegistrant2.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl2 = vGridPrimaryRegistrant2.cursor( "LLD_Block" ).getStringFromAttribute( "BlockTitle", "" );
+            strGridEditCtl2 = vGridPrimaryRegistrant2.cursor( "LLD_Block" ).getAttribute( "BlockTitle" ).getString( "" );
 
             if ( strGridEditCtl2 == null )
                strGridEditCtl2 = "";

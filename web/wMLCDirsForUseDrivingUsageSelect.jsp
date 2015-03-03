@@ -86,9 +86,9 @@ public int DoInputMapping( HttpServletRequest request,
                VmlOperation.CreateMessage( task, "GridCheckCtl2", "", strMapValue );
             else
                if ( strMapValue != null )
-                  vGridTmp.cursor( "M_DrivingUsage" ).setAttribute( "wSelected", strMapValue );
+                  vGridTmp.cursor( "M_DrivingUsage" ).getAttribute( "wSelected" ).setValue( strMapValue );
                else
-                  vGridTmp.cursor( "M_DrivingUsage" ).setAttribute( "wSelected", "" );
+                  vGridTmp.cursor( "M_DrivingUsage" ).getAttribute( "wSelected" ).setValue( "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -126,9 +126,9 @@ public int DoInputMapping( HttpServletRequest request,
                VmlOperation.CreateMessage( task, "GridCheckCtl1", "", strMapValue );
             else
                if ( strMapValue != null )
-                  vGridTmp.cursor( "M_Usage" ).setAttribute( "wSelected", strMapValue );
+                  vGridTmp.cursor( "M_Usage" ).getAttribute( "wSelected" ).setValue( strMapValue );
                else
-                  vGridTmp.cursor( "M_Usage" ).setAttribute( "wSelected", "" );
+                  vGridTmp.cursor( "M_Usage" ).getAttribute( "wSelected" ).setValue( "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -608,7 +608,7 @@ else
 }
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wMLC", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -616,8 +616,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wMLC" );
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "DirsForUseDrivingUsageSelect" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wMLC" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "DirsForUseDrivingUsageSelect" );
    }
 
 %>
@@ -636,6 +636,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wMLCDirsForUseDrivingUsageSelect.js"></script>
 
 </head>
@@ -753,7 +754,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wMLC", "DirsForUseDrivingUsageSelect" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -765,7 +766,7 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
 
@@ -920,7 +921,7 @@ try
          nRC = vGrid1.cursor( "M_DrivingUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridCheckCtl2 = vGrid1.cursor( "M_DrivingUsage" ).getStringFromAttribute( "wSelected", "" );
+            strGridCheckCtl2 = vGrid1.cursor( "M_DrivingUsage" ).getAttribute( "wSelected" ).getString( "" );
 
             if ( strGridCheckCtl2 == null )
                strGridCheckCtl2 = "";
@@ -941,7 +942,7 @@ try
          nRC = vGrid1.cursor( "M_DrivingUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl2 = vGrid1.cursor( "M_DrivingUsage" ).getStringFromAttribute( "ClaimsClassification", "" );
+            strGridEditCtl2 = vGrid1.cursor( "M_DrivingUsage" ).getAttribute( "ClaimsClassification" ).getString( "" );
 
             if ( strGridEditCtl2 == null )
                strGridEditCtl2 = "";
@@ -954,7 +955,7 @@ try
          nRC = vGrid1.cursor( "M_DrivingUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl3 = vGrid1.cursor( "M_DrivingUsage" ).getStringFromAttribute( "Name", "" );
+            strGridEditCtl3 = vGrid1.cursor( "M_DrivingUsage" ).getAttribute( "Name" ).getString( "" );
 
             if ( strGridEditCtl3 == null )
                strGridEditCtl3 = "";
@@ -1117,7 +1118,7 @@ try
          nRC = vGrid2.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridCheckCtl1 = vGrid2.cursor( "M_Usage" ).getStringFromAttribute( "wSelected", "" );
+            strGridCheckCtl1 = vGrid2.cursor( "M_Usage" ).getAttribute( "wSelected" ).getString( "" );
 
             if ( strGridCheckCtl1 == null )
                strGridCheckCtl1 = "";
@@ -1138,7 +1139,7 @@ try
          nRC = vGrid2.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl1 = vGrid2.cursor( "M_Usage" ).getStringFromAttribute( "ClaimsClassification", "" );
+            strGridEditCtl1 = vGrid2.cursor( "M_Usage" ).getAttribute( "ClaimsClassification" ).getString( "" );
 
             if ( strGridEditCtl1 == null )
                strGridEditCtl1 = "";
@@ -1151,7 +1152,7 @@ try
          nRC = vGrid2.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl4 = vGrid2.cursor( "M_Usage" ).getStringFromAttribute( "Name", "" );
+            strGridEditCtl4 = vGrid2.cursor( "M_Usage" ).getAttribute( "Name" ).getString( "" );
 
             if ( strGridEditCtl4 == null )
                strGridEditCtl4 = "";

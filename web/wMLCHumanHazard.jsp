@@ -70,7 +70,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "ChildHazard", "", strMapValue );
             else
-               mMasLC.cursor( "M_HumanHazardSection" ).setAttribute( "EPA_ChildHazardWarning", strMapValue, "" );
+               mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "EPA_ChildHazardWarning" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -89,7 +89,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "SignalWord", "", strMapValue );
             else
-               mMasLC.cursor( "M_HumanHazardSection" ).setAttribute( "EPA_SignalWord", strMapValue, "" );
+               mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "EPA_SignalWord" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -108,7 +108,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "Statement", "", strMapValue );
             else
-               mMasLC.cursor( "M_HumanHazardSection" ).setAttribute( "PrecautionaryStatement", strMapValue, "" );
+               mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "PrecautionaryStatement" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -127,7 +127,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "Location1", "", strMapValue );
             else
-               mMasLC.cursor( "M_HumanHazardSection" ).setAttribute( "Location1", strMapValue, "" );
+               mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "Location1" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -146,7 +146,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "Location2", "", strMapValue );
             else
-               mMasLC.cursor( "M_HumanHazardSection" ).setAttribute( "Location2", strMapValue, "" );
+               mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "Location2" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -165,7 +165,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "Location3", "", strMapValue );
             else
-               mMasLC.cursor( "M_HumanHazardSection" ).setAttribute( "Location3", strMapValue, "" );
+               mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "Location3" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -184,7 +184,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "Location4", "", strMapValue );
             else
-               mMasLC.cursor( "M_HumanHazardSection" ).setAttribute( "Location4", strMapValue, "" );
+               mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "Location4" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -203,7 +203,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "Location5", "", strMapValue );
             else
-               mMasLC.cursor( "M_HumanHazardSection" ).setAttribute( "Location5", strMapValue, "" );
+               mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "Location5" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -974,7 +974,7 @@ else
       String strURLParameters;
 
       vView = task.getViewByName( "wXferO" );
-      strMessage = vView.cursor( "Root" ).getStringFromAttribute( "WebReturnMessage" );
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString();
       strURLParameters = "?CallingPage=wMLCHumanHazard.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wMLC" +
@@ -988,7 +988,7 @@ else
 
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wMLC", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -996,8 +996,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wMLC" );
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "HumanHazard" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wMLC" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "HumanHazard" );
    }
 
 %>
@@ -1016,6 +1016,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wMLCHumanHazard.js"></script>
 
 </head>
@@ -1302,7 +1303,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wMLC", "HumanHazard" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -1314,7 +1315,7 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
 
@@ -1385,7 +1386,7 @@ else
       nRC = mMasLC.cursor( "M_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mMasLC.cursor( "M_HumanHazardSection" ).getStringFromAttribute( "EPA_ChildHazardWarning", "" );
+         strComboCurrentValue = mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "EPA_ChildHazardWarning" ).getString();
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }
@@ -1479,7 +1480,7 @@ else
       nRC = mMasLC.cursor( "M_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mMasLC.cursor( "M_HumanHazardSection" ).getStringFromAttribute( "EPA_SignalWord", "" );
+         strComboCurrentValue = mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "EPA_SignalWord" ).getString();
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }
@@ -1574,7 +1575,7 @@ else
          nRC = mMasLC.cursor( "M_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strErrorMapValue = mMasLC.cursor( "M_HumanHazardSection" ).getStringFromAttribute( "PrecautionaryStatement", "" );
+            strErrorMapValue = mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "PrecautionaryStatement" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
@@ -1623,7 +1624,7 @@ else
          {
             try
             {
-            strErrorMapValue = mMasLC.cursor( "M_HumanHazardSection" ).getStringFromAttribute( "Location1", "" );
+            strErrorMapValue = mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "Location1" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1678,7 +1679,7 @@ else
          {
             try
             {
-            strErrorMapValue = mMasLC.cursor( "M_HumanHazardSection" ).getStringFromAttribute( "Location2", "" );
+            strErrorMapValue = mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "Location2" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1733,7 +1734,7 @@ else
          {
             try
             {
-            strErrorMapValue = mMasLC.cursor( "M_HumanHazardSection" ).getStringFromAttribute( "Location3", "" );
+            strErrorMapValue = mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "Location3" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1788,7 +1789,7 @@ else
          {
             try
             {
-            strErrorMapValue = mMasLC.cursor( "M_HumanHazardSection" ).getStringFromAttribute( "Location4", "" );
+            strErrorMapValue = mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "Location4" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1843,7 +1844,7 @@ else
          {
             try
             {
-            strErrorMapValue = mMasLC.cursor( "M_HumanHazardSection" ).getStringFromAttribute( "Location5", "" );
+            strErrorMapValue = mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "Location5" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1935,7 +1936,7 @@ else
          nRC = mMasLC.cursor( "M_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strErrorMapValue = mMasLC.cursor( "M_HumanHazardSection" ).getStringFromAttribute( "dFullStatement", "" );
+            strErrorMapValue = mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "dFullStatement" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 

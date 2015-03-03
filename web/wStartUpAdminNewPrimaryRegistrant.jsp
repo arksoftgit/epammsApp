@@ -71,7 +71,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EBName", "", strMapValue );
             else
-               mPrimReg.cursor( "Organization" ).setAttribute( "Name", strMapValue, "" );
+               mPrimReg.cursor( "Organization" ).getAttribute( "Name" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -90,7 +90,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EBDescription", "", strMapValue );
             else
-               mPrimReg.cursor( "Organization" ).setAttribute( "Description", strMapValue, "" );
+               mPrimReg.cursor( "Organization" ).getAttribute( "Description" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -109,7 +109,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EPA_ID", "", strMapValue );
             else
-               mPrimReg.cursor( "PrimaryRegistrant" ).setAttribute( "EPA_CompanyNumber", strMapValue, "" );
+               mPrimReg.cursor( "PrimaryRegistrant" ).getAttribute( "EPA_CompanyNumber" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -128,7 +128,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "Role", "", strMapValue );
             else
-               mPrimReg.cursor( "Organization" ).setAttribute( "Role", strMapValue, "" );
+               mPrimReg.cursor( "Organization" ).getAttribute( "Role" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -147,7 +147,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EBLoginName", "", strMapValue );
             else
-               mPrimReg.cursor( "Organization" ).setAttribute( "LoginName", strMapValue, "" );
+               mPrimReg.cursor( "Organization" ).getAttribute( "LoginName" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -166,7 +166,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EBPStreetAddress", "", strMapValue );
             else
-               mPrimReg.cursor( "PhysicalAddress" ).setAttribute( "Address", strMapValue, "" );
+               mPrimReg.cursor( "PhysicalAddress" ).getAttribute( "Address" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -185,7 +185,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EBPAddress", "", strMapValue );
             else
-               mPrimReg.cursor( "PhysicalAddress" ).setAttribute( "AddressLine2", strMapValue, "" );
+               mPrimReg.cursor( "PhysicalAddress" ).getAttribute( "AddressLine2" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -204,7 +204,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EBPCity", "", strMapValue );
             else
-               mPrimReg.cursor( "PhysicalAddress" ).setAttribute( "City", strMapValue, "" );
+               mPrimReg.cursor( "PhysicalAddress" ).getAttribute( "City" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -223,7 +223,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "CBPState", "", strMapValue );
             else
-               mPrimReg.cursor( "PhysicalAddress" ).setAttribute( "State", strMapValue, "" );
+               mPrimReg.cursor( "PhysicalAddress" ).getAttribute( "State" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -242,7 +242,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EBPZipCode", "", strMapValue );
             else
-               mPrimReg.cursor( "PhysicalAddress" ).setAttribute( "ZipCode", strMapValue, "" );
+               mPrimReg.cursor( "PhysicalAddress" ).getAttribute( "ZipCode" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -261,7 +261,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EBPEmergencyPhone", "", strMapValue );
             else
-               mPrimReg.cursor( "PhysicalAddress" ).setAttribute( "TollFreePhone", strMapValue, "" );
+               mPrimReg.cursor( "PhysicalAddress" ).getAttribute( "TollFreePhone" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -280,7 +280,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EBStreetAddress", "", strMapValue );
             else
-               mPrimReg.cursor( "MailingAddress" ).setAttribute( "Address", strMapValue, "" );
+               mPrimReg.cursor( "MailingAddress" ).getAttribute( "Address" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -299,7 +299,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EBAddress", "", strMapValue );
             else
-               mPrimReg.cursor( "MailingAddress" ).setAttribute( "AddressLine2", strMapValue, "" );
+               mPrimReg.cursor( "MailingAddress" ).getAttribute( "AddressLine2" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -318,7 +318,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EBCity", "", strMapValue );
             else
-               mPrimReg.cursor( "MailingAddress" ).setAttribute( "City", strMapValue, "" );
+               mPrimReg.cursor( "MailingAddress" ).getAttribute( "City" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -337,7 +337,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "CBState", "", strMapValue );
             else
-               mPrimReg.cursor( "MailingAddress" ).setAttribute( "State", strMapValue, "" );
+               mPrimReg.cursor( "MailingAddress" ).getAttribute( "State" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -356,7 +356,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EBZipCode", "", strMapValue );
             else
-               mPrimReg.cursor( "MailingAddress" ).setAttribute( "ZipCode", strMapValue, "" );
+               mPrimReg.cursor( "MailingAddress" ).getAttribute( "ZipCode" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -375,7 +375,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EBFirstName", "", strMapValue );
             else
-               mPrimReg.cursor( "ContactPerson" ).setAttribute( "FirstName", strMapValue, "" );
+               mPrimReg.cursor( "ContactPerson" ).getAttribute( "FirstName" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -394,7 +394,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EBLastName", "", strMapValue );
             else
-               mPrimReg.cursor( "ContactPerson" ).setAttribute( "LastName", strMapValue, "" );
+               mPrimReg.cursor( "ContactPerson" ).getAttribute( "LastName" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -413,7 +413,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EBTitle", "", strMapValue );
             else
-               mPrimReg.cursor( "ContactPerson" ).setAttribute( "Title", strMapValue, "" );
+               mPrimReg.cursor( "ContactPerson" ).getAttribute( "Title" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -432,7 +432,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EBCPhone", "", strMapValue );
             else
-               mPrimReg.cursor( "ContactPerson" ).setAttribute( "WorkPhone", strMapValue, "" );
+               mPrimReg.cursor( "ContactPerson" ).getAttribute( "WorkPhone" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -451,7 +451,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EBFax", "", strMapValue );
             else
-               mPrimReg.cursor( "ContactPerson" ).setAttribute( "Fax", strMapValue, "" );
+               mPrimReg.cursor( "ContactPerson" ).getAttribute( "Fax" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -470,7 +470,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EBEmail", "", strMapValue );
             else
-               mPrimReg.cursor( "ContactPerson" ).setAttribute( "EmailAddress", strMapValue, "" );
+               mPrimReg.cursor( "ContactPerson" ).getAttribute( "EmailAddress" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -494,7 +494,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EBPassword", "", strMapValue );
             else
-               wWebXfer.cursor( "Root" ).setAttribute( "AttemptPassword", strMapValue, "" );
+               wWebXfer.cursor( "Root" ).getAttribute( "AttemptPassword" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -513,7 +513,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EBConfirmPassword", "", strMapValue );
             else
-               wWebXfer.cursor( "Root" ).setAttribute( "ConfirmPassword", strMapValue, "" );
+               wWebXfer.cursor( "Root" ).getAttribute( "ConfirmPassword" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -532,7 +532,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "SameAddress", "", strMapValue );
             else
-               wWebXfer.cursor( "Root" ).setAttribute( "SameAs", strMapValue, "" );
+               wWebXfer.cursor( "Root" ).getAttribute( "SameAs" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -1211,7 +1211,7 @@ else
       String strURLParameters;
 
       vView = task.getViewByName( "wXferO" );
-      strMessage = vView.cursor( "Root" ).getStringFromAttribute( "WebReturnMessage" );
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString();
       strURLParameters = "?CallingPage=wStartUpAdminNewPrimaryRegistrant.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wStartUp" +
@@ -1225,7 +1225,7 @@ else
 
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wStartUp", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -1233,8 +1233,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wStartUp" );
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "AdminNewPrimaryRegistrant" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wStartUp" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "AdminNewPrimaryRegistrant" );
    }
 
 %>
@@ -1253,6 +1253,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wStartUpAdminNewPrimaryRegistrant.js"></script>
 
 </head>
@@ -1403,7 +1404,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wStartUp", "AdminNewPrimaryRegistrant" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -1415,7 +1416,7 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
 
@@ -1510,7 +1511,7 @@ else
          {
             try
             {
-            strErrorMapValue = mPrimReg.cursor( "Organization" ).getStringFromAttribute( "Name", "" );
+            strErrorMapValue = mPrimReg.cursor( "Organization" ).getAttribute( "Name" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1561,7 +1562,7 @@ else
          {
             try
             {
-            strErrorMapValue = mPrimReg.cursor( "Organization" ).getStringFromAttribute( "Description", "" );
+            strErrorMapValue = mPrimReg.cursor( "Organization" ).getAttribute( "Description" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1612,7 +1613,7 @@ else
          {
             try
             {
-            strErrorMapValue = mPrimReg.cursor( "PrimaryRegistrant" ).getStringFromAttribute( "EPA_CompanyNumber", "" );
+            strErrorMapValue = mPrimReg.cursor( "PrimaryRegistrant" ).getAttribute( "EPA_CompanyNumber" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1658,7 +1659,7 @@ else
       nRC = mPrimReg.cursor( "Organization" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mPrimReg.cursor( "Organization" ).getStringFromAttribute( "Role", "" );
+         strComboCurrentValue = mPrimReg.cursor( "Organization" ).getAttribute( "Role" ).getString();
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }
@@ -1797,7 +1798,7 @@ else
          {
             try
             {
-            strErrorMapValue = mPrimReg.cursor( "Organization" ).getStringFromAttribute( "LoginName", "" );
+            strErrorMapValue = mPrimReg.cursor( "Organization" ).getAttribute( "LoginName" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1848,7 +1849,7 @@ else
          {
             try
             {
-            strErrorMapValue = wWebXfer.cursor( "Root" ).getStringFromAttribute( "AttemptPassword", "" );
+            strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "AttemptPassword" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1899,7 +1900,7 @@ else
          {
             try
             {
-            strErrorMapValue = wWebXfer.cursor( "Root" ).getStringFromAttribute( "ConfirmPassword", "" );
+            strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "ConfirmPassword" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1994,7 +1995,7 @@ else
          {
             try
             {
-            strErrorMapValue = mPrimReg.cursor( "PhysicalAddress" ).getStringFromAttribute( "Address", "" );
+            strErrorMapValue = mPrimReg.cursor( "PhysicalAddress" ).getAttribute( "Address" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -2044,7 +2045,7 @@ else
          {
             try
             {
-            strErrorMapValue = mPrimReg.cursor( "PhysicalAddress" ).getStringFromAttribute( "AddressLine2", "" );
+            strErrorMapValue = mPrimReg.cursor( "PhysicalAddress" ).getAttribute( "AddressLine2" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -2095,7 +2096,7 @@ else
          {
             try
             {
-            strErrorMapValue = mPrimReg.cursor( "PhysicalAddress" ).getStringFromAttribute( "City", "" );
+            strErrorMapValue = mPrimReg.cursor( "PhysicalAddress" ).getAttribute( "City" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -2148,7 +2149,7 @@ else
       nRC = mPrimReg.cursor( "PhysicalAddress" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mPrimReg.cursor( "PhysicalAddress" ).getStringFromAttribute( "State", "" );
+         strComboCurrentValue = mPrimReg.cursor( "PhysicalAddress" ).getAttribute( "State" ).getString();
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }
@@ -2241,7 +2242,7 @@ else
          {
             try
             {
-            strErrorMapValue = mPrimReg.cursor( "PhysicalAddress" ).getStringFromAttribute( "ZipCode", "" );
+            strErrorMapValue = mPrimReg.cursor( "PhysicalAddress" ).getAttribute( "ZipCode" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -2298,7 +2299,7 @@ else
          {
             try
             {
-            strErrorMapValue = mPrimReg.cursor( "PhysicalAddress" ).getStringFromAttribute( "TollFreePhone", "" );
+            strErrorMapValue = mPrimReg.cursor( "PhysicalAddress" ).getAttribute( "TollFreePhone" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -2375,7 +2376,7 @@ else
    {
       nRC = wWebXfer.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
-         strRadioGroupValue = wWebXfer.cursor( "Root" ).getStringFromAttribute( "SameAs" );
+         strRadioGroupValue = wWebXfer.cursor( "Root" ).getAttribute( "SameAs" ).getString();
    }
 
    if ( StringUtils.equals( strRadioGroupValue, "Y" ) )
@@ -2438,7 +2439,7 @@ else
          {
             try
             {
-            strErrorMapValue = mPrimReg.cursor( "MailingAddress" ).getStringFromAttribute( "Address", "" );
+            strErrorMapValue = mPrimReg.cursor( "MailingAddress" ).getAttribute( "Address" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -2488,7 +2489,7 @@ else
          {
             try
             {
-            strErrorMapValue = mPrimReg.cursor( "MailingAddress" ).getStringFromAttribute( "AddressLine2", "" );
+            strErrorMapValue = mPrimReg.cursor( "MailingAddress" ).getAttribute( "AddressLine2" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -2539,7 +2540,7 @@ else
          {
             try
             {
-            strErrorMapValue = mPrimReg.cursor( "MailingAddress" ).getStringFromAttribute( "City", "" );
+            strErrorMapValue = mPrimReg.cursor( "MailingAddress" ).getAttribute( "City" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -2592,7 +2593,7 @@ else
       nRC = mPrimReg.cursor( "MailingAddress" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mPrimReg.cursor( "MailingAddress" ).getStringFromAttribute( "State", "" );
+         strComboCurrentValue = mPrimReg.cursor( "MailingAddress" ).getAttribute( "State" ).getString();
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }
@@ -2685,7 +2686,7 @@ else
          {
             try
             {
-            strErrorMapValue = mPrimReg.cursor( "MailingAddress" ).getStringFromAttribute( "ZipCode", "" );
+            strErrorMapValue = mPrimReg.cursor( "MailingAddress" ).getAttribute( "ZipCode" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -2786,7 +2787,7 @@ else
          {
             try
             {
-            strErrorMapValue = mPrimReg.cursor( "ContactPerson" ).getStringFromAttribute( "FirstName", "" );
+            strErrorMapValue = mPrimReg.cursor( "ContactPerson" ).getAttribute( "FirstName" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -2837,7 +2838,7 @@ else
          {
             try
             {
-            strErrorMapValue = mPrimReg.cursor( "ContactPerson" ).getStringFromAttribute( "LastName", "" );
+            strErrorMapValue = mPrimReg.cursor( "ContactPerson" ).getAttribute( "LastName" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -2888,7 +2889,7 @@ else
          {
             try
             {
-            strErrorMapValue = mPrimReg.cursor( "ContactPerson" ).getStringFromAttribute( "Title", "" );
+            strErrorMapValue = mPrimReg.cursor( "ContactPerson" ).getAttribute( "Title" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -2939,7 +2940,7 @@ else
          {
             try
             {
-            strErrorMapValue = mPrimReg.cursor( "ContactPerson" ).getStringFromAttribute( "WorkPhone", "" );
+            strErrorMapValue = mPrimReg.cursor( "ContactPerson" ).getAttribute( "WorkPhone" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -2990,7 +2991,7 @@ else
          {
             try
             {
-            strErrorMapValue = mPrimReg.cursor( "ContactPerson" ).getStringFromAttribute( "Fax", "" );
+            strErrorMapValue = mPrimReg.cursor( "ContactPerson" ).getAttribute( "Fax" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -3041,7 +3042,7 @@ else
          {
             try
             {
-            strErrorMapValue = mPrimReg.cursor( "ContactPerson" ).getStringFromAttribute( "EmailAddress", "" );
+            strErrorMapValue = mPrimReg.cursor( "ContactPerson" ).getAttribute( "EmailAddress" ).getString( "" );
             }
             catch (Exception e)
             {

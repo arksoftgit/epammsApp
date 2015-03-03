@@ -219,7 +219,7 @@ if ( strActionToProcess != null )
          if ( !csrRC.isSet() )
          {
             boolean bFound = false;
-            csrRCk = mOrganiz.cursor( "Feedback" ).setFirst( );
+            csrRCk = mOrganiz.cursor( "Feedback" ).setFirstWithinOi( );
             while ( csrRCk.isSet() && !bFound )
             {
                lEKey = mOrganiz.cursor( "Feedback" ).getEntityKey( );
@@ -528,7 +528,7 @@ else
       String strURLParameters;
 
       vView = task.getViewByName( "wXferO" );
-      strMessage = vView.cursor( "Root" ).getStringFromAttribute( "WebReturnMessage" );
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString();
       strURLParameters = "?CallingPage=wSystemShowFeedback.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wSystem" +
@@ -542,7 +542,7 @@ else
 
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSystem", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -550,8 +550,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wSystem" );
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "ShowFeedback" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSystem" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "ShowFeedback" );
    }
 
 %>
@@ -572,6 +572,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSystemShowFeedback.js"></script>
 
 </head>
@@ -710,7 +711,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSystem", "ShowFeedback" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -722,7 +723,7 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
 
@@ -840,7 +841,7 @@ try
          nRC = vGridFeedback.cursor( "Organization" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridOrganization = vGridFeedback.cursor( "Organization" ).getStringFromAttribute( "LoginName", "" );
+            strGridOrganization = vGridFeedback.cursor( "Organization" ).getAttribute( "LoginName" ).getString( "" );
 
             if ( strGridOrganization == null )
                strGridOrganization = "";
@@ -853,7 +854,7 @@ try
          nRC = vGridFeedback.cursor( "Feedback" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridUserId = vGridFeedback.cursor( "Feedback" ).getStringFromAttribute( "UserId", "" );
+            strGridUserId = vGridFeedback.cursor( "Feedback" ).getAttribute( "UserId" ).getString( "" );
 
             if ( strGridUserId == null )
                strGridUserId = "";
@@ -866,7 +867,7 @@ try
          nRC = vGridFeedback.cursor( "Feedback" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridDialog = vGridFeedback.cursor( "Feedback" ).getStringFromAttribute( "Dialog", "" );
+            strGridDialog = vGridFeedback.cursor( "Feedback" ).getAttribute( "Dialog" ).getString( "" );
 
             if ( strGridDialog == null )
                strGridDialog = "";
@@ -879,7 +880,7 @@ try
          nRC = vGridFeedback.cursor( "Feedback" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridWindow = vGridFeedback.cursor( "Feedback" ).getStringFromAttribute( "Window", "" );
+            strGridWindow = vGridFeedback.cursor( "Feedback" ).getAttribute( "Window" ).getString( "" );
 
             if ( strGridWindow == null )
                strGridWindow = "";
@@ -892,7 +893,7 @@ try
          nRC = vGridFeedback.cursor( "Feedback" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridFeedbackComment = vGridFeedback.cursor( "Feedback" ).getStringFromAttribute( "Comment", "" );
+            strGridFeedbackComment = vGridFeedback.cursor( "Feedback" ).getAttribute( "Comment" ).getString( "" );
 
             if ( strGridFeedbackComment == null )
                strGridFeedbackComment = "";

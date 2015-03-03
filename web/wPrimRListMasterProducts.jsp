@@ -976,7 +976,7 @@ else
       String strURLParameters;
 
       vView = task.getViewByName( "wXferO" );
-      strMessage = vView.cursor( "Root" ).getStringFromAttribute( "WebReturnMessage" );
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString();
       strURLParameters = "?CallingPage=wPrimRListMasterProducts.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wPrimR" +
@@ -990,7 +990,7 @@ else
 
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wPrimR", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -998,8 +998,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentDialog", "wPrimR" );
-      wWebXA.cursor( "Root" ).setAttribute( "CurrentWindow", "ListMasterProducts" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wPrimR" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "ListMasterProducts" );
    }
 
 %>
@@ -1018,6 +1018,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wPrimRListMasterProducts.js"></script>
 
 </head>
@@ -1187,7 +1188,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wPrimR", "ListMasterProducts" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -1199,7 +1200,7 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strKeyRole = wWebXA.cursor( "Root" ).getStringFromAttribute( "KeyRole", "KeyRole" );
+         strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
 
@@ -1267,7 +1268,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mPrimReg.cursor( "PrimaryRegistrant" ).getStringFromAttribute( "dNameEPA_Number", "" );
+         strTextDisplayValue = mPrimReg.cursor( "PrimaryRegistrant" ).getAttribute( "dNameEPA_Number" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -1353,7 +1354,7 @@ try
          nRC = vGridMasterProducts.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGEMasterProductName = vGridMasterProducts.cursor( "MasterProduct" ).getStringFromAttribute( "Name", "" );
+            strGEMasterProductName = vGridMasterProducts.cursor( "MasterProduct" ).getAttribute( "Name" ).getString( "" );
 
             if ( strGEMasterProductName == null )
                strGEMasterProductName = "";
@@ -1366,7 +1367,7 @@ try
          nRC = vGridMasterProducts.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridMasterProductDescription = vGridMasterProducts.cursor( "MasterProduct" ).getStringFromAttribute( "Description", "" );
+            strGridMasterProductDescription = vGridMasterProducts.cursor( "MasterProduct" ).getAttribute( "Description" ).getString( "" );
 
             if ( strGridMasterProductDescription == null )
                strGridMasterProductDescription = "";
