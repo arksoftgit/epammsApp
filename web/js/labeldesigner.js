@@ -1310,11 +1310,11 @@ $(function() {
       $("#page").attr( "id", "page" + g_currentPage ).attr( "name", "page" + g_currentPage );
       var $initElement = $("#label");
       var jsonDOM = mapDOM( $initElement[0], true );
-   // console.log( "JSON DOM: " + jsonDOM );
+      console.log( "JSON DOM: " + jsonDOM );
       var jsonLabel = CaptureZeidonLabelJsonFromDomJson( jsonDOM );
 
       // Display the resultant JSON that will be passed to Zeidon to be saved as an LLD.
-   // console.log( "\nJsonLabel: " + jsonLabel );
+      console.log( "\nJsonLabel: " + jsonLabel );
 
      // The jqXHR.success(), jqXHR.error(), and jqXHR.complete() callback methods introduced in jQuery 1.5
      // are deprecated as of jQuery 1.8. Use jqXHR.done(), jqXHR.fail(), and jqXHR.always() instead.
@@ -1755,10 +1755,10 @@ public class FileServer {
                         lastPanel = false;
                      // entityIdx = 0;
                         if ( firstPage ) {
-                           jsonLabel += ", \n\"LLD_Page\" : [ { \".meta\" : { \"created\" : \"true\" }, \"PageNbr\" : \"" + pageNbr + "\" ";
+                           jsonLabel += ", \n\"LLD_Page\" : [ { \".meta\" : { \"created\" : \"true\" } ";
                            firstPage = false;
                         } else {
-                           jsonLabel += "}, \n{ \".meta\" : { \"created\" : \"true\" }, \"PageNbr\" : \"" + pageNbr + "\" ";
+                           jsonLabel += "}, \n{ \".meta\" : { \"created\" : \"true\" } ";
                         }
                         jsonLabel += TranslateWysiwygDesignToJsonLabel( null, -1, obj["attributes"], 0, true, false, firstBlock );
                         lastPage = CheckIfLastSibling( parentArray, parentIdx, "page" );

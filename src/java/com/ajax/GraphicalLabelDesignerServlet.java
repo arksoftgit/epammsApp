@@ -377,6 +377,17 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                   boolean recurse = false;
                   EntityInstance ei = null;
                   try {
+                     if ( entity.compareTo( "LLD_SubBlock" ) == 0 ) {
+                        if ( ec.isNull() == false ) {
+                           ec.setToSubobject();
+                        // logger.debug( "SetToSubobject Entity: " + entity + "  Depth: " + depth );
+                           recurse = true;
+                        // entity = "LLD_Block"; // entity has to stay as LLD_SubBlock for ei.getEntityDef().getName() check later on!!!
+                           ec = vLLD.getCursor( "LLD_Block" );
+                           ei = ec.getEntityInstance();
+                        }
+                     }
+
                      String Delete = (String)jo.get( "_Delete" );
                      if ( ID == null || ID.isEmpty() ) {
                         if ( Delete == null || Delete.charAt( 0 ) != 'Y' ) {
@@ -389,30 +400,25 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                      //    logger.debug( "Processing Entity: " + entity + "  ID: " + ID + "  Depth: " + depth );
                      // }
                         CursorResult cr = ec.setFirst( "ID", ID );
-                        if ( cr == CursorResult.UNCHANGED ) {
-                           logger.debug( "Entity NOT FOUND: " + entity + "  ID: " + ID + "  Depth: " + depth );
-                           ei = ec.createEntity( CursorPosition.NEXT );
-                           ei.getAttribute( "Tag" ).setValue( "Busted" + ID );
-                           vLLD.logObjectInstance();
-                           throw new ZeidonException( "Entity NOT Found: " + ID + "  Look for Busted" ); 
-                        } else if ( cr == CursorResult.SET ) {
+                        if ( cr == CursorResult.SET ) {
                            ei = ec.getEntityInstance();
                            if ( Delete != null && Delete.charAt( 0 ) == 'Y' ) {
                               ei.deleteEntity();
                               ei = null;
                               logger.debug( "Entity DELETED: " + entity + "  ID: " + ID + "  Depth: " + depth );
                            }
-                        }
-                        if ( entity.compareTo( "LLD_SubBlock" ) == 0 ) {
-                           EntityCursor cursor = vLLD.getCursor( entity );
-                           if ( cursor.isNull() == false ) {
-                              cursor.setToSubobject();
-                           // logger.debug( "SetToSubobject Entity: " + entity + "  Depth: " + depth );
-                              recurse = true;
-                           // entity = "LLD_Block"; entity has to stay as LLD_Block for ei.getEntityDef().getName() check later on!!!
-                              cursor = vLLD.getCursor( "LLD_Block" );
-                              ei = cursor.getEntityInstance();
-                           }
+                        } else if ( cr == CursorResult.UNCHANGED ) {
+                           logger.debug( "Entity NOT FOUND (UNCHANGED): " + entity + "  ID: " + ID + "  Depth: " + depth + "  Recurse: " + (recurse ? "Y" : "N") );
+                           ei = ec.createEntity( CursorPosition.NEXT );
+                           ei.getAttribute( "Tag" ).setValue( "BustedUnchanged" + ID );
+                           vLLD.logObjectInstance();
+                           throw new ZeidonException( "Entity NOT Found: " + ID + "  Look for Busted" + "  Recurse: " + (recurse ? "Y" : "N") ); 
+                        } else {
+                           logger.debug( "Entity NOT FOUND: " + entity + "  ID: " + ID + "  Depth: " + depth );
+                           ei = ec.createEntity( CursorPosition.NEXT );
+                           ei.getAttribute( "Tag" ).setValue( "Busted" + ID );
+                           vLLD.logObjectInstance();
+                           throw new ZeidonException( "Entity NOT Found: " + ID + "  Look for Busted" ); 
                         }
                      }
                   // if ( ei != null ) {
@@ -436,7 +442,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                   }
             // }
             } else {
-               // logger.debug( indent + "Entity: " + entity + "  Depth: " + depth ); 
+            // logger.debug( indent + "Entity: " + entity + "  Depth: " + depth ); 
                applyJsonLabelToView( vLLD, (JSONObject)obj, entity, depth + 1, null );
             }
          } else {
@@ -653,10 +659,10 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
          // jsonLabel = request.getParameter( "jsonLabel" );
             try {
                View v = vLLD.newView();
-               v.reset();
+               v.resetSubobjectTop();
                applyJsonLabelToView( v, jsonPost, "", -2, null );  // OIs, SPLD_LLD, depth == 0 for LLD_Page
                logger.debug( "Saved JSON to OI" );
-               vLLD.logObjectInstance();
+            // vLLD.logObjectInstance();
                vLLD.commit();
             } catch( ZeidonException ze ) {
                logger.debug( "Error processing Json Label: " + ze.getMessage() );

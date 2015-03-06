@@ -1024,7 +1024,7 @@ else
    mMasProd = task.getViewByName( "mMasProd" );
    if ( VmlOperation.isValid( mMasProd ) )
    {
-      List<TableEntry> list = JspWebUtils.getTableDomainValues( mMasProd , "MasterProduct", "ChemicalFamily", "" );
+      List<TableEntry> list = JspWebUtils.getTableDomainValues( mMasProd , "MasterProduct", "ChemicalFamily", "ChemicalFamily" );
 
       nRC = mMasProd.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
