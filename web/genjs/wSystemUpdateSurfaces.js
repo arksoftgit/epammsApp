@@ -189,6 +189,27 @@ function AcceptUpdateSurface( )
    }
 }
 
+function SortApplicationTypes( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+       document.wSLCMarketingStatement.zTableRowSelect.value = buildSortTableHtml( "mEPA", "EPA_Surface", "GridSurfaces",  ["Surface"]  ); // viewName, entityName, tableId, arrTableColumnTitles
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wSystemUpdateSurfaces.zAction.value = "SortApplicationTypes";
+      document.wSystemUpdateSurfaces.submit( );
+   }
+}
+
 function UpdateSurface( strTagEntityKey )
 {
 
@@ -324,44 +345,6 @@ function InitSurfacesForUpdate( )
 
       // END of Javascript code entered by user.
 
-   }
-}
-
-function MoveSurfaceDown( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wSystemUpdateSurfaces.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wSystemUpdateSurfaces.zAction.value = "MoveSurfaceDown";
-      document.wSystemUpdateSurfaces.submit( );
-   }
-}
-
-function MoveSurfaceUp( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wSystemUpdateSurfaces.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wSystemUpdateSurfaces.zAction.value = "MoveSurfaceUp";
-      document.wSystemUpdateSurfaces.submit( );
    }
 }
 

@@ -179,9 +179,9 @@ public int DoInputMapping( HttpServletRequest request,
                VmlOperation.CreateMessage( task, "Select", "", strMapValue );
             else
                if ( strMapValue != null )
-                  vGridTmp.cursor( "ListMasterProduct" ).getAttribute( "wkSelected" ).setValue( strMapValue );
+                  vGridTmp.cursor( "ListMasterProduct" ).getAttribute( "wkSelected" ).setValue( strMapValue, "" );
                else
-                  vGridTmp.cursor( "ListMasterProduct" ).getAttribute( "wkSelected" ).setValue( "" );
+                  vGridTmp.cursor( "ListMasterProduct" ).getAttribute( "wkSelected" ).setValue( "", "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -929,7 +929,7 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
 else
 {
    VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRNewSubregProduct.jsp", "wSubR.InitSubregProductForInsert" );
-   nOptRC = wSubR.InitSubregProductForInsert( new zVIEW( vKZXMLPGO ) );
+         nOptRC = wSubR.InitSubregProductForInsert( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -937,7 +937,7 @@ else
       String strURLParameters;
 
       vView = task.getViewByName( "wXferO" );
-      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString();
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString( "" );
       strURLParameters = "?CallingPage=wSubRNewSubregProduct.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wSubR" +
@@ -951,7 +951,7 @@ else
 
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSubR", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -959,8 +959,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSubR" );
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "NewSubregProduct" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSubR", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "NewSubregProduct", "" );
    }
 
 %>
@@ -1126,7 +1126,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSubR", "NewSubregProduct" );
    strOpenFile = VmlOperation.FindOpenFile( task );

@@ -86,9 +86,9 @@ public int DoInputMapping( HttpServletRequest request,
                VmlOperation.CreateMessage( task, "GridCheckCtl3", "", strMapValue );
             else
                if ( strMapValue != null )
-                  vGridTmp.cursor( "SubregLabelContent" ).getAttribute( "wSelected" ).setValue( strMapValue );
+                  vGridTmp.cursor( "SubregLabelContent" ).getAttribute( "wSelected" ).setValue( strMapValue, "" );
                else
-                  vGridTmp.cursor( "SubregLabelContent" ).getAttribute( "wSelected" ).setValue( "" );
+                  vGridTmp.cursor( "SubregLabelContent" ).getAttribute( "wSelected" ).setValue( "", "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -373,7 +373,7 @@ else
 }
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSPLD", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -381,8 +381,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSPLD" );
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "NewSPLD_SelectSLC" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSPLD", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "NewSPLD_SelectSLC", "" );
    }
 
 %>
@@ -536,7 +536,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSPLD", "NewSPLD_SelectSLC" );
    strOpenFile = VmlOperation.FindOpenFile( task );

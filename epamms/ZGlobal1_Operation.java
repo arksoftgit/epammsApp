@@ -2012,7 +2012,7 @@ public class ZGlobal1_Operation extends VmlOperation
                                     String entityName,
                                     String attributeName )
    {
-      zVIEW  wXferO;
+      zVIEW  wWebXfer;
       zVIEW  vDynamicT;
       zVIEW  vQualObject;
       zVIEW  zqFrameOrig;
@@ -2028,7 +2028,7 @@ public class ZGlobal1_Operation extends VmlOperation
       int nLth;
       int nRC;
 
-      GetViewByName( wXferO, "wXferO", lpView, zLEVEL_TASK );
+      GetViewByName( wWebXfer, "wWebXfer", lpView, zLEVEL_TASK );
       lpReturnedString = "";
       lpViewEntity = String MiGetViewEntityForView( lpView, entityName );
       if ( lpViewEntity == 0 )
@@ -2221,48 +2221,48 @@ public class ZGlobal1_Operation extends VmlOperation
       }
       else
       {
-         // If Domain Type is not Table, use data type for conversion through wXferO attribute.
+         // If Domain Type is not Table, use data type for conversion through wWebXfer attribute.
          DataType = lpDomain->cType;
          if ( DataType == 'L' )
          {
-            nRC = SetAttributeFromVariable( wXferO, "Root", "WorkInteger",
+            nRC = SetAttributeFromVariable( wWebXfer, "Root", "WorkInteger",
                                            srcString, zTYPE_STRING,
                                            nLth, 0, zUSE_DEFAULT_CONTEXT );
             if ( nRC >= 0 )
-               GetStringFromAttribute( lpReturnedString, wXferO, "Root", "WorkInteger" );
+               GetStringFromAttribute( lpReturnedString, wWebXfer, "Root", "WorkInteger" );
             else
                return -1;
          }
          else
          if ( DataType == 'T' )
          {
-            nRC = SetAttributeFromVariable( wXferO, "Root", "WorkDate",
+            nRC = SetAttributeFromVariable( wWebXfer, "Root", "WorkDate",
                                             srcString, zTYPE_STRING,
                                             nLth, "M/D/YYYY", 0 );
             if ( nRC >= 0 )
-               GetStringFromAttribute( lpReturnedString, wXferO, "Root", "WorkDate" );
+               GetStringFromAttribute( lpReturnedString, wWebXfer, "Root", "WorkDate" );
             else
                return -1;
          }
          else
          if ( DataType == 'D' )
          {
-            nRC = SetAttributeFromVariable( wXferO, "Root", "WorkDate",
+            nRC = SetAttributeFromVariable( wWebXfer, "Root", "WorkDate",
                                             srcString, zTYPE_STRING,
                                             nLth, "M/D/YYYY", 0 );
             if ( nRC >= 0 )
-               GetStringFromAttribute( lpReturnedString, wXferO, "Root", "WorkDate" );
+               GetStringFromAttribute( lpReturnedString, wWebXfer, "Root", "WorkDate" );
             else
                return -1;
          }
          else
          if ( DataType == 'M' )
          {
-            nRC = SetAttributeFromVariable( wXferO, "Root", "WorkDecimal",
+            nRC = SetAttributeFromVariable( wWebXfer, "Root", "WorkDecimal",
                                             srcString, zTYPE_STRING,
                                             nLth, 0, zUSE_DEFAULT_CONTEXT );
             if ( nRC >= 0 )
-               GetStringFromAttribute( lpReturnedString, wXferO, "Root", "WorkDecimal" );
+               GetStringFromAttribute( lpReturnedString, wWebXfer, "Root", "WorkDecimal" );
             else
                return -1;
          }
@@ -4036,7 +4036,7 @@ public class ZGlobal1_Operation extends VmlOperation
    // int  selBodyMemory;
    // int  lFileLth;
       zVIEW  zqMDocOLST = null;
-      zVIEW  wXferO = null;
+      zVIEW  wWebXfer = null;
       int    nRC;
 
    // TraceLine( "SendEmailForFiles Server: %s   Sender: %s   Recipient: %s"
@@ -4050,7 +4050,7 @@ public class ZGlobal1_Operation extends VmlOperation
          return 2;
 
       GetViewByName( zqMDocOLST, "zqMDocOLST", ResultSet, zLEVEL_TASK );
-      GetViewByName( wXferO, "wXferO", ViewToWindow, zLEVEL_TASK );
+      GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
 
       if ( stringBodyFileName != null )
       {
@@ -4177,7 +4177,7 @@ public class ZGlobal1_Operation extends VmlOperation
    // int  selBodyMemory;
    // int  lFileLth;
       zVIEW  zqMDocOLST = null;
-      zVIEW  wXferO = null;
+      zVIEW  wWebXfer = null;
       int nRC;
 
    // TraceLine( "SendEmailForFiles Server: %s   Sender: %s   Recipient: %s"
@@ -4191,7 +4191,7 @@ public class ZGlobal1_Operation extends VmlOperation
          return 2;
 
       GetViewByName( zqMDocOLST, "zqMDocOLST", ResultSet, zLEVEL_TASK );
-      GetViewByName( wXferO, "wXferO", ViewToWindow, zLEVEL_TASK );
+      GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
 
       if ( stringBodyFileName != null )
       {
@@ -4365,7 +4365,7 @@ public class ZGlobal1_Operation extends VmlOperation
    /////////////////////////////////////////////////////////////////////////////
 
    public int
-   FixLegacyReportDate( View wXferO, View vLegacyTranscript,
+   FixLegacyReportDate( View wWebXfer, View vLegacyTranscript,
                         String stringEntity, String stringAttribute,
                         String searchString )
    {
@@ -4376,7 +4376,7 @@ public class ZGlobal1_Operation extends VmlOperation
 
       if ( lSearchLth != 0 )
       {
-        stringDate = GetStringFromAttributeByContext( stringDate, wXferO, "Root",
+        stringDate = GetStringFromAttributeByContext( stringDate, wWebXfer, "Root",
                                                        "dCurrentDate", "MonthDDYYYY", 64 );
       // lLth = stringDate.length( );
          stringBlob = GetAddrForAttribute( stringBlob, vLegacyTranscript, stringEntity, stringAttribute );

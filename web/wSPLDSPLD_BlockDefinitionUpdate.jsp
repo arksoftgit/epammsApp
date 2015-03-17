@@ -768,7 +768,7 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
 else
 {
    VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockDefinitionUpdate.jsp", "wSPLD.PostbuildBlockDefinitionUpdate" );
-   nOptRC = wSPLD.PostbuildBlockDefinitionUpdate( new zVIEW( vKZXMLPGO ) );
+         nOptRC = wSPLD.PostbuildBlockDefinitionUpdate( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -776,7 +776,7 @@ else
       String strURLParameters;
 
       vView = task.getViewByName( "wXferO" );
-      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString();
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString( "" );
       strURLParameters = "?CallingPage=wSPLDSPLD_BlockDefinitionUpdate.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wSPLD" +
@@ -790,7 +790,7 @@ else
 
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSPLD", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -798,8 +798,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSPLD" );
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "SPLD_BlockDefinitionUpdate" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSPLD", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "SPLD_BlockDefinitionUpdate", "" );
    }
 
 %>
@@ -963,7 +963,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSPLD", "SPLD_BlockDefinitionUpdate" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -1085,7 +1085,7 @@ else
       nRC = mSPLDefBlock.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "LLD_SectionType" ).getString();
+         strComboCurrentValue = mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "LLD_SectionType" ).getString( "" );
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }
@@ -1440,7 +1440,7 @@ else
    {
       nRC = mSPLDefBlock.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
-         strRadioGroupValue = mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "ContinuationBlockFlag" ).getString();
+         strRadioGroupValue = mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "ContinuationBlockFlag" ).getString( "" );
    }
 
    if ( StringUtils.equals( strRadioGroupValue, "Y" ) )
@@ -1618,7 +1618,7 @@ else
       nRC = mSPLDefBlock.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "LLD_ColumnListType" ).getString();
+         strComboCurrentValue = mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "LLD_ColumnListType" ).getString( "" );
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }

@@ -966,7 +966,7 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
 else
 {
    VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCHumanHazard.jsp", "wMLC.InitHumanHazardSect" );
-   nOptRC = wMLC.InitHumanHazardSect( new zVIEW( vKZXMLPGO ) );
+         nOptRC = wMLC.InitHumanHazardSect( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -974,7 +974,7 @@ else
       String strURLParameters;
 
       vView = task.getViewByName( "wXferO" );
-      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString();
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString( "" );
       strURLParameters = "?CallingPage=wMLCHumanHazard.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wMLC" +
@@ -988,7 +988,7 @@ else
 
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wMLC", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -996,8 +996,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wMLC" );
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "HumanHazard" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wMLC", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "HumanHazard", "" );
    }
 
 %>
@@ -1303,7 +1303,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wMLC", "HumanHazard" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -1361,19 +1361,16 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox1:GroupBox */ %>
 
-<div id="GroupBox1" name="GroupBox1" style="width:692px;height:258px;float:left;">  <!-- GroupBox1 --> 
+<div id="GroupBox1" name="GroupBox1"   style="float:left;position:relative; width:692px; height:258px;">  <!-- GroupBox1 --> 
 
-
-<div>  <!-- Beginning of a new line -->
 <% /* HazardText::Text */ %>
 
-<span  id="HazardText:" name="HazardText:" style="width:130px;height:16px;">Hazard Text:</span>
+<label  id="HazardText:" name="HazardText:" style="width:130px;height:16px;position:absolute;left:0px;top:0px;">Hazard Text:</label>
 
-<span style="height:16px;">&nbsp&nbsp</span>
 <% /* ChildHazard:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select class="text12" name="ChildHazard" id="ChildHazard" size="1" style="width:552px;" onchange="ChildHazardOnChange( )">
+<select class="text12" name="ChildHazard" id="ChildHazard" size="1" style="width:552px;position:absolute;left:140px;top:0px;" onchange="ChildHazardOnChange( )">
 
 <%
    boolean inListChildHazard = false;
@@ -1386,7 +1383,7 @@ else
       nRC = mMasLC.cursor( "M_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "EPA_ChildHazardWarning" ).getString();
+         strComboCurrentValue = mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "EPA_ChildHazardWarning" ).getString( "" );
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }
@@ -1450,24 +1447,14 @@ else
 </select>
 
 <input name="hChildHazard" id="hChildHazard" type="hidden" value="<%=strComboCurrentValue%>" >
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:16px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
 <% /* SignalWord::Text */ %>
 
-<span  id="SignalWord:" name="SignalWord:" style="width:130px;height:16px;">Signal Word:</span>
+<label  id="SignalWord:" name="SignalWord:" style="width:130px;height:16px;position:absolute;left:0px;top:32px;">Signal Word:</label>
 
-<span style="height:146px;">&nbsp&nbsp</span>
 <% /* SignalWord:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="SignalWord" id="SignalWord" size="1" style="width:214px;" onchange="SignalWordOnChange( )">
+<select  name="SignalWord" id="SignalWord" size="1" style="width:214px;position:absolute;left:140px;top:32px;" onchange="SignalWordOnChange( )">
 
 <%
    boolean inListSignalWord = false;
@@ -1480,7 +1467,7 @@ else
       nRC = mMasLC.cursor( "M_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "EPA_SignalWord" ).getString();
+         strComboCurrentValue = mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "EPA_SignalWord" ).getString( "" );
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }
@@ -1544,17 +1531,10 @@ else
 </select>
 
 <input name="hSignalWord" id="hSignalWord" type="hidden" value="<%=strComboCurrentValue%>" >
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
-<div>  <!-- Beginning of a new line -->
 <% /* Statement::Text */ %>
 
-<span  id="Statement:" name="Statement:" style="width:130px;height:16px;">Statement:</span>
+<label  id="Statement:" name="Statement:" style="width:130px;height:16px;position:absolute;left:0px;top:70px;">Statement:</label>
 
-<span style="height:50px;">&nbsp&nbsp</span>
 <% /* Statement:MLEdit */ %>
 <%
    // : Statement
@@ -1587,22 +1567,12 @@ else
    }
 %>
 
-<textarea name="Statement" id="Statement" style="border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+<textarea name="Statement" id="Statement" style="width:552px;height:50px;position:absolute;left:140px;top:70px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:-48px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
 <% /* Location1::Text */ %>
 
-<span  id="Location1:" name="Location1:" style="width:130px;height:16px;">Location:</span>
+<label  id="Location1:" name="Location1:" style="width:130px;height:16px;position:absolute;left:0px;top:130px;">Location:</label>
 
-<span style="height:16px;">&nbsp&nbsp</span>
 <% /* Location1:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "Location1", strError );
@@ -1642,22 +1612,12 @@ else
    }
 %>
 
-<input class="text12" name="Location1" id="Location1" style="width:214px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="Location1" id="Location1" style="width:214px;position:absolute;left:140px;top:130px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:-22px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
 <% /* Location2::Text */ %>
 
-<span  id="Location2:" name="Location2:" style="width:130px;height:16px;">Location:</span>
+<label  id="Location2:" name="Location2:" style="width:130px;height:16px;position:absolute;left:0px;top:156px;">Location:</label>
 
-<span style="height:16px;">&nbsp&nbsp</span>
 <% /* Location2:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "Location2", strError );
@@ -1697,22 +1657,12 @@ else
    }
 %>
 
-<input name="Location2" id="Location2" style="width:214px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Location2" id="Location2" style="width:214px;position:absolute;left:140px;top:156px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:4px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
 <% /* Location3::Text */ %>
 
-<span  id="Location3:" name="Location3:" style="width:130px;height:16px;">Location:</span>
+<label  id="Location3:" name="Location3:" style="width:130px;height:16px;position:absolute;left:0px;top:182px;">Location:</label>
 
-<span style="height:16px;">&nbsp&nbsp</span>
 <% /* Location3:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "Location3", strError );
@@ -1752,22 +1702,12 @@ else
    }
 %>
 
-<input name="Location3" id="Location3" style="width:214px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Location3" id="Location3" style="width:214px;position:absolute;left:140px;top:182px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
 <% /* Location4::Text */ %>
 
-<span  id="Location4:" name="Location4:" style="width:130px;height:16px;">Location:</span>
+<label  id="Location4:" name="Location4:" style="width:130px;height:16px;position:absolute;left:0px;top:208px;">Location:</label>
 
-<span style="height:16px;">&nbsp&nbsp</span>
 <% /* Location4:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "Location4", strError );
@@ -1807,22 +1747,12 @@ else
    }
 %>
 
-<input name="Location4" id="Location4" style="width:214px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Location4" id="Location4" style="width:214px;position:absolute;left:140px;top:208px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
 <% /* Location5::Text */ %>
 
-<span  id="Location5:" name="Location5:" style="width:130px;height:16px;">Location:</span>
+<label  id="Location5:" name="Location5:" style="width:130px;height:16px;position:absolute;left:0px;top:234px;">Location:</label>
 
-<span style="height:16px;">&nbsp&nbsp</span>
 <% /* Location5:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "Location5", strError );
@@ -1862,9 +1792,7 @@ else
    }
 %>
 
-<input class="text12" name="Location5" id="Location5" style="width:214px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
-
-</div>  <!-- End of a new line -->
+<input class="text12" name="Location5" id="Location5" style="width:214px;position:absolute;left:140px;top:234px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 
 </div>  <!--  GroupBox1 --> 
@@ -1880,19 +1808,11 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox2:GroupBox */ %>
 
-<div id="GroupBox2" name="GroupBox2" class="withborder" style="width:692px;height:40px;float:left;">  <!-- GroupBox2 --> 
+<div id="GroupBox2" name="GroupBox2" class="withborder"   style="float:left;position:relative; width:692px; height:40px;">  <!-- GroupBox2 --> 
 
-
- <!-- This is added as a line spacer -->
-<div style="height:14px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp&nbsp</span>
 <% /* FullHazardStatement:Text */ %>
 
-<span class="groupbox"  id="FullHazardStatement" name="FullHazardStatement" style="width:208px;height:16px;">Complete Hazard Statement</span>
-
-</div>  <!-- End of a new line -->
+<label class="groupbox"  id="FullHazardStatement" name="FullHazardStatement" style="width:208px;height:16px;position:absolute;left:18px;top:14px;">Complete Hazard Statement</label>
 
 
 </div>  <!--  GroupBox2 --> 
@@ -1908,14 +1828,11 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox3:GroupBox */ %>
 
-<div id="GroupBox3" name="GroupBox3" style="width:692px;height:142px;float:left;">  <!-- GroupBox3 --> 
+<div id="GroupBox3" name="GroupBox3"   style="float:left;position:relative; width:692px; height:142px;">  <!-- GroupBox3 --> 
 
-
-<div>  <!-- Beginning of a new line -->
 <% /* Refresh:PushBtn */ %>
-<button type="button" name="Refresh" id="Refresh" value="" onclick="RefreshFullStatement( )" style="width:130px;height:24px;">Refresh</button>
+<button type="button" name="Refresh" id="Refresh" value="" onclick="RefreshFullStatement( )" style="width:130px;height:24px;position:absolute;left:0px;top:0px;">Refresh</button>
 
-<span style="height:136px;">&nbsp&nbsp</span>
 <% /* MLEditFullStatement:MLEdit */ %>
 <%
    // : MLEditFullStatement
@@ -1948,9 +1865,7 @@ else
    }
 %>
 
-<textarea name="MLEditFullStatement" id="MLEditFullStatement" style="border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
-
-</div>  <!-- End of a new line -->
+<textarea name="MLEditFullStatement" id="MLEditFullStatement" style="width:552px;height:136px;position:absolute;left:140px;top:0px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 
 </div>  <!--  GroupBox3 --> 

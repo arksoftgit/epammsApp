@@ -417,7 +417,8 @@ ImportAreasOfUseFromFile( VIEW ViewToWindow )
       RETURN 2
    END
 
-   szDirectoryName = szDirectoryName + szFileName
+   szMessage = szDirectoryName + szFileName // borrow szMessage for a sec...
+   SysConvertEnvironmentString( szDirectoryName, szMessage )
    nRC = ImportCSV_ToZeidonOI( mEPA, szDirectoryName )
    IF nRC < 0
       IF nRC = -1
@@ -583,7 +584,8 @@ ImportAppTypesFromFile( VIEW ViewToWindow )
       RETURN 2
    END
 
-   szDirectoryName = szDirectoryName + szFileName
+   szMessage = szDirectoryName + szFileName // borrow szMessage for a sec...
+   SysConvertEnvironmentString( szDirectoryName, szMessage )
    nRC = ImportCSV_ToZeidonOI( mEPA, szDirectoryName )
    IF nRC < 0
       IF nRC = -1
@@ -680,7 +682,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: ImportBacteriaStatementList
+// OPERATION: ImportBacteriaList
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -753,7 +755,8 @@ ImportBacteriaFromFile( VIEW ViewToWindow )
       RETURN 2
    END
 
-   szDirectoryName = szDirectoryName + szFileName
+   szMessage = szDirectoryName + szFileName // borrow szMessage for a sec...
+   SysConvertEnvironmentString( szDirectoryName, szMessage )
    nRC = ImportCSV_ToZeidonOI( mEPA, szDirectoryName )
    IF nRC < 0
       IF nRC = -1
@@ -928,7 +931,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: ImportFungiStatementList
+// OPERATION: ImportFungiList
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -1001,7 +1004,8 @@ ImportFungiFromFile( VIEW ViewToWindow )
       RETURN 2
    END
 
-   szDirectoryName = szDirectoryName + szFileName
+   szMessage = szDirectoryName + szFileName // borrow szMessage for a sec...
+   SysConvertEnvironmentString( szDirectoryName, szMessage )
    nRC = ImportCSV_ToZeidonOI( mEPA, szDirectoryName )
    IF nRC < 0
       IF nRC = -1
@@ -1182,7 +1186,8 @@ ImportVirusesFromFile( VIEW ViewToWindow )
       RETURN 2
    END
 
-   szDirectoryName = szDirectoryName + szFileName
+   szMessage = szDirectoryName + szFileName // borrow szMessage for a sec...
+   SysConvertEnvironmentString( szDirectoryName, szMessage )
    nRC = ImportCSV_ToZeidonOI( mEPA, szDirectoryName )
    IF nRC < 0
       IF nRC = -1
@@ -1359,7 +1364,8 @@ ImportSurfacesFromFile( VIEW ViewToWindow )
       RETURN 2
    END
 
-   szDirectoryName = szDirectoryName + szFileName
+   szMessage = szDirectoryName + szFileName // borrow szMessage for a sec...
+   SysConvertEnvironmentString( szDirectoryName, szMessage )
    nRC = ImportCSV_ToZeidonOI( mEPA, szDirectoryName )
    IF nRC < 0
       IF nRC = -1
@@ -1479,534 +1485,6 @@ InitPrimaryRegistrantForInsert( VIEW ViewToWindow )
    END
 
    SetDynamicBannerName( ViewToWindow, "wSystem", "Administration" )
-
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// OPERATION: DeleteAreasOfUse
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-DeleteAreasOfUse( VIEW ViewToWindow )
-
-   VIEW mEPA     REGISTERED AS mEPA
-
-   DELETE ENTITY mEPA.EPA_AreaOfUse
-   AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "DeleteAreasOfUse: " )
-
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// OPERATION: DeleteClaim
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-DeleteClaim( VIEW ViewToWindow )
-
-   VIEW mEPA     REGISTERED AS mEPA
-
-   DELETE ENTITY mEPA.EPA_Claim
-   AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "DeleteClaim: " )
-
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// OPERATION: DeleteSurface
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-DeleteSurface( VIEW ViewToWindow )
-
-   VIEW mEPA     REGISTERED AS mEPA
-
-   DELETE ENTITY mEPA.EPA_Surface
-   AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "DeleteSurface: " )
-
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// OPERATION: DeleteSelectedBacteria
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-DeleteSelectedBacteria( VIEW ViewToWindow )
-
-   VIEW mEPA     REGISTERED AS mEPA
-   STRING ( 1 )  szSelected
-   SHORT nRC
-
-   nRC = SetCursorFirstEntity( mEPA, "EPA_Claim", "" )
-   LOOP WHILE nRC = zCURSOR_SET
-      szSelected = mEPA.EPA_Claim.wkSelected
-      IF szSelected = "Y"
-         IF mEPA.EPA_Claim EXISTS
-            DeleteEntity( mEPA, "EPA_Claim", zREPOS_NONE )
-         ELSE
-            DisplayObjectInstance( mEPA, "", "" )
-            MessageSend( ViewToWindow, "", "Delete Selected Bacteria",
-                         "Found Selection that was not Bacteria?",
-                         zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-            SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-            RETURN 2
-         END
-      END
-
-      nRC = SetCursorNextEntity( mEPA, "EPA_Claim", "" )
-   END
-
-   Commit mEPA
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// OPERATION: MoveAreasOfUseUp
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-MoveAreasOfUseUp( VIEW ViewToWindow )
-
-   VIEW wWebXfer REGISTERED AS wWebXfer
-   VIEW mEPA     REGISTERED AS mEPA
-   VIEW mTempEPA REGISTERED AS mEPA
-   INTEGER lMove
-
-   AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "MoveAreasOfUseUp: " )
-   CreateViewFromView( mTempEPA, mEPA )
-   lMove = wWebXfer.Root.MoveIncrement
-   IF lMove <= 0
-      lMove = 1
-   END
-
-   LOOP WHILE lMove > 0
-      SET CURSOR PREVIOUS mTempEPA.EPA_AreaOfUse
-      lMove = lMove - 1
-   END
-
-   MoveSubobject( mTempEPA, "EPA_AreaOfUse",
-                  mEPA, "EPA_AreaOfUse",
-                  zPOS_PREV, zREPOS_PREV )
-   DropView( mTempEPA )
-
-   // We now accept the EPA OI to maintain order!
-   COMMIT mEPA
-
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// OPERATION: MoveAreasOfUseDown
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-MoveAreasOfUseDown( VIEW ViewToWindow )
-
-   VIEW wWebXfer REGISTERED AS wWebXfer
-   VIEW mEPA     REGISTERED AS mEPA
-   VIEW mTempEPA REGISTERED AS mEPA
-   INTEGER lMove
-
-   AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "MoveAreasOfUseDown: " )
-   CreateViewFromView( mTempEPA, mEPA )
-   lMove = wWebXfer.Root.MoveIncrement
-   IF lMove <= 0
-      lMove = 1
-   END
-
-   LOOP WHILE lMove > 0
-      SET CURSOR NEXT mTempEPA.EPA_AreaOfUse
-      lMove = lMove - 1
-   END
-
-   MoveSubobject( mTempEPA, "EPA_AreaOfUse",
-                  mEPA, "EPA_AreaOfUse",
-                  zPOS_NEXT, zREPOS_NEXT )
-   DropView( mTempEPA )
-
-   // We now accept the Master Label to maintain order!
-   COMMIT mEPA
-
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// OPERATION: MoveClaimUp
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-MoveClaimUp( VIEW ViewToWindow )
-
-   VIEW wWebXfer REGISTERED AS wWebXfer
-   VIEW mEPA     REGISTERED AS mEPA
-   VIEW mTempEPA REGISTERED AS mEPA
-   INTEGER lMove
-
-   AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "MoveClaimUp: " )
-   CreateViewFromView( mTempEPA, mEPA )
-   lMove = wWebXfer.Root.MoveIncrement
-   IF lMove <= 0
-      lMove = 1
-   END
-
-   LOOP WHILE lMove > 0
-      SET CURSOR PREVIOUS mTempEPA.EPA_Claim
-      lMove = lMove - 1
-   END
-
-   MoveSubobject( mTempEPA, "EPA_Claim",
-                  mEPA, "EPA_Claim",
-                  zPOS_PREV, zREPOS_PREV )
-   DropView( mTempEPA )
-
-   // We now accept the EPA OI to maintain order!
-   COMMIT mEPA
-
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// OPERATION: MoveClaimDown
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-MoveClaimDown( VIEW ViewToWindow )
-
-   VIEW wWebXfer REGISTERED AS wWebXfer
-   VIEW mEPA     REGISTERED AS mEPA
-   VIEW mTempEPA REGISTERED AS mEPA
-   INTEGER lMove
-
-   AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "MoveClaimDown: " )
-   CreateViewFromView( mTempEPA, mEPA )
-   lMove = wWebXfer.Root.MoveIncrement
-   IF lMove <= 0
-      lMove = 1
-   END
-
-   LOOP WHILE lMove > 0
-      SET CURSOR NEXT mTempEPA.EPA_Claim
-      lMove = lMove - 1
-   END
-
-   MoveSubobject( mTempEPA, "EPA_Claim",
-                  mEPA, "EPA_Claim",
-                  zPOS_NEXT, zREPOS_NEXT )
-   DropView( mTempEPA )
-
-   // We now accept the Master Label to maintain order!
-   COMMIT mEPA
-
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// OPERATION: MoveBacteriaUp
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-MoveBacteriaUp( VIEW ViewToWindow )
-
-   VIEW wWebXfer REGISTERED AS wWebXfer
-   VIEW mEPA     REGISTERED AS mEPA
-   VIEW mTempEPA REGISTERED AS mEPA
-   INTEGER lMove
-
-   AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "MoveBacteriaUp: " )
-   CreateViewFromView( mTempEPA, mEPA )
-   lMove = wWebXfer.Root.MoveIncrement
-   IF lMove <= 0
-      lMove = 1
-   END
-
-   LOOP WHILE lMove > 0
-      SET CURSOR PREVIOUS mTempEPA.EPA_Claim
-      IF RESULT < 0 OR mTempEPA.Bacteria EXISTS
-         lMove = lMove - 1
-      END
-   END
-
-   MoveSubobject( mTempEPA, "EPA_Claim",
-                  mEPA, "EPA_Claim",
-                  zPOS_PREV, zREPOS_PREV )
-   DropView( mTempEPA )
-
-   // We now accept the EPA OI to maintain order!
-   COMMIT mEPA
-
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// OPERATION: MoveBacteriaDown
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-MoveBacteriaDown( VIEW ViewToWindow )
-
-   VIEW wWebXfer REGISTERED AS wWebXfer
-   VIEW mEPA     REGISTERED AS mEPA
-   VIEW mTempEPA REGISTERED AS mEPA
-   INTEGER lMove
-
-   AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "MoveBacteriaDown: " )
-   CreateViewFromView( mTempEPA, mEPA )
-   lMove = wWebXfer.Root.MoveIncrement
-   IF lMove <= 0
-      lMove = 1
-   END
-
-   LOOP WHILE lMove > 0
-      SET CURSOR NEXT mTempEPA.EPA_Claim
-      IF RESULT < 0 OR mTempEPA.Bacteria EXISTS
-         lMove = lMove - 1
-      END
-   END
-
-   MoveSubobject( mTempEPA, "EPA_Claim",
-                  mEPA, "EPA_Claim",
-                  zPOS_NEXT, zREPOS_NEXT )
-   DropView( mTempEPA )
-
-   // We now accept the Master Label to maintain order!
-   COMMIT mEPA
-
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// OPERATION: MoveBacteriaUp
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-MoveFungiUp( VIEW ViewToWindow )
-
-   VIEW wWebXfer REGISTERED AS wWebXfer
-   VIEW mEPA     REGISTERED AS mEPA
-   VIEW mTempEPA REGISTERED AS mEPA
-   INTEGER lMove
-
-   AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "MoveFungiUp: " )
-   CreateViewFromView( mTempEPA, mEPA )
-   lMove = wWebXfer.Root.MoveIncrement
-   IF lMove <= 0
-      lMove = 1
-   END
-
-   LOOP WHILE lMove > 0
-      SET CURSOR PREVIOUS mTempEPA.EPA_Claim
-      IF RESULT < 0 OR mTempEPA.Fungi EXISTS
-         lMove = lMove - 1
-      END
-   END
-
-   MoveSubobject( mTempEPA, "EPA_Claim",
-                  mEPA, "EPA_Claim",
-                  zPOS_PREV, zREPOS_PREV )
-   DropView( mTempEPA )
-
-   // We now accept the EPA OI to maintain order!
-   COMMIT mEPA
-
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// OPERATION: MoveFungiDown
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-MoveFungiDown( VIEW ViewToWindow )
-
-   VIEW wWebXfer REGISTERED AS wWebXfer
-   VIEW mEPA     REGISTERED AS mEPA
-   VIEW mTempEPA REGISTERED AS mEPA
-   INTEGER lMove
-
-   AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "MoveFungiDown: " )
-   CreateViewFromView( mTempEPA, mEPA )
-   lMove = wWebXfer.Root.MoveIncrement
-   IF lMove <= 0
-      lMove = 1
-   END
-
-   LOOP WHILE lMove > 0
-      SET CURSOR NEXT mTempEPA.EPA_Claim
-      IF RESULT < 0 OR mTempEPA.Fungi EXISTS
-         lMove = lMove - 1
-      END
-   END
-
-   MoveSubobject( mTempEPA, "EPA_Claim",
-                  mEPA, "EPA_Claim",
-                  zPOS_NEXT, zREPOS_NEXT )
-   DropView( mTempEPA )
-
-   // We now accept the Master Label to maintain order!
-   COMMIT mEPA
-
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// OPERATION: MoveVirusUp
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-MoveVirusUp( VIEW ViewToWindow )
-
-   VIEW wWebXfer REGISTERED AS wWebXfer
-   VIEW mEPA     REGISTERED AS mEPA
-   VIEW mTempEPA REGISTERED AS mEPA
-   INTEGER lMove
-
-   AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "MoveVirusUp: " )
-   CreateViewFromView( mTempEPA, mEPA )
-   lMove = wWebXfer.Root.MoveIncrement
-   IF lMove <= 0
-      lMove = 1
-   END
-
-   LOOP WHILE lMove > 0
-      SET CURSOR PREVIOUS mTempEPA.EPA_Claim
-      IF RESULT < 0 OR mTempEPA.Viruses EXISTS
-         lMove = lMove - 1
-      END
-   END
-
-   MoveSubobject( mTempEPA, "EPA_Claim",
-                  mEPA, "EPA_Claim",
-                  zPOS_PREV, zREPOS_PREV )
-   DropView( mTempEPA )
-
-   // We now accept the EPA OI to maintain order!
-   COMMIT mEPA
-
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// OPERATION: MoveVirusDown
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-MoveVirusDown( VIEW ViewToWindow )
-
-   VIEW wWebXfer REGISTERED AS wWebXfer
-   VIEW mEPA     REGISTERED AS mEPA
-   VIEW mTempEPA REGISTERED AS mEPA
-   INTEGER lMove
-
-   AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "MoveVirusDown: " )
-   CreateViewFromView( mTempEPA, mEPA )
-   lMove = wWebXfer.Root.MoveIncrement
-   IF lMove <= 0
-      lMove = 1
-   END
-
-   LOOP WHILE lMove > 0
-      SET CURSOR NEXT mTempEPA.EPA_Claim
-      IF RESULT < 0 OR mTempEPA.Viruses EXISTS
-         lMove = lMove - 1
-      END
-   END
-
-   MoveSubobject( mTempEPA, "EPA_Claim",
-                  mEPA, "EPA_Claim",
-                  zPOS_NEXT, zREPOS_NEXT )
-   DropView( mTempEPA )
-
-   // We now accept the Master Label to maintain order!
-   COMMIT mEPA
-
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// OPERATION: MoveSurfaceUp
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-MoveSurfaceUp( VIEW ViewToWindow )
-
-   VIEW wWebXfer REGISTERED AS wWebXfer
-   VIEW mEPA     REGISTERED AS mEPA
-   VIEW mTempEPA REGISTERED AS mEPA
-   INTEGER lMove
-
-   AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "MoveSurfaceUp: " )
-   CreateViewFromView( mTempEPA, mEPA )
-   lMove = wWebXfer.Root.MoveIncrement
-   IF lMove <= 0
-      lMove = 1
-   END
-
-   LOOP WHILE lMove > 0
-      SET CURSOR PREVIOUS mTempEPA.EPA_Surface
-      lMove = lMove - 1
-   END
-
-   MoveSubobject( mTempEPA, "EPA_Surface",
-                  mEPA, "EPA_Surface",
-                  zPOS_PREV, zREPOS_PREV )
-   DropView( mTempEPA )
-
-   // We now accept the EPA OI to maintain order!
-   COMMIT mEPA
-
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// OPERATION: MoveSurfaceDown
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-MoveSurfaceDown( VIEW ViewToWindow )
-
-   VIEW wWebXfer REGISTERED AS wWebXfer
-   VIEW mEPA     REGISTERED AS mEPA
-   VIEW mTempEPA REGISTERED AS mEPA
-   INTEGER lMove
-
-   AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "MoveSurfaceDown: " )
-   CreateViewFromView( mTempEPA, mEPA )
-   lMove = wWebXfer.Root.MoveIncrement
-   IF lMove <= 0
-      lMove = 1
-   END
-
-   LOOP WHILE lMove > 0
-      SET CURSOR NEXT mTempEPA.EPA_Surface
-      lMove = lMove - 1
-   END
-
-   MoveSubobject( mTempEPA, "EPA_Surface",
-                  mEPA, "EPA_Surface",
-                  zPOS_NEXT, zREPOS_NEXT )
-   DropView( mTempEPA )
-
-   // We now accept the EPA OI to maintain order!
-   COMMIT mEPA
-
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// OPERATION: UpdateAppTypeFromCurrent
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-UpdateAppTypeFromCurrent( VIEW ViewToWindow )
-
-   VIEW wWebXfer REGISTERED AS wWebXfer
-   VIEW mEPA     REGISTERED AS mEPA
-
-   AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "UpdateAppTypeFromCurrent: " )
-   mEPA.EPA_ApplicationType.Name = wWebXfer.Root.CurrentStatement
-   COMMIT mEPA
 
 END
 
@@ -2488,21 +1966,6 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: DeleteSystemChemical
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-DeleteSystemChemical( VIEW ViewToWindow )
-
-   VIEW mEPA     REGISTERED AS mEPA
-
-   AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "DeleteSystemChemical: " )
-   COMMIT mEPA
-
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
 // OPERATION: InitSystemChemicalForDelete
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -2727,6 +2190,118 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+//    OPERATION: DeleteAppType
+//    
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+DeleteAppType( VIEW ViewToWindow )
+
+   VIEW mEPA     REGISTERED AS mEPA
+
+   DELETE ENTITY mEPA.EPA_ApplicationType
+   AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "DeleteAppType: " )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: DeleteAreasOfUse
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+DeleteAreasOfUse( VIEW ViewToWindow )
+
+   VIEW mEPA     REGISTERED AS mEPA
+
+   DELETE ENTITY mEPA.EPA_AreaOfUse
+   AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "DeleteAreasOfUse: " )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: DeleteClaim
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+DeleteClaim( VIEW ViewToWindow )
+
+   VIEW mEPA     REGISTERED AS mEPA
+
+   DELETE ENTITY mEPA.EPA_Claim
+   AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "DeleteClaim: " )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: DeleteSurface
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+DeleteSurface( VIEW ViewToWindow )
+
+   VIEW mEPA     REGISTERED AS mEPA
+
+   DELETE ENTITY mEPA.EPA_Surface
+   AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "DeleteSurface: " )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: DeleteSelectedBacteria
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+DeleteSelectedBacteria( VIEW ViewToWindow )
+
+   VIEW mEPA     REGISTERED AS mEPA
+   STRING ( 1 )  szSelected
+   SHORT nRC
+
+   nRC = SetCursorFirstEntity( mEPA, "EPA_Claim", "" )
+   LOOP WHILE nRC = zCURSOR_SET
+      szSelected = mEPA.EPA_Claim.wkSelected
+      IF szSelected = "Y"
+         IF mEPA.EPA_Claim EXISTS
+            DeleteEntity( mEPA, "EPA_Claim", zREPOS_NONE )
+         ELSE
+            DisplayObjectInstance( mEPA, "", "" )
+            MessageSend( ViewToWindow, "", "Delete Selected Bacteria",
+                         "Found Selection that was not Bacteria?",
+                         zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+            SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+            RETURN 2
+         END
+      END
+
+      nRC = SetCursorNextEntity( mEPA, "EPA_Claim", "" )
+   END
+
+   Commit mEPA
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: UpdateAppTypeFromCurrent
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+UpdateAppTypeFromCurrent( VIEW ViewToWindow )
+
+   VIEW wWebXfer REGISTERED AS wWebXfer
+   VIEW mEPA     REGISTERED AS mEPA
+
+   AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "UpdateAppTypeFromCurrent: " )
+   mEPA.EPA_ApplicationType.Name = wWebXfer.Root.CurrentStatement
+   COMMIT mEPA
+
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
 // OPERATION: DeleteSystemKeyword
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -2739,5 +2314,20 @@ DeleteSystemKeyword( VIEW ViewToWindow )
    AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "DeleteSystemKeyword: " )
    COMMIT mEPA
    DropObjectInstance( mEPA )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: DeleteSystemChemical
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+DeleteSystemChemical( VIEW ViewToWindow )
+
+   VIEW mEPA     REGISTERED AS mEPA
+
+   AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "DeleteSystemChemical: " )
+   COMMIT mEPA
 
 END

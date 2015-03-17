@@ -605,7 +605,7 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
 else
 {
    VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemImportAppTypesList.jsp", "wSystem.InitImportAppTypesList" );
-   nOptRC = wSystem.InitImportAppTypesList( new zVIEW( vKZXMLPGO ) );
+         nOptRC = wSystem.InitImportAppTypesList( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -613,7 +613,7 @@ else
       String strURLParameters;
 
       vView = task.getViewByName( "wXferO" );
-      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString();
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString( "" );
       strURLParameters = "?CallingPage=wSystemImportAppTypesList.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wSystem" +
@@ -627,7 +627,7 @@ else
 
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSystem", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -635,8 +635,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSystem" );
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "ImportAppTypesList" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSystem", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "ImportAppTypesList", "" );
    }
 
 %>
@@ -809,7 +809,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSystem", "ImportAppTypesList" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -975,20 +975,12 @@ else
 <div style="height:1px;width:22px;float:left;"></div>   <!-- Width Spacer -->
 <% /* ImportAreasOfUseList:GroupBox */ %>
 
-<div id="ImportAreasOfUseList" name="ImportAreasOfUseList" class="withborder" style="width:822px;height:430px;float:left;">  <!-- ImportAreasOfUseList --> 
+<div id="ImportAreasOfUseList" name="ImportAreasOfUseList" class="withborder"   style="float:left;position:relative; width:822px; height:430px;">  <!-- ImportAreasOfUseList --> 
 
-<div  id="ImportAreasOfUseList" name="ImportAreasOfUseList" >Import Application Types List</div>
-
- <!-- This is added as a line spacer -->
-<div style="height:28px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
 <% /* AreasOfUseFileName::Text */ %>
 
-<span  id="AreasOfUseFileName:" name="AreasOfUseFileName:" style="width:78px;height:16px;">File Name:</span>
+<label  id="AreasOfUseFileName:" name="AreasOfUseFileName:" style="width:78px;height:16px;position:absolute;left:12px;top:28px;">File Name:</label>
 
-<span style="height:16px;">&nbsp</span>
 <% /* FileName:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "FileName", strError );
@@ -1028,32 +1020,12 @@ else
    }
 %>
 
-<input class="text12" name="FileName" id="FileName" style="width:702px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="FileName" id="FileName" style="width:702px;position:absolute;left:96px;top:28px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:16px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
 <% /* TXSortAppTypesList:Text */ %>
 
-<a href="#" id="TXSortAppTypesList" name="TXSortAppTypesList"  onclick="SortAppTypesList( );" style="width:72px;height:16px;">Sort</a>
+<a href="#" id="TXSortAppTypesList" name="TXSortAppTypesList"  onclick="SortAppTypesList( );" style="width:72px;height:16px;position:absolute;left:552px;top:60px;">Sort</a>
 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:8px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:330px;">&nbsp</span>
 <% /* Import:MLEdit */ %>
 <%
    // : Import
@@ -1086,9 +1058,7 @@ else
    }
 %>
 
-<textarea name="Import" id="Import" style="border:solid;border-width:2px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
-
-</div>  <!-- End of a new line -->
+<textarea name="Import" id="Import" style="width:798px;height:330px;position:absolute;left:8px;top:84px;border:solid;border-width:2px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 
 </div>  <!--  ImportAreasOfUseList --> 
@@ -1104,29 +1074,12 @@ else
 <div style="height:1px;width:22px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupWork:GroupBox */ %>
 
-<div id="GroupWork" name="GroupWork" class="withborder" style="width:822px;height:280px;float:left;">  <!-- GroupWork --> 
+<div id="GroupWork" name="GroupWork" class="withborder"   style="float:left;position:relative; width:822px; height:280px;">  <!-- GroupWork --> 
 
-<div  id="GroupWork" name="GroupWork" >Sort Work Group</div>
-
- <!-- This is added as a line spacer -->
-<div style="height:18px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
 <% /* TXSortWorkList:Text */ %>
 
-<a href="#" id="TXSortWorkList" name="TXSortWorkList"  onclick="SortWorkList( );" style="width:72px;height:16px;">Sort</a>
+<a href="#" id="TXSortWorkList" name="TXSortWorkList"  onclick="SortWorkList( );" style="width:72px;height:16px;position:absolute;left:552px;top:18px;">Sort</a>
 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:8px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:226px;">&nbsp</span>
 <% /* Work:MLEdit */ %>
 <%
    // : Work
@@ -1159,9 +1112,7 @@ else
    }
 %>
 
-<textarea name="Work" id="Work" style="border:solid;border-width:2px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
-
-</div>  <!-- End of a new line -->
+<textarea name="Work" id="Work" style="width:798px;height:226px;position:absolute;left:8px;top:42px;border:solid;border-width:2px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 
 </div>  <!--  GroupWork --> 

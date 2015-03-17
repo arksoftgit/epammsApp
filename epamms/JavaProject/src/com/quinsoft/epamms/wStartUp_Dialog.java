@@ -56,22 +56,22 @@ ProcessUserLogin( View     ViewToWindow )
 {
    zVIEW    wWebXfer = new zVIEW( );
    int      RESULT = 0;
+   //:VIEW pePamms  REGISTERED AS pePamms
+   zVIEW    pePamms = new zVIEW( );
+   //:VIEW mePamms  BASED ON LOD  mePamms
+   zVIEW    mePamms = new zVIEW( );
+   //:VIEW sePamms  BASED ON LOD  sePamms
+   zVIEW    sePamms = new zVIEW( );
    //:VIEW qOrganiz BASED ON LOD  qOrganiz
    zVIEW    qOrganiz = new zVIEW( );
-   //:VIEW mOrganizInit BASED ON LOD  mOrganiz
-   zVIEW    mOrganizInit = new zVIEW( );
    //:VIEW mOrganiz BASED ON LOD  mOrganiz
    zVIEW    mOrganiz = new zVIEW( );
-   //:VIEW qPrimReg BASED ON LOD  qPrimReg
-   zVIEW    qPrimReg = new zVIEW( );
+   //:VIEW mOrganizInit BASED ON LOD mOrganiz
+   zVIEW    mOrganizInit = new zVIEW( );
    //:VIEW lPrimReg BASED ON LOD  lPrimReg
    zVIEW    lPrimReg = new zVIEW( );
-   //:VIEW qSubreg  BASED ON LOD  qSubreg
-   zVIEW    qSubreg = new zVIEW( );
-   //:VIEW lSubreg  BASED ON LOD  lSubreg
-   zVIEW    lSubreg = new zVIEW( );
-   //:VIEW KZXMLPGO
-   zVIEW    KZXMLPGO = new zVIEW( );
+   //:STRING ( 256  ) szMessage
+   String   szMessage = null;
    //:STRING (  50  ) szLoginName
    String   szLoginName = null;
    //:STRING (  50  ) szUserName
@@ -88,12 +88,14 @@ ProcessUserLogin( View     ViewToWindow )
    int      lID = 0;
    //:SHORT         nRC
    int      nRC = 0;
-   zVIEW    vTempViewVar_0 = new zVIEW( );
    int      lTempInteger_0 = 0;
    int      lTempInteger_1 = 0;
-   zVIEW    vTempViewVar_1 = new zVIEW( );
+   zVIEW    vTempViewVar_0 = new zVIEW( );
    int      lTempInteger_2 = 0;
+   zVIEW    vTempViewVar_1 = new zVIEW( );
+   String   szTempString_0 = null;
    int      lTempInteger_3 = 0;
+   zVIEW    vTempViewVar_2 = new zVIEW( );
    int      lTempInteger_4 = 0;
    int      lTempInteger_5 = 0;
    int      lTempInteger_6 = 0;
@@ -103,11 +105,15 @@ ProcessUserLogin( View     ViewToWindow )
    int      lTempInteger_10 = 0;
    int      lTempInteger_11 = 0;
    int      lTempInteger_12 = 0;
-   zVIEW    vTempViewVar_2 = new zVIEW( );
    int      lTempInteger_13 = 0;
-   String   szTempString_0 = null;
+   int      lTempInteger_14 = 0;
+   int      lTempInteger_15 = 0;
+   zVIEW    vTempViewVar_3 = new zVIEW( );
+   int      lTempInteger_16 = 0;
+   String   szTempString_1 = null;
 
    RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( pePamms, "pePamms", ViewToWindow, zLEVEL_TASK );
 
    //:IF wWebXfer = 0
    if ( getView( wWebXfer ) == null )
@@ -120,116 +126,54 @@ ProcessUserLogin( View     ViewToWindow )
 
    //:END
 
-   //:wWebXfer.Root.MoveIncrement = 1  // number of positions an entity will move
-   SetAttributeFromInteger( wWebXfer, "Root", "MoveIncrement", 1 );
-
-   //:GET VIEW KZXMLPGO NAMED "KZXMLPGO"
-   RESULT = GetViewByName( KZXMLPGO, "KZXMLPGO", ViewToWindow, zLEVEL_TASK );
-   //:IF KZXMLPGO != 0
-   if ( getView( KZXMLPGO ) != null )
+   //:wWebXfer.Root.KeyRole = "U"  // U is for Unknown (so far)
+   SetAttributeFromString( wWebXfer, "Root", "KeyRole", "U" );
+   //:IF pePamms.ePamms DOES NOT EXIST OR pePamms.ePamms.ID != "1"
+   lTempInteger_0 = CheckExistenceOfEntity( pePamms, "ePamms" );
+   if ( lTempInteger_0 != 0 || CompareAttributeToString( pePamms, "ePamms", "ID", "1" ) != 0 )
    { 
-      //:FOR EACH KZXMLPGO.NextDialogWindow
-      RESULT = SetCursorFirstEntity( KZXMLPGO, "NextDialogWindow", "" );
-      while ( RESULT > zCURSOR_UNCHANGED )
-      { 
-         //:DELETE ENTITY KZXMLPGO.NextDialogWindow
-         RESULT = DeleteEntity( KZXMLPGO, "NextDialogWindow", zPOS_NEXT );
-         RESULT = SetCursorNextEntity( KZXMLPGO, "NextDialogWindow", "" );
-      } 
-
-      //:END
-   } 
-
-   //:END
-
-   //:GET VIEW qPrimReg NAMED "qPrimRegLogin"
-   RESULT = GetViewByName( qPrimReg, "qPrimRegLogin", ViewToWindow, zLEVEL_TASK );
-   //:IF qPrimReg != 0
-   if ( getView( qPrimReg ) != null )
-   { 
-      //:DropObjectInstance( qPrimReg )
-      DropObjectInstance( qPrimReg );
-   } 
-
-   //:END
-
-   //:GET VIEW qSubreg NAMED "qSubregLogin"
-   RESULT = GetViewByName( qSubreg, "qSubregLogin", ViewToWindow, zLEVEL_TASK );
-   //:IF qSubreg != 0
-   if ( getView( qSubreg ) != null )
-   { 
-      //:DropObjectInstance( qSubreg )
-      DropObjectInstance( qSubreg );
-   } 
-
-   //:END
-
-   //:GET VIEW qOrganiz NAMED "qOrganizLogin"
-   RESULT = GetViewByName( qOrganiz, "qOrganizLogin", ViewToWindow, zLEVEL_TASK );
-   //:IF qOrganiz != 0
-   if ( getView( qOrganiz ) != null )
-   { 
-      //:DropObjectInstance( qOrganiz )
-      DropObjectInstance( qOrganiz );
-   } 
-
-   //:END
-
-   //:GET VIEW lPrimReg NAMED "lPrimReg"
-   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
-   //:IF lPrimReg != 0
-   if ( getView( lPrimReg ) != null )
-   { 
-      //:DropObjectInstance( lPrimReg )
-      DropObjectInstance( lPrimReg );
-   } 
-
-   //:END
-
-   //:GET VIEW lSubreg NAMED "lSubreg"
-   RESULT = GetViewByName( lSubreg, "lSubreg", ViewToWindow, zLEVEL_TASK );
-   //:IF lSubreg != 0
-   if ( getView( lSubreg ) != null )
-   { 
-      //:DropObjectInstance( lSubreg )
-      DropObjectInstance( lSubreg );
-   } 
-
-   //:END
-
-   //:// Note that Activate always returns at least an empty view.
-   //:ACTIVATE qOrganiz WHERE qOrganiz.Organization.LoginName = "Admin"
-   o_fnLocalBuildQual_1( ViewToWindow, vTempViewVar_0 );
-   RESULT = ActivateObjectInstance( qOrganiz, "qOrganiz", ViewToWindow, vTempViewVar_0, zSINGLE );
-   DropView( vTempViewVar_0 );
-   //:NAME VIEW qOrganiz "qOrganiz"
-   SetNameForView( qOrganiz, "qOrganiz", null, zLEVEL_TASK );
-   //:IF qOrganiz.Organization DOES NOT EXIST
-   lTempInteger_0 = CheckExistenceOfEntity( qOrganiz, "Organization" );
-   if ( lTempInteger_0 != 0 )
-   { 
-
-      //:// No administrator found!  We need to bootstrap here.
-      //:TraceLineS( "ProcessAdministratorLogin: ", "No Administrator found!!!" )
-      TraceLineS( "ProcessAdministratorLogin: ", "No Administrator found!!!" );
+      //:// No administrator found!  We bootstrap here.
+      //:TraceLineS( "ProcessUserLogin: ", "No Administrator found!!!" )
+      TraceLineS( "ProcessUserLogin: ", "No Administrator found!!!" );
+      //:ACTIVATE mePamms EMPTY
+      RESULT = ActivateEmptyObjectInstance( mePamms, "mePamms", ViewToWindow, zSINGLE );
+      //:NAME VIEW mePamms "mePamms"
+      SetNameForView( mePamms, "mePamms", null, zLEVEL_TASK );
+      //:CREATE ENTITY mePamms.ePamms
+      RESULT = CreateEntity( mePamms, "ePamms", zPOS_AFTER );
+      //:CREATE ENTITY mePamms.PrimaryRegistrant 
+      RESULT = CreateEntity( mePamms, "PrimaryRegistrant", zPOS_AFTER );
+      //:CREATE ENTITY mePamms.Organization
+      RESULT = CreateEntity( mePamms, "Organization", zPOS_AFTER );
+      //:mePamms.ePamms.ID = 1
+      SetAttributeFromInteger( mePamms, "ePamms", "ID", 1 );
+      //:mePamms.Organization.Name = "ePamms Administrator"
+      SetAttributeFromString( mePamms, "Organization", "Name", "ePamms Administrator" );
+      //:mePamms.Organization.LoginName = "Admin"
+      SetAttributeFromString( mePamms, "Organization", "LoginName", "Admin" );
       //:SetWindowActionBehavior( ViewToWindow, zWAB_StartTopWindow,
-      //:                         "wStartUp", "AdminNewPrimaryRegistrant" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StartTopWindow, "wStartUp", "AdminNewPrimaryRegistrant" );
-      //:DropObjectInstance( qOrganiz )
-      DropObjectInstance( qOrganiz );
+      //:                         "wStartUp", "AdminNewAdministrator" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StartTopWindow, "wStartUp", "AdminNewAdministrator" );
+      //:DropObjectInstance( pePamms )
+      DropObjectInstance( pePamms );
       //:RETURN 1
       if(8==8)return( 1 );
    } 
 
    //:END
 
-   //:DropObjectInstance( qOrganiz )
-   DropObjectInstance( qOrganiz );
+   //:// OK ... we know that Admin exists ... if there are no Primary Registrants, the only login possible is Admin, which can
+   //:// create Primary Registrants.  If there are no Subregistrants for a Primary Registrant, the only login possible for the
+   //:// specified Primary Registrant is the administrator for that Primary Registrant, which can create Subregistrants.  If
+   //:// there are no Users for a Subregistrant, the only login possible for the specified Subregistrant is the administrator
+   //:// for that Subregistrant.
 
-   //:// OK ... we know that Admin exists ...
+   //:DisplayObjectInstance( pePamms, "", "" )
+   DisplayObjectInstance( pePamms, "", "" );
+   //:DisplayEntityInstance( pePamms, "Organization" )
+   DisplayEntityInstance( pePamms, "Organization" );
 
-   //:// Note that Activate always returns at least an empty view.
-   //:szLoginName = wWebXfer.Root.AttemptLoginName  // e.g. Lonza (a primary registrant)
+   //:szLoginName = wWebXfer.Root.AttemptLoginName  // e.g. Lonza (a primary registrant) or ATP (Alpha Tech Pet - a subregistrant)
    {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
    StringBuilder sb_szLoginName;
    if ( szLoginName == null )
@@ -239,17 +183,142 @@ ProcessUserLogin( View     ViewToWindow )
        GetVariableFromAttribute( sb_szLoginName, mi_lTempInteger_1, 'S', 51, wWebXfer, "Root", "AttemptLoginName", "", 0 );
    lTempInteger_1 = mi_lTempInteger_1.intValue( );
    szLoginName = sb_szLoginName.toString( );}
-   //:ACTIVATE qOrganiz WHERE qOrganiz.Organization.LoginName = szLoginName
-   o_fnLocalBuildQual_2( ViewToWindow, vTempViewVar_1, szLoginName );
-   RESULT = ActivateObjectInstance( qOrganiz, "qOrganiz", ViewToWindow, vTempViewVar_1, zSINGLE );
-   DropView( vTempViewVar_1 );
+   //:IF pePamms.Organization.LoginName = "Admin"  // cannot use szLoginName since we need a case insensitive comparison
+   if ( CompareAttributeToString( pePamms, "Organization", "LoginName", "Admin" ) == 0 )
+   { 
+      //:// SET CURSOR FIRST pePamms.Organization WHERE pePamms.Organization.LoginName = szLoginName
+      //:RESULT = SetCursorFirstEntityByString( pePamms, "Organization", "LoginName", szLoginName, "ePamms" )
+      RESULT = SetCursorFirstEntityByString( pePamms, "Organization", "LoginName", szLoginName, "ePamms" );
+
+      //:IF RESULT < 0
+      if ( RESULT < 0 )
+      { 
+         //:TraceLineS( "Login Organization not found within Admin: ", szLoginName )
+         TraceLineS( "Login Organization not found within Admin: ", szLoginName );
+         //:MessageSend( ViewToWindow, "", "User Login",
+         //:             "Invalid User Login.",
+         //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         MessageSend( ViewToWindow, "", "User Login", "Invalid User Login.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+         //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+         m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+         //:RETURN 2
+         if(8==8)return( 2 );
+      } 
+
+      //:END
+
+      //:// Note that Activate always returns at least an empty view.
+      //:ACTIVATE qOrganiz WHERE qOrganiz.Organization.LoginName = szLoginName
+      o_fnLocalBuildQual_1( ViewToWindow, vTempViewVar_0, szLoginName );
+      RESULT = ActivateObjectInstance( qOrganiz, "qOrganiz", ViewToWindow, vTempViewVar_0, zSINGLE );
+      DropView( vTempViewVar_0 );
+      //:ELSE
+   } 
+   else
+   { 
+      //:// Within a Primary Registrant (not Admin)
+      //:ACTIVATE sePamms WHERE sePamms.PrimaryRegistrant.ID = pePamms.PrimaryRegistrant.ID
+      {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
+             GetIntegerFromAttribute( mi_lTempInteger_2, pePamms, "PrimaryRegistrant", "ID" );
+      lTempInteger_2 = mi_lTempInteger_2.intValue( );}
+      o_fnLocalBuildQual_2( ViewToWindow, vTempViewVar_1, lTempInteger_2 );
+      RESULT = ActivateObjectInstance( sePamms, "sePamms", ViewToWindow, vTempViewVar_1, zSINGLE );
+      DropView( vTempViewVar_1 );
+      //:NAME VIEW sePamms "sePamms"
+      SetNameForView( sePamms, "sePamms", null, zLEVEL_TASK );
+      //:DisplayObjectInstance( sePamms, "", "" )
+      DisplayObjectInstance( sePamms, "", "" );
+
+      //:// We cannot use SET CURSOR FIRST WHERE since we need a case insensitive comparison.
+      //:// SET CURSOR FIRST sePamms.Subregistrant WHERE sePamms.Organization.LoginName = szLoginName
+      //:TraceLineS( "Looking for Subregistrant Login: ", wWebXfer.Root.AttemptUserName )
+      {StringBuilder sb_szTempString_0;
+      if ( szTempString_0 == null )
+         sb_szTempString_0 = new StringBuilder( 32 );
+      else
+         sb_szTempString_0 = new StringBuilder( szTempString_0 );
+             GetStringFromAttribute( sb_szTempString_0, wWebXfer, "Root", "AttemptUserName" );
+      szTempString_0 = sb_szTempString_0.toString( );}
+      TraceLineS( "Looking for Subregistrant Login: ", szTempString_0 );
+      //:RESULT = SetCursorFirstEntityByString( sePamms, "Organization", "LoginName", szLoginName, "PrimaryRegistrant" )
+      RESULT = SetCursorFirstEntityByString( sePamms, "Organization", "LoginName", szLoginName, "PrimaryRegistrant" );
+      //:/*
+      //:SET CURSOR FIRST sePamms.Subregistrant
+      //:LOOP WHILE RESULT >= 0 AND wWebXfer.Root.AttemptUserName != sePamms.Organization.LoginName // case insensitive comparison
+      //:   SET CURSOR NEXT sePamms.Subregistrant
+      //:END
+      //:*/
+      //:DisplayEntityInstance( sePamms, "Organization" )
+      DisplayEntityInstance( sePamms, "Organization" );
+      //:IF RESULT >= 0
+      if ( RESULT >= 0 )
+      { 
+         //: ACTIVATE qOrganiz WHERE qOrganiz.Organization.ID = sePamms.Organization.ID
+         {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
+                   GetIntegerFromAttribute( mi_lTempInteger_3, sePamms, "Organization", "ID" );
+         lTempInteger_3 = mi_lTempInteger_3.intValue( );}
+         o_fnLocalBuildQual_3( ViewToWindow, vTempViewVar_2, lTempInteger_3 );
+         RESULT = ActivateObjectInstance( qOrganiz, "qOrganiz", ViewToWindow, vTempViewVar_2, zSINGLE );
+         DropView( vTempViewVar_2 );
+         //:DropObjectInstance( sePamms )
+         DropObjectInstance( sePamms );
+         //:ELSE
+      } 
+      else
+      { 
+         //:// Organization not found!
+         //:szMessage = pePamms.Organization.Name
+         {MutableInt mi_lTempInteger_4 = new MutableInt( lTempInteger_4 );
+         StringBuilder sb_szMessage;
+         if ( szMessage == null )
+            sb_szMessage = new StringBuilder( 32 );
+         else
+            sb_szMessage = new StringBuilder( szMessage );
+                   GetVariableFromAttribute( sb_szMessage, mi_lTempInteger_4, 'S', 257, pePamms, "Organization", "Name", "", 0 );
+         lTempInteger_4 = mi_lTempInteger_4.intValue( );
+         szMessage = sb_szMessage.toString( );}
+         //:szMessage = szMessage + "    Login: "
+          {StringBuilder sb_szMessage;
+         if ( szMessage == null )
+            sb_szMessage = new StringBuilder( 32 );
+         else
+            sb_szMessage = new StringBuilder( szMessage );
+                  ZeidonStringConcat( sb_szMessage, 1, 0, "    Login: ", 1, 0, 257 );
+         szMessage = sb_szMessage.toString( );}
+         //:szMessage = szMessage + szLoginName
+          {StringBuilder sb_szMessage;
+         if ( szMessage == null )
+            sb_szMessage = new StringBuilder( 32 );
+         else
+            sb_szMessage = new StringBuilder( szMessage );
+                  ZeidonStringConcat( sb_szMessage, 1, 0, szLoginName, 1, 0, 257 );
+         szMessage = sb_szMessage.toString( );}
+         //:TraceLineS( "Login Organization not found within Primary Registrant: ", szMessage )
+         TraceLineS( "Login Organization not found within Primary Registrant: ", szMessage );
+         //:MessageSend( ViewToWindow, "", "User Login",
+         //:             "Invalid User Login.",
+         //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         MessageSend( ViewToWindow, "", "User Login", "Invalid User Login.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+         //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+         m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+         //:DropObjectInstance( sePamms )
+         DropObjectInstance( sePamms );
+         //:RETURN 2
+         if(8==8)return( 2 );
+      } 
+
+      //:END
+   } 
+
+   //:END
+
    //:NAME VIEW qOrganiz "qOrganizLogin"
    SetNameForView( qOrganiz, "qOrganizLogin", null, zLEVEL_TASK );
    //:DisplayObjectInstance( qOrganiz, "", "" )
    DisplayObjectInstance( qOrganiz, "", "" );
    //:IF qOrganiz.Organization DOES NOT EXIST
-   lTempInteger_2 = CheckExistenceOfEntity( qOrganiz, "Organization" );
-   if ( lTempInteger_2 != 0 )
+   lTempInteger_5 = CheckExistenceOfEntity( qOrganiz, "Organization" );
+   if ( lTempInteger_5 != 0 )
    { 
       //:// Organization not found!
       //:TraceLineS( "Login Organization not found: ", szLoginName )
@@ -271,40 +340,40 @@ ProcessUserLogin( View     ViewToWindow )
    //:wWebXfer.Root.LoginName = qOrganiz.Organization.LoginName // e.g. Lonza
    SetAttributeFromAttribute( wWebXfer, "Root", "LoginName", qOrganiz, "Organization", "LoginName" );
    //:szUserName = wWebXfer.Root.AttemptUserName  // e.g. Admin
-   {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
+   {MutableInt mi_lTempInteger_6 = new MutableInt( lTempInteger_6 );
    StringBuilder sb_szUserName;
    if ( szUserName == null )
       sb_szUserName = new StringBuilder( 32 );
    else
       sb_szUserName = new StringBuilder( szUserName );
-       GetVariableFromAttribute( sb_szUserName, mi_lTempInteger_3, 'S', 51, wWebXfer, "Root", "AttemptUserName", "", 0 );
-   lTempInteger_3 = mi_lTempInteger_3.intValue( );
+       GetVariableFromAttribute( sb_szUserName, mi_lTempInteger_6, 'S', 51, wWebXfer, "Root", "AttemptUserName", "", 0 );
+   lTempInteger_6 = mi_lTempInteger_6.intValue( );
    szUserName = sb_szUserName.toString( );}
    //:szKeyRole = wWebXfer.Root.KeyRole
-   {MutableInt mi_lTempInteger_4 = new MutableInt( lTempInteger_4 );
+   {MutableInt mi_lTempInteger_7 = new MutableInt( lTempInteger_7 );
    StringBuilder sb_szKeyRole;
    if ( szKeyRole == null )
       sb_szKeyRole = new StringBuilder( 32 );
    else
       sb_szKeyRole = new StringBuilder( szKeyRole );
-       GetVariableFromAttribute( sb_szKeyRole, mi_lTempInteger_4, 'S', 2, wWebXfer, "Root", "KeyRole", "", 0 );
-   lTempInteger_4 = mi_lTempInteger_4.intValue( );
+       GetVariableFromAttribute( sb_szKeyRole, mi_lTempInteger_7, 'S', 2, wWebXfer, "Root", "KeyRole", "", 0 );
+   lTempInteger_7 = mi_lTempInteger_7.intValue( );
    szKeyRole = sb_szKeyRole.toString( );}
 
    //:szAttemptPassword = wWebXfer.Root.AttemptPassword
-   {MutableInt mi_lTempInteger_5 = new MutableInt( lTempInteger_5 );
+   {MutableInt mi_lTempInteger_8 = new MutableInt( lTempInteger_8 );
    StringBuilder sb_szAttemptPassword;
    if ( szAttemptPassword == null )
       sb_szAttemptPassword = new StringBuilder( 32 );
    else
       sb_szAttemptPassword = new StringBuilder( szAttemptPassword );
-       GetVariableFromAttribute( sb_szAttemptPassword, mi_lTempInteger_5, 'S', 129, wWebXfer, "Root", "AttemptPassword", "", 0 );
-   lTempInteger_5 = mi_lTempInteger_5.intValue( );
+       GetVariableFromAttribute( sb_szAttemptPassword, mi_lTempInteger_8, 'S', 129, wWebXfer, "Root", "AttemptPassword", "", 0 );
+   lTempInteger_8 = mi_lTempInteger_8.intValue( );
    szAttemptPassword = sb_szAttemptPassword.toString( );}
    //:nRC = 0  // initialize to normal processing
    nRC = 0;
 
-   //:// Cannot use szLoginName since we need a case insensitive comparison.
+   //:// Cannot use szLoginName (in place of wWebXfer.Root.AttemptUserName) since we need a case insensitive comparison.
    //:IF wWebXfer.Root.AttemptUserName = "Admin" // logging in as user Admin for specified registrant
    if ( CompareAttributeToString( wWebXfer, "Root", "AttemptUserName", "Admin" ) == 0 )
    { 
@@ -323,26 +392,26 @@ ProcessUserLogin( View     ViewToWindow )
          //:TraceLineS( "//////* Invalid Login Password: ", szAttemptPassword )
          TraceLineS( "//////* Invalid Login Password: ", szAttemptPassword );
          //:szConfirmPassword = qOrganiz.Organization.AdministratorPassword
-         {MutableInt mi_lTempInteger_6 = new MutableInt( lTempInteger_6 );
+         {MutableInt mi_lTempInteger_9 = new MutableInt( lTempInteger_9 );
          StringBuilder sb_szConfirmPassword;
          if ( szConfirmPassword == null )
             sb_szConfirmPassword = new StringBuilder( 32 );
          else
             sb_szConfirmPassword = new StringBuilder( szConfirmPassword );
-                   GetVariableFromAttribute( sb_szConfirmPassword, mi_lTempInteger_6, 'S', 129, qOrganiz, "Organization", "AdministratorPassword", "", 0 );
-         lTempInteger_6 = mi_lTempInteger_6.intValue( );
+                   GetVariableFromAttribute( sb_szConfirmPassword, mi_lTempInteger_9, 'S', 129, qOrganiz, "Organization", "AdministratorPassword", "", 0 );
+         lTempInteger_9 = mi_lTempInteger_9.intValue( );
          szConfirmPassword = sb_szConfirmPassword.toString( );}
          //:wWebXfer.Root.TracePassword = szAttemptPassword
          SetAttributeFromString( wWebXfer, "Root", "TracePassword", szAttemptPassword );
          //:szAttemptPassword = wWebXfer.Root.TracePassword
-         {MutableInt mi_lTempInteger_7 = new MutableInt( lTempInteger_7 );
+         {MutableInt mi_lTempInteger_10 = new MutableInt( lTempInteger_10 );
          StringBuilder sb_szAttemptPassword;
          if ( szAttemptPassword == null )
             sb_szAttemptPassword = new StringBuilder( 32 );
          else
             sb_szAttemptPassword = new StringBuilder( szAttemptPassword );
-                   GetVariableFromAttribute( sb_szAttemptPassword, mi_lTempInteger_7, 'S', 129, wWebXfer, "Root", "TracePassword", "", 0 );
-         lTempInteger_7 = mi_lTempInteger_7.intValue( );
+                   GetVariableFromAttribute( sb_szAttemptPassword, mi_lTempInteger_10, 'S', 129, wWebXfer, "Root", "TracePassword", "", 0 );
+         lTempInteger_10 = mi_lTempInteger_10.intValue( );
          szAttemptPassword = sb_szAttemptPassword.toString( );}
          //:TraceLineS( "//////*+++++ CurrentUser: ", szConfirmPassword )
          TraceLineS( "//////*+++++ CurrentUser: ", szConfirmPassword );
@@ -364,7 +433,7 @@ ProcessUserLogin( View     ViewToWindow )
 
       //:END
 
-      //:// Cannot use szLoginUser since we need a case insensitive comparison.
+      //:// Cannot use szLoginUser (in place of wWebXfer.Root.AttemptUserName) since we need a case insensitive comparison.
       //:IF qOrganiz.Organization.LoginName = "Admin"
       if ( CompareAttributeToString( qOrganiz, "Organization", "LoginName", "Admin" ) == 0 )
       { 
@@ -390,12 +459,12 @@ ProcessUserLogin( View     ViewToWindow )
       { 
 
          //:IF qOrganiz.PrimaryRegistrant EXISTS
-         lTempInteger_8 = CheckExistenceOfEntity( qOrganiz, "PrimaryRegistrant" );
-         if ( lTempInteger_8 == 0 )
+         lTempInteger_11 = CheckExistenceOfEntity( qOrganiz, "PrimaryRegistrant" );
+         if ( lTempInteger_11 == 0 )
          { 
             //:IF qOrganiz.Subregistrant EXISTS
-            lTempInteger_9 = CheckExistenceOfEntity( qOrganiz, "Subregistrant" );
-            if ( lTempInteger_9 == 0 )
+            lTempInteger_12 = CheckExistenceOfEntity( qOrganiz, "Subregistrant" );
+            if ( lTempInteger_12 == 0 )
             { 
                //:wWebXfer.Root.KeyRole = "D"  // Dual registrant
                SetAttributeFromString( wWebXfer, "Root", "KeyRole", "D" );
@@ -413,8 +482,8 @@ ProcessUserLogin( View     ViewToWindow )
          else
          { 
             //:IF qOrganiz.Subregistrant EXISTS
-            lTempInteger_10 = CheckExistenceOfEntity( qOrganiz, "Subregistrant" );
-            if ( lTempInteger_10 == 0 )
+            lTempInteger_13 = CheckExistenceOfEntity( qOrganiz, "Subregistrant" );
+            if ( lTempInteger_13 == 0 )
             { 
                //:wWebXfer.Root.KeyRole = "S"  // Subregistrant (for now)
                SetAttributeFromString( wWebXfer, "Root", "KeyRole", "S" );
@@ -447,8 +516,8 @@ ProcessUserLogin( View     ViewToWindow )
       lControl = zQUAL_STRING + zPOS_FIRST + zQUAL_SCOPE_OI + zTEST_CSR_RESULT;
       //:IF SetEntityCursor( qOrganiz, "User", "UserName", lControl,
       //:                    szUserName, "", "", 0, "", "" ) < zCURSOR_SET
-      lTempInteger_11 = SetEntityCursor( qOrganiz, "User", "UserName", lControl, szUserName, "", "", 0, "", "" );
-      if ( lTempInteger_11 < zCURSOR_SET )
+      lTempInteger_14 = SetEntityCursor( qOrganiz, "User", "UserName", lControl, szUserName, "", "", 0, "", "" );
+      if ( lTempInteger_14 < zCURSOR_SET )
       { 
          //:// Organization user not found!
          //:TraceLineS( "Login User not found: ", szUserName )
@@ -502,16 +571,16 @@ ProcessUserLogin( View     ViewToWindow )
 
    //:END
 
-   //:GET VIEW mOrganizInit NAMED "mOrganiz"
-   RESULT = GetViewByName( mOrganizInit, "mOrganiz", ViewToWindow, zLEVEL_TASK );
+   //:GET VIEW mOrganizInit NAMED "mOrganizInit"
+   RESULT = GetViewByName( mOrganizInit, "mOrganizInit", ViewToWindow, zLEVEL_TASK );
 
    //:ACTIVATE mOrganiz WHERE mOrganiz.Organization.ID = qOrganiz.Organization.ID
-   {MutableInt mi_lTempInteger_12 = new MutableInt( lTempInteger_12 );
-       GetIntegerFromAttribute( mi_lTempInteger_12, qOrganiz, "Organization", "ID" );
-   lTempInteger_12 = mi_lTempInteger_12.intValue( );}
-   o_fnLocalBuildQual_3( ViewToWindow, vTempViewVar_2, lTempInteger_12 );
-   RESULT = ActivateObjectInstance( mOrganiz, "mOrganiz", ViewToWindow, vTempViewVar_2, zSINGLE );
-   DropView( vTempViewVar_2 );
+   {MutableInt mi_lTempInteger_15 = new MutableInt( lTempInteger_15 );
+       GetIntegerFromAttribute( mi_lTempInteger_15, qOrganiz, "Organization", "ID" );
+   lTempInteger_15 = mi_lTempInteger_15.intValue( );}
+   o_fnLocalBuildQual_4( ViewToWindow, vTempViewVar_3, lTempInteger_15 );
+   RESULT = ActivateObjectInstance( mOrganiz, "mOrganiz", ViewToWindow, vTempViewVar_3, zSINGLE );
+   DropView( vTempViewVar_3 );
    //:DisplayObjectInstance( mOrganiz, "", "" )
    DisplayObjectInstance( mOrganiz, "", "" );
    //:NAME VIEW mOrganiz "mOrganiz"
@@ -526,14 +595,14 @@ ProcessUserLogin( View     ViewToWindow )
          //:CREATE ENTITY mOrganiz.Feedback LAST
          RESULT = CreateEntity( mOrganiz, "Feedback", zPOS_LAST );
          //:szLoginName = wWebXfer.Root.LoginName
-         {MutableInt mi_lTempInteger_13 = new MutableInt( lTempInteger_13 );
+         {MutableInt mi_lTempInteger_16 = new MutableInt( lTempInteger_16 );
          StringBuilder sb_szLoginName;
          if ( szLoginName == null )
             sb_szLoginName = new StringBuilder( 32 );
          else
             sb_szLoginName = new StringBuilder( szLoginName );
-                   GetVariableFromAttribute( sb_szLoginName, mi_lTempInteger_13, 'S', 51, wWebXfer, "Root", "LoginName", "", 0 );
-         lTempInteger_13 = mi_lTempInteger_13.intValue( );
+                   GetVariableFromAttribute( sb_szLoginName, mi_lTempInteger_16, 'S', 51, wWebXfer, "Root", "LoginName", "", 0 );
+         lTempInteger_16 = mi_lTempInteger_16.intValue( );
          szLoginName = sb_szLoginName.toString( );}
          //:mOrganizInit.Feedback.UserId = szLoginName
          SetAttributeFromString( mOrganizInit, "Feedback", "UserId", szLoginName );
@@ -554,14 +623,14 @@ ProcessUserLogin( View     ViewToWindow )
    //:END
 
    //:SfSetUserIdForTask( ViewToWindow, wWebXfer.Root.LoginUser )
-   {StringBuilder sb_szTempString_0;
-   if ( szTempString_0 == null )
-      sb_szTempString_0 = new StringBuilder( 32 );
+   {StringBuilder sb_szTempString_1;
+   if ( szTempString_1 == null )
+      sb_szTempString_1 = new StringBuilder( 32 );
    else
-      sb_szTempString_0 = new StringBuilder( szTempString_0 );
-       GetStringFromAttribute( sb_szTempString_0, wWebXfer, "Root", "LoginUser" );
-   szTempString_0 = sb_szTempString_0.toString( );}
-   SfSetUserIdForTask( ViewToWindow, szTempString_0 );
+      sb_szTempString_1 = new StringBuilder( szTempString_1 );
+       GetStringFromAttribute( sb_szTempString_1, wWebXfer, "Root", "LoginUser" );
+   szTempString_1 = sb_szTempString_1.toString( );}
+   SfSetUserIdForTask( ViewToWindow, szTempString_1 );
    //:wWebXfer.Root.AttemptUserName = ""
    SetAttributeFromString( wWebXfer, "Root", "AttemptUserName", "" );
    //:wWebXfer.Root.AttemptPassword = ""
@@ -595,7 +664,7 @@ ProcessUserLogin( View     ViewToWindow )
 
 
 private int 
-o_fnLocalBuildQual_25( View     vSubtask,
+o_fnLocalBuildQual_27( View     vSubtask,
                        zVIEW    vQualObject,
                        int      lTempInteger_0 )
 {
@@ -614,7 +683,7 @@ o_fnLocalBuildQual_25( View     vSubtask,
 
 
 private int 
-o_fnLocalBuildQual_26( View     vSubtask,
+o_fnLocalBuildQual_28( View     vSubtask,
                        zVIEW    vQualObject,
                        int      lTempInteger_3 )
 {
@@ -633,7 +702,7 @@ o_fnLocalBuildQual_26( View     vSubtask,
 
 
 private int 
-o_fnLocalBuildQual_27( View     vSubtask,
+o_fnLocalBuildQual_29( View     vSubtask,
                        zVIEW    vQualObject,
                        int      lTempInteger_4 )
 {
@@ -652,7 +721,7 @@ o_fnLocalBuildQual_27( View     vSubtask,
 
 
 private int 
-o_fnLocalBuildQual_28( View     vSubtask,
+o_fnLocalBuildQual_30( View     vSubtask,
                        zVIEW    vQualObject,
                        int      lTempInteger_6 )
 {
@@ -665,44 +734,6 @@ o_fnLocalBuildQual_28( View     vSubtask,
    SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
    SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
    SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_6 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_29( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lID )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lID );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_30( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lID )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lID );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
    return( 0 );
 } 
@@ -730,17 +761,17 @@ o_fnLocalBuildQual_31( View     vSubtask,
 private int 
 o_fnLocalBuildQual_32( View     vSubtask,
                        zVIEW    vQualObject,
-                       int      lTempInteger_0 )
+                       int      lID )
 {
    int      RESULT = 0;
 
    RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
    CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterLabelContent" );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
    CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterLabelContent" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
    SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lID );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
    return( 0 );
 } 
@@ -768,17 +799,17 @@ o_fnLocalBuildQual_33( View     vSubtask,
 private int 
 o_fnLocalBuildQual_34( View     vSubtask,
                        zVIEW    vQualObject,
-                       int      lID )
+                       int      lTempInteger_0 )
 {
    int      RESULT = 0;
 
    RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
    CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterLabelContent" );
    CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterLabelContent" );
    SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lID );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
    return( 0 );
 } 
@@ -806,6 +837,44 @@ o_fnLocalBuildQual_35( View     vSubtask,
 private int 
 o_fnLocalBuildQual_36( View     vSubtask,
                        zVIEW    vQualObject,
+                       int      lID )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lID );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_37( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lID )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lID );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_38( View     vSubtask,
+                       zVIEW    vQualObject,
                        int      lTempInteger_0 )
 {
    int      RESULT = 0;
@@ -823,7 +892,7 @@ o_fnLocalBuildQual_36( View     vSubtask,
 
 
 private int 
-o_fnLocalBuildQual_37( View     vSubtask,
+o_fnLocalBuildQual_39( View     vSubtask,
                        zVIEW    vQualObject,
                        int      lID )
 {
@@ -842,7 +911,7 @@ o_fnLocalBuildQual_37( View     vSubtask,
 
 
 private int 
-o_fnLocalBuildQual_38( View     vSubtask,
+o_fnLocalBuildQual_40( View     vSubtask,
                        zVIEW    vQualObject,
                        int      lID )
 {
@@ -861,9 +930,9 @@ o_fnLocalBuildQual_38( View     vSubtask,
 
 
 private int 
-o_fnLocalBuildQual_9( View     vSubtask,
-                      zVIEW    vQualObject,
-                      int      lTempInteger_0 )
+o_fnLocalBuildQual_10( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lTempInteger_0 )
 {
    int      RESULT = 0;
 
@@ -880,7 +949,7 @@ o_fnLocalBuildQual_9( View     vSubtask,
 
 
 private int 
-o_fnLocalBuildQual_10( View     vSubtask,
+o_fnLocalBuildQual_11( View     vSubtask,
                        zVIEW    vQualObject,
                        String   szRegistrantName )
 {
@@ -899,7 +968,7 @@ o_fnLocalBuildQual_10( View     vSubtask,
 
 
 private int 
-o_fnLocalBuildQual_11( View     vSubtask,
+o_fnLocalBuildQual_12( View     vSubtask,
                        zVIEW    vQualObject )
 {
    int      RESULT = 0;
@@ -917,7 +986,25 @@ o_fnLocalBuildQual_11( View     vSubtask,
 
 
 private int 
-o_fnLocalBuildQual_12( View     vSubtask,
+o_fnLocalBuildQual_13( View     vSubtask,
+                       zVIEW    vQualObject )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "ePamms" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "ePamms" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Value", "1" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_14( View     vSubtask,
                        zVIEW    vQualObject,
                        String   szAttemptRegistrantName )
 {
@@ -936,57 +1023,19 @@ o_fnLocalBuildQual_12( View     vSubtask,
 
 
 private int 
-o_fnLocalBuildQual_13( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lTempInteger_0 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_14( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lTempInteger_0 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
 o_fnLocalBuildQual_15( View     vSubtask,
                        zVIEW    vQualObject,
-                       int      lTempInteger_1 )
+                       int      lTempInteger_0 )
 {
    int      RESULT = 0;
 
    RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
    CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "Subregistrant" );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
    CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
    SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
    SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_1 );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
    return( 0 );
 } 
@@ -1001,9 +1050,9 @@ o_fnLocalBuildQual_16( View     vSubtask,
 
    RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
    CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "Subregistrant" );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
    CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "Subregistrant" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
    SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
    SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
@@ -1014,17 +1063,17 @@ o_fnLocalBuildQual_16( View     vSubtask,
 private int 
 o_fnLocalBuildQual_17( View     vSubtask,
                        zVIEW    vQualObject,
-                       int      lID )
+                       int      lTempInteger_1 )
 {
    int      RESULT = 0;
 
    RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
    CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "Subregistrant" );
    CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
    SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
    SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lID );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_1 );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
    return( 0 );
 } 
@@ -1071,6 +1120,44 @@ o_fnLocalBuildQual_19( View     vSubtask,
 private int 
 o_fnLocalBuildQual_20( View     vSubtask,
                        zVIEW    vQualObject,
+                       int      lTempInteger_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "Subregistrant" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "Subregistrant" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_21( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lID )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lID );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_22( View     vSubtask,
+                       zVIEW    vQualObject,
                        String   szAttemptLoginName )
 {
    int      RESULT = 0;
@@ -1088,7 +1175,7 @@ o_fnLocalBuildQual_20( View     vSubtask,
 
 
 private int 
-o_fnLocalBuildQual_21( View     vSubtask,
+o_fnLocalBuildQual_23( View     vSubtask,
                        zVIEW    vQualObject,
                        int      lTempInteger_0 )
 {
@@ -1101,44 +1188,6 @@ o_fnLocalBuildQual_21( View     vSubtask,
    SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "Subregistrant" );
    SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
    SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_22( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lID )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lID );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_23( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lID )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lID );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
    return( 0 );
 } 
@@ -1147,6 +1196,44 @@ o_fnLocalBuildQual_23( View     vSubtask,
 private int 
 o_fnLocalBuildQual_24( View     vSubtask,
                        zVIEW    vQualObject,
+                       int      lID )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lID );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_25( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lID )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lID );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_26( View     vSubtask,
+                       zVIEW    vQualObject,
                        int      lTempInteger_0 )
 {
    int      RESULT = 0;
@@ -1164,64 +1251,26 @@ o_fnLocalBuildQual_24( View     vSubtask,
 
 
 private int 
-o_fnLocalBuildQual_4( View     vSubtask,
-                      zVIEW    vQualObject,
-                      int      lTempInteger_1 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_1 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_5( View     vSubtask,
-                      zVIEW    vQualObject,
-                      int      lTempInteger_2 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "Subregistrant" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "Subregistrant" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_2 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_6( View     vSubtask,
-                      zVIEW    vQualObject,
-                      int      lTempInteger_2 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_2 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
 o_fnLocalBuildQual_7( View     vSubtask,
+                      zVIEW    vQualObject,
+                      int      lTempInteger_2 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_2 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_8( View     vSubtask,
                       zVIEW    vQualObject,
                       int      lTempInteger_4 )
 {
@@ -1240,7 +1289,7 @@ o_fnLocalBuildQual_7( View     vSubtask,
 
 
 private int 
-o_fnLocalBuildQual_8( View     vSubtask,
+o_fnLocalBuildQual_9( View     vSubtask,
                       zVIEW    vQualObject,
                       int      lTempInteger_0 )
 {
@@ -1260,24 +1309,6 @@ o_fnLocalBuildQual_8( View     vSubtask,
 
 private int 
 o_fnLocalBuildQual_1( View     vSubtask,
-                      zVIEW    vQualObject )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "Organization" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "Organization" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "LoginName" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Value", "Admin" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_2( View     vSubtask,
                       zVIEW    vQualObject,
                       String   szLoginName )
 {
@@ -1296,9 +1327,28 @@ o_fnLocalBuildQual_2( View     vSubtask,
 
 
 private int 
+o_fnLocalBuildQual_2( View     vSubtask,
+                      zVIEW    vQualObject,
+                      int      lTempInteger_2 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_2 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
 o_fnLocalBuildQual_3( View     vSubtask,
                       zVIEW    vQualObject,
-                      int      lTempInteger_12 )
+                      int      lTempInteger_3 )
 {
    int      RESULT = 0;
 
@@ -1308,7 +1358,64 @@ o_fnLocalBuildQual_3( View     vSubtask,
    CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
    SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "Organization" );
    SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_12 );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_3 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_4( View     vSubtask,
+                      zVIEW    vQualObject,
+                      int      lTempInteger_15 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "Organization" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "Organization" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_15 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_5( View     vSubtask,
+                      zVIEW    vQualObject,
+                      int      lTempInteger_1 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_1 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_6( View     vSubtask,
+                      zVIEW    vQualObject,
+                      int      lTempInteger_2 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "Subregistrant" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "Subregistrant" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_2 );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
    return( 0 );
 } 
@@ -1322,13 +1429,42 @@ o_fnLocalBuildQual_0( View     vSubtask,
 
    RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
    CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "Organization" );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "ePamms" );
    CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "Organization" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "LoginName" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Value", "Admin" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "ePamms" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Value", "1" );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
    return( 0 );
+} 
+
+
+//:DIALOG OPERATION
+//:CancelNewAdministrator( VIEW ViewToWindow )
+
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
+public int 
+CancelNewAdministrator( View     ViewToWindow )
+{
+   zVIEW    wWebXfer = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW mePamms  REGISTERED AS mePamms
+   zVIEW    mePamms = new zVIEW( );
+
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( mePamms, "mePamms", ViewToWindow, zLEVEL_TASK );
+
+   //:wWebXfer.Root.AttemptPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
+   //:wWebXfer.Root.ConfirmPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "ConfirmPassword", "" );
+   //:wWebXfer.Root.CurrentPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "CurrentPassword", "" );
+
+   //:DropObjectInstance( mePamms )
+   DropObjectInstance( mePamms );
+   return( 0 );
+// END
 } 
 
 
@@ -1578,7 +1714,7 @@ ProductManagement( View     ViewToWindow )
          {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
                    GetIntegerFromAttribute( mi_lTempInteger_1, qOrganiz, "PrimaryRegistrant", "ID" );
          lTempInteger_1 = mi_lTempInteger_1.intValue( );}
-         o_fnLocalBuildQual_4( ViewToWindow, vTempViewVar_0, lTempInteger_1 );
+         o_fnLocalBuildQual_5( ViewToWindow, vTempViewVar_0, lTempInteger_1 );
          RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
          DropView( vTempViewVar_0 );
          //:NAME VIEW lPrimReg "lPrimReg"
@@ -1615,7 +1751,7 @@ ProductManagement( View     ViewToWindow )
       {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
              GetIntegerFromAttribute( mi_lTempInteger_2, qOrganiz, "Subregistrant", "ID" );
       lTempInteger_2 = mi_lTempInteger_2.intValue( );}
-      o_fnLocalBuildQual_5( ViewToWindow, vTempViewVar_1, lTempInteger_2 );
+      o_fnLocalBuildQual_6( ViewToWindow, vTempViewVar_1, lTempInteger_2 );
       RESULT = ActivateObjectInstance( mSubreg, "mSubreg", ViewToWindow, vTempViewVar_1, zSINGLE );
       DropView( vTempViewVar_1 );
       //:NAME VIEW mSubreg "mSubreg"
@@ -1823,18 +1959,8 @@ MoveMasterProductUp( View     ViewToWindow )
 
    //:CreateViewFromView( mTempReg, mPrimReg )
    CreateViewFromView( mTempReg, mPrimReg );
-   //:lMove = wWebXfer.Root.MoveIncrement
-   {MutableInt mi_lMove = new MutableInt( lMove );
-       GetIntegerFromAttribute( mi_lMove, wWebXfer, "Root", "MoveIncrement" );
-   lMove = mi_lMove.intValue( );}
-   //:IF lMove <= 0
-   if ( lMove <= 0 )
-   { 
-      //:lMove = 1
-      lMove = 1;
-   } 
-
-   //:END
+   //:lMove = 1
+   lMove = 1;
 
    //:LOOP WHILE lMove > 0
    while ( lMove > 0 )
@@ -1883,18 +2009,8 @@ MoveMasterProductDown( View     ViewToWindow )
 
    //:CreateViewFromView( mTempReg, mPrimReg )
    CreateViewFromView( mTempReg, mPrimReg );
-   //:lMove = wWebXfer.Root.MoveIncrement
-   {MutableInt mi_lMove = new MutableInt( lMove );
-       GetIntegerFromAttribute( mi_lMove, wWebXfer, "Root", "MoveIncrement" );
-   lMove = mi_lMove.intValue( );}
-   //:IF lMove <= 0
-   if ( lMove <= 0 )
-   { 
-      //:lMove = 1
-      lMove = 1;
-   } 
-
-   //:END
+   //:lMove = 1
+   lMove = 1;
 
    //:LOOP WHILE lMove > 0
    while ( lMove > 0 )
@@ -2055,7 +2171,7 @@ SelectSubregistrantForUpdate( View     ViewToWindow )
        GetIntegerFromAttribute( mi_lID, lPrimReg, "Subregistrant", "ID" );
    lID = mi_lID.intValue( );}
    //:ACTIVATE lSubreg WHERE lSubreg.Subregistrant.ID = lID
-   o_fnLocalBuildQual_38( ViewToWindow, vTempViewVar_0, lID );
+   o_fnLocalBuildQual_40( ViewToWindow, vTempViewVar_0, lID );
    RESULT = ActivateObjectInstance( lSubreg, "lSubreg", ViewToWindow, vTempViewVar_0, zSINGLE );
    DropView( vTempViewVar_0 );
    //:NAME VIEW lSubreg "lSubreg"
@@ -2229,7 +2345,7 @@ PrimaryRegistrantCompanySetup( View     ViewToWindow )
          {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
                    GetIntegerFromAttribute( mi_lTempInteger_2, qOrganiz, "PrimaryRegistrant", "ID" );
          lTempInteger_2 = mi_lTempInteger_2.intValue( );}
-         o_fnLocalBuildQual_6( ViewToWindow, vTempViewVar_0, lTempInteger_2 );
+         o_fnLocalBuildQual_7( ViewToWindow, vTempViewVar_0, lTempInteger_2 );
          RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
          DropView( vTempViewVar_0 );
          //:NAME VIEW lPrimReg "lPrimReg"
@@ -2260,7 +2376,7 @@ PrimaryRegistrantCompanySetup( View     ViewToWindow )
          {MutableInt mi_lTempInteger_4 = new MutableInt( lTempInteger_4 );
                    GetIntegerFromAttribute( mi_lTempInteger_4, qOrganiz, "Subregistrant", "ID" );
          lTempInteger_4 = mi_lTempInteger_4.intValue( );}
-         o_fnLocalBuildQual_7( ViewToWindow, vTempViewVar_1, lTempInteger_4 );
+         o_fnLocalBuildQual_8( ViewToWindow, vTempViewVar_1, lTempInteger_4 );
          RESULT = ActivateObjectInstance( lSubreg, "lSubreg", ViewToWindow, vTempViewVar_1, zSINGLE );
          DropView( vTempViewVar_1 );
          //:NAME VIEW lSubreg "lSubreg"
@@ -2397,7 +2513,7 @@ SubregistrantManagement( View     ViewToWindow )
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
        GetIntegerFromAttribute( mi_lTempInteger_0, qOrganiz, "PrimaryRegistrant", "ID" );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );}
-   o_fnLocalBuildQual_14( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
+   o_fnLocalBuildQual_16( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
    RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
    DropView( vTempViewVar_0 );
    //:NAME VIEW lPrimReg "lPrimReg"
@@ -2408,7 +2524,7 @@ SubregistrantManagement( View     ViewToWindow )
    {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
        GetIntegerFromAttribute( mi_lTempInteger_1, lPrimReg, "PrimaryRegistrant", "ID" );
    lTempInteger_1 = mi_lTempInteger_1.intValue( );}
-   o_fnLocalBuildQual_15( ViewToWindow, vTempViewVar_1, lTempInteger_1 );
+   o_fnLocalBuildQual_17( ViewToWindow, vTempViewVar_1, lTempInteger_1 );
    RESULT = ActivateObjectInstance( lSubreg, "lSubreg", ViewToWindow, vTempViewVar_1, zMULTIPLE );
    DropView( vTempViewVar_1 );
    //:NAME VIEW lSubreg "lSubreg"
@@ -2453,7 +2569,7 @@ ListSubregistrants( View     ViewToWindow )
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
        GetIntegerFromAttribute( mi_lTempInteger_0, lPrimReg, "Subregistrant", "ID" );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );}
-   o_fnLocalBuildQual_16( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
+   o_fnLocalBuildQual_18( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
    RESULT = ActivateObjectInstance( lSubreg, "lSubreg", ViewToWindow, vTempViewVar_0, zSINGLE );
    DropView( vTempViewVar_0 );
    //:NAME VIEW lSubreg "lSubreg"
@@ -2785,7 +2901,7 @@ AddNewPrimRegUser( View     ViewToWindow )
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
        GetIntegerFromAttribute( mi_lTempInteger_0, lPrimReg, "PrimaryRegistrant", "ID" );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );}
-   o_fnLocalBuildQual_24( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
+   o_fnLocalBuildQual_26( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
    RESULT = ActivateObjectInstance( qPrimReg, "qPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
    DropView( vTempViewVar_0 );
    //:NAME VIEW qPrimReg "qPrimReg"
@@ -2964,7 +3080,7 @@ InitPrimRegUserForUpdate( View     ViewToWindow )
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
        GetIntegerFromAttribute( mi_lTempInteger_0, lPrimReg, "PrimaryRegistrant", "ID" );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );}
-   o_fnLocalBuildQual_25( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
+   o_fnLocalBuildQual_27( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
    RESULT = ActivateObjectInstance( qPrimReg, "qPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
    DropView( vTempViewVar_0 );
    //:NAME VIEW qPrimReg "qPrimReg"
@@ -3011,7 +3127,7 @@ InitPrimRegUserForUpdate( View     ViewToWindow )
    {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
        GetIntegerFromAttribute( mi_lTempInteger_3, lPrimReg, "User", "ID" );
    lTempInteger_3 = mi_lTempInteger_3.intValue( );}
-   o_fnLocalBuildQual_26( ViewToWindow, vTempViewVar_1, lTempInteger_3 );
+   o_fnLocalBuildQual_28( ViewToWindow, vTempViewVar_1, lTempInteger_3 );
    RESULT = ActivateObjectInstance( mCurrentUser, "mUser", ViewToWindow, vTempViewVar_1, zSINGLE );
    DropView( vTempViewVar_1 );
    //:NAME VIEW mCurrentUser "mCurrentUser"
@@ -3020,7 +3136,7 @@ InitPrimRegUserForUpdate( View     ViewToWindow )
    {MutableInt mi_lTempInteger_4 = new MutableInt( lTempInteger_4 );
        GetIntegerFromAttribute( mi_lTempInteger_4, mCurrentUser, "Employee", "ID" );
    lTempInteger_4 = mi_lTempInteger_4.intValue( );}
-   o_fnLocalBuildQual_27( ViewToWindow, vTempViewVar_2, lTempInteger_4 );
+   o_fnLocalBuildQual_29( ViewToWindow, vTempViewVar_2, lTempInteger_4 );
    RESULT = ActivateObjectInstance( mPerson, "mPerson", ViewToWindow, vTempViewVar_2, zSINGLE );
    DropView( vTempViewVar_2 );
    //:NAME VIEW mPerson "mPerson"
@@ -3102,7 +3218,7 @@ InitListSubregProducts( View     ViewToWindow )
        GetIntegerFromAttribute( mi_lID, lPrimReg, "Subregistrant", "ID" );
    lID = mi_lID.intValue( );}
    //:ACTIVATE mSubreg WHERE mSubreg.Subregistrant.ID = lID
-   o_fnLocalBuildQual_37( ViewToWindow, vTempViewVar_0, lID );
+   o_fnLocalBuildQual_39( ViewToWindow, vTempViewVar_0, lID );
    RESULT = ActivateObjectInstance( mSubreg, "mSubreg", ViewToWindow, vTempViewVar_0, zSINGLE );
    DropView( vTempViewVar_0 );
    //:NAME VIEW mSubreg "mSubreg"
@@ -3262,7 +3378,7 @@ InitListPrimRegUsers( View     ViewToWindow )
    //:// Activate the "selected" primary registrant ... just in case someone added or
    //:// deleted a primary registrant user.
    //:ACTIVATE lPrimReg WHERE lPrimReg.PrimaryRegistrant.ID = lID
-   o_fnLocalBuildQual_23( ViewToWindow, vTempViewVar_0, lID );
+   o_fnLocalBuildQual_25( ViewToWindow, vTempViewVar_0, lID );
    RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
    DropView( vTempViewVar_0 );
    //:NAME VIEW lPrimReg "lPrimReg"
@@ -3597,7 +3713,7 @@ InitListMasterLabels( View     ViewToWindow )
    //:// Activate the "selected" primary registrant ... just in case someone added or
    //:// deleted a primary registrant label.
    //:ACTIVATE lPrimReg WHERE lPrimReg.PrimaryRegistrant.ID = lID
-   o_fnLocalBuildQual_31( ViewToWindow, vTempViewVar_0, lID );
+   o_fnLocalBuildQual_33( ViewToWindow, vTempViewVar_0, lID );
    RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
    DropView( vTempViewVar_0 );
    //:NAME VIEW lPrimReg "lPrimReg"
@@ -3702,7 +3818,7 @@ InitMasterLabelForUpdate( View     ViewToWindow )
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
        GetIntegerFromAttribute( mi_lTempInteger_0, lPrimReg, "MasterLabelContent", "ID" );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );}
-   o_fnLocalBuildQual_32( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
+   o_fnLocalBuildQual_34( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
    RESULT = ActivateObjectInstance( mMasLC, "mMasLC", ViewToWindow, vTempViewVar_0, zSINGLE );
    DropView( vTempViewVar_0 );
    //:NAME VIEW mMasLC "mMasLC"
@@ -3833,7 +3949,7 @@ AcceptNewMasterLabel( View     ViewToWindow )
        GetIntegerFromAttribute( mi_lID, lPrimReg, "PrimaryRegistrant", "ID" );
    lID = mi_lID.intValue( );}
    //:ACTIVATE mPrimReg WHERE mPrimReg.PrimaryRegistrant.ID = lID
-   o_fnLocalBuildQual_33( ViewToWindow, vTempViewVar_0, lID );
+   o_fnLocalBuildQual_35( ViewToWindow, vTempViewVar_0, lID );
    RESULT = ActivateObjectInstance( mPrimReg, "mPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
    DropView( vTempViewVar_0 );
    //:NAME VIEW mPrimReg "mPrimReg"
@@ -3859,7 +3975,7 @@ AcceptNewMasterLabel( View     ViewToWindow )
    DropObjectInstance( lPrimReg );
 
    //:ACTIVATE lPrimReg WHERE lPrimReg.PrimaryRegistrant.ID = lID
-   o_fnLocalBuildQual_34( ViewToWindow, vTempViewVar_1, lID );
+   o_fnLocalBuildQual_36( ViewToWindow, vTempViewVar_1, lID );
    RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, vTempViewVar_1, zSINGLE );
    DropView( vTempViewVar_1 );
    //:NAME VIEW lPrimReg "lPrimReg"
@@ -4000,7 +4116,7 @@ AcceptUpdateMasterLabel( View     ViewToWindow )
    DropObjectInstance( lPrimReg );
 
    //:ACTIVATE lPrimReg WHERE lPrimReg.PrimaryRegistrant.ID = lID
-   o_fnLocalBuildQual_35( ViewToWindow, vTempViewVar_0, lID );
+   o_fnLocalBuildQual_37( ViewToWindow, vTempViewVar_0, lID );
    RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
    DropView( vTempViewVar_0 );
    //:NAME VIEW lPrimReg "lPrimReg"
@@ -4364,7 +4480,7 @@ DeleteSubregistrant( View     ViewToWindow )
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
        GetIntegerFromAttribute( mi_lTempInteger_0, lPrimReg, "Subregistrant", "ID" );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );}
-   o_fnLocalBuildQual_21( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
+   o_fnLocalBuildQual_23( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
    RESULT = ActivateObjectInstance( mSubreg, "mSubreg", ViewToWindow, vTempViewVar_0, zSINGLE );
    DropView( vTempViewVar_0 );
    //:NAME VIEW mSubreg "mSubreg"
@@ -4445,7 +4561,7 @@ DeleteSubregistrant( View     ViewToWindow )
    //:// Activate the "selected" primary registrant ... because we just deleted
    //:// a subregistrant.
    //:ACTIVATE lPrimReg WHERE lPrimReg.PrimaryRegistrant.ID = lID
-   o_fnLocalBuildQual_22( ViewToWindow, vTempViewVar_1, lID );
+   o_fnLocalBuildQual_24( ViewToWindow, vTempViewVar_1, lID );
    RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, vTempViewVar_1, zSINGLE );
    DropView( vTempViewVar_1 );
    //:NAME VIEW lPrimReg "lPrimReg"
@@ -4542,7 +4658,7 @@ InitSubregistrantForUpdate( View     ViewToWindow )
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
        GetIntegerFromAttribute( mi_lTempInteger_0, lSubreg, "Subregistrant", "ID" );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );}
-   o_fnLocalBuildQual_18( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
+   o_fnLocalBuildQual_20( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
    RESULT = ActivateObjectInstance( mSubreg, "mSubreg", ViewToWindow, vTempViewVar_0, zSINGLE );
    DropView( vTempViewVar_0 );
    //:NAME VIEW mSubreg "mSubreg"
@@ -5058,6 +5174,8 @@ AcceptNewSubregistrant( View     ViewToWindow )
    //:// SetAttrFromStrByContext( mSubreg, "User", "UserPassword", szConfirmPassword, "Password" )
    //:mSubreg.SubregOrganization.AdministratorPassword = szConfirmPassword
    SetAttributeFromString( mSubreg, "SubregOrganization", "AdministratorPassword", szConfirmPassword );
+   //:mSubreg.SubregOrganization.Role = "S"  // Subregistrant
+   SetAttributeFromString( mSubreg, "SubregOrganization", "Role", "S" );
 
    //:// AcceptSubobject( mSubreg, "ContactPerson" )
    //:// AcceptSubobject( mSubreg, "PhysicalAddress" )
@@ -5095,7 +5213,7 @@ AcceptNewSubregistrant( View     ViewToWindow )
    DropObjectInstance( lPrimReg );
 
    //:ACTIVATE lPrimReg WHERE lPrimReg.PrimaryRegistrant.ID = lID
-   o_fnLocalBuildQual_19( ViewToWindow, vTempViewVar_0, lID );
+   o_fnLocalBuildQual_21( ViewToWindow, vTempViewVar_0, lID );
    RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
    DropView( vTempViewVar_0 );
    //:NAME VIEW lPrimReg "lPrimReg"
@@ -5359,7 +5477,7 @@ AcceptNewPrimRegUser( View     ViewToWindow )
    {MutableInt mi_lTempInteger_6 = new MutableInt( lTempInteger_6 );
        GetIntegerFromAttribute( mi_lTempInteger_6, lPrimReg, "PrimaryRegistrant", "ID" );
    lTempInteger_6 = mi_lTempInteger_6.intValue( );}
-   o_fnLocalBuildQual_28( ViewToWindow, vTempViewVar_0, lTempInteger_6 );
+   o_fnLocalBuildQual_30( ViewToWindow, vTempViewVar_0, lTempInteger_6 );
    RESULT = ActivateObjectInstance( qPrimReg, "qPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
    DropView( vTempViewVar_0 );
    //:NAME VIEW qPrimReg "qPrimReg"
@@ -5399,7 +5517,7 @@ AcceptNewPrimRegUser( View     ViewToWindow )
    //:// Activate the "selected" primary registrant ... just in case someone added or
    //:// deleted a primary registrant user.
    //:ACTIVATE lPrimReg WHERE lPrimReg.PrimaryRegistrant.ID = lID
-   o_fnLocalBuildQual_29( ViewToWindow, vTempViewVar_1, lID );
+   o_fnLocalBuildQual_31( ViewToWindow, vTempViewVar_1, lID );
    RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, vTempViewVar_1, zSINGLE );
    DropView( vTempViewVar_1 );
    //:NAME VIEW lPrimReg "lPrimReg"
@@ -5418,6 +5536,8 @@ AcceptNewPrimaryRegistrant( View     ViewToWindow )
 {
    zVIEW    wWebXfer = new zVIEW( );
    int      RESULT = 0;
+   //:VIEW iePamms  BASED ON LOD  iePamms
+   zVIEW    iePamms = new zVIEW( );
    //:VIEW mUser    BASED ON LOD  mUser
    zVIEW    mUser = new zVIEW( );
    //:VIEW qPrimReg BASED ON LOD  qPrimReg
@@ -5446,6 +5566,7 @@ AcceptNewPrimaryRegistrant( View     ViewToWindow )
    int      lTempInteger_3 = 0;
    int      lTempInteger_4 = 0;
    int      lTempInteger_5 = 0;
+   zVIEW    vTempViewVar_2 = new zVIEW( );
 
    RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
    RESULT = GetViewByName( mPrimReg, "mPrimReg", ViewToWindow, zLEVEL_TASK );
@@ -5483,7 +5604,7 @@ AcceptNewPrimaryRegistrant( View     ViewToWindow )
    else
    { 
       //:ACTIVATE lPrimReg WHERE lPrimReg.Organization.LoginName = szRegistrantName
-      o_fnLocalBuildQual_10( ViewToWindow, vTempViewVar_0, szRegistrantName );
+      o_fnLocalBuildQual_11( ViewToWindow, vTempViewVar_0, szRegistrantName );
       RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
       DropView( vTempViewVar_0 );
       //:NAME VIEW lPrimReg "lPrimRegX"
@@ -5514,7 +5635,7 @@ AcceptNewPrimaryRegistrant( View     ViewToWindow )
 
    //:// Note that Activate always returns at least an empty view.
    //:ACTIVATE qPrimReg WHERE qPrimReg.Organization.LoginName = "Admin"
-   o_fnLocalBuildQual_11( ViewToWindow, vTempViewVar_1 );
+   o_fnLocalBuildQual_12( ViewToWindow, vTempViewVar_1 );
    RESULT = ActivateObjectInstance( qPrimReg, "qPrimReg", ViewToWindow, vTempViewVar_1, zSINGLE );
    DropView( vTempViewVar_1 );
    //:NAME VIEW qPrimReg "qPrimReg"
@@ -5654,6 +5775,13 @@ AcceptNewPrimaryRegistrant( View     ViewToWindow )
    //:mPrimReg.Organization.AdministratorPassword = szConfirmPassword
    SetAttributeFromString( mPrimReg, "Organization", "AdministratorPassword", szConfirmPassword );
 
+   //:ACTIVATE iePamms WHERE iePamms.ePamms.ID = 1
+   o_fnLocalBuildQual_13( ViewToWindow, vTempViewVar_2 );
+   RESULT = ActivateObjectInstance( iePamms, "iePamms", ViewToWindow, vTempViewVar_2, zSINGLE );
+   DropView( vTempViewVar_2 );
+   //:IncludeSubobjectFromSubobject( mPrimReg, "ePamms",
+   //:                               iePamms, "ePamms", zPOS_FIRST )
+   IncludeSubobjectFromSubobject( mPrimReg, "ePamms", iePamms, "ePamms", zPOS_FIRST );
    //:// AcceptSubobject( mPrimReg, "ContactPerson" )
    //:// AcceptSubobject( mPrimReg, "PhysicalAddress" )
    //:// AcceptSubobject( mPrimReg, "MailingAddress" )
@@ -5669,10 +5797,118 @@ AcceptNewPrimaryRegistrant( View     ViewToWindow )
 
    //:END
 
-   //:Commit mPrimReg
+   //:COMMIT mPrimReg
    RESULT = CommitObjectInstance( mPrimReg );
    //:DropObjectInstance( mPrimReg )
    DropObjectInstance( mPrimReg );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:AcceptNewAdministrator( VIEW ViewToWindow )
+
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
+public int 
+AcceptNewAdministrator( View     ViewToWindow )
+{
+   zVIEW    wWebXfer = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW mePamms  REGISTERED AS mePamms
+   zVIEW    mePamms = new zVIEW( );
+   //:STRING ( 128  ) szAttemptPassword
+   String   szAttemptPassword = null;
+   //:STRING ( 128  ) szConfirmPassword
+   String   szConfirmPassword = null;
+   //:INTEGER         lRegistrantNameLth
+   int      lRegistrantNameLth = 0;
+   //:INTEGER         lPasswordLth
+   int      lPasswordLth = 0;
+   //:SHORT           nRC
+   int      nRC = 0;
+   int      lTempInteger_0 = 0;
+   int      lTempInteger_1 = 0;
+
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( mePamms, "mePamms", ViewToWindow, zLEVEL_TASK );
+
+   //:szAttemptPassword = wWebXfer.Root.AttemptPassword
+   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+   StringBuilder sb_szAttemptPassword;
+   if ( szAttemptPassword == null )
+      sb_szAttemptPassword = new StringBuilder( 32 );
+   else
+      sb_szAttemptPassword = new StringBuilder( szAttemptPassword );
+       GetVariableFromAttribute( sb_szAttemptPassword, mi_lTempInteger_0, 'S', 129, wWebXfer, "Root", "AttemptPassword", "", 0 );
+   lTempInteger_0 = mi_lTempInteger_0.intValue( );
+   szAttemptPassword = sb_szAttemptPassword.toString( );}
+   //:szConfirmPassword = wWebXfer.Root.ConfirmPassword
+   {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+   StringBuilder sb_szConfirmPassword;
+   if ( szConfirmPassword == null )
+      sb_szConfirmPassword = new StringBuilder( 32 );
+   else
+      sb_szConfirmPassword = new StringBuilder( szConfirmPassword );
+       GetVariableFromAttribute( sb_szConfirmPassword, mi_lTempInteger_1, 'S', 129, wWebXfer, "Root", "ConfirmPassword", "", 0 );
+   lTempInteger_1 = mi_lTempInteger_1.intValue( );
+   szConfirmPassword = sb_szConfirmPassword.toString( );}
+
+   //:// 1: Ensure attempted password matches confirm password.
+   //:IF szAttemptPassword != szConfirmPassword
+   if ( ZeidonStringCompare( szAttemptPassword, 1, 0, szConfirmPassword, 1, 0, 129 ) != 0 )
+   { 
+      //:// TraceLineS( szAttemptPassword, szConfirmPassword )
+      //:MessageSend( ViewToWindow, "", "Accept New Administrator",
+      //:             "The new password and the confirmation password do not match.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Accept New Administrator", "The new password and the confirmation password do not match.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+
+   //:// 2: Ensure new password is at least 8 characters long.
+   //:lPasswordLth = zGetStringLen( szConfirmPassword )
+   lPasswordLth = zGetStringLen( szConfirmPassword );
+   //:TraceLineI( "Password Length: ", lPasswordLth )
+   TraceLineI( "Password Length: ", lPasswordLth );
+   //:IF lPasswordLth < 8
+   if ( lPasswordLth < 8 )
+   { 
+      //:MessageSend( ViewToWindow, "", "Accept New Administrator",
+      //:             "The new password must be at least 8 characters long.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Accept New Administrator", "The new password must be at least 8 characters long.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+
+   //:// Set user password to new password.
+   //:// SetAttrFromStrByContext( mPrimReg, "User", "UserPassword", szVerifyPassword, "Password" )
+   //:mePamms.Organization.AdministratorPassword = szConfirmPassword
+   SetAttributeFromString( mePamms, "Organization", "AdministratorPassword", szConfirmPassword );
+   //:mePamms.Organization.LastLoginDateTime = wWebXfer.Root.dCurrentDateTime
+   SetAttributeFromAttribute( mePamms, "Organization", "LastLoginDateTime", wWebXfer, "Root", "dCurrentDateTime" );
+
+   //:wWebXfer.Root.AttemptPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
+   //:wWebXfer.Root.ConfirmPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "ConfirmPassword", "" );
+   //:wWebXfer.Root.CurrentPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "CurrentPassword", "" );
+
+   //:COMMIT mePamms
+   RESULT = CommitObjectInstance( mePamms );
+   //:DropObjectInstance( mePamms )
+   DropObjectInstance( mePamms );
    return( 0 );
 // END
 } 
@@ -5718,7 +5954,7 @@ InitPrimaryRegistrantForUpdate( View     ViewToWindow )
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
        GetIntegerFromAttribute( mi_lTempInteger_0, lPrimReg, "PrimaryRegistrant", "ID" );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );}
-   o_fnLocalBuildQual_9( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
+   o_fnLocalBuildQual_10( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
    RESULT = ActivateObjectInstance( mPrimReg, "mPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
    DropView( vTempViewVar_0 );
    //:NAME VIEW mPrimReg "mPrimReg"
@@ -5977,7 +6213,7 @@ ValidatePrimaryRegistrant( View     ViewToWindow )
    if ( ZeidonStringCompare( szRegistrantName, 1, 0, szAttemptRegistrantName, 1, 0, 51 ) != 0 )
    { 
       //:ACTIVATE lPrimReg WHERE lPrimReg.Organization.LoginName = szAttemptRegistrantName
-      o_fnLocalBuildQual_12( ViewToWindow, vTempViewVar_0, szAttemptRegistrantName );
+      o_fnLocalBuildQual_14( ViewToWindow, vTempViewVar_0, szAttemptRegistrantName );
       RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
       DropView( vTempViewVar_0 );
       //:NAME VIEW lPrimReg "lPrimRegX"
@@ -6150,7 +6386,7 @@ ValidateSubregistrant( View     ViewToWindow )
    if ( ZeidonStringCompare( szRegistrantName, 1, 0, szAttemptLoginName, 1, 0, 51 ) != 0 )
    { 
       //:ACTIVATE qOrganiz WHERE qOrganiz.Organization.LoginName = szAttemptLoginName
-      o_fnLocalBuildQual_20( ViewToWindow, vTempViewVar_0, szAttemptLoginName );
+      o_fnLocalBuildQual_22( ViewToWindow, vTempViewVar_0, szAttemptLoginName );
       RESULT = ActivateObjectInstance( qOrganiz, "qOrganiz", ViewToWindow, vTempViewVar_0, zSINGLE );
       DropView( vTempViewVar_0 );
       //:IF qOrganiz.Organization EXISTS
@@ -6548,7 +6784,7 @@ AcceptUpdatePrimRegUser( View     ViewToWindow )
    //:// Activate the "selected" primary registrant ... just in case someone added or
    //:// deleted a primary registrant user.
    //:ACTIVATE lPrimReg WHERE lPrimReg.PrimaryRegistrant.ID = lID
-   o_fnLocalBuildQual_30( ViewToWindow, vTempViewVar_0, lID );
+   o_fnLocalBuildQual_32( ViewToWindow, vTempViewVar_0, lID );
    RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
    DropView( vTempViewVar_0 );
    //:NAME VIEW lPrimReg "lPrimReg"
@@ -6587,7 +6823,7 @@ InitListSubregistrants( View     ViewToWindow )
    //:// Activate the "selected" primary registrant ... just in case someone added or
    //:// deleted a subregistrant.
    //:ACTIVATE lPrimReg WHERE lPrimReg.PrimaryRegistrant.ID = lID
-   o_fnLocalBuildQual_17( ViewToWindow, vTempViewVar_0, lID );
+   o_fnLocalBuildQual_19( ViewToWindow, vTempViewVar_0, lID );
    RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
    DropView( vTempViewVar_0 );
    //:NAME VIEW lPrimReg "lPrimReg"
@@ -6666,15 +6902,27 @@ InitSelectSubregistrant( View     ViewToWindow )
 //:DIALOG OPERATION
 //:ProcessLogout( VIEW ViewToWindow )
 
-//:   VIEW mCurrentUser BASED ON LOD mUser
+//:   VIEW pePamms  BASED ON LOD pePamms
 public int 
 ProcessLogout( View     ViewToWindow )
 {
+   zVIEW    pePamms = new zVIEW( );
+   //:VIEW mCurrentUser BASED ON LOD mUser
    zVIEW    mCurrentUser = new zVIEW( );
    //:VIEW wWebXfer BASED ON LOD  wWebXfer
    zVIEW    wWebXfer = new zVIEW( );
+   //:VIEW qOrganiz BASED ON LOD  qOrganiz
+   zVIEW    qOrganiz = new zVIEW( );
    //:VIEW qPrimReg BASED ON LOD  qPrimReg
    zVIEW    qPrimReg = new zVIEW( );
+   //:VIEW qSubreg  BASED ON LOD  qSubreg
+   zVIEW    qSubreg = new zVIEW( );
+   //:VIEW lSubreg  BASED ON LOD  lSubreg
+   zVIEW    lSubreg = new zVIEW( );
+   //:VIEW lPrimReg BASED ON LOD  lPrimReg
+   zVIEW    lPrimReg = new zVIEW( );
+   //:VIEW mOrganiz BASED ON LOD  mOrganiz
+   zVIEW    mOrganiz = new zVIEW( );
    //:VIEW KZXMLPGO
    zVIEW    KZXMLPGO = new zVIEW( );
    int      RESULT = 0;
@@ -6686,6 +6934,17 @@ ProcessLogout( View     ViewToWindow )
     m_ZGlobalV_Operation.AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "TopMenu Logout" );
     // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
    }
+
+   //:GET VIEW pePamms NAMED "pePamms"
+   RESULT = GetViewByName( pePamms, "pePamms", ViewToWindow, zLEVEL_TASK );
+   //:IF pePamms != 0
+   if ( getView( pePamms ) != null )
+   { 
+      //:DropObjectInstance( pePamms )
+      DropObjectInstance( pePamms );
+   } 
+
+   //:END
 
    //:GET VIEW mCurrentUser NAMED "mCurrentUser"
    RESULT = GetViewByName( mCurrentUser, "mCurrentUser", ViewToWindow, zLEVEL_TASK );
@@ -6716,6 +6975,50 @@ ProcessLogout( View     ViewToWindow )
    { 
       //:DropObjectInstance( qPrimReg )
       DropObjectInstance( qPrimReg );
+   } 
+
+   //:END
+
+   //:GET VIEW qSubreg NAMED "qSubregLogin"
+   RESULT = GetViewByName( qSubreg, "qSubregLogin", ViewToWindow, zLEVEL_TASK );
+   //:IF qSubreg != 0
+   if ( getView( qSubreg ) != null )
+   { 
+      //:DropObjectInstance( qSubreg )
+      DropObjectInstance( qSubreg );
+   } 
+
+   //:END
+
+   //:GET VIEW qOrganiz NAMED "qOrganizLogin"
+   RESULT = GetViewByName( qOrganiz, "qOrganizLogin", ViewToWindow, zLEVEL_TASK );
+   //:IF qOrganiz != 0
+   if ( getView( qOrganiz ) != null )
+   { 
+      //:DropObjectInstance( qOrganiz )
+      DropObjectInstance( qOrganiz );
+   } 
+
+   //:END
+
+   //:GET VIEW lPrimReg NAMED "lPrimReg"
+   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
+   //:IF lPrimReg != 0
+   if ( getView( lPrimReg ) != null )
+   { 
+      //:DropObjectInstance( lPrimReg )
+      DropObjectInstance( lPrimReg );
+   } 
+
+   //:END
+
+   //:GET VIEW lSubreg NAMED "lSubreg"
+   RESULT = GetViewByName( lSubreg, "lSubreg", ViewToWindow, zLEVEL_TASK );
+   //:IF lSubreg != 0
+   if ( getView( lSubreg ) != null )
+   { 
+      //:DropObjectInstance( lSubreg )
+      DropObjectInstance( lSubreg );
    } 
 
    //:END
@@ -6782,44 +7085,11 @@ public int
 InitLoginWindow( View     ViewToWindow )
 {
    zVIEW    wWebXfer = new zVIEW( );
-   //:VIEW qOrganiz BASED ON LOD qOrganiz
-   zVIEW    qOrganiz = new zVIEW( );
-   //:VIEW mOrganiz BASED ON LOD mOrganiz
-   zVIEW    mOrganiz = new zVIEW( );
-
-   //://VIEW mTempl   BASED ON LOD  mTempl
-   //:VIEW mSubLC BASED ON LOD mSubLC
-   zVIEW    mSubLC = new zVIEW( );
+   //:VIEW pePamms  BASED ON LOD pePamms
+   zVIEW    pePamms = new zVIEW( );
    int      RESULT = 0;
    zVIEW    vTempViewVar_0 = new zVIEW( );
-   int      lTempInteger_0 = 0;
 
-
-   //:/*
-   //:// For test purposes only ... remove prior to deployment.
-   //:ActivateOI_FromFile( mSubLC, "mSubLC", ViewToWindow,
-   //:                     "c:\lplr\epamms\mSubLC.por", zIGNORE_ERRORS )
-   //:CommitOI_ToXML_File( mSubLC, "c:\lplr\epamms\mSubLC.xml", 0 )
-   //:ActivateOI_FromFile( mTempl, "mTempl", ViewToWindow,
-   //:                     "c:\lplr\epamms\bin\mTempl1.por", zIGNORE_ERRORS )
-   //:CommitOI_ToXML_File( mTempl, "c:\lplr\epamms\mTempl.xml", 0 )
-   //:// End:  For test purposes only ... remove prior to deployment.
-   //:*/
-
-   //:/*
-   //:GET VIEW mTempl NAMED "mTempl"
-   //:IF mTempl != 0
-   //:   DropObjectInstance( mTempl )
-   //:END
-   //:ActivateOI_FromFile( mTempl, "mTempl", ViewToWindow,
-   //:                     "c:\lplr\epamms\bin\mTempl1.por", zIGNORE_ERRORS )
-   //:SetNameForView( mTempl, "mTempl", 0, zLEVEL_TASK )
-   //:MiSetInstanceUpdateFlag( mTempl, 1 )
-   //:// MessageSend( ViewToWindow, "", "Save Template",
-   //://              "Check view: mTempl", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-   //:COMMIT mTempl
-   //:// DropObjectInstance( mTempl )
-   //:*/
 
    //:ProcessLogout( ViewToWindow )  // just to ensure clean up
    ProcessLogout( ViewToWindow );
@@ -6830,53 +7100,6 @@ InitLoginWindow( View     ViewToWindow )
    SetNameForView( wWebXfer, "wWebXfer", null, zLEVEL_TASK );
    //:CREATE ENTITY wWebXfer.Root
    RESULT = CreateEntity( wWebXfer, "Root", zPOS_AFTER );
-
-   //:ACTIVATE qOrganiz WHERE qOrganiz.Organization.LoginName = "Admin"
-   o_fnLocalBuildQual_0( ViewToWindow, vTempViewVar_0 );
-   RESULT = ActivateObjectInstance( qOrganiz, "qOrganiz", ViewToWindow, vTempViewVar_0, zSINGLE );
-   DropView( vTempViewVar_0 );
-   //:NAME VIEW qOrganiz "qOrganiz"
-   SetNameForView( qOrganiz, "qOrganiz", null, zLEVEL_TASK );
-   //:IF qOrganiz.Organization EXISTS AND qOrganiz.Organization.LoginName = "Admin"
-   lTempInteger_0 = CheckExistenceOfEntity( qOrganiz, "Organization" );
-   if ( lTempInteger_0 == 0 && CompareAttributeToString( qOrganiz, "Organization", "LoginName", "Admin" ) == 0 )
-   { 
-
-      //:wWebXfer.Root.KeyRole = ""
-      SetAttributeFromString( wWebXfer, "Root", "KeyRole", "" );
-
-      //:ELSE
-   } 
-   else
-   { 
-
-      //:// No administrator found!  We need to bootstrap here.
-      //:TraceLineS( "InitLoginWindow: ", "No Administrator found!!!" )
-      TraceLineS( "InitLoginWindow: ", "No Administrator found!!!" );
-      //:wWebXfer.Root.KeyRole = "U"  // i think U is for undefined???
-      SetAttributeFromString( wWebXfer, "Root", "KeyRole", "U" );
-   } 
-
-
-   //:END
-
-   //:DropObjectInstance( qOrganiz )
-   DropObjectInstance( qOrganiz );
-
-   //:GET VIEW mOrganiz NAMED "mOrganiz"
-   RESULT = GetViewByName( mOrganiz, "mOrganiz", ViewToWindow, zLEVEL_TASK );
-   //:IF mOrganiz = 0
-   if ( getView( mOrganiz ) == null )
-   { 
-      //:ACTIVATE mOrganiz EMPTY
-      RESULT = ActivateEmptyObjectInstance( mOrganiz, "mOrganiz", ViewToWindow, zSINGLE );
-      //:NAME VIEW mOrganiz "mOrganiz"
-      SetNameForView( mOrganiz, "mOrganiz", null, zLEVEL_TASK );
-      //:CREATE ENTITY mOrganiz.Organization
-      RESULT = CreateEntity( mOrganiz, "Organization", zPOS_AFTER );
-   } 
-
-   //:END
 
    //:wWebXfer.Root.Banner1 = ""
    SetAttributeFromString( wWebXfer, "Root", "Banner1", "" );
@@ -6902,46 +7125,13 @@ InitLoginWindow( View     ViewToWindow )
    SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "xxxxxxxx" );
    //:// End of: Remove these lines prior to deployment!!!
 
-   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "Default" )
-   {
-    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "Default" );
-    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-   }
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:InitAdminLoginWindow( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer BASED ON LOD wWebXfer
-public int 
-InitAdminLoginWindow( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-
-
-   //:ProcessLogout( ViewToWindow )  // clean up
-   ProcessLogout( ViewToWindow );
-
-   //:ACTIVATE wWebXfer EMPTY
-   RESULT = ActivateEmptyObjectInstance( wWebXfer, "wWebXfer", ViewToWindow, zSINGLE );
-   //:NAME VIEW wWebXfer "wWebXfer"
-   SetNameForView( wWebXfer, "wWebXfer", null, zLEVEL_TASK );
-   //:CREATE ENTITY wWebXfer.Root
-   RESULT = CreateEntity( wWebXfer, "Root", zPOS_AFTER );
-
-   //:// Remove these lines prior to deployment!!!
-   //:wWebXfer.Root.AttemptLoginName = "Admin"
-   SetAttributeFromString( wWebXfer, "Root", "AttemptLoginName", "Admin" );
-   //:wWebXfer.Root.AttemptUserName = "Admin"
-   SetAttributeFromString( wWebXfer, "Root", "AttemptUserName", "Admin" );
-   //:wWebXfer.Root.AttemptPassword = "xxxxxxxx"
-   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "xxxxxxxx" );
-   //:// End of: Remove these lines prior to deployment!!!
+   //:// Note that Activate always returns at least an empty view.
+   //:ACTIVATE pePamms WHERE pePamms.ePamms.ID = 1
+   o_fnLocalBuildQual_0( ViewToWindow, vTempViewVar_0 );
+   RESULT = ActivateObjectInstance( pePamms, "pePamms", ViewToWindow, vTempViewVar_0, zSINGLE );
+   DropView( vTempViewVar_0 );
+   //:NAME VIEW pePamms "pePamms"
+   SetNameForView( pePamms, "pePamms", null, zLEVEL_TASK );
 
    //:SetDynamicBannerName( ViewToWindow, "wStartUp", "Default" )
    {
@@ -6949,148 +7139,6 @@ InitAdminLoginWindow( View     ViewToWindow )
     m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "Default" );
     // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
    }
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:ProcessAdministratorLogin( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-ProcessAdministratorLogin( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW qOrganiz BASED ON LOD  qOrganiz
-   zVIEW    qOrganiz = new zVIEW( );
-   //:VIEW qPrimReg BASED ON LOD  qPrimReg
-   zVIEW    qPrimReg = new zVIEW( );
-   //:VIEW lPrimReg BASED ON LOD  lPrimReg
-   zVIEW    lPrimReg = new zVIEW( );
-   //:VIEW qSubreg  BASED ON LOD  qSubreg
-   zVIEW    qSubreg = new zVIEW( );
-   //:VIEW lSubreg  BASED ON LOD  lSubreg
-   zVIEW    lSubreg = new zVIEW( );
-   //:VIEW KZXMLPGO
-   zVIEW    KZXMLPGO = new zVIEW( );
-   //:STRING (  50  ) szLoginName
-   String   szLoginName = null;
-   //:STRING (  50  ) szUserName
-   String   szUserName = null;
-   //:STRING (   1  ) szKeyRole
-   String   szKeyRole = null;
-   //:INTEGER       lControl
-   int      lControl = 0;
-   //:INTEGER       lID
-   int      lID = 0;
-   //:SHORT         nRC
-   int      nRC = 0;
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-
-   //:IF wWebXfer = 0
-   if ( getView( wWebXfer ) == null )
-   { 
-      //:TraceLineS( "wStartUp.ProcessAdministratorLogin cannot find Transfer View", "" )
-      TraceLineS( "wStartUp.ProcessAdministratorLogin cannot find Transfer View", "" );
-      //:RETURN 2
-      if(8==8)return( 2 );
-   } 
-
-   //:END
-
-   //:GET VIEW KZXMLPGO NAMED "KZXMLPGO"
-   RESULT = GetViewByName( KZXMLPGO, "KZXMLPGO", ViewToWindow, zLEVEL_TASK );
-   //:IF KZXMLPGO != 0
-   if ( getView( KZXMLPGO ) != null )
-   { 
-      //:FOR EACH KZXMLPGO.NextDialogWindow
-      RESULT = SetCursorFirstEntity( KZXMLPGO, "NextDialogWindow", "" );
-      while ( RESULT > zCURSOR_UNCHANGED )
-      { 
-         //:DELETE ENTITY KZXMLPGO.NextDialogWindow
-         RESULT = DeleteEntity( KZXMLPGO, "NextDialogWindow", zPOS_NEXT );
-         RESULT = SetCursorNextEntity( KZXMLPGO, "NextDialogWindow", "" );
-      } 
-
-      //:END
-   } 
-
-   //:END
-
-   //:GET VIEW qPrimReg NAMED "qPrimRegLogin"
-   RESULT = GetViewByName( qPrimReg, "qPrimRegLogin", ViewToWindow, zLEVEL_TASK );
-   //:IF qPrimReg != 0
-   if ( getView( qPrimReg ) != null )
-   { 
-      //:DropObjectInstance( qPrimReg )
-      DropObjectInstance( qPrimReg );
-   } 
-
-   //:END
-
-   //:GET VIEW qSubreg NAMED "qSubregLogin"
-   RESULT = GetViewByName( qSubreg, "qSubregLogin", ViewToWindow, zLEVEL_TASK );
-   //:IF qSubreg != 0
-   if ( getView( qSubreg ) != null )
-   { 
-      //:DropObjectInstance( qSubreg )
-      DropObjectInstance( qSubreg );
-   } 
-
-   //:END
-
-   //:GET VIEW qOrganiz NAMED "qOrganizLogin"
-   RESULT = GetViewByName( qOrganiz, "qOrganizLogin", ViewToWindow, zLEVEL_TASK );
-   //:IF qOrganiz != 0
-   if ( getView( qOrganiz ) != null )
-   { 
-      //:DropObjectInstance( qOrganiz )
-      DropObjectInstance( qOrganiz );
-   } 
-
-   //:END
-
-   //:GET VIEW qPrimReg NAMED "lPrimReg"
-   RESULT = GetViewByName( qPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
-   //:IF lPrimReg != 0
-   if ( getView( lPrimReg ) != null )
-   { 
-      //:DropObjectInstance( lPrimReg )
-      DropObjectInstance( lPrimReg );
-   } 
-
-   //:END
-
-   //:GET VIEW lSubreg NAMED "lSubreg"
-   RESULT = GetViewByName( lSubreg, "lSubreg", ViewToWindow, zLEVEL_TASK );
-   //:IF lSubreg != 0
-   if ( getView( lSubreg ) != null )
-   { 
-      //:DropObjectInstance( lSubreg )
-      DropObjectInstance( lSubreg );
-   } 
-
-   //:END
-
-   //:SfSetUserIdForTask( ViewToWindow, "Admin" )
-   SfSetUserIdForTask( ViewToWindow, "Admin" );
-   //:wWebXfer.Root.AttemptUserName = "Admin"
-   SetAttributeFromString( wWebXfer, "Root", "AttemptUserName", "Admin" );
-   //:wWebXfer.Root.AttemptPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
-   //:wWebXfer.Root.ConfirmPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "ConfirmPassword", "" );
-   //:wWebXfer.Root.CurrentPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "CurrentPassword", "" );
-   //:wWebXfer.Root.KeyRole = "U"  // should already be set ... i think U is for undefined???
-   SetAttributeFromString( wWebXfer, "Root", "KeyRole", "U" );
-
-   //:// Trace Login.
-   //:TraceLineS( "Login going to administration to setup Administrator", "" )
-   TraceLineS( "Login going to administration to setup Administrator", "" );
    return( 0 );
 // END
 } 
@@ -7337,7 +7385,7 @@ InitPrimaryRegistrantForDelete( View     ViewToWindow )
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
        GetIntegerFromAttribute( mi_lTempInteger_0, lPrimReg, "PrimaryRegistrant", "ID" );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );}
-   o_fnLocalBuildQual_13( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
+   o_fnLocalBuildQual_15( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
    RESULT = ActivateObjectInstance( mPrimReg, "mPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
    DropView( vTempViewVar_0 );
    //:NAME VIEW mPrimReg "mPrimReg"
@@ -7554,7 +7602,7 @@ SelectListSubregistrants( View     ViewToWindow )
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
        GetIntegerFromAttribute( mi_lTempInteger_0, qOrganiz, "PrimaryRegistrant", "ID" );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );}
-   o_fnLocalBuildQual_36( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
+   o_fnLocalBuildQual_38( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
    RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
    DropView( vTempViewVar_0 );
    //:NAME VIEW lPrimReg "lPrimReg"
@@ -7827,7 +7875,7 @@ InitPrimaryRegistrant( View     ViewToWindow )
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
        GetIntegerFromAttribute( mi_lTempInteger_0, lPrimReg, "PrimaryRegistrant", "ID" );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );}
-   o_fnLocalBuildQual_8( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
+   o_fnLocalBuildQual_9( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
    RESULT = ActivateObjectInstance( mPrimReg, "mPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
    DropView( vTempViewVar_0 );
    //:NAME VIEW mPrimReg "mPrimReg"

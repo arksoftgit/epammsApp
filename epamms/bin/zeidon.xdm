@@ -1,4 +1,4 @@
-z1000-Zeidon    ZEIDON   TZDMXGPO 12/16/14   12:56:21 1.0a2    
+z1000-Zeidon    ZEIDON   TZDMXGPO 03/16/15   10:28:21 1.0a2    
 eDomainGroup 1
 aName      ePamms
 
@@ -2394,6 +2394,21 @@ aContextRestriction N
 eContext   3
 aZKey      68568066
 aName      GeneralName_Address
+aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.CaseAwareStringDomain
+aZKey      110002352
+aName      GeneralNameCaseInsensitive
+aDesc      Case Insensitive General Text (names, streets, cities, etc.)
+aDomainType E
+aDataType  S
+aMaxStringLth 128
+aContextRestriction N
+
+eContext   3
+aZKey      110002353
+aName      GeneralNameCaseInsensitive
 aIsDefault Y
 
 eDomain    2

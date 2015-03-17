@@ -174,6 +174,21 @@ function CheckAllInGrid(id, CheckBoxName)
    }
 }
 
+function CancelAndReturn( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSystemSystem.zAction.value = "CancelAndReturn";
+      document.wSystemSystem.submit( );
+   }
+}
+
 function CopyToNewSystemChemical( strTagEntityKey )
 {
 
@@ -189,48 +204,6 @@ function CopyToNewSystemChemical( strTagEntityKey )
       _DisableFormElements( true );
 
       document.wSystemSystem.zAction.value = "CopyToNewSystemChemical";
-      document.wSystemSystem.submit( );
-   }
-}
-
-function SaveAndReturn( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      // Javascript code entered by user.
-
-      if ( document.wSystemSystem.Name.value == "" )
-      {
-         alert( "The ePamms Name must be specified" );
-         document.wSystemSystem.Name.focus();
-         return;
-      }
-
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wSystemSystem.zAction.value = "SaveAndReturn";
-      document.wSystemSystem.submit( );
-   }
-}
-
-function CancelAndReturn( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemSystem.zAction.value = "CancelAndReturn";
       document.wSystemSystem.submit( );
    }
 }
@@ -370,6 +343,33 @@ function NewSystemKeyword( )
       _DisableFormElements( true );
 
       document.wSystemSystem.zAction.value = "NewSystemKeyword";
+      document.wSystemSystem.submit( );
+   }
+}
+
+function SaveAndReturn( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+      if ( document.wSystemSystem.Name.value == "" )
+      {
+         alert( "The ePamms Name must be specified" );
+         document.wSystemSystem.Name.focus();
+         return;
+      }
+
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wSystemSystem.zAction.value = "SaveAndReturn";
       document.wSystemSystem.submit( );
    }
 }

@@ -189,7 +189,7 @@ function AcceptUpdateViruses( )
    }
 }
 
-function NewVirusLast( )
+function AddNewVirus( strTagEntityKey )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -197,6 +197,10 @@ function NewVirusLast( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wSystemUpdateViruses.zTableRowSelect.value = strEntityKey;
       // Javascript code entered by user.
 
       if ( document.wSystemUpdateViruses.Virus.value == "" )
@@ -209,7 +213,7 @@ function NewVirusLast( )
 
       _DisableFormElements( true );
 
-      document.wSystemUpdateViruses.zAction.value = "NewVirusLast";
+      document.wSystemUpdateViruses.zAction.value = "AddNewVirus";
       document.wSystemUpdateViruses.submit( );
    }
 }
@@ -294,6 +298,79 @@ function InitVirusesForUpdate( )
    }
 }
 
+function NewVirusLast( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+      if ( document.wSystemUpdateViruses.Virus.value == "" )
+      {
+         alert( "'Virus:' may not be blank to add a new Virus" );
+         return;
+      }
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wSystemUpdateViruses.zAction.value = "NewVirusLast";
+      document.wSystemUpdateViruses.submit( );
+   }
+}
+
+function SelectVirus( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wSystemUpdateViruses.zTableRowSelect.value = strEntityKey;
+      // Javascript code entered by user.
+
+      var tempField = document.getElementById( strTagEntityKey );
+      document.wSystemUpdateViruses.Virus.value = tempField.innerText;
+      return;
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wSystemUpdateViruses.zAction.value = "SelectVirus";
+      document.wSystemUpdateViruses.submit( );
+   }
+}
+
+function SortApplicationTypes( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+       document.wSLCMarketingStatement.zTableRowSelect.value = buildSortTableHtml( "mEPA", "Viruses", "GridVirus",  ["Virus"]  ); // viewName, entityName, tableId, arrTableColumnTitles
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wSystemUpdateViruses.zAction.value = "SortApplicationTypes";
+      document.wSystemUpdateViruses.submit( );
+   }
+}
+
 function UpdateVirus( strTagEntityKey )
 {
 
@@ -323,100 +400,6 @@ function UpdateVirus( strTagEntityKey )
       _DisableFormElements( true );
 
       document.wSystemUpdateViruses.zAction.value = "UpdateVirus";
-      document.wSystemUpdateViruses.submit( );
-   }
-}
-
-function MoveVirusDown( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wSystemUpdateViruses.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wSystemUpdateViruses.zAction.value = "MoveVirusDown";
-      document.wSystemUpdateViruses.submit( );
-   }
-}
-
-function MoveVirusUp( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wSystemUpdateViruses.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wSystemUpdateViruses.zAction.value = "MoveVirusUp";
-      document.wSystemUpdateViruses.submit( );
-   }
-}
-
-function AddNewVirus( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wSystemUpdateViruses.zTableRowSelect.value = strEntityKey;
-      // Javascript code entered by user.
-
-      if ( document.wSystemUpdateViruses.Virus.value == "" )
-      {
-         alert( "'Virus:' may not be blank to add a new Virus" );
-         return;
-      }
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wSystemUpdateViruses.zAction.value = "AddNewVirus";
-      document.wSystemUpdateViruses.submit( );
-   }
-}
-
-function SelectVirus( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wSystemUpdateViruses.zTableRowSelect.value = strEntityKey;
-      // Javascript code entered by user.
-
-      var tempField = document.getElementById( strTagEntityKey );
-      document.wSystemUpdateViruses.Virus.value = tempField.innerText;
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wSystemUpdateViruses.zAction.value = "SelectVirus";
       document.wSystemUpdateViruses.submit( );
    }
 }

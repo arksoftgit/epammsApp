@@ -82,9 +82,9 @@ public int DoInputMapping( HttpServletRequest request,
                VmlOperation.CreateMessage( task, "CheckBox1", "", strMapValue );
             else
                if ( strMapValue != null )
-                  vGridTmp.cursor( "LLD" ).getAttribute( "wSelected" ).setValue( strMapValue );
+                  vGridTmp.cursor( "LLD" ).getAttribute( "wSelected" ).setValue( strMapValue, "" );
                else
-                  vGridTmp.cursor( "LLD" ).getAttribute( "wSelected" ).setValue( "" );
+                  vGridTmp.cursor( "LLD" ).getAttribute( "wSelected" ).setValue( "", "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -369,7 +369,7 @@ else
 }
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSPLD", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -377,8 +377,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSPLD" );
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "SelectLLD_ForSPLD" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSPLD", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "SelectLLD_ForSPLD", "" );
    }
 
 %>
@@ -532,7 +532,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSPLD", "SelectLLD_ForSPLD" );
    strOpenFile = VmlOperation.FindOpenFile( task );

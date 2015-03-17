@@ -122,8 +122,8 @@ public int DoInputMapping( HttpServletRequest request,
                if ( nRC >= 0 )
                {
                   // Only do the automatic include if this is a different entity
-                  strTemp = mMasLC.cursor( "M_UsageFootnoteUsed" ).getAttribute( "Text" ).getString();
-                  if ( !StringUtils.equals( strTemp, mMasLC.cursor( "M_UsageFootnote" ).getAttribute( "Text" ).getString())) 
+                  strTemp = mMasLC.cursor( "M_UsageFootnoteUsed" ).getAttribute( "Text" ).getString( "" );
+                  if ( !StringUtils.equals( strTemp, mMasLC.cursor( "M_UsageFootnote" ).getAttribute( "Text" ).getString( "" ) ) )
                   {
                      mMasLC.cursor( "M_UsageFootnoteUsed" ).excludeEntity( CursorPosition.NONE );
                      mMasLC.cursor( "M_UsageFootnoteUsed" ).includeSubobject( mMasLC.cursor( "M_UsageFootnote" ), CursorPosition.NEXT );
@@ -463,7 +463,7 @@ else
 }
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wMLC", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -471,8 +471,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wMLC" );
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "OrganismClaimsStatement" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wMLC", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "OrganismClaimsStatement", "" );
    }
 
 %>
@@ -628,7 +628,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wMLC", "OrganismClaimsStatement" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -731,7 +731,7 @@ else
       nRC = mMasLC.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mMasLC.cursor( "M_Usage" ).getAttribute( "ClaimsClassification" ).getString();
+         strComboCurrentValue = mMasLC.cursor( "M_Usage" ).getAttribute( "ClaimsClassification" ).getString( "" );
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }

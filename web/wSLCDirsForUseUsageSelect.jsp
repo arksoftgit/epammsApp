@@ -86,9 +86,9 @@ public int DoInputMapping( HttpServletRequest request,
                VmlOperation.CreateMessage( task, "GridCheckCtl2", "", strMapValue );
             else
                if ( strMapValue != null )
-                  vGridTmp.cursor( "S_DirectionsUsageOrdering" ).getAttribute( "wSelected" ).setValue( strMapValue );
+                  vGridTmp.cursor( "S_DirectionsUsageOrdering" ).getAttribute( "wSelected" ).setValue( strMapValue, "" );
                else
-                  vGridTmp.cursor( "S_DirectionsUsageOrdering" ).getAttribute( "wSelected" ).setValue( "" );
+                  vGridTmp.cursor( "S_DirectionsUsageOrdering" ).getAttribute( "wSelected" ).setValue( "", "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -126,9 +126,9 @@ public int DoInputMapping( HttpServletRequest request,
                VmlOperation.CreateMessage( task, "GridCheckCtl1", "", strMapValue );
             else
                if ( strMapValue != null )
-                  vGridTmp.cursor( "S_SelectableDirsForUseUsage" ).getAttribute( "wSelected" ).setValue( strMapValue );
+                  vGridTmp.cursor( "S_SelectableDirsForUseUsage" ).getAttribute( "wSelected" ).setValue( strMapValue, "" );
                else
-                  vGridTmp.cursor( "S_SelectableDirsForUseUsage" ).getAttribute( "wSelected" ).setValue( "" );
+                  vGridTmp.cursor( "S_SelectableDirsForUseUsage" ).getAttribute( "wSelected" ).setValue( "", "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -456,7 +456,7 @@ else
 }
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSLC", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -464,8 +464,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSLC" );
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "DirsForUseUsageSelect" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSLC", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "DirsForUseUsageSelect", "" );
    }
 
 %>
@@ -601,7 +601,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSLC", "DirsForUseUsageSelect" );
    strOpenFile = VmlOperation.FindOpenFile( task );

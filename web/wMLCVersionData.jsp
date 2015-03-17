@@ -854,7 +854,7 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
 else
 {
    VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCVersionData.jsp", "wMLC.InitMasterLabelContentForUpdate" );
-   nOptRC = wMLC.InitMasterLabelContentForUpdate( new zVIEW( vKZXMLPGO ) );
+         nOptRC = wMLC.InitMasterLabelContentForUpdate( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -862,7 +862,7 @@ else
       String strURLParameters;
 
       vView = task.getViewByName( "wXferO" );
-      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString();
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString( "" );
       strURLParameters = "?CallingPage=wMLCVersionData.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wMLC" +
@@ -876,7 +876,7 @@ else
 
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wMLC", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -884,8 +884,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wMLC" );
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "VersionData" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wMLC", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "VersionData", "" );
    }
 
 %>
@@ -1201,7 +1201,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wMLC", "VersionData" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -1245,17 +1245,11 @@ else
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* MasterLabelContent:GroupBox */ %>
 
-<div id="MasterLabelContent" name="MasterLabelContent" class="withborder" style="width:732px;height:152px;float:left;">  <!-- MasterLabelContent --> 
+<div id="MasterLabelContent" name="MasterLabelContent" class="withborder"   style="float:left;position:relative; width:732px; height:152px;">  <!-- MasterLabelContent --> 
 
-
- <!-- This is added as a line spacer -->
-<div style="height:28px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
 <% /* EPA_RegistrationNbr:Text */ %>
 
-<span  id="EPA_RegistrationNbr" name="EPA_RegistrationNbr" style="width:154px;height:16px;">Registration Number:</span>
+<label  id="EPA_RegistrationNbr" name="EPA_RegistrationNbr" style="width:154px;height:16px;position:absolute;left:12px;top:28px;">Registration Number:</label>
 
 <% /* EPA_RegNbr:Text */ %>
 <% strTextDisplayValue = "";
@@ -1282,21 +1276,11 @@ else
    }
 %>
 
-<span  id="EPA_RegNbr" name="EPA_RegNbr" style="width:182px;height:24px;"><%=strTextDisplayValue%></span>
+<label  id="EPA_RegNbr" name="EPA_RegNbr" style="width:182px;height:24px;position:absolute;left:170px;top:28px;"><%=strTextDisplayValue%></label>
 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:4px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
 <% /* Version::Text */ %>
 
-<span  id="Version:" name="Version:" style="width:154px;height:16px;">Version:</span>
+<label  id="Version:" name="Version:" style="width:154px;height:16px;position:absolute;left:12px;top:56px;">Version:</label>
 
 <% /* MasterLabelContentVersion:EditBox */ %>
 <%
@@ -1337,21 +1321,11 @@ else
    }
 %>
 
-<input class="text12" name="MasterLabelContentVersion" id="MasterLabelContentVersion" style="width:182px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="MasterLabelContentVersion" id="MasterLabelContentVersion" style="width:182px;position:absolute;left:170px;top:56px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:12px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
 <% /* RevisionDate::Text */ %>
 
-<span  id="RevisionDate:" name="RevisionDate:" style="width:154px;height:16px;">Revision Date:</span>
+<label  id="RevisionDate:" name="RevisionDate:" style="width:154px;height:16px;position:absolute;left:12px;top:84px;">Revision Date:</label>
 
 <% /* RevisionDate:Text */ %>
 <% strTextDisplayValue = "";
@@ -1378,21 +1352,11 @@ else
    }
 %>
 
-<span  id="RevisionDate" name="RevisionDate" style="width:182px;height:24px;"><%=strTextDisplayValue%></span>
+<label  id="RevisionDate" name="RevisionDate" style="width:182px;height:24px;position:absolute;left:170px;top:84px;"><%=strTextDisplayValue%></label>
 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
 <% /* Finalized::Text */ %>
 
-<span  id="Finalized:" name="Finalized:" style="width:154px;height:16px;">Finalized:</span>
+<label  id="Finalized:" name="Finalized:" style="width:154px;height:16px;position:absolute;left:12px;top:114px;">Finalized:</label>
 
 <% /* Finalized:Text */ %>
 <% strTextDisplayValue = "";
@@ -1419,9 +1383,7 @@ else
    }
 %>
 
-<span class="text12"  id="Finalized" name="Finalized" style="width:54px;height:16px;"><%=strTextDisplayValue%></span>
-
-</div>  <!-- End of a new line -->
+<label class="text12"  id="Finalized" name="Finalized" style="width:54px;height:16px;position:absolute;left:170px;top:114px;"><%=strTextDisplayValue%></label>
 
 
 </div>  <!--  MasterLabelContent --> 

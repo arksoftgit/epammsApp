@@ -171,8 +171,6 @@ function _AfterPageLoaded( )
       timerID = null;
    }
 
-   document.wStartUpUserLogin.hCBRole.value = document.wStartUpUserLogin.CBRole.value
-
    var varTimeout = document.wStartUpUserLogin.zTimeout.value;
    if ( varTimeout > 0 )
    {
@@ -198,21 +196,6 @@ function CheckAllInGrid(id, CheckBoxName)
       {
          wcontrol.checked = check;
       }
-   }
-}
-
-function AdministratorLogin( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wStartUpUserLogin.zAction.value = "AdministratorLogin";
-      document.wStartUpUserLogin.submit( );
    }
 }
 
@@ -328,7 +311,7 @@ function mmLogout( )
    }
 }
 
-function CBRoleOnChange( )
+function PrimaryRegistrantsOnChange( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -336,7 +319,7 @@ function CBRoleOnChange( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      document.wStartUpUserLogin.hCBRole.value = document.wStartUpUserLogin.CBRole.value;
+      document.wStartUpUserLogin.hPrimaryRegistrants.value = document.wStartUpUserLogin.PrimaryRegistrants.selectedIndex;
    }
 }
 

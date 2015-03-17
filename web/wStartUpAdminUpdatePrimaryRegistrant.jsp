@@ -1275,7 +1275,7 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
 else
 {
    VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminUpdatePrimaryRegistrant.jsp", "wStartUp.InitPrimaryRegistrantForUpdate" );
-   nOptRC = wStartUp.InitPrimaryRegistrantForUpdate( new zVIEW( vKZXMLPGO ) );
+         nOptRC = wStartUp.InitPrimaryRegistrantForUpdate( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -1283,7 +1283,7 @@ else
       String strURLParameters;
 
       vView = task.getViewByName( "wXferO" );
-      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString();
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString( "" );
       strURLParameters = "?CallingPage=wStartUpAdminUpdatePrimaryRegistrant.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wStartUp" +
@@ -1297,7 +1297,7 @@ else
 
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wStartUp", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -1305,8 +1305,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wStartUp" );
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "AdminUpdatePrimaryRegistrant" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wStartUp", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "AdminUpdatePrimaryRegistrant", "" );
    }
 
 %>
@@ -1420,14 +1420,17 @@ else
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
+   View iePamms = null;
    View lPrimReg = null;
    View lSubreg = null;
    View mCurrentUser = null;
+   View mePamms = null;
    View mMasLC = null;
    View mPerson = null;
    View mPrimReg = null;
    View mSubreg = null;
    View mUser = null;
+   View pePamms = null;
    View qOrganiz = null;
    View qOrganizLogin = null;
    View qPrimReg = null;
@@ -1496,7 +1499,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wStartUp", "AdminUpdatePrimaryRegistrant" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -1751,7 +1754,7 @@ else
       nRC = mPrimReg.cursor( "Organization" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mPrimReg.cursor( "Organization" ).getAttribute( "Role" ).getString();
+         strComboCurrentValue = mPrimReg.cursor( "Organization" ).getAttribute( "Role" ).getString( "" );
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }
@@ -2095,7 +2098,7 @@ else
       nRC = mPrimReg.cursor( "PhysicalAddress" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mPrimReg.cursor( "PhysicalAddress" ).getAttribute( "State" ).getString();
+         strComboCurrentValue = mPrimReg.cursor( "PhysicalAddress" ).getAttribute( "State" ).getString( "" );
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }
@@ -2322,7 +2325,7 @@ else
    {
       nRC = wWebXfer.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
-         strRadioGroupValue = wWebXfer.cursor( "Root" ).getAttribute( "SameAs" ).getString();
+         strRadioGroupValue = wWebXfer.cursor( "Root" ).getAttribute( "SameAs" ).getString( "" );
    }
 
    if ( StringUtils.equals( strRadioGroupValue, "Y" ) )
@@ -2539,7 +2542,7 @@ else
       nRC = mPrimReg.cursor( "MailingAddress" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mPrimReg.cursor( "MailingAddress" ).getAttribute( "State" ).getString();
+         strComboCurrentValue = mPrimReg.cursor( "MailingAddress" ).getAttribute( "State" ).getString( "" );
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }

@@ -100,7 +100,7 @@ public class ZGlobal1_Operation extends VmlOperation
       stringTimeStamp = KZOEP1AA.SysGetDateTime( stringTimeStamp );
       StringBuilder sb_szDate = new StringBuilder( 32 );
       KZOEP1AA.SysGetDateTime( sb_szDate );
-      
+
       rc = SetAttributeFromString( View, entityName, attributeName, stringTimeStamp );
       return rc;
     }
@@ -169,12 +169,12 @@ public class ZGlobal1_Operation extends VmlOperation
                              String stringAttribute,
                              String stringContext )
     {
- 	  int lValueInt = 0;
- 	  	  
- 	  lValueInt = GetVariableFromAttribute( lValueInt, 0, zTYPE_INTEGER, 0,
+     int lValueInt = 0;
+
+     lValueInt = GetVariableFromAttribute( lValueInt, 0, zTYPE_INTEGER, 0,
                                              view, stringEntity, stringAttribute, stringContext, 0 );
- 	  
- 	  lValue.setValue(lValueInt);
+
+     lValue.setValue(lValueInt);
        return lValue.intValue();
     }
 
@@ -310,12 +310,12 @@ public class ZGlobal1_Operation extends VmlOperation
     public Double
     StrToDecimal( String stringStr )
     {
- 	   if ( stringStr == null )
- 		   return 0.0;
- 	   
- 	   if ( stringStr.equals("") )
- 		   return 0.0;
- 	   
+      if ( stringStr == null )
+         return 0.0;
+
+      if ( stringStr.equals("") )
+         return 0.0;
+
        return Double.valueOf( stringStr );
     }
 
@@ -392,15 +392,15 @@ public class ZGlobal1_Operation extends VmlOperation
        // read the attributes
        //stringSourceDate = GetStringFromAttribute( stringSourceDate, srcView, srcEntityName, srcAttributeName );
        //stringTargetDate = GetStringFromAttribute( stringTargetDate, tgtView, tgtEntityName, tgtAttributeName );
-       
+
        DateTime BeginDate = srcView.cursor(srcEntityName).getAttribute(srcAttributeName).getDateTime();
        DateTime EndDate = tgtView.cursor(tgtEntityName).getAttribute(tgtAttributeName).getDateTime();
-       
+
        //DateTime BeginDate = new DateTime(stringSourceDate);
        //DateTime EndDate = new DateTime(stringTargetDate);
 
-       //int days = Days.daysBetween( BeginDate, EndDate).getDays();       
-       int days = Days.daysBetween( EndDate, BeginDate).getDays();       
+       //int days = Days.daysBetween( BeginDate, EndDate).getDays();
+       int days = Days.daysBetween( EndDate, BeginDate).getDays();
        /*
        UfStringToDateTime( stringSourceDate, SourceDate );
        UfStringToDateTime( stringTargetDate, TargetDate );
@@ -408,10 +408,10 @@ public class ZGlobal1_Operation extends VmlOperation
        // subtract the values
        lDaysTmp = lDays.intValue();
        lDaysTmp = UfDateTimeDiff( lDaysTmp, TargetDate, SourceDate, zDT_DAY );
-       
+
        lDays.setValue(lDaysTmp);
        */
-       
+
        lDays.setValue(days);
 
        return lDays;
@@ -758,17 +758,17 @@ public class ZGlobal1_Operation extends VmlOperation
        String stringZipCodeFormatted = null;
        String stringCountry = null;
        StringBuilder stringSep = new StringBuilder();      // set to /r/n or "; "
-       
+
        // NEED TO FIX THIS CAUSE I GET TOO MANY ERRORS MAINLY WITH IsValidAttribute
        return "";
-       
+
 /*
        entityName = zstrcpy( entityName, stringInternalEntityStructure );
        stringAttribName = zstrcpy( stringAttribName, stringInternalAttribStructure );
        if ( ZeidonStringCompare( stringAttribName, 1, 5, "dLine", 1, 5, 33 ) == 0 )
-    	   zstrcpy( stringSep, "; " );
+         zstrcpy( stringSep, "; " );
        else
-    	   zstrcpy( stringSep, "\\r\\n" );
+         zstrcpy( stringSep, "\\r\\n" );
 
        stringMultiLineAddress = "";
        stringAttn = "";
@@ -804,7 +804,7 @@ public class ZGlobal1_Operation extends VmlOperation
        if ( IsValidAttribute ( "Line2", stringInternalEntityStructure ) == 0 )
           GetStringFromAttribute( sb, vAnyObject, entityName, "Line2" );
        else
-    	   sb.setLength( 0 );
+         sb.setLength( 0 );
 
        if ( sb.length( ) != 0 )
           stringMultiLineAddress = zsprintf( stringMultiLineAddress, "%s%s%s", stringMultiLineAddress, sb, stringSep );
@@ -812,7 +812,7 @@ public class ZGlobal1_Operation extends VmlOperation
        if ( IsValidAttribute ( "Line3", stringInternalEntityStructure ) == 0 )
           GetStringFromAttribute( sb, vAnyObject, entityName, "Line3" );
        else
-    	  sb.setLength( 0 );
+        sb.setLength( 0 );
 
        if ( sb.length( ) != 0 )
           stringMultiLineAddress = zsprintf( stringMultiLineAddress, "%s%s%s", stringMultiLineAddress, sb, stringSep );
@@ -889,7 +889,7 @@ public class ZGlobal1_Operation extends VmlOperation
                             stringInternalAttribStructure, stringMultiLineAddress );
 
        return 0;
-       
+
     } // dAdressLabel
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2062,7 +2062,7 @@ public class ZGlobal1_Operation extends VmlOperation
                                      String entityName,
                                      String attributeName )
     {
-       zVIEW  wXferO;
+       zVIEW  wWebXfer;
        zVIEW  vDynamicT;
        zVIEW  vQualObject;
        zVIEW  zqFrameOrig;
@@ -2078,7 +2078,7 @@ public class ZGlobal1_Operation extends VmlOperation
        int nLth;
        int nRC;
 
-       GetViewByName( wXferO, "wXferO", lpView, zLEVEL_TASK );
+       GetViewByName( wWebXfer, "wWebXfer", lpView, zLEVEL_TASK );
        lpReturnedString = "";
        lpViewEntity = String MiGetViewEntityForView( lpView, entityName );
        if ( lpViewEntity == 0 )
@@ -2271,48 +2271,48 @@ public class ZGlobal1_Operation extends VmlOperation
        }
        else
        {
-          // If Domain Type is not Table, use data type for conversion through wXferO attribute.
+          // If Domain Type is not Table, use data type for conversion through wWebXfer attribute.
           DataType = lpDomain->cType;
           if ( DataType == 'L' )
           {
-             nRC = SetAttributeFromVariable( wXferO, "Root", "WorkInteger",
+             nRC = SetAttributeFromVariable( wWebXfer, "Root", "WorkInteger",
                                             srcString, zTYPE_STRING,
                                             nLth, 0, zUSE_DEFAULT_CONTEXT );
              if ( nRC >= 0 )
-                GetStringFromAttribute( lpReturnedString, wXferO, "Root", "WorkInteger" );
+                GetStringFromAttribute( lpReturnedString, wWebXfer, "Root", "WorkInteger" );
              else
                 return -1;
           }
           else
           if ( DataType == 'T' )
           {
-             nRC = SetAttributeFromVariable( wXferO, "Root", "WorkDate",
+             nRC = SetAttributeFromVariable( wWebXfer, "Root", "WorkDate",
                                              srcString, zTYPE_STRING,
                                              nLth, "M/D/YYYY", 0 );
              if ( nRC >= 0 )
-                GetStringFromAttribute( lpReturnedString, wXferO, "Root", "WorkDate" );
+                GetStringFromAttribute( lpReturnedString, wWebXfer, "Root", "WorkDate" );
              else
                 return -1;
           }
           else
           if ( DataType == 'D' )
           {
-             nRC = SetAttributeFromVariable( wXferO, "Root", "WorkDate",
+             nRC = SetAttributeFromVariable( wWebXfer, "Root", "WorkDate",
                                              srcString, zTYPE_STRING,
                                              nLth, "M/D/YYYY", 0 );
              if ( nRC >= 0 )
-                GetStringFromAttribute( lpReturnedString, wXferO, "Root", "WorkDate" );
+                GetStringFromAttribute( lpReturnedString, wWebXfer, "Root", "WorkDate" );
              else
                 return -1;
           }
           else
           if ( DataType == 'M' )
           {
-             nRC = SetAttributeFromVariable( wXferO, "Root", "WorkDecimal",
+             nRC = SetAttributeFromVariable( wWebXfer, "Root", "WorkDecimal",
                                              srcString, zTYPE_STRING,
                                              nLth, 0, zUSE_DEFAULT_CONTEXT );
              if ( nRC >= 0 )
-                GetStringFromAttribute( lpReturnedString, wXferO, "Root", "WorkDecimal" );
+                GetStringFromAttribute( lpReturnedString, wWebXfer, "Root", "WorkDecimal" );
              else
                 return -1;
           }
@@ -2758,7 +2758,7 @@ public class ZGlobal1_Operation extends VmlOperation
        // Exit if the document file is empty.
        if ( lDocumentLth == 0 )
        {
-    	   m_KZOEP1AA.SysCloseFile( vResultSet, hDocumentFile, 0 );
+         m_KZOEP1AA.SysCloseFile( vResultSet, hDocumentFile, 0 );
           return 0;
        }
 
@@ -2784,68 +2784,68 @@ public class ZGlobal1_Operation extends VmlOperation
 
        return lDocumentLth;
     }
-    
+
     public int
     ParseBooleanExpression( View zqFrame )
     {
- 	   //zPCHAR pchValue;
- 	   //zPCHAR pchNext;
- 	   String  szBooleanExpression=null;
- 	   StringBuilder sbBooleanExpression=null;
- 	   String  szConditionValue=null;
+      //zPCHAR pchValue;
+      //zPCHAR pchNext;
+      String  szBooleanExpression=null;
+      StringBuilder sbBooleanExpression=null;
+      String  szConditionValue=null;
 
- 	   // Parse the Boolean Expression and create each component value as an entity Component.
+      // Parse the Boolean Expression and create each component value as an entity Component.
 
- 	   GetStringFromAttributeByContext( sbBooleanExpression,
- 	                                    zqFrame, "BooleanExpression",
- 	                                    "TextValue", "", 254 );
+      GetStringFromAttributeByContext( sbBooleanExpression,
+                                       zqFrame, "BooleanExpression",
+                                       "TextValue", "", 254 );
  /*
- 	   // Skip to first nonblank.
- 	   for ( pchNext = szBooleanExpression;
- 	         *pchNext == ' ' && *pchNext != 0;
- 	         pchNext++ )
- 	   {
- 	   }
+      // Skip to first nonblank.
+      for ( pchNext = szBooleanExpression;
+            *pchNext == ' ' && *pchNext != 0;
+            pchNext++ )
+      {
+      }
 
- 	   // Loop through all parameters.
- 	   while ( *pchNext != 0 )
- 	   {
- 	      // Find next parameter
- 	      if ( *pchNext == ')' || *pchNext == '(' )
- 	      {
- 	         pchValue = szConditionValue;
- 	         *pchValue = *pchNext;
- 	         pchValue++;
- 	         *pchValue = 0;
- 	         if ( *pchNext == ')' )
- 	            pchNext++;    // We need to do the skip here for close paren
- 	      }
- 	      else
- 	      {
- 	        for ( pchValue = szConditionValue;
- 	              *pchNext != ' ' && *pchNext != 0 && *pchNext != ')';
- 	              pchNext++ )
- 	         {
- 	            *pchValue = *pchNext;
- 	            pchValue++;
- 	         }
+      // Loop through all parameters.
+      while ( *pchNext != 0 )
+      {
+         // Find next parameter
+         if ( *pchNext == ')' || *pchNext == '(' )
+         {
+            pchValue = szConditionValue;
+            *pchValue = *pchNext;
+            pchValue++;
+            *pchValue = 0;
+            if ( *pchNext == ')' )
+               pchNext++;    // We need to do the skip here for close paren
+         }
+         else
+         {
+           for ( pchValue = szConditionValue;
+                 *pchNext != ' ' && *pchNext != 0 && *pchNext != ')';
+                 pchNext++ )
+            {
+               *pchValue = *pchNext;
+               pchValue++;
+            }
 
- 	         *pchValue = 0;
+            *pchValue = 0;
 
- 	      }
+         }
 
- 	      CreateEntity( zqFrame, "Component", zPOS_AFTER );
- 	      SetAttributeFromString( zqFrame, "Component", "Value", szConditionValue );
+         CreateEntity( zqFrame, "Component", zPOS_AFTER );
+         SetAttributeFromString( zqFrame, "Component", "Value", szConditionValue );
 
- 	      if ( *pchNext != 0 && *pchNext != ')' )
- 	         pchNext++;
+         if ( *pchNext != 0 && *pchNext != ')' )
+            pchNext++;
 
- 	      // Skip to next nonblank.
- 	      while ( *pchNext == ' ' && *pchNext != 0 )
- 	         pchNext++;
- 	   }
+         // Skip to next nonblank.
+         while ( *pchNext == ' ' && *pchNext != 0 )
+            pchNext++;
+      }
  */
- 	   return 0;
+      return 0;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3260,108 +3260,108 @@ public class ZGlobal1_Operation extends VmlOperation
     //    Insert OI variable data in Template File
     //
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    public int 
-    InsertOI_DataIntoTemplateFile(View view, 
-    		              View workView, 
-     		              String toFile, 
-       		              String fromFile, 
-     		              String stringRootEntityName) throws IOException
+    public int
+    InsertOI_DataIntoTemplateFile(View view,
+                       View workView,
+                       String toFile,
+                          String fromFile,
+                       String stringRootEntityName) throws IOException
 {
-    	BufferedWriter bw;
-    	StringBuilder sbInsertTemplate  = new StringBuilder();
-    	StringBuilder sbRawTemplate = new StringBuilder();
-    	StringBuilder sbEntityBuffer;
-    	StringBuilder sbAttributeBuffer;
-    	String swapString = null;
-    	String stringStart  = "{";
-    	String stringEnd    = "}";	
-    	String szTmp    = null;	
-    	int nRC = 0;
-    	int lSelectedCount = 0;
-    	int lTemplateLth = 0;
-    	
-    	nRC = SetCursorFirstEntity(workView, stringRootEntityName, "");
-    	while(nRC > zCURSOR_UNCHANGED)
-    	{
-    		lSelectedCount++;
-    		nRC = SetCursorNextEntity(workView, stringRootEntityName, "");
-    	}
-    	
-    	if (lSelectedCount <= 0)
-    		return 0;
-    	
-    	lTemplateLth = ReadFileDataIntoMemory(workView, fromFile, lTemplateLth, sbRawTemplate);
-    	
-    	if (lTemplateLth > Integer.MAX_VALUE)
-    		return 0;
-    	
-    	// File not found.
-    	if (lTemplateLth < 0)
-    		return -1;
-   	
-    	swapString = sbRawTemplate.substring(1, (lTemplateLth - 1));
-    	lTemplateLth = swapString.length();
-    	sbRawTemplate = new StringBuilder();
-    	
-    	nRC = SetCursorFirstEntity(workView, stringRootEntityName, "");
-    	while(nRC > zCURSOR_UNCHANGED)
-    	{
-    		sbRawTemplate.insert(0, swapString);
-    		
-    		for(int i = 0; i < sbRawTemplate.length(); i++)
-    		{
-    			sbEntityBuffer = new StringBuilder();
-    			sbAttributeBuffer = new StringBuilder();
-    			if (sbRawTemplate.charAt(i) == '[' && sbRawTemplate.charAt(i + 1) == 'Z')
-    			{
-    				int j = i;
-    				i += 2;
-    				while(sbRawTemplate.charAt(++i) != '.')
-    					sbEntityBuffer.append(sbRawTemplate.charAt(i));
-    				
-    				while(sbRawTemplate.charAt(++i) != ']')
-    					sbAttributeBuffer.append(sbRawTemplate.charAt(i));
-    				
-    				i++;
-    				szTmp = sbRawTemplate.substring(j, i + 10).toString();
-    				sbRawTemplate.replace(j, i, GetStringFromAttribute(workView, 
-    																   sbEntityBuffer.toString(), 
-    																   sbAttributeBuffer.toString()));
-    				szTmp = sbRawTemplate.substring(j, j+12).toString();
-    				
-    			}
-    		}
-    		
-    		sbInsertTemplate.append(sbRawTemplate);
-    		//szTmp = sbInsertTemplate.substring(87284, 87296).toString();
-    		sbRawTemplate = new StringBuilder();		
-    		nRC = SetCursorNextEntity(workView, stringRootEntityName, "");
-    	}
-    	
-    	sbInsertTemplate.insert(0, stringStart);
-    	sbInsertTemplate.append(stringEnd);
-		//szTmp = sbInsertTemplate.substring(87285, 87297).toString();
-		szTmp = sbInsertTemplate.substring(13917, 13929).toString();
-    	
-    	bw = new BufferedWriter(new FileWriter(toFile));
-    	//bw.write(sbInsertTemplate.toString());
-    	szTmp = sbInsertTemplate.toString();
-    	bw.write(szTmp);
-    	bw.flush();
-    	bw.close();
-    	
-    	return 0;	
+      BufferedWriter bw;
+      StringBuilder sbInsertTemplate  = new StringBuilder();
+      StringBuilder sbRawTemplate = new StringBuilder();
+      StringBuilder sbEntityBuffer;
+      StringBuilder sbAttributeBuffer;
+      String swapString = null;
+      String stringStart  = "{";
+      String stringEnd    = "}";
+      String szTmp    = null;
+      int nRC = 0;
+      int lSelectedCount = 0;
+      int lTemplateLth = 0;
+
+      nRC = SetCursorFirstEntity(workView, stringRootEntityName, "");
+      while(nRC > zCURSOR_UNCHANGED)
+      {
+         lSelectedCount++;
+         nRC = SetCursorNextEntity(workView, stringRootEntityName, "");
+      }
+
+      if (lSelectedCount <= 0)
+         return 0;
+
+      lTemplateLth = ReadFileDataIntoMemory(workView, fromFile, lTemplateLth, sbRawTemplate);
+
+      if (lTemplateLth > Integer.MAX_VALUE)
+         return 0;
+
+      // File not found.
+      if (lTemplateLth < 0)
+         return -1;
+
+      swapString = sbRawTemplate.substring(1, (lTemplateLth - 1));
+      lTemplateLth = swapString.length();
+      sbRawTemplate = new StringBuilder();
+
+      nRC = SetCursorFirstEntity(workView, stringRootEntityName, "");
+      while(nRC > zCURSOR_UNCHANGED)
+      {
+         sbRawTemplate.insert(0, swapString);
+
+         for(int i = 0; i < sbRawTemplate.length(); i++)
+         {
+            sbEntityBuffer = new StringBuilder();
+            sbAttributeBuffer = new StringBuilder();
+            if (sbRawTemplate.charAt(i) == '[' && sbRawTemplate.charAt(i + 1) == 'Z')
+            {
+               int j = i;
+               i += 2;
+               while(sbRawTemplate.charAt(++i) != '.')
+                  sbEntityBuffer.append(sbRawTemplate.charAt(i));
+
+               while(sbRawTemplate.charAt(++i) != ']')
+                  sbAttributeBuffer.append(sbRawTemplate.charAt(i));
+
+               i++;
+               szTmp = sbRawTemplate.substring(j, i + 10).toString();
+               sbRawTemplate.replace(j, i, GetStringFromAttribute(workView,
+                                                      sbEntityBuffer.toString(),
+                                                      sbAttributeBuffer.toString()));
+               szTmp = sbRawTemplate.substring(j, j+12).toString();
+
+            }
+         }
+
+         sbInsertTemplate.append(sbRawTemplate);
+         //szTmp = sbInsertTemplate.substring(87284, 87296).toString();
+         sbRawTemplate = new StringBuilder();
+         nRC = SetCursorNextEntity(workView, stringRootEntityName, "");
+      }
+
+      sbInsertTemplate.insert(0, stringStart);
+      sbInsertTemplate.append(stringEnd);
+      //szTmp = sbInsertTemplate.substring(87285, 87297).toString();
+      szTmp = sbInsertTemplate.substring(13917, 13929).toString();
+
+      bw = new BufferedWriter(new FileWriter(toFile));
+      //bw.write(sbInsertTemplate.toString());
+      szTmp = sbInsertTemplate.toString();
+      bw.write(szTmp);
+      bw.flush();
+      bw.close();
+
+      return 0;
     }
 
-    public int 
-    InsertOI_DataIntoTemplateFile(View view, 
-    		              zVIEW workView, 
-     		              String toFile, 
-       		              String fromFile, 
-       		              String altFile,
-     		              String stringRootEntityName) throws IOException
+    public int
+    InsertOI_DataIntoTemplateFile(View view,
+                       zVIEW workView,
+                       String toFile,
+                          String fromFile,
+                          String altFile,
+                       String stringRootEntityName) throws IOException
      {
-    	return (InsertOI_DataIntoTemplateFile(view, workView.getView(), toFile, fromFile, stringRootEntityName));
+      return (InsertOI_DataIntoTemplateFile(view, workView.getView(), toFile, fromFile, stringRootEntityName));
      }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     //
@@ -3517,7 +3517,7 @@ public class ZGlobal1_Operation extends VmlOperation
                   int    FileHandle ) throws IOException
     {
        int nRC = 0;
-       
+
        nRC = m_KZOEP1AA.SysReadLine( ViewToWindow, sbLineBuffer, FileHandle );
        if ( sbLineBuffer.length( ) == 0 )
           return 0;
@@ -3908,7 +3908,7 @@ public class ZGlobal1_Operation extends VmlOperation
           // lLth = zstrlen( stringMemory );
              if ( lTotalSize - lLth < (int) ulAttributeLth )
              {
-            	 s = cbMemory.toString( );
+                s = cbMemory.toString( );
 
                  lEntityCnt *= 2;
                  lTotalSize = lEntityCnt * (int) ulAttributeLth;
@@ -4150,7 +4150,7 @@ public class ZGlobal1_Operation extends VmlOperation
        }
        else
        {
-     	  m_ZDRVROPR.StartEmailClient( stringEmailAddress,
+        m_ZDRVROPR.StartEmailClient( stringEmailAddress,
                             stringSubjectLine,
                             stringCopyToEmailAddress,
                             stringBlindCopyEmailAddress,
@@ -4261,7 +4261,7 @@ public class ZGlobal1_Operation extends VmlOperation
     // int  selBodyMemory;
     // int  lFileLth;
        zVIEW  zqMDocOLST = null;
-       zVIEW  wXferO = null;
+       zVIEW  wWebXfer = null;
        int    nRC;
 
     // TraceLine( "SendEmailForFiles Server: %s   Sender: %s   Recipient: %s"
@@ -4275,7 +4275,7 @@ public class ZGlobal1_Operation extends VmlOperation
           return 2;
 
        GetViewByName( zqMDocOLST, "zqMDocOLST", ResultSet, zLEVEL_TASK );
-       GetViewByName( wXferO, "wXferO", ViewToWindow, zLEVEL_TASK );
+       GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
 
        if ( stringBodyFileName != null )
        {
@@ -4402,7 +4402,7 @@ public class ZGlobal1_Operation extends VmlOperation
     // int  selBodyMemory;
     // int  lFileLth;
        zVIEW  zqMDocOLST = null;
-       zVIEW  wXferO = null;
+       zVIEW  wWebXfer = null;
        int nRC;
 
     // TraceLine( "SendEmailForFiles Server: %s   Sender: %s   Recipient: %s"
@@ -4416,7 +4416,7 @@ public class ZGlobal1_Operation extends VmlOperation
           return 2;
 
        GetViewByName( zqMDocOLST, "zqMDocOLST", ResultSet, zLEVEL_TASK );
-       GetViewByName( wXferO, "wXferO", ViewToWindow, zLEVEL_TASK );
+       GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
 
        if ( stringBodyFileName != null )
        {
@@ -4574,8 +4574,8 @@ public class ZGlobal1_Operation extends VmlOperation
            int    nBlankLineCnt ) throws IOException
     {
 
-       //stringInput = stringInput.replaceAll( stringTransChar, "\"" );  
-       stringInput = stringInput.replace( stringTransChar, "\"" ); 
+       //stringInput = stringInput.replaceAll( stringTransChar, "\"" );
+       stringInput = stringInput.replace( stringTransChar, "\"" );
     // TraceLineS( "#### WL_QC: ", stringInput );
        m_KZOEP1AA.SysWriteLine( vAnyView, lFile, stringInput );
        while ( nBlankLineCnt-- > 0 )
@@ -4590,7 +4590,7 @@ public class ZGlobal1_Operation extends VmlOperation
     /////////////////////////////////////////////////////////////////////////////
 
     public int
-    FixLegacyReportDate( View wXferO, View vLegacyTranscript,
+    FixLegacyReportDate( View wWebXfer, View vLegacyTranscript,
                          String stringEntity, String stringAttribute,
                          String searchString )
     {
@@ -4601,7 +4601,7 @@ public class ZGlobal1_Operation extends VmlOperation
 
        if ( lSearchLth != 0 )
        {
-         stringDate = GetStringFromAttributeByContext( stringDate, wXferO, "Root",
+          stringDate = GetStringFromAttributeByContext( stringDate, wWebXfer, "Root",
                                                         "dCurrentDate", "MonthDDYYYY", 64 );
        // lLth = stringDate.length( );
           stringBlob = GetAddrForAttribute( stringBlob, vLegacyTranscript, stringEntity, stringAttribute );
@@ -5305,60 +5305,60 @@ public class ZGlobal1_Operation extends VmlOperation
     public int
     AD_TestAdmin( )
     {
-			String ldapurl = "ldap://10.150.0.10";
-			String stringADUserName = "";
-			String szAD_Password = "";
-			// This is using fastbind.
-	   	    return m_ActiveDirectory.ActiveDirectoryLoginAuthentication( ldapurl, "enc-ad\\zmail", "F82b7mk,9j" );
+         String ldapurl = "ldap://10.150.0.10";
+         String stringADUserName = "";
+         String szAD_Password = "";
+         // This is using fastbind.
+             return m_ActiveDirectory.ActiveDirectoryLoginAuthentication( ldapurl, "enc-ad\\zmail", "F82b7mk,9j" );
     }
 
     public int
     AD_TestAdminNotFast( )
     {
-		String ldapurl = "ldap://10.150.0.10";
-		String stringADUserName = "";
-		String szAD_Password = "";
-		// Try binding w/o fastbind.
-   	    return m_ActiveDirectory.ActiveDirectoryLoginAuthenticationNF( ldapurl, "enc-ad\\zmail", "F82b7mk,9j" );
-    	//IsAuthenticated = ctx.Authenticate("enc-ad\\zmailxx","F82b7mk,9jssss");
+      String ldapurl = "ldap://10.150.0.10";
+      String stringADUserName = "";
+      String szAD_Password = "";
+      // Try binding w/o fastbind.
+          return m_ActiveDirectory.ActiveDirectoryLoginAuthenticationNF( ldapurl, "enc-ad\\zmail", "F82b7mk,9j" );
+      //IsAuthenticated = ctx.Authenticate("enc-ad\\zmailxx","F82b7mk,9jssss");
    }
 
     public int
     AD_TestUserNotFast( )
     {
-		String ldapurl = "ldap://10.150.0.10";
-		String stringADUserName = "";
-		String szAD_Password = "";
-		// Try binding w/o fastbind.
-   	    return m_ActiveDirectory.ActiveDirectoryLoginAuthenticationNF( ldapurl, stringADUserName, szAD_Password );
+      String ldapurl = "ldap://10.150.0.10";
+      String stringADUserName = "";
+      String szAD_Password = "";
+      // Try binding w/o fastbind.
+          return m_ActiveDirectory.ActiveDirectoryLoginAuthenticationNF( ldapurl, stringADUserName, szAD_Password );
     }
 
     public int
     AD_TestUser( )
     {
-		String ldapurl = "ldap://10.150.0.10";
-		String stringADUserName = "";
-		String szAD_Password = "";
-		// This is using fastbind.
-   	    return m_ActiveDirectory.ActiveDirectoryLoginAuthentication( ldapurl, stringADUserName, szAD_Password );
+      String ldapurl = "ldap://10.150.0.10";
+      String stringADUserName = "";
+      String szAD_Password = "";
+      // This is using fastbind.
+          return m_ActiveDirectory.ActiveDirectoryLoginAuthentication( ldapurl, stringADUserName, szAD_Password );
     }
 
     public int
     AD_TestChangePassword( )
     {
-		String ldapurl = "ldap://10.150.0.10";
-		String stringADAdminUserName = "enc-ad\\zmail";
-		String stringADAdminPassword = "F82b7mk,9j";
-		String stringADUserName = "";
-		String stringADOldPassword = "";
-		String stringADNewPassword = "";
-    	int nRC;
-    	
-    	nRC = m_ActiveDirectory.ActiveDirectoryChangePassword(ldapurl, stringADAdminUserName, 
-    			stringADAdminPassword, stringADUserName, stringADOldPassword, stringADNewPassword);
-    	return 0;
+      String ldapurl = "ldap://10.150.0.10";
+      String stringADAdminUserName = "enc-ad\\zmail";
+      String stringADAdminPassword = "F82b7mk,9j";
+      String stringADUserName = "";
+      String stringADOldPassword = "";
+      String stringADNewPassword = "";
+      int nRC;
+
+      nRC = m_ActiveDirectory.ActiveDirectoryChangePassword(ldapurl, stringADAdminUserName,
+            stringADAdminPassword, stringADUserName, stringADOldPassword, stringADNewPassword);
+      return 0;
     }
-    
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     //
     //  Method Name: AD_AuthenticateUserPassword
@@ -5370,11 +5370,11 @@ public class ZGlobal1_Operation extends VmlOperation
                                  String szAD_UserName,
                                  String szAD_Password )
     {
-    	// In the "c" world this is "LDAP://DC=ENC-AD,DC=ENC,DC=EDU"
-    	// But I couldn't get a connection using that in java, so I am using the
-    	// ldap server id.
-    	szAD_Pathname = "ldap://10.150.0.10";
-    	return m_ActiveDirectory.ActiveDirectoryLoginAuthentication( szAD_Pathname, szAD_UserName, szAD_Password );
+      // In the "c" world this is "LDAP://DC=ENC-AD,DC=ENC,DC=EDU"
+      // But I couldn't get a connection using that in java, so I am using the
+      // ldap server id.
+      szAD_Pathname = "ldap://10.150.0.10";
+      return m_ActiveDirectory.ActiveDirectoryLoginAuthentication( szAD_Pathname, szAD_UserName, szAD_Password );
 
     } // AD_AuthenticateUserPassword
 
@@ -5425,16 +5425,16 @@ public class ZGlobal1_Operation extends VmlOperation
                            String stringAD_OldPassword,
                            String stringAD_NewPassword )
     {
-    	// In the "c" world this is "LDAP://DC=ENC-AD,DC=ENC,DC=EDU"
-    	// But I couldn't get a connection using that in java, so I am using the
-    	// ldap server id.
-    	stringAD_Pathname = "ldap://10.150.0.10";
-    	// Also, in "c" we store password on the database but I need to do some
-    	// work with that because we are using different encyrption right now for java and
-    	// I can't decrypt a password.
-		stringAD_LoginUserName = "enc-ad\\zmail";
-		stringAD_LoginPassword = "F82b7mk,9j";
-    	return m_ActiveDirectory.ActiveDirectoryChangePassword( stringAD_Pathname, stringAD_LoginUserName, stringAD_LoginPassword, stringAD_UserName, stringAD_OldPassword, stringAD_NewPassword );
+      // In the "c" world this is "LDAP://DC=ENC-AD,DC=ENC,DC=EDU"
+      // But I couldn't get a connection using that in java, so I am using the
+      // ldap server id.
+      stringAD_Pathname = "ldap://10.150.0.10";
+      // Also, in "c" we store password on the database but I need to do some
+      // work with that because we are using different encyrption right now for java and
+      // I can't decrypt a password.
+      stringAD_LoginUserName = "enc-ad\\zmail";
+      stringAD_LoginPassword = "F82b7mk,9j";
+      return m_ActiveDirectory.ActiveDirectoryChangePassword( stringAD_Pathname, stringAD_LoginUserName, stringAD_LoginPassword, stringAD_UserName, stringAD_OldPassword, stringAD_NewPassword );
     } // AD_ChangeUserPassword
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -5871,18 +5871,18 @@ public class ZGlobal1_Operation extends VmlOperation
        return 0;
     }
 
-    
+
 
 
     /*************************************************************************************************
-    **    
+    **
     **    OPERATION: CopyFileToPDF
     **    Copy a file to a pdf file.
-    **    
+    **
     *************************************************************************************************/
     public int CopyFileToPDF( View vMapObject,
- 		                     String szFileToCopy,
- 		                     String szPDFName )
+                           String szFileToCopy,
+                           String szPDFName )
     {
        zVIEW   vKZXMLPGO = new zVIEW( );
        String  szCommandLine = null;
@@ -5890,23 +5890,23 @@ public class ZGlobal1_Operation extends VmlOperation
        String  szFileName = null;
 
        szCommandLine = "copypdf.bat \"" + szFileToCopy + "\"";
-       
+
        // KJS 01/05/11 - When we move to java I don't think we will be able to do this anymore.
        // Need to keep JODConverter in mind:http://stackoverflow.com/questions/586411/is-there-a-free-way-to-convert-rtf-to-pdf
 
-       try 
+       try
        {
-    	   Process proc = Runtime.getRuntime().exec( szCommandLine );
-    	   int exitCode = proc.waitFor(); 	
-       } 
-       catch (IOException e) 
-       {
-    	   return -1;
+         Process proc = Runtime.getRuntime().exec( szCommandLine );
+         int exitCode = proc.waitFor();
        }
-       catch (InterruptedException e) 
+       catch (IOException e)
        {
-    	   return -1;
-       }   
+         return -1;
+       }
+       catch (InterruptedException e)
+       {
+         return -1;
+       }
 /*
  * Also , you can invoke apps like notepad ;
 Runtime rt = Runtime.getRuntime();
@@ -5915,8 +5915,8 @@ rt.exec("notepad");
 } catch (IOException ioe) {
 ioe.printStackTrace();
 }
-*/     
-    	   
+*/
+
 
 
        // KJS 02/20/2009 - We would like our pdfs to be created in a separate directory.
@@ -5929,16 +5929,16 @@ ioe.printStackTrace();
        //SysReadZeidonIni( -1, "[App.Zencas]", "WebDirectory", sb_szDirectoryName );
        m_KZOEP1AA.SysReadZeidonIni( -1, "Workstation", "PDF_PathFileName", sb_szPathName );
        szPathFileName = sb_szPathName.toString( );
-                                 
+
        /*
        nZRetCode = GetWorkstationApplicationValues( vMapObject, "PDF_PathFileName",
           szPathFileName, 32, &lFontSize, &lWork, &lWork, &lWork, &lWork, &lWork,
           &lWork, &lWork, &lWork, &lWork );
        */
-                                 
+
        //szFileName = szPathFileName + szPDFName;
        szFileName = szPDFName + ".pdf";
-       
+
        // We set the report name in KZXMLPGO so that
        // we can retrieve this name in FindOpenFile (kzoejava.c) when trying to
        // open the file in the jsp files.

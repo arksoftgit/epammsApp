@@ -1,4 +1,4 @@
-z1000-Zeidon    TEXTSA   TZDGSRCO 04/11/14   17:11:03 1.0a2    
+z1000-Zeidon    TEXTSA   TZDGSRCO 03/16/15   10:28:21 1.0a2    
 eDomainGroup 1
 aZKey      68568034
 aName      TextsA
@@ -20,6 +20,21 @@ aContextRestriction N
 eContext   3
 aZKey      68568042
 aName      MiddleName
+aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.CaseAwareStringDomain
+aZKey      110002352
+aName      GeneralNameCaseInsensitive
+aDesc      Case Insensitive General Text (names, streets, cities, etc.)
+aDomainType E
+aDataType  S
+aMaxStringLth 128
+aContextRestriction N
+
+eContext   3
+aZKey      110002353
+aName      GeneralNameCaseInsensitive
 aIsDefault Y
 
 eDomain    2

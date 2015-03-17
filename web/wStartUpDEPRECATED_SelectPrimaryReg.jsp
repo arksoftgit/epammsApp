@@ -693,7 +693,7 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
 else
 {
    VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpDEPRECATED_SelectPrimaryReg.jsp", "wStartUp.InitSelectPrimaryRegistrant" );
-   nOptRC = wStartUp.InitSelectPrimaryRegistrant( new zVIEW( vKZXMLPGO ) );
+         nOptRC = wStartUp.InitSelectPrimaryRegistrant( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -701,7 +701,7 @@ else
       String strURLParameters;
 
       vView = task.getViewByName( "wXferO" );
-      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString();
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString( "" );
       strURLParameters = "?CallingPage=wStartUpDEPRECATED_SelectPrimaryReg.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wStartUp" +
@@ -715,7 +715,7 @@ else
 
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wStartUp", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -723,8 +723,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wStartUp" );
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "DEPRECATED_SelectPrimaryReg" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wStartUp", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "DEPRECATED_SelectPrimaryReg", "" );
    }
 
 %>
@@ -838,14 +838,17 @@ else
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
+   View iePamms = null;
    View lPrimReg = null;
    View lSubreg = null;
    View mCurrentUser = null;
+   View mePamms = null;
    View mMasLC = null;
    View mPerson = null;
    View mPrimReg = null;
    View mSubreg = null;
    View mUser = null;
+   View pePamms = null;
    View qOrganiz = null;
    View qOrganizLogin = null;
    View qPrimReg = null;
@@ -914,7 +917,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wStartUp", "DEPRECATED_SelectPrimaryReg" );
    strOpenFile = VmlOperation.FindOpenFile( task );

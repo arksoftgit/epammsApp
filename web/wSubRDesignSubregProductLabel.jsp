@@ -671,7 +671,7 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
 else
 {
    VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRDesignSubregProductLabel.jsp", "wSubR.InitDesignSubregProductLabel" );
-   nOptRC = wSubR.InitDesignSubregProductLabel( new zVIEW( vKZXMLPGO ) );
+         nOptRC = wSubR.InitDesignSubregProductLabel( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -679,7 +679,7 @@ else
       String strURLParameters;
 
       vView = task.getViewByName( "wXferO" );
-      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString();
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString( "" );
       strURLParameters = "?CallingPage=wSubRDesignSubregProductLabel.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wSubR" +
@@ -693,7 +693,7 @@ else
 
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSubR", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -701,8 +701,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSubR" );
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "DesignSubregProductLabel" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSubR", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "DesignSubregProductLabel", "" );
    }
 
 %>
@@ -888,7 +888,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSubR", "DesignSubregProductLabel" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -980,7 +980,7 @@ else
 <div>  <!-- Beginning of a new line -->
 <span style="height:824px;">&nbsp&nbsp&nbsp&nbsp</span>
 <% /* wysiwygEditor:MLEdit */ %>
-<textarea name="wysiwygEditor" id="wysiwygEditor" style="border:solid;border-width:2px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+<textarea name="wysiwygEditor" id="wysiwygEditor" style="width:934px;height:824px;position:absolute;left:20px;top:88px;border:solid;border-width:2px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 </div>  <!-- End of a new line -->
 

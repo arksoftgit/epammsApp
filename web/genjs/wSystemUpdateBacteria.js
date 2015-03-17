@@ -189,6 +189,50 @@ function AcceptUpdateBacteria( )
    }
 }
 
+function AddNewBacteria( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wSystemUpdateBacteria.zTableRowSelect.value = strEntityKey;
+      // Javascript code entered by user.
+
+      if ( document.wSystemUpdateBacteria.Bacteria.value == "" )
+      {
+         alert( "'Bacteria:' may not be blank to add a new Bacteria" );
+         return;
+      }
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wSystemUpdateBacteria.zAction.value = "AddNewBacteria";
+      document.wSystemUpdateBacteria.submit( );
+   }
+}
+
+function CancelUpdateBacteria( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSystemUpdateBacteria.zAction.value = "CancelUpdateBacteria";
+      document.wSystemUpdateBacteria.submit( );
+   }
+}
+
 function ClearSelectedBacteria( )
 {
 
@@ -233,105 +277,6 @@ function ClearSelectedBacteria( )
    }
 }
 
-function DeleteSelectedBacteria( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemUpdateBacteria.zAction.value = "DeleteSelectedBacteria";
-      document.wSystemUpdateBacteria.submit( );
-   }
-}
-
-function SelectAllBacteria( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      // Javascript code entered by user.
-
-      var theForm;
-      var type;
-      var name;
-      var str;
-      var j;
-      var k;
-
-      for ( j = 0; j < document.forms.length; j++ )
-      {
-         theForm = document.forms[ j ];
-         for ( k = 0; k < theForm.length; k++ )
-         {
-            type = theForm.elements[ k ].type;
-
-            if ( type == "checkbox" )
-            {
-               name = theForm.elements[ k ].name;
-               str = name.substr( 0, 9 );
-               if ( str.match("GS_Select") )
-               {
-                  theForm.elements[ k ].checked = true;
-               }
-            }
-         }
-      }
-
-      return;
-
-
-      // END of Javascript code entered by user.
-
-   }
-}
-
-function NewBacteriaLast( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      // Javascript code entered by user.
-
-      if ( document.wSystemUpdateBacteria.Bacteria.value == "" )
-      {
-         alert( "'Bacteria:' may not be blank to add a new Bacteria" );
-         return;
-      }
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wSystemUpdateBacteria.zAction.value = "NewBacteriaLast";
-      document.wSystemUpdateBacteria.submit( );
-   }
-}
-
-function CancelUpdateBacteria( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemUpdateBacteria.zAction.value = "CancelUpdateBacteria";
-      document.wSystemUpdateBacteria.submit( );
-   }
-}
-
 function DeleteBacteria( strTagEntityKey )
 {
 
@@ -351,7 +296,7 @@ function DeleteBacteria( strTagEntityKey )
    }
 }
 
-function UpdateBacteria( strTagEntityKey )
+function DeleteSelectedBacteria( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -359,28 +304,9 @@ function UpdateBacteria( strTagEntityKey )
 
    if ( _IsDocDisabled( ) == false )
    {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wSystemUpdateBacteria.zTableRowSelect.value = strEntityKey;
-      // Javascript code entered by user.
-
-      var strBacteria = document.wSystemUpdateBacteria.Bacteria.value;
-      if ( strBacteria == null || strBacteria == "" )
-      {
-         alert( "'Bacteria:' may not be blank to update a Bacteria" );
-         return;
-      }
-
-      var tempField = document.getElementById( "GEBacteria::" + strEntityKey );
-      tempField.innerText = strBacteria;
-
-
-      // END of Javascript code entered by user.
-
       _DisableFormElements( true );
 
-      document.wSystemUpdateBacteria.zAction.value = "UpdateBacteria";
+      document.wSystemUpdateBacteria.zAction.value = "DeleteSelectedBacteria";
       document.wSystemUpdateBacteria.submit( );
    }
 }
@@ -431,7 +357,7 @@ function InitBacteriaForUpdate( )
    }
 }
 
-function MoveBacteriaDown( strTagEntityKey )
+function NewBacteriaLast( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -439,48 +365,6 @@ function MoveBacteriaDown( strTagEntityKey )
 
    if ( _IsDocDisabled( ) == false )
    {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wSystemUpdateBacteria.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wSystemUpdateBacteria.zAction.value = "MoveBacteriaDown";
-      document.wSystemUpdateBacteria.submit( );
-   }
-}
-
-function MoveBacteriaUp( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wSystemUpdateBacteria.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wSystemUpdateBacteria.zAction.value = "MoveBacteriaUp";
-      document.wSystemUpdateBacteria.submit( );
-   }
-}
-
-function AddNewBacteria( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wSystemUpdateBacteria.zTableRowSelect.value = strEntityKey;
       // Javascript code entered by user.
 
       if ( document.wSystemUpdateBacteria.Bacteria.value == "" )
@@ -493,8 +377,52 @@ function AddNewBacteria( strTagEntityKey )
 
       _DisableFormElements( true );
 
-      document.wSystemUpdateBacteria.zAction.value = "AddNewBacteria";
+      document.wSystemUpdateBacteria.zAction.value = "NewBacteriaLast";
       document.wSystemUpdateBacteria.submit( );
+   }
+}
+
+function SelectAllBacteria( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+      var theForm;
+      var type;
+      var name;
+      var str;
+      var j;
+      var k;
+
+      for ( j = 0; j < document.forms.length; j++ )
+      {
+         theForm = document.forms[ j ];
+         for ( k = 0; k < theForm.length; k++ )
+         {
+            type = theForm.elements[ k ].type;
+
+            if ( type == "checkbox" )
+            {
+               name = theForm.elements[ k ].name;
+               str = name.substr( 0, 9 );
+               if ( str.match("GS_Select") )
+               {
+                  theForm.elements[ k ].checked = true;
+               }
+            }
+         }
+      }
+
+      return;
+
+
+      // END of Javascript code entered by user.
+
    }
 }
 
@@ -521,6 +449,61 @@ function SelectBacteria( strTagEntityKey )
       _DisableFormElements( true );
 
       document.wSystemUpdateBacteria.zAction.value = "SelectBacteria";
+      document.wSystemUpdateBacteria.submit( );
+   }
+}
+
+function SortApplicationTypes( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+       document.wSLCMarketingStatement.zTableRowSelect.value = buildSortTableHtml( "mEPA", "EPA_Bacteria", "GridBacteria",  ["Bacteria"]  ); // viewName, entityName, tableId, arrTableColumnTitles
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wSystemUpdateBacteria.zAction.value = "SortApplicationTypes";
+      document.wSystemUpdateBacteria.submit( );
+   }
+}
+
+function UpdateBacteria( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wSystemUpdateBacteria.zTableRowSelect.value = strEntityKey;
+      // Javascript code entered by user.
+
+      var strBacteria = document.wSystemUpdateBacteria.Bacteria.value;
+      if ( strBacteria == null || strBacteria == "" )
+      {
+         alert( "'Bacteria:' may not be blank to update a Bacteria" );
+         return;
+      }
+
+      var tempField = document.getElementById( "GEBacteria::" + strEntityKey );
+      tempField.innerText = strBacteria;
+
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wSystemUpdateBacteria.zAction.value = "UpdateBacteria";
       document.wSystemUpdateBacteria.submit( );
    }
 }

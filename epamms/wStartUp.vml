@@ -34,12 +34,23 @@ END
 DIALOG OPERATION
 ProcessLogout( VIEW ViewToWindow )
 
+   VIEW pePamms  BASED ON LOD pePamms
    VIEW mCurrentUser BASED ON LOD mUser
    VIEW wWebXfer BASED ON LOD  wWebXfer
+   VIEW qOrganiz BASED ON LOD  qOrganiz
    VIEW qPrimReg BASED ON LOD  qPrimReg
+   VIEW qSubreg  BASED ON LOD  qSubreg
+   VIEW lSubreg  BASED ON LOD  lSubreg
+   VIEW lPrimReg BASED ON LOD  lPrimReg
+   VIEW mOrganiz BASED ON LOD  mOrganiz
    VIEW KZXMLPGO
 
    AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "TopMenu Logout" )
+
+   GET VIEW pePamms NAMED "pePamms"
+   IF pePamms != 0
+      DropObjectInstance( pePamms )
+   END
 
    GET VIEW mCurrentUser NAMED "mCurrentUser"
    IF mCurrentUser != 0
@@ -49,247 +60,6 @@ ProcessLogout( VIEW ViewToWindow )
    GET VIEW wWebXfer NAMED "wWebXfer"
    IF wWebXfer != 0
       DropObjectInstance( wWebXfer )
-   END
-
-   GET VIEW qPrimReg NAMED "qPrimRegLogin"
-   IF qPrimReg != 0
-      DropObjectInstance( qPrimReg )
-   END
-
-   GET VIEW KZXMLPGO NAMED "KZXMLPGO"
-   IF KZXMLPGO != 0
-      FOR EACH KZXMLPGO.NextDialogWindow
-         DELETE ENTITY KZXMLPGO.NextDialogWindow
-      END
-   END
-
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// OPERATION: InitLoginWindow
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-InitLoginWindow( VIEW ViewToWindow )
-
-   VIEW wWebXfer BASED ON LOD wWebXfer
-   VIEW qOrganiz BASED ON LOD qOrganiz
-   VIEW mOrganiz BASED ON LOD mOrganiz
-
-   //VIEW mTempl   BASED ON LOD  mTempl
-   VIEW mSubLC BASED ON LOD mSubLC
-
-/*
-   // For test purposes only ... remove prior to deployment.
-   ActivateOI_FromFile( mSubLC, "mSubLC", ViewToWindow,
-                        "c:\lplr\epamms\mSubLC.por", zIGNORE_ERRORS )
-   CommitOI_ToXML_File( mSubLC, "c:\lplr\epamms\mSubLC.xml", 0 )
-   ActivateOI_FromFile( mTempl, "mTempl", ViewToWindow,
-                        "c:\lplr\epamms\bin\mTempl1.por", zIGNORE_ERRORS )
-   CommitOI_ToXML_File( mTempl, "c:\lplr\epamms\mTempl.xml", 0 )
-   // End:  For test purposes only ... remove prior to deployment.
-*/
-
-/*
-   GET VIEW mTempl NAMED "mTempl"
-   IF mTempl != 0
-      DropObjectInstance( mTempl )
-   END
-   ActivateOI_FromFile( mTempl, "mTempl", ViewToWindow,
-                        "c:\lplr\epamms\bin\mTempl1.por", zIGNORE_ERRORS )
-   SetNameForView( mTempl, "mTempl", 0, zLEVEL_TASK )
-   MiSetInstanceUpdateFlag( mTempl, 1 )
-// MessageSend( ViewToWindow, "", "Save Template",
-//              "Check view: mTempl", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-   COMMIT mTempl
-// DropObjectInstance( mTempl )
-*/
-
-   ProcessLogout( ViewToWindow )  // just to ensure clean up
-
-   ACTIVATE wWebXfer EMPTY
-   NAME VIEW wWebXfer "wWebXfer"
-   CREATE ENTITY wWebXfer.Root
-
-   ACTIVATE qOrganiz WHERE qOrganiz.Organization.LoginName = "Admin"
-   NAME VIEW qOrganiz "qOrganiz"
-   IF qOrganiz.Organization EXISTS AND qOrganiz.Organization.LoginName = "Admin"
-
-      wWebXfer.Root.KeyRole = ""
-
-   ELSE
-
-      // No administrator found!  We need to bootstrap here.
-      TraceLineS( "InitLoginWindow: ", "No Administrator found!!!" )
-      wWebXfer.Root.KeyRole = "U"  // i think U is for undefined???
-
-   END
-
-   DropObjectInstance( qOrganiz )
-
-   GET VIEW mOrganiz NAMED "mOrganiz"
-   IF mOrganiz = 0
-      ACTIVATE mOrganiz EMPTY
-      NAME VIEW mOrganiz "mOrganiz"
-      CREATE ENTITY mOrganiz.Organization
-   END
-
-   wWebXfer.Root.Banner1 = ""
-   wWebXfer.Root.Banner2 = ""
-   wWebXfer.Root.Banner3 = ""
-   wWebXfer.Root.Banner4 = ""
-   wWebXfer.Root.Banner5 = ""
-   wWebXfer.Root.Banner6 = ""
-
-   // Remove these lines prior to deployment!!!
-// wWebXfer.Root.AttemptLoginName = "Lonza"
-// wWebXfer.Root.AttemptLoginName = "Admin"
-   wWebXfer.Root.AttemptLoginName = "atp"
-   wWebXfer.Root.AttemptUserName = "Admin"
-   wWebXfer.Root.AttemptPassword = "xxxxxxxx"
-   // End of: Remove these lines prior to deployment!!!
-
-   SetDynamicBannerName( ViewToWindow, "wStartUp", "Default" )
-
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// OPERATION: InitAdminLoginWindow
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-InitAdminLoginWindow( VIEW ViewToWindow )
-
-   VIEW wWebXfer BASED ON LOD wWebXfer
-
-   ProcessLogout( ViewToWindow )  // clean up
-
-   ACTIVATE wWebXfer EMPTY
-   NAME VIEW wWebXfer "wWebXfer"
-   CREATE ENTITY wWebXfer.Root
-
-   // Remove these lines prior to deployment!!!
-   wWebXfer.Root.AttemptLoginName = "Admin"
-   wWebXfer.Root.AttemptUserName = "Admin"
-   wWebXfer.Root.AttemptPassword = "xxxxxxxx"
-   // End of: Remove these lines prior to deployment!!!
-
-   SetDynamicBannerName( ViewToWindow, "wStartUp", "Default" )
-
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// OPERATION: ProcessAdministratorLogin
-// First time in login (to set up the administrator)
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-ProcessAdministratorLogin( VIEW ViewToWindow )
-
-   VIEW wWebXfer REGISTERED AS wWebXfer
-   VIEW qOrganiz BASED ON LOD  qOrganiz
-   VIEW qPrimReg BASED ON LOD  qPrimReg
-   VIEW lPrimReg BASED ON LOD  lPrimReg
-   VIEW qSubreg  BASED ON LOD  qSubreg
-   VIEW lSubreg  BASED ON LOD  lSubreg
-   VIEW KZXMLPGO
-   STRING (  50  ) szLoginName
-   STRING (  50  ) szUserName
-   STRING (   1  ) szKeyRole
-   INTEGER       lControl
-   INTEGER       lID
-   SHORT         nRC
-
-   IF wWebXfer = 0
-      TraceLineS( "wStartUp.ProcessAdministratorLogin cannot find Transfer View", "" )
-      RETURN 2
-   END
-
-   GET VIEW KZXMLPGO NAMED "KZXMLPGO"
-   IF KZXMLPGO != 0
-      FOR EACH KZXMLPGO.NextDialogWindow
-         DELETE ENTITY KZXMLPGO.NextDialogWindow
-      END
-   END
-
-   GET VIEW qPrimReg NAMED "qPrimRegLogin"
-   IF qPrimReg != 0
-      DropObjectInstance( qPrimReg )
-   END
-
-   GET VIEW qSubreg NAMED "qSubregLogin"
-   IF qSubreg != 0
-      DropObjectInstance( qSubreg )
-   END
-
-   GET VIEW qOrganiz NAMED "qOrganizLogin"
-   IF qOrganiz != 0
-      DropObjectInstance( qOrganiz )
-   END
-
-   GET VIEW qPrimReg NAMED "lPrimReg"
-   IF lPrimReg != 0
-      DropObjectInstance( lPrimReg )
-   END
-
-   GET VIEW lSubreg NAMED "lSubreg"
-   IF lSubreg != 0
-      DropObjectInstance( lSubreg )
-   END
-
-   SfSetUserIdForTask( ViewToWindow, "Admin" )
-   wWebXfer.Root.AttemptUserName = "Admin"
-   wWebXfer.Root.AttemptPassword = ""
-   wWebXfer.Root.ConfirmPassword = ""
-   wWebXfer.Root.CurrentPassword = ""
-   wWebXfer.Root.KeyRole = "U"  // should already be set ... i think U is for undefined???
-
-   // Trace Login.
-   TraceLineS( "Login going to administration to setup Administrator", "" )
-
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// OPERATION: ProcessUserLogin
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-ProcessUserLogin( VIEW ViewToWindow )
-
-   VIEW wWebXfer REGISTERED AS wWebXfer
-   VIEW qOrganiz BASED ON LOD  qOrganiz
-   VIEW mOrganizInit BASED ON LOD  mOrganiz
-   VIEW mOrganiz BASED ON LOD  mOrganiz
-   VIEW qPrimReg BASED ON LOD  qPrimReg
-   VIEW lPrimReg BASED ON LOD  lPrimReg
-   VIEW qSubreg  BASED ON LOD  qSubreg
-   VIEW lSubreg  BASED ON LOD  lSubreg
-   VIEW KZXMLPGO
-   STRING (  50  ) szLoginName
-   STRING (  50  ) szUserName
-   STRING ( 128  ) szAttemptPassword
-   STRING ( 128  ) szConfirmPassword
-   STRING (   1  ) szKeyRole
-   INTEGER       lControl
-   INTEGER       lID
-   SHORT         nRC
-
-   IF wWebXfer = 0
-      TraceLineS( "wStartUp.ProcessUserLogin cannot find Transfer View", "" )
-      RETURN 2
-   END
-
-   wWebXfer.Root.MoveIncrement = 1  // number of positions an entity will move
-
-   GET VIEW KZXMLPGO NAMED "KZXMLPGO"
-   IF KZXMLPGO != 0
-      FOR EACH KZXMLPGO.NextDialogWindow
-         DELETE ENTITY KZXMLPGO.NextDialogWindow
-      END
    END
 
    GET VIEW qPrimReg NAMED "qPrimRegLogin"
@@ -317,26 +87,164 @@ ProcessUserLogin( VIEW ViewToWindow )
       DropObjectInstance( lSubreg )
    END
 
-   // Note that Activate always returns at least an empty view.
-   ACTIVATE qOrganiz WHERE qOrganiz.Organization.LoginName = "Admin"
-   NAME VIEW qOrganiz "qOrganiz"
-   IF qOrganiz.Organization DOES NOT EXIST
+   GET VIEW KZXMLPGO NAMED "KZXMLPGO"
+   IF KZXMLPGO != 0
+      FOR EACH KZXMLPGO.NextDialogWindow
+         DELETE ENTITY KZXMLPGO.NextDialogWindow
+      END
+   END
 
-      // No administrator found!  We need to bootstrap here.
-      TraceLineS( "ProcessAdministratorLogin: ", "No Administrator found!!!" )
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: InitLoginWindow
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+InitLoginWindow( VIEW ViewToWindow )
+
+   VIEW wWebXfer BASED ON LOD wWebXfer
+   VIEW pePamms  BASED ON LOD pePamms
+
+   ProcessLogout( ViewToWindow )  // just to ensure clean up
+
+   ACTIVATE wWebXfer EMPTY
+   NAME VIEW wWebXfer "wWebXfer"
+   CREATE ENTITY wWebXfer.Root
+
+   wWebXfer.Root.Banner1 = ""
+   wWebXfer.Root.Banner2 = ""
+   wWebXfer.Root.Banner3 = ""
+   wWebXfer.Root.Banner4 = ""
+   wWebXfer.Root.Banner5 = ""
+   wWebXfer.Root.Banner6 = ""
+
+   // Remove these lines prior to deployment!!!
+// wWebXfer.Root.AttemptLoginName = "Lonza"
+// wWebXfer.Root.AttemptLoginName = "Admin"
+   wWebXfer.Root.AttemptLoginName = "atp"
+   wWebXfer.Root.AttemptUserName = "Admin"
+   wWebXfer.Root.AttemptPassword = "xxxxxxxx"
+   // End of: Remove these lines prior to deployment!!!
+   
+   // Note that Activate always returns at least an empty view.
+   ACTIVATE pePamms WHERE pePamms.ePamms.ID = 1
+   NAME VIEW pePamms "pePamms"
+
+   SetDynamicBannerName( ViewToWindow, "wStartUp", "Default" )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: ProcessUserLogin
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+ProcessUserLogin( VIEW ViewToWindow )
+
+   VIEW wWebXfer REGISTERED AS wWebXfer
+   VIEW pePamms  REGISTERED AS pePamms
+   VIEW mePamms  BASED ON LOD  mePamms
+   VIEW sePamms  BASED ON LOD  sePamms
+   VIEW qOrganiz BASED ON LOD  qOrganiz
+   VIEW mOrganiz BASED ON LOD  mOrganiz
+   VIEW mOrganizInit BASED ON LOD mOrganiz
+   VIEW lPrimReg BASED ON LOD  lPrimReg
+   STRING ( 256  ) szMessage
+   STRING (  50  ) szLoginName
+   STRING (  50  ) szUserName
+   STRING ( 128  ) szAttemptPassword
+   STRING ( 128  ) szConfirmPassword
+   STRING (   1  ) szKeyRole
+   INTEGER       lControl
+   INTEGER       lID
+   SHORT         nRC
+
+   IF wWebXfer = 0
+      TraceLineS( "wStartUp.ProcessUserLogin cannot find Transfer View", "" )
+      RETURN 2
+   END
+
+   wWebXfer.Root.KeyRole = "U"  // U is for Unknown (so far)
+   IF pePamms.ePamms DOES NOT EXIST OR pePamms.ePamms.ID != "1"
+      // No administrator found!  We bootstrap here.
+      TraceLineS( "ProcessUserLogin: ", "No Administrator found!!!" )
+      ACTIVATE mePamms EMPTY
+      NAME VIEW mePamms "mePamms"
+      CREATE ENTITY mePamms.ePamms
+      CREATE ENTITY mePamms.PrimaryRegistrant 
+      CREATE ENTITY mePamms.Organization
+      mePamms.ePamms.ID = 1
+      mePamms.Organization.Name = "ePamms Administrator"
+      mePamms.Organization.LoginName = "Admin"
       SetWindowActionBehavior( ViewToWindow, zWAB_StartTopWindow,
-                               "wStartUp", "AdminNewPrimaryRegistrant" )
-      DropObjectInstance( qOrganiz )
+                               "wStartUp", "AdminNewAdministrator" )
+      DropObjectInstance( pePamms )
       RETURN 1
    END
 
-   DropObjectInstance( qOrganiz )
+   // OK ... we know that Admin exists ... if there are no Primary Registrants, the only login possible is Admin, which can
+   // create Primary Registrants.  If there are no Subregistrants for a Primary Registrant, the only login possible for the
+   // specified Primary Registrant is the administrator for that Primary Registrant, which can create Subregistrants.  If
+   // there are no Users for a Subregistrant, the only login possible for the specified Subregistrant is the administrator
+   // for that Subregistrant.
 
-   // OK ... we know that Admin exists ...
+   DisplayObjectInstance( pePamms, "", "" )
+   DisplayEntityInstance( pePamms, "Organization" )
 
-   // Note that Activate always returns at least an empty view.
-   szLoginName = wWebXfer.Root.AttemptLoginName  // e.g. Lonza (a primary registrant)
-   ACTIVATE qOrganiz WHERE qOrganiz.Organization.LoginName = szLoginName
+   szLoginName = wWebXfer.Root.AttemptLoginName  // e.g. Lonza (a primary registrant) or ATP (Alpha Tech Pet - a subregistrant)
+   IF pePamms.Organization.LoginName = "Admin"  // cannot use szLoginName since we need a case insensitive comparison
+   // SET CURSOR FIRST pePamms.Organization WHERE pePamms.Organization.LoginName = szLoginName
+      RESULT = SetCursorFirstEntityByString( pePamms, "Organization", "LoginName", szLoginName, "ePamms" )
+
+      IF RESULT < 0
+         TraceLineS( "Login Organization not found within Admin: ", szLoginName )
+         MessageSend( ViewToWindow, "", "User Login",
+                      "Invalid User Login.",
+                      zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+         RETURN 2
+      END
+      
+      // Note that Activate always returns at least an empty view.
+      ACTIVATE qOrganiz WHERE qOrganiz.Organization.LoginName = szLoginName
+   ELSE
+      // Within a Primary Registrant (not Admin)
+      ACTIVATE sePamms WHERE sePamms.PrimaryRegistrant.ID = pePamms.PrimaryRegistrant.ID
+      NAME VIEW sePamms "sePamms"
+      DisplayObjectInstance( sePamms, "", "" )
+
+      // We cannot use SET CURSOR FIRST WHERE since we need a case insensitive comparison.
+      // SET CURSOR FIRST sePamms.Subregistrant WHERE sePamms.Organization.LoginName = szLoginName
+      TraceLineS( "Looking for Subregistrant Login: ", wWebXfer.Root.AttemptUserName )
+      RESULT = SetCursorFirstEntityByString( sePamms, "Organization", "LoginName", szLoginName, "PrimaryRegistrant" )
+   /*
+      SET CURSOR FIRST sePamms.Subregistrant
+      LOOP WHILE RESULT >= 0 AND wWebXfer.Root.AttemptUserName != sePamms.Organization.LoginName // case insensitive comparison
+         SET CURSOR NEXT sePamms.Subregistrant
+      END
+   */
+      DisplayEntityInstance( sePamms, "Organization" )
+      IF RESULT >= 0
+          ACTIVATE qOrganiz WHERE qOrganiz.Organization.ID = sePamms.Organization.ID
+         DropObjectInstance( sePamms )
+      ELSE
+         // Organization not found!
+         szMessage = pePamms.Organization.Name
+         szMessage = szMessage + "    Login: "
+         szMessage = szMessage + szLoginName
+         TraceLineS( "Login Organization not found within Primary Registrant: ", szMessage )
+         MessageSend( ViewToWindow, "", "User Login",
+                      "Invalid User Login.",
+                      zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+         DropObjectInstance( sePamms )
+         RETURN 2
+      END
+   END
+
    NAME VIEW qOrganiz "qOrganizLogin"
    DisplayObjectInstance( qOrganiz, "", "" )
    IF qOrganiz.Organization DOES NOT EXIST
@@ -349,7 +257,7 @@ ProcessUserLogin( VIEW ViewToWindow )
       DropObjectInstance( qOrganiz )
       RETURN 2
    END
-
+   
    wWebXfer.Root.LoginName = qOrganiz.Organization.LoginName // e.g. Lonza
    szUserName = wWebXfer.Root.AttemptUserName  // e.g. Admin
    szKeyRole = wWebXfer.Root.KeyRole
@@ -357,7 +265,7 @@ ProcessUserLogin( VIEW ViewToWindow )
    szAttemptPassword = wWebXfer.Root.AttemptPassword
    nRC = 0  // initialize to normal processing
 
-   // Cannot use szLoginName since we need a case insensitive comparison.
+   // Cannot use szLoginName (in place of wWebXfer.Root.AttemptUserName) since we need a case insensitive comparison.
    IF wWebXfer.Root.AttemptUserName = "Admin" // logging in as user Admin for specified registrant
 
       wWebXfer.Root.LoginUser = "Admin"
@@ -383,7 +291,7 @@ ProcessUserLogin( VIEW ViewToWindow )
          RETURN 2
       END
 
-      // Cannot use szLoginUser since we need a case insensitive comparison.
+      // Cannot use szLoginUser (in place of wWebXfer.Root.AttemptUserName) since we need a case insensitive comparison.
       IF qOrganiz.Organization.LoginName = "Admin"
 
          wWebXfer.Root.LoginName = "Admin"
@@ -450,7 +358,7 @@ ProcessUserLogin( VIEW ViewToWindow )
 
    END
 
-   GET VIEW mOrganizInit NAMED "mOrganiz"
+   GET VIEW mOrganizInit NAMED "mOrganizInit"
 
    ACTIVATE mOrganiz WHERE mOrganiz.Organization.ID = qOrganiz.Organization.ID
    DisplayObjectInstance( mOrganiz, "", "" )
@@ -485,6 +393,80 @@ ProcessUserLogin( VIEW ViewToWindow )
    wWebXfer.Root.Banner6 = ""
 
    RETURN nRC
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//    OPERATION: AcceptNewAdministrator
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+AcceptNewAdministrator( VIEW ViewToWindow )
+
+   VIEW wWebXfer REGISTERED AS wWebXfer
+   VIEW mePamms  REGISTERED AS mePamms
+   STRING ( 128  ) szAttemptPassword
+   STRING ( 128  ) szConfirmPassword
+   INTEGER         lRegistrantNameLth
+   INTEGER         lPasswordLth
+   SHORT           nRC
+
+   szAttemptPassword = wWebXfer.Root.AttemptPassword
+   szConfirmPassword = wWebXfer.Root.ConfirmPassword
+
+   // 1: Ensure attempted password matches confirm password.
+   IF szAttemptPassword != szConfirmPassword
+   // TraceLineS( szAttemptPassword, szConfirmPassword )
+      MessageSend( ViewToWindow, "", "Accept New Administrator",
+                   "The new password and the confirmation password do not match.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      RETURN 2
+   END
+
+   // 2: Ensure new password is at least 8 characters long.
+   lPasswordLth = zGetStringLen( szConfirmPassword )
+   TraceLineI( "Password Length: ", lPasswordLth )
+   IF lPasswordLth < 8
+      MessageSend( ViewToWindow, "", "Accept New Administrator",
+                   "The new password must be at least 8 characters long.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      RETURN 2
+   END
+
+   // Set user password to new password.
+// SetAttrFromStrByContext( mPrimReg, "User", "UserPassword", szVerifyPassword, "Password" )
+   mePamms.Organization.AdministratorPassword = szConfirmPassword
+   mePamms.Organization.LastLoginDateTime = wWebXfer.Root.dCurrentDateTime
+
+   wWebXfer.Root.AttemptPassword = ""
+   wWebXfer.Root.ConfirmPassword = ""
+   wWebXfer.Root.CurrentPassword = ""
+
+   COMMIT mePamms
+   DropObjectInstance( mePamms )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//    OPERATION: CancelNewAdministrator
+//
+/////////////////////////////////////////////////////////////////////////////
+
+DIALOG OPERATION
+CancelNewAdministrator( VIEW ViewToWindow )
+
+   VIEW wWebXfer REGISTERED AS wWebXfer
+   VIEW mePamms  REGISTERED AS mePamms
+
+   wWebXfer.Root.AttemptPassword = ""
+   wWebXfer.Root.ConfirmPassword = ""
+   wWebXfer.Root.CurrentPassword = ""
+
+   DropObjectInstance( mePamms )
 
 END
 
@@ -1120,6 +1102,7 @@ DIALOG OPERATION
 AcceptNewPrimaryRegistrant( VIEW ViewToWindow )
 
    VIEW wWebXfer REGISTERED AS wWebXfer
+   VIEW iePamms  BASED ON LOD  iePamms
    VIEW mUser    BASED ON LOD  mUser
    VIEW qPrimReg BASED ON LOD  qPrimReg
    VIEW lPrimReg BASED ON LOD  lPrimReg
@@ -1221,6 +1204,9 @@ AcceptNewPrimaryRegistrant( VIEW ViewToWindow )
 // SetAttrFromStrByContext( mPrimReg, "User", "UserPassword", szVerifyPassword, "Password" )
    mPrimReg.Organization.AdministratorPassword = szConfirmPassword
 
+   ACTIVATE iePamms WHERE iePamms.ePamms.ID = 1
+   IncludeSubobjectFromSubobject( mPrimReg, "ePamms",
+                                  iePamms, "ePamms", zPOS_FIRST )
 // AcceptSubobject( mPrimReg, "ContactPerson" )
 // AcceptSubobject( mPrimReg, "PhysicalAddress" )
 // AcceptSubobject( mPrimReg, "MailingAddress" )
@@ -1230,7 +1216,7 @@ AcceptNewPrimaryRegistrant( VIEW ViewToWindow )
       DELETE ENTITY mPrimReg.MailingAddress
    END
 
-   Commit mPrimReg
+   COMMIT mPrimReg
    DropObjectInstance( mPrimReg )
 
 END
@@ -1922,6 +1908,7 @@ AcceptNewSubregistrant( VIEW ViewToWindow )
    // Set user password to new password.
 // SetAttrFromStrByContext( mSubreg, "User", "UserPassword", szConfirmPassword, "Password" )
    mSubreg.SubregOrganization.AdministratorPassword = szConfirmPassword
+   mSubreg.SubregOrganization.Role = "S"  // Subregistrant
 
 // AcceptSubobject( mSubreg, "ContactPerson" )
 // AcceptSubobject( mSubreg, "PhysicalAddress" )
@@ -3478,10 +3465,7 @@ MoveMasterProductUp( VIEW ViewToWindow )
    INTEGER lMove
 
    CreateViewFromView( mTempReg, mPrimReg )
-   lMove = wWebXfer.Root.MoveIncrement
-   IF lMove <= 0
-      lMove = 1
-   END
+   lMove = 1
 
    LOOP WHILE lMove > 0
       SET CURSOR PREVIOUS mTempReg.MasterProduct
@@ -3512,10 +3496,7 @@ MoveMasterProductDown( VIEW ViewToWindow )
    INTEGER lMove
 
    CreateViewFromView( mTempReg, mPrimReg )
-   lMove = wWebXfer.Root.MoveIncrement
-   IF lMove <= 0
-      lMove = 1
-   END
+   lMove = 1
 
    LOOP WHILE lMove > 0
       SET CURSOR NEXT mTempReg.MasterProduct
@@ -3987,3 +3968,5 @@ DIALOG OPERATION
 ExitLLD( VIEW ViewToWindow )
 
 END
+
+

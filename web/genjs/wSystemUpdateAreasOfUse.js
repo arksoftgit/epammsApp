@@ -298,44 +298,6 @@ function InitAreasOfUseForUpdate( )
    }
 }
 
-function MoveAreasOfUseDown( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wSystemUpdateAreasOfUse.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wSystemUpdateAreasOfUse.zAction.value = "MoveAreasOfUseDown";
-      document.wSystemUpdateAreasOfUse.submit( );
-   }
-}
-
-function MoveAreasOfUseUp( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wSystemUpdateAreasOfUse.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wSystemUpdateAreasOfUse.zAction.value = "MoveAreasOfUseUp";
-      document.wSystemUpdateAreasOfUse.submit( );
-   }
-}
-
 function NewAreasOfUseLast( )
 {
 
@@ -384,6 +346,27 @@ function SelectAreasOfUse( strTagEntityKey )
       _DisableFormElements( true );
 
       document.wSystemUpdateAreasOfUse.zAction.value = "SelectAreasOfUse";
+      document.wSystemUpdateAreasOfUse.submit( );
+   }
+}
+
+function SortApplicationTypes( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+       document.wSLCMarketingStatement.zTableRowSelect.value = buildSortTableHtml( "mEPA", "EPA_AreaOfUse", "GridAreasUse",  ["Area of Use"]  ); // viewName, entityName, tableId, arrTableColumnTitles
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wSystemUpdateAreasOfUse.zAction.value = "SortApplicationTypes";
       document.wSystemUpdateAreasOfUse.submit( );
    }
 }

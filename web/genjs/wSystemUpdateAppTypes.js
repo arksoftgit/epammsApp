@@ -189,7 +189,7 @@ function AcceptUpdateAppTypes( )
    }
 }
 
-function UpdateAppType( strTagEntityKey )
+function AddNewAppType( strTagEntityKey )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -203,35 +203,6 @@ function UpdateAppType( strTagEntityKey )
       document.wSystemUpdateAppTypes.zTableRowSelect.value = strEntityKey;
       // Javascript code entered by user.
 
-      var strAppType = document.wSystemUpdateAppTypes.AppType.value;
-      if ( strAppType == null || strAppType == "" )
-      {
-         alert( "'Application Type:' may not be blank to update an Application Type" );
-         return;
-      }
-
-      var tempField = document.getElementById( "GEAppType::" + strEntityKey );
-      tempField.innerText = strAppType;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wSystemUpdateAppTypes.zAction.value = "UpdateAppType";
-      document.wSystemUpdateAppTypes.submit( );
-   }
-}
-
-function NewAppTypeLast( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      // Javascript code entered by user.
-
       if ( document.wSystemUpdateAppTypes.AppType.value == "" )
       {
          alert( "'Application Type:' may not be blank to add a new Application Type" );
@@ -242,7 +213,7 @@ function NewAppTypeLast( )
 
       _DisableFormElements( true );
 
-      document.wSystemUpdateAppTypes.zAction.value = "NewAppTypeLast";
+      document.wSystemUpdateAppTypes.zAction.value = "AddNewAppType";
       document.wSystemUpdateAppTypes.submit( );
    }
 }
@@ -327,7 +298,7 @@ function InitAppTypesForUpdate( )
    }
 }
 
-function MoveAppTypeDown( strTagEntityKey )
+function NewAppTypeLast( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -335,48 +306,6 @@ function MoveAppTypeDown( strTagEntityKey )
 
    if ( _IsDocDisabled( ) == false )
    {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wSystemUpdateAppTypes.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wSystemUpdateAppTypes.zAction.value = "MoveAppTypeDown";
-      document.wSystemUpdateAppTypes.submit( );
-   }
-}
-
-function MoveAppTypeUp( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wSystemUpdateAppTypes.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wSystemUpdateAppTypes.zAction.value = "MoveAppTypeUp";
-      document.wSystemUpdateAppTypes.submit( );
-   }
-}
-
-function AddNewAppType( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wSystemUpdateAppTypes.zTableRowSelect.value = strEntityKey;
       // Javascript code entered by user.
 
       if ( document.wSystemUpdateAppTypes.AppType.value == "" )
@@ -389,7 +318,7 @@ function AddNewAppType( strTagEntityKey )
 
       _DisableFormElements( true );
 
-      document.wSystemUpdateAppTypes.zAction.value = "AddNewAppType";
+      document.wSystemUpdateAppTypes.zAction.value = "NewAppTypeLast";
       document.wSystemUpdateAppTypes.submit( );
    }
 }
@@ -417,6 +346,60 @@ function SelectAppType( strTagEntityKey )
       _DisableFormElements( true );
 
       document.wSystemUpdateAppTypes.zAction.value = "SelectAppType";
+      document.wSystemUpdateAppTypes.submit( );
+   }
+}
+
+function SortApplicationTypes( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+       document.wSLCMarketingStatement.zTableRowSelect.value = buildSortTableHtml( "mEPA", "EPA_ApplicationType", "GridAppTypes",  ["Application Type"]  ); // viewName, entityName, tableId, arrTableColumnTitles
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wSystemUpdateAppTypes.zAction.value = "SortApplicationTypes";
+      document.wSystemUpdateAppTypes.submit( );
+   }
+}
+
+function UpdateAppType( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wSystemUpdateAppTypes.zTableRowSelect.value = strEntityKey;
+      // Javascript code entered by user.
+
+      var strAppType = document.wSystemUpdateAppTypes.AppType.value;
+      if ( strAppType == null || strAppType == "" )
+      {
+         alert( "'Application Type:' may not be blank to update an Application Type" );
+         return;
+      }
+
+      var tempField = document.getElementById( "GEAppType::" + strEntityKey );
+      tempField.innerText = strAppType;
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wSystemUpdateAppTypes.zAction.value = "UpdateAppType";
       document.wSystemUpdateAppTypes.submit( );
    }
 }

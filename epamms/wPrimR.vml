@@ -1180,11 +1180,7 @@ MoveMasterLabelContentUp( VIEW ViewToWindow )
           WHERE mMasLC.MasterLabelContent.ID = lContentID
 
       CreateViewFromView( mTempLDD, mMasLC )
-      lMove = wWebXfer.Root.MoveIncrement
-      IF lMove <= 0
-         lMove = 1
-      END
-
+      lMove = 1
       LOOP WHILE lMove > 0
          SET CURSOR PREVIOUS mTempLDD.MasterLabelContent
          lMove = lMove - 1
@@ -1230,11 +1226,7 @@ MoveMasterLabelContentDown( VIEW ViewToWindow )
           WHERE mMasLC.MasterLabelContent.ID = lContentID
 
       CreateViewFromView( mTempLDD, mMasLC )
-      lMove = wWebXfer.Root.MoveIncrement
-      IF lMove <= 0
-         lMove = 1
-      END
-
+      lMove = 1
       LOOP WHILE lMove > 0
          SET CURSOR NEXT mTempLDD.MasterLabelContent
          lMove = lMove - 1
@@ -1266,11 +1258,7 @@ MoveMasterProductUp( VIEW ViewToWindow )
    SHORT   nRC
 
    CreateViewFromView( mTempReg, mPrimReg )
-   lMove = wWebXfer.Root.MoveIncrement
-   IF lMove <= 0
-      lMove = 1
-   END
-
+   lMove = 1
    LOOP WHILE lMove > 0
       SET CURSOR PREVIOUS mTempReg.MasterLabelContent
       lMove = lMove - 1
@@ -1303,11 +1291,7 @@ MoveMasterProductDown( VIEW ViewToWindow )
    SHORT   nRC
 
    CreateViewFromView( mTempReg, mPrimReg )
-   lMove = wWebXfer.Root.MoveIncrement
-   IF lMove <= 0
-      lMove = 1
-   END
-
+   lMove = 1
    LOOP WHILE lMove > 0
       SET CURSOR NEXT mTempReg.MasterLabelContent
       lMove = lMove - 1

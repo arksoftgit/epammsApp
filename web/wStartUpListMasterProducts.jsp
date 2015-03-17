@@ -36,7 +36,6 @@ public int DoInputMapping( HttpServletRequest request,
    Task task = objectEngine.getTaskById( taskId );
 
    View mPrimReg = null;
-   View wWebXfer = null;
    View vGridTmp = null; // temp view to grid view
    View vRepeatingGrp = null; // temp view to repeating group view
    String strDateFormat = "";
@@ -79,30 +78,6 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       vGridTmp.drop( );
-   }
-
-   wWebXfer = task.getViewByName( "wWebXfer" );
-   if ( VmlOperation.isValid( wWebXfer ) )
-   {
-      // EditBox: MoveIncrement
-      nRC = wWebXfer.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
-      {
-         strMapValue = request.getParameter( "MoveIncrement" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "MoveIncrement", "", strMapValue );
-            else
-               wWebXfer.cursor( "Root" ).getAttribute( "MoveIncrement" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "MoveIncrement", e.getReason( ), strMapValue );
-         }
-      }
-
    }
 
    if ( webMapping == true )
@@ -288,7 +263,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "MoveMasterProductDown" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "SortMasterProductVersions" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wStartUpListMasterProducts", strActionToProcess );
@@ -298,32 +273,22 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
-      // Position on the entity that was selected in the grid.
-      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
-      View mPrimReg;
-      mPrimReg = task.getViewByName( "mPrimReg" );
-      if ( VmlOperation.isValid( mPrimReg ) )
-      {
-         lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mPrimReg.cursor( "MasterLabelContent" ).setByEntityKey( lEKey );
-         if ( !csrRC.isSet() )
-         {
-            boolean bFound = false;
-            csrRCk = mPrimReg.cursor( "MasterLabelContent" ).setFirst("PrimaryRegistrant" );
-            while ( csrRCk.isSet() && !bFound )
-            {
-               lEKey = mPrimReg.cursor( "MasterLabelContent" ).getEntityKey( );
-               strKey = Long.toString( lEKey );
-               if ( StringUtils.equals( strKey, strEntityKey ) )
-               {
-                  // Stop while loop because we have positioned on the correct entity.
-                  bFound = true;
-               }
-               else
-                  csrRCk = mPrimReg.cursor( "MasterLabelContent" ).setNextContinue( );
-            } // Grid
-         }
-      }
+      // Next Window
+      strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StartModalSubwindow, "wSystem", "DragDropSort" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "MoveMasterProductDown" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wStartUpListMasterProducts", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
 
       // Action Operation
       nRC = 0;
@@ -362,33 +327,6 @@ if ( strActionToProcess != null )
       nRC = DoInputMapping( request, session, application, false );
       if ( nRC < 0 )
          break;
-
-      // Position on the entity that was selected in the grid.
-      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
-      View mPrimReg;
-      mPrimReg = task.getViewByName( "mPrimReg" );
-      if ( VmlOperation.isValid( mPrimReg ) )
-      {
-         lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mPrimReg.cursor( "MasterLabelContent" ).setByEntityKey( lEKey );
-         if ( !csrRC.isSet() )
-         {
-            boolean bFound = false;
-            csrRCk = mPrimReg.cursor( "MasterLabelContent" ).setFirst("PrimaryRegistrant" );
-            while ( csrRCk.isSet() && !bFound )
-            {
-               lEKey = mPrimReg.cursor( "MasterLabelContent" ).getEntityKey( );
-               strKey = Long.toString( lEKey );
-               if ( StringUtils.equals( strKey, strEntityKey ) )
-               {
-                  // Stop while loop because we have positioned on the correct entity.
-                  bFound = true;
-               }
-               else
-                  csrRCk = mPrimReg.cursor( "MasterLabelContent" ).setNextContinue( );
-            } // Grid
-         }
-      }
 
       // Action Operation
       nRC = 0;
@@ -945,7 +883,7 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
 else
 {
    VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpListMasterProducts.jsp", "wStartUp.InitListMasterProducts" );
-   nOptRC = wStartUp.InitListMasterProducts( new zVIEW( vKZXMLPGO ) );
+         nOptRC = wStartUp.InitListMasterProducts( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -953,7 +891,7 @@ else
       String strURLParameters;
 
       vView = task.getViewByName( "wXferO" );
-      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString();
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString( "" );
       strURLParameters = "?CallingPage=wStartUpListMasterProducts.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wStartUp" +
@@ -967,7 +905,7 @@ else
 
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wStartUp", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -975,8 +913,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wStartUp" );
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "ListMasterProducts" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wStartUp", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "ListMasterProducts", "" );
    }
 
 %>
@@ -1060,14 +998,17 @@ else
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
+   View iePamms = null;
    View lPrimReg = null;
    View lSubreg = null;
    View mCurrentUser = null;
+   View mePamms = null;
    View mMasLC = null;
    View mPerson = null;
    View mPrimReg = null;
    View mSubreg = null;
    View mUser = null;
+   View pePamms = null;
    View qOrganiz = null;
    View qOrganizLogin = null;
    View qPrimReg = null;
@@ -1136,7 +1077,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wStartUp", "ListMasterProducts" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -1202,70 +1143,19 @@ else
 <% /* PBNewMasterLabel:PushBtn */ %>
 <button type="button" class="formStylebutton" name="PBNewMasterLabel" id="PBNewMasterLabel" value="" onclick="AddNewMasterProduct( )" style="width:80px;height:28px;">New</button>
 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
-<% /* MoveIncrement::Text */ %>
-
-<span  id="MoveIncrement:" name="MoveIncrement:" style="width:114px;height:16px;">Move Increment:</span>
-
-<% /* MoveIncrement:EditBox */ %>
-<%
-   strErrorMapValue = VmlOperation.CheckError( "MoveIncrement", strError );
-   if ( !StringUtils.isBlank( strErrorMapValue ) )
-   {
-      if ( StringUtils.equals( strErrorFlag, "Y" ) )
-         strErrorColor = "color:red;";
-   }
-   else
-   {
-      strErrorColor = "";
-      wWebXfer = task.getViewByName( "wWebXfer" );
-      if ( VmlOperation.isValid( wWebXfer ) == false )
-         task.log( ).debug( "Invalid View: " + "MoveIncrement" );
-      else
-      {
-         nRC = wWebXfer.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            try
-            {
-            strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "MoveIncrement" ).getString( "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on MoveIncrement: " + e.getMessage());
-               task.log().error( "*** Error on ctrl MoveIncrement", e );
-            }
-            if ( strErrorMapValue == null )
-               strErrorMapValue = "";
-
-            task.log( ).debug( "Root.MoveIncrement: " + strErrorMapValue );
-         }
-         else
-            task.log( ).debug( "Entity does not exist: " + "wWebXfer.Root" );
-      }
-   }
-%>
-
-<input name="MoveIncrement" id="MoveIncrement" style="width:32px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<span style="height:28px;">&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+<% /* PBSort:PushBtn */ %>
+<button type="button" class="newbutton" name="PBSort" id="PBSort" value="" onclick="SortMasterProductVersions( )" style="width:80px;height:28px;">Sort</button>
 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
-
- <!-- This is added as a line spacer -->
-<div style="height:0px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridPrimaryRegistrant:Grid */ %>
-<table  cols=7 style=""  name="GridPrimaryRegistrant" id="GridPrimaryRegistrant">
+<table  cols=5 style=""  name="GridPrimaryRegistrant" id="GridPrimaryRegistrant">
 
 <thead><tr>
 
@@ -1274,8 +1164,6 @@ else
    <th>Version</th>
    <th>Update</th>
    <th>Delete</th>
-   <th>Move Up</th>
-   <th>Move Down</th>
 
 </tr></thead>
 
@@ -1298,8 +1186,6 @@ try
       String strGridVersion;
       String strBMBUpdateMasterProduct;
       String strBMBDeleteMasterProduct;
-      String strBMBMoveMasterProductUp;
-      String strBMBMoveMasterProductDown;
       
       View vGridPrimaryRegistrant;
       vGridPrimaryRegistrant = mPrimReg.newView( );
@@ -1361,8 +1247,6 @@ try
    <td nowrap><%=strGridVersion%></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateMasterProduct" onclick="SelectMasterProductForUpdate( this.id )" id="BMBUpdateMasterProduct::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteMasterProduct" onclick="SelectMasterProductForDelete( this.id )" id="BMBDeleteMasterProduct::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBMoveMasterProductUp" onclick="MoveMasterProductUp( this.id )" id="BMBMoveMasterProductUp::<%=strEntityKey%>"><img src="./images/ePammsUp.jpg" alt="Move Up"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBMoveMasterProductDown" onclick="MoveMasterProductDown( this.id )" id="BMBMoveMasterProductDown::<%=strEntityKey%>"><img src="./images/ePammsDown.jpg" alt="Move Down"></a></td>
 
 </tr>
 

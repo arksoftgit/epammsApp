@@ -104,8 +104,8 @@ function _DisableFormElements( bDisabled )
    var $el = $("#zDisable");
    if ( $el.length > 0 ) {
       $el.attr( "disabled", bDisabled );
-      bRC = true;
-   }
+            bRC = true;
+         }
 
    $.blockUI({ message: '<h1><img src="./images/busy.gif" /></h1>', overlayCSS: { backgroundColor: '#eee' } });
    return bRC;

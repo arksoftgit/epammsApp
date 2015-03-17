@@ -36,7 +36,6 @@ public int DoInputMapping( HttpServletRequest request,
    Task task = objectEngine.getTaskById( taskId );
 
    View mPrimReg = null;
-   View wWebXfer = null;
    View vGridTmp = null; // temp view to grid view
    View vRepeatingGrp = null; // temp view to repeating group view
    String strDateFormat = "";
@@ -79,30 +78,6 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       vGridTmp.drop( );
-   }
-
-   wWebXfer = task.getViewByName( "wWebXfer" );
-   if ( VmlOperation.isValid( wWebXfer ) )
-   {
-      // EditBox: MoveIncrement
-      nRC = wWebXfer.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
-      {
-         strMapValue = request.getParameter( "MoveIncrement" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "MoveIncrement", "", strMapValue );
-            else
-               wWebXfer.cursor( "Root" ).getAttribute( "MoveIncrement" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "MoveIncrement", e.getReason( ), strMapValue );
-         }
-      }
-
    }
 
    if ( webMapping == true )
@@ -1163,7 +1138,7 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
 else
 {
    VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminPrimaryRegistrantDetail.jsp", "wStartUp.InitPrimaryRegistrant" );
-   nOptRC = wStartUp.InitPrimaryRegistrant( new zVIEW( vKZXMLPGO ) );
+         nOptRC = wStartUp.InitPrimaryRegistrant( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -1171,7 +1146,7 @@ else
       String strURLParameters;
 
       vView = task.getViewByName( "wXferO" );
-      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString();
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString( "" );
       strURLParameters = "?CallingPage=wStartUpAdminPrimaryRegistrantDetail.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wStartUp" +
@@ -1185,7 +1160,7 @@ else
 
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wStartUp", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -1193,8 +1168,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wStartUp" );
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "AdminPrimaryRegistrantDetail" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wStartUp", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "AdminPrimaryRegistrantDetail", "" );
    }
 
 %>
@@ -1308,14 +1283,17 @@ else
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
+   View iePamms = null;
    View lPrimReg = null;
    View lSubreg = null;
    View mCurrentUser = null;
+   View mePamms = null;
    View mMasLC = null;
    View mPerson = null;
    View mPrimReg = null;
    View mSubreg = null;
    View mUser = null;
+   View pePamms = null;
    View qOrganiz = null;
    View qOrganizLogin = null;
    View qPrimReg = null;
@@ -1384,7 +1362,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wStartUp", "AdminPrimaryRegistrantDetail" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -1585,44 +1563,6 @@ else
 <span  id="MoveIncrement:" name="MoveIncrement:" style="width:114px;height:16px;">Move Increment:</span>
 
 <% /* MoveIncrement:EditBox */ %>
-<%
-   strErrorMapValue = VmlOperation.CheckError( "MoveIncrement", strError );
-   if ( !StringUtils.isBlank( strErrorMapValue ) )
-   {
-      if ( StringUtils.equals( strErrorFlag, "Y" ) )
-         strErrorColor = "color:red;";
-   }
-   else
-   {
-      strErrorColor = "";
-      wWebXfer = task.getViewByName( "wWebXfer" );
-      if ( VmlOperation.isValid( wWebXfer ) == false )
-         task.log( ).debug( "Invalid View: " + "MoveIncrement" );
-      else
-      {
-         nRC = wWebXfer.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            try
-            {
-            strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "MoveIncrement" ).getString( "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on MoveIncrement: " + e.getMessage());
-               task.log().error( "*** Error on ctrl MoveIncrement", e );
-            }
-            if ( strErrorMapValue == null )
-               strErrorMapValue = "";
-
-            task.log( ).debug( "Root.MoveIncrement: " + strErrorMapValue );
-         }
-         else
-            task.log( ).debug( "Entity does not exist: " + "wWebXfer.Root" );
-      }
-   }
-%>
-
 <input name="MoveIncrement" id="MoveIncrement" style="width:32px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->

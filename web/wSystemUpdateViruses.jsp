@@ -240,7 +240,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "NewVirusLast" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "AddNewVirus" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemUpdateViruses", strActionToProcess );
@@ -249,6 +249,33 @@ if ( strActionToProcess != null )
       nRC = DoInputMapping( request, session, application, false );
       if ( nRC < 0 )
          break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mEPA;
+      mEPA = task.getViewByName( "mEPA" );
+      if ( VmlOperation.isValid( mEPA ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mEPA.cursor( "Viruses" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mEPA.cursor( "Viruses" ).setFirst("EPA_ChemicalFamily" );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mEPA.cursor( "Viruses" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mEPA.cursor( "Viruses" ).setNextContinue( );
+            } // Grid
+         }
+      }
 
       // Action Operation
       nRC = 0;
@@ -393,7 +420,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "UpdateVirus" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "NewVirusLast" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemUpdateViruses", strActionToProcess );
@@ -402,228 +429,6 @@ if ( strActionToProcess != null )
       nRC = DoInputMapping( request, session, application, false );
       if ( nRC < 0 )
          break;
-
-      // Position on the entity that was selected in the grid.
-      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
-      View mEPA;
-      mEPA = task.getViewByName( "mEPA" );
-      if ( VmlOperation.isValid( mEPA ) )
-      {
-         lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mEPA.cursor( "Viruses" ).setByEntityKey( lEKey );
-         if ( !csrRC.isSet() )
-         {
-            boolean bFound = false;
-            csrRCk = mEPA.cursor( "Viruses" ).setFirst("EPA_ChemicalFamily" );
-            while ( csrRCk.isSet() && !bFound )
-            {
-               lEKey = mEPA.cursor( "Viruses" ).getEntityKey( );
-               strKey = Long.toString( lEKey );
-               if ( StringUtils.equals( strKey, strEntityKey ) )
-               {
-                  // Stop while loop because we have positioned on the correct entity.
-                  bFound = true;
-               }
-               else
-                  csrRCk = mEPA.cursor( "Viruses" ).setNextContinue( );
-            } // Grid
-         }
-      }
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateViruses.jsp", "wSystem.UpdateVirusesFromCurrent" );
-         nOptRC = wSystem.UpdateVirusesFromCurrent( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSystem.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSystem.SetWebRedirection( vKZXMLPGO, wSystem.zWAB_StayOnWindowWithRefresh, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "MoveVirusDown" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemUpdateViruses", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Position on the entity that was selected in the grid.
-      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
-      View mEPA;
-      mEPA = task.getViewByName( "mEPA" );
-      if ( VmlOperation.isValid( mEPA ) )
-      {
-         lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mEPA.cursor( "Viruses" ).setByEntityKey( lEKey );
-         if ( !csrRC.isSet() )
-         {
-            boolean bFound = false;
-            csrRCk = mEPA.cursor( "Viruses" ).setFirst("EPA_ChemicalFamily" );
-            while ( csrRCk.isSet() && !bFound )
-            {
-               lEKey = mEPA.cursor( "Viruses" ).getEntityKey( );
-               strKey = Long.toString( lEKey );
-               if ( StringUtils.equals( strKey, strEntityKey ) )
-               {
-                  // Stop while loop because we have positioned on the correct entity.
-                  bFound = true;
-               }
-               else
-                  csrRCk = mEPA.cursor( "Viruses" ).setNextContinue( );
-            } // Grid
-         }
-      }
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateViruses.jsp", "wSystem.MoveVirusDown" );
-         nOptRC = wSystem.MoveVirusDown( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSystem.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSystem.SetWebRedirection( vKZXMLPGO, wSystem.zWAB_StayOnWindowWithRefresh, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "MoveVirusUp" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemUpdateViruses", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Position on the entity that was selected in the grid.
-      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
-      View mEPA;
-      mEPA = task.getViewByName( "mEPA" );
-      if ( VmlOperation.isValid( mEPA ) )
-      {
-         lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mEPA.cursor( "Viruses" ).setByEntityKey( lEKey );
-         if ( !csrRC.isSet() )
-         {
-            boolean bFound = false;
-            csrRCk = mEPA.cursor( "Viruses" ).setFirst("EPA_ChemicalFamily" );
-            while ( csrRCk.isSet() && !bFound )
-            {
-               lEKey = mEPA.cursor( "Viruses" ).getEntityKey( );
-               strKey = Long.toString( lEKey );
-               if ( StringUtils.equals( strKey, strEntityKey ) )
-               {
-                  // Stop while loop because we have positioned on the correct entity.
-                  bFound = true;
-               }
-               else
-                  csrRCk = mEPA.cursor( "Viruses" ).setNextContinue( );
-            } // Grid
-         }
-      }
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateViruses.jsp", "wSystem.MoveVirusUp" );
-         nOptRC = wSystem.MoveVirusUp( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSystem.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSystem.SetWebRedirection( vKZXMLPGO, wSystem.zWAB_StayOnWindowWithRefresh, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "AddNewVirus" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemUpdateViruses", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Position on the entity that was selected in the grid.
-      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
-      View mEPA;
-      mEPA = task.getViewByName( "mEPA" );
-      if ( VmlOperation.isValid( mEPA ) )
-      {
-         lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mEPA.cursor( "Viruses" ).setByEntityKey( lEKey );
-         if ( !csrRC.isSet() )
-         {
-            boolean bFound = false;
-            csrRCk = mEPA.cursor( "Viruses" ).setFirst("EPA_ChemicalFamily" );
-            while ( csrRCk.isSet() && !bFound )
-            {
-               lEKey = mEPA.cursor( "Viruses" ).getEntityKey( );
-               strKey = Long.toString( lEKey );
-               if ( StringUtils.equals( strKey, strEntityKey ) )
-               {
-                  // Stop while loop because we have positioned on the correct entity.
-                  bFound = true;
-               }
-               else
-                  csrRCk = mEPA.cursor( "Viruses" ).setNextContinue( );
-            } // Grid
-         }
-      }
 
       // Action Operation
       nRC = 0;
@@ -692,6 +497,88 @@ if ( strActionToProcess != null )
 
       // Next Window
       strNextJSP_Name = wSystem.SetWebRedirection( vKZXMLPGO, wSystem.zWAB_StayOnWindowWithRefresh, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "SortApplicationTypes" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemUpdateViruses", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      strNextJSP_Name = wSystem.SetWebRedirection( vKZXMLPGO, wSystem.zWAB_StartModalSubwindow, "wSystem", "DragDropSort" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "UpdateVirus" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemUpdateViruses", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mEPA;
+      mEPA = task.getViewByName( "mEPA" );
+      if ( VmlOperation.isValid( mEPA ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mEPA.cursor( "Viruses" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mEPA.cursor( "Viruses" ).setFirst("EPA_ChemicalFamily" );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mEPA.cursor( "Viruses" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mEPA.cursor( "Viruses" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateViruses.jsp", "wSystem.UpdateVirusesFromCurrent" );
+         nOptRC = wSystem.UpdateVirusesFromCurrent( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wSystem.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wSystem.SetWebRedirection( vKZXMLPGO, wSystem.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -916,7 +803,7 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
 else
 {
    VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateViruses.jsp", "wSystem.InitVirusesForUpdate" );
-   nOptRC = wSystem.InitVirusesForUpdate( new zVIEW( vKZXMLPGO ) );
+         nOptRC = wSystem.InitVirusesForUpdate( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -924,7 +811,7 @@ else
       String strURLParameters;
 
       vView = task.getViewByName( "wXferO" );
-      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString();
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString( "" );
       strURLParameters = "?CallingPage=wSystemUpdateViruses.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wSystem" +
@@ -938,7 +825,7 @@ else
 
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSystem", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -946,8 +833,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSystem" );
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "UpdateViruses" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSystem", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "UpdateViruses", "" );
    }
 
 %>
@@ -1120,7 +1007,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSystem", "UpdateViruses" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -1338,11 +1225,13 @@ else
    }
 %>
 
-<input name="Virus" id="Virus" style="width:580px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Virus" id="Virus" style="width:530px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-<span style="height:28px;">&nbsp</span>
 <% /* PBNewVirus:PushBtn */ %>
 <button type="button" class="formStylebutton" name="PBNewVirus" id="PBNewVirus" value="" onclick="NewVirusLast( )" style="width:80px;height:28px;">New</button>
+
+<% /* PBSort:PushBtn */ %>
+<button type="button" class="newbutton" name="PBSort" id="PBSort" value="" onclick="SortApplicationTypes( )" style="width:80px;height:28px;">Sort</button>
 
 </div>  <!-- End of a new line -->
 
@@ -1373,7 +1262,7 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:32px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridViruses:Grid */ %>
-<table  cols=6 style=""  name="GridViruses" id="GridViruses">
+<table  cols=4 style=""  name="GridViruses" id="GridViruses">
 
 <thead><tr>
 
@@ -1381,8 +1270,6 @@ else
    <th>Update</th>
    <th>New</th>
    <th>Delete</th>
-   <th>Up</th>
-   <th>Down</th>
 
 </tr></thead>
 
@@ -1404,8 +1291,6 @@ try
       String strBMBUpdateVirus;
       String strBMBNewVirus;
       String strBMBDeleteVirus;
-      String strBMBMoveVirusUp;
-      String strBMBMoveVirusDown;
       
       View vGridViruses;
       vGridViruses = mEPA.newView( );
@@ -1440,8 +1325,6 @@ try
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateVirus" onclick="UpdateVirus( this.id )" id="BMBUpdateVirus::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBNewVirus" onclick="AddNewVirus( this.id )" id="BMBNewVirus::<%=strEntityKey%>"><img src="./images/ePammsNew.jpg" alt="New"></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteVirus" onclick="DeleteVirus( this.id )" id="BMBDeleteVirus::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBMoveVirusUp" onclick="MoveVirusUp( this.id )" id="BMBMoveVirusUp::<%=strEntityKey%>"><img src="./images/ePammsUp.jpg" alt="Up"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBMoveVirusDown" onclick="MoveVirusDown( this.id )" id="BMBMoveVirusDown::<%=strEntityKey%>"><img src="./images/ePammsDown.jpg" alt="Down"></a></td>
 
 </tr>
 

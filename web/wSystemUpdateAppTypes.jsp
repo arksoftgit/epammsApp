@@ -240,7 +240,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "UpdateAppType" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "AddNewAppType" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemUpdateAppTypes", strActionToProcess );
@@ -276,44 +276,6 @@ if ( strActionToProcess != null )
             } // Grid
          }
       }
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateAppTypes.jsp", "wSystem.UpdateAppTypeFromCurrent" );
-         nOptRC = wSystem.UpdateAppTypeFromCurrent( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSystem.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSystem.SetWebRedirection( vKZXMLPGO, wSystem.zWAB_StayOnWindowWithRefresh, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "NewAppTypeLast" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemUpdateAppTypes", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
 
       // Action Operation
       nRC = 0;
@@ -458,7 +420,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "MoveAppTypeDown" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "NewAppTypeLast" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemUpdateAppTypes", strActionToProcess );
@@ -467,163 +429,6 @@ if ( strActionToProcess != null )
       nRC = DoInputMapping( request, session, application, false );
       if ( nRC < 0 )
          break;
-
-      // Position on the entity that was selected in the grid.
-      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
-      View mEPA;
-      mEPA = task.getViewByName( "mEPA" );
-      if ( VmlOperation.isValid( mEPA ) )
-      {
-         lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mEPA.cursor( "EPA_ApplicationType" ).setByEntityKey( lEKey );
-         if ( !csrRC.isSet() )
-         {
-            boolean bFound = false;
-            csrRCk = mEPA.cursor( "EPA_ApplicationType" ).setFirst( );
-            while ( csrRCk.isSet() && !bFound )
-            {
-               lEKey = mEPA.cursor( "EPA_ApplicationType" ).getEntityKey( );
-               strKey = Long.toString( lEKey );
-               if ( StringUtils.equals( strKey, strEntityKey ) )
-               {
-                  // Stop while loop because we have positioned on the correct entity.
-                  bFound = true;
-               }
-               else
-                  csrRCk = mEPA.cursor( "EPA_ApplicationType" ).setNextContinue( );
-            } // Grid
-         }
-      }
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateAppTypes.jsp", "wSystem.MoveAppTypeDown" );
-         nOptRC = wSystem.MoveAppTypeDown( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSystem.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSystem.SetWebRedirection( vKZXMLPGO, wSystem.zWAB_StayOnWindowWithRefresh, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "MoveAppTypeUp" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemUpdateAppTypes", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Position on the entity that was selected in the grid.
-      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
-      View mEPA;
-      mEPA = task.getViewByName( "mEPA" );
-      if ( VmlOperation.isValid( mEPA ) )
-      {
-         lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mEPA.cursor( "EPA_ApplicationType" ).setByEntityKey( lEKey );
-         if ( !csrRC.isSet() )
-         {
-            boolean bFound = false;
-            csrRCk = mEPA.cursor( "EPA_ApplicationType" ).setFirst( );
-            while ( csrRCk.isSet() && !bFound )
-            {
-               lEKey = mEPA.cursor( "EPA_ApplicationType" ).getEntityKey( );
-               strKey = Long.toString( lEKey );
-               if ( StringUtils.equals( strKey, strEntityKey ) )
-               {
-                  // Stop while loop because we have positioned on the correct entity.
-                  bFound = true;
-               }
-               else
-                  csrRCk = mEPA.cursor( "EPA_ApplicationType" ).setNextContinue( );
-            } // Grid
-         }
-      }
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateAppTypes.jsp", "wSystem.MoveAppTypeUp" );
-         nOptRC = wSystem.MoveAppTypeUp( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSystem.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSystem.SetWebRedirection( vKZXMLPGO, wSystem.zWAB_StayOnWindowWithRefresh, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "AddNewAppType" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemUpdateAppTypes", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Position on the entity that was selected in the grid.
-      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
-      View mEPA;
-      mEPA = task.getViewByName( "mEPA" );
-      if ( VmlOperation.isValid( mEPA ) )
-      {
-         lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mEPA.cursor( "EPA_ApplicationType" ).setByEntityKey( lEKey );
-         if ( !csrRC.isSet() )
-         {
-            boolean bFound = false;
-            csrRCk = mEPA.cursor( "EPA_ApplicationType" ).setFirst( );
-            while ( csrRCk.isSet() && !bFound )
-            {
-               lEKey = mEPA.cursor( "EPA_ApplicationType" ).getEntityKey( );
-               strKey = Long.toString( lEKey );
-               if ( StringUtils.equals( strKey, strEntityKey ) )
-               {
-                  // Stop while loop because we have positioned on the correct entity.
-                  bFound = true;
-               }
-               else
-                  csrRCk = mEPA.cursor( "EPA_ApplicationType" ).setNextContinue( );
-            } // Grid
-         }
-      }
 
       // Action Operation
       nRC = 0;
@@ -692,6 +497,88 @@ if ( strActionToProcess != null )
 
       // Next Window
       strNextJSP_Name = wSystem.SetWebRedirection( vKZXMLPGO, wSystem.zWAB_StayOnWindowWithRefresh, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "SortApplicationTypes" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemUpdateAppTypes", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      strNextJSP_Name = wSystem.SetWebRedirection( vKZXMLPGO, wSystem.zWAB_StartModalSubwindow, "wSystem", "DragDropSort" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "UpdateAppType" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemUpdateAppTypes", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mEPA;
+      mEPA = task.getViewByName( "mEPA" );
+      if ( VmlOperation.isValid( mEPA ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mEPA.cursor( "EPA_ApplicationType" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mEPA.cursor( "EPA_ApplicationType" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mEPA.cursor( "EPA_ApplicationType" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mEPA.cursor( "EPA_ApplicationType" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateAppTypes.jsp", "wSystem.UpdateAppTypeFromCurrent" );
+         nOptRC = wSystem.UpdateAppTypeFromCurrent( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wSystem.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wSystem.SetWebRedirection( vKZXMLPGO, wSystem.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -916,7 +803,7 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
 else
 {
    VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateAppTypes.jsp", "wSystem.InitAppTypesForUpdate" );
-   nOptRC = wSystem.InitAppTypesForUpdate( new zVIEW( vKZXMLPGO ) );
+         nOptRC = wSystem.InitAppTypesForUpdate( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -924,7 +811,7 @@ else
       String strURLParameters;
 
       vView = task.getViewByName( "wXferO" );
-      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString();
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString( "" );
       strURLParameters = "?CallingPage=wSystemUpdateAppTypes.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wSystem" +
@@ -938,7 +825,7 @@ else
 
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSystem", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -946,8 +833,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSystem" );
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "UpdateAppTypes" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSystem", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "UpdateAppTypes", "" );
    }
 
 %>
@@ -1120,7 +1007,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSystem", "UpdateAppTypes" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -1338,11 +1225,15 @@ else
    }
 %>
 
-<input name="AppType" id="AppType" style="width:554px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="AppType" id="AppType" style="width:478px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-<span style="height:28px;">&nbsp</span>
+<span style="height:28px;">&nbsp&nbsp</span>
 <% /* PBNewAppType:PushBtn */ %>
 <button type="button" class="formStylebutton" name="PBNewAppType" id="PBNewAppType" value="" onclick="NewAppTypeLast( )" style="width:80px;height:28px;">New</button>
+
+<span style="height:28px;">&nbsp&nbsp&nbsp</span>
+<% /* PBSort:PushBtn */ %>
+<button type="button" class="newbutton" name="PBSort" id="PBSort" value="" onclick="SortApplicationTypes( )" style="width:80px;height:28px;">Sort</button>
 
 </div>  <!-- End of a new line -->
 
@@ -1373,7 +1264,7 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:32px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridAppTypes:Grid */ %>
-<table  cols=6 style=""  name="GridAppTypes" id="GridAppTypes">
+<table  cols=4 style=""  name="GridAppTypes" id="GridAppTypes">
 
 <thead><tr>
 
@@ -1381,8 +1272,6 @@ else
    <th>Update</th>
    <th>New</th>
    <th>Delete</th>
-   <th>Up</th>
-   <th>Down</th>
 
 </tr></thead>
 
@@ -1404,8 +1293,6 @@ try
       String strBMBUpdateAppType;
       String strBMBNewAppType;
       String strBMBDeleteAppType;
-      String strBMBMoveAppTypeUp;
-      String strBMBMoveAppTypeDown;
       
       View vGridAppTypes;
       vGridAppTypes = mEPA.newView( );
@@ -1440,8 +1327,6 @@ try
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateAppType" onclick="UpdateAppType( this.id )" id="BMBUpdateAppType::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBNewAppType" onclick="AddNewAppType( this.id )" id="BMBNewAppType::<%=strEntityKey%>"><img src="./images/ePammsNew.jpg" alt="New"></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteAppType" onclick="DeleteAppType( this.id )" id="BMBDeleteAppType::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBMoveAppTypeUp" onclick="MoveAppTypeUp( this.id )" id="BMBMoveAppTypeUp::<%=strEntityKey%>"><img src="./images/ePammsUp.jpg" alt="Up"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBMoveAppTypeDown" onclick="MoveAppTypeDown( this.id )" id="BMBMoveAppTypeDown::<%=strEntityKey%>"><img src="./images/ePammsDown.jpg" alt="Down"></a></td>
 
 </tr>
 

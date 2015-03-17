@@ -193,6 +193,27 @@ function SelectMasterProductForDelete( strTagEntityKey )
    }
 }
 
+function SortMasterProductVersions( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+       document.wSLCMarketingStatement.zTableRowSelect.value = buildSortTableHtml( "mPrimReg", "MasterLabelContent", "GridPrimaryRegistrant",  ["Name", "Description", "Version"]  ); // viewName, entityName, tableId, arrTableColumnTitles
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wStartUpListMasterProducts.zAction.value = "SortMasterProductVersions";
+      document.wStartUpListMasterProducts.submit( );
+   }
+}
+
 function InitListMasterProducts( )
 {
 
@@ -242,7 +263,7 @@ function InitListMasterProducts( )
    }
 }
 
-function MoveMasterProductDown( strTagEntityKey )
+function MoveMasterProductDown( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -250,10 +271,6 @@ function MoveMasterProductDown( strTagEntityKey )
 
    if ( _IsDocDisabled( ) == false )
    {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wStartUpListMasterProducts.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
       document.wStartUpListMasterProducts.zAction.value = "MoveMasterProductDown";
@@ -261,7 +278,7 @@ function MoveMasterProductDown( strTagEntityKey )
    }
 }
 
-function MoveMasterProductUp( strTagEntityKey )
+function MoveMasterProductUp( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -269,10 +286,6 @@ function MoveMasterProductUp( strTagEntityKey )
 
    if ( _IsDocDisabled( ) == false )
    {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wStartUpListMasterProducts.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
       document.wStartUpListMasterProducts.zAction.value = "MoveMasterProductUp";

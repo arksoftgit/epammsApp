@@ -987,7 +987,7 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
 else
 {
    VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemChemical.jsp", "wSystem.InitSystemChemicalForUpdate" );
-   nOptRC = wSystem.InitSystemChemicalForUpdate( new zVIEW( vKZXMLPGO ) );
+         nOptRC = wSystem.InitSystemChemicalForUpdate( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -995,7 +995,7 @@ else
       String strURLParameters;
 
       vView = task.getViewByName( "wXferO" );
-      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString();
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString( "" );
       strURLParameters = "?CallingPage=wSystemUpdateSystemChemical.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wSystem" +
@@ -1009,7 +1009,7 @@ else
 
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSystem", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -1017,8 +1017,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSystem" );
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "UpdateSystemChemical" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSystem", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "UpdateSystemChemical", "" );
    }
 
 %>
@@ -1040,7 +1040,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 
 <!-- TinyMCE -->
-<script language="JavaScript" type="text/javascript" src="./js/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/tinymce/js/tinymce/tinymce.min.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/TinyMCE.js"></script>
 <!-- /TinyMCE -->
 
@@ -1247,7 +1247,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSystem", "UpdateSystemChemical" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -1304,21 +1304,16 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:22px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBChemical:GroupBox */ %>
-<div id="GBChemical" name="GBChemical" style="float:left;width:554px;" >
 
-<table cols=2 style="width:554px;"  class="grouptable">
+<div id="GBChemical" name="GBChemical"   style="float:left;position:relative; width:554px; height:298px;">  <!-- GBChemical --> 
 
-<tr>
-<td valign="top" style="width:112px;">
 <% /* Name::Text */ %>
 
-<span  id="Name:" name="Name:" style="width:102px;height:16px;">Name:</span>
+<label  id="Name:" name="Name:" style="width:102px;height:16px;position:absolute;left:18px;top:24px;">Name:</label>
 
-</td>
-<td valign="top" style="width:402px;">
 <% /* Name:MLEdit */ %>
 <%
-   // MLEdit: Name
+   // : Name
    strErrorMapValue = VmlOperation.CheckError( "Name", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
@@ -1330,7 +1325,7 @@ else
       strErrorColor = "";
       mEPA = task.getViewByName( "mEPA" );
       if ( VmlOperation.isValid( mEPA ) == false )
-         task.log( ).debug( "Invalid View: " + "Name" );
+         task.log( ).info( "Invalid View: " + "Name" );
       else
       {
          nRC = mEPA.cursor( "EPA_ChemicalFamily" ).checkExistenceOfEntity( ).toInt();
@@ -1340,29 +1335,23 @@ else
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "EPA_ChemicalFamily.Name: " + strErrorMapValue );
+            task.log( ).info( "EPA_ChemicalFamily.Name: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mEPA.EPA_ChemicalFamily" );
+            task.log( ).info( "Entity does not exist: " + "mEPA.EPA_ChemicalFamily" );
       }
    }
 %>
 
-<textarea id="Name" name="Name" class="mceSimple" style="width:402px;height:84px;border:solid;border-width:2px;border-style:groove;"><%=strErrorMapValue%></textarea>
+<textarea name="Name" id="Name" class="mceSimple" style="width:402px;height:84px;position:absolute;left:130px;top:24px;border:solid;border-width:2px;border-style:groove;"><%=strErrorMapValue%></textarea>
 
-</td>
-</tr>
-<tr>
-<td valign="top" style="width:114px;">
 <% /* Description::Text */ %>
 
-<span  id="Description:" name="Description:" style="width:102px;height:16px;">Description:</span>
+<label  id="Description:" name="Description:" style="width:102px;height:16px;position:absolute;left:18px;top:130px;">Description:</label>
 
-</td>
-<td valign="top" style="width:402px;">
 <% /* Description:MLEdit */ %>
 <%
-   // MLEdit: Description
+   // : Description
    strErrorMapValue = VmlOperation.CheckError( "Description", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
@@ -1374,7 +1363,7 @@ else
       strErrorColor = "";
       mEPA = task.getViewByName( "mEPA" );
       if ( VmlOperation.isValid( mEPA ) == false )
-         task.log( ).debug( "Invalid View: " + "Description" );
+         task.log( ).info( "Invalid View: " + "Description" );
       else
       {
          nRC = mEPA.cursor( "EPA_ChemicalFamily" ).checkExistenceOfEntity( ).toInt();
@@ -1384,30 +1373,24 @@ else
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "EPA_ChemicalFamily.Description: " + strErrorMapValue );
+            task.log( ).info( "EPA_ChemicalFamily.Description: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mEPA.EPA_ChemicalFamily" );
+            task.log( ).info( "Entity does not exist: " + "mEPA.EPA_ChemicalFamily" );
       }
    }
 %>
 
-<textarea id="Description" name="Description" class="mceSimple" style="width:402px;height:84px;border:solid;border-width:2px;border-style:groove;"><%=strErrorMapValue%></textarea>
+<textarea name="Description" id="Description" class="mceSimple" style="width:402px;height:84px;position:absolute;left:132px;top:130px;border:solid;border-width:2px;border-style:groove;"><%=strErrorMapValue%></textarea>
 
-</td>
-</tr>
-<tr>
-<td valign="top" style="width:114px;">
 <% /* Family::Text */ %>
 
-<span  id="Family:" name="Family:" style="width:102px;height:16px;">Family:</span>
+<label  id="Family:" name="Family:" style="width:102px;height:16px;position:absolute;left:18px;top:236px;">Family:</label>
 
-</td>
-<td valign="top" style="width:402px;">
 <% /* Family:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="Family" id="Family" size="1" style="width:402px;" onchange="FamilyOnChange( )">
+<select  name="Family" id="Family" size="1" style="width:402px;position:absolute;left:132px;top:236px;" onchange="FamilyOnChange( )">
 
 <%
    boolean inListFamily = false;
@@ -1420,7 +1403,7 @@ else
       nRC = mEPA.cursor( "EPA_ChemicalFamily" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mEPA.cursor( "EPA_ChemicalFamily" ).getAttribute( "ChemicalFamily" ).getString();
+         strComboCurrentValue = mEPA.cursor( "EPA_ChemicalFamily" ).getAttribute( "ChemicalFamily" ).getString( "" );
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }
@@ -1470,12 +1453,8 @@ else
 </select>
 
 <input name="hFamily" id="hFamily" type="hidden" value="<%=strComboCurrentValue%>" >
-</td>
-</tr>
-</table>
 
-</div>  <!-- GBChemical --> 
-
+</div>  <!--  GBChemical --> 
 </div>  <!-- End of a new line -->
 
 

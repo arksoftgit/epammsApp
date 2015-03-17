@@ -89,9 +89,9 @@ public int DoInputMapping( HttpServletRequest request,
                VmlOperation.CreateMessage( task, "GridCheckCtl1", "", strMapValue );
             else
                if ( strMapValue != null )
-                  vGridTmp.cursor( "CompositeComponentList" ).getAttribute( "Selected" ).setValue( strMapValue );
+                  vGridTmp.cursor( "CompositeComponentList" ).getAttribute( "Selected" ).setValue( strMapValue, "" );
                else
-                  vGridTmp.cursor( "CompositeComponentList" ).getAttribute( "Selected" ).setValue( "" );
+                  vGridTmp.cursor( "CompositeComponentList" ).getAttribute( "Selected" ).setValue( "", "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -172,9 +172,9 @@ public int DoInputMapping( HttpServletRequest request,
                VmlOperation.CreateMessage( task, "GridCheckCtl2", "", strMapValue );
             else
                if ( strMapValue != null )
-                  vGridTmp.cursor( "CompositeComponentList" ).getAttribute( "Selected" ).setValue( strMapValue );
+                  vGridTmp.cursor( "CompositeComponentList" ).getAttribute( "Selected" ).setValue( strMapValue, "" );
                else
-                  vGridTmp.cursor( "CompositeComponentList" ).getAttribute( "Selected" ).setValue( "" );
+                  vGridTmp.cursor( "CompositeComponentList" ).getAttribute( "Selected" ).setValue( "", "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -657,7 +657,7 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
 else
 {
    VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSLC_ComponentsUpdate.jsp", "wSPLD.PostbuildSLC_Update" );
-   nOptRC = wSPLD.PostbuildSLC_Update( new zVIEW( vKZXMLPGO ) );
+         nOptRC = wSPLD.PostbuildSLC_Update( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -665,7 +665,7 @@ else
       String strURLParameters;
 
       vView = task.getViewByName( "wXferO" );
-      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString();
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString( "" );
       strURLParameters = "?CallingPage=wSPLDSLC_ComponentsUpdate.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wSPLD" +
@@ -679,7 +679,7 @@ else
 
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSPLD", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -687,8 +687,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSPLD" );
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "SLC_ComponentsUpdate" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSPLD", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "SLC_ComponentsUpdate", "" );
    }
 
 %>
@@ -872,7 +872,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSPLD", "SLC_ComponentsUpdate" );
    strOpenFile = VmlOperation.FindOpenFile( task );

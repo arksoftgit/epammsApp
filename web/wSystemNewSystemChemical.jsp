@@ -531,7 +531,7 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
 else
 {
    VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemNewSystemChemical.jsp", "wSystem.InitSystemChemicalForInsert" );
-   nOptRC = wSystem.InitSystemChemicalForInsert( new zVIEW( vKZXMLPGO ) );
+         nOptRC = wSystem.InitSystemChemicalForInsert( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -539,7 +539,7 @@ else
       String strURLParameters;
 
       vView = task.getViewByName( "wXferO" );
-      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString();
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString( "" );
       strURLParameters = "?CallingPage=wSystemNewSystemChemical.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wSystem" +
@@ -553,7 +553,7 @@ else
 
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSystem", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -561,8 +561,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSystem" );
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "NewSystemChemical" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSystem", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "NewSystemChemical", "" );
    }
 
 %>
@@ -584,7 +584,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 
 <!-- TinyMCE -->
-<script language="JavaScript" type="text/javascript" src="./js/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/tinymce/js/tinymce/tinymce.min.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/TinyMCE.js"></script>
 <!-- /TinyMCE -->
 
@@ -731,7 +731,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSystem", "NewSystemChemical" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -832,7 +832,7 @@ else
    }
 %>
 
-<textarea id="Name" name="Name" class="mceSimple" style="width:402px;height:84px;border:solid;border-width:2px;border-style:groove;"><%=strErrorMapValue%></textarea>
+<textarea id="Name" name="Name" class="mceSimple" style="width:402px;height:84px;border:solid;border-width:2px;border-style:groove;style="width:402px;height:84px;""><%=strErrorMapValue%></textarea>
 
 </td>
 </tr>
@@ -876,7 +876,7 @@ else
    }
 %>
 
-<textarea id="Description" name="Description" class="mceSimple" style="width:402px;height:84px;border:solid;border-width:2px;border-style:groove;"><%=strErrorMapValue%></textarea>
+<textarea id="Description" name="Description" class="mceSimple" style="width:402px;height:84px;border:solid;border-width:2px;border-style:groove;style="width:402px;height:84px;""><%=strErrorMapValue%></textarea>
 
 </td>
 </tr>
@@ -904,7 +904,7 @@ else
       nRC = mEPA.cursor( "EPA_ChemicalFamily" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mEPA.cursor( "EPA_ChemicalFamily" ).getAttribute( "ChemicalFamily" ).getString();
+         strComboCurrentValue = mEPA.cursor( "EPA_ChemicalFamily" ).getAttribute( "ChemicalFamily" ).getString( "" );
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }

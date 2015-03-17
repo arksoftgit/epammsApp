@@ -446,7 +446,7 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
 else
 {
    VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemSysDefaultDetail.jsp", "wSystem.InitSysDefaultDetail" );
-   nOptRC = wSystem.InitSysDefaultDetail( new zVIEW( vKZXMLPGO ) );
+         nOptRC = wSystem.InitSysDefaultDetail( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -454,7 +454,7 @@ else
       String strURLParameters;
 
       vView = task.getViewByName( "wXferO" );
-      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString();
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString( "" );
       strURLParameters = "?CallingPage=wSystemSysDefaultDetail.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wSystem" +
@@ -468,7 +468,7 @@ else
 
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSystem", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -476,8 +476,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSystem" );
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "SysDefaultDetail" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSystem", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "SysDefaultDetail", "" );
    }
 
 %>
@@ -630,7 +630,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSystem", "SysDefaultDetail" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -792,10 +792,10 @@ else
       vComboBox3 = mUser.newView( );
       ComboCount = 0;
       strComboSelectedValue = "0";
-      nRC = vComboBox3.cursor( "User" ).setFirstWithinOi( );
+      csrRC = vComboBox3.cursor( "User" ).setFirstWithinOi( );
       while ( csrRC.isSet() )
       {
-         strErrorMapValue = vComboBox3.cursor( "User" ).getAttribute( "SMTPServer" ).getString( "" );
+         strErrorMapValue = vComboBox3.cursor( "User" ).getAttribute( "UserName" ).getString( "" );
          if ( strErrorMapValue == null )
             strErrorMapValue = "";
 

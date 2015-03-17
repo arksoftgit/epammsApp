@@ -328,4 +328,35 @@ function mmLogout( )
       document.wSystemDragDropSort.submit( );
    }
 }
-
+/*
+INFO  21:48:45,567  [8AEFCFBCDA702B9CBFA4376A5334504D] Order Array Entity: S_MarketingUsageOrdering
+INFO  21:48:45,567  [8AEFCFBCDA702B9CBFA4376A5334504D] Order Array subscript: 3,4,1,2
+INFO  21:48:45,567  [8AEFCFBCDA702B9CBFA4376A5334504D] Order array index length: 4
+INFO  21:48:45,567  [8AEFCFBCDA702B9CBFA4376A5334504D] Order array index[0] = 2
+INFO  21:48:45,567  [8AEFCFBCDA702B9CBFA4376A5334504D] Order array index[1] = 3
+INFO  21:48:45,567  [8AEFCFBCDA702B9CBFA4376A5334504D] Order array index[2] = 0
+INFO  21:48:45,567  [8AEFCFBCDA702B9CBFA4376A5334504D] Order array index[3] = 1
+INFO  21:48:45,567  [8AEFCFBCDA702B9CBFA4376A5334504D] Before orderByNewIndex
+INFO  21:48:45,567  [8AEFCFBCDA702B9CBFA4376A5334504D] S_MarketingUsage.UsageType: 3473  C   S_MarketingUsage.dDisplayUsageName: Bacteria - (1)  ATCC and antibiotic-resistant strain
+INFO  21:48:45,567  [8AEFCFBCDA702B9CBFA4376A5334504D] S_MarketingUsage.UsageType: 3474  C   S_MarketingUsage.dDisplayUsageName: Bacteria - (2)  antibiotic-resistant strain only
+INFO  21:48:45,568  [8AEFCFBCDA702B9CBFA4376A5334504D] S_MarketingUsage.UsageType: 3475  C   S_MarketingUsage.dDisplayUsageName: Bacteria - Acinetobacter calcoaceticus
+INFO  21:48:45,568  [8AEFCFBCDA702B9CBFA4376A5334504D] S_MarketingUsage.UsageType: 3476  C   S_MarketingUsage.dDisplayUsageName: Bacteria - Bordetella bronchiseptica
+INFO  21:48:45,568  [8AEFCFBCDA702B9CBFA4376A5334504D] k = 0  shifts: 0
+INFO  21:48:45,568  [8AEFCFBCDA702B9CBFA4376A5334504D] After swap (1)
+INFO  21:48:45,568  [8AEFCFBCDA702B9CBFA4376A5334504D] S_MarketingUsage.UsageType: 3475  C   S_MarketingUsage.dDisplayUsageName: Bacteria - Acinetobacter calcoaceticus
+INFO  21:48:45,568  [8AEFCFBCDA702B9CBFA4376A5334504D] S_MarketingUsage.UsageType: 3473  C   S_MarketingUsage.dDisplayUsageName: Bacteria - (1)  ATCC and antibiotic-resistant strain
+INFO  21:48:45,568  [8AEFCFBCDA702B9CBFA4376A5334504D] S_MarketingUsage.UsageType: 3474  C   S_MarketingUsage.dDisplayUsageName: Bacteria - (2)  antibiotic-resistant strain only
+INFO  21:48:45,568  [8AEFCFBCDA702B9CBFA4376A5334504D] S_MarketingUsage.UsageType: 3476  C   S_MarketingUsage.dDisplayUsageName: Bacteria - Bordetella bronchiseptica
+INFO  21:48:45,568  [8AEFCFBCDA702B9CBFA4376A5334504D] j = 0  Array Shift[0] : 2
+INFO  21:48:45,568  [8AEFCFBCDA702B9CBFA4376A5334504D] k = 1  shifts: 1
+INFO  21:48:45,569  [8AEFCFBCDA702B9CBFA4376A5334504D] arrIdx bounds error ???  arrIdx[1] 1 (4)
+INFO  21:48:45,569  [8AEFCFBCDA702B9CBFA4376A5334504D] S_MarketingUsage.UsageType: 3475  C   S_MarketingUsage.dDisplayUsageName: Bacteria - Acinetobacter calcoaceticus
+INFO  21:48:45,569  [8AEFCFBCDA702B9CBFA4376A5334504D] S_MarketingUsage.UsageType: 3473  C   S_MarketingUsage.dDisplayUsageName: Bacteria - (1)  ATCC and antibiotic-resistant strain
+INFO  21:48:45,569  [8AEFCFBCDA702B9CBFA4376A5334504D] S_MarketingUsage.UsageType: 3474  C   S_MarketingUsage.dDisplayUsageName: Bacteria - (2)  antibiotic-resistant strain only
+INFO  21:48:45,569  [8AEFCFBCDA702B9CBFA4376A5334504D] S_MarketingUsage.UsageType: 3476  C   S_MarketingUsage.dDisplayUsageName: Bacteria - Bordetella bronchiseptica
+INFO  21:48:45,569  [8AEFCFBCDA702B9CBFA4376A5334504D] After orderByNewIndex Swaps: 1
+INFO  21:48:45,569  [8AEFCFBCDA702B9CBFA4376A5334504D] S_MarketingUsage.UsageType: 3475  C   S_MarketingUsage.dDisplayUsageName: Bacteria - Acinetobacter calcoaceticus
+INFO  21:48:45,569  [8AEFCFBCDA702B9CBFA4376A5334504D] S_MarketingUsage.UsageType: 3473  C   S_MarketingUsage.dDisplayUsageName: Bacteria - (1)  ATCC and antibiotic-resistant strain
+INFO  21:48:45,569  [8AEFCFBCDA702B9CBFA4376A5334504D] S_MarketingUsage.UsageType: 3474  C   S_MarketingUsage.dDisplayUsageName: Bacteria - (2)  antibiotic-resistant strain only
+INFO  21:48:45,625  [8AEFCFBCDA702B9CBFA4376A5334504D] S_MarketingUsage.UsageType: 3476  C   S_MarketingUsage.dDisplayUsageName: Bacteria - Bordetella bronchiseptica
+*/

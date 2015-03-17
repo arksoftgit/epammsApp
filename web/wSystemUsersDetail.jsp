@@ -465,7 +465,7 @@ else
 }
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSystem", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -473,8 +473,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSystem" );
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "UsersDetail" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSystem", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "UsersDetail", "" );
    }
 
 %>
@@ -596,7 +596,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSystem", "UsersDetail" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -842,7 +842,7 @@ else
       vComboBox4 = mUser.newView( );
       ComboCount = 0;
       strComboSelectedValue = "0";
-      nRC = vComboBox4.cursor( "UserGroup" ).setFirstWithinOi( );
+      csrRC = vComboBox4.cursor( "UserGroup" ).setFirstWithinOi( );
       while ( csrRC.isSet() )
       {
          strErrorMapValue = vComboBox4.cursor( "UserGroup" ).getAttribute( "GroupName" ).getString( "" );
@@ -915,7 +915,7 @@ else
       nRC = mUser.cursor( "User" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mUser.cursor( "User" ).getAttribute( "Active" ).getString();
+         strComboCurrentValue = mUser.cursor( "User" ).getAttribute( "Active" ).getString( "" );
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }

@@ -381,6 +381,31 @@ DeleteAreasOfUse( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
+//:DeleteAppType( VIEW ViewToWindow )
+
+//:   VIEW mEPA     REGISTERED AS mEPA
+public int 
+DeleteAppType( View     ViewToWindow )
+{
+   zVIEW    mEPA = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
+
+   //:DELETE ENTITY mEPA.EPA_ApplicationType
+   RESULT = DeleteEntity( mEPA, "EPA_ApplicationType", zPOS_NEXT );
+   //:AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "DeleteAppType: " )
+   {
+    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
+    m_ZGlobalV_Operation.AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "DeleteAppType: " );
+    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
+   }
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
 //:DeleteClaim( VIEW ViewToWindow )
 
 //:   VIEW mEPA     REGISTERED AS mEPA
@@ -1367,13 +1392,28 @@ ImportBacteriaFromFile( View     ViewToWindow )
 
    //:END
 
-   //:szDirectoryName = szDirectoryName + szFileName
-    {StringBuilder sb_szDirectoryName;
+   //:szMessage = szDirectoryName + szFileName // borrow szMessage for a sec...
+    {StringBuilder sb_szMessage;
+   if ( szMessage == null )
+      sb_szMessage = new StringBuilder( 32 );
+   else
+      sb_szMessage = new StringBuilder( szMessage );
+      ZeidonStringCopy( sb_szMessage, 1, 0, szDirectoryName, 1, 0, 513 );
+   szMessage = sb_szMessage.toString( );}
+    {StringBuilder sb_szMessage;
+   if ( szMessage == null )
+      sb_szMessage = new StringBuilder( 32 );
+   else
+      sb_szMessage = new StringBuilder( szMessage );
+      ZeidonStringConcat( sb_szMessage, 1, 0, szFileName, 1, 0, 513 );
+   szMessage = sb_szMessage.toString( );}
+   //:SysConvertEnvironmentString( szDirectoryName, szMessage )
+   {StringBuilder sb_szDirectoryName;
    if ( szDirectoryName == null )
       sb_szDirectoryName = new StringBuilder( 32 );
    else
       sb_szDirectoryName = new StringBuilder( szDirectoryName );
-      ZeidonStringConcat( sb_szDirectoryName, 1, 0, szFileName, 1, 0, 513 );
+       m_KZOEP1AA.SysConvertEnvironmentString( sb_szDirectoryName, szMessage );
    szDirectoryName = sb_szDirectoryName.toString( );}
    //:nRC = ImportCSV_ToZeidonOI( mEPA, szDirectoryName )
    try
@@ -1559,13 +1599,28 @@ ImportFungiFromFile( View     ViewToWindow )
 
    //:END
 
-   //:szDirectoryName = szDirectoryName + szFileName
-    {StringBuilder sb_szDirectoryName;
+   //:szMessage = szDirectoryName + szFileName // borrow szMessage for a sec...
+    {StringBuilder sb_szMessage;
+   if ( szMessage == null )
+      sb_szMessage = new StringBuilder( 32 );
+   else
+      sb_szMessage = new StringBuilder( szMessage );
+      ZeidonStringCopy( sb_szMessage, 1, 0, szDirectoryName, 1, 0, 513 );
+   szMessage = sb_szMessage.toString( );}
+    {StringBuilder sb_szMessage;
+   if ( szMessage == null )
+      sb_szMessage = new StringBuilder( 32 );
+   else
+      sb_szMessage = new StringBuilder( szMessage );
+      ZeidonStringConcat( sb_szMessage, 1, 0, szFileName, 1, 0, 513 );
+   szMessage = sb_szMessage.toString( );}
+   //:SysConvertEnvironmentString( szDirectoryName, szMessage )
+   {StringBuilder sb_szDirectoryName;
    if ( szDirectoryName == null )
       sb_szDirectoryName = new StringBuilder( 32 );
    else
       sb_szDirectoryName = new StringBuilder( szDirectoryName );
-      ZeidonStringConcat( sb_szDirectoryName, 1, 0, szFileName, 1, 0, 513 );
+       m_KZOEP1AA.SysConvertEnvironmentString( sb_szDirectoryName, szMessage );
    szDirectoryName = sb_szDirectoryName.toString( );}
    //:nRC = ImportCSV_ToZeidonOI( mEPA, szDirectoryName )
    try
@@ -1751,13 +1806,28 @@ ImportVirusesFromFile( View     ViewToWindow )
 
    //:END
 
-   //:szDirectoryName = szDirectoryName + szFileName
-    {StringBuilder sb_szDirectoryName;
+   //:szMessage = szDirectoryName + szFileName // borrow szMessage for a sec...
+    {StringBuilder sb_szMessage;
+   if ( szMessage == null )
+      sb_szMessage = new StringBuilder( 32 );
+   else
+      sb_szMessage = new StringBuilder( szMessage );
+      ZeidonStringCopy( sb_szMessage, 1, 0, szDirectoryName, 1, 0, 513 );
+   szMessage = sb_szMessage.toString( );}
+    {StringBuilder sb_szMessage;
+   if ( szMessage == null )
+      sb_szMessage = new StringBuilder( 32 );
+   else
+      sb_szMessage = new StringBuilder( szMessage );
+      ZeidonStringConcat( sb_szMessage, 1, 0, szFileName, 1, 0, 513 );
+   szMessage = sb_szMessage.toString( );}
+   //:SysConvertEnvironmentString( szDirectoryName, szMessage )
+   {StringBuilder sb_szDirectoryName;
    if ( szDirectoryName == null )
       sb_szDirectoryName = new StringBuilder( 32 );
    else
       sb_szDirectoryName = new StringBuilder( szDirectoryName );
-      ZeidonStringConcat( sb_szDirectoryName, 1, 0, szFileName, 1, 0, 513 );
+       m_KZOEP1AA.SysConvertEnvironmentString( sb_szDirectoryName, szMessage );
    szDirectoryName = sb_szDirectoryName.toString( );}
    //:nRC = ImportCSV_ToZeidonOI( mEPA, szDirectoryName )
    try
@@ -1943,13 +2013,28 @@ ImportSurfacesFromFile( View     ViewToWindow )
 
    //:END
 
-   //:szDirectoryName = szDirectoryName + szFileName
-    {StringBuilder sb_szDirectoryName;
+   //:szMessage = szDirectoryName + szFileName // borrow szMessage for a sec...
+    {StringBuilder sb_szMessage;
+   if ( szMessage == null )
+      sb_szMessage = new StringBuilder( 32 );
+   else
+      sb_szMessage = new StringBuilder( szMessage );
+      ZeidonStringCopy( sb_szMessage, 1, 0, szDirectoryName, 1, 0, 513 );
+   szMessage = sb_szMessage.toString( );}
+    {StringBuilder sb_szMessage;
+   if ( szMessage == null )
+      sb_szMessage = new StringBuilder( 32 );
+   else
+      sb_szMessage = new StringBuilder( szMessage );
+      ZeidonStringConcat( sb_szMessage, 1, 0, szFileName, 1, 0, 513 );
+   szMessage = sb_szMessage.toString( );}
+   //:SysConvertEnvironmentString( szDirectoryName, szMessage )
+   {StringBuilder sb_szDirectoryName;
    if ( szDirectoryName == null )
       sb_szDirectoryName = new StringBuilder( 32 );
    else
       sb_szDirectoryName = new StringBuilder( szDirectoryName );
-      ZeidonStringConcat( sb_szDirectoryName, 1, 0, szFileName, 1, 0, 513 );
+       m_KZOEP1AA.SysConvertEnvironmentString( sb_szDirectoryName, szMessage );
    szDirectoryName = sb_szDirectoryName.toString( );}
    //:nRC = ImportCSV_ToZeidonOI( mEPA, szDirectoryName )
    try
@@ -2193,13 +2278,28 @@ ImportAreasOfUseFromFile( View     ViewToWindow )
 
    //:END
 
-   //:szDirectoryName = szDirectoryName + szFileName
-    {StringBuilder sb_szDirectoryName;
+   //:szMessage = szDirectoryName + szFileName // borrow szMessage for a sec...
+    {StringBuilder sb_szMessage;
+   if ( szMessage == null )
+      sb_szMessage = new StringBuilder( 32 );
+   else
+      sb_szMessage = new StringBuilder( szMessage );
+      ZeidonStringCopy( sb_szMessage, 1, 0, szDirectoryName, 1, 0, 513 );
+   szMessage = sb_szMessage.toString( );}
+    {StringBuilder sb_szMessage;
+   if ( szMessage == null )
+      sb_szMessage = new StringBuilder( 32 );
+   else
+      sb_szMessage = new StringBuilder( szMessage );
+      ZeidonStringConcat( sb_szMessage, 1, 0, szFileName, 1, 0, 513 );
+   szMessage = sb_szMessage.toString( );}
+   //:SysConvertEnvironmentString( szDirectoryName, szMessage )
+   {StringBuilder sb_szDirectoryName;
    if ( szDirectoryName == null )
       sb_szDirectoryName = new StringBuilder( 32 );
    else
       sb_szDirectoryName = new StringBuilder( szDirectoryName );
-      ZeidonStringConcat( sb_szDirectoryName, 1, 0, szFileName, 1, 0, 513 );
+       m_KZOEP1AA.SysConvertEnvironmentString( sb_szDirectoryName, szMessage );
    szDirectoryName = sb_szDirectoryName.toString( );}
    //:nRC = ImportCSV_ToZeidonOI( mEPA, szDirectoryName )
    try
@@ -2385,13 +2485,28 @@ ImportAppTypesFromFile( View     ViewToWindow )
 
    //:END
 
-   //:szDirectoryName = szDirectoryName + szFileName
-    {StringBuilder sb_szDirectoryName;
+   //:szMessage = szDirectoryName + szFileName // borrow szMessage for a sec...
+    {StringBuilder sb_szMessage;
+   if ( szMessage == null )
+      sb_szMessage = new StringBuilder( 32 );
+   else
+      sb_szMessage = new StringBuilder( szMessage );
+      ZeidonStringCopy( sb_szMessage, 1, 0, szDirectoryName, 1, 0, 513 );
+   szMessage = sb_szMessage.toString( );}
+    {StringBuilder sb_szMessage;
+   if ( szMessage == null )
+      sb_szMessage = new StringBuilder( 32 );
+   else
+      sb_szMessage = new StringBuilder( szMessage );
+      ZeidonStringConcat( sb_szMessage, 1, 0, szFileName, 1, 0, 513 );
+   szMessage = sb_szMessage.toString( );}
+   //:SysConvertEnvironmentString( szDirectoryName, szMessage )
+   {StringBuilder sb_szDirectoryName;
    if ( szDirectoryName == null )
       sb_szDirectoryName = new StringBuilder( 32 );
    else
       sb_szDirectoryName = new StringBuilder( szDirectoryName );
-      ZeidonStringConcat( sb_szDirectoryName, 1, 0, szFileName, 1, 0, 513 );
+       m_KZOEP1AA.SysConvertEnvironmentString( sb_szDirectoryName, szMessage );
    szDirectoryName = sb_szDirectoryName.toString( );}
    //:nRC = ImportCSV_ToZeidonOI( mEPA, szDirectoryName )
    try
@@ -3875,858 +3990,6 @@ UpdateAppTypeFromCurrent( View     ViewToWindow )
    }
    //:mEPA.EPA_ApplicationType.Name = wWebXfer.Root.CurrentStatement
    SetAttributeFromAttribute( mEPA, "EPA_ApplicationType", "Name", wWebXfer, "Root", "CurrentStatement" );
-   //:COMMIT mEPA
-   RESULT = CommitObjectInstance( mEPA );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:MoveClaimUp( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-MoveClaimUp( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW mEPA     REGISTERED AS mEPA
-   zVIEW    mEPA = new zVIEW( );
-   //:VIEW mTempEPA REGISTERED AS mEPA
-   zVIEW    mTempEPA = new zVIEW( );
-   //:INTEGER lMove
-   int      lMove = 0;
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mTempEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
-
-   //:AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "MoveClaimUp: " )
-   {
-    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "MoveClaimUp: " );
-    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-   }
-   //:CreateViewFromView( mTempEPA, mEPA )
-   CreateViewFromView( mTempEPA, mEPA );
-   //:lMove = wWebXfer.Root.MoveIncrement
-   {MutableInt mi_lMove = new MutableInt( lMove );
-       GetIntegerFromAttribute( mi_lMove, wWebXfer, "Root", "MoveIncrement" );
-   lMove = mi_lMove.intValue( );}
-   //:IF lMove <= 0
-   if ( lMove <= 0 )
-   { 
-      //:lMove = 1
-      lMove = 1;
-   } 
-
-   //:END
-
-   //:LOOP WHILE lMove > 0
-   while ( lMove > 0 )
-   { 
-      //:SET CURSOR PREVIOUS mTempEPA.EPA_Claim
-      RESULT = SetCursorPrevEntity( mTempEPA, "EPA_Claim", "" );
-      //:lMove = lMove - 1
-      lMove = lMove - 1;
-   } 
-
-   //:END
-
-   //:MoveSubobject( mTempEPA, "EPA_Claim",
-   //:               mEPA, "EPA_Claim",
-   //:               zPOS_PREV, zREPOS_PREV )
-   MoveSubobject( mTempEPA, "EPA_Claim", mEPA, "EPA_Claim", zPOS_PREV, zREPOS_PREV );
-   //:DropView( mTempEPA )
-   DropView( mTempEPA );
-
-   //:// We now accept the EPA OI to maintain order!
-   //:COMMIT mEPA
-   RESULT = CommitObjectInstance( mEPA );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:MoveClaimDown( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-MoveClaimDown( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW mEPA     REGISTERED AS mEPA
-   zVIEW    mEPA = new zVIEW( );
-   //:VIEW mTempEPA REGISTERED AS mEPA
-   zVIEW    mTempEPA = new zVIEW( );
-   //:INTEGER lMove
-   int      lMove = 0;
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mTempEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
-
-   //:AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "MoveClaimDown: " )
-   {
-    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "MoveClaimDown: " );
-    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-   }
-   //:CreateViewFromView( mTempEPA, mEPA )
-   CreateViewFromView( mTempEPA, mEPA );
-   //:lMove = wWebXfer.Root.MoveIncrement
-   {MutableInt mi_lMove = new MutableInt( lMove );
-       GetIntegerFromAttribute( mi_lMove, wWebXfer, "Root", "MoveIncrement" );
-   lMove = mi_lMove.intValue( );}
-   //:IF lMove <= 0
-   if ( lMove <= 0 )
-   { 
-      //:lMove = 1
-      lMove = 1;
-   } 
-
-   //:END
-
-   //:LOOP WHILE lMove > 0
-   while ( lMove > 0 )
-   { 
-      //:SET CURSOR NEXT mTempEPA.EPA_Claim
-      RESULT = SetCursorNextEntity( mTempEPA, "EPA_Claim", "" );
-      //:lMove = lMove - 1
-      lMove = lMove - 1;
-   } 
-
-   //:END
-
-   //:MoveSubobject( mTempEPA, "EPA_Claim",
-   //:               mEPA, "EPA_Claim",
-   //:               zPOS_NEXT, zREPOS_NEXT )
-   MoveSubobject( mTempEPA, "EPA_Claim", mEPA, "EPA_Claim", zPOS_NEXT, zREPOS_NEXT );
-   //:DropView( mTempEPA )
-   DropView( mTempEPA );
-
-   //:// We now accept the Master Label to maintain order!
-   //:COMMIT mEPA
-   RESULT = CommitObjectInstance( mEPA );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:MoveBacteriaDown( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-MoveBacteriaDown( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW mEPA     REGISTERED AS mEPA
-   zVIEW    mEPA = new zVIEW( );
-   //:VIEW mTempEPA REGISTERED AS mEPA
-   zVIEW    mTempEPA = new zVIEW( );
-   //:INTEGER lMove
-   int      lMove = 0;
-   int      lTempInteger_0 = 0;
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mTempEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
-
-   //:AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "MoveBacteriaDown: " )
-   {
-    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "MoveBacteriaDown: " );
-    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-   }
-   //:CreateViewFromView( mTempEPA, mEPA )
-   CreateViewFromView( mTempEPA, mEPA );
-   //:lMove = wWebXfer.Root.MoveIncrement
-   {MutableInt mi_lMove = new MutableInt( lMove );
-       GetIntegerFromAttribute( mi_lMove, wWebXfer, "Root", "MoveIncrement" );
-   lMove = mi_lMove.intValue( );}
-   //:IF lMove <= 0
-   if ( lMove <= 0 )
-   { 
-      //:lMove = 1
-      lMove = 1;
-   } 
-
-   //:END
-
-   //:LOOP WHILE lMove > 0
-   while ( lMove > 0 )
-   { 
-      //:SET CURSOR NEXT mTempEPA.EPA_Claim
-      RESULT = SetCursorNextEntity( mTempEPA, "EPA_Claim", "" );
-      //:IF RESULT < 0 OR mTempEPA.Bacteria EXISTS
-      lTempInteger_0 = CheckExistenceOfEntity( mTempEPA, "Bacteria" );
-      if ( RESULT < 0 || lTempInteger_0 == 0 )
-      { 
-         //:lMove = lMove - 1
-         lMove = lMove - 1;
-      } 
-
-      //:END
-   } 
-
-   //:END
-
-   //:MoveSubobject( mTempEPA, "EPA_Claim",
-   //:               mEPA, "EPA_Claim",
-   //:               zPOS_NEXT, zREPOS_NEXT )
-   MoveSubobject( mTempEPA, "EPA_Claim", mEPA, "EPA_Claim", zPOS_NEXT, zREPOS_NEXT );
-   //:DropView( mTempEPA )
-   DropView( mTempEPA );
-
-   //:// We now accept the Master Label to maintain order!
-   //:COMMIT mEPA
-   RESULT = CommitObjectInstance( mEPA );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:MoveBacteriaUp( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-MoveBacteriaUp( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW mEPA     REGISTERED AS mEPA
-   zVIEW    mEPA = new zVIEW( );
-   //:VIEW mTempEPA REGISTERED AS mEPA
-   zVIEW    mTempEPA = new zVIEW( );
-   //:INTEGER lMove
-   int      lMove = 0;
-   int      lTempInteger_0 = 0;
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mTempEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
-
-   //:AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "MoveBacteriaUp: " )
-   {
-    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "MoveBacteriaUp: " );
-    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-   }
-   //:CreateViewFromView( mTempEPA, mEPA )
-   CreateViewFromView( mTempEPA, mEPA );
-   //:lMove = wWebXfer.Root.MoveIncrement
-   {MutableInt mi_lMove = new MutableInt( lMove );
-       GetIntegerFromAttribute( mi_lMove, wWebXfer, "Root", "MoveIncrement" );
-   lMove = mi_lMove.intValue( );}
-   //:IF lMove <= 0
-   if ( lMove <= 0 )
-   { 
-      //:lMove = 1
-      lMove = 1;
-   } 
-
-   //:END
-
-   //:LOOP WHILE lMove > 0
-   while ( lMove > 0 )
-   { 
-      //:SET CURSOR PREVIOUS mTempEPA.EPA_Claim
-      RESULT = SetCursorPrevEntity( mTempEPA, "EPA_Claim", "" );
-      //:IF RESULT < 0 OR mTempEPA.Bacteria EXISTS
-      lTempInteger_0 = CheckExistenceOfEntity( mTempEPA, "Bacteria" );
-      if ( RESULT < 0 || lTempInteger_0 == 0 )
-      { 
-         //:lMove = lMove - 1
-         lMove = lMove - 1;
-      } 
-
-      //:END
-   } 
-
-   //:END
-
-   //:MoveSubobject( mTempEPA, "EPA_Claim",
-   //:               mEPA, "EPA_Claim",
-   //:               zPOS_PREV, zREPOS_PREV )
-   MoveSubobject( mTempEPA, "EPA_Claim", mEPA, "EPA_Claim", zPOS_PREV, zREPOS_PREV );
-   //:DropView( mTempEPA )
-   DropView( mTempEPA );
-
-   //:// We now accept the EPA OI to maintain order!
-   //:COMMIT mEPA
-   RESULT = CommitObjectInstance( mEPA );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:MoveVirusDown( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-MoveVirusDown( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW mEPA     REGISTERED AS mEPA
-   zVIEW    mEPA = new zVIEW( );
-   //:VIEW mTempEPA REGISTERED AS mEPA
-   zVIEW    mTempEPA = new zVIEW( );
-   //:INTEGER lMove
-   int      lMove = 0;
-   int      lTempInteger_0 = 0;
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mTempEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
-
-   //:AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "MoveVirusDown: " )
-   {
-    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "MoveVirusDown: " );
-    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-   }
-   //:CreateViewFromView( mTempEPA, mEPA )
-   CreateViewFromView( mTempEPA, mEPA );
-   //:lMove = wWebXfer.Root.MoveIncrement
-   {MutableInt mi_lMove = new MutableInt( lMove );
-       GetIntegerFromAttribute( mi_lMove, wWebXfer, "Root", "MoveIncrement" );
-   lMove = mi_lMove.intValue( );}
-   //:IF lMove <= 0
-   if ( lMove <= 0 )
-   { 
-      //:lMove = 1
-      lMove = 1;
-   } 
-
-   //:END
-
-   //:LOOP WHILE lMove > 0
-   while ( lMove > 0 )
-   { 
-      //:SET CURSOR NEXT mTempEPA.EPA_Claim
-      RESULT = SetCursorNextEntity( mTempEPA, "EPA_Claim", "" );
-      //:IF RESULT < 0 OR mTempEPA.Viruses EXISTS
-      lTempInteger_0 = CheckExistenceOfEntity( mTempEPA, "Viruses" );
-      if ( RESULT < 0 || lTempInteger_0 == 0 )
-      { 
-         //:lMove = lMove - 1
-         lMove = lMove - 1;
-      } 
-
-      //:END
-   } 
-
-   //:END
-
-   //:MoveSubobject( mTempEPA, "EPA_Claim",
-   //:               mEPA, "EPA_Claim",
-   //:               zPOS_NEXT, zREPOS_NEXT )
-   MoveSubobject( mTempEPA, "EPA_Claim", mEPA, "EPA_Claim", zPOS_NEXT, zREPOS_NEXT );
-   //:DropView( mTempEPA )
-   DropView( mTempEPA );
-
-   //:// We now accept the Master Label to maintain order!
-   //:COMMIT mEPA
-   RESULT = CommitObjectInstance( mEPA );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:MoveVirusUp( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-MoveVirusUp( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW mEPA     REGISTERED AS mEPA
-   zVIEW    mEPA = new zVIEW( );
-   //:VIEW mTempEPA REGISTERED AS mEPA
-   zVIEW    mTempEPA = new zVIEW( );
-   //:INTEGER lMove
-   int      lMove = 0;
-   int      lTempInteger_0 = 0;
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mTempEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
-
-   //:AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "MoveVirusUp: " )
-   {
-    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "MoveVirusUp: " );
-    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-   }
-   //:CreateViewFromView( mTempEPA, mEPA )
-   CreateViewFromView( mTempEPA, mEPA );
-   //:lMove = wWebXfer.Root.MoveIncrement
-   {MutableInt mi_lMove = new MutableInt( lMove );
-       GetIntegerFromAttribute( mi_lMove, wWebXfer, "Root", "MoveIncrement" );
-   lMove = mi_lMove.intValue( );}
-   //:IF lMove <= 0
-   if ( lMove <= 0 )
-   { 
-      //:lMove = 1
-      lMove = 1;
-   } 
-
-   //:END
-
-   //:LOOP WHILE lMove > 0
-   while ( lMove > 0 )
-   { 
-      //:SET CURSOR PREVIOUS mTempEPA.EPA_Claim
-      RESULT = SetCursorPrevEntity( mTempEPA, "EPA_Claim", "" );
-      //:IF RESULT < 0 OR mTempEPA.Viruses EXISTS
-      lTempInteger_0 = CheckExistenceOfEntity( mTempEPA, "Viruses" );
-      if ( RESULT < 0 || lTempInteger_0 == 0 )
-      { 
-         //:lMove = lMove - 1
-         lMove = lMove - 1;
-      } 
-
-      //:END
-   } 
-
-   //:END
-
-   //:MoveSubobject( mTempEPA, "EPA_Claim",
-   //:               mEPA, "EPA_Claim",
-   //:               zPOS_PREV, zREPOS_PREV )
-   MoveSubobject( mTempEPA, "EPA_Claim", mEPA, "EPA_Claim", zPOS_PREV, zREPOS_PREV );
-   //:DropView( mTempEPA )
-   DropView( mTempEPA );
-
-   //:// We now accept the EPA OI to maintain order!
-   //:COMMIT mEPA
-   RESULT = CommitObjectInstance( mEPA );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:MoveFungiDown( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-MoveFungiDown( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW mEPA     REGISTERED AS mEPA
-   zVIEW    mEPA = new zVIEW( );
-   //:VIEW mTempEPA REGISTERED AS mEPA
-   zVIEW    mTempEPA = new zVIEW( );
-   //:INTEGER lMove
-   int      lMove = 0;
-   int      lTempInteger_0 = 0;
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mTempEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
-
-   //:AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "MoveFungiDown: " )
-   {
-    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "MoveFungiDown: " );
-    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-   }
-   //:CreateViewFromView( mTempEPA, mEPA )
-   CreateViewFromView( mTempEPA, mEPA );
-   //:lMove = wWebXfer.Root.MoveIncrement
-   {MutableInt mi_lMove = new MutableInt( lMove );
-       GetIntegerFromAttribute( mi_lMove, wWebXfer, "Root", "MoveIncrement" );
-   lMove = mi_lMove.intValue( );}
-   //:IF lMove <= 0
-   if ( lMove <= 0 )
-   { 
-      //:lMove = 1
-      lMove = 1;
-   } 
-
-   //:END
-
-   //:LOOP WHILE lMove > 0
-   while ( lMove > 0 )
-   { 
-      //:SET CURSOR NEXT mTempEPA.EPA_Claim
-      RESULT = SetCursorNextEntity( mTempEPA, "EPA_Claim", "" );
-      //:IF RESULT < 0 OR mTempEPA.Fungi EXISTS
-      lTempInteger_0 = CheckExistenceOfEntity( mTempEPA, "Fungi" );
-      if ( RESULT < 0 || lTempInteger_0 == 0 )
-      { 
-         //:lMove = lMove - 1
-         lMove = lMove - 1;
-      } 
-
-      //:END
-   } 
-
-   //:END
-
-   //:MoveSubobject( mTempEPA, "EPA_Claim",
-   //:               mEPA, "EPA_Claim",
-   //:               zPOS_NEXT, zREPOS_NEXT )
-   MoveSubobject( mTempEPA, "EPA_Claim", mEPA, "EPA_Claim", zPOS_NEXT, zREPOS_NEXT );
-   //:DropView( mTempEPA )
-   DropView( mTempEPA );
-
-   //:// We now accept the Master Label to maintain order!
-   //:COMMIT mEPA
-   RESULT = CommitObjectInstance( mEPA );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:MoveFungiUp( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-MoveFungiUp( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW mEPA     REGISTERED AS mEPA
-   zVIEW    mEPA = new zVIEW( );
-   //:VIEW mTempEPA REGISTERED AS mEPA
-   zVIEW    mTempEPA = new zVIEW( );
-   //:INTEGER lMove
-   int      lMove = 0;
-   int      lTempInteger_0 = 0;
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mTempEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
-
-   //:AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "MoveFungiUp: " )
-   {
-    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "MoveFungiUp: " );
-    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-   }
-   //:CreateViewFromView( mTempEPA, mEPA )
-   CreateViewFromView( mTempEPA, mEPA );
-   //:lMove = wWebXfer.Root.MoveIncrement
-   {MutableInt mi_lMove = new MutableInt( lMove );
-       GetIntegerFromAttribute( mi_lMove, wWebXfer, "Root", "MoveIncrement" );
-   lMove = mi_lMove.intValue( );}
-   //:IF lMove <= 0
-   if ( lMove <= 0 )
-   { 
-      //:lMove = 1
-      lMove = 1;
-   } 
-
-   //:END
-
-   //:LOOP WHILE lMove > 0
-   while ( lMove > 0 )
-   { 
-      //:SET CURSOR PREVIOUS mTempEPA.EPA_Claim
-      RESULT = SetCursorPrevEntity( mTempEPA, "EPA_Claim", "" );
-      //:IF RESULT < 0 OR mTempEPA.Fungi EXISTS
-      lTempInteger_0 = CheckExistenceOfEntity( mTempEPA, "Fungi" );
-      if ( RESULT < 0 || lTempInteger_0 == 0 )
-      { 
-         //:lMove = lMove - 1
-         lMove = lMove - 1;
-      } 
-
-      //:END
-   } 
-
-   //:END
-
-   //:MoveSubobject( mTempEPA, "EPA_Claim",
-   //:               mEPA, "EPA_Claim",
-   //:               zPOS_PREV, zREPOS_PREV )
-   MoveSubobject( mTempEPA, "EPA_Claim", mEPA, "EPA_Claim", zPOS_PREV, zREPOS_PREV );
-   //:DropView( mTempEPA )
-   DropView( mTempEPA );
-
-   //:// We now accept the EPA OI to maintain order!
-   //:COMMIT mEPA
-   RESULT = CommitObjectInstance( mEPA );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:MoveSurfaceUp( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-MoveSurfaceUp( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW mEPA     REGISTERED AS mEPA
-   zVIEW    mEPA = new zVIEW( );
-   //:VIEW mTempEPA REGISTERED AS mEPA
-   zVIEW    mTempEPA = new zVIEW( );
-   //:INTEGER lMove
-   int      lMove = 0;
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mTempEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
-
-   //:AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "MoveSurfaceUp: " )
-   {
-    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "MoveSurfaceUp: " );
-    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-   }
-   //:CreateViewFromView( mTempEPA, mEPA )
-   CreateViewFromView( mTempEPA, mEPA );
-   //:lMove = wWebXfer.Root.MoveIncrement
-   {MutableInt mi_lMove = new MutableInt( lMove );
-       GetIntegerFromAttribute( mi_lMove, wWebXfer, "Root", "MoveIncrement" );
-   lMove = mi_lMove.intValue( );}
-   //:IF lMove <= 0
-   if ( lMove <= 0 )
-   { 
-      //:lMove = 1
-      lMove = 1;
-   } 
-
-   //:END
-
-   //:LOOP WHILE lMove > 0
-   while ( lMove > 0 )
-   { 
-      //:SET CURSOR PREVIOUS mTempEPA.EPA_Surface
-      RESULT = SetCursorPrevEntity( mTempEPA, "EPA_Surface", "" );
-      //:lMove = lMove - 1
-      lMove = lMove - 1;
-   } 
-
-   //:END
-
-   //:MoveSubobject( mTempEPA, "EPA_Surface",
-   //:               mEPA, "EPA_Surface",
-   //:               zPOS_PREV, zREPOS_PREV )
-   MoveSubobject( mTempEPA, "EPA_Surface", mEPA, "EPA_Surface", zPOS_PREV, zREPOS_PREV );
-   //:DropView( mTempEPA )
-   DropView( mTempEPA );
-
-   //:// We now accept the EPA OI to maintain order!
-   //:COMMIT mEPA
-   RESULT = CommitObjectInstance( mEPA );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:MoveSurfaceDown( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-MoveSurfaceDown( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW mEPA     REGISTERED AS mEPA
-   zVIEW    mEPA = new zVIEW( );
-   //:VIEW mTempEPA REGISTERED AS mEPA
-   zVIEW    mTempEPA = new zVIEW( );
-   //:INTEGER lMove
-   int      lMove = 0;
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mTempEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
-
-   //:AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "MoveSurfaceDown: " )
-   {
-    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "MoveSurfaceDown: " );
-    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-   }
-   //:CreateViewFromView( mTempEPA, mEPA )
-   CreateViewFromView( mTempEPA, mEPA );
-   //:lMove = wWebXfer.Root.MoveIncrement
-   {MutableInt mi_lMove = new MutableInt( lMove );
-       GetIntegerFromAttribute( mi_lMove, wWebXfer, "Root", "MoveIncrement" );
-   lMove = mi_lMove.intValue( );}
-   //:IF lMove <= 0
-   if ( lMove <= 0 )
-   { 
-      //:lMove = 1
-      lMove = 1;
-   } 
-
-   //:END
-
-   //:LOOP WHILE lMove > 0
-   while ( lMove > 0 )
-   { 
-      //:SET CURSOR NEXT mTempEPA.EPA_Surface
-      RESULT = SetCursorNextEntity( mTempEPA, "EPA_Surface", "" );
-      //:lMove = lMove - 1
-      lMove = lMove - 1;
-   } 
-
-   //:END
-
-   //:MoveSubobject( mTempEPA, "EPA_Surface",
-   //:               mEPA, "EPA_Surface",
-   //:               zPOS_NEXT, zREPOS_NEXT )
-   MoveSubobject( mTempEPA, "EPA_Surface", mEPA, "EPA_Surface", zPOS_NEXT, zREPOS_NEXT );
-   //:DropView( mTempEPA )
-   DropView( mTempEPA );
-
-   //:// We now accept the EPA OI to maintain order!
-   //:COMMIT mEPA
-   RESULT = CommitObjectInstance( mEPA );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:MoveAreasOfUseUp( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-MoveAreasOfUseUp( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW mEPA     REGISTERED AS mEPA
-   zVIEW    mEPA = new zVIEW( );
-   //:VIEW mTempEPA REGISTERED AS mEPA
-   zVIEW    mTempEPA = new zVIEW( );
-   //:INTEGER lMove
-   int      lMove = 0;
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mTempEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
-
-   //:AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "MoveAreasOfUseUp: " )
-   {
-    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "MoveAreasOfUseUp: " );
-    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-   }
-   //:CreateViewFromView( mTempEPA, mEPA )
-   CreateViewFromView( mTempEPA, mEPA );
-   //:lMove = wWebXfer.Root.MoveIncrement
-   {MutableInt mi_lMove = new MutableInt( lMove );
-       GetIntegerFromAttribute( mi_lMove, wWebXfer, "Root", "MoveIncrement" );
-   lMove = mi_lMove.intValue( );}
-   //:IF lMove <= 0
-   if ( lMove <= 0 )
-   { 
-      //:lMove = 1
-      lMove = 1;
-   } 
-
-   //:END
-
-   //:LOOP WHILE lMove > 0
-   while ( lMove > 0 )
-   { 
-      //:SET CURSOR PREVIOUS mTempEPA.EPA_AreaOfUse
-      RESULT = SetCursorPrevEntity( mTempEPA, "EPA_AreaOfUse", "" );
-      //:lMove = lMove - 1
-      lMove = lMove - 1;
-   } 
-
-   //:END
-
-   //:MoveSubobject( mTempEPA, "EPA_AreaOfUse",
-   //:               mEPA, "EPA_AreaOfUse",
-   //:               zPOS_PREV, zREPOS_PREV )
-   MoveSubobject( mTempEPA, "EPA_AreaOfUse", mEPA, "EPA_AreaOfUse", zPOS_PREV, zREPOS_PREV );
-   //:DropView( mTempEPA )
-   DropView( mTempEPA );
-
-   //:// We now accept the EPA OI to maintain order!
-   //:COMMIT mEPA
-   RESULT = CommitObjectInstance( mEPA );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:MoveAreasOfUseDown( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-MoveAreasOfUseDown( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW mEPA     REGISTERED AS mEPA
-   zVIEW    mEPA = new zVIEW( );
-   //:VIEW mTempEPA REGISTERED AS mEPA
-   zVIEW    mTempEPA = new zVIEW( );
-   //:INTEGER lMove
-   int      lMove = 0;
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mTempEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
-
-   //:AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "MoveAreasOfUseDown: " )
-   {
-    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "MoveAreasOfUseDown: " );
-    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-   }
-   //:CreateViewFromView( mTempEPA, mEPA )
-   CreateViewFromView( mTempEPA, mEPA );
-   //:lMove = wWebXfer.Root.MoveIncrement
-   {MutableInt mi_lMove = new MutableInt( lMove );
-       GetIntegerFromAttribute( mi_lMove, wWebXfer, "Root", "MoveIncrement" );
-   lMove = mi_lMove.intValue( );}
-   //:IF lMove <= 0
-   if ( lMove <= 0 )
-   { 
-      //:lMove = 1
-      lMove = 1;
-   } 
-
-   //:END
-
-   //:LOOP WHILE lMove > 0
-   while ( lMove > 0 )
-   { 
-      //:SET CURSOR NEXT mTempEPA.EPA_AreaOfUse
-      RESULT = SetCursorNextEntity( mTempEPA, "EPA_AreaOfUse", "" );
-      //:lMove = lMove - 1
-      lMove = lMove - 1;
-   } 
-
-   //:END
-
-   //:MoveSubobject( mTempEPA, "EPA_AreaOfUse",
-   //:               mEPA, "EPA_AreaOfUse",
-   //:               zPOS_NEXT, zREPOS_NEXT )
-   MoveSubobject( mTempEPA, "EPA_AreaOfUse", mEPA, "EPA_AreaOfUse", zPOS_NEXT, zREPOS_NEXT );
-   //:DropView( mTempEPA )
-   DropView( mTempEPA );
-
-   //:// We now accept the Master Label to maintain order!
    //:COMMIT mEPA
    RESULT = CommitObjectInstance( mEPA );
    return( 0 );

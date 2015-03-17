@@ -99,25 +99,6 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
-      // MLEdit: MasterProductDescription
-      nRC = mMasProd.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
-      {
-         strMapValue = request.getParameter( "MasterProductDescription" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "MasterProductDescription", "", strMapValue );
-            else
-               mMasProd.cursor( "MasterProduct" ).getAttribute( "Description" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "MasterProductDescription", e.getReason( ), strMapValue );
-         }
-      }
-
       // ComboBox: ToxicityCategory
       nRC = mMasProd.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
@@ -134,6 +115,25 @@ public int DoInputMapping( HttpServletRequest request,
          {
             nMapError = -16;
             VmlOperation.CreateMessage( task, "ToxicityCategory", e.getReason( ), strMapValue );
+         }
+      }
+
+      // MLEdit: MasterProductDescription
+      nRC = mMasProd.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "MasterProductDescription" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "MasterProductDescription", "", strMapValue );
+            else
+               mMasProd.cursor( "MasterProduct" ).getAttribute( "Description" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "MasterProductDescription", e.getReason( ), strMapValue );
          }
       }
 
@@ -688,7 +688,7 @@ else
 }
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wMLC", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -696,8 +696,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wMLC" );
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "UpdateMasterProduct" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wMLC", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "UpdateMasterProduct", "" );
    }
 
 %>
@@ -717,6 +717,12 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
+
+<!-- TinyMCE -->
+<script language="JavaScript" type="text/javascript" src="./js/tinymce/js/tinymce/tinymce.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/TinyMCE.js"></script>
+<!-- /TinyMCE -->
+
 <script language="JavaScript" type="text/javascript" src="./genjs/wMLCUpdateMasterProduct.js"></script>
 
 </head>
@@ -843,7 +849,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wMLC", "UpdateMasterProduct" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -887,20 +893,13 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBMasterProduct:GroupBox */ %>
 
-<div id="GBMasterProduct" name="GBMasterProduct" style="width:798px;height:224px;float:left;">  <!-- GBMasterProduct --> 
+<div id="GBMasterProduct" name="GBMasterProduct"   style="float:left;position:relative; width:798px; height:242px;">  <!-- GBMasterProduct --> 
 
 <div  id="GBMasterProduct" name="GBMasterProduct" >Master Product</div>
-
- <!-- This is added as a line spacer -->
-<div style="height:24px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
 <% /* MLC_Name::Text */ %>
 
-<span  id="MLC_Name:" name="MLC_Name:" style="width:178px;height:16px;">Name:</span>
+<label  id="MLC_Name:" name="MLC_Name:" style="width:178px;height:16px;position:absolute;left:12px;top:24px;">Name:</label>
 
-<span style="height:16px;">&nbsp</span>
 <% /* MasterProductName:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "MasterProductName", strError );
@@ -940,23 +939,12 @@ else
    }
 %>
 
-<input class="text12" name="MasterProductName" id="MasterProductName" style="width:578px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="MasterProductName" id="MasterProductName" style="width:578px;position:absolute;left:198px;top:24px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:4px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
 <% /* ProductNumber::Text */ %>
 
-<span  id="ProductNumber:" name="ProductNumber:" style="width:178px;height:16px;">Number:</span>
+<label  id="ProductNumber:" name="ProductNumber:" style="width:178px;height:16px;position:absolute;left:12px;top:50px;">Number:</label>
 
-<span style="height:16px;">&nbsp</span>
 <% /* MasterProductNumber:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "MasterProductNumber", strError );
@@ -996,27 +984,16 @@ else
    }
 %>
 
-<input class="text12" name="MasterProductNumber" id="MasterProductNumber"  title="Product Number within this Registrant" style="width:142px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="MasterProductNumber" id="MasterProductNumber"  title="Product Number within this Registrant" style="width:142px;position:absolute;left:198px;top:50px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
 <% /* ChemicalFamily::Text */ %>
 
-<span  id="ChemicalFamily:" name="ChemicalFamily:" style="width:178px;height:16px;">Chemical Family:</span>
+<label  id="ChemicalFamily:" name="ChemicalFamily:" style="width:178px;height:16px;position:absolute;left:12px;top:74px;">Chemical Family:</label>
 
-<span style="height:68px;">&nbsp</span>
 <% /* ChemicalFamily:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="ChemicalFamily" id="ChemicalFamily" size="1" style="width:210px;" onchange="ChemicalFamilyOnChange( )">
+<select  name="ChemicalFamily" id="ChemicalFamily" size="1" style="width:210px;position:absolute;left:198px;top:74px;" onchange="ChemicalFamilyOnChange( )">
 
 <%
    boolean inListChemicalFamily = false;
@@ -1029,7 +1006,7 @@ else
       nRC = mMasProd.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mMasProd.cursor( "MasterProduct" ).getAttribute( "ChemicalFamily" ).getString();
+         strComboCurrentValue = mMasProd.cursor( "MasterProduct" ).getAttribute( "ChemicalFamily" ).getString( "" );
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }
@@ -1079,18 +1056,10 @@ else
 </select>
 
 <input name="hChemicalFamily" id="hChemicalFamily" type="hidden" value="<%=strComboCurrentValue%>" >
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
 <% /* EstablishmentNumber::Text */ %>
 
-<span  id="EstablishmentNumber:" name="EstablishmentNumber:" style="width:178px;height:16px;">Establishment Number:</span>
+<label  id="EstablishmentNumber:" name="EstablishmentNumber:" style="width:178px;height:16px;position:absolute;left:12px;top:98px;">Establishment Number:</label>
 
-<span style="height:16px;">&nbsp</span>
 <% /* EstablishmentNumber:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "EstablishmentNumber", strError );
@@ -1130,76 +1099,16 @@ else
    }
 %>
 
-<input class="text12" name="EstablishmentNumber" id="EstablishmentNumber"  title="EPA Establishment Number" style="width:142px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="EstablishmentNumber" id="EstablishmentNumber"  title="EPA Establishment Number" style="width:142px;position:absolute;left:198px;top:98px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:-10px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
-<% /* Description::Text */ %>
-
-<span  id="Description:" name="Description:" style="width:178px;height:16px;">Description:</span>
-
-<span style="height:60px;">&nbsp</span>
-<% /* MasterProductDescription:MLEdit */ %>
-<%
-   // : MasterProductDescription
-   strErrorMapValue = VmlOperation.CheckError( "MasterProductDescription", strError );
-   if ( !StringUtils.isBlank( strErrorMapValue ) )
-   {
-      if ( StringUtils.equals( strErrorFlag, "Y" ) )
-         strErrorColor = "color:red;";
-   }
-   else
-   {
-      strErrorColor = "";
-      mMasProd = task.getViewByName( "mMasProd" );
-      if ( VmlOperation.isValid( mMasProd ) == false )
-         task.log( ).info( "Invalid View: " + "MasterProductDescription" );
-      else
-      {
-         nRC = mMasProd.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strErrorMapValue = mMasProd.cursor( "MasterProduct" ).getAttribute( "Description" ).getString( "" );
-            if ( strErrorMapValue == null )
-               strErrorMapValue = "";
-
-            task.log( ).info( "MasterProduct.Description: " + strErrorMapValue );
-         }
-         else
-            task.log( ).info( "Entity does not exist: " + "mMasProd.MasterProduct" );
-      }
-   }
-%>
-
-<textarea name="MasterProductDescription" id="MasterProductDescription" style="border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
-
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
 <% /* ToxicityCategory::Text */ %>
 
-<span  id="ToxicityCategory:" name="ToxicityCategory:" style="width:178px;height:16px;">Toxicity Category:</span>
+<label  id="ToxicityCategory:" name="ToxicityCategory:" style="width:178px;height:16px;position:absolute;left:12px;top:124px;">Toxicity Category:</label>
 
-<span style="height:78px;">&nbsp</span>
 <% /* ToxicityCategory:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="ToxicityCategory" id="ToxicityCategory" size="1" style="width:142px;" onchange="ToxicityCategoryOnChange( )">
+<select  name="ToxicityCategory" id="ToxicityCategory" size="1" style="width:142px;position:absolute;left:198px;top:124px;" onchange="ToxicityCategoryOnChange( )">
 
 <%
    boolean inListToxicityCategory = false;
@@ -1212,7 +1121,7 @@ else
       nRC = mMasProd.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mMasProd.cursor( "MasterProduct" ).getAttribute( "EPA_ToxicityCategory" ).getString();
+         strComboCurrentValue = mMasProd.cursor( "MasterProduct" ).getAttribute( "EPA_ToxicityCategory" ).getString( "" );
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }
@@ -1276,7 +1185,43 @@ else
 </select>
 
 <input name="hToxicityCategory" id="hToxicityCategory" type="hidden" value="<%=strComboCurrentValue%>" >
-</div>  <!-- End of a new line -->
+<% /* Description::Text */ %>
+
+<label  id="Description:" name="Description:" style="width:178px;height:16px;position:absolute;left:12px;top:148px;">Description:</label>
+
+<% /* MasterProductDescription:MLEdit */ %>
+<%
+   // : MasterProductDescription
+   strErrorMapValue = VmlOperation.CheckError( "MasterProductDescription", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasProd = task.getViewByName( "mMasProd" );
+      if ( VmlOperation.isValid( mMasProd ) == false )
+         task.log( ).info( "Invalid View: " + "MasterProductDescription" );
+      else
+      {
+         nRC = mMasProd.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strErrorMapValue = mMasProd.cursor( "MasterProduct" ).getAttribute( "Description" ).getString( "" );
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).info( "MasterProduct.Description: " + strErrorMapValue );
+         }
+         else
+            task.log( ).info( "Entity does not exist: " + "mMasProd.MasterProduct" );
+      }
+   }
+%>
+
+<textarea name="MasterProductDescription" id="MasterProductDescription" class="mceSimple" style="width:578px;height:84px;position:absolute;left:198px;top:148px;border:solid;border-width:4px;border-style:groove;"><%=strErrorMapValue%></textarea>
 
 
 </div>  <!--  GBMasterProduct --> 
@@ -1286,7 +1231,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:20px;width:100px;"></div>
+<div style="height:2px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->

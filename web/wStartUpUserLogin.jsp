@@ -35,6 +35,7 @@ public int DoInputMapping( HttpServletRequest request,
    String taskId = (String) session.getAttribute( "ZeidonTaskId" );
    Task task = objectEngine.getTaskById( taskId );
 
+   View pePamms = null;
    View wWebXfer = null;
    View vGridTmp = null; // temp view to grid view
    View vRepeatingGrp = null; // temp view to repeating group view
@@ -56,6 +57,27 @@ public int DoInputMapping( HttpServletRequest request,
 
    if ( webMapping == false )
       session.setAttribute( "ZeidonError", null );
+
+   pePamms = task.getViewByName( "pePamms" );
+   if ( VmlOperation.isValid( pePamms ) )
+   {
+      // ComboBox: PrimaryRegistrants
+      pePamms = task.getViewByName( "pePamms" );
+      if ( VmlOperation.isValid( pePamms ) )
+      {
+         nRC = pePamms.cursor( "PrimaryRegistrant" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strMapValue = request.getParameter( "hPrimaryRegistrants" );
+            if ( strMapValue != null )
+            {
+               nRelPos = java.lang.Integer.parseInt( strMapValue );
+               pePamms.cursor( "PrimaryRegistrant" ).setPosition( nRelPos, "" );
+            }
+         }
+
+         }  // checkExistenceofEntity
+   }
 
    wWebXfer = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXfer ) )
@@ -95,25 +117,6 @@ public int DoInputMapping( HttpServletRequest request,
          {
             nMapError = -16;
             VmlOperation.CreateMessage( task, "EBUserName", e.getReason( ), strMapValue );
-         }
-      }
-
-      // ComboBox: CBRole
-      nRC = wWebXfer.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strMapValue = request.getParameter( "hCBRole" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "CBRole", "", strMapValue );
-            else
-               wWebXfer.cursor( "Root" ).getAttribute( "KeyRole" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "CBRole", e.getReason( ), strMapValue );
          }
       }
 
@@ -246,43 +249,6 @@ if ( strActionToProcess != null )
          vMsgQ.drop( );
       }
 
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "AdministratorLogin" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wStartUpUserLogin", strActionToProcess );
-
-      // Prebuild/Postbuild Operations.
-      // These are called because we Unregister Zeidon when this page is finished loading, so
-      // these operations need to be called before any action code (for recreating objects etc).
-         nOptRC = wStartUp.InitLoginWindow( new zVIEW( vKZXMLPGO ) );
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpUserLogin.jsp", "wStartUp.ProcessAdministratorLogin" );
-         nOptRC = wStartUp.ProcessAdministratorLogin( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wStartUp.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_ResetTopWindow, "wStartUp", "AdminNewPrimaryRegistrant" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
    }
 
    while ( bDone == false && StringUtils.equals( strActionToProcess, "FORGOT_Password" ) )
@@ -488,7 +454,7 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
 else
 {
    VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpUserLogin.jsp", "wStartUp.InitLoginWindow" );
-   nOptRC = wStartUp.InitLoginWindow( new zVIEW( vKZXMLPGO ) );
+         nOptRC = wStartUp.InitLoginWindow( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -496,7 +462,7 @@ else
       String strURLParameters;
 
       vView = task.getViewByName( "wXferO" );
-      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString();
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString( "" );
       strURLParameters = "?CallingPage=wStartUpUserLogin.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wStartUp" +
@@ -510,7 +476,7 @@ else
 
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wStartUp", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -518,8 +484,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wStartUp" );
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "UserLogin" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wStartUp", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "UserLogin", "" );
    }
 
 %>
@@ -574,14 +540,17 @@ else
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
+   View iePamms = null;
    View lPrimReg = null;
    View lSubreg = null;
    View mCurrentUser = null;
+   View mePamms = null;
    View mMasLC = null;
    View mPerson = null;
    View mPrimReg = null;
    View mSubreg = null;
    View mUser = null;
+   View pePamms = null;
    View qOrganiz = null;
    View qOrganizLogin = null;
    View qPrimReg = null;
@@ -652,7 +621,7 @@ else
       strActionToProcess = null;
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wStartUp", "UserLogin" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -696,7 +665,7 @@ else
 </div>  <!--  GroupBox1 --> 
 <% /* WelcomeContainer:GroupBox */ %>
 
-<div id="WelcomeContainer" name="WelcomeContainer" class="divborder" style="width:770px;height:166px;position:absolute;left:60px;top:36px;">  <!-- WelcomeContainer --> 
+<div id="WelcomeContainer" name="WelcomeContainer" class="divborder" style="width:770px;height:220px;position:absolute;left:60px;top:36px;">  <!-- WelcomeContainer --> 
 
 <div  id="WelcomeContainer" name="WelcomeContainer" >Welcome To ePamms</div>
 <% /* RegistrantName::Text */ %>
@@ -747,9 +716,6 @@ else
 <% /* PBLogin:PushBtn */ %>
 <button type="button" class="formStylebutton" name="PBLogin" id="PBLogin" value="" onclick="ProcessUserLogin( )" style="width:140px;height:32px;position:absolute;left:430px;top:54px;">Login</button>
 
-<% /* PBSetupAdmin:PushBtn */ %>
-<button type="button" class="formStylebutton" name="PBSetupAdmin" id="PBSetupAdmin" value="" onclick="AdministratorLogin( )" style="width:140px;height:32px;position:absolute;left:586px;top:54px;">Setup Admin</button>
-
 <% /* UserName::Text */ %>
 
 <label class="text14bold"  id="UserName:" name="UserName:" style="width:118px;height:16px;position:absolute;left:16px;top:80px;">User Name:</label>
@@ -795,86 +761,10 @@ else
 
 <input class="text14" name="EBUserName" id="EBUserName" style="width:256px;position:absolute;left:146px;top:80px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
-<% /* CBRole:ComboBox */ %>
-<% strErrorMapValue = "";  %>
+<% /* Forgot:Text */ %>
 
-<select  name="CBRole" id="CBRole" size="1" style="width:194px;position:absolute;left:430px;top:88px;" onchange="CBRoleOnChange( )">
+<a href="#" id="Forgot" name="Forgot"  onclick="FORGOT_Password( );" class="text10" style="width:208px;height:22px;position:absolute;left:430px;top:94px;">Forgot Username/Password?</a>
 
-<%
-   boolean inListCBRole = false;
-
-   wWebXfer = task.getViewByName( "wWebXfer" );
-   if ( VmlOperation.isValid( wWebXfer ) )
-   {
-      List<TableEntry> list = JspWebUtils.getTableDomainValues( wWebXfer , "Root", "KeyRole", "" );
-
-      nRC = wWebXfer.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strComboCurrentValue = wWebXfer.cursor( "Root" ).getAttribute( "KeyRole" ).getString();
-         if ( strComboCurrentValue == null )
-            strComboCurrentValue = "";
-      }
-      else
-      {
-         strComboCurrentValue = "";
-      }
-
-      // Code for NOT required attribute, which makes sure a blank entry exists.
-      if ( strComboCurrentValue == "" )
-      {
-         inListCBRole = true;
-%>
-         <option selected="selected" value=""></option>
-<%
-      }
-      else
-      {
-%>
-         <option value=""></option>
-<%
-      }
-      for ( TableEntry entry : list )
-      {
-         String internalValue = entry.getInternalValue( );
-         String externalValue = entry.getExternalValue( );
-         // Perhaps getInternalValue and getExternalValue should return an empty string, 
-         // but currently it returns null.  Set to empty string. 
-         if ( externalValue == null )
-         {
-            internalValue = "";
-            externalValue = "";
-         }
-
-         if ( !StringUtils.isBlank( externalValue ) )
-         {
-            if ( StringUtils.equals( strComboCurrentValue, externalValue ) )
-            {
-               inListCBRole = true;
-%>
-               <option selected="selected" value="<%=externalValue%>"><%=externalValue%></option>
-<%
-            }
-            else
-            {
-%>
-               <option value="<%=externalValue%>"><%=externalValue%></option>
-<%
-            }
-         }
-      }  // for ( TableEntry entry
-      // The value from the database isn't in the domain, add it to the list as disabled.
-      if ( !inListCBRole )
-      { 
-%>
-         <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
-<%
-      }  
-   }  // if view != null
-%>
-</select>
-
-<input name="hCBRole" id="hCBRole" type="hidden" value="<%=strComboCurrentValue%>" >
 <% /* Password::Text */ %>
 
 <label class="text14bold"  id="Password:" name="Password:" style="width:118px;height:16px;position:absolute;left:16px;top:108px;">Password:</label>
@@ -920,9 +810,62 @@ else
 
 <input class="text14" name="EBPassword" id="EBPassword" style="width:256px;position:absolute;left:146px;top:108px;<%=strErrorColor%>" type="password" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
-<% /* Forgot:Text */ %>
+<% /* PrimaryRegistrants:ComboBox */ %>
+<% strErrorMapValue = "";  %>
 
-<a href="#" id="Forgot" name="Forgot"  onclick="FORGOT_Password( );" class="text10" style="width:208px;height:22px;position:absolute;left:430px;top:122px;">Forgot Username/Password?</a>
+<select  name="PrimaryRegistrants" id="PrimaryRegistrants" size="1"style="width:194px;position:absolute;left:146px;top:132px;" onchange="PrimaryRegistrantsOnChange( )">
+
+<%
+   pePamms = task.getViewByName( "pePamms" );
+   if ( VmlOperation.isValid( pePamms ) )
+   {
+         strComboCurrentValue = "";
+      View vPrimaryRegistrants;
+      pePamms = task.getViewByName( "pePamms" );
+      if ( VmlOperation.isValid( pePamms ) )
+      {
+         nRC = pePamms.cursor( "Organization" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strComboCurrentValue = pePamms.cursor( "Organization" ).getAttribute( "Name" ).getString( "" );
+            if ( strComboCurrentValue == null )
+               strComboCurrentValue = "";
+         }
+      }
+      vPrimaryRegistrants = pePamms.newView( );
+      ComboCount = 0;
+      strComboSelectedValue = "0";
+      csrRC = vPrimaryRegistrants.cursor( "PrimaryRegistrant" ).setFirst(  );
+      while ( csrRC.isSet() )
+      {
+         strErrorMapValue = vPrimaryRegistrants.cursor( "Organization" ).getAttribute( "Name" ).getString( "" );
+         if ( strErrorMapValue == null )
+            strErrorMapValue = "";
+
+         if ( StringUtils.equals( strComboCurrentValue, strErrorMapValue ) )
+         {
+%>
+            <option selected="selected"><%=strErrorMapValue%></option>
+<%
+            strComboSelectedValue = Integer.toString( ComboCount );
+         }
+         else
+         {
+%>
+            <option><%=strErrorMapValue%></option>
+<%
+         }
+
+         ComboCount++;
+         csrRC =  vPrimaryRegistrants.cursor( "PrimaryRegistrant" ).setNextContinue( );
+      }
+
+      vPrimaryRegistrants.drop( );
+
+   }
+%>
+</select>
+<input name="hPrimaryRegistrants" id="hPrimaryRegistrants" type="hidden" value="<%=strComboSelectedValue%>" >
 
 
 </div>  <!--  WelcomeContainer --> 

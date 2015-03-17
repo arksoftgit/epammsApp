@@ -420,136 +420,6 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "MoveAreasOfUseDown" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemUpdateAreasOfUse", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Position on the entity that was selected in the grid.
-      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
-      View mEPA;
-      mEPA = task.getViewByName( "mEPA" );
-      if ( VmlOperation.isValid( mEPA ) )
-      {
-         lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mEPA.cursor( "EPA_AreaOfUse" ).setByEntityKey( lEKey );
-         if ( !csrRC.isSet() )
-         {
-            boolean bFound = false;
-            csrRCk = mEPA.cursor( "EPA_AreaOfUse" ).setFirst( );
-            while ( csrRCk.isSet() && !bFound )
-            {
-               lEKey = mEPA.cursor( "EPA_AreaOfUse" ).getEntityKey( );
-               strKey = Long.toString( lEKey );
-               if ( StringUtils.equals( strKey, strEntityKey ) )
-               {
-                  // Stop while loop because we have positioned on the correct entity.
-                  bFound = true;
-               }
-               else
-                  csrRCk = mEPA.cursor( "EPA_AreaOfUse" ).setNextContinue( );
-            } // Grid
-         }
-      }
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateAreasOfUse.jsp", "wSystem.MoveAreasOfUseDown" );
-         nOptRC = wSystem.MoveAreasOfUseDown( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSystem.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSystem.SetWebRedirection( vKZXMLPGO, wSystem.zWAB_StayOnWindowWithRefresh, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "MoveAreasOfUseUp" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemUpdateAreasOfUse", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Position on the entity that was selected in the grid.
-      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
-      View mEPA;
-      mEPA = task.getViewByName( "mEPA" );
-      if ( VmlOperation.isValid( mEPA ) )
-      {
-         lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mEPA.cursor( "EPA_AreaOfUse" ).setByEntityKey( lEKey );
-         if ( !csrRC.isSet() )
-         {
-            boolean bFound = false;
-            csrRCk = mEPA.cursor( "EPA_AreaOfUse" ).setFirst( );
-            while ( csrRCk.isSet() && !bFound )
-            {
-               lEKey = mEPA.cursor( "EPA_AreaOfUse" ).getEntityKey( );
-               strKey = Long.toString( lEKey );
-               if ( StringUtils.equals( strKey, strEntityKey ) )
-               {
-                  // Stop while loop because we have positioned on the correct entity.
-                  bFound = true;
-               }
-               else
-                  csrRCk = mEPA.cursor( "EPA_AreaOfUse" ).setNextContinue( );
-            } // Grid
-         }
-      }
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateAreasOfUse.jsp", "wSystem.MoveAreasOfUseUp" );
-         nOptRC = wSystem.MoveAreasOfUseUp( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSystem.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSystem.SetWebRedirection( vKZXMLPGO, wSystem.zWAB_StayOnWindowWithRefresh, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
    while ( bDone == false && StringUtils.equals( strActionToProcess, "NewAreasOfUseLast" ) )
    {
       bDone = true;
@@ -627,6 +497,23 @@ if ( strActionToProcess != null )
 
       // Next Window
       strNextJSP_Name = wSystem.SetWebRedirection( vKZXMLPGO, wSystem.zWAB_StayOnWindowWithRefresh, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "SortApplicationTypes" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemUpdateAreasOfUse", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      strNextJSP_Name = wSystem.SetWebRedirection( vKZXMLPGO, wSystem.zWAB_StartModalSubwindow, "wSystem", "DragDropSort" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -916,7 +803,7 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
 else
 {
    VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateAreasOfUse.jsp", "wSystem.InitAreasOfUseForUpdate" );
-   nOptRC = wSystem.InitAreasOfUseForUpdate( new zVIEW( vKZXMLPGO ) );
+         nOptRC = wSystem.InitAreasOfUseForUpdate( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -924,7 +811,7 @@ else
       String strURLParameters;
 
       vView = task.getViewByName( "wXferO" );
-      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString();
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString( "" );
       strURLParameters = "?CallingPage=wSystemUpdateAreasOfUse.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wSystem" +
@@ -938,7 +825,7 @@ else
 
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSystem", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -946,8 +833,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSystem" );
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "UpdateAreasOfUse" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSystem", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "UpdateAreasOfUse", "" );
    }
 
 %>
@@ -1120,7 +1007,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSystem", "UpdateAreasOfUse" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -1298,7 +1185,6 @@ else
 
 <span  id="NewAreasOfUse:" name="NewAreasOfUse:" style="width:92px;height:16px;">Area of Use:</span>
 
-<span style="height:16px;">&nbsp</span>
 <% /* AreasOfUse:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "AreasOfUse", strError );
@@ -1340,9 +1226,12 @@ else
 
 <input name="AreasOfUse" id="AreasOfUse" style="width:580px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-<span style="height:28px;">&nbsp</span>
+<span style="height:28px;">&nbsp&nbsp</span>
 <% /* PBNewAreasOfUse:PushBtn */ %>
 <button type="button" class="formStylebutton" name="PBNewAreasOfUse" id="PBNewAreasOfUse" value="" onclick="NewAreasOfUseLast( )" style="width:80px;height:28px;">New</button>
+
+<% /* PBSort:PushBtn */ %>
+<button type="button" class="newbutton" name="PBSort" id="PBSort" value="" onclick="SortApplicationTypes( )" style="width:80px;height:28px;">Sort</button>
 
 </div>  <!-- End of a new line -->
 
@@ -1373,7 +1262,7 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:32px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridAreasOfUse:Grid */ %>
-<table  cols=6 style=""  name="GridAreasOfUse" id="GridAreasOfUse">
+<table  cols=4 style=""  name="GridAreasOfUse" id="GridAreasOfUse">
 
 <thead><tr>
 
@@ -1381,8 +1270,6 @@ else
    <th>Update</th>
    <th>New</th>
    <th>Delete</th>
-   <th>Up</th>
-   <th>Down</th>
 
 </tr></thead>
 
@@ -1404,8 +1291,6 @@ try
       String strBMBUpdateAreasOfUse;
       String strBMBNewAreasOfUse;
       String strBMBDeleteAreasOfUse;
-      String strBMBMoveAreasOfUseUp;
-      String strBMBMoveAreasOfUseDown;
       
       View vGridAreasOfUse;
       vGridAreasOfUse = mEPA.newView( );
@@ -1440,8 +1325,6 @@ try
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateAreasOfUse" onclick="UpdateAreasOfUse( this.id )" id="BMBUpdateAreasOfUse::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBNewAreasOfUse" onclick="AddNewAreasOfUse( this.id )" id="BMBNewAreasOfUse::<%=strEntityKey%>"><img src="./images/ePammsNew.jpg" alt="New"></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteAreasOfUse" onclick="DeleteAreasOfUse( this.id )" id="BMBDeleteAreasOfUse::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBMoveAreasOfUseUp" onclick="MoveAreasOfUseUp( this.id )" id="BMBMoveAreasOfUseUp::<%=strEntityKey%>"><img src="./images/ePammsUp.jpg" alt="Up"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBMoveAreasOfUseDown" onclick="MoveAreasOfUseDown( this.id )" id="BMBMoveAreasOfUseDown::<%=strEntityKey%>"><img src="./images/ePammsDown.jpg" alt="Down"></a></td>
 
 </tr>
 

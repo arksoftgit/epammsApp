@@ -449,7 +449,7 @@ else
 }
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wMLC", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString();
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
@@ -457,8 +457,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wMLC" );
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "IngredientsStatement" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wMLC", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "IngredientsStatement", "" );
    }
 
 %>
@@ -614,7 +614,7 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString();
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wMLC", "IngredientsStatement" );
    strOpenFile = VmlOperation.FindOpenFile( task );
@@ -789,7 +789,7 @@ else
    }
 %>
 
-<textarea id="ChemicalName" name="ChemicalName" class="" style="width:568px;height:52px;border:solid;border-width:2px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+<textarea id="ChemicalName" name="ChemicalName" class="" style="width:568px;height:52px;border:solid;border-width:2px;border-style:groove;style="width:568px;heig wrap="wrap"><%=strErrorMapValue%></textarea>
 
 </td>
 </tr>
@@ -817,7 +817,7 @@ else
       nRC = mMasLC.cursor( "M_IngredientsStatement" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mMasLC.cursor( "M_IngredientsStatement" ).getAttribute( "Active" ).getString();
+         strComboCurrentValue = mMasLC.cursor( "M_IngredientsStatement" ).getAttribute( "Active" ).getString( "" );
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }
