@@ -240,6 +240,12 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
+      // We are borrowing zTableRowSelect for the moment and this code is hardwired for the moment
+      wWebXA = task.getViewByName( "wWebXfer" );
+      String strHtml = (String) request.getParameter( "zTableRowSelect" );
+      wWebXA.cursor( "Root" ).getAttribute( "HTML" ).setValue( strHtml, "" );
+      // We are borrowing zTableRowSelect for the moment and this code is hardwired for the moment
+
       // Next Window
       strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartModalSubwindow, "wSystem", "DragDropSort" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -443,6 +449,8 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script src="js/jsoeUtils.js"></script>
+<script src="js/jsoe.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSLCMarketingStatement.js"></script>
 

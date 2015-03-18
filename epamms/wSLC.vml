@@ -552,7 +552,7 @@ GOTO_MarketingStatementDetail( VIEW ViewToWindow )
    // If we're positioned on a Marketing Section component, give error.
    IF mSubLC.CompositeComponentList.Type = "M_MarketingSection"
       MessageSend( ViewToWindow, "", "Marketing Statement Detail",
-                   "Only a Marketing Section can be selected.",
+                   "Only a Marketing Statement can be selected.",
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
       RETURN 2
    ELSE

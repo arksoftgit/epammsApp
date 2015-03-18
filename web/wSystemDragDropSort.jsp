@@ -497,6 +497,8 @@ else
 <%@ include file="./include/timeout.inc" %>
 <link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/css.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/sts.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>

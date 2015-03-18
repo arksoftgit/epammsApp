@@ -1134,13 +1134,11 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox1:GroupBox */ %>
 
-<div id="GroupBox1" name="GroupBox1" style="width:692px;height:258px;float:left;">  <!-- GroupBox1 --> 
+<div id="GroupBox1" name="GroupBox1"   style="float:left;position:relative; width:692px; height:258px;">  <!-- GroupBox1 --> 
 
-
-<div>  <!-- Beginning of a new line -->
 <% /* HazardText::Text */ %>
 
-<span  id="HazardText:" name="HazardText:" style="width:130px;height:16px;">Hazard Text:</span>
+<label  id="HazardText:" name="HazardText:" style="width:130px;height:16px;position:absolute;left:0px;top:0px;">Hazard Text:</label>
 
 <% /* Text3:Text */ %>
 <% strTextDisplayValue = "";
@@ -1167,20 +1165,11 @@ else
    }
 %>
 
-<span  id="Text3" name="Text3" style="width:522px;height:16px;"><%=strTextDisplayValue%></span>
+<label  id="Text3" name="Text3" style="width:522px;height:16px;position:absolute;left:130px;top:0px;"><%=strTextDisplayValue%></label>
 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:16px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
 <% /* SignalWord::Text */ %>
 
-<span  id="SignalWord:" name="SignalWord:" style="width:130px;height:16px;">Signal Word:</span>
+<label  id="SignalWord:" name="SignalWord:" style="width:130px;height:16px;position:absolute;left:0px;top:32px;">Signal Word:</label>
 
 <% /* Text1:Text */ %>
 <% strTextDisplayValue = "";
@@ -1207,20 +1196,11 @@ else
    }
 %>
 
-<span  id="Text1" name="Text1" style="width:130px;height:16px;"><%=strTextDisplayValue%></span>
+<label  id="Text1" name="Text1" style="width:130px;height:16px;position:absolute;left:130px;top:32px;"><%=strTextDisplayValue%></label>
 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:22px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
 <% /* Statement::Text */ %>
 
-<span  id="Statement:" name="Statement:" style="width:130px;height:16px;">Statement:</span>
+<label  id="Statement:" name="Statement:" style="width:130px;height:16px;position:absolute;left:0px;top:70px;">Statement:</label>
 
 <% /* Text4:Text */ %>
 <% strTextDisplayValue = "";
@@ -1247,20 +1227,11 @@ else
    }
 %>
 
-<span  id="Text4" name="Text4" style="width:522px;height:50px;"><%=strTextDisplayValue%></span>
+<label  id="Text4" name="Text4" style="width:522px;height:50px;position:absolute;left:130px;top:70px;"><%=strTextDisplayValue%></label>
 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
 <% /* Location1::Text */ %>
 
-<span  id="Location1:" name="Location1:" style="width:130px;height:16px;">Location:</span>
+<label  id="Location1:" name="Location1:" style="width:130px;height:16px;position:absolute;left:0px;top:130px;">Location:</label>
 
 <% /* Text5:Text */ %>
 <% strTextDisplayValue = "";
@@ -1287,20 +1258,11 @@ else
    }
 %>
 
-<span  id="Text5" name="Text5" style="width:130px;height:16px;"><%=strTextDisplayValue%></span>
+<label  id="Text5" name="Text5" style="width:130px;height:16px;position:absolute;left:130px;top:130px;"><%=strTextDisplayValue%></label>
 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
 <% /* Location2::Text */ %>
 
-<span  id="Location2:" name="Location2:" style="width:130px;height:16px;">Location:</span>
+<label  id="Location2:" name="Location2:" style="width:130px;height:16px;position:absolute;left:0px;top:156px;">Location:</label>
 
 <% /* Text6:Text */ %>
 <% strTextDisplayValue = "";
@@ -1327,20 +1289,11 @@ else
    }
 %>
 
-<span  id="Text6" name="Text6" style="width:130px;height:16px;"><%=strTextDisplayValue%></span>
+<label  id="Text6" name="Text6" style="width:130px;height:16px;position:absolute;left:130px;top:156px;"><%=strTextDisplayValue%></label>
 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
 <% /* Location3::Text */ %>
 
-<span  id="Location3:" name="Location3:" style="width:130px;height:16px;">Location:</span>
+<label  id="Location3:" name="Location3:" style="width:130px;height:16px;position:absolute;left:0px;top:182px;">Location:</label>
 
 <% /* Text7:Text */ %>
 <% strTextDisplayValue = "";
@@ -1367,20 +1320,11 @@ else
    }
 %>
 
-<span  id="Text7" name="Text7" style="width:130px;height:16px;"><%=strTextDisplayValue%></span>
+<label  id="Text7" name="Text7" style="width:130px;height:16px;position:absolute;left:130px;top:182px;"><%=strTextDisplayValue%></label>
 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
 <% /* Location4::Text */ %>
 
-<span  id="Location4:" name="Location4:" style="width:130px;height:16px;">Location:</span>
+<label  id="Location4:" name="Location4:" style="width:130px;height:16px;position:absolute;left:0px;top:208px;">Location:</label>
 
 <% /* Text9:Text */ %>
 <% strTextDisplayValue = "";
@@ -1407,20 +1351,11 @@ else
    }
 %>
 
-<span  id="Text9" name="Text9" style="width:130px;height:16px;"><%=strTextDisplayValue%></span>
+<label  id="Text9" name="Text9" style="width:130px;height:16px;position:absolute;left:130px;top:208px;"><%=strTextDisplayValue%></label>
 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
 <% /* Location5::Text */ %>
 
-<span  id="Location5:" name="Location5:" style="width:130px;height:16px;">Location:</span>
+<label  id="Location5:" name="Location5:" style="width:130px;height:16px;position:absolute;left:0px;top:234px;">Location:</label>
 
 <% /* Text8:Text */ %>
 <% strTextDisplayValue = "";
@@ -1447,9 +1382,7 @@ else
    }
 %>
 
-<span  id="Text8" name="Text8" style="width:130px;height:16px;"><%=strTextDisplayValue%></span>
-
-</div>  <!-- End of a new line -->
+<label  id="Text8" name="Text8" style="width:130px;height:16px;position:absolute;left:130px;top:234px;"><%=strTextDisplayValue%></label>
 
 
 </div>  <!--  GroupBox1 --> 
@@ -1465,19 +1398,11 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox2:GroupBox */ %>
 
-<div id="GroupBox2" name="GroupBox2" class="withborder" style="width:692px;height:40px;float:left;">  <!-- GroupBox2 --> 
+<div id="GroupBox2" name="GroupBox2" class="withborder"   style="float:left;position:relative; width:692px; height:40px;">  <!-- GroupBox2 --> 
 
-
- <!-- This is added as a line spacer -->
-<div style="height:14px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp&nbsp</span>
 <% /* FullHazardStatement:Text */ %>
 
-<span class="groupbox"  id="FullHazardStatement" name="FullHazardStatement" style="width:208px;height:16px;">Complete Hazard Statement</span>
-
-</div>  <!-- End of a new line -->
+<label class="groupbox"  id="FullHazardStatement" name="FullHazardStatement" style="width:208px;height:16px;position:absolute;left:18px;top:14px;">Complete Hazard Statement</label>
 
 
 </div>  <!--  GroupBox2 --> 
@@ -1493,14 +1418,11 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox3:GroupBox */ %>
 
-<div id="GroupBox3" name="GroupBox3" style="width:692px;height:142px;float:left;">  <!-- GroupBox3 --> 
+<div id="GroupBox3" name="GroupBox3"   style="float:left;position:relative; width:692px; height:142px;">  <!-- GroupBox3 --> 
 
-
-<div>  <!-- Beginning of a new line -->
 <% /* Refresh:PushBtn */ %>
-<button type="button" name="Refresh" id="Refresh" value="" onclick="RefreshFullStatement( )" style="width:130px;height:24px;">Refresh</button>
+<button type="button" name="Refresh" id="Refresh" value="" onclick="RefreshFullStatement( )" style="width:130px;height:24px;position:absolute;left:0px;top:0px;">Refresh</button>
 
-<span style="height:136px;">&nbsp&nbsp</span>
 <% /* MLEditFullStatement:MLEdit */ %>
 <%
    // : MLEditFullStatement
@@ -1534,8 +1456,6 @@ else
 %>
 
 <textarea name="MLEditFullStatement" id="MLEditFullStatement" style="width:552px;height:136px;position:absolute;left:140px;top:0px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
-
-</div>  <!-- End of a new line -->
 
 
 </div>  <!--  GroupBox3 --> 

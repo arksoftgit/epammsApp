@@ -86,7 +86,7 @@ function _IsDocDisabled( )
 
    var $el = $("#zDisable");
    if ( $el.length > 0 ) {
-      bRC = $el.attr( "disabled" );
+      bRC = $el.prop( "disabled" );
    }
    return bRC ? true : false;
 }
@@ -103,11 +103,11 @@ function _DisableFormElements( bDisabled )
 
    var $el = $("#zDisable");
    if ( $el.length > 0 ) {
-      $el.attr( "disabled", bDisabled );
+      $el.prop( "disabled", bDisabled );
       bRC = true;
    }
 
-   $.blockUI({ message: '<h1><img src="./images/busy.gif" /></h1>', overlayCSS: { backgroundColor: '#eee' } });
+// $.blockUI({ message: '<h1><img src="./images/busy.gif" /></h1>', overlayCSS: { backgroundColor: '#eee' } });
    return bRC;
 }
 

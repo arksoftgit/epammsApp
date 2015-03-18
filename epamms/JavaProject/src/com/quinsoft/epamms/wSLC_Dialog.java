@@ -995,9 +995,9 @@ GOTO_MarketingStatementDetail( View     ViewToWindow )
    if ( CompareAttributeToString( mSubLC, "CompositeComponentList", "Type", "M_MarketingSection" ) == 0 )
    { 
       //:MessageSend( ViewToWindow, "", "Marketing Statement Detail",
-      //:             "Only a Marketing Section can be selected.",
+      //:             "Only a Marketing Statement can be selected.",
       //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Marketing Statement Detail", "Only a Marketing Section can be selected.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      MessageSend( ViewToWindow, "", "Marketing Statement Detail", "Only a Marketing Statement can be selected.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
       //:RETURN 2
       if(8==8)return( 2 );
       //:ELSE

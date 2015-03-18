@@ -4,3 +4,5 @@ call wd "\Program Files\Apache Group\tomcat 7.0\webapps\ROOT\epamms\wStartUpUser
 call wd "\Program Files\Apache Group\tomcat 7.0\webapps\ROOT\epamms\genjs\wStartUpUserLogin.js" genjs\wStartUpUserLogin.js.hld
 call wd "\Program Files\Apache Group\tomcat 7.0\webapps\ROOT\epamms\wSystemDragDropSort.jsp" wSystemDragDropSort.jsp.hld
 call wd "\Program Files\Apache Group\tomcat 7.0\webapps\ROOT\epamms\genjs\wSystemDragDropSort.js" genjs\wSystemDragDropSort.js.hld
+call wd "\Program Files\Apache Group\tomcat 7.0\webapps\ROOT\epamms\wSLCMarketingStatement.jsp" wSLCMarketingStatement.jsp.hld
+call wd "\Program Files\Apache Group\tomcat 7.0\webapps\ROOT\epamms\genjs\wSLCMarketingStatement.js" genjs\wSLCMarketingStatement.js.hld

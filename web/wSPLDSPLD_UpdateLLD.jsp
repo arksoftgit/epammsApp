@@ -965,6 +965,8 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script src="js/jsoeUtils.js"></script>
+<script src="js/jsoe.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSPLDSPLD_UpdateLLD.js"></script>
 
