@@ -403,6 +403,8 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                         if ( cr == CursorResult.SET ) {
                            ei = ec.getEntityInstance();
                            if ( Delete != null && Delete.charAt( 0 ) == 'Y' ) {
+                           // vLLD.logObjectInstance();
+                           // ec.logEntity();
                               ei.deleteEntity();
                               ei = null;
                               logger.debug( "Entity DELETED: " + entity + "  ID: " + ID + "  Depth: " + depth );
@@ -431,7 +433,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                   //    ei.logEntity( false );
                   // }
                   } catch ( ZeidonException ze ) {
-                    logger.debug( "Failed to process entity: " + entity + "  Depth: " + depth + "   ID: " + ID );
+                    logger.debug( "Failed to process entity: " + entity + "  Depth: " + depth + "   ID: " + ID + "   Error: " + ze.getMessage() );
                   } finally {
                      if ( recurse ) {
                      // recurse = false; // not used
@@ -453,7 +455,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
 
    private String applyJsonLabelToView( View vLLD, JSONObject jsonObject, String entity, int depth, EntityInstance ei ) {
       String indent = StringUtils.repeat( " ", (depth + 2) * 3 );
-// start debug code
+/* start debug code
       boolean log = false;
       if ( ei != null ) {
          Object o = jsonObject.get( "ID" );
@@ -466,7 +468,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
             }
          }
       }
-// end debug code
+end debug code */
    // Set<String> keys = (Set<String>) jsonObject.keySet(); // these two line work, but cause
    // for ( String key : keys ) {                           // a warning ... replaced by next two lines
       for( Iterator iterator = jsonObject.keySet().iterator(); iterator.hasNext(); ) {
@@ -521,12 +523,12 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
             logger.debug( indent + "Key: " + key + "  Unknown type: " + obj.getClass().getName() );
          }
       }
-// start debug code
+/* start debug code
       if ( log ) {
          logger.debug( "After Setting entity: " + entity + "  ID: " + "626" );
          ei.logEntity( false );
       }
-// end debug code
+ end debug code*/
       return "";
    }
 

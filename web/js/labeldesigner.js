@@ -194,6 +194,7 @@ $(function() {
    // console.log( "Click on canvas-element: " + this.id + " has been pressed!" );
       if ( g_selected_first === null || e.ctrlKey === false ) {
          var el = this;
+      // displayElementData( "on click: ", $(el) );
          if ( g_selected_first ) { // try to select up through parentage
             var parent_array = $(this).parents( ".canvas-element" );
             var found = false;
@@ -525,8 +526,8 @@ $(function() {
    }
 
    function setCurrentBlockData( $element, message ) {
-   // console.log( "setCurrentBlockData: " + message );
-   // g_updatedLLD = true; this should be set prior to calling this function as necessary
+   //console.log( "setCurrentBlockData: " + message );
+   // g_updatedLLD = true; commented because this should be set prior to calling this function as necessary
       mapElementCssToElementData( $element );
       if ( g_$current_block && g_$current_block.attr( "id" ) !== $element.attr( "id" ) ) {
          mapUiDataToElementData( g_$current_block );
@@ -1310,11 +1311,11 @@ $(function() {
       $("#page").attr( "id", "page" + g_currentPage ).attr( "name", "page" + g_currentPage );
       var $initElement = $("#label");
       var jsonDOM = mapDOM( $initElement[0], true );
-      console.log( "JSON DOM: " + jsonDOM );
+   // console.log( "JSON DOM: " + jsonDOM );
       var jsonLabel = CaptureZeidonLabelJsonFromDomJson( jsonDOM );
 
       // Display the resultant JSON that will be passed to Zeidon to be saved as an LLD.
-      console.log( "\nJsonLabel: " + jsonLabel );
+   // console.log( "\nJsonLabel: " + jsonLabel );
 
      // The jqXHR.success(), jqXHR.error(), and jqXHR.complete() callback methods introduced in jQuery 1.5
      // are deprecated as of jQuery 1.8. Use jqXHR.done(), jqXHR.fail(), and jqXHR.always() instead.
@@ -1560,7 +1561,7 @@ public class FileServer {
          jsonObj = jsonStringToJsonObject( jsonLabel );
       } catch (e) {
          alert( "Generated JSON Label is not well formatted:\n" + e.message );
-         console.log( "JSON Label: " + jsonLabel );
+      // console.log( "JSON Label: " + jsonLabel );
          jsonObj = null;
          jsonLabel = "";
       } finally {
@@ -2355,7 +2356,7 @@ public class FileServer {
          data : { registeredViews : "rv" },
          dataType : 'json',
          success : function( data ) {
-            console.log( "Return from loadRegisteredViews: " + data );
+         // console.log( "Return from loadRegisteredViews: " + data );
             var jsonObj = jsonStringToJsonObject( data );
             simpleTraverseJsonObject( jsonObj, false );
             var $select = $('#selectRegisteredViews').empty();
@@ -2439,7 +2440,7 @@ public class FileServer {
          data : { "fileName" : g_loadedLLD, "registeredViews" : jsonRegisteredViews },
          dataType : 'json',
          success : function( data ) {
-            console.log( "Return from saveRegisteredViews: " + data );
+         // console.log( "Return from saveRegisteredViews: " + data );
             var jsonObj = jsonStringToJsonObject( data );
             simpleTraverseJsonObject( jsonObj, false );
          }
@@ -2636,7 +2637,7 @@ public class FileServer {
       return setLLD_sizes();
    });
 
-   function equalSpaceOrAbut( id, el_array ) {
+   function equalSpaceOrAbut( id, el_array, scale ) {
       var pos = -1;
       var $item;
       if ( id === "ah" || id === "av" ) { // Abut Horizontal or Vertical
@@ -2687,9 +2688,11 @@ public class FileServer {
             $item = $(item);
             if ( id === "esh" ) {
                $item.css({ left: pos });
+               $item.data( "z_^left", (pos / scale).toFixed( 2 ) );
                pos += $item.cssInt( 'width' ) + space;
             } else {
                $item.css({ top: pos });
+               $item.data( "z_^top", (pos / scale).toFixed( 2 ) );
                pos += $item.cssInt( 'height' ) + space;
             }
          });
@@ -2699,6 +2702,7 @@ public class FileServer {
    function runAlign( button ) {
    // console.log( "zalign id: " + button.id );
       if ( g_selected_list.length > 1 && g_selected_first !== null ) {
+         var scale = g_pixelsPerInch * g_scale;
          switch ( button.id ) {
             case "esh": // Equal Space Horizontal
             case "esv": // Equal Space Vertical
@@ -2726,7 +2730,7 @@ public class FileServer {
                      }
                   }
                });
-               equalSpaceOrAbut( button.id, new_array );
+               equalSpaceOrAbut( button.id, new_array, scale );
                break;
 
             default:
@@ -2737,13 +2741,19 @@ public class FileServer {
                // console.log( item.id );
                   if ( g_selected_first.id !== item.id ) {
                      $item = $(item);
+                  // console.log( "zalign item id: " + item.id );
+                  // displayElementData( "runAlign Before: ", $item );
                      switch ( button.id ) {
                         case "at": // Align Top
-                           $item.css({ top: $el.cssInt( 'top' ) });
+                           coord = $el.cssInt( 'top' );
+                           $item.css({ top: coord });
+                           $item.data( "z_^top", (coord / scale).toFixed( 2 ) );
                            break;
 
                         case "al": // Align Left
-                           $item.css({ left: $el.cssInt( 'left' ) });
+                           coord = $el.cssInt( 'left' );
+                           $item.css({ left: coord });
+                           $item.data( "z_^left", (coord / scale).toFixed( 2 ) );
                            break;
 
                         case "ab": // Align Bottom
@@ -2752,6 +2762,7 @@ public class FileServer {
                               coord = 0;
                            }
                            $item.css({ top: coord });
+                           $item.data( "z_^top", (coord / scale).toFixed( 2 ) );
                            break;
 
                         case "ar": // Align Right
@@ -2760,25 +2771,37 @@ public class FileServer {
                               coord = 0;
                            }
                            $item.css({ left: coord });
+                           $item.data( "z_^left", (coord / scale).toFixed( 2 ) );
                            break;
 
                         case "ew": // Equal Width
-                           $item.css({ width: $el.cssInt( 'width' ) });
+                           coord = $el.cssInt( 'width' );
+                           $item.css({ width: coord });
+                           $item.data( "z_^width", (coord / scale).toFixed( 2 ) );
                            break;
 
                         case "eh": // Equal Height
-                           $item.css({ height: $el.cssInt( 'height' ) });
+                           coord = $el.cssInt( 'height' );
+                           $item.css({ height: coord });
+                           $item.data( "z_^height", (coord / scale).toFixed( 2 ) );
                            break;
 
                         case "ewh": // Equal Width & Height
-                           $item.css({ width: $el.cssInt( 'width' ) });
-                           $item.css({ height: $el.cssInt( 'height' ) });
+                           coord = $el.cssInt( 'width' );
+                           $item.css({ width: coord });
+                           $item.data( "z_^width", (coord / scale).toFixed( 2 ) );
+                           coord = $el.cssInt( 'height' );
+                           $item.css({ height: coord });
+                           $item.data( "z_^height", (coord / scale).toFixed( 2 ) );
                            break;
 
                   } // end of: inner switch
+               // displayElementData( "runAlign After: ", $item );
                }
             });
+            g_updatedLLD = true;
          }
+         mapElementDataToUiData( g_$current_block );
       }
    }
 
