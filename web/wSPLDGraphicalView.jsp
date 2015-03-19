@@ -119,8 +119,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-   strURL = response.encodeRedirectURL( "logout.jsp" );
-   response.sendRedirect( strURL );
+    strURL = response.encodeRedirectURL( "logout.jsp" );
+    response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -307,7 +307,7 @@ if ( strActionToProcess != null )
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDGraphicalView", strActionToProcess );
 
       // Next Window
-      strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_ReturnToParent, "", "" );
+      strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_ReturnToParent, "wSPLD", "SPLD_UpdateLLD" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -434,7 +434,7 @@ else
 <head>
 
    <meta http-equiv="content-type" content="text/html; charset=utf-8">
-   <title>Graphical View of LLD</title>
+<title>Graphical View of LLD</title>
 
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
 <!-- log a user out.  Timeout.inc is not used if the dialog or window has a timeout value set. -->

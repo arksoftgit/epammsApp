@@ -89,7 +89,7 @@ function _IsDocDisabled( )
 
    var $el = $("#zDisable");
    if ( $el.length > 0 ) {
-      bRC = $el.attr( "disabled" );
+      bRC = $el[0].disabled;
    }
    return bRC ? true : false;
 }
@@ -106,7 +106,7 @@ function _DisableFormElements( bDisabled )
 
    var $el = $("#zDisable");
    if ( $el.length > 0 ) {
-      $el.attr( "disabled", bDisabled );
+      $el[0].disabled = true;
       bRC = true;
    }
 

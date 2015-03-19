@@ -349,27 +349,26 @@ function korderbyIndex( arrIdx, arrayOrig ) {
 }
 
 // </style>
-// #DragDropSortableGrid { list-style-type: none; margin: 0; padding: 0; width: 60%; }
-// #DragDropSortableGrid li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
-// #DragDropSortableGrid li span { position: absolute; margin-left: -1.3em; }
+// #DraggableSortTable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+// #DraggableSortTable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
+// #DraggableSortTable li span { position: absolute; margin-left: -1.3em; }
 // </style>
 // <script>
    $(function() {
-      $( "#DragDropSortableGrid" ).sortable();
-      $( "#DragDropSortableGrid" ).disableSelection();
+      $( "#DraggableSortTable" ).sortable();
+      $( "#DraggableSortTable" ).disableSelection();
 
-
-      var fixHelperModified = function(e, tr) {
+      var fixCloneColumnWidths = function(e, tr) {
          var $originals = tr.children();
          var $helper = tr.clone();
-         $helper.children().each(function(index) {
+         $helper.children().each(function(index) { // when dragging the row, maintains widths of columns within clone
             $(this).width($originals.eq(index).width());
          });
          return $helper;
       },
-      updateIndex = function(e, ui) {
+      updateOddEven = function(e, ui) { // reset the odd/even row class
          $('td.index', ui.item.parent()).each(function (k) {
-            // $(this).html(k + 1);
+            // $(this).html(k + 1); // uncomment to have row index change to new order
             if ( k % 2 ) {
                // console.log( "adding class odd at: " + k );
                $(this).closest("tr").addClass( "odd" );
@@ -380,9 +379,9 @@ function korderbyIndex( arrIdx, arrayOrig ) {
          });
       };
 
-      $("#DragDropSortableGrid tbody").sortable({
-         helper: fixHelperModified,
-         stop: updateIndex
+      $("#DraggableSortTable tbody").sortable({
+         helper: fixCloneColumnWidths,
+         stop: updateOddEven
       }).disableSelection();
 
    });
@@ -839,6 +838,7 @@ function getSortOrder( tableId ) {
 
 function buildSortTableHtml( viewName, entityName, tableId, arrTableColumnTitles )
 {
+   console.log( "buildSortTableHtml view: " + viewName + "  entity: " + entityName + "  table: " + tableId + "  Columns: " + arrTableColumnTitles );
    var k, col, row;
    var strOdd;
    var table = "<table style=\"margin:100;padding-left:0;border-left:0\" id=\"DraggableSortTable\">\n" +

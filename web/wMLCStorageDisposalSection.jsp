@@ -1118,7 +1118,7 @@ else
 <label class="listheader"  id="Text2" name="Text2" style="width:336px;height:16px;position:absolute;left:12px;top:4px;">Container Sizes that Utilize This Section</label>
 
 <% /* PushBtn1:PushBtn */ %>
-<button type="button" class="newbutton" name="PushBtn1" id="PushBtn1" value="" onclick="ADD_StorageDisposalContainer( )" style="width:78px;height:26px;position:absolute;left:560px;top:4px;">New</button>
+<button type="button" class="newbutton" name="PushBtn1" id="PushBtn1" value="" onclick="ADD_StorageDisposalContainer( )" style="width:78px;height:26px;position:absolute;left:518px;top:4px;">New</button>
 
 
 </div>  <!--  GroupBox2 --> 

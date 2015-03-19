@@ -86,7 +86,7 @@ function _IsDocDisabled( )
 
    var $el = $("#zDisable");
    if ( $el.length > 0 ) {
-      bRC = $el.prop( "disabled" );
+      bRC = $el[0].disabled;
    }
    return bRC ? true : false;
 }
@@ -103,7 +103,7 @@ function _DisableFormElements( bDisabled )
 
    var $el = $("#zDisable");
    if ( $el.length > 0 ) {
-      $el.prop( "disabled", bDisabled );
+      $el[0].disabled = true;
       bRC = true;
    }
 
@@ -220,7 +220,7 @@ function ApplySortOrder( )
       // Need some javascript here to apply the sort order
       var arrRowOrderIdx = getSortOrderArray( "DraggableSortTable" );
       document.wSystemDragDropSort.zOrderArray.value = arrRowOrderIdx.toString();
-
+      console.log( "New SortOrderArray: " + document.wSystemDragDropSort.zOrderArray.value );
 
       // END of Javascript code entered by user.
 
@@ -281,7 +281,7 @@ function mApplySortOrder( )
       // Need some javascript here to apply the sort order
       var arrRowOrderIdx = getSortOrderArray( "DraggableSortTable" );
       document.wSystemDragDropSort.zOrderArray.value = arrRowOrderIdx.toString();
-
+      console.log( "New SortOrderArray: " + document.wSystemDragDropSort.zOrderArray.value );
 
       // END of Javascript code entered by user.
 

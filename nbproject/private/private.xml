@@ -12,7 +12,7 @@
             <line>1024</line>
         </file>
     </editor-bookmarks>
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="20">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="24">
         <file>
             <url>web/wSPLDSPLD_UpdateLLD.jsp</url>
             <bookmark id="3">
@@ -38,25 +38,45 @@
             <url>src/java/com/ajax/GraphicalLabelDesignerServlet.java</url>
             <bookmark id="13">
                 <name/>
-                <line>491</line>
+                <line>490</line>
                 <key/>
             </bookmark>
         </file>
         <file>
             <url>web/js/labeldesigner.js</url>
+            <bookmark id="23">
+                <name/>
+                <line>192</line>
+                <key/>
+            </bookmark>
             <bookmark id="18">
                 <name/>
-                <line>372</line>
+                <line>373</line>
                 <key/>
             </bookmark>
             <bookmark id="19">
                 <name/>
-                <line>395</line>
+                <line>396</line>
                 <key/>
             </bookmark>
             <bookmark id="20">
                 <name/>
-                <line>490</line>
+                <line>491</line>
+                <key/>
+            </bookmark>
+            <bookmark id="22">
+                <name/>
+                <line>527</line>
+                <key/>
+            </bookmark>
+            <bookmark id="24">
+                <name/>
+                <line>717</line>
+                <key/>
+            </bookmark>
+            <bookmark id="21">
+                <name/>
+                <line>2701</line>
                 <key/>
             </bookmark>
         </file>
@@ -92,6 +112,7 @@
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/js/labeldesigner.js</file>
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/js/jsoeUtils.js</file>
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/wSPLDGraphicalView.jsp</file>
+            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/wSystemDragDropSort.jsp</file>
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/genjs/wSPLDGraphicalView.js</file>
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/genjs/wStartUpUserLogin.js</file>
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/genjs/wSPLDSPLD_UpdateLLD.js</file>
