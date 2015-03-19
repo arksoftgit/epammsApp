@@ -199,7 +199,7 @@ function SortMarketingStatements( )
    {
       // Javascript code entered by user.
 
-       document.wSLCMarketingStatement.zTableRowSelect.value = buildSortTableHtml( "mSubLC", "S_MarketingUsageOrdering", "GridMarketingUsage", ["Usage Type","Usage Name"] );
+       document.wSLCMarketingStatement.zTableRowSelect.value = buildSortTableHtml( "mSubLC", "S_MarketingUsageOrdering", "GridMarketingUsage",  ["Usage Type","Usage Name"]  );
 
       // END of Javascript code entered by user.
 

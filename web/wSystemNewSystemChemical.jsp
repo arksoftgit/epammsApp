@@ -832,7 +832,7 @@ else
    }
 %>
 
-<textarea id="Name" name="Name" class="mceSimple" style="width:402px;height:84px;border:solid;border-width:2px;border-style:groove;style="width:402px;height:84px;""><%=strErrorMapValue%></textarea>
+<textarea id="Name" name="Name" class="mceSimple" style="width:402px;height:84px;border:solid;border-width:2px;border-style:groove;"><%=strErrorMapValue%></textarea>
 
 </td>
 </tr>
@@ -876,7 +876,7 @@ else
    }
 %>
 
-<textarea id="Description" name="Description" class="mceSimple" style="width:402px;height:84px;border:solid;border-width:2px;border-style:groove;style="width:402px;height:84px;""><%=strErrorMapValue%></textarea>
+<textarea id="Description" name="Description" class="mceSimple" style="width:402px;height:84px;border:solid;border-width:2px;border-style:groove;"><%=strErrorMapValue%></textarea>
 
 </td>
 </tr>

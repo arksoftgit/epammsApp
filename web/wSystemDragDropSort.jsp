@@ -66,7 +66,7 @@ public int DoInputMapping( HttpServletRequest request,
 }
 
 // beginning of:  added by hand
-// hard-wired debugging code
+/* hard-wired debugging code
 private String displayArray( int [] arr, int lth ) {
    String msg = "";
    for ( int k = 0; k < lth; k++ ) {
@@ -91,18 +91,18 @@ private void displayEntity( View vOrig, String entityName, String entityName1, S
       cr = ec.setNext();
    }
 }
-//
+*/
 private boolean orderByNewIndex( String arr, View vOrig, String entityName ) {
-   vOrig.log().info( "Order Array Entity: " + entityName );
-   vOrig.logObjectInstance();
-   vOrig.log().info( "Order Array subscript: " + arr );
+// vOrig.log().info( "Order Array Entity: " + entityName );
+// vOrig.logObjectInstance();
+// vOrig.log().info( "Order Array subscript: " + arr );
    int lth = arr.length(); // more than enough items for the order array
    int [] arrOrder = new int[lth];
    int maxIdx = 0;
    int pos = 0;
    int commaIdx = arr.indexOf( ",", pos );
    while ( commaIdx >= 0 ) {
-      vOrig.log().info( "Position: " + pos + "  Comma index: " + commaIdx );
+   // vOrig.log().info( "Position: " + pos + "  Comma index: " + commaIdx );
       arrOrder[maxIdx++] = (Integer.parseInt( arr.substring( pos, commaIdx ).toString() )) - 1; // change from subsript to zero-based index
       pos = commaIdx + 1;
       commaIdx = arr.indexOf( ",", pos );
@@ -111,22 +111,22 @@ private boolean orderByNewIndex( String arr, View vOrig, String entityName ) {
       arrOrder[maxIdx++] = (Integer.parseInt( arr.substring(pos).toString())) - 1; // change from subsript to zero-based index
    }
    lth = maxIdx; // setting the correct length
-   vOrig.log().info( "Order array index length: " + lth + "  " + displayArray( arrOrder, lth ) );
+// vOrig.log().info( "Order array index length: " + lth + "  " + displayArray( arrOrder, lth ) );
    View v = vOrig.newView( );
    v.copyCursors( vOrig );
-   displayEntity( v, entityName, "S_MarketingUsage", "UsageType",
-                     "S_MarketingUsage", "dDisplayUsageName", "Before orderByNewIndex" );
+// displayEntity( v, entityName, "S_MarketingUsage", "UsageType",
+//                   "S_MarketingUsage", "dDisplayUsageName", "Before orderByNewIndex" );
    EntityCursor ecOrig = vOrig.getCursor( entityName );
    if ( ecOrig.isNull() == false ) {
       
-      int swaps = 0;
+   //int swaps = 0;
       int[] arrShift = new int[lth];
       int k, orderIdx;
 
       for ( k = 0; k < lth; k++ ) {
          arrShift[k] = k; // initialize shift array with original order
       }
-      vOrig.log().info( "Initialized shift array: " + displayArray( arrShift, lth ) );
+   // vOrig.log().info( "Initialized shift array: " + displayArray( arrShift, lth ) );
       ecOrig.setFirst();
       View vWork = vOrig.newView();
       vWork.copyCursors( vOrig );
@@ -161,8 +161,8 @@ private boolean orderByNewIndex( String arr, View vOrig, String entityName ) {
             }
          } else {
             while ( orderIdx < lth && arrOrder[orderIdx] == arrShift[orderIdx] ) {
-               displayEntity( v, entityName, "S_MarketingUsage", "UsageType",
-                              "S_MarketingUsage", "dDisplayUsageName", "No swap (" + swaps + ")" );
+            // displayEntity( v, entityName, "S_MarketingUsage", "UsageType",
+            //                "S_MarketingUsage", "dDisplayUsageName", "No swap (" + swaps + ")" );
                ecOrig.setNext();
                if ( orderIdx < lth - 1 && arrOrder[orderIdx + 1] == arrShift[orderIdx + 1] ) {
                   orderIdx++;
@@ -172,9 +172,9 @@ private boolean orderByNewIndex( String arr, View vOrig, String entityName ) {
             }
          }
       }
-      displayEntity( v, entityName, "S_MarketingUsage", "UsageType",
-                     "S_MarketingUsage", "dDisplayUsageName", "After orderByNewIndex Swaps: " + swaps );
-      vOrig.logObjectInstance();
+   // displayEntity( v, entityName, "S_MarketingUsage", "UsageType",
+   //                "S_MarketingUsage", "dDisplayUsageName", "After orderByNewIndex Swaps: " + swaps );
+   // vOrig.logObjectInstance();
       return true;
    } else {
       return false;

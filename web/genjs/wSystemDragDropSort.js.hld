@@ -220,7 +220,7 @@ function ApplySortOrder( )
       // Need some javascript here to apply the sort order
       var arrRowOrderIdx = getSortOrderArray( "DraggableSortTable" );
       document.wSystemDragDropSort.zOrderArray.value = arrRowOrderIdx.toString();
-
+      console.log( "New SortOrderArray: " + document.wSystemDragDropSort.zOrderArray.value );
 
       // END of Javascript code entered by user.
 

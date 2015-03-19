@@ -888,7 +888,7 @@ else
    }
 %>
 
-<textarea id="MLEdit2" name="MLEdit2" class="" style="width:590px;height:130px;border:solid;border-width:2px;border-style:groove;style="width:590px;hei wrap="wrap"><%=strErrorMapValue%></textarea>
+<textarea id="MLEdit2" name="MLEdit2" class="" style="width:590px;height:130px;border:solid;border-width:2px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 </td>
 </tr>
@@ -995,7 +995,7 @@ else
    }
 %>
 
-<textarea id="MLEdit3" name="MLEdit3" class="" style="width:590px;height:130px;border:solid;border-width:2px;border-style:groove;style="width:590px;hei wrap="wrap"><%=strErrorMapValue%></textarea>
+<textarea id="MLEdit3" name="MLEdit3" class="" style="width:590px;height:130px;border:solid;border-width:2px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 </td>
 </tr>
@@ -1056,7 +1056,7 @@ else
    }
 %>
 
-<textarea id="MLEdit4" name="MLEdit4" class="" style="width:590px;height:130px;border:solid;border-width:2px;border-style:groove;style="width:590px;hei wrap="wrap"><%=strErrorMapValue%></textarea>
+<textarea id="MLEdit4" name="MLEdit4" class="" style="width:590px;height:130px;border:solid;border-width:2px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 </td>
 </tr>

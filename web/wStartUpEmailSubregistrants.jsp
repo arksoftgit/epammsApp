@@ -1050,7 +1050,7 @@ else
          strErrorMapValue = "";
 %>
 
-<textarea id="EmailText" name="EmailText" class="" style="width:540px;height:172px;border:solid;border-width:4px;border-style:groove;style="width:540px;hei wrap="wrap"><%=strErrorMapValue%></textarea>
+<textarea id="EmailText" name="EmailText" class="" style="width:540px;height:172px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 </td>
 </tr>

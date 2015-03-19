@@ -789,7 +789,7 @@ else
    }
 %>
 
-<textarea id="ChemicalName" name="ChemicalName" class="" style="width:568px;height:52px;border:solid;border-width:2px;border-style:groove;style="width:568px;heig wrap="wrap"><%=strErrorMapValue%></textarea>
+<textarea id="ChemicalName" name="ChemicalName" class="" style="width:568px;height:52px;border:solid;border-width:2px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 </td>
 </tr>
