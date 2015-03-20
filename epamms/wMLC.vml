@@ -379,7 +379,7 @@ NEW_MasterProduct( VIEW ViewToWindow )
 // CreateTemporalEntity( mMasProd, "MasterProduct", zPOS_FIRST )
    CreateCurrentTemporalVersion( ViewToWindow, zPOS_FIRST, "mMasProd", "MasterProduct", "InitMasterProductForInsert: " )
 
-   mMasProd.MasterProduct.ChemicalFamily = "DQ" // Quat Disinfectant
+   mMasProd.MasterProduct.ChemicalFamily = "DQ" // QuatDisinfectant
    wWebXfer.Root.AttemptProductName = ""
    wWebXfer.Root.AttemptProductNumber = ""
 // wWebXfer.Root.AttemptContentVersion = "Please specify content version"
@@ -830,11 +830,13 @@ InitHumanHazardSect( VIEW ViewToWindow )
 
    IF mMasLC.M_HumanHazardSection DOES NOT EXIST
       CREATE ENTITY mMasLC.M_HumanHazardSection  
-      mMasLC.M_HumanHazardSection.PrecautionaryStatement = "See {{Precautionary Position}} Panel for Precautionary Statements"
-      mMasLC.M_HumanHazardSection.Location1 = "Back"
-      mMasLC.M_HumanHazardSection.Location2 = "Side"
-      mMasLC.M_HumanHazardSection.Location3 = "Left"
-      mMasLC.M_HumanHazardSection.Location4 = "Right"
+      mMasLC.M_HumanHazardSection.PrecautionaryStatement = "See {{Precautionary Panel Position}} Panel {{Precautionary Label Position}} for Precautionary Statements"
+      mMasLC.M_HumanHazardSection.PanelLoc1 = "[Back]"
+      mMasLC.M_HumanHazardSection.PanelLoc2 = "[Side]"
+      mMasLC.M_HumanHazardSection.PanelLoc3 = "[Left]"
+      mMasLC.M_HumanHazardSection.PanelLoc4 = "[Right]"
+      mMasLC.M_HumanHazardSection.LabelLoc1 = "[of Panel]"
+      mMasLC.M_HumanHazardSection.LabelLoc2 = "[below]"
       mMasLC.M_HumanHazardSection.BoldItalic = "R"
    END
 

@@ -1229,15 +1229,15 @@ else
 
 <label  id="Text4" name="Text4" style="width:522px;height:50px;position:absolute;left:130px;top:70px;"><%=strTextDisplayValue%></label>
 
-<% /* Location1::Text */ %>
+<% /* PanelLocation1::Text */ %>
 
-<label  id="Location1:" name="Location1:" style="width:130px;height:16px;position:absolute;left:0px;top:130px;">Location:</label>
+<label  id="PanelLocation1:" name="PanelLocation1:" style="width:130px;height:16px;position:absolute;left:0px;top:130px;">Panel Location:</label>
 
-<% /* Text5:Text */ %>
+<% /* PanelLocation1:Text */ %>
 <% strTextDisplayValue = "";
    mSubLC = task.getViewByName( "mSubLC" );
    if ( VmlOperation.isValid( mSubLC ) == false )
-      task.log( ).debug( "Invalid View: " + "Text5" );
+      task.log( ).debug( "Invalid View: " + "PanelLocation1" );
    else
    {
       nRC = mSubLC.cursor( "S_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
@@ -1245,12 +1245,12 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubLC.cursor( "S_HumanHazardSection" ).getAttribute( "Location1" ).getString( "" );
+         strTextDisplayValue = mSubLC.cursor( "S_HumanHazardSection" ).getAttribute( "PanelLoc1" ).getString( "" );
       }
       catch (Exception e)
       {
-         out.println("There is an error on Text5: " + e.getMessage());
-         task.log().info( "*** Error on ctrl Text5" + e.getMessage() );
+         out.println("There is an error on PanelLocation1: " + e.getMessage());
+         task.log().info( "*** Error on ctrl PanelLocation1" + e.getMessage() );
       }
          if ( strTextDisplayValue == null )
             strTextDisplayValue = "";
@@ -1258,17 +1258,17 @@ else
    }
 %>
 
-<label  id="Text5" name="Text5" style="width:130px;height:16px;position:absolute;left:130px;top:130px;"><%=strTextDisplayValue%></label>
+<label  id="PanelLocation1" name="PanelLocation1" style="width:130px;height:16px;position:absolute;left:130px;top:130px;"><%=strTextDisplayValue%></label>
 
-<% /* Location2::Text */ %>
+<% /* LabelLocation1::Text */ %>
 
-<label  id="Location2:" name="Location2:" style="width:130px;height:16px;position:absolute;left:0px;top:156px;">Location:</label>
+<label  id="LabelLocation1:" name="LabelLocation1:" style="width:130px;height:16px;position:absolute;left:298px;top:130px;">Label Location:</label>
 
-<% /* Text6:Text */ %>
+<% /* LabelLocation1:Text */ %>
 <% strTextDisplayValue = "";
    mSubLC = task.getViewByName( "mSubLC" );
    if ( VmlOperation.isValid( mSubLC ) == false )
-      task.log( ).debug( "Invalid View: " + "Text6" );
+      task.log( ).debug( "Invalid View: " + "LabelLocation1" );
    else
    {
       nRC = mSubLC.cursor( "S_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
@@ -1276,12 +1276,12 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubLC.cursor( "S_HumanHazardSection" ).getAttribute( "Location2" ).getString( "" );
+         strTextDisplayValue = mSubLC.cursor( "S_HumanHazardSection" ).getAttribute( "LabelLoc1" ).getString( "" );
       }
       catch (Exception e)
       {
-         out.println("There is an error on Text6: " + e.getMessage());
-         task.log().info( "*** Error on ctrl Text6" + e.getMessage() );
+         out.println("There is an error on LabelLocation1: " + e.getMessage());
+         task.log().info( "*** Error on ctrl LabelLocation1" + e.getMessage() );
       }
          if ( strTextDisplayValue == null )
             strTextDisplayValue = "";
@@ -1289,17 +1289,17 @@ else
    }
 %>
 
-<label  id="Text6" name="Text6" style="width:130px;height:16px;position:absolute;left:130px;top:156px;"><%=strTextDisplayValue%></label>
+<label  id="LabelLocation1" name="LabelLocation1" style="width:130px;height:16px;position:absolute;left:434px;top:130px;"><%=strTextDisplayValue%></label>
 
-<% /* Location3::Text */ %>
+<% /* PanelLocation2::Text */ %>
 
-<label  id="Location3:" name="Location3:" style="width:130px;height:16px;position:absolute;left:0px;top:182px;">Location:</label>
+<label  id="PanelLocation2:" name="PanelLocation2:" style="width:130px;height:16px;position:absolute;left:0px;top:156px;">Panel Location:</label>
 
-<% /* Text7:Text */ %>
+<% /* PanelLocation2:Text */ %>
 <% strTextDisplayValue = "";
    mSubLC = task.getViewByName( "mSubLC" );
    if ( VmlOperation.isValid( mSubLC ) == false )
-      task.log( ).debug( "Invalid View: " + "Text7" );
+      task.log( ).debug( "Invalid View: " + "PanelLocation2" );
    else
    {
       nRC = mSubLC.cursor( "S_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
@@ -1307,12 +1307,12 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubLC.cursor( "S_HumanHazardSection" ).getAttribute( "Location3" ).getString( "" );
+         strTextDisplayValue = mSubLC.cursor( "S_HumanHazardSection" ).getAttribute( "PanelLoc2" ).getString( "" );
       }
       catch (Exception e)
       {
-         out.println("There is an error on Text7: " + e.getMessage());
-         task.log().info( "*** Error on ctrl Text7" + e.getMessage() );
+         out.println("There is an error on PanelLocation2: " + e.getMessage());
+         task.log().info( "*** Error on ctrl PanelLocation2" + e.getMessage() );
       }
          if ( strTextDisplayValue == null )
             strTextDisplayValue = "";
@@ -1320,17 +1320,17 @@ else
    }
 %>
 
-<label  id="Text7" name="Text7" style="width:130px;height:16px;position:absolute;left:130px;top:182px;"><%=strTextDisplayValue%></label>
+<label  id="PanelLocation2" name="PanelLocation2" style="width:130px;height:16px;position:absolute;left:130px;top:156px;"><%=strTextDisplayValue%></label>
 
-<% /* Location4::Text */ %>
+<% /* LabelLocation2::Text */ %>
 
-<label  id="Location4:" name="Location4:" style="width:130px;height:16px;position:absolute;left:0px;top:208px;">Location:</label>
+<label  id="LabelLocation2:" name="LabelLocation2:" style="width:130px;height:16px;position:absolute;left:298px;top:156px;">LabelLocation:</label>
 
-<% /* Text9:Text */ %>
+<% /* LabelLocation2:Text */ %>
 <% strTextDisplayValue = "";
    mSubLC = task.getViewByName( "mSubLC" );
    if ( VmlOperation.isValid( mSubLC ) == false )
-      task.log( ).debug( "Invalid View: " + "Text9" );
+      task.log( ).debug( "Invalid View: " + "LabelLocation2" );
    else
    {
       nRC = mSubLC.cursor( "S_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
@@ -1338,12 +1338,12 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubLC.cursor( "S_HumanHazardSection" ).getAttribute( "Location4" ).getString( "" );
+         strTextDisplayValue = mSubLC.cursor( "S_HumanHazardSection" ).getAttribute( "LabelLoc2" ).getString( "" );
       }
       catch (Exception e)
       {
-         out.println("There is an error on Text9: " + e.getMessage());
-         task.log().info( "*** Error on ctrl Text9" + e.getMessage() );
+         out.println("There is an error on LabelLocation2: " + e.getMessage());
+         task.log().info( "*** Error on ctrl LabelLocation2" + e.getMessage() );
       }
          if ( strTextDisplayValue == null )
             strTextDisplayValue = "";
@@ -1351,17 +1351,17 @@ else
    }
 %>
 
-<label  id="Text9" name="Text9" style="width:130px;height:16px;position:absolute;left:130px;top:208px;"><%=strTextDisplayValue%></label>
+<label  id="LabelLocation2" name="LabelLocation2" style="width:130px;height:16px;position:absolute;left:434px;top:156px;"><%=strTextDisplayValue%></label>
 
-<% /* Location5::Text */ %>
+<% /* PanelLocation3::Text */ %>
 
-<label  id="Location5:" name="Location5:" style="width:130px;height:16px;position:absolute;left:0px;top:234px;">Location:</label>
+<label  id="PanelLocation3:" name="PanelLocation3:" style="width:130px;height:16px;position:absolute;left:0px;top:182px;">PanelLocation:</label>
 
-<% /* Text8:Text */ %>
+<% /* PanelLocation3:Text */ %>
 <% strTextDisplayValue = "";
    mSubLC = task.getViewByName( "mSubLC" );
    if ( VmlOperation.isValid( mSubLC ) == false )
-      task.log( ).debug( "Invalid View: " + "Text8" );
+      task.log( ).debug( "Invalid View: " + "PanelLocation3" );
    else
    {
       nRC = mSubLC.cursor( "S_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
@@ -1369,12 +1369,12 @@ else
       {
       try
       {
-         strTextDisplayValue = mSubLC.cursor( "S_HumanHazardSection" ).getAttribute( "Location5" ).getString( "" );
+         strTextDisplayValue = mSubLC.cursor( "S_HumanHazardSection" ).getAttribute( "PanelLoc3" ).getString( "" );
       }
       catch (Exception e)
       {
-         out.println("There is an error on Text8: " + e.getMessage());
-         task.log().info( "*** Error on ctrl Text8" + e.getMessage() );
+         out.println("There is an error on PanelLocation3: " + e.getMessage());
+         task.log().info( "*** Error on ctrl PanelLocation3" + e.getMessage() );
       }
          if ( strTextDisplayValue == null )
             strTextDisplayValue = "";
@@ -1382,7 +1382,162 @@ else
    }
 %>
 
-<label  id="Text8" name="Text8" style="width:130px;height:16px;position:absolute;left:130px;top:234px;"><%=strTextDisplayValue%></label>
+<label  id="PanelLocation3" name="PanelLocation3" style="width:130px;height:16px;position:absolute;left:130px;top:182px;"><%=strTextDisplayValue%></label>
+
+<% /* LabelLocation3::Text */ %>
+
+<label  id="LabelLocation3:" name="LabelLocation3:" style="width:130px;height:16px;position:absolute;left:298px;top:182px;">LabelLocation:</label>
+
+<% /* LabelLocation3:Text */ %>
+<% strTextDisplayValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "LabelLocation3" );
+   else
+   {
+      nRC = mSubLC.cursor( "S_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSubLC.cursor( "S_HumanHazardSection" ).getAttribute( "LabelLoc3" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on LabelLocation3: " + e.getMessage());
+         task.log().info( "*** Error on ctrl LabelLocation3" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<label  id="LabelLocation3" name="LabelLocation3" style="width:130px;height:16px;position:absolute;left:434px;top:182px;"><%=strTextDisplayValue%></label>
+
+<% /* PanelLocation4::Text */ %>
+
+<label  id="PanelLocation4:" name="PanelLocation4:" style="width:130px;height:16px;position:absolute;left:0px;top:208px;">Panel Location:</label>
+
+<% /* PanelLocation4:Text */ %>
+<% strTextDisplayValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "PanelLocation4" );
+   else
+   {
+      nRC = mSubLC.cursor( "S_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSubLC.cursor( "S_HumanHazardSection" ).getAttribute( "PanelLoc4" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on PanelLocation4: " + e.getMessage());
+         task.log().info( "*** Error on ctrl PanelLocation4" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<label  id="PanelLocation4" name="PanelLocation4" style="width:130px;height:16px;position:absolute;left:130px;top:208px;"><%=strTextDisplayValue%></label>
+
+<% /* LabelLocation4::Text */ %>
+
+<label  id="LabelLocation4:" name="LabelLocation4:" style="width:130px;height:16px;position:absolute;left:298px;top:208px;">Label Location:</label>
+
+<% /* LabelLocation4:Text */ %>
+<% strTextDisplayValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "LabelLocation4" );
+   else
+   {
+      nRC = mSubLC.cursor( "S_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSubLC.cursor( "S_HumanHazardSection" ).getAttribute( "LabelLoc4" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on LabelLocation4: " + e.getMessage());
+         task.log().info( "*** Error on ctrl LabelLocation4" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<label  id="LabelLocation4" name="LabelLocation4" style="width:130px;height:16px;position:absolute;left:434px;top:208px;"><%=strTextDisplayValue%></label>
+
+<% /* PanelLocation5::Text */ %>
+
+<label  id="PanelLocation5:" name="PanelLocation5:" style="width:130px;height:16px;position:absolute;left:0px;top:234px;">PanelLocation:</label>
+
+<% /* PanelLocation5:Text */ %>
+<% strTextDisplayValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "PanelLocation5" );
+   else
+   {
+      nRC = mSubLC.cursor( "S_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSubLC.cursor( "S_HumanHazardSection" ).getAttribute( "PanelLoc5" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on PanelLocation5: " + e.getMessage());
+         task.log().info( "*** Error on ctrl PanelLocation5" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<label  id="PanelLocation5" name="PanelLocation5" style="width:130px;height:16px;position:absolute;left:130px;top:234px;"><%=strTextDisplayValue%></label>
+
+<% /* LabelLocation5::Text */ %>
+
+<label  id="LabelLocation5:" name="LabelLocation5:" style="width:130px;height:16px;position:absolute;left:298px;top:234px;">LabelLocation:</label>
+
+<% /* LabelLocation5:Text */ %>
+<% strTextDisplayValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "LabelLocation5" );
+   else
+   {
+      nRC = mSubLC.cursor( "S_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSubLC.cursor( "S_HumanHazardSection" ).getAttribute( "LabelLoc5" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on LabelLocation5: " + e.getMessage());
+         task.log().info( "*** Error on ctrl LabelLocation5" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<label  id="LabelLocation5" name="LabelLocation5" style="width:130px;height:16px;position:absolute;left:434px;top:234px;"><%=strTextDisplayValue%></label>
 
 
 </div>  <!--  GroupBox1 --> 

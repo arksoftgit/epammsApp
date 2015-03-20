@@ -117,98 +117,193 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
-      // EditBox: Location1
+      // EditBox: PanelLocation1
       nRC = mMasLC.cursor( "M_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "Location1" );
+         strMapValue = request.getParameter( "PanelLocation1" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "Location1", "", strMapValue );
+               VmlOperation.CreateMessage( task, "PanelLocation1", "", strMapValue );
             else
-               mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "Location1" ).setValue( strMapValue, "" );
+               mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "PanelLoc1" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "Location1", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "PanelLocation1", e.getReason( ), strMapValue );
          }
       }
 
-      // EditBox: Location2
+      // EditBox: LabelLocation1
       nRC = mMasLC.cursor( "M_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "Location2" );
+         strMapValue = request.getParameter( "LabelLocation1" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "Location2", "", strMapValue );
+               VmlOperation.CreateMessage( task, "LabelLocation1", "", strMapValue );
             else
-               mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "Location2" ).setValue( strMapValue, "" );
+               mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "LabelLoc1" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "Location2", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "LabelLocation1", e.getReason( ), strMapValue );
          }
       }
 
-      // EditBox: Location3
+      // EditBox: PanelLocation2
       nRC = mMasLC.cursor( "M_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "Location3" );
+         strMapValue = request.getParameter( "PanelLocation2" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "Location3", "", strMapValue );
+               VmlOperation.CreateMessage( task, "PanelLocation2", "", strMapValue );
             else
-               mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "Location3" ).setValue( strMapValue, "" );
+               mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "PanelLoc2" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "Location3", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "PanelLocation2", e.getReason( ), strMapValue );
          }
       }
 
-      // EditBox: Location4
+      // EditBox: LabelLocation2
       nRC = mMasLC.cursor( "M_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "Location4" );
+         strMapValue = request.getParameter( "LabelLocation2" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "Location4", "", strMapValue );
+               VmlOperation.CreateMessage( task, "LabelLocation2", "", strMapValue );
             else
-               mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "Location4" ).setValue( strMapValue, "" );
+               mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "LabelLoc2" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "Location4", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "LabelLocation2", e.getReason( ), strMapValue );
          }
       }
 
-      // EditBox: Location5
+      // EditBox: PanelLocation3
       nRC = mMasLC.cursor( "M_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "Location5" );
+         strMapValue = request.getParameter( "PanelLocation3" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "Location5", "", strMapValue );
+               VmlOperation.CreateMessage( task, "PanelLocation3", "", strMapValue );
             else
-               mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "Location5" ).setValue( strMapValue, "" );
+               mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "PanelLoc3" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "Location5", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "PanelLocation3", e.getReason( ), strMapValue );
+         }
+      }
+
+      // EditBox: LabelLocation3
+      nRC = mMasLC.cursor( "M_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "LabelLocation3" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "LabelLocation3", "", strMapValue );
+            else
+               mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "LabelLoc3" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "LabelLocation3", e.getReason( ), strMapValue );
+         }
+      }
+
+      // EditBox: PanelLocation4
+      nRC = mMasLC.cursor( "M_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "PanelLocation4" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "PanelLocation4", "", strMapValue );
+            else
+               mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "PanelLoc4" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "PanelLocation4", e.getReason( ), strMapValue );
+         }
+      }
+
+      // EditBox: LabelLocation4
+      nRC = mMasLC.cursor( "M_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "LabelLocation4" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "LabelLocation4", "", strMapValue );
+            else
+               mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "LabelLoc4" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "LabelLocation4", e.getReason( ), strMapValue );
+         }
+      }
+
+      // EditBox: PanelLocation5
+      nRC = mMasLC.cursor( "M_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "PanelLocation5" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "PanelLocation5", "", strMapValue );
+            else
+               mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "PanelLoc5" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "PanelLocation5", e.getReason( ), strMapValue );
+         }
+      }
+
+      // EditBox: LabelLocation5
+      nRC = mMasLC.cursor( "M_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "LabelLocation5" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "LabelLocation5", "", strMapValue );
+            else
+               mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "LabelLoc5" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "LabelLocation5", e.getReason( ), strMapValue );
          }
       }
 
@@ -1569,13 +1664,13 @@ else
 
 <textarea name="Statement" id="Statement" style="width:552px;height:50px;position:absolute;left:140px;top:70px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
-<% /* Location1::Text */ %>
+<% /* PanelLocation1::Text */ %>
 
-<label  id="Location1:" name="Location1:" style="width:130px;height:16px;position:absolute;left:0px;top:130px;">Location:</label>
+<label  id="PanelLocation1:" name="PanelLocation1:" style="width:130px;height:16px;position:absolute;left:0px;top:130px;">Panel Location:</label>
 
-<% /* Location1:EditBox */ %>
+<% /* PanelLocation1:EditBox */ %>
 <%
-   strErrorMapValue = VmlOperation.CheckError( "Location1", strError );
+   strErrorMapValue = VmlOperation.CheckError( "PanelLocation1", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -1586,7 +1681,7 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "Location1" );
+         task.log( ).debug( "Invalid View: " + "PanelLocation1" );
       else
       {
          nRC = mMasLC.cursor( "M_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
@@ -1594,17 +1689,17 @@ else
          {
             try
             {
-            strErrorMapValue = mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "Location1" ).getString( "" );
+            strErrorMapValue = mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "PanelLoc1" ).getString( "" );
             }
             catch (Exception e)
             {
-               out.println("There is an error on Location1: " + e.getMessage());
-               task.log().error( "*** Error on ctrl Location1", e );
+               out.println("There is an error on PanelLocation1: " + e.getMessage());
+               task.log().error( "*** Error on ctrl PanelLocation1", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "M_HumanHazardSection.Location1: " + strErrorMapValue );
+            task.log( ).debug( "M_HumanHazardSection.PanelLoc1: " + strErrorMapValue );
          }
          else
             task.log( ).debug( "Entity does not exist: " + "mMasLC.M_HumanHazardSection" );
@@ -1612,15 +1707,15 @@ else
    }
 %>
 
-<input class="text12" name="Location1" id="Location1" style="width:214px;position:absolute;left:140px;top:130px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="PanelLocation1" id="PanelLocation1" style="width:162px;position:absolute;left:140px;top:130px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-<% /* Location2::Text */ %>
+<% /* LabelLocation1::Text */ %>
 
-<label  id="Location2:" name="Location2:" style="width:130px;height:16px;position:absolute;left:0px;top:156px;">Location:</label>
+<label  id="LabelLocation1:" name="LabelLocation1:" style="width:130px;height:16px;position:absolute;left:336px;top:130px;">Label Location:</label>
 
-<% /* Location2:EditBox */ %>
+<% /* LabelLocation1:EditBox */ %>
 <%
-   strErrorMapValue = VmlOperation.CheckError( "Location2", strError );
+   strErrorMapValue = VmlOperation.CheckError( "LabelLocation1", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -1631,7 +1726,7 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "Location2" );
+         task.log( ).debug( "Invalid View: " + "LabelLocation1" );
       else
       {
          nRC = mMasLC.cursor( "M_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
@@ -1639,17 +1734,17 @@ else
          {
             try
             {
-            strErrorMapValue = mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "Location2" ).getString( "" );
+            strErrorMapValue = mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "LabelLoc1" ).getString( "" );
             }
             catch (Exception e)
             {
-               out.println("There is an error on Location2: " + e.getMessage());
-               task.log().error( "*** Error on ctrl Location2", e );
+               out.println("There is an error on LabelLocation1: " + e.getMessage());
+               task.log().error( "*** Error on ctrl LabelLocation1", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "M_HumanHazardSection.Location2: " + strErrorMapValue );
+            task.log( ).debug( "M_HumanHazardSection.LabelLoc1: " + strErrorMapValue );
          }
          else
             task.log( ).debug( "Entity does not exist: " + "mMasLC.M_HumanHazardSection" );
@@ -1657,15 +1752,15 @@ else
    }
 %>
 
-<input name="Location2" id="Location2" style="width:214px;position:absolute;left:140px;top:156px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="LabelLocation1" id="LabelLocation1" style="width:162px;position:absolute;left:478px;top:130px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-<% /* Location3::Text */ %>
+<% /* PanelLocation2::Text */ %>
 
-<label  id="Location3:" name="Location3:" style="width:130px;height:16px;position:absolute;left:0px;top:182px;">Location:</label>
+<label  id="PanelLocation2:" name="PanelLocation2:" style="width:130px;height:16px;position:absolute;left:0px;top:156px;">Panel Location:</label>
 
-<% /* Location3:EditBox */ %>
+<% /* PanelLocation2:EditBox */ %>
 <%
-   strErrorMapValue = VmlOperation.CheckError( "Location3", strError );
+   strErrorMapValue = VmlOperation.CheckError( "PanelLocation2", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -1676,7 +1771,7 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "Location3" );
+         task.log( ).debug( "Invalid View: " + "PanelLocation2" );
       else
       {
          nRC = mMasLC.cursor( "M_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
@@ -1684,17 +1779,17 @@ else
          {
             try
             {
-            strErrorMapValue = mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "Location3" ).getString( "" );
+            strErrorMapValue = mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "PanelLoc2" ).getString( "" );
             }
             catch (Exception e)
             {
-               out.println("There is an error on Location3: " + e.getMessage());
-               task.log().error( "*** Error on ctrl Location3", e );
+               out.println("There is an error on PanelLocation2: " + e.getMessage());
+               task.log().error( "*** Error on ctrl PanelLocation2", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "M_HumanHazardSection.Location3: " + strErrorMapValue );
+            task.log( ).debug( "M_HumanHazardSection.PanelLoc2: " + strErrorMapValue );
          }
          else
             task.log( ).debug( "Entity does not exist: " + "mMasLC.M_HumanHazardSection" );
@@ -1702,15 +1797,15 @@ else
    }
 %>
 
-<input name="Location3" id="Location3" style="width:214px;position:absolute;left:140px;top:182px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="PanelLocation2" id="PanelLocation2" style="width:162px;position:absolute;left:140px;top:156px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-<% /* Location4::Text */ %>
+<% /* LabelLocation2::Text */ %>
 
-<label  id="Location4:" name="Location4:" style="width:130px;height:16px;position:absolute;left:0px;top:208px;">Location:</label>
+<label  id="LabelLocation2:" name="LabelLocation2:" style="width:130px;height:16px;position:absolute;left:336px;top:156px;">Label Location:</label>
 
-<% /* Location4:EditBox */ %>
+<% /* LabelLocation2:EditBox */ %>
 <%
-   strErrorMapValue = VmlOperation.CheckError( "Location4", strError );
+   strErrorMapValue = VmlOperation.CheckError( "LabelLocation2", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -1721,7 +1816,7 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "Location4" );
+         task.log( ).debug( "Invalid View: " + "LabelLocation2" );
       else
       {
          nRC = mMasLC.cursor( "M_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
@@ -1729,17 +1824,17 @@ else
          {
             try
             {
-            strErrorMapValue = mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "Location4" ).getString( "" );
+            strErrorMapValue = mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "LabelLoc2" ).getString( "" );
             }
             catch (Exception e)
             {
-               out.println("There is an error on Location4: " + e.getMessage());
-               task.log().error( "*** Error on ctrl Location4", e );
+               out.println("There is an error on LabelLocation2: " + e.getMessage());
+               task.log().error( "*** Error on ctrl LabelLocation2", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "M_HumanHazardSection.Location4: " + strErrorMapValue );
+            task.log( ).debug( "M_HumanHazardSection.LabelLoc2: " + strErrorMapValue );
          }
          else
             task.log( ).debug( "Entity does not exist: " + "mMasLC.M_HumanHazardSection" );
@@ -1747,15 +1842,15 @@ else
    }
 %>
 
-<input name="Location4" id="Location4" style="width:214px;position:absolute;left:140px;top:208px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="LabelLocation2" id="LabelLocation2" style="width:162px;position:absolute;left:478px;top:156px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-<% /* Location5::Text */ %>
+<% /* PanelLocation3::Text */ %>
 
-<label  id="Location5:" name="Location5:" style="width:130px;height:16px;position:absolute;left:0px;top:234px;">Location:</label>
+<label  id="PanelLocation3:" name="PanelLocation3:" style="width:130px;height:16px;position:absolute;left:0px;top:182px;">Panel Location:</label>
 
-<% /* Location5:EditBox */ %>
+<% /* PanelLocation3:EditBox */ %>
 <%
-   strErrorMapValue = VmlOperation.CheckError( "Location5", strError );
+   strErrorMapValue = VmlOperation.CheckError( "PanelLocation3", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -1766,7 +1861,7 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "Location5" );
+         task.log( ).debug( "Invalid View: " + "PanelLocation3" );
       else
       {
          nRC = mMasLC.cursor( "M_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
@@ -1774,17 +1869,17 @@ else
          {
             try
             {
-            strErrorMapValue = mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "Location5" ).getString( "" );
+            strErrorMapValue = mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "PanelLoc3" ).getString( "" );
             }
             catch (Exception e)
             {
-               out.println("There is an error on Location5: " + e.getMessage());
-               task.log().error( "*** Error on ctrl Location5", e );
+               out.println("There is an error on PanelLocation3: " + e.getMessage());
+               task.log().error( "*** Error on ctrl PanelLocation3", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "M_HumanHazardSection.Location5: " + strErrorMapValue );
+            task.log( ).debug( "M_HumanHazardSection.PanelLoc3: " + strErrorMapValue );
          }
          else
             task.log( ).debug( "Entity does not exist: " + "mMasLC.M_HumanHazardSection" );
@@ -1792,7 +1887,232 @@ else
    }
 %>
 
-<input class="text12" name="Location5" id="Location5" style="width:214px;position:absolute;left:140px;top:234px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="PanelLocation3" id="PanelLocation3" style="width:162px;position:absolute;left:140px;top:182px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
+<% /* LabelLocation3::Text */ %>
+
+<label  id="LabelLocation3:" name="LabelLocation3:" style="width:130px;height:16px;position:absolute;left:336px;top:182px;">Label Location:</label>
+
+<% /* LabelLocation3:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "LabelLocation3", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "LabelLocation3" );
+      else
+      {
+         nRC = mMasLC.cursor( "M_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+            strErrorMapValue = mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "LabelLoc3" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on LabelLocation3: " + e.getMessage());
+               task.log().error( "*** Error on ctrl LabelLocation3", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "M_HumanHazardSection.LabelLoc3: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_HumanHazardSection" );
+      }
+   }
+%>
+
+<input name="LabelLocation3" id="LabelLocation3" style="width:162px;position:absolute;left:478px;top:182px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
+<% /* PanelLocation4::Text */ %>
+
+<label  id="PanelLocation4:" name="PanelLocation4:" style="width:130px;height:16px;position:absolute;left:0px;top:208px;">Panel Location:</label>
+
+<% /* PanelLocation4:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "PanelLocation4", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "PanelLocation4" );
+      else
+      {
+         nRC = mMasLC.cursor( "M_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+            strErrorMapValue = mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "PanelLoc4" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on PanelLocation4: " + e.getMessage());
+               task.log().error( "*** Error on ctrl PanelLocation4", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "M_HumanHazardSection.PanelLoc4: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_HumanHazardSection" );
+      }
+   }
+%>
+
+<input name="PanelLocation4" id="PanelLocation4" style="width:162px;position:absolute;left:140px;top:208px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
+<% /* LabelLocation4::Text */ %>
+
+<label  id="LabelLocation4:" name="LabelLocation4:" style="width:130px;height:16px;position:absolute;left:336px;top:208px;">Label Location:</label>
+
+<% /* LabelLocation4:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "LabelLocation4", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "LabelLocation4" );
+      else
+      {
+         nRC = mMasLC.cursor( "M_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+            strErrorMapValue = mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "LabelLoc4" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on LabelLocation4: " + e.getMessage());
+               task.log().error( "*** Error on ctrl LabelLocation4", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "M_HumanHazardSection.LabelLoc4: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_HumanHazardSection" );
+      }
+   }
+%>
+
+<input name="LabelLocation4" id="LabelLocation4" style="width:162px;position:absolute;left:478px;top:208px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
+<% /* PanelLocation5::Text */ %>
+
+<label  id="PanelLocation5:" name="PanelLocation5:" style="width:130px;height:16px;position:absolute;left:0px;top:234px;">Panel Location:</label>
+
+<% /* PanelLocation5:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "PanelLocation5", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "PanelLocation5" );
+      else
+      {
+         nRC = mMasLC.cursor( "M_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+            strErrorMapValue = mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "PanelLoc5" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on PanelLocation5: " + e.getMessage());
+               task.log().error( "*** Error on ctrl PanelLocation5", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "M_HumanHazardSection.PanelLoc5: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_HumanHazardSection" );
+      }
+   }
+%>
+
+<input class="text12" name="PanelLocation5" id="PanelLocation5" style="width:162px;position:absolute;left:140px;top:234px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
+<% /* LabelLocation5::Text */ %>
+
+<label  id="LabelLocation5:" name="LabelLocation5:" style="width:130px;height:16px;position:absolute;left:336px;top:234px;">Label Location:</label>
+
+<% /* LabelLocation5:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "LabelLocation5", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "LabelLocation5" );
+      else
+      {
+         nRC = mMasLC.cursor( "M_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+            strErrorMapValue = mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "LabelLoc5" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on LabelLocation5: " + e.getMessage());
+               task.log().error( "*** Error on ctrl LabelLocation5", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "M_HumanHazardSection.LabelLoc5: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_HumanHazardSection" );
+      }
+   }
+%>
+
+<input class="text12" name="LabelLocation5" id="LabelLocation5" style="width:162px;position:absolute;left:478px;top:234px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 
 </div>  <!--  GroupBox1 --> 

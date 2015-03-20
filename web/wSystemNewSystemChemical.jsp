@@ -582,12 +582,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-
-<!-- TinyMCE -->
-<script language="JavaScript" type="text/javascript" src="./js/tinymce/js/tinymce/tinymce.min.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/TinyMCE.js"></script>
-<!-- /TinyMCE -->
-
 <script language="JavaScript" type="text/javascript" src="./genjs/wSystemNewSystemChemical.js"></script>
 
 </head>
@@ -832,7 +826,7 @@ else
    }
 %>
 
-<textarea id="Name" name="Name" class="mceSimple" style="width:402px;height:84px;border:solid;border-width:2px;border-style:groove;"><%=strErrorMapValue%></textarea>
+<textarea id="Name" name="Name" class="" style="width:402px;height:84px;border:solid;border-width:2px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 </td>
 </tr>
@@ -876,7 +870,7 @@ else
    }
 %>
 
-<textarea id="Description" name="Description" class="mceSimple" style="width:402px;height:84px;border:solid;border-width:2px;border-style:groove;"><%=strErrorMapValue%></textarea>
+<textarea id="Description" name="Description" class="" style="width:402px;height:84px;border:solid;border-width:2px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 </td>
 </tr>

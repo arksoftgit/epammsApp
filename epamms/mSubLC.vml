@@ -665,53 +665,88 @@ dFullHazardStatement( VIEW mSubLC BASED ON LOD mSubLC,
       IF mSubLC.S_HumanHazardSection  EXISTS
 
          szString = mSubLC.S_HumanHazardSection.PrecautionaryStatement
-         nPosStart  = zSearchSubString( szString, "{{Precautionary Position}}", "f", 0 )
+         nPosStart  = zSearchSubString( szString, "{{Precautionary Panel Location}}", "f", 0 )
          IF nPosStart >= 0
 
-            nPosEnd = nPosStart + 26 // length of "{{Precautionary Position}}"
+            nPosEnd = nPosStart + 32 // length of "{{Precautionary Panel Location}}"
             szReplaceString = ""
-            szLocation = mSubLC.S_HumanHazardSection.Location1
+            szLocation = mSubLC.S_HumanHazardSection.PanelLoc1
             IF szLocation != ""
-               szReplaceString = szReplaceString + "[" + szLocation + "]"
+            // szReplaceString = szReplaceString + "[" + szLocation + "]"  now we expect brackets or parentheses or whatever to be included
+               szReplaceString = szReplaceString + szLocation
             END
 
-            szLocation = mSubLC.S_HumanHazardSection.Location2
+            szLocation = mSubLC.S_HumanHazardSection.PanelLoc2
             IF szLocation != ""
-               szReplaceString = szReplaceString + "[" + szLocation + "]"
+               szReplaceString = szReplaceString + szLocation
             END
 
-            szLocation = mSubLC.S_HumanHazardSection.Location3
+            szLocation = mSubLC.S_HumanHazardSection.PanelLoc3
             IF szLocation != ""
-               szReplaceString = szReplaceString + "[" + szLocation + "]"
+               szReplaceString = szReplaceString + szLocation
             END
 
-            szLocation = mSubLC.S_HumanHazardSection.Location4
+            szLocation = mSubLC.S_HumanHazardSection.PanelLoc4
             IF szLocation != ""
-               szReplaceString = szReplaceString + "[" + szLocation + "]"
+               szReplaceString = szReplaceString + szLocation
             END
 
-            szLocation = mSubLC.S_HumanHazardSection.Location5
+            szLocation = mSubLC.S_HumanHazardSection.PanelLoc5
             IF szLocation != ""
-               szReplaceString = szReplaceString + "[" + szLocation + "]"
+               szReplaceString = szReplaceString + szLocation
             END
 
             zReplaceSubString( szString, nPosStart, nPosEnd, szReplaceString )
          END
 
-       ELSE
-          szString = ""
-       END
+         nPosStart  = zSearchSubString( szString, "{{Precautionary Label Location}}", "f", 0 )
+         IF nPosStart >= 0
 
-       // Store the calculated value in the object.
-       StoreStringInRecord( mSubLC,
-                            InternalEntityStructure,
-                            InternalAttribStructure, szString )
-       RETURN 0
+            nPosEnd = nPosStart + 32 // length of "{{Precautionary Label Location}}"
+            szReplaceString = ""
+            szLocation = mSubLC.S_HumanHazardSection.LabelLoc1
+            IF szLocation != ""
+            // szReplaceString = szReplaceString + "[" + szLocation + "]"  now we expect brackets or parentheses or whatever to be included
+               szReplaceString = szReplaceString + szLocation
+            END
 
-        /* end zDERIVED_GET */
+            szLocation = mSubLC.S_HumanHazardSection.LabelLoc2
+            IF szLocation != ""
+               szReplaceString = szReplaceString + szLocation
+            END
+
+            szLocation = mSubLC.S_HumanHazardSection.LabelLoc3
+            IF szLocation != ""
+               szReplaceString = szReplaceString + szLocation
+            END
+
+            szLocation = mSubLC.S_HumanHazardSection.LabelLoc4
+            IF szLocation != ""
+               szReplaceString = szReplaceString + szLocation
+            END
+
+            szLocation = mSubLC.S_HumanHazardSection.LabelLoc5
+            IF szLocation != ""
+               szReplaceString = szReplaceString + szLocation
+            END
+
+            zReplaceSubString( szString, nPosStart, nPosEnd, szReplaceString )
+         END
+
+      ELSE
+         szString = ""
+      END
+
+      // Store the calculated value in the object.
+      StoreStringInRecord( mSubLC,
+                           InternalEntityStructure,
+                           InternalAttribStructure, szString )
+      RETURN 0
+
+      /* end zDERIVED_GET */
    OF   zDERIVED_SET:
 
-        /* end zDERIVED_SET */
+      /* end zDERIVED_SET */
    END  /* case */
 
 END
@@ -1064,18 +1099,18 @@ BuildCompositeEntriesOld( VIEW mSubLC BASED ON LOD mSubLC )
    
    CREATE ENTITY mSubLC.CompositeComponentList 
    mSubLC.CompositeComponentList.DisplayTypeIndent = "Location"
-   szCompositeLocation = "..." + mSubLC.S_HumanHazardSection.Location1 
-   IF mSubLC.S_HumanHazardSection.Location2 != ""
-      szCompositeLocation = szCompositeLocation + " / " + mSubLC.S_HumanHazardSection.Location2 
+   szCompositeLocation = "..." + mSubLC.S_HumanHazardSection.PanelLoc1 
+   IF mSubLC.S_HumanHazardSection.PanelLoc2 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mSubLC.S_HumanHazardSection.PanelLoc2 
    END
-   IF mSubLC.S_HumanHazardSection.Location3 != ""
-      szCompositeLocation = szCompositeLocation + " / " + mSubLC.S_HumanHazardSection.Location3
+   IF mSubLC.S_HumanHazardSection.PanelLoc3 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mSubLC.S_HumanHazardSection.PanelLoc3
    END
-   IF mSubLC.S_HumanHazardSection.Location4 != ""
-      szCompositeLocation = szCompositeLocation + " / " + mSubLC.S_HumanHazardSection.Location4 
+   IF mSubLC.S_HumanHazardSection.PanelLoc4 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mSubLC.S_HumanHazardSection.PanelLoc4 
    END
-   IF mSubLC.S_HumanHazardSection.Location5 != ""
-      szCompositeLocation = szCompositeLocation + " / " + mSubLC.S_HumanHazardSection.Location5 
+   IF mSubLC.S_HumanHazardSection.PanelLoc5 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mSubLC.S_HumanHazardSection.PanelLoc5 
    END
    mSubLC.CompositeComponentList.DisplayValue   = szCompositeLocation
 

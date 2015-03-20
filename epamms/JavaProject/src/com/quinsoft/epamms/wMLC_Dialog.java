@@ -987,16 +987,20 @@ InitHumanHazardSect( View     ViewToWindow )
    { 
       //:CREATE ENTITY mMasLC.M_HumanHazardSection  
       RESULT = CreateEntity( mMasLC, "M_HumanHazardSection", zPOS_AFTER );
-      //:mMasLC.M_HumanHazardSection.PrecautionaryStatement = "See {{Precautionary Position}} Panel for Precautionary Statements"
-      SetAttributeFromString( mMasLC, "M_HumanHazardSection", "PrecautionaryStatement", "See {{Precautionary Position}} Panel for Precautionary Statements" );
-      //:mMasLC.M_HumanHazardSection.Location1 = "Back"
-      SetAttributeFromString( mMasLC, "M_HumanHazardSection", "Location1", "Back" );
-      //:mMasLC.M_HumanHazardSection.Location2 = "Side"
-      SetAttributeFromString( mMasLC, "M_HumanHazardSection", "Location2", "Side" );
-      //:mMasLC.M_HumanHazardSection.Location3 = "Left"
-      SetAttributeFromString( mMasLC, "M_HumanHazardSection", "Location3", "Left" );
-      //:mMasLC.M_HumanHazardSection.Location4 = "Right"
-      SetAttributeFromString( mMasLC, "M_HumanHazardSection", "Location4", "Right" );
+      //:mMasLC.M_HumanHazardSection.PrecautionaryStatement = "See {{Precautionary Panel Position}} Panel {{Precautionary Label Position}} for Precautionary Statements"
+      SetAttributeFromString( mMasLC, "M_HumanHazardSection", "PrecautionaryStatement", "See {{Precautionary Panel Position}} Panel {{Precautionary Label Position}} for Precautionary Statements" );
+      //:mMasLC.M_HumanHazardSection.PanelLoc1 = "[Back]"
+      SetAttributeFromString( mMasLC, "M_HumanHazardSection", "PanelLoc1", "[Back]" );
+      //:mMasLC.M_HumanHazardSection.PanelLoc2 = "[Side]"
+      SetAttributeFromString( mMasLC, "M_HumanHazardSection", "PanelLoc2", "[Side]" );
+      //:mMasLC.M_HumanHazardSection.PanelLoc3 = "[Left]"
+      SetAttributeFromString( mMasLC, "M_HumanHazardSection", "PanelLoc3", "[Left]" );
+      //:mMasLC.M_HumanHazardSection.PanelLoc4 = "[Right]"
+      SetAttributeFromString( mMasLC, "M_HumanHazardSection", "PanelLoc4", "[Right]" );
+      //:mMasLC.M_HumanHazardSection.LabelLoc1 = "[of Panel]"
+      SetAttributeFromString( mMasLC, "M_HumanHazardSection", "LabelLoc1", "[of Panel]" );
+      //:mMasLC.M_HumanHazardSection.LabelLoc2 = "[below]"
+      SetAttributeFromString( mMasLC, "M_HumanHazardSection", "LabelLoc2", "[below]" );
       //:mMasLC.M_HumanHazardSection.BoldItalic = "R"
       SetAttributeFromString( mMasLC, "M_HumanHazardSection", "BoldItalic", "R" );
    } 
@@ -1803,7 +1807,7 @@ NEW_MasterProduct( View     ViewToWindow )
     // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
    }
 
-   //:mMasProd.MasterProduct.ChemicalFamily = "DQ" // Quat Disinfectant
+   //:mMasProd.MasterProduct.ChemicalFamily = "DQ" // QuatDisinfectant
    SetAttributeFromString( mMasProd, "MasterProduct", "ChemicalFamily", "DQ" );
    //:wWebXfer.Root.AttemptProductName = ""
    SetAttributeFromString( wWebXfer, "Root", "AttemptProductName", "" );

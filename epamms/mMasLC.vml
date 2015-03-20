@@ -501,53 +501,88 @@ dFullHazardStatement( VIEW mMasLC BASED ON LOD mMasLC,
       IF mMasLC.M_HumanHazardSection  EXISTS
 
          szString = mMasLC.M_HumanHazardSection.PrecautionaryStatement
-         nPosStart  = zSearchSubString( szString, "{{Precautionary Position}}", "f", 0 )
+         nPosStart  = zSearchSubString( szString, "{{Precautionary Panel Location}}", "f", 0 )
          IF nPosStart >= 0
 
-            nPosEnd = nPosStart + 26 // length of "{{Precautionary Position}}"
+            nPosEnd = nPosStart + 32 // length of "{{Precautionary Panel Location}}"
             szReplaceString = ""
-            szLocation = mMasLC.M_HumanHazardSection.Location1
+            szLocation = mMasLC.M_HumanHazardSection.PanelLoc1
             IF szLocation != ""
-               szReplaceString = szReplaceString + "[" + szLocation + "]"
+            // szReplaceString = szReplaceString + "[" + szLocation + "]"  now we expect brackets or parentheses or whatever to be included
+               szReplaceString = szReplaceString + szLocation
             END
 
-            szLocation = mMasLC.M_HumanHazardSection.Location2
+            szLocation = mMasLC.M_HumanHazardSection.PanelLoc2
             IF szLocation != ""
-               szReplaceString = szReplaceString + "[" + szLocation + "]"
+               szReplaceString = szReplaceString + szLocation
             END
 
-            szLocation = mMasLC.M_HumanHazardSection.Location3
+            szLocation = mMasLC.M_HumanHazardSection.PanelLoc3
             IF szLocation != ""
-               szReplaceString = szReplaceString + "[" + szLocation + "]"
+               szReplaceString = szReplaceString + szLocation
             END
 
-            szLocation = mMasLC.M_HumanHazardSection.Location4
+            szLocation = mMasLC.M_HumanHazardSection.PanelLoc4
             IF szLocation != ""
-               szReplaceString = szReplaceString + "[" + szLocation + "]"
+               szReplaceString = szReplaceString + szLocation
             END
 
-            szLocation = mMasLC.M_HumanHazardSection.Location5
+            szLocation = mMasLC.M_HumanHazardSection.PanelLoc5
             IF szLocation != ""
-               szReplaceString = szReplaceString + "[" + szLocation + "]"
+               szReplaceString = szReplaceString + szLocation
             END
 
             zReplaceSubString( szString, nPosStart, nPosEnd, szReplaceString )
          END
 
-       ELSE
-          szString = ""
-       END
+         nPosStart  = zSearchSubString( szString, "{{Precautionary Label Location}}", "f", 0 )
+         IF nPosStart >= 0
 
-       // Store the calculated value in the object.
-       StoreStringInRecord( mMasLC,
-                            InternalEntityStructure,
-                            InternalAttribStructure, szString )
-       RETURN 0
+            nPosEnd = nPosStart + 32 // length of "{{Precautionary Label Location}}"
+            szReplaceString = ""
+            szLocation = mMasLC.M_HumanHazardSection.LabelLoc1
+            IF szLocation != ""
+            // szReplaceString = szReplaceString + "[" + szLocation + "]"  now we expect brackets or parentheses or whatever to be included
+               szReplaceString = szReplaceString + szLocation
+            END
 
-        /* end zDERIVED_GET */
+            szLocation = mMasLC.M_HumanHazardSection.LabelLoc2
+            IF szLocation != ""
+               szReplaceString = szReplaceString + szLocation
+            END
+
+            szLocation = mMasLC.M_HumanHazardSection.LabelLoc3
+            IF szLocation != ""
+               szReplaceString = szReplaceString + szLocation
+            END
+
+            szLocation = mMasLC.M_HumanHazardSection.LabelLoc4
+            IF szLocation != ""
+               szReplaceString = szReplaceString + szLocation
+            END
+
+            szLocation = mMasLC.M_HumanHazardSection.LabelLoc5
+            IF szLocation != ""
+               szReplaceString = szReplaceString + szLocation
+            END
+
+            zReplaceSubString( szString, nPosStart, nPosEnd, szReplaceString )
+         END
+
+      ELSE
+         szString = ""
+      END
+
+      // Store the calculated value in the object.
+      StoreStringInRecord( mMasLC,
+                           InternalEntityStructure,
+                           InternalAttribStructure, szString )
+      RETURN 0
+
+      /* end zDERIVED_GET */
    OF   zDERIVED_SET:
 
-        /* end zDERIVED_SET */
+      /* end zDERIVED_SET */
    END  /* case */
 
 END
@@ -1136,18 +1171,18 @@ BuildCompositeEntries( VIEW mMasLC BASED ON LOD mMasLC )
    
    CREATE ENTITY mMasLC.CompositeComponentList 
    mMasLC.CompositeComponentList.DisplayTypeIndent = "Location"
-   szCompositeLocation = "..." + mMasLC.M_HumanHazardSection.Location1 
-   IF mMasLC.M_HumanHazardSection.Location2 != ""
-      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.Location2 
+   szCompositeLocation = "..." + mMasLC.M_HumanHazardSection.PanelLoc1 
+   IF mMasLC.M_HumanHazardSection.PanelLoc2 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc2 
    END
-   IF mMasLC.M_HumanHazardSection.Location3 != ""
-      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.Location3
+   IF mMasLC.M_HumanHazardSection.PanelLoc3 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc3
    END
-   IF mMasLC.M_HumanHazardSection.Location4 != ""
-      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.Location4 
+   IF mMasLC.M_HumanHazardSection.PanelLoc4 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc4 
    END
-   IF mMasLC.M_HumanHazardSection.Location5 != ""
-      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.Location5 
+   IF mMasLC.M_HumanHazardSection.PanelLoc5 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc5 
    END
    mMasLC.CompositeComponentList.DisplayValue   = szCompositeLocation*/
    
@@ -1325,18 +1360,18 @@ BuildFullCompEntries( VIEW mMasLC BASED ON LOD mMasLC )
    
    CREATE ENTITY mMasLC.CompositeComponentList 
    mMasLC.CompositeComponentList.DisplayType    = "Location"
-   szCompositeLocation = "..." + mMasLC.M_HumanHazardSection.Location1 
-   IF mMasLC.M_HumanHazardSection.Location2 != ""
-      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.Location2 
+   szCompositeLocation = "..." + mMasLC.M_HumanHazardSection.PanelLoc1 
+   IF mMasLC.M_HumanHazardSection.PanelLoc2 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc2 
    END
-   IF mMasLC.M_HumanHazardSection.Location3 != ""
-      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.Location3
+   IF mMasLC.M_HumanHazardSection.PanelLoc3 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc3
    END
-   IF mMasLC.M_HumanHazardSection.Location4 != ""
-      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.Location4 
+   IF mMasLC.M_HumanHazardSection.PanelLoc4 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc4 
    END
-   IF mMasLC.M_HumanHazardSection.Location5 != ""
-      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.Location5 
+   IF mMasLC.M_HumanHazardSection.PanelLoc5 != ""
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc5 
    END
    mMasLC.CompositeComponentList.DisplayValue   = szCompositeLocation
 

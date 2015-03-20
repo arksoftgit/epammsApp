@@ -1,4 +1,4 @@
-z1000-Zeidon    EPAMMS   TZCMLPLO 03/19/15   20:01:07 1.0a2    
+z1000-Zeidon    EPAMMS   TZCMLPLO 03/20/15   12:06:56 1.0a2    
 eLPLR      1
 aName      epamms
 aDesc      ePamms Application
@@ -995,8 +995,8 @@ Additions:
 1. Added a relationship between M_UsageOrdering, S_UsageOrdering and SPLD_UsageOrdering and their corresponding DirectionsForUse and Marketing Statement entities.
 2. Added Default attributes to LLD and SPLD_LLD.
 3. Add 
-aLastSyncDate 20150316110751798
-aLastUpdateDate 20150316110751798
+aLastSyncDate 20150320112443141
+aLastUpdateDate 20150320112443141
 
 eW_MetaType 2
 aType      5
@@ -1019,8 +1019,8 @@ aStatus    1
 aUpdateInd 2
 aName      ePamms
 aDesc      ePamms Application
-aLastSyncDate 20150317104709407
-aLastUpdateDate 20150317104709407
+aLastSyncDate 20150320112531930
+aLastUpdateDate 20150320112531930
 
 eW_MetaType 2
 aType      7
@@ -1219,8 +1219,8 @@ aStatus    1
 aUpdateInd 2
 aName      mMasLC
 aDesc      Master Label Content Maintenance
-aLastSyncDate 20141023220401634
-aLastUpdateDate 20141023220401634
+aLastSyncDate 20150320101937468
+aLastUpdateDate 20150320101937468
 
 eW_MetaDef 3
 aCPLR_ZKey 69033348
@@ -1272,8 +1272,8 @@ aStatus    1
 aUpdateInd 2
 aName      mSPL
 aDesc      Sub Registrant Physical Label Maintenance
-aLastSyncDate 20141023220423355
-aLastUpdateDate 20141023220423355
+aLastSyncDate 20150320112714419
+aLastUpdateDate 20150320112714419
 
 eW_MetaDef 3
 aCPLR_ZKey 69082112
@@ -1281,8 +1281,8 @@ aStatus    1
 aUpdateInd 2
 aName      mSPLDef
 aDesc      Subregistrant Physical Label Maintenance
-aLastSyncDate 20141230023342501
-aLastUpdateDate 20141230023342501
+aLastSyncDate 20150320112649532
+aLastUpdateDate 20150320112649532
 
 eW_MetaDef 3
 aCPLR_ZKey 69035258
@@ -1290,8 +1290,8 @@ aStatus    1
 aUpdateInd 2
 aName      mSubLC
 aDesc      Subregistrant Label Content Maintenance
-aLastSyncDate 20141023220555313
-aLastUpdateDate 20141023220555313
+aLastSyncDate 20150320102146670
+aLastUpdateDate 20150320102146670
 
 eW_MetaDef 3
 aCPLR_ZKey 1157934
@@ -1945,8 +1945,8 @@ aStatus    1
 aUpdateInd 2
 aName      wMLC
 aDesc      2nd Version of wMLC
-aLastSyncDate 20150319200107801
-aLastUpdateDate 20150319200107801
+aLastSyncDate 20150320120656403
+aLastUpdateDate 20150320120656403
 
 eW_MetaDef 3
 aCPLR_ZKey 1158563
@@ -1962,8 +1962,8 @@ aCPLR_ZKey 120336464
 aStatus    1
 aUpdateInd 2
 aName      wSLC
-aLastSyncDate 20150319124438143
-aLastUpdateDate 20150319124438143
+aLastSyncDate 20150320105217907
+aLastUpdateDate 20150320105217907
 
 eW_MetaDef 3
 aCPLR_ZKey 11205
@@ -3409,15 +3409,15 @@ i544       257
 i545       258
 i546       259
 i547       260
-i550       271
-i551       264
-i552       266
+i550       264
+i551       266
+i552       271
 i553       269
 i554       267
 i555       270
-i556       265
-i557       263
-i558       268
+i556       268
+i557       265
+i558       263
 i561       274
 i562       275
 i563       276

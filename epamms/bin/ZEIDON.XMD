@@ -1,4 +1,4 @@
-z1000-Zeidon    ZEIDON   TZEREMXO 03/17/15   22:06:35 1.0a2    
+z1000-Zeidon    ZEIDON   TZEREMXO 03/20/15   10:19:37 1.0a2    
 eMODEL     1
 aNumEnts   84
 aNumRels   148
@@ -1486,7 +1486,7 @@ aLTH       4
 
 eENTITY    2
 aZKEY      69011371
-aNumAtts   13
+aNumAtts   18
 
 eATTRIB    3
 aZKEY      69011372
@@ -1515,27 +1515,52 @@ aAPDM_TOK  1186473
 
 eATTRIB    3
 aZKEY      2481210
-aNAME      Location1
+aNAME      PanelLoc1
 aAPDM_TOK  68568081
 
 eATTRIB    3
 aZKEY      2481211
-aNAME      Location2
+aNAME      PanelLoc2
 aAPDM_TOK  68568081
 
 eATTRIB    3
 aZKEY      2481213
-aNAME      Location3
+aNAME      PanelLoc3
 aAPDM_TOK  68568081
 
 eATTRIB    3
 aZKEY      2481214
-aNAME      Location4
+aNAME      PanelLoc4
 aAPDM_TOK  68568081
 
 eATTRIB    3
 aZKEY      2481212
-aNAME      Location5
+aNAME      PanelLoc5
+aAPDM_TOK  68568081
+
+eATTRIB    3
+aZKEY      110003014
+aNAME      LabelLoc1
+aAPDM_TOK  68568081
+
+eATTRIB    3
+aZKEY      110003015
+aNAME      LabelLoc2
+aAPDM_TOK  68568081
+
+eATTRIB    3
+aZKEY      110003016
+aNAME      LabelLoc3
+aAPDM_TOK  68568081
+
+eATTRIB    3
+aZKEY      110003017
+aNAME      LabelLoc4
+aAPDM_TOK  68568081
+
+eATTRIB    3
+aZKEY      110003013
+aNAME      LabelLoc5
 aAPDM_TOK  68568081
 
 eATTRIB    3
@@ -2643,7 +2668,7 @@ aLTH       4
 
 eENTITY    2
 aZKEY      69031597
-aNumAtts   13
+aNumAtts   18
 
 eATTRIB    3
 aZKEY      69031691
@@ -2672,27 +2697,52 @@ aAPDM_TOK  1186473
 
 eATTRIB    3
 aZKEY      2481215
-aNAME      Location1
+aNAME      PanelLoc1
 aAPDM_TOK  68568081
 
 eATTRIB    3
 aZKEY      2481216
-aNAME      Location2
+aNAME      PanelLoc2
 aAPDM_TOK  68568081
 
 eATTRIB    3
 aZKEY      2481217
-aNAME      Location3
+aNAME      PanelLoc3
 aAPDM_TOK  68568081
 
 eATTRIB    3
 aZKEY      2481218
-aNAME      Location4
+aNAME      PanelLoc4
 aAPDM_TOK  68568081
 
 eATTRIB    3
 aZKEY      2481219
-aNAME      Location5
+aNAME      PanelLoc5
+aAPDM_TOK  68568081
+
+eATTRIB    3
+aZKEY      110003018
+aNAME      LabelLoc1
+aAPDM_TOK  68568081
+
+eATTRIB    3
+aZKEY      110003019
+aNAME      LabelLoc2
+aAPDM_TOK  68568081
+
+eATTRIB    3
+aZKEY      110003020
+aNAME      LabelLoc3
+aAPDM_TOK  68568081
+
+eATTRIB    3
+aZKEY      110003021
+aNAME      LabelLoc4
+aAPDM_TOK  68568081
+
+eATTRIB    3
+aZKEY      110003022
+aNAME      LabelLoc5
 aAPDM_TOK  68568081
 
 eATTRIB    3
