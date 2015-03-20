@@ -1313,6 +1313,7 @@ AcceptUpdatePrimaryRegistrant( VIEW ViewToWindow )
    VIEW mPrimReg REGISTERED AS mPrimReg
    SHORT nRC
 
+   DisplayObjectInstance( mPrimReg, "", "" )
    nRC = ValidatePrimaryRegistrant( ViewToWindow )
    IF nRC = 0
       DropObjectInstance( mPrimReg )

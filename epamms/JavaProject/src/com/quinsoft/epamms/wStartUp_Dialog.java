@@ -6121,6 +6121,8 @@ AcceptUpdatePrimaryRegistrant( View     ViewToWindow )
 
    RESULT = GetViewByName( mPrimReg, "mPrimReg", ViewToWindow, zLEVEL_TASK );
 
+   //:DisplayObjectInstance( mPrimReg, "", "" )
+   DisplayObjectInstance( mPrimReg, "", "" );
    //:nRC = ValidatePrimaryRegistrant( ViewToWindow )
    nRC = ValidatePrimaryRegistrant( ViewToWindow );
    //:IF nRC = 0

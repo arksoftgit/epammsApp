@@ -717,12 +717,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-
-<!-- TinyMCE -->
-<script language="JavaScript" type="text/javascript" src="./js/tinymce/js/tinymce/tinymce.min.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/TinyMCE.js"></script>
-<!-- /TinyMCE -->
-
 <script language="JavaScript" type="text/javascript" src="./genjs/wMLCUpdateMasterProduct.js"></script>
 
 </head>
@@ -1221,7 +1215,7 @@ else
    }
 %>
 
-<textarea name="MasterProductDescription" id="MasterProductDescription" class="mceSimple" style="width:578px;height:84px;position:absolute;left:198px;top:148px;border:solid;border-width:4px;border-style:groove;"><%=strErrorMapValue%></textarea>
+<textarea name="MasterProductDescription" id="MasterProductDescription" style="width:578px;height:84px;position:absolute;left:198px;top:148px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 
 </div>  <!--  GBMasterProduct --> 
