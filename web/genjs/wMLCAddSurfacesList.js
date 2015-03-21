@@ -82,31 +82,17 @@ function _BeforePageUnload( )
 
 function _IsDocDisabled( )
 {
-   var theForm;
-   var j;
-   var k;
+   var bRC = false;
 
-   for ( j = 0; j < document.forms.length; j++ )
-   {
-      theForm = document.forms[ j ];
-      for ( k = 0; k < theForm.length; k++ )
-      {
-         if ( theForm.elements[ k ].name == "zDisable" )
-            return theForm.elements[ k ].disabled;
-      }
+   var $el = $("#zDisable");
+   if ( $el.length > 0 ) {
+      bRC = $el[0].disabled;
    }
-
-   return false;
+   return bRC ? true : false;
 }
 
 function _DisableFormElements( bDisabled )
 {
-   var theForm;
-   var type;
-   var lis;
-   var thisLi;
-   var j;
-   var k;
    var bRC = false;
 
    if ( bDisabled && timerID != null )
@@ -115,48 +101,13 @@ function _DisableFormElements( bDisabled )
       timerID = null;
    }
 
-   // Controls on the window may have been set as disabled through javascript but
-   // when we try to get the values for these controls in jsp (response.getParameter)
-   // they will always be null.  Set any disabled fields to enabled for this reason.
-   for ( j = 0; j < document.forms.length; j++ )
-   {
-      theForm = document.forms[ j ];
-      for ( k = 0; k < theForm.length; k++ )
-      {
-         if (theForm.elements[ k ].disabled == true)
-             theForm.elements[ k ].disabled = false;
-      }
+   var $el = $("#zDisable");
+   if ( $el.length > 0 ) {
+      $el[0].disabled = true;
+      bRC = true;
    }
 
-   // We want to set some fields as disabled (like buttons and comboboxes) so that
-   // while the jsp code is processing, users can not select these controls.
-   for ( j = 0; j < document.forms.length; j++ )
-   {
-      theForm = document.forms[ j ];
-      for ( k = 0; k < theForm.length; k++ )
-      {
-         type = theForm.elements[ k ].type;
-
-         if ( type == "button" || type == "submit" || (type != null && type.indexOf( "select" ) == 0) )
-         {
-            theForm.elements[ k ].disabled = bDisabled;
-         }
-         else
-         if ( theForm.elements[ k ].name == "zDisable" )
-         {
-            theForm.elements[ k ].disabled = bDisabled;
-            bRC = true;
-         }
-      }
-   }
-
-   lis = document.getElementsByTagName( "li" );
-   for ( k = 0; k < lis.length; k++ )
-   {
-      thisLi = lis[ k ];
-      thisLi.disabled = bDisabled;
-   }
-
+   $.blockUI({ message: '<h1><img src="./images/busy.gif" /></h1>', overlayCSS: { backgroundColor: '#eee' } });
    return bRC;
 }
 
@@ -185,6 +136,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var keyRole = document.wMLCAddSurfacesList.zKeyRole.value;
    document.wMLCAddSurfacesList.zError.value = "";
    document.wMLCAddSurfacesList.zOpenFile.value = "";
 
@@ -386,267 +338,6 @@ function SelectAllSurfaces( )
 
       // END of Javascript code entered by user.
 
-   }
-}
-
-function smConfirmAddSelectedSurfacesStmts( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCAddSurfacesList.zAction.value = "smConfirmAddSelectedSurfacesStmts";
-      document.wMLCAddSurfacesList.submit( );
-   }
-}
-
-function smConfirmAddSurfacesStmtsAndReturn( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCAddSurfacesList.zAction.value = "smConfirmAddSurfacesStmtsAndReturn";
-      document.wMLCAddSurfacesList.submit( );
-   }
-}
-
-function smCancelAddSurfacesStmts( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCAddSurfacesList.zAction.value = "smCancelAddSurfacesStmts";
-      document.wMLCAddSurfacesList.submit( );
-   }
-}
-
-function mProductManagement( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmProductManagement" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wMLCAddSurfacesList.zAction.value = "mProductManagement";
-      document.wMLCAddSurfacesList.submit( );
-   }
-}
-
-function mSubregistrants( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmSubregistrants" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wMLCAddSurfacesList.zAction.value = "mSubregistrants";
-      document.wMLCAddSurfacesList.submit( );
-   }
-}
-
-function mTrackingNotificationCompliance( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmTrackingNotificationCompliance" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wMLCAddSurfacesList.zAction.value = "mTrackingNotificationCompliance";
-      document.wMLCAddSurfacesList.submit( );
-   }
-}
-
-function mStateRegistrations( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmStateRegistrations" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wMLCAddSurfacesList.zAction.value = "mStateRegistrations";
-      document.wMLCAddSurfacesList.submit( );
-   }
-}
-
-function mMarketingFulfillment( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmMarketingFulfillment" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wMLCAddSurfacesList.zAction.value = "mMarketingFulfillment";
-      document.wMLCAddSurfacesList.submit( );
-   }
-}
-
-function mWebDevelopment( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmWebDevelopment" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wMLCAddSurfacesList.zAction.value = "mWebDevelopment";
-      document.wMLCAddSurfacesList.submit( );
-   }
-}
-
-function mAdministration( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmAdministration" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wMLCAddSurfacesList.zAction.value = "mAdministration";
-      document.wMLCAddSurfacesList.submit( );
-   }
-}
-
-function mLogin( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmLogin" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wMLCAddSurfacesList.zAction.value = "mLogin";
-      document.wMLCAddSurfacesList.submit( );
-   }
-}
-
-function mLogout( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmLogout" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wMLCAddSurfacesList.zAction.value = "_OnUnload";
-      document.wMLCAddSurfacesList.submit( );
    }
 }
 

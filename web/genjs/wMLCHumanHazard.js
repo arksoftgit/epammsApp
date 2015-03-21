@@ -148,6 +148,7 @@ function _AfterPageLoaded( )
 
    document.wMLCHumanHazard.hChildHazard.value = document.wMLCHumanHazard.ChildHazard.value
    document.wMLCHumanHazard.hSignalWord.value = document.wMLCHumanHazard.SignalWord.value
+   document.wMLCHumanHazard.hLocSeparator.value = document.wMLCHumanHazard.LocSeparator.value
 
    var varTimeout = document.wMLCHumanHazard.zTimeout.value;
    if ( varTimeout > 0 )
@@ -498,6 +499,18 @@ function SignalWordOnChange( )
    if ( _IsDocDisabled( ) == false )
    {
       document.wMLCHumanHazard.hSignalWord.value = document.wMLCHumanHazard.SignalWord.value;
+   }
+}
+
+function LocSeparatorOnChange( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      document.wMLCHumanHazard.hLocSeparator.value = document.wMLCHumanHazard.LocSeparator.value;
    }
 }
 

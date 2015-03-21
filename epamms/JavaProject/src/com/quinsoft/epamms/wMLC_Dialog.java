@@ -73,6 +73,63 @@ GOTO_PrecautionaryStmtDelete( View     ViewToWindow )
 
 
 private int 
+o_fnLocalBuildQual_3( View     vSubtask,
+                      zVIEW    vQualObject,
+                      int      lTempInteger_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterProduct" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_4( View     vSubtask,
+                      zVIEW    vQualObject,
+                      int      lTempInteger_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterLabelContent" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterLabelContent" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_5( View     vSubtask,
+                      zVIEW    vQualObject,
+                      int      lTempInteger_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterLabelContent" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterLabelContent" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
 o_fnLocalBuildQual_6( View     vSubtask,
                       zVIEW    vQualObject,
                       int      lID )
@@ -124,6 +181,25 @@ o_fnLocalBuildQual_8( View     vSubtask,
    SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterLabelContent" );
    SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
    SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_9( View     vSubtask,
+                      zVIEW    vQualObject,
+                      String   szTempString_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "ePamms" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "EPA_ChemicalFamily" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ChemicalFamily" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Value", szTempString_0.toString( ) );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
    return( 0 );
 } 
@@ -186,60 +262,357 @@ o_fnLocalBuildQual_2( View     vSubtask,
 } 
 
 
-private int 
-o_fnLocalBuildQual_3( View     vSubtask,
-                      zVIEW    vQualObject,
-                      int      lTempInteger_0 )
-{
-   int      RESULT = 0;
+//:DIALOG OPERATION
+//:ConfirmAddAreasOfUseStmts( VIEW ViewToWindow )
 
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterProduct" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+//:   VIEW mMasLC   REGISTERED AS mMasLC
+public int 
+ConfirmAddAreasOfUseStmts( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW mEPA     REGISTERED AS mEPA
+   zVIEW    mEPA = new zVIEW( );
+   //:SHORT   nRC
+   int      nRC = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( mEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
+
+   //:FOR EACH mEPA.EPA_AreaOfUse
+   RESULT = SetCursorFirstEntity( mEPA, "EPA_AreaOfUse", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:IF mEPA.EPA_AreaOfUse.wkSelected = "Y"
+      if ( CompareAttributeToString( mEPA, "EPA_AreaOfUse", "wkSelected", "Y" ) == 0 )
+      { 
+         //:CreateEntity( mMasLC, "M_Usage", zPOS_LAST )
+         CreateEntity( mMasLC, "M_Usage", zPOS_LAST );
+         //:mMasLC.M_Usage.UsageType = "U" // Area of Use
+         SetAttributeFromString( mMasLC, "M_Usage", "UsageType", "U" );
+         //:mMasLC.M_Usage.Name = mEPA.EPA_AreaOfUse.Name
+         SetAttributeFromAttribute( mMasLC, "M_Usage", "Name", mEPA, "EPA_AreaOfUse", "Name" );
+      } 
+
+      RESULT = SetCursorNextEntity( mEPA, "EPA_AreaOfUse", "" );
+      //:END
+   } 
+
+   //:END
+
+   //:COMMIT mMasLC
+   RESULT = CommitObjectInstance( mMasLC );
+   //:DropObjectInstance( mEPA )
+   DropObjectInstance( mEPA );
    return( 0 );
+// END
 } 
 
 
-private int 
-o_fnLocalBuildQual_4( View     vSubtask,
-                      zVIEW    vQualObject,
-                      int      lTempInteger_0 )
+//:DIALOG OPERATION
+//:CancelAddAreasOfUseStmts( VIEW ViewToWindow )
+
+//:   VIEW mEPA     REGISTERED AS mEPA
+public int 
+CancelAddAreasOfUseStmts( View     ViewToWindow )
 {
+   zVIEW    mEPA = new zVIEW( );
    int      RESULT = 0;
 
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterLabelContent" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterLabelContent" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   RESULT = GetViewByName( mEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
+
+   //:DropObjectInstance( mEPA )
+   DropObjectInstance( mEPA );
    return( 0 );
+// END
 } 
 
 
-private int 
-o_fnLocalBuildQual_5( View     vSubtask,
-                      zVIEW    vQualObject,
-                      int      lTempInteger_0 )
+//:DIALOG OPERATION
+//:ConfirmAddAppTypesStmts( VIEW ViewToWindow )
+
+//:   VIEW mMasLC   REGISTERED AS mMasLC
+public int 
+ConfirmAddAppTypesStmts( View     ViewToWindow )
 {
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW mEPA     REGISTERED AS mEPA
+   zVIEW    mEPA = new zVIEW( );
+   //:SHORT   nRC
+   int      nRC = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( mEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
+
+   //:FOR EACH mEPA.EPA_AreaOfUse
+   RESULT = SetCursorFirstEntity( mEPA, "EPA_AreaOfUse", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:IF mEPA.EPA_AreaOfUse.wkSelected = "Y"
+      if ( CompareAttributeToString( mEPA, "EPA_AreaOfUse", "wkSelected", "Y" ) == 0 )
+      { 
+         //:CreateEntity( mMasLC, "M_Usage", zPOS_LAST )
+         CreateEntity( mMasLC, "M_Usage", zPOS_LAST );
+         //:mMasLC.M_Usage.UsageType = "T" // Application Type
+         SetAttributeFromString( mMasLC, "M_Usage", "UsageType", "T" );
+         //:mMasLC.M_Usage.Name = mEPA.EPA_ApplicationType.Name
+         SetAttributeFromAttribute( mMasLC, "M_Usage", "Name", mEPA, "EPA_ApplicationType", "Name" );
+      } 
+
+      RESULT = SetCursorNextEntity( mEPA, "EPA_AreaOfUse", "" );
+      //:END
+   } 
+
+   //:END
+
+   //:COMMIT mMasLC
+   RESULT = CommitObjectInstance( mMasLC );
+   //:DropObjectInstance( mEPA )
+   DropObjectInstance( mEPA );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:CancelAddAppTypesStmts( VIEW ViewToWindow )
+
+//:   VIEW mEPA     REGISTERED AS mEPA
+public int 
+CancelAddAppTypesStmts( View     ViewToWindow )
+{
+   zVIEW    mEPA = new zVIEW( );
    int      RESULT = 0;
 
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterLabelContent" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterLabelContent" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   RESULT = GetViewByName( mEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
+
+   //:DropObjectInstance( mEPA )
+   DropObjectInstance( mEPA );
    return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:ConfirmAddSurfacesStmts( VIEW ViewToWindow )
+
+//:   VIEW mMasLC   REGISTERED AS mMasLC
+public int 
+ConfirmAddSurfacesStmts( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW mEPA     REGISTERED AS mEPA
+   zVIEW    mEPA = new zVIEW( );
+   //:SHORT   nRC
+   int      nRC = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( mEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
+
+   //:FOR EACH mEPA.EPA_Surface
+   RESULT = SetCursorFirstEntity( mEPA, "EPA_Surface", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:IF mEPA.EPA_Surface.wkSelected = "Y"
+      if ( CompareAttributeToString( mEPA, "EPA_Surface", "wkSelected", "Y" ) == 0 )
+      { 
+         //:CreateEntity( mMasLC, "M_Usage", zPOS_LAST )
+         CreateEntity( mMasLC, "M_Usage", zPOS_LAST );
+         //:mMasLC.M_Usage.UsageType = "S" // Surface
+         SetAttributeFromString( mMasLC, "M_Usage", "UsageType", "S" );
+         //:mMasLC.M_Usage.Name = mEPA.EPA_Surface.Name
+         SetAttributeFromAttribute( mMasLC, "M_Usage", "Name", mEPA, "EPA_Surface", "Name" );
+      } 
+
+      RESULT = SetCursorNextEntity( mEPA, "EPA_Surface", "" );
+      //:END
+   } 
+
+   //:END
+
+   //:COMMIT mMasLC
+   RESULT = CommitObjectInstance( mMasLC );
+   //:DropObjectInstance( mEPA )
+   DropObjectInstance( mEPA );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:CancelAddSurfacesStmts( VIEW ViewToWindow )
+
+//:   VIEW mEPA     REGISTERED AS mEPA
+public int 
+CancelAddSurfacesStmts( View     ViewToWindow )
+{
+   zVIEW    mEPA = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
+
+   //:DropObjectInstance( mEPA )
+   DropObjectInstance( mEPA );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:InitClaimsStmtsForInsert( VIEW ViewToWindow )
+
+//:   VIEW mMasLC   REGISTERED AS mMasLC
+public int 
+InitClaimsStmtsForInsert( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW mEPA     BASED ON LOD  mEPA
+   zVIEW    mEPA = new zVIEW( );
+   //:STRING ( 16 ) szClass
+   String   szClass = null;
+   String   szTempString_0 = null;
+   zVIEW    vTempViewVar_0 = new zVIEW( );
+   int      lTempInteger_0 = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:CancelCurrentTemporalSubobject( ViewToWindow, "InitClaimsStmtsForInsert: " )
+   {
+    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
+    m_ZGlobalV_Operation.CancelCurrentTemporalSubobject( ViewToWindow, "InitClaimsStmtsForInsert: " );
+    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
+   }
+   //:GET VIEW mEPA NAMED "mEPA"
+   RESULT = GetViewByName( mEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
+   //:IF mEPA != 0
+   if ( getView( mEPA ) != null )
+   { 
+      //:DropObjectInstance( mEPA )
+      DropObjectInstance( mEPA );
+   } 
+
+   //:END
+
+   //:ACTIVATE mEPA WHERE mEPA.EPA_ChemicalFamily.ChemicalFamily = mMasLC.MasterProduct.ChemicalFamily
+   {StringBuilder sb_szTempString_0;
+   if ( szTempString_0 == null )
+      sb_szTempString_0 = new StringBuilder( 32 );
+   else
+      sb_szTempString_0 = new StringBuilder( szTempString_0 );
+       GetStringFromAttribute( sb_szTempString_0, mMasLC, "MasterProduct", "ChemicalFamily" );
+   szTempString_0 = sb_szTempString_0.toString( );}
+   o_fnLocalBuildQual_9( ViewToWindow, vTempViewVar_0, szTempString_0 );
+   RESULT = ActivateObjectInstance( mEPA, "mEPA", ViewToWindow, vTempViewVar_0, zSINGLE );
+   DropView( vTempViewVar_0 );
+   //:FOR EACH mEPA.EPA_Claim
+   RESULT = SetCursorFirstEntity( mEPA, "EPA_Claim", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:szClass = mEPA.EPA_Claim.ClaimsClassification
+      {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+      StringBuilder sb_szClass;
+      if ( szClass == null )
+         sb_szClass = new StringBuilder( 32 );
+      else
+         sb_szClass = new StringBuilder( szClass );
+             GetVariableFromAttribute( sb_szClass, mi_lTempInteger_0, 'S', 17, mEPA, "EPA_Claim", "ClaimsClassification", "", 0 );
+      lTempInteger_0 = mi_lTempInteger_0.intValue( );
+      szClass = sb_szClass.toString( );}
+      //:IF szClass = "Bacteria" OR szClass = "Fungi" OR szClass = "Viruses" OR szClass = "Protozoa"
+      if ( ZeidonStringCompare( szClass, 1, 0, "Bacteria", 1, 0, 17 ) == 0 || ZeidonStringCompare( szClass, 1, 0, "Fungi", 1, 0, 17 ) == 0 || ZeidonStringCompare( szClass, 1, 0, "Viruses", 1, 0, 17 ) == 0 ||
+           ZeidonStringCompare( szClass, 1, 0, "Protozoa", 1, 0, 17 ) == 0 )
+      { 
+         //:CreateEntity( mEPA, szClass, zPOS_LAST )
+         CreateEntity( mEPA, szClass, zPOS_LAST );
+         //:ELSE
+      } 
+      else
+      { 
+         //:TraceLineS( "Invalid ClaimsClassification: ", szClass )
+         TraceLineS( "Invalid ClaimsClassification: ", szClass );
+      } 
+
+      RESULT = SetCursorNextEntity( mEPA, "EPA_Claim", "" );
+      //:END
+   } 
+
+   //:END
+
+   //:NAME VIEW mEPA "mEPA"
+   SetNameForView( mEPA, "mEPA", null, zLEVEL_TASK );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:ConfirmAddClaimsStmts( VIEW ViewToWindow )
+
+//:   VIEW mMasLC   REGISTERED AS mMasLC
+public int 
+ConfirmAddClaimsStmts( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW mEPA     REGISTERED AS mEPA
+   zVIEW    mEPA = new zVIEW( );
+   //:SHORT   nRC
+   int      nRC = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( mEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
+
+   //:FOR EACH mEPA.EPA_Claim
+   RESULT = SetCursorFirstEntity( mEPA, "EPA_Claim", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:IF mEPA.EPA_Claim.wkSelected = "Y"
+      if ( CompareAttributeToString( mEPA, "EPA_Claim", "wkSelected", "Y" ) == 0 )
+      { 
+         //:CreateEntity( mMasLC, "M_Usage", zPOS_LAST )
+         CreateEntity( mMasLC, "M_Usage", zPOS_LAST );
+         //:mMasLC.M_Usage.UsageType = "C" // Claim
+         SetAttributeFromString( mMasLC, "M_Usage", "UsageType", "C" );
+         //:mMasLC.M_Usage.ClaimsClassification = mEPA.EPA_Claim.ClaimsClassification
+         SetAttributeFromAttribute( mMasLC, "M_Usage", "ClaimsClassification", mEPA, "EPA_Claim", "ClaimsClassification" );
+         //:mMasLC.M_Usage.Name = mEPA.EPA_Claim.Name
+         SetAttributeFromAttribute( mMasLC, "M_Usage", "Name", mEPA, "EPA_Claim", "Name" );
+      } 
+
+      RESULT = SetCursorNextEntity( mEPA, "EPA_Claim", "" );
+      //:END
+   } 
+
+   //:END
+
+   //:COMMIT mMasLC
+   RESULT = CommitObjectInstance( mMasLC );
+   //:DropObjectInstance( mEPA )
+   DropObjectInstance( mEPA );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:CancelAddClaimsStmts( VIEW ViewToWindow )
+
+//:   VIEW mEPA     REGISTERED AS mEPA
+public int 
+CancelAddClaimsStmts( View     ViewToWindow )
+{
+   zVIEW    mEPA = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
+
+   //:DropObjectInstance( mEPA )
+   DropObjectInstance( mEPA );
+   return( 0 );
+// END
 } 
 
 

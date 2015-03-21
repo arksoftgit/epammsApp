@@ -549,7 +549,7 @@ CANCEL_BlockSubBlockDefinition( View     ViewToWindow )
    //:CancelSubobject( mSPLDef, "LLD_Block" )
    CancelSubobject( mSPLDef, "LLD_Block" );
    //:ResetViewFromSubobject( mSPLDef )
-   ResetViewFromSubobject( mSPLDef );
+   ResetViewFromSubobjectTop( mSPLDef );
    //:CancelSubobject( mSPLDef, "LLD_Block" )
    CancelSubobject( mSPLDef, "LLD_Block" );
    return( 0 );
@@ -2990,7 +2990,7 @@ GENERATE_SPLD_Label( View     ViewToWindow )
       //:CreateViewFromView( mSPLDefPanel, mSPLDefPanel )
       CreateViewFromView( mSPLDefPanel, mSPLDefPanel );
       //:ResetViewFromSubobjectTop( mSPLDefPanel )
-      ResetViewFromSubobjectTop( mSPLDefPanel );
+      ResetViewFromSubobject( mSPLDefPanel );
       //:NAME VIEW mSPLDefPanel "mSPLDefPanel"
       SetNameForView( mSPLDefPanel, "mSPLDefPanel", null, zLEVEL_TASK );
    } 
@@ -3520,7 +3520,7 @@ ExecuteJOE_Test1( View     ViewToWindow )
    SetAttributeFromString( mSPLDef, "LLD_SpecialSectionAttribute", "Name", "Spec Attribute 2" );
 
    //:ResetViewFromSubobject( mSPLDef )
-   ResetViewFromSubobject( mSPLDef );
+   ResetViewFromSubobjectTop( mSPLDef );
 
    //:// See if we can now read what we created.
    //:IF mSPLDef.LLD_Block.Name != "Block Level 1"
@@ -3574,7 +3574,7 @@ ExecuteJOE_Test1( View     ViewToWindow )
 
    //:END
    //:ResetViewFromSubobject( mSPLDef )
-   ResetViewFromSubobject( mSPLDef );
+   ResetViewFromSubobjectTop( mSPLDef );
 
    //:// Now try the subobject from a different view.
    //:CreateViewFromView( mSPLDef2, mSPLDef )
@@ -3607,7 +3607,7 @@ ExecuteJOE_Test1( View     ViewToWindow )
 
    //:END
    //:ResetViewFromSubobject( mSPLDef2 )
-   ResetViewFromSubobject( mSPLDef2 );
+   ResetViewFromSubobjectTop( mSPLDef2 );
 
    //:DropView( mSPLDef2 )
    DropView( mSPLDef2 );
@@ -3620,7 +3620,7 @@ ExecuteJOE_Test1( View     ViewToWindow )
    //:DropView( mSPLDef2 )
    DropView( mSPLDef2 );
    //:ResetViewFromSubobject( mSPLDef )
-   ResetViewFromSubobject( mSPLDef );
+   ResetViewFromSubobjectTop( mSPLDef );
 
    //:TraceLineS( "*** JOE Test 1 successfully completed", "" )
    TraceLineS( "*** JOE Test 1 successfully completed", "" );
@@ -4402,7 +4402,7 @@ GENERATE_SPLD_LabelDottedBorders( View     ViewToWindow )
       //:CreateViewFromView( mSPLDefPanel, mSPLDefPanel )
       CreateViewFromView( mSPLDefPanel, mSPLDefPanel );
       //:ResetViewFromSubobjectTop( mSPLDefPanel )
-      ResetViewFromSubobjectTop( mSPLDefPanel );
+      ResetViewFromSubobject( mSPLDefPanel );
       //:NAME VIEW mSPLDefPanel "mSPLDefPanel"
       SetNameForView( mSPLDefPanel, "mSPLDefPanel", null, zLEVEL_TASK );
    } 

@@ -1,4 +1,4 @@
-z1000-Zeidon    BASE     TZDGSRCO 09/08/14   21:22:10 1.0a2    
+z1000-Zeidon    BASE     TZDGSRCO 03/21/15   10:28:30 1.0a2    
 eDomainGroup 1
 aZKey      68567479
 aName      Base
@@ -18,6 +18,61 @@ eContext   3
 aZKey      68567481
 aName      BLOB
 aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      110003579
+aName      HazardLocationSeparator
+aDesc      Separator when multiple hazard locations are specified (e.g. [], (), /, \)
+aDomainType T
+aDataType  S
+aMaxStringLth 2
+aContextRestriction N
+
+eContext   3
+aZKey      110003580
+aName      HazardLocationSeparator
+aIsDefault Y
+
+eTableEntry 4
+aZKey      110003581
+aExternalValue Brackets
+aInternalValue []
+
+eTableEntry 4
+aZKey      110003582
+aExternalValue Parens
+aInternalValue ()
+
+eTableEntry 4
+aZKey      110003612
+aExternalValue Braces
+aInternalValue {}
+
+eTableEntry 4
+aZKey      110003583
+aExternalValue Backslash
+aInternalValue \
+
+eTableEntry 4
+aZKey      110003584
+aExternalValue Slash
+aInternalValue /
+
+eTableEntry 4
+aZKey      110003585
+aExternalValue Pipe
+aInternalValue |
+
+eTableEntry 4
+aZKey      110003588
+aExternalValue Dash
+aInternalValue -
+
+eTableEntry 4
+aZKey      110003586
+aExternalValue Comma
+aInternalValue ,
 
 eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
@@ -644,9 +699,6 @@ aZKey      4321560
 aName      FullGeneralSectionType
 
 eTableEntry 4
-aZKey      4321564
-
-eTableEntry 4
 aZKey      4321561
 aExternalValue Precautionary
 aInternalValue P
@@ -665,9 +717,6 @@ eContext   3
 aZKey      69055598
 aName      GeneralSectionType
 aIsDefault Y
-
-eTableEntry 4
-aZKey      4321565
 
 eTableEntry 4
 aZKey      69055599

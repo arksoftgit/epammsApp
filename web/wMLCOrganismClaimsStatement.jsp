@@ -295,6 +295,18 @@ if ( strActionToProcess != null )
       break;
    }
 
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "AddOrganismClaimsList" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCOrganismClaimsStatement", strActionToProcess );
+
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "AddOrganismClaimsList" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
    while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelClaimsStmt" ) )
    {
       bDone = true;
@@ -541,6 +553,16 @@ else
    }
 %>
 
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "AddClaimsList" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li><a href="#"  onclick="AddOrganismClaimsList( )">Add From Claims List</a></li>
+<%
+   }
+%>
+
    </ul>
 </div> <!-- sidenavigation -->
 
@@ -561,6 +583,7 @@ else
 
 <%
    View mMasLC = null;
+   View mEPA = null;
    View mMasProd = null;
    View mMasProdLST = null;
    View mPrimReg = null;

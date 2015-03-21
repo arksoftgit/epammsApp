@@ -191,6 +191,21 @@ function AcceptAndReturnClaimsStatement( )
    }
 }
 
+function AddOrganismClaimsList( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCOrganismClaimsStatement.zAction.value = "AddOrganismClaimsList";
+      document.wMLCOrganismClaimsStatement.submit( );
+   }
+}
+
 function CancelClaimsStmt( )
 {
 

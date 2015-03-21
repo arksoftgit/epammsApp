@@ -492,6 +492,10 @@ dFullHazardStatement( VIEW mMasLC BASED ON LOD mMasLC,
    STRING ( 256 ) szString
    STRING ( 256 ) szReplaceString
    STRING ( 256 ) szLocation
+   STRING ( 2 )   szSeparator
+   STRING ( 1 )   szOpenSeparator
+   STRING ( 1 )   szCloseSeparator
+   STRING ( 1 )   szEncloseFirst
    SHORT nPosStart
    SHORT nPosEnd
 
@@ -500,6 +504,18 @@ dFullHazardStatement( VIEW mMasLC BASED ON LOD mMasLC,
 
       IF mMasLC.M_HumanHazardSection  EXISTS
 
+         szSeparator = mMasLC.M_HumanHazardSection.LocationSeparator
+         szOpenSeparator = ""
+         szCloseSeparator = ""
+         nPosStart  = zstrlen( szSeparator )
+         IF nPosStart > 0
+            zstrncpy( szOpenSeparator, szSeparator, 1 )
+            IF nPosStart > 1
+               zstrncpyoffset( szCloseSeparator, szSeparator, 1, 1 )
+            END
+         END
+
+         szEncloseFirst = mMasLC.M_HumanHazardSection.EncloseFirstLocation
          szString = mMasLC.M_HumanHazardSection.PrecautionaryStatement
          nPosStart  = zSearchSubString( szString, "{{Precautionary Panel Location}}", "f", 0 )
          IF nPosStart >= 0
@@ -508,28 +524,31 @@ dFullHazardStatement( VIEW mMasLC BASED ON LOD mMasLC,
             szReplaceString = ""
             szLocation = mMasLC.M_HumanHazardSection.PanelLoc1
             IF szLocation != ""
-            // szReplaceString = szReplaceString + "[" + szLocation + "]"  now we expect brackets or parentheses or whatever to be included
-               szReplaceString = szReplaceString + szLocation
+               IF szEncloseFirst = "Y" AND szCloseSeparator != ""
+                  szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+               ELSE
+                  szReplaceString = szReplaceString + szLocation
+               END
             END
 
             szLocation = mMasLC.M_HumanHazardSection.PanelLoc2
             IF szLocation != ""
-               szReplaceString = szReplaceString + szLocation
+               szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
             END
 
             szLocation = mMasLC.M_HumanHazardSection.PanelLoc3
             IF szLocation != ""
-               szReplaceString = szReplaceString + szLocation
+               szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
             END
 
             szLocation = mMasLC.M_HumanHazardSection.PanelLoc4
             IF szLocation != ""
-               szReplaceString = szReplaceString + szLocation
+               szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
             END
 
             szLocation = mMasLC.M_HumanHazardSection.PanelLoc5
             IF szLocation != ""
-               szReplaceString = szReplaceString + szLocation
+               szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
             END
 
             zReplaceSubString( szString, nPosStart, nPosEnd, szReplaceString )
@@ -542,28 +561,31 @@ dFullHazardStatement( VIEW mMasLC BASED ON LOD mMasLC,
             szReplaceString = ""
             szLocation = mMasLC.M_HumanHazardSection.LabelLoc1
             IF szLocation != ""
-            // szReplaceString = szReplaceString + "[" + szLocation + "]"  now we expect brackets or parentheses or whatever to be included
-               szReplaceString = szReplaceString + szLocation
+               IF szCloseSeparator != ""
+                  szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+               ELSE
+                  szReplaceString = szReplaceString + szLocation
+               END
             END
 
             szLocation = mMasLC.M_HumanHazardSection.LabelLoc2
             IF szLocation != ""
-               szReplaceString = szReplaceString + szLocation
+               szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
             END
 
             szLocation = mMasLC.M_HumanHazardSection.LabelLoc3
             IF szLocation != ""
-               szReplaceString = szReplaceString + szLocation
+               szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
             END
 
             szLocation = mMasLC.M_HumanHazardSection.LabelLoc4
             IF szLocation != ""
-               szReplaceString = szReplaceString + szLocation
+               szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
             END
 
             szLocation = mMasLC.M_HumanHazardSection.LabelLoc5
             IF szLocation != ""
-               szReplaceString = szReplaceString + szLocation
+               szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
             END
 
             zReplaceSubString( szString, nPosStart, nPosEnd, szReplaceString )
@@ -574,9 +596,7 @@ dFullHazardStatement( VIEW mMasLC BASED ON LOD mMasLC,
       END
 
       // Store the calculated value in the object.
-      StoreStringInRecord( mMasLC,
-                           InternalEntityStructure,
-                           InternalAttribStructure, szString )
+      StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szString )
       RETURN 0
 
       /* end zDERIVED_GET */

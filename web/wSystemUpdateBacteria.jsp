@@ -1134,18 +1134,13 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:22px;float:left;"></div>   <!-- Width Spacer -->
 <% /* Chemical:GroupBox */ %>
-<div id="Chemical" name="Chemical" style="float:left;width:822px;" >
 
-<table cols=2 style="width:822px;"  class="grouptable">
+<div id="Chemical" name="Chemical"   style="float:left;position:relative; width:822px; height:110px;">  <!-- Chemical --> 
 
-<tr>
-<td valign="top" style="width:92px;">
 <% /* Name::Text */ %>
 
-<span  id="Name:" name="Name:" style="width:66px;height:16px;">Name:</span>
+<label  id="Name:" name="Name:" style="width:66px;height:16px;position:absolute;left:8px;top:24px;">Name:</label>
 
-</td>
-<td valign="top" style="width:680px;">
 <% /* Name:Text */ %>
 <% strTextDisplayValue = "";
    mEPA = task.getViewByName( "mEPA" );
@@ -1171,18 +1166,12 @@ else
    }
 %>
 
-<span  id="Name" name="Name" style="width:680px;height:16px;"><%=strTextDisplayValue%></span>
+<label  id="Name" name="Name" style="width:680px;height:16px;position:absolute;left:100px;top:24px;"><%=strTextDisplayValue%></label>
 
-</td>
-</tr>
-<tr>
-<td valign="top" style="width:92px;">
 <% /* Description::Text */ %>
 
-<span  id="Description:" name="Description:" style="width:80px;height:16px;">Description:</span>
+<label  id="Description:" name="Description:" style="width:80px;height:16px;position:absolute;left:8px;top:54px;">Description:</label>
 
-</td>
-<td valign="top" style="width:680px;">
 <% /* Description:Text */ %>
 <% strTextDisplayValue = "";
    mEPA = task.getViewByName( "mEPA" );
@@ -1208,18 +1197,12 @@ else
    }
 %>
 
-<span  id="Description" name="Description" style="width:680px;height:16px;"><%=strTextDisplayValue%></span>
+<label  id="Description" name="Description" style="width:680px;height:16px;position:absolute;left:100px;top:54px;"><%=strTextDisplayValue%></label>
 
-</td>
-</tr>
-<tr>
-<td valign="top" style="width:92px;">
 <% /* Family::Text */ %>
 
-<span  id="Family:" name="Family:" style="width:48px;height:16px;">Family:</span>
+<label  id="Family:" name="Family:" style="width:48px;height:16px;position:absolute;left:8px;top:84px;">Family:</label>
 
-</td>
-<td valign="top" style="width:680px;">
 <% /* Family:Text */ %>
 <% strTextDisplayValue = "";
    mEPA = task.getViewByName( "mEPA" );
@@ -1245,14 +1228,10 @@ else
    }
 %>
 
-<span  id="Family" name="Family" style="width:680px;height:16px;"><%=strTextDisplayValue%></span>
+<label  id="Family" name="Family" style="width:680px;height:16px;position:absolute;left:100px;top:84px;"><%=strTextDisplayValue%></label>
 
-</td>
-</tr>
-</table>
 
-</div>  <!-- Chemical --> 
-
+</div>  <!--  Chemical --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -1264,18 +1243,13 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:22px;float:left;"></div>   <!-- Width Spacer -->
 <% /* NewBacteria:GroupBox */ %>
-<div id="NewBacteria" name="NewBacteria" style="float:left;width:822px;" >
 
-<table cols=0 style="width:822px;"  class="grouptable">
+<div id="NewBacteria" name="NewBacteria"   style="float:left;position:relative; width:822px; height:56px;">  <!-- NewBacteria --> 
 
-<tr>
-<td valign="top" style="width:98px;">
 <% /* NewBacteria::Text */ %>
 
-<span  id="NewBacteria:" name="NewBacteria:" style="width:92px;height:16px;">Bacteria:</span>
+<label  id="NewBacteria:" name="NewBacteria:" style="width:92px;height:16px;position:absolute;left:0px;top:22px;">Bacteria:</label>
 
-</td>
-<td valign="top" style="width:536px;">
 <% /* Bacteria:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "Bacteria", strError );
@@ -1315,24 +1289,16 @@ else
    }
 %>
 
-<input name="Bacteria" id="Bacteria" style="width:532px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Bacteria" id="Bacteria" style="width:532px;position:absolute;left:98px;top:22px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-</td>
-<td valign="top"  class="formStylebutton" style="width:88px;">
 <% /* PBNewBacteria:PushBtn */ %>
-<button type="button" class="formStylebutton"  id="PBNewBacteria" name="PBNewBacteria" value="Add" onclick="NewBacteriaLast( )"  style="width:80px;height:28px;">Add</button>
+<button type="button" class="formStylebutton" name="PBNewBacteria" id="PBNewBacteria" value="" onclick="NewBacteriaLast( )" style="width:80px;height:28px;position:absolute;left:634px;top:22px;">Add</button>
 
-</td>
-<td valign="top"  class="newbutton" style="width:80px;">
 <% /* PBSort1:PushBtn */ %>
-<button type="button" class="newbutton"  id="PBSort1" name="PBSort1" value="Sort" onclick="SortApplicationTypes( )"  style="width:80px;height:28px;">Sort</button>
+<button type="button" class="newbutton" name="PBSort1" id="PBSort1" value="" onclick="SortApplicationTypes( )" style="width:80px;height:28px;position:absolute;left:722px;top:22px;">Sort</button>
 
-</td>
-</tr>
-</table>
 
-</div>  <!-- NewBacteria --> 
-
+</div>  <!--  NewBacteria --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -1344,48 +1310,157 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:22px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBNew:GroupBox */ %>
-<div id="GBNew" name="GBNew" style="float:left;width:822px;" >
 
-<table cols=4 style="width:822px;"  class="grouptable">
+<div id="GBNew" name="GBNew" style="width:842px;height:302px;float:left;">  <!-- GBNew --> 
 
-<tr>
-<td valign="top"  class="groupbox" style="width:204px;">
+
+ <!-- This is added as a line spacer -->
+<div style="height:20px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp</span>
 <% /* TXBacteria:Text */ %>
 
 <span class="groupbox"  id="TXBacteria" name="TXBacteria" style="width:86px;height:16px;">Bacteria</span>
 
-</td>
-<td valign="top" style="width:72px;">
+<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
 <% /* HTSelectAllAreasOfUse:Text */ %>
 
 <a href="#" id="HTSelectAllAreasOfUse" name="HTSelectAllAreasOfUse"  onclick="SelectAllBacteria( );" style="width:72px;height:16px;">Select All</a>
 
-</td>
-<td valign="top" style="width:100px;">
 <% /* HTClearSelectedAreasOfUse:Text */ %>
 
 <a href="#" id="HTClearSelectedAreasOfUse" name="HTClearSelectedAreasOfUse"  onclick="ClearSelectedBacteria( );" style="width:100px;height:16px;">Clear Selected</a>
 
-</td>
-<td valign="top" style="width:110px;">
 <% /* DeleteSelected:Text */ %>
 
 <a href="#" id="DeleteSelected" name="DeleteSelected"  onclick="DeleteSelectedBacteria( );" style="width:110px;height:16px;">Delete Selected</a>
 
-</td>
-</tr>
-<tr>
-<td valign="top" style="width:800px;">
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:20px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridBacteria:Grid */ %>
-</td>
-<td>&nbsp</td>
-<td>&nbsp</td>
-<td>&nbsp</td>
+<div class="tableScroll"  style="height:232px;">
+
+<table name="GridBacteria" id="GridBacteria" cellspacing=0  cols=5  >
+
+<thead><tr>
+
+   <th>Select</th>
+   <th>Bacteria</th>
+   <th>Update</th>
+   <th>New</th>
+   <th>Delete</th>
+
+</tr></thead>
+
+<tbody height="182px;">
+
+<%
+try
+{
+   iTableRowCnt = 0;
+   mEPA = task.getViewByName( "mEPA" );
+   if ( VmlOperation.isValid( mEPA ) )
+   {
+      long   lEntityKey;
+      String strEntityKey;
+      String strButtonName;
+      String strOdd;
+      String strTag;
+      String strGS_Select;
+      String strGS_SelectValue;
+      String strGEBacteria;
+      String strBMBUpdateBacteria;
+      String strBMBNewBacteria;
+      String strBMBDeleteBacteria;
+      
+      View vGridBacteria;
+      vGridBacteria = mEPA.newView( );
+      csrRC2 = vGridBacteria.cursor( "Bacteria" ).setFirst( "EPA_ChemicalFamily" );
+      while ( csrRC2.isSet() )
+      {
+         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
+         iTableRowCnt++;
+
+         lEntityKey = vGridBacteria.cursor( "Bacteria" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         strButtonName = "SelectButton" + strEntityKey;
+
+         strGS_Select = "";
+         nRC = vGridBacteria.cursor( "EPA_Claim" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strGS_Select = vGridBacteria.cursor( "EPA_Claim" ).getAttribute( "wkSelected" ).getString( "" );
+
+            if ( strGS_Select == null )
+               strGS_Select = "";
+         }
+
+         if ( StringUtils.equals( strGS_Select, "Y" ) )
+         {
+            strGS_SelectValue = "GS_Select" + strEntityKey;
+            strGS_Select = "<input name='" + strGS_SelectValue + "' id='" + strGS_SelectValue + "' value='Y' type='checkbox'  CHECKED > ";
+         }
+         else
+         {
+            strGS_SelectValue = "GS_Select" + strEntityKey;
+            strGS_Select = "<input name='" + strGS_SelectValue + "' id='" + strGS_SelectValue + "' value='Y' type='checkbox' > ";
+         }
+
+         strGEBacteria = "";
+         nRC = vGridBacteria.cursor( "EPA_Claim" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strGEBacteria = vGridBacteria.cursor( "EPA_Claim" ).getAttribute( "Name" ).getString( "" );
+
+            if ( strGEBacteria == null )
+               strGEBacteria = "";
+         }
+
+         if ( StringUtils.isBlank( strGEBacteria ) )
+            strGEBacteria = "&nbsp";
+
+%>
+
+<tr<%=strOdd%>>
+
+   <td nowrap><%=strGS_Select%></td>
+   <td nowrap><a href="#" onclick="SelectBacteria( this.id )" id="GEBacteria::<%=strEntityKey%>"><%=strGEBacteria%></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateBacteria" onclick="UpdateBacteria( this.id )" id="BMBUpdateBacteria::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBNewBacteria" onclick="AddNewBacteria( this.id )" id="BMBNewBacteria::<%=strEntityKey%>"><img src="./images/ePammsNew.jpg" alt="New"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteBacteria" onclick="DeleteBacteria( this.id )" id="BMBDeleteBacteria::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
+
 </tr>
+
+<%
+         csrRC2 = vGridBacteria.cursor( "Bacteria" ).setNextContinue( );
+      }
+      vGridBacteria.drop( );
+   }
+}
+catch (Exception e)
+{
+out.println("There is an error in grid: " + e.getMessage());
+task.log().info( "*** Error in grid" + e.getMessage() );
+}
+%>
+</tbody>
 </table>
 
-</div>  <!-- GBNew --> 
+</div>
 
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  GBNew --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->

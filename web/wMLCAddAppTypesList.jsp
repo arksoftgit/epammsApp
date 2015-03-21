@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 
 <%-- wMLCAddAppTypesList --%>
 
@@ -15,7 +15,7 @@
 
 <%! 
 
-ObjectEngine objectEngine = JavaObjectEngine.getInstance();
+ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
 public String ReplaceXSSValues( String szFieldValue )
 {
@@ -86,9 +86,9 @@ public int DoInputMapping( HttpServletRequest request,
                VmlOperation.CreateMessage( task, "GS_Select", "", strMapValue );
             else
                if ( strMapValue != null )
-                  vGridTmp.cursor( "EPA_AreaOfUse" ).setAttribute( "wkSelected", strMapValue );
+                  vGridTmp.cursor( "EPA_AreaOfUse" ).getAttribute( "wkSelected" ).setValue( strMapValue, "" );
                else
-                  vGridTmp.cursor( "EPA_AreaOfUse" ).setAttribute( "wkSelected", "" );
+                  vGridTmp.cursor( "EPA_AreaOfUse" ).getAttribute( "wkSelected" ).setValue( "", "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -117,6 +117,7 @@ public int DoInputMapping( HttpServletRequest request,
 
 session = request.getSession( );
 Task task = null;
+View wWebXA = null;
 KZMSGQOO_Object mMsgQ = null; // view to Message Queue
 View vKZXMLPGO = null;
 String strLastPage = "";
@@ -146,6 +147,7 @@ String strOpenPopupWindow = "";
 String strPopupWindowSZX = "";
 String strPopupWindowSZY = "";
 String strDateFormat = "";
+String strKeyRole = "";
 String strDialogName = "";
 String strWindowName = "";
 String strLastWindow;
@@ -185,6 +187,7 @@ else
 
 if ( task == null )
 {
+   session.setAttribute( "ZeidonTaskId", null );
     strURL = response.encodeRedirectURL( "logout.jsp" );
     response.sendRedirect( strURL );
    return; // something really bad has happened!!!
@@ -225,61 +228,27 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddAppTypesList.jsp", "wMLC.CancelAddAppTypesStmts" );
-      try
-      {
          nOptRC = wMLC.CancelAddAppTypesStmts( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation CancelAddAppTypesStmts: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
          session.setAttribute( "ZeidonError", "Y" );
          break;
       }
-
-      // Dynamic Next Window
-      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
-         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
-         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
-         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
-         strURL = response.encodeRedirectURL( strNextJSP_Name );
-         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
-         else
-            strFunctionCall = "";
-
-         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
-         {
-            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
-            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCAddAppTypesList" );
-         }
-
-         nRC = 1;  // do the redirection
-         break;
-      }
-
-      // Return to Last Window
-      nRC = vKZXMLPGO.cursor( "PagePath" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strLastPage = vKZXMLPGO.cursor( "PagePath" ).getStringFromAttribute( "LastPageName" );
-         vKZXMLPGO.cursor( "PagePath" ).deleteEntity( CursorPosition.PREV );
-         strLastPage = strLastPage + ".jsp";
-      }
       else
-         strLastPage = "wMLCAddAppTypesList.jsp";
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
 
-      strURL = response.encodeRedirectURL( strLastPage );
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
    }
@@ -294,6 +263,10 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
       break;
    }
 
@@ -310,51 +283,27 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddAppTypesList.jsp", "wMLC.ConfirmAddAppTypesStmts" );
-      try
-      {
          nOptRC = wMLC.ConfirmAddAppTypesStmts( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation ConfirmAddAppTypesStmts: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
          session.setAttribute( "ZeidonError", "Y" );
          break;
       }
-
-      // Dynamic Next Window
-      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
+      else
+      if ( nOptRC == 1 )
       {
-         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
-         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
-         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
-         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
-         strURL = response.encodeRedirectURL( strNextJSP_Name );
-         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
-         else
-            strFunctionCall = "";
-
-         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
-         {
-            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
-            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCAddAppTypesList" );
-         }
-
-         nRC = 1;  // do the redirection
-         break;
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
       }
 
-      // Stay on Window with Refresh
-      strURL = response.encodeRedirectURL( "wMLCAddAppTypesList.jsp" );
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
    }
@@ -372,61 +321,27 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddAppTypesList.jsp", "wMLC.ConfirmAddAppTypesStmts" );
-      try
-      {
          nOptRC = wMLC.ConfirmAddAppTypesStmts( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation ConfirmAddAppTypesStmts: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
          session.setAttribute( "ZeidonError", "Y" );
          break;
       }
-
-      // Dynamic Next Window
-      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
-         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
-         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
-         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
-         strURL = response.encodeRedirectURL( strNextJSP_Name );
-         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
-         else
-            strFunctionCall = "";
-
-         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
-         {
-            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
-            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCAddAppTypesList" );
-         }
-
-         nRC = 1;  // do the redirection
-         break;
-      }
-
-      // Return to Last Window
-      nRC = vKZXMLPGO.cursor( "PagePath" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strLastPage = vKZXMLPGO.cursor( "PagePath" ).getStringFromAttribute( "LastPageName" );
-         vKZXMLPGO.cursor( "PagePath" ).deleteEntity( CursorPosition.PREV );
-         strLastPage = strLastPage + ".jsp";
-      }
       else
-         strLastPage = "wMLCAddAppTypesList.jsp";
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
 
-      strURL = response.encodeRedirectURL( strLastPage );
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
    }
@@ -441,6 +356,10 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
       break;
    }
 
@@ -458,712 +377,12 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smConfirmAddAppTypesStmts" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAddAppTypesList", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddAppTypesList.jsp", "wMLC.ConfirmAddAppTypesStmts" );
-      try
-      {
-         nOptRC = wMLC.ConfirmAddAppTypesStmts( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation ConfirmAddAppTypesStmts: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-
-      // Dynamic Next Window
-      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
-         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
-         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
-         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
-         strURL = response.encodeRedirectURL( strNextJSP_Name );
-         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
-         else
-            strFunctionCall = "";
-
-         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
-         {
-            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
-            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCAddAppTypesList" );
-         }
-
-         nRC = 1;  // do the redirection
-         break;
-      }
-
-      // Stay on Window with Refresh
-      strURL = response.encodeRedirectURL( "wMLCAddAppTypesList.jsp" );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smConfirmAddAppTypesStmtsAndReturn" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAddAppTypesList", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddAppTypesList.jsp", "wMLC.ConfirmAddAppTypesStmts" );
-      try
-      {
-         nOptRC = wMLC.ConfirmAddAppTypesStmts( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation ConfirmAddAppTypesStmts: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-
-      // Dynamic Next Window
-      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
-         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
-         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
-         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
-         strURL = response.encodeRedirectURL( strNextJSP_Name );
-         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
-         else
-            strFunctionCall = "";
-
-         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
-         {
-            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
-            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCAddAppTypesList" );
-         }
-
-         nRC = 1;  // do the redirection
-         break;
-      }
-
-      // Return to Last Window
-      nRC = vKZXMLPGO.cursor( "PagePath" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strLastPage = vKZXMLPGO.cursor( "PagePath" ).getStringFromAttribute( "LastPageName" );
-         vKZXMLPGO.cursor( "PagePath" ).deleteEntity( CursorPosition.PREV );
-         strLastPage = strLastPage + ".jsp";
-      }
-      else
-         strLastPage = "wMLCAddAppTypesList.jsp";
-
-      strURL = response.encodeRedirectURL( strLastPage );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smCancelAddAppTypesStmts" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAddAppTypesList", strActionToProcess );
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddAppTypesList.jsp", "wMLC.CancelAddAppTypesStmts" );
-      try
-      {
-         nOptRC = wMLC.CancelAddAppTypesStmts( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation CancelAddAppTypesStmts: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-
-      // Dynamic Next Window
-      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
-         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
-         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
-         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
-         strURL = response.encodeRedirectURL( strNextJSP_Name );
-         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
-         else
-            strFunctionCall = "";
-
-         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
-         {
-            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
-            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCAddAppTypesList" );
-         }
-
-         nRC = 1;  // do the redirection
-         break;
-      }
-
-      // Return to Last Window
-      nRC = vKZXMLPGO.cursor( "PagePath" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strLastPage = vKZXMLPGO.cursor( "PagePath" ).getStringFromAttribute( "LastPageName" );
-         vKZXMLPGO.cursor( "PagePath" ).deleteEntity( CursorPosition.PREV );
-         strLastPage = strLastPage + ".jsp";
-      }
-      else
-         strLastPage = "wMLCAddAppTypesList.jsp";
-
-      strURL = response.encodeRedirectURL( strLastPage );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mProductManagement" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAddAppTypesList", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddAppTypesList.jsp", "wStartUp.ProductManagement" );
-      try
-      {
-         nOptRC = wStartUp.ProductManagement( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation ProductManagement: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-
-      // Dynamic Next Window
-      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
-         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
-         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
-         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
-         strURL = response.encodeRedirectURL( strNextJSP_Name );
-         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
-         else
-            strFunctionCall = "";
-
-         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
-         {
-            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
-            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCAddAppTypesList" );
-         }
-
-         nRC = 1;  // do the redirection
-         break;
-      }
-
-      // Next Window
-      strURL = response.encodeRedirectURL( "wStartUpAdminListPrimaryRegistrants.jsp" );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mSubregistrants" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAddAppTypesList", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddAppTypesList.jsp", "wStartUp.SubregistrantManagement" );
-      try
-      {
-         nOptRC = wStartUp.SubregistrantManagement( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation SubregistrantManagement: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-
-      // Dynamic Next Window
-      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
-         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
-         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
-         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
-         strURL = response.encodeRedirectURL( strNextJSP_Name );
-         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
-         else
-            strFunctionCall = "";
-
-         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
-         {
-            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
-            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCAddAppTypesList" );
-         }
-
-         nRC = 1;  // do the redirection
-         break;
-      }
-
-      // Next Window
-      strURL = response.encodeRedirectURL( "wStartUpAdminListSubregistrants.jsp" );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mTrackingNotificationCompliance" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAddAppTypesList", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddAppTypesList.jsp", "wStartUp.TrackingNotificationCompliance" );
-      try
-      {
-         nOptRC = wStartUp.TrackingNotificationCompliance( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation TrackingNotificationCompliance: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-
-      // Dynamic Next Window
-      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
-         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
-         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
-         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
-         strURL = response.encodeRedirectURL( strNextJSP_Name );
-         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
-         else
-            strFunctionCall = "";
-
-         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
-         {
-            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
-            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCAddAppTypesList" );
-         }
-
-         nRC = 1;  // do the redirection
-         break;
-      }
-
-      // Next Window
-      strURL = response.encodeRedirectURL( ".jsp" );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mStateRegistrations" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAddAppTypesList", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddAppTypesList.jsp", "wStartUp.StateRegistrations" );
-      try
-      {
-         nOptRC = wStartUp.StateRegistrations( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation StateRegistrations: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-
-      // Dynamic Next Window
-      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
-         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
-         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
-         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
-         strURL = response.encodeRedirectURL( strNextJSP_Name );
-         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
-         else
-            strFunctionCall = "";
-
-         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
-         {
-            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
-            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCAddAppTypesList" );
-         }
-
-         nRC = 1;  // do the redirection
-         break;
-      }
-
-      // Next Window
-      strURL = response.encodeRedirectURL( ".jsp" );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mMarketingFulfillment" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAddAppTypesList", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddAppTypesList.jsp", "wStartUp.MarketingFulfillment" );
-      try
-      {
-         nOptRC = wStartUp.MarketingFulfillment( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation MarketingFulfillment: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-
-      // Dynamic Next Window
-      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
-         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
-         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
-         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
-         strURL = response.encodeRedirectURL( strNextJSP_Name );
-         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
-         else
-            strFunctionCall = "";
-
-         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
-         {
-            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
-            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCAddAppTypesList" );
-         }
-
-         nRC = 1;  // do the redirection
-         break;
-      }
-
-      // Next Window
-      strURL = response.encodeRedirectURL( ".jsp" );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mWebDevelopment" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAddAppTypesList", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddAppTypesList.jsp", "wStartUp.WebDevelopment" );
-      try
-      {
-         nOptRC = wStartUp.WebDevelopment( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation WebDevelopment: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-
-      // Dynamic Next Window
-      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
-         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
-         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
-         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
-         strURL = response.encodeRedirectURL( strNextJSP_Name );
-         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
-         else
-            strFunctionCall = "";
-
-         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
-         {
-            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
-            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCAddAppTypesList" );
-         }
-
-         nRC = 1;  // do the redirection
-         break;
-      }
-
-      // Next Window
-      strURL = response.encodeRedirectURL( ".jsp" );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mAdministration" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAddAppTypesList", strActionToProcess );
-
-      // Action Operation
-      nRC = 0;
-      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddAppTypesList.jsp", "wStartUp.PrimaryRegistrantCompanySetup" );
-      try
-      {
-         nOptRC = wStartUp.PrimaryRegistrantCompanySetup( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation PrimaryRegistrantCompanySetup: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-
-      // Dynamic Next Window
-      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
-         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
-         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
-         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
-         strURL = response.encodeRedirectURL( strNextJSP_Name );
-         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
-         else
-            strFunctionCall = "";
-
-         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
-         {
-            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
-            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCAddAppTypesList" );
-         }
-
-         nRC = 1;  // do the redirection
-         break;
-      }
-
-      // Next Window
-      strURL = response.encodeRedirectURL( "wStartUpAdminUpdatePrimaryRegistrant.jsp" );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mLogin" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAddAppTypesList", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddAppTypesList.jsp", "wStartUp.ProcessLogin" );
-      try
-      {
-         nOptRC = wStartUp.ProcessLogin( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation ProcessLogin: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-
-      // Dynamic Next Window
-      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
-         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
-         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
-         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
-         strURL = response.encodeRedirectURL( strNextJSP_Name );
-         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
-         else
-            strFunctionCall = "";
-
-         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
-         {
-            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
-            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCAddAppTypesList" );
-         }
-
-         nRC = 1;  // do the redirection
-         break;
-      }
-
-      // Next Window
-      strURL = response.encodeRedirectURL( "wStartUpUserLogin.jsp" );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
    while ( bDone == false && strActionToProcess.equals( "_OnUnload" ) )
    {
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ----------------------------------->>> " + "wMLCAddAppTypesList" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wMLCAddAppTypesList" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -1180,7 +399,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ----------------------------------->>> " + "wMLCAddAppTypesList" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ------->>> " + "wMLCAddAppTypesList" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -1245,7 +464,7 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
 else
 {
    VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddAppTypesList.jsp", "wMLC.InitAppTypesStmtsForInsert" );
-   nOptRC = wMLC.InitAppTypesStmtsForInsert( new zVIEW( vKZXMLPGO ) );
+         nOptRC = wMLC.InitAppTypesStmtsForInsert( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -1253,7 +472,7 @@ else
       String strURLParameters;
 
       vView = task.getViewByName( "wXferO" );
-      strMessage = vView.cursor( "Root" ).getStringFromAttribute( "WebReturnMessage" );
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString( "" );
       strURLParameters = "?CallingPage=wMLCAddAppTypesList.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wMLC" +
@@ -1267,10 +486,17 @@ else
 
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wMLC", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
+
+   wWebXA = task.getViewByName( "wWebXfer" );
+   if ( VmlOperation.isValid( wWebXA ) )
+   {
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wMLC", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "AddAppTypesList", "" );
+   }
 
 %>
 
@@ -1285,10 +511,10 @@ else
 <%@ include file="./include/timeout.inc" %>
 <link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/validations.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wMLCAddAppTypesList.js"></script>
 
 </head>
@@ -1301,22 +527,6 @@ else
 
 <jsp:include page='<%=strBannerName %>' />
 
-<!-- Main Navigation *********************** -->
-<div id="mainnavigation">
-   <ul>
-       <li id="lmProductManagement" name="lmProductManagement"><a href="#" onclick="mProductManagement()">Products</a></li>
-       <li id="lmSubregistrants" name="lmSubregistrants"><a href="#" onclick="mSubregistrants()">Subregistrants</a></li>
-       <li id="lmTrackingNotificationCompliance" name="lmTrackingNotificationCompliance"><a href="#" onclick="mTrackingNotificationCompliance()">Tracking/Notification/Compliance</a></li>
-       <li id="lmStateRegistrations" name="lmStateRegistrations"><a href="#" onclick="mStateRegistrations()">State Registrations</a></li>
-       <li id="lmMarketingFulfillment" name="lmMarketingFulfillment"><a href="#" onclick="mMarketingFulfillment()">Marketing/Fulfillment</a></li>
-       <li id="lmWebDevelopment" name="lmWebDevelopment"><a href="#" onclick="mWebDevelopment()">Web Development</a></li>
-       <li id="lmAdministration" name="lmAdministration"><a href="#" onclick="mAdministration()">Company Profile</a></li>
-       <li id="lmLogin" name="lmLogin"><a href="#" onclick="mLogin()">Login</a></li>
-       <li id="lmLogout" name="lmLogout"><a href="#" onclick="mLogout()">Logout</a></li>
-   </ul>
-</div>  <!-- end Navigation Bar -->
-
-<%@include file="./include/topmenuend.inc" %>
 <div id="maincontent">
 
 <div id="leftcontent">
@@ -1329,7 +539,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smConfirmAddAppTypesStmts( )">Add Selected Application Types</a></li>
+       <li><a href="#"  onclick="ConfirmAddAppTypesStmts( )">Add Selected Application Types</a></li>
 <%
    }
 %>
@@ -1339,7 +549,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smConfirmAddAppTypesStmtsAndReturn( )">Add and Return</a></li>
+       <li><a href="#"  onclick="ConfirmAddAppTypesStmtsAndReturn( )">Add and Return</a></li>
 <%
    }
 %>
@@ -1349,7 +559,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smCancelAddAppTypesStmts( )">Cancel and Return</a></li>
+       <li><a href="#"  onclick="CancelAddAppTypesStmts( )">Cancel and Return</a></li>
 <%
    }
 %>
@@ -1373,13 +583,11 @@ else
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
-   View mEPA = null;
    View mMasLC = null;
+   View mEPA = null;
    View mMasProd = null;
+   View mMasProdLST = null;
    View mPrimReg = null;
-   View mSubLC = null;
-   View mSubProd = null;
-   View wMLCList = null;
    View wWebXfer = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
@@ -1444,17 +652,31 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
 
    strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wMLC", "AddAppTypesList" );
    strOpenFile = VmlOperation.FindOpenFile( task );
-   strDateFormat = "MM/DD/YYYY";
+   strDateFormat = "YYYY.MM.DD";
 
+   wWebXA = task.getViewByName( "wWebXfer" );
+   if ( VmlOperation.isValid( wWebXA ) )
+   {
+      nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+         strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
+         if ( strKeyRole == null )
+            strKeyRole = "";
+
+         task.log().info( "Root.KeyRole: " + strKeyRole );
+      }
+   }
 %>
 
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
    <input name="zPopupWindowSZX" id="zPopupWindowSZX" type="hidden" value="<%=strPopupWindowSZX%>">
    <input name="zPopupWindowSZY" id="zPopupWindowSZY" type="hidden" value="<%=strPopupWindowSZY%>">
@@ -1563,7 +785,7 @@ try
          nRC = vGrid.cursor( "EPA_AreaOfUse" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGS_Select = vGrid.cursor( "EPA_AreaOfUse" ).getStringFromAttribute( "wkSelected", "" );
+            strGS_Select = vGrid.cursor( "EPA_AreaOfUse" ).getAttribute( "wkSelected" ).getString( "" );
 
             if ( strGS_Select == null )
                strGS_Select = "";
@@ -1584,7 +806,7 @@ try
          nRC = vGrid.cursor( "EPA_AreaOfUse" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGE_AppType = vGrid.cursor( "EPA_AreaOfUse" ).getStringFromAttribute( "Name", "" );
+            strGE_AppType = vGrid.cursor( "EPA_AreaOfUse" ).getAttribute( "Name" ).getString( "" );
 
             if ( strGE_AppType == null )
                strGE_AppType = "";

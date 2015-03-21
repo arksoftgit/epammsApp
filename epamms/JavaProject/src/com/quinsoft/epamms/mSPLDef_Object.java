@@ -12660,6 +12660,14 @@ omSPLDef_dFullHazardStatement( View     mSPLDef,
    String   szReplaceString = null;
    //:STRING ( 256 ) szLocation
    String   szLocation = null;
+   //:STRING ( 2 )   szSeparator
+   String   szSeparator = null;
+   //:STRING ( 1 )   szOpenSeparator
+   String   szOpenSeparator = null;
+   //:STRING ( 1 )   szCloseSeparator
+   String   szCloseSeparator = null;
+   //:STRING ( 1 )   szEncloseFirst
+   String   szEncloseFirst = null;
    //:SHORT nPosStart
    int      nPosStart = 0;
    //:SHORT nPosEnd
@@ -12676,6 +12684,8 @@ omSPLDef_dFullHazardStatement( View     mSPLDef,
    int      lTempInteger_9 = 0;
    int      lTempInteger_10 = 0;
    int      lTempInteger_11 = 0;
+   int      lTempInteger_12 = 0;
+   int      lTempInteger_13 = 0;
 
 
    //:CASE GetOrSetFlag
@@ -12689,23 +12699,90 @@ omSPLDef_dFullHazardStatement( View     mSPLDef,
          if ( lTempInteger_0 == 0 )
          { 
 
-            //:szString = mSPLDef.SPLD_HumanHazardSection.PrecautionaryStatement
+            //:szSeparator = mSPLDef.SPLD_HumanHazardSection.LocationSeparator
             {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+            StringBuilder sb_szSeparator;
+            if ( szSeparator == null )
+               sb_szSeparator = new StringBuilder( 32 );
+            else
+               sb_szSeparator = new StringBuilder( szSeparator );
+                         GetVariableFromAttribute( sb_szSeparator, mi_lTempInteger_1, 'S', 3, mSPLDef, "SPLD_HumanHazardSection", "LocationSeparator", "", 0 );
+            lTempInteger_1 = mi_lTempInteger_1.intValue( );
+            szSeparator = sb_szSeparator.toString( );}
+            //:szOpenSeparator = ""
+             {StringBuilder sb_szOpenSeparator;
+            if ( szOpenSeparator == null )
+               sb_szOpenSeparator = new StringBuilder( 32 );
+            else
+               sb_szOpenSeparator = new StringBuilder( szOpenSeparator );
+                        ZeidonStringCopy( sb_szOpenSeparator, 1, 0, "", 1, 0, 2 );
+            szOpenSeparator = sb_szOpenSeparator.toString( );}
+            //:szCloseSeparator = ""
+             {StringBuilder sb_szCloseSeparator;
+            if ( szCloseSeparator == null )
+               sb_szCloseSeparator = new StringBuilder( 32 );
+            else
+               sb_szCloseSeparator = new StringBuilder( szCloseSeparator );
+                        ZeidonStringCopy( sb_szCloseSeparator, 1, 0, "", 1, 0, 2 );
+            szCloseSeparator = sb_szCloseSeparator.toString( );}
+            //:nPosStart  = zstrlen( szSeparator )
+            nPosStart = zstrlen( szSeparator );
+            //:IF nPosStart > 0
+            if ( nPosStart > 0 )
+            { 
+               //:zstrncpy( szOpenSeparator, szSeparator, 1 )
+                {StringBuilder sb_szOpenSeparator;
+               if ( szOpenSeparator == null )
+                  sb_szOpenSeparator = new StringBuilder( 32 );
+               else
+                  sb_szOpenSeparator = new StringBuilder( szOpenSeparator );
+                              zstrncpy( sb_szOpenSeparator, szSeparator, 1 );
+               szOpenSeparator = sb_szOpenSeparator.toString( );}
+               //:IF nPosStart > 1
+               if ( nPosStart > 1 )
+               { 
+                  //:zstrncpyoffset( szCloseSeparator, szSeparator, 1, 1 )
+                   {StringBuilder sb_szCloseSeparator;
+                  if ( szCloseSeparator == null )
+                     sb_szCloseSeparator = new StringBuilder( 32 );
+                  else
+                     sb_szCloseSeparator = new StringBuilder( szCloseSeparator );
+                                    zstrncpyoffset( sb_szCloseSeparator, szSeparator, 1, 1 );
+                  szCloseSeparator = sb_szCloseSeparator.toString( );}
+               } 
+
+               //:END
+            } 
+
+            //:END
+
+            //:szEncloseFirst = mSPLDef.SPLD_HumanHazardSection.EncloseFirstLocation
+            {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
+            StringBuilder sb_szEncloseFirst;
+            if ( szEncloseFirst == null )
+               sb_szEncloseFirst = new StringBuilder( 32 );
+            else
+               sb_szEncloseFirst = new StringBuilder( szEncloseFirst );
+                         GetVariableFromAttribute( sb_szEncloseFirst, mi_lTempInteger_2, 'S', 2, mSPLDef, "SPLD_HumanHazardSection", "EncloseFirstLocation", "", 0 );
+            lTempInteger_2 = mi_lTempInteger_2.intValue( );
+            szEncloseFirst = sb_szEncloseFirst.toString( );}
+            //:szString = mSPLDef.SPLD_HumanHazardSection.PrecautionaryStatement
+            {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
             StringBuilder sb_szString;
             if ( szString == null )
                sb_szString = new StringBuilder( 32 );
             else
                sb_szString = new StringBuilder( szString );
-                         GetVariableFromAttribute( sb_szString, mi_lTempInteger_1, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "PrecautionaryStatement", "", 0 );
-            lTempInteger_1 = mi_lTempInteger_1.intValue( );
+                         GetVariableFromAttribute( sb_szString, mi_lTempInteger_3, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "PrecautionaryStatement", "", 0 );
+            lTempInteger_3 = mi_lTempInteger_3.intValue( );
             szString = sb_szString.toString( );}
-            //:nPosStart  = zSearchSubString( szString, "{{Precautionary Panel Position}}", "f", 0 )
-            nPosStart = zSearchSubString( szString, "{{Precautionary Panel Position}}", "f", 0 );
+            //:nPosStart  = zSearchSubString( szString, "{{Precautionary Panel Location}}", "f", 0 )
+            nPosStart = zSearchSubString( szString, "{{Precautionary Panel Location}}", "f", 0 );
             //:IF nPosStart >= 0
             if ( nPosStart >= 0 )
             { 
 
-               //:nPosEnd = nPosStart + 32 // length of "{{Precautionary Panel Position}}"
+               //:nPosEnd = nPosStart + 32 // length of "{{Precautionary Panel Location}}"
                nPosEnd = nPosStart + 32;
                //:szReplaceString = ""
                 {StringBuilder sb_szReplaceString;
@@ -12716,95 +12793,83 @@ omSPLDef_dFullHazardStatement( View     mSPLDef,
                               ZeidonStringCopy( sb_szReplaceString, 1, 0, "", 1, 0, 257 );
                szReplaceString = sb_szReplaceString.toString( );}
                //:szLocation = mSPLDef.SPLD_HumanHazardSection.PanelLoc1
-               {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
-               StringBuilder sb_szLocation;
-               if ( szLocation == null )
-                  sb_szLocation = new StringBuilder( 32 );
-               else
-                  sb_szLocation = new StringBuilder( szLocation );
-                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_2, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "PanelLoc1", "", 0 );
-               lTempInteger_2 = mi_lTempInteger_2.intValue( );
-               szLocation = sb_szLocation.toString( );}
-               //:IF szLocation != ""
-               if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
-               { 
-                  //:// szReplaceString = szReplaceString + "[" + szLocation + "]"  now we expect brackets or parentheses or whatever to be included
-                  //:szReplaceString = szReplaceString + szLocation
-                   {StringBuilder sb_szReplaceString;
-                  if ( szReplaceString == null )
-                     sb_szReplaceString = new StringBuilder( 32 );
-                  else
-                     sb_szReplaceString = new StringBuilder( szReplaceString );
-                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szLocation, 1, 0, 257 );
-                  szReplaceString = sb_szReplaceString.toString( );}
-               } 
-
-               //:END
-
-               //:szLocation = mSPLDef.SPLD_HumanHazardSection.PanelLoc2
-               {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
-               StringBuilder sb_szLocation;
-               if ( szLocation == null )
-                  sb_szLocation = new StringBuilder( 32 );
-               else
-                  sb_szLocation = new StringBuilder( szLocation );
-                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_3, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "PanelLoc2", "", 0 );
-               lTempInteger_3 = mi_lTempInteger_3.intValue( );
-               szLocation = sb_szLocation.toString( );}
-               //:IF szLocation != ""
-               if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
-               { 
-                  //:szReplaceString = szReplaceString + szLocation
-                   {StringBuilder sb_szReplaceString;
-                  if ( szReplaceString == null )
-                     sb_szReplaceString = new StringBuilder( 32 );
-                  else
-                     sb_szReplaceString = new StringBuilder( szReplaceString );
-                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szLocation, 1, 0, 257 );
-                  szReplaceString = sb_szReplaceString.toString( );}
-               } 
-
-               //:END
-
-               //:szLocation = mSPLDef.SPLD_HumanHazardSection.PanelLoc3
                {MutableInt mi_lTempInteger_4 = new MutableInt( lTempInteger_4 );
                StringBuilder sb_szLocation;
                if ( szLocation == null )
                   sb_szLocation = new StringBuilder( 32 );
                else
                   sb_szLocation = new StringBuilder( szLocation );
-                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_4, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "PanelLoc3", "", 0 );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_4, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "PanelLoc1", "", 0 );
                lTempInteger_4 = mi_lTempInteger_4.intValue( );
                szLocation = sb_szLocation.toString( );}
                //:IF szLocation != ""
                if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
                { 
-                  //:szReplaceString = szReplaceString + szLocation
-                   {StringBuilder sb_szReplaceString;
-                  if ( szReplaceString == null )
-                     sb_szReplaceString = new StringBuilder( 32 );
+                  //:IF szEncloseFirst = "Y" AND szCloseSeparator != ""
+                  if ( ZeidonStringCompare( szEncloseFirst, 1, 0, "Y", 1, 0, 2 ) == 0 && ZeidonStringCompare( szCloseSeparator, 1, 0, "", 1, 0, 2 ) != 0 )
+                  { 
+                     //:szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+                      {StringBuilder sb_szReplaceString;
+                     if ( szReplaceString == null )
+                        sb_szReplaceString = new StringBuilder( 32 );
+                     else
+                        sb_szReplaceString = new StringBuilder( szReplaceString );
+                                          ZeidonStringConcat( sb_szReplaceString, 1, 0, szOpenSeparator, 1, 0, 257 );
+                     szReplaceString = sb_szReplaceString.toString( );}
+                      {StringBuilder sb_szReplaceString;
+                     if ( szReplaceString == null )
+                        sb_szReplaceString = new StringBuilder( 32 );
+                     else
+                        sb_szReplaceString = new StringBuilder( szReplaceString );
+                                          ZeidonStringConcat( sb_szReplaceString, 1, 0, szLocation, 1, 0, 257 );
+                     szReplaceString = sb_szReplaceString.toString( );}
+                      {StringBuilder sb_szReplaceString;
+                     if ( szReplaceString == null )
+                        sb_szReplaceString = new StringBuilder( 32 );
+                     else
+                        sb_szReplaceString = new StringBuilder( szReplaceString );
+                                          ZeidonStringConcat( sb_szReplaceString, 1, 0, szCloseSeparator, 1, 0, 257 );
+                     szReplaceString = sb_szReplaceString.toString( );}
+                     //:ELSE
+                  } 
                   else
-                     sb_szReplaceString = new StringBuilder( szReplaceString );
-                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szLocation, 1, 0, 257 );
-                  szReplaceString = sb_szReplaceString.toString( );}
+                  { 
+                     //:szReplaceString = szReplaceString + szLocation
+                      {StringBuilder sb_szReplaceString;
+                     if ( szReplaceString == null )
+                        sb_szReplaceString = new StringBuilder( 32 );
+                     else
+                        sb_szReplaceString = new StringBuilder( szReplaceString );
+                                          ZeidonStringConcat( sb_szReplaceString, 1, 0, szLocation, 1, 0, 257 );
+                     szReplaceString = sb_szReplaceString.toString( );}
+                  } 
+
+                  //:END
                } 
 
                //:END
 
-               //:szLocation = mSPLDef.SPLD_HumanHazardSection.PanelLoc4
+               //:szLocation = mSPLDef.SPLD_HumanHazardSection.PanelLoc2
                {MutableInt mi_lTempInteger_5 = new MutableInt( lTempInteger_5 );
                StringBuilder sb_szLocation;
                if ( szLocation == null )
                   sb_szLocation = new StringBuilder( 32 );
                else
                   sb_szLocation = new StringBuilder( szLocation );
-                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_5, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "PanelLoc4", "", 0 );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_5, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "PanelLoc2", "", 0 );
                lTempInteger_5 = mi_lTempInteger_5.intValue( );
                szLocation = sb_szLocation.toString( );}
                //:IF szLocation != ""
                if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
                { 
-                  //:szReplaceString = szReplaceString + szLocation
+                  //:szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szOpenSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
                    {StringBuilder sb_szReplaceString;
                   if ( szReplaceString == null )
                      sb_szReplaceString = new StringBuilder( 32 );
@@ -12812,30 +12877,129 @@ omSPLDef_dFullHazardStatement( View     mSPLDef,
                      sb_szReplaceString = new StringBuilder( szReplaceString );
                                     ZeidonStringConcat( sb_szReplaceString, 1, 0, szLocation, 1, 0, 257 );
                   szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szCloseSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
                } 
 
                //:END
 
-               //:szLocation = mSPLDef.SPLD_HumanHazardSection.PanelLoc5
+               //:szLocation = mSPLDef.SPLD_HumanHazardSection.PanelLoc3
                {MutableInt mi_lTempInteger_6 = new MutableInt( lTempInteger_6 );
                StringBuilder sb_szLocation;
                if ( szLocation == null )
                   sb_szLocation = new StringBuilder( 32 );
                else
                   sb_szLocation = new StringBuilder( szLocation );
-                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_6, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "PanelLoc5", "", 0 );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_6, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "PanelLoc3", "", 0 );
                lTempInteger_6 = mi_lTempInteger_6.intValue( );
                szLocation = sb_szLocation.toString( );}
                //:IF szLocation != ""
                if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
                { 
-                  //:szReplaceString = szReplaceString + szLocation
+                  //:szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szOpenSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
                    {StringBuilder sb_szReplaceString;
                   if ( szReplaceString == null )
                      sb_szReplaceString = new StringBuilder( 32 );
                   else
                      sb_szReplaceString = new StringBuilder( szReplaceString );
                                     ZeidonStringConcat( sb_szReplaceString, 1, 0, szLocation, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szCloseSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+               } 
+
+               //:END
+
+               //:szLocation = mSPLDef.SPLD_HumanHazardSection.PanelLoc4
+               {MutableInt mi_lTempInteger_7 = new MutableInt( lTempInteger_7 );
+               StringBuilder sb_szLocation;
+               if ( szLocation == null )
+                  sb_szLocation = new StringBuilder( 32 );
+               else
+                  sb_szLocation = new StringBuilder( szLocation );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_7, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "PanelLoc4", "", 0 );
+               lTempInteger_7 = mi_lTempInteger_7.intValue( );
+               szLocation = sb_szLocation.toString( );}
+               //:IF szLocation != ""
+               if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
+               { 
+                  //:szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szOpenSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szLocation, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szCloseSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+               } 
+
+               //:END
+
+               //:szLocation = mSPLDef.SPLD_HumanHazardSection.PanelLoc5
+               {MutableInt mi_lTempInteger_8 = new MutableInt( lTempInteger_8 );
+               StringBuilder sb_szLocation;
+               if ( szLocation == null )
+                  sb_szLocation = new StringBuilder( 32 );
+               else
+                  sb_szLocation = new StringBuilder( szLocation );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_8, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "PanelLoc5", "", 0 );
+               lTempInteger_8 = mi_lTempInteger_8.intValue( );
+               szLocation = sb_szLocation.toString( );}
+               //:IF szLocation != ""
+               if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
+               { 
+                  //:szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szOpenSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szLocation, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szCloseSeparator, 1, 0, 257 );
                   szReplaceString = sb_szReplaceString.toString( );}
                } 
 
@@ -12853,13 +13017,13 @@ omSPLDef_dFullHazardStatement( View     mSPLDef,
 
             //:END
 
-            //:nPosStart  = zSearchSubString( szString, "{{Precautionary Panel Position}}", "f", 0 )
-            nPosStart = zSearchSubString( szString, "{{Precautionary Panel Position}}", "f", 0 );
+            //:nPosStart  = zSearchSubString( szString, "{{Precautionary Label Location}}", "f", 0 )
+            nPosStart = zSearchSubString( szString, "{{Precautionary Label Location}}", "f", 0 );
             //:IF nPosStart >= 0
             if ( nPosStart >= 0 )
             { 
 
-               //:nPosEnd = nPosStart + 32 // length of "{{Precautionary Panel Position}}"
+               //:nPosEnd = nPosStart + 32 // length of "{{Precautionary Label Location}}"
                nPosEnd = nPosStart + 32;
                //:szReplaceString = ""
                 {StringBuilder sb_szReplaceString;
@@ -12870,95 +13034,83 @@ omSPLDef_dFullHazardStatement( View     mSPLDef,
                               ZeidonStringCopy( sb_szReplaceString, 1, 0, "", 1, 0, 257 );
                szReplaceString = sb_szReplaceString.toString( );}
                //:szLocation = mSPLDef.SPLD_HumanHazardSection.LabelLoc1
-               {MutableInt mi_lTempInteger_7 = new MutableInt( lTempInteger_7 );
-               StringBuilder sb_szLocation;
-               if ( szLocation == null )
-                  sb_szLocation = new StringBuilder( 32 );
-               else
-                  sb_szLocation = new StringBuilder( szLocation );
-                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_7, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "LabelLoc1", "", 0 );
-               lTempInteger_7 = mi_lTempInteger_7.intValue( );
-               szLocation = sb_szLocation.toString( );}
-               //:IF szLocation != ""
-               if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
-               { 
-                  //:// szReplaceString = szReplaceString + "[" + szLocation + "]"  now we expect brackets or parentheses or whatever to be included
-                  //:szReplaceString = szReplaceString + szLocation
-                   {StringBuilder sb_szReplaceString;
-                  if ( szReplaceString == null )
-                     sb_szReplaceString = new StringBuilder( 32 );
-                  else
-                     sb_szReplaceString = new StringBuilder( szReplaceString );
-                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szLocation, 1, 0, 257 );
-                  szReplaceString = sb_szReplaceString.toString( );}
-               } 
-
-               //:END
-
-               //:szLocation = mSPLDef.SPLD_HumanHazardSection.LabelLoc2
-               {MutableInt mi_lTempInteger_8 = new MutableInt( lTempInteger_8 );
-               StringBuilder sb_szLocation;
-               if ( szLocation == null )
-                  sb_szLocation = new StringBuilder( 32 );
-               else
-                  sb_szLocation = new StringBuilder( szLocation );
-                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_8, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "LabelLoc2", "", 0 );
-               lTempInteger_8 = mi_lTempInteger_8.intValue( );
-               szLocation = sb_szLocation.toString( );}
-               //:IF szLocation != ""
-               if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
-               { 
-                  //:szReplaceString = szReplaceString + szLocation
-                   {StringBuilder sb_szReplaceString;
-                  if ( szReplaceString == null )
-                     sb_szReplaceString = new StringBuilder( 32 );
-                  else
-                     sb_szReplaceString = new StringBuilder( szReplaceString );
-                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szLocation, 1, 0, 257 );
-                  szReplaceString = sb_szReplaceString.toString( );}
-               } 
-
-               //:END
-
-               //:szLocation = mSPLDef.SPLD_HumanHazardSection.LabelLoc3
                {MutableInt mi_lTempInteger_9 = new MutableInt( lTempInteger_9 );
                StringBuilder sb_szLocation;
                if ( szLocation == null )
                   sb_szLocation = new StringBuilder( 32 );
                else
                   sb_szLocation = new StringBuilder( szLocation );
-                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_9, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "LabelLoc3", "", 0 );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_9, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "LabelLoc1", "", 0 );
                lTempInteger_9 = mi_lTempInteger_9.intValue( );
                szLocation = sb_szLocation.toString( );}
                //:IF szLocation != ""
                if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
                { 
-                  //:szReplaceString = szReplaceString + szLocation
-                   {StringBuilder sb_szReplaceString;
-                  if ( szReplaceString == null )
-                     sb_szReplaceString = new StringBuilder( 32 );
+                  //:IF szCloseSeparator != ""
+                  if ( ZeidonStringCompare( szCloseSeparator, 1, 0, "", 1, 0, 2 ) != 0 )
+                  { 
+                     //:szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+                      {StringBuilder sb_szReplaceString;
+                     if ( szReplaceString == null )
+                        sb_szReplaceString = new StringBuilder( 32 );
+                     else
+                        sb_szReplaceString = new StringBuilder( szReplaceString );
+                                          ZeidonStringConcat( sb_szReplaceString, 1, 0, szOpenSeparator, 1, 0, 257 );
+                     szReplaceString = sb_szReplaceString.toString( );}
+                      {StringBuilder sb_szReplaceString;
+                     if ( szReplaceString == null )
+                        sb_szReplaceString = new StringBuilder( 32 );
+                     else
+                        sb_szReplaceString = new StringBuilder( szReplaceString );
+                                          ZeidonStringConcat( sb_szReplaceString, 1, 0, szLocation, 1, 0, 257 );
+                     szReplaceString = sb_szReplaceString.toString( );}
+                      {StringBuilder sb_szReplaceString;
+                     if ( szReplaceString == null )
+                        sb_szReplaceString = new StringBuilder( 32 );
+                     else
+                        sb_szReplaceString = new StringBuilder( szReplaceString );
+                                          ZeidonStringConcat( sb_szReplaceString, 1, 0, szCloseSeparator, 1, 0, 257 );
+                     szReplaceString = sb_szReplaceString.toString( );}
+                     //:ELSE
+                  } 
                   else
-                     sb_szReplaceString = new StringBuilder( szReplaceString );
-                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szLocation, 1, 0, 257 );
-                  szReplaceString = sb_szReplaceString.toString( );}
+                  { 
+                     //:szReplaceString = szReplaceString + szLocation
+                      {StringBuilder sb_szReplaceString;
+                     if ( szReplaceString == null )
+                        sb_szReplaceString = new StringBuilder( 32 );
+                     else
+                        sb_szReplaceString = new StringBuilder( szReplaceString );
+                                          ZeidonStringConcat( sb_szReplaceString, 1, 0, szLocation, 1, 0, 257 );
+                     szReplaceString = sb_szReplaceString.toString( );}
+                  } 
+
+                  //:END
                } 
 
                //:END
 
-               //:szLocation = mSPLDef.SPLD_HumanHazardSection.LabelLoc4
+               //:szLocation = mSPLDef.SPLD_HumanHazardSection.LabelLoc2
                {MutableInt mi_lTempInteger_10 = new MutableInt( lTempInteger_10 );
                StringBuilder sb_szLocation;
                if ( szLocation == null )
                   sb_szLocation = new StringBuilder( 32 );
                else
                   sb_szLocation = new StringBuilder( szLocation );
-                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_10, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "LabelLoc4", "", 0 );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_10, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "LabelLoc2", "", 0 );
                lTempInteger_10 = mi_lTempInteger_10.intValue( );
                szLocation = sb_szLocation.toString( );}
                //:IF szLocation != ""
                if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
                { 
-                  //:szReplaceString = szReplaceString + szLocation
+                  //:szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szOpenSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
                    {StringBuilder sb_szReplaceString;
                   if ( szReplaceString == null )
                      sb_szReplaceString = new StringBuilder( 32 );
@@ -12966,30 +13118,129 @@ omSPLDef_dFullHazardStatement( View     mSPLDef,
                      sb_szReplaceString = new StringBuilder( szReplaceString );
                                     ZeidonStringConcat( sb_szReplaceString, 1, 0, szLocation, 1, 0, 257 );
                   szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szCloseSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
                } 
 
                //:END
 
-               //:szLocation = mSPLDef.SPLD_HumanHazardSection.LabelLoc5
+               //:szLocation = mSPLDef.SPLD_HumanHazardSection.LabelLoc3
                {MutableInt mi_lTempInteger_11 = new MutableInt( lTempInteger_11 );
                StringBuilder sb_szLocation;
                if ( szLocation == null )
                   sb_szLocation = new StringBuilder( 32 );
                else
                   sb_szLocation = new StringBuilder( szLocation );
-                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_11, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "LabelLoc5", "", 0 );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_11, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "LabelLoc3", "", 0 );
                lTempInteger_11 = mi_lTempInteger_11.intValue( );
                szLocation = sb_szLocation.toString( );}
                //:IF szLocation != ""
                if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
                { 
-                  //:szReplaceString = szReplaceString + szLocation
+                  //:szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szOpenSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
                    {StringBuilder sb_szReplaceString;
                   if ( szReplaceString == null )
                      sb_szReplaceString = new StringBuilder( 32 );
                   else
                      sb_szReplaceString = new StringBuilder( szReplaceString );
                                     ZeidonStringConcat( sb_szReplaceString, 1, 0, szLocation, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szCloseSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+               } 
+
+               //:END
+
+               //:szLocation = mSPLDef.SPLD_HumanHazardSection.LabelLoc4
+               {MutableInt mi_lTempInteger_12 = new MutableInt( lTempInteger_12 );
+               StringBuilder sb_szLocation;
+               if ( szLocation == null )
+                  sb_szLocation = new StringBuilder( 32 );
+               else
+                  sb_szLocation = new StringBuilder( szLocation );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_12, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "LabelLoc4", "", 0 );
+               lTempInteger_12 = mi_lTempInteger_12.intValue( );
+               szLocation = sb_szLocation.toString( );}
+               //:IF szLocation != ""
+               if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
+               { 
+                  //:szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szOpenSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szLocation, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szCloseSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+               } 
+
+               //:END
+
+               //:szLocation = mSPLDef.SPLD_HumanHazardSection.LabelLoc5
+               {MutableInt mi_lTempInteger_13 = new MutableInt( lTempInteger_13 );
+               StringBuilder sb_szLocation;
+               if ( szLocation == null )
+                  sb_szLocation = new StringBuilder( 32 );
+               else
+                  sb_szLocation = new StringBuilder( szLocation );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_13, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "LabelLoc5", "", 0 );
+               lTempInteger_13 = mi_lTempInteger_13.intValue( );
+               szLocation = sb_szLocation.toString( );}
+               //:IF szLocation != ""
+               if ( ZeidonStringCompare( szLocation, 1, 0, "", 1, 0, 257 ) != 0 )
+               { 
+                  //:szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szOpenSeparator, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szLocation, 1, 0, 257 );
+                  szReplaceString = sb_szReplaceString.toString( );}
+                   {StringBuilder sb_szReplaceString;
+                  if ( szReplaceString == null )
+                     sb_szReplaceString = new StringBuilder( 32 );
+                  else
+                     sb_szReplaceString = new StringBuilder( szReplaceString );
+                                    ZeidonStringConcat( sb_szReplaceString, 1, 0, szCloseSeparator, 1, 0, 257 );
                   szReplaceString = sb_szReplaceString.toString( );}
                } 
 
@@ -13022,9 +13273,9 @@ omSPLDef_dFullHazardStatement( View     mSPLDef,
          } 
 
          //:END
+
          //:// Store the calculated value in the object.
-         //:StoreStringInRecord( mSPLDef,
-         //:                  InternalEntityStructure, InternalAttribStructure, szString )
+         //:StoreStringInRecord( mSPLDef, InternalEntityStructure, InternalAttribStructure, szString )
          StoreStringInRecord( mSPLDef, InternalEntityStructure, InternalAttribStructure, szString );
          //:RETURN 0
          if(8==8)return( 0 );

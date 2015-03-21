@@ -117,6 +117,44 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
+      // ComboBox: LocSeparator
+      nRC = mMasLC.cursor( "M_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+         strMapValue = request.getParameter( "hLocSeparator" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "LocSeparator", "", strMapValue );
+            else
+               mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "LocationSeparator" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "LocSeparator", e.getReason( ), strMapValue );
+         }
+      }
+
+      // CheckBox: EncloseFirst
+      nRC = mMasLC.cursor( "M_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "EncloseFirst" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "EncloseFirst", "", strMapValue );
+            else
+               mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "EncloseFirstLocation" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "EncloseFirst", e.getReason( ), strMapValue );
+         }
+      }
+
       // EditBox: PanelLocation1
       nRC = mMasLC.cursor( "M_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
@@ -1331,6 +1369,7 @@ else
 
 <%
    View mMasLC = null;
+   View mEPA = null;
    View mMasProd = null;
    View mMasProdLST = null;
    View mPrimReg = null;
@@ -1456,7 +1495,7 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox1:GroupBox */ %>
 
-<div id="GroupBox1" name="GroupBox1"   style="float:left;position:relative; width:692px; height:258px;">  <!-- GroupBox1 --> 
+<div id="GroupBox1" name="GroupBox1"   style="float:left;position:relative; width:692px; height:288px;">  <!-- GroupBox1 --> 
 
 <% /* HazardText::Text */ %>
 
@@ -1664,9 +1703,113 @@ else
 
 <textarea name="Statement" id="Statement" style="width:552px;height:50px;position:absolute;left:140px;top:70px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
+<% /* LocSeparator::Text */ %>
+
+<label  id="LocSeparator:" name="LocSeparator:" style="width:130px;height:16px;position:absolute;left:0px;top:134px;">Location Separator:</label>
+
+<% /* LocSeparator:ComboBox */ %>
+<% strErrorMapValue = "";  %>
+
+<select  name="LocSeparator" id="LocSeparator" size="1" style="width:214px;position:absolute;left:140px;top:134px;" onchange="LocSeparatorOnChange( )">
+
+<%
+   boolean inListLocSeparator = false;
+
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) )
+   {
+      List<TableEntry> list = JspWebUtils.getTableDomainValues( mMasLC , "M_HumanHazardSection", "LocationSeparator", "" );
+
+      nRC = mMasLC.cursor( "M_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+         strComboCurrentValue = mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "LocationSeparator" ).getString( "" );
+         if ( strComboCurrentValue == null )
+            strComboCurrentValue = "";
+      }
+      else
+      {
+         strComboCurrentValue = "";
+      }
+
+      // Code for NOT required attribute, which makes sure a blank entry exists.
+      if ( strComboCurrentValue == "" )
+      {
+         inListLocSeparator = true;
+%>
+         <option selected="selected" value=""></option>
+<%
+      }
+      else
+      {
+%>
+         <option value=""></option>
+<%
+      }
+      for ( TableEntry entry : list )
+      {
+         String internalValue = entry.getInternalValue( );
+         String externalValue = entry.getExternalValue( );
+         // Perhaps getInternalValue and getExternalValue should return an empty string, 
+         // but currently it returns null.  Set to empty string. 
+         if ( externalValue == null )
+         {
+            internalValue = "";
+            externalValue = "";
+         }
+
+         if ( !StringUtils.isBlank( externalValue ) )
+         {
+            if ( StringUtils.equals( strComboCurrentValue, externalValue ) )
+            {
+               inListLocSeparator = true;
+%>
+               <option selected="selected" value="<%=externalValue%>"><%=externalValue%></option>
+<%
+            }
+            else
+            {
+%>
+               <option value="<%=externalValue%>"><%=externalValue%></option>
+<%
+            }
+         }
+      }  // for ( TableEntry entry
+      // The value from the database isn't in the domain, add it to the list as disabled.
+      if ( !inListLocSeparator )
+      { 
+%>
+         <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
+<%
+      }  
+   }  // if view != null
+%>
+</select>
+
+<input name="hLocSeparator" id="hLocSeparator" type="hidden" value="<%=strComboCurrentValue%>" >
+<% /* EncloseFirst:CheckBox */ %>
+<%
+   strErrorMapValue = "";
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) == false )
+      task.log( ).debug( "Invalid View: " + "EncloseFirst" );
+   else
+   {
+      nRC = mMasLC.cursor( "M_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+         strRadioGroupValue = mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "EncloseFirstLocation" ).getString( "" );
+   }
+
+   if ( StringUtils.equals( strRadioGroupValue, "Y" ) )
+      strErrorMapValue = "checked=\"checked\"";
+%>
+
+<input type="checkbox" name="EncloseFirst" id="EncloseFirst"  value="Y" <%=strErrorMapValue%> style="position:absolute;left:432px;top:134px;">
+<span style="width:178px;height:24px;position:absolute;left:462px;top:134px;">Enclose First Location</span>
+
 <% /* PanelLocation1::Text */ %>
 
-<label  id="PanelLocation1:" name="PanelLocation1:" style="width:130px;height:16px;position:absolute;left:0px;top:130px;">Panel Location:</label>
+<label  id="PanelLocation1:" name="PanelLocation1:" style="width:130px;height:16px;position:absolute;left:0px;top:160px;">Panel Location:</label>
 
 <% /* PanelLocation1:EditBox */ %>
 <%
@@ -1707,11 +1850,11 @@ else
    }
 %>
 
-<input class="text12" name="PanelLocation1" id="PanelLocation1" style="width:162px;position:absolute;left:140px;top:130px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="PanelLocation1" id="PanelLocation1" style="width:162px;position:absolute;left:140px;top:160px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* LabelLocation1::Text */ %>
 
-<label  id="LabelLocation1:" name="LabelLocation1:" style="width:130px;height:16px;position:absolute;left:336px;top:130px;">Label Location:</label>
+<label  id="LabelLocation1:" name="LabelLocation1:" style="width:130px;height:16px;position:absolute;left:336px;top:160px;">Label Location:</label>
 
 <% /* LabelLocation1:EditBox */ %>
 <%
@@ -1752,11 +1895,11 @@ else
    }
 %>
 
-<input class="text12" name="LabelLocation1" id="LabelLocation1" style="width:162px;position:absolute;left:478px;top:130px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="LabelLocation1" id="LabelLocation1" style="width:162px;position:absolute;left:478px;top:160px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* PanelLocation2::Text */ %>
 
-<label  id="PanelLocation2:" name="PanelLocation2:" style="width:130px;height:16px;position:absolute;left:0px;top:156px;">Panel Location:</label>
+<label  id="PanelLocation2:" name="PanelLocation2:" style="width:130px;height:16px;position:absolute;left:0px;top:186px;">Panel Location:</label>
 
 <% /* PanelLocation2:EditBox */ %>
 <%
@@ -1797,11 +1940,11 @@ else
    }
 %>
 
-<input name="PanelLocation2" id="PanelLocation2" style="width:162px;position:absolute;left:140px;top:156px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="PanelLocation2" id="PanelLocation2" style="width:162px;position:absolute;left:140px;top:186px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* LabelLocation2::Text */ %>
 
-<label  id="LabelLocation2:" name="LabelLocation2:" style="width:130px;height:16px;position:absolute;left:336px;top:156px;">Label Location:</label>
+<label  id="LabelLocation2:" name="LabelLocation2:" style="width:130px;height:16px;position:absolute;left:336px;top:186px;">Label Location:</label>
 
 <% /* LabelLocation2:EditBox */ %>
 <%
@@ -1842,11 +1985,11 @@ else
    }
 %>
 
-<input name="LabelLocation2" id="LabelLocation2" style="width:162px;position:absolute;left:478px;top:156px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="LabelLocation2" id="LabelLocation2" style="width:162px;position:absolute;left:478px;top:186px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* PanelLocation3::Text */ %>
 
-<label  id="PanelLocation3:" name="PanelLocation3:" style="width:130px;height:16px;position:absolute;left:0px;top:182px;">Panel Location:</label>
+<label  id="PanelLocation3:" name="PanelLocation3:" style="width:130px;height:16px;position:absolute;left:0px;top:212px;">Panel Location:</label>
 
 <% /* PanelLocation3:EditBox */ %>
 <%
@@ -1887,11 +2030,11 @@ else
    }
 %>
 
-<input name="PanelLocation3" id="PanelLocation3" style="width:162px;position:absolute;left:140px;top:182px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="PanelLocation3" id="PanelLocation3" style="width:162px;position:absolute;left:140px;top:212px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* LabelLocation3::Text */ %>
 
-<label  id="LabelLocation3:" name="LabelLocation3:" style="width:130px;height:16px;position:absolute;left:336px;top:182px;">Label Location:</label>
+<label  id="LabelLocation3:" name="LabelLocation3:" style="width:130px;height:16px;position:absolute;left:336px;top:212px;">Label Location:</label>
 
 <% /* LabelLocation3:EditBox */ %>
 <%
@@ -1932,11 +2075,11 @@ else
    }
 %>
 
-<input name="LabelLocation3" id="LabelLocation3" style="width:162px;position:absolute;left:478px;top:182px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="LabelLocation3" id="LabelLocation3" style="width:162px;position:absolute;left:478px;top:212px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* PanelLocation4::Text */ %>
 
-<label  id="PanelLocation4:" name="PanelLocation4:" style="width:130px;height:16px;position:absolute;left:0px;top:208px;">Panel Location:</label>
+<label  id="PanelLocation4:" name="PanelLocation4:" style="width:130px;height:16px;position:absolute;left:0px;top:238px;">Panel Location:</label>
 
 <% /* PanelLocation4:EditBox */ %>
 <%
@@ -1977,11 +2120,11 @@ else
    }
 %>
 
-<input name="PanelLocation4" id="PanelLocation4" style="width:162px;position:absolute;left:140px;top:208px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="PanelLocation4" id="PanelLocation4" style="width:162px;position:absolute;left:140px;top:238px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* LabelLocation4::Text */ %>
 
-<label  id="LabelLocation4:" name="LabelLocation4:" style="width:130px;height:16px;position:absolute;left:336px;top:208px;">Label Location:</label>
+<label  id="LabelLocation4:" name="LabelLocation4:" style="width:130px;height:16px;position:absolute;left:336px;top:238px;">Label Location:</label>
 
 <% /* LabelLocation4:EditBox */ %>
 <%
@@ -2022,11 +2165,11 @@ else
    }
 %>
 
-<input name="LabelLocation4" id="LabelLocation4" style="width:162px;position:absolute;left:478px;top:208px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="LabelLocation4" id="LabelLocation4" style="width:162px;position:absolute;left:478px;top:238px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* PanelLocation5::Text */ %>
 
-<label  id="PanelLocation5:" name="PanelLocation5:" style="width:130px;height:16px;position:absolute;left:0px;top:234px;">Panel Location:</label>
+<label  id="PanelLocation5:" name="PanelLocation5:" style="width:130px;height:16px;position:absolute;left:0px;top:264px;">Panel Location:</label>
 
 <% /* PanelLocation5:EditBox */ %>
 <%
@@ -2067,11 +2210,11 @@ else
    }
 %>
 
-<input class="text12" name="PanelLocation5" id="PanelLocation5" style="width:162px;position:absolute;left:140px;top:234px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="PanelLocation5" id="PanelLocation5" style="width:162px;position:absolute;left:140px;top:264px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* LabelLocation5::Text */ %>
 
-<label  id="LabelLocation5:" name="LabelLocation5:" style="width:130px;height:16px;position:absolute;left:336px;top:234px;">Label Location:</label>
+<label  id="LabelLocation5:" name="LabelLocation5:" style="width:130px;height:16px;position:absolute;left:336px;top:264px;">Label Location:</label>
 
 <% /* LabelLocation5:EditBox */ %>
 <%
@@ -2112,7 +2255,7 @@ else
    }
 %>
 
-<input class="text12" name="LabelLocation5" id="LabelLocation5" style="width:162px;position:absolute;left:478px;top:234px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="LabelLocation5" id="LabelLocation5" style="width:162px;position:absolute;left:478px;top:264px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 
 </div>  <!--  GroupBox1 --> 
@@ -2122,7 +2265,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:4px;width:100px;"></div>
+<div style="height:8px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
