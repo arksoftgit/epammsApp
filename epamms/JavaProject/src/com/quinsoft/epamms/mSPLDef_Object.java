@@ -12263,13 +12263,13 @@ omSPLDef_dDisplayPathogenName( View     mSPLDef,
                          GetVariableFromAttribute( sb_szFootnoteNumber, mi_lTempInteger_3, 'S', 4, mSPLDef, "M_UsageFootnote", "wFootNoteRelativeNumber", "", 0 );
             lTempInteger_3 = mi_lTempInteger_3.intValue( );
             szFootnoteNumber = sb_szFootnoteNumber.toString( );}
-            //:szCombinedName = szCombinedName + "<sub> (" + szFootnoteNumber + ")</sub>"
+            //:szCombinedName = szCombinedName + "<sup>" + szFootnoteNumber + "</sup>"
              {StringBuilder sb_szCombinedName;
             if ( szCombinedName == null )
                sb_szCombinedName = new StringBuilder( 32 );
             else
                sb_szCombinedName = new StringBuilder( szCombinedName );
-                        ZeidonStringConcat( sb_szCombinedName, 1, 0, "<sub> (", 1, 0, 101 );
+                        ZeidonStringConcat( sb_szCombinedName, 1, 0, "<sup>", 1, 0, 101 );
             szCombinedName = sb_szCombinedName.toString( );}
              {StringBuilder sb_szCombinedName;
             if ( szCombinedName == null )
@@ -12283,7 +12283,7 @@ omSPLDef_dDisplayPathogenName( View     mSPLDef,
                sb_szCombinedName = new StringBuilder( 32 );
             else
                sb_szCombinedName = new StringBuilder( szCombinedName );
-                        ZeidonStringConcat( sb_szCombinedName, 1, 0, ")</sub>", 1, 0, 101 );
+                        ZeidonStringConcat( sb_szCombinedName, 1, 0, "</sup>", 1, 0, 101 );
             szCombinedName = sb_szCombinedName.toString( );}
          } 
 

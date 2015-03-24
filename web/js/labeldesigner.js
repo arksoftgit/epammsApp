@@ -725,6 +725,7 @@ $(function() {
          return false;  // prevent default propagation
       }
    });
+
 /*
    $("body").on( "click", "div.ui-draggable", function() {
       mapUiDataToElementData( $current_block );
@@ -2495,7 +2496,8 @@ public class FileServer {
       $item.css( "border", "2px solid #000" ).data( "z__^delete", "Y" ).removeClass( "canvas-element" ).hide();
    }
 
-   $(document).keydown( function(e) {
+   $(document).keydown( function( e ) {
+   // alert( event.keyCode );
       if ( e.ctrlKey ) {
          if ( e.keyCode === 90 ) { // Ctrl+Z keydown combo - Undo (only implemented for delete)
             if ( g_undo_list.length > 0 ) {
@@ -2520,6 +2522,47 @@ public class FileServer {
             var myWindow = openDebugWin();
          // var arrHeader = [ "NickName, ProperName, Description" ];
          // var myWindow = openSortWin( "Nick Names", "viewName", "entityName", arrHeader, null );
+         } else if ( g_selected_list.length > 0 ) {
+            var scale = g_pixelsPerInch * g_scale;
+            var k = 0;
+            var change = false;
+            while ( k < g_selected_list.length ) {
+               var $el = $(g_selected_list[k]);
+               var height = 0;
+               var width =  0;
+               if ( e.keyCode === 38 ) { // up arrow
+                  height -= 8;
+               } else if ( e.keyCode === 40 ) { // down arrow
+                  height += 4;
+               } else if ( e.keyCode === 37 ) { // left arrow
+                  width -= 8;
+               } else if ( e.keyCode === 39 ) { // right arrow
+                  width += 4;
+               }
+               if ( height !== 0 ) {
+                  change = true;
+                  height += $el.cssInt( 'height' );
+                  $el.css({ height: height });
+                  $el.data( "z_^height", (height / scale).toFixed( 2 ) );
+                  if ( $el[0] == g_$current_block[0] ) {
+                     mapElementDataToUiData( g_$current_block );
+                  }
+               }
+               if ( width !== 0 ) {
+                  change = true;
+                  width += $el.cssInt( 'width' );
+                  $el.css({ width: width });
+                  $el.data( "z_^width", (width / scale).toFixed( 2 ) );
+                  if ( $el[0] === g_$current_block[0] ) {
+                     mapElementDataToUiData( g_$current_block );
+                  }
+               }
+               k++;
+            }
+            if ( change ) {
+               g_updatedLLD = true;
+               return false;
+            }
          }
       } else if ( e.keyCode === 46 ) { // Delete keydown
       // alert( "Document Delete Key Pressed" );
@@ -2535,6 +2578,50 @@ public class FileServer {
             g_updatedLLD = true;
          }
          g_selected_first = null;
+      } else if ( e.shiftKey ) {
+         if ( g_selected_list.length > 0 ) {
+            var scale = g_pixelsPerInch * g_scale;
+            var k = 0;
+            var change = false;
+            g_updatedLLD = true;
+            while ( k < g_selected_list.length ) {
+               var $el = $(g_selected_list[k]);
+               var top = 0;
+               var left =  0;
+               if ( e.keyCode === 38 ) { // up arrow
+                  top -= 8;
+               } else if ( e.keyCode === 40 ) { // down arrow
+                  top += 4;
+               } else if ( e.keyCode === 37 ) { // left arrow
+                  left -= 8;
+               } else if ( e.keyCode === 39 ) { // right arrow
+                  left += 4;
+               }
+               if ( top !== 0 ) {
+                  change = true;
+                  top += $el.cssInt( 'top' );
+                  $el.css({ top: top });
+                  $el.data( "z_^top", (top / scale).toFixed( 2 ) );
+                  if ( $el[0] === g_$current_block[0] ) {
+                     mapElementDataToUiData( g_$current_block );
+                  }
+               }
+               if ( left !== 0 ) {
+                  change = true;
+                  left += $el.cssInt( 'left' );
+                  $el.css({ left: left });
+                  $el.data( "z_^left", (left / scale).toFixed( 2 ) );
+                  if ( $el[0] === g_$current_block[0] ) {
+                     mapElementDataToUiData( g_$current_block );
+                  }
+               }
+               k++;
+            }
+            if ( change ) {
+               g_updatedLLD = true;
+               return false;
+            }
+         }
       }
    });
 

@@ -108,7 +108,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "GeneralInertPercentage", "", strMapValue );
             else
-               mMasLC.cursor( "M_IngredientsSection" ).getAttribute( "GeneralInactivePercent" ).setValue( strMapValue, "" );
+               mMasLC.cursor( "M_IngredientsSection" ).getAttribute( "GeneralInactivePercent" ).setValue( strMapValue, "DECIMAL2" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -1551,7 +1551,7 @@ else
          {
             try
             {
-            strErrorMapValue = mMasLC.cursor( "M_IngredientsSection" ).getAttribute( "GeneralInactivePercent" ).getString( "" );
+            strErrorMapValue = mMasLC.cursor( "M_IngredientsSection" ).getAttribute( "GeneralInactivePercent" ).getString( "DECIMAL2" );
             }
             catch (Exception e)
             {

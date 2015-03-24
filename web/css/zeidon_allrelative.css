@@ -46,11 +46,14 @@ body{
 	 -webkit-border-top-right-radius:5px;
 	width: 998px;
 /*
-	height: 75px;
+	height: 40px;
 	background-image: url(../images/ePammsBannerDefault.jpg);
 */				
-	height: 198px;
-	background-image: url(../images/epamms_logo.gif);
+	
+ height: 80px;
+/*	background-image: url(../images/epamms_logo.gif);*/
+	background-image: url(../images/epamms_header.png);
+epamms header.png
 	background-color:#FFFFFF;
 	margin-top: 0px;
 	margin-right: auto;
@@ -77,13 +80,22 @@ body{
 	padding-top: 35px;
 	background-repeat: no-repeat;
 	background-position: left top;
-	width:200px;
+	width: 0px;
 	display:block;
-	height:35px;
+	height:48px;
 	font-size: 24px;
 	color: #000000;
 	font-weight: bold;
+	border-style: solid;
+	border-width: medium;
+	border-top: 0px solid #a1a1a1;
+	border-bottom: 0px solid #a1a1a1;
+	border-left: 1px double #cc0000;
+	border-right: 0px solid #a1a1a1;
 }
+/*	border-left: 7px solid #cc0000;*/
+/*	border-left: thin double #cc0000;*/
+/*	border-left: thick double #cc0000;*/
 
 #logo h1, #logo p {
 	margin: 0px;

@@ -1496,14 +1496,24 @@ ConfirmAddClaimsStmts( VIEW ViewToWindow )
 
    VIEW mMasLC   REGISTERED AS mMasLC
    VIEW mEPA     REGISTERED AS mEPA
+   STRING ( 256 ) szName
    SHORT   nRC
 
+   FOR EACH mMasLC.M_Usage
+      szName = mMasLC.M_Usage.Name
+      IF szName = ""
+         DeleteEntity( mMasLC, "M_Usage", zREPOS_NONE )
+      END
+   END
    FOR EACH mEPA.EPA_Claim
       IF mEPA.EPA_Claim.wkSelected = "Y"
-         CreateEntity( mMasLC, "M_Usage", zPOS_LAST )
-         mMasLC.M_Usage.UsageType = "C" // Claim
-         mMasLC.M_Usage.ClaimsClassification = mEPA.EPA_Claim.ClaimsClassification
-         mMasLC.M_Usage.Name = mEPA.EPA_Claim.Name
+         szName = mEPA.EPA_Claim.Name
+         IF szName != ""
+            CreateEntity( mMasLC, "M_Usage", zPOS_LAST )
+            mMasLC.M_Usage.UsageType = "C" // Claim
+            mMasLC.M_Usage.ClaimsClassification = mEPA.EPA_Claim.ClaimsClassification
+            mMasLC.M_Usage.Name = szName
+         END
       END
    END
 
@@ -1536,13 +1546,23 @@ ConfirmAddAppTypesStmts( VIEW ViewToWindow )
 
    VIEW mMasLC   REGISTERED AS mMasLC
    VIEW mEPA     REGISTERED AS mEPA
+   STRING ( 256 ) szName
    SHORT   nRC
 
-   FOR EACH mEPA.EPA_AreaOfUse
-      IF mEPA.EPA_AreaOfUse.wkSelected = "Y"
-         CreateEntity( mMasLC, "M_Usage", zPOS_LAST )
-         mMasLC.M_Usage.UsageType = "T" // Application Type
-         mMasLC.M_Usage.Name = mEPA.EPA_ApplicationType.Name
+   FOR EACH mMasLC.M_Usage
+      szName = mMasLC.M_Usage.Name
+      IF szName = ""
+         DeleteEntity( mMasLC, "M_Usage", zREPOS_NONE )
+      END
+   END
+   FOR EACH mEPA.EPA_ApplicationType
+      IF mEPA.EPA_ApplicationType.wkSelected = "Y"
+         szName = mEPA.EPA_ApplicationType.Name
+         IF szName != ""
+            CreateEntity( mMasLC, "M_Usage", zPOS_LAST )
+            mMasLC.M_Usage.UsageType = "T" // Application Type
+            mMasLC.M_Usage.Name = szName
+         END
       END
    END
 
@@ -1575,13 +1595,23 @@ ConfirmAddAreasOfUseStmts( VIEW ViewToWindow )
 
    VIEW mMasLC   REGISTERED AS mMasLC
    VIEW mEPA     REGISTERED AS mEPA
+   STRING ( 256 ) szName
    SHORT   nRC
 
+   FOR EACH mMasLC.M_Usage
+      szName = mMasLC.M_Usage.Name
+      IF szName = ""
+         DeleteEntity( mMasLC, "M_Usage", zREPOS_NONE )
+      END
+   END
    FOR EACH mEPA.EPA_AreaOfUse
       IF mEPA.EPA_AreaOfUse.wkSelected = "Y"
-         CreateEntity( mMasLC, "M_Usage", zPOS_LAST )
-         mMasLC.M_Usage.UsageType = "U" // Area of Use
-         mMasLC.M_Usage.Name = mEPA.EPA_AreaOfUse.Name
+         szName = mEPA.EPA_AreaOfUse.Name
+         IF szName != ""
+            CreateEntity( mMasLC, "M_Usage", zPOS_LAST )
+            mMasLC.M_Usage.UsageType = "U" // Area of Use
+            mMasLC.M_Usage.Name = szName
+         END
       END
    END
 
@@ -1614,13 +1644,23 @@ ConfirmAddSurfacesStmts( VIEW ViewToWindow )
 
    VIEW mMasLC   REGISTERED AS mMasLC
    VIEW mEPA     REGISTERED AS mEPA
+   STRING ( 256 ) szName
    SHORT   nRC
 
+   FOR EACH mMasLC.M_Usage
+      szName = mMasLC.M_Usage.Name
+      IF szName = ""
+         DeleteEntity( mMasLC, "M_Usage", zREPOS_NONE )
+      END
+   END
    FOR EACH mEPA.EPA_Surface
       IF mEPA.EPA_Surface.wkSelected = "Y"
-         CreateEntity( mMasLC, "M_Usage", zPOS_LAST )
-         mMasLC.M_Usage.UsageType = "S" // Surface
-         mMasLC.M_Usage.Name = mEPA.EPA_Surface.Name
+         szName = mEPA.EPA_Surface.Name
+         IF szName != ""
+            CreateEntity( mMasLC, "M_Usage", zPOS_LAST )
+            mMasLC.M_Usage.UsageType = "S" // Surface
+            mMasLC.M_Usage.Name = szName
+         END
       END
    END
 
@@ -1676,3 +1716,68 @@ InitClaimsStmtsForInsert( VIEW ViewToWindow )
 
 END
 
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: InitSurfacesStmtsForInsert
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+InitSurfacesStmtsForInsert( VIEW ViewToWindow )
+
+   VIEW mMasLC   REGISTERED AS mMasLC
+   VIEW mEPA     BASED ON LOD  mEPA
+
+   CancelCurrentTemporalSubobject( ViewToWindow, "InitSurfacesStmtsForInsert: " )
+   GET VIEW mEPA NAMED "mEPA"
+   IF mEPA != 0
+      DropObjectInstance( mEPA )
+   END
+
+   ACTIVATE mEPA WHERE mEPA.EPA_ChemicalFamily.ChemicalFamily = mMasLC.MasterProduct.ChemicalFamily
+   NAME VIEW mEPA "mEPA"
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: InitAreasOfUseStmtsForInsert
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+InitAreasOfUseStmtsForInsert( VIEW ViewToWindow )
+
+   VIEW mMasLC   REGISTERED AS mMasLC
+   VIEW mEPA     BASED ON LOD  mEPA
+
+   CancelCurrentTemporalSubobject( ViewToWindow, "InitAreasOfUseStmtsForInsert: " )
+   GET VIEW mEPA NAMED "mEPA"
+   IF mEPA != 0
+      DropObjectInstance( mEPA )
+   END
+
+   ACTIVATE mEPA WHERE mEPA.EPA_ChemicalFamily.ChemicalFamily = mMasLC.MasterProduct.ChemicalFamily
+   NAME VIEW mEPA "mEPA"
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: InitAppTypesStmtsForInsert
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+InitAppTypesStmtsForInsert( VIEW ViewToWindow )
+
+   VIEW mMasLC   REGISTERED AS mMasLC
+   VIEW mEPA     BASED ON LOD  mEPA
+
+   CancelCurrentTemporalSubobject( ViewToWindow, "InitAppTypesStmtsForInsert: " )
+   GET VIEW mEPA NAMED "mEPA"
+   IF mEPA != 0
+      DropObjectInstance( mEPA )
+   END
+
+   ACTIVATE mEPA WHERE mEPA.EPA_ChemicalFamily.ChemicalFamily = mMasLC.MasterProduct.ChemicalFamily
+   NAME VIEW mEPA "mEPA"
+
+END

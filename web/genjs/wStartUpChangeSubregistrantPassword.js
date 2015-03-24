@@ -199,14 +199,14 @@ function ConfirmChangeSubregPassword( )
    {
       // Javascript code entered by user.
 
-      var strPassword =  document.wStartUpChangeSubregPassword.Password.value;
-      var strNew =  document.wStartUpChangeSubregPassword.NewPassword.value;
-      var strConfirm =  document.wStartUpChangeSubregPassword.ConfirmPassword.value;
+      var strPassword =  document.wStartUpChangeSubregistrantPassword.Password.value;
+      var strNew =  document.wStartUpChangeSubregistrantPassword.NewPassword.value;
+      var strConfirm =  document.wStartUpChangeSubregistrantPassword.ConfirmPassword.value;
 
       if ( strPassword == "" )
       {
          alert( "Password must be specified." );
-         document.wStartUpChangeSubregPassword.Password.focus();
+         document.wStartUpChangeSubregistrantPassword.Password.focus();
          return;
       }
 
@@ -214,9 +214,9 @@ function ConfirmChangeSubregPassword( )
       {
          alert( "New and Confirmation passwords must be specified." );
          if ( strNew == "" )
-            document.wStartUpChangeSubregPassword.NewPassword.focus();
+            document.wStartUpChangeSubregistrantPassword.NewPassword.focus();
          else
-            document.wStartUpChangeSubregPassword.ConfirmPassword.focus();
+            document.wStartUpChangeSubregistrantPassword.ConfirmPassword.focus();
 
          return;
       }
@@ -224,14 +224,14 @@ function ConfirmChangeSubregPassword( )
       if ( strNew != strConfirm )
       {
          alert( "New and Confirmation passwords do not match." );
-         document.wStartUpChangeSubregPassword.NewPassword.focus();
+         document.wStartUpChangeSubregistrantPassword.NewPassword.focus();
          return;
       }
 
       if ( strNew.length < 8 )
       {
          alert( "New passwords must contain at least 8 characters." );
-         document.wStartUpChangeSubregPassword.NewPassword.focus();
+         document.wStartUpChangeSubregistrantPassword.NewPassword.focus();
          return;
       }
 
@@ -294,14 +294,14 @@ function smConfirmChangeSubregPassword( )
 
       // Javascript code entered by user.
 
-      var strPassword =  document.wStartUpChangeSubregPassword.Password.value;
-      var strNew =  document.wStartUpChangeSubregPassword.NewPassword.value;
-      var strConfirm =  document.wStartUpChangeSubregPassword.ConfirmPassword.value;
+      var strPassword =  document.wStartUpChangeSubregistrantPassword.Password.value;
+      var strNew =  document.wStartUpChangeSubregistrantPassword.NewPassword.value;
+      var strConfirm =  document.wStartUpChangeSubregistrantPassword.ConfirmPassword.value;
 
       if ( strPassword == "" )
       {
          alert( "Password must be specified." );
-         document.wStartUpChangeSubregPassword.Password.focus();
+         document.wStartUpChangeSubregistrantPassword.Password.focus();
          return;
       }
 
@@ -309,9 +309,9 @@ function smConfirmChangeSubregPassword( )
       {
          alert( "New and Confirmation passwords must be specified." );
          if ( strNew == "" )
-            document.wStartUpChangeSubregPassword.NewPassword.focus();
+            document.wStartUpChangeSubregistrantPassword.NewPassword.focus();
          else
-            document.wStartUpChangeSubregPassword.ConfirmPassword.focus();
+            document.wStartUpChangeSubregistrantPassword.ConfirmPassword.focus();
 
          return;
       }
@@ -319,14 +319,14 @@ function smConfirmChangeSubregPassword( )
       if ( strNew != strConfirm )
       {
          alert( "New and Confirmation passwords do not match." );
-         document.wStartUpChangeSubregPassword.NewPassword.focus();
+         document.wStartUpChangeSubregistrantPassword.NewPassword.focus();
          return;
       }
 
       if ( strNew.length < 8 )
       {
          alert( "New passwords must contain at least 8 characters." );
-         document.wStartUpChangeSubregPassword.NewPassword.focus();
+         document.wStartUpChangeSubregistrantPassword.NewPassword.focus();
          return;
       }
 

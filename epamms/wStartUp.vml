@@ -2190,27 +2190,29 @@ ConfirmChangeSubregPassword( VIEW ViewToWindow )
 
    VIEW wWebXfer REGISTERED AS wWebXfer
    VIEW mSubreg  REGISTERED AS mSubreg
+   STRING ( 128 ) szCurrentPassword
    STRING ( 128 ) szAttemptPassword
    STRING ( 128 ) szConfirmPassword
    INTEGER        lPasswordLth
    SHORT  nRC
 
    // 1: Ensure old password is correct.
-// IF mSubreg.SubregOrganization.AdministratorPassword != wWebXfer.Root.AttemptPassword
-   szAttemptPassword = wWebXfer.Root.AttemptPassword
-   nRC = CompareAttributeToString( mSubreg, "SubregOrganization", "AdministratorPassword", szAttemptPassword )
+// IF mSubreg.SubregOrganization.AdministratorPassword != wWebXfer.Root.CurrentPassword
+   szCurrentPassword = wWebXfer.Root.CurrentPassword
+   nRC = CompareAttributeToString( mSubreg, "SubregOrganization", "AdministratorPassword", szCurrentPassword )
    IF nRC != 0
 
-   // TraceLineS( "//////* Invalid Current User Password", szAttemptPassword )
+   // TraceLineS( "//////* Invalid Current User Password", szCurrentPassword )
+   // DisplayEntityInstance( mSubreg, "SubregOrganization" )
       MessageSend( ViewToWindow, "", "Change Subregistrant User Password",
-                   "Current password is not correct.",
+                   "Current password is incorrect.",
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
       SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
       RETURN 2
 
    END
 
-// szAttemptPassword = wWebXfer.Root.AttemptPassword
+   szAttemptPassword = wWebXfer.Root.AttemptPassword
    szConfirmPassword = wWebXfer.Root.ConfirmPassword
 
    // 2: Ensure attempted password matches confirm password.

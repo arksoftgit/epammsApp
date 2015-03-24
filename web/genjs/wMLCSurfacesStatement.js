@@ -189,6 +189,21 @@ function AcceptAndReturnAreasStatement( )
    }
 }
 
+function InitSurfacesStmtsForInsert( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCSurfacesStatement.zAction.value = "InitSurfacesStmtsForInsert";
+      document.wMLCSurfacesStatement.submit( );
+   }
+}
+
 function CancelAreasOfUseStatement( )
 {
 

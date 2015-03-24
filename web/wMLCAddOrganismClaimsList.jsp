@@ -813,11 +813,11 @@ else
 <span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
 <% /* HTSelectAllBacteria:Text */ %>
 
-<a href="#" id="HTSelectAllBacteria" name="HTSelectAllBacteria"  onclick="SelectAllClaims( );" style="width:80px;height:16px;" tabindex=-1 >Select All</a>
+<a href="#" id="HTSelectAllBacteria" name="HTSelectAllBacteria"  onclick="SelectAllClaims( );" style="width:80px;height:16px;">Select All</a>
 
 <% /* HTClearSelectedBacteria:Text */ %>
 
-<a href="#" id="HTClearSelectedBacteria" name="HTClearSelectedBacteria"  onclick="ClearSelectedClaims( );" style="width:100px;height:16px;" tabindex=-1 >Clear Selected</a>
+<a href="#" id="HTClearSelectedBacteria" name="HTClearSelectedBacteria"  onclick="ClearSelectedClaims( );" style="width:100px;height:16px;">Clear Selected</a>
 
 </div>  <!-- End of a new line -->
 
@@ -958,11 +958,11 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
 <% /* HTSelectAllFungi:Text */ %>
 
-<a href="#" id="HTSelectAllFungi" name="HTSelectAllFungi"  onclick="SelectAllClaims( );" style="width:80px;height:16px;" tabindex=-1 >Select All</a>
+<a href="#" id="HTSelectAllFungi" name="HTSelectAllFungi"  onclick="SelectAllClaims( );" style="width:80px;height:16px;">Select All</a>
 
 <% /* HTClearSelectedFungi:Text */ %>
 
-<a href="#" id="HTClearSelectedFungi" name="HTClearSelectedFungi"  onclick="ClearSelectedClaims( );" style="width:100px;height:16px;" tabindex=-1 >Clear Selected</a>
+<a href="#" id="HTClearSelectedFungi" name="HTClearSelectedFungi"  onclick="ClearSelectedClaims( );" style="width:100px;height:16px;">Clear Selected</a>
 
 </div>  <!-- End of a new line -->
 
@@ -1103,11 +1103,11 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
 <% /* HTSelectAllViruses:Text */ %>
 
-<a href="#" id="HTSelectAllViruses" name="HTSelectAllViruses"  onclick="SelectAllClaims( );" style="width:80px;height:16px;" tabindex=-1 >Select All</a>
+<a href="#" id="HTSelectAllViruses" name="HTSelectAllViruses"  onclick="SelectAllClaims( );" style="width:80px;height:16px;">Select All</a>
 
 <% /* HTClearSelectedViruses:Text */ %>
 
-<a href="#" id="HTClearSelectedViruses" name="HTClearSelectedViruses"  onclick="ClearSelectedClaims( );" style="width:100px;height:16px;" tabindex=-1 >Clear Selected</a>
+<a href="#" id="HTClearSelectedViruses" name="HTClearSelectedViruses"  onclick="ClearSelectedClaims( );" style="width:100px;height:16px;">Clear Selected</a>
 
 </div>  <!-- End of a new line -->
 

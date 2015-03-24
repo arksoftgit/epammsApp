@@ -1105,7 +1105,7 @@ function zeidonAttributeToKey( attribute ) {
 function addZeidonAttributeToElement( $element, attribute, value ) {
    if ( typeof value === "string" || typeof value === "number" ) {
       var key = zeidonAttributeToKey( attribute );
-      console.log( "addZeidonAttributeToElement: " + $element.attr( "id" ) + "  key: " + key + "  value: " + value );
+   // console.log( "addZeidonAttributeToElement: " + $element.attr( "id" ) + "  key: " + key + "  value: " + value );
       $element.data( key, value );
    }
 }

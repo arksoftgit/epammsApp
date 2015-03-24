@@ -3488,7 +3488,7 @@ dDisplayPathogenName( VIEW mSPLDef BASED ON LOD mSPLDef,
             DropView( mSPLDef2 )
          END 
          szFootnoteNumber = mSPLDef.M_UsageFootnote.wFootNoteRelativeNumber 
-         szCombinedName = szCombinedName + "<sub> (" + szFootnoteNumber + ")</sub>"
+         szCombinedName = szCombinedName + "<sup>" + szFootnoteNumber + "</sup>"
       END
 
       // Store the calculated value in the object.

@@ -307,7 +307,7 @@ if ( strActionToProcess != null )
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDGraphicalView", strActionToProcess );
 
       // Next Window
-      strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_ReturnToParent, "wSPLD", "SPLD_UpdateLLD" );
+      strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_ReturnToParent, "", "" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -670,19 +670,19 @@ else
       *+html #ztoolbar {
         display: inline;
       }
-      .ui-state-default .ui-icon { background-image: url(images/painter.png); }
-      .ui-button .tools { background-position: 0px 0px; }
-      .ui-button .alignleft { background-position: -15px 0px; }
-      .ui-button .aligntop { background-position: -31px 0px; }
-      .ui-button .alignright { background-position: -47px 0px; }
-      .ui-button .alignbottom { background-position: -63px 0px; }
-      .ui-button .equalwidth { background-position: -79px 0px; }
-      .ui-button .equalheight { background-position: -95px 0px; }
-      .ui-button .equalwidthheight { background-position: -111px 0px; }
-      .ui-button .equalspacehorizontal { background-position: -127px 0px; }
-      .ui-button .equalspacevertical { background-position: -143px 0px; }
-      .ui-button .abuthorizontal { background-position: -159px 0px; }
-      .ui-button .abutvertical { background-position: -175px 0px; }
+      #ztoolbar .ui-icon { background-image: url(images/labelpainter.png); }
+      #ztoolbar .ui-button, .tools { background-position: 0px 0px; }
+      #ztoolbar .ui-button, .alignleft { background-position: -15px 0px; }
+      #ztoolbar .ui-button, .aligntop { background-position: -31px 0px; }
+      #ztoolbar .ui-button, .alignright { background-position: -47px 0px; }
+      #ztoolbar .ui-button, .alignbottom { background-position: -63px 0px; }
+      #ztoolbar .ui-button, .equalwidth { background-position: -79px 0px; }
+      #ztoolbar .ui-button, .equalheight { background-position: -95px 0px; }
+      #ztoolbar .ui-button, .equalwidthheight { background-position: -111px 0px; }
+      #ztoolbar .ui-button, .equalspacehorizontal { background-position: -127px 0px; }
+      #ztoolbar .ui-button, .equalspacevertical { background-position: -143px 0px; }
+      #ztoolbar .ui-button, .abuthorizontal { background-position: -159px 0px; }
+      #ztoolbar .ui-button, .abutvertical { background-position: -175px 0px; }
 
       .ui-widget-header {
          border: 1px solid #aaaaaa;
@@ -787,10 +787,6 @@ else
                <button id="ah" class="zalign">Abut Horizontal</button>
                <button id="av" class="zalign">Abut Vertical</button> 
 
-               <span>
-                  <label for="zZoomSpinner">Zoom:</label>
-                  <input type="text" id="zZoomSpinner" value="1.0" style="width:20px;"/>
-               </span>
                <button id="ReturnUpdateLLD" class="zalign">Return</button>
                <button id="GenerateLabel" class="zalign">Generate Label</button>
                <button id="GenerateLabelBorders" class="zalign">Generate Label with Borders</button>
@@ -799,6 +795,10 @@ else
             &nbsp;&nbsp;
             <input type="checkbox" id="showtools" name="showtools" style="margin:5px; float:right;"><label for="showtools" style="margin:5px; float:right;">Show Tools</label>
             &nbsp;&nbsp;
+            <span style="margin:5px; float:right;">
+               <label for="zZoomSpinner">Zoom:</label>
+               <input type="text" id="zZoomSpinner" value="1.0" style="width:20px;"/>
+            </span>
          </div> <!-- zheader -->
       </span>
       <div id="zclient" style="margin:0"> <!-- client area -->

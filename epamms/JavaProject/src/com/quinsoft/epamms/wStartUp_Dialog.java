@@ -3539,6 +3539,8 @@ ConfirmChangeSubregPassword( View     ViewToWindow )
    int      RESULT = 0;
    //:VIEW mSubreg  REGISTERED AS mSubreg
    zVIEW    mSubreg = new zVIEW( );
+   //:STRING ( 128 ) szCurrentPassword
+   String   szCurrentPassword = null;
    //:STRING ( 128 ) szAttemptPassword
    String   szAttemptPassword = null;
    //:STRING ( 128 ) szConfirmPassword
@@ -3549,33 +3551,35 @@ ConfirmChangeSubregPassword( View     ViewToWindow )
    int      nRC = 0;
    int      lTempInteger_0 = 0;
    int      lTempInteger_1 = 0;
+   int      lTempInteger_2 = 0;
 
    RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
    RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
 
    //:// 1: Ensure old password is correct.
-   //:// IF mSubreg.SubregOrganization.AdministratorPassword != wWebXfer.Root.AttemptPassword
-   //:szAttemptPassword = wWebXfer.Root.AttemptPassword
+   //:// IF mSubreg.SubregOrganization.AdministratorPassword != wWebXfer.Root.CurrentPassword
+   //:szCurrentPassword = wWebXfer.Root.CurrentPassword
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
-   StringBuilder sb_szAttemptPassword;
-   if ( szAttemptPassword == null )
-      sb_szAttemptPassword = new StringBuilder( 32 );
+   StringBuilder sb_szCurrentPassword;
+   if ( szCurrentPassword == null )
+      sb_szCurrentPassword = new StringBuilder( 32 );
    else
-      sb_szAttemptPassword = new StringBuilder( szAttemptPassword );
-       GetVariableFromAttribute( sb_szAttemptPassword, mi_lTempInteger_0, 'S', 129, wWebXfer, "Root", "AttemptPassword", "", 0 );
+      sb_szCurrentPassword = new StringBuilder( szCurrentPassword );
+       GetVariableFromAttribute( sb_szCurrentPassword, mi_lTempInteger_0, 'S', 129, wWebXfer, "Root", "CurrentPassword", "", 0 );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );
-   szAttemptPassword = sb_szAttemptPassword.toString( );}
-   //:nRC = CompareAttributeToString( mSubreg, "SubregOrganization", "AdministratorPassword", szAttemptPassword )
-   nRC = CompareAttributeToString( mSubreg, "SubregOrganization", "AdministratorPassword", szAttemptPassword );
+   szCurrentPassword = sb_szCurrentPassword.toString( );}
+   //:nRC = CompareAttributeToString( mSubreg, "SubregOrganization", "AdministratorPassword", szCurrentPassword )
+   nRC = CompareAttributeToString( mSubreg, "SubregOrganization", "AdministratorPassword", szCurrentPassword );
    //:IF nRC != 0
    if ( nRC != 0 )
    { 
 
-      //:// TraceLineS( "//////* Invalid Current User Password", szAttemptPassword )
+      //:// TraceLineS( "//////* Invalid Current User Password", szCurrentPassword )
+      //:// DisplayEntityInstance( mSubreg, "SubregOrganization" )
       //:MessageSend( ViewToWindow, "", "Change Subregistrant User Password",
-      //:             "Current password is not correct.",
+      //:             "Current password is incorrect.",
       //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Change Subregistrant User Password", "Current password is not correct.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      MessageSend( ViewToWindow, "", "Change Subregistrant User Password", "Current password is incorrect.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
       //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
       m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
       //:RETURN 2
@@ -3585,16 +3589,25 @@ ConfirmChangeSubregPassword( View     ViewToWindow )
 
    //:END
 
-   //:// szAttemptPassword = wWebXfer.Root.AttemptPassword
-   //:szConfirmPassword = wWebXfer.Root.ConfirmPassword
+   //:szAttemptPassword = wWebXfer.Root.AttemptPassword
    {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+   StringBuilder sb_szAttemptPassword;
+   if ( szAttemptPassword == null )
+      sb_szAttemptPassword = new StringBuilder( 32 );
+   else
+      sb_szAttemptPassword = new StringBuilder( szAttemptPassword );
+       GetVariableFromAttribute( sb_szAttemptPassword, mi_lTempInteger_1, 'S', 129, wWebXfer, "Root", "AttemptPassword", "", 0 );
+   lTempInteger_1 = mi_lTempInteger_1.intValue( );
+   szAttemptPassword = sb_szAttemptPassword.toString( );}
+   //:szConfirmPassword = wWebXfer.Root.ConfirmPassword
+   {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
    StringBuilder sb_szConfirmPassword;
    if ( szConfirmPassword == null )
       sb_szConfirmPassword = new StringBuilder( 32 );
    else
       sb_szConfirmPassword = new StringBuilder( szConfirmPassword );
-       GetVariableFromAttribute( sb_szConfirmPassword, mi_lTempInteger_1, 'S', 129, wWebXfer, "Root", "ConfirmPassword", "", 0 );
-   lTempInteger_1 = mi_lTempInteger_1.intValue( );
+       GetVariableFromAttribute( sb_szConfirmPassword, mi_lTempInteger_2, 'S', 129, wWebXfer, "Root", "ConfirmPassword", "", 0 );
+   lTempInteger_2 = mi_lTempInteger_2.intValue( );
    szConfirmPassword = sb_szConfirmPassword.toString( );}
 
    //:// 2: Ensure attempted password matches confirm password.

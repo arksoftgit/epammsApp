@@ -67,7 +67,7 @@ public int DoInputMapping( HttpServletRequest request,
       // grids on the same window with the same view we do not mess up the 
       // entity positions. 
       vGridTmp = mEPA.newView( );
-      csrRC = vGridTmp.cursor( "EPA_ApplicationType" ).setFirst(  );
+      csrRC = vGridTmp.cursor( "EPA_ApplicationType" ).setFirst( "EPA_ChemicalFamily" );
       while ( csrRC.isSet() )
       {
          lEntityKey = vGridTmp.cursor( "EPA_ApplicationType" ).getEntityKey( );
@@ -86,9 +86,9 @@ public int DoInputMapping( HttpServletRequest request,
                VmlOperation.CreateMessage( task, "GS_Select", "", strMapValue );
             else
                if ( strMapValue != null )
-                  vGridTmp.cursor( "EPA_AreaOfUse" ).getAttribute( "wkSelected" ).setValue( strMapValue, "" );
+                  vGridTmp.cursor( "EPA_ApplicationType" ).getAttribute( "wkSelected" ).setValue( strMapValue, "" );
                else
-                  vGridTmp.cursor( "EPA_AreaOfUse" ).getAttribute( "wkSelected" ).setValue( "", "" );
+                  vGridTmp.cursor( "EPA_ApplicationType" ).getAttribute( "wkSelected" ).setValue( "", "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -771,7 +771,7 @@ try
       
       View vGrid;
       vGrid = mEPA.newView( );
-      csrRC2 = vGrid.cursor( "EPA_ApplicationType" ).setFirst(  );
+      csrRC2 = vGrid.cursor( "EPA_ApplicationType" ).setFirst( "EPA_ChemicalFamily" );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
@@ -782,10 +782,10 @@ try
          strButtonName = "SelectButton" + strEntityKey;
 
          strGS_Select = "";
-         nRC = vGrid.cursor( "EPA_AreaOfUse" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGrid.cursor( "EPA_ApplicationType" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGS_Select = vGrid.cursor( "EPA_AreaOfUse" ).getAttribute( "wkSelected" ).getString( "" );
+            strGS_Select = vGrid.cursor( "EPA_ApplicationType" ).getAttribute( "wkSelected" ).getString( "" );
 
             if ( strGS_Select == null )
                strGS_Select = "";
@@ -803,10 +803,10 @@ try
          }
 
          strGE_AppType = "";
-         nRC = vGrid.cursor( "EPA_AreaOfUse" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGrid.cursor( "EPA_ApplicationType" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGE_AppType = vGrid.cursor( "EPA_AreaOfUse" ).getAttribute( "Name" ).getString( "" );
+            strGE_AppType = vGrid.cursor( "EPA_ApplicationType" ).getAttribute( "Name" ).getString( "" );
 
             if ( strGE_AppType == null )
                strGE_AppType = "";

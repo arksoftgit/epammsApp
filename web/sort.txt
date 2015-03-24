@@ -1,3 +1,0 @@
-Don - The proof of concept for sorting a table using drag and drop is attached.  If you log in as "Admin" "Admin" in the login screen,
-you will go to wSystemListPrimaryRegistrants.jsp.  You should be able to drag to sort the items in the list.  It wouldn't take much to
-incorporate what is needed to implement the drag/sort mechanism. Let me know if you have any questions.

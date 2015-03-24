@@ -1468,7 +1468,7 @@ dDisplayPathogenName( VIEW mSubLC BASED ON LOD mSubLC,
                DropView( mSubLC2 )
             END 
             szFootnoteNumber = mSubLC.MLC_UsageFootnote.wFootNoteRelativeNumber 
-            szCombinedName = szCombinedName + "<sub> (" + szFootnoteNumber + ")</sub>"
+            szCombinedName = szCombinedName + "<sup>" + szFootnoteNumber + "</sup>"
          END
       END
 

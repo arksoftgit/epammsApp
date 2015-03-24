@@ -109,21 +109,23 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/genjs/wSLCMarketingStatement.js</file>
+            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/wSLCMarketingStatement.jsp</file>
+            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/wMLCHumanHazard.jsp</file>
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/js/labeldesigner.js</file>
+            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/wMLCAddOrganismClaimsList.jsp</file>
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/js/jsoeUtils.js</file>
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/wSPLDGraphicalView.jsp</file>
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/wSystemDragDropSort.jsp</file>
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/genjs/wSPLDGraphicalView.js</file>
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/genjs/wStartUpUserLogin.js</file>
-            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/genjs/wSPLDSPLD_UpdateLLD.js</file>
-            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/genjs/wSPLDListSubregProducts.js</file>
-            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/genjs/wSPLDSubregProductUpdate.js</file>
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/wSPLDSPLD_UpdateLLD.jsp</file>
+            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/genjs/wSystemDragDropSort.js</file>
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/wMLCUpdateMasterProduct.jsp</file>
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/src/java/com/ajax/GraphicalLabelDesignerServlet.java</file>
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/wStartUpUserLogin.jsp</file>
-            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/genjs/wStartUpAdminListPrimRegUsers.js</file>
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/js/jsoe.js</file>
+            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/wSPLDDeleteSubregProduct.jsp</file>
         </group>
     </open-files>
 </project-private>

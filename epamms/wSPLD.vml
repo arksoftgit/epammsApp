@@ -99,11 +99,11 @@ InitListSubregProducts( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: GOTO_UpdateSubregProduct
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: GOTO_UpdateSubregProduct
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_UpdateSubregProduct( VIEW ViewToWindow )
 
@@ -132,11 +132,11 @@ GOTO_UpdateSubregProduct( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: GOTO_UpdateSubregProductSLC
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: GOTO_UpdateSubregProductSLC
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_UpdateSubregProductSLC( VIEW ViewToWindow )
 
@@ -174,11 +174,11 @@ GOTO_UpdateSubregProductSLC( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: DELETE_SubregProductSLC
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: DELETE_SubregProductSLC
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 DELETE_SubregProductSLC( VIEW ViewToWindow )
 
@@ -195,11 +195,11 @@ DELETE_SubregProductSLC( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: GOTO_NewSubregProductSLC
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: GOTO_NewSubregProductSLC
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_NewSubregProductSLC( VIEW ViewToWindow )
 
@@ -216,11 +216,11 @@ GOTO_NewSubregProductSLC( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: SELECT_MLC_ForNewSLC
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: SELECT_MLC_ForNewSLC
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 SELECT_MLC_ForNewSLC( VIEW ViewToWindow )
 
@@ -262,11 +262,11 @@ SELECT_MLC_ForNewSLC( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: SELECT_SLC_ForNewSPLD
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: SELECT_SLC_ForNewSPLD
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 SELECT_SLC_ForNewSPLD( VIEW ViewToWindow )
 
@@ -305,11 +305,11 @@ SELECT_SLC_ForNewSPLD( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: SaveSubregProduct
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: SaveSubregProduct
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 SaveSubregProduct( VIEW ViewToWindow )
 
@@ -327,11 +327,11 @@ SaveSubregProduct( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: CancelSubregProduct
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: CancelSubregProduct
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 CancelSubregProduct( VIEW ViewToWindow )
 
@@ -342,11 +342,11 @@ CancelSubregProduct( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: CancelSubregistrantLabelContent
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: CancelSubregistrantLabelContent
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 CancelSubregistrantLabelContent( VIEW ViewToWindow )
 
@@ -358,11 +358,11 @@ CancelSubregistrantLabelContent( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: REFRESH_SLC_FromMLC
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: REFRESH_SLC_FromMLC
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 REFRESH_SLC_FromMLC( VIEW ViewToWindow )
 
@@ -374,11 +374,11 @@ REFRESH_SLC_FromMLC( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: SelectMLC_ComponentsForSLC
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: SelectMLC_ComponentsForSLC
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 SelectMLC_ComponentsForSLC( VIEW ViewToWindow )
 
@@ -493,11 +493,11 @@ SelectMLC_ComponentsForSLC( VIEW ViewToWindow )
    
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: SaveSubregistrantLabelContent
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: SaveSubregistrantLabelContent
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 SaveSubregistrantLabelContent( VIEW ViewToWindow )
 
@@ -671,11 +671,11 @@ SaveSubregistrantLabelContent( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: DeleteMLC_ComponentsForSLC
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: DeleteMLC_ComponentsForSLC
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 DeleteMLC_ComponentsForSLC( VIEW ViewToWindow )
 
@@ -774,11 +774,11 @@ DeleteMLC_ComponentsForSLC( VIEW ViewToWindow )
    
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: RemoveMLC_UsageEntries
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: RemoveMLC_UsageEntries
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 RemoveMLC_UsageEntries( VIEW ViewToWindow )
 
@@ -793,11 +793,11 @@ RemoveMLC_UsageEntries( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: PostbuildSLC_Update
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: PostbuildSLC_Update
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 PostbuildSLC_Update( VIEW ViewToWindow )
 
@@ -816,11 +816,11 @@ PostbuildSLC_Update( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: SaveSPLD
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: SaveSPLD
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 SaveSPLD( VIEW ViewToWindow )
 
@@ -855,11 +855,11 @@ SaveSPLD( VIEW ViewToWindow )
    
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: SaveSPLD_AndReturn
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: SaveSPLD_AndReturn
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 SaveSPLD_AndReturn( VIEW ViewToWindow )
 
@@ -887,11 +887,11 @@ SaveSPLD_AndReturn( VIEW ViewToWindow )
    
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: CancelSPLD
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: CancelSPLD
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 CancelSPLD( VIEW ViewToWindow )
 
@@ -906,11 +906,11 @@ CancelSPLD( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: GOTO_UpdateSubregProductSPLD
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: GOTO_UpdateSubregProductSPLD
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_UpdateSubregProductSPLD( VIEW ViewToWindow )
 
@@ -974,11 +974,11 @@ TraceLineS( "$$$$$$ end of oper", "" )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: DeleteSubregProductSPLD
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: DeleteSubregProductSPLD
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 DeleteSubregProductSPLD( VIEW ViewToWindow )
 
@@ -995,11 +995,11 @@ DeleteSubregProductSPLD( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: DeletePanelEntry
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: DeletePanelEntry
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 DeletePanelEntry( VIEW ViewToWindow )
 
@@ -1015,11 +1015,11 @@ DeletePanelEntry( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: GOTO_AddPanelEntry
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: GOTO_AddPanelEntry
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_AddPanelEntry( VIEW ViewToWindow )
 
@@ -1031,11 +1031,11 @@ GOTO_AddPanelEntry( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: GOTO_UpdatePanelEntry
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: GOTO_UpdatePanelEntry
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_UpdatePanelEntry( VIEW ViewToWindow )
 /*
@@ -1101,11 +1101,11 @@ GOTO_UpdatePanelEntry( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: ACCEPT_SPLD_Panel
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: ACCEPT_SPLD_Panel
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 ACCEPT_SPLD_Panel( VIEW ViewToWindow )
 
@@ -1126,11 +1126,11 @@ ACCEPT_SPLD_Panel( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: SELECT_MarketingSectionForBlock
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: SELECT_MarketingSectionForBlock
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 SELECT_MarketingSectionForBlock( VIEW ViewToWindow )
 
@@ -1168,11 +1168,11 @@ SELECT_MarketingSectionForBlock( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: GENERATE_SPLD_Label
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: GENERATE_SPLD_Label
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GENERATE_SPLD_Label( VIEW ViewToWindow )
 
@@ -1235,11 +1235,11 @@ GENERATE_SPLD_Label( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: GENERATE_SPLD_LabelDottedBorders
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: GENERATE_SPLD_LabelDottedBorders
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GENERATE_SPLD_LabelDottedBorders( VIEW ViewToWindow )
 
@@ -1266,7 +1266,7 @@ GENERATE_SPLD_LabelDottedBorders( VIEW ViewToWindow )
       NAME VIEW mSPLDefPanel "mSPLDefPanel"
    END
    
-   // Generate the label using LLD and SLC data defined in mSPLDef.	 
+   // Generate the label using LLD and SLC data defined in mSPLDef.    
    mSPLDefPanel.SubregPhysicalLabelDef.wFormatWithDottedBorders = "Y"
    nRC = GeneratePDF_Label( mSPLDefPanel )
    IF nRC = 2
@@ -1303,11 +1303,11 @@ GENERATE_SPLD_LabelDottedBorders( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: GENERATE_LLD_FromSPLD
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: GENERATE_LLD_FromSPLD
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GENERATE_LLD_FromSPLD( VIEW ViewToWindow )
 
@@ -1387,11 +1387,11 @@ GENERATE_LLD_FromSPLD( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: BACKUP_Objects
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: BACKUP_Objects
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 BACKUP_Objects( VIEW ViewToWindow )
 
@@ -1425,11 +1425,11 @@ BACKUP_Objects( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: ExecuteJOE_Test1
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: ExecuteJOE_Test1
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 ExecuteJOE_Test1( VIEW ViewToWindow )
 
@@ -1551,11 +1551,11 @@ ExecuteJOE_Test1( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: ExecuteJOE_Test2
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: ExecuteJOE_Test2
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 ExecuteJOE_Test2( VIEW ViewToWindow )
 
@@ -1701,11 +1701,11 @@ ExecuteJOE_Test2( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: DELETE_LLD
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: DELETE_LLD
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 DELETE_LLD( VIEW ViewToWindow )
 
@@ -1722,11 +1722,11 @@ DELETE_LLD( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: SELECT_LLD_ForSPLD
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: SELECT_LLD_ForSPLD
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 SELECT_LLD_ForSPLD( VIEW ViewToWindow )
 
@@ -1785,11 +1785,11 @@ SELECT_LLD_ForSPLD( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: REFRESH_SPLD_FromSLC
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: REFRESH_SPLD_FromSLC
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 REFRESH_SPLD_FromSLC( VIEW ViewToWindow )
 
@@ -1804,11 +1804,11 @@ REFRESH_SPLD_FromSLC( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: ACCEPT_SPLD_StatementUpdate
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: ACCEPT_SPLD_StatementUpdate
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 ACCEPT_SPLD_StatementUpdate( VIEW ViewToWindow )
 
@@ -1881,11 +1881,11 @@ TraceLineS( "$$$$ Set Continuation", "" )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: GOTO_UpdateSPLD_Statement
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: GOTO_UpdateSPLD_Statement
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_UpdateSPLD_Statement( VIEW ViewToWindow )
 
@@ -1897,11 +1897,11 @@ GOTO_UpdateSPLD_Statement( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: SPLIT_StatementForContinuation
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: SPLIT_StatementForContinuation
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 SPLIT_StatementForContinuation( VIEW ViewToWindow )
 
@@ -1949,11 +1949,11 @@ SPLIT_StatementForContinuation( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: CLEAN_ClaimEntries
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: CLEAN_ClaimEntries
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 CLEAN_ClaimEntries( VIEW ViewToWindow )
 
@@ -1975,11 +1975,11 @@ CLEAN_ClaimEntries( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: CLEAN_SPLD_Data
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: CLEAN_SPLD_Data
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 CLEAN_SPLD_Data( VIEW ViewToWindow )
 
@@ -2025,11 +2025,11 @@ CLEAN_SPLD_Data( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: PostbuildBlockDefinitionUpdate
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: PostbuildBlockDefinitionUpdate
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 PostbuildBlockDefinitionUpdate( VIEW ViewToWindow )
 
@@ -2041,11 +2041,11 @@ PostbuildBlockDefinitionUpdate( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: ACCEPT_BlockSpecialFormat
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: ACCEPT_BlockSpecialFormat
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 ACCEPT_BlockSpecialFormat( VIEW ViewToWindow )
 /*
@@ -2058,11 +2058,11 @@ ACCEPT_BlockSpecialFormat( VIEW ViewToWindow )
 */
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: CANCEL_BlockSpecialFormat
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: CANCEL_BlockSpecialFormat
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 CANCEL_BlockSpecialFormat( VIEW ViewToWindow )
 /*
@@ -2072,11 +2072,11 @@ CANCEL_BlockSpecialFormat( VIEW ViewToWindow )
 */
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: GOTO_NewSpecialFormatDefinition
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: GOTO_NewSpecialFormatDefinition
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_NewSpecialFormatDefinition( VIEW ViewToWindow )
 /*
@@ -2088,11 +2088,11 @@ GOTO_NewSpecialFormatDefinition( VIEW ViewToWindow )
 */   
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: GOTO_UpdateBlockComponent
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: GOTO_UpdateBlockComponent
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_UpdateBlockComponent( VIEW ViewToWindow )
 
@@ -2140,11 +2140,11 @@ GOTO_UpdateBlockComponent( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: DELETE_BlockComponentEntry
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: DELETE_BlockComponentEntry
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 DELETE_BlockComponentEntry( VIEW ViewToWindow )
 
@@ -2163,11 +2163,11 @@ DELETE_BlockComponentEntry( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: GOTO_AddBlockComponent
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: GOTO_AddBlockComponent
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_AddBlockComponent( VIEW ViewToWindow )
 
@@ -2185,11 +2185,11 @@ GOTO_AddBlockComponent( VIEW ViewToWindow )
    
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: GOTO_AddSubBlockComponent
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: GOTO_AddSubBlockComponent
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_AddSubBlockComponent( VIEW ViewToWindow )
 
@@ -2219,11 +2219,11 @@ GOTO_AddSubBlockComponent( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: ACCEPT_BlockSubBlockDefinition
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: ACCEPT_BlockSubBlockDefinition
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 ACCEPT_BlockSubBlockDefinition( VIEW ViewToWindow )
 /*
@@ -2260,11 +2260,11 @@ ACCEPT_BlockSubBlockDefinition( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: CANCEL_BlockSubBlockDefinition
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: CANCEL_BlockSubBlockDefinition
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 CANCEL_BlockSubBlockDefinition( VIEW ViewToWindow )
 
@@ -2282,11 +2282,11 @@ CANCEL_BlockSubBlockDefinition( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: PostbuildBlockSpecialFormatDef
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: PostbuildBlockSpecialFormatDef
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 PostbuildBlockSpecialFormatDef( VIEW ViewToWindow )
 
@@ -2299,11 +2299,11 @@ PostbuildBlockSpecialFormatDef( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: CONTINUE_BlockSubBlockDefAdd
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: CONTINUE_BlockSubBlockDefAdd
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 CONTINUE_BlockSubBlockDefAdd( VIEW ViewToWindow )
 
@@ -2329,11 +2329,11 @@ CONTINUE_BlockSubBlockDefAdd( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: DELETE_SpecialFormatDef
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: DELETE_SpecialFormatDef
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 DELETE_SpecialFormatDef( VIEW ViewToWindow )
 
@@ -2344,11 +2344,11 @@ DELETE_SpecialFormatDef( VIEW ViewToWindow )
 END
 
 
-/*************************************************************************************************
-**    
-**    OPERATION: TestLocking
-**    
-*************************************************************************************************/
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: TestLocking
+//
+////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 TestLocking( VIEW ViewToWindow )
 
@@ -2366,5 +2366,221 @@ TestLocking( VIEW ViewToWindow )
    
    //ACTIVATE ZPLOCKO Multiple
    //NAME VIEW ZPLOCKO "ZPLOCKO2"
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: CancelDeleteSubregProduct
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+CancelDeleteSubregProduct( VIEW ViewToWindow )
+
+// VIEW mSubProd REGISTERED AS mSubProd
+
+// DropObjectInstance( mSubProd )
+
+END
+
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: DeleteSubregProduct
+//
+////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+DeleteSubregProduct( VIEW ViewToWindow )
+
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: ConfirmDeleteSubregProduct
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+ConfirmDeleteSubregProduct( VIEW ViewToWindow )
+
+   VIEW mSubreg REGISTERED AS mSubreg
+   INTEGER lID
+   SHORT   nRC
+
+   GET VIEW mSubreg NAMED "mSubreg"
+   lID = mSubreg.Subregistrant.ID
+
+   DELETE ENTITY mSubreg.SubregProduct
+   COMMIT mSubreg
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: InitSPLD_ForDelete
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+InitSPLD_ForDelete( VIEW ViewToWindow )
+
+
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: CreateSLC
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+CreateSLC( VIEW ViewToWindow )
+
+   VIEW mMasLC  BASED ON LOD mMasLC
+   VIEW mSubLC  BASED ON LOD mSubLC
+   VIEW mSubLC2 BASED ON LOD mSubLC
+   VIEW mSPLDef BASED ON LOD mSPLDef
+
+   ACTIVATE mMasLC WHERE mMasLC.MasterLabelContent.ID = mSubreg.PrimaryRegistrant.????2
+   NAME VIEW mMasLC "mMasLC"
+
+   ACTIVATE mSubLC EMPTY
+   NAME VIEW mSubLC "mSubLC"
+
+   CREATE ENTITY mSubLC.SubregLabelContent
+
+   // General Section
+   FOR EACH mMasLC.M_GeneralSection
+      CREATE ENTITY mSubLC.S_GeneralSection
+      SetMatchingAttributesByName( mSubLC, "S_GeneralSection", mMasLC, "M_GeneralSection", zSET_NULL )
+      INCLUDE mSubLC.M_GeneralSection FROM mMasLC.M_GeneralSection
+      FOR EACH mMasLC.M_GeneralStatement
+         CREATE ENTITY mSubLC.S_GeneralStatement
+         SetMatchingAttributesByName( mSubLC, "S_GeneralStatement", mMasLC, "M_GeneralStatement", zSET_NULL )
+         INCLUDE mSubLC.M_GeneralStatement FROM mMasLC.M_GeneralStatement
+      END
+   END
+
+   // Ingredients Section
+   FOR EACH mMasLC.M_IngredientsSection
+      CREATE ENTITY mSubLC.S_IngredientsSection
+      SetMatchingAttributesByName( mSubLC, "S_IngredientsSection", mMasLC, "M_IngredientsSection", zSET_NULL )
+      INCLUDE mSubLC.M_IngredientsSection FROM mMasLC.M_IngredientsSection
+      FOR EACH mMasLC.M_IngredientsStatement
+         CREATE ENTITY mSubLC.S_IngredientsStatement
+         SetMatchingAttributesByName( mSubLC, "S_IngredientsStatement", mMasLC, "M_IngredientsStatement", zSET_NULL )
+         INCLUDE mSubLC.M_IngredientsStatement FROM mMasLC.M_IngredientsStatement
+      END
+   END
+
+   // StorageDisposal Section
+   FOR EACH mMasLC.M_StorageDisposalSection
+      CREATE ENTITY mSubLC.S_StorageDisposalSection
+      SetMatchingAttributesByName( mSubLC, "S_StorageDisposalSection", mMasLC, "M_StorageDisposalSection", zSET_NULL )
+      INCLUDE mSubLC.M_StorageDisposalSection FROM mMasLC.M_StorageDisposalSection
+      FOR EACH mMasLC.M_StorageDisposalStatement
+         CREATE ENTITY mSubLC.S_StorageDisposalStatement
+         SetMatchingAttributesByName( mSubLC, "S_StorageDisposalStatement", mMasLC, "M_StorageDisposalStatement", zSET_NULL )
+         INCLUDE mSubLC.M_StorageDisposalStatement FROM mMasLC.M_StorageDisposalStatement
+      END
+   END
+
+   // DirectionsForUse Section
+   FOR EACH mMasLC.M_DirectionsForUseSection
+      CREATE ENTITY mSubLC.S_DirectionsForUseSection
+      SetMatchingAttributesByName( mSubLC, "S_DirectionsForUseSection", mMasLC, "M_DirectionsForUseSection", zSET_NULL )
+      INCLUDE mSubLC.M_DirectionsForUseSection FROM mMasLC.M_DirectionsForUseSection
+      FOR EACH mMasLC.M_DirectionsForUseStatement
+         CREATE ENTITY mSubLC.S_DirectionsForUseStatement
+         SetMatchingAttributesByName( mSubLC, "S_DirectionsForUseStatement", mMasLC, "M_DirectionsForUseStatement", zSET_NULL )
+         INCLUDE mSubLC.M_DirectionsForUseStatement FROM mMasLC.M_DirectionsForUseStatement
+      END
+   END
+
+   // Marketing Section
+   FOR EACH mMasLC.M_MarketingSection
+      CREATE ENTITY mSubLC.S_MarketingSection
+      SetMatchingAttributesByName( mSubLC, "S_MarketingSection", mMasLC, "M_MarketingSection", zSET_NULL )
+      INCLUDE mSubLC.M_MarketingSection FROM mMasLC.M_MarketingSection
+      FOR EACH mMasLC.M_MarketingStatement
+         CREATE ENTITY mSubLC.S_MarketingStatement
+         SetMatchingAttributesByName( mSubLC, "S_MarketingStatement", mMasLC, "M_MarketingStatement", zSET_NULL )
+         INCLUDE mSubLC.M_MarketingStatement FROM mMasLC.M_MarketingStatement
+      END
+   END
+
+   // HumanHazard Section
+   FOR EACH mMasLC.M_HumanHazardSection
+      CREATE ENTITY mSubLC.S_HumanHazardSection
+      SetMatchingAttributesByName( mSubLC, "S_HumanHazardSection", mMasLC, "M_HumanHazardSection", zSET_NULL )
+      INCLUDE mSubLC.M_HumanHazardSection FROM mMasLC.M_HumanHazardSection
+   END
+
+   // Usage Section
+   FOR EACH mMasLC.M_Usage
+      CREATE ENTITY mSubLC.S_Usage
+      SetMatchingAttributesByName( mSubLC, "S_Usage", mMasLC, "M_Usage", zSET_NULL )
+      INCLUDE mSubLC.M_Usage FROM mMasLC.M_Usage
+   END
+
+   // Eliminate any duplicate Usages.
+   /*CreateViewFromView( mSubLC2, mSubLC )
+   FOR EACH mSubLC.S_Usage
+      SET CURSOR FIRST mSubLC2.S_Usage
+                 WHERE mSubLC2.S_Usage.UsageType = mSubLC.S_Usage.UsageType
+                   AND mSubLC2.S_Usage.Name = mSubLC.S_Usage.Name
+                   AND mSubLC2.S_Usage.ID  != mSubLC.S_Usage.ID
+      IF RESULT >= zCURSOR_SET
+         IssueError( ViewToWindow, 0, 0, mSubLC.S_Usage.Name )
+         DELETE ENTITY mSubLC2.S_Usage NONE
+      END
+   END
+   DropView( mSubLC2 )*/
+
+   // DirectionsForUse Usage
+   FOR EACH mMasLC.M_DirectionsForUseSection
+      SET CURSOR FIRST mSubLC.S_DirectionsForUseSection
+                 WHERE mSubLC.S_DirectionsForUseSection.Title = mMasLC.M_DirectionsForUseSection.Title
+      FOR EACH mMasLC.M_DirectionsUsage
+         CreateViewFromView( mSubLC2, mSubLC )
+         SET CURSOR FIRST mSubLC2.S_DirectionsUsage
+                    WHERE mSubLC2.S_DirectionsUsage.UsageType = mMasLC.M_DirectionsUsage.UsageType
+                      AND mSubLC2.S_DirectionsUsage.Name = mMasLC.M_DirectionsUsage.Name
+         IF RESULT < zCURSOR_SET
+            SET CURSOR FIRST mSubLC.S_Usage WHERE mSubLC.S_Usage.Name = mMasLC.M_DirectionsUsage.Name
+                                              AND mSubLC.S_Usage.UsageType = mMasLC.M_DirectionsUsage.UsageType
+            IF RESULT < zCURSOR_SET
+               IssueError( ViewToWindow, 0, 0, "Programming Error 1" )
+            END
+            INCLUDE mSubLC.S_DirectionsUsage FROM mSubLC.S_Usage
+         END
+         DropView( mSubLC2 )
+      END
+   END
+
+   // Marketing Usage
+   FOR EACH mMasLC.M_MarketingSection
+      SET CURSOR FIRST mSubLC.S_MarketingSection
+                 WHERE mSubLC.S_MarketingSection.Title = mMasLC.M_MarketingSection.Title
+      FOR EACH mMasLC.M_MarketingUsage
+         CreateViewFromView( mSubLC2, mSubLC )
+         SET CURSOR FIRST mSubLC2.S_MarketingUsage
+                    WHERE mSubLC2.S_MarketingUsage.UsageType = mMasLC.M_MarketingUsage.UsageType
+                      AND mSubLC2.S_MarketingUsage.Name = mMasLC.M_MarketingUsage.Name
+         IF RESULT < zCURSOR_SET
+            SET CURSOR FIRST mSubLC.S_Usage WHERE mSubLC.S_Usage.Name = mMasLC.M_MarketingUsage.Name
+                                                 AND mSubLC.S_Usage.UsageType = mMasLC.M_MarketingUsage.UsageType
+            IF RESULT < zCURSOR_SET
+               IssueError( ViewToWindow, 0, 0, "Programming Error 1" )
+            END
+            INCLUDE mSubLC.S_MarketingUsage FROM mSubLC.S_Usage
+         END
+         DropView( mSubLC2 )
+      END
+   END
+
+   IssueError( ViewToWindow, 0, 0, "Before Commit" )
+   //COMMIT mSubLC
+   IF RESULT < 0
+      IssueError( ViewToWindow, 0, 0, "Database Write Error" )
+   END
 
 END
