@@ -176,6 +176,21 @@ function GenerateLabelBorders( )
    }
 }
 
+function GOTO_UpdateBlockComponent( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSPLDGraphicalView.zAction.value = "GOTO_UpdateBlockComponent";
+      document.wSPLDGraphicalView.submit( );
+   }
+}
+
 function ReturnUpdateLLD( )
 {
 
@@ -191,22 +206,7 @@ function ReturnUpdateLLD( )
    }
 }
 
-function GOTO_UpdateBlockComponent()
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) === false )
-   {
-      _DisableFormElements( true );
-
-      document.wSPLDGraphicalView.zAction.value = "GOTO_UpdateBlockComponent";
-      document.wSPLDGraphicalView.submit( );
-   }
-}
-
-function GOTO_DisplaySPLD_Components( )
+function SaveUpdateLLD( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -216,7 +216,8 @@ function GOTO_DisplaySPLD_Components( )
    {
       _DisableFormElements( true );
 
-      document.wSPLDGraphicalView.zAction.value = "GOTO_DisplaySPLD_Components";
+      document.wSPLDGraphicalView.zAction.value = "SaveUpdateLLD";
       document.wSPLDGraphicalView.submit( );
    }
 }
+

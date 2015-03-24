@@ -148,92 +148,13 @@ if ( strActionToProcess != null )
          mMsgQ.setView( null );
          vMsgQ.drop( );
       }
-   }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_UpdateBlockComponent" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDSPLD_PanelUpdate", strActionToProcess );
-/*
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Position on the entity that was selected in the grid.
-      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
-      View mSPLDef;
-      mSPLDef = task.getViewByName( "mSPLDef" );
-      if ( VmlOperation.isValid( mSPLDef ) )
-      {
-         lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mSPLDef.cursor( "BlockSubBlockComponent" ).setByEntityKey( lEKey );
-         if ( !csrRC.isSet() )
-         {
-            boolean bFound = false;
-            csrRCk = mSPLDef.cursor( "BlockSubBlockComponent" ).setFirst( );
-            while ( csrRCk.isSet() && !bFound )
-            {
-               lEKey = mSPLDef.cursor( "BlockSubBlockComponent" ).getEntityKey( );
-               strKey = Long.toString( lEKey );
-               if ( StringUtils.equals( strKey, strEntityKey ) )
-               {
-                  // Stop while loop because we have positioned on the correct entity.
-                  bFound = true;
-               }
-               else
-                  csrRCk = mSPLDef.cursor( "BlockSubBlockComponent" ).setNextContinue( );
-            } // Grid
-         }
-      }
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_PanelUpdate.jsp", "wSPLD.GOTO_UpdateBlockComponent" );
-      try
-      {
-         nOptRC = wSPLD.GOTO_UpdateBlockComponent( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation GOTO_UpdateBlockComponent: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSPLD.GetWebRedirection( vKZXMLPGO );
-      }
-*/
-   // if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_StartModalSubwindow, "wSPLD", "SPLD_BlockDefinitionUpdate" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
    }
 
    while ( bDone == false && StringUtils.equals( strActionToProcess, "GenerateLabel" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDGraphicalView", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
 
       // Action Operation
       nRC = 0;
@@ -268,11 +189,6 @@ if ( strActionToProcess != null )
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDGraphicalView", strActionToProcess );
 
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDGraphicalView.jsp", "wSPLD.GENERATE_SPLD_LabelDottedBorders" );
@@ -301,6 +217,18 @@ if ( strActionToProcess != null )
       break;
    }
 
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_UpdateBlockComponent" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDGraphicalView", strActionToProcess );
+
+      // Next Window
+      strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_StartModalSubwindow, "wSPLD", "SPLD_BlockDefinitionUpdate" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
    while ( bDone == false && StringUtils.equals( strActionToProcess, "ReturnUpdateLLD" ) )
    {
       bDone = true;
@@ -308,6 +236,18 @@ if ( strActionToProcess != null )
 
       // Next Window
       strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_ReturnToParent, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "SaveUpdateLLD" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDGraphicalView", strActionToProcess );
+
+      // Next Window
+      strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_StayOnWindowWithRefresh, "", "" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -787,9 +727,11 @@ else
                <button id="ah" class="zalign">Abut Horizontal</button>
                <button id="av" class="zalign">Abut Vertical</button> 
 
-               <button id="ReturnUpdateLLD" class="zalign">Return</button>
-               <button id="GenerateLabel" class="zalign">Generate Label</button>
-               <button id="GenerateLabelBorders" class="zalign">Generate Label with Borders</button>
+               <button id="ReturnUpdateLLD">Save and Return</button>
+               <button id="SaveUpdateLLD">Save</button>
+               <button id="GenerateSPLD_Label">Generate Label</button>
+               <button id="GenerateSPLD_LabelBorders">Generate Label with Borders</button>
+               <button id="UpdateBlockComponent">Update Current Block</button>
             </div> <!-- ztoolbar -->
             <img src="./images/epamms.jpg" width="64" height="25" alt="ePamms" style="margin:5px; float:right; border-style:double;">
             &nbsp;&nbsp;
@@ -1173,15 +1115,18 @@ else
 <form name="wSPLDGraphicalView" id="wSPLDGraphicalView" method="post">
    <input name="zAction" id="zAction" type="hidden" value="NOVALUE">
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
+
 <%
    strOpenFile = VmlOperation.FindOpenFile( task );
 %>
+
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zErrorFlag" id="zErrorFlag" type="hidden" value="<%=strErrorFlag%>">
    <input name="zTimeout" id="zTimeout" type="hidden" value="300">
    <input name="zError" id="zError" type="hidden" value="<%=strErrorMsg%>">
+
 </form>
 </div>  <!-- This is the end tag for wrapper -->
 

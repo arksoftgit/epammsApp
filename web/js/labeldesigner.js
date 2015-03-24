@@ -1359,14 +1359,33 @@ $(function() {
       ReturnUpdateLLD();
    });
 
-   $("#GenerateLabel").click( function() {
+   $("#SaveUpdateLLD").click( function() {
+      saveLabel();
+      SaveUpdateLLD();
+   });
+
+   $("#GenerateSPLD_Label").click( function() {
       saveLabel();
       GenerateLabel();
    });
 
-   $("#GenerateLabelBorders").click( function() {
+   $("#GenerateSPLD_LabelBorders").click( function() {
       saveLabel();
       GenerateLabelBorders();
+   });
+
+   $("#UpdateBlockComponent").click( function() {
+      saveLabel();
+      if ( g_$current_block ) {
+         g_loadedLLD = "mSPLDef";
+         if ( g_updatedLLD ) {
+            ConvertWysiwygLabelDesignToZeidonJson( "saveLabel", g_loadedLLD, saveLabelCallback, this );
+         } else {
+            saveLabelCallback( g_$current_block );
+         }
+      } else {
+         alert( "No block selected" );
+      }
    });
 
    var $ZoomSpinner = $("#zZoomSpinner").spinner();
