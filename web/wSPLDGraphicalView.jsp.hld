@@ -727,11 +727,11 @@ else
                <button id="ah" class="zalign">Abut Horizontal</button>
                <button id="av" class="zalign">Abut Vertical</button> 
 
-               <button id="ReturnUpdateLLD" class="zalign">Save and Return</button>
-               <button id="SaveUpdateLLD" class="zalign">Save</button>
-               <button id="GenerateSPLD_Label" class="zalign">Generate Label</button>
-               <button id="GenerateSPLD_LabelBorders" class="zalign">Generate Label with Borders</button>
-               <button id="UpdateBlockComponent" class="zalign">Update Current Block</button>
+               <button id="ReturnUpdateLLD">Save and Return</button>
+               <button id="SaveUpdateLLD">Save</button>
+               <button id="GenerateSPLD_Label">Generate Label</button>
+               <button id="GenerateSPLD_LabelBorders">Generate Label with Borders</button>
+               <button id="UpdateBlockComponent">Update Current Block</button>
             </div> <!-- ztoolbar -->
             <img src="./images/epamms.jpg" width="64" height="25" alt="ePamms" style="margin:5px; float:right; border-style:double;">
             &nbsp;&nbsp;
@@ -777,6 +777,13 @@ else
                      &nbsp;
                      <br>
                      <br>
+                     <div>Double-click block to update the selected block</div><br>
+                     <div>Ctrl+Arrow to size selected block</div><br>
+                     <div>Shift+Arrow to move selected block</div><br>
+                     &nbsp;
+                     &nbsp;
+                     &nbsp;
+                     &nbsp;
                      <br>
                      <br>
                      <div>

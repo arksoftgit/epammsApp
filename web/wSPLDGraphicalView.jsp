@@ -777,6 +777,13 @@ else
                      &nbsp;
                      <br>
                      <br>
+                     <div>Double-click block to update the selected block</div><br>
+                     <div>Ctrl+Arrow to size selected block</div><br>
+                     <div>Shift+Arrow to move selected block</div><br>
+                     &nbsp;
+                     &nbsp;
+                     &nbsp;
+                     &nbsp;
                      <br>
                      <br>
                      <div>
