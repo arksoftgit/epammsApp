@@ -305,7 +305,7 @@ dDisplayUsageName( VIEW mSubLC BASED ON LOD mSubLC,
                DropView( mSubLC2 )
             END 
             szFootnoteNumber = mSubLC.MLC_UsageFootnote.wFootNoteRelativeNumber 
-            szCombinedName = szCombinedName + "<sub> (" + szFootnoteNumber + ")</sub>"
+            szCombinedName = szCombinedName + "<sup> " + szFootnoteNumber + "</sup>"
          END
       END
 
@@ -537,11 +537,15 @@ BuildSLC_FromMLC( VIEW NewSLC    BASED ON LOD mSubLC,
    END
 
    // Usage Entries ... Surface, Application Type, Area of Use, Organism Claim
-   FOR EACH SourceMLC.M_Usage
-      CREATE ENTITY NewSLC.S_Usage
-      SetMatchingAttributesByName( NewSLC, "S_Usage", SourceMLC, "M_Usage", zSET_NULL )
-      INCLUDE NewSLC.M_Usage FROM SourceMLC.M_Usage
-      TraceLineI( "#### Build S_Usage: ", NewSLC.M_Usage.ID )
+   FOR EACH SourceMLC.M_UsageType
+      CREATE ENTITY NewSLC.S_UsageType
+      SetMatchingAttributesByName( NewSLC, "S_UsageType", SourceMLC, "M_UsageType", zSET_NULL )
+      FOR EACH SourceMLC.M_Usage
+         CREATE ENTITY NewSLC.S_Usage
+         SetMatchingAttributesByName( NewSLC, "S_Usage", SourceMLC, "M_Usage", zSET_NULL )
+         INCLUDE NewSLC.M_Usage FROM SourceMLC.M_Usage
+         TraceLineI( "#### Build S_Usage: ", NewSLC.M_Usage.ID )
+      END
    END
 
    // General Section ... Precautionary, First Aid, Other Hazard
@@ -1468,7 +1472,7 @@ dDisplayPathogenName( VIEW mSubLC BASED ON LOD mSubLC,
                DropView( mSubLC2 )
             END 
             szFootnoteNumber = mSubLC.MLC_UsageFootnote.wFootNoteRelativeNumber 
-            szCombinedName = szCombinedName + "<sup>" + szFootnoteNumber + "</sup>"
+            szCombinedName = szCombinedName + "<sup> " + szFootnoteNumber + "</sup>"
          END
       END
 

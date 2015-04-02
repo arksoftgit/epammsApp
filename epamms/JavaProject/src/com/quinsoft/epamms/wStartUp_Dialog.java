@@ -1421,24 +1421,6 @@ o_fnLocalBuildQual_6( View     vSubtask,
 } 
 
 
-private int 
-o_fnLocalBuildQual_0( View     vSubtask,
-                      zVIEW    vQualObject )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "ePamms" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "ePamms" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Value", "1" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
 //:DIALOG OPERATION
 //:CancelNewAdministrator( VIEW ViewToWindow )
 
@@ -8230,6 +8212,24 @@ SelectSubregUserForUpdate( View     ViewToWindow )
 
    return( 0 );
 // END
+} 
+
+
+private int 
+o_fnLocalBuildQual_0( View     vSubtask,
+                      zVIEW    vQualObject )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "ePamms" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "ePamms" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Value", "1" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
 } 
 
 

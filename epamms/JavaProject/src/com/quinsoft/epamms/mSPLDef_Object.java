@@ -7198,13 +7198,13 @@ omSPLDef_GeneratePDF_ClmList( View     mSPLDef,
                                GetVariableFromAttribute( sb_szFootnoteNumber, mi_lTempInteger_7, 'S', 4, mSPLDef, "M_UsageFootnote", "wFootNoteRelativeNumber", "", 0 );
                lTempInteger_7 = mi_lTempInteger_7.intValue( );
                szFootnoteNumber = sb_szFootnoteNumber.toString( );}
-               //:szCombinedName = szCombinedName + "<sub> (" + szFootnoteNumber + ")</sub>"
+               //:szCombinedName = szCombinedName + "<sup> " + szFootnoteNumber + "</sup>"
                 {StringBuilder sb_szCombinedName;
                if ( szCombinedName == null )
                   sb_szCombinedName = new StringBuilder( 32 );
                else
                   sb_szCombinedName = new StringBuilder( szCombinedName );
-                              ZeidonStringConcat( sb_szCombinedName, 1, 0, "<sub> (", 1, 0, 101 );
+                              ZeidonStringConcat( sb_szCombinedName, 1, 0, "<sup> ", 1, 0, 101 );
                szCombinedName = sb_szCombinedName.toString( );}
                 {StringBuilder sb_szCombinedName;
                if ( szCombinedName == null )
@@ -7218,7 +7218,7 @@ omSPLDef_GeneratePDF_ClmList( View     mSPLDef,
                   sb_szCombinedName = new StringBuilder( 32 );
                else
                   sb_szCombinedName = new StringBuilder( szCombinedName );
-                              ZeidonStringConcat( sb_szCombinedName, 1, 0, ")</sub>", 1, 0, 101 );
+                              ZeidonStringConcat( sb_szCombinedName, 1, 0, "</sup>", 1, 0, 101 );
                szCombinedName = sb_szCombinedName.toString( );}
             } 
 
@@ -7448,13 +7448,13 @@ omSPLDef_GeneratePDF_ClmList( View     mSPLDef,
              GetVariableFromAttribute( sb_szFootnoteNumber, mi_lTempInteger_10, 'S', 4, mSPLDef, "M_UsageFootnote", "wFootNoteRelativeNumber", "", 0 );
       lTempInteger_10 = mi_lTempInteger_10.intValue( );
       szFootnoteNumber = sb_szFootnoteNumber.toString( );}
-      //:szFootnoteText = "<sub> (" + szFootnoteNumber + ")</sub>" + mSPLDef.M_UsageFootnote.Text 
+      //:szFootnoteText = "<sup> " + szFootnoteNumber + "</sup>" + mSPLDef.M_UsageFootnote.Text 
        {StringBuilder sb_szFootnoteText;
       if ( szFootnoteText == null )
          sb_szFootnoteText = new StringBuilder( 32 );
       else
          sb_szFootnoteText = new StringBuilder( szFootnoteText );
-            ZeidonStringCopy( sb_szFootnoteText, 1, 0, "<sub> (", 1, 0, 101 );
+            ZeidonStringCopy( sb_szFootnoteText, 1, 0, "<sup> ", 1, 0, 101 );
       szFootnoteText = sb_szFootnoteText.toString( );}
        {StringBuilder sb_szFootnoteText;
       if ( szFootnoteText == null )
@@ -7468,7 +7468,7 @@ omSPLDef_GeneratePDF_ClmList( View     mSPLDef,
          sb_szFootnoteText = new StringBuilder( 32 );
       else
          sb_szFootnoteText = new StringBuilder( szFootnoteText );
-            ZeidonStringConcat( sb_szFootnoteText, 1, 0, ")</sub>", 1, 0, 101 );
+            ZeidonStringConcat( sb_szFootnoteText, 1, 0, "</sup>", 1, 0, 101 );
       szFootnoteText = sb_szFootnoteText.toString( );}
       {MutableInt mi_lTempInteger_11 = new MutableInt( lTempInteger_11 );
       StringBuilder sb_szTempString_1;
@@ -10094,7 +10094,7 @@ omSPLDef_dPrimRegNameID( View     mSPLDef,
                   sb_szTempString_0 = new StringBuilder( 32 );
                else
                   sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_2, 'S', 129, mSPLDef, "PrimaryRegistrant", "EPA_CompanyNumber", "", 0 );
+                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_2, 'S', 7, mSPLDef, "PrimaryRegistrant", "EPA_CompanyNumber", "", 0 );
                lTempInteger_2 = mi_lTempInteger_2.intValue( );
                szTempString_0 = sb_szTempString_0.toString( );}
                 {StringBuilder sb_szString;
@@ -10207,7 +10207,7 @@ omSPLDef_dSubregNameID( View     mSPLDef,
                   sb_szTempString_0 = new StringBuilder( 32 );
                else
                   sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_2, 'S', 129, mSPLDef, "Subregistrant", "EPA_CompanyNumber", "", 0 );
+                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_2, 'S', 7, mSPLDef, "Subregistrant", "EPA_CompanyNumber", "", 0 );
                lTempInteger_2 = mi_lTempInteger_2.intValue( );
                szTempString_0 = sb_szTempString_0.toString( );}
                 {StringBuilder sb_szString;
@@ -12000,7 +12000,7 @@ omSPLDef_dMasterProductNameNbr( View     mSPLDef,
                sb_szTempString_0 = new StringBuilder( 32 );
             else
                sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                         GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_1, 'S', 129, mSPLDef, "PrimaryRegistrant", "EPA_CompanyNumber", "", 0 );
+                         GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_1, 'S', 7, mSPLDef, "PrimaryRegistrant", "EPA_CompanyNumber", "", 0 );
             lTempInteger_1 = mi_lTempInteger_1.intValue( );
             szTempString_0 = sb_szTempString_0.toString( );}
              {StringBuilder sb_szString;
@@ -12023,7 +12023,7 @@ omSPLDef_dMasterProductNameNbr( View     mSPLDef,
                sb_szTempString_1 = new StringBuilder( 32 );
             else
                sb_szTempString_1 = new StringBuilder( szTempString_1 );
-                         GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_2, 'S', 129, mSPLDef, "MasterProduct", "Number", "", 0 );
+                         GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_2, 'S', 6, mSPLDef, "MasterProduct", "Number", "", 0 );
             lTempInteger_2 = mi_lTempInteger_2.intValue( );
             szTempString_1 = sb_szTempString_1.toString( );}
              {StringBuilder sb_szString;
@@ -12127,7 +12127,7 @@ omSPLDef_dSubregProductNameNbr( View     mSPLDef,
                sb_szTempString_0 = new StringBuilder( 32 );
             else
                sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                         GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_1, 'S', 129, mSPLDef, "SubregProduct", "Number", "", 0 );
+                         GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_1, 'S', 6, mSPLDef, "SubregProduct", "Number", "", 0 );
             lTempInteger_1 = mi_lTempInteger_1.intValue( );
             szTempString_0 = sb_szTempString_0.toString( );}
              {StringBuilder sb_szString;
@@ -12263,13 +12263,13 @@ omSPLDef_dDisplayPathogenName( View     mSPLDef,
                          GetVariableFromAttribute( sb_szFootnoteNumber, mi_lTempInteger_3, 'S', 4, mSPLDef, "M_UsageFootnote", "wFootNoteRelativeNumber", "", 0 );
             lTempInteger_3 = mi_lTempInteger_3.intValue( );
             szFootnoteNumber = sb_szFootnoteNumber.toString( );}
-            //:szCombinedName = szCombinedName + "<sup>" + szFootnoteNumber + "</sup>"
+            //:szCombinedName = szCombinedName + "<sup> " + szFootnoteNumber + "</sup>"
              {StringBuilder sb_szCombinedName;
             if ( szCombinedName == null )
                sb_szCombinedName = new StringBuilder( 32 );
             else
                sb_szCombinedName = new StringBuilder( szCombinedName );
-                        ZeidonStringConcat( sb_szCombinedName, 1, 0, "<sup>", 1, 0, 101 );
+                        ZeidonStringConcat( sb_szCombinedName, 1, 0, "<sup> ", 1, 0, 101 );
             szCombinedName = sb_szCombinedName.toString( );}
              {StringBuilder sb_szCombinedName;
             if ( szCombinedName == null )
@@ -14142,29 +14142,34 @@ omSPLDef_FormatBlockContainer( View     mSPLDefPDF,
       } 
 
       //:END
-      //:szWriteBuffer = szWriteBuffer + " font-size=^" + szFontSize + "^" 
-       {StringBuilder sb_szWriteBuffer;
-      if ( szWriteBuffer == null )
-         sb_szWriteBuffer = new StringBuilder( 32 );
-      else
-         sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-            ZeidonStringConcat( sb_szWriteBuffer, 1, 0, " font-size=^", 1, 0, 32001 );
-      szWriteBuffer = sb_szWriteBuffer.toString( );}
-       {StringBuilder sb_szWriteBuffer;
-      if ( szWriteBuffer == null )
-         sb_szWriteBuffer = new StringBuilder( 32 );
-      else
-         sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-            ZeidonStringConcat( sb_szWriteBuffer, 1, 0, szFontSize, 1, 0, 32001 );
-      szWriteBuffer = sb_szWriteBuffer.toString( );}
-       {StringBuilder sb_szWriteBuffer;
-      if ( szWriteBuffer == null )
-         sb_szWriteBuffer = new StringBuilder( 32 );
-      else
-         sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-            ZeidonStringConcat( sb_szWriteBuffer, 1, 0, "^", 1, 0, 32001 );
-      szWriteBuffer = sb_szWriteBuffer.toString( );}
+      //:IF szFontSize != ""
+      if ( ZeidonStringCompare( szFontSize, 1, 0, "", 1, 0, 11 ) != 0 )
+      { 
+         //:szWriteBuffer = szWriteBuffer + " font-size=^" + szFontSize + "^" 
+          {StringBuilder sb_szWriteBuffer;
+         if ( szWriteBuffer == null )
+            sb_szWriteBuffer = new StringBuilder( 32 );
+         else
+            sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
+                  ZeidonStringConcat( sb_szWriteBuffer, 1, 0, " font-size=^", 1, 0, 32001 );
+         szWriteBuffer = sb_szWriteBuffer.toString( );}
+          {StringBuilder sb_szWriteBuffer;
+         if ( szWriteBuffer == null )
+            sb_szWriteBuffer = new StringBuilder( 32 );
+         else
+            sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
+                  ZeidonStringConcat( sb_szWriteBuffer, 1, 0, szFontSize, 1, 0, 32001 );
+         szWriteBuffer = sb_szWriteBuffer.toString( );}
+          {StringBuilder sb_szWriteBuffer;
+         if ( szWriteBuffer == null )
+            sb_szWriteBuffer = new StringBuilder( 32 );
+         else
+            sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
+                  ZeidonStringConcat( sb_szWriteBuffer, 1, 0, "^", 1, 0, 32001 );
+         szWriteBuffer = sb_szWriteBuffer.toString( );}
+      } 
 
+      //:END
       //:szFontWeight = mSPLDefPDF.LLD_SpecialSectionAttrBlock.FontWeight 
       {MutableInt mi_lTempInteger_10 = new MutableInt( lTempInteger_10 );
       StringBuilder sb_szFontWeight;

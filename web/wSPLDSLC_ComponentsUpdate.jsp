@@ -1366,7 +1366,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <div>  <!-- Beginning of a new line -->
 <% /* GroupBox5:GroupBox */ %>
 
-<div id="GroupBox5" name="GroupBox5" style="width:22px;height:76px;float:left;">  <!-- GroupBox5 --> 
+<div id="GroupBox5" name="GroupBox5" style="width:22px;height:50px;float:left;">  <!-- GroupBox5 --> 
 
 
 </div>  <!--  GroupBox5 --> 
@@ -1376,7 +1376,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 
  <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
+<div style="height:2px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <% /* PushBtn1:PushBtn */ %>
@@ -1388,7 +1388,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 
  <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
+<div style="height:8px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <% /* PushBtn2:PushBtn */ %>

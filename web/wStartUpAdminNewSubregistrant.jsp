@@ -99,6 +99,25 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
+      // EditBox: EPA_ID
+      nRC = mSubreg.cursor( "Subregistrant" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "EPA_ID" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "EPA_ID", "", strMapValue );
+            else
+               mSubreg.cursor( "Subregistrant" ).getAttribute( "EPA_CompanyNumber" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "EPA_ID", e.getReason( ), strMapValue );
+         }
+      }
+
       // EditBox: EBPStreetAddress
       nRC = mSubreg.cursor( "PhysicalAddress" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
@@ -1434,7 +1453,7 @@ else
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBSubregistrant:GroupBox */ %>
 
-<div id="GBSubregistrant" name="GBSubregistrant" style="width:586px;height:88px;float:left;">  <!-- GBSubregistrant --> 
+<div id="GBSubregistrant" name="GBSubregistrant" style="width:586px;height:122px;float:left;">  <!-- GBSubregistrant --> 
 
 
  <!-- This is added as a line spacer -->
@@ -1549,6 +1568,57 @@ else
 
 </td>
 </tr>
+<tr>
+<td valign="top" style="width:152px;">
+<% /* EPA_ID:1:Text */ %>
+
+<span  id="EPA_ID:1" name="EPA_ID:1" style="width:118px;height:16px;">EPA Company ID:</span>
+
+</td>
+<td valign="top" style="width:350px;">
+<% /* EPA_ID:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "EPA_ID", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mSubreg = task.getViewByName( "mSubreg" );
+      if ( VmlOperation.isValid( mSubreg ) == false )
+         task.log( ).debug( "Invalid View: " + "EPA_ID" );
+      else
+      {
+         nRC = mSubreg.cursor( "Subregistrant" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+            strErrorMapValue = mSubreg.cursor( "Subregistrant" ).getAttribute( "EPA_CompanyNumber" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on EPA_ID: " + e.getMessage());
+               task.log().error( "*** Error on ctrl EPA_ID", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "Subregistrant.EPA_CompanyNumber: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist: " + "mSubreg.Subregistrant" );
+      }
+   }
+%>
+
+<input name="EPA_ID" id="EPA_ID" style="width:350px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
+</td>
+</tr>
 </table>
 
 </div>  <!-- GroupBox1 --> 
@@ -1563,7 +1633,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:18px;width:100px;"></div>
+<div style="height:10px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <span style="height:24px;">&nbsp&nbsp</span>
@@ -1760,7 +1830,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:26px;width:100px;"></div>
+<div style="height:14px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <span style="height:24px;">&nbsp&nbsp</span>
@@ -2159,7 +2229,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:34px;width:100px;"></div>
+<div style="height:12px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->

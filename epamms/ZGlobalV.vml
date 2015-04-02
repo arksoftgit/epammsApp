@@ -1298,18 +1298,18 @@ InsertMappingWordsIntoString( VIEW mSPLDef BASED ON LOD mSPLDef,
          // Copy the Usage values into the text. This will depend on Type.
          
          // Claim, Surface, Area of Use, and Application Type.
-         IF szUsageType = "Claim" OR 
-            szUsageType = "Surface" OR 
-            szUsageType = "Area Of Use" OR 
-            szUsageType = "Application Type"
+         IF szUsageType = "Claim" OR szUsageType = "Claims" OR 
+            szUsageType = "Surface" OR szUsageType = "Surfaces" OR 
+            szUsageType = "Area Of Use" OR szUsageType = "Areas Of Use" OR 
+            szUsageType = "Application Type" OR  szUsageType = "Application Types"
             
-            IF szUsageType = "Claim"
+            IF szUsageType = "Claim" OR szUsageType = "Claims"
                szSelectUsageType = "C"
             ELSE
-               IF szUsageType = "Surface"
+               IF szUsageType = "Surface" OR szUsageType = "Surfaces"
                   szSelectUsageType = "S"
                ELSE
-                  IF szUsageType = "Area Of Use"
+                  IF szUsageType = "Area Of Use" OR szUsageType = "Areas Of Use"
                      szSelectUsageType = "U"
                   ELSE
                      szSelectUsageType = "T"

@@ -1380,7 +1380,8 @@ InitSubregProductForInsert( View     ViewToWindow )
    //:// We need to create a new SubregProduct entity.
    //:CreateTemporalEntity( mSubreg, "SubregProduct", zPOS_AFTER )
    CreateTemporalEntity( mSubreg, "SubregProduct", zPOS_AFTER );
-
+   //:SetAttributeFromString( mSubreg, "SubregProduct", "Number", "0" )
+   SetAttributeFromString( mSubreg, "SubregProduct", "Number", "0" );
    //:SetDynamicBannerName( ViewToWindow, "wSubR", "SubregistrantProduct" )
    {
     ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );

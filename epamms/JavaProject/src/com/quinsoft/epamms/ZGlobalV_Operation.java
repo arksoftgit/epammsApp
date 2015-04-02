@@ -217,16 +217,17 @@ InsertMappingWordsIntoString( View     mSPLDef,
          //:// Copy the Usage values into the text. This will depend on Type.
 
          //:// Claim, Surface, Area of Use, and Application Type.
-         //:IF szUsageType = "Claim" OR 
-         //:   szUsageType = "Surface" OR 
-         //:   szUsageType = "Area Of Use" OR 
-         //:   szUsageType = "Application Type"
-         if ( ZeidonStringCompare( szUsageType, 1, 0, "Claim", 1, 0, 33 ) == 0 || ZeidonStringCompare( szUsageType, 1, 0, "Surface", 1, 0, 33 ) == 0 || ZeidonStringCompare( szUsageType, 1, 0, "Area Of Use", 1, 0, 33 ) == 0 ||
-              ZeidonStringCompare( szUsageType, 1, 0, "Application Type", 1, 0, 33 ) == 0 )
+         //:IF szUsageType = "Claim" OR szUsageType = "Claims" OR 
+         //:   szUsageType = "Surface" OR szUsageType = "Surfaces" OR 
+         //:   szUsageType = "Area Of Use" OR szUsageType = "Areas Of Use" OR 
+         //:   szUsageType = "Application Type" OR  szUsageType = "Application Types"
+         if ( ZeidonStringCompare( szUsageType, 1, 0, "Claim", 1, 0, 33 ) == 0 || ZeidonStringCompare( szUsageType, 1, 0, "Claims", 1, 0, 33 ) == 0 || ZeidonStringCompare( szUsageType, 1, 0, "Surface", 1, 0, 33 ) == 0 ||
+              ZeidonStringCompare( szUsageType, 1, 0, "Surfaces", 1, 0, 33 ) == 0 || ZeidonStringCompare( szUsageType, 1, 0, "Area Of Use", 1, 0, 33 ) == 0 || ZeidonStringCompare( szUsageType, 1, 0, "Areas Of Use", 1, 0, 33 ) == 0 ||
+              ZeidonStringCompare( szUsageType, 1, 0, "Application Type", 1, 0, 33 ) == 0 || ZeidonStringCompare( szUsageType, 1, 0, "Application Types", 1, 0, 33 ) == 0 )
          { 
 
-            //:IF szUsageType = "Claim"
-            if ( ZeidonStringCompare( szUsageType, 1, 0, "Claim", 1, 0, 33 ) == 0 )
+            //:IF szUsageType = "Claim" OR szUsageType = "Claims"
+            if ( ZeidonStringCompare( szUsageType, 1, 0, "Claim", 1, 0, 33 ) == 0 || ZeidonStringCompare( szUsageType, 1, 0, "Claims", 1, 0, 33 ) == 0 )
             { 
                //:szSelectUsageType = "C"
                 {StringBuilder sb_szSelectUsageType;
@@ -240,8 +241,8 @@ InsertMappingWordsIntoString( View     mSPLDef,
             } 
             else
             { 
-               //:IF szUsageType = "Surface"
-               if ( ZeidonStringCompare( szUsageType, 1, 0, "Surface", 1, 0, 33 ) == 0 )
+               //:IF szUsageType = "Surface" OR szUsageType = "Surfaces"
+               if ( ZeidonStringCompare( szUsageType, 1, 0, "Surface", 1, 0, 33 ) == 0 || ZeidonStringCompare( szUsageType, 1, 0, "Surfaces", 1, 0, 33 ) == 0 )
                { 
                   //:szSelectUsageType = "S"
                    {StringBuilder sb_szSelectUsageType;
@@ -255,8 +256,8 @@ InsertMappingWordsIntoString( View     mSPLDef,
                } 
                else
                { 
-                  //:IF szUsageType = "Area Of Use"
-                  if ( ZeidonStringCompare( szUsageType, 1, 0, "Area Of Use", 1, 0, 33 ) == 0 )
+                  //:IF szUsageType = "Area Of Use" OR szUsageType = "Areas Of Use"
+                  if ( ZeidonStringCompare( szUsageType, 1, 0, "Area Of Use", 1, 0, 33 ) == 0 || ZeidonStringCompare( szUsageType, 1, 0, "Areas Of Use", 1, 0, 33 ) == 0 )
                   { 
                      //:szSelectUsageType = "U"
                       {StringBuilder sb_szSelectUsageType;

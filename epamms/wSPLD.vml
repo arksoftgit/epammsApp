@@ -7,7 +7,6 @@
 //
 // SUBSYSTEM:    wSPLD         - Subregistrant Physical Label Definition operations
 // FILE:         wSPLD.vml
-// AUTHOR:       Doug Sorensen
 //
 /////////////////////////////////////////////////////////////////////////////
 
@@ -195,6 +194,37 @@ DELETE_SubregProductSLC( VIEW ViewToWindow )
 
 END
 
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: GOTO_NewSubregProduct
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+GOTO_NewSubregProduct( VIEW ViewToWindow )
+
+   VIEW mSubreg REGISTERED AS mSubreg
+
+   IF mSubreg.PrimaryRegistrant EXISTS
+      IF mSubreg.ListMasterProduct EXISTS
+         RETURN 0
+      ELSE
+         MessageSend( ViewToWindow, "", "New Subregistrant Product",
+                      "Primary Registrant must have at least one\nMaster Product to create a Subregistrant Product.",
+                      zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+         RETURN 2
+      END
+   ELSE
+      // This should not be possible.
+      MessageSend( ViewToWindow, "", "New Subregistrant Product",
+                   "Subregistrant must be associated with a Primary Registrant\nto create a Subregistrant Product.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      RETURN 2
+   END
+
+END
+
 ////////////////////////////////////////////////////////////////
 //
 // OPERATION: GOTO_NewSubregProductSLC
@@ -203,7 +233,7 @@ END
 DIALOG OPERATION
 GOTO_NewSubregProductSLC( VIEW ViewToWindow )
 
-   VIEW mSubProd REGISTERED AS mSubProd
+   VIEW mSubreg  REGISTERED AS mSubreg
    VIEW lMLC     BASED ON LOD  lMLC
    
    // Activate lMLC for selecting a MLC for creation of a new SLC.
@@ -211,7 +241,7 @@ GOTO_NewSubregProductSLC( VIEW ViewToWindow )
    IF RESULT >= 0
       DropObjectInstance( lMLC )
    END
-   ACTIVATE lMLC Multiple WHERE lMLC.MasterProduct.ID = mSubProd.MasterProduct.ID 
+   ACTIVATE lMLC Multiple WHERE lMLC.MasterProduct.ID = mSubreg.MasterProduct.ID 
    NAME VIEW lMLC "lMLC"
 
 END
@@ -225,6 +255,7 @@ DIALOG OPERATION
 SELECT_MLC_ForNewSLC( VIEW ViewToWindow )
 
    VIEW mSubProd REGISTERED AS mSubProd
+   VIEW mSubreg  REGISTERED AS mSubreg
    VIEW lMLC     REGISTERED AS lMLC
    VIEW mSubLC   BASED ON LOD  mSubLC 
    VIEW mMasLC   BASED ON LOD  mMasLC
@@ -254,6 +285,8 @@ SELECT_MLC_ForNewSLC( VIEW ViewToWindow )
    INCLUDE mSubLC.MasterLabelContent FROM mMasLC.MasterLabelContent 
    BuildCompositeEntries( mMasLC )
    
+   DisplayObjectInstance( mSubLC, "", "" )
+
    // Initialize the data in the SLC from the MLC.
    BuildSLC_FromMLC( mSubLC, mMasLC )
    
@@ -2085,7 +2118,7 @@ GOTO_NewSpecialFormatDefinition( VIEW ViewToWindow )
    // Create the temporal LLD_SpecialSectionAttribute entry.
    CreateTemporalEntity( mSPLDef, "LLD_SpecialSectionAttribute", zPOS_AFTER )
    CREATE ENTITY mSPLDef.LLD_SpecialSectionAttrBlock 
-*/   
+*/
 END
 
 ////////////////////////////////////////////////////////////////
@@ -2434,12 +2467,13 @@ END
 DIALOG OPERATION
 CreateSLC( VIEW ViewToWindow )
 
+   VIEW mSubreg REGISTERED AS mSubreg
    VIEW mMasLC  BASED ON LOD mMasLC
    VIEW mSubLC  BASED ON LOD mSubLC
    VIEW mSubLC2 BASED ON LOD mSubLC
    VIEW mSPLDef BASED ON LOD mSPLDef
 
-   ACTIVATE mMasLC WHERE mMasLC.MasterLabelContent.ID = mSubreg.PrimaryRegistrant.????2
+   ACTIVATE mMasLC WHERE mMasLC.MasterLabelContent.ID = mSubreg.PrimaryRegistrant.ID
    NAME VIEW mMasLC "mMasLC"
 
    ACTIVATE mSubLC EMPTY

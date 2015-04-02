@@ -1,4 +1,4 @@
-z1000-Zeidon    TEXTSA   TZDGSRCO 03/16/15   10:28:21 1.0a2    
+z1000-Zeidon    TEXTSA   TZDGSRCO 03/25/15   09:54:24 1.0a2    
 eDomainGroup 1
 aZKey      68568034
 aName      TextsA
@@ -184,6 +184,23 @@ aZKey      4515173
 aName      PhoneNumberDots
 aEditString 999.999.9999
 aDIL_Text  phone number in format 999.999.9999
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.RegularExpressionDomain
+aZKey      18568062
+aName      NumericId
+aDesc      Numeric Text (0-9).
+aDomainType F
+aDataType  S
+aMaxStringLth 32
+aContextRestriction N
+
+eContext   3
+aZKey      18568063
+aName      NumericId
+aEditString 99999999999999999999999999999999
+aJavaEditString ^[0-9]*$
+aIsDefault Y
 
 eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.StringDomain

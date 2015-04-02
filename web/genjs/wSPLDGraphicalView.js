@@ -130,6 +130,7 @@ function _AfterPageLoaded( )
    document.wSPLDGraphicalView.zOpenFile.value = "";
 }
 
+/* Don't know why this is here???
 function CheckAllInGrid(id, CheckBoxName)
 {
    var wcontrols = id.form.elements;
@@ -145,6 +146,7 @@ function CheckAllInGrid(id, CheckBoxName)
       }
    }
 }
+*/
 
 function GenerateLabel( )
 {
@@ -176,7 +178,7 @@ function GenerateLabelBorders( )
    }
 }
 
-function GOTO_UpdateBlockComponent( )
+function GOTO_UpdateBlock( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -186,12 +188,12 @@ function GOTO_UpdateBlockComponent( )
    {
       _DisableFormElements( true );
 
-      document.wSPLDGraphicalView.zAction.value = "GOTO_UpdateBlockComponent";
+      document.wSPLDGraphicalView.zAction.value = "GOTO_UpdateBlock";
       document.wSPLDGraphicalView.submit( );
    }
 }
 
-function ReturnUpdateLLD( )
+function Return( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -201,12 +203,13 @@ function ReturnUpdateLLD( )
    {
       _DisableFormElements( true );
 
-      document.wSPLDGraphicalView.zAction.value = "ReturnUpdateLLD";
+      document.wSPLDGraphicalView.zAction.value = "Return";
       document.wSPLDGraphicalView.submit( );
    }
 }
 
-function SaveUpdateLLD( )
+/* Never should be called
+function SaveLLD( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -216,8 +219,8 @@ function SaveUpdateLLD( )
    {
       _DisableFormElements( true );
 
-      document.wSPLDGraphicalView.zAction.value = "SaveUpdateLLD";
+      document.wSPLDGraphicalView.zAction.value = "SaveLLD";
       document.wSPLDGraphicalView.submit( );
    }
 }
-
+*/

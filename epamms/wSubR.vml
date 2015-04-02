@@ -1035,7 +1035,7 @@ InitSubregProductForInsert( VIEW ViewToWindow )
 
    // We need to create a new SubregProduct entity.
    CreateTemporalEntity( mSubreg, "SubregProduct", zPOS_AFTER )
-
+   SetAttributeFromString( mSubreg, "SubregProduct", "Number", "0" )
    SetDynamicBannerName( ViewToWindow, "wSubR", "SubregistrantProduct" )
 
 END

@@ -788,7 +788,7 @@ dDisplayUsageName( VIEW mMasLC BASED ON LOD mMasLC,
                DropView( mMasLC2 )
             END 
             szFootnoteNumber = mMasLC.M_UsageFootnote.wFootNoteRelativeNumber 
-            szCombinedName = szCombinedName + "<sub> (" + szFootnoteNumber + ")</sub>"
+            szCombinedName = szCombinedName + "<sup> " + szFootnoteNumber + "</sup>"
          END
       END
 
@@ -848,7 +848,7 @@ dDisplayPathogenName( VIEW mMasLC BASED ON LOD mMasLC,
                DropView( mMasLC2 )
             END 
             szFootnoteNumber = mMasLC.M_UsageFootnote.wFootNoteRelativeNumber 
-            szCombinedName = szCombinedName + "<sup>" + szFootnoteNumber + "</sup>"
+            szCombinedName = szCombinedName + "<sup> " + szFootnoteNumber + "</sup>"
          END
       END
 

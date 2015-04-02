@@ -362,8 +362,97 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
       return jsonLabel;
    }
 
+   private void displaySPLD( View vLLD, String entity ) {
+      logger.debug( "displaySPLD" );
+      EntityCursor ec;
+      if ( entity != null ) {
+         ec = vLLD.getCursor( entity );
+         ec.logEntity( false );
+      }
+      View t = vLLD.newView();
+      t.resetSubobjectTop();
+      ec = t.getCursor( "SPLD_LLD" );
+      ec.logEntity( true );
+      t.drop();
+   }
+
+   private EntityCursor moveEntityIfNecessary( View vLLD, String entity, String ID, EntityCursor ec ) {
+   // int id = Integer.getInteger( ID );
+      if ( entity.compareTo( "LLD_Panel" ) != 0 && entity.compareTo( "LLD_Page" ) != 0 && entity.compareTo( "SPLD_LLD" ) != 0 ) {
+         // Note that ec and hence ei and eip are related to vLLD.
+         String wPID = ec.getAttribute( "wPID" ).getString();
+         EntityInstance ei = ec.getEntityInstance();
+         EntityInstance eip = null;
+         try {
+            eip = ei.getParent();
+         } catch ( ZeidonException ze ) {
+            logger.debug( "Error checking for move entity: " + entity + "  error: " + ze );
+            return ec;
+         }
+         String IDP = eip.getAttribute( "wID" ).getString();
+         if ( wPID.compareTo( IDP ) != 0 ) { // if there is a new parent ...
+            logger.debug( "Before moving entity: " + entity + "  with ID: " + ID );
+            displaySPLD( vLLD, entity );
+            String wPE = ec.getAttribute( "wPE" ).getString();
+            if ( wPE.compareTo( "label" ) == 0 ) {
+               wPE = "SPLD_LLD";
+            } else if ( wPE.compareTo( "page" ) == 0 ) {
+               wPE = "LLD_Page";
+            } else if ( wPE.compareTo( "panel" ) == 0 ) {
+               wPE = "LLD_Panel";
+            } else if ( wPE.compareTo( "block" ) == 0 ) {
+               wPE = "LLD_Block";
+            }
+
+           /* TEST code 
+         EntityCursor ec1 = vLLD.getCursor( "LLD_Block" );
+         ec1.setFirst();
+
+         View mSPLDef2 = vLLD.newView();
+         mSPLDef2.getCursor( "LLD_Block" ).setLast();
+         mSPLDef2.getCursor( "LLD_SubBlock" ).setToSubobject();
+         mSPLDef2.cursor( "LLD_Block" ).moveSubobject( CursorPosition.FIRST, ec1, CursorPosition.FIRST );
+         mSPLDef2.logObjectInstance();
+          END TEST code  */
+
+            View v = vLLD.newView();
+         // v.copyCursors( vLLD );
+         // v.resetSubobjectTop();
+            EntityCursor ecp = v.getCursor( wPE );  // this is the new parent entity
+            CursorResult cr = ecp.setFirstWithinOi( "wID", wPID );
+            if ( cr.isSet() ) {
+               try {
+                  logger.debug( "Cursor setFirstWithinOI entity: " + wPE + "  with ID: " + wPID );
+                  if ( wPE.compareTo( "LLD_Block" ) == 0 ) {
+                     displaySPLD( v, wPE );
+                     logger.debug( "Before getting SubBlock: " + wPID );
+                     ecp.logEntity( false );
+                     ecp = v.getCursor( "LLD_SubBlock" );
+                     logger.debug( "After getting SubBlock cursor: " + wPID );
+                  // ecp.logEntity( false );
+                     ecp.setToSubobject();
+                  // logger.debug( "After setToSubobject: " + wPID );
+                  // ecp.logEntity( false );
+                     ecp = v.getCursor( "LLD_Block" );
+                  // logger.debug( "After setToSubobject getCursor: " + wPID );
+                  // ecp.logEntity( false );
+                  }
+                  logger.debug( "Just before moveSubobject: " + ID );
+                  ec.logEntity( false );
+                  ecp.moveSubobject( CursorPosition.LAST, ec, CursorPosition.NEXT );
+                  logger.debug( "After moving entity: " + entity + " to parent entity: " + wPE + "  with ID: " + wPID );
+                  displaySPLD( v, entity );
+                  logger.debug( "End moving entity: " + entity );
+               } catch ( ZeidonException ze ) {
+                  logger.debug( "Error trying to move entity: " + entity + "  error: " + ze );
+               }
+            }
+            v.drop();
+         }
+      }
+      return ec;
+   }
    private void processJsonArray( View vLLD, JSONArray jsonArray, String entity, int depth ) {
-      String indent = StringUtils.repeat( " ", (depth + 2) * 3 );
       Iterator it = jsonArray.iterator();
       while ( it.hasNext() ) {
          Object obj = it.next();
@@ -372,54 +461,85 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
             JSONObject jo = (JSONObject)obj;
             if ( depth >= -1 ) {
                EntityCursor ec = vLLD.getCursor( entity );
-            // if ( ec.isNull() == false ) {  // the ec may be null ==> no entities, but we may want to create one!
-                  String ID = (String)jo.get( "ID" );
+            // if ( ec.isNull() == false ) {  // the ec.isNull may be true ==> no entities, but we may want to create one!
+                  String ID = (String) jo.get( "ID" );
+                  if ( ID != null && ID.compareTo( "633" ) == 0 ) {
+                     logger.debug( "Processing ID: " + ID );
+                  }
                   boolean recurse = false;
-                  EntityInstance ei = null;
                   try {
-                     if ( entity.compareTo( "LLD_SubBlock" ) == 0 ) {
-                        if ( ec.isNull() == false ) {
-                           ec.setToSubobject();
-                        // logger.debug( "SetToSubobject Entity: " + entity + "  Depth: " + depth );
-                           recurse = true;
-                        // entity = "LLD_Block"; // entity has to stay as LLD_SubBlock for ei.getEntityDef().getName() check later on!!!
-                           ec = vLLD.getCursor( "LLD_Block" );
-                           ei = ec.getEntityInstance();
+                     if ( entity.compareTo( "LLD_Page" ) == 0 ) {
+                        Object op = jo.get( "LLD_Panel" ); // if there are no panels we will delete the page
+                        if ( op == null ) {
+                           if ( ID != null && ID.isEmpty() == false ) {
+                              CursorResult cr = ec.setFirst( "ID", ID );
+                              if ( cr.isSet() ) {
+                                 ec.getEntityInstance();
+                                 logger.debug( "Deleting entity: " + entity );
+                                 ec.logEntity( true );
+                                 ec.deleteEntity();
+                              }
+                           }
+                           continue; // while ( it.hasNext ...
                         }
                      }
 
                      String Delete = (String)jo.get( "_Delete" );
-                     if ( ID == null || ID.isEmpty() ) {
+                     if ( ID == null || ID.isEmpty() ) {  // if we are in a create situation, take care of that right now
                         if ( Delete == null || Delete.charAt( 0 ) != 'Y' ) {
-                           ei = ec.createEntity( CursorPosition.NEXT );
+                           applyJsonPropertiesToZeidonAttributes( vLLD, (JSONObject)obj, entity, depth + 1, ec.createEntity( CursorPosition.NEXT ) );
                         }
                      } else {
-                     // if ( ID.compareTo( "626" ) == 0 ) {
-                     //    logger.debug( "Processing Entity: " + entity + "  ID: " + ID + "  Depth: " + depth );
-                     // } else {
-                     //    logger.debug( "Processing Entity: " + entity + "  ID: " + ID + "  Depth: " + depth );
-                     // }
+                        // Get position on the corresponding entity in the OI.
                         CursorResult cr = ec.setFirst( "ID", ID );
-                        if ( cr == CursorResult.SET ) {
-                           ei = ec.getEntityInstance();
+                        if ( cr.isSet() == false ) {
+                           cr = ec.setFirstWithinOi( "ID", ID );
+                           if ( cr.isSet() == false ) {
+                              // Locate using wID because if it exists ... ID only exists if the entity came from the database.
+                              String wID = (String) jo.get( "wID" );
+                              if ( wID != null && wID.isEmpty() == false ) {
+                                 cr = ec.setFirstWithinOi( "wID", wID );
+                              }
+                           }
+                        }
+                        // If we found it, things are hunky-dory.
+                        if ( cr.isSet() ) {
+                           EntityInstance ei = ec.getEntityInstance();
+                           if ( entity.compareTo( "LLD_SubBlock" ) == 0 ) {
+                              ec.setToSubobject();
+                              ec = vLLD.getCursor( "LLD_Block" );
+                              recurse = true;
+                              // entity = "LLD_Block"; // entity has to stay as LLD_SubBlock for ei.getEntityDef().getName() check later on!!!
+                              ec = vLLD.getCursor( "LLD_Block" );
+                           } else if ( ei.getEntityDef().getName().compareTo( "LLD_SubBlock" ) == 0 ) {
+                              ec.logEntity( true );
+                              ec = vLLD.getCursor( "LLD_SubBlock" );
+                              ec.setToSubobject();
+                              ec = vLLD.getCursor( "LLD_Block" );
+                           // entity = "LLD_Block";
+                              recurse = true;
+                           }
                            if ( Delete != null && Delete.charAt( 0 ) == 'Y' ) {
                            // vLLD.logObjectInstance();
-                           // ec.logEntity();
-                              ei.deleteEntity();
-                              ei = null;
+                              ec.logEntity( true );
+                              ec.deleteEntity();
                               logger.debug( "Entity DELETED: " + entity + "  ID: " + ID + "  Depth: " + depth );
+                              continue; // while ( it.hasNext ...
+                           } else {
+                              applyJsonPropertiesToZeidonAttributes( vLLD, (JSONObject)obj, entity, depth + 1, ec.getEntityInstance() );
+                              ec = moveEntityIfNecessary( vLLD, entity, ID, ec );
                            }
                         } else if ( cr == CursorResult.UNCHANGED ) {
                            logger.debug( "Entity NOT FOUND (UNCHANGED): " + entity + "  ID: " + ID + "  Depth: " + depth + "  Recurse: " + (recurse ? "Y" : "N") );
-                           ei = ec.createEntity( CursorPosition.NEXT );
-                           ei.getAttribute( "Tag" ).setValue( "BustedUnchanged" + ID );
-                           vLLD.logObjectInstance();
+                           ec.createEntity( CursorPosition.NEXT );
+                           ec.getAttribute( "Tag" ).setValue( "BustedUnchanged" + ID );
+                           displaySPLD( vLLD, entity );
                            throw new ZeidonException( "Entity NOT Found: " + ID + "  Look for Busted" + "  Recurse: " + (recurse ? "Y" : "N") ); 
                         } else {
                            logger.debug( "Entity NOT FOUND: " + entity + "  ID: " + ID + "  Depth: " + depth );
-                           ei = ec.createEntity( CursorPosition.NEXT );
-                           ei.getAttribute( "Tag" ).setValue( "Busted" + ID );
-                           vLLD.logObjectInstance();
+                           ec.createEntity( CursorPosition.NEXT );
+                           ec.getAttribute( "Tag" ).setValue( "Busted" + ID );
+                           displaySPLD( vLLD, entity );
                            throw new ZeidonException( "Entity NOT Found: " + ID + "  Look for Busted" ); 
                         }
                      }
@@ -427,7 +547,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                   //    logger.debug( "Entity Instance Before: " + entity + "  ID: " + ID + "  Depth: " + depth );
                   //    ei.logEntity( false );
                   // }
-                     applyJsonLabelToView( vLLD, (JSONObject)obj, entity, depth + 1, ei );
+                     applyJsonLabelToView( vLLD, (JSONObject)obj, entity, depth + 1, ec.getEntityInstance() );
                   // if ( ei != null ) {
                   //    logger.debug( "Entity Instance After: " + entity + "  ID: " + ID + "  Depth: " + depth );
                   //    ei.logEntity( false );
@@ -442,19 +562,18 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                      // entity = "LLD_SubBlock"; not needed since left alone after cursor.setToSubobject()
                      }
                   }
-            // }
+            // } not checking ec.isNull()
             } else {
-            // logger.debug( indent + "Entity: " + entity + "  Depth: " + depth ); 
+            // logger.debug( StringUtils.repeat( " ", (depth + 2) * 3 ) + "Entity: " + entity + "  Depth: " + depth ); 
                applyJsonLabelToView( vLLD, (JSONObject)obj, entity, depth + 1, null );
             }
          } else {
-            logger.debug( indent + "Entity: " + entity + " Unknown type: " + obj.getClass().getName() );
+            logger.debug( StringUtils.repeat( " ", (depth + 2) * 3 ) + "Entity: " + entity + " Unknown type: " + obj.getClass().getName() );
          }
       }
    }
 
-   private String applyJsonLabelToView( View vLLD, JSONObject jsonObject, String entity, int depth, EntityInstance ei ) {
-      String indent = StringUtils.repeat( " ", (depth + 2) * 3 );
+   private void applyJsonPropertiesToZeidonAttributes( View vLLD, JSONObject jsonObject, String entity, int depth, EntityInstance ei ) {
 /* start debug code
       boolean log = false;
       if ( ei != null ) {
@@ -469,33 +588,38 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
          }
       }
 end debug code */
-   // Set<String> keys = (Set<String>) jsonObject.keySet(); // these two line work, but cause
+   // Set<String> keys = (Set<String>) jsonObject.keySet(); // these two lines work, but cause
    // for ( String key : keys ) {                           // a warning ... replaced by next two lines
-      for( Iterator iterator = jsonObject.keySet().iterator(); iterator.hasNext(); ) {
+      ei.logEntity( false );
+      for ( Iterator iterator = jsonObject.keySet().iterator(); iterator.hasNext(); ) {
          String key = (String) iterator.next();
       // logger.debug( "OTag: " + entity + "   Key: " + key + "   Depth: " + depth );
          Object obj = jsonObject.get( key );
          if ( obj instanceof String ) {
-            String value = (String)obj;
-         // logger.debug( indent + "E.Attr: " + entity + "." + key + " : " + value );
+            String valueNew = (String) obj;
+         // logger.debug( StringUtils.repeat( " ", (depth + 2) * 3 ) + "E.Attr: " + entity + "." + key + " : " + valueNew );
             if ( ei != null ) {
                if ( entity.equals( ei.getEntityDef().getName() ) ) {
                   if ( key.compareTo( "ID" ) != 0 ) {  // attribute is not ID (which is immutable)
-                     String oldValue = ei.getAttribute( key ).getString();
-                     if ( oldValue.equals( value ) == false ) { // if the value has changed ...
+                     String valueOld = ei.getAttribute( key ).getString();
+                     if ( valueOld.equals( valueNew ) == false ) { // if the value has changed ...
+                     // logger.debug( "Changing entity.attribute: " + entity + "." + key + ": " + valueOld + "  to: " + valueNew );
+                     // ei.logEntity( false );
                      // if ( key.contains( "Color" ) ) {
-                     //    logger.debug( "Color: " + key + ":" + value );
+                     //    logger.debug( "Color: " + key + ":" + valueNew );
                      // }
                         try {
-                           ei.getAttribute( key ).setValue( value );
+                        // logger.debug( "AfterChange entity.attribute: " + entity + "." + key + ": " + valueOld + "  to: " + valueNew );
+                           ei.getAttribute( key ).setValue( valueNew );
+                        // ei.logEntity( false );
                         } catch ( ZeidonException ze ) {
                            if ( key.startsWith( "FK_ID_" ) || key.startsWith( "FKID" ) || key.startsWith( "AUTOSEQ" ) ) {
                               String v = ei.getAttribute( key ).getString();
-                              if ( v.compareTo( value ) != 0 ) {
-                                 logger.debug( "System entity.attribute changed: " + entity + "." + key + "  value: " + value + " ==> " + v );
+                              if ( v.compareTo( valueNew ) != 0 ) {
+                                 logger.debug( "System entity.attribute changed: " + entity + "." + key + "  value: " + valueNew + " ==> " + v );
                               }
                            } else {
-                              logger.debug( "Failed to set entity.attribute: " + entity + "." + key + "  value: " + value );
+                              logger.debug( "Failed to set entity.attribute: " + entity + "." + key + "  value: " + valueNew );
                            }
                         }
                      }
@@ -506,6 +630,40 @@ end debug code */
                   throw new ZeidonException( msg ); 
                }
             }
+         }
+      }
+      ei.logEntity( false );
+/* start debug code
+      if ( log ) {
+         logger.debug( "After Setting entity: " + entity + "  ID: " + "626" );
+         ei.logEntity( false );
+      }
+ end debug code*/
+   }
+
+   private void applyJsonLabelToView( View vLLD, JSONObject jsonObject, String entity, int depth, EntityInstance ei ) {
+/* start debug code
+      boolean log = false;
+      if ( ei != null ) {
+         Object o = jsonObject.get( "ID" );
+         if ( o instanceof String ) {
+            String ID = (String)o;
+            if ( ID.compareTo( "626" ) == 0 ) {
+               log = true;
+               logger.debug( "Before Setting entity: " + entity + "  ID: " + ID );
+               ei.logEntity( false );
+            }
+         }
+      }
+end debug code */
+   // Set<String> keys = (Set<String>) jsonObject.keySet(); // these two lines work, but cause
+   // for ( String key : keys ) {                           // a warning ... replaced by next two lines
+      for ( Iterator iterator = jsonObject.keySet().iterator(); iterator.hasNext(); ) {
+         String key = (String) iterator.next();
+      // logger.debug( "OTag: " + entity + "   Key: " + key + "   Depth: " + depth );
+         Object obj = jsonObject.get( key );
+         if ( obj instanceof String ) {
+            // we've already done this
          } else if ( obj instanceof JSONArray ) {
             JSONArray ja = (JSONArray)obj;
             // depth is 0 for a page, 1 for a panel, 2 for a block, 3 for a subblock, ...
@@ -514,13 +672,13 @@ end debug code */
             } else if ( key.compareTo( "SPLD_LLD" ) == 0 ) {
                depth = -1;
             }
-         // logger.debug( indent + "Entity: " + key + " Depth: " + (depth + 1) );
+         // logger.debug( StringUtils.repeat( " ", (depth + 2) * 3 ) + "Entity: " + key + " Depth: " + (depth + 1) );
             processJsonArray( vLLD, ja, key, depth );
          } else if ( obj instanceof JSONObject ) {
-         // logger.debug( indent + "MetaOI: " + key + " Skipped!" );
+         // logger.debug( StringUtils.repeat( " ", (depth + 2) * 3 ) + "MetaOI: " + key + " Skipped!" );
          // applyJsonLabelToView( vLLD, (JSONObject)obj, key, depth + 1, null );
          } else {
-            logger.debug( indent + "Key: " + key + "  Unknown type: " + obj.getClass().getName() );
+            logger.debug( StringUtils.repeat( " ", (depth + 2) * 3 ) + "Key: " + key + "  Unknown type: " + obj.getClass().getName() );
          }
       }
 /* start debug code
@@ -529,7 +687,6 @@ end debug code */
          ei.logEntity( false );
       }
  end debug code*/
-      return "";
    }
 
    private JSONObject getPostData( HttpServletRequest request ) {
@@ -592,7 +749,6 @@ end debug code */
          }
       }
    }
-
    /**
     * @see HttpServlet#doGet( HttpServletRequest request, HttpServletResponse response )
     */
@@ -642,9 +798,9 @@ end debug code */
                   mSPLDefPanel.resetSubobjectTop();
                }
                String viewPath = request.getParameter( "viewPath" );
-               logger.debug( "Setting view path: " + viewPath );
+            // logger.debug( "Setting view path: " + viewPath );
                setPathCursorPosition( mSPLDefBlock, viewPath, 0, 0 );
-               logger.debug( "Finished setting view path: " + viewPath );
+            // logger.debug( "Finished setting view path: " + viewPath );
             } catch (ZeidonException ze) {
                // I think this means we are at the top
                logger.debug( "resetSubobject: " + ze.getMessage() );
@@ -652,7 +808,7 @@ end debug code */
             response.setContentType( "text/json" );
             response.getWriter().write( new Gson().toJson( "{}" ) );
          }
-      } else if ( action.compareTo( "saveLabel" ) == 0 ) {
+      } else if ( action.compareTo( "saveLabel" ) == 0 || action.compareTo( "saveLabelCommit" ) == 0 ) {
          if ( vLLD != null ) {
          // jsonLabel = getPostData( request );
             JSONObject jsonPost = getPostData( request );
@@ -663,14 +819,19 @@ end debug code */
                View v = vLLD.newView();
                v.resetSubobjectTop();
                applyJsonLabelToView( v, jsonPost, "", -2, null );  // OIs, SPLD_LLD, depth == 0 for LLD_Page
-               logger.debug( "Saved JSON to OI" );
-            // vLLD.logObjectInstance();
-               vLLD.commit();
+               v.drop();
+            // logger.debug( "Saved JSON to OI" );
+            // displaySPLD( vLLD, null );
+               vLLD.setName( "mSPLDefPanel", Level.TASK );
+               vLLD.resetSubobjectTop();
+               if ( action.compareTo( "saveLabelCommit" ) == 0 ) {
+                  vLLD.commit();
+               }
             } catch( ZeidonException ze ) {
                logger.debug( "Error processing Json Label: " + ze.getMessage() );
             } finally {
                convertLLD_ToJSON( vLLD );
-               logger.debug( "Completed processing Json Label: " + jsonLabel );
+            // logger.debug( "Completed processing Json Label: " + jsonLabel );
                response.setContentType( "text/json" );
             // response.getWriter().write( jsonLabel );
                response.getWriter().write( new Gson().toJson( "{}" ) );
@@ -691,8 +852,8 @@ end debug code */
                vLLD.commit();
             } catch( ParseException pe ) {
                logger.debug( "Unable to parse JSON: " + jsonLabel );
-            } catch( ZeidonException ze ) {
-               logger.debug( "Error processing Json Label: " + ze.getMessage() );
+         // } catch( ZeidonException ze ) { already caught
+         //    logger.debug( "Error processing Json Label: " + ze.getMessage() );
             } finally {
                jsonLabel = convertLLD_ToJSON( vLLD );
             // logger.debug( "Completed processing Json Label: " + jsonLabel );
@@ -709,7 +870,9 @@ end debug code */
       } else if ( action.compareTo( "loadLabel" ) == 0 ) {
       // We are just going to get the SPLD_LLD and its children and rename SPLD_LLD to LLD
          try {
+         // displaySPLD( vLLD, null );
             jsonLabel = convertLLD_ToJSON( vLLD );
+         // logger.debug( "LoadLabel JSON: " + jsonLabel );
          // jsonLabel = jsonLabel.replaceFirst( "\"TZLLD\",", "\"TZLLD\",\n      \"fileName\" : \"" + fileName + "\"," );
          } catch( ZeidonException ze ) {
             logger.debug( "Error loading Json Label: " + ze.getMessage() );

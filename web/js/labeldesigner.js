@@ -3,7 +3,6 @@ $(function() {
 
 // $(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
 
-   var g_loadedLLD = null;
    var g_updatedLLD = false;
    var g_application = "epamms";
    var g_currentPage = 1;
@@ -120,10 +119,10 @@ $(function() {
       return path;
    }
 
-   function saveLabelCallback( element ) {
+   function updateBlockCallback( element ) {
       g_updatedLLD = false;
       var parentagePath = getParentagePathKeys( element );
-      var url = "labeldesigner?action=setCursorPosition&viewName=" + escape( g_loadedLLD ) + "&viewPath=" + escape( parentagePath );
+      var url = "labeldesigner?action=setCursorPosition&viewName=" + escape( "mSPLDef" ) + "&viewPath=" + escape( parentagePath );
       $.ajax({ url: url,
                type: "post", // string defining the HTTP method to use for the request: GET (default) or POST
                contentType: "application/json; charset=utf-8",
@@ -133,7 +132,7 @@ $(function() {
             // beforeSend - callback function that is executed before the request is sent
                success: function( data, textStatus, jqXHR ) {
                         // console.log( "setCursorPosition: success status: " + textStatus + "  data: " + data + "  jqXHR: " + jqXHR );
-                           GOTO_UpdateBlockComponent();
+                           GOTO_UpdateBlock();
                         },
                error:   function( jqXHR, textStatus, errorThrown ) {
                         // console.log( "setCursorPosition: error xhr response: " + jqXHR.responseText + "  status: " + textStatus + "  error: " + errorThrown );
@@ -144,28 +143,75 @@ $(function() {
       });
    }
 
-   function saveLabel() {
+   function saveLabel( commit, callback ) {
       if ( g_updatedLLD ) {
-         g_loadedLLD = "mSPLDef";
-         ConvertWysiwygLabelDesignToZeidonJson( "saveLabel", g_loadedLLD, null, null );
+         ConvertWysiwygLabelDesignToZeidonJson( "saveLabel" + commit , "mSPLDef", callback, null );
+         g_updatedLLD = false;
+      } else if ( callback ) {
+         callback();
       }      
    }
-   $("#zLLD_Save").click( function() {
-      saveLabel();
+
+   function returnCallback() {
+      Return();
+   }
+
+   $("#Return").click( function() {
+      if ( g_updatedLLD ) {      
+         saveLabel( "", returnCallback );
+         g_updatedLLD = false;
+      } else {
+         Return();
+      }
+   });
+
+   $("#Save").click( function() {
+      saveLabel( "Commit", null );
+   // SaveLLD(); don't do this
+   });
+
+   function generateLabelCallback() {
+      if ( $("#labelBorders").is( ":checked" ) ) {
+         GenerateLabelBorders();
+      } else {
+         GenerateLabel();
+      }
+   }
+   $("#GenerateSPLD_Label").click( function() {
+      saveLabel( "", generateLabelCallback );
+   });
+
+   $("#UpdateBlock").click( function() {
+      if ( g_$current_block ) {
+         if ( g_updatedLLD ) {
+            ConvertWysiwygLabelDesignToZeidonJson( "saveLabel", "mSPLDef", updateBlockCallback, this );
+         } else {
+            updateBlockCallback( g_$current_block );
+         }
+      } else {
+         alert( "No block selected" );
+      }
+   });
+
+/*
+   $("#zLLD_Save").click( function( e ) {
+      e.preventDefault();
+      saveLabel( "Commit" );
       return false;  // prevent default propagation
    });
 
-   $("#zLLD_Reload").click( function() {
+   $("#zLLD_Reload").click( function( e ) {
+      e.preventDefault();
       if ( g_updatedLLD ) {
          if ( window.confirm( "Current label has been updated.  Do you want to overwrite changes?" ) === false ) {
             return false;  // prevent default propagation
          }
+      // g_updatedLLD = false;  done in LoadZeidonJsonFromLLD
       }
-      g_loadedLLD = "mSPLDef";
-      LoadZeidonJsonFromLLD( g_loadedLLD );
+      LoadZeidonJsonFromLLD( "mSPLDef" );
       return false;  // prevent default propagation
    });
-
+*/
    // Create/maintain list of selected elements:
    // When an element is clicked add/remove selected elements to the list and set css class appropriately:
    //  - if no element has been selected:
@@ -180,11 +226,10 @@ $(function() {
    //        - set the element as the first selected and add as the only element in the selected list
    $("body").on( "dblclick", ".canvas-element", function(e) {
    // console.log( "Double Click on canvas-element: " + this.id + " has been pressed!" );
-      g_loadedLLD = "mSPLDef";
       if ( g_updatedLLD ) {
-         ConvertWysiwygLabelDesignToZeidonJson( "saveLabel", g_loadedLLD, saveLabelCallback, this );
+         ConvertWysiwygLabelDesignToZeidonJson( "saveLabel", "mSPLDef", updateBlockCallback, this );
       } else {
-         saveLabelCallback( this );
+         updateBlockCallback( this );
       }
 
       return false;
@@ -414,6 +459,8 @@ $(function() {
             var $canvasElement = $(ui.helper);
             var $parent = $canvasElement.parent();
             var $canvas = determineTargetOfDrop( event, $(this), $canvasElement );
+            addZeidonAttributeToElement( $canvasElement, "wPID", $canvas.data( "z_w^i^d" ) );
+            addZeidonAttributeToElement( $canvasElement, "wPE", $canvas.data( "z_w^e" ) );
             if ( true || $parent[0] !== $canvas[0] ) {
                var top = ui.offset.top;
                var left = ui.offset.left;
@@ -437,6 +484,8 @@ $(function() {
             // console.log( ".page, .block-element top:" + top + "  left: " + left );
                $canvasElement.offset({ top: top, left: left });
                $canvas.append( $canvasElement );
+               addZeidonAttributeToElement( $canvasElement, "wPID", $canvas.data( "z_w^i^d" ) );
+               addZeidonAttributeToElement( $canvasElement, "wPE", $canvas.data( "z_w^e" ) );
                g_updatedLLD = true;
                setChildrenDepth( $canvas, $canvasElement );
             // setCurrentBlockData( $canvasElement, "updated 7" );
@@ -457,11 +506,17 @@ $(function() {
             var $canvas = determineTargetOfDrop( event, $(this), $canvasElement );
             $canvasElement.attr( "name", uniqueTag );
             $canvasElement.text( uniqueTag );
+            addZeidonAttributeToElement( $canvasElement, "wID", uniqueTag );
             $canvasElement.removeClass( "ui-draggable-dragging" ).addClass( "canvas-element block-element" );
+            if ( $canvas[0].id === "page" ) {
+               $canvasElement.addClass( "toppanel" );  // an element with class "panel" cannot become a "block" and vice-versa
+            }
 
             setBlockDraggableResizable( $canvas, $canvasElement, $(this) );
 
             $canvas.append( $canvasElement );
+            addZeidonAttributeToElement( $canvasElement, "wPID", $canvas.data( "z_w^i^d" ) );
+            addZeidonAttributeToElement( $canvasElement, "wPE", $canvas.data( "z_w^e" ) );
          // $canvasElement.append( "<h5 class='ui-widget-header'></h5>" );
             $canvasElement.append( "<h5></h5>" );
             $canvasElement.children( ".ui-resizable-handle" ).css( "z-index", "" );  // prevent these from "showing through"
@@ -785,6 +840,10 @@ $(function() {
       var offset;
       var range;
       var $body = $('body').parents().addBack();
+      if ( $canvasElement.hasClass( "toppanel" ) ) {
+         $target = $("page");
+         return $target;
+      }
 
       $list = $('body *').filter( function() {
         offset = $(this).offset();
@@ -861,7 +920,7 @@ $(function() {
 
    function getUniqueId() {
       var stopLoop = 0; // prevent infinite loop
-      var arr = $(document.getElementById( "Tag" + g_generateTag ));
+      var arr = $(document.getElementById( "t_" + g_generateTag ));
       do
       {
          if ( $(arr).length <= 0 ) {
@@ -869,10 +928,10 @@ $(function() {
          }
 
          g_generateTag++;
-         arr = $(document.getElementById( "Tag" + g_generateTag ));
+         arr = $(document.getElementById( "t_" + g_generateTag ));
       } while ( stopLoop++ < 100 )
 
-      var tag = "Tag" + g_generateTag;
+      var tag = "t_" + g_generateTag;
    // console.log( "getUniqueId: " + tag );
       return tag;
    }
@@ -1055,7 +1114,7 @@ $(function() {
 */
 
 
-// $("#zBlockBackgroundColor").attr( "readonly", true );
+// $("#zBlockBackgroundColor").attr( "readonly", true ); data???
    var selectedBlock;
    var fBlock = $.farbtastic( "#zBlockPicker", fbCallback );
    var pBlock = $("#zBlockPicker").css("opacity", 0.25).hide();
@@ -1079,7 +1138,7 @@ $(function() {
       });
 
    var selectedLabel;
-// $("#zLabelBackgroundColor").attr( "readonly", true );
+// $("#zLabelBackgroundColor").attr( "readonly", true ); data???
 //xvar fLLD = $.farbtastic( "#zLabelPicker", fbCallback );
 //xvar pLLD = $("#zLabelPicker").css("opacity", 0.25).hide();
    $("input.colorwell2")
@@ -1182,8 +1241,14 @@ $(function() {
 
    $("#zSectionType")
       .change( function() {
-      // alert( "Selected value: " + $('#zSectionType').val() );
-         g_$current_block.text( $('#zSectionType').val() );
+         var val = $('#zSectionType').val();
+         if ( val === "" ) {
+            val = "?";
+         }
+      // alert( "Selected value: " + val );
+      // g_$current_block.text( $('#zSectionType').val() );  this wipes out all child nodes of the div ... but the complicated next line works where
+      // nodeType === 3 restricts this to TEXT_NODE.
+         g_$current_block.contents().filter( function() { return this.nodeType === 3; }).replaceWith( val );
       });
 
 // $("#label").niceScroll({touchbehavior:false,cursorcolor:"#00F",cursoropacitymax:0.7,cursorwidth:6,background:"#ccc",autohidemode:false});
@@ -1196,6 +1261,15 @@ $(function() {
          $("#zmenu").hide( "slide", options, 125 );
       }
    }
+
+   $("#labelBorders")
+      .change( function() {
+         if ( $(this).is( ":checked" ) ) {
+            localStorage.setItem( "epamms_graphic_labelborders", "Y" );
+         } else {
+            localStorage.setItem( "epamms_graphic_labelborders", "N" );
+         }
+      });
 
    $("#showtools")
       .change( function() {
@@ -1338,7 +1412,7 @@ $(function() {
                               }
                            },
                   error:   function( jqXHR, textStatus, errorThrown ) {
-                           // console.log( "ConvertWysiwygLabelDesignToZeidonJson: error xhr response: " + jqXHR.responseText + "  status: " + textStatus + "  error: " + errorThrown );
+                              console.log( "ConvertWysiwygLabelDesignToZeidonJson: error xhr response: " + jqXHR.responseText + "  status: " + textStatus + "  error: " + errorThrown );
                            },
                   complete: function( jqXHR, textStatus ) { // callback function that executes whenever the request finishes
                            // console.log( "ConvertWysiwygLabelDesignToZeidonJson: complete status: " + textStatus + "  response: " + jqXHR.responseText );
@@ -1346,47 +1420,13 @@ $(function() {
          });
       } catch(e) {
          alert( "Could not load OI: " + name + "\n" + e.message );
-      } finally { // this should not be done here ... it happens way too early ... the success/error/complete function? should do it 
+      } finally { // TODO:  this should not be done here ... it happens way too early ... the success/error/complete function? should do it 
          $("#page" + g_currentPage).attr( "id", "page" );
          g_$current_block = null;
 
          // TODO: display the label/page/block properties
       }
    }
-
-   $("#ReturnUpdateLLD").click( function() {
-      saveLabel();
-      ReturnUpdateLLD();
-   });
-
-   $("#SaveUpdateLLD").click( function() {
-      saveLabel();
-      SaveUpdateLLD();
-   });
-
-   $("#GenerateSPLD_Label").click( function() {
-      saveLabel();
-      GenerateLabel();
-   });
-
-   $("#GenerateSPLD_LabelBorders").click( function() {
-      saveLabel();
-      GenerateLabelBorders();
-   });
-
-   $("#UpdateBlockComponent").click( function() {
-      saveLabel();
-      if ( g_$current_block ) {
-         g_loadedLLD = "mSPLDef";
-         if ( g_updatedLLD ) {
-            ConvertWysiwygLabelDesignToZeidonJson( "saveLabel", g_loadedLLD, saveLabelCallback, this );
-         } else {
-            saveLabelCallback( g_$current_block );
-         }
-      } else {
-         alert( "No block selected" );
-      }
-   });
 
    var $ZoomSpinner = $("#zZoomSpinner").spinner();
    $ZoomSpinner.spinner( "option", "min", 0.2 );
@@ -1537,11 +1577,11 @@ public class FileServer {
 } 
 */
 
-/* top of JSON received from load ...
+/* Reduced Json Label from OI: ...
 {
   ".meta" : {
-    "version" : "1.0",
-    "date" : "2014-08-29T15:50:33.897"
+    "version" : "1",
+    "date" : "2015-03-26T18:19:15.663"
   },
   "OIs" : [ {
     ".oimeta" : {
@@ -1550,17 +1590,45 @@ public class FileServer {
       "incremental" : true
     },
     "SubregPhysicalLabelDef" : [ {
-      "ID" : "5",
-      "Name" : "KennelSol 5 Gallon",
-      "ProductName" : "KennelSol",
-      "FKIDSUBREGLABELCON" : "6",
+      ".meta" : {
+        "selected" : true
+      },
+      "ID" : "6",
+      "Name" : "spld name",
+      "ProductName" : "product name",
+      "FK_ID_SUBREGLABELCONTENT" : "7",
       "SPLD_LLD" : [ {
-        "ID" : "10",
-        "Name" : "Four Panel Across",
+        ".meta" : {
+          "selected" : true
+        },
+        "ID" : "11",
         "ContinuationPreviousPageText" : "** Continued on Side Panel",
-        "ContNextPageTextMarketing" : "** Continued from Previous Page",
-        "ContNextPageTextDirForUse" : "** Continued from Previous Page",
-        "FKIDSUBREGPHYSICAL" : "5",
+        "ContNextPageTextMarketing" : "** Continued from Mrktg Previous Page",
+        "ContNextPageTextDirForUse" : "** Continued from DU Previous Page",
+        "FK_ID_SUBREGPHYSICALLABELDEF" : "6",
+        "LLD_Page" : [ {
+          ".meta" : {
+            "selected" : true
+          },
+          "ID" : "27",
+          "Height" : "14.6",
+          "Width" : "19.6",
+          "FK_ID_SPLD_LLD" : "11",
+          "LLD_Panel" : [ {
+            ".meta" : {
+              "selected" : true
+            },
+            "ID" : "54",
+            "Top" : "1.0",
+            "Left" : "1.0",
+            "Height" : "10.0",
+            "Width" : "10.0",
+            "FK_ID_LLD_PAGE" : "27"
+          } ]
+        } ]
+      } ]
+   } ]
+} ] }
 */
    function CaptureZeidonLabelJsonFromDomJson( jsonDom ) {
    // var jsonObj = eval( "[" + json + "]" );
@@ -1580,8 +1648,8 @@ public class FileServer {
       try {
          jsonObj = jsonStringToJsonObject( jsonLabel );
       } catch (e) {
+         console.log( "JSON Label: " + jsonLabel );
          alert( "Generated JSON Label is not well formatted:\n" + e.message );
-      // console.log( "JSON Label: " + jsonLabel );
          jsonObj = null;
          jsonLabel = "";
       } finally {
@@ -1762,6 +1830,10 @@ public class FileServer {
                      var isBlock = false;
                      var lastBlock = true;
                      if ( classlist.indexOf( "label" ) >= 0 ) {
+                        if ( isLabel ) {
+                           alert( "The JSON object contains multiple label entities" );
+                           throw new Error( "The JSON object contains multiple label entities" );
+                        }
                         isLabel = true;
                      // entityIdx = -1;
                         pageNbr = 0;
@@ -1984,7 +2056,7 @@ public class FileServer {
       return name;
    }
 
-   function AddHtmlLabelElementAttributes( $root, $parentElement, obj, entity, depth ) {
+   function AddHtmlLabelElementAttributes( $root, $parentElement, parentId, obj, entity, depth ) {
    // console.log( "AddHtmlLabelElementAttributes processing entity: " + entity );
       var $element;
       var attr = "";
@@ -2006,13 +2078,13 @@ public class FileServer {
          }
       }
 
+      var id = obj["ID"];
       // $(tag).innerHTML = attr + style;
       if ( entity === "block" || entity === "panel" ) {
          var name = formatTitle( obj );
          var tag = obj["Tag"];
          if ( !tag ) {
-            var id = obj["ID"];
-            tag = "Tag" + id;
+            tag = "t_" + id;
          }
          var identity = "id=\"" + tag + "\" name=\"" + tag + "\" ";
          var classes = "class=\"" + entity;
@@ -2072,13 +2144,9 @@ public class FileServer {
 */
       } else { // must be label or page
          if ( entity === "page" ) {
-            var pageNbr = obj["PageNbr"];
-            if ( !pageNbr ) {
-               pageNbr = "1";
-            }
-            $element = $("#page" + pageNbr);
+            $element = $root;
          } else if ( entity === "label" ) {
-            $element = $("#" + "label");
+            $element = $parentElement;
          } else {
             throw new Error( "The JSON object contains an unexpected entity: " + entity );
          }
@@ -2094,19 +2162,26 @@ public class FileServer {
             }
          }
       }
+
+      addZeidonAttributeToElement( $element, "wID", id );
       addZeidonAttributeToElement( $element, "Depth", depth );
       return $element;
    }
 
    // for ( var k = 0; k < objPage.length; k++ ) {
-   //    AddHtmlWysiwygLabelElements( $("#page" + (k + 1)), $parentElement, objPage[k], "page", 0 );
+   //    AddHtmlWysiwygLabelElements( $("#page" + (k + 1)), $parentElement, parentId, objPage[k], "page", 0 );
 
-   function AddHtmlWysiwygLabelElements( $root, $parentElement, obj, div, depth ) {
+   function AddHtmlWysiwygLabelElements( $root, $parentElement, parentId, obj, div, depth ) {
       if ( div === "block" || div === "panel" || div === "page" || div === "label" ) {
-      // console.log( "Processing div: " + div );
-         var $el = AddHtmlLabelElementAttributes( $root, $parentElement, obj, div, depth );
-      // displayElementData( "AddHtmlWysiwygLabelElements", $parentElement );
+         console.log( "Processing div: " + div );
+         var $el = AddHtmlLabelElementAttributes( $root, $parentElement, parentId, obj, div, depth );
+         addZeidonAttributeToElement( $el, "wE", div );
+         addZeidonAttributeToElement( $el, "wPID", parentId );
+         addZeidonAttributeToElement( $el, "wPE", $parentElement.data( "z_w^e" ) );
+         displayElementData( "AddHtmlWysiwygLabelElements Parent", $parentElement );
+         displayElementData( "AddHtmlWysiwygLabelElements Element", $el );
          $parentElement = $el;
+         parentId = obj["ID"];
       /*
          if ( obj["Tag"] ) {
             $parentElement = $("#" + obj["Tag"]);
@@ -2126,7 +2201,7 @@ public class FileServer {
          if ( prop === "LLD_Block" || prop === "LLD_SubBlock" || prop === "LLD_Panel" ) {
             var objBlock = obj[prop];
             for ( var k = 0; k < objBlock.length; k++ ) {
-               AddHtmlWysiwygLabelElements( $root, $parentElement, objBlock[k], prop === "LLD_Panel" ? "panel" : "block", depth + 1 );
+               AddHtmlWysiwygLabelElements( $root, $parentElement, parentId, objBlock[k], prop === "LLD_Panel" ? "panel" : "block", depth + 1 );
             }
          }
       /*
@@ -2134,7 +2209,7 @@ public class FileServer {
          if ( prop === "LLD_Panel" ) {
             var objPanel = obj[prop];
             for ( var k = 0; k < objPanel.length; k++ ) {
-               AddHtmlWysiwygLabelElements( $root, $parentElement, objPanel[k], "panel", depth + 1 );
+               AddHtmlWysiwygLabelElements( $root, $parentElement, parentId, objPanel[k], "panel", depth + 1 );
             }
          }
       */
@@ -2171,19 +2246,25 @@ public class FileServer {
                   // do nothing
                }
                else
+               if ( prop === "ID" ) {
+                  var $label = $("#label");
+                  AddHtmlLabelElementAttributes( null, $label, "", objLLD, "label", 0 );
+                  addZeidonAttributeToElement( $label, "wE", "label" );
+               }
+               else
                if ( prop === "Name" ) {
                   $("#label").innerText = objLLD["Name"];
-                  AddHtmlLabelElementAttributes( null, $("#label"), objLLD, "label", 0 );
                }
                else
                if ( prop === "LLD_Page" ) {
                   var objPage = objLLD["LLD_Page"];
                   var $parentElement = $("#label");
+                  var parentId = objLLD["ID"];
                   var $page;
                   for ( var k = 0; k < objPage.length; k++ ) {
                      $page = $("#page" + (k + 1));
                      addZeidonAttributeToElement( $page, "PageNbr", k + 1 );
-                     AddHtmlWysiwygLabelElements( $page, $parentElement, objPage[k], "page", 0 );
+                     AddHtmlWysiwygLabelElements( $page, $parentElement, parentId, objPage[k], "page", 0 );
                   }
                }
                else
@@ -2211,7 +2292,7 @@ public class FileServer {
       if ( xhr.readyState === 4 ) {
          if ( xhr.status === 200 ) {
          // parseMessages( req.responseXML );
-         // console.log( "JSON Zeidon: " + jsonZeidon );
+            console.log( "JSON Zeidon returned from call to servlet: " + jsonZeidon );
             try {
                g_generateTag = 100;
                $("#page").attr( "id", "page" + g_currentPage )
@@ -2296,6 +2377,19 @@ public class FileServer {
                $(".block").each( function() {
                   setBlockDraggableResizable( $(this).parent(), $(this), $(this) );
                });
+
+// debug code
+   $("#page").attr( "id", "page" + g_currentPage ).attr( "name", "page" + g_currentPage );
+   var $initElement = $("#label");
+   var jsonDOM = mapDOM( $initElement[0], true );
+   console.log( "JSON DOM Debug3: " + jsonDOM );
+   var jsonLabel = CaptureZeidonLabelJsonFromDomJson( jsonDOM );
+
+   // Display the resultant JSON that will be passed to Zeidon to be saved as an LLD.
+   console.log( "\nJsonLabel Debug3: " + jsonLabel );
+   $("#page" + g_currentPage).attr( "id", "page" );
+// end debug code
+
             }
          }
       }
@@ -2413,7 +2507,7 @@ public class FileServer {
          var first = true;
 
          $("#selectedRegisteredViews li").each( function() {
-            var metaZKey = $(this).attr( "uniqueidentity" );
+            var metaZKey = $(this).data( "uniqueidentity" );
             var metaViewName = $(this)[0].innerText;
          // alert( "ZKey: " + metaZKey + "   Name: " + metaViewName );
             if ( first ) {
@@ -2457,7 +2551,7 @@ public class FileServer {
       $.ajax({
          url : url,
          type : 'POST',
-         data : { "fileName" : g_loadedLLD, "registeredViews" : jsonRegisteredViews },
+         data : { "fileName" : "mSPLDef", "registeredViews" : jsonRegisteredViews },
          dataType : 'json',
          success : function( data ) {
          // console.log( "Return from saveRegisteredViews: " + data );
@@ -2471,7 +2565,7 @@ public class FileServer {
 */
    var fnEnsureInDropTargetOnce = function( event, ui ) {
       var toDrop = $(ui.draggable).clone();
-      if ( $("#selectedRegisteredViews").find( "li[uniqueIdentity=" + toDrop.attr( "uniqueIdentity" ) + "]" ).length <= 0 ) {
+      if ( $("#selectedRegisteredViews").find( "li[uniqueIdentity=" + toDrop.data( "uniqueIdentity" ) + "]" ).length <= 0 ) {
          toDrop.removeClass("ui-state-default").addClass( "ui-state-highlight" );
          $("#selectedRegisteredViews").append( toDrop );
          updateRegisteredViewsSession();
@@ -2911,13 +3005,15 @@ public class FileServer {
       }
    }
 
+   // Initialize everything (first time in).
    scrollbarHeightWidth();  // call the function to set g_scrollbar
    setLLD_sizes();
 
    LoadZeidonJsonFromLLD( "mSPLDef" );
-   g_loadedLLD = "mSPLDef";
 
    // set initial state.
+   var borders = localStorage.getItem( "epamms_graphic_labelborders" ) === "Y" ? true : false;
+   $("#labelBorders").prop( "checked", borders );
    var show = localStorage.getItem( "epamms_graphic_showtools" ) === "Y" ? true : false;
    $("#showtools").prop( "checked", show );
    runSlideToolsEffect( show );

@@ -1167,8 +1167,9 @@ FormatBlockContainer( VIEW mSPLDefPDF BASED ON LOD mSPLDef,
       ELSE
          szFontSize = mSPLDefPDF.LLD_SpecialSectionAttrBlock.FontSize 
       END
-      szWriteBuffer = szWriteBuffer + " font-size=^" + szFontSize + "^" 
-      
+      IF szFontSize != ""
+         szWriteBuffer = szWriteBuffer + " font-size=^" + szFontSize + "^" 
+      END
       szFontWeight = mSPLDefPDF.LLD_SpecialSectionAttrBlock.FontWeight 
       IF szFontWeight != ""
          szWriteBuffer = szWriteBuffer + " font-weight=^" + szFontWeight + "^" 
@@ -1886,7 +1887,7 @@ GeneratePDF_ClmList( VIEW mSPLDef      BASED ON LOD mSPLDef,
                SET CURSOR FIRST mSPLDef.M_UsageFootnote 
                           WHERE mSPLDef.M_UsageFootnote.ID = mSPLDef.M_UsageFootnoteUsed.ID 
                szFootnoteNumber = mSPLDef.M_UsageFootnote.wFootNoteRelativeNumber 
-               szCombinedName = szCombinedName + "<sub> (" + szFootnoteNumber + ")</sub>"
+               szCombinedName = szCombinedName + "<sup> " + szFootnoteNumber + "</sup>"
             END
             mSPLDef.SPLD_MarketingUsage.wNameWithFootnoteDesignator = szCombinedName
          END
@@ -1966,7 +1967,7 @@ GeneratePDF_ClmList( VIEW mSPLDef      BASED ON LOD mSPLDef,
    // Add any Footnote entries to the last Column.
    FOR EACH mSPLDef.M_UsageFootnote 
       szFootnoteNumber = mSPLDef.M_UsageFootnote.wFootNoteRelativeNumber 
-      szFootnoteText = "<sub> (" + szFootnoteNumber + ")</sub>" + mSPLDef.M_UsageFootnote.Text 
+      szFootnoteText = "<sup> " + szFootnoteNumber + "</sup>" + mSPLDef.M_UsageFootnote.Text 
       IF CurrentColumnNumber = 1
          CREATE ENTITY mSPLDef.DisplayUsageColumn1 
          mSPLDef.DisplayUsageColumn1.Name = szFootnoteText 
@@ -3488,7 +3489,7 @@ dDisplayPathogenName( VIEW mSPLDef BASED ON LOD mSPLDef,
             DropView( mSPLDef2 )
          END 
          szFootnoteNumber = mSPLDef.M_UsageFootnote.wFootNoteRelativeNumber 
-         szCombinedName = szCombinedName + "<sup>" + szFootnoteNumber + "</sup>"
+         szCombinedName = szCombinedName + "<sup> " + szFootnoteNumber + "</sup>"
       END
 
       // Store the calculated value in the object.

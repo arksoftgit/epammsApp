@@ -1074,7 +1074,7 @@ function testJsonPath() {
 
 function displayElementData( message, $element ) {
    if ( $element ) {
-      console.log( message + "... Element Data for: " + $element.attr( "id" ) );
+      console.log( message + "... Element Data for: " + $element.attr( "id" ) );  // need to use attr( "id" ) rather than data( "id" )
       if ( $element.data() ) {
          $.each( $element.data(), function( key, value ) {
             if ( typeof value === "string" || typeof value === "number" ) {
@@ -1117,7 +1117,7 @@ function mapUiDataToElementData( $current_element ) {
       var n;
       var entity;
       var key;
-      var element_id = $current_element.attr( "id" );
+      var element_id = $current_element.attr( "id" );  // need to use attr( "id" ) rather than data( "id" )
       if ( element_id !== "label" && element_id !== "page" ) {
          element_id = "block";
       }
@@ -1144,7 +1144,7 @@ function mapElementDataToUiData( $current_element ) {
       var entity;
       var key;
       var value;
-      var element_id = $current_element.attr( "id" );
+      var element_id = $current_element.attr( "id" );  // need to use attr( "id" ) rather than data( "id" )
       if ( element_id !== "label" && element_id !== "page" ) {
          element_id = "block";
       }
@@ -1163,7 +1163,7 @@ function mapElementDataToUiData( $current_element ) {
                   if ( value.indexOf( '#' ) !== 0 ) {
                      value = "#ffffff";
                   }
-                  var colorPicker = $.farbtastic( "#" + $(this).attr( "id" ) );
+                  var colorPicker = $.farbtastic( "#" + $(this).attr( "id" ) );  // need to use attr( "id" ) rather than data( "id" )
                   colorPicker.setColor( value );
                }
                this.type === "checkbox" ? (value === "Y" ? this.checked = true : this.checked = false) : $(this).val( value );

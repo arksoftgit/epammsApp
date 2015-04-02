@@ -60,7 +60,7 @@ public int DoInputMapping( HttpServletRequest request,
    lMLC = task.getViewByName( "lMLC" );
    if ( VmlOperation.isValid( lMLC ) )
    {
-      // Grid: Grid2
+      // Grid: Grid
       iTableRowCnt = 0;
 
       // We are creating a temp view to the grid view so that if there are 
@@ -74,7 +74,7 @@ public int DoInputMapping( HttpServletRequest request,
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
 
-         strTag = "GridCheckCtl3" + strEntityKey;
+         strTag = "GridMLC_Selected" + strEntityKey;
          strMapValue = request.getParameter( strTag );
          // If the checkbox is not checked, then set to the unchecked value.
          if (strMapValue == null || strMapValue.isEmpty() )
@@ -83,7 +83,7 @@ public int DoInputMapping( HttpServletRequest request,
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "GridCheckCtl3", "", strMapValue );
+               VmlOperation.CreateMessage( task, "GridMLC_Selected", "", strMapValue );
             else
                if ( strMapValue != null )
                   vGridTmp.cursor( "MasterLabelContent" ).getAttribute( "wSelected" ).setValue( strMapValue, "" );
@@ -578,9 +578,9 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <span style="height:16px;">&nbsp</span>
-<% /* AddAppTypesList2:Text */ %>
+<% /* SelectMasterLabelContent:Text */ %>
 
-<span class="groupbox"  id="AddAppTypesList2" name="AddAppTypesList2" style="width:350px;height:16px;">Selection of MLC Usage Entries</span>
+<span class="groupbox"  id="SelectMasterLabelContent" name="SelectMasterLabelContent" style="width:350px;height:16px;">Select Master Label Content</span>
 
 </div>  <!-- End of a new line -->
 
@@ -592,9 +592,9 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox1:GroupBox */ %>
+<% /* GroupBox:GroupBox */ %>
 
-<div id="GroupBox1" name="GroupBox1" style="width:548px;height:130px;float:left;">  <!-- GroupBox1 --> 
+<div id="GroupBox" name="GroupBox" style="width:548px;height:130px;float:left;">  <!-- GroupBox --> 
 
 
  <!-- This is added as a line spacer -->
@@ -602,12 +602,12 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
-<% /* Grid2:Grid */ %>
-<table  cols=3 style="width:518px;"  name="Grid2" id="Grid2">
+<% /* Grid:Grid */ %>
+<table  cols=3 style="width:518px;"  name="Grid" id="Grid">
 
 <thead><tr>
 
-   <th class="gridheading"><input type="checkbox" onclick="CheckAllInGrid(this,'GridCheckCtl3')"></th>
+   <th class="gridheading"><input type="checkbox" onclick="CheckAllInGrid(this,'GridMLC_Selected')"></th>
    <th style="width:224px;">Name</th>
    <th style="width:224px;">Version</th>
 
@@ -627,84 +627,84 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
-      String strGridCheckCtl3;
-      String strGridCheckCtl3Value;
-      String strGridEditCtl3;
-      String strGridEditCtl1;
+      String strGridMLC_Selected;
+      String strGridMLC_SelectedValue;
+      String strGridProductName;
+      String strGridMLC_Version;
       
-      View vGrid2;
-      vGrid2 = lMLC.newView( );
-      csrRC2 = vGrid2.cursor( "MasterLabelContent" ).setFirst(  );
+      View vGrid;
+      vGrid = lMLC.newView( );
+      csrRC2 = vGrid.cursor( "MasterLabelContent" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGrid2.cursor( "MasterLabelContent" ).getEntityKey( );
+         lEntityKey = vGrid.cursor( "MasterLabelContent" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          strButtonName = "SelectButton" + strEntityKey;
 
-         strGridCheckCtl3 = "";
-         nRC = vGrid2.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
+         strGridMLC_Selected = "";
+         nRC = vGrid.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridCheckCtl3 = vGrid2.cursor( "MasterLabelContent" ).getAttribute( "wSelected" ).getString( "" );
+            strGridMLC_Selected = vGrid.cursor( "MasterLabelContent" ).getAttribute( "wSelected" ).getString( "" );
 
-            if ( strGridCheckCtl3 == null )
-               strGridCheckCtl3 = "";
+            if ( strGridMLC_Selected == null )
+               strGridMLC_Selected = "";
          }
 
-         if ( StringUtils.equals( strGridCheckCtl3, "Y" ) )
+         if ( StringUtils.equals( strGridMLC_Selected, "Y" ) )
          {
-            strGridCheckCtl3Value = "GridCheckCtl3" + strEntityKey;
-            strGridCheckCtl3 = "<input name='" + strGridCheckCtl3Value + "' id='" + strGridCheckCtl3Value + "' value='Y' type='checkbox'  CHECKED > ";
+            strGridMLC_SelectedValue = "GridMLC_Selected" + strEntityKey;
+            strGridMLC_Selected = "<input name='" + strGridMLC_SelectedValue + "' id='" + strGridMLC_SelectedValue + "' value='Y' type='checkbox'  CHECKED > ";
          }
          else
          {
-            strGridCheckCtl3Value = "GridCheckCtl3" + strEntityKey;
-            strGridCheckCtl3 = "<input name='" + strGridCheckCtl3Value + "' id='" + strGridCheckCtl3Value + "' value='Y' type='checkbox' > ";
+            strGridMLC_SelectedValue = "GridMLC_Selected" + strEntityKey;
+            strGridMLC_Selected = "<input name='" + strGridMLC_SelectedValue + "' id='" + strGridMLC_SelectedValue + "' value='Y' type='checkbox' > ";
          }
 
-         strGridEditCtl3 = "";
-         nRC = vGrid2.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
+         strGridProductName = "";
+         nRC = vGrid.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl3 = vGrid2.cursor( "MasterProduct" ).getAttribute( "Name" ).getString( "" );
+            strGridProductName = vGrid.cursor( "MasterProduct" ).getAttribute( "Name" ).getString( "" );
 
-            if ( strGridEditCtl3 == null )
-               strGridEditCtl3 = "";
+            if ( strGridProductName == null )
+               strGridProductName = "";
          }
 
-         if ( StringUtils.isBlank( strGridEditCtl3 ) )
-            strGridEditCtl3 = "&nbsp";
+         if ( StringUtils.isBlank( strGridProductName ) )
+            strGridProductName = "&nbsp";
 
-         strGridEditCtl1 = "";
-         nRC = vGrid2.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
+         strGridMLC_Version = "";
+         nRC = vGrid.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl1 = vGrid2.cursor( "MasterLabelContent" ).getAttribute( "Version" ).getString( "" );
+            strGridMLC_Version = vGrid.cursor( "MasterLabelContent" ).getAttribute( "Version" ).getString( "" );
 
-            if ( strGridEditCtl1 == null )
-               strGridEditCtl1 = "";
+            if ( strGridMLC_Version == null )
+               strGridMLC_Version = "";
          }
 
-         if ( StringUtils.isBlank( strGridEditCtl1 ) )
-            strGridEditCtl1 = "&nbsp";
+         if ( StringUtils.isBlank( strGridMLC_Version ) )
+            strGridMLC_Version = "&nbsp";
 
 %>
 
 <tr<%=strOdd%>>
 
-   <td nowrap><%=strGridCheckCtl3%></td>
-   <td nowrap style="width:224px;"><%=strGridEditCtl3%></td>
-   <td nowrap style="width:224px;"><%=strGridEditCtl1%></td>
+   <td nowrap><%=strGridMLC_Selected%></td>
+   <td nowrap style="width:224px;"><%=strGridProductName%></td>
+   <td nowrap style="width:224px;"><%=strGridMLC_Version%></td>
 
 </tr>
 
 <%
-         csrRC2 = vGrid2.cursor( "MasterLabelContent" ).setNextContinue( );
+         csrRC2 = vGrid.cursor( "MasterLabelContent" ).setNextContinue( );
       }
-      vGrid2.drop( );
+      vGrid.drop( );
    }
 }
 catch (Exception e)
@@ -719,7 +719,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </div>  <!-- End of a new line -->
 
 
-</div>  <!--  GroupBox1 --> 
+</div>  <!--  GroupBox --> 
 </div>  <!-- End of a new line -->
 
 

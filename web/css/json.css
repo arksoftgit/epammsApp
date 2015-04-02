@@ -1,0 +1,186 @@
+body {
+   font-size: 62.5%;
+   font-family: "Trebuchet MS", "Arial", "Helvetica", "Verdana", "sans-serif";
+}
+
+table {
+   font-size: 1em;
+}
+
+.demo-description {
+	clear: both;
+	padding: 12px;
+	font-size: 1.3em;
+	line-height: 1.4em;
+}
+
+.ui-draggable, .ui-droppable {
+   background-position: top;
+}
+
+div.panel_hidden {
+   display: none
+}
+
+*{
+   font-family: Georgia;
+}
+
+.zFormattedJsonLabel {
+   font: 10pt Georgia;
+   font-size: 140%;
+   background-color:#ECECEC;
+   color:#000000;
+   border:solid 1px #CECECE;
+}
+
+.ObjectBrace {
+   color:#00AA00;
+   font-weight:bold;
+   font-family: monospace;
+}
+
+.ArrayBrace {
+   color:#0033FF;
+   font-weight:bold;
+   font-family: monospace;
+}
+
+.PropertyName {
+   color:#ee0000;
+   font-weight:bold;
+   font-family: monospace;
+}
+
+.CursorPropertyName {
+   color:#33ee33;
+   font-weight:bold;
+   font-family: monospace;
+}
+
+.String {
+   color:#007777;
+   font-family: monospace;
+}
+
+.Number {
+   color:#AA00AA;
+}
+
+.Boolean {
+   color:#0000FF;
+}
+
+.Function {
+   color:#AA6633;
+  text-decoration:italic;
+}
+
+.Null {
+   color:#0000FF;
+}
+
+.Comma {
+   color:#000000;
+   font-weight:bold;
+}
+
+PRE.CodeContainer {
+   margin-top:0px;
+   margin-bottom:0px;
+}
+
+PRE.CodeContainer img {
+   cursor:pointer;
+   border:none;
+   margin-bottom:-1px;
+}
+
+#CollapsibleViewDetail a {
+  padding-left:10px;
+}
+
+#ControlsRow {
+   white-space:nowrap;
+   font: 11px Georgia;
+}
+
+#TabSizeHolder {
+  padding-left:10px;
+  padding-right:10px;
+}
+
+#HeaderTitle {
+   text-align:right;
+   font-size:11px;
+}
+
+#HeaderSubTitle {
+   margin-bottom:2px;
+   margin-top:0px
+}
+
+#RawJson {
+  width:99%;
+  height:130px;
+}
+
+.border {
+  border: 2px solid #009;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: 4px 4px 5px rgba(50, 50, 50, 0.75);
+  -moz-box-shadow: 4px 4px 5px rgba(50, 50, 50, 0.75);
+  box-shadow: 4px 4px 5px rgba(50, 50, 50, 0.75);
+}
+/*
+.border {
+  border: 2px solid #009;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: 4px 4px 5px rgba(50, 50, 50, 0.75);
+  -moz-box-shadow: 4px 4px 5px rgba(50, 50, 50, 0.75);
+  box-shadow: 4px 4px 5px rgba(50, 50, 50, 0.75);
+  background: rgb(30, 50, 230);
+  background: -moz-linear-gradient(270deg, rgb(30, 50, 230) 7%, rgb(90, 140, 250) 99%);
+  background: -webkit-linear-gradient(270deg, rgb(30, 50, 230) 7%, rgb(90, 140, 250) 99%);
+  background: -o-linear-gradient(270deg, rgb(30, 50, 230) 7%, rgb(90, 140, 250) 99%);
+  background: -ms-linear-gradient(270deg, rgb(30, 50, 230) 7%, rgb(90, 140, 250) 99%);
+  background: linear-gradient(270deg, rgb(30, 50, 230) 7%, rgb(90, 140, 250) 99%);  
+}
+*/
+legend {
+  display: block;
+  margin-left: 3px;
+  padding-top: 2px;
+  text-shadow: 2px 2px 3px rgba(150, 150, 150, 0.75);
+  font-family:Verdana, Geneva, sans-serif;
+  font-size:.9em;
+}
+/*
+legend {
+  text-shadow: 2px 2px 3px rgba(150, 150, 150, 0.75);
+  font-family:Verdana, Geneva, sans-serif;
+  font-size:1.4em;
+  border-top: 2px solid #009;
+  border-left: 2px solid #009;
+  border-right:  2px solid #009;
+  border-radius: 10px;
+  -webkit-box-shadow: 4px 4px 5px rgba(50, 50, 50, 0.75);
+  -moz-box-shadow: 4px 4px 5px rgba(50, 50, 50, 0.75);
+  box-shadow: 4px 4px 5px rgba(50, 50, 50, 0.75);
+  padding: 3px;
+  background: rgb(30, 50, 230);
+  background: -moz-linear-gradient(270deg, rgb(30, 50, 230) 7%, rgb(90, 140, 250) 99%);
+  background: -webkit-linear-gradient(270deg, rgb(30, 50, 230) 7%, rgb(90, 140, 250) 99%);
+  background: -o-linear-gradient(270deg, rgb(30, 50, 230) 7%, rgb(90, 140, 250) 99%);
+  background: -ms-linear-gradient(270deg, rgb(30, 50, 230) 7%, rgb(90, 140, 250) 99%);
+  background: linear-gradient(270deg, rgb(30, 50, 230) 7%, rgb(90, 140, 250) 99%); 
+}
+
+.inline {
+  display:inline-block;
+}
+*/

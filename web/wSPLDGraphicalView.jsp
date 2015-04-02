@@ -217,7 +217,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_UpdateBlockComponent" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_UpdateBlock" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDGraphicalView", strActionToProcess );
@@ -229,7 +229,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "ReturnUpdateLLD" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "Return" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDGraphicalView", strActionToProcess );
@@ -241,7 +241,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "SaveUpdateLLD" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "SaveLLD" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDGraphicalView", strActionToProcess );
@@ -727,20 +727,22 @@ else
                <button id="ah" class="zalign">Abut Horizontal</button>
                <button id="av" class="zalign">Abut Vertical</button> 
 
-               <button id="ReturnUpdateLLD">Save and Return</button>
-               <button id="SaveUpdateLLD">Save</button>
+               <button id="Return">Return</button>
+               <button id="Save">Save</button>
                <button id="GenerateSPLD_Label">Generate Label</button>
-               <button id="GenerateSPLD_LabelBorders">Generate Label with Borders</button>
-               <button id="UpdateBlockComponent">Update Current Block</button>
+               <input type="checkbox" id="labelBorders" name="labelBorders" style="margin:2px;">
+               <label for="labelBorders" style="margin-right:2px;margin-top:0px;">Borders</label>
+               <button id="UpdateBlock">Update Current Block</button>
             </div> <!-- ztoolbar -->
-            <img src="./images/epamms.jpg" width="64" height="25" alt="ePamms" style="margin:5px; float:right; border-style:double;">
+            <img src="./images/epamms.jpg" width="64" height="25" alt="ePamms" style="margin:5px;float:right;border-style:double;">
             &nbsp;&nbsp;
-            <input type="checkbox" id="showtools" name="showtools" style="margin:5px; float:right;"><label for="showtools" style="margin:5px; float:right;">Show Tools</label>
+            <label for="showtools" style="margin-right:2px;margin-top:12px;float:right;">Show Tools</label>
+            <input type="checkbox" id="showtools" name="showtools" style="margin-left:2px;margin-top:12px;float:right;">
             &nbsp;&nbsp;
-            <span style="margin:5px; float:right;">
-               <label for="zZoomSpinner">Zoom:</label>
+            <div style="margin-top:12px;margin:5px;float:right;padding-top:4px"><span>
+               <label for="zZoomSpinner" style="margin-top:4px;">Zoom:</label>
                <input type="text" id="zZoomSpinner" value="1.0" style="width:20px;"/>
-            </span>
+            </span></div>
          </div> <!-- zheader -->
       </span>
       <div id="zclient" style="margin:0"> <!-- client area -->
@@ -780,6 +782,7 @@ else
                      <div>Double-click block to update the selected block</div><br>
                      <div>Ctrl+Arrow to size selected block</div><br>
                      <div>Shift+Arrow to move selected block</div><br>
+                     <div>Del key to delete selected block - Ctrl+Z to undo delete</div><br>
                      &nbsp;
                      &nbsp;
                      &nbsp;
@@ -815,11 +818,16 @@ else
 
                   <h3>Block Properties</h3>
                   <div>
-                     <div style="overflow:hidden; white-space:nowrap;">
-                       <label for="zBlockTag">Tag:</label>
-                       <input type="text" id="zBlockTag" class="zeidon" data-zmap="block.z_^tag" style="float:right" />
-                     </div>
-
+                     <span>
+                        <div style="overflow:hidden; white-space:nowrap;">
+                          <label for="zBlockId">ID:</label>
+                          <input type="text" id="zBlockId" class="zeidon" data-zmap="block.z_^i^d" style="float:right" disabled />
+                        </div>
+                        <div style="overflow:hidden; white-space:nowrap;">
+                          <label for="zBlockTag">Tag:</label>
+                          <input type="text" id="zBlockTag" class="zeidon" data-zmap="block.z_^tag" style="float:right" />
+                        </div>
+                     </span>
                      <!-- 
                      <div id="jQueryRequired" style="color: red; font-size: 1.4em">jQuery.js is not present. You must install jQuery in this folder for the demo to work.</div>
                      <div class="form-item">
@@ -1025,6 +1033,7 @@ else
 
                   <h3>LLD Properties</h3>
                   <div>
+                     <!-- 
                      <p>
                         <label for="zLLD_Name">LLD Name:</label>
                         <span>
@@ -1033,6 +1042,7 @@ else
                            <input type="text" id="zLLD_Name" class="zeidon" data-zmap="label.z_^name" value="" style="float:right;width:92px;"/>
                         </span>
                      </p>
+                     -->
                      <p style="clear:both;position:relative"></p>
                      <p>
                         <span>

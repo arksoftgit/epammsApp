@@ -113,7 +113,7 @@ omSubLC_dRegistrantNameID( View     mSubLC,
                   sb_szTempString_0 = new StringBuilder( 32 );
                else
                   sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_2, 'S', 129, mSubLC, "PrimaryRegistrant", "EPA_CompanyNumber", "", 0 );
+                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_2, 'S', 7, mSubLC, "PrimaryRegistrant", "EPA_CompanyNumber", "", 0 );
                lTempInteger_2 = mi_lTempInteger_2.intValue( );
                szTempString_0 = sb_szTempString_0.toString( );}
                 {StringBuilder sb_szString;
@@ -396,7 +396,7 @@ omSubLC_dMasterProductNameNbr( View     mSubLC,
                sb_szTempString_0 = new StringBuilder( 32 );
             else
                sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                         GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_1, 'S', 129, mSubLC, "PrimaryRegistrant", "EPA_CompanyNumber", "", 0 );
+                         GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_1, 'S', 7, mSubLC, "PrimaryRegistrant", "EPA_CompanyNumber", "", 0 );
             lTempInteger_1 = mi_lTempInteger_1.intValue( );
             szTempString_0 = sb_szTempString_0.toString( );}
              {StringBuilder sb_szString;
@@ -419,7 +419,7 @@ omSubLC_dMasterProductNameNbr( View     mSubLC,
                sb_szTempString_1 = new StringBuilder( 32 );
             else
                sb_szTempString_1 = new StringBuilder( szTempString_1 );
-                         GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_2, 'S', 129, mSubLC, "MasterProduct", "Number", "", 0 );
+                         GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_2, 'S', 6, mSubLC, "MasterProduct", "Number", "", 0 );
             lTempInteger_2 = mi_lTempInteger_2.intValue( );
             szTempString_1 = sb_szTempString_1.toString( );}
              {StringBuilder sb_szString;
@@ -525,7 +525,7 @@ omSubLC_dSubregProductNameNbr( View     mSubLC,
                sb_szTempString_0 = new StringBuilder( 32 );
             else
                sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                         GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_1, 'S', 129, mSubLC, "SubregProduct", "Number", "", 0 );
+                         GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_1, 'S', 6, mSubLC, "SubregProduct", "Number", "", 0 );
             lTempInteger_1 = mi_lTempInteger_1.intValue( );
             szTempString_0 = sb_szTempString_0.toString( );}
              {StringBuilder sb_szString;
@@ -733,13 +733,13 @@ omSubLC_dDisplayUsageName( View     mSubLC,
                                GetVariableFromAttribute( sb_szFootnoteNumber, mi_lTempInteger_2, 'S', 4, mSubLC, "MLC_UsageFootnote", "wFootNoteRelativeNumber", "", 0 );
                lTempInteger_2 = mi_lTempInteger_2.intValue( );
                szFootnoteNumber = sb_szFootnoteNumber.toString( );}
-               //:szCombinedName = szCombinedName + "<sub> (" + szFootnoteNumber + ")</sub>"
+               //:szCombinedName = szCombinedName + "<sup> " + szFootnoteNumber + "</sup>"
                 {StringBuilder sb_szCombinedName;
                if ( szCombinedName == null )
                   sb_szCombinedName = new StringBuilder( 32 );
                else
                   sb_szCombinedName = new StringBuilder( szCombinedName );
-                              ZeidonStringConcat( sb_szCombinedName, 1, 0, "<sub> (", 1, 0, 101 );
+                              ZeidonStringConcat( sb_szCombinedName, 1, 0, "<sup> ", 1, 0, 101 );
                szCombinedName = sb_szCombinedName.toString( );}
                 {StringBuilder sb_szCombinedName;
                if ( szCombinedName == null )
@@ -753,7 +753,7 @@ omSubLC_dDisplayUsageName( View     mSubLC,
                   sb_szCombinedName = new StringBuilder( 32 );
                else
                   sb_szCombinedName = new StringBuilder( szCombinedName );
-                              ZeidonStringConcat( sb_szCombinedName, 1, 0, ")</sub>", 1, 0, 101 );
+                              ZeidonStringConcat( sb_szCombinedName, 1, 0, "</sup>", 1, 0, 101 );
                szCombinedName = sb_szCombinedName.toString( );}
             } 
 
@@ -1292,22 +1292,34 @@ omSubLC_BuildSLC_FromMLC( View     NewSLC,
    //:END
 
    //:// Usage Entries ... Surface, Application Type, Area of Use, Organism Claim
-   //:FOR EACH SourceMLC.M_Usage
-   RESULT = SetCursorFirstEntity( SourceMLC, "M_Usage", "" );
+   //:FOR EACH SourceMLC.M_UsageType
+   RESULT = SetCursorFirstEntity( SourceMLC, "M_UsageType", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
-      //:CREATE ENTITY NewSLC.S_Usage
-      RESULT = CreateEntity( NewSLC, "S_Usage", zPOS_AFTER );
-      //:SetMatchingAttributesByName( NewSLC, "S_Usage", SourceMLC, "M_Usage", zSET_NULL )
-      SetMatchingAttributesByName( NewSLC, "S_Usage", SourceMLC, "M_Usage", zSET_NULL );
-      //:INCLUDE NewSLC.M_Usage FROM SourceMLC.M_Usage
-      RESULT = IncludeSubobjectFromSubobject( NewSLC, "M_Usage", SourceMLC, "M_Usage", zPOS_AFTER );
-      //:TraceLineI( "#### Build S_Usage: ", NewSLC.M_Usage.ID )
-      {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
-             GetIntegerFromAttribute( mi_lTempInteger_1, NewSLC, "M_Usage", "ID" );
-      lTempInteger_1 = mi_lTempInteger_1.intValue( );}
-      TraceLineI( "#### Build S_Usage: ", lTempInteger_1 );
-      RESULT = SetCursorNextEntity( SourceMLC, "M_Usage", "" );
+      //:CREATE ENTITY NewSLC.S_UsageType
+      RESULT = CreateEntity( NewSLC, "S_UsageType", zPOS_AFTER );
+      //:SetMatchingAttributesByName( NewSLC, "S_UsageType", SourceMLC, "M_UsageType", zSET_NULL )
+      SetMatchingAttributesByName( NewSLC, "S_UsageType", SourceMLC, "M_UsageType", zSET_NULL );
+      //:FOR EACH SourceMLC.M_Usage
+      RESULT = SetCursorFirstEntity( SourceMLC, "M_Usage", "" );
+      while ( RESULT > zCURSOR_UNCHANGED )
+      { 
+         //:CREATE ENTITY NewSLC.S_Usage
+         RESULT = CreateEntity( NewSLC, "S_Usage", zPOS_AFTER );
+         //:SetMatchingAttributesByName( NewSLC, "S_Usage", SourceMLC, "M_Usage", zSET_NULL )
+         SetMatchingAttributesByName( NewSLC, "S_Usage", SourceMLC, "M_Usage", zSET_NULL );
+         //:INCLUDE NewSLC.M_Usage FROM SourceMLC.M_Usage
+         RESULT = IncludeSubobjectFromSubobject( NewSLC, "M_Usage", SourceMLC, "M_Usage", zPOS_AFTER );
+         //:TraceLineI( "#### Build S_Usage: ", NewSLC.M_Usage.ID )
+         {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+                   GetIntegerFromAttribute( mi_lTempInteger_1, NewSLC, "M_Usage", "ID" );
+         lTempInteger_1 = mi_lTempInteger_1.intValue( );}
+         TraceLineI( "#### Build S_Usage: ", lTempInteger_1 );
+         RESULT = SetCursorNextEntity( SourceMLC, "M_Usage", "" );
+      } 
+
+      RESULT = SetCursorNextEntity( SourceMLC, "M_UsageType", "" );
+      //:END
    } 
 
    //:END
@@ -1635,7 +1647,7 @@ omSubLC_dSubregNameID( View     mSubLC,
                   sb_szTempString_0 = new StringBuilder( 32 );
                else
                   sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_2, 'S', 129, mSubLC, "Subregistrant", "EPA_CompanyNumber", "", 0 );
+                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_2, 'S', 7, mSubLC, "Subregistrant", "EPA_CompanyNumber", "", 0 );
                lTempInteger_2 = mi_lTempInteger_2.intValue( );
                szTempString_0 = sb_szTempString_0.toString( );}
                 {StringBuilder sb_szString;
@@ -4554,13 +4566,13 @@ omSubLC_dDisplayPathogenName( View     mSubLC,
                                GetVariableFromAttribute( sb_szFootnoteNumber, mi_lTempInteger_2, 'S', 4, mSubLC, "MLC_UsageFootnote", "wFootNoteRelativeNumber", "", 0 );
                lTempInteger_2 = mi_lTempInteger_2.intValue( );
                szFootnoteNumber = sb_szFootnoteNumber.toString( );}
-               //:szCombinedName = szCombinedName + "<sup>" + szFootnoteNumber + "</sup>"
+               //:szCombinedName = szCombinedName + "<sup> " + szFootnoteNumber + "</sup>"
                 {StringBuilder sb_szCombinedName;
                if ( szCombinedName == null )
                   sb_szCombinedName = new StringBuilder( 32 );
                else
                   sb_szCombinedName = new StringBuilder( szCombinedName );
-                              ZeidonStringConcat( sb_szCombinedName, 1, 0, "<sup>", 1, 0, 101 );
+                              ZeidonStringConcat( sb_szCombinedName, 1, 0, "<sup> ", 1, 0, 101 );
                szCombinedName = sb_szCombinedName.toString( );}
                 {StringBuilder sb_szCombinedName;
                if ( szCombinedName == null )

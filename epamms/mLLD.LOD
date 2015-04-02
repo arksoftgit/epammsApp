@@ -1,4 +1,4 @@
-z1000-Zeidon    MLLD     TZZOLODO 03/17/15   22:06:35 1.0a2    
+z1000-Zeidon    MLLD     TZZOLODO 04/02/15   08:47:16 1.0a2    
 eLOD       1
 aZKey      3
 aName      mLLD
@@ -35,7 +35,10 @@ aInclSrc   Y
 aExclude   N
 aRecursive N
 aDerived   N
+aWork      N
 aParentDeleteBehave D
+aDupEntityInstance N
+aDupRelationshipInstance N
 aRelLinkIndicator L
 
 eLOD_EntityChild 4
@@ -46,12 +49,15 @@ aZKey      120134830
 aCreate    Y
 aDelete    Y
 aUpdate    Y
-aInclude   N
+aInclude   Y
 aInclSrc   Y
-aExclude   N
+aExclude   Y
 aRecursive N
 aDerived   N
+aWork      N
 aParentDeleteBehave D
+aDupEntityInstance N
+aDupRelationshipInstance N
 aRelLinkIndicator L
 
 eLOD_EntityChild 5
@@ -62,12 +68,15 @@ aZKey      120134837
 aCreate    Y
 aDelete    Y
 aUpdate    Y
-aInclude   N
+aInclude   Y
 aInclSrc   Y
-aExclude   N
+aExclude   Y
 aRecursive N
 aDerived   N
+aWork      N
 aParentDeleteBehave D
+aDupEntityInstance N
+aDupRelationshipInstance N
 aRelLinkIndicator L
 
 eLOD_EntityChild 6
@@ -78,12 +87,15 @@ aZKey      120134861
 aCreate    Y
 aDelete    Y
 aUpdate    Y
-aInclude   N
+aInclude   Y
 aInclSrc   Y
-aExclude   N
-aRecursive N
+aExclude   Y
+aRecursive Y
 aDerived   N
+aWork      N
 aParentDeleteBehave D
+aDupEntityInstance N
+aDupRelationshipInstance N
 aRelLinkIndicator L
 
 eLOD_AttributeRec 7
@@ -103,6 +115,273 @@ aMaxStringLth 4
 aDecimalFormat 0
 aDesc      Integer numbers from -lots to +lots
 aContextRestriction N
+
+eLOD_AttributeRec 7
+aZKey      110004134
+aUpdate    Y
+
+eER_AttributeRec 8
+aName      Tag
+aZKey      44805049
+aLth       64
+
+eDomainRec 9
+aZKey      68568081
+aName      Text
+aDomainType E
+aDataType  S
+aMaxStringLth 254
+aDesc      Any Character String
+aContextRestriction N
+
+eLOD_AttributeRec 7
+aZKey      110004135
+aUpdate    Y
+
+eER_AttributeRec 8
+aName      LLD_ColumnListType
+aZKey      120150081
+
+eDomainRec 9
+aZKey      120150076
+aName      LLD_ColumnListType
+aDomainType T
+aDataType  S
+aMaxStringLth 2
+aContextRestriction N
+
+eLOD_AttributeRec 7
+aZKey      110004136
+aUpdate    Y
+
+eER_AttributeRec 8
+aName      TextColorOverride
+aZKey      44805074
+
+eDomainRec 9
+aZKey      68567482
+aName      Y/N
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aDesc      Yes or No
+aContextRestriction N
+
+eLOD_AttributeRec 7
+aZKey      110004137
+aUpdate    Y
+
+eER_AttributeRec 8
+aName      BackgroundColor
+aZKey      44805073
+aLth       20
+
+eDomainRec 9
+
+eLOD_AttributeRec 7
+aZKey      110004138
+aUpdate    Y
+
+eER_AttributeRec 8
+aName      BackgroundColorOverride
+aZKey      44805075
+
+eDomainRec 9
+
+eLOD_AttributeRec 7
+aZKey      110004139
+aUpdate    Y
+
+eER_AttributeRec 8
+aName      BorderColorOverride
+aZKey      44805076
+
+eDomainRec 9
+
+eLOD_AttributeRec 7
+aZKey      110004140
+aUpdate    Y
+
+eER_AttributeRec 8
+aName      Margin
+aZKey      44805059
+
+eDomainRec 9
+aZKey      68568257
+aName      Decimal3
+aDomainType E
+aDataType  M
+aDecimalFormat 3
+aDesc      Characters '0-9' precision ( 0.000 )
+aContextRestriction N
+
+eLOD_AttributeRec 7
+aZKey      110004141
+aUpdate    Y
+
+eER_AttributeRec 8
+aName      MarginOverride
+aZKey      44805070
+
+eDomainRec 9
+
+eLOD_AttributeRec 7
+aZKey      110004142
+aUpdate    Y
+
+eER_AttributeRec 8
+aName      Border
+aZKey      44805060
+
+eDomainRec 9
+
+eLOD_AttributeRec 7
+aZKey      110004143
+aUpdate    Y
+
+eER_AttributeRec 8
+aName      BorderTop
+aZKey      44805061
+
+eDomainRec 9
+
+eLOD_AttributeRec 7
+aZKey      110004144
+aUpdate    Y
+
+eER_AttributeRec 8
+aName      BorderBottom
+aZKey      44805062
+
+eDomainRec 9
+
+eLOD_AttributeRec 7
+aZKey      110004145
+aUpdate    Y
+
+eER_AttributeRec 8
+aName      BorderLeft
+aZKey      44805063
+
+eDomainRec 9
+
+eLOD_AttributeRec 7
+aZKey      110004146
+aUpdate    Y
+
+eER_AttributeRec 8
+aName      BorderRight
+aZKey      44805064
+
+eDomainRec 9
+
+eLOD_AttributeRec 7
+aZKey      110004147
+aUpdate    Y
+
+eER_AttributeRec 8
+aName      BorderOverride
+aZKey      44805071
+
+eDomainRec 9
+
+eLOD_AttributeRec 7
+aZKey      110004148
+aUpdate    Y
+
+eER_AttributeRec 8
+aName      Padding
+aZKey      44805065
+
+eDomainRec 9
+
+eLOD_AttributeRec 7
+aZKey      110004149
+aUpdate    Y
+
+eER_AttributeRec 8
+aName      PaddingTop
+aZKey      44805066
+
+eDomainRec 9
+
+eLOD_AttributeRec 7
+aZKey      110004150
+aUpdate    Y
+
+eER_AttributeRec 8
+aName      PaddingBottom
+aZKey      44805067
+
+eDomainRec 9
+
+eLOD_AttributeRec 7
+aZKey      110004151
+aUpdate    Y
+
+eER_AttributeRec 8
+aName      PaddingLeft
+aZKey      44805068
+
+eDomainRec 9
+
+eLOD_AttributeRec 7
+aZKey      110004152
+aUpdate    Y
+
+eER_AttributeRec 8
+aName      PaddingRight
+aZKey      44805069
+
+eDomainRec 9
+
+eLOD_AttributeRec 7
+aZKey      110004153
+aUpdate    Y
+
+eER_AttributeRec 8
+aName      PaddingOverride
+aZKey      44805072
+
+eDomainRec 9
+
+eLOD_AttributeRec 7
+aZKey      110004154
+aUpdate    Y
+
+eER_AttributeRec 8
+aName      CapitalizeTitleTextFlag
+aZKey      120190104
+
+eDomainRec 9
+
+eLOD_AttributeRec 7
+aZKey      110004155
+aUpdate    Y
+
+eER_AttributeRec 8
+aName      TextLineHeight
+aZKey      120192327
+aDesc      The line-height of a text block expresses as a decimal number, such that 1.18 is approximately the same as entering no value.
+
+eDomainRec 9
+aZKey      68568211
+aName      Percent
+aDomainType E
+aDataType  M
+aDecimalFormat 3
+aDesc      Percent as a decimal, such that 1.00 is 100%.
+aContextRestriction N
+
+eLOD_AttributeRec 7
+aZKey      110004156
+aUpdate    Y
+
+eER_AttributeRec 8
+aName      Depth
+aZKey      44805058
+
+eDomainRec 9
 
 eLOD_AttributeRec 7
 aZKey      120134863
@@ -129,13 +408,6 @@ aZKey      4051216
 aDesc      Title for block.
 
 eDomainRec 9
-aZKey      68568081
-aName      Text
-aDomainType E
-aDataType  S
-aMaxStringLth 254
-aDesc      Any Character String
-aContextRestriction N
 
 eLOD_AttributeRec 7
 aZKey      120134865
@@ -161,13 +433,6 @@ aName      ContinuationBlockFlag
 aZKey      4327700
 
 eDomainRec 9
-aZKey      68567482
-aName      Y/N
-aDomainType T
-aDataType  S
-aMaxStringLth 1
-aDesc      Yes or No
-aContextRestriction N
 
 eLOD_AttributeRec 7
 aZKey      120134867
@@ -186,13 +451,6 @@ aName      Top
 aZKey      4322612
 
 eDomainRec 9
-aZKey      68568257
-aName      Decimal3
-aDomainType E
-aDataType  M
-aDecimalFormat 3
-aDesc      Characters '0-9' precision ( 0.000 )
-aContextRestriction N
 
 eLOD_AttributeRec 7
 aZKey      120134869
@@ -416,7 +674,10 @@ aInclSrc   Y
 aExclude   N
 aRecursive N
 aDerived   N
+aWork      N
 aParentDeleteBehave D
+aDupEntityInstance N
+aDupRelationshipInstance N
 aRelLinkIndicator L
 
 eLOD_EntityChild 7
@@ -437,6 +698,190 @@ aRelLinkIndicator H
 
 eLOD_AttributeRec 8
 aZKey      120134889
+
+eER_AttributeRec 9
+
+eDomainRec 10
+
+eLOD_AttributeRec 8
+aZKey      110004157
+aUpdate    Y
+
+eER_AttributeRec 9
+
+eDomainRec 10
+
+eLOD_AttributeRec 8
+aZKey      110004158
+aUpdate    Y
+
+eER_AttributeRec 9
+
+eDomainRec 10
+
+eLOD_AttributeRec 8
+aZKey      110004159
+aUpdate    Y
+
+eER_AttributeRec 9
+
+eDomainRec 10
+
+eLOD_AttributeRec 8
+aZKey      110004160
+aUpdate    Y
+
+eER_AttributeRec 9
+
+eDomainRec 10
+
+eLOD_AttributeRec 8
+aZKey      110004161
+aUpdate    Y
+
+eER_AttributeRec 9
+
+eDomainRec 10
+
+eLOD_AttributeRec 8
+aZKey      110004162
+aUpdate    Y
+
+eER_AttributeRec 9
+
+eDomainRec 10
+
+eLOD_AttributeRec 8
+aZKey      110004163
+aUpdate    Y
+
+eER_AttributeRec 9
+
+eDomainRec 10
+
+eLOD_AttributeRec 8
+aZKey      110004164
+aUpdate    Y
+
+eER_AttributeRec 9
+
+eDomainRec 10
+
+eLOD_AttributeRec 8
+aZKey      110004165
+aUpdate    Y
+
+eER_AttributeRec 9
+
+eDomainRec 10
+
+eLOD_AttributeRec 8
+aZKey      110004166
+aUpdate    Y
+
+eER_AttributeRec 9
+
+eDomainRec 10
+
+eLOD_AttributeRec 8
+aZKey      110004167
+aUpdate    Y
+
+eER_AttributeRec 9
+
+eDomainRec 10
+
+eLOD_AttributeRec 8
+aZKey      110004168
+aUpdate    Y
+
+eER_AttributeRec 9
+
+eDomainRec 10
+
+eLOD_AttributeRec 8
+aZKey      110004169
+aUpdate    Y
+
+eER_AttributeRec 9
+
+eDomainRec 10
+
+eLOD_AttributeRec 8
+aZKey      110004170
+aUpdate    Y
+
+eER_AttributeRec 9
+
+eDomainRec 10
+
+eLOD_AttributeRec 8
+aZKey      110004171
+aUpdate    Y
+
+eER_AttributeRec 9
+
+eDomainRec 10
+
+eLOD_AttributeRec 8
+aZKey      110004172
+aUpdate    Y
+
+eER_AttributeRec 9
+
+eDomainRec 10
+
+eLOD_AttributeRec 8
+aZKey      110004173
+aUpdate    Y
+
+eER_AttributeRec 9
+
+eDomainRec 10
+
+eLOD_AttributeRec 8
+aZKey      110004174
+aUpdate    Y
+
+eER_AttributeRec 9
+
+eDomainRec 10
+
+eLOD_AttributeRec 8
+aZKey      110004175
+aUpdate    Y
+
+eER_AttributeRec 9
+
+eDomainRec 10
+
+eLOD_AttributeRec 8
+aZKey      110004176
+aUpdate    Y
+
+eER_AttributeRec 9
+
+eDomainRec 10
+
+eLOD_AttributeRec 8
+aZKey      110004177
+aUpdate    Y
+
+eER_AttributeRec 9
+
+eDomainRec 10
+
+eLOD_AttributeRec 8
+aZKey      110004178
+aUpdate    Y
+
+eER_AttributeRec 9
+
+eDomainRec 10
+
+eLOD_AttributeRec 8
+aZKey      110004179
+aUpdate    Y
 
 eER_AttributeRec 9
 
@@ -671,6 +1116,190 @@ eER_AttributeRec 7
 eDomainRec 8
 
 eLOD_AttributeRec 6
+aZKey      110004111
+aUpdate    Y
+
+eER_AttributeRec 7
+
+eDomainRec 8
+
+eLOD_AttributeRec 6
+aZKey      110004112
+aUpdate    Y
+
+eER_AttributeRec 7
+
+eDomainRec 8
+
+eLOD_AttributeRec 6
+aZKey      110004113
+aUpdate    Y
+
+eER_AttributeRec 7
+
+eDomainRec 8
+
+eLOD_AttributeRec 6
+aZKey      110004114
+aUpdate    Y
+
+eER_AttributeRec 7
+
+eDomainRec 8
+
+eLOD_AttributeRec 6
+aZKey      110004115
+aUpdate    Y
+
+eER_AttributeRec 7
+
+eDomainRec 8
+
+eLOD_AttributeRec 6
+aZKey      110004116
+aUpdate    Y
+
+eER_AttributeRec 7
+
+eDomainRec 8
+
+eLOD_AttributeRec 6
+aZKey      110004117
+aUpdate    Y
+
+eER_AttributeRec 7
+
+eDomainRec 8
+
+eLOD_AttributeRec 6
+aZKey      110004118
+aUpdate    Y
+
+eER_AttributeRec 7
+
+eDomainRec 8
+
+eLOD_AttributeRec 6
+aZKey      110004119
+aUpdate    Y
+
+eER_AttributeRec 7
+
+eDomainRec 8
+
+eLOD_AttributeRec 6
+aZKey      110004120
+aUpdate    Y
+
+eER_AttributeRec 7
+
+eDomainRec 8
+
+eLOD_AttributeRec 6
+aZKey      110004121
+aUpdate    Y
+
+eER_AttributeRec 7
+
+eDomainRec 8
+
+eLOD_AttributeRec 6
+aZKey      110004122
+aUpdate    Y
+
+eER_AttributeRec 7
+
+eDomainRec 8
+
+eLOD_AttributeRec 6
+aZKey      110004123
+aUpdate    Y
+
+eER_AttributeRec 7
+
+eDomainRec 8
+
+eLOD_AttributeRec 6
+aZKey      110004124
+aUpdate    Y
+
+eER_AttributeRec 7
+
+eDomainRec 8
+
+eLOD_AttributeRec 6
+aZKey      110004125
+aUpdate    Y
+
+eER_AttributeRec 7
+
+eDomainRec 8
+
+eLOD_AttributeRec 6
+aZKey      110004126
+aUpdate    Y
+
+eER_AttributeRec 7
+
+eDomainRec 8
+
+eLOD_AttributeRec 6
+aZKey      110004127
+aUpdate    Y
+
+eER_AttributeRec 7
+
+eDomainRec 8
+
+eLOD_AttributeRec 6
+aZKey      110004128
+aUpdate    Y
+
+eER_AttributeRec 7
+
+eDomainRec 8
+
+eLOD_AttributeRec 6
+aZKey      110004129
+aUpdate    Y
+
+eER_AttributeRec 7
+
+eDomainRec 8
+
+eLOD_AttributeRec 6
+aZKey      110004130
+aUpdate    Y
+
+eER_AttributeRec 7
+
+eDomainRec 8
+
+eLOD_AttributeRec 6
+aZKey      110004131
+aUpdate    Y
+
+eER_AttributeRec 7
+
+eDomainRec 8
+
+eLOD_AttributeRec 6
+aZKey      110004132
+aUpdate    Y
+
+eER_AttributeRec 7
+
+eDomainRec 8
+
+eLOD_AttributeRec 6
+aZKey      110004133
+aUpdate    Y
+
+eER_AttributeRec 7
+
+eDomainRec 8
+
+eLOD_AttributeRec 6
 aZKey      120134839
 
 eER_AttributeRec 7
@@ -858,6 +1487,422 @@ aNotNull   Y
 eDomainRec 7
 
 eLOD_AttributeRec 5
+aZKey      110004070
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      Tag
+aZKey      44805048
+aLth       64
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004071
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      Name
+aZKey      44805285
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004072
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      LLD_SectionType
+aZKey      110000402
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004073
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      LLD_ColumnListType
+aZKey      110000403
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004074
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      ContinuationBlockFlag
+aZKey      110000404
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004075
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      ImageName
+aZKey      110000405
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004076
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      TextColor
+aZKey      110000369
+aLth       20
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004077
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      TextColorOverride
+aZKey      110000370
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004078
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      BackgroundColor
+aZKey      110000371
+aLth       20
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004079
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      BackgroundColorOverride
+aZKey      110000372
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004080
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      BorderColor
+aZKey      110000373
+aLth       20
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004081
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      BorderColorOverride
+aZKey      110000374
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004082
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      BorderStyle
+aZKey      110000375
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004083
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      BorderWidth
+aZKey      110000376
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004084
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      FontFamily
+aZKey      110000377
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004085
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      FontSize
+aZKey      110000378
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004086
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      FontWeight
+aZKey      110000379
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004087
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      Margin
+aZKey      110000380
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004088
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      MarginTop
+aZKey      110000381
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004089
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      MarginBottom
+aZKey      110000382
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004090
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      MarginLeft
+aZKey      110000383
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004091
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      MarginRight
+aZKey      110000384
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004092
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      MarginOverride
+aZKey      110000385
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004093
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      Border
+aZKey      110000386
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004094
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      BorderTop
+aZKey      110000387
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004095
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      BorderBottom
+aZKey      110000388
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004096
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      BorderLeft
+aZKey      110000389
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004097
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      BorderRight
+aZKey      110000390
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004098
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      BorderOverride
+aZKey      110000391
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004099
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      Padding
+aZKey      110000392
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004100
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      PaddingTop
+aZKey      110000393
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004101
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      PaddingBottom
+aZKey      110000394
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004102
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      PaddingLeft
+aZKey      110000395
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004103
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      PaddingRight
+aZKey      110000396
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004104
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      PaddingOverride
+aZKey      110000397
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004105
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      TitlePosition
+aZKey      110000398
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004106
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      CapitalizeTitleTextFlag
+aZKey      110000399
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004107
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      TextAlign
+aZKey      110000400
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004108
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      TextLineHeight
+aZKey      110000401
+aDesc      The line-height of a text block expresses as a decimal number, such that 1.18 is approximately the same as entering no value.
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004109
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      BlockTitle
+aZKey      110000443
+aDesc      Title for block.
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      110004110
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      Depth
+aZKey      44805057
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
 aZKey      120134832
 
 eER_AttributeRec 6
@@ -936,6 +1981,47 @@ aNotNull   Y
 eDomainRec 6
 
 eLOD_AttributeRec 4
+aZKey      110004066
+aUpdate    Y
+
+eER_AttributeRec 5
+aName      Tag
+aZKey      44805046
+aLth       64
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      110004067
+aUpdate    Y
+
+eER_AttributeRec 5
+aName      Name
+aZKey      44805286
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      110004068
+aUpdate    Y
+
+eER_AttributeRec 5
+aName      PageNbr
+aZKey      44805050
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      110004069
+aUpdate    Y
+
+eER_AttributeRec 5
+aName      Depth
+aZKey      44805121
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
 aZKey      120134828
 
 eER_AttributeRec 5
@@ -981,6 +2067,8 @@ aER_DiagramE2PosY 22
 
 eLOD_AttributeRec 3
 aZKey      5
+aUpdate    Y
+aSeqOrder  A
 
 eER_AttributeRec 4
 aName      ID
@@ -1134,6 +2222,43 @@ aZKey      120192326
 eDomainRec 5
 
 eLOD_AttributeRec 3
+aZKey      110004063
+aUpdate    Y
+
+eER_AttributeRec 4
+aName      Tag
+aZKey      44805045
+aLth       64
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      110004064
+aUpdate    Y
+
+eER_AttributeRec 4
+aName      DefaultFontColor
+aZKey      120192322
+
+eDomainRec 5
+aZKey      4322642
+aName      Color
+aDomainType T
+aDataType  S
+aMaxStringLth 20
+aContextRestriction N
+
+eLOD_AttributeRec 3
+aZKey      110004065
+aUpdate    Y
+
+eER_AttributeRec 4
+aName      Depth
+aZKey      44805123
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
 aZKey      120139393
 aWork      Y
 aUpdate    Y
@@ -1153,7 +2278,7 @@ aER_DiagramPosX 189
 aER_DiagramPosY 20
 
 eLOD_Entity 2
-awkSelectedAttributeForDragSort 11
+awkSelectedAttributeForDragSort 1
 
 eLOD_Attribute 3
 awkSequence 1
@@ -1260,26 +2385,22 @@ eER_Attribute 4
 
 eDomain    5
 
-eER_Entity 3
-
-eLOD_Entity 2
-
 eLOD_Attribute 3
-awkSequence 1
+awkSequence 16
 
 eER_Attribute 4
 
 eDomain    5
 
 eLOD_Attribute 3
-awkSequence 2
+awkSequence 17
 
 eER_Attribute 4
 
 eDomain    5
 
 eLOD_Attribute 3
-awkSequence 3
+awkSequence 18
 
 eER_Attribute 4
 
@@ -1287,11 +2408,8 @@ eDomain    5
 
 eER_Entity 3
 
-eER_RelLink 3
-
-eER_RelType 4
-
 eLOD_Entity 2
+awkSelectedAttributeForDragSort 1
 
 eLOD_Attribute 3
 awkSequence 1
@@ -1335,6 +2453,13 @@ eER_Attribute 4
 
 eDomain    5
 
+eLOD_Attribute 3
+awkSequence 7
+
+eER_Attribute 4
+
+eDomain    5
+
 eER_Entity 3
 
 eER_RelLink 3
@@ -1342,7 +2467,7 @@ eER_RelLink 3
 eER_RelType 4
 
 eLOD_Entity 2
-awkSelectedAttributeForDragSort 12
+awkSelectedAttributeForDragSort 1
 
 eLOD_Attribute 3
 awkSequence 1
@@ -1505,6 +2630,174 @@ eER_Attribute 4
 
 eDomain    5
 
+eLOD_Attribute 3
+awkSequence 24
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 25
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 26
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 27
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 28
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 29
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 30
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 31
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 32
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 33
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 34
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 35
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 36
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 37
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 38
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 39
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 40
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 41
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 42
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 43
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 44
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 45
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 46
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 47
+
+eER_Attribute 4
+
+eDomain    5
+
 eER_Entity 3
 
 eER_RelLink 3
@@ -1512,6 +2805,7 @@ eER_RelLink 3
 eER_RelType 4
 
 eLOD_Entity 2
+awkSelectedAttributeForDragSort 1
 
 eLOD_Attribute 3
 awkSequence 1
@@ -1674,6 +2968,167 @@ eER_Attribute 4
 
 eDomain    5
 
+eLOD_Attribute 3
+awkSequence 24
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 25
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 26
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 27
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 28
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 29
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 30
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 31
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 32
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 33
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 34
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 35
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 36
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 37
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 38
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 39
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 40
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 41
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 42
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 43
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 44
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 45
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 46
+
+eER_Attribute 4
+
+eDomain    5
+
 eER_Entity 3
 
 eER_RelLink 3
@@ -1681,28 +3136,7 @@ eER_RelLink 3
 eER_RelType 4
 
 eLOD_Entity 2
-
-eLOD_Attribute 3
-awkSequence 1
-
-eER_Attribute 4
-
-eDomain    5
-
-eLOD_Attribute 3
-awkSequence 2
-
-eER_Attribute 4
-
-eDomain    5
-
-eER_Entity 3
-
-eER_RelLink 3
-
-eER_RelType 4
-
-eLOD_Entity 2
+awkSelectedAttributeForDragSort 1
 
 eLOD_Attribute 3
 awkSequence 1
@@ -1860,6 +3294,521 @@ eDomain    5
 
 eLOD_Attribute 3
 awkSequence 23
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 24
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 25
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 26
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 27
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 28
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 29
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 30
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 31
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 32
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 33
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 34
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 35
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 36
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 37
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 38
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 39
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 40
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 41
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 42
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 43
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 44
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 45
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 46
+
+eER_Attribute 4
+
+eDomain    5
+
+eER_Entity 3
+
+eER_RelLink 3
+
+eER_RelType 4
+
+eLOD_Entity 2
+awkSelectedAttributeForDragSort 1
+
+eLOD_Attribute 3
+awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 2
+
+eER_Attribute 4
+
+eDomain    5
+
+eER_Entity 3
+
+eER_RelLink 3
+
+eER_RelType 4
+
+eLOD_Entity 2
+awkSelectedAttributeForDragSort 1
+
+eLOD_Attribute 3
+awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 2
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 4
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 5
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 6
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 7
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 8
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 9
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 10
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 11
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 12
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 13
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 14
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 15
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 16
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 17
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 18
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 19
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 20
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 21
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 22
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 23
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 24
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 25
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 26
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 27
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 28
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 29
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 30
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 31
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 32
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 33
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 34
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 35
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 36
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 37
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 38
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 39
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 40
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 41
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 42
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 43
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 44
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 45
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 46
 
 eER_Attribute 4
 
@@ -1907,442 +3856,953 @@ aGenCreateTables Y
 
 
 
-i23        14
-i29        26
-i32        26
-i35        26
-i41        14
-i44        26
-i47        14
-i59        26
-i62        26
-i65        26
-i68        26
-i81        7
-i82        8
-i84        10
-i85        11
-i87        13
-i88        14
-i90        16
-i91        17
-i93        19
-i94        20
-i96        22
-i97        14
-i99        25
-i100       26
-i102       28
-i103       26
-i105       31
-i106       26
-i108       34
-i109       26
-i111       37
-i112       38
-i114       40
-i115       14
-i117       43
-i118       26
-i120       46
-i121       14
-i123       49
-i124       50
-i126       52
-i127       53
-i129       55
-i130       56
-i132       58
-i133       26
-i135       61
-i136       26
-i138       64
-i139       26
-i141       67
-i142       26
-i144       70
-i145       71
-i147       73
-i148       74
-i149       75
-i154       8
-i157       11
-i162       7
-i163       8
-i165       10
-i166       11
-i168       13
-i169       14
-i171       16
-i172       17
-i174       19
-i175       20
-i177       22
-i178       14
-i180       25
-i181       26
-i183       28
-i184       26
-i186       31
-i187       26
-i189       34
-i190       26
-i192       37
-i193       38
-i195       40
-i196       14
-i198       43
-i199       26
-i201       46
-i202       14
-i204       49
-i205       50
-i207       52
-i208       53
-i210       55
-i211       56
-i213       58
-i214       26
-i216       61
-i217       26
-i219       64
-i220       26
-i222       67
-i223       26
-i225       70
-i226       71
-i228       73
-i229       74
-i230       75
-i235       8
-i238       26
-i241       26
-i244       26
-i247       26
-i250       8
-i256       8
-i259       26
-i262       26
-i268       8
-i271       11
-i277       14
-i286       283
-i289       283
-i292       50
-i295       53
-i298       26
-i301       26
-i304       26
-i307       26
-i310       20
-i312       1
-i313       266
-i314       267
-i315       8
-i316       269
-i317       270
-i318       11
-i319       272
-i320       273
-i321       274
-i322       275
-i323       276
-i324       14
-i325       278
-i326       279
-i327       280
-i328       281
-i329       282
-i330       283
-i331       284
-i332       285
-i333       283
-i334       287
-i335       288
-i336       283
-i337       290
-i338       291
-i339       50
-i340       293
-i341       294
-i342       53
-i343       296
-i344       297
-i345       26
-i346       299
-i347       300
-i348       26
-i349       302
-i350       303
-i351       26
-i352       305
-i353       306
-i354       26
-i355       308
-i356       309
-i357       20
-i358       311
-i359       2
-i360       254
-i361       255
-i362       8
-i363       257
-i364       258
-i365       26
-i366       260
-i367       261
-i368       26
-i369       263
-i370       264
-i371       265
-i372       3
-i373       233
-i374       234
-i375       8
-i376       236
-i377       237
-i378       26
-i379       239
-i380       240
-i381       26
-i382       242
-i383       243
-i384       26
-i385       245
-i386       246
-i387       26
-i388       248
-i389       249
-i390       8
-i391       251
-i392       252
-i393       253
-i394       4
-i395       161
-i396       7
-i397       8
-i398       164
-i399       10
-i400       11
-i401       167
-i402       13
-i403       14
-i404       170
-i405       16
-i406       17
-i407       173
-i408       19
-i409       20
-i410       176
-i411       22
-i412       14
-i413       179
-i414       25
-i415       26
-i416       182
-i417       28
-i418       26
-i419       185
-i420       31
-i421       26
-i422       188
-i423       34
-i424       26
-i425       191
-i426       37
-i427       38
-i428       194
-i429       40
-i430       14
-i431       197
-i432       43
-i433       26
-i434       200
-i435       46
-i436       14
-i437       203
-i438       49
-i439       50
-i440       206
-i441       52
-i442       53
-i443       209
-i444       55
-i445       56
-i446       212
-i447       58
-i448       26
-i449       215
-i450       61
-i451       26
-i452       218
-i453       64
-i454       26
-i455       221
-i456       67
-i457       26
-i458       224
-i459       70
-i460       71
-i461       227
-i462       73
-i463       74
-i464       75
-i465       231
-i466       232
-i467       5
-i468       6
-i469       7
-i470       8
-i471       9
-i472       10
-i473       11
-i474       12
-i475       13
-i476       14
-i477       15
-i478       16
-i479       17
-i480       18
-i481       19
-i482       20
-i483       21
-i484       22
-i485       14
-i486       24
-i487       25
-i488       26
-i489       27
-i490       28
-i491       26
-i492       30
-i493       31
-i494       26
-i495       33
-i496       34
-i497       26
-i498       36
-i499       37
-i500       38
-i501       39
-i502       40
-i503       14
-i504       42
-i505       43
-i506       26
-i507       45
-i508       46
-i509       14
-i510       48
-i511       49
-i512       50
-i513       51
-i514       52
-i515       53
-i516       54
-i517       55
-i518       56
-i519       57
-i520       58
-i521       26
-i522       60
-i523       61
-i524       26
-i525       63
-i526       64
-i527       26
-i528       66
-i529       67
-i530       26
-i531       69
-i532       70
-i533       71
-i534       72
-i535       73
-i536       74
-i537       75
-i538       76
-i539       77
-i540       78
-i541       152
-i542       153
-i543       8
-i544       155
-i545       156
-i546       11
-i547       158
-i548       159
-i549       160
-i550       79
-i551       80
-i552       7
-i553       8
-i554       83
-i555       10
-i556       11
-i557       86
-i558       13
-i559       14
-i560       89
-i561       16
-i562       17
-i563       92
-i564       19
-i565       20
-i566       95
-i567       22
-i568       14
-i569       98
-i570       25
-i571       26
-i572       101
-i573       28
-i574       26
-i575       104
-i576       31
-i577       26
-i578       107
-i579       34
-i580       26
-i581       110
-i582       37
-i583       38
-i584       113
-i585       40
-i586       14
-i587       116
-i588       43
-i589       26
-i590       119
-i591       46
-i592       14
-i593       122
-i594       49
-i595       50
-i596       125
-i597       52
-i598       53
-i599       128
-i600       55
-i601       56
-i602       131
-i603       58
-i604       26
-i605       134
-i606       61
-i607       26
-i608       137
-i609       64
-i610       26
-i611       140
-i612       67
-i613       26
-i614       143
-i615       70
-i616       71
-i617       146
-i618       73
-i619       74
-i620       75
-i621       150
-i622       151
+i20        11
+i23        17
+i26        17
+i32        17
+i35        29
+i38        29
+i41        29
+i44        29
+i47        29
+i50        17
+i53        29
+i56        29
+i59        29
+i62        29
+i65        29
+i68        17
+i71        17
+i77        8
+i83        11
+i89        17
+i92        11
+i95        29
+i98        29
+i101       29
+i104       29
+i110       11
+i113       29
+i116       11
+i128       29
+i131       29
+i134       29
+i137       29
+i150       7
+i151       8
+i153       10
+i154       11
+i156       13
+i157       14
+i159       16
+i160       17
+i162       19
+i163       11
+i165       22
+i166       17
+i168       25
+i169       17
+i171       28
+i172       29
+i174       31
+i175       17
+i177       34
+i178       29
+i180       37
+i181       29
+i183       40
+i184       29
+i186       43
+i187       29
+i189       46
+i190       29
+i192       49
+i193       17
+i195       52
+i196       29
+i198       55
+i199       29
+i201       58
+i202       29
+i204       61
+i205       29
+i207       64
+i208       29
+i210       67
+i211       17
+i213       70
+i214       17
+i216       73
+i217       74
+i219       76
+i220       8
+i222       79
+i223       80
+i225       82
+i226       11
+i228       85
+i229       86
+i231       88
+i232       17
+i234       91
+i235       11
+i237       94
+i238       29
+i240       97
+i241       29
+i243       100
+i244       29
+i246       103
+i247       29
+i249       106
+i250       107
+i252       109
+i253       11
+i255       112
+i256       29
+i258       115
+i259       11
+i261       118
+i262       119
+i264       121
+i265       122
+i267       124
+i268       125
+i270       127
+i271       29
+i273       130
+i274       29
+i276       133
+i277       29
+i279       136
+i280       29
+i282       139
+i283       140
+i285       142
+i286       143
+i287       144
+i292       8
+i295       80
+i300       7
+i301       8
+i303       10
+i304       11
+i306       13
+i307       14
+i309       16
+i310       17
+i312       19
+i313       11
+i315       22
+i316       17
+i318       25
+i319       17
+i321       28
+i322       29
+i324       31
+i325       17
+i327       34
+i328       29
+i330       37
+i331       29
+i333       40
+i334       29
+i336       43
+i337       29
+i339       46
+i340       29
+i342       49
+i343       17
+i345       52
+i346       29
+i348       55
+i349       29
+i351       58
+i352       29
+i354       61
+i355       29
+i357       64
+i358       29
+i360       67
+i361       17
+i363       70
+i364       17
+i366       73
+i367       74
+i369       76
+i370       8
+i372       79
+i373       80
+i375       82
+i376       11
+i378       85
+i379       86
+i381       88
+i382       17
+i384       91
+i385       11
+i387       94
+i388       29
+i390       97
+i391       29
+i393       100
+i394       29
+i396       103
+i397       29
+i399       106
+i400       107
+i402       109
+i403       11
+i405       112
+i406       29
+i408       115
+i409       11
+i411       118
+i412       119
+i414       121
+i415       122
+i417       124
+i418       125
+i420       127
+i421       29
+i423       130
+i424       29
+i426       133
+i427       29
+i429       136
+i430       29
+i432       139
+i433       140
+i435       142
+i436       143
+i437       144
+i442       8
+i445       11
+i448       80
+i451       86
+i454       14
+i457       17
+i460       11
+i463       11
+i466       17
+i469       11
+i472       17
+i475       11
+i478       17
+i481       107
+i484       29
+i487       119
+i490       122
+i493       125
+i496       29
+i499       29
+i502       29
+i505       29
+i508       29
+i511       17
+i514       29
+i517       29
+i520       29
+i523       29
+i526       29
+i529       17
+i532       29
+i535       29
+i538       29
+i541       29
+i544       29
+i547       17
+i550       140
+i553       17
+i556       143
+i559       74
+i562       11
+i565       8
+i568       29
+i571       29
+i574       29
+i577       29
+i580       8
+i586       8
+i589       11
+i592       80
+i595       8
+i598       8
+i601       29
+i604       29
+i610       8
+i613       80
+i619       11
+i628       625
+i631       625
+i634       119
+i637       122
+i640       29
+i643       29
+i646       29
+i649       29
+i652       11
+i658       8
+i661       17
+i663       1
+i664       608
+i665       609
+i666       8
+i667       650
+i668       651
+i669       11
+i670       611
+i671       612
+i672       80
+i673       614
+i674       615
+i675       616
+i676       617
+i677       618
+i678       11
+i679       620
+i680       621
+i681       622
+i682       623
+i683       624
+i684       625
+i685       626
+i686       627
+i687       625
+i688       629
+i689       630
+i690       625
+i691       632
+i692       633
+i693       119
+i694       635
+i695       636
+i696       122
+i697       638
+i698       639
+i699       29
+i700       641
+i701       642
+i702       29
+i703       644
+i704       645
+i705       29
+i706       647
+i707       648
+i708       29
+i709       653
+i710       654
+i711       655
+i712       656
+i713       657
+i714       8
+i715       659
+i716       660
+i717       17
+i718       662
+i719       2
+i720       584
+i721       585
+i722       8
+i723       587
+i724       588
+i725       11
+i726       590
+i727       591
+i728       80
+i729       593
+i730       594
+i731       8
+i732       596
+i733       597
+i734       8
+i735       599
+i736       600
+i737       29
+i738       602
+i739       603
+i740       29
+i741       605
+i742       606
+i743       607
+i744       3
+i745       440
+i746       441
+i747       8
+i748       443
+i749       444
+i750       11
+i751       446
+i752       447
+i753       80
+i754       449
+i755       450
+i756       86
+i757       452
+i758       453
+i759       14
+i760       455
+i761       456
+i762       17
+i763       458
+i764       459
+i765       11
+i766       461
+i767       462
+i768       11
+i769       464
+i770       465
+i771       17
+i772       467
+i773       468
+i774       11
+i775       470
+i776       471
+i777       17
+i778       473
+i779       474
+i780       11
+i781       476
+i782       477
+i783       17
+i784       479
+i785       480
+i786       107
+i787       482
+i788       483
+i789       29
+i790       485
+i791       486
+i792       119
+i793       488
+i794       489
+i795       122
+i796       491
+i797       492
+i798       125
+i799       494
+i800       495
+i801       29
+i802       497
+i803       498
+i804       29
+i805       500
+i806       501
+i807       29
+i808       503
+i809       504
+i810       29
+i811       506
+i812       507
+i813       29
+i814       509
+i815       510
+i816       17
+i817       512
+i818       513
+i819       29
+i820       515
+i821       516
+i822       29
+i823       518
+i824       519
+i825       29
+i826       521
+i827       522
+i828       29
+i829       524
+i830       525
+i831       29
+i832       527
+i833       528
+i834       17
+i835       530
+i836       531
+i837       29
+i838       533
+i839       534
+i840       29
+i841       536
+i842       537
+i843       29
+i844       539
+i845       540
+i846       29
+i847       542
+i848       543
+i849       29
+i850       545
+i851       546
+i852       17
+i853       548
+i854       549
+i855       140
+i856       551
+i857       552
+i858       17
+i859       554
+i860       555
+i861       143
+i862       557
+i863       558
+i864       74
+i865       560
+i866       561
+i867       11
+i868       563
+i869       564
+i870       8
+i871       566
+i872       567
+i873       29
+i874       569
+i875       570
+i876       29
+i877       572
+i878       573
+i879       29
+i880       575
+i881       576
+i882       29
+i883       578
+i884       579
+i885       8
+i886       581
+i887       582
+i888       583
+i889       4
+i890       299
+i891       7
+i892       8
+i893       302
+i894       10
+i895       11
+i896       305
+i897       13
+i898       14
+i899       308
+i900       16
+i901       17
+i902       311
+i903       19
+i904       11
+i905       314
+i906       22
+i907       17
+i908       317
+i909       25
+i910       17
+i911       320
+i912       28
+i913       29
+i914       323
+i915       31
+i916       17
+i917       326
+i918       34
+i919       29
+i920       329
+i921       37
+i922       29
+i923       332
+i924       40
+i925       29
+i926       335
+i927       43
+i928       29
+i929       338
+i930       46
+i931       29
+i932       341
+i933       49
+i934       17
+i935       344
+i936       52
+i937       29
+i938       347
+i939       55
+i940       29
+i941       350
+i942       58
+i943       29
+i944       353
+i945       61
+i946       29
+i947       356
+i948       64
+i949       29
+i950       359
+i951       67
+i952       17
+i953       362
+i954       70
+i955       17
+i956       365
+i957       73
+i958       74
+i959       368
+i960       76
+i961       8
+i962       371
+i963       79
+i964       80
+i965       374
+i966       82
+i967       11
+i968       377
+i969       85
+i970       86
+i971       380
+i972       88
+i973       17
+i974       383
+i975       91
+i976       11
+i977       386
+i978       94
+i979       29
+i980       389
+i981       97
+i982       29
+i983       392
+i984       100
+i985       29
+i986       395
+i987       103
+i988       29
+i989       398
+i990       106
+i991       107
+i992       401
+i993       109
+i994       11
+i995       404
+i996       112
+i997       29
+i998       407
+i999       115
+i1000      11
+i1001      410
+i1002      118
+i1003      119
+i1004      413
+i1005      121
+i1006      122
+i1007      416
+i1008      124
+i1009      125
+i1010      419
+i1011      127
+i1012      29
+i1013      422
+i1014      130
+i1015      29
+i1016      425
+i1017      133
+i1018      29
+i1019      428
+i1020      136
+i1021      29
+i1022      431
+i1023      139
+i1024      140
+i1025      434
+i1026      142
+i1027      143
+i1028      144
+i1029      438
+i1030      439
+i1031      5
+i1032      6
+i1033      7
+i1034      8
+i1035      9
+i1036      10
+i1037      11
+i1038      12
+i1039      13
+i1040      14
+i1041      15
+i1042      16
+i1043      17
+i1044      18
+i1045      19
+i1046      11
+i1047      21
+i1048      22
+i1049      17
+i1050      24
+i1051      25
+i1052      17
+i1053      27
+i1054      28
+i1055      29
+i1056      30
+i1057      31
+i1058      17
+i1059      33
+i1060      34
+i1061      29
+i1062      36
+i1063      37
+i1064      29
+i1065      39
+i1066      40
+i1067      29
+i1068      42
+i1069      43
+i1070      29
+i1071      45
+i1072      46
+i1073      29
+i1074      48
+i1075      49
+i1076      17
+i1077      51
+i1078      52
+i1079      29
+i1080      54
+i1081      55
+i1082      29
+i1083      57
+i1084      58
+i1085      29
+i1086      60
+i1087      61
+i1088      29
+i1089      63
+i1090      64
+i1091      29
+i1092      66
+i1093      67
+i1094      17
+i1095      69
+i1096      70
+i1097      17
+i1098      72
+i1099      73
+i1100      74
+i1101      75
+i1102      76
+i1103      8
+i1104      78
+i1105      79
+i1106      80
+i1107      81
+i1108      82
+i1109      11
+i1110      84
+i1111      85
+i1112      86
+i1113      87
+i1114      88
+i1115      17
+i1116      90
+i1117      91
+i1118      11
+i1119      93
+i1120      94
+i1121      29
+i1122      96
+i1123      97
+i1124      29
+i1125      99
+i1126      100
+i1127      29
+i1128      102
+i1129      103
+i1130      29
+i1131      105
+i1132      106
+i1133      107
+i1134      108
+i1135      109
+i1136      11
+i1137      111
+i1138      112
+i1139      29
+i1140      114
+i1141      115
+i1142      11
+i1143      117
+i1144      118
+i1145      119
+i1146      120
+i1147      121
+i1148      122
+i1149      123
+i1150      124
+i1151      125
+i1152      126
+i1153      127
+i1154      29
+i1155      129
+i1156      130
+i1157      29
+i1158      132
+i1159      133
+i1160      29
+i1161      135
+i1162      136
+i1163      29
+i1164      138
+i1165      139
+i1166      140
+i1167      141
+i1168      142
+i1169      143
+i1170      144
+i1171      145
+i1172      146
+i1173      147
+i1174      290
+i1175      291
+i1176      8
+i1177      293
+i1178      294
+i1179      80
+i1180      296
+i1181      297
+i1182      298
+i1183      148
+i1184      149
+i1185      7
+i1186      8
+i1187      152
+i1188      10
+i1189      11
+i1190      155
+i1191      13
+i1192      14
+i1193      158
+i1194      16
+i1195      17
+i1196      161
+i1197      19
+i1198      11
+i1199      164
+i1200      22
+i1201      17
+i1202      167
+i1203      25
+i1204      17
+i1205      170
+i1206      28
+i1207      29
+i1208      173
+i1209      31
+i1210      17
+i1211      176
+i1212      34
+i1213      29
+i1214      179
+i1215      37
+i1216      29
+i1217      182
+i1218      40
+i1219      29
+i1220      185
+i1221      43
+i1222      29
+i1223      188
+i1224      46
+i1225      29
+i1226      191
+i1227      49
+i1228      17
+i1229      194
+i1230      52
+i1231      29
+i1232      197
+i1233      55
+i1234      29
+i1235      200
+i1236      58
+i1237      29
+i1238      203
+i1239      61
+i1240      29
+i1241      206
+i1242      64
+i1243      29
+i1244      209
+i1245      67
+i1246      17
+i1247      212
+i1248      70
+i1249      17
+i1250      215
+i1251      73
+i1252      74
+i1253      218
+i1254      76
+i1255      8
+i1256      221
+i1257      79
+i1258      80
+i1259      224
+i1260      82
+i1261      11
+i1262      227
+i1263      85
+i1264      86
+i1265      230
+i1266      88
+i1267      17
+i1268      233
+i1269      91
+i1270      11
+i1271      236
+i1272      94
+i1273      29
+i1274      239
+i1275      97
+i1276      29
+i1277      242
+i1278      100
+i1279      29
+i1280      245
+i1281      103
+i1282      29
+i1283      248
+i1284      106
+i1285      107
+i1286      251
+i1287      109
+i1288      11
+i1289      254
+i1290      112
+i1291      29
+i1292      257
+i1293      115
+i1294      11
+i1295      260
+i1296      118
+i1297      119
+i1298      263
+i1299      121
+i1300      122
+i1301      266
+i1302      124
+i1303      125
+i1304      269
+i1305      127
+i1306      29
+i1307      272
+i1308      130
+i1309      29
+i1310      275
+i1311      133
+i1312      29
+i1313      278
+i1314      136
+i1315      29
+i1316      281
+i1317      139
+i1318      140
+i1319      284
+i1320      142
+i1321      143
+i1322      144
+i1323      288
+i1324      289
