@@ -12,7 +12,7 @@
             <line>1024</line>
         </file>
     </editor-bookmarks>
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="26">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="27">
         <file>
             <url>web/wSPLDSPLD_UpdateLLD.jsp</url>
             <bookmark id="3">
@@ -38,55 +38,50 @@
             <url>src/java/com/ajax/GraphicalLabelDesignerServlet.java</url>
             <bookmark id="25">
                 <name/>
-                <line>443</line>
+                <line>428</line>
                 <key/>
             </bookmark>
             <bookmark id="13">
                 <name/>
-                <line>533</line>
+                <line>516</line>
                 <key/>
             </bookmark>
         </file>
         <file>
             <url>web/js/labeldesigner.js</url>
+            <bookmark id="27">
+                <name/>
+                <line>171</line>
+                <key/>
+            </bookmark>
             <bookmark id="23">
                 <name/>
-                <line>197</line>
+                <line>201</line>
                 <key/>
             </bookmark>
             <bookmark id="18">
                 <name/>
-                <line>378</line>
+                <line>382</line>
                 <key/>
             </bookmark>
             <bookmark id="19">
                 <name/>
-                <line>401</line>
+                <line>405</line>
                 <key/>
             </bookmark>
             <bookmark id="20">
                 <name/>
-                <line>499</line>
+                <line>503</line>
                 <key/>
             </bookmark>
             <bookmark id="22">
                 <name/>
-                <line>536</line>
-                <key/>
-            </bookmark>
-            <bookmark id="24">
-                <name/>
-                <line>726</line>
+                <line>540</line>
                 <key/>
             </bookmark>
             <bookmark id="26">
                 <name/>
-                <line>1241</line>
-                <key/>
-            </bookmark>
-            <bookmark id="21">
-                <name/>
-                <line>2765</line>
+                <line>1245</line>
                 <key/>
             </bookmark>
         </file>

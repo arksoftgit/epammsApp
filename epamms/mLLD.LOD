@@ -1,4 +1,4 @@
-z1000-Zeidon    MLLD     TZZOLODO 04/02/15   08:47:16 1.0a2    
+z1000-Zeidon    MLLD     TZZOLODO 04/03/15   09:40:50 1.0a2    
 eLOD       1
 aZKey      3
 aName      mLLD
@@ -49,9 +49,9 @@ aZKey      120134830
 aCreate    Y
 aDelete    Y
 aUpdate    Y
-aInclude   Y
+aInclude   N
 aInclSrc   Y
-aExclude   Y
+aExclude   N
 aRecursive N
 aDerived   N
 aWork      N

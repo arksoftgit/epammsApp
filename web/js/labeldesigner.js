@@ -144,7 +144,7 @@ $(function() {
    }
 
    function saveLabel( commit, callback ) {
-      if ( g_updatedLLD ) {
+      if ( g_updatedLLD || commit === "Commit" ) {
          ConvertWysiwygLabelDesignToZeidonJson( "saveLabel" + commit , "mSPLDef", callback, null );
          g_updatedLLD = false;
       } else if ( callback ) {
@@ -165,8 +165,12 @@ $(function() {
       }
    });
 
+   function reloadCallback() {
+      LoadZeidonJsonFromLLD( "mSPLDef" );
+   }
+
    $("#Save").click( function() {
-      saveLabel( "Commit", null );
+      saveLabel( "Commit", reloadCallback );
    // SaveLLD(); don't do this
    });
 
@@ -2175,6 +2179,7 @@ public class FileServer {
       if ( div === "block" || div === "panel" || div === "page" || div === "label" ) {
          console.log( "Processing div: " + div );
          var $el = AddHtmlLabelElementAttributes( $root, $parentElement, parentId, obj, div, depth );
+         addZeidonAttributeToElement( $el, "_EOI", "Y" );  // existed on OI
          addZeidonAttributeToElement( $el, "wE", div );
          addZeidonAttributeToElement( $el, "wPID", parentId );
          addZeidonAttributeToElement( $el, "wPE", $parentElement.data( "z_w^e" ) );
@@ -2198,7 +2203,7 @@ public class FileServer {
             // do nothing
          }
          else
-         if ( prop === "LLD_Block" || prop === "LLD_SubBlock" || prop === "LLD_Panel" ) {
+         if ( prop === "LLD_SubBlock" || prop === "LLD_Block" || prop === "LLD_Panel" ) {
             var objBlock = obj[prop];
             for ( var k = 0; k < objBlock.length; k++ ) {
                AddHtmlWysiwygLabelElements( $root, $parentElement, parentId, objBlock[k], prop === "LLD_Panel" ? "panel" : "block", depth + 1 );
@@ -2378,7 +2383,7 @@ public class FileServer {
                   setBlockDraggableResizable( $(this).parent(), $(this), $(this) );
                });
 
-// debug code
+/* debug code
    $("#page").attr( "id", "page" + g_currentPage ).attr( "name", "page" + g_currentPage );
    var $initElement = $("#label");
    var jsonDOM = mapDOM( $initElement[0], true );
@@ -2388,7 +2393,7 @@ public class FileServer {
    // Display the resultant JSON that will be passed to Zeidon to be saved as an LLD.
    console.log( "\nJsonLabel Debug3: " + jsonLabel );
    $("#page" + g_currentPage).attr( "id", "page" );
-// end debug code
+ end debug code */
 
             }
          }
@@ -2657,7 +2662,7 @@ public class FileServer {
                   height += $el.cssInt( 'height' );
                   $el.css({ height: height });
                   $el.data( "z_^height", (height / scale).toFixed( 2 ) );
-                  if ( $el[0] == g_$current_block[0] ) {
+                  if ( $el[0] === g_$current_block[0] ) {
                      mapElementDataToUiData( g_$current_block );
                   }
                }
