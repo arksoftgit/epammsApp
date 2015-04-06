@@ -395,7 +395,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
          }
          String IDP = eip.getAttribute( "wID" ).getString();  // get ID of original parent
          if ( wPID == null || IDP == null  ) {
-            logger.debug( "Unexpected null wPID: " + wPID == null ? "Null" : wPID + "  wID: " + IDP == null ? "Null" : IDP );
+            logger.debug( "For ID: " + ID + "  Unexpected null wPID: " + wPID == null ? "Null" : wPID + "  wID: " + IDP == null ? "Null" : IDP );
          } else if ( wPID.compareTo( IDP ) != 0 ) { // if there is a new parent ...
          // logger.debug( "Before moving entity: " + entity + "  with ID: " + ID + "  from parent ID: " + IDP + "  to parent ID: " + wPID );
          // displaySPLD( vLLD, entity );
@@ -444,6 +444,9 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                   String ID = (String) jo.get( "ID" );
                   if ( ID != null && ID.isEmpty() == false ) {
                      logger.debug( "Processing Entity: " + entity + "  ID: " + ID );
+                     if ( ID.compareTo( "600" ) == 0 ) {
+                        logger.debug( "600" );
+                     }
                   } else {
                      logger.debug( "Processing Entity: " + entity + "  wID: " + (String) jo.get( "wID" ) );
                   }
@@ -477,7 +480,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                            }
                         } else {
                            String _EOI = (String)jo.get( "_EOI" );
-                           if ( _EOI != null && _EOI.charAt( 0 ) == 'Y' ) {
+                           if ( _EOI != null && _EOI.charAt( 0 ) == 'Y' ) { // exists on OI
                               cr = ec.setFirstWithinOi( "wID", wID );
                               if ( cr.isSet() ) {
                                  EntityInstance ei = ec.getEntityInstance();
@@ -574,18 +577,21 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
    }
 
    private void applyJsonPropertiesToZeidonAttributes( View vLLD, JSONObject jsonObject, String entity, int depth, EntityInstance ei ) {
-   // Set<String> keys = (Set<String>) jsonObject.keySet(); // these two lines work, but cause
-   // for ( String key : keys ) {                           // a warning ... replaced by next two lines
-      ei.logEntity( false );
-      for ( Iterator iterator = jsonObject.keySet().iterator(); iterator.hasNext(); ) {
-         String key = (String) iterator.next();
-      // logger.debug( "OTag: " + entity + "   Key: " + key + "   Depth: " + depth );
-         Object obj = jsonObject.get( key );
-         if ( obj instanceof String ) {
-            String valueNew = (String) obj;
-         // logger.debug( StringUtils.repeat( " ", (depth + 2) * 3 ) + "E.Attr: " + entity + "." + key + " : " + valueNew );
-            if ( ei != null ) {
-               if ( entity.equals( ei.getEntityDef().getName() ) ) {
+      if ( ei != null ) {
+      // ei.logEntity( false );
+         String entityDefName = ei.getEntityDef().getName();
+         if ( entity.equals( entityDefName ) ||
+              (entity.equals( "LLD_Block" ) && entityDefName.contains( "LLD_SubBlock" )) ||
+              (entity.equals( "LLD_SubBlock" ) && entityDefName.contains( "LLD_Block" )) ) {
+         // Set<String> keys = (Set<String>) jsonObject.keySet(); // these two lines work, but cause
+         // for ( String key : keys ) {                           // a warning ... replaced by next two lines
+            for ( Iterator iterator = jsonObject.keySet().iterator(); iterator.hasNext(); ) {
+               String key = (String) iterator.next();
+            // logger.debug( "OTag: " + entity + "   Key: " + key + "   Depth: " + depth );
+               Object obj = jsonObject.get( key );
+               if ( obj instanceof String ) {
+                  String valueNew = (String) obj;
+               // logger.debug( StringUtils.repeat( " ", (depth + 2) * 3 ) + "E.Attr: " + entity + "." + key + " : " + valueNew );
                   if ( key.compareTo( "ID" ) != 0 && key.charAt( 0 ) != '_' ) {  // attribute is not ID (which is immutable)
                      String valueOld = ei.getAttribute( key ).getString();
                      if ( valueOld.equals( valueNew ) == false ) { // if the value has changed ...
@@ -607,15 +613,15 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                         }
                      }
                   }
-               } else {
-                  String msg = "ei (" + ei.getEntityDef().getName() + ") does not match entity: " + entity + " for key: " + key;
-                  logger.debug( msg ); 
-                  throw new ZeidonException( msg ); 
                }
             }
+         } else {
+            String msg = "ei (" + ei.getEntityDef().getName() + ") does not match entity: " + entity;
+            logger.debug( msg ); 
+            throw new ZeidonException( msg ); 
          }
+      // ei.logEntity( false );
       }
-      ei.logEntity( false );
    }
 
    private void applyJsonLabelToView( View vLLD, JSONObject jsonObject, String entity, int depth, EntityInstance ei ) {
