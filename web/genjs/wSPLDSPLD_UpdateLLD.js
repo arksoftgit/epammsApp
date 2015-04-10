@@ -189,7 +189,7 @@ function CancelAndReturn( )
    }
 }
 
-function GraphicalView( )
+function CopySPLD( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -199,7 +199,7 @@ function GraphicalView( )
    {
       _DisableFormElements( true );
 
-      document.wSPLDSPLD_UpdateLLD.zAction.value = "GraphicalView";
+      document.wSPLDSPLD_UpdateLLD.zAction.value = "CopySPLD";
       document.wSPLDSPLD_UpdateLLD.submit( );
    }
 }
@@ -362,6 +362,21 @@ function GOTO_UpdatePanelEntry( strTagEntityKey )
       _DisableFormElements( true );
 
       document.wSPLDSPLD_UpdateLLD.zAction.value = "GOTO_UpdatePanelEntry";
+      document.wSPLDSPLD_UpdateLLD.submit( );
+   }
+}
+
+function GraphicalView( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSPLDSPLD_UpdateLLD.zAction.value = "GraphicalView";
       document.wSPLDSPLD_UpdateLLD.submit( );
    }
 }

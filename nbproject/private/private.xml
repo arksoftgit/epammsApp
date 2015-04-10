@@ -38,12 +38,12 @@
             <url>src/java/com/ajax/GraphicalLabelDesignerServlet.java</url>
             <bookmark id="25">
                 <name/>
-                <line>428</line>
+                <line>432</line>
                 <key/>
             </bookmark>
             <bookmark id="13">
                 <name/>
-                <line>516</line>
+                <line>520</line>
                 <key/>
             </bookmark>
         </file>
@@ -119,6 +119,7 @@
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/src/java/com/ajax/GraphicalLabelDesignerServlet.java</file>
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/wSPLDGraphicalView.jsp</file>
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/js/jsoeUtils.js</file>
+            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/js/jsoeObjectBrowser.js</file>
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/js/jsoe.js</file>
         </group>
     </open-files>

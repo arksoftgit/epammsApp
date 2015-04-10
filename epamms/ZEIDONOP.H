@@ -1,4 +1,4 @@
-//start mSPLDef 2015.04.03 21:31:58
+//start mSPLDef 2015.04.08 10:20:20
 zOPER_EXPORT zSHORT OPERATION
 omSPLDef_GeneratePDF_Label( zVIEW vViewToInstance0 );
 
@@ -139,6 +139,14 @@ omSPLDef_ObjectConstraints( zVIEW vViewtoInstance0,
 zOPER_EXPORT zSHORT OPERATION
 omSPLDef_BuildUsageEntriesFrSLC( zVIEW vViewToInstance0,
                                  zVIEW vmSubLC1 );
+
+zOPER_EXPORT zSHORT OPERATION
+omSPLDef_CheckAddKeywordEntry( zVIEW vViewToInstance0,
+                               zPCHAR pchszKeywordName1 );
+
+zOPER_EXPORT zSHORT OPERATION
+omSPLDef_SetUpKeywordEntries( zVIEW vViewToInstance0,
+                              zPCHAR pchszSectionType1 );
 
 //end
 //start mTempl 2014.04.11 13:18:24

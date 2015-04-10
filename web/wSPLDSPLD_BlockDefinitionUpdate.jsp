@@ -1724,23 +1724,6 @@ else
 
 
 </div>  <!--  GroupBox6 --> 
-<% /* GroupBox7:GroupBox */ %>
-
-<div id="GroupBox7" name="GroupBox7" style="width:216px;height:34px;float:left;">  <!-- GroupBox7 --> 
-
-
- <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:24px;">&nbsp&nbsp</span>
-<% /* PushBtn2:PushBtn */ %>
-<button type="button" class="formStylebutton" name="PushBtn2" id="PushBtn2" value="" onclick="GOTO_NewSpecialFormatDefinition( )" style="width:68px;height:24px;">New</button>
-
-</div>  <!-- End of a new line -->
-
-
-</div>  <!--  GroupBox7 --> 
 </div>  <!-- End of a new line -->
 
 

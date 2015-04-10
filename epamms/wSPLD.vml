@@ -2071,6 +2071,7 @@ PostbuildBlockDefinitionUpdate( VIEW ViewToWindow )
    
    // mSPLDefBlock should have been set up before transferring to this page.
    SetUpFormattingSelect( mSPLDefPanel, mSPLDefBlock.LLD_Block.LLD_SectionType ) 
+   SetUpKeywordEntries( mSPLDefBlock, mSPLDefBlock.LLD_Block.LLD_SectionType )
 
 END
 
@@ -2617,4 +2618,37 @@ CreateSLC( VIEW ViewToWindow )
       IssueError( ViewToWindow, 0, 0, "Database Write Error" )
    END
 
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//  
+// OPERATION: CopySPLD
+//    
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+CopySPLD( VIEW ViewToWindow )
+
+   VIEW mSPLDef REGISTERED AS mSPLDef
+   VIEW mSubLC  REGISTERED AS mSubLC
+   VIEW wWebXfer REGISTERED AS wWebXfer
+   VIEW mSPLDefNew BASED ON LOD mSPLDef
+   VIEW lSPLDLST BASED ON LOD lSPLDLST
+   STRING ( 64 ) szSearchName
+   SHORT   nRC
+
+   ACTIVATE lSPLDLST Multiple
+   szSearchName = wWebXfer.Root.SearchName
+   nRC = SetCursorFirstEntityByString( lSPLDLST, "SubregPhysicalLabelDef", "Name", szSearchName, "" )
+   IF nRC = zCURSOR_SET
+      MessageSend( ViewToWindow, "", "Copy Label",
+                   "The Label Name must be unique.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+
+
+   ACTIVATE mSPLDefNew EMPTY
+   NAME VIEW mSPLDefNew "NewSPLD"
+   BuildSPLD_FromSPLD( mSPLDefNew, mSPLDef, mSubLC )
+   
 END

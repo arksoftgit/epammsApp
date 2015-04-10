@@ -362,18 +362,18 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
       return jsonLabel;
    }
 
-   private void displaySPLD( View vLLD, String entity ) {
+   private void displaySPLD( View mSPLDef, String entity ) {
       logger.debug( "displaySPLD" );
       EntityCursor ec;
       if ( entity != null ) {
-         ec = vLLD.getCursor( entity );
+         ec = mSPLDef.getCursor( entity );
          if ( ec.isNull() == false ) {
             ec.logEntity( false );
          } else {
             logger.debug( "Null entity: " + entity );
          }
       }
-      View t = vLLD.newView();
+      View t = mSPLDef.newView();
       t.resetSubobjectTop();
       ec = t.getCursor( "SPLD_LLD" );
       ec.logEntity( true );
@@ -384,7 +384,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
    // int id = Integer.getInteger( ID );
       if ( entity.compareTo( "LLD_Block" ) == 0 || entity.compareTo( "LLD_SubBlock" ) == 0 ) {  // the only entities that can be moved to a new parent
          // Note that ec and hence ei and eip are related to vLLD.
-         EntityInstance ei = ec.getEntityInstance();  // this is the entity that we are moving (805 in test)
+         EntityInstance ei = ec.getEntityInstance();  // this is the entity that we are moving (600 in test)
          String wPID = ec.getAttribute( "wPID" ).getString();
          EntityInstance eip = null;
          try {
@@ -394,12 +394,19 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
             return ec;
          }
          String IDP = eip.getAttribute( "wID" ).getString();  // get ID of original parent
+         if ( ID.compareTo( "600" ) == 0 || ID.compareTo( "812" ) == 0 || ID.compareTo( "813" ) == 0 ) {
+           logger.debug( ID + "C"  + "  Checking move from parent ID: " + IDP + "  to parent ID: " + wPID );
+           eip.logEntity( false );
+           displaySPLD( vLLD, entity );
+         }
          if ( wPID == null || IDP == null  ) {
             logger.debug( "For ID: " + ID + "  Unexpected null wPID: " + wPID == null ? "Null" : wPID + "  wID: " + IDP == null ? "Null" : IDP );
          } else if ( wPID.compareTo( IDP ) != 0 ) { // if there is a new parent ...
-         // logger.debug( "Before moving entity: " + entity + "  with ID: " + ID + "  from parent ID: " + IDP + "  to parent ID: " + wPID );
-         // displaySPLD( vLLD, entity );
+            logger.debug( "Before moving entity: " + entity + "  with ID: " + ID + "  from parent ID: " + IDP + "  to parent ID: " + wPID );
+            displaySPLD( vLLD, entity );
             String wPE = ec.getAttribute( "wPE" ).getString();
+            ei.getAttribute( "wPE" ).setValue( wPE );
+            ei.getAttribute( "wPID" ).setValue( wPID );
             if ( wPE.compareTo( "panel" ) == 0 ) {
                wPE = "LLD_Panel";
             } else if ( wPE.compareTo( "block" ) == 0 ) {
@@ -420,8 +427,8 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                   }
                   ecp = v.getCursor( "LLD_Block" );
                   ecp.moveSubobject( CursorPosition.FIRST, ec, CursorPosition.NONE );
-               // logger.debug( "After Moving To SubBlock Target" );
-               // displaySPLD( v, wPE );
+                  logger.debug( "After Moving To SubBlock Target entity: " + entity + "  with ID: " + ID + "  from parent ID: " + IDP + "  to parent ID: " + wPID );
+                  displaySPLD( v, wPE );
                } catch ( ZeidonException ze ) {
                   logger.debug( "Error trying to move entity: " + entity + "  error: " + ze );
                }
@@ -442,14 +449,16 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                EntityCursor ec = vLLD.getCursor( entity );
             // if ( ec.isNull() == false ) {  // the ec.isNull may be true ==> no entities, but we may want to create one!
                   String ID = (String) jo.get( "ID" );
+                  //
                   if ( ID != null && ID.isEmpty() == false ) {
                      logger.debug( "Processing Entity: " + entity + "  ID: " + ID );
-                     if ( ID.compareTo( "600" ) == 0 ) {
-                        logger.debug( "600" );
+                     if ( ID.compareTo( "600" ) == 0 || ID.compareTo( "812" ) == 0 || ID.compareTo( "813" ) == 0 ) {
+                        logger.debug( ID + "A" );
                      }
                   } else {
                      logger.debug( "Processing Entity: " + entity + "  wID: " + (String) jo.get( "wID" ) );
                   }
+                  //
                   try {
                      if ( entity.compareTo( "LLD_Page" ) == 0 ) {
                         Object op = jo.get( "LLD_Panel" ); // if there are no panels we will delete the page
@@ -513,6 +522,10 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                         // Get position on the corresponding entity in the OI.
                         cr = ec.setFirst( "ID", ID );
                         if ( cr.isSet() == false ) {
+                           if ( entity.equals( "LLD_SubBlock" ) ) {
+                              entity = "LLD_Block";
+                              ec = vLLD.getCursor( entity );
+                           }
                            cr = ec.setFirstWithinOi( "ID", ID );
                            if ( cr.isSet() == false ) {
                               // Locate using wID because if it exists ... ID only exists if the entity came from the database.
@@ -525,6 +538,13 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                         // If we found it, things are hunky-dory.
                         if ( cr.isSet() ) {
                            EntityInstance ei = ec.getEntityInstance();
+                           //
+                           if ( ID.compareTo( "600" ) == 0 || ID.compareTo( "812" ) == 0 || ID.compareTo( "813" ) == 0 ) {
+                              EntityInstance eip = ei.getParent();
+                              String IDP = eip.getAttribute( "ID" ).getString();
+                              logger.debug( ID + "B Parent ID: " + IDP );
+                           }
+                           //
                            if ( deleteEntity ) {
                            // vLLD.logObjectInstance();
                               ec.logEntity( true );
@@ -578,6 +598,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
 
    private void applyJsonPropertiesToZeidonAttributes( View vLLD, JSONObject jsonObject, String entity, int depth, EntityInstance ei ) {
       if ( ei != null ) {
+      // logger.debug( "Apply Json Start" );
       // ei.logEntity( false );
          String entityDefName = ei.getEntityDef().getName();
          if ( entity.equals( entityDefName ) ||
@@ -620,6 +641,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
             logger.debug( msg ); 
             throw new ZeidonException( msg ); 
          }
+      // logger.debug( "Apply Json End" );
       // ei.logEntity( false );
       }
    }
@@ -702,7 +724,8 @@ end debug code */
       return json;
    }
 
-   private void setPathCursorPosition( View vLLD, String entityTagList, int idx1, int depth ) {
+   private EntityCursor setPathCursorPosition( View vLLD, String entityTagList, int idx1, int depth ) {
+      EntityCursor ec = null;
       int idx2 = entityTagList.indexOf( ".", idx1 );
       if ( idx2 >= 0 ) {
          String entity = entityTagList.substring( idx1, idx2 );
@@ -710,27 +733,32 @@ end debug code */
          idx2 = entityTagList.indexOf( ";", idx1 );
          if ( idx2 >= 0 ) {
             String tag = entityTagList.substring( idx1, idx2 );
-            EntityCursor cursor;
-            if ( depth > 2 && entity.compareTo( "LLD_Block" ) == 0 ) {
-               entity = "LLD_SubBlock";
+            if ( entity.compareTo( "LLD_Block" ) == 0 ) {
+               if ( depth > 2 ) {
+                  ec = vLLD.getCursor( "LLD_SubBlock" );
+                  ec.setToSubobject();
+               } else {
+                  if ( depth < 2 ) {
+                     depth = 2;  // ensure we know we need to setToSubobject next level down
+                  }
+               }
             }
-            cursor = vLLD.getCursor( entity );
-            CursorResult cr = cursor.setFirst( "Tag", tag );
+            ec = vLLD.getCursor( entity );
+
+            CursorResult cr = ec.setFirst( "Tag", tag );
             if ( cr.isSet() ) {
                logger.debug( "View path set to Entity.Tag ================>>> " + entity + "." + tag );
-            // cursor.logEntity( false );
-               if ( depth > 2 && entity.compareTo( "LLD_SubBlock" ) == 0 ) {
-                  cursor.setToSubobject();
-               }
+               ec.logEntity( false );
                if ( idx2 < entityTagList.length() - 1 ) {
                   idx2++;
-                  setPathCursorPosition( vLLD, entityTagList, idx2, depth + 1 );
+                  ec = setPathCursorPosition( vLLD, entityTagList, idx2, depth + 1 );
                }
             } else {
                logger.debug( "Could not set cursor for Entity.Tag: " + entity + "." + tag );
             }
          }
       }
+      return ec;
    }
    /**
     * @see HttpServlet#doGet( HttpServletRequest request, HttpServletResponse response )
@@ -770,8 +798,8 @@ end debug code */
                View mSPLDefBlock = epamms.getViewByName( "mSPLDefBlock" );;
                if ( mSPLDefBlock == null ) {
                   mSPLDefBlock = vLLD.newView( );
+                  mSPLDefBlock.setName( "mSPLDefBlock", Level.TASK );
                }
-               mSPLDefBlock.setName( "mSPLDefBlock", Level.TASK );
                mSPLDefBlock.resetSubobjectTop();
                View mSPLDefPanel = epamms.getViewByName( "mSPLDefPanel" );;
                if ( mSPLDefPanel == null ) {
@@ -781,9 +809,10 @@ end debug code */
                   mSPLDefPanel.resetSubobjectTop();
                }
                String viewPath = request.getParameter( "viewPath" );
-            // logger.debug( "Setting view path: " + viewPath );
-               setPathCursorPosition( mSPLDefBlock, viewPath, 0, 0 );
-            // logger.debug( "Finished setting view path: " + viewPath );
+               logger.debug( "Setting view path: " + viewPath );
+               EntityCursor ec = setPathCursorPosition( mSPLDefBlock, viewPath, 0, 0 );
+               logger.debug( "Finished setting view path: " + viewPath );
+               ec.logEntity( false );
             } catch (ZeidonException ze) {
                // I think this means we are at the top
                logger.debug( "resetSubobject: " + ze.getMessage() );
@@ -796,11 +825,13 @@ end debug code */
          // jsonLabel = getPostData( request );
             JSONObject jsonPost = getPostData( request );
             String strJson = jsonPost.toJSONString();
-            logger.debug( "Save JSON: " + strJson );
+         // logger.debug( "Save JSON: " + strJson );
          // jsonLabel = request.getParameter( "jsonLabel" );
             try {
                View v = vLLD.newView();
                v.resetSubobjectTop();
+            // logger.debug( "Before Apply Json to OI" );
+            // displaySPLD( vLLD, null );
                applyJsonLabelToView( v, jsonPost, "", -2, null );  // OIs, SPLD_LLD, depth == 0 for LLD_Page
                v.drop();
             // logger.debug( "Saved JSON to OI" );
@@ -853,9 +884,9 @@ end debug code */
       } else if ( action.compareTo( "loadLabel" ) == 0 ) {
       // We are just going to get the SPLD_LLD and its children and rename SPLD_LLD to LLD
          try {
-         // displaySPLD( vLLD, null );
+            displaySPLD( vLLD, null );
             jsonLabel = convertLLD_ToJSON( vLLD );
-         // logger.debug( "LoadLabel JSON: " + jsonLabel );
+            logger.debug( "LoadLabel JSON: " + jsonLabel );
          // jsonLabel = jsonLabel.replaceFirst( "\"TZLLD\",", "\"TZLLD\",\n      \"fileName\" : \"" + fileName + "\"," );
          } catch( ZeidonException ze ) {
             logger.debug( "Error loading Json Label: " + ze.getMessage() );

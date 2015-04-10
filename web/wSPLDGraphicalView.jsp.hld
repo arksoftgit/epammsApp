@@ -818,11 +818,16 @@ else
 
                   <h3>Block Properties</h3>
                   <div>
+                     <span>
                      <div style="overflow:hidden; white-space:nowrap;">
+                          <label for="zBlockId">ID:</label>
+                          <input type="text" id="zBlockId" class="zeidon" data-zmap="block.z_^i^d" style="float:right" disabled />
+                        </div>
+                        <div style="overflow:hidden; white-space:nowrap;">
                        <label for="zBlockTag">Tag:</label>
                        <input type="text" id="zBlockTag" class="zeidon" data-zmap="block.z_^tag" style="float:right" />
                      </div>
-
+                     </span>
                      <!-- 
                      <div id="jQueryRequired" style="color: red; font-size: 1.4em">jQuery.js is not present. You must install jQuery in this folder for the demo to work.</div>
                      <div class="form-item">

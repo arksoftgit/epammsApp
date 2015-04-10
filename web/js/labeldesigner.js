@@ -465,6 +465,7 @@ $(function() {
             var $canvas = determineTargetOfDrop( event, $(this), $canvasElement );
             addZeidonAttributeToElement( $canvasElement, "wPID", $canvas.data( "z_w^i^d" ) );
             addZeidonAttributeToElement( $canvasElement, "wPE", $canvas.data( "z_w^e" ) );
+            console.log( "Setting1 wPID: " + $canvas.data( "z_w^i^d" ) + "  wPE: " + $canvas.data( "z_w^e" ) );
             if ( true || $parent[0] !== $canvas[0] ) {
                var top = ui.offset.top;
                var left = ui.offset.left;
@@ -490,6 +491,7 @@ $(function() {
                $canvas.append( $canvasElement );
                addZeidonAttributeToElement( $canvasElement, "wPID", $canvas.data( "z_w^i^d" ) );
                addZeidonAttributeToElement( $canvasElement, "wPE", $canvas.data( "z_w^e" ) );
+               console.log( "Setting2 wPID: " + $canvas.data( "z_w^i^d" ) + "  wPE: " + $canvas.data( "z_w^e" ) );
                g_updatedLLD = true;
                setChildrenDepth( $canvas, $canvasElement );
             // setCurrentBlockData( $canvasElement, "updated 7" );
@@ -521,6 +523,7 @@ $(function() {
             $canvas.append( $canvasElement );
             addZeidonAttributeToElement( $canvasElement, "wPID", $canvas.data( "z_w^i^d" ) );
             addZeidonAttributeToElement( $canvasElement, "wPE", $canvas.data( "z_w^e" ) );
+            console.log( "Setting3 wPID: " + $canvas.data( "z_w^i^d" ) + "  wPE: " + $canvas.data( "z_w^e" ) );
          // $canvasElement.append( "<h5 class='ui-widget-header'></h5>" );
             $canvasElement.append( "<h5></h5>" );
             $canvasElement.children( ".ui-resizable-handle" ).css( "z-index", "" );  // prevent these from "showing through"
@@ -1386,12 +1389,19 @@ $(function() {
    //   status - contains the status of the request ("success", "notmodified", "error", "timeout", or "parsererror")
    //   xhr - contains the XMLHttpRequest object
 
-   function ConvertWysiwygLabelDesignToZeidonJson( action, name, callback_func, element ) {
+   function GetCurrentLabel() {
       $("#page").attr( "id", "page" + g_currentPage ).attr( "name", "page" + g_currentPage );
       var $initElement = $("#label");
       var jsonDOM = mapDOM( $initElement[0], true );
    // console.log( "JSON DOM: " + jsonDOM );
       var jsonLabel = CaptureZeidonLabelJsonFromDomJson( jsonDOM );
+      $("#page" + g_currentPage).attr( "id", "page" );
+      return jsonLabel;
+   }
+
+function ConvertWysiwygLabelDesignToZeidonJson( action, name, callback_func, element ) {
+
+   var jsonLabel = GetCurrentLabel();
 
       // Display the resultant JSON that will be passed to Zeidon to be saved as an LLD.
    // console.log( "\nJsonLabel: " + jsonLabel );
@@ -1425,7 +1435,6 @@ $(function() {
       } catch(e) {
          alert( "Could not load OI: " + name + "\n" + e.message );
       } finally { // TODO:  this should not be done here ... it happens way too early ... the success/error/complete function? should do it 
-         $("#page" + g_currentPage).attr( "id", "page" );
          g_$current_block = null;
 
          // TODO: display the label/page/block properties
@@ -1637,7 +1646,12 @@ public class FileServer {
    function CaptureZeidonLabelJsonFromDomJson( jsonDom ) {
    // var jsonObj = eval( "[" + json + "]" );
    // console.log( "Dom: " + jsonDom );
-      var jsonObj = jsonStringToJsonObject( jsonDom );
+      var jsonObj = g_ViewNameMap.getViewByName( "LLD_Dom" );
+      g_ViewNameMap.dropNameForView( jsonObj, "LLD_Dom" );
+      jsonObj = g_ViewNameMap.getViewByName( "LLD_New" );
+      g_ViewNameMap.dropNameForView( jsonObj, "LLD_New" );
+
+      jsonObj = jsonStringToJsonObject( jsonDom );
       g_ViewNameMap.setNameForView( jsonObj, "LLD_Dom" );
    // var formattedHtml = renderJsonObjectAsFormattedHtml( jsonObj[0], 0, false, false, false );
    // $id("zFormattedJsonLabel").innerHTML = "<PRE class='CodeContainer'>" + formattedHtml + "</PRE>";
@@ -2183,6 +2197,7 @@ public class FileServer {
          addZeidonAttributeToElement( $el, "wE", div );
          addZeidonAttributeToElement( $el, "wPID", parentId );
          addZeidonAttributeToElement( $el, "wPE", $parentElement.data( "z_w^e" ) );
+         console.log( "Setting4 wPID: " + parentId + "  wPE: " + $parentElement.data( "z_w^e" ) );
          displayElementData( "AddHtmlWysiwygLabelElements Parent", $parentElement );
          displayElementData( "AddHtmlWysiwygLabelElements Element", $el );
          $parentElement = $el;
@@ -2630,11 +2645,16 @@ public class FileServer {
                }
             }
          } else if ( e.keyCode === 123 ) { // Ctrl + F12 keydown combo
+            var jsonObj = g_ViewNameMap.getViewByName( "LLD_CurrentView" );
+            g_ViewNameMap.dropNameForView( jsonObj, "LLD_CurrentView" );
+            var jsonLabel = GetCurrentLabel();
+            jsonObj = jsonStringToJsonObject( jsonLabel );
+            g_ViewNameMap.setNameForView( jsonObj, "LLD_CurrentView" );
          // console.log( "Ctrl+F12 has been pressed!" );
-            g_jsonLabel1 = jsonStringToJsonObject( g_JsonNewLabel );
-            g_jsonLabel2 = jsonStringToJsonObject( g_JsonNewLabelA );
-            g_ViewNameMap.setNameForView( g_jsonLabel1, "dks1_viewname" );
-            g_ViewNameMap.setNameForView( g_jsonLabel2, "dks2_viewname" );
+         // g_jsonLabel1 = jsonStringToJsonObject( g_JsonNewLabel );
+         // g_jsonLabel2 = jsonStringToJsonObject( g_JsonNewLabelA );
+         // g_ViewNameMap.setNameForView( g_jsonLabel1, "dks1_viewname" );
+         //g_ViewNameMap.setNameForView( g_jsonLabel2, "dks2_viewname" );
          // var cursorsLabel = g_ViewNameMap.getViewByName( "dks1_viewname" );
          // console.log( "getViewByName found: " + cursorsLabel );
             var myWindow = openDebugWin();

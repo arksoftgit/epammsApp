@@ -4323,3 +4323,78 @@ ObjectConstraints( VIEW mSPLDef BASED ON LOD mSPLDef,
    END  /* case */
 
 END
+
+
+/*************************************************************************************************
+**    
+**    OPERATION: CheckAddKeywordEntry
+**    
+*************************************************************************************************/
+TRANSFORMATION OPERATION
+CheckAddKeywordEntry( VIEW mSPLDef BASED ON LOD mSPLDef,
+                      STRING ( 50 ) szKeywordName )
+
+   // Make sure that the entry for the Keyword passed in exists.
+   SET CURSOR FIRST mSPLDef.LLD_SpecialSectionAttribute WHERE mSPLDef.LLD_SpecialSectionAttribute.Name = szKeywordName
+   IF RESULT < zCURSOR_SET
+      SET CURSOR LAST mSPLDef.LLD_SpecialSectionAttribute  
+      CREATE ENTITY mSPLDef.LLD_SpecialSectionAttribute
+      mSPLDef.LLD_SpecialSectionAttribute.Name = szKeywordName
+      CREATE ENTITY mSPLDef.LLD_SpecialSectionAttrBlock  
+   END 
+   
+END
+
+
+/*************************************************************************************************
+**    
+**    OPERATION: SetUpKeywordEntries
+**    
+*************************************************************************************************/
+TRANSFORMATION OPERATION
+SetUpKeywordEntries( VIEW mSPLDef BASED ON LOD mSPLDef,
+                     STRING ( 50 ) szSectionType )
+
+   // Make sure that the appropriate Keyword entries are set up for a given Section/Block Type.
+   IF szSectionType = "HumanHazard" 
+      // Human Hazard
+      CheckAddKeywordEntry( mSPLDef, "Hazards Warning" )
+      CheckAddKeywordEntry( mSPLDef, "Hazards Signal Word" )
+      CheckAddKeywordEntry( mSPLDef, "Hazards Precautionary" )
+   ELSE
+      IF szSectionType = "Ingredients" 
+         // Ingredients
+         CheckAddKeywordEntry( mSPLDef, "Ingredients Title" )
+         CheckAddKeywordEntry( mSPLDef, "Ingredients Items" )
+         CheckAddKeywordEntry( mSPLDef, "Ingredients Inert" )
+         CheckAddKeywordEntry( mSPLDef, "Ingredients Total" ) 
+      ELSE
+         IF szSectionType = "DirectionsForUse" 
+            // Directions for Use
+            CheckAddKeywordEntry( mSPLDef, "Title" )
+            CheckAddKeywordEntry( mSPLDef, "Text" )
+            CheckAddKeywordEntry( mSPLDef, "DIRECTIONS Header" )
+         ELSE
+            IF szSectionType = "Marketing"
+               // Marketing
+               CheckAddKeywordEntry( mSPLDef, "Title" )
+               CheckAddKeywordEntry( mSPLDef, "Text" )
+               CheckAddKeywordEntry( mSPLDef, "Column List" )
+               CheckAddKeywordEntry( mSPLDef, "MARKETING Header" )
+            ELSE
+               IF szSectionType = "FirstAid"
+                  // First Aid
+                  CheckAddKeywordEntry( mSPLDef, "Title" )
+                  CheckAddKeywordEntry( mSPLDef, "Text" )
+                  CheckAddKeywordEntry( mSPLDef, "FIRST AID Header" )
+               ELSE
+                  // Default
+                  CheckAddKeywordEntry( mSPLDef, "Title" )
+                  CheckAddKeywordEntry( mSPLDef, "Text" )
+               END
+            END
+         END
+      END
+   END
+   
+END

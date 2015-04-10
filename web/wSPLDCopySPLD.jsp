@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCClaimsFootnoteStatement --%>
+<%-- wSPLDCopySPLD --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -35,7 +35,7 @@ public int DoInputMapping( HttpServletRequest request,
    String taskId = (String) session.getAttribute( "ZeidonTaskId" );
    Task task = objectEngine.getTaskById( taskId );
 
-   View mMasLC = null;
+   View wWebXfer = null;
    View vGridTmp = null; // temp view to grid view
    View vRepeatingGrp = null; // temp view to repeating group view
    String strDateFormat = "";
@@ -57,25 +57,25 @@ public int DoInputMapping( HttpServletRequest request,
    if ( webMapping == false )
       session.setAttribute( "ZeidonError", null );
 
-   mMasLC = task.getViewByName( "mMasLC" );
-   if ( VmlOperation.isValid( mMasLC ) )
+   wWebXfer = task.getViewByName( "wWebXfer" );
+   if ( VmlOperation.isValid( wWebXfer ) )
    {
-      // EditBox: Footnote
-      nRC = mMasLC.cursor( "M_UsageFootnote" ).checkExistenceOfEntity( ).toInt();
+      // EditBox: SPLD_Name
+      nRC = wWebXfer.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "Footnote" );
+         strMapValue = request.getParameter( "SPLD_Name" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "Footnote", "", strMapValue );
+               VmlOperation.CreateMessage( task, "SPLD_Name", "", strMapValue );
             else
-               mMasLC.cursor( "M_UsageFootnote" ).getAttribute( "Text" ).setValue( strMapValue, "" );
+               wWebXfer.cursor( "Root" ).getAttribute( "SearchName" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "Footnote", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "SPLD_Name", e.getReason( ), strMapValue );
          }
       }
 
@@ -143,7 +143,7 @@ if ( StringUtils.isBlank( strLastWindow ) )
 
 strLastAction = (String) session.getAttribute( "ZeidonAction" );
 
-if ( strLastWindow.equals("wMLCClaimsFootnoteStatement") && StringUtils.isBlank( strActionToProcess ) && StringUtils.isBlank( strLastAction ) )
+if ( strLastWindow.equals("wSPLDCopySPLD") && StringUtils.isBlank( strActionToProcess ) && StringUtils.isBlank( strLastAction ) )
 {
    strURL = response.encodeRedirectURL( "logout.jsp" );
    response.sendRedirect( strURL );
@@ -175,15 +175,15 @@ if ( task == null )
 vKZXMLPGO = JspWebUtils.createWebSession( null, task, "" );
 mMsgQ = new KZMSGQOO_Object( vKZXMLPGO );
 mMsgQ.setView( VmlOperation.getMessageObject( task ) );
-wMLC_Dialog wMLC = new wMLC_Dialog( vKZXMLPGO );
+wSPLD_Dialog wSPLD = new wSPLD_Dialog( vKZXMLPGO );
 
 strURL = "";
 bDone = false;
 nRC = 0;
 
-task.log().info("*** wMLCClaimsFootnoteStatement strActionToProcess *** " + strActionToProcess );
-task.log().info("*** wMLCClaimsFootnoteStatement LastWindow *** " + strLastWindow );
-task.log().info("*** wMLCClaimsFootnoteStatement LastAction *** " + strLastAction );
+task.log().info("*** wSPLDCopySPLD strActionToProcess *** " + strActionToProcess );
+task.log().info("*** wSPLDCopySPLD LastWindow *** " + strLastWindow );
+task.log().info("*** wSPLDCopySPLD LastAction *** " + strLastAction );
 
 if ( strActionToProcess != null )
 {
@@ -199,60 +199,56 @@ if ( strActionToProcess != null )
 
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "AcceptFootnoteStatement" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "Cancel" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCClaimsFootnoteStatement", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDCopySPLD", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
       if ( nRC < 0 )
          break;
 
-      // Action Auto Object Function
-      nRC = 0;
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_UsageFootnote" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         if ( cursor.isVersioned( ) )
-         {
-           cursor.acceptSubobject( );
-           nRC = 0;
-         }
-      }
-
       // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_ReturnToParent, "", "" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelFootnoteStatement" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "CopySPLD" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCClaimsFootnoteStatement", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDCopySPLD", strActionToProcess );
 
-      // Action Auto Object Function
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
       nRC = 0;
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_UsageFootnote" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDCopySPLD.jsp", "wSPLD.CopySPLD" );
+         nOptRC = wSPLD.CopySPLD( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
       {
-         if ( cursor.isVersioned( ) )
-         {
-           cursor.cancelSubobject( );
-           nRC = 0;
-         }
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wSPLD.GetWebRedirection( vKZXMLPGO );
       }
 
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_ReturnToParent, "", "" );
+      }
+
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -277,7 +273,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wMLCClaimsFootnoteStatement" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wSPLDCopySPLD" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -294,7 +290,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ------->>> " + "wMLCClaimsFootnoteStatement" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ------->>> " + "wSPLDCopySPLD" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -309,14 +305,14 @@ if ( strActionToProcess != null )
    while ( bDone == false && strActionToProcess.equals( "_OnResubmitPage" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCClaimsFootnoteStatement", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDCopySPLD", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
       if ( nRC < 0 )
          break;
 
-      strURL = response.encodeRedirectURL( "wMLCClaimsFootnoteStatement.jsp" );
+      strURL = response.encodeRedirectURL( "wSPLDCopySPLD.jsp" );
       nRC = 1;  //do the redirection
       break;
    }
@@ -327,11 +323,11 @@ if ( strActionToProcess != null )
       {
          if ( nRC > 1 )
          {
-            strURL = response.encodeRedirectURL( "wMLCClaimsFootnoteStatement.jsp" );
+            strURL = response.encodeRedirectURL( "wSPLDCopySPLD.jsp" );
             task.log().info( "Action Error Redirect to: " + strURL );
          }
 
-         if ( ! strURL.equals("wMLCClaimsFootnoteStatement.jsp") ) 
+         if ( ! strURL.equals("wSPLDCopySPLD.jsp") ) 
          {
             response.sendRedirect( strURL );
             // If we are redirecting to a new page, then we need this return so that the rest of this page doesn't get built.
@@ -342,7 +338,7 @@ if ( strActionToProcess != null )
       {
          if ( nRC > -128 )
          {
-            strURL = response.encodeRedirectURL( "wMLCClaimsFootnoteStatement.jsp" );
+            strURL = response.encodeRedirectURL( "wSPLDCopySPLD.jsp" );
             task.log().info( "Mapping Error Redirect to: " + strURL );
          }
          else
@@ -359,7 +355,7 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
 else
 {
 }
-   csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wMLC", "" );
+   csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSPLD", "" );
    if ( csrRC.isSet( ) )
       strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
 
@@ -369,8 +365,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wMLC", "" );
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "ClaimsFootnoteStatement", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSPLD", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "CopySPLD", "" );
    }
 
 %>
@@ -378,7 +374,7 @@ else
 <html>
 <head>
 
-<title>Ingredients Statement</title>
+<title>Copy Label</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
@@ -389,9 +385,8 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/he.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-<script language="JavaScript" type="text/javascript" src="./genjs/wMLCClaimsFootnoteStatement.js"></script>
+<script language="JavaScript" type="text/javascript" src="./genjs/wSPLDCopySPLD.js"></script>
 
 </head>
 
@@ -411,21 +406,21 @@ else
 <div id="sidenavigation">
    <ul>
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "SaveAndReturn" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Save" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="AcceptFootnoteStatement( )">Accept & Return</a></li>
+       <li><a href="#"  onclick="CopySPLD( )">Save and Return</a></li>
 <%
    }
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "CancelAndReturn" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Cancel" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="CancelFootnoteStatement( )">Cancel & Return</a></li>
+       <li><a href="#"  onclick="Cancel( )">Cancel and Return</a></li>
 <%
    }
 %>
@@ -436,6 +431,7 @@ else
 </div>  <!-- leftcontent -->
 
 <div id="content">
+
 <!--System Maintenance-->
 
 <%@ include file="./include/systemmaintenance.inc" %>
@@ -443,17 +439,23 @@ else
 <!-- END System Maintenance-->
 
 
-<form name="wMLCClaimsFootnoteStatement" id="wMLCClaimsFootnoteStatement" method="post">
+<form name="wSPLDCopySPLD" id="wSPLDCopySPLD" method="post">
    <input name="zAction" id="zAction" type="hidden" value="NOVALUE">
    <input name="zTableRowSelect" id="zTableRowSelect" type="hidden" value="NOVALUE">
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
+   View lMLC = null;
+   View lSPLDLST = null;
+   View mSPLDefBlock = null;
+   View mLLD_LST = null;
    View mMasLC = null;
-   View mEPA = null;
-   View mMasProd = null;
-   View mMasProdLST = null;
    View mPrimReg = null;
+   View mSPLDef = null;
+   View mSPLDefPanel = null;
+   View mSubLC = null;
+   View mSubProd = null;
+   View mSubreg = null;
    View wWebXfer = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
@@ -520,7 +522,7 @@ else
 
    strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
 
-   strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wMLC", "ClaimsFootnoteStatement" );
+   strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSPLD", "CopySPLD" );
    strOpenFile = VmlOperation.FindOpenFile( task );
    strDateFormat = "YYYY.MM.DD";
 
@@ -556,32 +558,16 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:8px;width:100px;"></div>
+<div style="height:14px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
-<% /* Text2:Text */ %>
+<% /* SPLD_Name::Text */ %>
 
-<span class="listheader"  id="Text2" name="Text2" style="width:250px;height:16px;">Claims Footnote Statement</span>
+<span  id="SPLD_Name:" name="SPLD_Name:" style="width:102px;height:18px;">SPLD Name:</span>
 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
-<div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GBIngredientsStatement:GroupBox */ %>
-
-<div id="GBIngredientsStatement" name="GBIngredientsStatement"   style="float:left;position:relative; width:670px; height:40px;">  <!-- GBIngredientsStatement --> 
-
-<% /* ActiveTitle::Text */ %>
-
-<label  id="ActiveTitle:" name="ActiveTitle:" style="width:50px;height:20px;position:absolute;left:12px;top:6px;">Text:</label>
-
-<% /* Footnote:EditBox */ %>
+<% /* SPLD_Name:EditBox */ %>
 <%
-   strErrorMapValue = VmlOperation.CheckError( "Footnote", strError );
+   strErrorMapValue = VmlOperation.CheckError( "SPLD_Name", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -590,38 +576,36 @@ else
    else
    {
       strErrorColor = "";
-      mMasLC = task.getViewByName( "mMasLC" );
-      if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "Footnote" );
+      wWebXfer = task.getViewByName( "wWebXfer" );
+      if ( VmlOperation.isValid( wWebXfer ) == false )
+         task.log( ).debug( "Invalid View: " + "SPLD_Name" );
       else
       {
-         nRC = mMasLC.cursor( "M_UsageFootnote" ).checkExistenceOfEntity( ).toInt();
+         nRC = wWebXfer.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
             try
             {
-            strErrorMapValue = mMasLC.cursor( "M_UsageFootnote" ).getAttribute( "Text" ).getString( "" );
+            strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "SearchName" ).getString( "" );
             }
             catch (Exception e)
             {
-               out.println("There is an error on Footnote: " + e.getMessage());
-               task.log().error( "*** Error on ctrl Footnote", e );
+               out.println("There is an error on SPLD_Name: " + e.getMessage());
+               task.log().error( "*** Error on ctrl SPLD_Name", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "M_UsageFootnote.Text: " + strErrorMapValue );
+            task.log( ).debug( "Root.SearchName: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_UsageFootnote" );
+            task.log( ).debug( "Entity does not exist: " + "wWebXfer.Root" );
       }
    }
 %>
 
-<input name="Footnote" id="Footnote" style="width:594px;position:absolute;left:62px;top:6px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="SPLD_Name" id="SPLD_Name" style="width:392px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-
-</div>  <!--  GBIngredientsStatement --> 
 </div>  <!-- End of a new line -->
 
 
@@ -653,7 +637,7 @@ else
 </body>
 </html>
 <%
-   session.setAttribute( "ZeidonWindow", "wMLCClaimsFootnoteStatement" );
+   session.setAttribute( "ZeidonWindow", "wSPLDCopySPLD" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

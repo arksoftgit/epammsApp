@@ -31,6 +31,7 @@ import org.apache.commons.lang3.mutable.MutableInt;
 
 import com.quinsoft.epamms.ZGlobal1_Operation;
 import com.quinsoft.epamms.ZGlobalV_Operation;
+import com.quinsoft.zeidon.EntityCursor;
 
 import com.quinsoft.zeidon.zeidonoperations.KZOEP1AA;
 import com.quinsoft.zeidon.zeidonoperations.ZDRVROPR;
@@ -64,7 +65,7 @@ omSPLDef_GeneratePDF_Label( View     mSPLDef )
    //:INTEGER lFile
    int      lFile = 0;
    //:INTEGER lControl
-   int      lControl = 0;
+   int       lControl = 0;
    //:STRING ( 50 ) szLeadingBlanks
    String   szLeadingBlanks = null;
    //:STRING ( 10 ) szSize
@@ -17392,6 +17393,166 @@ omSPLDef_BuildUsageEntriesFrSLC( View     mSPLDef,
 
    //:END
    return( 0 );
+// END
+} 
+
+   private void displaySPLD( View mSPLDef, String entity ) {
+      TraceLineS( "displaySPLD", "" );
+      EntityCursor ec;
+      if ( entity != null ) {
+         ec = mSPLDef.getCursor( entity );
+         if ( ec.isNull() == false ) {
+            ec.logEntity( false );
+         } else {
+            TraceLineS( "Null entity: ", entity );
+         }
+      }
+      View t = mSPLDef.newView();
+      t.resetSubobjectTop();
+      ec = t.getCursor( "SPLD_LLD" );
+      ec.logEntity( true );
+      t.drop();
+   }
+
+//:TRANSFORMATION OPERATION
+public int 
+omSPLDef_CheckAddKeywordEntry( View     mSPLDef,
+                               String   szKeywordName )
+{
+   int      RESULT = 0;
+
+   //:CheckAddKeywordEntry( VIEW mSPLDef BASED ON LOD mSPLDef,
+   //:                   STRING ( 50 ) szKeywordName )
+displaySPLD( mSPLDef, "LLD_Block" );
+   //:// Make sure that the entry for the Keyword passed in exists.
+   //:SET CURSOR FIRST mSPLDef.LLD_SpecialSectionAttribute WHERE mSPLDef.LLD_SpecialSectionAttribute.Name = szKeywordName
+   RESULT = SetCursorFirstEntityByString( mSPLDef, "LLD_SpecialSectionAttribute", "Name", szKeywordName, "" );
+   //:IF RESULT < zCURSOR_SET
+   if ( RESULT < zCURSOR_SET )
+   { 
+      //:SET CURSOR LAST mSPLDef.LLD_SpecialSectionAttribute  
+      RESULT = SetCursorLastEntity( mSPLDef, "LLD_SpecialSectionAttribute", "" );
+      //:CREATE ENTITY mSPLDef.LLD_SpecialSectionAttribute
+      RESULT = CreateEntity( mSPLDef, "LLD_SpecialSectionAttribute", zPOS_AFTER );
+      //:mSPLDef.LLD_SpecialSectionAttribute.Name = szKeywordName
+      SetAttributeFromString( mSPLDef, "LLD_SpecialSectionAttribute", "Name", szKeywordName );
+      //:CREATE ENTITY mSPLDef.LLD_SpecialSectionAttrBlock  
+      RESULT = CreateEntity( mSPLDef, "LLD_SpecialSectionAttrBlock", zPOS_AFTER );
+   } 
+
+   //:END 
+   return( 0 );
+//    
+// END
+} 
+
+
+//:TRANSFORMATION OPERATION
+public int 
+omSPLDef_SetUpKeywordEntries( View     mSPLDef,
+                              String   szSectionType )
+{
+
+   //:SetUpKeywordEntries( VIEW mSPLDef BASED ON LOD mSPLDef,
+   //:                  STRING ( 50 ) szSectionType )
+
+   //:// Make sure that the appropriate Keyword entries are set up for a given Section/Block Type.
+   //:IF szSectionType = "HumanHazard" 
+   if ( ZeidonStringCompare( szSectionType, 1, 0, "HumanHazard", 1, 0, 51 ) == 0 )
+   { 
+      //:// Human Hazard
+      //:CheckAddKeywordEntry( mSPLDef, "Hazards Warning" )
+      omSPLDef_CheckAddKeywordEntry( mSPLDef, "Hazards Warning" );
+      //:CheckAddKeywordEntry( mSPLDef, "Hazards Signal Word" )
+      omSPLDef_CheckAddKeywordEntry( mSPLDef, "Hazards Signal Word" );
+      //:CheckAddKeywordEntry( mSPLDef, "Hazards Precautionary" )
+      omSPLDef_CheckAddKeywordEntry( mSPLDef, "Hazards Precautionary" );
+      //:ELSE
+   } 
+   else
+   { 
+      //:IF szSectionType = "Ingredients" 
+      if ( ZeidonStringCompare( szSectionType, 1, 0, "Ingredients", 1, 0, 51 ) == 0 )
+      { 
+         //:// Ingredients
+         //:CheckAddKeywordEntry( mSPLDef, "Ingredients Title" )
+         omSPLDef_CheckAddKeywordEntry( mSPLDef, "Ingredients Title" );
+         //:CheckAddKeywordEntry( mSPLDef, "Ingredients Items" )
+         omSPLDef_CheckAddKeywordEntry( mSPLDef, "Ingredients Items" );
+         //:CheckAddKeywordEntry( mSPLDef, "Ingredients Inert" )
+         omSPLDef_CheckAddKeywordEntry( mSPLDef, "Ingredients Inert" );
+         //:CheckAddKeywordEntry( mSPLDef, "Ingredients Total" ) 
+         omSPLDef_CheckAddKeywordEntry( mSPLDef, "Ingredients Total" );
+         //:ELSE
+      } 
+      else
+      { 
+         //:IF szSectionType = "DirectionsForUse" 
+         if ( ZeidonStringCompare( szSectionType, 1, 0, "DirectionsForUse", 1, 0, 51 ) == 0 )
+         { 
+            //:// Directions for Use
+            //:CheckAddKeywordEntry( mSPLDef, "Title" )
+            omSPLDef_CheckAddKeywordEntry( mSPLDef, "Title" );
+            //:CheckAddKeywordEntry( mSPLDef, "Text" )
+            omSPLDef_CheckAddKeywordEntry( mSPLDef, "Text" );
+            //:CheckAddKeywordEntry( mSPLDef, "DIRECTIONS Header" )
+            omSPLDef_CheckAddKeywordEntry( mSPLDef, "DIRECTIONS Header" );
+            //:ELSE
+         } 
+         else
+         { 
+            //:IF szSectionType = "Marketing"
+            if ( ZeidonStringCompare( szSectionType, 1, 0, "Marketing", 1, 0, 51 ) == 0 )
+            { 
+               //:// Marketing
+               //:CheckAddKeywordEntry( mSPLDef, "Title" )
+               omSPLDef_CheckAddKeywordEntry( mSPLDef, "Title" );
+               //:CheckAddKeywordEntry( mSPLDef, "Text" )
+               omSPLDef_CheckAddKeywordEntry( mSPLDef, "Text" );
+               //:CheckAddKeywordEntry( mSPLDef, "Column List" )
+               omSPLDef_CheckAddKeywordEntry( mSPLDef, "Column List" );
+               //:CheckAddKeywordEntry( mSPLDef, "MARKETING Header" )
+               omSPLDef_CheckAddKeywordEntry( mSPLDef, "MARKETING Header" );
+               //:ELSE
+            } 
+            else
+            { 
+               //:IF szSectionType = "FirstAid"
+               if ( ZeidonStringCompare( szSectionType, 1, 0, "FirstAid", 1, 0, 51 ) == 0 )
+               { 
+                  //:// First Aid
+                  //:CheckAddKeywordEntry( mSPLDef, "Title" )
+                  omSPLDef_CheckAddKeywordEntry( mSPLDef, "Title" );
+                  //:CheckAddKeywordEntry( mSPLDef, "Text" )
+                  omSPLDef_CheckAddKeywordEntry( mSPLDef, "Text" );
+                  //:CheckAddKeywordEntry( mSPLDef, "FIRST AID Header" )
+                  omSPLDef_CheckAddKeywordEntry( mSPLDef, "FIRST AID Header" );
+                  //:ELSE
+               } 
+               else
+               { 
+                  //:// Default
+                  //:CheckAddKeywordEntry( mSPLDef, "Title" )
+                  omSPLDef_CheckAddKeywordEntry( mSPLDef, "Title" );
+                  //:CheckAddKeywordEntry( mSPLDef, "Text" )
+                  omSPLDef_CheckAddKeywordEntry( mSPLDef, "Text" );
+               } 
+
+               //:END
+            } 
+
+            //:END
+         } 
+
+         //:END
+      } 
+
+      //:END
+   } 
+
+   //:END
+   return( 0 );
+//    
 // END
 } 
 

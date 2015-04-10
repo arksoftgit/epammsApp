@@ -43,8 +43,8 @@ function _OnAlmostTimeout()
       // If the time is less than one minute, resubmit the page.  Otherwise, go to the timeout window.
       if (tDiff < 60000)
       {
-         document.wSPLDGraphicalView.zAction.value = "_OnResubmitPage";
-         document.wSPLDGraphicalView.submit( );
+         document.wSPLDCopySPLD.zAction.value = "_OnResubmitPage";
+         document.wSPLDCopySPLD.submit( );
       }
       else
       {
@@ -59,8 +59,8 @@ function _OnTimeout( )
    {
       _DisableFormElements( true );
 
-      document.wSPLDGraphicalView.zAction.value = "_OnTimeout";
-      document.wSPLDGraphicalView.submit( );
+      document.wSPLDCopySPLD.zAction.value = "_OnTimeout";
+      document.wSPLDCopySPLD.submit( );
    }
 }
 
@@ -74,8 +74,8 @@ function _BeforePageUnload( )
       // If the user clicked the window close box, unregister zeidon.
       if (isWindowClosing)
       {
-         document.wSPLDGraphicalView.zAction.value = "_OnUnload";
-         document.wSPLDGraphicalView.submit( );
+         document.wSPLDCopySPLD.zAction.value = "_OnUnload";
+         document.wSPLDCopySPLD.submit( );
       }
    }
 }
@@ -104,8 +104,8 @@ function _DisableFormElements( bDisabled )
    var $el = $("#zDisable");
    if ( $el.length > 0 ) {
       $el[0].disabled = true;
-            bRC = true;
-         }
+      bRC = true;
+   }
 
    $.blockUI({ message: '<h1><img src="./images/busy.gif" /></h1>', overlayCSS: { backgroundColor: '#eee' } });
    return bRC;
@@ -115,7 +115,16 @@ function _AfterPageLoaded( )
 {
 // _DisableFormElements( false );
 
-   szMsg = document.wSPLDGraphicalView.zOpenFile.value;
+   var szFocusCtrl = document.wSPLDCopySPLD.zFocusCtrl.value;
+   if ( szFocusCtrl != "" && szFocusCtrl != "null" )
+      eval( 'document.wSPLDCopySPLD.' + szFocusCtrl + '.focus( )' );
+
+   // This is where we put out a message from the previous iteration on this window
+   var szMsg = document.wSPLDCopySPLD.zError.value;
+   if ( szMsg != "" )
+      alert( szMsg ); // "Houston ... We have a problem"
+
+   szMsg = document.wSPLDCopySPLD.zOpenFile.value;
    if ( szMsg != "" )
    {
       var NewWin = window.open( szMsg );
@@ -127,10 +136,28 @@ function _AfterPageLoaded( )
       }
    }
 
-   document.wSPLDGraphicalView.zOpenFile.value = "";
+   var keyRole = document.wSPLDCopySPLD.zKeyRole.value;
+   document.wSPLDCopySPLD.zError.value = "";
+   document.wSPLDCopySPLD.zOpenFile.value = "";
+
+   if ( timerID != null )
+   {
+      clearTimeout( timerID );
+      timerID = null;
+   }
+
+   var varTimeout = document.wSPLDCopySPLD.zTimeout.value;
+   if ( varTimeout > 0 )
+   {
+      var varDelay = 60000 * varTimeout;  // Timeout value in timeout.inc
+      timerID = setTimeout( "_OnAlmostTimeout( )", varDelay );
+   }
+   else
+      timerID = null; // No timeout specified
+
+   isWindowClosing = true;
 }
 
-/* Don't know why this is here???
 function CheckAllInGrid(id, CheckBoxName)
 {
    var wcontrols = id.form.elements;
@@ -146,9 +173,8 @@ function CheckAllInGrid(id, CheckBoxName)
       }
    }
 }
-*/
 
-function GenerateLabel( )
+function Cancel( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -158,12 +184,12 @@ function GenerateLabel( )
    {
       _DisableFormElements( true );
 
-      document.wSPLDGraphicalView.zAction.value = "GenerateLabel";
-      document.wSPLDGraphicalView.submit( );
+      document.wSPLDCopySPLD.zAction.value = "Cancel";
+      document.wSPLDCopySPLD.submit( );
    }
 }
 
-function GenerateLabelBorders( )
+function CopySPLD( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -171,56 +197,22 @@ function GenerateLabelBorders( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      // Javascript code entered by user.
+
+   if ( document.wSPLDCopySPLD.SPLD_Name.value == "" ) {
+      alert( "Name for copy of Label must be specified" );
+      document.wSPLDCopySPLD.SPLD_Name.focus();
+      return;
+   }
+   alert( "Copy not yet working ... use Cancel" );
+   return;
+
+      // END of Javascript code entered by user.
+
       _DisableFormElements( true );
 
-      document.wSPLDGraphicalView.zAction.value = "GenerateLabelBorders";
-      document.wSPLDGraphicalView.submit( );
+      document.wSPLDCopySPLD.zAction.value = "CopySPLD";
+      document.wSPLDCopySPLD.submit( );
    }
 }
 
-function GOTO_UpdateBlock( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSPLDGraphicalView.zAction.value = "GOTO_UpdateBlock";
-      document.wSPLDGraphicalView.submit( );
-   }
-}
-
-function Return( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSPLDGraphicalView.zAction.value = "Return";
-      document.wSPLDGraphicalView.submit( );
-   }
-}
-
-/* Never should be called
-function SaveLLD( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSPLDGraphicalView.zAction.value = "SaveLLD";
-      document.wSPLDGraphicalView.submit( );
-   }
-}
-*/

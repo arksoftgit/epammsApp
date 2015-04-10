@@ -407,7 +407,7 @@ SimpleHashMap.prototype.getIndexOfKey = function( key ) {
    return -1;
 };
 
-SimpleHashMap.prototype.add = function( key, value ) {
+SimpleHashMap.prototype.addItem = function( key, value ) {
    if ( typeof key !== this._keyType ) {
       throw new Error( "Type of key should be: " + this._keyType + "  Not: " + typeof key );
    } else if ( value !== null && typeof value !== this._valueType ) {
@@ -422,7 +422,7 @@ SimpleHashMap.prototype.add = function( key, value ) {
    return this;
 };
 
-SimpleHashMap.prototype.get = function( key ) {
+SimpleHashMap.prototype.getItem = function( key ) {
    if ( this._db.length > 0 && typeof key === this._keyType ){
       for ( var k = 0; k < this._db.length; k++ ) {
          if ( this._db[k][0] === key ) {
@@ -431,6 +431,26 @@ SimpleHashMap.prototype.get = function( key ) {
       }
    }
    return null;
+};
+
+SimpleHashMap.prototype.removeItem = function( key ) {
+   var item = null;
+   var k = this.getIndexOfKey( key );
+   if ( k >= 0 ) {
+      item = this._db[k][1];
+      this._db = remove( this._db, k );
+   /*
+      while ( k < this._db.length ) {
+         this._db[k][0] = this._db[k + 1][0];
+         this._db[k][1] = this._db[k + 1][1];
+         k++;
+      }
+      this._db.length--;
+      this._db[_db.length][0] = null;
+      this._db[_db.length][1] = null;
+   */
+   }
+   return item;
 };
 
 SimpleHashMap.prototype.size = function() {
@@ -493,26 +513,6 @@ SimpleHashMap.prototype.swapItems = function( idx1, idx2 ) {
    } else {
       return false;
    }
-};
-
-SimpleHashMap.prototype.removeItem = function( key ) {
-   var item = null;
-   var k = this.getIndexOfKey( key );
-   if ( k >= 0 ) {
-      item = this._db[k][1];
-      this._db = remove( this._db, k );
-   /*
-      while ( k < this._db.length ) {
-         this._db[k][0] = this._db[k + 1][0];
-         this._db[k][1] = this._db[k + 1][1];
-         k++;
-      }
-      this._db.length--;
-      this._db[_db.length][0] = null;
-      this._db[_db.length][1] = null;
-   */
-   }
-   return item;
 };
 
 SimpleHashMap.prototype.clear = function() {
