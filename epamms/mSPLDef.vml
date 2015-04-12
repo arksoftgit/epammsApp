@@ -28,6 +28,7 @@ GeneratePDF_Label( VIEW mSPLDef BASED ON LOD mSPLDef )
    SHORT         nRC
    DECIMAL       InterPanelSpace
    DECIMAL       Left
+   DECIMAL       Temp
    STRING ( 32 ) szLPLR_Name
    STRING ( 64 ) szSystemIniApplName
    STRING ( 64 ) szLabelName
@@ -108,8 +109,10 @@ GeneratePDF_Label( VIEW mSPLDef BASED ON LOD mSPLDef )
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    
    // Page
-   szPageHeight = mSPLDef.LLD_Page.Height 
-   szPageWidth  = mSPLDef.LLD_Page.Width 
+   Temp = mSPLDef.LLD_Page.Height + 2.0  // add 1-inch border
+   szPageHeight = Temp
+   Temp = mSPLDef.LLD_Page.Width + 2.0 // add 1-inch border
+   szPageWidth  = Temp
    szWriteBuffer = "            <fo:simple-page-master master-name=^p1^ page-width=^" + szPageWidth + "in^ page-height=^" + szPageHeight + "in^>"
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    
@@ -157,10 +160,12 @@ GeneratePDF_Label( VIEW mSPLDef BASED ON LOD mSPLDef )
       
       // Panel Container
       //szTop        = "1.0"
-      szTop  = mSPLDef.LLD_Panel.Top 
-      szLeft = mSPLDef.LLD_Panel.Left 
-      szHeight     = mSPLDef.LLD_Panel.Height 
-      szWidth      = mSPLDef.LLD_Panel.Width 
+      Temp = mSPLDef.LLD_Panel.Top + 1.0
+      szTop = Temp 
+      Temp = mSPLDef.LLD_Panel.Left + 1.0
+      szLeft = Temp
+      szHeight     = mSPLDef.LLD_Panel.Height
+      szWidth      = mSPLDef.LLD_Panel.Width
       szWriteBuffer = "               <fo:block-container position=^absolute^ top=^" + szTop + "in^ left=^" + szLeft + 
                       "in^ height=^" + szHeight + "in^ width=^" + szWidth + "in^" + szPanelDottedBorder + ">"
       WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
@@ -330,20 +335,20 @@ FormatPrintIcons( VIEW mSPLDef BASED ON LOD mSPLDef,
    
    TopMargin       = 1
    LeftMargin      = 1
-   PageWidth      = mSPLDef.LLD_Page.Width 
-   PageHeight     = mSPLDef.LLD_Page.Height 
+   PageWidth      = mSPLDef.LLD_Page.Width + 2
+   PageHeight     = mSPLDef.LLD_Page.Height + 2
    
    IconTopLeftTop         = 0.2
    IconTopLeftLeft        = 0.2
    
-   IconBottomLeftTop      = PageHeight - 1.2
+   IconBottomLeftTop      = PageHeight - 0.8
    IconBottomLeftLeft     = 0.2
    
    IconTopRightTop        = 0.2
-   IconTopRightLeft       = PageWidth - 1.2
+   IconTopRightLeft       = PageWidth - 0.8
    
-   IconBottomRightTop     = PageHeight - 1.2
-   IconBottomRightLeft    = PageWidth - 1.2
+   IconBottomRightTop     = PageHeight - 0.8
+   IconBottomRightLeft    = PageWidth - 0.8
    
    IconCenterTopTop       = 0.2
    IconCenterTopLeft      = (PageWidth - 2) / 2 + 0.2
@@ -352,9 +357,9 @@ FormatPrintIcons( VIEW mSPLDef BASED ON LOD mSPLDef,
    IconCenterLeftLeft     = 0.2
    
    IconCenterRightTop     = (PageHeight - 2) / 2 + 0.2
-   IconCenterRightLeft    = PageWidth - 1.2
+   IconCenterRightLeft    = PageWidth - 0.8
    
-   IconCenterBottomTop    = PageHeight - 1.2
+   IconCenterBottomTop    = PageHeight - 0.8
    IconCenterBottomLeft   = (PageWidth - 2) / 2 + 0.2
    
    // Generate Icons

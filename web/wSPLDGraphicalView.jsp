@@ -374,7 +374,7 @@ else
 <head>
 
    <meta http-equiv="content-type" content="text/html; charset=utf-8">
-<title>Graphical View of LLD</title>
+<title>SPLD Graphical View</title>
 
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
 <!-- log a user out.  Timeout.inc is not used if the dialog or window has a timeout value set. -->
@@ -819,14 +819,14 @@ else
                   <h3>Block Properties</h3>
                   <div>
                      <span>
-                        <div style="overflow:hidden; white-space:nowrap;">
+                     <div style="overflow:hidden; white-space:nowrap;">
                           <label for="zBlockId">ID:</label>
                           <input type="text" id="zBlockId" class="zeidon" data-zmap="block.z_^i^d" style="float:right" disabled />
                         </div>
                         <div style="overflow:hidden; white-space:nowrap;">
-                          <label for="zBlockTag">Tag:</label>
-                          <input type="text" id="zBlockTag" class="zeidon" data-zmap="block.z_^tag" style="float:right" />
-                        </div>
+                       <label for="zBlockTag">Tag:</label>
+                       <input type="text" id="zBlockTag" class="zeidon" data-zmap="block.z_^tag" style="float:right" />
+                     </div>
                      </span>
                      <!-- 
                      <div id="jQueryRequired" style="color: red; font-size: 1.4em">jQuery.js is not present. You must install jQuery in this folder for the demo to work.</div>
@@ -995,7 +995,7 @@ else
                      &nbsp;
                      <p style="clear:both;position:relative"></p>
                      <hr>
-                     <input type="checkbox" id="zCheckContinuationBlock" name="zCheckContinuationBlock" class="zeidon" data-zmap="block.z_^continuation^block^flag" /><label for="zCheckContinuationBlock">Continuation Block</label>
+                     <input type="checkbox" id="zCheckContinuationBlock" name="zCheckContinuationBlock" class="zeidon" data-zmap="block.z_^continuation^block^flag" /><label for="zCheckContinuationBlock">Continuation from Previous Section/Statement</label>
 
                      <!-- Add a <div> element where the dynatree should appear: -->
                      <hr>
@@ -1009,12 +1009,14 @@ else
                            <input type="text" id="zPageSpinner" value="1" style="width:20px;"/>
                         </span>
                      </p>
+                     <!--
                      <p style="clear:both;position:relative">
                         <span>
                            <label for="zPageTitle">Page Title:</label>
                            <input type="text" id="zPageTitle" class="zeidon" data-zmap="page.z_^title" value="" style="width:120px;float:right;" />
                         </span>
                      </p>
+                     -->
                      <p style="clear:both;position:relative">
                         <span>
                            <label for="zPageHeight">Page Height:</label>
@@ -1033,7 +1035,7 @@ else
 
                   <h3>LLD Properties</h3>
                   <div>
-                     <!-- 
+                     <!--
                      <p>
                         <label for="zLLD_Name">LLD Name:</label>
                         <span>
@@ -1050,6 +1052,7 @@ else
                            <input type="text" id="zCSS_File" class="zeidon" data-zmap="label.z_^c^s^s_^file^name" value="" style="float:right;width:180px;"/>
                         </span>
                      </p>
+                     <!--
                      <p style="clear:both;position:relative"></p>
                      <div class="ui-widget" style="overflow:hidden; white-space:nowrap;">
                         <label for="zHazardPanel">Hazard Panel:</label>
@@ -1063,6 +1066,7 @@ else
                           <option value="5">Location 5</option>
                         </select>
                      </div>
+                     -->
                      <p style="clear:both;position:relative"></p>
                      <p>
                         <label>Continuation Text:</label><br />

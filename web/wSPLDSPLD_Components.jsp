@@ -528,7 +528,7 @@ else
 <html>
 <head>
 
-<title>SPLD_Components</title>
+<title>List SPLD Components</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
@@ -752,9 +752,9 @@ else
 
 <tr>
 <td valign="top" style="width:140px;">
-<% /* PrimaryRegistrantName:2:Text */ %>
+<% /* PrimaryRegistrantName::Text */ %>
 
-<span  id="PrimaryRegistrantName:2" name="PrimaryRegistrantName:2" style="width:130px;height:16px;">Registrant Product:</span>
+<span  id="PrimaryRegistrantName:" name="PrimaryRegistrantName:" style="width:130px;height:16px;">Registrant Product:</span>
 
 </td>
 <td valign="top"  class="text14bold" style="width:366px;">
@@ -789,9 +789,9 @@ else
 </tr>
 <tr>
 <td valign="top" style="width:140px;">
-<% /* Subregistrant:2:Text */ %>
+<% /* Subregistrant::Text */ %>
 
-<span  id="Subregistrant:2" name="Subregistrant:2" style="width:130px;height:16px;">Subreg Product:</span>
+<span  id="Subregistrant:" name="Subregistrant:" style="width:130px;height:16px;">Subreg Product:</span>
 
 </td>
 <td valign="top" style="width:366px;">

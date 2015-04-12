@@ -31,7 +31,6 @@ import org.apache.commons.lang3.mutable.MutableInt;
 
 import com.quinsoft.epamms.ZGlobal1_Operation;
 import com.quinsoft.epamms.ZGlobalV_Operation;
-import com.quinsoft.zeidon.EntityCursor;
 
 import com.quinsoft.zeidon.zeidonoperations.KZOEP1AA;
 import com.quinsoft.zeidon.zeidonoperations.ZDRVROPR;
@@ -65,7 +64,7 @@ omSPLDef_GeneratePDF_Label( View     mSPLDef )
    //:INTEGER lFile
    int      lFile = 0;
    //:INTEGER lControl
-   int       lControl = 0;
+   int      lControl = 0;
    //:STRING ( 50 ) szLeadingBlanks
    String   szLeadingBlanks = null;
    //:STRING ( 10 ) szSize
@@ -102,6 +101,8 @@ omSPLDef_GeneratePDF_Label( View     mSPLDef )
    double  InterPanelSpace = 0.0;
    //:DECIMAL       Left
    double  Left = 0.0;
+   //:DECIMAL       Temp
+   double  Temp = 0.0;
    //:STRING ( 32 ) szLPLR_Name
    String   szLPLR_Name = null;
    //:STRING ( 64 ) szSystemIniApplName
@@ -118,13 +119,13 @@ omSPLDef_GeneratePDF_Label( View     mSPLDef )
    String   szTempString_0 = null;
    int      lTempInteger_0 = 0;
    int      lTempInteger_1 = 0;
+   double  dTempDecimal_0 = 0.0;
+   double  dTempDecimal_1 = 0.0;
+   double  dTempDecimal_2 = 0.0;
+   double  dTempDecimal_3 = 0.0;
    int      lTempInteger_2 = 0;
    int      lTempInteger_3 = 0;
-   int      lTempInteger_4 = 0;
-   int      lTempInteger_5 = 0;
-   int      lTempInteger_6 = 0;
-   int      lTempInteger_7 = 0;
-   double  dTempDecimal_0 = 0.0;
+   double  dTempDecimal_4 = 0.0;
 
 
    //:// Generate an PDF Label from the SPLD.
@@ -619,25 +620,31 @@ omSPLDef_GeneratePDF_Label( View     mSPLDef )
    }
 
    //:// Page
-   //:szPageHeight = mSPLDef.LLD_Page.Height 
-   {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
-   StringBuilder sb_szPageHeight;
+   //:Temp = mSPLDef.LLD_Page.Height + 2.0  // add 1-inch border
+   {MutableDouble md_dTempDecimal_0 = new MutableDouble( dTempDecimal_0 );
+       GetDecimalFromAttribute( md_dTempDecimal_0, mSPLDef, "LLD_Page", "Height" );
+   dTempDecimal_0 = md_dTempDecimal_0.doubleValue( );}
+   Temp = dTempDecimal_0 + 2.0;
+   //:szPageHeight = Temp
+    {StringBuilder sb_szPageHeight;
    if ( szPageHeight == null )
       sb_szPageHeight = new StringBuilder( 32 );
    else
       sb_szPageHeight = new StringBuilder( szPageHeight );
-       GetVariableFromAttribute( sb_szPageHeight, mi_lTempInteger_2, 'S', 11, mSPLDef, "LLD_Page", "Height", "", 0 );
-   lTempInteger_2 = mi_lTempInteger_2.intValue( );
+      ZeidonStringConvertFromNumber( sb_szPageHeight, 1, 0, 10, 0, Temp, "D" );
    szPageHeight = sb_szPageHeight.toString( );}
-   //:szPageWidth  = mSPLDef.LLD_Page.Width 
-   {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
-   StringBuilder sb_szPageWidth;
+   //:Temp = mSPLDef.LLD_Page.Width + 2.0 // add 1-inch border
+   {MutableDouble md_dTempDecimal_1 = new MutableDouble( dTempDecimal_1 );
+       GetDecimalFromAttribute( md_dTempDecimal_1, mSPLDef, "LLD_Page", "Width" );
+   dTempDecimal_1 = md_dTempDecimal_1.doubleValue( );}
+   Temp = dTempDecimal_1 + 2.0;
+   //:szPageWidth  = Temp
+    {StringBuilder sb_szPageWidth;
    if ( szPageWidth == null )
       sb_szPageWidth = new StringBuilder( 32 );
    else
       sb_szPageWidth = new StringBuilder( szPageWidth );
-       GetVariableFromAttribute( sb_szPageWidth, mi_lTempInteger_3, 'S', 11, mSPLDef, "LLD_Page", "Width", "", 0 );
-   lTempInteger_3 = mi_lTempInteger_3.intValue( );
+      ZeidonStringConvertFromNumber( sb_szPageWidth, 1, 0, 10, 0, Temp, "D" );
    szPageWidth = sb_szPageWidth.toString( );}
    //:szWriteBuffer = "            <fo:simple-page-master master-name=^p1^ page-width=^" + szPageWidth + "in^ page-height=^" + szPageHeight + "in^>"
     {StringBuilder sb_szWriteBuffer;
@@ -903,45 +910,51 @@ omSPLDef_GeneratePDF_Label( View     mSPLDef )
 
       //:// Panel Container
       //://szTop        = "1.0"
-      //:szTop  = mSPLDef.LLD_Panel.Top 
-      {MutableInt mi_lTempInteger_4 = new MutableInt( lTempInteger_4 );
-      StringBuilder sb_szTop;
+      //:Temp = mSPLDef.LLD_Panel.Top + 1.0
+      {MutableDouble md_dTempDecimal_2 = new MutableDouble( dTempDecimal_2 );
+             GetDecimalFromAttribute( md_dTempDecimal_2, mSPLDef, "LLD_Panel", "Top" );
+      dTempDecimal_2 = md_dTempDecimal_2.doubleValue( );}
+      Temp = dTempDecimal_2 + 1.0;
+      //:szTop = Temp 
+       {StringBuilder sb_szTop;
       if ( szTop == null )
          sb_szTop = new StringBuilder( 32 );
       else
          sb_szTop = new StringBuilder( szTop );
-             GetVariableFromAttribute( sb_szTop, mi_lTempInteger_4, 'S', 11, mSPLDef, "LLD_Panel", "Top", "", 0 );
-      lTempInteger_4 = mi_lTempInteger_4.intValue( );
+            ZeidonStringConvertFromNumber( sb_szTop, 1, 0, 10, 0, Temp, "D" );
       szTop = sb_szTop.toString( );}
-      //:szLeft = mSPLDef.LLD_Panel.Left 
-      {MutableInt mi_lTempInteger_5 = new MutableInt( lTempInteger_5 );
-      StringBuilder sb_szLeft;
+      //:Temp = mSPLDef.LLD_Panel.Left + 1.0
+      {MutableDouble md_dTempDecimal_3 = new MutableDouble( dTempDecimal_3 );
+             GetDecimalFromAttribute( md_dTempDecimal_3, mSPLDef, "LLD_Panel", "Left" );
+      dTempDecimal_3 = md_dTempDecimal_3.doubleValue( );}
+      Temp = dTempDecimal_3 + 1.0;
+      //:szLeft = Temp
+       {StringBuilder sb_szLeft;
       if ( szLeft == null )
          sb_szLeft = new StringBuilder( 32 );
       else
          sb_szLeft = new StringBuilder( szLeft );
-             GetVariableFromAttribute( sb_szLeft, mi_lTempInteger_5, 'S', 11, mSPLDef, "LLD_Panel", "Left", "", 0 );
-      lTempInteger_5 = mi_lTempInteger_5.intValue( );
+            ZeidonStringConvertFromNumber( sb_szLeft, 1, 0, 10, 0, Temp, "D" );
       szLeft = sb_szLeft.toString( );}
-      //:szHeight     = mSPLDef.LLD_Panel.Height 
-      {MutableInt mi_lTempInteger_6 = new MutableInt( lTempInteger_6 );
+      //:szHeight     = mSPLDef.LLD_Panel.Height
+      {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
       StringBuilder sb_szHeight;
       if ( szHeight == null )
          sb_szHeight = new StringBuilder( 32 );
       else
          sb_szHeight = new StringBuilder( szHeight );
-             GetVariableFromAttribute( sb_szHeight, mi_lTempInteger_6, 'S', 11, mSPLDef, "LLD_Panel", "Height", "", 0 );
-      lTempInteger_6 = mi_lTempInteger_6.intValue( );
+             GetVariableFromAttribute( sb_szHeight, mi_lTempInteger_2, 'S', 11, mSPLDef, "LLD_Panel", "Height", "", 0 );
+      lTempInteger_2 = mi_lTempInteger_2.intValue( );
       szHeight = sb_szHeight.toString( );}
-      //:szWidth      = mSPLDef.LLD_Panel.Width 
-      {MutableInt mi_lTempInteger_7 = new MutableInt( lTempInteger_7 );
+      //:szWidth      = mSPLDef.LLD_Panel.Width
+      {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
       StringBuilder sb_szWidth;
       if ( szWidth == null )
          sb_szWidth = new StringBuilder( 32 );
       else
          sb_szWidth = new StringBuilder( szWidth );
-             GetVariableFromAttribute( sb_szWidth, mi_lTempInteger_7, 'S', 11, mSPLDef, "LLD_Panel", "Width", "", 0 );
-      lTempInteger_7 = mi_lTempInteger_7.intValue( );
+             GetVariableFromAttribute( sb_szWidth, mi_lTempInteger_3, 'S', 11, mSPLDef, "LLD_Panel", "Width", "", 0 );
+      lTempInteger_3 = mi_lTempInteger_3.intValue( );
       szWidth = sb_szWidth.toString( );}
       //:szWriteBuffer = "               <fo:block-container position=^absolute^ top=^" + szTop + "in^ left=^" + szLeft + 
       //:                "in^ height=^" + szHeight + "in^ width=^" + szWidth + "in^" + szPanelDottedBorder + ">"
@@ -1279,10 +1292,10 @@ omSPLDef_GeneratePDF_Label( View     mSPLDef )
 
       //:// Increment Left position for next Panel.
       //:Left = Left + InterPanelSpace + mSPLDef.LLD_Panel.Width
-      {MutableDouble md_dTempDecimal_0 = new MutableDouble( dTempDecimal_0 );
-             GetDecimalFromAttribute( md_dTempDecimal_0, mSPLDef, "LLD_Panel", "Width" );
-      dTempDecimal_0 = md_dTempDecimal_0.doubleValue( );}
-      Left = Left + InterPanelSpace + dTempDecimal_0;
+      {MutableDouble md_dTempDecimal_4 = new MutableDouble( dTempDecimal_4 );
+             GetDecimalFromAttribute( md_dTempDecimal_4, mSPLDef, "LLD_Panel", "Width" );
+      dTempDecimal_4 = md_dTempDecimal_4.doubleValue( );}
+      Left = Left + InterPanelSpace + dTempDecimal_4;
       RESULT = SetCursorNextEntity( mSPLDef, "LLD_Panel", "" );
    } 
 
@@ -1742,6 +1755,8 @@ omSPLDef_FormatPrintIcons( View     mSPLDef,
    //:STRING ( 90 ) szProductIdentifier
    String   szProductIdentifier = null;
    int      RESULT = 0;
+   double  dTempDecimal_0 = 0.0;
+   double  dTempDecimal_1 = 0.0;
 
 
    //:// Format the printer icons based on the Page Height and Width.
@@ -1781,34 +1796,36 @@ omSPLDef_FormatPrintIcons( View     mSPLDef,
    TopMargin = 1;
    //:LeftMargin      = 1
    LeftMargin = 1;
-   //:PageWidth      = mSPLDef.LLD_Page.Width 
-   {MutableDouble md_PageWidth = new MutableDouble( PageWidth );
-       GetDecimalFromAttribute( md_PageWidth, mSPLDef, "LLD_Page", "Width" );
-   PageWidth = md_PageWidth.doubleValue( );}
-   //:PageHeight     = mSPLDef.LLD_Page.Height 
-   {MutableDouble md_PageHeight = new MutableDouble( PageHeight );
-       GetDecimalFromAttribute( md_PageHeight, mSPLDef, "LLD_Page", "Height" );
-   PageHeight = md_PageHeight.doubleValue( );}
+   //:PageWidth      = mSPLDef.LLD_Page.Width + 2
+   {MutableDouble md_dTempDecimal_0 = new MutableDouble( dTempDecimal_0 );
+       GetDecimalFromAttribute( md_dTempDecimal_0, mSPLDef, "LLD_Page", "Width" );
+   dTempDecimal_0 = md_dTempDecimal_0.doubleValue( );}
+   PageWidth = dTempDecimal_0 + 2;
+   //:PageHeight     = mSPLDef.LLD_Page.Height + 2
+   {MutableDouble md_dTempDecimal_1 = new MutableDouble( dTempDecimal_1 );
+       GetDecimalFromAttribute( md_dTempDecimal_1, mSPLDef, "LLD_Page", "Height" );
+   dTempDecimal_1 = md_dTempDecimal_1.doubleValue( );}
+   PageHeight = dTempDecimal_1 + 2;
 
    //:IconTopLeftTop         = 0.2
    IconTopLeftTop = 0.2;
    //:IconTopLeftLeft        = 0.2
    IconTopLeftLeft = 0.2;
 
-   //:IconBottomLeftTop      = PageHeight - 1.2
-   IconBottomLeftTop = PageHeight - 1.2;
+   //:IconBottomLeftTop      = PageHeight - 0.8
+   IconBottomLeftTop = PageHeight - 0.8;
    //:IconBottomLeftLeft     = 0.2
    IconBottomLeftLeft = 0.2;
 
    //:IconTopRightTop        = 0.2
    IconTopRightTop = 0.2;
-   //:IconTopRightLeft       = PageWidth - 1.2
-   IconTopRightLeft = PageWidth - 1.2;
+   //:IconTopRightLeft       = PageWidth - 0.8
+   IconTopRightLeft = PageWidth - 0.8;
 
-   //:IconBottomRightTop     = PageHeight - 1.2
-   IconBottomRightTop = PageHeight - 1.2;
-   //:IconBottomRightLeft    = PageWidth - 1.2
-   IconBottomRightLeft = PageWidth - 1.2;
+   //:IconBottomRightTop     = PageHeight - 0.8
+   IconBottomRightTop = PageHeight - 0.8;
+   //:IconBottomRightLeft    = PageWidth - 0.8
+   IconBottomRightLeft = PageWidth - 0.8;
 
    //:IconCenterTopTop       = 0.2
    IconCenterTopTop = 0.2;
@@ -1822,11 +1839,11 @@ omSPLDef_FormatPrintIcons( View     mSPLDef,
 
    //:IconCenterRightTop     = (PageHeight - 2) / 2 + 0.2
    IconCenterRightTop = ( PageHeight - 2 ) / 2 + 0.2;
-   //:IconCenterRightLeft    = PageWidth - 1.2
-   IconCenterRightLeft = PageWidth - 1.2;
+   //:IconCenterRightLeft    = PageWidth - 0.8
+   IconCenterRightLeft = PageWidth - 0.8;
 
-   //:IconCenterBottomTop    = PageHeight - 1.2
-   IconCenterBottomTop = PageHeight - 1.2;
+   //:IconCenterBottomTop    = PageHeight - 0.8
+   IconCenterBottomTop = PageHeight - 0.8;
    //:IconCenterBottomLeft   = (PageWidth - 2) / 2 + 0.2
    IconCenterBottomLeft = ( PageWidth - 2 ) / 2 + 0.2;
 
@@ -17396,23 +17413,6 @@ omSPLDef_BuildUsageEntriesFrSLC( View     mSPLDef,
 // END
 } 
 
-   private void displaySPLD( View mSPLDef, String entity ) {
-      TraceLineS( "displaySPLD", "" );
-      EntityCursor ec;
-      if ( entity != null ) {
-         ec = mSPLDef.getCursor( entity );
-         if ( ec.isNull() == false ) {
-            ec.logEntity( false );
-         } else {
-            TraceLineS( "Null entity: ", entity );
-         }
-      }
-      View t = mSPLDef.newView();
-      t.resetSubobjectTop();
-      ec = t.getCursor( "SPLD_LLD" );
-      ec.logEntity( true );
-      t.drop();
-   }
 
 //:TRANSFORMATION OPERATION
 public int 
@@ -17423,7 +17423,7 @@ omSPLDef_CheckAddKeywordEntry( View     mSPLDef,
 
    //:CheckAddKeywordEntry( VIEW mSPLDef BASED ON LOD mSPLDef,
    //:                   STRING ( 50 ) szKeywordName )
-displaySPLD( mSPLDef, "LLD_Block" );
+
    //:// Make sure that the entry for the Keyword passed in exists.
    //:SET CURSOR FIRST mSPLDef.LLD_SpecialSectionAttribute WHERE mSPLDef.LLD_SpecialSectionAttribute.Name = szKeywordName
    RESULT = SetCursorFirstEntityByString( mSPLDef, "LLD_SpecialSectionAttribute", "Name", szKeywordName, "" );

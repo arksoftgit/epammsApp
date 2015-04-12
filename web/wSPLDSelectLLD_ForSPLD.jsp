@@ -386,7 +386,7 @@ else
 <html>
 <head>
 
-<title>DeleteLLD</title>
+<title>Select LLD for SPLD</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->

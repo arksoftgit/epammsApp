@@ -2958,11 +2958,11 @@ SELECT_SLC_ForNewSPLD( View     ViewToWindow )
       if(8==8)return( 2 );
    } 
 
-   //:END 
+   //:END
 
    //:// Create a new mSPLDef object instance and ititialize it with data from the mSubLC data from the
    //:// selected SubregLabelContent entry in mSubProd.
-   //:ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSubProd.SubregLabelContent.ID 
+   //:ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSubProd.SubregLabelContent.ID
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
        GetIntegerFromAttribute( mi_lTempInteger_0, mSubProd, "SubregLabelContent", "ID" );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );}
@@ -2972,24 +2972,33 @@ SELECT_SLC_ForNewSPLD( View     ViewToWindow )
    //:NAME VIEW mSubLC "mSubLC"
    SetNameForView( mSubLC, "mSubLC", null, zLEVEL_TASK );
 
-   //:ACTIVATE mSPLDef EMPTY 
+   //:ACTIVATE mSPLDef EMPTY
    RESULT = ActivateEmptyObjectInstance( mSPLDef, "mSPLDef", ViewToWindow, zSINGLE );
-   //:CREATE ENTITY mSPLDef.SubregPhysicalLabelDef 
+   //:CREATE ENTITY mSPLDef.SubregPhysicalLabelDef
    RESULT = CreateEntity( mSPLDef, "SubregPhysicalLabelDef", zPOS_AFTER );
-   //:NAME VIEW mSPLDef "mSPLDef" 
+   //:NAME VIEW mSPLDef "mSPLDef"
    SetNameForView( mSPLDef, "mSPLDef", null, zLEVEL_TASK );
-   //:INCLUDE mSPLDef.SubregLabelContent FROM mSubProd.SubregLabelContent 
+   //:INCLUDE mSPLDef.SubregLabelContent FROM mSubProd.SubregLabelContent
    RESULT = IncludeSubobjectFromSubobject( mSPLDef, "SubregLabelContent", mSubProd, "SubregLabelContent", zPOS_AFTER );
-   //:CREATE ENTITY mSPLDef.SPLD_LLD 
+   //:CREATE ENTITY mSPLDef.SPLD_LLD
    RESULT = CreateEntity( mSPLDef, "SPLD_LLD", zPOS_AFTER );
-   //:CREATE ENTITY mSPLDef.LLD_Page 
+   //:CREATE ENTITY mSPLDef.LLD_Page
    RESULT = CreateEntity( mSPLDef, "LLD_Page", zPOS_AFTER );
+   //:mSPLDef.LLD_Page.Height = 14.0
+   SetAttributeFromDecimal( mSPLDef, "LLD_Page", "Height", (double) 14.0 );
+   //:mSPLDef.LLD_Page.Width = 19.5         
+   SetAttributeFromDecimal( mSPLDef, "LLD_Page", "Width", (double) 19.5 );
+
    //:CREATE ENTITY mSPLDef.LLD_Panel 
    RESULT = CreateEntity( mSPLDef, "LLD_Panel", zPOS_AFTER );
-   //:mSPLDef.LLD_Panel.Left = 0
-   SetAttributeFromInteger( mSPLDef, "LLD_Panel", "Left", 0 );
-   //:mSPLDef.LLD_Panel.Top = 0         
-   SetAttributeFromInteger( mSPLDef, "LLD_Panel", "Top", 0 );
+   //:mSPLDef.LLD_Panel.Top = 1.0         
+   SetAttributeFromDecimal( mSPLDef, "LLD_Panel", "Top", (double) 1.0 );
+   //:mSPLDef.LLD_Panel.Left = 1.0
+   SetAttributeFromDecimal( mSPLDef, "LLD_Panel", "Left", (double) 1.0 );
+   //:mSPLDef.LLD_Panel.Height = 7.0
+   SetAttributeFromDecimal( mSPLDef, "LLD_Panel", "Height", (double) 7.0 );
+   //:mSPLDef.LLD_Panel.Width = 9.0
+   SetAttributeFromDecimal( mSPLDef, "LLD_Panel", "Width", (double) 9.0 );
 
    //:// Build the Components of the SPLD from the SLC.
    //:BuildSPLD_FromSLC( mSPLDef, mSubLC )

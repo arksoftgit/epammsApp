@@ -314,22 +314,27 @@ SELECT_SLC_ForNewSPLD( VIEW ViewToWindow )
                    "An SLC must be selected.",
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
       RETURN 2
-   END 
+   END
    
    // Create a new mSPLDef object instance and ititialize it with data from the mSubLC data from the
    // selected SubregLabelContent entry in mSubProd.
-   ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSubProd.SubregLabelContent.ID 
+   ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSubProd.SubregLabelContent.ID
    NAME VIEW mSubLC "mSubLC"
    
-   ACTIVATE mSPLDef EMPTY 
-   CREATE ENTITY mSPLDef.SubregPhysicalLabelDef 
-   NAME VIEW mSPLDef "mSPLDef" 
-   INCLUDE mSPLDef.SubregLabelContent FROM mSubProd.SubregLabelContent 
-   CREATE ENTITY mSPLDef.SPLD_LLD 
-   CREATE ENTITY mSPLDef.LLD_Page 
+   ACTIVATE mSPLDef EMPTY
+   CREATE ENTITY mSPLDef.SubregPhysicalLabelDef
+   NAME VIEW mSPLDef "mSPLDef"
+   INCLUDE mSPLDef.SubregLabelContent FROM mSubProd.SubregLabelContent
+   CREATE ENTITY mSPLDef.SPLD_LLD
+   CREATE ENTITY mSPLDef.LLD_Page
+   mSPLDef.LLD_Page.Height = 14.0
+   mSPLDef.LLD_Page.Width = 19.5         
+
    CREATE ENTITY mSPLDef.LLD_Panel 
-   mSPLDef.LLD_Panel.Left = 0
-   mSPLDef.LLD_Panel.Top = 0         
+   mSPLDef.LLD_Panel.Top = 1.0         
+   mSPLDef.LLD_Panel.Left = 1.0
+   mSPLDef.LLD_Panel.Height = 7.0
+   mSPLDef.LLD_Panel.Width = 9.0
    
    // Build the Components of the SPLD from the SLC.
    BuildSPLD_FromSLC( mSPLDef, mSubLC )

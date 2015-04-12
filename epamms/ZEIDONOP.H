@@ -1,4 +1,4 @@
-//start mSPLDef 2015.04.08 10:20:20
+//start mSPLDef 2015.04.10 21:16:41
 zOPER_EXPORT zSHORT OPERATION
 omSPLDef_GeneratePDF_Label( zVIEW vViewToInstance0 );
 
@@ -192,7 +192,7 @@ omMasLC_SetMLC_SelectedFlags( zVIEW vViewToInstance0,
                               zVIEW vmSubLC1 );
 
 //end
-//start mSubLC 2015.03.25 09:59:41
+//start mSubLC 2015.04.10 21:17:30
 zOPER_EXPORT zSHORT OPERATION
 omSubLC_BuildNewSLC_Version( zVIEW vViewToInstance0,
                              zVIEW vOriginalSLC1,

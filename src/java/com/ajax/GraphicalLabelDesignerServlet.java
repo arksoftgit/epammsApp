@@ -394,16 +394,18 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
             return ec;
          }
          String IDP = eip.getAttribute( "wID" ).getString();  // get ID of original parent
+         /*
          if ( ID.compareTo( "600" ) == 0 || ID.compareTo( "812" ) == 0 || ID.compareTo( "813" ) == 0 ) {
-           logger.debug( ID + "C"  + "  Checking move from parent ID: " + IDP + "  to parent ID: " + wPID );
-           eip.logEntity( false );
-           displaySPLD( vLLD, entity );
+            logger.debug( ID + "C"  + "  Checking move from parent ID: " + IDP + "  to parent ID: " + wPID );
+            eip.logEntity( false );
+            displaySPLD( vLLD, entity );
          }
+         */
          if ( wPID == null || IDP == null  ) {
             logger.debug( "For ID: " + ID + "  Unexpected null wPID: " + wPID == null ? "Null" : wPID + "  wID: " + IDP == null ? "Null" : IDP );
          } else if ( wPID.compareTo( IDP ) != 0 ) { // if there is a new parent ...
-            logger.debug( "Before moving entity: " + entity + "  with ID: " + ID + "  from parent ID: " + IDP + "  to parent ID: " + wPID );
-            displaySPLD( vLLD, entity );
+         // logger.debug( "Before moving entity: " + entity + "  with ID: " + ID + "  from parent ID: " + IDP + "  to parent ID: " + wPID );
+         // displaySPLD( vLLD, entity );
             String wPE = ec.getAttribute( "wPE" ).getString();
             ei.getAttribute( "wPE" ).setValue( wPE );
             ei.getAttribute( "wPID" ).setValue( wPID );
@@ -427,8 +429,8 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                   }
                   ecp = v.getCursor( "LLD_Block" );
                   ecp.moveSubobject( CursorPosition.FIRST, ec, CursorPosition.NONE );
-                  logger.debug( "After Moving To SubBlock Target entity: " + entity + "  with ID: " + ID + "  from parent ID: " + IDP + "  to parent ID: " + wPID );
-                  displaySPLD( v, wPE );
+               // logger.debug( "After Moving To SubBlock Target entity: " + entity + "  with ID: " + ID + "  from parent ID: " + IDP + "  to parent ID: " + wPID );
+               // displaySPLD( v, wPE );
                } catch ( ZeidonException ze ) {
                   logger.debug( "Error trying to move entity: " + entity + "  error: " + ze );
                }
@@ -449,7 +451,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                EntityCursor ec = vLLD.getCursor( entity );
             // if ( ec.isNull() == false ) {  // the ec.isNull may be true ==> no entities, but we may want to create one!
                   String ID = (String) jo.get( "ID" );
-                  //
+                  /*
                   if ( ID != null && ID.isEmpty() == false ) {
                      logger.debug( "Processing Entity: " + entity + "  ID: " + ID );
                      if ( ID.compareTo( "600" ) == 0 || ID.compareTo( "812" ) == 0 || ID.compareTo( "813" ) == 0 ) {
@@ -458,7 +460,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                   } else {
                      logger.debug( "Processing Entity: " + entity + "  wID: " + (String) jo.get( "wID" ) );
                   }
-                  //
+                  */
                   try {
                      if ( entity.compareTo( "LLD_Page" ) == 0 ) {
                         Object op = jo.get( "LLD_Panel" ); // if there are no panels we will delete the page
@@ -468,7 +470,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                               if ( cr.isSet() ) {
                                  ec.getEntityInstance();
                                  logger.debug( "Deleting entity: " + entity );
-                                 ec.logEntity( true );
+                              // ec.logEntity( true );
                                  ec.deleteEntity();
                               }
                            }
@@ -542,12 +544,12 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                            if ( ID.compareTo( "600" ) == 0 || ID.compareTo( "812" ) == 0 || ID.compareTo( "813" ) == 0 ) {
                               EntityInstance eip = ei.getParent();
                               String IDP = eip.getAttribute( "ID" ).getString();
-                              logger.debug( ID + "B Parent ID: " + IDP );
+                           // logger.debug( ID + "B Parent ID: " + IDP );
                            }
                            //
                            if ( deleteEntity ) {
                            // vLLD.logObjectInstance();
-                              ec.logEntity( true );
+                           //ec.logEntity( true );
                               ec.deleteEntity();
                               logger.debug( "Entity DELETED: " + entity + "  ID: " + ID + "  Depth: " + depth );
                               continue; // while ( it.hasNext ...
@@ -748,13 +750,14 @@ end debug code */
             CursorResult cr = ec.setFirst( "Tag", tag );
             if ( cr.isSet() ) {
                logger.debug( "View path set to Entity.Tag ================>>> " + entity + "." + tag );
-               ec.logEntity( false );
+            // ec.logEntity( false );
                if ( idx2 < entityTagList.length() - 1 ) {
                   idx2++;
                   ec = setPathCursorPosition( vLLD, entityTagList, idx2, depth + 1 );
                }
             } else {
                logger.debug( "Could not set cursor for Entity.Tag: " + entity + "." + tag );
+               throw new ZeidonException( "Could not set cursor for Entity.Tag: " + entity + "." + tag ); 
             }
          }
       }
@@ -808,14 +811,23 @@ end debug code */
                } else {
                   mSPLDefPanel.resetSubobjectTop();
                }
-               String viewPath = request.getParameter( "viewPath" );
-               logger.debug( "Setting view path: " + viewPath );
-               EntityCursor ec = setPathCursorPosition( mSPLDefBlock, viewPath, 0, 0 );
-               logger.debug( "Finished setting view path: " + viewPath );
-               ec.logEntity( false );
+               try {
+                  String viewPath = request.getParameter( "viewPath" );
+                  logger.debug( "Setting view path: " + viewPath );
+                  EntityCursor ec = setPathCursorPosition( mSPLDefBlock, viewPath, 0, 0 );
+                  logger.debug( "Finished setting view path: " + viewPath );
+                  ec.logEntity( false );
+               } catch (ZeidonException ze) {
+                  // Could not locate target block
+                  logger.debug( "Error locating the target block: " + ze.getMessage() );
+                  jsonLabel = "{ \"Error\" : \"" + ze.getMessage() + "\" }";
+                  response.setStatus( HttpServletResponse.SC_ACCEPTED );
+                  response.setContentType( "text/json" );
+                  response.getWriter().write( new Gson().toJson( jsonLabel ) );
+               }
             } catch (ZeidonException ze) {
                // I think this means we are at the top
-               logger.debug( "resetSubobject: " + ze.getMessage() );
+               logger.debug( "setCursorPosition: " + ze.getMessage() );
             }
             response.setContentType( "text/json" );
             response.getWriter().write( new Gson().toJson( "{}" ) );
@@ -884,9 +896,9 @@ end debug code */
       } else if ( action.compareTo( "loadLabel" ) == 0 ) {
       // We are just going to get the SPLD_LLD and its children and rename SPLD_LLD to LLD
          try {
-            displaySPLD( vLLD, null );
+         // displaySPLD( vLLD, null );
             jsonLabel = convertLLD_ToJSON( vLLD );
-            logger.debug( "LoadLabel JSON: " + jsonLabel );
+         // logger.debug( "LoadLabel JSON: " + jsonLabel );
          // jsonLabel = jsonLabel.replaceFirst( "\"TZLLD\",", "\"TZLLD\",\n      \"fileName\" : \"" + fileName + "\"," );
          } catch( ZeidonException ze ) {
             logger.debug( "Error loading Json Label: " + ze.getMessage() );

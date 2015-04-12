@@ -807,7 +807,7 @@ else
 <html>
 <head>
 
-<title>SPLD_BlockDefinitionUpdate</title>
+<title>Update SPLD Block Definition</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
@@ -1011,13 +1011,13 @@ else
 <table cols=2 style="width:466px;"  class="grouptable">
 
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:116px;">
 <% /* Text1:Text */ %>
 
-<span  id="Text1" name="Text1" style="width:130px;height:26px;">Block Tag:</span>
+<span  id="Text1" name="Text1" style="width:110px;height:26px;">Block Tag:</span>
 
 </td>
-<td valign="top" style="width:78px;">
+<td valign="top" style="width:224px;">
 <% /* Tag:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "Tag", strError );
@@ -1057,15 +1057,66 @@ else
    }
 %>
 
-<input name="Tag" id="Tag"  disabled style="width:78px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Tag" id="Tag"  disabled style="width:224px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:116px;">
+<% /* BlockName::Text */ %>
+
+<span  id="BlockName:" name="BlockName:" style="width:110px;height:26px;">Block Name:</span>
+
+</td>
+<td valign="top" style="width:224px;">
+<% /* BlockName:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "BlockName", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
+      if ( VmlOperation.isValid( mSPLDefBlock ) == false )
+         task.log( ).debug( "Invalid View: " + "BlockName" );
+      else
+      {
+         nRC = mSPLDefBlock.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+            strErrorMapValue = mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "Name" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on BlockName: " + e.getMessage());
+               task.log().error( "*** Error on ctrl BlockName", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "LLD_Block.Name: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist: " + "mSPLDefBlock.LLD_Block" );
+      }
+   }
+%>
+
+<input name="BlockName" id="BlockName"  disabled style="width:224px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
+</td>
+</tr>
+<tr>
+<td valign="top" style="width:116px;">
 <% /* Text5:Text */ %>
 
-<span  id="Text5" name="Text5" style="width:130px;height:26px;">Data Type:</span>
+<span  id="Text5" name="Text5" style="width:110px;height:26px;">Data Type:</span>
 
 </td>
 <td valign="top" style="width:224px;">
@@ -1152,10 +1203,10 @@ else
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:116px;">
 <% /* Text9:Text */ %>
 
-<span  id="Text9" name="Text9" style="width:130px;height:26px;">Top:</span>
+<span  id="Text9" name="Text9" style="width:110px;height:26px;">Top:</span>
 
 </td>
 <td valign="top" style="width:78px;">
@@ -1203,10 +1254,10 @@ else
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:116px;">
 <% /* Text3:Text */ %>
 
-<span  id="Text3" name="Text3" style="width:130px;height:26px;">Left:</span>
+<span  id="Text3" name="Text3" style="width:110px;height:26px;">Left:</span>
 
 </td>
 <td valign="top" style="width:78px;">
@@ -1254,10 +1305,10 @@ else
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:116px;">
 <% /* Text2:Text */ %>
 
-<span  id="Text2" name="Text2" style="width:130px;height:26px;">Height:</span>
+<span  id="Text2" name="Text2" style="width:110px;height:26px;">Height:</span>
 
 </td>
 <td valign="top" style="width:78px;">
@@ -1305,10 +1356,10 @@ else
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:116px;">
 <% /* Text4:Text */ %>
 
-<span  id="Text4" name="Text4" style="width:130px;height:26px;">Width:</span>
+<span  id="Text4" name="Text4" style="width:110px;height:26px;">Width:</span>
 
 </td>
 <td valign="top" style="width:78px;">
@@ -1356,10 +1407,10 @@ else
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:116px;">
 <% /* Text7:Text */ %>
 
-<span  id="Text7" name="Text7" style="width:130px;height:26px;">Graphic Name:</span>
+<span  id="Text7" name="Text7" style="width:110px;height:26px;">Graphic Name:</span>
 
 </td>
 <td valign="top" style="width:310px;">

@@ -180,10 +180,10 @@ function AcceptFootnoteStatement( )
    // This is for indicating whether the user hit the window close box.
    isWindowClosing = false;
 
-   var footnoteText = document.wMLCClaimsFootnoteStatement.Footnote.value;
-   var newText = he.encode( footnoteText, { "useNamedReferences" : true } );
-   alert( "Raw footnote text: " + footnoteText + "  Encoded footnote: " + newText );
-   document.wMLCClaimsFootnoteStatement.Footnote.value = newText;
+// var footnoteText = document.wMLCClaimsFootnoteStatement.Footnote.value;
+// var newText = he.encode( footnoteText, { "useNamedReferences" : true } );
+// alert( "Raw footnote text: " + footnoteText + "  Encoded footnote: " + newText );
+// document.wMLCClaimsFootnoteStatement.Footnote.value = newText;
    if ( _IsDocDisabled( ) == false )
    {
       _DisableFormElements( true );

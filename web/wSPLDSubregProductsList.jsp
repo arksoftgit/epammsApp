@@ -586,7 +586,7 @@ else
 <html>
 <head>
 
-<title>SPLD List Subregistrant Products</title>
+<title>List Subregistrant Products</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->

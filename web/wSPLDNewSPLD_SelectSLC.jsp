@@ -390,7 +390,7 @@ else
 <html>
 <head>
 
-<title>NewSPLD_SelectSLC</title>
+<title>Select SLC for New SPLD</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->

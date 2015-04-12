@@ -789,7 +789,7 @@ else
 <html>
 <head>
 
-<title>Subreg Product</title>
+<title>Update Subregistrant Product</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->

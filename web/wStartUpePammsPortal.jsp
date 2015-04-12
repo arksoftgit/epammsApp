@@ -858,7 +858,7 @@ else
    }
 %>
 
-<span  id="WelcomeText" name="WelcomeText" style="width:856px;height:32px;text-align:center;"><%=strTextDisplayValue%></span>
+<label  id="WelcomeText" name="WelcomeText" style="width:856px;height:32px;"><%=strTextDisplayValue%></label>
 
 </div>  <!-- End of a new line -->
 

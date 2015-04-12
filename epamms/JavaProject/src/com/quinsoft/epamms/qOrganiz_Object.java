@@ -132,7 +132,7 @@ oqOrganiz_dLoginUserName( View     qOrganiz,
                      sb_szTempString_1 = new StringBuilder( 32 );
                   else
                      sb_szTempString_1 = new StringBuilder( szTempString_1 );
-                                     GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_3, 'S', 129, qOrganiz, "PrimaryRegistrant", "EPA_CompanyNumber", "", 0 );
+                                     GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_3, 'S', 7, qOrganiz, "PrimaryRegistrant", "EPA_CompanyNumber", "", 0 );
                   lTempInteger_3 = mi_lTempInteger_3.intValue( );
                   szTempString_1 = sb_szTempString_1.toString( );}
                    {StringBuilder sb_szString;
@@ -178,7 +178,7 @@ oqOrganiz_dLoginUserName( View     qOrganiz,
                      sb_szTempString_2 = new StringBuilder( 32 );
                   else
                      sb_szTempString_2 = new StringBuilder( szTempString_2 );
-                                     GetVariableFromAttribute( sb_szTempString_2, mi_lTempInteger_5, 'S', 129, qOrganiz, "Subregistrant", "EPA_CompanyNumber", "", 0 );
+                                     GetVariableFromAttribute( sb_szTempString_2, mi_lTempInteger_5, 'S', 7, qOrganiz, "Subregistrant", "EPA_CompanyNumber", "", 0 );
                   lTempInteger_5 = mi_lTempInteger_5.intValue( );
                   szTempString_2 = sb_szTempString_2.toString( );}
                    {StringBuilder sb_szString;
@@ -351,6 +351,9 @@ oqOrganiz_dLoginUserNameRole( View     qOrganiz,
    int      lTempInteger_4 = 0;
    String   szTempString_2 = null;
    int      lTempInteger_5 = 0;
+   int      lTempInteger_6 = 0;
+   String   szTempString_3 = null;
+   int      lTempInteger_7 = 0;
 
 
    //:CASE GetOrSetFlag
@@ -409,7 +412,7 @@ oqOrganiz_dLoginUserNameRole( View     qOrganiz,
                      sb_szTempString_1 = new StringBuilder( 32 );
                   else
                      sb_szTempString_1 = new StringBuilder( szTempString_1 );
-                                     GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_3, 'S', 129, qOrganiz, "PrimaryRegistrant", "EPA_CompanyNumber", "", 0 );
+                                     GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_3, 'S', 7, qOrganiz, "PrimaryRegistrant", "EPA_CompanyNumber", "", 0 );
                   lTempInteger_3 = mi_lTempInteger_3.intValue( );
                   szTempString_1 = sb_szTempString_1.toString( );}
                    {StringBuilder sb_szString;
@@ -440,8 +443,7 @@ oqOrganiz_dLoginUserNameRole( View     qOrganiz,
                //:IF qOrganiz.Subregistrant.EPA_CompanyNumber != ""
                if ( CompareAttributeToString( qOrganiz, "Subregistrant", "EPA_CompanyNumber", "" ) != 0 )
                { 
-                  //:szString = szString + " (" +
-                  //:     qOrganiz.Subregistrant.EPA_CompanyNumber + ")"
+                  //:szString = szString + " (" + qOrganiz.Subregistrant.EPA_CompanyNumber + ")"
                    {StringBuilder sb_szString;
                   if ( szString == null )
                      sb_szString = new StringBuilder( 32 );
@@ -455,7 +457,7 @@ oqOrganiz_dLoginUserNameRole( View     qOrganiz,
                      sb_szTempString_2 = new StringBuilder( 32 );
                   else
                      sb_szTempString_2 = new StringBuilder( szTempString_2 );
-                                     GetVariableFromAttribute( sb_szTempString_2, mi_lTempInteger_5, 'S', 129, qOrganiz, "Subregistrant", "EPA_CompanyNumber", "", 0 );
+                                     GetVariableFromAttribute( sb_szTempString_2, mi_lTempInteger_5, 'S', 7, qOrganiz, "Subregistrant", "EPA_CompanyNumber", "", 0 );
                   lTempInteger_5 = mi_lTempInteger_5.intValue( );
                   szTempString_2 = sb_szTempString_2.toString( );}
                    {StringBuilder sb_szString;
@@ -476,6 +478,7 @@ oqOrganiz_dLoginUserNameRole( View     qOrganiz,
 
                //:END
             } 
+
 
             //:END
 
@@ -502,6 +505,44 @@ oqOrganiz_dLoginUserNameRole( View     qOrganiz,
                sb_szString = new StringBuilder( szString );
                         ZeidonStringConcat( sb_szString, 1, 0, szRole, 1, 0, 1001 );
             szString = sb_szString.toString( );}
+            //:IF szRole = "Subregistrant"
+            if ( ZeidonStringCompare( szRole, 1, 0, "Subregistrant", 1, 0, 33 ) == 0 )
+            { 
+               //:IF qOrganiz.RelatedPrimaryRegistrant EXISTS
+               lTempInteger_6 = CheckExistenceOfEntity( qOrganiz, "RelatedPrimaryRegistrant" );
+               if ( lTempInteger_6 == 0 )
+               { 
+                  //:szString = szString + "   -- for Primary Registrant: " + qOrganiz.PrimaryOrganization.Name
+                   {StringBuilder sb_szString;
+                  if ( szString == null )
+                     sb_szString = new StringBuilder( 32 );
+                  else
+                     sb_szString = new StringBuilder( szString );
+                                    ZeidonStringConcat( sb_szString, 1, 0, "   -- for Primary Registrant: ", 1, 0, 1001 );
+                  szString = sb_szString.toString( );}
+                  {MutableInt mi_lTempInteger_7 = new MutableInt( lTempInteger_7 );
+                  StringBuilder sb_szTempString_3;
+                  if ( szTempString_3 == null )
+                     sb_szTempString_3 = new StringBuilder( 32 );
+                  else
+                     sb_szTempString_3 = new StringBuilder( szTempString_3 );
+                                     GetVariableFromAttribute( sb_szTempString_3, mi_lTempInteger_7, 'S', 255, qOrganiz, "PrimaryOrganization", "Name", "", 0 );
+                  lTempInteger_7 = mi_lTempInteger_7.intValue( );
+                  szTempString_3 = sb_szTempString_3.toString( );}
+                   {StringBuilder sb_szString;
+                  if ( szString == null )
+                     sb_szString = new StringBuilder( 32 );
+                  else
+                     sb_szString = new StringBuilder( szString );
+                                    ZeidonStringConcat( sb_szString, 1, 0, szTempString_3, 1, 0, 1001 );
+                  szString = sb_szString.toString( );}
+               } 
+
+               //:END
+            } 
+
+
+            //:END
 
             //:ELSE
          } 

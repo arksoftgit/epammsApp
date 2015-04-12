@@ -114,13 +114,19 @@ dLoginUserNameRole( VIEW qOrganiz BASED ON LOD qOrganiz,
 
          IF qOrganiz.Subregistrant EXISTS
             IF qOrganiz.Subregistrant.EPA_CompanyNumber != ""
-               szString = szString + " (" +
-                       qOrganiz.Subregistrant.EPA_CompanyNumber + ")"
+               szString = szString + " (" + qOrganiz.Subregistrant.EPA_CompanyNumber + ")"
             END
+
          END
 
          GetStringFromAttributeByContext( szRole, qOrganiz, "Organization", "Role", "RegistrantRole", 32 )
          szString = szString + "    Role: " + szRole
+         IF szRole = "Subregistrant"
+            IF qOrganiz.RelatedPrimaryRegistrant EXISTS
+               szString = szString + "   -- for Primary Registrant: " + qOrganiz.PrimaryOrganization.Name
+            END
+            
+         END
 
       ELSE
          szString = ""

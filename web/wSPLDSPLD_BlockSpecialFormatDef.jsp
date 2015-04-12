@@ -351,22 +351,6 @@ public int DoInputMapping( HttpServletRequest request,
    mSPLDefPanel = task.getViewByName( "mSPLDefPanel" );
    if ( VmlOperation.isValid( mSPLDefPanel ) )
    {
-      // ComboBox: ComboBox1
-      mSPLDefPanel = task.getViewByName( "mSPLDefPanel" );
-      if ( VmlOperation.isValid( mSPLDefPanel ) )
-      {
-         nRC = mSPLDefPanel.cursor( "SpecialFormattingSelectEntry" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strMapValue = request.getParameter( "hComboBox1" );
-            if ( strMapValue != null )
-            {
-               nRelPos = java.lang.Integer.parseInt( strMapValue );
-               mSPLDefPanel.cursor( "SpecialFormattingSelectEntry" ).setPosition( nRelPos, "" );
-            }
-         }
-
-         }  // checkExistenceofEntity
    }
 
    if ( webMapping == true )
@@ -698,7 +682,7 @@ else
 <html>
 <head>
 
-<title>SPLD_BlockSpecialFormatDef</title>
+<title>Update SPLD Block Special Format Definition</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
@@ -899,62 +883,32 @@ else
 
 </td>
 <td valign="top" style="width:192px;">
-<% /* ComboBox1:ComboBox */ %>
-<% strErrorMapValue = "";  %>
-
-<select  name="ComboBox1" id="ComboBox1" size="1"style="width:192px;" onchange="ComboBox1OnChange( )">
-
-<%
+<% /* Type:Text */ %>
+<% strTextDisplayValue = "";
    mSPLDefPanel = task.getViewByName( "mSPLDefPanel" );
-   if ( VmlOperation.isValid( mSPLDefPanel ) )
+   if ( VmlOperation.isValid( mSPLDefPanel ) == false )
+      task.log( ).debug( "Invalid View: " + "Type" );
+   else
    {
-         strComboCurrentValue = "";
-      View vComboBox1;
-      mSPLDefPanel = task.getViewByName( "mSPLDefPanel" );
-      if ( VmlOperation.isValid( mSPLDefPanel ) )
+      nRC = mSPLDefPanel.cursor( "SpecialFormattingSelectEntry" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         nRC = mSPLDefPanel.cursor( "SpecialFormattingSelectEntry" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strComboCurrentValue = mSPLDefPanel.cursor( "SpecialFormattingSelectEntry" ).getAttribute( "KeywordName" ).getString( "" );
-            if ( strComboCurrentValue == null )
-               strComboCurrentValue = "";
-         }
-      }
-      vComboBox1 = mSPLDefPanel.newView( );
-      ComboCount = 0;
-      strComboSelectedValue = "0";
-      csrRC = vComboBox1.cursor( "SpecialFormattingSelectEntry" ).setFirst(  );
-      while ( csrRC.isSet() )
+      try
       {
-         strErrorMapValue = vComboBox1.cursor( "SpecialFormattingSelectEntry" ).getAttribute( "KeywordName" ).getString( "" );
-         if ( strErrorMapValue == null )
-            strErrorMapValue = "";
-
-         if ( StringUtils.equals( strComboCurrentValue, strErrorMapValue ) )
-         {
-%>
-            <option selected="selected"><%=strErrorMapValue%></option>
-<%
-            strComboSelectedValue = Integer.toString( ComboCount );
-         }
-         else
-         {
-%>
-            <option><%=strErrorMapValue%></option>
-<%
-         }
-
-         ComboCount++;
-         csrRC =  vComboBox1.cursor( "SpecialFormattingSelectEntry" ).setNextContinue( );
+         strTextDisplayValue = mSPLDefPanel.cursor( "SpecialFormattingSelectEntry" ).getAttribute( "KeywordName" ).getString( "" );
       }
-
-      vComboBox1.drop( );
-
+      catch (Exception e)
+      {
+         out.println("There is an error on Type: " + e.getMessage());
+         task.log().info( "*** Error on ctrl Type" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
    }
 %>
-</select>
-<input name="hComboBox1" id="hComboBox1" type="hidden" value="<%=strComboSelectedValue%>" >
+
+<span  id="Type" name="Type" style="width:192px;height:24px;"><%=strTextDisplayValue%></span>
 
 </td>
 </tr>

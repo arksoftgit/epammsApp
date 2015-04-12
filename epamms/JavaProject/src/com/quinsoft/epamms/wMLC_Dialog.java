@@ -1631,18 +1631,77 @@ ConfirmDeleteUsageEntry( View     ViewToWindow )
 {
    zVIEW    mMasLC = new zVIEW( );
    int      RESULT = 0;
+   //:VIEW mMasLC2 BASED ON LOD mMasLC
+   zVIEW    mMasLC2 = new zVIEW( );
+   //:SHORT nContinue
+   int      nContinue = 0;
+   int      lTempInteger_0 = 0;
 
    RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
 
+   //:CreateViewFromView( mMasLC2, mMasLC )
+   CreateViewFromView( mMasLC2, mMasLC );
+
    //:// Delete all selected Usage entries.
-   //:FOR EACH mMasLC.M_Usage 
+   //:FOR EACH mMasLC.M_Usage
    RESULT = SetCursorFirstEntity( mMasLC, "M_Usage", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
       //:IF mMasLC.M_Usage.wSelected = "Y"
       if ( CompareAttributeToString( mMasLC, "M_Usage", "wSelected", "Y" ) == 0 )
       { 
-         //:DELETE ENTITY mMasLC.M_Usage NONE 
+         //:nContinue = 1
+         nContinue = 1;
+         //:SET CURSOR FIRST mMasLC2.M_MarketingSection
+         RESULT = SetCursorFirstEntity( mMasLC2, "M_MarketingSection", "" );
+         //:LOOP WHILE RESULT >= zCURSOR_SET AND nContinue > 0
+         while ( RESULT >= zCURSOR_SET && nContinue > 0 )
+         { 
+            //:SET CURSOR FIRST mMasLC2.M_MarketingStatement
+            RESULT = SetCursorFirstEntity( mMasLC2, "M_MarketingStatement", "" );
+            //:LOOP WHILE RESULT >= zCURSOR_SET AND nContinue > 0
+            while ( RESULT >= zCURSOR_SET && nContinue > 0 )
+            { 
+               //:SET CURSOR FIRST mMasLC2.M_MarketingUsage  WHERE mMasLC2.M_MarketingUsage.ID = mMasLC.M_Usage.ID 
+               {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+                               GetIntegerFromAttribute( mi_lTempInteger_0, mMasLC, "M_Usage", "ID" );
+               lTempInteger_0 = mi_lTempInteger_0.intValue( );}
+               RESULT = SetCursorFirstEntityByInteger( mMasLC2, "M_MarketingUsage", "ID", lTempInteger_0, "" );
+               //:IF RESULT >= zCURSOR_SET
+               if ( RESULT >= zCURSOR_SET )
+               { 
+                  //:DELETE ENTITY mMasLC2.M_MarketingUsageOrdering NONE
+                  RESULT = DeleteEntity( mMasLC2, "M_MarketingUsageOrdering", zREPOS_NONE );
+                  //:nContinue = -1
+                  nContinue = -1;
+                  //:RESULT = zCURSOR_UNCHANGED
+                  RESULT = zCURSOR_UNCHANGED;
+               } 
+
+               //:END
+               //:IF nContinue > 0
+               if ( nContinue > 0 )
+               { 
+                  //:SET CURSOR NEXT mMasLC2.M_MarketingStatement
+                  RESULT = SetCursorNextEntity( mMasLC2, "M_MarketingStatement", "" );
+               } 
+
+               //:END
+            } 
+
+            //:END
+            //:IF nContinue > 0
+            if ( nContinue > 0 )
+            { 
+               //:SET CURSOR NEXT mMasLC2.M_MarketingSection
+               RESULT = SetCursorNextEntity( mMasLC2, "M_MarketingSection", "" );
+            } 
+
+            //:END
+         } 
+
+         //:END
+         //:DELETE ENTITY mMasLC.M_Usage NONE
          RESULT = DeleteEntity( mMasLC, "M_Usage", zREPOS_NONE );
       } 
 

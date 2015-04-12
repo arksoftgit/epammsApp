@@ -136,6 +136,7 @@ $(function() {
                         },
                error:   function( jqXHR, textStatus, errorThrown ) {
                         // console.log( "setCursorPosition: error xhr response: " + jqXHR.responseText + "  status: " + textStatus + "  error: " + errorThrown );
+                           alert( "Error: " + errorThrown );
                         },
                complete: function( jqXHR, textStatus ) { // callback function that executes whenever the request finishes
                         // console.log( "setCursorPosition: complete status: " + textStatus + "  response: " + jqXHR.responseText );
@@ -465,7 +466,7 @@ $(function() {
             var $canvas = determineTargetOfDrop( event, $(this), $canvasElement );
             addZeidonAttributeToElement( $canvasElement, "wPID", $canvas.data( "z_w^i^d" ) );
             addZeidonAttributeToElement( $canvasElement, "wPE", $canvas.data( "z_w^e" ) );
-            console.log( "Setting1 wPID: " + $canvas.data( "z_w^i^d" ) + "  wPE: " + $canvas.data( "z_w^e" ) );
+         // console.log( "Setting1 wPID: " + $canvas.data( "z_w^i^d" ) + "  wPE: " + $canvas.data( "z_w^e" ) );
             if ( true || $parent[0] !== $canvas[0] ) {
                var top = ui.offset.top;
                var left = ui.offset.left;
@@ -491,7 +492,7 @@ $(function() {
                $canvas.append( $canvasElement );
                addZeidonAttributeToElement( $canvasElement, "wPID", $canvas.data( "z_w^i^d" ) );
                addZeidonAttributeToElement( $canvasElement, "wPE", $canvas.data( "z_w^e" ) );
-               console.log( "Setting2 wPID: " + $canvas.data( "z_w^i^d" ) + "  wPE: " + $canvas.data( "z_w^e" ) );
+            // console.log( "Setting2 wPID: " + $canvas.data( "z_w^i^d" ) + "  wPE: " + $canvas.data( "z_w^e" ) );
                g_updatedLLD = true;
                setChildrenDepth( $canvas, $canvasElement );
             // setCurrentBlockData( $canvasElement, "updated 7" );
@@ -523,7 +524,7 @@ $(function() {
             $canvas.append( $canvasElement );
             addZeidonAttributeToElement( $canvasElement, "wPID", $canvas.data( "z_w^i^d" ) );
             addZeidonAttributeToElement( $canvasElement, "wPE", $canvas.data( "z_w^e" ) );
-            console.log( "Setting3 wPID: " + $canvas.data( "z_w^i^d" ) + "  wPE: " + $canvas.data( "z_w^e" ) );
+         // console.log( "Setting3 wPID: " + $canvas.data( "z_w^i^d" ) + "  wPE: " + $canvas.data( "z_w^e" ) );
          // $canvasElement.append( "<h5 class='ui-widget-header'></h5>" );
             $canvasElement.append( "<h5></h5>" );
             $canvasElement.children( ".ui-resizable-handle" ).css( "z-index", "" );  // prevent these from "showing through"
@@ -2191,13 +2192,13 @@ public class FileServer {
 
    function AddHtmlWysiwygLabelElements( $root, $parentElement, parentId, obj, div, depth ) {
       if ( div === "block" || div === "panel" || div === "page" || div === "label" ) {
-         console.log( "Processing div: " + div );
+      // console.log( "Processing div: " + div );
          var $el = AddHtmlLabelElementAttributes( $root, $parentElement, parentId, obj, div, depth );
          addZeidonAttributeToElement( $el, "_EOI", "Y" );  // existed on OI
          addZeidonAttributeToElement( $el, "wE", div );
          addZeidonAttributeToElement( $el, "wPID", parentId );
          addZeidonAttributeToElement( $el, "wPE", $parentElement.data( "z_w^e" ) );
-         console.log( "Setting4 wPID: " + parentId + "  wPE: " + $parentElement.data( "z_w^e" ) );
+      // console.log( "Setting4 wPID: " + parentId + "  wPE: " + $parentElement.data( "z_w^e" ) );
          displayElementData( "AddHtmlWysiwygLabelElements Parent", $parentElement );
          displayElementData( "AddHtmlWysiwygLabelElements Element", $el );
          $parentElement = $el;
@@ -2312,7 +2313,7 @@ public class FileServer {
       if ( xhr.readyState === 4 ) {
          if ( xhr.status === 200 ) {
          // parseMessages( req.responseXML );
-            console.log( "JSON Zeidon returned from call to servlet: " + jsonZeidon );
+         // console.log( "JSON Zeidon returned from call to servlet: " + jsonZeidon );
             try {
                g_generateTag = 100;
                $("#page").attr( "id", "page" + g_currentPage )

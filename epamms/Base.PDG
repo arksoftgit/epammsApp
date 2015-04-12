@@ -1,4 +1,4 @@
-z1000-Zeidon    BASE     TZDGSRCO 03/22/15   08:19:17 1.0a2    
+z1000-Zeidon    BASE     TZDGSRCO 04/11/15   15:47:44 1.0a2    
 eDomainGroup 1
 aZKey      68567479
 aName      Base
@@ -229,12 +229,18 @@ aName      HazardPanel
 aDesc      Panel where additional hazard statements are found
 aDomainType T
 aDataType  L
+aMaxStringLth 4
 aContextRestriction N
 
 eContext   3
 aZKey      3898402
 aName      HazardPanel
 aIsDefault Y
+
+eTableEntry 4
+aZKey      3898408
+aExternalValue None
+aInternalValue 0
 
 eTableEntry 4
 aZKey      3898403
@@ -260,11 +266,6 @@ eTableEntry 4
 aZKey      3898407
 aExternalValue Location 5
 aInternalValue 5
-
-eTableEntry 4
-aZKey      3898408
-aExternalValue None
-aInternalValue 0
 
 eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
