@@ -1035,6 +1035,17 @@ GOTO_SelectMarketingUsageEntries( View     ViewToWindow )
    RESULT = GetViewByName( mSubLC, "mSubLC", ViewToWindow, zLEVEL_TASK );
    RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
 
+   //:FOR EACH mSubLC.S_SelectableMarketingUsage
+   RESULT = SetCursorFirstEntity( mSubLC, "S_SelectableMarketingUsage", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:EXCLUDE mSubLC.S_SelectableMarketingUsage NONE
+      RESULT = ExcludeEntity( mSubLC, "S_SelectableMarketingUsage", zREPOS_NONE );
+      RESULT = SetCursorNextEntity( mSubLC, "S_SelectableMarketingUsage", "" );
+   } 
+
+   //:END
+
    //:// Set up the list of selectable Usage Statements. This is the subset of MLC Usage Statements tied
    //:// to the corresponding MLC Statement is ARE ALSO IN the list of Usage Statements selected for this SLC.
    //:SET CURSOR FIRST mMasLC.M_MarketingStatement WITHIN mMasLC.MasterLabelContent 

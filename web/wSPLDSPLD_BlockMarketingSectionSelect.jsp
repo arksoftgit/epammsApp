@@ -35,7 +35,7 @@ public int DoInputMapping( HttpServletRequest request,
    String taskId = (String) session.getAttribute( "ZeidonTaskId" );
    Task task = objectEngine.getTaskById( taskId );
 
-   View mSPLDef = null;
+   View mSPLDefPanel = null;
    View vGridTmp = null; // temp view to grid view
    View vRepeatingGrp = null; // temp view to repeating group view
    String strDateFormat = "";
@@ -57,8 +57,8 @@ public int DoInputMapping( HttpServletRequest request,
    if ( webMapping == false )
       session.setAttribute( "ZeidonError", null );
 
-   mSPLDef = task.getViewByName( "mSPLDef" );
-   if ( VmlOperation.isValid( mSPLDef ) )
+   mSPLDefPanel = task.getViewByName( "mSPLDefPanel" );
+   if ( VmlOperation.isValid( mSPLDefPanel ) )
    {
       // Grid: Grid4
       iTableRowCnt = 0;
@@ -66,7 +66,7 @@ public int DoInputMapping( HttpServletRequest request,
       // We are creating a temp view to the grid view so that if there are 
       // grids on the same window with the same view we do not mess up the 
       // entity positions. 
-      vGridTmp = mSPLDef.newView( );
+      vGridTmp = mSPLDefPanel.newView( );
       csrRC = vGridTmp.cursor( "SPLD_MarketingSection" ).setFirst(  );
       while ( csrRC.isSet() )
       {
@@ -463,11 +463,11 @@ else
 <%
    View lMLC = null;
    View lSPLDLST = null;
-   View mSPLDefBlock = null;
    View mLLD_LST = null;
    View mMasLC = null;
    View mPrimReg = null;
    View mSPLDef = null;
+   View mSPLDefBlock = null;
    View mSPLDefPanel = null;
    View mSubLC = null;
    View mSubProd = null;
@@ -623,8 +623,8 @@ else
 try
 {
    iTableRowCnt = 0;
-   mSPLDef = task.getViewByName( "mSPLDef" );
-   if ( VmlOperation.isValid( mSPLDef ) )
+   mSPLDefPanel = task.getViewByName( "mSPLDefPanel" );
+   if ( VmlOperation.isValid( mSPLDefPanel ) )
    {
       long   lEntityKey;
       String strEntityKey;
@@ -636,7 +636,7 @@ try
       String strGridEditCtl3;
       
       View vGrid4;
-      vGrid4 = mSPLDef.newView( );
+      vGrid4 = mSPLDefPanel.newView( );
       csrRC2 = vGrid4.cursor( "SPLD_MarketingSection" ).setFirst(  );
       while ( csrRC2.isSet() )
       {

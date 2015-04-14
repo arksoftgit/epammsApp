@@ -999,6 +999,7 @@ END
 DIALOG OPERATION
 ConfirmDeleteUsageEntry( VIEW ViewToWindow )
 
+/*
    VIEW mMasLC REGISTERED AS mMasLC
    VIEW mMasLC2 BASED ON LOD mMasLC
    SHORT nContinue
@@ -1028,6 +1029,42 @@ ConfirmDeleteUsageEntry( VIEW ViewToWindow )
             END
          END
          DELETE ENTITY mMasLC.M_Usage NONE
+      END
+   END
+*/
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   
+   // Delete all selected Usage entries.
+   FOR EACH mMasLC.M_Usage 
+      IF mMasLC.M_Usage.wSelected = "Y"
+         // Delete any Usage entries that have been tied to a Marketing Statement.
+         FOR EACH mMasLC.M_MarketingStatement WITHIN mMasLC.MasterLabelContent 
+            SET CURSOR FIRST mMasLC.M_MarketingUsage WITHIN mMasLC.M_MarketingStatement 
+                       WHERE mMasLC.M_MarketingUsage.ID = mMasLC.M_Usage.ID 
+            IF RESULT >= zCURSOR_SET
+               DELETE ENTITY mMasLC.M_MarketingUsageOrdering  
+            END 
+         END
+         
+         // Delete any Usage entries that have been tied to a Directions for Use Statement or that 
+         // drive a Directions for Use Section.
+         FOR EACH mMasLC.M_DirectionsForUseSection
+            FOR EACH mMasLC.M_DirectionsForUseStatement
+               SET CURSOR FIRST mMasLC.M_DirectionsUsage WITHIN mMasLC.M_DirectionsForUseStatement 
+                          WHERE mMasLC.M_DirectionsUsage.ID = mMasLC.M_Usage.ID 
+               IF RESULT >= zCURSOR_SET
+                  DELETE ENTITY mMasLC.M_DirectionsUsageOrdering   
+               END 
+            END
+            SET CURSOR FIRST mMasLC.M_DrivingUsage WHERE mMasLC.M_DrivingUsage.ID = mMasLC.M_Usage.ID 
+            IF RESULT >= zCURSOR_SET
+               DELETE ENTITY mMasLC.M_DrivingUsage
+            END
+         END
+         
+         // Delete the actual Usage entry.
+         DELETE ENTITY mMasLC.M_Usage NONE 
       END
    END
 

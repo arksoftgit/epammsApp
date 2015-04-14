@@ -107,41 +107,49 @@ $(function() {
       return path;
    }
 
-   function getParentagePathKeys( element ) {
-      var parent_array = $(element).parents( ".canvas-element" );
+   function getParentagePathKeys( $element ) {
+      var parent_array = $element.parents( ".canvas-element" );
       var path = "LLD_Page." + "page" + g_currentPage + ";";
       var $el;
       for ( var k = parent_array.length - 1; k >= 0; k-- ) {
          $el = $(parent_array[k]);
          path += addType( $el );
       }
-      path += addType( $(element) );
+      path += addType( $element );
       return path;
    }
 
    function updateBlockCallback( element ) {
+      var $element = $(element);
       g_updatedLLD = false;
-      var parentagePath = getParentagePathKeys( element );
-      var url = "labeldesigner?action=setCursorPosition&viewName=" + escape( "mSPLDef" ) + "&viewPath=" + escape( parentagePath );
-      $.ajax({ url: url,
-               type: "post", // string defining the HTTP method to use for the request: GET (default) or POST
-               contentType: "application/json; charset=utf-8",
-               dataType: "json", // defines the type of data expected back from the server (xml, html, json, or script)
-               processData: true, // boolean (default:true) indicating whether to convert the submitted data from an object form into a query-string form
-               data: {},
-            // beforeSend - callback function that is executed before the request is sent
-               success: function( data, textStatus, jqXHR ) {
-                        // console.log( "setCursorPosition: success status: " + textStatus + "  data: " + data + "  jqXHR: " + jqXHR );
-                           GOTO_UpdateBlock();
-                        },
-               error:   function( jqXHR, textStatus, errorThrown ) {
-                        // console.log( "setCursorPosition: error xhr response: " + jqXHR.responseText + "  status: " + textStatus + "  error: " + errorThrown );
-                           alert( "Error: " + errorThrown );
-                        },
-               complete: function( jqXHR, textStatus ) { // callback function that executes whenever the request finishes
-                        // console.log( "setCursorPosition: complete status: " + textStatus + "  response: " + jqXHR.responseText );
-                        }
-      });
+      var parentagePath = getParentagePathKeys( $element );
+      var keys = $element.data( "z_^i^d" ) + ";" + $element.data( "z_w^i^d" ) + ";" + $element.data( "z_w^p^e" );
+      var n = keys.search( "undefined" );
+      if ( n >= 0 ) {
+         alert( "Looking for invalid block: " + keys );
+      } else {
+         var elementKey = addType( $element ) + keys;
+         var url = "labeldesigner?action=setCursorPosition&viewName=" + escape( "mSPLDef" ) + "&viewPath=" + escape( parentagePath ) + "&elementKey=" + escape( elementKey );
+         $.ajax({ url: url,
+                  type: "post", // string defining the HTTP method to use for the request: GET (default) or POST
+                  contentType: "application/json; charset=utf-8",
+                  dataType: "json", // defines the type of data expected back from the server (xml, html, json, or script)
+                  processData: true, // boolean (default:true) indicating whether to convert the submitted data from an object form into a query-string form
+                  data: {},
+               // beforeSend - callback function that is executed before the request is sent
+                  success: function( data, textStatus, jqXHR ) {
+                           // console.log( "setCursorPosition: success status: " + textStatus + "  data: " + data + "  jqXHR: " + jqXHR );
+                              GOTO_UpdateBlock();
+                           },
+                  error:   function( jqXHR, textStatus, errorThrown ) {
+                           // console.log( "setCursorPosition: error xhr response: " + jqXHR.responseText + "  status: " + textStatus + "  error: " + errorThrown );
+                              alert( "Error: " + errorThrown );
+                           },
+                  complete: function( jqXHR, textStatus ) { // callback function that executes whenever the request finishes
+                           // console.log( "setCursorPosition: complete status: " + textStatus + "  response: " + jqXHR.responseText );
+                           }
+         });
+      }
    }
 
    function saveLabel( commit, callback ) {
@@ -188,10 +196,14 @@ $(function() {
 
    $("#UpdateBlock").click( function() {
       if ( g_$current_block ) {
-         if ( g_updatedLLD ) {
-            ConvertWysiwygLabelDesignToZeidonJson( "saveLabel", "mSPLDef", updateBlockCallback, this );
+         if ( g_$current_block.hasClass( "panel" ) === false ) {
+            if ( g_updatedLLD ) {
+               ConvertWysiwygLabelDesignToZeidonJson( "saveLabel", "mSPLDef", updateBlockCallback, this );
+            } else {
+               updateBlockCallback( g_$current_block );
+            }
          } else {
-            updateBlockCallback( g_$current_block );
+            alert( "Update panel via tools" );
          }
       } else {
          alert( "No block selected" );
@@ -231,13 +243,16 @@ $(function() {
    //        - set the element as the first selected and add as the only element in the selected list
    $("body").on( "dblclick", ".canvas-element", function(e) {
    // console.log( "Double Click on canvas-element: " + this.id + " has been pressed!" );
-      if ( g_updatedLLD ) {
-         ConvertWysiwygLabelDesignToZeidonJson( "saveLabel", "mSPLDef", updateBlockCallback, this );
+      if ( $(this).hasClass( "panel" ) === false ) {
+         if ( g_updatedLLD ) {
+            ConvertWysiwygLabelDesignToZeidonJson( "saveLabel", "mSPLDef", updateBlockCallback, this );
+         } else {
+            updateBlockCallback( this );
+         }
+         return false;
       } else {
-         updateBlockCallback( this );
+         alert( "Update panel via tools" );
       }
-
-      return false;
    });
    
    $("body").on( "click", ".canvas-element", function(e) {

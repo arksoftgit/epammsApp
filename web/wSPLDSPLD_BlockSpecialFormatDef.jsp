@@ -36,7 +36,6 @@ public int DoInputMapping( HttpServletRequest request,
    Task task = objectEngine.getTaskById( taskId );
 
    View mSPLDefBlock = null;
-   View mSPLDefPanel = null;
    View vGridTmp = null; // temp view to grid view
    View vRepeatingGrp = null; // temp view to repeating group view
    String strDateFormat = "";
@@ -61,231 +60,231 @@ public int DoInputMapping( HttpServletRequest request,
    mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
    if ( VmlOperation.isValid( mSPLDefBlock ) )
    {
-      // EditBox: EditBox6
+      // EditBox: MarginTop
       nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "EditBox6" );
+         strMapValue = request.getParameter( "MarginTop" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "EditBox6", "", strMapValue );
+               VmlOperation.CreateMessage( task, "MarginTop", "", strMapValue );
             else
                mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "MarginTop" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "EditBox6", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "MarginTop", e.getReason( ), strMapValue );
          }
       }
 
-      // EditBox: EditBox7
+      // EditBox: MarginBottom
       nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "EditBox7" );
+         strMapValue = request.getParameter( "MarginBottom" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "EditBox7", "", strMapValue );
+               VmlOperation.CreateMessage( task, "MarginBottom", "", strMapValue );
             else
                mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "MarginBottom" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "EditBox7", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "MarginBottom", e.getReason( ), strMapValue );
          }
       }
 
-      // EditBox: EditBox8
+      // EditBox: MarginLeft
       nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "EditBox8" );
+         strMapValue = request.getParameter( "MarginLeft" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "EditBox8", "", strMapValue );
+               VmlOperation.CreateMessage( task, "MarginLeft", "", strMapValue );
             else
                mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "MarginLeft" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "EditBox8", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "MarginLeft", e.getReason( ), strMapValue );
          }
       }
 
-      // EditBox: EditBox9
+      // EditBox: MarginRight
       nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "EditBox9" );
+         strMapValue = request.getParameter( "MarginRight" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "EditBox9", "", strMapValue );
+               VmlOperation.CreateMessage( task, "MarginRight", "", strMapValue );
             else
                mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "MarginRight" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "EditBox9", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "MarginRight", e.getReason( ), strMapValue );
          }
       }
 
-      // ComboBox: ComboBox2
+      // ComboBox: TextAlign
       nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strMapValue = request.getParameter( "hComboBox2" );
+         strMapValue = request.getParameter( "hTextAlign" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "ComboBox2", "", strMapValue );
+               VmlOperation.CreateMessage( task, "TextAlign", "", strMapValue );
             else
                mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "TextAlign" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "ComboBox2", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "TextAlign", e.getReason( ), strMapValue );
          }
       }
 
-      // ComboBox: ComboBox3
+      // ComboBox: FontFamily
       nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strMapValue = request.getParameter( "hComboBox3" );
+         strMapValue = request.getParameter( "hFontFamily" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "ComboBox3", "", strMapValue );
+               VmlOperation.CreateMessage( task, "FontFamily", "", strMapValue );
             else
                mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "FontFamily" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "ComboBox3", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "FontFamily", e.getReason( ), strMapValue );
          }
       }
 
-      // ComboBox: ComboBox4
+      // ComboBox: FontSize
       nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strMapValue = request.getParameter( "hComboBox4" );
+         strMapValue = request.getParameter( "hFontSize" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "ComboBox4", "", strMapValue );
+               VmlOperation.CreateMessage( task, "FontSize", "", strMapValue );
             else
                mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "FontSize" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "ComboBox4", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "FontSize", e.getReason( ), strMapValue );
          }
       }
 
-      // ComboBox: ComboBox5
+      // ComboBox: FontWeight
       nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strMapValue = request.getParameter( "hComboBox5" );
+         strMapValue = request.getParameter( "hFontWeight" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "ComboBox5", "", strMapValue );
+               VmlOperation.CreateMessage( task, "FontWeight", "", strMapValue );
             else
                mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "FontWeight" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "ComboBox5", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "FontWeight", e.getReason( ), strMapValue );
          }
       }
 
-      // EditBox: TextColor
+      // EditBox: EBTextColor
       nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "TextColor" );
+         strMapValue = request.getParameter( "EBTextColor" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "TextColor", "", strMapValue );
+               VmlOperation.CreateMessage( task, "EBTextColor", "", strMapValue );
             else
                mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "TextColor" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "TextColor", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "EBTextColor", e.getReason( ), strMapValue );
          }
       }
 
-      // EditBox: EditBox1
+      // EditBox: TextLineHeight
       nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "EditBox1" );
+         strMapValue = request.getParameter( "TextLineHeight" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "EditBox1", "", strMapValue );
+               VmlOperation.CreateMessage( task, "TextLineHeight", "", strMapValue );
             else
                mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "TextLineHeight" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "EditBox1", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "TextLineHeight", e.getReason( ), strMapValue );
          }
       }
 
-      // ComboBox: ComboBox7
+      // ComboBox: BorderStyle
       nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strMapValue = request.getParameter( "hComboBox7" );
+         strMapValue = request.getParameter( "hBorderStyle" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "ComboBox7", "", strMapValue );
+               VmlOperation.CreateMessage( task, "BorderStyle", "", strMapValue );
             else
                mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "BorderStyle" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "ComboBox7", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "BorderStyle", e.getReason( ), strMapValue );
          }
       }
 
-      // EditBox: EditBox10
+      // EditBox: BorderWidth
       nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "EditBox10" );
+         strMapValue = request.getParameter( "BorderWidth" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "EditBox10", "", strMapValue );
+               VmlOperation.CreateMessage( task, "BorderWidth", "", strMapValue );
             else
                mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "BorderWidth" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "EditBox10", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "BorderWidth", e.getReason( ), strMapValue );
          }
       }
 
@@ -308,22 +307,22 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
-      // ComboBox: ComboBox10
+      // ComboBox: TitlePosition
       nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strMapValue = request.getParameter( "hComboBox10" );
+         strMapValue = request.getParameter( "hTitlePosition" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "ComboBox10", "", strMapValue );
+               VmlOperation.CreateMessage( task, "TitlePosition", "", strMapValue );
             else
                mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "TitlePosition" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "ComboBox10", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "TitlePosition", e.getReason( ), strMapValue );
          }
       }
 
@@ -346,11 +345,6 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
-   }
-
-   mSPLDefPanel = task.getViewByName( "mSPLDefPanel" );
-   if ( VmlOperation.isValid( mSPLDefPanel ) )
-   {
    }
 
    if ( webMapping == true )
@@ -755,11 +749,11 @@ else
 <%
    View lMLC = null;
    View lSPLDLST = null;
-   View mSPLDefBlock = null;
    View mLLD_LST = null;
    View mMasLC = null;
    View mPrimReg = null;
    View mSPLDef = null;
+   View mSPLDefBlock = null;
    View mSPLDefPanel = null;
    View mSubLC = null;
    View mSubProd = null;
@@ -877,25 +871,25 @@ else
 
 <tr>
 <td valign="top" style="width:136px;">
-<% /* Text1:Text */ %>
+<% /* TXFormattingType::Text */ %>
 
-<span  id="Text1" name="Text1" style="width:130px;height:26px;">Formatting Type:</span>
+<span  id="TXFormattingType:" name="TXFormattingType:" style="width:130px;height:26px;">Formatting Type:</span>
 
 </td>
 <td valign="top" style="width:192px;">
 <% /* Type:Text */ %>
 <% strTextDisplayValue = "";
-   mSPLDefPanel = task.getViewByName( "mSPLDefPanel" );
-   if ( VmlOperation.isValid( mSPLDefPanel ) == false )
+   mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
+   if ( VmlOperation.isValid( mSPLDefBlock ) == false )
       task.log( ).debug( "Invalid View: " + "Type" );
    else
    {
-      nRC = mSPLDefPanel.cursor( "SpecialFormattingSelectEntry" ).checkExistenceOfEntity( ).toInt();
+      nRC = mSPLDefBlock.cursor( "SpecialFormattingSelectEntry" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
       try
       {
-         strTextDisplayValue = mSPLDefPanel.cursor( "SpecialFormattingSelectEntry" ).getAttribute( "KeywordName" ).getString( "" );
+         strTextDisplayValue = mSPLDefBlock.cursor( "SpecialFormattingSelectEntry" ).getAttribute( "KeywordName" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -914,15 +908,15 @@ else
 </tr>
 <tr>
 <td valign="top" style="width:136px;">
-<% /* Text8:Text */ %>
+<% /* TXTopMargin::Text */ %>
 
-<span  id="Text8" name="Text8" style="width:130px;height:26px;">Top Margin:</span>
+<span  id="TXTopMargin:" name="TXTopMargin:" style="width:130px;height:26px;">Top Margin:</span>
 
 </td>
 <td valign="top" style="width:136px;">
-<% /* EditBox6:EditBox */ %>
+<% /* MarginTop:EditBox */ %>
 <%
-   strErrorMapValue = VmlOperation.CheckError( "EditBox6", strError );
+   strErrorMapValue = VmlOperation.CheckError( "MarginTop", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -933,7 +927,7 @@ else
       strErrorColor = "";
       mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
       if ( VmlOperation.isValid( mSPLDefBlock ) == false )
-         task.log( ).debug( "Invalid View: " + "EditBox6" );
+         task.log( ).debug( "Invalid View: " + "MarginTop" );
       else
       {
          nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
@@ -945,8 +939,8 @@ else
             }
             catch (Exception e)
             {
-               out.println("There is an error on EditBox6: " + e.getMessage());
-               task.log().error( "*** Error on ctrl EditBox6", e );
+               out.println("There is an error on MarginTop: " + e.getMessage());
+               task.log().error( "*** Error on ctrl MarginTop", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -954,32 +948,35 @@ else
             task.log( ).debug( "LLD_SpecialSectionAttrBlock.MarginTop: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
+         {
+            task.log( ).debug( "Entity does not exist for MarginTop: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
+            mSPLDefBlock.cursor( "LLD_Block" ).logEntity( true );
+         }
       }
    }
 %>
 
-<input name="EditBox6" id="EditBox6" style="width:98px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="MarginTop" id="MarginTop" style="width:98px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 <td valign="top" style="width:128px;">
-<% /* Text21:Text */ %>
+<% /* TX1:Text */ %>
 
-<span  id="Text21" name="Text21" style="width:128px;height:26px;">  (Ex. .05)</span>
+<span  id="TX1" name="TX1" style="width:128px;height:26px;">  (Ex. .05)</span>
 
 </td>
 </tr>
 <tr>
 <td valign="top" style="width:136px;">
-<% /* Text10:Text */ %>
+<% /* TXBottomMargin::Text */ %>
 
-<span  id="Text10" name="Text10" style="width:130px;height:26px;">Bottom Margin:</span>
+<span  id="TXBottomMargin:" name="TXBottomMargin:" style="width:130px;height:26px;">Bottom Margin:</span>
 
 </td>
 <td valign="top" style="width:136px;">
-<% /* EditBox7:EditBox */ %>
+<% /* MarginBottom:EditBox */ %>
 <%
-   strErrorMapValue = VmlOperation.CheckError( "EditBox7", strError );
+   strErrorMapValue = VmlOperation.CheckError( "MarginBottom", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -990,7 +987,7 @@ else
       strErrorColor = "";
       mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
       if ( VmlOperation.isValid( mSPLDefBlock ) == false )
-         task.log( ).debug( "Invalid View: " + "EditBox7" );
+         task.log( ).debug( "Invalid View: " + "MarginBottom" );
       else
       {
          nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
@@ -1002,8 +999,8 @@ else
             }
             catch (Exception e)
             {
-               out.println("There is an error on EditBox7: " + e.getMessage());
-               task.log().error( "*** Error on ctrl EditBox7", e );
+               out.println("There is an error on MarginBottom: " + e.getMessage());
+               task.log().error( "*** Error on ctrl MarginBottom", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -1011,32 +1008,32 @@ else
             task.log( ).debug( "LLD_SpecialSectionAttrBlock.MarginBottom: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
+            task.log( ).debug( "Entity does not exist for MarginBottom: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
       }
    }
 %>
 
-<input name="EditBox7" id="EditBox7" style="width:98px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="MarginBottom" id="MarginBottom" style="width:98px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 <td valign="top" style="width:128px;">
-<% /* Text22:Text */ %>
+<% /* TX2:Text */ %>
 
-<span  id="Text22" name="Text22" style="width:128px;height:26px;">  (Ex. .05)</span>
+<span  id="TX2" name="TX2" style="width:128px;height:26px;">  (Ex. .05)</span>
 
 </td>
 </tr>
 <tr>
 <td valign="top" style="width:136px;">
-<% /* Text11:Text */ %>
+<% /* TXLeftMargin::Text */ %>
 
-<span  id="Text11" name="Text11" style="width:130px;height:26px;">Left Margin:</span>
+<span  id="TXLeftMargin:" name="TXLeftMargin:" style="width:130px;height:26px;">Left Margin:</span>
 
 </td>
 <td valign="top" style="width:136px;">
-<% /* EditBox8:EditBox */ %>
+<% /* MarginLeft:EditBox */ %>
 <%
-   strErrorMapValue = VmlOperation.CheckError( "EditBox8", strError );
+   strErrorMapValue = VmlOperation.CheckError( "MarginLeft", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -1047,7 +1044,7 @@ else
       strErrorColor = "";
       mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
       if ( VmlOperation.isValid( mSPLDefBlock ) == false )
-         task.log( ).debug( "Invalid View: " + "EditBox8" );
+         task.log( ).debug( "Invalid View: " + "MarginLeft" );
       else
       {
          nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
@@ -1059,8 +1056,8 @@ else
             }
             catch (Exception e)
             {
-               out.println("There is an error on EditBox8: " + e.getMessage());
-               task.log().error( "*** Error on ctrl EditBox8", e );
+               out.println("There is an error on MarginLeft: " + e.getMessage());
+               task.log().error( "*** Error on ctrl MarginLeft", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -1068,32 +1065,32 @@ else
             task.log( ).debug( "LLD_SpecialSectionAttrBlock.MarginLeft: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
+            task.log( ).debug( "Entity does not exist for MarginLeft: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
       }
    }
 %>
 
-<input name="EditBox8" id="EditBox8" style="width:98px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="MarginLeft" id="MarginLeft" style="width:98px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 <td valign="top" style="width:128px;">
-<% /* Text23:Text */ %>
+<% /* TX3:Text */ %>
 
-<span  id="Text23" name="Text23" style="width:128px;height:26px;">  (Ex. .05)</span>
+<span  id="TX3" name="TX3" style="width:128px;height:26px;">  (Ex. .05)</span>
 
 </td>
 </tr>
 <tr>
 <td valign="top" style="width:136px;">
-<% /* Text12:Text */ %>
+<% /* TXRightMargin::Text */ %>
 
-<span  id="Text12" name="Text12" style="width:130px;height:26px;">Right Margin:</span>
+<span  id="TXRightMargin:" name="TXRightMargin:" style="width:130px;height:26px;">Right Margin:</span>
 
 </td>
 <td valign="top" style="width:136px;">
-<% /* EditBox9:EditBox */ %>
+<% /* MarginRight:EditBox */ %>
 <%
-   strErrorMapValue = VmlOperation.CheckError( "EditBox9", strError );
+   strErrorMapValue = VmlOperation.CheckError( "MarginRight", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -1104,7 +1101,7 @@ else
       strErrorColor = "";
       mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
       if ( VmlOperation.isValid( mSPLDefBlock ) == false )
-         task.log( ).debug( "Invalid View: " + "EditBox9" );
+         task.log( ).debug( "Invalid View: " + "MarginRight" );
       else
       {
          nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
@@ -1116,8 +1113,8 @@ else
             }
             catch (Exception e)
             {
-               out.println("There is an error on EditBox9: " + e.getMessage());
-               task.log().error( "*** Error on ctrl EditBox9", e );
+               out.println("There is an error on MarginRight: " + e.getMessage());
+               task.log().error( "*** Error on ctrl MarginRight", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -1125,36 +1122,36 @@ else
             task.log( ).debug( "LLD_SpecialSectionAttrBlock.MarginRight: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
+            task.log( ).debug( "Entity does not exist for MarginRight: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
       }
    }
 %>
 
-<input name="EditBox9" id="EditBox9" style="width:98px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="MarginRight" id="MarginRight" style="width:98px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 <td valign="top" style="width:128px;">
-<% /* Text24:Text */ %>
+<% /* TX4:Text */ %>
 
-<span  id="Text24" name="Text24" style="width:128px;height:26px;">  (Ex. .05)</span>
+<span  id="TX4" name="TX4" style="width:128px;height:26px;">  (Ex. .05)</span>
 
 </td>
 </tr>
 <tr>
 <td valign="top" style="width:136px;">
-<% /* Text13:Text */ %>
+<% /* TXTextAlignment::Text */ %>
 
-<span  id="Text13" name="Text13" style="width:130px;height:28px;">Text Alignment:</span>
+<span  id="TXTextAlignment:" name="TXTextAlignment:" style="width:130px;height:28px;">Text Alignment:</span>
 
 </td>
 <td valign="top" style="width:98px;">
-<% /* ComboBox2:ComboBox */ %>
+<% /* TextAlign:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="ComboBox2" id="ComboBox2" size="1" style="width:98px;" onchange="ComboBox2OnChange( )">
+<select  name="TextAlign" id="TextAlign" size="1" style="width:98px;" onchange="TextAlignOnChange( )">
 
 <%
-   boolean inListComboBox2 = false;
+   boolean inListTextAlign = false;
 
    mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
    if ( VmlOperation.isValid( mSPLDefBlock ) )
@@ -1176,7 +1173,7 @@ else
       // Code for NOT required attribute, which makes sure a blank entry exists.
       if ( strComboCurrentValue == "" )
       {
-         inListComboBox2 = true;
+         inListTextAlign = true;
 %>
          <option selected="selected" value=""></option>
 <%
@@ -1203,7 +1200,7 @@ else
          {
             if ( StringUtils.equals( strComboCurrentValue, externalValue ) )
             {
-               inListComboBox2 = true;
+               inListTextAlign = true;
 %>
                <option selected="selected" value="<%=externalValue%>"><%=externalValue%></option>
 <%
@@ -1217,7 +1214,7 @@ else
          }
       }  // for ( TableEntry entry
       // The value from the database isn't in the domain, add it to the list as disabled.
-      if ( !inListComboBox2 )
+      if ( !inListTextAlign )
       { 
 %>
          <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
@@ -1227,25 +1224,25 @@ else
 %>
 </select>
 
-<input name="hComboBox2" id="hComboBox2" type="hidden" value="<%=strComboCurrentValue%>" >
+<input name="hTextAlign" id="hTextAlign" type="hidden" value="<%=strComboCurrentValue%>" >
 </td>
 <td>&nbsp</td>
 </tr>
 <tr>
 <td valign="top" style="width:136px;">
-<% /* Text14:Text */ %>
+<% /* TXFontFamily::Text */ %>
 
-<span  id="Text14" name="Text14" style="width:130px;height:30px;">Font Family:</span>
+<span  id="TXFontFamily:" name="TXFontFamily:" style="width:130px;height:30px;">Font Family:</span>
 
 </td>
 <td valign="top" style="width:98px;">
-<% /* ComboBox3:ComboBox */ %>
+<% /* FontFamily:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="ComboBox3" id="ComboBox3" size="1" style="width:98px;" onchange="ComboBox3OnChange( )">
+<select  name="FontFamily" id="FontFamily" size="1" style="width:98px;" onchange="FontFamilyOnChange( )">
 
 <%
-   boolean inListComboBox3 = false;
+   boolean inListFontFamily = false;
 
    mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
    if ( VmlOperation.isValid( mSPLDefBlock ) )
@@ -1267,7 +1264,7 @@ else
       // Code for NOT required attribute, which makes sure a blank entry exists.
       if ( strComboCurrentValue == "" )
       {
-         inListComboBox3 = true;
+         inListFontFamily = true;
 %>
          <option selected="selected" value=""></option>
 <%
@@ -1294,7 +1291,7 @@ else
          {
             if ( StringUtils.equals( strComboCurrentValue, externalValue ) )
             {
-               inListComboBox3 = true;
+               inListFontFamily = true;
 %>
                <option selected="selected" value="<%=externalValue%>"><%=externalValue%></option>
 <%
@@ -1308,7 +1305,7 @@ else
          }
       }  // for ( TableEntry entry
       // The value from the database isn't in the domain, add it to the list as disabled.
-      if ( !inListComboBox3 )
+      if ( !inListFontFamily )
       { 
 %>
          <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
@@ -1318,25 +1315,25 @@ else
 %>
 </select>
 
-<input name="hComboBox3" id="hComboBox3" type="hidden" value="<%=strComboCurrentValue%>" >
+<input name="hFontFamily" id="hFontFamily" type="hidden" value="<%=strComboCurrentValue%>" >
 </td>
 <td>&nbsp</td>
 </tr>
 <tr>
 <td valign="top" style="width:136px;">
-<% /* Text15:Text */ %>
+<% /* TXFontSize::Text */ %>
 
-<span  id="Text15" name="Text15" style="width:130px;height:30px;">Font Size:</span>
+<span  id="TXFontSize:" name="TXFontSize:" style="width:130px;height:30px;">Font Size:</span>
 
 </td>
 <td valign="top" style="width:98px;">
-<% /* ComboBox4:ComboBox */ %>
+<% /* FontSize:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="ComboBox4" id="ComboBox4" size="1" style="width:98px;" onchange="ComboBox4OnChange( )">
+<select  name="FontSize" id="FontSize" size="1" style="width:98px;" onchange="FontSizeOnChange( )">
 
 <%
-   boolean inListComboBox4 = false;
+   boolean inListFontSize = false;
 
    mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
    if ( VmlOperation.isValid( mSPLDefBlock ) )
@@ -1358,7 +1355,7 @@ else
       // Code for NOT required attribute, which makes sure a blank entry exists.
       if ( strComboCurrentValue == "" )
       {
-         inListComboBox4 = true;
+         inListFontSize = true;
 %>
          <option selected="selected" value=""></option>
 <%
@@ -1385,7 +1382,7 @@ else
          {
             if ( StringUtils.equals( strComboCurrentValue, externalValue ) )
             {
-               inListComboBox4 = true;
+               inListFontSize = true;
 %>
                <option selected="selected" value="<%=externalValue%>"><%=externalValue%></option>
 <%
@@ -1399,7 +1396,7 @@ else
          }
       }  // for ( TableEntry entry
       // The value from the database isn't in the domain, add it to the list as disabled.
-      if ( !inListComboBox4 )
+      if ( !inListFontSize )
       { 
 %>
          <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
@@ -1409,25 +1406,25 @@ else
 %>
 </select>
 
-<input name="hComboBox4" id="hComboBox4" type="hidden" value="<%=strComboCurrentValue%>" >
+<input name="hFontSize" id="hFontSize" type="hidden" value="<%=strComboCurrentValue%>" >
 </td>
 <td>&nbsp</td>
 </tr>
 <tr>
 <td valign="top" style="width:136px;">
-<% /* Text16:Text */ %>
+<% /* TXFontWeight::Text */ %>
 
-<span  id="Text16" name="Text16" style="width:130px;height:30px;">Font Weight:</span>
+<span  id="TXFontWeight:" name="TXFontWeight:" style="width:130px;height:30px;">Font Weight:</span>
 
 </td>
 <td valign="top" style="width:98px;">
-<% /* ComboBox5:ComboBox */ %>
+<% /* FontWeight:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="ComboBox5" id="ComboBox5" size="1" style="width:98px;" onchange="ComboBox5OnChange( )">
+<select  name="FontWeight" id="FontWeight" size="1" style="width:98px;" onchange="FontWeightOnChange( )">
 
 <%
-   boolean inListComboBox5 = false;
+   boolean inListFontWeight = false;
 
    mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
    if ( VmlOperation.isValid( mSPLDefBlock ) )
@@ -1449,7 +1446,7 @@ else
       // Code for NOT required attribute, which makes sure a blank entry exists.
       if ( strComboCurrentValue == "" )
       {
-         inListComboBox5 = true;
+         inListFontWeight = true;
 %>
          <option selected="selected" value=""></option>
 <%
@@ -1476,7 +1473,7 @@ else
          {
             if ( StringUtils.equals( strComboCurrentValue, externalValue ) )
             {
-               inListComboBox5 = true;
+               inListFontWeight = true;
 %>
                <option selected="selected" value="<%=externalValue%>"><%=externalValue%></option>
 <%
@@ -1490,7 +1487,7 @@ else
          }
       }  // for ( TableEntry entry
       // The value from the database isn't in the domain, add it to the list as disabled.
-      if ( !inListComboBox5 )
+      if ( !inListFontWeight )
       { 
 %>
          <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
@@ -1500,21 +1497,21 @@ else
 %>
 </select>
 
-<input name="hComboBox5" id="hComboBox5" type="hidden" value="<%=strComboCurrentValue%>" >
+<input name="hFontWeight" id="hFontWeight" type="hidden" value="<%=strComboCurrentValue%>" >
 </td>
 <td>&nbsp</td>
 </tr>
 <tr>
 <td valign="top" style="width:136px;">
-<% /* Text17:Text */ %>
+<% /* TXFontColor::Text */ %>
 
-<span  id="Text17" name="Text17" style="width:130px;height:30px;">Font Color:</span>
+<span  id="TXFontColor:" name="TXFontColor:" style="width:130px;height:30px;">Font Color:</span>
 
 </td>
 <td valign="top" style="width:98px;">
-<% /* TextColor:EditBox */ %>
+<% /* EBTextColor:EditBox */ %>
 <%
-   strErrorMapValue = VmlOperation.CheckError( "TextColor", strError );
+   strErrorMapValue = VmlOperation.CheckError( "EBTextColor", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -1525,7 +1522,7 @@ else
       strErrorColor = "";
       mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
       if ( VmlOperation.isValid( mSPLDefBlock ) == false )
-         task.log( ).debug( "Invalid View: " + "TextColor" );
+         task.log( ).debug( "Invalid View: " + "EBTextColor" );
       else
       {
          nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
@@ -1537,8 +1534,8 @@ else
             }
             catch (Exception e)
             {
-               out.println("There is an error on TextColor: " + e.getMessage());
-               task.log().error( "*** Error on ctrl TextColor", e );
+               out.println("There is an error on EBTextColor: " + e.getMessage());
+               task.log().error( "*** Error on ctrl EBTextColor", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -1546,27 +1543,27 @@ else
             task.log( ).debug( "LLD_SpecialSectionAttrBlock.TextColor: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
+            task.log( ).debug( "Entity does not exist for TextColor: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
       }
    }
 %>
 
-<input name="TextColor" id="TextColor" style="width:98px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EBTextColor" id="EBTextColor" style="width:98px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 <td>&nbsp</td>
 </tr>
 <tr>
 <td valign="top" style="width:136px;">
-<% /* Text4:Text */ %>
+<% /* TXLineHeight::Text */ %>
 
-<span  id="Text4" name="Text4" style="width:130px;height:26px;">Line Height:</span>
+<span  id="TXLineHeight:" name="TXLineHeight:" style="width:130px;height:26px;">Line Height:</span>
 
 </td>
 <td valign="top" style="width:136px;">
-<% /* EditBox1:EditBox */ %>
+<% /* TextLineHeight:EditBox */ %>
 <%
-   strErrorMapValue = VmlOperation.CheckError( "EditBox1", strError );
+   strErrorMapValue = VmlOperation.CheckError( "TextLineHeight", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -1577,7 +1574,7 @@ else
       strErrorColor = "";
       mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
       if ( VmlOperation.isValid( mSPLDefBlock ) == false )
-         task.log( ).debug( "Invalid View: " + "EditBox1" );
+         task.log( ).debug( "Invalid View: " + "TextLineHeight" );
       else
       {
          nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
@@ -1589,8 +1586,8 @@ else
             }
             catch (Exception e)
             {
-               out.println("There is an error on EditBox1: " + e.getMessage());
-               task.log().error( "*** Error on ctrl EditBox1", e );
+               out.println("There is an error on TextLineHeight: " + e.getMessage());
+               task.log().error( "*** Error on ctrl TextLineHeight", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -1598,36 +1595,36 @@ else
             task.log( ).debug( "LLD_SpecialSectionAttrBlock.TextLineHeight: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
+            task.log( ).debug( "Entity does not exist for TextLineHeight: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
       }
    }
 %>
 
-<input name="EditBox1" id="EditBox1" style="width:98px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="TextLineHeight" id="TextLineHeight" style="width:98px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 <td valign="top" style="width:162px;">
-<% /* Text2:Text */ %>
+<% /* TX(1.16isaboutnormal):Text */ %>
 
-<span  id="Text2" name="Text2" style="width:162px;height:26px;">  (1.16 is about normal)</span>
+<span  id="TX(1.16isaboutnormal)" name="TX(1.16isaboutnormal)" style="width:162px;height:26px;">  (1.16 is about normal)</span>
 
 </td>
 </tr>
 <tr>
 <td valign="top" style="width:136px;">
-<% /* Text18:Text */ %>
+<% /* TXBorderStyle::Text */ %>
 
-<span  id="Text18" name="Text18" style="width:130px;height:30px;">Border Style:</span>
+<span  id="TXBorderStyle:" name="TXBorderStyle:" style="width:130px;height:30px;">Border Style:</span>
 
 </td>
 <td valign="top" style="width:98px;">
-<% /* ComboBox7:ComboBox */ %>
+<% /* BorderStyle:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="ComboBox7" id="ComboBox7" size="1" style="width:98px;" onchange="ComboBox7OnChange( )">
+<select  name="BorderStyle" id="BorderStyle" size="1" style="width:98px;" onchange="BorderStyleOnChange( )">
 
 <%
-   boolean inListComboBox7 = false;
+   boolean inListBorderStyle = false;
 
    mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
    if ( VmlOperation.isValid( mSPLDefBlock ) )
@@ -1649,7 +1646,7 @@ else
       // Code for NOT required attribute, which makes sure a blank entry exists.
       if ( strComboCurrentValue == "" )
       {
-         inListComboBox7 = true;
+         inListBorderStyle = true;
 %>
          <option selected="selected" value=""></option>
 <%
@@ -1676,7 +1673,7 @@ else
          {
             if ( StringUtils.equals( strComboCurrentValue, externalValue ) )
             {
-               inListComboBox7 = true;
+               inListBorderStyle = true;
 %>
                <option selected="selected" value="<%=externalValue%>"><%=externalValue%></option>
 <%
@@ -1690,7 +1687,7 @@ else
          }
       }  // for ( TableEntry entry
       // The value from the database isn't in the domain, add it to the list as disabled.
-      if ( !inListComboBox7 )
+      if ( !inListBorderStyle )
       { 
 %>
          <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
@@ -1700,21 +1697,21 @@ else
 %>
 </select>
 
-<input name="hComboBox7" id="hComboBox7" type="hidden" value="<%=strComboCurrentValue%>" >
+<input name="hBorderStyle" id="hBorderStyle" type="hidden" value="<%=strComboCurrentValue%>" >
 </td>
 <td>&nbsp</td>
 </tr>
 <tr>
 <td valign="top" style="width:136px;">
-<% /* Text19:Text */ %>
+<% /* TXBorderWidth::Text */ %>
 
-<span  id="Text19" name="Text19" style="width:130px;height:30px;">Border Width:</span>
+<span  id="TXBorderWidth:" name="TXBorderWidth:" style="width:130px;height:30px;">Border Width:</span>
 
 </td>
 <td valign="top" style="width:136px;">
-<% /* EditBox10:EditBox */ %>
+<% /* BorderWidth:EditBox */ %>
 <%
-   strErrorMapValue = VmlOperation.CheckError( "EditBox10", strError );
+   strErrorMapValue = VmlOperation.CheckError( "BorderWidth", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -1725,7 +1722,7 @@ else
       strErrorColor = "";
       mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
       if ( VmlOperation.isValid( mSPLDefBlock ) == false )
-         task.log( ).debug( "Invalid View: " + "EditBox10" );
+         task.log( ).debug( "Invalid View: " + "BorderWidth" );
       else
       {
          nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
@@ -1737,8 +1734,8 @@ else
             }
             catch (Exception e)
             {
-               out.println("There is an error on EditBox10: " + e.getMessage());
-               task.log().error( "*** Error on ctrl EditBox10", e );
+               out.println("There is an error on BorderWidth: " + e.getMessage());
+               task.log().error( "*** Error on ctrl BorderWidth", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -1746,26 +1743,26 @@ else
             task.log( ).debug( "LLD_SpecialSectionAttrBlock.BorderWidth: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
+            task.log( ).debug( "Entity does not exist for BorderWidth: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
       }
    }
 %>
 
-<input name="EditBox10" id="EditBox10" style="width:98px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="BorderWidth" id="BorderWidth" style="width:98px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 <td valign="top" style="width:128px;">
-<% /* Text25:Text */ %>
+<% /* TX(Ex.1.0):Text */ %>
 
-<span  id="Text25" name="Text25" style="width:128px;height:26px;">  (Ex. 1.0)</span>
+<span  id="TX(Ex.1.0)" name="TX(Ex.1.0)" style="width:128px;height:26px;">  (Ex. 1.0)</span>
 
 </td>
 </tr>
 <tr>
 <td valign="top" style="width:136px;">
-<% /* Text20:Text */ %>
+<% /* TXBorderColor::Text */ %>
 
-<span  id="Text20" name="Text20" style="width:130px;height:30px;">Border Color:</span>
+<span  id="TXBorderColor:" name="TXBorderColor:" style="width:130px;height:30px;">Border Color:</span>
 
 </td>
 <td valign="top" style="width:98px;">
@@ -1803,7 +1800,7 @@ else
             task.log( ).debug( "LLD_SpecialSectionAttrBlock.BorderColor: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
+            task.log( ).debug( "Entity does not exist for BorderColor: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
       }
    }
 %>
@@ -1815,19 +1812,19 @@ else
 </tr>
 <tr>
 <td valign="top" style="width:136px;">
-<% /* Text3:Text */ %>
+<% /* TXTitlePosition::Text */ %>
 
-<span  id="Text3" name="Text3" style="width:130px;height:30px;">Title Position:</span>
+<span  id="TXTitlePosition:" name="TXTitlePosition:" style="width:130px;height:30px;">Title Position:</span>
 
 </td>
 <td valign="top" style="width:252px;">
-<% /* ComboBox10:ComboBox */ %>
+<% /* TitlePosition:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="ComboBox10" id="ComboBox10" size="1" style="width:252px;" onchange="ComboBox10OnChange( )">
+<select  name="TitlePosition" id="TitlePosition" size="1" style="width:252px;" onchange="TitlePositionOnChange( )">
 
 <%
-   boolean inListComboBox10 = false;
+   boolean inListTitlePosition = false;
 
    mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
    if ( VmlOperation.isValid( mSPLDefBlock ) )
@@ -1849,7 +1846,7 @@ else
       // Code for NOT required attribute, which makes sure a blank entry exists.
       if ( strComboCurrentValue == "" )
       {
-         inListComboBox10 = true;
+         inListTitlePosition = true;
 %>
          <option selected="selected" value=""></option>
 <%
@@ -1876,7 +1873,7 @@ else
          {
             if ( StringUtils.equals( strComboCurrentValue, externalValue ) )
             {
-               inListComboBox10 = true;
+               inListTitlePosition = true;
 %>
                <option selected="selected" value="<%=externalValue%>"><%=externalValue%></option>
 <%
@@ -1890,7 +1887,7 @@ else
          }
       }  // for ( TableEntry entry
       // The value from the database isn't in the domain, add it to the list as disabled.
-      if ( !inListComboBox10 )
+      if ( !inListTitlePosition )
       { 
 %>
          <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
@@ -1900,7 +1897,7 @@ else
 %>
 </select>
 
-<input name="hComboBox10" id="hComboBox10" type="hidden" value="<%=strComboCurrentValue%>" >
+<input name="hTitlePosition" id="hTitlePosition" type="hidden" value="<%=strComboCurrentValue%>" >
 </td>
 <td>&nbsp</td>
 </tr>

@@ -1625,83 +1625,132 @@ SaveAddNewUsage( View     ViewToWindow )
 //:DIALOG OPERATION
 //:ConfirmDeleteUsageEntry( VIEW ViewToWindow )
 
+//:/*
+//:   VIEW mMasLC REGISTERED AS mMasLC
+//:   VIEW mMasLC2 BASED ON LOD mMasLC
+//:   SHORT nContinue
+
+//:   CreateViewFromView( mMasLC2, mMasLC )
+
+//:   // Delete all selected Usage entries.
+//:   FOR EACH mMasLC.M_Usage
+//:      IF mMasLC.M_Usage.wSelected = "Y"
+//:         nContinue = 1
+//:         SET CURSOR FIRST mMasLC2.M_MarketingSection
+//:         LOOP WHILE RESULT >= zCURSOR_SET AND nContinue > 0
+//:            SET CURSOR FIRST mMasLC2.M_MarketingStatement
+//:            LOOP WHILE RESULT >= zCURSOR_SET AND nContinue > 0
+//:               SET CURSOR FIRST mMasLC2.M_MarketingUsage  WHERE mMasLC2.M_MarketingUsage.ID = mMasLC.M_Usage.ID 
+//:               IF RESULT >= zCURSOR_SET
+//:                  DELETE ENTITY mMasLC2.M_MarketingUsageOrdering NONE
+//:                  nContinue = -1
+//:                  RESULT = zCURSOR_UNCHANGED
+//:               END
+//:               IF nContinue > 0
+//:                  SET CURSOR NEXT mMasLC2.M_MarketingStatement
+//:               END
+//:            END
+//:            IF nContinue > 0
+//:               SET CURSOR NEXT mMasLC2.M_MarketingSection
+//:            END
+//:         END
+//:         DELETE ENTITY mMasLC.M_Usage NONE
+//:      END
+//:   END
+//:*/
+
 //:   VIEW mMasLC REGISTERED AS mMasLC
 public int 
 ConfirmDeleteUsageEntry( View     ViewToWindow )
 {
    zVIEW    mMasLC = new zVIEW( );
    int      RESULT = 0;
-   //:VIEW mMasLC2 BASED ON LOD mMasLC
-   zVIEW    mMasLC2 = new zVIEW( );
-   //:SHORT nContinue
-   int      nContinue = 0;
    int      lTempInteger_0 = 0;
+   int      lTempInteger_1 = 0;
+   int      lTempInteger_2 = 0;
 
    RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
 
-   //:CreateViewFromView( mMasLC2, mMasLC )
-   CreateViewFromView( mMasLC2, mMasLC );
-
    //:// Delete all selected Usage entries.
-   //:FOR EACH mMasLC.M_Usage
+   //:FOR EACH mMasLC.M_Usage 
    RESULT = SetCursorFirstEntity( mMasLC, "M_Usage", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
       //:IF mMasLC.M_Usage.wSelected = "Y"
       if ( CompareAttributeToString( mMasLC, "M_Usage", "wSelected", "Y" ) == 0 )
       { 
-         //:nContinue = 1
-         nContinue = 1;
-         //:SET CURSOR FIRST mMasLC2.M_MarketingSection
-         RESULT = SetCursorFirstEntity( mMasLC2, "M_MarketingSection", "" );
-         //:LOOP WHILE RESULT >= zCURSOR_SET AND nContinue > 0
-         while ( RESULT >= zCURSOR_SET && nContinue > 0 )
+         //:// Delete any Usage entries that have been tied to a Marketing Statement.
+         //:FOR EACH mMasLC.M_MarketingStatement WITHIN mMasLC.MasterLabelContent 
+         RESULT = SetCursorFirstEntity( mMasLC, "M_MarketingStatement", "MasterLabelContent" );
+         while ( RESULT > zCURSOR_UNCHANGED )
          { 
-            //:SET CURSOR FIRST mMasLC2.M_MarketingStatement
-            RESULT = SetCursorFirstEntity( mMasLC2, "M_MarketingStatement", "" );
-            //:LOOP WHILE RESULT >= zCURSOR_SET AND nContinue > 0
-            while ( RESULT >= zCURSOR_SET && nContinue > 0 )
+            //:SET CURSOR FIRST mMasLC.M_MarketingUsage WITHIN mMasLC.M_MarketingStatement 
+            //:           WHERE mMasLC.M_MarketingUsage.ID = mMasLC.M_Usage.ID 
+            {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+                         GetIntegerFromAttribute( mi_lTempInteger_0, mMasLC, "M_Usage", "ID" );
+            lTempInteger_0 = mi_lTempInteger_0.intValue( );}
+            RESULT = SetCursorFirstEntityByInteger( mMasLC, "M_MarketingUsage", "ID", lTempInteger_0, "M_MarketingStatement" );
+            //:IF RESULT >= zCURSOR_SET
+            if ( RESULT >= zCURSOR_SET )
             { 
-               //:SET CURSOR FIRST mMasLC2.M_MarketingUsage  WHERE mMasLC2.M_MarketingUsage.ID = mMasLC.M_Usage.ID 
-               {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
-                               GetIntegerFromAttribute( mi_lTempInteger_0, mMasLC, "M_Usage", "ID" );
-               lTempInteger_0 = mi_lTempInteger_0.intValue( );}
-               RESULT = SetCursorFirstEntityByInteger( mMasLC2, "M_MarketingUsage", "ID", lTempInteger_0, "" );
+               //:DELETE ENTITY mMasLC.M_MarketingUsageOrdering  
+               RESULT = DeleteEntity( mMasLC, "M_MarketingUsageOrdering", zPOS_NEXT );
+            } 
+
+            RESULT = SetCursorNextEntity( mMasLC, "M_MarketingStatement", "MasterLabelContent" );
+            //:END 
+         } 
+
+         //:END
+
+         //:// Delete any Usage entries that have been tied to a Directions for Use Statement or that 
+         //:// drive a Directions for Use Section.
+         //:FOR EACH mMasLC.M_DirectionsForUseSection
+         RESULT = SetCursorFirstEntity( mMasLC, "M_DirectionsForUseSection", "" );
+         while ( RESULT > zCURSOR_UNCHANGED )
+         { 
+            //:FOR EACH mMasLC.M_DirectionsForUseStatement
+            RESULT = SetCursorFirstEntity( mMasLC, "M_DirectionsForUseStatement", "" );
+            while ( RESULT > zCURSOR_UNCHANGED )
+            { 
+               //:SET CURSOR FIRST mMasLC.M_DirectionsUsage WITHIN mMasLC.M_DirectionsForUseStatement 
+               //:           WHERE mMasLC.M_DirectionsUsage.ID = mMasLC.M_Usage.ID 
+               {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+                               GetIntegerFromAttribute( mi_lTempInteger_1, mMasLC, "M_Usage", "ID" );
+               lTempInteger_1 = mi_lTempInteger_1.intValue( );}
+               RESULT = SetCursorFirstEntityByInteger( mMasLC, "M_DirectionsUsage", "ID", lTempInteger_1, "M_DirectionsForUseStatement" );
                //:IF RESULT >= zCURSOR_SET
                if ( RESULT >= zCURSOR_SET )
                { 
-                  //:DELETE ENTITY mMasLC2.M_MarketingUsageOrdering NONE
-                  RESULT = DeleteEntity( mMasLC2, "M_MarketingUsageOrdering", zREPOS_NONE );
-                  //:nContinue = -1
-                  nContinue = -1;
-                  //:RESULT = zCURSOR_UNCHANGED
-                  RESULT = zCURSOR_UNCHANGED;
+                  //:DELETE ENTITY mMasLC.M_DirectionsUsageOrdering   
+                  RESULT = DeleteEntity( mMasLC, "M_DirectionsUsageOrdering", zPOS_NEXT );
                } 
 
-               //:END
-               //:IF nContinue > 0
-               if ( nContinue > 0 )
-               { 
-                  //:SET CURSOR NEXT mMasLC2.M_MarketingStatement
-                  RESULT = SetCursorNextEntity( mMasLC2, "M_MarketingStatement", "" );
-               } 
-
-               //:END
+               RESULT = SetCursorNextEntity( mMasLC, "M_DirectionsForUseStatement", "" );
+               //:END 
             } 
 
             //:END
-            //:IF nContinue > 0
-            if ( nContinue > 0 )
+            //:SET CURSOR FIRST mMasLC.M_DrivingUsage WHERE mMasLC.M_DrivingUsage.ID = mMasLC.M_Usage.ID 
+            {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
+                         GetIntegerFromAttribute( mi_lTempInteger_2, mMasLC, "M_Usage", "ID" );
+            lTempInteger_2 = mi_lTempInteger_2.intValue( );}
+            RESULT = SetCursorFirstEntityByInteger( mMasLC, "M_DrivingUsage", "ID", lTempInteger_2, "" );
+            //:IF RESULT >= zCURSOR_SET
+            if ( RESULT >= zCURSOR_SET )
             { 
-               //:SET CURSOR NEXT mMasLC2.M_MarketingSection
-               RESULT = SetCursorNextEntity( mMasLC2, "M_MarketingSection", "" );
+               //:DELETE ENTITY mMasLC.M_DrivingUsage
+               RESULT = DeleteEntity( mMasLC, "M_DrivingUsage", zPOS_NEXT );
             } 
 
+            RESULT = SetCursorNextEntity( mMasLC, "M_DirectionsForUseSection", "" );
             //:END
          } 
 
          //:END
-         //:DELETE ENTITY mMasLC.M_Usage NONE
+
+         //:// Delete the actual Usage entry.
+         //:DELETE ENTITY mMasLC.M_Usage NONE 
          RESULT = DeleteEntity( mMasLC, "M_Usage", zREPOS_NONE );
       } 
 

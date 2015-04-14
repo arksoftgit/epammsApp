@@ -219,7 +219,7 @@ function CLEAN_SPLD_Data( )
    }
 }
 
-function DeletePanelEntry( strTagEntityKey )
+function DeletePanelEntry( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -227,10 +227,6 @@ function DeletePanelEntry( strTagEntityKey )
 
    if ( _IsDocDisabled( ) == false )
    {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wSPLDSPLD_UpdateLLD.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
       document.wSPLDSPLD_UpdateLLD.zAction.value = "DeletePanelEntry";
@@ -268,7 +264,7 @@ function GENERATE_SPLD_LabelDottedBorders( )
    }
 }
 
-function GOTO_AddPanelEntry( strTagEntityKey )
+function GOTO_AddPanelEntry( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -276,10 +272,6 @@ function GOTO_AddPanelEntry( strTagEntityKey )
 
    if ( _IsDocDisabled( ) == false )
    {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wSPLDSPLD_UpdateLLD.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
       document.wSPLDSPLD_UpdateLLD.zAction.value = "GOTO_AddPanelEntry";
@@ -347,7 +339,7 @@ function GOTO_SelectLLD_ForSPLD( )
    }
 }
 
-function GOTO_UpdatePanelEntry( strTagEntityKey )
+function GOTO_UpdatePanelEntry( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -355,10 +347,6 @@ function GOTO_UpdatePanelEntry( strTagEntityKey )
 
    if ( _IsDocDisabled( ) == false )
    {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wSPLDSPLD_UpdateLLD.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
       document.wSPLDSPLD_UpdateLLD.zAction.value = "GOTO_UpdatePanelEntry";

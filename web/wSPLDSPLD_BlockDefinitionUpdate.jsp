@@ -36,7 +36,6 @@ public int DoInputMapping( HttpServletRequest request,
    Task task = objectEngine.getTaskById( taskId );
 
    View mSPLDefBlock = null;
-   View mSPLDefPanel = null;
    View vGridTmp = null; // temp view to grid view
    View vRepeatingGrp = null; // temp view to repeating group view
    String strDateFormat = "";
@@ -213,7 +212,7 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
-      // Grid: Grid2
+      // Grid: SpecialSectionAttributes
       iTableRowCnt = 0;
 
       // We are creating a temp view to the grid view so that if there are 
@@ -231,11 +230,6 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       vGridTmp.drop( );
-   }
-
-   mSPLDefPanel = task.getViewByName( "mSPLDefPanel" );
-   if ( VmlOperation.isValid( mSPLDefPanel ) )
-   {
    }
 
    if ( webMapping == true )
@@ -394,7 +388,40 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "GENERATE_SPLD_LabelDottedBorders" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "CANCEL_BlockSubBlockDefinition" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDSPLD_BlockDefinitionUpdate", strActionToProcess );
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockDefinitionUpdate.jsp", "wSPLD.CANCEL_BlockSubBlockDefinition" );
+         nOptRC = wSPLD.CANCEL_BlockSubBlockDefinition( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wSPLD.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_ReturnToParent, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "DELETE_SpecialFormatDef" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDSPLD_BlockDefinitionUpdate", strActionToProcess );
@@ -406,8 +433,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockDefinitionUpdate.jsp", "wSPLD.GENERATE_SPLD_Label" );
-         nOptRC = wSPLD.GENERATE_SPLD_Label( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockDefinitionUpdate.jsp", "wSPLD.DELETE_SpecialFormatDef" );
+         nOptRC = wSPLD.DELETE_SpecialFormatDef( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -470,40 +497,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "CANCEL_BlockSubBlockDefinition" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDSPLD_BlockDefinitionUpdate", strActionToProcess );
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockDefinitionUpdate.jsp", "wSPLD.CANCEL_BlockSubBlockDefinition" );
-         nOptRC = wSPLD.CANCEL_BlockSubBlockDefinition( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSPLD.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_ReturnToParent, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "DELETE_SpecialFormatDef" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GENERATE_SPLD_LabelDottedBorders" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDSPLD_BlockDefinitionUpdate", strActionToProcess );
@@ -513,37 +507,10 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
-      // Position on the entity that was selected in the grid.
-      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
-      View mSPLDefBlock;
-      mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
-      if ( VmlOperation.isValid( mSPLDefBlock ) )
-      {
-         lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttribute" ).setByEntityKey( lEKey );
-         if ( !csrRC.isSet() )
-         {
-            boolean bFound = false;
-            csrRCk = mSPLDefBlock.cursor( "LLD_SpecialSectionAttribute" ).setFirst( );
-            while ( csrRCk.isSet() && !bFound )
-            {
-               lEKey = mSPLDefBlock.cursor( "LLD_SpecialSectionAttribute" ).getEntityKey( );
-               strKey = Long.toString( lEKey );
-               if ( StringUtils.equals( strKey, strEntityKey ) )
-               {
-                  // Stop while loop because we have positioned on the correct entity.
-                  bFound = true;
-               }
-               else
-                  csrRCk = mSPLDefBlock.cursor( "LLD_SpecialSectionAttribute" ).setNextContinue( );
-            } // Grid
-         }
-      }
-
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockDefinitionUpdate.jsp", "wSPLD.DELETE_SpecialFormatDef" );
-         nOptRC = wSPLD.DELETE_SpecialFormatDef( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockDefinitionUpdate.jsp", "wSPLD.GENERATE_SPLD_Label" );
+         nOptRC = wSPLD.GENERATE_SPLD_Label( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -660,8 +627,29 @@ if ( strActionToProcess != null )
          }
       }
 
-      // Next Window
-      strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_StartModalSubwindow, "wSPLD", "SPLD_BlockSpecialFormatDef" );
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockDefinitionUpdate.jsp", "wSPLD.GOTO_UpdateSpecialFormatDef" );
+         nOptRC = wSPLD.GOTO_UpdateSpecialFormatDef( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wSPLD.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_StartModalSubwindow, "wSPLD", "SPLD_BlockSpecialFormatDef" );
+      }
+
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -890,11 +878,11 @@ else
 <%
    View lMLC = null;
    View lSPLDLST = null;
-   View mSPLDefBlock = null;
    View mLLD_LST = null;
    View mMasLC = null;
    View mPrimReg = null;
    View mSPLDef = null;
+   View mSPLDefBlock = null;
    View mSPLDefPanel = null;
    View mSubLC = null;
    View mSubProd = null;
@@ -1012,9 +1000,9 @@ else
 
 <tr>
 <td valign="top" style="width:116px;">
-<% /* Text1:Text */ %>
+<% /* TXBlockTag::Text */ %>
 
-<span  id="Text1" name="Text1" style="width:110px;height:26px;">Block Tag:</span>
+<span  id="TXBlockTag:" name="TXBlockTag:" style="width:110px;height:26px;">Block Tag:</span>
 
 </td>
 <td valign="top" style="width:224px;">
@@ -1114,9 +1102,9 @@ else
 </tr>
 <tr>
 <td valign="top" style="width:116px;">
-<% /* Text5:Text */ %>
+<% /* TXDataType::Text */ %>
 
-<span  id="Text5" name="Text5" style="width:110px;height:26px;">Data Type:</span>
+<span  id="TXDataType:" name="TXDataType:" style="width:110px;height:26px;">Data Type:</span>
 
 </td>
 <td valign="top" style="width:224px;">
@@ -1204,9 +1192,9 @@ else
 </tr>
 <tr>
 <td valign="top" style="width:116px;">
-<% /* Text9:Text */ %>
+<% /* TXTop::Text */ %>
 
-<span  id="Text9" name="Text9" style="width:110px;height:26px;">Top:</span>
+<span  id="TXTop:" name="TXTop:" style="width:110px;height:26px;">Top:</span>
 
 </td>
 <td valign="top" style="width:78px;">
@@ -1255,9 +1243,9 @@ else
 </tr>
 <tr>
 <td valign="top" style="width:116px;">
-<% /* Text3:Text */ %>
+<% /* TXLeft::Text */ %>
 
-<span  id="Text3" name="Text3" style="width:110px;height:26px;">Left:</span>
+<span  id="TXLeft:" name="TXLeft:" style="width:110px;height:26px;">Left:</span>
 
 </td>
 <td valign="top" style="width:78px;">
@@ -1306,9 +1294,9 @@ else
 </tr>
 <tr>
 <td valign="top" style="width:116px;">
-<% /* Text2:Text */ %>
+<% /* TXHeight::Text */ %>
 
-<span  id="Text2" name="Text2" style="width:110px;height:26px;">Height:</span>
+<span  id="TXHeight:" name="TXHeight:" style="width:110px;height:26px;">Height:</span>
 
 </td>
 <td valign="top" style="width:78px;">
@@ -1357,9 +1345,9 @@ else
 </tr>
 <tr>
 <td valign="top" style="width:116px;">
-<% /* Text4:Text */ %>
+<% /* TXWidth::Text */ %>
 
-<span  id="Text4" name="Text4" style="width:110px;height:26px;">Width:</span>
+<span  id="TXWidth:" name="TXWidth:" style="width:110px;height:26px;">Width:</span>
 
 </td>
 <td valign="top" style="width:78px;">
@@ -1408,9 +1396,9 @@ else
 </tr>
 <tr>
 <td valign="top" style="width:116px;">
-<% /* Text7:Text */ %>
+<% /* TXGraphicName::Text */ %>
 
-<span  id="Text7" name="Text7" style="width:110px;height:26px;">Graphic Name:</span>
+<span  id="TXGraphicName:" name="TXGraphicName:" style="width:110px;height:26px;">Graphic Name:</span>
 
 </td>
 <td valign="top" style="width:310px;">
@@ -1529,9 +1517,9 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <span style="height:20px;">&nbsp</span>
-<% /* Text11:Text */ %>
+<% /* TXRelatedMarketingSection:Text */ %>
 
-<span  id="Text11" name="Text11" style="width:286px;height:20px;">Related Marketing Section</span>
+<span  id="TXRelatedMarketingSection" name="TXRelatedMarketingSection" style="width:286px;height:20px;">Related Marketing Section</span>
 
 </div>  <!-- End of a new line -->
 
@@ -1553,9 +1541,9 @@ else
 <div style="height:8px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<% /* Text13:Text */ %>
+<% /* TXSectionName::Text */ %>
 
-<span  id="Text13" name="Text13" style="width:98px;height:14px;">Section Name:</span>
+<span  id="TXSectionName:" name="TXSectionName:" style="width:98px;height:14px;">Section Name:</span>
 
 </div>  <!-- End of a new line -->
 
@@ -1571,24 +1559,24 @@ else
 <div style="height:8px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<% /* Text14:Text */ %>
+<% /* TXName:Text */ %>
 <% strTextDisplayValue = "";
-   mSPLDefPanel = task.getViewByName( "mSPLDefPanel" );
-   if ( VmlOperation.isValid( mSPLDefPanel ) == false )
-      task.log( ).debug( "Invalid View: " + "Text14" );
+   mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
+   if ( VmlOperation.isValid( mSPLDefBlock ) == false )
+      task.log( ).debug( "Invalid View: " + "TXName" );
    else
    {
-      nRC = mSPLDefPanel.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
+      nRC = mSPLDefBlock.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
       try
       {
-         strTextDisplayValue = mSPLDefPanel.cursor( "LLD_Block" ).getAttribute( "Name" ).getString( "" );
+         strTextDisplayValue = mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "Name" ).getString( "" );
       }
       catch (Exception e)
       {
-         out.println("There is an error on Text14: " + e.getMessage());
-         task.log().info( "*** Error on ctrl Text14" + e.getMessage() );
+         out.println("There is an error on TXName: " + e.getMessage());
+         task.log().info( "*** Error on ctrl TXName" + e.getMessage() );
       }
          if ( strTextDisplayValue == null )
             strTextDisplayValue = "";
@@ -1596,7 +1584,7 @@ else
    }
 %>
 
-<span  id="Text14" name="Text14" style="width:158px;height:14px;"><%=strTextDisplayValue%></span>
+<span  id="TXName" name="TXName" style="width:158px;height:14px;"><%=strTextDisplayValue%></span>
 
 </div>  <!-- End of a new line -->
 
@@ -1635,9 +1623,9 @@ else
 <div style="height:8px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<% /* Text12:Text */ %>
+<% /* TXClaimListType::Text */ %>
 
-<span  id="Text12" name="Text12" style="width:106px;height:14px;">Claim List Type:</span>
+<span  id="TXClaimListType:" name="TXClaimListType:" style="width:106px;height:14px;">Claim List Type:</span>
 
 </div>  <!-- End of a new line -->
 
@@ -1767,9 +1755,9 @@ else
 <div style="height:4px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<% /* Text8:Text */ %>
+<% /* TXBlockFormattingDefinitions:Text */ %>
 
-<span  id="Text8" name="Text8" style="width:250px;height:20px;">Block Formatting Definitions</span>
+<span  id="TXBlockFormattingDefinitions" name="TXBlockFormattingDefinitions" style="width:250px;height:20px;">Block Formatting Definitions</span>
 
 </div>  <!-- End of a new line -->
 
@@ -1789,8 +1777,8 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
-<% /* Grid2:Grid */ %>
-<table  cols=7 style=""  name="Grid2" id="Grid2">
+<% /* SpecialSectionAttributes:Grid */ %>
+<table  cols=5 style=""  name="SpecialSectionAttributes" id="SpecialSectionAttributes">
 
 <thead><tr>
 
@@ -1799,8 +1787,6 @@ else
    <th>Bottom Margin</th>
    <th>Weight</th>
    <th>Color</th>
-   <th>Update</th>
-   <th>Delete</th>
 
 </tr></thead>
 
@@ -1818,109 +1804,105 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
-      String strGridEditCtl2;
-      String strGridEditCtl1;
-      String strGridEditCtl5;
-      String strGridEditCtl3;
-      String strGridEditCtl4;
-      String strBitmapBtn4;
-      String strBitmapBtn5;
+      String strFormattingKeyword;
+      String strFontSize;
+      String strBottomMargin;
+      String strWeight;
+      String strColor;
       
-      View vGrid2;
-      vGrid2 = mSPLDefBlock.newView( );
-      csrRC2 = vGrid2.cursor( "LLD_SpecialSectionAttribute" ).setFirst(  );
+      View vSpecialSectionAttributes;
+      vSpecialSectionAttributes = mSPLDefBlock.newView( );
+      csrRC2 = vSpecialSectionAttributes.cursor( "LLD_SpecialSectionAttribute" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGrid2.cursor( "LLD_SpecialSectionAttribute" ).getEntityKey( );
+         lEntityKey = vSpecialSectionAttributes.cursor( "LLD_SpecialSectionAttribute" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          strButtonName = "SelectButton" + strEntityKey;
 
-         strGridEditCtl2 = "";
-         nRC = vGrid2.cursor( "LLD_SpecialSectionAttribute" ).checkExistenceOfEntity( ).toInt();
+         strFormattingKeyword = "";
+         nRC = vSpecialSectionAttributes.cursor( "LLD_SpecialSectionAttribute" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl2 = vGrid2.cursor( "LLD_SpecialSectionAttribute" ).getAttribute( "Name" ).getString( "" );
+            strFormattingKeyword = vSpecialSectionAttributes.cursor( "LLD_SpecialSectionAttribute" ).getAttribute( "Name" ).getString( "" );
 
-            if ( strGridEditCtl2 == null )
-               strGridEditCtl2 = "";
+            if ( strFormattingKeyword == null )
+               strFormattingKeyword = "";
          }
 
-         if ( StringUtils.isBlank( strGridEditCtl2 ) )
-            strGridEditCtl2 = "&nbsp";
+         if ( StringUtils.isBlank( strFormattingKeyword ) )
+            strFormattingKeyword = "&nbsp";
 
-         strGridEditCtl1 = "";
-         nRC = vGrid2.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
+         strFontSize = "";
+         nRC = vSpecialSectionAttributes.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl1 = vGrid2.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "FontSize" ).getString( "" );
+            strFontSize = vSpecialSectionAttributes.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "FontSize" ).getString( "" );
 
-            if ( strGridEditCtl1 == null )
-               strGridEditCtl1 = "";
+            if ( strFontSize == null )
+               strFontSize = "";
          }
 
-         if ( StringUtils.isBlank( strGridEditCtl1 ) )
-            strGridEditCtl1 = "&nbsp";
+         if ( StringUtils.isBlank( strFontSize ) )
+            strFontSize = "&nbsp";
 
-         strGridEditCtl5 = "";
-         nRC = vGrid2.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
+         strBottomMargin = "";
+         nRC = vSpecialSectionAttributes.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl5 = vGrid2.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "MarginBottom" ).getString( "" );
+            strBottomMargin = vSpecialSectionAttributes.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "MarginBottom" ).getString( "" );
 
-            if ( strGridEditCtl5 == null )
-               strGridEditCtl5 = "";
+            if ( strBottomMargin == null )
+               strBottomMargin = "";
          }
 
-         if ( StringUtils.isBlank( strGridEditCtl5 ) )
-            strGridEditCtl5 = "&nbsp";
+         if ( StringUtils.isBlank( strBottomMargin ) )
+            strBottomMargin = "&nbsp";
 
-         strGridEditCtl3 = "";
-         nRC = vGrid2.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
+         strWeight = "";
+         nRC = vSpecialSectionAttributes.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl3 = vGrid2.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "FontWeight" ).getString( "" );
+            strWeight = vSpecialSectionAttributes.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "FontWeight" ).getString( "" );
 
-            if ( strGridEditCtl3 == null )
-               strGridEditCtl3 = "";
+            if ( strWeight == null )
+               strWeight = "";
          }
 
-         if ( StringUtils.isBlank( strGridEditCtl3 ) )
-            strGridEditCtl3 = "&nbsp";
+         if ( StringUtils.isBlank( strWeight ) )
+            strWeight = "&nbsp";
 
-         strGridEditCtl4 = "";
-         nRC = vGrid2.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
+         strColor = "";
+         nRC = vSpecialSectionAttributes.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl4 = vGrid2.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "TextColor" ).getString( "" );
+            strColor = vSpecialSectionAttributes.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "TextColor" ).getString( "" );
 
-            if ( strGridEditCtl4 == null )
-               strGridEditCtl4 = "";
+            if ( strColor == null )
+               strColor = "";
          }
 
-         if ( StringUtils.isBlank( strGridEditCtl4 ) )
-            strGridEditCtl4 = "&nbsp";
+         if ( StringUtils.isBlank( strColor ) )
+            strColor = "&nbsp";
 
 %>
 
 <tr<%=strOdd%>>
 
-   <td><a href="#" onclick="GOTO_UpdateSpecialFormatDef( this.id )" id="GridEditCtl2::<%=strEntityKey%>"><%=strGridEditCtl2%></a></td>
-   <td><%=strGridEditCtl1%></td>
-   <td><%=strGridEditCtl5%></td>
-   <td><%=strGridEditCtl3%></td>
-   <td><%=strGridEditCtl4%></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn4" onclick="GOTO_UpdateSpecialFormatDef( this.id )" id="BitmapBtn4::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn5" onclick="DELETE_SpecialFormatDef( this.id )" id="BitmapBtn5::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
+   <td><a href="#" onclick="GOTO_UpdateSpecialFormatDef( this.id )" id="FormattingKeyword::<%=strEntityKey%>"><%=strFormattingKeyword%></a></td>
+   <td><a href="#" onclick="GOTO_UpdateSpecialFormatDef( this.id )" id="FontSize::<%=strEntityKey%>"><%=strFontSize%></a></td>
+   <td><a href="#" onclick="GOTO_UpdateSpecialFormatDef( this.id )" id="BottomMargin::<%=strEntityKey%>"><%=strBottomMargin%></a></td>
+   <td><a href="#" onclick="GOTO_UpdateSpecialFormatDef( this.id )" id="Weight::<%=strEntityKey%>"><%=strWeight%></a></td>
+   <td><a href="#" onclick="GOTO_UpdateSpecialFormatDef( this.id )" id="Color::<%=strEntityKey%>"><%=strColor%></a></td>
 
 </tr>
 
 <%
-         csrRC2 = vGrid2.cursor( "LLD_SpecialSectionAttribute" ).setNextContinue( );
+         csrRC2 = vSpecialSectionAttributes.cursor( "LLD_SpecialSectionAttribute" ).setNextContinue( );
       }
-      vGrid2.drop( );
+      vSpecialSectionAttributes.drop( );
    }
 }
 catch (Exception e)

@@ -440,6 +440,10 @@ GOTO_SelectMarketingUsageEntries( VIEW ViewToWindow )
    VIEW mSubLC REGISTERED AS mSubLC
    VIEW mMasLC REGISTERED AS mMasLC
    
+   FOR EACH mSubLC.S_SelectableMarketingUsage
+      EXCLUDE mSubLC.S_SelectableMarketingUsage NONE
+   END
+   
    // Set up the list of selectable Usage Statements. This is the subset of MLC Usage Statements tied
    // to the corresponding MLC Statement is ARE ALSO IN the list of Usage Statements selected for this SLC.
    SET CURSOR FIRST mMasLC.M_MarketingStatement WITHIN mMasLC.MasterLabelContent 

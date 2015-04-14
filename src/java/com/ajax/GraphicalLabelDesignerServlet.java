@@ -763,6 +763,56 @@ end debug code */
       }
       return ec;
    }
+
+   private EntityCursor setPositionByKey( View mSPLDefBlock, String elementKey ) {
+      // mSPLDefBlock comes in set to the top.
+      // entity.tag;id;wid;wpe ==> LLD_Block.Tag622;622;622;block
+      EntityCursor ec = null;
+      int idx1 = elementKey.indexOf( "." );
+      if ( idx1 >= 0 ) {
+         String entity = elementKey.substring( 0, idx1 );
+         idx1++;
+         int idx2 = elementKey.indexOf( ";", idx1 );
+         if ( idx2 >= 0 ) {
+            String tag = elementKey.substring( idx1, idx2 );
+            idx1 = idx2 + 1;
+            idx2 = elementKey.indexOf( ";", idx1 );
+            if ( idx2 >= 0 ) {
+               String id = elementKey.substring( idx1, idx2 );
+               idx1 = idx2 + 1;
+               idx2 = elementKey.indexOf( ";", idx1 );
+               if ( idx2 >= 0 ) {
+                  String wid = elementKey.substring( idx1, idx2 );
+                  idx1 = idx2 + 1;
+                  String wpe = elementKey.substring( idx1 );
+                  if ( entity.compareTo( "LLD_Panel" ) == 0 ) {
+                     ec = mSPLDefBlock.getCursor( "LLD_Panel" );
+                  } else {
+                     ec = mSPLDefBlock.getCursor( "LLD_Block" );
+                  }
+                  CursorResult cr;
+                  if ( id != null && id.isEmpty() == false && id.compareTo( wid ) == 0 ) {
+                     cr = ec.setFirstWithinOi( "ID", id );
+                     tag = id;
+                  } else {
+                     cr = ec.setFirstWithinOi( "Tag", tag );
+                  }
+                  if ( cr.isSet() ) {
+                     logger.debug( "PositionByKey set to Entity.Tag ================>>> " + entity + "." + tag );
+                  // ec.logEntity( false );
+                  } else {
+                     logger.debug( "Could not set cursor for Entity.Tag: " + entity + "." + tag );
+                     throw new ZeidonException( "Could not set cursor for Entity.Tag: " + entity + "." + tag ); 
+                  }
+               }
+            }
+         }
+      }
+
+      return ec;
+   }
+   
+
    /**
     * @see HttpServlet#doGet( HttpServletRequest request, HttpServletResponse response )
     */
@@ -814,7 +864,10 @@ end debug code */
                try {
                   String viewPath = request.getParameter( "viewPath" );
                   logger.debug( "Setting view path: " + viewPath );
-                  EntityCursor ec = setPathCursorPosition( mSPLDefBlock, viewPath, 0, 0 );
+                  String elementKey = request.getParameter( "elementKey" );
+                  logger.debug( "Setting cursor for element key: " + elementKey );
+               // EntityCursor ec = setPathCursorPosition( mSPLDefBlock, viewPath, 0, 0 );
+                  EntityCursor ec = setPositionByKey( mSPLDefBlock, elementKey );
                   logger.debug( "Finished setting view path: " + viewPath );
                   ec.logEntity( false );
                } catch (ZeidonException ze) {

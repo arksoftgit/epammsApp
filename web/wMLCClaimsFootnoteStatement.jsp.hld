@@ -65,6 +65,7 @@ public int DoInputMapping( HttpServletRequest request,
       if ( nRC >= 0 ) // CursorResult.SET
       {
          strMapValue = request.getParameter( "Footnote" );
+         strMapValue = StringEscapeUtils.escapeHtml4( strMapValue );
          try
          {
             if ( webMapping )
@@ -389,7 +390,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/he.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wMLCClaimsFootnoteStatement.js"></script>
 
@@ -601,6 +601,7 @@ else
             try
             {
             strErrorMapValue = mMasLC.cursor( "M_UsageFootnote" ).getAttribute( "Text" ).getString( "" );
+            StringEscapeUtils.unescapeHtml4( strErrorMapValue );
             }
             catch (Exception e)
             {

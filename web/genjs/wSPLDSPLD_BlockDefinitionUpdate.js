@@ -192,7 +192,7 @@ function ACCEPT_BlockSubBlockDefinition( )
    }
 }
 
-function GENERATE_SPLD_LabelDottedBorders( )
+function CANCEL_BlockSubBlockDefinition( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -202,7 +202,22 @@ function GENERATE_SPLD_LabelDottedBorders( )
    {
       _DisableFormElements( true );
 
-      document.wSPLDSPLD_BlockDefinitionUpdate.zAction.value = "GENERATE_SPLD_LabelDottedBorders";
+      document.wSPLDSPLD_BlockDefinitionUpdate.zAction.value = "CANCEL_BlockSubBlockDefinition";
+      document.wSPLDSPLD_BlockDefinitionUpdate.submit( );
+   }
+}
+
+function DELETE_SpecialFormatDef( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSPLDSPLD_BlockDefinitionUpdate.zAction.value = "DELETE_SpecialFormatDef";
       document.wSPLDSPLD_BlockDefinitionUpdate.submit( );
    }
 }
@@ -222,7 +237,7 @@ function GENERATE_SPLD_Label( )
    }
 }
 
-function CANCEL_BlockSubBlockDefinition( )
+function GENERATE_SPLD_LabelDottedBorders( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -232,26 +247,7 @@ function CANCEL_BlockSubBlockDefinition( )
    {
       _DisableFormElements( true );
 
-      document.wSPLDSPLD_BlockDefinitionUpdate.zAction.value = "CANCEL_BlockSubBlockDefinition";
-      document.wSPLDSPLD_BlockDefinitionUpdate.submit( );
-   }
-}
-
-function DELETE_SpecialFormatDef( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wSPLDSPLD_BlockDefinitionUpdate.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wSPLDSPLD_BlockDefinitionUpdate.zAction.value = "DELETE_SpecialFormatDef";
+      document.wSPLDSPLD_BlockDefinitionUpdate.zAction.value = "GENERATE_SPLD_LabelDottedBorders";
       document.wSPLDSPLD_BlockDefinitionUpdate.submit( );
    }
 }

@@ -4179,75 +4179,75 @@ END
 **    
 *************************************************************************************************/
 TRANSFORMATION OPERATION
-SetUpFormattingSelect( VIEW mSPLDef BASED ON LOD mSPLDef,
+SetUpFormattingSelect( VIEW mSPLDefPanel BASED ON LOD mSPLDef,
                        STRING ( 50 ) szSectionType )
 
    // Initialize the SpecialFormattingSelectEntry entries depending on Section Type.
-   FOR EACH mSPLDef.SpecialFormattingSelectEntry 
-      DELETE ENTITY mSPLDef.SpecialFormattingSelectEntry NONE 
+   FOR EACH mSPLDefPanel.SpecialFormattingSelectEntry 
+      DELETE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry NONE 
    END
    IF szSectionType = "HumanHazard" 
       // Human Hazard
-      CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-      mSPLDef.SpecialFormattingSelectEntry.KeywordName = "Hazards Warning"
-      CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-      mSPLDef.SpecialFormattingSelectEntry.KeywordName = "Hazards Signal Word"
-      CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-      mSPLDef.SpecialFormattingSelectEntry.KeywordName = "Hazards Precautionary"
+      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Hazards Warning"
+      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Hazards Signal Word"
+      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Hazards Precautionary"
    ELSE
       IF szSectionType = "Ingredients" 
          // Ingredients
-         CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-         mSPLDef.SpecialFormattingSelectEntry.KeywordName = "Ingredients Title"
-         CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-         mSPLDef.SpecialFormattingSelectEntry.KeywordName = "Ingredients Items" 
-         CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-         mSPLDef.SpecialFormattingSelectEntry.KeywordName = "Ingredients Inert" 
-         CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-         mSPLDef.SpecialFormattingSelectEntry.KeywordName = "Ingredients Total" 
+         CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+         mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Ingredients Title"
+         CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+         mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Ingredients Items" 
+         CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+         mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Ingredients Inert" 
+         CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+         mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Ingredients Total" 
       ELSE
          IF szSectionType = "DirectionsForUse" 
             // Directions for Use
-            CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-            mSPLDef.SpecialFormattingSelectEntry.KeywordName = "Title"
-            CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-            mSPLDef.SpecialFormattingSelectEntry.KeywordName = "Text" 
-            CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-            mSPLDef.SpecialFormattingSelectEntry.KeywordName = "DIRECTIONS Header" 
+            CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+            mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Title"
+            CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+            mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Text" 
+            CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+            mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "DIRECTIONS Header" 
          ELSE
             IF szSectionType = "Marketing"
                // Marketing
-               CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-               mSPLDef.SpecialFormattingSelectEntry.KeywordName = "Title"
-               CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-               mSPLDef.SpecialFormattingSelectEntry.KeywordName = "Text" 
-               CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-               mSPLDef.SpecialFormattingSelectEntry.KeywordName = "Column List" 
-               CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-               mSPLDef.SpecialFormattingSelectEntry.KeywordName = "MARKETING Header" 
+               CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+               mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Title"
+               CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+               mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Text" 
+               CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+               mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Column List" 
+               CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+               mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "MARKETING Header" 
             ELSE
                IF szSectionType = "FirstAid"
                   // First Aid
-                  CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-                  mSPLDef.SpecialFormattingSelectEntry.KeywordName = "Title"
-                  CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-                  mSPLDef.SpecialFormattingSelectEntry.KeywordName = "Text" 
-                  CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-                  mSPLDef.SpecialFormattingSelectEntry.KeywordName = "FIRST AID Header" 
+                  CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+                  mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Title"
+                  CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+                  mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Text" 
+                  CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+                  mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "FIRST AID Header" 
                ELSE
                   // Default
-                  CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-                  mSPLDef.SpecialFormattingSelectEntry.KeywordName = "Title"
-                  CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-                  mSPLDef.SpecialFormattingSelectEntry.KeywordName = "Text" 
+                  CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+                  mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Title"
+                  CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+                  mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Text" 
                END
             END
          END
       END
    END
-   CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-   mSPLDef.SpecialFormattingSelectEntry.KeywordName = "Block"
-   SET CURSOR FIRST mSPLDef.SpecialFormattingSelectEntry 
+   CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+   mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Block"
+   SET CURSOR FIRST mSPLDefPanel.SpecialFormattingSelectEntry 
    
 END
 
@@ -4336,16 +4336,16 @@ END
 **    
 *************************************************************************************************/
 TRANSFORMATION OPERATION
-CheckAddKeywordEntry( VIEW mSPLDef BASED ON LOD mSPLDef,
+CheckAddKeywordEntry( VIEW mSPLDefBlock BASED ON LOD mSPLDef,
                       STRING ( 50 ) szKeywordName )
 
    // Make sure that the entry for the Keyword passed in exists.
-   SET CURSOR FIRST mSPLDef.LLD_SpecialSectionAttribute WHERE mSPLDef.LLD_SpecialSectionAttribute.Name = szKeywordName
+   SET CURSOR FIRST mSPLDefBlock.LLD_SpecialSectionAttribute WHERE mSPLDefBlock.LLD_SpecialSectionAttribute.Name = szKeywordName
    IF RESULT < zCURSOR_SET
-      SET CURSOR LAST mSPLDef.LLD_SpecialSectionAttribute  
-      CREATE ENTITY mSPLDef.LLD_SpecialSectionAttribute
-      mSPLDef.LLD_SpecialSectionAttribute.Name = szKeywordName
-      CREATE ENTITY mSPLDef.LLD_SpecialSectionAttrBlock  
+      SET CURSOR LAST mSPLDefBlock.LLD_SpecialSectionAttribute  
+      CREATE ENTITY mSPLDefBlock.LLD_SpecialSectionAttribute
+      mSPLDefBlock.LLD_SpecialSectionAttribute.Name = szKeywordName
+      CREATE ENTITY mSPLDefBlock.LLD_SpecialSectionAttrBlock  
    END 
    
 END
@@ -4357,45 +4357,45 @@ END
 **    
 *************************************************************************************************/
 TRANSFORMATION OPERATION
-SetUpKeywordEntries( VIEW mSPLDef BASED ON LOD mSPLDef,
+SetUpKeywordEntries( VIEW mSPLDefBlock BASED ON LOD mSPLDef,
                      STRING ( 50 ) szSectionType )
 
    // Make sure that the appropriate Keyword entries are set up for a given Section/Block Type.
    IF szSectionType = "HumanHazard" 
       // Human Hazard
-      CheckAddKeywordEntry( mSPLDef, "Hazards Warning" )
-      CheckAddKeywordEntry( mSPLDef, "Hazards Signal Word" )
-      CheckAddKeywordEntry( mSPLDef, "Hazards Precautionary" )
+      CheckAddKeywordEntry( mSPLDefBlock, "Hazards Warning" )
+      CheckAddKeywordEntry( mSPLDefBlock, "Hazards Signal Word" )
+      CheckAddKeywordEntry( mSPLDefBlock, "Hazards Precautionary" )
    ELSE
       IF szSectionType = "Ingredients" 
          // Ingredients
-         CheckAddKeywordEntry( mSPLDef, "Ingredients Title" )
-         CheckAddKeywordEntry( mSPLDef, "Ingredients Items" )
-         CheckAddKeywordEntry( mSPLDef, "Ingredients Inert" )
-         CheckAddKeywordEntry( mSPLDef, "Ingredients Total" ) 
+         CheckAddKeywordEntry( mSPLDefBlock, "Ingredients Title" )
+         CheckAddKeywordEntry( mSPLDefBlock, "Ingredients Items" )
+         CheckAddKeywordEntry( mSPLDefBlock, "Ingredients Inert" )
+         CheckAddKeywordEntry( mSPLDefBlock, "Ingredients Total" ) 
       ELSE
          IF szSectionType = "DirectionsForUse" 
             // Directions for Use
-            CheckAddKeywordEntry( mSPLDef, "Title" )
-            CheckAddKeywordEntry( mSPLDef, "Text" )
-            CheckAddKeywordEntry( mSPLDef, "DIRECTIONS Header" )
+            CheckAddKeywordEntry( mSPLDefBlock, "Title" )
+            CheckAddKeywordEntry( mSPLDefBlock, "Text" )
+            CheckAddKeywordEntry( mSPLDefBlock, "DIRECTIONS Header" )
          ELSE
             IF szSectionType = "Marketing"
                // Marketing
-               CheckAddKeywordEntry( mSPLDef, "Title" )
-               CheckAddKeywordEntry( mSPLDef, "Text" )
-               CheckAddKeywordEntry( mSPLDef, "Column List" )
-               CheckAddKeywordEntry( mSPLDef, "MARKETING Header" )
+               CheckAddKeywordEntry( mSPLDefBlock, "Title" )
+               CheckAddKeywordEntry( mSPLDefBlock, "Text" )
+               CheckAddKeywordEntry( mSPLDefBlock, "Column List" )
+               CheckAddKeywordEntry( mSPLDefBlock, "MARKETING Header" )
             ELSE
                IF szSectionType = "FirstAid"
                   // First Aid
-                  CheckAddKeywordEntry( mSPLDef, "Title" )
-                  CheckAddKeywordEntry( mSPLDef, "Text" )
-                  CheckAddKeywordEntry( mSPLDef, "FIRST AID Header" )
+                  CheckAddKeywordEntry( mSPLDefBlock, "Title" )
+                  CheckAddKeywordEntry( mSPLDefBlock, "Text" )
+                  CheckAddKeywordEntry( mSPLDefBlock, "FIRST AID Header" )
                ELSE
                   // Default
-                  CheckAddKeywordEntry( mSPLDef, "Title" )
-                  CheckAddKeywordEntry( mSPLDef, "Text" )
+                  CheckAddKeywordEntry( mSPLDefBlock, "Title" )
+                  CheckAddKeywordEntry( mSPLDefBlock, "Text" )
                END
             END
          END

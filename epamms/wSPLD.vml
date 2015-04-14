@@ -1172,36 +1172,34 @@ END
 DIALOG OPERATION
 SELECT_MarketingSectionForBlock( VIEW ViewToWindow )
 
-   VIEW mSPLDef REGISTERED AS mSPLDef
+   VIEW mSPLDefPanel REGISTERED AS mSPLDefPanel
+   VIEW mSPLDefBlock REGISTERED AS mSPLDefBlock
+   STRING ( 256 ) szName
+   INTEGER lCount
    
+   lCount = 0
    // User selected Marketing Section to set Block Name in component.
-   SET CURSOR FIRST mSPLDef.SPLD_MarketingSection WHERE mSPLDef.SPLD_MarketingSection.wSelected = "Y"
-   IF RESULT < zCURSOR_SET
+   SET CURSOR FIRST mSPLDefPanel.SPLD_MarketingSection WHERE mSPLDefPanel.SPLD_MarketingSection.wSelected = "Y"
+   IF RESULT = zCURSOR_SET
+      lCount = 1
+      szName = mSPLDefPanel.SPLD_MarketingSection.Name 
+      SET CURSOR NEXT mSPLDefPanel.SPLD_MarketingSection WHERE mSPLDefPanel.SPLD_MarketingSection.wSelected = "Y"
+      IF RESULT = zCURSOR_SET
+         lCount = 2
+      END
+   END
+   IF lCount != 1
       MessageSend( ViewToWindow, "", "Select Marketing Section",
-                   "A Section must be selected.",
+                   "One Section must be selected.",
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
       RETURN 2
    END
    
-   mSPLDef.LLD_Block.Name = mSPLDef.SPLD_MarketingSection.Name 
-// IF mSPLDef.LLD_Block.Type = "Block" 
-      mSPLDef.LLD_Block.Name = mSPLDef.SPLD_MarketingSection.Name
-// ELSE
-//    mSPLDef.LLD_SubBlock.Name = mSPLDef.SPLD_MarketingSection.Name
-// END
-   
-   // Create display list of Usage Entries for the selected Marketing Section, if it exists.
-   /*FOR EACH mSPLDef.MarketingUsage 
-      DELETE ENTITY mSPLDef.MarketingUsage NONE 
-   END
-   FOR EACH mSPLDef.SPLD_MarketingOrdering 
-      CREATE ENTITY mSPLDef.MarketingUsage 
-      mSPLDef.MarketingUsage.DisplayEntry = mSPLDef.SPLD_MarketingUsage.Name  
-   END*/
+   mSPLDefBlock.LLD_Block.Name = szName 
    
    // Remove any existing entries, including the one just processed.
-   FOR EACH mSPLDef.SPLD_MarketingSection
-      mSPLDef.SPLD_MarketingSection.wSelected = ""
+   FOR EACH mSPLDefPanel.SPLD_MarketingSection
+      mSPLDefPanel.SPLD_MarketingSection.wSelected = ""
    END
 
 END
@@ -2075,6 +2073,8 @@ PostbuildBlockDefinitionUpdate( VIEW ViewToWindow )
    VIEW mSPLDefBlock REGISTERED AS mSPLDefBlock
    
    // mSPLDefBlock should have been set up before transferring to this page.
+   TraceLineS( "PostbuildBlockDefinitionUpdate Display ", "LLD_Block" )
+   DisplayEntityInstance( mSPLDefBlock, "LLD_Block" )
    SetUpFormattingSelect( mSPLDefPanel, mSPLDefBlock.LLD_Block.LLD_SectionType ) 
    SetUpKeywordEntries( mSPLDefBlock, mSPLDefBlock.LLD_Block.LLD_SectionType )
 
@@ -2087,6 +2087,12 @@ END
 ////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 ACCEPT_BlockSpecialFormat( VIEW ViewToWindow )
+
+   VIEW mSPLDefBlock REGISTERED AS mSPLDefBlock
+   
+   TraceLineS( "ACCEPT_BlockSpecialFormat LLD_Block", "" )
+   DisplayEntityInstance( mSPLDefBlock, "LLD_Block" ) 
+
 /*
    VIEW mSPLDef      REGISTERED AS mSPLDef
    VIEW mSPLDefPanel REGISTERED AS mSPLDefPanel
@@ -2329,12 +2335,16 @@ END
 DIALOG OPERATION
 PostbuildBlockSpecialFormatDef( VIEW ViewToWindow )
 
-   VIEW mSPLDef      REGISTERED AS mSPLDef
    VIEW mSPLDefPanel REGISTERED AS mSPLDefPanel
+   VIEW mSPLDefBlock REGISTERED AS mSPLDefBlock
+   STRING ( 256 ) szName
    
+   szName = mSPLDefBlock.LLD_SpecialSectionAttribute.Name
+   TraceLineS( "PostbuildBlockSpecialFormatDef Position on Name: ", szName )
+   DisplayEntityInstance( mSPLDefBlock, "LLD_Block" )
    // Position on the correct SpecialFormattingSelectEntry.
    SET CURSOR FIRST mSPLDefPanel.SpecialFormattingSelectEntry 
-              WHERE mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = mSPLDef.LLD_SpecialSectionAttribute.Name 
+              WHERE mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = szName
 
 END
 
@@ -2656,4 +2666,17 @@ CopySPLD( VIEW ViewToWindow )
    NAME VIEW mSPLDefNew "NewSPLD"
    BuildSPLD_FromSPLD( mSPLDefNew, mSPLDef, mSubLC )
    
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//  
+// OPERATION: GOTO_UpdateSpecialFormatDef
+//    
+/////////////////////////////////////////////////////////////////////////////
+
+DIALOG OPERATION
+GOTO_UpdateSpecialFormatDef( VIEW ViewToWindow )
+
+   // Just for positioning
+
 END

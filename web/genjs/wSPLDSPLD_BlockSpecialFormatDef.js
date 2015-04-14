@@ -146,12 +146,12 @@ function _AfterPageLoaded( )
       timerID = null;
    }
 
-   document.wSPLDSPLD_BlockSpecialFormatDef.hComboBox2.value = document.wSPLDSPLD_BlockSpecialFormatDef.ComboBox2.value
-   document.wSPLDSPLD_BlockSpecialFormatDef.hComboBox3.value = document.wSPLDSPLD_BlockSpecialFormatDef.ComboBox3.value
-   document.wSPLDSPLD_BlockSpecialFormatDef.hComboBox4.value = document.wSPLDSPLD_BlockSpecialFormatDef.ComboBox4.value
-   document.wSPLDSPLD_BlockSpecialFormatDef.hComboBox5.value = document.wSPLDSPLD_BlockSpecialFormatDef.ComboBox5.value
-   document.wSPLDSPLD_BlockSpecialFormatDef.hComboBox7.value = document.wSPLDSPLD_BlockSpecialFormatDef.ComboBox7.value
-   document.wSPLDSPLD_BlockSpecialFormatDef.hComboBox10.value = document.wSPLDSPLD_BlockSpecialFormatDef.ComboBox10.value
+   document.wSPLDSPLD_BlockSpecialFormatDef.hTextAlign.value = document.wSPLDSPLD_BlockSpecialFormatDef.TextAlign.value
+   document.wSPLDSPLD_BlockSpecialFormatDef.hFontFamily.value = document.wSPLDSPLD_BlockSpecialFormatDef.FontFamily.value
+   document.wSPLDSPLD_BlockSpecialFormatDef.hFontSize.value = document.wSPLDSPLD_BlockSpecialFormatDef.FontSize.value
+   document.wSPLDSPLD_BlockSpecialFormatDef.hFontWeight.value = document.wSPLDSPLD_BlockSpecialFormatDef.FontWeight.value
+   document.wSPLDSPLD_BlockSpecialFormatDef.hBorderStyle.value = document.wSPLDSPLD_BlockSpecialFormatDef.BorderStyle.value
+   document.wSPLDSPLD_BlockSpecialFormatDef.hTitlePosition.value = document.wSPLDSPLD_BlockSpecialFormatDef.TitlePosition.value
 
    var varTimeout = document.wSPLDSPLD_BlockSpecialFormatDef.zTimeout.value;
    if ( varTimeout > 0 )
@@ -226,7 +226,7 @@ function CANCEL_BlockComponent( )
    }
 }
 
-function ComboBox1OnChange( )
+function TextAlignOnChange( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -234,11 +234,11 @@ function ComboBox1OnChange( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      document.wSPLDSPLD_BlockSpecialFormatDef.hComboBox1.value = document.wSPLDSPLD_BlockSpecialFormatDef.ComboBox1.selectedIndex;
+      document.wSPLDSPLD_BlockSpecialFormatDef.hTextAlign.value = document.wSPLDSPLD_BlockSpecialFormatDef.TextAlign.value;
    }
 }
 
-function ComboBox2OnChange( )
+function FontFamilyOnChange( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -246,11 +246,11 @@ function ComboBox2OnChange( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      document.wSPLDSPLD_BlockSpecialFormatDef.hComboBox2.value = document.wSPLDSPLD_BlockSpecialFormatDef.ComboBox2.value;
+      document.wSPLDSPLD_BlockSpecialFormatDef.hFontFamily.value = document.wSPLDSPLD_BlockSpecialFormatDef.FontFamily.value;
    }
 }
 
-function ComboBox3OnChange( )
+function FontSizeOnChange( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -258,11 +258,11 @@ function ComboBox3OnChange( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      document.wSPLDSPLD_BlockSpecialFormatDef.hComboBox3.value = document.wSPLDSPLD_BlockSpecialFormatDef.ComboBox3.value;
+      document.wSPLDSPLD_BlockSpecialFormatDef.hFontSize.value = document.wSPLDSPLD_BlockSpecialFormatDef.FontSize.value;
    }
 }
 
-function ComboBox4OnChange( )
+function FontWeightOnChange( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -270,11 +270,11 @@ function ComboBox4OnChange( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      document.wSPLDSPLD_BlockSpecialFormatDef.hComboBox4.value = document.wSPLDSPLD_BlockSpecialFormatDef.ComboBox4.value;
+      document.wSPLDSPLD_BlockSpecialFormatDef.hFontWeight.value = document.wSPLDSPLD_BlockSpecialFormatDef.FontWeight.value;
    }
 }
 
-function ComboBox5OnChange( )
+function BorderStyleOnChange( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -282,11 +282,11 @@ function ComboBox5OnChange( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      document.wSPLDSPLD_BlockSpecialFormatDef.hComboBox5.value = document.wSPLDSPLD_BlockSpecialFormatDef.ComboBox5.value;
+      document.wSPLDSPLD_BlockSpecialFormatDef.hBorderStyle.value = document.wSPLDSPLD_BlockSpecialFormatDef.BorderStyle.value;
    }
 }
 
-function ComboBox7OnChange( )
+function TitlePositionOnChange( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -294,19 +294,7 @@ function ComboBox7OnChange( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      document.wSPLDSPLD_BlockSpecialFormatDef.hComboBox7.value = document.wSPLDSPLD_BlockSpecialFormatDef.ComboBox7.value;
-   }
-}
-
-function ComboBox10OnChange( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      document.wSPLDSPLD_BlockSpecialFormatDef.hComboBox10.value = document.wSPLDSPLD_BlockSpecialFormatDef.ComboBox10.value;
+      document.wSPLDSPLD_BlockSpecialFormatDef.hTitlePosition.value = document.wSPLDSPLD_BlockSpecialFormatDef.TitlePosition.value;
    }
 }
 

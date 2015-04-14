@@ -16880,22 +16880,22 @@ omSPLDef_GenerateAttribute( View     mSPLDef,
 
 //:TRANSFORMATION OPERATION
 public int 
-omSPLDef_SetUpFormattingSelect( View     mSPLDef,
+omSPLDef_SetUpFormattingSelect( View     mSPLDefPanel,
                                 String   szSectionType )
 {
    int      RESULT = 0;
 
-   //:SetUpFormattingSelect( VIEW mSPLDef BASED ON LOD mSPLDef,
+   //:SetUpFormattingSelect( VIEW mSPLDefPanel BASED ON LOD mSPLDef,
    //:                    STRING ( 50 ) szSectionType )
 
    //:// Initialize the SpecialFormattingSelectEntry entries depending on Section Type.
-   //:FOR EACH mSPLDef.SpecialFormattingSelectEntry 
-   RESULT = SetCursorFirstEntity( mSPLDef, "SpecialFormattingSelectEntry", "" );
+   //:FOR EACH mSPLDefPanel.SpecialFormattingSelectEntry 
+   RESULT = SetCursorFirstEntity( mSPLDefPanel, "SpecialFormattingSelectEntry", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
-      //:DELETE ENTITY mSPLDef.SpecialFormattingSelectEntry NONE 
-      RESULT = DeleteEntity( mSPLDef, "SpecialFormattingSelectEntry", zREPOS_NONE );
-      RESULT = SetCursorNextEntity( mSPLDef, "SpecialFormattingSelectEntry", "" );
+      //:DELETE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry NONE 
+      RESULT = DeleteEntity( mSPLDefPanel, "SpecialFormattingSelectEntry", zREPOS_NONE );
+      RESULT = SetCursorNextEntity( mSPLDefPanel, "SpecialFormattingSelectEntry", "" );
    } 
 
    //:END
@@ -16903,18 +16903,18 @@ omSPLDef_SetUpFormattingSelect( View     mSPLDef,
    if ( ZeidonStringCompare( szSectionType, 1, 0, "HumanHazard", 1, 0, 51 ) == 0 )
    { 
       //:// Human Hazard
-      //:CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-      RESULT = CreateEntity( mSPLDef, "SpecialFormattingSelectEntry", zPOS_AFTER );
-      //:mSPLDef.SpecialFormattingSelectEntry.KeywordName = "Hazards Warning"
-      SetAttributeFromString( mSPLDef, "SpecialFormattingSelectEntry", "KeywordName", "Hazards Warning" );
-      //:CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-      RESULT = CreateEntity( mSPLDef, "SpecialFormattingSelectEntry", zPOS_AFTER );
-      //:mSPLDef.SpecialFormattingSelectEntry.KeywordName = "Hazards Signal Word"
-      SetAttributeFromString( mSPLDef, "SpecialFormattingSelectEntry", "KeywordName", "Hazards Signal Word" );
-      //:CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-      RESULT = CreateEntity( mSPLDef, "SpecialFormattingSelectEntry", zPOS_AFTER );
-      //:mSPLDef.SpecialFormattingSelectEntry.KeywordName = "Hazards Precautionary"
-      SetAttributeFromString( mSPLDef, "SpecialFormattingSelectEntry", "KeywordName", "Hazards Precautionary" );
+      //:CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+      RESULT = CreateEntity( mSPLDefPanel, "SpecialFormattingSelectEntry", zPOS_AFTER );
+      //:mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Hazards Warning"
+      SetAttributeFromString( mSPLDefPanel, "SpecialFormattingSelectEntry", "KeywordName", "Hazards Warning" );
+      //:CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+      RESULT = CreateEntity( mSPLDefPanel, "SpecialFormattingSelectEntry", zPOS_AFTER );
+      //:mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Hazards Signal Word"
+      SetAttributeFromString( mSPLDefPanel, "SpecialFormattingSelectEntry", "KeywordName", "Hazards Signal Word" );
+      //:CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+      RESULT = CreateEntity( mSPLDefPanel, "SpecialFormattingSelectEntry", zPOS_AFTER );
+      //:mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Hazards Precautionary"
+      SetAttributeFromString( mSPLDefPanel, "SpecialFormattingSelectEntry", "KeywordName", "Hazards Precautionary" );
       //:ELSE
    } 
    else
@@ -16923,22 +16923,22 @@ omSPLDef_SetUpFormattingSelect( View     mSPLDef,
       if ( ZeidonStringCompare( szSectionType, 1, 0, "Ingredients", 1, 0, 51 ) == 0 )
       { 
          //:// Ingredients
-         //:CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-         RESULT = CreateEntity( mSPLDef, "SpecialFormattingSelectEntry", zPOS_AFTER );
-         //:mSPLDef.SpecialFormattingSelectEntry.KeywordName = "Ingredients Title"
-         SetAttributeFromString( mSPLDef, "SpecialFormattingSelectEntry", "KeywordName", "Ingredients Title" );
-         //:CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-         RESULT = CreateEntity( mSPLDef, "SpecialFormattingSelectEntry", zPOS_AFTER );
-         //:mSPLDef.SpecialFormattingSelectEntry.KeywordName = "Ingredients Items" 
-         SetAttributeFromString( mSPLDef, "SpecialFormattingSelectEntry", "KeywordName", "Ingredients Items" );
-         //:CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-         RESULT = CreateEntity( mSPLDef, "SpecialFormattingSelectEntry", zPOS_AFTER );
-         //:mSPLDef.SpecialFormattingSelectEntry.KeywordName = "Ingredients Inert" 
-         SetAttributeFromString( mSPLDef, "SpecialFormattingSelectEntry", "KeywordName", "Ingredients Inert" );
-         //:CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-         RESULT = CreateEntity( mSPLDef, "SpecialFormattingSelectEntry", zPOS_AFTER );
-         //:mSPLDef.SpecialFormattingSelectEntry.KeywordName = "Ingredients Total" 
-         SetAttributeFromString( mSPLDef, "SpecialFormattingSelectEntry", "KeywordName", "Ingredients Total" );
+         //:CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+         RESULT = CreateEntity( mSPLDefPanel, "SpecialFormattingSelectEntry", zPOS_AFTER );
+         //:mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Ingredients Title"
+         SetAttributeFromString( mSPLDefPanel, "SpecialFormattingSelectEntry", "KeywordName", "Ingredients Title" );
+         //:CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+         RESULT = CreateEntity( mSPLDefPanel, "SpecialFormattingSelectEntry", zPOS_AFTER );
+         //:mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Ingredients Items" 
+         SetAttributeFromString( mSPLDefPanel, "SpecialFormattingSelectEntry", "KeywordName", "Ingredients Items" );
+         //:CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+         RESULT = CreateEntity( mSPLDefPanel, "SpecialFormattingSelectEntry", zPOS_AFTER );
+         //:mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Ingredients Inert" 
+         SetAttributeFromString( mSPLDefPanel, "SpecialFormattingSelectEntry", "KeywordName", "Ingredients Inert" );
+         //:CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+         RESULT = CreateEntity( mSPLDefPanel, "SpecialFormattingSelectEntry", zPOS_AFTER );
+         //:mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Ingredients Total" 
+         SetAttributeFromString( mSPLDefPanel, "SpecialFormattingSelectEntry", "KeywordName", "Ingredients Total" );
          //:ELSE
       } 
       else
@@ -16947,18 +16947,18 @@ omSPLDef_SetUpFormattingSelect( View     mSPLDef,
          if ( ZeidonStringCompare( szSectionType, 1, 0, "DirectionsForUse", 1, 0, 51 ) == 0 )
          { 
             //:// Directions for Use
-            //:CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-            RESULT = CreateEntity( mSPLDef, "SpecialFormattingSelectEntry", zPOS_AFTER );
-            //:mSPLDef.SpecialFormattingSelectEntry.KeywordName = "Title"
-            SetAttributeFromString( mSPLDef, "SpecialFormattingSelectEntry", "KeywordName", "Title" );
-            //:CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-            RESULT = CreateEntity( mSPLDef, "SpecialFormattingSelectEntry", zPOS_AFTER );
-            //:mSPLDef.SpecialFormattingSelectEntry.KeywordName = "Text" 
-            SetAttributeFromString( mSPLDef, "SpecialFormattingSelectEntry", "KeywordName", "Text" );
-            //:CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-            RESULT = CreateEntity( mSPLDef, "SpecialFormattingSelectEntry", zPOS_AFTER );
-            //:mSPLDef.SpecialFormattingSelectEntry.KeywordName = "DIRECTIONS Header" 
-            SetAttributeFromString( mSPLDef, "SpecialFormattingSelectEntry", "KeywordName", "DIRECTIONS Header" );
+            //:CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+            RESULT = CreateEntity( mSPLDefPanel, "SpecialFormattingSelectEntry", zPOS_AFTER );
+            //:mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Title"
+            SetAttributeFromString( mSPLDefPanel, "SpecialFormattingSelectEntry", "KeywordName", "Title" );
+            //:CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+            RESULT = CreateEntity( mSPLDefPanel, "SpecialFormattingSelectEntry", zPOS_AFTER );
+            //:mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Text" 
+            SetAttributeFromString( mSPLDefPanel, "SpecialFormattingSelectEntry", "KeywordName", "Text" );
+            //:CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+            RESULT = CreateEntity( mSPLDefPanel, "SpecialFormattingSelectEntry", zPOS_AFTER );
+            //:mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "DIRECTIONS Header" 
+            SetAttributeFromString( mSPLDefPanel, "SpecialFormattingSelectEntry", "KeywordName", "DIRECTIONS Header" );
             //:ELSE
          } 
          else
@@ -16967,22 +16967,22 @@ omSPLDef_SetUpFormattingSelect( View     mSPLDef,
             if ( ZeidonStringCompare( szSectionType, 1, 0, "Marketing", 1, 0, 51 ) == 0 )
             { 
                //:// Marketing
-               //:CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-               RESULT = CreateEntity( mSPLDef, "SpecialFormattingSelectEntry", zPOS_AFTER );
-               //:mSPLDef.SpecialFormattingSelectEntry.KeywordName = "Title"
-               SetAttributeFromString( mSPLDef, "SpecialFormattingSelectEntry", "KeywordName", "Title" );
-               //:CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-               RESULT = CreateEntity( mSPLDef, "SpecialFormattingSelectEntry", zPOS_AFTER );
-               //:mSPLDef.SpecialFormattingSelectEntry.KeywordName = "Text" 
-               SetAttributeFromString( mSPLDef, "SpecialFormattingSelectEntry", "KeywordName", "Text" );
-               //:CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-               RESULT = CreateEntity( mSPLDef, "SpecialFormattingSelectEntry", zPOS_AFTER );
-               //:mSPLDef.SpecialFormattingSelectEntry.KeywordName = "Column List" 
-               SetAttributeFromString( mSPLDef, "SpecialFormattingSelectEntry", "KeywordName", "Column List" );
-               //:CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-               RESULT = CreateEntity( mSPLDef, "SpecialFormattingSelectEntry", zPOS_AFTER );
-               //:mSPLDef.SpecialFormattingSelectEntry.KeywordName = "MARKETING Header" 
-               SetAttributeFromString( mSPLDef, "SpecialFormattingSelectEntry", "KeywordName", "MARKETING Header" );
+               //:CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+               RESULT = CreateEntity( mSPLDefPanel, "SpecialFormattingSelectEntry", zPOS_AFTER );
+               //:mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Title"
+               SetAttributeFromString( mSPLDefPanel, "SpecialFormattingSelectEntry", "KeywordName", "Title" );
+               //:CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+               RESULT = CreateEntity( mSPLDefPanel, "SpecialFormattingSelectEntry", zPOS_AFTER );
+               //:mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Text" 
+               SetAttributeFromString( mSPLDefPanel, "SpecialFormattingSelectEntry", "KeywordName", "Text" );
+               //:CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+               RESULT = CreateEntity( mSPLDefPanel, "SpecialFormattingSelectEntry", zPOS_AFTER );
+               //:mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Column List" 
+               SetAttributeFromString( mSPLDefPanel, "SpecialFormattingSelectEntry", "KeywordName", "Column List" );
+               //:CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+               RESULT = CreateEntity( mSPLDefPanel, "SpecialFormattingSelectEntry", zPOS_AFTER );
+               //:mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "MARKETING Header" 
+               SetAttributeFromString( mSPLDefPanel, "SpecialFormattingSelectEntry", "KeywordName", "MARKETING Header" );
                //:ELSE
             } 
             else
@@ -16991,31 +16991,31 @@ omSPLDef_SetUpFormattingSelect( View     mSPLDef,
                if ( ZeidonStringCompare( szSectionType, 1, 0, "FirstAid", 1, 0, 51 ) == 0 )
                { 
                   //:// First Aid
-                  //:CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-                  RESULT = CreateEntity( mSPLDef, "SpecialFormattingSelectEntry", zPOS_AFTER );
-                  //:mSPLDef.SpecialFormattingSelectEntry.KeywordName = "Title"
-                  SetAttributeFromString( mSPLDef, "SpecialFormattingSelectEntry", "KeywordName", "Title" );
-                  //:CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-                  RESULT = CreateEntity( mSPLDef, "SpecialFormattingSelectEntry", zPOS_AFTER );
-                  //:mSPLDef.SpecialFormattingSelectEntry.KeywordName = "Text" 
-                  SetAttributeFromString( mSPLDef, "SpecialFormattingSelectEntry", "KeywordName", "Text" );
-                  //:CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-                  RESULT = CreateEntity( mSPLDef, "SpecialFormattingSelectEntry", zPOS_AFTER );
-                  //:mSPLDef.SpecialFormattingSelectEntry.KeywordName = "FIRST AID Header" 
-                  SetAttributeFromString( mSPLDef, "SpecialFormattingSelectEntry", "KeywordName", "FIRST AID Header" );
+                  //:CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+                  RESULT = CreateEntity( mSPLDefPanel, "SpecialFormattingSelectEntry", zPOS_AFTER );
+                  //:mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Title"
+                  SetAttributeFromString( mSPLDefPanel, "SpecialFormattingSelectEntry", "KeywordName", "Title" );
+                  //:CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+                  RESULT = CreateEntity( mSPLDefPanel, "SpecialFormattingSelectEntry", zPOS_AFTER );
+                  //:mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Text" 
+                  SetAttributeFromString( mSPLDefPanel, "SpecialFormattingSelectEntry", "KeywordName", "Text" );
+                  //:CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+                  RESULT = CreateEntity( mSPLDefPanel, "SpecialFormattingSelectEntry", zPOS_AFTER );
+                  //:mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "FIRST AID Header" 
+                  SetAttributeFromString( mSPLDefPanel, "SpecialFormattingSelectEntry", "KeywordName", "FIRST AID Header" );
                   //:ELSE
                } 
                else
                { 
                   //:// Default
-                  //:CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-                  RESULT = CreateEntity( mSPLDef, "SpecialFormattingSelectEntry", zPOS_AFTER );
-                  //:mSPLDef.SpecialFormattingSelectEntry.KeywordName = "Title"
-                  SetAttributeFromString( mSPLDef, "SpecialFormattingSelectEntry", "KeywordName", "Title" );
-                  //:CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-                  RESULT = CreateEntity( mSPLDef, "SpecialFormattingSelectEntry", zPOS_AFTER );
-                  //:mSPLDef.SpecialFormattingSelectEntry.KeywordName = "Text" 
-                  SetAttributeFromString( mSPLDef, "SpecialFormattingSelectEntry", "KeywordName", "Text" );
+                  //:CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+                  RESULT = CreateEntity( mSPLDefPanel, "SpecialFormattingSelectEntry", zPOS_AFTER );
+                  //:mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Title"
+                  SetAttributeFromString( mSPLDefPanel, "SpecialFormattingSelectEntry", "KeywordName", "Title" );
+                  //:CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+                  RESULT = CreateEntity( mSPLDefPanel, "SpecialFormattingSelectEntry", zPOS_AFTER );
+                  //:mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Text" 
+                  SetAttributeFromString( mSPLDefPanel, "SpecialFormattingSelectEntry", "KeywordName", "Text" );
                } 
 
                //:END
@@ -17031,12 +17031,12 @@ omSPLDef_SetUpFormattingSelect( View     mSPLDef,
    } 
 
    //:END
-   //:CREATE ENTITY mSPLDef.SpecialFormattingSelectEntry 
-   RESULT = CreateEntity( mSPLDef, "SpecialFormattingSelectEntry", zPOS_AFTER );
-   //:mSPLDef.SpecialFormattingSelectEntry.KeywordName = "Block"
-   SetAttributeFromString( mSPLDef, "SpecialFormattingSelectEntry", "KeywordName", "Block" );
-   //:SET CURSOR FIRST mSPLDef.SpecialFormattingSelectEntry 
-   RESULT = SetCursorFirstEntity( mSPLDef, "SpecialFormattingSelectEntry", "" );
+   //:CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+   RESULT = CreateEntity( mSPLDefPanel, "SpecialFormattingSelectEntry", zPOS_AFTER );
+   //:mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Block"
+   SetAttributeFromString( mSPLDefPanel, "SpecialFormattingSelectEntry", "KeywordName", "Block" );
+   //:SET CURSOR FIRST mSPLDefPanel.SpecialFormattingSelectEntry 
+   RESULT = SetCursorFirstEntity( mSPLDefPanel, "SpecialFormattingSelectEntry", "" );
    return( 0 );
 //    
 // END
@@ -17416,28 +17416,28 @@ omSPLDef_BuildUsageEntriesFrSLC( View     mSPLDef,
 
 //:TRANSFORMATION OPERATION
 public int 
-omSPLDef_CheckAddKeywordEntry( View     mSPLDef,
+omSPLDef_CheckAddKeywordEntry( View     mSPLDefBlock,
                                String   szKeywordName )
 {
    int      RESULT = 0;
 
-   //:CheckAddKeywordEntry( VIEW mSPLDef BASED ON LOD mSPLDef,
+   //:CheckAddKeywordEntry( VIEW mSPLDefBlock BASED ON LOD mSPLDef,
    //:                   STRING ( 50 ) szKeywordName )
 
    //:// Make sure that the entry for the Keyword passed in exists.
-   //:SET CURSOR FIRST mSPLDef.LLD_SpecialSectionAttribute WHERE mSPLDef.LLD_SpecialSectionAttribute.Name = szKeywordName
-   RESULT = SetCursorFirstEntityByString( mSPLDef, "LLD_SpecialSectionAttribute", "Name", szKeywordName, "" );
+   //:SET CURSOR FIRST mSPLDefBlock.LLD_SpecialSectionAttribute WHERE mSPLDefBlock.LLD_SpecialSectionAttribute.Name = szKeywordName
+   RESULT = SetCursorFirstEntityByString( mSPLDefBlock, "LLD_SpecialSectionAttribute", "Name", szKeywordName, "" );
    //:IF RESULT < zCURSOR_SET
    if ( RESULT < zCURSOR_SET )
    { 
-      //:SET CURSOR LAST mSPLDef.LLD_SpecialSectionAttribute  
-      RESULT = SetCursorLastEntity( mSPLDef, "LLD_SpecialSectionAttribute", "" );
-      //:CREATE ENTITY mSPLDef.LLD_SpecialSectionAttribute
-      RESULT = CreateEntity( mSPLDef, "LLD_SpecialSectionAttribute", zPOS_AFTER );
-      //:mSPLDef.LLD_SpecialSectionAttribute.Name = szKeywordName
-      SetAttributeFromString( mSPLDef, "LLD_SpecialSectionAttribute", "Name", szKeywordName );
-      //:CREATE ENTITY mSPLDef.LLD_SpecialSectionAttrBlock  
-      RESULT = CreateEntity( mSPLDef, "LLD_SpecialSectionAttrBlock", zPOS_AFTER );
+      //:SET CURSOR LAST mSPLDefBlock.LLD_SpecialSectionAttribute  
+      RESULT = SetCursorLastEntity( mSPLDefBlock, "LLD_SpecialSectionAttribute", "" );
+      //:CREATE ENTITY mSPLDefBlock.LLD_SpecialSectionAttribute
+      RESULT = CreateEntity( mSPLDefBlock, "LLD_SpecialSectionAttribute", zPOS_AFTER );
+      //:mSPLDefBlock.LLD_SpecialSectionAttribute.Name = szKeywordName
+      SetAttributeFromString( mSPLDefBlock, "LLD_SpecialSectionAttribute", "Name", szKeywordName );
+      //:CREATE ENTITY mSPLDefBlock.LLD_SpecialSectionAttrBlock  
+      RESULT = CreateEntity( mSPLDefBlock, "LLD_SpecialSectionAttrBlock", zPOS_AFTER );
    } 
 
    //:END 
@@ -17449,11 +17449,11 @@ omSPLDef_CheckAddKeywordEntry( View     mSPLDef,
 
 //:TRANSFORMATION OPERATION
 public int 
-omSPLDef_SetUpKeywordEntries( View     mSPLDef,
+omSPLDef_SetUpKeywordEntries( View     mSPLDefBlock,
                               String   szSectionType )
 {
 
-   //:SetUpKeywordEntries( VIEW mSPLDef BASED ON LOD mSPLDef,
+   //:SetUpKeywordEntries( VIEW mSPLDefBlock BASED ON LOD mSPLDef,
    //:                  STRING ( 50 ) szSectionType )
 
    //:// Make sure that the appropriate Keyword entries are set up for a given Section/Block Type.
@@ -17461,12 +17461,12 @@ omSPLDef_SetUpKeywordEntries( View     mSPLDef,
    if ( ZeidonStringCompare( szSectionType, 1, 0, "HumanHazard", 1, 0, 51 ) == 0 )
    { 
       //:// Human Hazard
-      //:CheckAddKeywordEntry( mSPLDef, "Hazards Warning" )
-      omSPLDef_CheckAddKeywordEntry( mSPLDef, "Hazards Warning" );
-      //:CheckAddKeywordEntry( mSPLDef, "Hazards Signal Word" )
-      omSPLDef_CheckAddKeywordEntry( mSPLDef, "Hazards Signal Word" );
-      //:CheckAddKeywordEntry( mSPLDef, "Hazards Precautionary" )
-      omSPLDef_CheckAddKeywordEntry( mSPLDef, "Hazards Precautionary" );
+      //:CheckAddKeywordEntry( mSPLDefBlock, "Hazards Warning" )
+      omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Hazards Warning" );
+      //:CheckAddKeywordEntry( mSPLDefBlock, "Hazards Signal Word" )
+      omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Hazards Signal Word" );
+      //:CheckAddKeywordEntry( mSPLDefBlock, "Hazards Precautionary" )
+      omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Hazards Precautionary" );
       //:ELSE
    } 
    else
@@ -17475,14 +17475,14 @@ omSPLDef_SetUpKeywordEntries( View     mSPLDef,
       if ( ZeidonStringCompare( szSectionType, 1, 0, "Ingredients", 1, 0, 51 ) == 0 )
       { 
          //:// Ingredients
-         //:CheckAddKeywordEntry( mSPLDef, "Ingredients Title" )
-         omSPLDef_CheckAddKeywordEntry( mSPLDef, "Ingredients Title" );
-         //:CheckAddKeywordEntry( mSPLDef, "Ingredients Items" )
-         omSPLDef_CheckAddKeywordEntry( mSPLDef, "Ingredients Items" );
-         //:CheckAddKeywordEntry( mSPLDef, "Ingredients Inert" )
-         omSPLDef_CheckAddKeywordEntry( mSPLDef, "Ingredients Inert" );
-         //:CheckAddKeywordEntry( mSPLDef, "Ingredients Total" ) 
-         omSPLDef_CheckAddKeywordEntry( mSPLDef, "Ingredients Total" );
+         //:CheckAddKeywordEntry( mSPLDefBlock, "Ingredients Title" )
+         omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Ingredients Title" );
+         //:CheckAddKeywordEntry( mSPLDefBlock, "Ingredients Items" )
+         omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Ingredients Items" );
+         //:CheckAddKeywordEntry( mSPLDefBlock, "Ingredients Inert" )
+         omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Ingredients Inert" );
+         //:CheckAddKeywordEntry( mSPLDefBlock, "Ingredients Total" ) 
+         omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Ingredients Total" );
          //:ELSE
       } 
       else
@@ -17491,12 +17491,12 @@ omSPLDef_SetUpKeywordEntries( View     mSPLDef,
          if ( ZeidonStringCompare( szSectionType, 1, 0, "DirectionsForUse", 1, 0, 51 ) == 0 )
          { 
             //:// Directions for Use
-            //:CheckAddKeywordEntry( mSPLDef, "Title" )
-            omSPLDef_CheckAddKeywordEntry( mSPLDef, "Title" );
-            //:CheckAddKeywordEntry( mSPLDef, "Text" )
-            omSPLDef_CheckAddKeywordEntry( mSPLDef, "Text" );
-            //:CheckAddKeywordEntry( mSPLDef, "DIRECTIONS Header" )
-            omSPLDef_CheckAddKeywordEntry( mSPLDef, "DIRECTIONS Header" );
+            //:CheckAddKeywordEntry( mSPLDefBlock, "Title" )
+            omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Title" );
+            //:CheckAddKeywordEntry( mSPLDefBlock, "Text" )
+            omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Text" );
+            //:CheckAddKeywordEntry( mSPLDefBlock, "DIRECTIONS Header" )
+            omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "DIRECTIONS Header" );
             //:ELSE
          } 
          else
@@ -17505,14 +17505,14 @@ omSPLDef_SetUpKeywordEntries( View     mSPLDef,
             if ( ZeidonStringCompare( szSectionType, 1, 0, "Marketing", 1, 0, 51 ) == 0 )
             { 
                //:// Marketing
-               //:CheckAddKeywordEntry( mSPLDef, "Title" )
-               omSPLDef_CheckAddKeywordEntry( mSPLDef, "Title" );
-               //:CheckAddKeywordEntry( mSPLDef, "Text" )
-               omSPLDef_CheckAddKeywordEntry( mSPLDef, "Text" );
-               //:CheckAddKeywordEntry( mSPLDef, "Column List" )
-               omSPLDef_CheckAddKeywordEntry( mSPLDef, "Column List" );
-               //:CheckAddKeywordEntry( mSPLDef, "MARKETING Header" )
-               omSPLDef_CheckAddKeywordEntry( mSPLDef, "MARKETING Header" );
+               //:CheckAddKeywordEntry( mSPLDefBlock, "Title" )
+               omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Title" );
+               //:CheckAddKeywordEntry( mSPLDefBlock, "Text" )
+               omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Text" );
+               //:CheckAddKeywordEntry( mSPLDefBlock, "Column List" )
+               omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Column List" );
+               //:CheckAddKeywordEntry( mSPLDefBlock, "MARKETING Header" )
+               omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "MARKETING Header" );
                //:ELSE
             } 
             else
@@ -17521,21 +17521,21 @@ omSPLDef_SetUpKeywordEntries( View     mSPLDef,
                if ( ZeidonStringCompare( szSectionType, 1, 0, "FirstAid", 1, 0, 51 ) == 0 )
                { 
                   //:// First Aid
-                  //:CheckAddKeywordEntry( mSPLDef, "Title" )
-                  omSPLDef_CheckAddKeywordEntry( mSPLDef, "Title" );
-                  //:CheckAddKeywordEntry( mSPLDef, "Text" )
-                  omSPLDef_CheckAddKeywordEntry( mSPLDef, "Text" );
-                  //:CheckAddKeywordEntry( mSPLDef, "FIRST AID Header" )
-                  omSPLDef_CheckAddKeywordEntry( mSPLDef, "FIRST AID Header" );
+                  //:CheckAddKeywordEntry( mSPLDefBlock, "Title" )
+                  omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Title" );
+                  //:CheckAddKeywordEntry( mSPLDefBlock, "Text" )
+                  omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Text" );
+                  //:CheckAddKeywordEntry( mSPLDefBlock, "FIRST AID Header" )
+                  omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "FIRST AID Header" );
                   //:ELSE
                } 
                else
                { 
                   //:// Default
-                  //:CheckAddKeywordEntry( mSPLDef, "Title" )
-                  omSPLDef_CheckAddKeywordEntry( mSPLDef, "Title" );
-                  //:CheckAddKeywordEntry( mSPLDef, "Text" )
-                  omSPLDef_CheckAddKeywordEntry( mSPLDef, "Text" );
+                  //:CheckAddKeywordEntry( mSPLDefBlock, "Title" )
+                  omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Title" );
+                  //:CheckAddKeywordEntry( mSPLDefBlock, "Text" )
+                  omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Text" );
                } 
 
                //:END

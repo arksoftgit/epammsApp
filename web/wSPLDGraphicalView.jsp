@@ -859,8 +859,8 @@ else
                      </div>
                      &nbsp;
                      <div style="overflow:hidden; white-space:nowrap;">
-                       <label for="zBlockTitle">Block Title:</label>
-                       <input type="text" id="zBlockTitle" class="zeidon" data-zmap="block.z_^block^title" style="float:right" />
+                       <label for="zBlockTitle">Block Name:</label>
+                       <input type="text" id="zBlockName" class="zeidon" data-zmap="block.z_^name" style="float:right" />
                      </div>
                      <div style="overflow:hidden; white-space:nowrap;">
                        <label for="zBlockTop">Block Top:</label>
@@ -888,13 +888,13 @@ else
                           <input type="checkbox" id="zOverrideCSS_Text" name="zOverrideCSS_Text" class="zeidon" data-zmap="block.z_^text^color^override" /><label for="zOverrideCSS_Text">Text</label>
                           <label for="zBlockTextColor">Color:</label>
                           <input type="text" id="zBlockTextColor" class="colorwell colorwell1 zeidon" data-zmap="block.z_^text^color" value="#ff0000" style="float:right" />
-                       </span></div>                  &nbsp;
+                       </span></div>
                        <p style="clear:both;position:relative"></p>
                        <div><span>
                           <input type="checkbox" id="zOverrideCSS_Background" name="zOverrideCSS_Background" class="zeidon" data-zmap="block.z_^background^color^override" /><label for="zOverrideCSS_Background">Back</label>
                           <label for="zBlockBackgroundColor">Color:</label>
                           <input type="text" id="zBlockBackgroundColor" class="colorwell colorwell1 zeidon" data-zmap="block.z_^background^color" value="#00ff00" style="float:right" />
-                       </span></div>                  &nbsp;
+                       </span></div>
                        <p style="clear:both;position:relative"></p>
                        <div><span>
                           <input type="checkbox" id="zOverrideCSS_Border" name="zOverrideCSS_Border" class="zeidon" data-zmap="block.z_^border^color^override" /><label for="zOverrideCSS_Border">Border</label>
@@ -996,6 +996,20 @@ else
                      <p style="clear:both;position:relative"></p>
                      <hr>
                      <input type="checkbox" id="zCheckContinuationBlock" name="zCheckContinuationBlock" class="zeidon" data-zmap="block.z_^continuation^block^flag" /><label for="zCheckContinuationBlock">Continuation from Previous Section/Statement</label>
+                     &nbsp;
+                     <p style="clear:both;position:relative"></p>
+                     <div style="overflow:hidden; white-space:nowrap; padding-top:6px">
+                       <label for="zImageName">Graphic Image Name:</label>
+                       <input type="text" id="zImageName" class="zeidon" data-zmap="block.z_^image^name" style="float:right" />
+                     </div>
+                     <div class="ui-widget" style="padding-top:6px">
+                       <label>Claim List Type: </label>
+                       <select id="zClaimListType" class="zeidon" data-zmap="block.z_^l^l^d_^column^list^type" style="float:right">
+                         <option value="">Select Claim List Type...</option>
+                         <option value="C2">Usage List - 2 Column</option>
+                         <option value="C3">Usage List - 3 Column</option>
+                        </select>
+                     </div>
 
                      <!-- Add a <div> element where the dynatree should appear: -->
                      <hr>
