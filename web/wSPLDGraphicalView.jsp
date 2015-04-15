@@ -124,6 +124,7 @@ if ( task == null )
    return; // something really bad has happened!!!
 }
 
+task.log().debug( "===============================>>>>>>>>>>>>>>>>>>>>>>> GraphicalView Task Id: " + taskId );
 vKZXMLPGO = JspWebUtils.createWebSession( null, task, "" );
 mMsgQ = new KZMSGQOO_Object( vKZXMLPGO );
 mMsgQ.setView( VmlOperation.getMessageObject( task ) );
@@ -878,11 +879,11 @@ else
                        <label for="zBlockWidth">Block Width:</label>
                        <input type="text" id="zBlockWidth" class="zeidon" data-zmap="block.z_^width" style="float:right" />
                      </div>
-
+<!--
                      &nbsp;
                      <p style="clear:both;position:relative"></p>
                      <div style="overflow:hidden; white-space:nowrap;">
-                <!-- <fieldset class="border"><legend>Override CSS</legend> -->
+                <!-- <fieldset class="border"><legend>Override CSS</legend> *->
                      <hr>Override CSS<hr>
                        <div><span>
                           <input type="checkbox" id="zOverrideCSS_Text" name="zOverrideCSS_Text" class="zeidon" data-zmap="block.z_^text^color^override" /><label for="zOverrideCSS_Text">Text</label>
@@ -903,12 +904,12 @@ else
                        </span></div>
                        <p style="clear:both"></p>
                        <div id="zBlockPicker"></div>
-                <!-- </fieldset> -->
+                <!-- </fieldset> *->
                      &nbsp;
                      &nbsp;
                      &nbsp;
                      </div>
-
+-->
                      <div id="zmbp">
                         <ul>
                            <li><a href="#zMargins">Margins</a></li>

@@ -150,7 +150,9 @@ function _AfterPageLoaded( )
    document.wSPLDSPLD_BlockSpecialFormatDef.hFontFamily.value = document.wSPLDSPLD_BlockSpecialFormatDef.FontFamily.value
    document.wSPLDSPLD_BlockSpecialFormatDef.hFontSize.value = document.wSPLDSPLD_BlockSpecialFormatDef.FontSize.value
    document.wSPLDSPLD_BlockSpecialFormatDef.hFontWeight.value = document.wSPLDSPLD_BlockSpecialFormatDef.FontWeight.value
+   document.wSPLDSPLD_BlockSpecialFormatDef.hTextColor.value = document.wSPLDSPLD_BlockSpecialFormatDef.TextColor.value
    document.wSPLDSPLD_BlockSpecialFormatDef.hBorderStyle.value = document.wSPLDSPLD_BlockSpecialFormatDef.BorderStyle.value
+   document.wSPLDSPLD_BlockSpecialFormatDef.hBorderColor.value = document.wSPLDSPLD_BlockSpecialFormatDef.BorderColor.value
    document.wSPLDSPLD_BlockSpecialFormatDef.hTitlePosition.value = document.wSPLDSPLD_BlockSpecialFormatDef.TitlePosition.value
 
    var varTimeout = document.wSPLDSPLD_BlockSpecialFormatDef.zTimeout.value;
@@ -274,6 +276,18 @@ function FontWeightOnChange( )
    }
 }
 
+function TextColorOnChange( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      document.wSPLDSPLD_BlockSpecialFormatDef.hTextColor.value = document.wSPLDSPLD_BlockSpecialFormatDef.TextColor.value;
+   }
+}
+
 function BorderStyleOnChange( )
 {
 
@@ -283,6 +297,18 @@ function BorderStyleOnChange( )
    if ( _IsDocDisabled( ) == false )
    {
       document.wSPLDSPLD_BlockSpecialFormatDef.hBorderStyle.value = document.wSPLDSPLD_BlockSpecialFormatDef.BorderStyle.value;
+   }
+}
+
+function BorderColorOnChange( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      document.wSPLDSPLD_BlockSpecialFormatDef.hBorderColor.value = document.wSPLDSPLD_BlockSpecialFormatDef.BorderColor.value;
    }
 }
 

@@ -1,4 +1,4 @@
-z1000-Zeidon    EPAMMS   TZCMLPLO 04/13/15   19:57:36 1.0a2    
+z1000-Zeidon    EPAMMS   TZCMLPLO 04/15/15   11:44:31 1.0a2    
 eLPLR      1
 aName      epamms
 aDesc      ePamms Application
@@ -6,7 +6,7 @@ aZKey      4324720
 aPgmSrcDir %kzd%:\lplr\epamms
 aExecDir   %kzd%:\lplr\epamms\bin
 aMetaSrcDir %kzd%:\lplr\epamms
-aTaskUseCount 2
+aTaskUseCount 1
 aLPLR_Type 2
 aCurrentCompilerSpec DKS
 aTempDesc  ePamms Application
@@ -1009,8 +1009,8 @@ Additions:
 1. Added a relationship between M_UsageOrdering, S_UsageOrdering and SPLD_UsageOrdering and their corresponding DirectionsForUse and Marketing Statement entities.
 2. Added Default attributes to LLD and SPLD_LLD.
 3. Add 
-aLastSyncDate 20150325113209695
-aLastUpdateDate 20150325113209695
+aLastSyncDate 20150414081514023
+aLastUpdateDate 20150414081514023
 
 eW_MetaType 2
 aType      5
@@ -1033,8 +1033,8 @@ aStatus    1
 aUpdateInd 2
 aName      ePamms
 aDesc      ePamms Application
-aLastSyncDate 20150325100008193
-aLastUpdateDate 20150325100008193
+aLastSyncDate 20150414081604046
+aLastUpdateDate 20150414081604046
 
 eW_MetaType 2
 aType      7
@@ -1259,8 +1259,8 @@ aStatus    1
 aUpdateInd 2
 aName      mPerson
 aDesc      Person object to be included in the User object
-aLastSyncDate 20150410211358674
-aLastUpdateDate 20150410211358674
+aLastSyncDate 20150415111516651
+aLastUpdateDate 20150415111516651
 
 eW_MetaDef 3
 aCPLR_ZKey 1156951
@@ -1277,8 +1277,8 @@ aStatus    1
 aUpdateInd 2
 aName      mPrimReg
 aDesc      Primary Registrant Maintenance
-aLastSyncDate 20150410211506105
-aLastUpdateDate 20150410211506105
+aLastSyncDate 20150415112021941
+aLastUpdateDate 20150415112021941
 
 eW_MetaDef 3
 aCPLR_ZKey 69055287
@@ -1295,8 +1295,8 @@ aStatus    1
 aUpdateInd 2
 aName      mSPLDef
 aDesc      Subregistrant Physical Label Maintenance
-aLastSyncDate 20150410211641562
-aLastUpdateDate 20150410211641562
+aLastSyncDate 20150414080225467
+aLastUpdateDate 20150414080225467
 
 eW_MetaDef 3
 aCPLR_ZKey 69035258
@@ -1331,8 +1331,8 @@ aStatus    1
 aUpdateInd 2
 aName      mSubreg
 aDesc      Subregistrant Maintenance
-aLastSyncDate 20150410211927204
-aLastUpdateDate 20150410211927204
+aLastSyncDate 20150415114430587
+aLastUpdateDate 20150415114430587
 
 eW_MetaDef 3
 aCPLR_ZKey 1157571
@@ -1340,8 +1340,8 @@ aStatus    1
 aUpdateInd 2
 aName      mUser
 aDesc      User Maintenance
-aLastSyncDate 20150410212025127
-aLastUpdateDate 20150410212025127
+aLastSyncDate 20150415113919768
+aLastUpdateDate 20150415113919768
 
 eW_MetaDef 3
 aCPLR_ZKey 110001735
@@ -1985,8 +1985,8 @@ aStatus    1
 aUpdateInd 2
 aName      wSPLD
 aDesc      Subregistrant Physical Label Definition
-aLastSyncDate 20150413103443372
-aLastUpdateDate 20150413103443372
+aLastSyncDate 20150414084931983
+aLastUpdateDate 20150414084931983
 
 eW_MetaDef 3
 aCPLR_ZKey 93086489

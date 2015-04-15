@@ -1138,6 +1138,7 @@ $(function() {
 
 
 // $("#zBlockBackgroundColor").attr( "readonly", true ); data???
+/*
    var selectedBlock;
    var fBlock = $.farbtastic( "#zBlockPicker", fbCallback );
    var pBlock = $("#zBlockPicker").css("opacity", 0.25).hide();
@@ -1181,7 +1182,7 @@ $(function() {
          pLLD.fadeIn();
          $(selectedLabel = this).css( "opacity", 1 ).addClass( "colorwell-selected" );
       });
-
+*/
    $("#zBlockTop")
       .blur( function () {
          var top = pixel2Scale( inch2px( $(this).val(), 0 ) );

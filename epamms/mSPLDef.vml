@@ -35,8 +35,12 @@ GeneratePDF_Label( VIEW mSPLDef BASED ON LOD mSPLDef )
    STRING ( 256 ) szXslDirectory
    STRING ( 256 ) szXmlName
    STRING ( 256 ) szXslName
+   STRING ( 30 ) szDateTime
+   STRING ( 30 ) szDateTimeDisplay
    
-   // Generate an PDF Label from the SPLD.
+   // Generate a PDF Label from the SPLD.
+   SysGetDateTime( szDateTime )
+   mSPLDef.SubregPhysicalLabelDef.wDateTime = szDateTime
    
    // Delete any existing DisplaySection entries.
    FOR EACH mSPLDef.DisplaySection 
@@ -77,6 +81,11 @@ GeneratePDF_Label( VIEW mSPLDef BASED ON LOD mSPLDef )
    // Put out XSL header data.
    szWriteBuffer = "<?xml version=@1.0@ encoding='iso-8859-1'?>"
    WL_QC( mSPLDef, lFile, szWriteBuffer, "@", 0 )
+
+   GetStringFromAttributeByContext( szDateTimeDisplay, mSPLDef, "SubregPhysicalLabelDef", "wDateTime", "YYYY/MM/DD HH:MM:SS.S AM", 30 )
+   szWriteBuffer = "<!-- Output created by ePamms   " + szDateTimeDisplay + " -->"
+   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+
    szWriteBuffer = "<xsl:stylesheet version=^1.0^"
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    szWriteBuffer = "   xmlns:xsl=^http://www.w3.org/1999/XSL/Transform^"
@@ -481,8 +490,6 @@ FormatPrintIcons( VIEW mSPLDef BASED ON LOD mSPLDef,
    
    // Company and Date/Time Identifier
    
-   SysGetDateTime( szDateTime )
-   mSPLDef.SubregPhysicalLabelDef.wDateTime = szDateTime
    GetStringFromAttributeByContext( szDateTimeDisplay, mSPLDef, "SubregPhysicalLabelDef", "wDateTime", "YYYY/MM/DD HH:MM:SS.S AM", 30 )
    //szDateTimeDisplay = "01/01/2000 00:00:00.0 AM"
    szProductIdentifier = mSPLDef.SubregOrganization.Name + "   " + szDateTimeDisplay
@@ -3796,6 +3803,7 @@ GenerateXML_File( VIEW mSPLDef BASED ON LOD mSPLDef,
    STRING ( 5000 ) szOutputLine
    STRING ( 50 )   szSectionName
    STRING ( 50 )   szStatementName
+   STRING ( 50 )   szDateTimeDisplay
    INTEGER         lFileHandle
    SHORT           nRC
    
@@ -3813,7 +3821,8 @@ GenerateXML_File( VIEW mSPLDef BASED ON LOD mSPLDef,
    // Build Header entries.
    szOutputLine = "<?xml version=" + QUOTES + "1.0" + QUOTES + "?>"
    GenerateLine( mSPLDef, lFileHandle, szOutputLine )
-   szOutputLine = "<!-- Output created by OpenCUAS -->"
+   GetStringFromAttributeByContext( szDateTimeDisplay, mSPLDef, "SubregPhysicalLabelDef", "wDateTime", "YYYY/MM/DD HH:MM:SS.S AM", 30 )
+   szOutputLine = "<!-- Output created by ePamms   " + szDateTimeDisplay + " -->"
    GenerateLine( mSPLDef, lFileHandle, szOutputLine )
    
    szOutputLine = "   <zOI>"

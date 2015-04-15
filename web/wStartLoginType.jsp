@@ -5,64 +5,91 @@
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
 <%@ page import="javax.servlet.http.*" %>
-<%@ page import="org.apache.commons.lang3.*" %>
-<%@ page import="com.quinsoft.zeidon.*" %>
-<%@ page import="com.quinsoft.zeidon.standardoe.*" %>
-<%@ page import="com.quinsoft.zeidon.utils.*" %>
-<%@ page import="com.quinsoft.zeidon.vml.*" %>
-<%@ page import="com.quinsoft.zeidon.domains.*" %>
+<%@ page import="zeidon.zView" %>
+<%@ page import="com.quinsoft.epamms.*" %>
+
 <%@ page import="com.quinsoft.epamms.*" %>
 
 <%! 
 
-ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
-
 public String ReplaceXSSValues( String szFieldValue )
 {
    String szOutput;
-   szOutput = szFieldValue.replace( "<","&lt;" );
-   szOutput = szOutput.replace( ">", "&gt;" );
-   szOutput = szOutput.replace( "\"", "&quot;" );
-   szOutput = szOutput.replace( "\'", "&apos;" );
+   szOutput = szFieldValue.replace("<","&lt;");
+   szOutput = szOutput.replace(">","&gt;");
+   szOutput = szOutput.replace("\"","&quot;");
+   szOutput = szOutput.replace("\'","&apos;");
    return( szOutput );
 }
 
 public int DoInputMapping( HttpServletRequest request,
                            HttpSession session,
-                           ServletContext application,
-                           boolean webMapping )
+                           ServletContext application )
 {
-   String taskId = (String) session.getAttribute( "ZeidonTaskId" );
-   Task task = objectEngine.getTaskById( taskId );
+   String strSID = session.getId( );
+   zeidon.zView vAS = (zeidon.zView) session.getAttribute( "ZeidonSubtask" );
 
-   View vGridTmp = null; // temp view to grid view
-   View vRepeatingGrp = null; // temp view to repeating group view
+   zeidon.zView vGridTmp = new zeidon.zView( strSID ); // temp view to grid view
+   zeidon.zView vMsgQ = new zeidon.zView( strSID ); // view to Message Queue
+   zeidon.zView v = new zeidon.zView( strSID );     // view to Message Queue
+
+   String strError = "";
    String strDateFormat = "";
    String strMapValue = "";
    int    iView = 0;
-   long   lEntityKey = 0;
+   int    lEntityKey = 0;
    String strEntityKey = "";
-   long   lEntityKeyRG = 0;
-   String strEntityKeyRG = "";
    String strTag = "";
    String strTemp = "";
    int    iTableRowCnt = 0;
    String strSuffix = "";
    int    nRelPos = 0;
    int    nRC = 0;
-   CursorResult csrRC = null;
-   int    nMapError = 1;
-
-   if ( webMapping == false )
-      session.setAttribute( "ZeidonError", null );
-
-   if ( webMapping == true )
-      return 2;
+   int    nMapError = 0;
 
    if ( nMapError < 0 )
-      session.setAttribute( "ZeidonError", "Y" );
+   {
+      iView = vAS.GetIntegerFromView( strSID );
+      vAS.TraceLine( "DoInputMapping ERROR =======>> ", strError );
+      nRC = vMsgQ.GetView( strSID, "__MSGQ", vAS );
+      if ( nRC > 0 )
+      {
+         v.CreateViewFromView( strSID, vMsgQ );
+         vAS.TraceLine( "DoInputMapping found __MSGQ", "" );
+         v.DisplayObjectInstance( strSID );
+         vAS.TraceLine( "DoInputMapping __MSGQ View: ", iView );
+         nRC = v.SetCursorFirst( strSID, "Task", "Id", iView, "" );
+         vAS.TraceLine( "DoInputMapping SetCursorFirst RC: ", nRC );
+         if ( nRC == 0 )
+         {
+            nRC = v.SetCursorFirst( strSID, "QMsg" );
+            if ( nRC == 0 )
+            {
+               vAS.TraceLine( "DoInputMapping found QMsg Entity", "" );
+               v.SetAttributeFromVariable( strSID, "QMsg", "Title", strError, 'S',
+                                           strError.length( ) + 1, "", 8 );
+            }
 
-   return nMapError;
+            while ( nRC == 0 )
+            {
+               v.DisplayEntityInstance( strSID, "QMsg" );
+               nRC = v.SetCursorNext( strSID, "QMsg" );
+               vAS.TraceLine( "DoInputMapping SetCursorNext RC: ", nRC );
+            }
+
+            vAS.TraceLine( "DoInputMapping after __MSGQ", "" );
+            nRC = 0;
+         }
+
+         v.DisplayObjectInstance( strSID );
+         v.DropView( strSID );
+         nRC = -1;
+      }
+
+      return( nRC );
+   }
+
+   return( 1 );
 }
 
 %>
@@ -70,21 +97,20 @@ public int DoInputMapping( HttpServletRequest request,
 <%
 
 session = request.getSession( );
-Task task = null;
-View wWebXA = null;
-KZMSGQOO_Object mMsgQ = null; // view to Message Queue
-View vKZXMLPGO = null;
-String strLastPage = "";
+String strSessionId = session.getId( );
+zeidon.zView vAppSubtask; // view to this subtask
+zeidon.zView vMsgQ = new zeidon.zView( strSessionId ); // view to Message Queue
+zView vKZXMLPGO = null;
+String strLastPage;
 short  nRepos = 0;
-boolean bDone = false;
+int bDone = 0;
+int nPos = 0;
 int nOptRC = 0;
 int nRC = 0;
-CursorResult csrRC = null;
-CursorResult csrRCk = null;
 
 int nRCk = 0;  // temp fix for SetCursorEntityKey
 
-long lEKey = 0; // temp fix for SetCursorEntityKey
+int lEKey = 0; // temp fix for SetCursorEntityKey
 
 String strKey = "";
 String strActionToProcess = "";
@@ -95,7 +121,6 @@ String strErrorTitle = "";
 String strErrorMsg = "";
 String strFocusCtrl = "";
 String strBannerName = "";
-String strVMLError = "";
 String strOpenFile = "";
 String strOpenPopupWindow = "";
 String strPopupWindowSZX = "";
@@ -104,21 +129,21 @@ String strDateFormat = "";
 String strKeyRole = "";
 String strDialogName = "";
 String strWindowName = "";
-String strLastWindow;
-String strLastAction;
+String strLastWindow = "";
+String strLastAction = "";
 String strFunctionCall = "";
 String strNextJSP_Name = "";
 String strInputFileName = "";
+int iFileLth = 0;
 
-strActionToProcess = (String) request.getParameter( "zAction" );
+   strActionToProcess = (String) request.getParameter( "zAction" );
 
 strLastWindow = (String) session.getAttribute( "ZeidonWindow" );
-if ( StringUtils.isBlank( strLastWindow ) ) 
-   strLastWindow = "NoLastWindow";
-
+if ( strLastWindow == null ) 
+strLastWindow = "NoLastWindow";
 strLastAction = (String) session.getAttribute( "ZeidonAction" );
 
-if ( strLastWindow.equals("wStartLoginType") && StringUtils.isBlank( strActionToProcess ) && StringUtils.isBlank( strLastAction ) )
+if ( strLastWindow.equals("wStartLoginType") && strActionToProcess == null && strLastAction == null )
 {
    strURL = response.encodeRedirectURL( "logout.jsp" );
    response.sendRedirect( strURL );
@@ -127,122 +152,108 @@ if ( strLastWindow.equals("wStartLoginType") && StringUtils.isBlank( strActionTo
 
 // Check to see if the Zeidon subtask view already exists.  If not, create
 // it and copy it into the application object.
-String taskId = (String) session.getAttribute( "ZeidonTaskId" );
-if ( StringUtils.isBlank( taskId ) )
+vAppSubtask = (zeidon.zView) session.getAttribute( "ZeidonSubtask" );
+if ( vAppSubtask == null )
 {
-   task = objectEngine.createTask( "epamms", session.getId() );
-   session.setAttribute( "ZeidonTaskId", task.getTaskId() );
+   vAppSubtask = new zeidon.zView( strSessionId );
+   vAppSubtask.RegisterZeidonApplication( strSessionId, "//epamms" );
+   session.setAttribute( "ZeidonSubtask", vAppSubtask );
+}
+
+if ( vAppSubtask == null )
+{
+   return; // something really bad has happened!!!
 }
 else
 {
-   task = objectEngine.getTaskById( taskId );
+   if ( vKZXMLPGO == null )
+      vKZXMLPGO = new zeidon.zView( strSessionId );
+
+   nRC = vKZXMLPGO.GetView( strSessionId, "KZXMLPGO", vAppSubtask );
+   if ( nRC <= 0 )
+   {
+      vKZXMLPGO.InitWebSessionObject( strSessionId, vAppSubtask, "TestUserID" );
+      vKZXMLPGO.SetName( strSessionId, "KZXMLPGO" );
+   }
+
+   nRC = vMsgQ.GetView( strSessionId, "__MSGQ", vAppSubtask );
+   vAppSubtask.SetDefaultViewForActiveTask( strSessionId, 2 );
+
+   strURL = "";
+   bDone = 0;
+   nRC = 0;
 }
 
-if ( task == null )
-{
-   session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
-   return; // something really bad has happened!!!
-}
+vAppSubtask.TraceLine("*** wStartLoginType strActionToProcess *** ", strActionToProcess );
 
-vKZXMLPGO = JspWebUtils.createWebSession( null, task, "" );
-mMsgQ = new KZMSGQOO_Object( vKZXMLPGO );
-mMsgQ.setView( VmlOperation.getMessageObject( task ) );
-wStart_Dialog wStart = new wStart_Dialog( vKZXMLPGO );
-
-strURL = "";
-bDone = false;
-nRC = 0;
-
-task.log().info("*** wStartLoginType strActionToProcess *** " + strActionToProcess );
-task.log().info("*** wStartLoginType LastWindow *** " + strLastWindow );
-task.log().info("*** wStartLoginType LastAction *** " + strLastAction );
+vAppSubtask.TraceLine("*** wStartLoginType LastWindow *** ", strLastWindow );
+strLastAction = (String) session.getAttribute( "ZeidonAction" );
+vAppSubtask.TraceLine("*** wStartLoginType LastAction *** ", strLastAction );
 
 if ( strActionToProcess != null )
 {
-   if ( task != null )
+   if ( vAppSubtask != null )
    {
       // Delete the message object if error on last interation.
-      View vMsgQ = task.getViewByName( "__MSGQ" );
-      if ( VmlOperation.isValid( vMsgQ ) )
-      {
-         mMsgQ.setView( null );
-         vMsgQ.drop( );
-      }
-
+      nRC = vMsgQ.GetView( strSessionId, "__MSGQ", vAppSubtask );
+      if ( nRC > 0 )
+         vMsgQ.DropObjectInstance( strSessionId );
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_SelectedRole" ) )
+   while ( bDone == 0 && strActionToProcess.equals( "GOTO_SelectedRole" ) )
    {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wStartLoginType", strActionToProcess );
+      bDone = 1;
+
+      session.setAttribute( "ZeidonAction", "GOTO_SelectedRole" );
 
       // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
+      nRC = DoInputMapping( request, session, application );
       if ( nRC < 0 )
          break;
 
-      // Position on the entity that was selected in the grid.
-      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
-       = task.getViewByName( "" );
-      if ( VmlOperation.isValid(  ) )
-      {
-         lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = .cursor( "" ).setByEntityKey( lEKey );
-         if ( !csrRC.isSet() )
-         {
-            boolean bFound = false;
-            csrRCk = .cursor( "" ).setFirst( );
-            while ( csrRCk.isSet() && !bFound )
-            {
-               lEKey = .cursor( "" ).getEntityKey( );
-               strKey = Long.toString( lEKey );
-               if ( StringUtils.equals( strKey, strEntityKey ) )
-               {
-                  // Stop while loop because we have positioned on the correct entity.
-                  bFound = true;
-               }
-               else
-                  csrRCk = .cursor( "" ).setNextContinue( );
-            } // Grid
-         }
-      }
-
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartLoginType.jsp", "wStart.GOTO_SelectedRole" );
-         nOptRC = wStart.GOTO_SelectedRole( new zVIEW( vKZXMLPGO ) );
+      nOptRC = vAppSubtask.CallDialogOperation( strSessionId, "wStart", "GOTO_SelectedRole", 0 );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
          break;
       }
-      else
-      if ( nOptRC == 1 )
+
+      // Dynamic Next Window
+      nRC = vKZXMLPGO.CheckExistenceOfEntity( strSessionId, "NextDialogWindow" );
+      if ( nRC >= 0 )
       {
-         // Dynamic Next Window
-         strNextJSP_Name = wStart.GetWebRedirection( vKZXMLPGO );
+         strDialogName = vKZXMLPGO.GetString( strSessionId, "NextDialogWindow", "DialogName" );
+         strWindowName = vKZXMLPGO.GetString( strSessionId, "NextDialogWindow", "WindowName" );
+         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
+         vKZXMLPGO.DeleteEntity( strSessionId, "NextDialogWindow", nRepos );
+         strURL = response.encodeRedirectURL( strNextJSP_Name );
+         nRC = vKZXMLPGO.CheckExistenceOfEntity( strSessionId, "NextDialogWindow" );
+         if ( nRC >= 0 )
+            strFunctionCall = vKZXMLPGO.GetString( strSessionId, "NextDialogWindow", "FunctionCall" );
+         else
+            strFunctionCall = "";
+
+         if ( strFunctionCall.equals( "StartSubwindow" ) )
+         {
+            vKZXMLPGO.CreateEntity( strSessionId, "PagePath", vKZXMLPGO.zPOS_AFTER );
+            vKZXMLPGO.SetAttribute( strSessionId, "PagePath", "LastPageName", "wStartLoginType" );
+         }
+
+         nRC = 1;  // do the redirection
+         break;
       }
 
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wStart.SetWebRedirection( vKZXMLPGO, wStart.zWAB_StayOnWindowWithRefresh, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
       break;
    }
 
-   while ( bDone == false && strActionToProcess.equals( "ZEIDON_ComboBoxSubmit" ) )
+   while ( bDone == 0 && strActionToProcess.equals( "ZEIDON_ComboBoxSubmit" ) )
    {
-      bDone = true;
+      bDone = 1;
 
       // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
+      nRC = DoInputMapping( request, session, application );
       if ( nRC < 0 )
          break;
 
@@ -251,15 +262,16 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && strActionToProcess.equals( "_OnUnload" ) )
+   while ( bDone == 0 && strActionToProcess.equals( "_OnUnload" ) )
    {
-      bDone = true;
-      if ( task != null )
+      bDone = 1;
+      if ( vAppSubtask != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wStartLoginType" );
-         task.dropTask();
-         task = null;
-         session.setAttribute( "ZeidonTaskId", task );
+         nOptRC = vAppSubtask.CallDialogOperation( strSessionId, "zGLOBALW", "CleanupObjects", 0 );
+         vAppSubtask.TraceLine( "OnUnload UnregisterZeidonApplication: ----------------------------------->>> ", "wStartLoginType" );
+         vAppSubtask.UnregisterZeidonApplication( strSessionId );
+         vAppSubtask = null;
+         session.setAttribute( "ZeidonSubtask", vAppSubtask );
       }
 
       // Next Window is HTML termination
@@ -268,15 +280,16 @@ if ( strActionToProcess != null )
       return;
    }
 
-   while ( bDone == false && strActionToProcess.equals( "_OnTimeout" ) )
+   while ( bDone == 0 && strActionToProcess.equals( "_OnTimeout" ) )
    {
-      bDone = true;
-      if ( task != null )
+      bDone = 1;
+      if ( vAppSubtask != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ------->>> " + "wStartLoginType" );
-         task.dropTask();
-         task = null;
-         session.setAttribute( "ZeidonTaskId", task );
+         nOptRC = vAppSubtask.CallDialogOperation( strSessionId, "zGLOBALW", "CleanupObjects", 0 );
+         vAppSubtask.TraceLine( "OnUnload UnregisterZeidonApplication: ----------------------------------->>> ", "wStartLoginType" );
+         vAppSubtask.UnregisterZeidonApplication( strSessionId );
+         vAppSubtask = null;
+         session.setAttribute( "ZeidonSubtask", vAppSubtask );
       }
 
       // Next Window is HTML termination
@@ -285,16 +298,15 @@ if ( strActionToProcess != null )
       return;
    }
 
-   while ( bDone == false && strActionToProcess.equals( "_OnResubmitPage" ) )
+   while ( bDone == 0 && strActionToProcess.equals( "_OnResubmitPage" ) )
    {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wStartLoginType", strActionToProcess );
+      bDone = 1;
+      session.setAttribute( "ZeidonAction", "_OnResubmitPage" );
 
       // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
+      nRC = DoInputMapping( request, session, application );
       if ( nRC < 0 )
          break;
-
       strURL = response.encodeRedirectURL( "wStartLoginType.jsp" );
       nRC = 1;  //do the redirection
       break;
@@ -307,54 +319,49 @@ if ( strActionToProcess != null )
          if ( nRC > 1 )
          {
             strURL = response.encodeRedirectURL( "wStartLoginType.jsp" );
-            task.log().info( "Action Error Redirect to: " + strURL );
+            vAppSubtask.TraceLine( "Action Error Redirect to: ", strURL );
          }
 
-         if ( ! strURL.equals("wStartLoginType.jsp") ) 
-         {
-            response.sendRedirect( strURL );
-            // If we are redirecting to a new page, then we need this return so that the rest of this page doesn't get built.
-            return;
-         }
+         strActionToProcess = "";
+         response.sendRedirect( strURL );
       }
       else
       {
          if ( nRC > -128 )
          {
+            strActionToProcess = "";
             strURL = response.encodeRedirectURL( "wStartLoginType.jsp" );
-            task.log().info( "Mapping Error Redirect to: " + strURL );
+            vAppSubtask.TraceLine( "Mapping Error Redirect to: %s", strURL );
+            response.sendRedirect( strURL );
          }
          else
          {
-            task.log().info( "InputMapping Reentry Prevented" );
+            vAppSubtask.TraceLine( "InputMapping Reentry Prevented", "" );
          }
       }
    }
 
-}
-
-if ( session.getAttribute( "ZeidonError" ) == "Y" )
-   session.setAttribute( "ZeidonError", null );
-else
-{
-}
-   csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wStart", "" );
-   if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
-
-   if ( StringUtils.isBlank( strBannerName ) )
-      strBannerName = "welcome_banner.gif";
-
-   wWebXA = task.getViewByName( "wWebXfer" );
-   if ( VmlOperation.isValid( wWebXA ) )
+   if ( strActionToProcess.length( ) == 0 )
    {
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wStart", "" );
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "LoginType", "" );
+   // vAppSubtask.GarbageCollectViews( strSessionId );
+      return;
    }
+}
+
+if ( strErrorFlag != "Y" && vAppSubtask != null )
+{
+   nRC = vKZXMLPGO.SetCursorFirst( strSessionId, "DynamicBannerName", "DialogName", "wStart", "" );
+   if ( nRC >= 0 )
+      strBannerName = vKZXMLPGO.GetString( strSessionId, "DynamicBannerName", "BannerName" );
+
+   if ( strBannerName == null || strBannerName.isEmpty( ) )
+      strBannerName = "welcome_banner.gif";
+}
 
 %>
 
 <html>
+
 <head>
 
 <title>Login Type</title>
@@ -365,17 +372,266 @@ else
 <%@ include file="./include/timeout.inc" %>
 <link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/validations.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-<script language="JavaScript" type="text/javascript" src="./genjs/wStartLoginType.js"></script>
+<script language="JavaScript" type="text/javascript">
+
+var isWindowClosing = true;
+var timerID = null;
+onerror = handleErr;
+window.history.forward( 1 );
+
+function handleErr( msg, url, l )
+{
+   var txt = "There was an error on this page.\n\n";
+   txt += "Error: " + msg + "\n";
+   txt += "URL: " + url + "\n";
+   txt += "Line: " + l + "\n\n";
+   txt += "Click OK to continue.\n\n";
+   alert( txt );
+   return true;
+}
+
+// This function returns Internet Explorer's major version number,
+// or 0 for others. It works by finding the "MSIE " string and
+// extracting the version number following the space, up to the decimal
+// point, ignoring the minor version number.
+function msieversion( )
+{
+   var ua = window.navigator.userAgent;
+   var msie = ua.indexOf( "MSIE " );
+
+   if ( msie > 0 )      // if Internet Explorer, return version number
+      return parseInt( ua.substring( msie + 5, ua.indexOf( ".", msie ) ) );
+   else                 // if another browser, return 0
+      return 0;
+}
+
+function _OnAlmostTimeout()
+{
+   if ( _IsDocDisabled( ) == false )
+   {
+      var tStart   = new Date();
+
+      alert("Your session will timeout in one minute.  Please click 'OK' within that time to continue and save your work if necessary.")
+
+      var tEnd   = new Date();
+      var tDiff = tEnd.getTime() - tStart.getTime();
+
+      // If the time is less than one minute, resubmit the page.  Otherwise, go to the timeout window.
+      if ( tDiff < 60000 )
+      {
+         document.wStartLoginType.zAction.value = "_OnResubmitPage";
+         document.wStartLoginType.submit( );
+      }
+      else
+      {
+         _OnTimeout( );
+      }
+   }
+}
+
+function _OnTimeout( )
+{
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wStartLoginType.zAction.value = "_OnTimeout";
+      document.wStartLoginType.submit( );
+   }
+}
+
+function _BeforePageUnload( )
+{
+   if ( _IsDocDisabled( ) == false )
+   {
+      // If the user clicked on the window close box, then
+      // isWindowClosing will be true.  Otherwise if the user
+      // clicked on something else in the page, isWindowClosing will be false.
+      // If the user clicked the window close box, unregister zeidon.
+      if ( isWindowClosing )
+      {
+         document.wStartLoginType.zAction.value = "_OnUnload";
+         document.wStartLoginType.submit( );
+      }
+   }
+}
+
+function _IsDocDisabled( )
+{
+   var theForm;
+   var j;
+   var k;
+
+   for ( j = 0; j < document.forms.length; j++ )
+   {
+      theForm = document.forms[ j ];
+      for ( k = 0; k < theForm.length; k++ )
+      {
+         if ( theForm.elements[ k ].name == "zDisable" )
+            return theForm.elements[ k ].disabled;
+      }
+   }
+
+   return false;
+}
+
+function _DisableFormElements( bDisabled )
+{
+   var theForm;
+   var type;
+   var lis;
+   var thisLi;
+   var j;
+   var k;
+   var bRC = false;
+
+   if ( bDisabled && timerID != null )
+   {
+      clearTimeout( timerID );
+      timerID = null;
+   }
+
+   // Controls on the window may have been set as disabled through javascript but
+   // when we try to get the values for these controls in jsp (response.getParameter)
+   // they will always be null.  Set any disabled fields to enabled for this reason.
+   for ( j = 0; j < document.forms.length; j++ )
+   {
+      theForm = document.forms[ j ];
+      for ( k = 0; k < theForm.length; k++ )
+      {
+         if (theForm.elements[ k ].disabled == true)
+             theForm.elements[ k ].disabled = false;
+      }
+   }
+
+   // We want to set some fields as disabled (like buttons and comboboxes) so that
+   // while the jsp code is processing, users can not select these controls.
+   for ( j = 0; j < document.forms.length; j++ )
+   {
+      theForm = document.forms[ j ];
+      for ( k = 0; k < theForm.length; k++ )
+      {
+         type = theForm.elements[ k ].type;
+
+         if ( type == "button" || type == "submit" || (type != null && type.indexOf( "select" ) == 0) )
+         {
+            theForm.elements[ k ].disabled = bDisabled;
+         }
+         else
+         if ( theForm.elements[ k ].name == "zDisable" )
+         {
+            theForm.elements[ k ].disabled = bDisabled;
+            bRC = true;
+         }
+      }
+   }
+
+   lis = document.getElementsByTagName( "li" );
+   for ( k = 0; k < lis.length; k++ )
+   {
+      thisLi = lis[ k ];
+      thisLi.disabled = bDisabled;
+   }
+
+   return bRC;
+}
+
+function _AfterPageLoaded( )
+{
+// _DisableFormElements( false );
+
+   var szFocusCtrl = document.wStartLoginType.zFocusCtrl.value;
+   if ( szFocusCtrl != "" )
+      eval( 'document.wStartLoginType.' + szFocusCtrl + '.focus( )' );
+
+   // This is where we put out a message from the previous iteration on this window
+   var szMsg = document.wStartLoginType.zError.value;
+   if ( szMsg != "" )
+      alert( szMsg ); // "Houston ... We have a problem"
+
+   szMsg = document.wStartLoginType.zOpenFile.value;
+   if ( szMsg != "" )
+   {
+      var NewWin = window.open( szMsg );
+      if ( NewWin )
+         NewWin.focus( );
+      else
+      {
+         alert( "Pop-up windows are being blocked.  You need to set your browser to allow pop-ups from this site for this action to work." );
+      }
+   }
+
+   var keyRole = document.wStartLoginType.zKeyRole.value;
+   document.wStartLoginType.zError.value = "";
+   document.wStartLoginType.zOpenFile.value = "";
+
+   if ( timerID != null )
+   {
+      clearTimeout( timerID );
+      timerID = null;
+   }
+
+   var varTimeout = document.wStartLoginType.zTimeout.value;
+   if (varTimeout > 0)
+   {
+      var delay = 60000 * varTimeout;  // Timeout value in timeout.inc
+      timerID = setTimeout( "_OnAlmostTimeout( )", delay );
+   }
+   else
+      timerID = null; // No timeout specified
+
+   isWindowClosing = true;
+
+   document.body.style.cursor = "default";
+
+}
+
+function CheckAllInGrid(id, CheckBoxName)
+{
+   var wcontrols = id.form.elements;
+   var check = id.checked;
+   var wcontrol, i = 0;
+
+   while ( (wcontrol = wcontrols[ i++ ]) != null )
+   {
+      //Check to see if the checkbox belongs to this table then check it.
+      if ( wcontrol.name.indexOf( CheckBoxName ) != -1 && wcontrol.type == 'checkbox' )
+      {
+         wcontrol.checked = check;
+      }
+   }
+}
+
+function GOTO_SelectedRole( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.body.style.cursor = "wait";
+
+      _DisableFormElements( true );
+
+      document.wStartLoginType.zTableRowSelect.value = strEntityKey;
+      document.wStartLoginType.zAction.value = "GOTO_SelectedRole";
+      document.wStartLoginType.submit( );
+   }
+}
+
+</script>
 
 </head>
 
 <body onLoad="_AfterPageLoaded( )" onSubmit="_DisableFormElements( true )" onBeforeUnload="_BeforePageUnload( )">
-
-<%@ include file="./include/pagebackground.inc" %>  <!-- just temporary until we get the painter dialog updates from Kelly ... 2011.10.08 dks -->
 
 <div id="wrapper">
 
@@ -397,8 +653,9 @@ else
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
-   View mUser = null;
-   View wWebXfer = null;
+   strSessionId = session.getId( );
+   zeidon.zView mUser = new zeidon.zView( strSessionId );
+   zeidon.zView wWebXfer = new zeidon.zView( strSessionId );
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";
@@ -411,76 +668,42 @@ else
    String strTblOutput = "";
    int    ComboCount = 0;
    int    iTableRowCnt = 0;
-   CursorResult csrRC2 = null;
+   int    nRC2 = 0;
    nRC = 0;
 
+   nRC2 = vKZXMLPGO.GetView( strSessionId, "KZXMLPGO", vAppSubtask );
+   if ( nRC2 <= 0 )
+   {
+      vKZXMLPGO.InitWebSessionObject( strSessionId, vAppSubtask, "TestUserID" );
+      vKZXMLPGO.SetName( strSessionId, "KZXMLPGO" );
+   }
+
+   nRC2 = vKZXMLPGO.InitWebPage( strSessionId, "wStart", "LoginType" );
+
    // FindErrorFields Processing
-   mMsgQ = new KZMSGQOO_Object( vKZXMLPGO );
-   mMsgQ.setView( VmlOperation.getMessageObject( task ) );
-   strError = mMsgQ.FindErrorFields( );
-
-   // strError is of the form: "Y\tChemicalName\tMax length exceeded\t\nMapping value in error\t\nY\tPercent\tInvalid numeric\t\n6.84%\t\n ..."
-   // We want to find the first "Y" error flag if it exists.
-   int nLth = strError.length( );
-   int nPos = strError.indexOf( "\t" );
-   while ( nPos > 0 && nPos < nLth )
+   strError = vAppSubtask.FindErrorFields( strSessionId );
+   nPos = strError.indexOf( "\t" );
+   if ( nPos > 0 )
    {
-      strErrorFlag = strError.substring( nPos - 1, nPos );
-      if ( StringUtils.equals( strErrorFlag, "Y" ) )
-      {
-         int nPos2 = strError.indexOf( "\t\n" );
-         if ( nPos2 >= 0 )
-         {
-            strErrorMapValue = strError.substring( nPos + 1, nPos2 );
-            nPos = strErrorMapValue.indexOf( "\t" );
-            if ( nPos >= 0 )
-            {
-               strErrorTitle = strErrorMapValue.substring( 0, nPos );
-               strErrorMsg = strErrorMapValue.substring( nPos + 1 );
-            }
-         }
+      strErrorFlag = strError.substring( 0, 1 );
+      strError = strError.substring( nPos + 1 );
+   }
 
-         break;
-      }
-      else
+   if ( nPos >= 0 && strErrorFlag.equals( "Y" ) )
+   {
+      nPos = strError.indexOf( "\t\t" );
+      if ( nPos >= 0 )
       {
-         nPos = strError.indexOf( "\t\n", nPos + 1 );
-         if ( nPos > 0 )
-         {
-            strErrorTitle = strError.substring( nPos + 2 ); // debugging
-            int nPos2 = strError.indexOf( "\t\n", nPos + 2 );
-            if ( nPos2 >= 0 )
-            {
-               nPos = nPos2 + 2;
-               strErrorTitle = strError.substring( nPos ); // debugging
-               task.log().info( "Error: " + strErrorTitle ); // debugging
-               nPos = strError.indexOf( "\t", nPos );
-            }
-            else
-               nPos = -1;
-         }
+         strErrorTitle = strError.substring( 0, nPos );
+         strErrorMsg = strError.substring( nPos + 2 );
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
+   strSolicitSave = vKZXMLPGO.GetString( strSessionId, "Session", "SolicitSaveFlag" );
 
-   strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wStart", "LoginType" );
-   strOpenFile = VmlOperation.FindOpenFile( task );
-   strDateFormat = "YYYY.MM.DD";
-
-   wWebXA = task.getViewByName( "wWebXfer" );
-   if ( VmlOperation.isValid( wWebXA ) )
-   {
-      nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
-         if ( strKeyRole == null )
-            strKeyRole = "";
-
-         task.log().info( "Root.KeyRole: " + strKeyRole );
-      }
-   }
+   strFocusCtrl = vAppSubtask.GetFocusCtrl( strSessionId, "wStart", "LoginType" );
+   strOpenFile = vAppSubtask.FindOpenFile( strSessionId );
+   strDateFormat = vAppSubtask.GetDateDefaultContextFormat( strSessionId );
 %>
 
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
@@ -493,10 +716,6 @@ else
    <input name="zErrorFlag" id="zErrorFlag" type="hidden" value="<%=strErrorFlag%>">
    <input name="zTimeout" id="zTimeout" type="hidden" value="<%=nTimeout%>">
    <input name="zSolicitSave" id="zSolicitSave" type="hidden" value="<%=strSolicitSave%>">
-
-   <div name="ShowVMLError" id="ShowVMLError" class="ShowVMLError">
-      <%=strVMLError%>
-   </div>
 
 
  <!-- This is added as a line spacer -->
@@ -554,6 +773,8 @@ else
 </div>  <!--  GroupBox1 --> 
 <div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
 <% /* SS1:Grid */ %>
+<% /* SS1:Grid */ %>
+
 <table  cols=3 style=""  name="SS1" id="SS1">
 
 <thead><tr>
@@ -567,14 +788,6 @@ else
 <tbody>
 
 <%
-try
-{
-}
-catch (Exception e)
-{
-out.println("There is an error in grid: " + e.getMessage());
-task.log().info( "*** Error in grid" + e.getMessage() );
-}
 %>
 </tbody>
 </table>
@@ -619,14 +832,14 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 
 <%
-   if ( StringUtils.equals( strErrorFlag, "X" ) )
+   if ( strErrorFlag.equals( "D" ) )
    {
-      nPos = strError.indexOf( "\t", 2 );
+      nPos = strError.indexOf( "\t" );
       if ( nPos >= 0 )
       {
-         strErrorTitle = strError.substring( 2, nPos );
-         int nPos2 = strError.indexOf( "\t\n" );
-         strErrorMsg = strError.substring( nPos + 1, nPos2 );
+         strErrorTitle = strError.substring( 0, nPos );
+         nPos = strError.indexOf( "\t\t" );
+         strErrorMsg = strError.substring( nPos + 2 );
       }
    }
 
@@ -644,11 +857,10 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </div>  <!-- This is the end tag for wrapper -->
 
 </body>
+
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wStartLoginType" );
    session.setAttribute( "ZeidonAction", null );
-
-     strActionToProcess = "";
 
 %>

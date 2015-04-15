@@ -832,6 +832,7 @@ end debug code */
 
       String taskId = (String) request.getSession().getAttribute( "ZeidonTaskId" );
       Task epamms = oe.getTaskById( taskId );
+      logger.debug( "=========================================>>>>>>>>>>>>>>>>>>>>>>>>>>> Graphical Designer Servlet Task Id: " + taskId );
    // Application zeidonTools = epamms.getApplication( "Zeidon_Tools" );
    // Task zeidonSystem = oe.getSystemTask();
       String action = request.getParameter( "action" );

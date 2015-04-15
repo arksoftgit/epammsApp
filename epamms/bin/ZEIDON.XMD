@@ -1,4 +1,4 @@
-z1000-Zeidon    ZEIDON   TZEREMXO 03/25/15   09:59:28 1.0a2    
+z1000-Zeidon    ZEIDON   TZEREMXO 04/14/15   08:02:04 1.0a2    
 eMODEL     1
 aNumEnts   84
 aNumRels   148
@@ -655,7 +655,7 @@ aAPDM_TOK  68568257
 eATTRIB    3
 aZKEY      4322650
 aNAME      TextColor
-aAPDM_TOK  68568081
+aAPDM_TOK  4322642
 aLTH       20
 
 eATTRIB    3
@@ -666,7 +666,7 @@ aAPDM_TOK  68567482
 eATTRIB    3
 aZKEY      44805073
 aNAME      BackgroundColor
-aAPDM_TOK  68568081
+aAPDM_TOK  4322642
 aLTH       20
 
 eATTRIB    3
@@ -677,7 +677,7 @@ aAPDM_TOK  68567482
 eATTRIB    3
 aZKEY      4322622
 aNAME      BorderColor
-aAPDM_TOK  68568081
+aAPDM_TOK  4322642
 aLTH       20
 
 eATTRIB    3

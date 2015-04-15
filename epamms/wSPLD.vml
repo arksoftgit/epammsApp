@@ -903,6 +903,9 @@ SaveSPLD_AndReturn( VIEW ViewToWindow )
 
    VIEW mSubProd REGISTERED AS mSubProd
    VIEW mSPLDef  REGISTERED AS mSPLDef
+   VIEW mSPLDefPanel BASED ON LOD mSPLDef
+   VIEW mSPLDefBlock BASED ON LOD mSPLDef
+   VIEW mSubLC  BASED ON LOD  mSubLC
    VIEW lSPLDLST REGISTERED AS lSPLDLST
    INTEGER SubregProductID
    
@@ -915,8 +918,29 @@ SaveSPLD_AndReturn( VIEW ViewToWindow )
    END
    
    COMMIT mSPLDef
+
+   GET VIEW mSPLDefPanel NAMED "mSPLDefPanel"
+   IF RESULT >= 0
+      DropNameForView( mSPLDefPanel, "mSPLDefPanel", ViewToWindow, zLEVEL_TASK )
+      DropView( mSPLDefPanel )
+   END
+
+   GET VIEW mSPLDefBlock NAMED "mSPLDefBlock"
+   IF RESULT >= 0
+      DropNameForView( mSPLDefBlock, "mSPLDefBlock", ViewToWindow, zLEVEL_TASK )
+      DropView( mSPLDefPanel )
+   END
+
+   DropNameForView( mSPLDef, "mSPLDef", ViewToWindow, zLEVEL_TASK )
+   DropView( mSPLDef )
    DropObjectInstance( mSPLDef )
-   
+
+   GET VIEW mSubLC NAMED "mSubLC"
+   IF RESULT >= 0
+      DropNameForView( mSubLC, "mSubLC", ViewToWindow, zLEVEL_TASK )
+      DropObjectInstance( mSubLC )
+   END
+
    // Reactivate the lSPLDLST object.
    SubregProductID = lSPLDLST.SubregProduct.ID 
    DropObjectInstance( lSPLDLST )
@@ -934,11 +958,29 @@ DIALOG OPERATION
 CancelSPLD( VIEW ViewToWindow )
 
    VIEW mSPLDef REGISTERED AS mSPLDef
+   VIEW mSPLDefPanel BASED ON LOD mSPLDef
+   VIEW mSPLDefBlock BASED ON LOD mSPLDef
    VIEW mSubLC  BASED ON LOD  mSubLC
-   
+
+   GET VIEW mSPLDefPanel NAMED "mSPLDefPanel"
+   IF RESULT >= 0
+      DropNameForView( mSPLDefPanel, "mSPLDefPanel", ViewToWindow, zLEVEL_TASK )
+      DropView( mSPLDefPanel )
+   END
+
+   GET VIEW mSPLDefBlock NAMED "mSPLDefBlock"
+   IF RESULT >= 0
+      DropNameForView( mSPLDefBlock, "mSPLDefBlock", ViewToWindow, zLEVEL_TASK )
+      DropView( mSPLDefPanel )
+   END
+
+   DropNameForView( mSPLDef, "mSPLDef", ViewToWindow, zLEVEL_TASK )
+   DropView( mSPLDef )
    DropObjectInstance( mSPLDef )
+
    GET VIEW mSubLC NAMED "mSubLC"
    IF RESULT >= 0
+      DropNameForView( mSubLC, "mSubLC", ViewToWindow, zLEVEL_TASK )
       DropObjectInstance( mSubLC )
    END
 
@@ -1214,8 +1256,6 @@ GENERATE_SPLD_Label( VIEW ViewToWindow )
 
    VIEW mSPLDefPanel  BASED ON LOD  mSPLDef
    VIEW mSubLC   REGISTERED AS mSubLC
-   STRING ( 30 ) szDateTime
-   STRING ( 30 ) szDateTimeDisplay
    STRING ( 32 ) szLPLR_Name
    STRING ( 64 ) szSystemIniApplName
    STRING ( 64 ) szLabelName
@@ -1281,8 +1321,6 @@ GENERATE_SPLD_LabelDottedBorders( VIEW ViewToWindow )
 
    VIEW mSPLDefPanel  BASED ON LOD  mSPLDef
    VIEW mSubLC   REGISTERED AS mSubLC
-   STRING ( 30 ) szDateTime
-   STRING ( 30 ) szDateTimeDisplay
    STRING ( 32 ) szLPLR_Name
    STRING ( 64 ) szSystemIniApplName
    STRING ( 64 ) szLabelName
@@ -2090,8 +2128,8 @@ ACCEPT_BlockSpecialFormat( VIEW ViewToWindow )
 
    VIEW mSPLDefBlock REGISTERED AS mSPLDefBlock
    
-   TraceLineS( "ACCEPT_BlockSpecialFormat LLD_Block", "" )
-   DisplayEntityInstance( mSPLDefBlock, "LLD_Block" ) 
+// TraceLineS( "ACCEPT_BlockSpecialFormat LLD_Block", "" )
+// DisplayEntityInstance( mSPLDefBlock, "LLD_Block" ) 
 
 /*
    VIEW mSPLDef      REGISTERED AS mSPLDef
@@ -2340,8 +2378,8 @@ PostbuildBlockSpecialFormatDef( VIEW ViewToWindow )
    STRING ( 256 ) szName
    
    szName = mSPLDefBlock.LLD_SpecialSectionAttribute.Name
-   TraceLineS( "PostbuildBlockSpecialFormatDef Position on Name: ", szName )
-   DisplayEntityInstance( mSPLDefBlock, "LLD_Block" )
+// TraceLineS( "PostbuildBlockSpecialFormatDef Position on Name: ", szName )
+// DisplayEntityInstance( mSPLDefBlock, "LLD_Block" )
    // Position on the correct SpecialFormattingSelectEntry.
    SET CURSOR FIRST mSPLDefPanel.SpecialFormattingSelectEntry 
               WHERE mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = szName
