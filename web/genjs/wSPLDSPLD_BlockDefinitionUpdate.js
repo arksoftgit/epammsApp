@@ -192,6 +192,25 @@ function ACCEPT_BlockSubBlockDefinition( )
    }
 }
 
+function GOTO_UpdateSPLD_Statement( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wSPLDSPLD_BlockDefinitionUpdate.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wSPLDSPLD_BlockDefinitionUpdate.zAction.value = "GOTO_UpdateSPLD_Statement";
+      document.wSPLDSPLD_BlockDefinitionUpdate.submit( );
+   }
+}
+
 function CANCEL_BlockSubBlockDefinition( )
 {
 

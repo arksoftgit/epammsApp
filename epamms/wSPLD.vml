@@ -456,7 +456,7 @@ SelectMLC_ComponentsForSLC( VIEW ViewToWindow )
       END
    END
    
-   // Make sure that if a lower level entry is selected, it's parent entry is also selected.
+   // Make sure that if a lower level entry is selected, its parent entry is also selected.
    // We will do this in two loops, setting level 2 entries from selected level 3 entries first and then
    // setting level 1 entries from selected level 2 entries.
    CreateViewFromView( mMasLC1, mMasLC )
@@ -1942,9 +1942,6 @@ ACCEPT_SPLD_StatementUpdate( VIEW ViewToWindow )
                                  mSPLDef, "CompositeComponentList", "ContinuationText" ) 
       SetAttributeFromAttribute( mSPLDef, szEntityName, "ContinuationLeadingText", 
                                  mSPLDef, "CompositeComponentList", "ContinuationLeadingText" )
-TraceLineS( "$$$$ Set Continuation", "" )
-TraceLineS( "$$$$ Set Continuation", "" )
-TraceLineS( "$$$$ Set Continuation", "" )
       
       // Accept the temporal subobject.
       AcceptSubobject( mSPLDef, "CompositeComponentList" )
@@ -2107,14 +2104,44 @@ END
 DIALOG OPERATION
 PostbuildBlockDefinitionUpdate( VIEW ViewToWindow )
 
+   VIEW mSPLDef REGISTERED AS mSPLDef
    VIEW mSPLDefPanel REGISTERED AS mSPLDefPanel
    VIEW mSPLDefBlock REGISTERED AS mSPLDefBlock
-   
+   STRING ( 64 )  szName
+   STRING ( 64 )  szType
+   STRING ( 256 ) szMsg
+
    // mSPLDefBlock should have been set up before transferring to this page.
    TraceLineS( "PostbuildBlockDefinitionUpdate Display ", "LLD_Block" )
    DisplayEntityInstance( mSPLDefBlock, "LLD_Block" )
    SetUpFormattingSelect( mSPLDefPanel, mSPLDefBlock.LLD_Block.LLD_SectionType ) 
    SetUpKeywordEntries( mSPLDefBlock, mSPLDefBlock.LLD_Block.LLD_SectionType )
+
+   // Select which of the CompositeComponentList entities are to be displayed
+   FOR EACH mSPLDef.Display WITHIN mSPLDef.SubregPhysicalLabelDef 
+      DELETE ENTITY mSPLDef.Display NONE
+   END
+   szName = mSPLDefBlock.LLD_Block.Name
+   szType = mSPLDefBlock.LLD_Block.LLD_SectionType
+   SET CURSOR FIRST mSPLDef.CompositeComponentList WHERE mSPLDef.CompositeComponentList.DisplayType = szType AND
+                                                         mSPLDef.CompositeComponentList.Value = szName
+   IF RESULT < zCURSOR_SET
+      szMsg = "Unable to locate " + szName + " within " + szType
+      MessageSend( ViewToWindow, "", "Block Update",
+                   szMsg,
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+   szMsg = "Looking for: " + szName + "  within: " + szType
+   TraceLineS( szMsg, "" )
+
+   SET CURSOR NEXT mSPLDef.CompositeComponentList
+   LOOP WHILE RESULT = zCURSOR_SET AND mSPLDef.CompositeComponentList.SelectLevel > 1
+      IF mSPLDef.CompositeComponentList.SelectLevel = 2
+         CREATE ENTITY mSPLDef.Display
+      END
+      SET CURSOR NEXT mSPLDef.CompositeComponentList
+   END 
 
 END
 

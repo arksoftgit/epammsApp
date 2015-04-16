@@ -1,0 +1,1 @@
+copy  JavaProject\target\epamms-1.0.jar  "%TOMCAT_HOME%\webapps\ROOT\web-inf\lib\"

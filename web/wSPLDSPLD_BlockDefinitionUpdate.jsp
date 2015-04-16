@@ -35,6 +35,7 @@ public int DoInputMapping( HttpServletRequest request,
    String taskId = (String) session.getAttribute( "ZeidonTaskId" );
    Task task = objectEngine.getTaskById( taskId );
 
+   View mSPLDef = null;
    View mSPLDefBlock = null;
    View vGridTmp = null; // temp view to grid view
    View vRepeatingGrp = null; // temp view to repeating group view
@@ -57,101 +58,124 @@ public int DoInputMapping( HttpServletRequest request,
    if ( webMapping == false )
       session.setAttribute( "ZeidonError", null );
 
+   mSPLDef = task.getViewByName( "mSPLDef" );
+   if ( VmlOperation.isValid( mSPLDef ) )
+   {
+      // Grid: GridComponentList
+      iTableRowCnt = 0;
+
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
+      vGridTmp = mSPLDef.newView( );
+      csrRC = vGridTmp.cursor( "Display" ).setFirst( "SubregPhysicalLabelDef" );
+      while ( csrRC.isSet() )
+      {
+         lEntityKey = vGridTmp.cursor( "Display" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         iTableRowCnt++;
+
+         csrRC = vGridTmp.cursor( "Display" ).setNextContinue( );
+      }
+
+      vGridTmp.drop( );
+   }
+
    mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
    if ( VmlOperation.isValid( mSPLDefBlock ) )
    {
-      // ComboBox: ComboBox1
+      // ComboBox: ComboSectionType
       nRC = mSPLDefBlock.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strMapValue = request.getParameter( "hComboBox1" );
+         strMapValue = request.getParameter( "hComboSectionType" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "ComboBox1", "", strMapValue );
+               VmlOperation.CreateMessage( task, "ComboSectionType", "", strMapValue );
             else
                mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "LLD_SectionType" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "ComboBox1", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "ComboSectionType", e.getReason( ), strMapValue );
          }
       }
 
-      // EditBox: EditBox3
+      // EditBox: EditTop
       nRC = mSPLDefBlock.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "EditBox3" );
+         strMapValue = request.getParameter( "EditTop" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "EditBox3", "", strMapValue );
+               VmlOperation.CreateMessage( task, "EditTop", "", strMapValue );
             else
                mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "Top" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "EditBox3", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "EditTop", e.getReason( ), strMapValue );
          }
       }
 
-      // EditBox: EditBox2
+      // EditBox: EditLeft
       nRC = mSPLDefBlock.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "EditBox2" );
+         strMapValue = request.getParameter( "EditLeft" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "EditBox2", "", strMapValue );
+               VmlOperation.CreateMessage( task, "EditLeft", "", strMapValue );
             else
                mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "Left" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "EditBox2", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "EditLeft", e.getReason( ), strMapValue );
          }
       }
 
-      // EditBox: EditBox4
+      // EditBox: EditHeight
       nRC = mSPLDefBlock.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "EditBox4" );
+         strMapValue = request.getParameter( "EditHeight" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "EditBox4", "", strMapValue );
+               VmlOperation.CreateMessage( task, "EditHeight", "", strMapValue );
             else
                mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "Height" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "EditBox4", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "EditHeight", e.getReason( ), strMapValue );
          }
       }
 
-      // EditBox: EditBox5
+      // EditBox: EditWidth
       nRC = mSPLDefBlock.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "EditBox5" );
+         strMapValue = request.getParameter( "EditWidth" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "EditBox5", "", strMapValue );
+               VmlOperation.CreateMessage( task, "EditWidth", "", strMapValue );
             else
                mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "Width" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "EditBox5", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "EditWidth", e.getReason( ), strMapValue );
          }
       }
 
@@ -381,6 +405,71 @@ if ( strActionToProcess != null )
       {
          // Next Window
          strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_ReturnToParent, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_UpdateSPLD_Statement" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDSPLD_BlockDefinitionUpdate", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mSPLDef;
+      mSPLDef = task.getViewByName( "mSPLDef" );
+      if ( VmlOperation.isValid( mSPLDef ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mSPLDef.cursor( "Display" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mSPLDef.cursor( "Display" ).setFirst("SubregPhysicalLabelDef" );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mSPLDef.cursor( "Display" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mSPLDef.cursor( "Display" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockDefinitionUpdate.jsp", "wSPLD.GOTO_UpdateSPLD_Statement" );
+         nOptRC = wSPLD.GOTO_UpdateSPLD_Statement( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wSPLD.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_StartModalSubwindow, "wSPLD", "SPLD_StatementUpdate" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -1108,13 +1197,13 @@ else
 
 </td>
 <td valign="top" style="width:224px;">
-<% /* ComboBox1:ComboBox */ %>
+<% /* ComboSectionType:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="ComboBox1" id="ComboBox1" size="1" style="width:224px;" onchange="ComboBox1OnChange( )">
+<select  name="ComboSectionType" id="ComboSectionType" size="1" style="width:224px;" onchange="ComboSectionTypeOnChange( )">
 
 <%
-   boolean inListComboBox1 = false;
+   boolean inListComboSectionType = false;
 
    mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
    if ( VmlOperation.isValid( mSPLDefBlock ) )
@@ -1136,7 +1225,7 @@ else
       // Code for NOT required attribute, which makes sure a blank entry exists.
       if ( strComboCurrentValue == "" )
       {
-         inListComboBox1 = true;
+         inListComboSectionType = true;
 %>
          <option selected="selected" value=""></option>
 <%
@@ -1163,7 +1252,7 @@ else
          {
             if ( StringUtils.equals( strComboCurrentValue, externalValue ) )
             {
-               inListComboBox1 = true;
+               inListComboSectionType = true;
 %>
                <option selected="selected" value="<%=externalValue%>"><%=externalValue%></option>
 <%
@@ -1177,7 +1266,7 @@ else
          }
       }  // for ( TableEntry entry
       // The value from the database isn't in the domain, add it to the list as disabled.
-      if ( !inListComboBox1 )
+      if ( !inListComboSectionType )
       { 
 %>
          <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
@@ -1187,7 +1276,7 @@ else
 %>
 </select>
 
-<input name="hComboBox1" id="hComboBox1" type="hidden" value="<%=strComboCurrentValue%>" >
+<input name="hComboSectionType" id="hComboSectionType" type="hidden" value="<%=strComboCurrentValue%>" >
 </td>
 </tr>
 <tr>
@@ -1198,9 +1287,9 @@ else
 
 </td>
 <td valign="top" style="width:78px;">
-<% /* EditBox3:EditBox */ %>
+<% /* EditTop:EditBox */ %>
 <%
-   strErrorMapValue = VmlOperation.CheckError( "EditBox3", strError );
+   strErrorMapValue = VmlOperation.CheckError( "EditTop", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -1211,7 +1300,7 @@ else
       strErrorColor = "";
       mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
       if ( VmlOperation.isValid( mSPLDefBlock ) == false )
-         task.log( ).debug( "Invalid View: " + "EditBox3" );
+         task.log( ).debug( "Invalid View: " + "EditTop" );
       else
       {
          nRC = mSPLDefBlock.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
@@ -1223,8 +1312,8 @@ else
             }
             catch (Exception e)
             {
-               out.println("There is an error on EditBox3: " + e.getMessage());
-               task.log().error( "*** Error on ctrl EditBox3", e );
+               out.println("There is an error on EditTop: " + e.getMessage());
+               task.log().error( "*** Error on ctrl EditTop", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -1237,7 +1326,7 @@ else
    }
 %>
 
-<input name="EditBox3" id="EditBox3" style="width:78px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EditTop" id="EditTop" style="width:78px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -1249,9 +1338,9 @@ else
 
 </td>
 <td valign="top" style="width:78px;">
-<% /* EditBox2:EditBox */ %>
+<% /* EditLeft:EditBox */ %>
 <%
-   strErrorMapValue = VmlOperation.CheckError( "EditBox2", strError );
+   strErrorMapValue = VmlOperation.CheckError( "EditLeft", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -1262,7 +1351,7 @@ else
       strErrorColor = "";
       mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
       if ( VmlOperation.isValid( mSPLDefBlock ) == false )
-         task.log( ).debug( "Invalid View: " + "EditBox2" );
+         task.log( ).debug( "Invalid View: " + "EditLeft" );
       else
       {
          nRC = mSPLDefBlock.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
@@ -1274,8 +1363,8 @@ else
             }
             catch (Exception e)
             {
-               out.println("There is an error on EditBox2: " + e.getMessage());
-               task.log().error( "*** Error on ctrl EditBox2", e );
+               out.println("There is an error on EditLeft: " + e.getMessage());
+               task.log().error( "*** Error on ctrl EditLeft", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -1288,7 +1377,7 @@ else
    }
 %>
 
-<input name="EditBox2" id="EditBox2" style="width:78px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EditLeft" id="EditLeft" style="width:78px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -1300,9 +1389,9 @@ else
 
 </td>
 <td valign="top" style="width:78px;">
-<% /* EditBox4:EditBox */ %>
+<% /* EditHeight:EditBox */ %>
 <%
-   strErrorMapValue = VmlOperation.CheckError( "EditBox4", strError );
+   strErrorMapValue = VmlOperation.CheckError( "EditHeight", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -1313,7 +1402,7 @@ else
       strErrorColor = "";
       mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
       if ( VmlOperation.isValid( mSPLDefBlock ) == false )
-         task.log( ).debug( "Invalid View: " + "EditBox4" );
+         task.log( ).debug( "Invalid View: " + "EditHeight" );
       else
       {
          nRC = mSPLDefBlock.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
@@ -1325,8 +1414,8 @@ else
             }
             catch (Exception e)
             {
-               out.println("There is an error on EditBox4: " + e.getMessage());
-               task.log().error( "*** Error on ctrl EditBox4", e );
+               out.println("There is an error on EditHeight: " + e.getMessage());
+               task.log().error( "*** Error on ctrl EditHeight", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -1339,7 +1428,7 @@ else
    }
 %>
 
-<input name="EditBox4" id="EditBox4" style="width:78px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EditHeight" id="EditHeight" style="width:78px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -1351,9 +1440,9 @@ else
 
 </td>
 <td valign="top" style="width:78px;">
-<% /* EditBox5:EditBox */ %>
+<% /* EditWidth:EditBox */ %>
 <%
-   strErrorMapValue = VmlOperation.CheckError( "EditBox5", strError );
+   strErrorMapValue = VmlOperation.CheckError( "EditWidth", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -1364,7 +1453,7 @@ else
       strErrorColor = "";
       mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
       if ( VmlOperation.isValid( mSPLDefBlock ) == false )
-         task.log( ).debug( "Invalid View: " + "EditBox5" );
+         task.log( ).debug( "Invalid View: " + "EditWidth" );
       else
       {
          nRC = mSPLDefBlock.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
@@ -1376,8 +1465,8 @@ else
             }
             catch (Exception e)
             {
-               out.println("There is an error on EditBox5: " + e.getMessage());
-               task.log().error( "*** Error on ctrl EditBox5", e );
+               out.println("There is an error on EditWidth: " + e.getMessage());
+               task.log().error( "*** Error on ctrl EditWidth", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -1390,7 +1479,7 @@ else
    }
 %>
 
-<input name="EditBox5" id="EditBox5" style="width:78px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EditWidth" id="EditWidth" style="width:78px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -1914,6 +2003,142 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </tbody>
 </table>
 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:22px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox7:GroupBox */ %>
+
+<div id="GroupBox7" name="GroupBox7" style="width:866px;float:left;">  <!-- GroupBox7 --> 
+
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:22px;">&nbsp&nbsp&nbsp</span>
+<% /* Text2:Text */ %>
+
+<span  id="Text2" name="Text2" style="width:254px;height:22px;">SPLD Components</span>
+
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+<div>  <!-- Beginning of a new line -->
+<% /* GridComponentList:Grid */ %>
+<table  cols=3 style="width:828px;"  name="GridComponentList" id="GridComponentList">
+
+<thead><tr>
+
+   <th style="width:126px;">Name</th>
+   <th style="width:50px;">Cont</th>
+   <th>Type/Content</th>
+
+</tr></thead>
+
+<tbody>
+
+<%
+try
+{
+   iTableRowCnt = 0;
+   mSPLDef = task.getViewByName( "mSPLDef" );
+   if ( VmlOperation.isValid( mSPLDef ) )
+   {
+      long   lEntityKey;
+      String strEntityKey;
+      String strButtonName;
+      String strOdd;
+      String strTag;
+      String strComponentName;
+      String strComponentBreak;
+      String strComponentValue;
+      
+      View vGridComponentList;
+      vGridComponentList = mSPLDef.newView( );
+      csrRC2 = vGridComponentList.cursor( "Display" ).setFirst( "SubregPhysicalLabelDef" );
+      while ( csrRC2.isSet() )
+      {
+         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
+         iTableRowCnt++;
+
+         lEntityKey = vGridComponentList.cursor( "Display" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         strButtonName = "SelectButton" + strEntityKey;
+
+         strComponentName = "";
+         nRC = vGridComponentList.cursor( "CompositeComponentList" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strComponentName = vGridComponentList.cursor( "CompositeComponentList" ).getAttribute( "DisplayTypeIndent" ).getString( "" );
+
+            if ( strComponentName == null )
+               strComponentName = "";
+         }
+
+         if ( StringUtils.isBlank( strComponentName ) )
+            strComponentName = "&nbsp";
+
+         strComponentBreak = "";
+         nRC = vGridComponentList.cursor( "CompositeComponentList" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strComponentBreak = vGridComponentList.cursor( "CompositeComponentList" ).getAttribute( "ContinuationBreakFlag" ).getString( "ShortName" );
+
+            if ( strComponentBreak == null )
+               strComponentBreak = "";
+         }
+
+         if ( StringUtils.isBlank( strComponentBreak ) )
+            strComponentBreak = "&nbsp";
+
+         strComponentValue = "";
+         nRC = vGridComponentList.cursor( "CompositeComponentList" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strComponentValue = vGridComponentList.cursor( "CompositeComponentList" ).getAttribute( "Value" ).getString( "" );
+
+            if ( strComponentValue == null )
+               strComponentValue = "";
+         }
+
+         if ( StringUtils.isBlank( strComponentValue ) )
+            strComponentValue = "&nbsp";
+
+%>
+
+<tr<%=strOdd%>>
+
+   <td nowrap style="width:126px;"><a href="#" onclick="GOTO_UpdateSPLD_Statement( this.id )" id="ComponentName::<%=strEntityKey%>"><%=strComponentName%></a></td>
+   <td nowrap style="width:50px;"><%=strComponentBreak%></td>
+   <td><%=strComponentValue%></td>
+
+</tr>
+
+<%
+         csrRC2 = vGridComponentList.cursor( "Display" ).setNextContinue( );
+      }
+      vGridComponentList.drop( );
+   }
+}
+catch (Exception e)
+{
+out.println("There is an error in grid: " + e.getMessage());
+task.log().info( "*** Error in grid" + e.getMessage() );
+}
+%>
+</tbody>
+</table>
+
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  GroupBox7 --> 
 </div>  <!-- End of a new line -->
 
 
