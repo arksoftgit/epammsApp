@@ -73,7 +73,7 @@ $(function() {
       // event: "mouseover"
    });
 
-   $(".zalign").click( function() {
+   $(".zalign-btn").click( function() {
       runAlign( this );
       return false;  // prevent default propagation
    });
@@ -2215,8 +2215,8 @@ public class FileServer {
          addZeidonAttributeToElement( $el, "wPID", parentId );
          addZeidonAttributeToElement( $el, "wPE", $parentElement.data( "z_w^e" ) );
       // console.log( "Setting4 wPID: " + parentId + "  wPE: " + $parentElement.data( "z_w^e" ) );
-         displayElementData( "AddHtmlWysiwygLabelElements Parent", $parentElement );
-         displayElementData( "AddHtmlWysiwygLabelElements Element", $el );
+      // displayElementData( "AddHtmlWysiwygLabelElements Parent", $parentElement );
+      // displayElementData( "AddHtmlWysiwygLabelElements Element", $el );
          $parentElement = $el;
          parentId = obj["ID"];
       /*
@@ -3069,6 +3069,9 @@ public class FileServer {
    }
    var spinner = $( "#zZoomSpinner" ).spinner();
    spinner.spinner( "value", g_scale );
+
+   $('#colorText').colorPicker( { colors: ["1111ff", "333333", "ff1111", "eeeeee", "feeeee"], names: ["Blue", "Black", "Red", "Gray", "Pink"], showHexField: false,
+                                  onColorChange : function(id, newValue) { console.log("ID: '" + id + "' has been changed to " + newValue); } } );
 
 /**
 var canvas = $('#canvasback')[0];

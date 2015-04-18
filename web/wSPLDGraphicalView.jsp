@@ -382,15 +382,13 @@ else
 <%@ include file="./include/timeout.inc" %>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSPLDGraphicalView.js"></script>
 
+
    <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
    <link rel="stylesheet" type="text/css" href="css/result-light.css">
    <link rel="stylesheet" type="text/css" href="css/style.css">
-<!-- styles needed by jScrollPane
-   <link rel="stylesheet" type="text/css" href="css/jquery.jscrollpane.css" media="all" />
- -->
-<!-- <link href="css/evol.colorpicker.css" rel="stylesheet" /> -->
-   <link rel="stylesheet" type="text/css" href="css/farbtastic.css">
-<!--  
+   <link rel="stylesheet" type="text/css" href="css/jquery.colorPicker.css">
+
+<!--
    <link href="../src/skin-win8/ui.fancytree.css" class="skinswitcher" rel="stylesheet" type="text/css">
    <script src="../src/jquery.fancytree.js" type="text/javascript"></script>
    <script src="../src/jquery.fancytree.dnd.js" type="text/javascript"></script>
@@ -486,10 +484,9 @@ else
    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
    <script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
    <script src="js/jquery.nicescroll.min.js"></script>
-<!--   <script src="js/evol.colorpicker.js" type="text/javascript"></script>  -->
-   <script src="js/farbtastic.js"></script>
-<!--   <script src="js/label.js"></script> -->
-       <script src="js/jquery.blockUI.js"></script>
+   <script src="js/jquery.blockUI.js"></script>
+
+   <script src="js/jquery.colorPicker.js" type="text/javascript"></script>
 
    <script src="js/labeldesigner.js"></script>
    <script src="js/jsonpath-0.8.0.js"></script>
@@ -716,17 +713,17 @@ else
          <div id="zheader" style="display: block; font-size: 1em; font-weight: bold;">
             ePamms Label Designer&nbsp;&nbsp;&nbsp;&nbsp;
             <div id="ztoolbar" class="ui-widget-header ui-corner-all">
-               <button id="at" class="zalign">Align Top</button>
-               <button id="al" class="zalign">Align Left</button> 
-               <button id="ab" class="zalign">Align Bottom</button> 
-               <button id="ar" class="zalign">Align Right</button> 
-               <button id="ew" class="zalign">Equal Width</button>
-               <button id="eh" class="zalign">Equal Height</button> 
-               <button id="ewh" class="zalign">Equal Width & Height</button> 
-               <button id="esh" class="zalign">Equal Space Horizontal</button>
-               <button id="esv" class="zalign">Equal Space Vertical</button> 
-               <button id="ah" class="zalign">Abut Horizontal</button>
-               <button id="av" class="zalign">Abut Vertical</button> 
+               <button id="at" class="zalign-btn">Align Top</button>
+               <button id="al" class="zalign-btn">Align Left</button> 
+               <button id="ab" class="zalign-btn">Align Bottom</button> 
+               <button id="ar" class="zalign-btn">Align Right</button> 
+               <button id="ew" class="zalign-btn">Equal Width</button>
+               <button id="eh" class="zalign-btn">Equal Height</button> 
+               <button id="ewh" class="zalign-btn">Equal Width & Height</button> 
+               <button id="esh" class="zalign-btn">Equal Space Horizontal</button>
+               <button id="esv" class="zalign-btn">Equal Space Vertical</button> 
+               <button id="ah" class="zalign-btn">Abut Horizontal</button>
+               <button id="av" class="zalign-btn">Abut Vertical</button> 
 
                <button id="Return">Return</button>
                <button id="Save">Save</button>
@@ -992,7 +989,30 @@ else
                            </div>
                         </div>
                      </div>
-
+                     &nbsp;
+                <!-- <select id="colorselector">
+                        <option value="106" data-color="#A0522D">sienna</option>
+                        <option value="47" data-color="#CD5C5C" selected="selected">indianred</option>
+                        <option value="87" data-color="#FF4500">orangered</option>
+                        <option value="15" data-color="#DC143C">crimson</option>
+                        <option value="24" data-color="#FF8C00">darkorange</option>
+                        <option value="78" data-color="#C71585">mediumvioletred</option>
+                        <option value="17" data-color="#008B8B">darkcyan</option>
+                        <option value="68" data-color="#32CD32">limegreen</option>
+                        <option value="18" data-color="#B8860B">darkgoldenrod</option>
+                        <option value="42" data-color="#FFD700">gold</option>
+                        <option value="77" data-color="#48D1CC">mediumturquoise</option>
+                        <option value="107" data-color="#87CEEB">skyblue</option>
+                        <option value="46" data-color="#FF69B4">hotpink</option>
+                        <option value="64" data-color="#87CEFA">lightskyblue</option>
+                        <option value="13" data-color="#6495ED">cornflowerblue</option>
+                        <option value="123" data-color="#000000">black</option>
+                        
+                     </select> -->
+                     <div><label for="colorText">Text Color</label>
+                     <div class="colorPicker-frame">
+                        <input id="colorText" name="colorText" type="text" value="#ff1111" style="float:right" data-text="DKS" /></div>
+                     </div>
                      &nbsp;
                      <p style="clear:both;position:relative"></p>
                      <hr>

@@ -12,7 +12,7 @@
             <line>1024</line>
         </file>
     </editor-bookmarks>
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="30">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="32">
         <file>
             <url>web/wSPLDSPLD_UpdateLLD.jsp</url>
             <bookmark id="3">
@@ -79,6 +79,14 @@
             </bookmark>
         </file>
         <file>
+            <url>web/js/jquery.colorPicker.js</url>
+            <bookmark id="32">
+                <name/>
+                <line>349</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
             <url>web/wStartUpAdminUpdateSubregistrant.jsp</url>
             <bookmark id="0">
                 <name/>
@@ -95,12 +103,13 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/genjs/wSPLDGraphicalView.js</file>
+            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/css/jquery.colorPicker.css</file>
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/js/labeldesigner.js</file>
-            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/wSPLDSPLD_BlockSpecialFormatDef.jsp</file>
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/js/jsoeUtils.js</file>
-            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/wSPLDGraphicalView.jsp</file>
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/src/java/com/ajax/GraphicalLabelDesignerServlet.java</file>
+            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/wSPLDGraphicalView.jsp</file>
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/js/jsoeObjectBrowser.js</file>
+            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/js/jquery.colorPicker.js</file>
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/js/jsoe.js</file>
         </group>
     </open-files>

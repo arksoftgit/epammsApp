@@ -1,0 +1,62 @@
+div.colorPicker-picker {
+  height: 16px;
+  width: 16px;
+  padding: 0 !important;
+  border: 1px solid #ccc;
+  background: url(../images/arrowColorPicker.gif) no-repeat top right;
+  cursor: pointer;
+  line-height: 16px;
+  font-size:0.75em;
+  font-weight:bold;
+  text-align: center;
+}
+
+div.colorPicker-palette {
+  width: 110px;
+  position: absolute;
+  border: 1px solid #598FEF;
+  background-color: #EFEFEF;
+  padding: 2px;
+  z-index: 9999;
+}
+  div.colorPicker_hexWrap {width: 100%; float:left }
+  div.colorPicker_hexWrap label {font-size: 95%; color: #2F2F2F; margin: 5px 2px; width: 25%}
+  div.colorPicker_hexWrap input {margin: 5px 2px; padding: 0; font-size: 95%; border: 1px solid #000; width: 65%; }
+
+div.colorPicker-swatch {
+  height: 12px;
+  width: 12px;
+  border: 1px solid #000;
+  margin: 2px;
+  float: left;
+  cursor: pointer;
+  line-height: 12px;
+}
+
+div.colorPicker-frame
+{
+   display: inline-block;
+   width: 100px;
+   height: 18px;
+   background-image: -webkit-linear-gradient( top, rgba( 186, 186, 186, 1 ), rgba( 200, 200, 200, 1 ) 12px, rgba( 160, 160, 160, 1 ) );
+   background-image: -moz-linear-gradient( top, rgba( 186, 186, 186, 1 ), rgba( 200, 200, 200, 1 ) 12px, rgba( 160, 160, 160, 1 ) );
+   background-image: -ms-linear-gradient( top, rgba( 186, 186, 186, 1 ), rgba( 200, 200, 200, 1 ) 12px, rgba( 160, 160, 160, 1 ) );
+   background-image: -o-linear-gradient( top, rgba( 186, 186, 186, 1 ), rgba( 200, 200, 200, 1 ) 12px, rgba( 160, 160, 160, 1 ) );
+   background-image: linear-gradient( to bottom, rgba( 186, 186, 186, 1 ), rgba( 200, 200, 200, 1 ) 12px, rgba( 160, 160, 160, 1 ) );
+   vertical-align: bottom;
+   border: 1px solid rgba( 128, 128, 128, 1 );
+   border-radius: 4px;
+   margin-left: 1em;
+   padding: 3px 6px 3px 6px;
+   box-shadow: 1px 1px 3px rgba( 0, 0, 0, 0.5 );
+}
+
+div.colorPicker-picker
+{
+   width: 98px;
+   height: 16px;
+   border-color: rgba( 160, 160, 160, 1 ) rgba( 208, 208, 208, 1 ) rgba( 208, 208, 208, 1 ) rgba( 160, 160, 160, 1 );
+   border-style: solid;
+   border-width: 1px;
+   cursor: pointer;
+}

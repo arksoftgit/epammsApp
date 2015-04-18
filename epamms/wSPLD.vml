@@ -2130,19 +2130,18 @@ PostbuildBlockDefinitionUpdate( VIEW ViewToWindow )
       MessageSend( ViewToWindow, "", "Block Update",
                    szMsg,
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      RETURN 2
-   END
-   szMsg = "Looking for: " + szName + "  within: " + szType
-   TraceLineS( szMsg, "" )
-
-   SET CURSOR NEXT mSPLDef.CompositeComponentList
-   LOOP WHILE RESULT = zCURSOR_SET AND mSPLDef.CompositeComponentList.SelectLevel > 1
-      IF mSPLDef.CompositeComponentList.SelectLevel = 2
-         CREATE ENTITY mSPLDef.Display
-      END
+   ELSE
+      szMsg = "Looking for: " + szName + "  within: " + szType
+      TraceLineS( szMsg, "" )
+   
       SET CURSOR NEXT mSPLDef.CompositeComponentList
-   END 
-
+      LOOP WHILE RESULT = zCURSOR_SET AND mSPLDef.CompositeComponentList.SelectLevel > 1
+         IF mSPLDef.CompositeComponentList.SelectLevel = 2
+            CREATE ENTITY mSPLDef.Display
+         END
+         SET CURSOR NEXT mSPLDef.CompositeComponentList
+      END
+   END
 END
 
 ////////////////////////////////////////////////////////////////

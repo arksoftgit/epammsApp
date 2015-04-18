@@ -103,139 +103,6 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
-      // EditBox: EditTop
-      nRC = mSPLDefBlock.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
-      {
-         strMapValue = request.getParameter( "EditTop" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "EditTop", "", strMapValue );
-            else
-               mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "Top" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "EditTop", e.getReason( ), strMapValue );
-         }
-      }
-
-      // EditBox: EditLeft
-      nRC = mSPLDefBlock.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
-      {
-         strMapValue = request.getParameter( "EditLeft" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "EditLeft", "", strMapValue );
-            else
-               mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "Left" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "EditLeft", e.getReason( ), strMapValue );
-         }
-      }
-
-      // EditBox: EditHeight
-      nRC = mSPLDefBlock.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
-      {
-         strMapValue = request.getParameter( "EditHeight" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "EditHeight", "", strMapValue );
-            else
-               mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "Height" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "EditHeight", e.getReason( ), strMapValue );
-         }
-      }
-
-      // EditBox: EditWidth
-      nRC = mSPLDefBlock.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
-      {
-         strMapValue = request.getParameter( "EditWidth" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "EditWidth", "", strMapValue );
-            else
-               mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "Width" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "EditWidth", e.getReason( ), strMapValue );
-         }
-      }
-
-      // EditBox: EditBox1
-      nRC = mSPLDefBlock.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
-      {
-         strMapValue = request.getParameter( "EditBox1" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "EditBox1", "", strMapValue );
-            else
-               mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "ImageName" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "EditBox1", e.getReason( ), strMapValue );
-         }
-      }
-
-      // CheckBox: CheckBox1
-      nRC = mSPLDefBlock.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
-      {
-         strMapValue = request.getParameter( "CheckBox1" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "CheckBox1", "", strMapValue );
-            else
-               mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "ContinuationBlockFlag" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "CheckBox1", e.getReason( ), strMapValue );
-         }
-      }
-
-      // ComboBox: ComboBox3
-      nRC = mSPLDefBlock.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strMapValue = request.getParameter( "hComboBox3" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "ComboBox3", "", strMapValue );
-            else
-               mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "LLD_ColumnListType" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "ComboBox3", e.getReason( ), strMapValue );
-         }
-      }
-
       // Grid: SpecialSectionAttributes
       iTableRowCnt = 0;
 
@@ -1078,14 +945,42 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
+<div style="height:8px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox3:GroupBox */ %>
+
+<div id="GroupBox3" name="GroupBox3" style="width:340px;height:30px;float:left;">  <!-- GroupBox3 --> 
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:10px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:20px;">&nbsp</span>
+<% /* TXRelatedMarketingSection:Text */ %>
+
+<span  id="TXRelatedMarketingSection" name="TXRelatedMarketingSection" style="width:286px;height:20px;">Related Marketing Section</span>
+
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  GroupBox3 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:8px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox9:GroupBox */ %>
-<div id="GroupBox9" name="GroupBox9" style="float:left;width:466px;" >
+<div id="GroupBox9" name="GroupBox9" style="float:left;width:574px;" >
 
-<table cols=2 style="width:466px;"  class="grouptable">
+<table cols=3 style="width:574px;"  class="grouptable">
 
 <tr>
 <td valign="top" style="width:116px;">
@@ -1145,7 +1040,7 @@ else
 <span  id="BlockName:" name="BlockName:" style="width:110px;height:26px;">Block Name:</span>
 
 </td>
-<td valign="top" style="width:224px;">
+<td valign="top" style="width:254px;">
 <% /* BlockName:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "BlockName", strError );
@@ -1187,6 +1082,22 @@ else
 
 <input name="BlockName" id="BlockName"  disabled style="width:224px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
+</td>
+<td valign="top" style="width:130px;">
+<% /* GroupBox4:GroupBox */ %>
+<div id="GroupBox4" name="GroupBox4" style="width:130px;height:36px;float:left;">
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:8px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<% /* PushBtn3:PushBtn */ %>
+<button type="button" name="PushBtn3" id="PushBtn3" value="" onclick="GOTO_SelectMarketingSection( )" style="width:68px;height:24px;">Select</button>
+
+</div>  <!-- End of a new line -->
+
+</div>  <!-- GroupBox4 --> 
 </td>
 </tr>
 <tr>
@@ -1278,261 +1189,7 @@ else
 
 <input name="hComboSectionType" id="hComboSectionType" type="hidden" value="<%=strComboCurrentValue%>" >
 </td>
-</tr>
-<tr>
-<td valign="top" style="width:116px;">
-<% /* TXTop::Text */ %>
-
-<span  id="TXTop:" name="TXTop:" style="width:110px;height:26px;">Top:</span>
-
-</td>
-<td valign="top" style="width:78px;">
-<% /* EditTop:EditBox */ %>
-<%
-   strErrorMapValue = VmlOperation.CheckError( "EditTop", strError );
-   if ( !StringUtils.isBlank( strErrorMapValue ) )
-   {
-      if ( StringUtils.equals( strErrorFlag, "Y" ) )
-         strErrorColor = "color:red;";
-   }
-   else
-   {
-      strErrorColor = "";
-      mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
-      if ( VmlOperation.isValid( mSPLDefBlock ) == false )
-         task.log( ).debug( "Invalid View: " + "EditTop" );
-      else
-      {
-         nRC = mSPLDefBlock.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            try
-            {
-            strErrorMapValue = mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "Top" ).getString( "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on EditTop: " + e.getMessage());
-               task.log().error( "*** Error on ctrl EditTop", e );
-            }
-            if ( strErrorMapValue == null )
-               strErrorMapValue = "";
-
-            task.log( ).debug( "LLD_Block.Top: " + strErrorMapValue );
-         }
-         else
-            task.log( ).debug( "Entity does not exist: " + "mSPLDefBlock.LLD_Block" );
-      }
-   }
-%>
-
-<input name="EditTop" id="EditTop" style="width:78px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
-
-</td>
-</tr>
-<tr>
-<td valign="top" style="width:116px;">
-<% /* TXLeft::Text */ %>
-
-<span  id="TXLeft:" name="TXLeft:" style="width:110px;height:26px;">Left:</span>
-
-</td>
-<td valign="top" style="width:78px;">
-<% /* EditLeft:EditBox */ %>
-<%
-   strErrorMapValue = VmlOperation.CheckError( "EditLeft", strError );
-   if ( !StringUtils.isBlank( strErrorMapValue ) )
-   {
-      if ( StringUtils.equals( strErrorFlag, "Y" ) )
-         strErrorColor = "color:red;";
-   }
-   else
-   {
-      strErrorColor = "";
-      mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
-      if ( VmlOperation.isValid( mSPLDefBlock ) == false )
-         task.log( ).debug( "Invalid View: " + "EditLeft" );
-      else
-      {
-         nRC = mSPLDefBlock.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            try
-            {
-            strErrorMapValue = mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "Left" ).getString( "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on EditLeft: " + e.getMessage());
-               task.log().error( "*** Error on ctrl EditLeft", e );
-            }
-            if ( strErrorMapValue == null )
-               strErrorMapValue = "";
-
-            task.log( ).debug( "LLD_Block.Left: " + strErrorMapValue );
-         }
-         else
-            task.log( ).debug( "Entity does not exist: " + "mSPLDefBlock.LLD_Block" );
-      }
-   }
-%>
-
-<input name="EditLeft" id="EditLeft" style="width:78px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
-
-</td>
-</tr>
-<tr>
-<td valign="top" style="width:116px;">
-<% /* TXHeight::Text */ %>
-
-<span  id="TXHeight:" name="TXHeight:" style="width:110px;height:26px;">Height:</span>
-
-</td>
-<td valign="top" style="width:78px;">
-<% /* EditHeight:EditBox */ %>
-<%
-   strErrorMapValue = VmlOperation.CheckError( "EditHeight", strError );
-   if ( !StringUtils.isBlank( strErrorMapValue ) )
-   {
-      if ( StringUtils.equals( strErrorFlag, "Y" ) )
-         strErrorColor = "color:red;";
-   }
-   else
-   {
-      strErrorColor = "";
-      mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
-      if ( VmlOperation.isValid( mSPLDefBlock ) == false )
-         task.log( ).debug( "Invalid View: " + "EditHeight" );
-      else
-      {
-         nRC = mSPLDefBlock.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            try
-            {
-            strErrorMapValue = mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "Height" ).getString( "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on EditHeight: " + e.getMessage());
-               task.log().error( "*** Error on ctrl EditHeight", e );
-            }
-            if ( strErrorMapValue == null )
-               strErrorMapValue = "";
-
-            task.log( ).debug( "LLD_Block.Height: " + strErrorMapValue );
-         }
-         else
-            task.log( ).debug( "Entity does not exist: " + "mSPLDefBlock.LLD_Block" );
-      }
-   }
-%>
-
-<input name="EditHeight" id="EditHeight" style="width:78px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
-
-</td>
-</tr>
-<tr>
-<td valign="top" style="width:116px;">
-<% /* TXWidth::Text */ %>
-
-<span  id="TXWidth:" name="TXWidth:" style="width:110px;height:26px;">Width:</span>
-
-</td>
-<td valign="top" style="width:78px;">
-<% /* EditWidth:EditBox */ %>
-<%
-   strErrorMapValue = VmlOperation.CheckError( "EditWidth", strError );
-   if ( !StringUtils.isBlank( strErrorMapValue ) )
-   {
-      if ( StringUtils.equals( strErrorFlag, "Y" ) )
-         strErrorColor = "color:red;";
-   }
-   else
-   {
-      strErrorColor = "";
-      mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
-      if ( VmlOperation.isValid( mSPLDefBlock ) == false )
-         task.log( ).debug( "Invalid View: " + "EditWidth" );
-      else
-      {
-         nRC = mSPLDefBlock.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            try
-            {
-            strErrorMapValue = mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "Width" ).getString( "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on EditWidth: " + e.getMessage());
-               task.log().error( "*** Error on ctrl EditWidth", e );
-            }
-            if ( strErrorMapValue == null )
-               strErrorMapValue = "";
-
-            task.log( ).debug( "LLD_Block.Width: " + strErrorMapValue );
-         }
-         else
-            task.log( ).debug( "Entity does not exist: " + "mSPLDefBlock.LLD_Block" );
-      }
-   }
-%>
-
-<input name="EditWidth" id="EditWidth" style="width:78px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
-
-</td>
-</tr>
-<tr>
-<td valign="top" style="width:116px;">
-<% /* TXGraphicName::Text */ %>
-
-<span  id="TXGraphicName:" name="TXGraphicName:" style="width:110px;height:26px;">Graphic Name:</span>
-
-</td>
-<td valign="top" style="width:310px;">
-<% /* EditBox1:EditBox */ %>
-<%
-   strErrorMapValue = VmlOperation.CheckError( "EditBox1", strError );
-   if ( !StringUtils.isBlank( strErrorMapValue ) )
-   {
-      if ( StringUtils.equals( strErrorFlag, "Y" ) )
-         strErrorColor = "color:red;";
-   }
-   else
-   {
-      strErrorColor = "";
-      mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
-      if ( VmlOperation.isValid( mSPLDefBlock ) == false )
-         task.log( ).debug( "Invalid View: " + "EditBox1" );
-      else
-      {
-         nRC = mSPLDefBlock.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            try
-            {
-            strErrorMapValue = mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "ImageName" ).getString( "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on EditBox1: " + e.getMessage());
-               task.log().error( "*** Error on ctrl EditBox1", e );
-            }
-            if ( strErrorMapValue == null )
-               strErrorMapValue = "";
-
-            task.log( ).debug( "LLD_Block.ImageName: " + strErrorMapValue );
-         }
-         else
-            task.log( ).debug( "Entity does not exist: " + "mSPLDefBlock.LLD_Block" );
-      }
-   }
-%>
-
-<input name="EditBox1" id="EditBox1" style="width:310px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
-
-</td>
+<td>&nbsp</td>
 </tr>
 </table>
 
@@ -1544,284 +1201,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox2:GroupBox */ %>
-
-<div id="GroupBox2" name="GroupBox2" style="width:466px;height:38px;float:left;">  <!-- GroupBox2 --> 
-
-
- <!-- This is added as a line spacer -->
 <div style="height:12px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:26px;">&nbsp</span>
-<% /* CheckBox1:CheckBox */ %>
-<%
-   strErrorMapValue = "";
-   mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
-   if ( VmlOperation.isValid( mSPLDefBlock ) == false )
-      task.log( ).debug( "Invalid View: " + "CheckBox1" );
-   else
-   {
-      nRC = mSPLDefBlock.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-         strRadioGroupValue = mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "ContinuationBlockFlag" ).getString( "" );
-   }
-
-   if ( StringUtils.equals( strRadioGroupValue, "Y" ) )
-      strErrorMapValue = "checked=\"checked\"";
-%>
-
-<input type="checkbox" name="CheckBox1" id="CheckBox1"  value="Y" <%=strErrorMapValue%> style="">
-<span style="width:404px;height:26px;">&nbsp This is a Continuation from Previous Section/Statement</span>
-
-</div>  <!-- End of a new line -->
-
-
-</div>  <!--  GroupBox2 --> 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
-<div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox8:GroupBox */ %>
-
-<div id="GroupBox8" name="GroupBox8" style="width:480px;float:left;">  <!-- GroupBox8 --> 
-
-
-<div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox3:GroupBox */ %>
-
-<div id="GroupBox3" name="GroupBox3" style="width:340px;height:30px;float:left;">  <!-- GroupBox3 --> 
-
-
- <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:20px;">&nbsp</span>
-<% /* TXRelatedMarketingSection:Text */ %>
-
-<span  id="TXRelatedMarketingSection" name="TXRelatedMarketingSection" style="width:286px;height:20px;">Related Marketing Section</span>
-
-</div>  <!-- End of a new line -->
-
-
-</div>  <!--  GroupBox3 --> 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
-<div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox10:GroupBox */ %>
-
-<div id="GroupBox10" name="GroupBox10" style="width:114px;height:36px;float:left;">  <!-- GroupBox10 --> 
-
-
- <!-- This is added as a line spacer -->
-<div style="height:8px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<% /* TXSectionName::Text */ %>
-
-<span  id="TXSectionName:" name="TXSectionName:" style="width:98px;height:14px;">Section Name:</span>
-
-</div>  <!-- End of a new line -->
-
-
-</div>  <!--  GroupBox10 --> 
-<div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox11:GroupBox */ %>
-
-<div id="GroupBox11" name="GroupBox11" style="width:222px;height:36px;float:left;">  <!-- GroupBox11 --> 
-
-
- <!-- This is added as a line spacer -->
-<div style="height:8px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<% /* TXName:Text */ %>
-<% strTextDisplayValue = "";
-   mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
-   if ( VmlOperation.isValid( mSPLDefBlock ) == false )
-      task.log( ).debug( "Invalid View: " + "TXName" );
-   else
-   {
-      nRC = mSPLDefBlock.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-      try
-      {
-         strTextDisplayValue = mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "Name" ).getString( "" );
-      }
-      catch (Exception e)
-      {
-         out.println("There is an error on TXName: " + e.getMessage());
-         task.log().info( "*** Error on ctrl TXName" + e.getMessage() );
-      }
-         if ( strTextDisplayValue == null )
-            strTextDisplayValue = "";
-      }
-   }
-%>
-
-<span  id="TXName" name="TXName" style="width:158px;height:14px;"><%=strTextDisplayValue%></span>
-
-</div>  <!-- End of a new line -->
-
-
-</div>  <!--  GroupBox11 --> 
-<div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox4:GroupBox */ %>
-
-<div id="GroupBox4" name="GroupBox4" style="width:130px;height:36px;float:left;">  <!-- GroupBox4 --> 
-
-
- <!-- This is added as a line spacer -->
-<div style="height:8px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<% /* PushBtn3:PushBtn */ %>
-<button type="button" name="PushBtn3" id="PushBtn3" value="" onclick="GOTO_SelectMarketingSection( )" style="width:68px;height:24px;">Select</button>
-
-</div>  <!-- End of a new line -->
-
-
-</div>  <!--  GroupBox4 --> 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
-<div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox12:GroupBox */ %>
-
-<div id="GroupBox12" name="GroupBox12" style="width:114px;height:36px;float:left;">  <!-- GroupBox12 --> 
-
-
- <!-- This is added as a line spacer -->
-<div style="height:8px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<% /* TXClaimListType::Text */ %>
-
-<span  id="TXClaimListType:" name="TXClaimListType:" style="width:106px;height:14px;">Claim List Type:</span>
-
-</div>  <!-- End of a new line -->
-
-
-</div>  <!--  GroupBox12 --> 
-<div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox13:GroupBox */ %>
-
-<div id="GroupBox13" name="GroupBox13" style="width:222px;height:36px;float:left;">  <!-- GroupBox13 --> 
-
-
- <!-- This is added as a line spacer -->
-<div style="height:8px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<% /* ComboBox3:ComboBox */ %>
-<% strErrorMapValue = "";  %>
-
-<select  name="ComboBox3" id="ComboBox3" size="1" style="width:188px;" onchange="ComboBox3OnChange( )">
-
-<%
-   boolean inListComboBox3 = false;
-
-   mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
-   if ( VmlOperation.isValid( mSPLDefBlock ) )
-   {
-      List<TableEntry> list = JspWebUtils.getTableDomainValues( mSPLDefBlock , "LLD_Block", "LLD_ColumnListType", "" );
-
-      nRC = mSPLDefBlock.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strComboCurrentValue = mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "LLD_ColumnListType" ).getString( "" );
-         if ( strComboCurrentValue == null )
-            strComboCurrentValue = "";
-      }
-      else
-      {
-         strComboCurrentValue = "";
-      }
-
-      // Code for NOT required attribute, which makes sure a blank entry exists.
-      if ( strComboCurrentValue == "" )
-      {
-         inListComboBox3 = true;
-%>
-         <option selected="selected" value=""></option>
-<%
-      }
-      else
-      {
-%>
-         <option value=""></option>
-<%
-      }
-      for ( TableEntry entry : list )
-      {
-         String internalValue = entry.getInternalValue( );
-         String externalValue = entry.getExternalValue( );
-         // Perhaps getInternalValue and getExternalValue should return an empty string, 
-         // but currently it returns null.  Set to empty string. 
-         if ( externalValue == null )
-         {
-            internalValue = "";
-            externalValue = "";
-         }
-
-         if ( !StringUtils.isBlank( externalValue ) )
-         {
-            if ( StringUtils.equals( strComboCurrentValue, externalValue ) )
-            {
-               inListComboBox3 = true;
-%>
-               <option selected="selected" value="<%=externalValue%>"><%=externalValue%></option>
-<%
-            }
-            else
-            {
-%>
-               <option value="<%=externalValue%>"><%=externalValue%></option>
-<%
-            }
-         }
-      }  // for ( TableEntry entry
-      // The value from the database isn't in the domain, add it to the list as disabled.
-      if ( !inListComboBox3 )
-      { 
-%>
-         <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
-<%
-      }  
-   }  // if view != null
-%>
-</select>
-
-<input name="hComboBox3" id="hComboBox3" type="hidden" value="<%=strComboCurrentValue%>" >
-</div>  <!-- End of a new line -->
-
-
-</div>  <!--  GroupBox13 --> 
-</div>  <!-- End of a new line -->
-
-
-</div>  <!--  GroupBox8 --> 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
@@ -1862,7 +1242,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:8px;width:100px;"></div>
+<div style="height:10px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
@@ -2009,7 +1389,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 
  <!-- This is added as a line spacer -->
-<div style="height:22px;width:100px;"></div>
+<div style="height:10px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->

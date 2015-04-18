@@ -124,6 +124,7 @@ if ( task == null )
    return; // something really bad has happened!!!
 }
 
+task.log().debug( "===============================>>>>>>>>>>>>>>>>>>>>>>> GraphicalView Task Id: " + taskId );
 vKZXMLPGO = JspWebUtils.createWebSession( null, task, "" );
 mMsgQ = new KZMSGQOO_Object( vKZXMLPGO );
 mMsgQ.setView( VmlOperation.getMessageObject( task ) );
@@ -374,7 +375,7 @@ else
 <head>
 
    <meta http-equiv="content-type" content="text/html; charset=utf-8">
-   <title>Graphical View of LLD</title>
+<title>SPLD Graphical View</title>
 
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
 <!-- log a user out.  Timeout.inc is not used if the dialog or window has a timeout value set. -->
@@ -715,17 +716,17 @@ else
          <div id="zheader" style="display: block; font-size: 1em; font-weight: bold;">
             ePamms Label Designer&nbsp;&nbsp;&nbsp;&nbsp;
             <div id="ztoolbar" class="ui-widget-header ui-corner-all">
-               <button id="at" class="zalign">Align Top</button>
-               <button id="al" class="zalign">Align Left</button> 
-               <button id="ab" class="zalign">Align Bottom</button> 
-               <button id="ar" class="zalign">Align Right</button> 
-               <button id="ew" class="zalign">Equal Width</button>
-               <button id="eh" class="zalign">Equal Height</button> 
-               <button id="ewh" class="zalign">Equal Width & Height</button> 
-               <button id="esh" class="zalign">Equal Space Horizontal</button>
-               <button id="esv" class="zalign">Equal Space Vertical</button> 
-               <button id="ah" class="zalign">Abut Horizontal</button>
-               <button id="av" class="zalign">Abut Vertical</button> 
+               <button id="at" class="zalign-btn">Align Top</button>
+               <button id="al" class="zalign-btn">Align Left</button> 
+               <button id="ab" class="zalign-btn">Align Bottom</button> 
+               <button id="ar" class="zalign-btn">Align Right</button> 
+               <button id="ew" class="zalign-btn">Equal Width</button>
+               <button id="eh" class="zalign-btn">Equal Height</button> 
+               <button id="ewh" class="zalign-btn">Equal Width & Height</button> 
+               <button id="esh" class="zalign-btn">Equal Space Horizontal</button>
+               <button id="esv" class="zalign-btn">Equal Space Vertical</button> 
+               <button id="ah" class="zalign-btn">Abut Horizontal</button>
+               <button id="av" class="zalign-btn">Abut Vertical</button> 
 
                <button id="Return">Return</button>
                <button id="Save">Save</button>
@@ -734,7 +735,7 @@ else
                <label for="labelBorders" style="margin-right:2px;margin-top:0px;">Borders</label>
                <button id="UpdateBlock">Update Current Block</button>
             </div> <!-- ztoolbar -->
-            <img src="./images/epamms.jpg" width="64" height="25" alt="ePamms" style="margin:5px; float:right; border-style:double;">
+            <img src="./images/epamms.jpg" width="64" height="25" alt="ePamms" style="margin:5px;float:right;border-style:double;">
             &nbsp;&nbsp;
             <label for="showtools" style="margin-right:2px;margin-top:12px;float:right;">Show Tools</label>
             <input type="checkbox" id="showtools" name="showtools" style="margin-left:2px;margin-top:12px;float:right;">
@@ -859,8 +860,8 @@ else
                      </div>
                      &nbsp;
                      <div style="overflow:hidden; white-space:nowrap;">
-                       <label for="zBlockTitle">Block Title:</label>
-                       <input type="text" id="zBlockTitle" class="zeidon" data-zmap="block.z_^block^title" style="float:right" />
+                       <label for="zBlockTitle">Block Name:</label>
+                       <input type="text" id="zBlockName" class="zeidon" data-zmap="block.z_^name" style="float:right" />
                      </div>
                      <div style="overflow:hidden; white-space:nowrap;">
                        <label for="zBlockTop">Block Top:</label>
@@ -995,7 +996,21 @@ else
                      &nbsp;
                      <p style="clear:both;position:relative"></p>
                      <hr>
-                     <input type="checkbox" id="zCheckContinuationBlock" name="zCheckContinuationBlock" class="zeidon" data-zmap="block.z_^continuation^block^flag" /><label for="zCheckContinuationBlock">Continuation Block</label>
+                     <input type="checkbox" id="zCheckContinuationBlock" name="zCheckContinuationBlock" class="zeidon" data-zmap="block.z_^continuation^block^flag" /><label for="zCheckContinuationBlock">Continuation from Previous Section/Statement</label>
+                     &nbsp;
+                     <p style="clear:both;position:relative"></p>
+                     <div style="overflow:hidden; white-space:nowrap; padding-top:6px">
+                       <label for="zImageName">Graphic Image Name:</label>
+                       <input type="text" id="zImageName" class="zeidon" data-zmap="block.z_^image^name" style="float:right" />
+                     </div>
+                     <div class="ui-widget" style="padding-top:6px">
+                       <label>Claim List Type: </label>
+                       <select id="zClaimListType" class="zeidon" data-zmap="block.z_^l^l^d_^column^list^type" style="float:right">
+                         <option value="">Select Claim List Type...</option>
+                         <option value="C2">Usage List - 2 Column</option>
+                         <option value="C3">Usage List - 3 Column</option>
+                        </select>
+                     </div>
 
                      <!-- Add a <div> element where the dynatree should appear: -->
                      <hr>
@@ -1009,12 +1024,14 @@ else
                            <input type="text" id="zPageSpinner" value="1" style="width:20px;"/>
                         </span>
                      </p>
+                     <!--
                      <p style="clear:both;position:relative">
                         <span>
                            <label for="zPageTitle">Page Title:</label>
                            <input type="text" id="zPageTitle" class="zeidon" data-zmap="page.z_^title" value="" style="width:120px;float:right;" />
                         </span>
                      </p>
+                     -->
                      <p style="clear:both;position:relative">
                         <span>
                            <label for="zPageHeight">Page Height:</label>
@@ -1033,6 +1050,7 @@ else
 
                   <h3>LLD Properties</h3>
                   <div>
+                     <!--
                      <p>
                         <label for="zLLD_Name">LLD Name:</label>
                         <span>
@@ -1041,6 +1059,7 @@ else
                            <input type="text" id="zLLD_Name" class="zeidon" data-zmap="label.z_^name" value="" style="float:right;width:92px;"/>
                         </span>
                      </p>
+                     -->
                      <p style="clear:both;position:relative"></p>
                      <p>
                         <span>
@@ -1048,6 +1067,7 @@ else
                            <input type="text" id="zCSS_File" class="zeidon" data-zmap="label.z_^c^s^s_^file^name" value="" style="float:right;width:180px;"/>
                         </span>
                      </p>
+                     <!--
                      <p style="clear:both;position:relative"></p>
                      <div class="ui-widget" style="overflow:hidden; white-space:nowrap;">
                         <label for="zHazardPanel">Hazard Panel:</label>
@@ -1061,6 +1081,7 @@ else
                           <option value="5">Location 5</option>
                         </select>
                      </div>
+                     -->
                      <p style="clear:both;position:relative"></p>
                      <p>
                         <label>Continuation Text:</label><br />
