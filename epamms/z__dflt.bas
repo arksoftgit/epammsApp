@@ -1,0 +1,51 @@
+z0000-Zeidon    Z__DFLT  TZADCSDO 06/20/97   16:54:12 1.0b0
+eUI_Spec   1
+aZKey      90067529
+aName      Z__DFLT
+aDefaultType L
+
+eDfltWndDesign 2
+aZKey      90067530
+aAutoVersion N
+aActionType B
+aUsageStyle U
+aCascade   N
+aUpdateCancelAction N
+aUpdateDeleteAction N
+aUpdateSaveAction N
+aUpdateNextAction N
+aUpdatePrevAction N
+aListOptionPosition P
+aListDeleteAction N
+aListCreateAction N
+aWndRefresh N
+aListQualWndButtonText &New...
+
+eInitValues 2
+aOK        OK
+aCancel    Cancel
+aDelete    Delete
+aNext      Next
+aPrevious  Previous
+aClose     Close
+aNew       New...
+aExit      Exit
+aDetailUpdate Update...
+aDetailDisplay Detail...
+aSelectOnParent New...
+aSelectOnInclude Select
+aCancelOnInclude Cancel
+aCloseOnInclude Close
+aButtonWidth 40
+aButtonHeight 12
+aButtonTopMargin 10
+aButtonBottomMargin 3
+aButtonLeftMargin 5
+aButtonRightMargin 5
+aButtonIncrementX 5
+aButtonIncrementY 3
+aDIL_MessageFlag N
+aReportTextSize 10
+aReportTextIncrementX 0
+aReportTextIncrementY 0
+

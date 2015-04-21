@@ -115,6 +115,10 @@ omSPLDef_GeneratePDF_Label( View     mSPLDef )
    String   szXmlName = null;
    //:STRING ( 256 ) szXslName
    String   szXslName = null;
+   //:STRING ( 30 ) szDateTime
+   String   szDateTime = null;
+   //:STRING ( 30 ) szDateTimeDisplay
+   String   szDateTimeDisplay = null;
    int      RESULT = 0;
    String   szTempString_0 = null;
    int      lTempInteger_0 = 0;
@@ -128,7 +132,17 @@ omSPLDef_GeneratePDF_Label( View     mSPLDef )
    double  dTempDecimal_4 = 0.0;
 
 
-   //:// Generate an PDF Label from the SPLD.
+   //:// Generate a PDF Label from the SPLD.
+   //:SysGetDateTime( szDateTime )
+    {StringBuilder sb_szDateTime;
+   if ( szDateTime == null )
+      sb_szDateTime = new StringBuilder( 32 );
+   else
+      sb_szDateTime = new StringBuilder( szDateTime );
+      m_KZOEP1AA.SysGetDateTime( sb_szDateTime );
+   szDateTime = sb_szDateTime.toString( );}
+   //:mSPLDef.SubregPhysicalLabelDef.wDateTime = szDateTime
+   SetAttributeFromString( mSPLDef, "SubregPhysicalLabelDef", "wDateTime", szDateTime );
 
    //:// Delete any existing DisplaySection entries.
    //:FOR EACH mSPLDef.DisplaySection 
@@ -322,6 +336,51 @@ omSPLDef_GeneratePDF_Label( View     mSPLDef )
    {
       throw ZeidonException.wrapException( e );
    }
+
+   //:GetStringFromAttributeByContext( szDateTimeDisplay, mSPLDef, "SubregPhysicalLabelDef", "wDateTime", "YYYY/MM/DD HH:MM:SS.S AM", 30 )
+   {StringBuilder sb_szDateTimeDisplay;
+   if ( szDateTimeDisplay == null )
+      sb_szDateTimeDisplay = new StringBuilder( 32 );
+   else
+      sb_szDateTimeDisplay = new StringBuilder( szDateTimeDisplay );
+       GetStringFromAttributeByContext( sb_szDateTimeDisplay, mSPLDef, "SubregPhysicalLabelDef", "wDateTime", "YYYY/MM/DD HH:MM:SS.S AM", 30 );
+   szDateTimeDisplay = sb_szDateTimeDisplay.toString( );}
+   //:szWriteBuffer = "<!-- Output created by ePamms   " + szDateTimeDisplay + " -->"
+    {StringBuilder sb_szWriteBuffer;
+   if ( szWriteBuffer == null )
+      sb_szWriteBuffer = new StringBuilder( 32 );
+   else
+      sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
+      ZeidonStringCopy( sb_szWriteBuffer, 1, 0, "<!-- Output created by ePamms   ", 1, 0, 32001 );
+   szWriteBuffer = sb_szWriteBuffer.toString( );}
+    {StringBuilder sb_szWriteBuffer;
+   if ( szWriteBuffer == null )
+      sb_szWriteBuffer = new StringBuilder( 32 );
+   else
+      sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
+      ZeidonStringConcat( sb_szWriteBuffer, 1, 0, szDateTimeDisplay, 1, 0, 32001 );
+   szWriteBuffer = sb_szWriteBuffer.toString( );}
+    {StringBuilder sb_szWriteBuffer;
+   if ( szWriteBuffer == null )
+      sb_szWriteBuffer = new StringBuilder( 32 );
+   else
+      sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
+      ZeidonStringConcat( sb_szWriteBuffer, 1, 0, " -->", 1, 0, 32001 );
+   szWriteBuffer = sb_szWriteBuffer.toString( );}
+   //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+   try
+   {
+       {
+    ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mSPLDef );
+    m_ZGlobal1_Operation.WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 );
+    // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+   };
+   }
+   catch ( Exception e )
+   {
+      throw ZeidonException.wrapException( e );
+   }
+
    //:szWriteBuffer = "<xsl:stylesheet version=^1.0^"
     {StringBuilder sb_szWriteBuffer;
    if ( szWriteBuffer == null )
@@ -3081,16 +3140,6 @@ omSPLDef_FormatPrintIcons( View     mSPLDef,
 
    //:// Company and Date/Time Identifier
 
-   //:SysGetDateTime( szDateTime )
-    {StringBuilder sb_szDateTime;
-   if ( szDateTime == null )
-      sb_szDateTime = new StringBuilder( 32 );
-   else
-      sb_szDateTime = new StringBuilder( szDateTime );
-      m_KZOEP1AA.SysGetDateTime( sb_szDateTime );
-   szDateTime = sb_szDateTime.toString( );}
-   //:mSPLDef.SubregPhysicalLabelDef.wDateTime = szDateTime
-   SetAttributeFromString( mSPLDef, "SubregPhysicalLabelDef", "wDateTime", szDateTime );
    //:GetStringFromAttributeByContext( szDateTimeDisplay, mSPLDef, "SubregPhysicalLabelDef", "wDateTime", "YYYY/MM/DD HH:MM:SS.S AM", 30 )
    {StringBuilder sb_szDateTimeDisplay;
    if ( szDateTimeDisplay == null )
@@ -8495,7 +8544,7 @@ omSPLDef_GeneratePDF_Ingred( View     mSPLDef,
    }
    //://FormatBlockContainer( mSPLDef, mSPLDef, lFile, szLeadingBlanks, szWriteBuffer, "" )
 
-   //:// Ingredients Title
+   //:// Title
    //:szWriteBuffer = szLeadingBlanks + "<fo:block "
     {StringBuilder sb_szWriteBuffer;
    if ( szWriteBuffer == null )
@@ -8511,13 +8560,13 @@ omSPLDef_GeneratePDF_Ingred( View     mSPLDef,
       sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
       ZeidonStringConcat( sb_szWriteBuffer, 1, 0, "<fo:block ", 1, 0, 32001 );
    szWriteBuffer = sb_szWriteBuffer.toString( );}
-   //:AddFormatToSpecialText( mSPLDefPDF, "Ingredients Title", szWriteBuffer )
+   //:AddFormatToSpecialText( mSPLDefPDF, "Title", szWriteBuffer )
    {StringBuilder sb_szWriteBuffer;
    if ( szWriteBuffer == null )
       sb_szWriteBuffer = new StringBuilder( 32 );
    else
       sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-       omSPLDef_AddFormatToSpecialText( mSPLDefPDF, "Ingredients Title", sb_szWriteBuffer );
+       omSPLDef_AddFormatToSpecialText( mSPLDefPDF, "Title", sb_szWriteBuffer );
    szWriteBuffer = sb_szWriteBuffer.toString( );}
    //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    try
@@ -15661,6 +15710,8 @@ omSPLDef_GenerateXML_File( View     mSPLDef,
    String   szSectionName = null;
    //:STRING ( 50 )   szStatementName
    String   szStatementName = null;
+   //:STRING ( 50 )   szDateTimeDisplay
+   String   szDateTimeDisplay = null;
    //:INTEGER         lFileHandle
    int      lFileHandle = 0;
    //:SHORT           nRC
@@ -15771,13 +15822,35 @@ omSPLDef_GenerateXML_File( View     mSPLDef,
    szOutputLine = sb_szOutputLine.toString( );}
    //:GenerateLine( mSPLDef, lFileHandle, szOutputLine )
    omSPLDef_GenerateLine( mSPLDef, lFileHandle, szOutputLine );
-   //:szOutputLine = "<!-- Output created by OpenCUAS -->"
+   //:GetStringFromAttributeByContext( szDateTimeDisplay, mSPLDef, "SubregPhysicalLabelDef", "wDateTime", "YYYY/MM/DD HH:MM:SS.S AM", 30 )
+   {StringBuilder sb_szDateTimeDisplay;
+   if ( szDateTimeDisplay == null )
+      sb_szDateTimeDisplay = new StringBuilder( 32 );
+   else
+      sb_szDateTimeDisplay = new StringBuilder( szDateTimeDisplay );
+       GetStringFromAttributeByContext( sb_szDateTimeDisplay, mSPLDef, "SubregPhysicalLabelDef", "wDateTime", "YYYY/MM/DD HH:MM:SS.S AM", 30 );
+   szDateTimeDisplay = sb_szDateTimeDisplay.toString( );}
+   //:szOutputLine = "<!-- Output created by ePamms   " + szDateTimeDisplay + " -->"
     {StringBuilder sb_szOutputLine;
    if ( szOutputLine == null )
       sb_szOutputLine = new StringBuilder( 32 );
    else
       sb_szOutputLine = new StringBuilder( szOutputLine );
-      ZeidonStringCopy( sb_szOutputLine, 1, 0, "<!-- Output created by OpenCUAS -->", 1, 0, 5001 );
+      ZeidonStringCopy( sb_szOutputLine, 1, 0, "<!-- Output created by ePamms   ", 1, 0, 5001 );
+   szOutputLine = sb_szOutputLine.toString( );}
+    {StringBuilder sb_szOutputLine;
+   if ( szOutputLine == null )
+      sb_szOutputLine = new StringBuilder( 32 );
+   else
+      sb_szOutputLine = new StringBuilder( szOutputLine );
+      ZeidonStringConcat( sb_szOutputLine, 1, 0, szDateTimeDisplay, 1, 0, 5001 );
+   szOutputLine = sb_szOutputLine.toString( );}
+    {StringBuilder sb_szOutputLine;
+   if ( szOutputLine == null )
+      sb_szOutputLine = new StringBuilder( 32 );
+   else
+      sb_szOutputLine = new StringBuilder( szOutputLine );
+      ZeidonStringConcat( sb_szOutputLine, 1, 0, " -->", 1, 0, 5001 );
    szOutputLine = sb_szOutputLine.toString( );}
    //:GenerateLine( mSPLDef, lFileHandle, szOutputLine )
    omSPLDef_GenerateLine( mSPLDef, lFileHandle, szOutputLine );
@@ -16925,8 +16998,8 @@ omSPLDef_SetUpFormattingSelect( View     mSPLDefPanel,
          //:// Ingredients
          //:CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
          RESULT = CreateEntity( mSPLDefPanel, "SpecialFormattingSelectEntry", zPOS_AFTER );
-         //:mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Ingredients Title"
-         SetAttributeFromString( mSPLDefPanel, "SpecialFormattingSelectEntry", "KeywordName", "Ingredients Title" );
+         //:mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Title"
+         SetAttributeFromString( mSPLDefPanel, "SpecialFormattingSelectEntry", "KeywordName", "Title" );
          //:CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
          RESULT = CreateEntity( mSPLDefPanel, "SpecialFormattingSelectEntry", zPOS_AFTER );
          //:mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Ingredients Items" 
@@ -17475,8 +17548,8 @@ omSPLDef_SetUpKeywordEntries( View     mSPLDefBlock,
       if ( ZeidonStringCompare( szSectionType, 1, 0, "Ingredients", 1, 0, 51 ) == 0 )
       { 
          //:// Ingredients
-         //:CheckAddKeywordEntry( mSPLDefBlock, "Ingredients Title" )
-         omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Ingredients Title" );
+         //:CheckAddKeywordEntry( mSPLDefBlock, "Title" )
+         omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Title" );
          //:CheckAddKeywordEntry( mSPLDefBlock, "Ingredients Items" )
          omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Ingredients Items" );
          //:CheckAddKeywordEntry( mSPLDefBlock, "Ingredients Inert" )

@@ -1421,6 +1421,115 @@ o_fnLocalBuildQual_6( View     vSubtask,
 } 
 
 
+private int 
+o_fnLocalBuildQual_0( View     vSubtask,
+                      zVIEW    vQualObject )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "ePamms" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "ePamms" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Value", "1" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+//:DIALOG OPERATION
+//:InitColorForAdd( VIEW ViewToWindow )
+
+//:   VIEW mSubreg REGISTERED AS  mSubreg
+public int 
+InitColorForAdd( View     ViewToWindow )
+{
+   zVIEW    mSubreg = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
+
+   //:CREATE ENTITY mSubreg.Color
+   RESULT = CreateEntity( mSubreg, "Color", zPOS_AFTER );
+   //:mSubreg.Color.wkCreated = "Y"
+   SetAttributeFromString( mSubreg, "Color", "wkCreated", "Y" );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:DeleteColor( VIEW ViewToWindow )
+
+//:   VIEW mSubreg REGISTERED AS  mSubreg
+public int 
+DeleteColor( View     ViewToWindow )
+{
+   zVIEW    mSubreg = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
+
+   //:DELETE ENTITY mSubreg.Color
+   RESULT = DeleteEntity( mSubreg, "Color", zPOS_NEXT );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:SaveAndAddNewColor( VIEW ViewToWindow )
+
+//:   VIEW mSubreg REGISTERED AS  mSubreg
+public int 
+SaveAndAddNewColor( View     ViewToWindow )
+{
+   zVIEW    mSubreg = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
+   return( 0 );
+// // COMMIT mSubreg
+// // CREATE ENTITY mSubreg.Color
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:SaveColor( VIEW ViewToWindow )
+
+public int 
+SaveColor( View     ViewToWindow )
+{
+
+   return( 0 );
+// // VIEW mSubreg REGISTERED AS  mSubreg
+// // COMMIT mSubreg
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:InitColorForUpdate( VIEW ViewToWindow )
+
+//:   VIEW mSubreg REGISTERED AS  mSubreg
+public int 
+InitColorForUpdate( View     ViewToWindow )
+{
+   zVIEW    mSubreg = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
+
+   //:mSubreg.Color.wkCreated = "N"
+   SetAttributeFromString( mSubreg, "Color", "wkCreated", "N" );
+   return( 0 );
+// END
+} 
+
+
 //:DIALOG OPERATION
 //:CancelNewAdministrator( VIEW ViewToWindow )
 
@@ -8215,21 +8324,41 @@ SelectSubregUserForUpdate( View     ViewToWindow )
 } 
 
 
-private int 
-o_fnLocalBuildQual_0( View     vSubtask,
-                      zVIEW    vQualObject )
+//:DIALOG OPERATION
+//:UpdateColor( VIEW ViewToWindow )
+
+public int 
+UpdateColor( View     ViewToWindow )
 {
+
+   return( 0 );
+//    // Just for positioning.
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:CancelColor( VIEW ViewToWindow )
+
+//:   VIEW mSubreg REGISTERED AS  mSubreg
+public int 
+CancelColor( View     ViewToWindow )
+{
+   zVIEW    mSubreg = new zVIEW( );
    int      RESULT = 0;
 
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "ePamms" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "ePamms" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Value", "1" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
+
+   //:IF mSubreg.Color.wkCreated = "Y"
+   if ( CompareAttributeToString( mSubreg, "Color", "wkCreated", "Y" ) == 0 )
+   { 
+      //:DELETE ENTITY mSubreg.Color
+      RESULT = DeleteEntity( mSubreg, "Color", zPOS_NEXT );
+   } 
+
+   //:END
    return( 0 );
+// END
 } 
 
 

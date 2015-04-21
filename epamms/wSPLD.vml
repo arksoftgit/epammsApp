@@ -146,10 +146,50 @@ GOTO_UpdateSubregProductSLC( VIEW ViewToWindow )
    // Activate selected Subreg SLC and build the Components work entries from persistent entries.
    ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSubProd.SubregLabelContent.ID 
    NAME VIEW mSubLC "mSubLC"
+   
+   // Delete any S_Usage entries that aren't tied to an MLC.
+   // Also delete any Directions for Use or Marketing Ordering entries not tied to a Usage.
+   FOR EACH mSubLC.S_UsageType 
+      FOR EACH mSubLC.S_Usage 
+         IF mSubLC.M_Usage DOES NOT EXIST
+            DELETE ENTITY mSubLC.S_Usage NONE 
+         END
+      END
+   END
+   FOR EACH mSubLC.S_DirectionsForUseStatement WITHIN mSubLC.SubregLabelContent 
+      FOR EACH mSubLC.S_DirectionsUsageOrdering 
+         IF mSubLC.S_DirectionsUsage DOES NOT EXIST
+            DELETE ENTITY mSubLC.S_DirectionsUsageOrdering NONE 
+         END
+      END
+   END
+   FOR EACH mSubLC.S_MarketingStatement WITHIN mSubLC.SubregLabelContent 
+      FOR EACH mSubLC.S_MarketingUsageOrdering 
+         IF mSubLC.S_MarketingUsage DOES NOT EXIST
+            DELETE ENTITY mSubLC.S_MarketingUsageOrdering NONE 
+         END
+      END
+   END
+   
+   FOR EACH mSubLC.S_MarketingSection 
+      FOR EACH mSubLC.S_MarketingStatement 
+         FOR EACH mSubLC.S_MarketingUsageOrdering 
+            IF mSubLC.S_MarketingUsage DOES NOT EXIST
+               MessageSend( ViewToWindow, "", "Test",
+                            "Missing usage.",
+                            zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+               SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+               RETURN 2            
+            END         
+         END      
+      END   
+   END
+   COMMIT mSubLC
+   
    BuildCompositeEntries( mSubLC )
    
    // Relink Usage.
-   /*FOR EACH mSubLC.S_DirectionsForUseSection 
+   FOR EACH mSubLC.S_DirectionsForUseSection 
       FOR EACH mSubLC.S_DirectionsUsageOrdering 
          SET CURSOR FIRST mSubLC.S_Usage WHERE mSubLC.S_Usage.ID = mSubLC.S_DirectionsUsage.ID 
          IF RESULT < zCURSOR_SET
@@ -163,7 +203,6 @@ GOTO_UpdateSubregProductSLC( VIEW ViewToWindow )
          END
       END
    END
-   TraceLineS( "######## After Link Test ", "" )*/
    
    // Activate related MLC, which has the selectable content.
    ACTIVATE mMasLC WHERE mMasLC.MasterLabelContent.ID = mSubProd.MasterLabelContent.ID 

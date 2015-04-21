@@ -146,8 +146,7 @@ function _AfterPageLoaded( )
       timerID = null;
    }
 
-   document.wSPLDSPLD_BlockDefinitionUpdate.hComboBox1.value = document.wSPLDSPLD_BlockDefinitionUpdate.ComboBox1.value
-   document.wSPLDSPLD_BlockDefinitionUpdate.hComboBox3.value = document.wSPLDSPLD_BlockDefinitionUpdate.ComboBox3.value
+   document.wSPLDSPLD_BlockDefinitionUpdate.hComboSectionType.value = document.wSPLDSPLD_BlockDefinitionUpdate.ComboSectionType.value
 
    var varTimeout = document.wSPLDSPLD_BlockDefinitionUpdate.zTimeout.value;
    if ( varTimeout > 0 )
@@ -335,7 +334,7 @@ function PostbuildBlockDefinitionUpdate( )
    }
 }
 
-function ComboBox1OnChange( )
+function ComboSectionTypeOnChange( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -343,19 +342,7 @@ function ComboBox1OnChange( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      document.wSPLDSPLD_BlockDefinitionUpdate.hComboBox1.value = document.wSPLDSPLD_BlockDefinitionUpdate.ComboBox1.value;
-   }
-}
-
-function ComboBox3OnChange( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      document.wSPLDSPLD_BlockDefinitionUpdate.hComboBox3.value = document.wSPLDSPLD_BlockDefinitionUpdate.ComboBox3.value;
+      document.wSPLDSPLD_BlockDefinitionUpdate.hComboSectionType.value = document.wSPLDSPLD_BlockDefinitionUpdate.ComboSectionType.value;
    }
 }
 

@@ -2191,9 +2191,9 @@ GeneratePDF_Ingred( VIEW mSPLDef      BASED ON LOD mSPLDef,
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    //FormatBlockContainer( mSPLDef, mSPLDef, lFile, szLeadingBlanks, szWriteBuffer, "" )
    
-   // Ingredients Title
+   // Title
    szWriteBuffer = szLeadingBlanks + "<fo:block "
-   AddFormatToSpecialText( mSPLDefPDF, "Ingredients Title", szWriteBuffer )
+   AddFormatToSpecialText( mSPLDefPDF, "Title", szWriteBuffer )
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    
    szWriteBuffer = szLeadingBlanks + "   <xsl:apply-templates select=^SubregPhysicalLabelDef/SPLD_IngredientsSection/ActiveTitle^/>"
@@ -4207,7 +4207,7 @@ SetUpFormattingSelect( VIEW mSPLDefPanel BASED ON LOD mSPLDef,
       IF szSectionType = "Ingredients" 
          // Ingredients
          CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
-         mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Ingredients Title"
+         mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Title"
          CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
          mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Ingredients Items" 
          CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
@@ -4378,7 +4378,7 @@ SetUpKeywordEntries( VIEW mSPLDefBlock BASED ON LOD mSPLDef,
    ELSE
       IF szSectionType = "Ingredients" 
          // Ingredients
-         CheckAddKeywordEntry( mSPLDefBlock, "Ingredients Title" )
+         CheckAddKeywordEntry( mSPLDefBlock, "Title" )
          CheckAddKeywordEntry( mSPLDefBlock, "Ingredients Items" )
          CheckAddKeywordEntry( mSPLDefBlock, "Ingredients Inert" )
          CheckAddKeywordEntry( mSPLDefBlock, "Ingredients Total" ) 

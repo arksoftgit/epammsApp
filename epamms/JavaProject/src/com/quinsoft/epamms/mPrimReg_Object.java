@@ -194,7 +194,7 @@ omPrimReg_dRegistrantNameID( View     mPrimReg,
                   sb_szTempString_0 = new StringBuilder( 32 );
                else
                   sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_2, 'S', 129, mPrimReg, "PrimaryRegistrant", "EPA_CompanyNumber", "", 0 );
+                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_2, 'S', 7, mPrimReg, "PrimaryRegistrant", "EPA_CompanyNumber", "", 0 );
                lTempInteger_2 = mi_lTempInteger_2.intValue( );
                szTempString_0 = sb_szTempString_0.toString( );}
                 {StringBuilder sb_szString;
@@ -304,7 +304,7 @@ omPrimReg_dMasterProductNameNbr( View     mPrimReg,
                sb_szTempString_0 = new StringBuilder( 32 );
             else
                sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                         GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_1, 'S', 129, mPrimReg, "PrimaryRegistrant", "EPA_CompanyNumber", "", 0 );
+                         GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_1, 'S', 7, mPrimReg, "PrimaryRegistrant", "EPA_CompanyNumber", "", 0 );
             lTempInteger_1 = mi_lTempInteger_1.intValue( );
             szTempString_0 = sb_szTempString_0.toString( );}
              {StringBuilder sb_szString;
@@ -327,7 +327,7 @@ omPrimReg_dMasterProductNameNbr( View     mPrimReg,
                sb_szTempString_1 = new StringBuilder( 32 );
             else
                sb_szTempString_1 = new StringBuilder( szTempString_1 );
-                         GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_2, 'S', 129, mPrimReg, "MasterProduct", "Number", "", 0 );
+                         GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_2, 'S', 6, mPrimReg, "MasterProduct", "Number", "", 0 );
             lTempInteger_2 = mi_lTempInteger_2.intValue( );
             szTempString_1 = sb_szTempString_1.toString( );}
              {StringBuilder sb_szString;

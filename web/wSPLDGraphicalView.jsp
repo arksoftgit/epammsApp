@@ -382,7 +382,6 @@ else
 <%@ include file="./include/timeout.inc" %>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSPLDGraphicalView.js"></script>
 
-
    <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
    <link rel="stylesheet" type="text/css" href="css/result-light.css">
    <link rel="stylesheet" type="text/css" href="css/style.css">
@@ -813,17 +812,73 @@ else
                         </fieldset>
                      </div>
                   </div> <!-- zpool -->  <!-- End of: Block Types -->
+                  <!--
+                  // Make sure that the appropriate Keyword entries are set up for a given Section/Block Type.
 
+                  // Human Hazard
+                  Hazards Warning
+                  Hazards Signal Word
+                  Hazards Precautionary
+
+                  // Ingredients
+                  Title
+                  Ingredients Items
+                  Ingredients Inert
+                  Ingredients Total 
+
+                  // Directions for Use
+                  Title
+                  Text
+                  DIRECTIONS Header
+
+                  // Marketing
+                  Title
+                  Text
+                  Column List
+                  MARKETING Header
+
+                  // First Aid
+                  Title
+                  Text
+                  FIRST AID Header
+
+                  // Default
+                  Title
+                  Text
+
+                  Fields Common to All Block Types
+                     1. Block Tag (display)
+                     2. Data Type (display - could show as title of page at top)
+                     3. Top Position
+                     4. Left Position
+                     5. Height
+                     6. Width
+                     7. Formatting Keyword Listbox
+
+                  Fields Unique by Type
+
+                     Graphic
+                     1. Graphic Name
+
+                     Marketing
+                     1. Continuation Checkbox
+                     2. Related Marketing Section (display)
+                     3. Marketing Section Select Button
+                     4. Claim List Type (combo box)
+
+                     Directions for Use / Storage and Disposal / Hazards
+                     1. Continuation Checkbox
+                  -->
                   <h3>Block Properties</h3>
                   <div>
                      <span>
                      <div style="overflow:hidden; white-space:nowrap;">
-                          <label for="zBlockId">ID:</label>
-                          <input type="text" id="zBlockId" class="zeidon" data-zmap="block.z_^i^d" style="float:right" disabled />
-                        </div>
-                        <div style="overflow:hidden; white-space:nowrap;">
-                       <label for="zBlockTag">Tag:</label>
-                       <input type="text" id="zBlockTag" class="zeidon" data-zmap="block.z_^tag" style="float:right" />
+                        <label for="zBlockId">ID:</label>
+                        <input type="text" id="zBlockId" class="zeidon" data-zmap="block.z_^i^d" style="float:right" disabled />
+                     </div>
+                     <div style="overflow:hidden; white-space:nowrap;">
+                        <label for="zBlockTag">Tag:</label>
+                        <input type="text" id="zBlockTag" class="zeidon" data-zmap="block.z_^tag" style="float:right" />
                      </div>
                      </span>
                      <!-- 
@@ -836,45 +891,45 @@ else
                      -->
 
                      <div class="ui-widget">
-                       <label>Section Type: </label>
-                       <select id="zSectionType" class="zeidon" data-zmap="block.z_^l^l^d_^section^type" style="float:right">
-                         <option value="">Select Section Type...</option>
-                         <option value="ContainerDisposal">Container Disposal</option>
-                         <option value="DirectionsForUse">Directions For Use</option>
-                         <option value="EPA_RegAndEstNbr">EPA Reg. No. - EPA Est. No.</option>
-                         <option value="FirstAid">First Aid</option>
-                         <option value="Graphic">Graphic</option>
-                         <option value="Hazards">Hazards</option>
-                         <option value="HumanHazard">Human Hazard</option>
-                         <option value="Ingredients">Ingredients</option>
-                         <option value="Marketing">Marketing</option>
-                         <option value="NetContents">Net Contents</option>
-                         <option value="PhysicalHazard">Physical Hazard</option>
-                         <option value="Precautionary">Precautionary</option>
-                         <option value="Product">Product Specific</option>
-                         <option value="StorageDisposal">Storage and Disposal</option>
+                        <label>Section Type: </label>
+                        <select id="zSectionType" class="zeidon" data-zmap="block.z_^l^l^d_^section^type" style="float:right">
+                           <option value="">Select Section Type...</option>
+                           <option value="ContainerDisposal">Container Disposal</option>
+                           <option value="DirectionsForUse">Directions For Use</option>
+                           <option value="EPA_RegAndEstNbr">EPA Reg. No. - EPA Est. No.</option>
+                           <option value="FirstAid">First Aid</option>
+                           <option value="Graphic">Graphic</option>
+                           <option value="Hazards">Hazards</option>
+                           <option value="HumanHazard">Human Hazard</option>
+                           <option value="Ingredients">Ingredients</option>
+                           <option value="Marketing">Marketing</option>
+                           <option value="NetContents">Net Contents</option>
+                           <option value="PhysicalHazard">Physical Hazard</option>
+                           <option value="Precautionary">Precautionary</option>
+                           <option value="Product">Product Specific</option>
+                           <option value="StorageDisposal">Storage and Disposal</option>
                         </select>
                      </div>
                      &nbsp;
                      <div style="overflow:hidden; white-space:nowrap;">
-                       <label for="zBlockTitle">Block Name:</label>
-                       <input type="text" id="zBlockName" class="zeidon" data-zmap="block.z_^name" style="float:right" />
+                        <label for="zBlockTitle">Block Name:</label>
+                        <input type="text" id="zBlockName" class="zeidon" data-zmap="block.z_^name" style="float:right" />
                      </div>
                      <div style="overflow:hidden; white-space:nowrap;">
-                       <label for="zBlockTop">Block Top:</label>
-                       <input type="text" id="zBlockTop" class="zeidon" data-zmap="block.z_^top" style="float:right" />
+                        <label for="zBlockTop">Block Top:</label>
+                        <input type="text" id="zBlockTop" class="zeidon" data-zmap="block.z_^top" style="float:right" />
                      </div>
                      <div style="overflow:hidden; white-space:nowrap;">
-                       <label for="zBlockLeft">Block Left:</label>
-                       <input type="text" id="zBlockLeft" class="zeidon" data-zmap="block.z_^left" style="float:right" />
+                        <label for="zBlockLeft">Block Left:</label>
+                        <input type="text" id="zBlockLeft" class="zeidon" data-zmap="block.z_^left" style="float:right" />
                      </div>
                      <div style="overflow:hidden; white-space:nowrap;">
-                       <label for="zBlockHeight">Block Height:</label>
-                       <input type="text" id="zBlockHeight" class="zeidon" data-zmap="block.z_^height" style="float:right" />
+                        <label for="zBlockHeight">Block Height:</label>
+                        <input type="text" id="zBlockHeight" class="zeidon" data-zmap="block.z_^height" style="float:right" />
                      </div>
                      <div style="overflow:hidden; white-space:nowrap;">
-                       <label for="zBlockWidth">Block Width:</label>
-                       <input type="text" id="zBlockWidth" class="zeidon" data-zmap="block.z_^width" style="float:right" />
+                        <label for="zBlockWidth">Block Width:</label>
+                        <input type="text" id="zBlockWidth" class="zeidon" data-zmap="block.z_^width" style="float:right" />
                      </div>
 <!--
                      &nbsp;
@@ -1009,26 +1064,37 @@ else
                         <option value="123" data-color="#000000">black</option>
                         
                      </select> -->
-                     <div><label for="colorText">Text Color</label>
-                     <div class="colorPicker-frame">
-                        <input id="colorText" name="colorText" type="text" value="#ff1111" style="float:right" data-text="DKS" /></div>
+                     <div>
+                        <label for="colorText">Text Color</label>
+                        <div class="colorPicker-frame">
+                           <input id="colorText" name="colorText" type="text" value="#ffffff" data-text="n/a" />
+                        </div>
+                     </div>
+                     &nbsp;
+                     <div>
+                        <label for="colorText2">Back Color</label>
+                        <div class="colorPicker-frame">
+                           <input id="colorText2" name="colorText2" type="text" value="#ffffff" data-text="n/b" />
+                        </div>
                      </div>
                      &nbsp;
                      <p style="clear:both;position:relative"></p>
                      <hr>
-                     <input type="checkbox" id="zCheckContinuationBlock" name="zCheckContinuationBlock" class="zeidon" data-zmap="block.z_^continuation^block^flag" /><label for="zCheckContinuationBlock">Continuation from Previous Section/Statement</label>
-                     &nbsp;
-                     <p style="clear:both;position:relative"></p>
-                     <div style="overflow:hidden; white-space:nowrap; padding-top:6px">
-                       <label for="zImageName">Graphic Image Name:</label>
-                       <input type="text" id="zImageName" class="zeidon" data-zmap="block.z_^image^name" style="float:right" />
+                     <div id="zCheckContinuationBlockToggle" style="overflow:hidden; white-space:nowrap; padding-top:6px; padding-bottom:12px;">
+                        <input type="checkbox" id="zCheckContinuationBlock" name="zCheckContinuationBlock" class="zeidon" data-zmap="block.z_^continuation^block^flag" /><label for="zCheckContinuationBlock">Continuation from Previous Section/Statement</label>
                      </div>
-                     <div class="ui-widget" style="padding-top:6px">
-                       <label>Claim List Type: </label>
-                       <select id="zClaimListType" class="zeidon" data-zmap="block.z_^l^l^d_^column^list^type" style="float:right">
-                         <option value="">Select Claim List Type...</option>
-                         <option value="C2">Usage List - 2 Column</option>
-                         <option value="C3">Usage List - 3 Column</option>
+                     <p style="clear:both;position:relative"></p>
+                     <div id="zImageNameToggle" style="overflow:hidden; white-space:nowrap; padding-top:6px; padding-bottom:6px;">
+                        <label for="zImageName">Graphic Image Name:</label>
+                        <input type="text" id="zImageName" class="zeidon" data-zmap="block.z_^image^name" style="float:right" />
+                     </div>
+                     <p style="clear:both;position:relative"></p>
+                     <div id="zClaimListTypeToggle" style="overflow:hidden; white-space:nowrap; padding-top:6px; padding-bottom:6px;">
+                        <label for="zClaimListType">Claim List Type: </label>
+                        <select id="zClaimListType" class="zeidon" data-zmap="block.z_^l^l^d_^column^list^type" style="float:right">
+                           <option value="">Select Claim List Type...</option>
+                           <option value="C2">Usage List - 2 Column</option>
+                           <option value="C3">Usage List - 3 Column</option>
                         </select>
                      </div>
 

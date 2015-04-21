@@ -1078,19 +1078,8 @@ MoveMasterProductDown( View     ViewToWindow )
 
    //:CreateViewFromView( mTempReg, mPrimReg )
    CreateViewFromView( mTempReg, mPrimReg );
-   //:lMove = wWebXfer.Root.MoveIncrement
-   {MutableInt mi_lMove = new MutableInt( lMove );
-       GetIntegerFromAttribute( mi_lMove, wWebXfer, "Root", "MoveIncrement" );
-   lMove = mi_lMove.intValue( );}
-   //:IF lMove <= 0
-   if ( lMove <= 0 )
-   { 
-      //:lMove = 1
-      lMove = 1;
-   } 
-
-   //:END
-
+   //:lMove = 1
+   lMove = 1;
    //:LOOP WHILE lMove > 0
    while ( lMove > 0 )
    { 
@@ -1141,19 +1130,8 @@ MoveMasterProductUp( View     ViewToWindow )
 
    //:CreateViewFromView( mTempReg, mPrimReg )
    CreateViewFromView( mTempReg, mPrimReg );
-   //:lMove = wWebXfer.Root.MoveIncrement
-   {MutableInt mi_lMove = new MutableInt( lMove );
-       GetIntegerFromAttribute( mi_lMove, wWebXfer, "Root", "MoveIncrement" );
-   lMove = mi_lMove.intValue( );}
-   //:IF lMove <= 0
-   if ( lMove <= 0 )
-   { 
-      //:lMove = 1
-      lMove = 1;
-   } 
-
-   //:END
-
+   //:lMove = 1
+   lMove = 1;
    //:LOOP WHILE lMove > 0
    while ( lMove > 0 )
    { 
@@ -2798,19 +2776,8 @@ MoveMasterLabelContentUp( View     ViewToWindow )
 
       //:CreateViewFromView( mTempLDD, mMasLC )
       CreateViewFromView( mTempLDD, mMasLC );
-      //:lMove = wWebXfer.Root.MoveIncrement
-      {MutableInt mi_lMove = new MutableInt( lMove );
-             GetIntegerFromAttribute( mi_lMove, wWebXfer, "Root", "MoveIncrement" );
-      lMove = mi_lMove.intValue( );}
-      //:IF lMove <= 0
-      if ( lMove <= 0 )
-      { 
-         //:lMove = 1
-         lMove = 1;
-      } 
-
-      //:END
-
+      //:lMove = 1
+      lMove = 1;
       //:LOOP WHILE lMove > 0
       while ( lMove > 0 )
       { 
@@ -2895,19 +2862,8 @@ MoveMasterLabelContentDown( View     ViewToWindow )
 
       //:CreateViewFromView( mTempLDD, mMasLC )
       CreateViewFromView( mTempLDD, mMasLC );
-      //:lMove = wWebXfer.Root.MoveIncrement
-      {MutableInt mi_lMove = new MutableInt( lMove );
-             GetIntegerFromAttribute( mi_lMove, wWebXfer, "Root", "MoveIncrement" );
-      lMove = mi_lMove.intValue( );}
-      //:IF lMove <= 0
-      if ( lMove <= 0 )
-      { 
-         //:lMove = 1
-         lMove = 1;
-      } 
-
-      //:END
-
+      //:lMove = 1
+      lMove = 1;
       //:LOOP WHILE lMove > 0
       while ( lMove > 0 )
       { 

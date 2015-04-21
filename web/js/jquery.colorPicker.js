@@ -40,6 +40,7 @@
             hexField: $('<input type="text" id="colorPicker_hex" />')
         },
         transparent     = "transparent",
+        lastName,
         lastColor;
 
     /**
@@ -92,18 +93,18 @@
             });
 
             newHexField.bind("keydown", function (event) {
-                if (event.keyCode === 13) {
+                if (event.keyCode === 13) { // Enter
                     var hexColor = $.fn.colorPicker.toHex($(this).val());
                     $.fn.colorPicker.changeColor(hexColor ? hexColor : element.val(), $(this));
                 }
-                if (event.keyCode === 27) {
+                if (event.keyCode === 27) { // Esc
                     $.fn.colorPicker.hidePalette();
                 }
             });
 
             newHexField.bind("keyup", function (event) {
               var hexColor = $.fn.colorPicker.toHex($(event.target).val());
-              $.fn.colorPicker.previewColor(hexColor ? hexColor : element.val());
+              $.fn.colorPicker.previewColor(hexColor ? hexColor : element.val(), $(this));
             });
 
             $('<div class="colorPicker_hexWrap" />').append(newHexLabel).appendTo(newPalette);
@@ -206,66 +207,6 @@
             }
         },
 
-        /*
-         const float gamma = 2.2;
-         float L = 0.2126 * pow( R, gamma )
-                 + 0.7152 * pow( G, gamma )
-                 + 0.0722 * pow( B, gamma );
-
-         boolean use_black = ( L > 0.5 );
-         This assumes that R, G and B are floating-point numbers ranging from 0.0 to 1.0. If what you have is,
-         say, integers from 0 to 255, convert them to floats and divide them by 255.
-
-         (I would not suggest using colored text, both because the human eye has much poorer spatial resolution
-         for color than for luminance, and also because combinations of highly saturated complementary colors
-         tend to be irritating to look at.)
-
-         Note that, if L is close to 0.5, small changes in the background color could cause the most contrasting
-         text color to flip from black to white or vice versa. To avoid this happening too frequently, you could
-         save the previous text color and only change it if L moves too far from 0.5:
-
-         if ( L > 0.6 ) {
-             use_black = true;
-         } else if ( L < 0.4 ) {
-             use_black = false;
-         } else {
-             // keep previous text color
-         }
-         Ps. If you wanted an even quicker approximation, you could round the exponent gamma down to 2.0,
-         allowing you to replace the pow() with a simple multiplication:
-
-         float L = 0.2126 * R*R + 0.7152 * G*G + 0.0722 * B*B;
-         This approximate formula is still within ±0.05 of the correct luminance calculated with the official
-         piecewise formula given by Martin (or with the gamma = 2.2 approximation used above, which itself is
-         within ±0.01 of the official formula), and so more than close enough for this purpose. Besides, you
-         can mostly compensate for the error simply by adjusting the threshold from 0.5 to 0.54 or so.
-         */
-
-        invertHexColor : function (hexColor) {
-           //javascript code
-
-            if ( hexColor.charAt(0) == "#" ) {
-               hexColor = hexColor.substring( 1,7 );
-            }
-            var r = parseInt( hexColor.substring( 0, 2 ), 16 ) / 255;
-            var g = parseInt( hexColor.substring( 2, 4 ), 16 ) / 255;
-            var b = parseInt( hexColor.substring( 4, 6 ), 16 ) / 255;
-            console.log( 'Red  :' + r );
-            console.log( 'Green:' + g );
-            console.log( 'Blue :' + b );
-            var L = 0.2126 * r*r + 0.7152 * g*g + 0.0722 * b*b;
-            var color;
-            if ( L > 0.6 ) {
-               color = "#000000";
-            } else if ( L < 0.4 ) {
-               color = "#ffffff";;
-            } else {
-               // keep previous text color
-               color = null;
-            }
-            return color;
-        },
-
         /**
          * Check whether user clicked on the selector or owner.
         **/
@@ -331,7 +272,7 @@
          * Update the input with a newly selected color.
         **/
         changeColor : function (value, $swatch) {
-            var reverseColor = $.fn.colorPicker.invertHexColor( value );
+            var reverseColor = invertHexColor( value );
             if ( reverseColor ) {
                var idx = $swatch.data( "idx" );
                var colorName = $swatch.data( "colorname" );
@@ -352,7 +293,16 @@
         /**
          * Preview the input with a newly selected color.
         **/
-        previewColor : function (value) {
+        previewColor : function (value, $swatch) {
+            var reverseColor = invertHexColor( value );
+            if ( reverseColor ) {
+               var idx = $swatch.data( "idx" );
+               var colorName = $swatch.data( "colorname" );
+               console.log( 'Setting reverse color:' + reverseColor + "  idx:" + idx + "   color: " + colorName );
+               selectorOwner.css( "color", reverseColor );
+               selectorOwner.text( colorName );
+            }
+
             selectorOwner.css("background-color", value);
         },
 
@@ -360,31 +310,39 @@
          * Bind events to the color palette swatches.
         */
         bindPalette : function (paletteInput, element, color) {
-            color = color ? color : $.fn.colorPicker.toHex(element.css("background-color"));
+            var colorName;
+            if ( ! color ) {
+               color = $.fn.colorPicker.toHex(element.css("background-color"));
+               colorName = element.data( "colorname" );
+            }
 
             element.bind({
                 click : function (ev) {
                     lastColor = color;
+                    lastName = colorName;
 
                     $.fn.colorPicker.changeColor(color, $(this));
+             /*
                 },
                 mouseover : function (ev) {
                     lastColor = paletteInput.val();
+                    lastName = colorName;
 
                     $(this).css("border-color", "#598FEF");
 
                     paletteInput.val(color);
 
-                    $.fn.colorPicker.previewColor(color);
+                    $.fn.colorPicker.previewColor(color, $(this));
                 },
                 mouseout : function (ev) {
-                    $(this).css("border-color", "#000");
+                    $(this).css("border-color", "#000000");
 
                     paletteInput.val(selectorOwner.css("background-color"));
 
                     paletteInput.val(lastColor);
 
-                    $.fn.colorPicker.previewColor(lastColor);
+                    $.fn.colorPicker.previewColor(lastColor, $(this));
+             */
                 }
             });
         }

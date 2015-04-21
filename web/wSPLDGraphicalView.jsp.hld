@@ -385,11 +385,8 @@ else
    <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
    <link rel="stylesheet" type="text/css" href="css/result-light.css">
    <link rel="stylesheet" type="text/css" href="css/style.css">
-<!-- styles needed by jScrollPane
-   <link rel="stylesheet" type="text/css" href="css/jquery.jscrollpane.css" media="all" />
- -->
-<!-- <link href="css/evol.colorpicker.css" rel="stylesheet" /> -->
-   <link rel="stylesheet" type="text/css" href="css/farbtastic.css">
+   <link rel="stylesheet" type="text/css" href="css/jquery.colorPicker.css">
+
 <!--  
    <link href="../src/skin-win8/ui.fancytree.css" class="skinswitcher" rel="stylesheet" type="text/css">
    <script src="../src/jquery.fancytree.js" type="text/javascript"></script>
@@ -486,10 +483,9 @@ else
    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
    <script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
    <script src="js/jquery.nicescroll.min.js"></script>
-<!--   <script src="js/evol.colorpicker.js" type="text/javascript"></script>  -->
-   <script src="js/farbtastic.js"></script>
-<!--   <script src="js/label.js"></script> -->
        <script src="js/jquery.blockUI.js"></script>
+
+   <script src="js/jquery.colorPicker.js" type="text/javascript"></script>
 
    <script src="js/labeldesigner.js"></script>
    <script src="js/jsonpath-0.8.0.js"></script>
@@ -816,7 +812,63 @@ else
                         </fieldset>
                      </div>
                   </div> <!-- zpool -->  <!-- End of: Block Types -->
+                  <!--
+                  // Make sure that the appropriate Keyword entries are set up for a given Section/Block Type.
 
+                  // Human Hazard
+                  Hazards Warning
+                  Hazards Signal Word
+                  Hazards Precautionary
+
+                  // Ingredients
+                  Title
+                  Ingredients Items
+                  Ingredients Inert
+                  Ingredients Total 
+
+                  // Directions for Use
+                  Title
+                  Text
+                  DIRECTIONS Header
+
+                  // Marketing
+                  Title
+                  Text
+                  Column List
+                  MARKETING Header
+
+                  // First Aid
+                  Title
+                  Text
+                  FIRST AID Header
+
+                  // Default
+                  Title
+                  Text
+
+                  Fields Common to All Block Types
+                     1. Block Tag (display)
+                     2. Data Type (display - could show as title of page at top)
+                     3. Top Position
+                     4. Left Position
+                     5. Height
+                     6. Width
+                     7. Formatting Keyword Listbox
+
+                  Fields Unique by Type
+
+                     Graphic
+                     1. Graphic Name
+
+                     Marketing
+                     1. Continuation Checkbox
+                     2. Related Marketing Section (display)
+                     3. Marketing Section Select Button
+                     4. Claim List Type (combo box)
+
+                     Directions for Use / Storage and Disposal / Hazards
+                     1. Continuation Checkbox
+                  -->
                   <h3>Block Properties</h3>
                   <div>
                      <span>
@@ -879,23 +931,23 @@ else
                        <label for="zBlockWidth">Block Width:</label>
                        <input type="text" id="zBlockWidth" class="zeidon" data-zmap="block.z_^width" style="float:right" />
                      </div>
-
+<!--
                      &nbsp;
                      <p style="clear:both;position:relative"></p>
                      <div style="overflow:hidden; white-space:nowrap;">
-                <!-- <fieldset class="border"><legend>Override CSS</legend> -->
+                <!-- <fieldset class="border"><legend>Override CSS</legend> *->
                      <hr>Override CSS<hr>
                        <div><span>
                           <input type="checkbox" id="zOverrideCSS_Text" name="zOverrideCSS_Text" class="zeidon" data-zmap="block.z_^text^color^override" /><label for="zOverrideCSS_Text">Text</label>
                           <label for="zBlockTextColor">Color:</label>
                           <input type="text" id="zBlockTextColor" class="colorwell colorwell1 zeidon" data-zmap="block.z_^text^color" value="#ff0000" style="float:right" />
-                       </span></div>                  &nbsp;
+                       </span></div>
                        <p style="clear:both;position:relative"></p>
                        <div><span>
                           <input type="checkbox" id="zOverrideCSS_Background" name="zOverrideCSS_Background" class="zeidon" data-zmap="block.z_^background^color^override" /><label for="zOverrideCSS_Background">Back</label>
                           <label for="zBlockBackgroundColor">Color:</label>
                           <input type="text" id="zBlockBackgroundColor" class="colorwell colorwell1 zeidon" data-zmap="block.z_^background^color" value="#00ff00" style="float:right" />
-                       </span></div>                  &nbsp;
+                       </span></div>
                        <p style="clear:both;position:relative"></p>
                        <div><span>
                           <input type="checkbox" id="zOverrideCSS_Border" name="zOverrideCSS_Border" class="zeidon" data-zmap="block.z_^border^color^override" /><label for="zOverrideCSS_Border">Border</label>
@@ -904,12 +956,12 @@ else
                        </span></div>
                        <p style="clear:both"></p>
                        <div id="zBlockPicker"></div>
-                <!-- </fieldset> -->
+                <!-- </fieldset> *->
                      &nbsp;
                      &nbsp;
                      &nbsp;
                      </div>
-
+-->
                      <div id="zmbp">
                         <ul>
                            <li><a href="#zMargins">Margins</a></li>
@@ -992,19 +1044,45 @@ else
                            </div>
                         </div>
                      </div>
+                     &nbsp;
+                <!-- <select id="colorselector">
+                        <option value="106" data-color="#A0522D">sienna</option>
+                        <option value="47" data-color="#CD5C5C" selected="selected">indianred</option>
+                        <option value="87" data-color="#FF4500">orangered</option>
+                        <option value="15" data-color="#DC143C">crimson</option>
+                        <option value="24" data-color="#FF8C00">darkorange</option>
+                        <option value="78" data-color="#C71585">mediumvioletred</option>
+                        <option value="17" data-color="#008B8B">darkcyan</option>
+                        <option value="68" data-color="#32CD32">limegreen</option>
+                        <option value="18" data-color="#B8860B">darkgoldenrod</option>
+                        <option value="42" data-color="#FFD700">gold</option>
+                        <option value="77" data-color="#48D1CC">mediumturquoise</option>
+                        <option value="107" data-color="#87CEEB">skyblue</option>
+                        <option value="46" data-color="#FF69B4">hotpink</option>
+                        <option value="64" data-color="#87CEFA">lightskyblue</option>
+                        <option value="13" data-color="#6495ED">cornflowerblue</option>
+                        <option value="123" data-color="#000000">black</option>
 
+                     </select> -->
+                     <div>
+                        <label for="colorText">Text Color</label>
+                        <div class="colorPicker-frame">
+                           <input id="colorText" name="colorText" type="text" value="#ffffff" data-text="n/a" disabled /></div>
+                        </div>
                      &nbsp;
                      <p style="clear:both;position:relative"></p>
                      <hr>
+                     <div id="zCheckContinuationBlockToggle" style="overflow:hidden; white-space:nowrap; padding-top:6px; padding-bottom:12px;">
                      <input type="checkbox" id="zCheckContinuationBlock" name="zCheckContinuationBlock" class="zeidon" data-zmap="block.z_^continuation^block^flag" /><label for="zCheckContinuationBlock">Continuation from Previous Section/Statement</label>
-                     &nbsp;
+                     </div>
                      <p style="clear:both;position:relative"></p>
-                     <div style="overflow:hidden; white-space:nowrap; padding-top:6px">
+                     <div id="zImageNameToggle" style="overflow:hidden; white-space:nowrap; padding-top:6px; padding-bottom:6px;">
                        <label for="zImageName">Graphic Image Name:</label>
                        <input type="text" id="zImageName" class="zeidon" data-zmap="block.z_^image^name" style="float:right" />
                      </div>
-                     <div class="ui-widget" style="padding-top:6px">
-                       <label>Claim List Type: </label>
+                     <p style="clear:both;position:relative"></p>
+                     <div id="zClaimListTypeToggle" style="overflow:hidden; white-space:nowrap; padding-top:6px; padding-bottom:6px;">
+                        <label for="zClaimListType">Claim List Type: </label>
                        <select id="zClaimListType" class="zeidon" data-zmap="block.z_^l^l^d_^column^list^type" style="float:right">
                          <option value="">Select Claim List Type...</option>
                          <option value="C2">Usage List - 2 Column</option>

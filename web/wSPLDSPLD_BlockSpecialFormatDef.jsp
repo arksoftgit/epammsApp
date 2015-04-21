@@ -865,15 +865,15 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox1:GroupBox */ %>
-<div id="GroupBox1" name="GroupBox1" style="float:left;width:456px;" >
+<div id="GroupBox1" name="GroupBox1" style="float:left;width:592px;" >
 
-<table cols=3 style="width:456px;"  class="grouptable">
+<table cols=3 style="width:592px;"  class="grouptable">
 
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:158px;">
 <% /* TXFormattingType::Text */ %>
 
-<span  id="TXFormattingType:" name="TXFormattingType:" style="width:130px;height:26px;">Formatting Type:</span>
+<span  id="TXFormattingType:" name="TXFormattingType:" style="width:146px;height:26px;">Formatting Type:</span>
 
 </td>
 <td valign="top" style="width:192px;">
@@ -884,12 +884,12 @@ else
       task.log( ).debug( "Invalid View: " + "Type" );
    else
    {
-      nRC = mSPLDefBlock.cursor( "SpecialFormattingSelectEntry" ).checkExistenceOfEntity( ).toInt();
+      nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttribute" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
       try
       {
-         strTextDisplayValue = mSPLDefBlock.cursor( "SpecialFormattingSelectEntry" ).getAttribute( "KeywordName" ).getString( "" );
+         strTextDisplayValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttribute" ).getAttribute( "Name" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -907,13 +907,13 @@ else
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:158px;">
 <% /* TXTopMargin::Text */ %>
 
-<span  id="TXTopMargin:" name="TXTopMargin:" style="width:130px;height:26px;">Top Margin:</span>
+<span  id="TXTopMargin:" name="TXTopMargin:" style="width:146px;height:26px;">Top Margin:</span>
 
 </td>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:184px;">
 <% /* MarginTop:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "MarginTop", strError );
@@ -964,13 +964,13 @@ else
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:158px;">
 <% /* TXBottomMargin::Text */ %>
 
-<span  id="TXBottomMargin:" name="TXBottomMargin:" style="width:130px;height:26px;">Bottom Margin:</span>
+<span  id="TXBottomMargin:" name="TXBottomMargin:" style="width:146px;height:26px;">Bottom Margin:</span>
 
 </td>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:184px;">
 <% /* MarginBottom:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "MarginBottom", strError );
@@ -1021,13 +1021,13 @@ else
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:158px;">
 <% /* TXLeftMargin::Text */ %>
 
-<span  id="TXLeftMargin:" name="TXLeftMargin:" style="width:130px;height:26px;">Left Margin:</span>
+<span  id="TXLeftMargin:" name="TXLeftMargin:" style="width:146px;height:26px;">Left Margin:</span>
 
 </td>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:184px;">
 <% /* MarginLeft:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "MarginLeft", strError );
@@ -1078,13 +1078,13 @@ else
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:158px;">
 <% /* TXRightMargin::Text */ %>
 
-<span  id="TXRightMargin:" name="TXRightMargin:" style="width:130px;height:26px;">Right Margin:</span>
+<span  id="TXRightMargin:" name="TXRightMargin:" style="width:146px;height:26px;">Right Margin:</span>
 
 </td>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:184px;">
 <% /* MarginRight:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "MarginRight", strError );
@@ -1135,10 +1135,10 @@ else
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:158px;">
 <% /* TXTextAlignment::Text */ %>
 
-<span  id="TXTextAlignment:" name="TXTextAlignment:" style="width:130px;height:28px;">Text Alignment:</span>
+<span  id="TXTextAlignment:" name="TXTextAlignment:" style="width:146px;height:28px;">Text Alignment:</span>
 
 </td>
 <td valign="top" style="width:98px;">
@@ -1226,10 +1226,10 @@ else
 <td>&nbsp</td>
 </tr>
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:158px;">
 <% /* TXFontFamily::Text */ %>
 
-<span  id="TXFontFamily:" name="TXFontFamily:" style="width:130px;height:30px;">Font Family:</span>
+<span  id="TXFontFamily:" name="TXFontFamily:" style="width:146px;height:30px;">Font Family:</span>
 
 </td>
 <td valign="top" style="width:98px;">
@@ -1317,10 +1317,10 @@ else
 <td>&nbsp</td>
 </tr>
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:158px;">
 <% /* TXFontSize::Text */ %>
 
-<span  id="TXFontSize:" name="TXFontSize:" style="width:130px;height:30px;">Font Size:</span>
+<span  id="TXFontSize:" name="TXFontSize:" style="width:146px;height:30px;">Font Size:</span>
 
 </td>
 <td valign="top" style="width:98px;">
@@ -1408,10 +1408,10 @@ else
 <td>&nbsp</td>
 </tr>
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:158px;">
 <% /* TXFontWeight::Text */ %>
 
-<span  id="TXFontWeight:" name="TXFontWeight:" style="width:130px;height:30px;">Font Weight:</span>
+<span  id="TXFontWeight:" name="TXFontWeight:" style="width:146px;height:30px;">Font Weight:</span>
 
 </td>
 <td valign="top" style="width:98px;">
@@ -1499,10 +1499,10 @@ else
 <td>&nbsp</td>
 </tr>
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:158px;">
 <% /* TXFontColor::Text */ %>
 
-<span  id="TXFontColor:" name="TXFontColor:" style="width:130px;height:30px;">Font Color:</span>
+<span  id="TXFontColor:" name="TXFontColor:" style="width:146px;height:30px;">Font Color:</span>
 
 </td>
 <td valign="top" style="width:98px;">
@@ -1590,13 +1590,13 @@ else
 <td>&nbsp</td>
 </tr>
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:158px;">
 <% /* TXLineHeight::Text */ %>
 
-<span  id="TXLineHeight:" name="TXLineHeight:" style="width:130px;height:26px;">Line Height:</span>
+<span  id="TXLineHeight:" name="TXLineHeight:" style="width:146px;height:26px;">Line Height:</span>
 
 </td>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:184px;">
 <% /* TextLineHeight:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "TextLineHeight", strError );
@@ -1647,10 +1647,10 @@ else
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:158px;">
 <% /* TXBorderStyle::Text */ %>
 
-<span  id="TXBorderStyle:" name="TXBorderStyle:" style="width:130px;height:30px;">Border Style:</span>
+<span  id="TXBorderStyle:" name="TXBorderStyle:" style="width:146px;height:30px;">Border Style:</span>
 
 </td>
 <td valign="top" style="width:98px;">
@@ -1738,13 +1738,13 @@ else
 <td>&nbsp</td>
 </tr>
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:158px;">
 <% /* TXBorderWidth::Text */ %>
 
-<span  id="TXBorderWidth:" name="TXBorderWidth:" style="width:130px;height:30px;">Border Width:</span>
+<span  id="TXBorderWidth:" name="TXBorderWidth:" style="width:146px;height:30px;">Border Width:</span>
 
 </td>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:184px;">
 <% /* BorderWidth:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "BorderWidth", strError );
@@ -1795,10 +1795,10 @@ else
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:158px;">
 <% /* TXBorderColor::Text */ %>
 
-<span  id="TXBorderColor:" name="TXBorderColor:" style="width:130px;height:30px;">Border Color:</span>
+<span  id="TXBorderColor:" name="TXBorderColor:" style="width:146px;height:30px;">Border Color:</span>
 
 </td>
 <td valign="top" style="width:98px;">
@@ -1886,10 +1886,10 @@ else
 <td>&nbsp</td>
 </tr>
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:158px;">
 <% /* TXTitlePosition::Text */ %>
 
-<span  id="TXTitlePosition:" name="TXTitlePosition:" style="width:130px;height:30px;">Title Position:</span>
+<span  id="TXTitlePosition:" name="TXTitlePosition:" style="width:146px;height:30px;">Title Position:</span>
 
 </td>
 <td valign="top" style="width:252px;">

@@ -43,8 +43,8 @@ function _OnAlmostTimeout()
       // If the time is less than one minute, resubmit the page.  Otherwise, go to the timeout window.
       if (tDiff < 60000)
       {
-         document.wStartUpUserLogin.zAction.value = "_OnResubmitPage";
-         document.wStartUpUserLogin.submit( );
+         document.wStartUpSubregColorAdd.zAction.value = "_OnResubmitPage";
+         document.wStartUpSubregColorAdd.submit( );
       }
       else
       {
@@ -59,8 +59,8 @@ function _OnTimeout( )
    {
       _DisableFormElements( true );
 
-      document.wStartUpUserLogin.zAction.value = "_OnTimeout";
-      document.wStartUpUserLogin.submit( );
+      document.wStartUpSubregColorAdd.zAction.value = "_OnTimeout";
+      document.wStartUpSubregColorAdd.submit( );
    }
 }
 
@@ -74,11 +74,8 @@ function _BeforePageUnload( )
       // If the user clicked the window close box, unregister zeidon.
       if (isWindowClosing)
       {
-         // These lines are commented out because either we are registering zeidon on this
-         // window or this is a popup window so we don't want to do an unload if the user
-         // closes the window using the red close button.
-         //document.wStartUpUserLogin.zAction.value = "_OnUnload";
-         //document.wStartUpUserLogin.submit( );
+         document.wStartUpSubregColorAdd.zAction.value = "_OnUnload";
+         document.wStartUpSubregColorAdd.submit( );
       }
    }
 }
@@ -120,49 +117,27 @@ function _DisableFormElements( bDisabled )
    var $el = $("#zDisable");
    if ( $el.length > 0 ) {
       $el[0].disabled = true;
-            bRC = true;
-         }
+      bRC = true;
+   }
 
    $.blockUI({ message: '<h1><img src="./images/busy.gif" /></h1>', overlayCSS: { backgroundColor: '#eee' } });
    return bRC;
 }
 
-function _OnEnter( e )
-{
-   var keycode;
-   if ( window.event )
-      keycode = window.event.keyCode;
-   else
-   {
-      if ( e )
-         keycode = e.which;
-      else
-         return true;
-   }
-
-   if ( keycode == 13 )
-   {
-      ProcessUserLogin( );
-      return false;
-   }
-   else
-      return true;
-   }
-
 function _AfterPageLoaded( )
 {
 // _DisableFormElements( false );
 
-   var szFocusCtrl = document.wStartUpUserLogin.zFocusCtrl.value;
+   var szFocusCtrl = document.wStartUpSubregColorAdd.zFocusCtrl.value;
    if ( szFocusCtrl != "" && szFocusCtrl != "null" )
-      eval( 'document.wStartUpUserLogin.' + szFocusCtrl + '.focus( )' );
+      eval( 'document.wStartUpSubregColorAdd.' + szFocusCtrl + '.focus( )' );
 
    // This is where we put out a message from the previous iteration on this window
-   var szMsg = document.wStartUpUserLogin.zError.value;
+   var szMsg = document.wStartUpSubregColorAdd.zError.value;
    if ( szMsg != "" )
       alert( szMsg ); // "Houston ... We have a problem"
 
-   szMsg = document.wStartUpUserLogin.zOpenFile.value;
+   szMsg = document.wStartUpSubregColorAdd.zOpenFile.value;
    if ( szMsg != "" )
    {
       var NewWin = window.open( szMsg );
@@ -174,9 +149,9 @@ function _AfterPageLoaded( )
       }
    }
 
-   var keyRole = document.wStartUpUserLogin.zKeyRole.value;
-   document.wStartUpUserLogin.zError.value = "";
-   document.wStartUpUserLogin.zOpenFile.value = "";
+   var keyRole = document.wStartUpSubregColorAdd.zKeyRole.value;
+   document.wStartUpSubregColorAdd.zError.value = "";
+   document.wStartUpSubregColorAdd.zOpenFile.value = "";
 
    if ( timerID != null )
    {
@@ -184,7 +159,7 @@ function _AfterPageLoaded( )
       timerID = null;
    }
 
-   var varTimeout = document.wStartUpUserLogin.zTimeout.value;
+   var varTimeout = document.wStartUpSubregColorAdd.zTimeout.value;
    if ( varTimeout > 0 )
    {
       var varDelay = 60000 * varTimeout;  // Timeout value in timeout.inc
@@ -212,7 +187,7 @@ function CheckAllInGrid(id, CheckBoxName)
    }
 }
 
-function FORGOT_Password( )
+function Cancel( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -222,42 +197,12 @@ function FORGOT_Password( )
    {
       _DisableFormElements( true );
 
-      document.wStartUpUserLogin.zAction.value = "FORGOT_Password";
-      document.wStartUpUserLogin.submit( );
+      document.wStartUpSubregColorAdd.zAction.value = "Cancel";
+      document.wStartUpSubregColorAdd.submit( );
    }
 }
 
-function AutoLogin( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wStartUpUserLogin.zAction.value = "AutoLogin";
-      document.wStartUpUserLogin.submit( );
-   }
-}
-
-function mLogout( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wStartUpUserLogin.zAction.value = "_OnUnload";
-      document.wStartUpUserLogin.submit( );
-   }
-}
-
-function InitLoginWindow( )
+function InitColorForAdd( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -267,34 +212,106 @@ function InitLoginWindow( )
    {
       // Javascript code entered by user.
 
-  var thisLi;
+   // We knock out Login and Template as options.
+   thisLi = document.getElementById( "lmLogin" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+   thisLi = document.getElementById( "lmTemplate" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
 
-   // If the Role is not set when we get here, it is because there is no admin (KeyRole = "U"), so we will only permit the user to go to set up the administrator.
-   if ( keyRole == "U" )
+   if ( keyRole == "S" )
    {
-      thisLi = document.getElementById( "EBRegistrantName" );
-      thisLi .disabled = true;
-      thisLi = document.getElementById( "EBUserName" );
-      thisLi .disabled = true;
-      thisLi = document.getElementById( "EBPassword" );
-      thisLi .disabled = true;
-      thisLi = document.getElementById( "CBRole" );
-      thisLi .disabled = true;
-      thisLi = document.getElementById( "PBLogin");
+      thisLi = document.getElementById( "lmSubregistrants" );
       thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+      thisLi = document.getElementById( "lmTrackingNotificationCompliance" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
    }
    else
    {
-      thisLi = document.getElementById( "PBSetupAdmin" );
+      thisLi = document.getElementById( "lmStateRegistrations" );
       thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
    }
+
+   thisLi = document.getElementById( "lmAdministration" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
 
       // END of Javascript code entered by user.
 
    }
 }
 
-function ProcessUserLogin( )
+function SaveAddNew( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+var strName = document.getElementById( "ColorName" ).value;
+if ( strName === "" ) {
+   alert( "Color Name is required" );
+   return;
+}
+strName = document.getElementById( "RGB" ).value;
+if ( strName === "" ) {
+   alert( "Color RGB is required" );
+   return;
+}
+var isOk  = /[0-9A-F]{6}$/i.test(strName);
+if ( isOk === false ) {
+   alert( "Invalid RGB color" );
+   return;
+}
+
+      // END of Javascript code entered by user.
+
+   }
+}
+
+function SaveReturn( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+var strName = document.getElementById( "ColorName" ).value;
+if ( strName === "" ) {
+   alert( "Color Name is required" );
+   return;
+}
+strName = document.getElementById( "RGB" ).value;
+if ( strName === "" ) {
+   alert( "Color RGB is required" );
+   return;
+}
+var isOk  = /[0-9A-F]{6}$/i.test(strName);
+if ( isOk === false ) {
+   alert( "Invalid RGB color" );
+   return;
+}
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wStartUpSubregColorAdd.zAction.value = "SaveReturn";
+      document.wStartUpSubregColorAdd.submit( );
+   }
+}
+
+function UpdateColor( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -304,12 +321,84 @@ function ProcessUserLogin( )
    {
       _DisableFormElements( true );
 
-      document.wStartUpUserLogin.zAction.value = "ProcessUserLogin";
-      document.wStartUpUserLogin.submit( );
+      document.wStartUpSubregColorAdd.zAction.value = "UpdateColor";
+      document.wStartUpSubregColorAdd.submit( );
    }
 }
 
-function mmLogout( )
+function smSaveReturn( )
+{
+
+      // This is for indicating whether the user hit the window close box.
+      isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+
+      // Javascript code entered by user.
+
+var strName = document.getElementById( "ColorName" ).value;
+if ( strName === "" ) {
+   alert( "Color Name is required" );
+   return;
+}
+strName = document.getElementById( "RGB" ).value;
+if ( strName === "" ) {
+   alert( "Color RGB is required" );
+   return;
+}
+var isOk  = /[0-9A-F]{6}$/i.test(strName);
+if ( isOk === false ) {
+   alert( "Invalid RGB color" );
+   return;
+}
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wStartUpSubregColorAdd.zAction.value = "smSaveReturn";
+      document.wStartUpSubregColorAdd.submit( );
+   }
+}
+
+function smSaveAddNew( )
+{
+
+      // This is for indicating whether the user hit the window close box.
+      isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+
+      // Javascript code entered by user.
+
+var strName = document.getElementById( "ColorName" ).value;
+if ( strName === "" ) {
+   alert( "Color Name is required" );
+   return;
+}
+strName = document.getElementById( "RGB" ).value;
+if ( strName === "" ) {
+   alert( "Color RGB is required" );
+   return;
+}
+var isOk  = /[0-9A-F]{6}$/i.test(strName);
+if ( isOk === false ) {
+   alert( "Invalid RGB color" );
+   return;
+}
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wStartUpSubregColorAdd.zAction.value = "smSaveAddNew";
+      document.wStartUpSubregColorAdd.submit( );
+   }
+}
+
+function smCancel( )
 {
 
       // This is for indicating whether the user hit the window close box.
@@ -319,20 +408,8 @@ function mmLogout( )
    {
       _DisableFormElements( true );
 
-      document.wStartUpUserLogin.zAction.value = "_OnUnload";
-      document.wStartUpUserLogin.submit( );
-   }
-}
-
-function PrimaryRegistrantsOnChange( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      document.wStartUpUserLogin.hPrimaryRegistrants.value = document.wStartUpUserLogin.PrimaryRegistrants.selectedIndex;
+      document.wStartUpSubregColorAdd.zAction.value = "smCancel";
+      document.wStartUpSubregColorAdd.submit( );
    }
 }
 

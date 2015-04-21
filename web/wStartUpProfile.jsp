@@ -35,6 +35,7 @@ public int DoInputMapping( HttpServletRequest request,
    String taskId = (String) session.getAttribute( "ZeidonTaskId" );
    Task task = objectEngine.getTaskById( taskId );
 
+   View mSubreg = null;
    View vGridTmp = null; // temp view to grid view
    View vRepeatingGrp = null; // temp view to repeating group view
    String strDateFormat = "";
@@ -55,6 +56,29 @@ public int DoInputMapping( HttpServletRequest request,
 
    if ( webMapping == false )
       session.setAttribute( "ZeidonError", null );
+
+   mSubreg = task.getViewByName( "mSubreg" );
+   if ( VmlOperation.isValid( mSubreg ) )
+   {
+      // Grid: Colors
+      iTableRowCnt = 0;
+
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
+      vGridTmp = mSubreg.newView( );
+      csrRC = vGridTmp.cursor( "Color" ).setFirst(  );
+      while ( csrRC.isSet() )
+      {
+         lEntityKey = vGridTmp.cursor( "Color" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         iTableRowCnt++;
+
+         csrRC = vGridTmp.cursor( "Color" ).setNextContinue( );
+      }
+
+      vGridTmp.drop( );
+   }
 
    if ( webMapping == true )
       return 2;
@@ -174,7 +198,7 @@ if ( strActionToProcess != null )
 
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "Return" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "AddNewColor" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wStartUpProfile", strActionToProcess );
@@ -185,7 +209,203 @@ if ( strActionToProcess != null )
          break;
 
       // Next Window
-      strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_ReturnToParent, "", "" );
+      strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StartModalSubwindow, "wStartUp", "SubregColorAdd" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "InitProfileForUpdate" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wStartUpProfile", strActionToProcess );
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpProfile.jsp", "wStartUp.InitColorForUpdate" );
+         nOptRC = wStartUp.InitColorForUpdate( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wStartUp.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "Return" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wStartUpProfile", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpProfile.jsp", "wStartUp.AcceptUpdateSubregistrant" );
+         nOptRC = wStartUp.AcceptUpdateSubregistrant( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wStartUp.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_ReturnToParent, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "DeleteColor" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wStartUpProfile", strActionToProcess );
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mSubreg;
+      mSubreg = task.getViewByName( "mSubreg" );
+      if ( VmlOperation.isValid( mSubreg ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mSubreg.cursor( "Color" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mSubreg.cursor( "Color" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mSubreg.cursor( "Color" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mSubreg.cursor( "Color" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpProfile.jsp", "wStartUp.DeleteColor" );
+         nOptRC = wStartUp.DeleteColor( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wStartUp.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "UpdateColor" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wStartUpProfile", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mSubreg;
+      mSubreg = task.getViewByName( "mSubreg" );
+      if ( VmlOperation.isValid( mSubreg ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mSubreg.cursor( "Color" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mSubreg.cursor( "Color" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mSubreg.cursor( "Color" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mSubreg.cursor( "Color" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpProfile.jsp", "wStartUp.UpdateColor" );
+         nOptRC = wStartUp.UpdateColor( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wStartUp.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StartModalSubwindow, "wStartUp", "SubregColorUpdate" );
+      }
+
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -215,8 +435,29 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
-      // Next Window
-      strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_ReturnToParent, "", "" );
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpProfile.jsp", "wStartUp.AcceptUpdateSubregistrant" );
+         nOptRC = wStartUp.AcceptUpdateSubregistrant( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wStartUp.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_ReturnToParent, "", "" );
+      }
+
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -608,7 +849,6 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
 else
 {
 }
-
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wStartUp", "" );
    if ( csrRC.isSet( ) )
       strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
@@ -822,18 +1062,156 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:48px;width:100px;"></div>
+<div style="height:14px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
-<% /* MoveIncrement::Text */ %>
+<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
+<% /* ColorList:GroupBox */ %>
 
-<span  id="MoveIncrement:" name="MoveIncrement:" style="width:118px;height:16px;">Move Increment:</span>
+<div id="ColorList" name="ColorList" style="width:814px;height:264px;float:left;">  <!-- ColorList --> 
 
-<span style="height:16px;">&nbsp</span>
-<% /* MoveIncrement:EditBox */ %>
-<input name="MoveIncrement" id="MoveIncrement" style="width:90px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<div  id="ColorList" name="ColorList" >Color List</div>
 
+ <!-- This is added as a line spacer -->
+<div style="height:20px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:138px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox1:GroupBox */ %>
+
+<div id="GroupBox1" name="GroupBox1" style="width:192px;height:30px;float:left;">  <!-- GroupBox1 --> 
+
+
+</div>  <!--  GroupBox1 --> 
+<span style="height:30px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+<% /* NewColor:PushBtn */ %>
+<button type="button" name="NewColor" id="NewColor" value="" onclick="AddNewColor( )" style="width:82px;height:30px;">New</button>
+
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:10px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:30px;float:left;"></div>   <!-- Width Spacer -->
+<% /* Colors:Grid */ %>
+<table  cols=5 style=""  name="Colors" id="Colors">
+
+<thead><tr>
+
+   <th>Name</th>
+   <th>RGB (Hex)</th>
+   <th>Pantone</th>
+   <th>Update</th>
+   <th>Delete</th>
+
+</tr></thead>
+
+<tbody>
+
+<%
+try
+{
+   iTableRowCnt = 0;
+   mSubreg = task.getViewByName( "mSubreg" );
+   if ( VmlOperation.isValid( mSubreg ) )
+   {
+      long   lEntityKey;
+      String strEntityKey;
+      String strButtonName;
+      String strOdd;
+      String strTag;
+      String strColorName;
+      String strRGBHex;
+      String strPantoneName;
+      String strBMBUpdateColor;
+      String strBMBDeleteColor;
+      
+      View vColors;
+      vColors = mSubreg.newView( );
+      csrRC2 = vColors.cursor( "Color" ).setFirst(  );
+      while ( csrRC2.isSet() )
+      {
+         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
+         iTableRowCnt++;
+
+         lEntityKey = vColors.cursor( "Color" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         strButtonName = "SelectButton" + strEntityKey;
+
+         strColorName = "";
+         nRC = vColors.cursor( "Color" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strColorName = vColors.cursor( "Color" ).getAttribute( "Name" ).getString( "" );
+
+            if ( strColorName == null )
+               strColorName = "";
+         }
+
+         if ( StringUtils.isBlank( strColorName ) )
+            strColorName = "&nbsp";
+
+         strRGBHex = "";
+         nRC = vColors.cursor( "Color" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strRGBHex = vColors.cursor( "Color" ).getAttribute( "RGB" ).getString( "" );
+
+            if ( strRGBHex == null )
+               strRGBHex = "";
+         }
+
+         if ( StringUtils.isBlank( strRGBHex ) )
+            strRGBHex = "&nbsp";
+
+         strPantoneName = "";
+         nRC = vColors.cursor( "Color" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strPantoneName = vColors.cursor( "Color" ).getAttribute( "Pantone" ).getString( "" );
+
+            if ( strPantoneName == null )
+               strPantoneName = "";
+         }
+
+         if ( StringUtils.isBlank( strPantoneName ) )
+            strPantoneName = "&nbsp";
+
+%>
+
+<tr<%=strOdd%>>
+
+   <td nowrap><a href="#" onclick="UpdateColor( this.id )" id="ColorName::<%=strEntityKey%>"><%=strColorName%></a></td>
+   <td nowrap><a href="#" onclick="UpdateColor( this.id )" id="RGBHex::<%=strEntityKey%>"><%=strRGBHex%></a></td>
+   <td nowrap><a href="#" onclick="UpdateColor( this.id )" id="PantoneName::<%=strEntityKey%>"><%=strPantoneName%></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateColor" onclick="UpdateColor( this.id )" id="BMBUpdateColor::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteColor" onclick="DeleteColor( this.id )" id="BMBDeleteColor::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
+
+</tr>
+
+<%
+         csrRC2 = vColors.cursor( "Color" ).setNextContinue( );
+      }
+      vColors.drop( );
+   }
+}
+catch (Exception e)
+{
+out.println("There is an error in grid: " + e.getMessage());
+task.log().info( "*** Error in grid" + e.getMessage() );
+}
+%>
+</tbody>
+</table>
+
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  ColorList --> 
 </div>  <!-- End of a new line -->
 
 

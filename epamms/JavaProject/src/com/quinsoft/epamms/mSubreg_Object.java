@@ -182,7 +182,7 @@ omSubreg_dPrimRegNameID( View     mSubreg,
                   sb_szTempString_0 = new StringBuilder( 32 );
                else
                   sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_2, 'S', 129, mSubreg, "PrimaryRegistrant", "EPA_CompanyNumber", "", 0 );
+                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_2, 'S', 7, mSubreg, "PrimaryRegistrant", "EPA_CompanyNumber", "", 0 );
                lTempInteger_2 = mi_lTempInteger_2.intValue( );
                szTempString_0 = sb_szTempString_0.toString( );}
                 {StringBuilder sb_szString;
@@ -297,7 +297,7 @@ omSubreg_dSubregNameID( View     mSubreg,
                   sb_szTempString_0 = new StringBuilder( 32 );
                else
                   sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_2, 'S', 129, mSubreg, "Subregistrant", "EPA_CompanyNumber", "", 0 );
+                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_2, 'S', 7, mSubreg, "Subregistrant", "EPA_CompanyNumber", "", 0 );
                lTempInteger_2 = mi_lTempInteger_2.intValue( );
                szTempString_0 = sb_szTempString_0.toString( );}
                 {StringBuilder sb_szString;
@@ -405,7 +405,7 @@ omSubreg_dSubregProductNameNbr( View     mSubreg,
                sb_szTempString_0 = new StringBuilder( 32 );
             else
                sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                         GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_1, 'S', 129, mSubreg, "SubregProduct", "Number", "", 0 );
+                         GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_1, 'S', 6, mSubreg, "SubregProduct", "Number", "", 0 );
             lTempInteger_1 = mi_lTempInteger_1.intValue( );
             szTempString_0 = sb_szTempString_0.toString( );}
              {StringBuilder sb_szString;
@@ -500,7 +500,7 @@ omSubreg_dMasterProductNameNbr( View     mSubreg,
                sb_szTempString_0 = new StringBuilder( 32 );
             else
                sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                         GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_1, 'S', 129, mSubreg, "PrimaryRegistrant", "EPA_CompanyNumber", "", 0 );
+                         GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_1, 'S', 7, mSubreg, "PrimaryRegistrant", "EPA_CompanyNumber", "", 0 );
             lTempInteger_1 = mi_lTempInteger_1.intValue( );
             szTempString_0 = sb_szTempString_0.toString( );}
              {StringBuilder sb_szString;
@@ -523,7 +523,7 @@ omSubreg_dMasterProductNameNbr( View     mSubreg,
                sb_szTempString_1 = new StringBuilder( 32 );
             else
                sb_szTempString_1 = new StringBuilder( szTempString_1 );
-                         GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_2, 'S', 129, mSubreg, "MasterProduct", "Number", "", 0 );
+                         GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_2, 'S', 6, mSubreg, "MasterProduct", "Number", "", 0 );
             lTempInteger_2 = mi_lTempInteger_2.intValue( );
             szTempString_1 = sb_szTempString_1.toString( );}
              {StringBuilder sb_szString;

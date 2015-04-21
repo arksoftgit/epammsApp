@@ -726,7 +726,15 @@ $(function() {
       // displayElementData( "mapUiDataToElementData (after)", $current_element );
       }
    }
-
+/*
+   function showHideTandem( id, show ) {
+      if ( show ) {
+         $('#' + id + ', label[for=' + id + ']').show();
+      } else {
+         $('#' + id + ', label[for=' + id + ']').hide();
+      }
+   }
+*/
    function mapElementDataToUiData( $current_element ) {
       if ( $current_element ) {
       // displayElementData( "mapElementDataToUiData", $current_element );
@@ -735,21 +743,27 @@ $(function() {
          var entity;
          var key;
          var value;
+         var sectionType;
          var element_id = $current_element.attr( "id" );
          if ( element_id !== "label" && element_id !== "page" ) {
             element_id = "block";
+            sectionType = "";
          }
          $("input.zeidon, select.zeidon").each( function() {
             entityAttr = $(this).data( "zmap" );
             if ( entityAttr ) {
                n = entityAttr.indexOf( ".z_" );
                entity = entityAttr.substring( 0, n );
-               key = entityAttr.substring( n + 1 );
                if ( entity === element_id ) {
+                  key = entityAttr.substring( n + 1 );
                   value = $current_element.data( key );
                   if ( ! value ) {
                      value = "";
                   }
+                  if ( key === "z_^l^l^d_^section^type" ) {
+                     sectionType = value;
+                  }
+                  /* not using colorwell at present
                   if ( $(this).hasClass( "colorwell" ) ) {
                      if ( value.indexOf( '#' ) !== 0 ) {
                         value = "#ffffff";
@@ -757,15 +771,125 @@ $(function() {
                      var colorPicker = $.farbtastic( "#" + $(this).attr( "id" ) );
                      colorPicker.setColor( value );
                   }
+                  */
                   this.type === "checkbox" ? (value === "Y" ? this.checked = true : this.checked = false) : $(this).val( value );
                }
             }
          });
+         if ( element_id === "block" ) {
+            console.log( "Processing block type: " + sectionType );
+            // The .prop() method should be used to set disabled and checked instead of the .attr() method.
+            // $('#id').prop('disabled', false);
+            // $('#id').prop('disabled', 'disabled');
+            if ( sectionType === "Graphic" ) {
+               $("#zImageNameToggle").show();
+               $("#zCheckContinuationBlockToggle").hide()
+               $("#zClaimListTypeToggle").hide();
+            } else if ( sectionType === "Marketing" || sectionType === "DirectionsForUse" ||
+                        sectionType === "StorageDisposal" || sectionType === "Hazards" || sectionType === "Precautionary" ) {
+               $("#zCheckContinuationBlockToggle").show();
+               $("#zImageNameToggle").hide();
+               if ( sectionType === "Marketing" ) {
+                  $("#zClaimListTypeToggle").show();
+               } else {
+                  $("#zClaimListTypeToggle").hide();
+               }
+            } else {
+               $("#zCheckContinuationBlockToggle").hide();
+               $("#zImageNameToggle").hide();
+               $("#zClaimListTypeToggle").hide();
+            }
+         } else {
+            $("#zCheckContinuationBlockToggle").hide()
+            $("#zImageNameToggle").hide();
+            $("#zClaimListTypeToggle").hide();
+         }
+      } else {
+         $("input.zeidon, select.zeidonToggle").each( function() {
+            this.type === "checkbox" ? this.checked = false : $(this).val( "" );
+         });
+         $("#zCheckContinuationBlockToggle").hide();
+         $("#zImageNameToggle").hide();
+         $("#zClaimListTypeToggle").hide();
+      }
+
+      /*
+         if ( element_id === "block" ) {
+            console.log( "Processing block type: " + sectionType );
+            // The .prop() method should be used to set disabled and checked instead of the .attr() method.
+            // $('#id').prop('disabled', false);
+            // $('#id').prop('disabled', 'disabled');
+            if ( sectionType === "Graphic" ) {
+               showHideTandem( "zImageName", true );
+               showHideTandem( "zCheckContinuationBlock", false );
+               showHideTandem( "zClaimListType", false );;
+            } else if ( sectionType === "Marketing" || sectionType === "DirectionsForUse" ||
+                        sectionType === "StorageDisposal" || sectionType === "Hazards" || sectionType === "Precautionary" ) {
+               showHideTandem( "zCheckContinuationBlock", true );
+               showHideTandem( "zImageName", false );
+               if ( sectionType === "Marketing" ) {
+                  showHideTandem( "zClaimListType", true );
+               } else {
+                  showHideTandem( "zClaimListType", false );
+               }
+            } else {
+               showHideTandem( "zCheckContinuationBlock", false );;
+               showHideTandem( "zImageName", false );
+               showHideTandem( "zClaimListType", false );
+            }
+         } else {
+            showHideTandem( "zCheckContinuationBlock", false );
+            showHideTandem( "zImageName", false );
+            showHideTandem( "zClaimListType", false );
+         }
       } else {
          $("input.zeidon, select.zeidon").each( function() {
             this.type === "checkbox" ? this.checked = false : $(this).val( "" );
          });
+         showHideTandem( "zCheckContinuationBlock", false );
+         showHideTandem( "zImageName", false );
+         showHideTandem( "zClaimListType", false );
       }
+      */
+/*      
+         if ( element_id === "block" ) {
+            console.log( "Processing block type: " + sectionType );
+            // The .prop() method should be used to set disabled and checked instead of the .attr() method.
+            // $('#id').prop('disabled', false);
+            // $('#id').prop('disabled', 'disabled');
+            if ( sectionType === "Graphic" ) {
+               $("#zImageName").prop('disabled', false);
+               $("#zCheckContinuationBlock").prop('disabled', true);
+               $("#zClaimListType").prop('disabled', 'disabled');
+            } else if ( sectionType === "Marketing" || sectionType === "DirectionsForUse" ||
+                        sectionType === "StorageDisposal" || sectionType === "Hazards" || sectionType === "Precautionary" ) {
+               $("#zCheckContinuationBlock").prop('disabled', false);
+               $("#zImageName").prop('disabled', true);
+               if ( sectionType === "Marketing" ) {
+                  $("#zClaimListType").prop('disabled', false);
+               } else {
+                  $("#zClaimListType").prop('disabled', 'disabled');
+               }
+            } else {
+               $("#zCheckContinuationBlock").prop('disabled', true);
+               $("#zImageName").prop('disabled', true);
+               $("#zClaimListType").prop('disabled', 'disabled');
+            }
+         } else {
+            $("#zCheckContinuationBlock").prop('disabled', true);
+            $("#zImageName").prop('disabled', true);
+            $("#zClaimListType").prop('disabled', 'disabled');
+         }
+      } else {
+         $("input.zeidon, select.zeidon").each( function() {
+            this.type === "checkbox" ? this.checked = false : $(this).val( "" );
+         });
+         $("#zCheckContinuationBlock").prop('disabled', true);
+         $("#zImageName").prop('disabled', true);
+         $("#zClaimListType").prop('disabled', 'disabled');
+      }
+*/
+      
    }
 
 /* 1 ELEMENT_NODE
@@ -1057,7 +1181,7 @@ $(function() {
       mapElementDataToUiData( $("#page") );
    }
 
-/*
+/* not using colorwell at present
    var selected;
    var f = $.farbtastic('#zpicker');
    var p = $('#zpicker').css('opacity', 0.25);
@@ -1138,7 +1262,7 @@ $(function() {
 
 
 // $("#zBlockBackgroundColor").attr( "readonly", true ); data???
-/*
+/* not using colorwell at present
    var selectedBlock;
    var fBlock = $.farbtastic( "#zBlockPicker", fbCallback );
    var pBlock = $("#zBlockPicker").css("opacity", 0.25).hide();
@@ -2364,13 +2488,15 @@ public class FileServer {
                // if ( $(this).attr( "id" ) === "CSS_File" ) {
                //    console.log( "Clearing CSS_File element: " + $(this).attr( "id" ) );
                // }
+               /* not using colorwell at present
                   if ( $(this).hasClass( "colorwell" ) ) {
                      var colorPicker = $.farbtastic( "#" + $(this).attr( "id" ) );
                      colorPicker.setColor( "#ffffff" );
                      $(this).val( "#ffffff" );
                   } else {
+               */
                      $(this).val( "" );
-                  }
+               // }
                });
 
             // var jsonObj = eval( "[" + data + "]" );
@@ -2380,6 +2506,7 @@ public class FileServer {
                var jsonMeta = jsonObj[".meta"];
                g_metaVersion = jsonMeta["version"];
                g_metaDate = jsonMeta["date"];
+               var jsonColors = jsonObj["Colors"];
                jsonObj = jsonObj["OIs"];
 
                // Display the JSON coming back (to the client) from Zeidon (server).
@@ -2391,6 +2518,7 @@ public class FileServer {
             // if ( g_scale && g_scale !== 1 ) {
                   resizeImg();
             // }
+               setColors( jsonColors );
             } catch(e) {
                $id("zFormattedJsonLabel").innerHTML = jsonZeidon;
                alert( "JSON is not well formatted:\n" + e.message );
@@ -3047,7 +3175,41 @@ public class FileServer {
       }
    }
 
-   // Initialize everything (first time in).
+   function setColors( jsonColors )
+   {
+      var colors = [];
+      var names = [];
+      if ( $.isArray( jsonColors ) ) {
+         var name;
+         for ( var k = 0; k < jsonColors.length; k++ ) {
+            name = jsonColors[k].Pantone;
+            if ( name === "" ) {
+               name = jsonColors[k].Name;
+            }
+            colors.push( jsonColors[k].RGB );
+            names.push( name );
+         }
+         colors.push( "EFEFEF" );
+         names.push( "n/a" );
+      }
+   // $('#colorText').colorPicker( { colors: ["1111ff", "333333", "ff1111", "eeeeee", "feeeee"], names: ["Blue", "Black", "Red", "Gray", "Pink"], showHexField: false,
+   //                               onColorChange : function(id, newValue) { console.log("ID: '" + id + "' has been changed to " + newValue); } } );
+      $('#colorText').colorPicker( { colors: colors, names: names, showHexField: false,
+                                     onColorChange : function(id, newValue) { console.log("ID: '" + id + "' has been changed to " + newValue); } } );
+                                 
+      $('#colorText2').colorPicker( { colors: colors, names: names, showHexField: false,
+                                     onColorChange : function(id, newValue) { console.log("ID: '" + id + "' has been changed to " + newValue); } } );
+      // Plain English of "#header .callout":
+      //  - Select all elements with the class name callout that are decendents of the element with an ID of header.
+      var el = $('#colorText').siblings('.colorPicker-picker')[0];
+      $(el).css( "background-color", "#" + jsonColors[0].RGB ).css( "color", "#" + invertHexColor( jsonColors[0].RGB ) ).text( jsonColors[0].Name );
+      $('#colorText').val( "#" + jsonColors[0].RGB );
+      el = $('#colorText2').siblings('.colorPicker-picker')[0];
+      $(el).css( "background-color", "#" + jsonColors[1].RGB ).css( "color", "#" + invertHexColor( jsonColors[1].RGB ) ).text( jsonColors[1].Name );
+      $('#colorText2').val( "#" + jsonColors[1].RGB );
+   }
+
+// Initialize everything (first time in).
    scrollbarHeightWidth();  // call the function to set g_scrollbar
    setLLD_sizes();
 
@@ -3069,9 +3231,6 @@ public class FileServer {
    }
    var spinner = $( "#zZoomSpinner" ).spinner();
    spinner.spinner( "value", g_scale );
-
-   $('#colorText').colorPicker( { colors: ["1111ff", "333333", "ff1111", "eeeeee", "feeeee"], names: ["Blue", "Black", "Red", "Gray", "Pink"], showHexField: false,
-                                  onColorChange : function(id, newValue) { console.log("ID: '" + id + "' has been changed to " + newValue); } } );
 
 /**
 var canvas = $('#canvasback')[0];

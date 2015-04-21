@@ -101,6 +101,19 @@ function _DisableFormElements( bDisabled )
       timerID = null;
    }
 
+   // Controls on the window may have been set as disabled through javascript but
+   // when we try to get the values for these controls in jsp (response.getParameter)
+   // they will always be null.  Set any disabled fields to enabled for this reason.
+   for ( j = 0; j < document.forms.length; j++ )
+   {
+      theForm = document.forms[ j ];
+      for ( k = 0; k < theForm.length; k++ )
+      {
+         if (theForm.elements[ k ].disabled == true)
+             theForm.elements[ k ].disabled = false;
+      }
+   }
+
    var $el = $("#zDisable");
    if ( $el.length > 0 ) {
       $el[0].disabled = true;
@@ -174,7 +187,7 @@ function CheckAllInGrid(id, CheckBoxName)
    }
 }
 
-function Return( )
+function AddNewColor( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -184,7 +197,7 @@ function Return( )
    {
       _DisableFormElements( true );
 
-      document.wStartUpProfile.zAction.value = "Return";
+      document.wStartUpProfile.zAction.value = "AddNewColor";
       document.wStartUpProfile.submit( );
    }
 }
@@ -229,6 +242,59 @@ function InitProfileForUpdate( )
 
       // END of Javascript code entered by user.
 
+   }
+}
+
+function Return( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wStartUpProfile.zAction.value = "Return";
+      document.wStartUpProfile.submit( );
+   }
+}
+
+function DeleteColor( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wStartUpProfile.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wStartUpProfile.zAction.value = "DeleteColor";
+      document.wStartUpProfile.submit( );
+   }
+}
+
+function UpdateColor( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wStartUpProfile.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wStartUpProfile.zAction.value = "UpdateColor";
+      document.wStartUpProfile.submit( );
    }
 }
 

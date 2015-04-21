@@ -135,15 +135,15 @@ public class ZGlobal1_Operation extends VmlOperation
     {
        Double decimalSum;
        Double decimalValue = null;
-       int RESULT;
+       int rc;
 
        decimalSum = 0.0;
 
-       RESULT = SetCursorFirstEntity( vSum, entityName, stringParentName );
-       while ( RESULT > zCURSOR_UNCHANGED )
+       rc = SetCursorFirstEntity( vSum, entityName, stringParentName );
+       while ( rc > zCURSOR_UNCHANGED )
        {
          decimalSum += GetDecimalFromAttribute( decimalValue, vSum, entityName, attributeName );
-          RESULT = SetCursorNextEntity( vSum, entityName, stringParentName );
+         rc = SetCursorNextEntity( vSum, entityName, stringParentName );
        }
 
        return decimalSum;
@@ -310,10 +310,7 @@ public class ZGlobal1_Operation extends VmlOperation
     public Double
     StrToDecimal( String stringStr )
     {
-      if ( stringStr == null )
-         return 0.0;
-
-      if ( stringStr.equals("") )
+      if ( stringStr == null || stringStr.equals("") )
          return 0.0;
 
        return Double.valueOf( stringStr );
@@ -5943,13 +5940,8 @@ ioe.printStackTrace();
        // we can retrieve this name in FindOpenFile (kzoejava.c) when trying to
        // open the file in the jsp files.
        GetViewByName( vKZXMLPGO, "_KZXMLPGO", vMapObject, zLEVEL_TASK );
-       SetAttributeFromString( vKZXMLPGO, "Session",
-                               "PrintFileName",
-                               szFileName );
-                               //pchReportName );
-       SetAttributeFromString( vKZXMLPGO, "Session",
-                               "PrintFileType",
-                               "pdf" );
+       SetAttributeFromString( vKZXMLPGO, "Session", "PrintFileName", szFileName );  //pchReportName );
+       SetAttributeFromString( vKZXMLPGO, "Session", "PrintFileType", "pdf" );
        return( 0 );
     } // CopyFileToPDF
 }

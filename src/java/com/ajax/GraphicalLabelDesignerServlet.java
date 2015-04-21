@@ -274,6 +274,19 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
 
    private String convertLLD_ToJSON( View vLLD ) {
       String jsonLabel = null;
+      String jsonColors = "[";
+      EntityCursor ec = vLLD.cursor( "Color" );
+      CursorResult cr = ec.setFirst();
+      while ( cr.isSet() ) {
+         jsonColors += " { \"Name\" : \"" + ec.getAttribute( "Name" ).getString() +
+                      "\", \"RGB\" : \"" + ec.getAttribute( "RGB" ).getString() +
+                      "\", \"Pantone\" : \"" + ec.getAttribute( "Pantone" ).getString() + "\" }";
+         cr = ec.setNext();
+         if ( cr.isSet() ) {
+            jsonColors += ", ";
+         }
+      }
+      jsonColors += " ]";
    // StringWriter sw = null;
    // BufferedWriter writer = null;
       try {
@@ -335,9 +348,9 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
 
          // Remove everything after SPLD_LLD and its children, and then add back termination for
          // OIs, SubregPhysicalLabelDef, and the opening brace.
-         jsonLabel = sb.substring( 0, pos ) + " } ] } ] }";
-      // logger.debug( "Reduced Json Label from OI: " + jsonLabel );
-         
+         jsonLabel = sb.substring( 0, pos ) + " } ] } ], \"Colors\" : " + jsonColors + " }";
+         logger.debug( "Reduced Json Label from OI: " + jsonLabel );
+
       } catch( ZeidonException ze ) {
          logger.debug( "Error loading Json Label: " + ze.getMessage() );
          jsonLabel = "{ \"Error\" : \"" + ze.getMessage() + "\" }";
@@ -726,6 +739,7 @@ end debug code */
       return json;
    }
 
+/* setPathCursorPosition is currently not used (deprecated ... setPositionByKey is being used instead)
    private EntityCursor setPathCursorPosition( View vLLD, String entityTagList, int idx1, int depth ) {
       EntityCursor ec = null;
       int idx2 = entityTagList.indexOf( ".", idx1 );
@@ -741,7 +755,7 @@ end debug code */
                   ec.setToSubobject();
                } else {
                   if ( depth < 2 ) {
-                     depth = 2;  // ensure we know we need to setToSubobject next level down
+                     depth = 2;  // we for sure need to setToSubobject next level down from here on
                   }
                }
             }
@@ -763,6 +777,7 @@ end debug code */
       }
       return ec;
    }
+*/
 
    private EntityCursor setPositionByKey( View mSPLDefBlock, String elementKey ) {
       // mSPLDefBlock comes in set to the top.

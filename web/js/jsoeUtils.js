@@ -48,6 +48,64 @@ function checkRegexp( o, regexp, n ) {
       return true;
    }
 }
+
+/*
+ const float gamma = 2.2;
+ float L = 0.2126 * pow( R, gamma )
+         + 0.7152 * pow( G, gamma )
+         + 0.0722 * pow( B, gamma );
+
+ boolean use_black = ( L > 0.5 );
+ This assumes that R, G and B are floating-point numbers ranging from 0.0 to 1.0. If what you have is,
+ say, integers from 0 to 255, convert them to floats and divide them by 255.
+
+ (I would not suggest using colored text, both because the human eye has much poorer spatial resolution
+ for color than for luminance, and also because combinations of highly saturated complementary colors
+ tend to be irritating to look at.)
+
+ Note that, if L is close to 0.5, small changes in the background color could cause the most contrasting
+ text color to flip from black to white or vice versa. To avoid this happening too frequently, you could
+ save the previous text color and only change it if L moves too far from 0.5:
+
+ if ( L > 0.6 ) {
+     use_black = true;
+ } else if ( L < 0.4 ) {
+     use_black = false;
+ } else {
+     // keep previous text color
+ }
+ Ps. If you wanted an even quicker approximation, you could round the exponent gamma down to 2.0,
+ allowing you to replace the pow() with a simple multiplication:
+
+ float L = 0.2126 * R*R + 0.7152 * G*G + 0.0722 * B*B;
+ This approximate formula is still within ±0.05 of the correct luminance calculated with the official
+ piecewise formula given by Martin (or with the gamma = 2.2 approximation used above, which itself is
+ within ±0.01 of the official formula), and so more than close enough for this purpose. Besides, you
+ can mostly compensate for the error simply by adjusting the threshold from 0.5 to 0.54 or so.
+ */
+
+ function invertHexColor( hexColor ) {
+   //javascript code
+
+    if ( hexColor.charAt(0) == "#" ) {
+       hexColor = hexColor.substring( 1,7 );
+    }
+    var r = parseInt( hexColor.substring( 0, 2 ), 16 ) / 255;
+    var g = parseInt( hexColor.substring( 2, 4 ), 16 ) / 255;
+    var b = parseInt( hexColor.substring( 4, 6 ), 16 ) / 255;
+    console.log( 'Red  :' + r );
+    console.log( 'Green:' + g );
+    console.log( 'Blue :' + b );
+    var L = 0.2126 * r*r + 0.7152 * g*g + 0.0722 * b*b;
+    var color;
+    if ( L > 0.5 ) {
+       color = "#000000";
+    } else {
+       color = "#ffffff";;
+    }
+    return color;
+}
+
 /*
 function addUser() {
    var valid = true;
