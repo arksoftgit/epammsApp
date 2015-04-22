@@ -349,7 +349,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
          // Remove everything after SPLD_LLD and its children, and then add back termination for
          // OIs, SubregPhysicalLabelDef, and the opening brace.
          jsonLabel = sb.substring( 0, pos ) + " } ] } ], \"Colors\" : " + jsonColors + " }";
-         logger.debug( "Reduced Json Label from OI: " + jsonLabel );
+      // logger.debug( "Reduced Json Label from OI: " + jsonLabel );
 
       } catch( ZeidonException ze ) {
          logger.debug( "Error loading Json Label: " + ze.getMessage() );
@@ -375,13 +375,20 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
       return jsonLabel;
    }
 
-   private void displaySPLD( View mSPLDef, String entity ) {
+   private void displaySPLD( View mSPLDef, String entity, String id ) {
       logger.debug( "displaySPLD" );
       EntityCursor ec;
       if ( entity != null ) {
+         boolean display = false;
          ec = mSPLDef.getCursor( entity );
+         if ( id != "" ) {
+            CursorResult cr = ec.setFirst( "ID", id );
+            if ( cr.isSet() ) {
+               display = true;
+            }
+         }
          if ( ec.isNull() == false ) {
-            ec.logEntity( false );
+            ec.logEntity( display );
          } else {
             logger.debug( "Null entity: " + entity );
          }
@@ -411,14 +418,14 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
          if ( ID.compareTo( "600" ) == 0 || ID.compareTo( "812" ) == 0 || ID.compareTo( "813" ) == 0 ) {
             logger.debug( ID + "C"  + "  Checking move from parent ID: " + IDP + "  to parent ID: " + wPID );
             eip.logEntity( false );
-            displaySPLD( vLLD, entity );
+            displaySPLD( vLLD, entity, ID );
          }
          */
          if ( wPID == null || IDP == null  ) {
             logger.debug( "For ID: " + ID + "  Unexpected null wPID: " + wPID == null ? "Null" : wPID + "  wID: " + IDP == null ? "Null" : IDP );
          } else if ( wPID.compareTo( IDP ) != 0 ) { // if there is a new parent ...
          // logger.debug( "Before moving entity: " + entity + "  with ID: " + ID + "  from parent ID: " + IDP + "  to parent ID: " + wPID );
-         // displaySPLD( vLLD, entity );
+         // displaySPLD( vLLD, entity, "" );
             String wPE = ec.getAttribute( "wPE" ).getString();
             ei.getAttribute( "wPE" ).setValue( wPE );
             ei.getAttribute( "wPID" ).setValue( wPID );
@@ -443,7 +450,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                   ecp = v.getCursor( "LLD_Block" );
                   ecp.moveSubobject( CursorPosition.FIRST, ec, CursorPosition.NONE );
                // logger.debug( "After Moving To SubBlock Target entity: " + entity + "  with ID: " + ID + "  from parent ID: " + IDP + "  to parent ID: " + wPID );
-               // displaySPLD( v, wPE );
+               // displaySPLD( v, wPE, "" );
                } catch ( ZeidonException ze ) {
                   logger.debug( "Error trying to move entity: " + entity + "  error: " + ze );
                }
@@ -574,13 +581,13 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                            logger.debug( "Entity NOT FOUND (UNCHANGED): " + entity + "  ID: " + ID + "  Depth: " + depth );
                            ec.createEntity( CursorPosition.NEXT );
                            ec.getAttribute( "Tag" ).setValue( "BustedUnchanged" + ID );
-                           displaySPLD( vLLD, entity );
+                           displaySPLD( vLLD, entity, ID );
                            throw new ZeidonException( "Entity NOT Found: " + ID + "  Look for Busted" ); 
                         } else {
                            logger.debug( "Entity NOT FOUND: " + entity + "  ID: " + ID + "  Depth: " + depth );
                            ec.createEntity( CursorPosition.NEXT );
                            ec.getAttribute( "Tag" ).setValue( "Busted" + ID );
-                           displaySPLD( vLLD, entity );
+                           displaySPLD( vLLD, entity, ID );
                            throw new ZeidonException( "Entity NOT Found: " + ID + "  Look for Busted" ); 
                         }
                      }
@@ -847,7 +854,7 @@ end debug code */
 
       String taskId = (String) request.getSession().getAttribute( "ZeidonTaskId" );
       Task epamms = oe.getTaskById( taskId );
-      logger.debug( "=========================================>>>>>>>>>>>>>>>>>>>>>>>>>>> Graphical Designer Servlet Task Id: " + taskId );
+   // logger.debug( "=========================================>>>>>>>>>>>>>>>>>>>>>>>>>>> Graphical Designer Servlet Task Id: " + taskId );
    // Application zeidonTools = epamms.getApplication( "Zeidon_Tools" );
    // Task zeidonSystem = oe.getSystemTask();
       String action = request.getParameter( "action" );
@@ -879,13 +886,13 @@ end debug code */
                }
                try {
                   String viewPath = request.getParameter( "viewPath" );
-                  logger.debug( "Setting view path: " + viewPath );
+               // logger.debug( "Setting view path: " + viewPath );
                   String elementKey = request.getParameter( "elementKey" );
-                  logger.debug( "Setting cursor for element key: " + elementKey );
+               // logger.debug( "Setting cursor for element key: " + elementKey );
                // EntityCursor ec = setPathCursorPosition( mSPLDefBlock, viewPath, 0, 0 );
                   EntityCursor ec = setPositionByKey( mSPLDefBlock, elementKey );
-                  logger.debug( "Finished setting view path: " + viewPath );
-                  ec.logEntity( false );
+               // logger.debug( "Finished setting view path: " + viewPath );
+               // ec.logEntity( false );
                } catch (ZeidonException ze) {
                   // Could not locate target block
                   logger.debug( "Error locating the target block: " + ze.getMessage() );
@@ -912,15 +919,15 @@ end debug code */
                View v = vLLD.newView();
                v.resetSubobjectTop();
             // logger.debug( "Before Apply Json to OI" );
-            // displaySPLD( vLLD, null );
+            // displaySPLD( vLLD, null, "" );
                applyJsonLabelToView( v, jsonPost, "", -2, null );  // OIs, SPLD_LLD, depth == 0 for LLD_Page
                v.drop();
             // logger.debug( "Saved JSON to OI" );
-            // displaySPLD( vLLD, null );
                vLLD.setName( "mSPLDefPanel", Level.TASK );
                vLLD.resetSubobjectTop();
                if ( action.compareTo( "saveLabelCommit" ) == 0 ) {
                   vLLD.commit();
+               // displaySPLD( vLLD, null, "" );
                }
             } catch( ZeidonException ze ) {
                logger.debug( "Error processing Json Label: " + ze.getMessage() );
@@ -965,7 +972,8 @@ end debug code */
       } else if ( action.compareTo( "loadLabel" ) == 0 ) {
       // We are just going to get the SPLD_LLD and its children and rename SPLD_LLD to LLD
          try {
-         // displaySPLD( vLLD, null );
+         // displaySPLD( vLLD, null, "" );
+         // vLLD.logObjectInstance();
             jsonLabel = convertLLD_ToJSON( vLLD );
          // logger.debug( "LoadLabel JSON: " + jsonLabel );
          // jsonLabel = jsonLabel.replaceFirst( "\"TZLLD\",", "\"TZLLD\",\n      \"fileName\" : \"" + fileName + "\"," );

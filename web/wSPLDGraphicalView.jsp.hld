@@ -1067,7 +1067,22 @@ else
                      <div>
                         <label for="colorText">Text Color</label>
                         <div class="colorPicker-frame">
-                           <input id="colorText" name="colorText" type="text" value="#ffffff" data-text="n/a" disabled /></div>
+                           <input id="colorText" name="colorText" type="text" value="#ffffff" data-text="n/a" />
+                        </div>
+                     </div>
+                     &nbsp;
+                     <div>
+                        <label for="colorBack">Background Color</label>
+                        <div class="colorPicker-frame">
+                           <input id="colorBack" name="colorBack" type="text" value="#ffffff" data-text="n/b" />
+                        </div>
+                     </div>
+                     &nbsp;
+                     <div>
+                        <label for="colorBack">Border Color</label>
+                        <div class="colorPicker-frame">
+                           <input id="colorBord" name="colorBorder" type="text" value="#ffffff" data-text="n/c" />
+                        </div>
                         </div>
                      &nbsp;
                      <p style="clear:both;position:relative"></p>

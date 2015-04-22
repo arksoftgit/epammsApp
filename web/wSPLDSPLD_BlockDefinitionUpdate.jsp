@@ -84,25 +84,6 @@ public int DoInputMapping( HttpServletRequest request,
    mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
    if ( VmlOperation.isValid( mSPLDefBlock ) )
    {
-      // ComboBox: ComboSectionType
-      nRC = mSPLDefBlock.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strMapValue = request.getParameter( "hComboSectionType" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "ComboSectionType", "", strMapValue );
-            else
-               mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "LLD_SectionType" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "ComboSectionType", e.getReason( ), strMapValue );
-         }
-      }
-
       // Grid: SpecialSectionAttributes
       iTableRowCnt = 0;
 
@@ -945,7 +926,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:8px;width:100px;"></div>
+<div style="height:10px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
@@ -967,29 +948,14 @@ else
 
 
 </div>  <!--  GroupBox3 --> 
-</div>  <!-- End of a new line -->
+<div style="height:1px;width:24px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox1:GroupBox */ %>
 
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+<div id="GroupBox1" name="GroupBox1" style="width:246px;height:28px;float:left;">  <!-- GroupBox1 --> 
 
 
- <!-- This is added as a line spacer -->
-<div style="height:8px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox9:GroupBox */ %>
-<div id="GroupBox9" name="GroupBox9" style="float:left;width:574px;" >
-
-<table cols=3 style="width:574px;"  class="grouptable">
-
-<tr>
-<td valign="top" style="width:116px;">
-<% /* TXBlockTag::Text */ %>
-
-<span  id="TXBlockTag:" name="TXBlockTag:" style="width:110px;height:26px;">Block Tag:</span>
-
-</td>
-<td valign="top" style="width:224px;">
+</div>  <!--  GroupBox1 --> 
+<span style="height:26px;">&nbsp&nbsp&nbsp&nbsp</span>
 <% /* Tag:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "Tag", strError );
@@ -1031,16 +997,29 @@ else
 
 <input name="Tag" id="Tag"  disabled style="width:224px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-</td>
-</tr>
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:12px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox9:GroupBox */ %>
+<div id="GroupBox9" name="GroupBox9" style="float:left;width:574px;" >
+
+<table cols=3 style="width:574px;"  class="grouptable">
+
 <tr>
-<td valign="top" style="width:116px;">
+<td valign="top" style="width:124px;">
 <% /* BlockName::Text */ %>
 
 <span  id="BlockName:" name="BlockName:" style="width:110px;height:26px;">Block Name:</span>
 
 </td>
-<td valign="top" style="width:254px;">
+<td valign="top" style="width:250px;">
 <% /* BlockName:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "BlockName", strError );
@@ -1083,35 +1062,24 @@ else
 <input name="BlockName" id="BlockName"  disabled style="width:224px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
-<td valign="top" style="width:130px;">
-<% /* GroupBox4:GroupBox */ %>
-<div id="GroupBox4" name="GroupBox4" style="width:130px;height:36px;float:left;">
-
-
- <!-- This is added as a line spacer -->
-<div style="height:8px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
+<td valign="top" style="width:68px;">
 <% /* PushBtn3:PushBtn */ %>
-<button type="button" name="PushBtn3" id="PushBtn3" value="" onclick="GOTO_SelectMarketingSection( )" style="width:68px;height:24px;">Select</button>
+<button type="button"  id="PushBtn3" name="PushBtn3" value="Select" onclick="GOTO_SelectMarketingSection( )"  style="width:68px;height:24px;">Select</button>
 
-</div>  <!-- End of a new line -->
-
-</div>  <!-- GroupBox4 --> 
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:116px;">
+<td valign="top" style="width:124px;">
 <% /* TXDataType::Text */ %>
 
 <span  id="TXDataType:" name="TXDataType:" style="width:110px;height:26px;">Data Type:</span>
 
 </td>
-<td valign="top" style="width:224px;">
+<td valign="top" style="width:250px;">
 <% /* ComboSectionType:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="ComboSectionType" id="ComboSectionType" size="1" style="width:224px;" onchange="ComboSectionTypeOnChange( )">
+<select  name="ComboSectionType" id="ComboSectionType" size="1" style="width:224px;"  disabled onchange="ComboSectionTypeOnChange( )">
 
 <%
    boolean inListComboSectionType = false;
@@ -1189,7 +1157,11 @@ else
 
 <input name="hComboSectionType" id="hComboSectionType" type="hidden" value="<%=strComboCurrentValue%>" >
 </td>
-<td>&nbsp</td>
+<td valign="top" style="width:130px;">
+<% /* GroupBox2:GroupBox */ %>
+<div id="GroupBox2" name="GroupBox2" style="width:130px;height:24px;float:left;">
+</div>  <!-- GroupBox2 --> 
+</td>
 </tr>
 </table>
 
@@ -1242,7 +1214,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
+<div style="height:12px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
@@ -1389,7 +1361,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 
  <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
+<div style="height:14px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->

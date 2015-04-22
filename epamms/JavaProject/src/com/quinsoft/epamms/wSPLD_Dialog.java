@@ -1345,8 +1345,17 @@ SaveSPLD_AndReturn( View     ViewToWindow )
 
    //:END
 
+   //:// Other than the COMMIT, the following block of code is for debugging purposes
+   //:// SubregProductID = mSPLDef.SubregPhysicalLabelDef.ID
+   //:// TraceLineS( "SaveSPLD_AndReturn", "#1" )
+   //:// DisplayObjectInstance( mSPLDef, "", "" )
    //:COMMIT mSPLDef
    RESULT = CommitObjectInstance( mSPLDef );
+   //:// ACTIVATE mSPLDef WHERE mSPLDef.SubregPhysicalLabelDef.ID = SubregProductID
+   //:// TraceLineS( "SaveSPLD_AndReturn", "#2" )
+   //:// DisplayObjectInstance( mSPLDef, "", "" )
+   //:// DropObjectInstance( mSPLDef )
+
 
    //:GET VIEW mSPLDefPanel NAMED "mSPLDefPanel"
    RESULT = GetViewByName( mSPLDefPanel, "mSPLDefPanel", ViewToWindow, zLEVEL_TASK );
@@ -4750,115 +4759,121 @@ PostbuildBlockDefinitionUpdate( View     ViewToWindow )
        GetVariableFromAttribute( sb_szName, mi_lTempInteger_0, 'S', 65, mSPLDefBlock, "LLD_Block", "Name", "", 0 );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );
    szName = sb_szName.toString( );}
-   //:szType = mSPLDefBlock.LLD_Block.LLD_SectionType
-   {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
-   StringBuilder sb_szType;
-   if ( szType == null )
-      sb_szType = new StringBuilder( 32 );
-   else
-      sb_szType = new StringBuilder( szType );
-       GetVariableFromAttribute( sb_szType, mi_lTempInteger_1, 'S', 65, mSPLDefBlock, "LLD_Block", "LLD_SectionType", "", 0 );
-   lTempInteger_1 = mi_lTempInteger_1.intValue( );
-   szType = sb_szType.toString( );}
-   //:SET CURSOR FIRST mSPLDef.CompositeComponentList WHERE mSPLDef.CompositeComponentList.DisplayType = szType AND
-   //:                                                      mSPLDef.CompositeComponentList.Value = szName
-   RESULT = SetCursorFirstEntity( mSPLDef, "CompositeComponentList", "" );
-   if ( RESULT > zCURSOR_UNCHANGED )
+   //:IF szName != ""
+   if ( ZeidonStringCompare( szName, 1, 0, "", 1, 0, 65 ) != 0 )
    { 
-      while ( RESULT > zCURSOR_UNCHANGED && ( CompareAttributeToString( mSPLDef, "CompositeComponentList", "DisplayType", szType ) != 0 || CompareAttributeToString( mSPLDef, "CompositeComponentList", "Value", szName ) != 0 ) )
+      //:szType = mSPLDefBlock.LLD_Block.LLD_SectionType
+      {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+      StringBuilder sb_szType;
+      if ( szType == null )
+         sb_szType = new StringBuilder( 32 );
+      else
+         sb_szType = new StringBuilder( szType );
+             GetVariableFromAttribute( sb_szType, mi_lTempInteger_1, 'S', 65, mSPLDefBlock, "LLD_Block", "LLD_SectionType", "", 0 );
+      lTempInteger_1 = mi_lTempInteger_1.intValue( );
+      szType = sb_szType.toString( );}
+      //:SET CURSOR FIRST mSPLDef.CompositeComponentList WHERE mSPLDef.CompositeComponentList.DisplayType = szType AND
+      //:                                                   mSPLDef.CompositeComponentList.Value = szName
+      RESULT = SetCursorFirstEntity( mSPLDef, "CompositeComponentList", "" );
+      if ( RESULT > zCURSOR_UNCHANGED )
       { 
-         RESULT = SetCursorNextEntity( mSPLDef, "CompositeComponentList", "" );
+         while ( RESULT > zCURSOR_UNCHANGED && ( CompareAttributeToString( mSPLDef, "CompositeComponentList", "DisplayType", szType ) != 0 || CompareAttributeToString( mSPLDef, "CompositeComponentList", "Value", szName ) != 0 ) )
+         { 
+            RESULT = SetCursorNextEntity( mSPLDef, "CompositeComponentList", "" );
+         } 
+
       } 
 
-   } 
-
-   //:IF RESULT < zCURSOR_SET
-   if ( RESULT < zCURSOR_SET )
-   { 
-      //:szMsg = "Unable to locate " + szName + " within " + szType
-       {StringBuilder sb_szMsg;
-      if ( szMsg == null )
-         sb_szMsg = new StringBuilder( 32 );
-      else
-         sb_szMsg = new StringBuilder( szMsg );
-            ZeidonStringCopy( sb_szMsg, 1, 0, "Unable to locate ", 1, 0, 257 );
-      szMsg = sb_szMsg.toString( );}
-       {StringBuilder sb_szMsg;
-      if ( szMsg == null )
-         sb_szMsg = new StringBuilder( 32 );
-      else
-         sb_szMsg = new StringBuilder( szMsg );
-            ZeidonStringConcat( sb_szMsg, 1, 0, szName, 1, 0, 257 );
-      szMsg = sb_szMsg.toString( );}
-       {StringBuilder sb_szMsg;
-      if ( szMsg == null )
-         sb_szMsg = new StringBuilder( 32 );
-      else
-         sb_szMsg = new StringBuilder( szMsg );
-            ZeidonStringConcat( sb_szMsg, 1, 0, " within ", 1, 0, 257 );
-      szMsg = sb_szMsg.toString( );}
-       {StringBuilder sb_szMsg;
-      if ( szMsg == null )
-         sb_szMsg = new StringBuilder( 32 );
-      else
-         sb_szMsg = new StringBuilder( szMsg );
-            ZeidonStringConcat( sb_szMsg, 1, 0, szType, 1, 0, 257 );
-      szMsg = sb_szMsg.toString( );}
-      //:MessageSend( ViewToWindow, "", "Block Update",
-      //:             szMsg,
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Block Update", szMsg, zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:ELSE
-   } 
-   else
-   { 
-      //:szMsg = "Looking for: " + szName + "  within: " + szType
-       {StringBuilder sb_szMsg;
-      if ( szMsg == null )
-         sb_szMsg = new StringBuilder( 32 );
-      else
-         sb_szMsg = new StringBuilder( szMsg );
-            ZeidonStringCopy( sb_szMsg, 1, 0, "Looking for: ", 1, 0, 257 );
-      szMsg = sb_szMsg.toString( );}
-       {StringBuilder sb_szMsg;
-      if ( szMsg == null )
-         sb_szMsg = new StringBuilder( 32 );
-      else
-         sb_szMsg = new StringBuilder( szMsg );
-            ZeidonStringConcat( sb_szMsg, 1, 0, szName, 1, 0, 257 );
-      szMsg = sb_szMsg.toString( );}
-       {StringBuilder sb_szMsg;
-      if ( szMsg == null )
-         sb_szMsg = new StringBuilder( 32 );
-      else
-         sb_szMsg = new StringBuilder( szMsg );
-            ZeidonStringConcat( sb_szMsg, 1, 0, "  within: ", 1, 0, 257 );
-      szMsg = sb_szMsg.toString( );}
-       {StringBuilder sb_szMsg;
-      if ( szMsg == null )
-         sb_szMsg = new StringBuilder( 32 );
-      else
-         sb_szMsg = new StringBuilder( szMsg );
-            ZeidonStringConcat( sb_szMsg, 1, 0, szType, 1, 0, 257 );
-      szMsg = sb_szMsg.toString( );}
-      //:TraceLineS( szMsg, "" )
-      TraceLineS( szMsg, "" );
-
-      //:SET CURSOR NEXT mSPLDef.CompositeComponentList
-      RESULT = SetCursorNextEntity( mSPLDef, "CompositeComponentList", "" );
-      //:LOOP WHILE RESULT = zCURSOR_SET AND mSPLDef.CompositeComponentList.SelectLevel > 1
-      while ( RESULT == zCURSOR_SET && CompareAttributeToInteger( mSPLDef, "CompositeComponentList", "SelectLevel", 1 ) > 0 )
+      //:IF RESULT < zCURSOR_SET
+      if ( RESULT < zCURSOR_SET )
       { 
-         //:IF mSPLDef.CompositeComponentList.SelectLevel = 2
-         if ( CompareAttributeToInteger( mSPLDef, "CompositeComponentList", "SelectLevel", 2 ) == 0 )
+         //:szMsg = "Unable to locate " + szName + " within " + szType
+          {StringBuilder sb_szMsg;
+         if ( szMsg == null )
+            sb_szMsg = new StringBuilder( 32 );
+         else
+            sb_szMsg = new StringBuilder( szMsg );
+                  ZeidonStringCopy( sb_szMsg, 1, 0, "Unable to locate ", 1, 0, 257 );
+         szMsg = sb_szMsg.toString( );}
+          {StringBuilder sb_szMsg;
+         if ( szMsg == null )
+            sb_szMsg = new StringBuilder( 32 );
+         else
+            sb_szMsg = new StringBuilder( szMsg );
+                  ZeidonStringConcat( sb_szMsg, 1, 0, szName, 1, 0, 257 );
+         szMsg = sb_szMsg.toString( );}
+          {StringBuilder sb_szMsg;
+         if ( szMsg == null )
+            sb_szMsg = new StringBuilder( 32 );
+         else
+            sb_szMsg = new StringBuilder( szMsg );
+                  ZeidonStringConcat( sb_szMsg, 1, 0, " within ", 1, 0, 257 );
+         szMsg = sb_szMsg.toString( );}
+          {StringBuilder sb_szMsg;
+         if ( szMsg == null )
+            sb_szMsg = new StringBuilder( 32 );
+         else
+            sb_szMsg = new StringBuilder( szMsg );
+                  ZeidonStringConcat( sb_szMsg, 1, 0, szType, 1, 0, 257 );
+         szMsg = sb_szMsg.toString( );}
+         //:MessageSend( ViewToWindow, "", "Block Update",
+         //:             szMsg,
+         //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         MessageSend( ViewToWindow, "", "Block Update", szMsg, zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+         //:ELSE
+      } 
+      else
+      { 
+         //:szMsg = "Looking for: " + szName + "  within: " + szType
+          {StringBuilder sb_szMsg;
+         if ( szMsg == null )
+            sb_szMsg = new StringBuilder( 32 );
+         else
+            sb_szMsg = new StringBuilder( szMsg );
+                  ZeidonStringCopy( sb_szMsg, 1, 0, "Looking for: ", 1, 0, 257 );
+         szMsg = sb_szMsg.toString( );}
+          {StringBuilder sb_szMsg;
+         if ( szMsg == null )
+            sb_szMsg = new StringBuilder( 32 );
+         else
+            sb_szMsg = new StringBuilder( szMsg );
+                  ZeidonStringConcat( sb_szMsg, 1, 0, szName, 1, 0, 257 );
+         szMsg = sb_szMsg.toString( );}
+          {StringBuilder sb_szMsg;
+         if ( szMsg == null )
+            sb_szMsg = new StringBuilder( 32 );
+         else
+            sb_szMsg = new StringBuilder( szMsg );
+                  ZeidonStringConcat( sb_szMsg, 1, 0, "  within: ", 1, 0, 257 );
+         szMsg = sb_szMsg.toString( );}
+          {StringBuilder sb_szMsg;
+         if ( szMsg == null )
+            sb_szMsg = new StringBuilder( 32 );
+         else
+            sb_szMsg = new StringBuilder( szMsg );
+                  ZeidonStringConcat( sb_szMsg, 1, 0, szType, 1, 0, 257 );
+         szMsg = sb_szMsg.toString( );}
+         //:TraceLineS( szMsg, "" )
+         TraceLineS( szMsg, "" );
+
+         //:SET CURSOR NEXT mSPLDef.CompositeComponentList
+         RESULT = SetCursorNextEntity( mSPLDef, "CompositeComponentList", "" );
+         //:LOOP WHILE RESULT = zCURSOR_SET AND mSPLDef.CompositeComponentList.SelectLevel > 1
+         while ( RESULT == zCURSOR_SET && CompareAttributeToInteger( mSPLDef, "CompositeComponentList", "SelectLevel", 1 ) > 0 )
          { 
-            //:CREATE ENTITY mSPLDef.Display
-            RESULT = CreateEntity( mSPLDef, "Display", zPOS_AFTER );
+            //:IF mSPLDef.CompositeComponentList.SelectLevel = 2
+            if ( CompareAttributeToInteger( mSPLDef, "CompositeComponentList", "SelectLevel", 2 ) == 0 )
+            { 
+               //:CREATE ENTITY mSPLDef.Display
+               RESULT = CreateEntity( mSPLDef, "Display", zPOS_AFTER );
+            } 
+
+            //:END
+            //:SET CURSOR NEXT mSPLDef.CompositeComponentList
+            RESULT = SetCursorNextEntity( mSPLDef, "CompositeComponentList", "" );
          } 
 
          //:END
-         //:SET CURSOR NEXT mSPLDef.CompositeComponentList
-         RESULT = SetCursorNextEntity( mSPLDef, "CompositeComponentList", "" );
       } 
 
       //:END

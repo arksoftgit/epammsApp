@@ -1072,9 +1072,16 @@ else
                      </div>
                      &nbsp;
                      <div>
-                        <label for="colorText2">Back Color</label>
+                        <label for="colorBack">Background Color</label>
                         <div class="colorPicker-frame">
-                           <input id="colorText2" name="colorText2" type="text" value="#ffffff" data-text="n/b" />
+                           <input id="colorBack" name="colorBack" type="text" value="#ffffff" data-text="n/b" />
+                        </div>
+                     </div>
+                     &nbsp;
+                     <div>
+                        <label for="colorBack">Border Color</label>
+                        <div class="colorPicker-frame">
+                           <input id="colorBord" name="colorBorder" type="text" value="#ffffff" data-text="n/c" />
                         </div>
                      </div>
                      &nbsp;

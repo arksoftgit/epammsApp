@@ -1,4 +1,4 @@
-z1000-Zeidon    IEPAMMS  TZZOXODO 04/21/15   08:18:17 1.0a2    
+z1000-Zeidon    IEPAMMS  TZZOXODO 04/21/15   15:16:30 1.0a2    
 eOBJECT    1
 aNAME      iePamms
 aZKey      110002215
@@ -7,7 +7,7 @@ aDATABASE  ePammsM
 aOPER_LIBNM iePamms
 aHANDLER   kzhsqloa
 aGKHANDLER kzhgenky
-aER_DATE   20150421081704559
+aER_DATE   20150421145419712
 
 eENTITY    2
 aNAME      ePamms

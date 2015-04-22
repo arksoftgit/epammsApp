@@ -955,8 +955,17 @@ SaveSPLD_AndReturn( VIEW ViewToWindow )
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
       RETURN 2
    END
-   
+
+   // Other than the COMMIT, the following block of code is for debugging purposes
+// SubregProductID = mSPLDef.SubregPhysicalLabelDef.ID
+// TraceLineS( "SaveSPLD_AndReturn", "#1" )
+// DisplayObjectInstance( mSPLDef, "", "" )
    COMMIT mSPLDef
+// ACTIVATE mSPLDef WHERE mSPLDef.SubregPhysicalLabelDef.ID = SubregProductID
+// TraceLineS( "SaveSPLD_AndReturn", "#2" )
+// DisplayObjectInstance( mSPLDef, "", "" )
+// DropObjectInstance( mSPLDef )
+
 
    GET VIEW mSPLDefPanel NAMED "mSPLDefPanel"
    IF RESULT >= 0
@@ -2161,24 +2170,26 @@ PostbuildBlockDefinitionUpdate( VIEW ViewToWindow )
       DELETE ENTITY mSPLDef.Display NONE
    END
    szName = mSPLDefBlock.LLD_Block.Name
-   szType = mSPLDefBlock.LLD_Block.LLD_SectionType
-   SET CURSOR FIRST mSPLDef.CompositeComponentList WHERE mSPLDef.CompositeComponentList.DisplayType = szType AND
+   IF szName != ""
+      szType = mSPLDefBlock.LLD_Block.LLD_SectionType
+      SET CURSOR FIRST mSPLDef.CompositeComponentList WHERE mSPLDef.CompositeComponentList.DisplayType = szType AND
                                                          mSPLDef.CompositeComponentList.Value = szName
-   IF RESULT < zCURSOR_SET
-      szMsg = "Unable to locate " + szName + " within " + szType
-      MessageSend( ViewToWindow, "", "Block Update",
-                   szMsg,
-                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-   ELSE
-      szMsg = "Looking for: " + szName + "  within: " + szType
-      TraceLineS( szMsg, "" )
+      IF RESULT < zCURSOR_SET
+         szMsg = "Unable to locate " + szName + " within " + szType
+         MessageSend( ViewToWindow, "", "Block Update",
+                      szMsg,
+                      zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      ELSE
+         szMsg = "Looking for: " + szName + "  within: " + szType
+         TraceLineS( szMsg, "" )
    
-      SET CURSOR NEXT mSPLDef.CompositeComponentList
-      LOOP WHILE RESULT = zCURSOR_SET AND mSPLDef.CompositeComponentList.SelectLevel > 1
-         IF mSPLDef.CompositeComponentList.SelectLevel = 2
-            CREATE ENTITY mSPLDef.Display
-         END
          SET CURSOR NEXT mSPLDef.CompositeComponentList
+         LOOP WHILE RESULT = zCURSOR_SET AND mSPLDef.CompositeComponentList.SelectLevel > 1
+            IF mSPLDef.CompositeComponentList.SelectLevel = 2
+               CREATE ENTITY mSPLDef.Display
+            END
+            SET CURSOR NEXT mSPLDef.CompositeComponentList
+         END
       END
    END
 END

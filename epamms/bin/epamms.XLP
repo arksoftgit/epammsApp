@@ -1,4 +1,4 @@
-z1000-Zeidon    EPAMMS   TZCMLPLO 04/21/15   11:31:55 1.0a2    
+z1000-Zeidon    EPAMMS   TZCMLPLO 04/22/15   13:43:15 1.0a2    
 eLPLR      1
 aName      epamms
 aDesc      ePamms Application
@@ -923,15 +923,15 @@ aCPLR_ZKey 68568353
 aStatus    1
 aUpdateInd 2
 aName      epamms
-aDesc      255
+aDesc      286
 ePamms Application
 
 Additions:
 1. Added a relationship between M_UsageOrdering, S_UsageOrdering and SPLD_UsageOrdering and their corresponding DirectionsForUse and Marketing Statement entities.
 2. Added Default attributes to LLD and SPLD_LLD.
-3. Add 
-aLastSyncDate 20150421081704865
-aLastUpdateDate 20150421081704865
+3. Added TextLineHeight to LLD_Block. 
+aLastSyncDate 20150421185419740
+aLastUpdateDate 20150421185419740
 
 eW_MetaType 2
 aType      5
@@ -954,8 +954,8 @@ aStatus    1
 aUpdateInd 2
 aName      ePamms
 aDesc      ePamms Application
-aLastSyncDate 20150421081851071
-aLastUpdateDate 20150421081851071
+aLastSyncDate 20150421192249974
+aLastUpdateDate 20150421192249974
 
 eW_MetaType 2
 aType      7
@@ -1216,8 +1216,8 @@ aStatus    1
 aUpdateInd 2
 aName      mSPLDef
 aDesc      Subregistrant Physical Label Maintenance
-aLastSyncDate 20150421113153490
-aLastUpdateDate 20150421113153490
+aLastSyncDate 20150422020532612
+aLastUpdateDate 20150422020532612
 
 eW_MetaDef 3
 aCPLR_ZKey 69035258
@@ -1225,8 +1225,8 @@ aStatus    1
 aUpdateInd 2
 aName      mSubLC
 aDesc      Subregistrant Label Content Maintenance
-aLastSyncDate 20150411011730086
-aLastUpdateDate 20150411011730086
+aLastSyncDate 20150421191534058
+aLastUpdateDate 20150421191534058
 
 eW_MetaDef 3
 aCPLR_ZKey 1157934
@@ -1252,8 +1252,8 @@ aStatus    1
 aUpdateInd 2
 aName      mSubreg
 aDesc      Subregistrant Maintenance
-aLastSyncDate 20150421081738776
-aLastUpdateDate 20150421081738776
+aLastSyncDate 20150421121738775
+aLastUpdateDate 20150421121738775
 
 eW_MetaDef 3
 aCPLR_ZKey 1157571
@@ -1361,6 +1361,262 @@ eW_MetaType 2
 aType      9
 
 eW_MetaDef 3
+aCPLR_ZKey 114
+aStatus    1
+aUpdateInd 2
+aName      mLLD
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20131220164252000
+aLastUpdateDate 20131220164252000
+
+eW_MetaDef 3
+aCPLR_ZKey 1156964
+aStatus    1
+aUpdateInd 2
+aName      mPrimLDD
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1157023
+aStatus    1
+aUpdateInd 2
+aName      mPrimReg
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1157147
+aStatus    1
+aUpdateInd 2
+aName      wWebXfer
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1157615
+aStatus    1
+aUpdateInd 2
+aName      mUser
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1157616
+aStatus    1
+aUpdateInd 2
+aName      mCurrentUser
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1157825
+aStatus    1
+aUpdateInd 2
+aName      ZPLOCKO
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1157864
+aStatus    1
+aUpdateInd 2
+aName      mSubreg
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1157941
+aStatus    1
+aUpdateInd 2
+aName      mSubLDD
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1158114
+aStatus    1
+aUpdateInd 2
+aName      qPrimReg
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1158616
+aStatus    1
+aUpdateInd 2
+aName      lPrimReg
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1159381
+aStatus    1
+aUpdateInd 2
+aName      qSubreg
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1162969
+aStatus    1
+aUpdateInd 2
+aName      lPrimLDD
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1163001
+aStatus    1
+aUpdateInd 2
+aName      lSubLDD
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1163363
+aStatus    1
+aUpdateInd 2
+aName      rPrimReg
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1164719
+aStatus    1
+aUpdateInd 2
+aName      mPerson
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1165276
+aStatus    1
+aUpdateInd 2
+aName      lSubreg
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1178913
+aStatus    1
+aUpdateInd 2
+aName      mEPA
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1179336
+aStatus    1
+aUpdateInd 2
+aName      rSubreg
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1182250
+aStatus    1
+aUpdateInd 2
+aName      wMLCList
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1347042
+aStatus    1
+aUpdateInd 2
+aName      mSPLDef
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1357813
+aStatus    1
+aUpdateInd 2
+aName      mSubProd
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1658420
+aStatus    1
+aUpdateInd 2
+aName      qOrganiz
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1666257
+aStatus    1
+aUpdateInd 2
+aName      qOrganizLogin
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1813276
+aStatus    1
+aUpdateInd 2
+aName      lPersonLST
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 1813512
+aStatus    1
+aUpdateInd 2
+aName      lUserLST
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 2348802
+aStatus    1
+aUpdateInd 2
+aName      mEPAx
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 3322346
+aStatus    1
+aUpdateInd 2
+aName      mOrganiz
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 4326824
+aStatus    1
+aUpdateInd 2
+aName      mSPLDefPanel
+aLastSyncDate 20131125200150000
+aLastUpdateDate 20131125200150000
+
+eW_MetaDef 3
 aCPLR_ZKey 68568779
 aStatus    1
 aUpdateInd 2
@@ -1369,18 +1625,18 @@ aLastSyncDate 20130702023522000
 aLastUpdateDate 20130702023522000
 
 eW_MetaDef 3
-aCPLR_ZKey 68568788
-aStatus    1
-aUpdateInd 2
-aName      DOMAINTL
-aLastSyncDate 20130702023522000
-aLastUpdateDate 20130702023522000
-
-eW_MetaDef 3
 aCPLR_ZKey 68568780
 aStatus    1
 aUpdateInd 2
 aName      DOMAINTLST
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 68568788
+aStatus    1
+aUpdateInd 2
+aName      DOMAINTL
 aLastSyncDate 20130702023522000
 aLastUpdateDate 20130702023522000
 
@@ -1401,15 +1657,6 @@ aLastSyncDate 20130702023522000
 aLastUpdateDate 20130702023522000
 
 eW_MetaDef 3
-aCPLR_ZKey 110002219
-aStatus    1
-aUpdateInd 2
-aName      iePamms
-aDesc      VOR automatically built from LOD Dialog
-aLastSyncDate 20150312121913435
-aLastUpdateDate 20150312121913435
-
-eW_MetaDef 3
 aCPLR_ZKey 68568831
 aStatus    1
 aUpdateInd 2
@@ -1426,6 +1673,33 @@ aLastSyncDate 20130702023522000
 aLastUpdateDate 20130702023522000
 
 eW_MetaDef 3
+aCPLR_ZKey 69033381
+aStatus    1
+aUpdateInd 2
+aName      mMasProd
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 69033387
+aStatus    1
+aUpdateInd 2
+aName      mMasLC
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
+aCPLR_ZKey 69035325
+aStatus    1
+aUpdateInd 2
+aName      mSubLC
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20130702023522000
+aLastUpdateDate 20130702023522000
+
+eW_MetaDef 3
 aCPLR_ZKey 69035531
 aStatus    1
 aUpdateInd 2
@@ -1435,81 +1709,19 @@ aLastSyncDate 20130702023522000
 aLastUpdateDate 20130702023522000
 
 eW_MetaDef 3
-aCPLR_ZKey 70129561
+aCPLR_ZKey 69035750
 aStatus    1
 aUpdateInd 2
-aName      lMLC
+aName      lSubLCA
 aDesc      VOR automatically built from LOD Dialog
 aLastSyncDate 20130702023522000
 aLastUpdateDate 20130702023522000
 
 eW_MetaDef 3
-aCPLR_ZKey 70129435
+aCPLR_ZKey 69055383
 aStatus    1
 aUpdateInd 2
-aName      lMLCASrc
-aDesc      VOR automatically built from LOD Dialog
-aLastSyncDate 20130702023522000
-aLastUpdateDate 20130702023522000
-
-eW_MetaDef 3
-aCPLR_ZKey 70129220
-aStatus    1
-aUpdateInd 2
-aName      lMLCATgt
-aDesc      VOR automatically built from LOD Dialog
-aLastSyncDate 20130702023522000
-aLastUpdateDate 20130702023522000
-
-eW_MetaDef 3
-aCPLR_ZKey 1813276
-aStatus    1
-aUpdateInd 2
-aName      lPersonLST
-aLastSyncDate 20130702023522000
-aLastUpdateDate 20130702023522000
-
-eW_MetaDef 3
-aCPLR_ZKey 1162969
-aStatus    1
-aUpdateInd 2
-aName      lPrimLDD
-aDesc      VOR automatically built from LOD Dialog
-aLastSyncDate 20130702023522000
-aLastUpdateDate 20130702023522000
-
-eW_MetaDef 3
-aCPLR_ZKey 1158616
-aStatus    1
-aUpdateInd 2
-aName      lPrimReg
-aDesc      VOR automatically built from LOD Dialog
-aLastSyncDate 20130702023522000
-aLastUpdateDate 20130702023522000
-
-eW_MetaDef 3
-aCPLR_ZKey 70130441
-aStatus    1
-aUpdateInd 2
-aName      lSLC
-aDesc      VOR automatically built from LOD Dialog
-aLastSyncDate 20130702023522000
-aLastUpdateDate 20130702023522000
-
-eW_MetaDef 3
-aCPLR_ZKey 70226251
-aStatus    1
-aUpdateInd 2
-aName      lSLCAnal
-aDesc      VOR automatically built from LOD Dialog
-aLastSyncDate 20130702023522000
-aLastUpdateDate 20130702023522000
-
-eW_MetaDef 3
-aCPLR_ZKey 70130057
-aStatus    1
-aUpdateInd 2
-aName      lSLCAnal
+aName      mSPL
 aDesc      VOR automatically built from LOD Dialog
 aLastSyncDate 20130702023522000
 aLastUpdateDate 20130702023522000
@@ -1533,168 +1745,55 @@ aLastSyncDate 20130702023522000
 aLastUpdateDate 20130702023522000
 
 eW_MetaDef 3
-aCPLR_ZKey 69035750
+aCPLR_ZKey 70129220
 aStatus    1
 aUpdateInd 2
-aName      lSubLCA
+aName      lMLCATgt
 aDesc      VOR automatically built from LOD Dialog
 aLastSyncDate 20130702023522000
 aLastUpdateDate 20130702023522000
 
 eW_MetaDef 3
-aCPLR_ZKey 1163001
+aCPLR_ZKey 70129435
 aStatus    1
 aUpdateInd 2
-aName      lSubLDD
+aName      lMLCASrc
 aDesc      VOR automatically built from LOD Dialog
 aLastSyncDate 20130702023522000
 aLastUpdateDate 20130702023522000
 
 eW_MetaDef 3
-aCPLR_ZKey 1165276
+aCPLR_ZKey 70129561
 aStatus    1
 aUpdateInd 2
-aName      lSubreg
+aName      lMLC
 aDesc      VOR automatically built from LOD Dialog
 aLastSyncDate 20130702023522000
 aLastUpdateDate 20130702023522000
 
 eW_MetaDef 3
-aCPLR_ZKey 1813512
+aCPLR_ZKey 70130057
 aStatus    1
 aUpdateInd 2
-aName      lUserLST
-aLastSyncDate 20130702023522000
-aLastUpdateDate 20130702023522000
-
-eW_MetaDef 3
-aCPLR_ZKey 1157616
-aStatus    1
-aUpdateInd 2
-aName      mCurrentUser
-aLastSyncDate 20130702023522000
-aLastUpdateDate 20130702023522000
-
-eW_MetaDef 3
-aCPLR_ZKey 1178913
-aStatus    1
-aUpdateInd 2
-aName      mEPA
+aName      lSLCAnal
 aDesc      VOR automatically built from LOD Dialog
 aLastSyncDate 20130702023522000
 aLastUpdateDate 20130702023522000
 
 eW_MetaDef 3
-aCPLR_ZKey 110002030
+aCPLR_ZKey 70130441
 aStatus    1
 aUpdateInd 2
-aName      mePamms
-aDesc      VOR automatically built from LOD Dialog
-aLastSyncDate 20150310224335496
-aLastUpdateDate 20150310224335496
-
-eW_MetaDef 3
-aCPLR_ZKey 2348802
-aStatus    1
-aUpdateInd 2
-aName      mEPAx
+aName      lSLC
 aDesc      VOR automatically built from LOD Dialog
 aLastSyncDate 20130702023522000
 aLastUpdateDate 20130702023522000
 
 eW_MetaDef 3
-aCPLR_ZKey 114
+aCPLR_ZKey 70226251
 aStatus    1
 aUpdateInd 2
-aName      mLLD
-aDesc      VOR automatically built from LOD Dialog
-aLastSyncDate 20131220164252000
-aLastUpdateDate 20131220164252000
-
-eW_MetaDef 3
-aCPLR_ZKey 120134912
-aStatus    1
-aUpdateInd 2
-aName      mLLD_LST
-aLastSyncDate 20140415202918000
-aLastUpdateDate 20140415202918000
-
-eW_MetaDef 3
-aCPLR_ZKey 69033387
-aStatus    1
-aUpdateInd 2
-aName      mMasLC
-aDesc      VOR automatically built from LOD Dialog
-aLastSyncDate 20130702023522000
-aLastUpdateDate 20130702023522000
-
-eW_MetaDef 3
-aCPLR_ZKey 69033381
-aStatus    1
-aUpdateInd 2
-aName      mMasProd
-aDesc      VOR automatically built from LOD Dialog
-aLastSyncDate 20130702023522000
-aLastUpdateDate 20130702023522000
-
-eW_MetaDef 3
-aCPLR_ZKey 120233879
-aStatus    1
-aUpdateInd 2
-aName      mMasProdLST
-aLastSyncDate 20140702141844000
-aLastUpdateDate 20140702141844000
-
-eW_MetaDef 3
-aCPLR_ZKey 3322346
-aStatus    1
-aUpdateInd 2
-aName      mOrganiz
-aDesc      VOR automatically built from LOD Dialog
-aLastSyncDate 20130702023522000
-aLastUpdateDate 20130702023522000
-
-eW_MetaDef 3
-aCPLR_ZKey 1164719
-aStatus    1
-aUpdateInd 2
-aName      mPerson
-aDesc      VOR automatically built from LOD Dialog
-aLastSyncDate 20130702023522000
-aLastUpdateDate 20130702023522000
-
-eW_MetaDef 3
-aCPLR_ZKey 1156964
-aStatus    1
-aUpdateInd 2
-aName      mPrimLDD
-aDesc      VOR automatically built from LOD Dialog
-aLastSyncDate 20130702023522000
-aLastUpdateDate 20130702023522000
-
-eW_MetaDef 3
-aCPLR_ZKey 1157023
-aStatus    1
-aUpdateInd 2
-aName      mPrimReg
-aDesc      VOR automatically built from LOD Dialog
-aLastSyncDate 20130702023522000
-aLastUpdateDate 20130702023522000
-
-eW_MetaDef 3
-aCPLR_ZKey 69055383
-aStatus    1
-aUpdateInd 2
-aName      mSPL
-aDesc      VOR automatically built from LOD Dialog
-aLastSyncDate 20130702023522000
-aLastUpdateDate 20130702023522000
-
-eW_MetaDef 3
-aCPLR_ZKey 1347042
-aStatus    1
-aUpdateInd 2
-aName      mSPLDef
+aName      lSLCAnal
 aDesc      VOR automatically built from LOD Dialog
 aLastSyncDate 20130702023522000
 aLastUpdateDate 20130702023522000
@@ -1709,57 +1808,13 @@ aLastSyncDate 20141222154511764
 aLastUpdateDate 20141222154511764
 
 eW_MetaDef 3
-aCPLR_ZKey 4326824
+aCPLR_ZKey 110001570
 aStatus    1
 aUpdateInd 2
-aName      mSPLDefPanel
-aLastSyncDate 20131125200150000
-aLastUpdateDate 20131125200150000
-
-eW_MetaDef 3
-aCPLR_ZKey 69035325
-aStatus    1
-aUpdateInd 2
-aName      mSubLC
+aName      sePamms
 aDesc      VOR automatically built from LOD Dialog
-aLastSyncDate 20130702023522000
-aLastUpdateDate 20130702023522000
-
-eW_MetaDef 3
-aCPLR_ZKey 1157941
-aStatus    1
-aUpdateInd 2
-aName      mSubLDD
-aDesc      VOR automatically built from LOD Dialog
-aLastSyncDate 20130702023522000
-aLastUpdateDate 20130702023522000
-
-eW_MetaDef 3
-aCPLR_ZKey 1357813
-aStatus    1
-aUpdateInd 2
-aName      mSubProd
-aDesc      VOR automatically built from LOD Dialog
-aLastSyncDate 20130702023522000
-aLastUpdateDate 20130702023522000
-
-eW_MetaDef 3
-aCPLR_ZKey 1157864
-aStatus    1
-aUpdateInd 2
-aName      mSubreg
-aDesc      VOR automatically built from LOD Dialog
-aLastSyncDate 20130702023522000
-aLastUpdateDate 20130702023522000
-
-eW_MetaDef 3
-aCPLR_ZKey 1157615
-aStatus    1
-aUpdateInd 2
-aName      mUser
-aDesc      VOR automatically built from LOD Dialog
-aLastSyncDate 20130702023522000
-aLastUpdateDate 20130702023522000
+aLastSyncDate 20150310194246526
+aLastUpdateDate 20150310194246526
 
 eW_MetaDef 3
 aCPLR_ZKey 110001715
@@ -1771,93 +1826,38 @@ aLastSyncDate 20150310194314185
 aLastUpdateDate 20150310194314185
 
 eW_MetaDef 3
-aCPLR_ZKey 1658420
+aCPLR_ZKey 110002030
 aStatus    1
 aUpdateInd 2
-aName      qOrganiz
+aName      mePamms
 aDesc      VOR automatically built from LOD Dialog
-aLastSyncDate 20130702023522000
-aLastUpdateDate 20130702023522000
+aLastSyncDate 20150310224335496
+aLastUpdateDate 20150310224335496
 
 eW_MetaDef 3
-aCPLR_ZKey 1666257
+aCPLR_ZKey 110002219
 aStatus    1
 aUpdateInd 2
-aName      qOrganizLogin
-aLastSyncDate 20130702023522000
-aLastUpdateDate 20130702023522000
+aName      iePamms
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20150312121913435
+aLastUpdateDate 20150312121913435
 
 eW_MetaDef 3
-aCPLR_ZKey 1158114
+aCPLR_ZKey 120134912
 aStatus    1
 aUpdateInd 2
-aName      qPrimReg
-aDesc      VOR automatically built from LOD Dialog
-aLastSyncDate 20130702023522000
-aLastUpdateDate 20130702023522000
+aName      mLLD_LST
+aLastSyncDate 20140415202918000
+aLastUpdateDate 20140415202918000
 
 eW_MetaDef 3
-aCPLR_ZKey 1159381
+aCPLR_ZKey 120233879
 aStatus    1
 aUpdateInd 2
-aName      qSubreg
-aDesc      VOR automatically built from LOD Dialog
-aLastSyncDate 20130702023522000
-aLastUpdateDate 20130702023522000
-
-eW_MetaDef 3
-aCPLR_ZKey 1163363
-aStatus    1
-aUpdateInd 2
-aName      rPrimReg
-aDesc      VOR automatically built from LOD Dialog
-aLastSyncDate 20130702023522000
-aLastUpdateDate 20130702023522000
-
-eW_MetaDef 3
-aCPLR_ZKey 1179336
-aStatus    1
-aUpdateInd 2
-aName      rSubreg
-aDesc      VOR automatically built from LOD Dialog
-aLastSyncDate 20130702023522000
-aLastUpdateDate 20130702023522000
-
-eW_MetaDef 3
-aCPLR_ZKey 110001570
-aStatus    1
-aUpdateInd 2
-aName      sePamms
-aDesc      VOR automatically built from LOD Dialog
-aLastSyncDate 20150310194246526
-aLastUpdateDate 20150310194246526
-
-eW_MetaDef 3
-aCPLR_ZKey 1182250
-aStatus    1
-aUpdateInd 2
-aName      wMLCList
-aDesc      VOR automatically built from LOD Dialog
-aLastSyncDate 20130702023522000
-aLastUpdateDate 20130702023522000
-
-eW_MetaDef 3
-aCPLR_ZKey 1157147
-aStatus    1
-aUpdateInd 2
-aName      wWebXfer
-aDesc      VOR automatically built from LOD Dialog
-aLastSyncDate 20130702023522000
-aLastUpdateDate 20130702023522000
-
-eW_MetaDef 3
-aCPLR_ZKey 1157825
-aStatus    1
-aUpdateInd 2
-aName      ZPLOCKO
-aDesc      VOR automatically built from LOD Dialog
-aLastSyncDate 20130702023522000
-aLastUpdateDate 20130702023522000
+aName      mMasProdLST
+aLastSyncDate 20140702141844000
+aLastUpdateDate 20140702141844000
 
 eW_MetaType 2
 aType      10
@@ -1897,8 +1897,8 @@ aCPLR_ZKey 120336464
 aStatus    1
 aUpdateInd 2
 aName      wSLC
-aLastSyncDate 20150413235736282
-aLastUpdateDate 20150413235736282
+aLastSyncDate 20150421190033223
+aLastUpdateDate 20150421190033223
 
 eW_MetaDef 3
 aCPLR_ZKey 11205
@@ -1906,8 +1906,8 @@ aStatus    1
 aUpdateInd 2
 aName      wSPLD
 aDesc      Subregistrant Physical Label Definition
-aLastSyncDate 20150421111657263
-aLastUpdateDate 20150421111657263
+aLastSyncDate 20150422134315676
+aLastUpdateDate 20150422134315676
 
 eW_MetaDef 3
 aCPLR_ZKey 93086489
@@ -1924,8 +1924,8 @@ aStatus    1
 aUpdateInd 2
 aName      wStartUp
 aDesc      Login and Administration
-aLastSyncDate 20150421083245490
-aLastUpdateDate 20150421083245490
+aLastSyncDate 20150421123245489
+aLastUpdateDate 20150421123245489
 
 eW_MetaDef 3
 aCPLR_ZKey 1158869
@@ -1944,42 +1944,6 @@ aName      wSystem
 aDesc      ePamms System Settings
 aLastSyncDate 20150325025212127
 aLastUpdateDate 20150325025212127
-
-eW_MetaDef 3
-aCPLR_ZKey 1179416
-aStatus    1
-aUpdateInd 2
-aName      xMLC
-aDesc      Master Label Content
-aLastSyncDate 20150320204435645
-aLastUpdateDate 20150320204435645
-
-eW_MetaDef 3
-aCPLR_ZKey 1404830
-aStatus    1
-aUpdateInd 2
-aName      xSPLD
-aDesc      Subregistrant Physical Label Definition
-aLastSyncDate 20150323165736836
-aLastUpdateDate 20150323165736836
-
-eW_MetaDef 3
-aCPLR_ZKey 9404830
-aStatus    1
-aUpdateInd 2
-aName      xwSPLD
-aDesc      Subregistrant Physical Label Definition
-aLastSyncDate 20130628232226000
-aLastUpdateDate 20130628232226000
-
-eW_MetaDef 3
-aCPLR_ZKey 9158869
-aStatus    1
-aUpdateInd 2
-aName      xwSubR
-aDesc      Maintain Subregistrants
-aLastSyncDate 20120508123954000
-aLastUpdateDate 20120508123954000
 
 eW_MetaType 2
 aType      12
@@ -2795,14 +2759,6 @@ eW_MetaDef 3
 
 eW_MetaDef 3
 
-eW_MetaDef 3
-
-eW_MetaDef 3
-
-eW_MetaDef 3
-
-eW_MetaDef 3
-
 eW_MetaType 2
 aType      2012
 
@@ -3145,278 +3101,274 @@ aName      ZGlobalV
 aZKey      1399843
 aMetaType  2014
 
-i296       4
-i297       5
-i298       6
-i299       7
-i300       8
-i301       9
-i302       10
-i303       11
-i304       12
-i305       13
-i306       14
-i307       15
-i308       16
-i309       17
-i310       18
-i311       19
-i312       20
-i313       21
-i314       22
-i315       23
-i316       24
-i317       25
-i318       26
-i319       27
-i320       28
-i321       29
-i322       30
-i323       31
-i324       32
-i325       33
-i326       34
-i327       35
-i328       36
-i329       37
-i330       38
-i331       39
-i332       40
-i333       41
-i334       42
-i335       43
-i336       44
-i337       45
-i338       46
-i339       47
-i340       48
-i341       49
-i342       50
-i343       51
-i344       52
-i345       53
-i346       54
-i347       55
-i348       56
-i349       57
-i350       58
-i351       59
-i352       60
-i353       61
-i354       62
-i355       63
-i356       64
-i357       65
-i358       66
-i359       67
-i360       68
-i361       69
-i362       70
-i363       71
-i364       72
-i366       74
-i367       75
-i368       76
-i369       77
-i370       78
-i371       79
-i372       80
-i373       81
-i374       82
-i375       83
-i376       84
-i377       85
-i378       86
-i379       87
-i380       88
-i381       89
-i382       90
-i383       91
-i384       92
-i385       93
-i386       94
-i387       95
-i388       96
-i389       97
-i390       98
-i391       99
-i392       100
-i393       101
-i394       102
-i395       103
-i396       104
-i397       105
-i398       106
-i399       107
-i400       108
-i401       109
-i402       110
-i403       111
-i404       112
-i405       113
-i406       114
-i407       115
-i408       116
-i409       117
-i410       118
-i411       119
-i412       120
-i413       121
-i414       122
-i415       123
-i416       124
-i417       125
-i418       126
-i419       127
-i420       128
-i421       129
-i422       130
-i423       131
-i424       132
-i425       133
-i426       134
-i427       135
-i428       136
-i429       137
-i430       138
-i431       139
-i432       140
-i433       141
-i434       142
-i435       143
-i436       144
-i437       145
-i438       146
-i439       147
-i440       148
-i441       149
-i442       150
-i443       151
-i444       152
-i446       154
-i448       156
-i450       158
-i452       160
-i453       161
-i454       162
-i455       163
-i456       164
-i457       165
-i458       166
-i459       167
-i460       168
-i461       169
-i462       170
-i463       171
-i464       172
-i466       173
-i467       174
-i468       175
-i469       176
-i470       177
-i471       178
-i472       179
-i473       180
-i474       181
-i475       182
-i476       183
-i477       184
-i478       185
-i479       186
-i480       187
-i481       188
-i482       189
-i483       190
-i484       191
-i485       192
-i486       193
-i487       194
-i488       195
-i489       196
-i490       197
-i491       198
-i492       199
-i493       200
-i494       201
-i495       202
-i496       203
-i499       206
-i500       207
-i501       208
-i502       209
-i503       210
-i504       211
-i505       212
-i506       213
-i507       214
-i508       215
-i509       216
-i510       217
-i511       218
-i512       219
-i513       220
-i514       221
-i515       223
-i516       222
-i517       224
-i518       225
-i519       226
-i520       227
-i521       228
-i522       229
-i523       230
-i524       231
-i525       232
-i526       233
-i527       234
-i528       235
-i529       236
-i530       237
-i531       238
-i532       239
-i533       240
-i534       241
-i535       242
-i536       243
-i537       244
-i538       245
-i539       246
-i540       247
-i541       248
-i542       249
-i543       250
-i544       251
-i545       252
-i546       253
-i547       254
-i548       255
-i549       256
-i550       257
-i551       258
-i552       259
-i553       260
-i554       261
-i555       262
-i558       265
-i559       266
-i560       267
-i561       268
-i562       269
-i563       270
-i564       271
-i565       272
-i566       273
-i567       274
-i568       275
-i569       276
-i570       277
-i573       280
-i574       281
-i575       282
-i576       283
-i577       284
-i578       285
-i579       286
-i580       287
-i582       289
-i583       290
+i292       4
+i293       5
+i294       6
+i295       7
+i296       8
+i297       9
+i298       10
+i299       11
+i300       12
+i301       13
+i302       14
+i303       15
+i304       16
+i305       17
+i306       18
+i307       19
+i308       20
+i309       21
+i310       22
+i311       23
+i312       24
+i313       25
+i314       26
+i315       27
+i316       28
+i317       29
+i318       30
+i319       31
+i320       32
+i321       33
+i322       34
+i323       35
+i324       36
+i325       37
+i326       38
+i327       39
+i328       40
+i329       41
+i330       42
+i331       43
+i332       44
+i333       45
+i334       46
+i335       47
+i336       48
+i337       49
+i338       50
+i339       51
+i340       52
+i341       53
+i342       54
+i343       55
+i344       56
+i345       57
+i346       58
+i347       59
+i348       60
+i349       61
+i350       62
+i351       63
+i352       64
+i353       65
+i354       66
+i355       67
+i356       68
+i357       69
+i358       70
+i359       71
+i360       72
+i362       74
+i363       75
+i364       76
+i365       77
+i366       78
+i367       79
+i368       80
+i369       81
+i370       82
+i371       83
+i372       84
+i373       85
+i374       86
+i375       87
+i376       88
+i377       89
+i378       90
+i379       91
+i380       92
+i381       93
+i382       94
+i383       95
+i384       96
+i385       97
+i386       98
+i387       99
+i388       100
+i389       101
+i390       102
+i391       103
+i392       104
+i393       105
+i394       106
+i395       107
+i396       108
+i397       109
+i398       110
+i399       111
+i400       112
+i401       113
+i402       114
+i403       115
+i404       116
+i405       117
+i406       118
+i407       119
+i408       120
+i409       121
+i410       122
+i411       123
+i412       124
+i413       125
+i414       126
+i415       127
+i416       128
+i417       129
+i418       130
+i419       131
+i420       132
+i421       133
+i422       134
+i423       135
+i424       136
+i425       137
+i426       138
+i427       139
+i428       140
+i429       141
+i430       142
+i431       143
+i432       144
+i433       145
+i434       146
+i435       147
+i436       148
+i437       149
+i438       150
+i439       151
+i440       152
+i442       154
+i444       156
+i446       158
+i448       160
+i449       161
+i450       162
+i451       163
+i452       164
+i453       165
+i454       166
+i455       167
+i456       168
+i457       169
+i458       170
+i459       171
+i460       172
+i462       173
+i463       174
+i464       175
+i465       176
+i466       177
+i467       178
+i468       179
+i469       180
+i470       181
+i471       182
+i472       183
+i473       184
+i474       185
+i475       186
+i476       187
+i477       188
+i478       189
+i479       190
+i480       191
+i481       192
+i482       193
+i483       194
+i484       195
+i485       196
+i486       197
+i487       198
+i488       199
+i489       200
+i490       201
+i491       202
+i492       203
+i495       206
+i496       207
+i497       208
+i498       209
+i499       210
+i500       211
+i501       212
+i502       213
+i503       214
+i504       215
+i505       216
+i506       217
+i507       218
+i508       219
+i509       220
+i510       221
+i511       222
+i512       223
+i513       224
+i514       225
+i515       226
+i516       227
+i517       228
+i518       229
+i519       230
+i520       231
+i521       232
+i522       233
+i523       234
+i524       235
+i525       236
+i526       237
+i527       238
+i528       239
+i529       240
+i530       241
+i531       242
+i532       243
+i533       244
+i534       245
+i535       246
+i536       247
+i537       248
+i538       249
+i539       250
+i540       251
+i541       252
+i542       253
+i543       254
+i544       255
+i545       256
+i546       257
+i547       258
+i548       259
+i549       260
+i550       261
+i551       262
+i554       265
+i555       266
+i556       267
+i557       268
+i558       269
+i559       270
+i560       271
+i561       272
+i562       273
+i565       276
+i566       277
+i567       278
+i568       279
+i569       280
+i570       281
+i571       282
+i572       283
+i574       285
+i575       286

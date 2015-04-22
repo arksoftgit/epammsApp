@@ -198,7 +198,7 @@ $(function() {
       if ( g_$current_block ) {
          if ( g_$current_block.hasClass( "panel" ) === false ) {
             if ( g_updatedLLD ) {
-               ConvertWysiwygLabelDesignToZeidonJson( "saveLabel", "mSPLDef", updateBlockCallback, this );
+               ConvertWysiwygLabelDesignToZeidonJson( "saveLabel", "mSPLDef", updateBlockCallback, g_$current_block );
             } else {
                updateBlockCallback( g_$current_block );
             }
@@ -3174,6 +3174,41 @@ public class FileServer {
          mapElementDataToUiData( g_$current_block );
       }
    }
+/*
+   function initColorPicker( id, colors, names ) {
+      var $el = $('#' + id);
+      if ( $el.parent().hasClass( "colorPicker-frame" ) === false )
+      {
+      // $('#colorText').colorPicker( { colors: ["1111ff", "333333", "ff1111", "eeeeee", "feeeee"], names: ["Blue", "Black", "Red", "Gray", "Pink"], showHexField: false,
+      //                               onColorChange : function(id, newValue) { console.log("ID: '" + id + "' has been changed to " + newValue); } } );
+         $el.colorPicker( { colors: colors, names: names, showHexField: false,
+                          onColorChange : function(id, newValue) { console.log("ID: '" + id + "' has been changed to " + newValue); } } );
+      }
+      return $el;
+   }
+*/
+   function initColorPicker( id, jsonColors, colors, names, idx ) {
+      var $el = $(id);
+      if ( ! $el.data( '_init' ) )
+      {
+         $el.data( '_init', "Y" );
+      // $('#colorText').colorPicker( { colors: ["1111ff", "333333", "ff1111", "eeeeee", "feeeee"], names: ["Blue", "Black", "Red", "Gray", "Pink"], showHexField: false,
+      //                               onColorChange : function(id, newValue) { console.log("ID: '" + id + "' has been changed to " + newValue); } } );
+         $el.colorPicker( { colors: colors, names: names, showHexField: false,
+                          onColorChange : function(id, newValue) { console.log("ID: '" + id + "' has been changed to " + newValue); } } );
+      }
+      if ( idx >= names.length || idx >= colors.length ) {
+         idx = 0;
+      }
+
+      // Plain English of "#header .callout":
+      //  - Select all elements with the class name 'callout' that are decendents of the element with an ID of 'header'.
+      var sib = $el.siblings('.colorPicker-picker')[0];
+      $(sib).css( "background-color", "#" + jsonColors[idx].RGB ).css( "color", "#" + invertHexColor( jsonColors[idx].RGB ) ).text( names[idx] );
+      $el.val( "#" + jsonColors[idx].RGB );
+
+      return $el;
+   }
 
    function setColors( jsonColors )
    {
@@ -3192,21 +3227,9 @@ public class FileServer {
          colors.push( "EFEFEF" );
          names.push( "n/a" );
       }
-   // $('#colorText').colorPicker( { colors: ["1111ff", "333333", "ff1111", "eeeeee", "feeeee"], names: ["Blue", "Black", "Red", "Gray", "Pink"], showHexField: false,
-   //                               onColorChange : function(id, newValue) { console.log("ID: '" + id + "' has been changed to " + newValue); } } );
-      $('#colorText').colorPicker( { colors: colors, names: names, showHexField: false,
-                                     onColorChange : function(id, newValue) { console.log("ID: '" + id + "' has been changed to " + newValue); } } );
-                                 
-      $('#colorText2').colorPicker( { colors: colors, names: names, showHexField: false,
-                                     onColorChange : function(id, newValue) { console.log("ID: '" + id + "' has been changed to " + newValue); } } );
-      // Plain English of "#header .callout":
-      //  - Select all elements with the class name callout that are decendents of the element with an ID of header.
-      var el = $('#colorText').siblings('.colorPicker-picker')[0];
-      $(el).css( "background-color", "#" + jsonColors[0].RGB ).css( "color", "#" + invertHexColor( jsonColors[0].RGB ) ).text( jsonColors[0].Name );
-      $('#colorText').val( "#" + jsonColors[0].RGB );
-      el = $('#colorText2').siblings('.colorPicker-picker')[0];
-      $(el).css( "background-color", "#" + jsonColors[1].RGB ).css( "color", "#" + invertHexColor( jsonColors[1].RGB ) ).text( jsonColors[1].Name );
-      $('#colorText2').val( "#" + jsonColors[1].RGB );
+      initColorPicker( '#colorText', jsonColors, colors, names, 0 );
+      initColorPicker( '#colorBack', jsonColors, colors, names, 1 );
+      initColorPicker( '#colorBord', jsonColors, colors, names, 2 );
    }
 
 // Initialize everything (first time in).
