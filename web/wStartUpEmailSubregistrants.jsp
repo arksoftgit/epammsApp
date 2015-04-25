@@ -995,7 +995,7 @@ else
             task.log( ).debug( "Root.EmailSubjectLine: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "wWebXfer.Root" );
+            task.log( ).debug( "Entity does not exist for Subject: " + "wWebXfer.Root" );
       }
    }
 
@@ -1042,7 +1042,7 @@ else
             task.log( ).debug( "Root.EmailMessage: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "wWebXfer.Root" );
+            task.log( ).debug( "Entity does not exist for EmailText: " + "wWebXfer.Root" );
       }
    }
 

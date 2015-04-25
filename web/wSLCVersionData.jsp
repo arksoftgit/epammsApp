@@ -1365,7 +1365,7 @@ else
             task.log( ).debug( "SubregLabelContent.Description: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSubLC.SubregLabelContent" );
+            task.log( ).debug( "Entity does not exist for EditBox2: " + "mSubLC.SubregLabelContent" );
       }
    }
 %>
@@ -1410,7 +1410,7 @@ else
             task.log( ).debug( "SubregLabelContent.Version: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSubLC.SubregLabelContent" );
+            task.log( ).debug( "Entity does not exist for EditBox3: " + "mSubLC.SubregLabelContent" );
       }
    }
 %>

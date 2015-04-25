@@ -1464,7 +1464,7 @@ else
             task.log( ).debug( "PrimaryRegistrant.dNameEPA_Number: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mPrimReg.PrimaryRegistrant" );
+            task.log( ).debug( "Entity does not exist for EBName: " + "mPrimReg.PrimaryRegistrant" );
       }
    }
 %>
@@ -1520,7 +1520,7 @@ else
             task.log( ).debug( "Organization.LoginName: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mPrimReg.Organization" );
+            task.log( ).debug( "Entity does not exist for LoginName: " + "mPrimReg.Organization" );
       }
    }
 %>

@@ -1574,7 +1574,7 @@ else
             task.log( ).debug( "MasterLabelContent.DilutionChartStrengthTitle: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasLC.MasterLabelContent" );
+            task.log( ).debug( "Entity does not exist for EditBox2: " + "mMasLC.MasterLabelContent" );
       }
    }
 %>
@@ -1625,7 +1625,7 @@ else
             task.log( ).debug( "MasterLabelContent.DilutionChartStrengthText: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasLC.MasterLabelContent" );
+            task.log( ).debug( "Entity does not exist for EditBox1: " + "mMasLC.MasterLabelContent" );
       }
    }
 %>

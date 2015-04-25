@@ -690,7 +690,7 @@ else
             task.log( ).debug( "User.UserName: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mUser.User" );
+            task.log( ).debug( "Entity does not exist for EditBox2: " + "mUser.User" );
       }
    }
 %>

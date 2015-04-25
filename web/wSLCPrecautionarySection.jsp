@@ -1236,7 +1236,7 @@ else
             task.log( ).debug( "S_GeneralSection.Title: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSubLC.S_GeneralSection" );
+            task.log( ).debug( "Entity does not exist for PrecautionaryTitle: " + "mSubLC.S_GeneralSection" );
       }
    }
 %>
@@ -1287,7 +1287,7 @@ else
             task.log( ).debug( "S_GeneralSection.Subtitle: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSubLC.S_GeneralSection" );
+            task.log( ).debug( "Entity does not exist for PrecautionarySubtitle: " + "mSubLC.S_GeneralSection" );
       }
    }
 %>

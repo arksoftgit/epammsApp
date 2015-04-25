@@ -2152,26 +2152,54 @@ END
 DIALOG OPERATION
 PostbuildBlockDefinitionUpdate( VIEW ViewToWindow )
 
+   VIEW wWebXfer REGISTERED AS wWebXfer
    VIEW mSPLDef REGISTERED AS mSPLDef
    VIEW mSPLDefPanel REGISTERED AS mSPLDefPanel
    VIEW mSPLDefBlock REGISTERED AS mSPLDefBlock
+   STRING ( 2 )   szSpace
    STRING ( 64 )  szName
    STRING ( 64 )  szType
-   STRING ( 256 ) szMsg
+   STRING ( 256 ) szGraphic
+   STRING ( 512 ) szMsg
+
+   szName = mSPLDefBlock.LLD_Block.Name
+   szType = mSPLDefBlock.LLD_Block.LLD_SectionType
+   szGraphic = mSPLDefBlock.LLD_Block.ImageName 
+   
+   IF szType != ""
+      szMsg = szType
+      szSpace = ": "
+   ELSE
+      szMsg = ""
+      szSpace = ""
+   END
+   IF mSPLDefBlock.LLD_Block.ContinuationBlockFlag = "Y"
+      szMsg = szMsg + "[**continued**]"
+      szSpace = ": "
+   END
+   IF szName != ""
+      szMsg = szMsg + szSpace + szName
+      szSpace = " - "
+   END
+   IF szGraphic != ""
+      szMsg = szMsg + szSpace + szGraphic
+   END
+   
+   wWebXfer.Root.CurrentSectionTitle = szMsg
 
    // mSPLDefBlock should have been set up before transferring to this page.
    TraceLineS( "PostbuildBlockDefinitionUpdate Display ", "LLD_Block" )
    DisplayEntityInstance( mSPLDefBlock, "LLD_Block" )
-   SetUpFormattingSelect( mSPLDefPanel, mSPLDefBlock.LLD_Block.LLD_SectionType ) 
+// SetUpFormattingSelect( mSPLDefPanel, mSPLDefBlock.LLD_Block.LLD_SectionType ) 
    SetUpKeywordEntries( mSPLDefBlock, mSPLDefBlock.LLD_Block.LLD_SectionType )
-
+   TraceLineS( "PostbuildBlockDefinitionUpdate Display2 ", "LLD_Block" )
+   DisplayEntityInstance( mSPLDefBlock, "LLD_Block" )
    // Select which of the CompositeComponentList entities are to be displayed
    FOR EACH mSPLDef.Display WITHIN mSPLDef.SubregPhysicalLabelDef 
       DELETE ENTITY mSPLDef.Display NONE
    END
-   szName = mSPLDefBlock.LLD_Block.Name
+   
    IF szName != ""
-      szType = mSPLDefBlock.LLD_Block.LLD_SectionType
       SET CURSOR FIRST mSPLDef.CompositeComponentList WHERE mSPLDef.CompositeComponentList.DisplayType = szType AND
                                                          mSPLDef.CompositeComponentList.Value = szName
       IF RESULT < zCURSOR_SET

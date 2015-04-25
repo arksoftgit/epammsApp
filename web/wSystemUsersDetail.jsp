@@ -728,7 +728,7 @@ else
             task.log( ).debug( "User.UserName: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mUser.User" );
+            task.log( ).debug( "Entity does not exist for UserName: " + "mUser.User" );
       }
    }
 %>
@@ -783,7 +783,7 @@ else
             task.log( ).debug( "User.UserPassword: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mUser.User" );
+            task.log( ).debug( "Entity does not exist for Password: " + "mUser.User" );
       }
    }
 %>

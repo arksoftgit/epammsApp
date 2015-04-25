@@ -4183,10 +4183,11 @@ GenerateAttribute( VIEW mSPLDef BASED ON LOD mSPLDef,
 END
 
 /*************************************************************************************************
+**  No longer used ... incorrectly deletes everything up front.  Replaced by SetUpKeywordEntries.
 **    
 **    OPERATION: SetUpFormattingSelect
-**    
-*************************************************************************************************/
+**
+  
 TRANSFORMATION OPERATION
 SetUpFormattingSelect( VIEW mSPLDefPanel BASED ON LOD mSPLDef,
                        STRING ( 50 ) szSectionType )
@@ -4259,6 +4260,7 @@ SetUpFormattingSelect( VIEW mSPLDefPanel BASED ON LOD mSPLDef,
    SET CURSOR FIRST mSPLDefPanel.SpecialFormattingSelectEntry 
    
 END
+*************************************************************************************************/
 
 /*************************************************************************************************
 **    
@@ -4351,11 +4353,14 @@ CheckAddKeywordEntry( VIEW mSPLDefBlock BASED ON LOD mSPLDef,
    // Make sure that the entry for the Keyword passed in exists.
    SET CURSOR FIRST mSPLDefBlock.LLD_SpecialSectionAttribute WHERE mSPLDefBlock.LLD_SpecialSectionAttribute.Name = szKeywordName
    IF RESULT < zCURSOR_SET
+      TraceLineS( "CheckAddKeyordEntry adding: ", szKeywordName )
       SET CURSOR LAST mSPLDefBlock.LLD_SpecialSectionAttribute  
       CREATE ENTITY mSPLDefBlock.LLD_SpecialSectionAttribute
       mSPLDefBlock.LLD_SpecialSectionAttribute.Name = szKeywordName
-      CREATE ENTITY mSPLDefBlock.LLD_SpecialSectionAttrBlock  
-   END 
+      CREATE ENTITY mSPLDefBlock.LLD_SpecialSectionAttrBlock 
+   ELSE
+      TraceLineS( "CheckAddKeyordEntry located: ", szKeywordName )
+   END
    
 END
 

@@ -1,4 +1,4 @@
-z1000-Zeidon    TEMPLATE TZDGSRCO 06/10/14   09:15:42 1.0a2    
+z1000-Zeidon    TEMPLATE TZDGSRCO 04/24/15   18:19:37 1.0a2    
 eDomainGroup 1
 aZKey      69081339
 aName      Template
@@ -573,9 +573,6 @@ aName      LLD_SectionType
 aIsDefault Y
 
 eTableEntry 4
-aZKey      120180211
-
-eTableEntry 4
 aZKey      69081348
 aExternalValue Ingredients
 aInternalValue Ingredients
@@ -643,10 +640,15 @@ aInternalValue EPA_RegAndEstNbr
 eTableEntry 4
 aZKey      4043314
 aExternalValue Product Name
-aInternalValue Product Name
+aInternalValue ProductName
 
 eTableEntry 4
 aZKey      120180210
 aExternalValue Product Description
-aInternalValue Product Description
+aInternalValue ProductDescription
+
+eTableEntry 4
+aZKey      110006004
+aExternalValue Product Specific
+aInternalValue ProductSpecific
 

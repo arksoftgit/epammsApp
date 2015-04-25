@@ -1036,7 +1036,7 @@ else
             task.log( ).info( "Root.HTML: " + strErrorMapValue );
          }
          else
-            task.log( ).info( "Entity does not exist: " + "wWebXfer.Root" );
+            task.log( ).info( "Entity does not exist for wysiwygEditor: " + "wWebXfer.Root" );
       }
    }
 %>

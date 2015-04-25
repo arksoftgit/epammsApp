@@ -1023,7 +1023,7 @@ else
             task.log( ).debug( "M_StorageDisposalSection.Title: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_StorageDisposalSection" );
+            task.log( ).debug( "Entity does not exist for Title: " + "mMasLC.M_StorageDisposalSection" );
       }
    }
 %>
@@ -1079,7 +1079,7 @@ else
             task.log( ).debug( "M_StorageDisposalSection.Subtitle: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_StorageDisposalSection" );
+            task.log( ).debug( "Entity does not exist for Subtitle: " + "mMasLC.M_StorageDisposalSection" );
       }
    }
 %>

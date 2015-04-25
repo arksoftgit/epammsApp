@@ -699,7 +699,7 @@ else
             task.log( ).debug( "M_MarketingStatement.Title: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_MarketingStatement" );
+            task.log( ).debug( "Entity does not exist for MLEdit2: " + "mMasLC.M_MarketingStatement" );
       }
    }
 %>
@@ -743,7 +743,7 @@ else
             task.log( ).debug( "M_MarketingStatement.Text: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_MarketingStatement" );
+            task.log( ).debug( "Entity does not exist for MLEdit1: " + "mMasLC.M_MarketingStatement" );
       }
    }
 %>

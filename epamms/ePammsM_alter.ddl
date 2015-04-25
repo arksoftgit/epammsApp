@@ -24,44 +24,63 @@ CREATE TABLE ADDRESS (
            FK_ID_ORGANIZATION               int                NULL    , 
            FK_ID_ORGANIZATION02             int                NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - Address */
-CREATE UNIQUE INDEX UADDRESS_ID_646610 
+CREATE UNIQUE INDEX UADDRESS_ID_975990 
        ON ADDRESS ( 
            ID ) ;
 /* Main key for Entity - Address */
-CREATE INDEX ADDRESS_PHONE1_646700 
+CREATE INDEX ADDRESS_PHONE1_976080 
        ON ADDRESS ( 
            PHONE ) ;
 /* Main key for Entity - Address */
-CREATE INDEX ADDRESS_CITY_646650 
+CREATE INDEX ADDRESS_CITY_976030 
        ON ADDRESS ( 
            CITY ) ;
 /* Main key for Entity - Address */
-CREATE INDEX ADDRESS_STATE_646660 
+CREATE INDEX ADDRESS_STATE_976040 
        ON ADDRESS ( 
            STATE ) ;
 /* Main key for Entity - Address */
-CREATE INDEX ADDRESS_ZIPCODE_646690 
+CREATE INDEX ADDRESS_ZIPCODE_976070 
        ON ADDRESS ( 
            ZIPCODE ) ;
  
-COMMIT;
 /* Index for Relationship - 'ORGANIZATION(has mail [0:1] ) ADDRESS' */
-CREATE INDEX ADDRESS_FK_ID_ORGANIZATION_65614 
+CREATE INDEX ADDRESS_FK_ID_ORGANIZATION_98605 
        ON ADDRESS ( 
            FK_ID_ORGANIZATION ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'ORGANIZATION(has [0:1] ) ADDRESS' */
-CREATE INDEX ADDRESS_FK_IDORGANIZATION0265615 
+CREATE INDEX ADDRESS_FK_IDORGANIZATION0298606 
        ON ADDRESS ( 
            FK_ID_ORGANIZATION02 ) ;
  
-
-COMMIT;
+/* Entity - Color */
+CREATE TABLE COLOR ( 
+           ID                               int                NOT NULL, 
+           NAME                             varchar( 32 )      NOT NULL, 
+           RGB                              varchar( 6 )       NOT NULL, 
+           C                                int                NULL    , 
+           M                                int                NULL    , 
+           Y                                int                NULL    , 
+           K                                int                NULL    , 
+           PANTONE                          varchar( 32 )      NULL    , 
+           FK_ID_SUBREGISTRANT              int                NOT NULL ) ;
+ 
+/* Main key for Entity - Color */
+CREATE UNIQUE INDEX UCOLOR_ID_976250 
+       ON COLOR ( 
+           ID ) ;
+/* Main key for Entity - Color */
+CREATE INDEX COLOR_NAME_976260 
+       ON COLOR ( 
+           NAME ) ;
+ 
+/* Index for Relationship - 'SUBREGISTRANT(has [0:m] ) COLOR' */
+CREATE INDEX COLOR_FK_ID_SUBREGISTRANT_985700 
+       ON COLOR ( 
+           FK_ID_SUBREGISTRANT ) ;
+ 
 /* Entity - Domain */
 CREATE TABLE z_DOMAIN ( 
            ID                               int                NOT NULL, 
@@ -69,14 +88,11 @@ CREATE TABLE z_DOMAIN (
            z_DESC                           varchar( 254 )     NULL    , 
            SYSTEMREQUIRED                   varchar( 1 )       NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - Domain */
-CREATE UNIQUE INDEX Uz_DOMAIN_ID_646870 
+CREATE UNIQUE INDEX Uz_DOMAIN_ID_976360 
        ON z_DOMAIN ( 
            ID ) ;
  
-COMMIT;
 /* Entity - DomainValue */
 CREATE TABLE DOMAINVALUE ( 
            DOMAINVALUE_TOKEN                int                NOT NULL, 
@@ -87,21 +103,16 @@ CREATE TABLE DOMAINVALUE (
            AUTOSEQ                          int                NULL    , 
            FK_ID_Z_DOMAIN                   int                NOT NULL ) ;
  
-COMMIT;
- 
 /* Main key for Entity - DomainValue */
-CREATE UNIQUE INDEX UDOMAINVALUE_DOMAINVALUEID_64698 
+CREATE UNIQUE INDEX UDOMAINVALUE_DOMAINVALUEID_97647 
        ON DOMAINVALUE ( 
            DOMAINVALUE_TOKEN ) ;
  
-COMMIT;
 /* Index for Relationship - 'z_DOMAIN(has [0:m] ) DOMAINVALUE' */
-CREATE INDEX DOMAINVALUE_FK_ID_Z_DOMAIN_65734 
+CREATE INDEX DOMAINVALUE_FK_ID_Z_DOMAIN_98725 
        ON DOMAINVALUE ( 
            FK_ID_Z_DOMAIN ) ;
  
-
-COMMIT;
 /* Entity - EPA_ApplicationType */
 CREATE TABLE EPA_APPLICATIONTYPE ( 
            ID                               int                NOT NULL, 
@@ -110,21 +121,16 @@ CREATE TABLE EPA_APPLICATIONTYPE (
            AUTOSEQ                          int                NULL    , 
            FK_ID_EPA_CHEMICALFAMILY         int                NOT NULL ) ;
  
-COMMIT;
- 
 /* Main key for Entity - EPA_ApplicationType */
-CREATE UNIQUE INDEX UEPA_APPLICATIONTYPE_ID_647000 
+CREATE UNIQUE INDEX UEPA_APPLICATIONTYPE_ID_976490 
        ON EPA_APPLICATIONTYPE ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'EPA_CHEMICALFAMILY(has [0:m] ) EPA_APPLICATIONTYPE' */
-CREATE INDEX EPAAPPLICATIONTYPEFKIDEPACH65604 
+CREATE INDEX EPAAPPLICATIONTYPEFKIDEPACH98595 
        ON EPA_APPLICATIONTYPE ( 
            FK_ID_EPA_CHEMICALFAMILY ) ;
  
-
-COMMIT;
 /* Entity - EPA_AreaOfUse */
 CREATE TABLE EPA_AREAOFUSE ( 
            ID                               int                NOT NULL, 
@@ -133,21 +139,16 @@ CREATE TABLE EPA_AREAOFUSE (
            AUTOSEQ                          int                NULL    , 
            FK_ID_EPA_CHEMICALFAMILY         int                NOT NULL ) ;
  
-COMMIT;
- 
 /* Main key for Entity - EPA_AreaOfUse */
-CREATE UNIQUE INDEX UEPA_AREAOFUSE_ID_647050 
+CREATE UNIQUE INDEX UEPA_AREAOFUSE_ID_976540 
        ON EPA_AREAOFUSE ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'EPA_CHEMICALFAMILY(has [0:m] ) EPA_AREAOFUSE' */
-CREATE INDEX EPAAREAOFUSEFKIDEPACHEMICAL65716 
+CREATE INDEX EPAAREAOFUSEFKIDEPACHEMICAL98707 
        ON EPA_AREAOFUSE ( 
            FK_ID_EPA_CHEMICALFAMILY ) ;
  
-
-COMMIT;
 /* Entity - EPA_ChemicalFamily */
 CREATE TABLE EPA_CHEMICALFAMILY ( 
            ID                               int                NOT NULL, 
@@ -156,21 +157,16 @@ CREATE TABLE EPA_CHEMICALFAMILY (
            CHEMICALFAMILY                   varchar( 2 )       NOT NULL, 
            FK_ID_EPAMMS                     int                NOT NULL ) ;
  
-COMMIT;
- 
 /* Main key for Entity - EPA_ChemicalFamily */
-CREATE UNIQUE INDEX UEPA_CHEMICALFAMILY_ID_647100 
+CREATE UNIQUE INDEX UEPA_CHEMICALFAMILY_ID_976590 
        ON EPA_CHEMICALFAMILY ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'EPAMMS(has [0:m] ) EPA_CHEMICALFAMILY' */
-CREATE INDEX EPACHEMICALFAMILYFKIDEPAMMS65602 
+CREATE INDEX EPACHEMICALFAMILYFKIDEPAMMS98593 
        ON EPA_CHEMICALFAMILY ( 
            FK_ID_EPAMMS ) ;
  
-
-COMMIT;
 /* Entity - EPA_Claim */
 CREATE TABLE EPA_CLAIM ( 
            ID                               int                NOT NULL, 
@@ -180,21 +176,16 @@ CREATE TABLE EPA_CLAIM (
            AUTOSEQ                          int                NULL    , 
            FK_ID_EPA_CHEMICALFAMILY         int                NOT NULL ) ;
  
-COMMIT;
- 
 /* Main key for Entity - EPA_Claim */
-CREATE UNIQUE INDEX UEPA_CLAIM_ID_647160 
+CREATE UNIQUE INDEX UEPA_CLAIM_ID_976650 
        ON EPA_CLAIM ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'EPA_CHEMICALFAMILY(has [0:m] ) EPA_CLAIM' */
-CREATE INDEX EPACLAIMFKIDEPACHEMICALFAMI65675 
+CREATE INDEX EPACLAIMFKIDEPACHEMICALFAMI98666 
        ON EPA_CLAIM ( 
            FK_ID_EPA_CHEMICALFAMILY ) ;
  
-
-COMMIT;
 /* Entity - EPA_StorageDisposal */
 CREATE TABLE EPA_STORAGEDISPOSAL ( 
            ID                               int                NOT NULL, 
@@ -205,21 +196,16 @@ CREATE TABLE EPA_STORAGEDISPOSAL (
            AUTOSEQ                          int                NULL    , 
            FK_ID_EPA_CHEMICALFAMILY         int                NOT NULL ) ;
  
-COMMIT;
- 
 /* Main key for Entity - EPA_StorageDisposal */
-CREATE UNIQUE INDEX UEPA_STORAGEDISPOSAL_ID_647220 
+CREATE UNIQUE INDEX UEPA_STORAGEDISPOSAL_ID_976710 
        ON EPA_STORAGEDISPOSAL ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'EPA_CHEMICALFAMILY(has [0:m] ) EPA_STORAGEDISPOSAL' */
-CREATE INDEX EPASTORAGEDISPOSALFKIDEPACH65715 
+CREATE INDEX EPASTORAGEDISPOSALFKIDEPACH98706 
        ON EPA_STORAGEDISPOSAL ( 
            FK_ID_EPA_CHEMICALFAMILY ) ;
  
-
-COMMIT;
 /* Entity - EPA_Surface */
 CREATE TABLE EPA_SURFACE ( 
            ID                               int                NOT NULL, 
@@ -228,34 +214,26 @@ CREATE TABLE EPA_SURFACE (
            AUTOSEQ                          int                NULL    , 
            FK_ID_EPA_CHEMICALFAMILY         int                NOT NULL ) ;
  
-COMMIT;
- 
 /* Main key for Entity - EPA_Surface */
-CREATE UNIQUE INDEX UEPA_SURFACE_ID_647290 
+CREATE UNIQUE INDEX UEPA_SURFACE_ID_976780 
        ON EPA_SURFACE ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'EPA_CHEMICALFAMILY(has [0:m] ) EPA_SURFACE' */
-CREATE INDEX EPASURFACEFKIDEPACHEMICALFA65717 
+CREATE INDEX EPASURFACEFKIDEPACHEMICALFA98708 
        ON EPA_SURFACE ( 
            FK_ID_EPA_CHEMICALFAMILY ) ;
  
-
-COMMIT;
 /* Entity - ePamms */
 CREATE TABLE EPAMMS ( 
            ID                               int                NOT NULL, 
-           NAME                             varchar( 254 )     NOT NULL ) ;
- 
-COMMIT;
+           NAME                             varchar( 128 )     NOT NULL ) ;
  
 /* Main key for Entity - ePamms */
-CREATE UNIQUE INDEX UEPAMMS_ID_647340 
+CREATE UNIQUE INDEX UEPAMMS_ID_976830 
        ON EPAMMS ( 
            ID ) ;
  
-COMMIT;
 /* Entity - Feedback */
 CREATE TABLE FEEDBACK ( 
            ID                               int                NOT NULL, 
@@ -265,21 +243,16 @@ CREATE TABLE FEEDBACK (
            COMMENT                          longtext           NULL    , 
            FK_ID_ORGANIZATION               int                NOT NULL ) ;
  
-COMMIT;
- 
 /* Main key for Entity - Feedback */
-CREATE UNIQUE INDEX UFEEDBACK_ID_647380 
+CREATE UNIQUE INDEX UFEEDBACK_ID_976870 
        ON FEEDBACK ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'ORGANIZATION(has [0:m] ) FEEDBACK' */
-CREATE INDEX FEEDBACK_FK_ID_ORGANIZATION65601 
+CREATE INDEX FEEDBACK_FK_ID_ORGANIZATION98592 
        ON FEEDBACK ( 
            FK_ID_ORGANIZATION ) ;
  
-
-COMMIT;
 /* Entity - GraphicLabelControl */
 CREATE TABLE GRAPHICLABELCONTROL ( 
            ID                               int                NOT NULL, 
@@ -291,21 +264,16 @@ CREATE TABLE GRAPHICLABELCONTROL (
            AUTOSEQ                          int                NULL    , 
            FK_ID_GRAPHICLABELDEFINITION     int                NOT NULL ) ;
  
-COMMIT;
- 
 /* Main key for Entity - GraphicLabelControl */
-CREATE UNIQUE INDEX UGRAPHICLABELCONTROL_ID_647450 
+CREATE UNIQUE INDEX UGRAPHICLABELCONTROL_ID_976940 
        ON GRAPHICLABELCONTROL ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'GRAPHICLABELDEFINITION(has [0:m] ) GRAPHICLABELCONTROL' */
-CREATE INDEX GRAPHICLABELCONTROLFKIDGRAP65726 
+CREATE INDEX GRAPHICLABELCONTROLFKIDGRAP98717 
        ON GRAPHICLABELCONTROL ( 
            FK_ID_GRAPHICLABELDEFINITION ) ;
  
-
-COMMIT;
 /* Entity - GraphicLabelDefinition */
 CREATE TABLE GRAPHICLABELDEFINITION ( 
            ID                               int                NOT NULL, 
@@ -316,49 +284,37 @@ CREATE TABLE GRAPHICLABELDEFINITION (
            FK_ID_SUBREGISTRANT              int                NOT NULL, 
            FK_ID_SUBREGLABELCONTENT         int                NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - GraphicLabelDefinition */
-CREATE UNIQUE INDEX UGRAPHICLABELDEFINITION_ID_64753 
+CREATE UNIQUE INDEX UGRAPHICLABELDEFINITION_ID_97702 
        ON GRAPHICLABELDEFINITION ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'SUBREGISTRANT(has [0:m] ) GRAPHICLABELDEFINITION' */
-CREATE INDEX GRAPHICLABELDEFINITIONFKIDS65724 
+CREATE INDEX GRAPHICLABELDEFINITIONFKIDS98715 
        ON GRAPHICLABELDEFINITION ( 
            FK_ID_SUBREGISTRANT ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'SUBREGLABELCONTENT(has [0:m] ) GRAPHICLABELDEFINITION' */
-CREATE INDEX GRAPHICLABELDEFINITIONFKIDS65725 
+CREATE INDEX GRAPHICLABELDEFINITIONFKIDS98716 
        ON GRAPHICLABELDEFINITION ( 
            FK_ID_SUBREGLABELCONTENT ) ;
  
-
-COMMIT;
 /* Entity - Keyword */
 CREATE TABLE KEYWORD ( 
            ID                               int                NOT NULL, 
            NAME                             varchar( 254 )     NOT NULL, 
            FK_ID_EPAMMS                     int                NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - Keyword */
-CREATE UNIQUE INDEX UKEYWORD_ID_647600 
+CREATE UNIQUE INDEX UKEYWORD_ID_977090 
        ON KEYWORD ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'EPAMMS(has [0:m] ) KEYWORD' */
-CREATE INDEX KEYWORD_FK_ID_EPAMMS_656030 
+CREATE INDEX KEYWORD_FK_ID_EPAMMS_985940 
        ON KEYWORD ( 
            FK_ID_EPAMMS ) ;
  
-
-COMMIT;
 /* Entity - LLD */
 CREATE TABLE LLD ( 
            ID                               int                NOT NULL, 
@@ -379,14 +335,11 @@ CREATE TABLE LLD (
            DEFAULTTEXTMARGINBOTTOM          double             NULL    , 
            DEPTH                            int                NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - LLD */
-CREATE UNIQUE INDEX ULLD_ID_647640 
+CREATE UNIQUE INDEX ULLD_ID_977130 
        ON LLD ( 
            ID ) ;
  
-COMMIT;
 /* Entity - LLD_Block */
 CREATE TABLE LLD_BLOCK ( 
            ID                               int                NOT NULL, 
@@ -440,35 +393,26 @@ CREATE TABLE LLD_BLOCK (
            FK_ID_LLD_PANEL                  int                NULL    , 
            FK_ID_LLD_BLOCK                  int                NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - LLD_Block */
-CREATE UNIQUE INDEX ULLD_BLOCK_ID_647830 
+CREATE UNIQUE INDEX ULLD_BLOCK_ID_977320 
        ON LLD_BLOCK ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'SPLD_SECTION(has [0:m] ) LLD_BLOCK' */
-CREATE INDEX LLD_BLOCK_FK_ID_SPLDSECTION65600 
+CREATE INDEX LLD_BLOCK_FK_ID_SPLDSECTION98591 
        ON LLD_BLOCK ( 
            FK_ID_SPLD_SECTION ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'LLD_PANEL(has [0:m] ) LLD_BLOCK' */
-CREATE INDEX LLD_BLOCK_FK_ID_LLD_PANEL_656540 
+CREATE INDEX LLD_BLOCK_FK_ID_LLD_PANEL_986450 
        ON LLD_BLOCK ( 
            FK_ID_LLD_PANEL ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'LLD_BLOCK(is linked to [0:m] ) LLD_BLOCK' */
-CREATE INDEX LLD_BLOCK_FK_ID_LLD_BLOCK_656610 
+CREATE INDEX LLD_BLOCK_FK_ID_LLD_BLOCK_986520 
        ON LLD_BLOCK ( 
            FK_ID_LLD_BLOCK ) ;
  
-
-COMMIT;
 /* Entity - LLD_Page */
 CREATE TABLE LLD_PAGE ( 
            ID                               int                NOT NULL, 
@@ -476,33 +420,34 @@ CREATE TABLE LLD_PAGE (
            NAME                             varchar( 128 )     NULL    , 
            HEIGHT                           double             NULL    , 
            WIDTH                            double             NULL    , 
+           BACKGROUNDCOLOR                  varchar( 20 )      NULL    , 
+           BACKGROUNDCOLOROVERRIDE          varchar( 1 )       NULL    , 
            PAGENBR                          int                NULL    , 
            DEPTH                            int                NULL    , 
+           FK_ID_COLOR                      int                NULL    , 
            FK_ID_LLD                        int                NULL    , 
            FK_ID_SPLD_LLD                   int                NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - LLD_Page */
-CREATE UNIQUE INDEX ULLD_PAGE_ID_648310 
+CREATE UNIQUE INDEX ULLD_PAGE_ID_977800 
        ON LLD_PAGE ( 
            ID ) ;
  
-COMMIT;
+/* Index for Relationship - 'COLOR(for [0:m] ) LLD_PAGE' */
+CREATE INDEX LLD_PAGE_FK_ID_COLOR_985610 
+       ON LLD_PAGE ( 
+           FK_ID_COLOR ) ;
+ 
 /* Index for Relationship - 'LLD(has [0:m] ) LLD_PAGE' */
-CREATE INDEX LLD_PAGE_FK_ID_LLD_655960 
+CREATE INDEX LLD_PAGE_FK_ID_LLD_985870 
        ON LLD_PAGE ( 
            FK_ID_LLD ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'SPLD_LLD(has [0:m] ) LLD_PAGE' */
-CREATE INDEX LLD_PAGE_FK_ID_SPLD_LLD_655970 
+CREATE INDEX LLD_PAGE_FK_ID_SPLD_LLD_985880 
        ON LLD_PAGE ( 
            FK_ID_SPLD_LLD ) ;
  
-
-COMMIT;
 /* Entity - LLD_Panel */
 CREATE TABLE LLD_PANEL ( 
            ID                               int                NOT NULL, 
@@ -550,24 +495,20 @@ CREATE TABLE LLD_PANEL (
            CAPITALIZETITLETEXTFLAG          varchar( 1 )       NULL    , 
            TEXTALIGN                        varchar( 20 )      NULL    , 
            TEXTLINEHEIGHT                   double             NULL    , 
+           BLOCKTITLE                       varchar( 254 )     NULL    , 
            DEPTH                            int                NULL    , 
            FK_ID_LLD_PAGE                   int                NOT NULL ) ;
  
-COMMIT;
- 
 /* Main key for Entity - LLD_Panel */
-CREATE UNIQUE INDEX ULLD_PANEL_ID_648400 
+CREATE UNIQUE INDEX ULLD_PANEL_ID_977910 
        ON LLD_PANEL ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'LLD_PAGE(has [0:m] ) LLD_PANEL' */
-CREATE INDEX LLD_PANEL_FK_ID_LLD_PAGE_655950 
+CREATE INDEX LLD_PANEL_FK_ID_LLD_PAGE_985860 
        ON LLD_PANEL ( 
            FK_ID_LLD_PAGE ) ;
  
-
-COMMIT;
 /* Entity - LLD_SpecialSectionAttribute */
 CREATE TABLE LLD_SPECIALSECTIONATTRIBUTE ( 
            ID                               int                NOT NULL, 
@@ -575,28 +516,21 @@ CREATE TABLE LLD_SPECIALSECTIONATTRIBUTE (
            PF1ID_LLD_BLOCK                  int                NOT NULL, 
            PF2ID_LLD_BLOCK                  int                NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - LLD_SpecialSectionAttribute */
-CREATE UNIQUE INDEX ULLDSPECIALSECTIONATTRIBUTE64888 
+CREATE UNIQUE INDEX ULLDSPECIALSECTIONATTRIBUTE97840 
        ON LLD_SPECIALSECTIONATTRIBUTE ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'LLD_BLOCK(contains [0:m] ) LLD_SPECIALSECTIONATTRIBUTE' */
-CREATE INDEX LLDSPECIALSECTIONATTRIBUTE165598 
+CREATE INDEX LLDSPECIALSECTIONATTRIBUTE198589 
        ON LLD_SPECIALSECTIONATTRIBUTE ( 
            PF1ID_LLD_BLOCK ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'LLD_BLOCK(is text characteristics (max 1) [0:m] ) LLD_SPECIALSECTIONATTRIBUTE' */
-CREATE INDEX LLDSPECIALSECTIONATTRIBUTE265599 
+CREATE INDEX LLDSPECIALSECTIONATTRIBUTE298590 
        ON LLD_SPECIALSECTIONATTRIBUTE ( 
            PF2ID_LLD_BLOCK ) ;
  
-
-COMMIT;
 /* Entity - M_DilutionChartEntry */
 CREATE TABLE M_DILUTIONCHARTENTRY ( 
            ID                               int                NOT NULL, 
@@ -604,21 +538,16 @@ CREATE TABLE M_DILUTIONCHARTENTRY (
            WATERAMOUNTTEXT                  varchar( 254 )     NULL    , 
            FK_ID_MASTERLABELCONTENT         int                NOT NULL ) ;
  
-COMMIT;
- 
 /* Main key for Entity - M_DilutionChartEntry */
-CREATE UNIQUE INDEX UM_DILUTIONCHARTENTRY_ID_648920 
+CREATE UNIQUE INDEX UM_DILUTIONCHARTENTRY_ID_978440 
        ON M_DILUTIONCHARTENTRY ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'MASTERLABELCONTENT(has [0:m] ) M_DILUTIONCHARTENTRY' */
-CREATE INDEX MDILUTIONCHARTENTRYFKIDMAST65583 
+CREATE INDEX MDILUTIONCHARTENTRYFKIDMAST98574 
        ON M_DILUTIONCHARTENTRY ( 
            FK_ID_MASTERLABELCONTENT ) ;
  
-
-COMMIT;
 /* Entity - M_DilutionGroup */
 CREATE TABLE M_DILUTIONGROUP ( 
            ID                               int                NOT NULL, 
@@ -626,70 +555,32 @@ CREATE TABLE M_DILUTIONGROUP (
            DILUTIONQUATTEXT                 varchar( 254 )     NULL    , 
            FK_ID_MASTERLABELCONTENT         int                NOT NULL ) ;
  
-COMMIT;
- 
 /* Main key for Entity - M_DilutionGroup */
-CREATE UNIQUE INDEX UM_DILUTIONGROUP_ID_648970 
+CREATE UNIQUE INDEX UM_DILUTIONGROUP_ID_978490 
        ON M_DILUTIONGROUP ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'MASTERLABELCONTENT(has [0:m] ) M_DILUTIONGROUP' */
-CREATE INDEX MDILUTIONGROUPFKIDMASTERLAB65584 
+CREATE INDEX MDILUTIONGROUPFKIDMASTERLAB98575 
        ON M_DILUTIONGROUP ( 
            FK_ID_MASTERLABELCONTENT ) ;
  
-
-COMMIT;
-/* Entity - S_DilutionGroup */
-CREATE TABLE S_DILUTIONGROUP ( 
-           ID                               int                NOT NULL, 
-           FK_ID_SUBREGLABELCONTENT         int                NOT NULL, 
-           FK_ID_M_DILUTIONGROUP            int                NOT NULL ) ;
- 
-COMMIT;
- 
-/* Main key for Entity - S_DilutionGroup */
-CREATE UNIQUE INDEX US_DILUTIONGROUP_ID_649020 
-       ON S_DILUTIONGROUP ( 
-           ID ) ;
- 
-COMMIT;
-/* Index for Relationship - 'SUBREGLABELCONTENT(has [0:m] ) S_DILUTIONGROUP' */
-CREATE INDEX SDILUTIONGROUPFKIDSUBREGLAB65590 
-       ON S_DILUTIONGROUP ( 
-           FK_ID_SUBREGLABELCONTENT ) ;
- 
-
-COMMIT;
-/* Index for Relationship - 'M_DILUTIONGROUP(has [0:m] ) S_DILUTIONGROUP' */
-CREATE INDEX SDILUTIONGROUPFKIDMDILUTION65591 
-       ON S_DILUTIONGROUP ( 
-           FK_ID_M_DILUTIONGROUP ) ;
- 
-
-COMMIT;
 /* Entity - M_DilutionGroupItem */
 CREATE TABLE M_DILUTIONGROUPITEM ( 
            ID                               int                NOT NULL, 
            z_TEXT                           varchar( 254 )     NULL    , 
            FK_ID_M_DILUTIONGROUP            int                NOT NULL ) ;
  
-COMMIT;
- 
 /* Main key for Entity - M_DilutionGroupItem */
-CREATE UNIQUE INDEX UM_DILUTIONGROUPITEM_ID_649050 
+CREATE UNIQUE INDEX UM_DILUTIONGROUPITEM_ID_978540 
        ON M_DILUTIONGROUPITEM ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'M_DILUTIONGROUP(has [0:m] ) M_DILUTIONGROUPITEM' */
-CREATE INDEX MDILUTIONGROUPITEMFKIDMDILU65585 
+CREATE INDEX MDILUTIONGROUPITEMFKIDMDILU98576 
        ON M_DILUTIONGROUPITEM ( 
            FK_ID_M_DILUTIONGROUP ) ;
  
-
-COMMIT;
 /* Entity - M_DirectionsForUseSection */
 CREATE TABLE M_DIRECTIONSFORUSESECTION ( 
            ID                               int                NOT NULL, 
@@ -708,28 +599,21 @@ CREATE TABLE M_DIRECTIONSFORUSESECTION (
            FK_ID_MASTERLABELCONTENT         int                NOT NULL, 
            FK_ID_M_DIRECTIONSFORUSESECTION  int                NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - M_DirectionsForUseSection */
-CREATE UNIQUE INDEX UMDIRECTIONSFORUSESECTIONID64909 
+CREATE UNIQUE INDEX UMDIRECTIONSFORUSESECTIONID97858 
        ON M_DIRECTIONSFORUSESECTION ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'MASTERLABELCONTENT(has [0:m] ) M_DIRECTIONSFORUSESECTION' */
-CREATE INDEX MDIRECTIONSFORUSESECTIONFKI65674 
+CREATE INDEX MDIRECTIONSFORUSESECTIONFKI98665 
        ON M_DIRECTIONSFORUSESECTION ( 
            FK_ID_MASTERLABELCONTENT ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'M_DIRECTIONSFORUSESECTION(has next version [0:m] ) M_DIRECTIONSFORUSESECTION' */
-CREATE INDEX MDIRECTIONSFORUSESECTIONFKI65685 
+CREATE INDEX MDIRECTIONSFORUSESECTIONFKI98676 
        ON M_DIRECTIONSFORUSESECTION ( 
            FK_ID_M_DIRECTIONSFORUSESECTION ) ;
  
-
-COMMIT;
 /* Entity - M_DirectionsForUseStatement */
 CREATE TABLE M_DIRECTIONSFORUSESTATEMENT ( 
            ID                               int                NOT NULL, 
@@ -744,28 +628,21 @@ CREATE TABLE M_DIRECTIONSFORUSESTATEMENT (
            FK_ID_M_DIRECTIONSFORUSESECTION  int                NOT NULL, 
            FK_ID_M_DIRECTIONSFORUSESTATEMEN int                NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - M_DirectionsForUseStatement */
-CREATE UNIQUE INDEX UMDIRECTIONSFORUSESTATEMENT64923 
+CREATE UNIQUE INDEX UMDIRECTIONSFORUSESTATEMENT97872 
        ON M_DIRECTIONSFORUSESTATEMENT ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'M_DIRECTIONSFORUSESECTION(has [0:m] ) M_DIRECTIONSFORUSESTATEMENT' */
-CREATE INDEX MDIRECTIONSFORUSESTATEMENTF65668 
+CREATE INDEX MDIRECTIONSFORUSESTATEMENTF98659 
        ON M_DIRECTIONSFORUSESTATEMENT ( 
            FK_ID_M_DIRECTIONSFORUSESECTION ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'M_DIRECTIONSFORUSESTATEMENT(has next version [0:m] ) M_DIRECTIONSFORUSESTATEMENT' */
-CREATE INDEX MDIRECTIONSFORUSESTATEMENTF65673 
+CREATE INDEX MDIRECTIONSFORUSESTATEMENTF98664 
        ON M_DIRECTIONSFORUSESTATEMENT ( 
            FK_ID_M_DIRECTIONSFORUSESTATEMEN ) ;
  
-
-COMMIT;
 /* Entity - M_GeneralSection */
 CREATE TABLE M_GENERALSECTION ( 
            ID                               int                NOT NULL, 
@@ -783,28 +660,21 @@ CREATE TABLE M_GENERALSECTION (
            FK_ID_MASTERLABELCONTENT         int                NOT NULL, 
            FK_ID_M_GENERALSECTION           int                NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - M_GeneralSection */
-CREATE UNIQUE INDEX UM_GENERALSECTION_ID_649330 
+CREATE UNIQUE INDEX UM_GENERALSECTION_ID_978820 
        ON M_GENERALSECTION ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'MASTERLABELCONTENT(has [0:m] ) M_GENERALSECTION' */
-CREATE INDEX MGENERALSECTIONFKIDMASTERLA65655 
+CREATE INDEX MGENERALSECTIONFKIDMASTERLA98646 
        ON M_GENERALSECTION ( 
            FK_ID_MASTERLABELCONTENT ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'M_GENERALSECTION(has next version [0:m] ) M_GENERALSECTION' */
-CREATE INDEX MGENERALSECTIONFKIDMGENERAL65663 
+CREATE INDEX MGENERALSECTIONFKIDMGENERAL98654 
        ON M_GENERALSECTION ( 
            FK_ID_M_GENERALSECTION ) ;
  
-
-COMMIT;
 /* Entity - M_GeneralStatement */
 CREATE TABLE M_GENERALSTATEMENT ( 
            ID                               int                NOT NULL, 
@@ -816,28 +686,21 @@ CREATE TABLE M_GENERALSTATEMENT (
            FK_ID_M_GENERALSECTION           int                NOT NULL, 
            FK_ID_M_GENERALSTATEMENT         int                NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - M_GeneralStatement */
-CREATE UNIQUE INDEX UM_GENERALSTATEMENT_ID_649460 
+CREATE UNIQUE INDEX UM_GENERALSTATEMENT_ID_978950 
        ON M_GENERALSTATEMENT ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'M_GENERALSECTION(has [0:m] ) M_GENERALSTATEMENT' */
-CREATE INDEX MGENERALSTATEMENTFKIDMGENER65656 
+CREATE INDEX MGENERALSTATEMENTFKIDMGENER98647 
        ON M_GENERALSTATEMENT ( 
            FK_ID_M_GENERALSECTION ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'M_GENERALSTATEMENT(has next version [0:m] ) M_GENERALSTATEMENT' */
-CREATE INDEX MGENERALSTATEMENTFKIDMGENER65659 
+CREATE INDEX MGENERALSTATEMENTFKIDMGENER98650 
        ON M_GENERALSTATEMENT ( 
            FK_ID_M_GENERALSTATEMENT ) ;
  
-
-COMMIT;
 /* Entity - M_HumanHazardSection */
 CREATE TABLE M_HUMANHAZARDSECTION ( 
            ID                               int                NOT NULL, 
@@ -845,38 +708,38 @@ CREATE TABLE M_HUMANHAZARDSECTION (
            EPA_CHILDHAZARDWARNING           varchar( 1 )       NULL    , 
            PRECAUTIONARYSTATEMENT           longtext           NULL    , 
            BOLDITALIC                       varchar( 1 )       NULL    , 
-           LOCATION1                        varchar( 254 )     NULL    , 
-           LOCATION2                        varchar( 254 )     NULL    , 
-           LOCATION3                        varchar( 254 )     NULL    , 
-           LOCATION4                        varchar( 254 )     NULL    , 
-           LOCATION5                        varchar( 254 )     NULL    , 
+           LOCATIONSEPARATOR                varchar( 2 )       NULL    , 
+           ENCLOSEFIRSTLOCATION             varchar( 1 )       NULL    , 
+           PANELLOC1                        varchar( 254 )     NULL    , 
+           PANELLOC2                        varchar( 254 )     NULL    , 
+           PANELLOC3                        varchar( 254 )     NULL    , 
+           PANELLOC4                        varchar( 254 )     NULL    , 
+           PANELLOC5                        varchar( 254 )     NULL    , 
+           LABELLOC1                        varchar( 254 )     NULL    , 
+           LABELLOC2                        varchar( 254 )     NULL    , 
+           LABELLOC3                        varchar( 254 )     NULL    , 
+           LABELLOC4                        varchar( 254 )     NULL    , 
+           LABELLOC5                        varchar( 254 )     NULL    , 
            DELETEDFLAG                      varchar( 1 )       NULL    , 
            AUTOSEQ                          int                NULL    , 
            FK_ID_MASTERLABELCONTENT         int                NOT NULL, 
            FK_ID_M_HUMANHAZARDSECTION       int                NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - M_HumanHazardSection */
-CREATE UNIQUE INDEX UM_HUMANHAZARDSECTION_ID_649530 
+CREATE UNIQUE INDEX UM_HUMANHAZARDSECTION_ID_979020 
        ON M_HUMANHAZARDSECTION ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'MASTERLABELCONTENT(has [0:1] ) M_HUMANHAZARDSECTION' */
-CREATE INDEX MHUMANHAZARDSECTIONFKIDMAST65680 
+CREATE INDEX MHUMANHAZARDSECTIONFKIDMAST98671 
        ON M_HUMANHAZARDSECTION ( 
            FK_ID_MASTERLABELCONTENT ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'M_HUMANHAZARDSECTION(has next version [0:m] ) M_HUMANHAZARDSECTION' */
-CREATE INDEX MHUMANHAZARDSECTIONFKIDMHUM65689 
+CREATE INDEX MHUMANHAZARDSECTIONFKIDMHUM98680 
        ON M_HUMANHAZARDSECTION ( 
            FK_ID_M_HUMANHAZARDSECTION ) ;
  
-
-COMMIT;
 /* Entity - M_IngredientsSection */
 CREATE TABLE M_INGREDIENTSSECTION ( 
            ID                               int                NOT NULL, 
@@ -892,28 +755,21 @@ CREATE TABLE M_INGREDIENTSSECTION (
            FK_ID_M_INGREDIENTSSECTION       int                NULL    , 
            FK_ID_MASTERLABELCONTENT         int                NOT NULL ) ;
  
-COMMIT;
- 
 /* Main key for Entity - M_IngredientsSection */
-CREATE UNIQUE INDEX UM_INGREDIENTSSECTION_ID_649660 
+CREATE UNIQUE INDEX UM_INGREDIENTSSECTION_ID_979220 
        ON M_INGREDIENTSSECTION ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'M_INGREDIENTSSECTION(has next version [0:m] ) M_INGREDIENTSSECTION' */
-CREATE INDEX MINGREDIENTSSECTIONFKIDMING65711 
+CREATE INDEX MINGREDIENTSSECTIONFKIDMING98702 
        ON M_INGREDIENTSSECTION ( 
            FK_ID_M_INGREDIENTSSECTION ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'MASTERLABELCONTENT(has [0:1] ) M_INGREDIENTSSECTION' */
-CREATE INDEX MINGREDIENTSSECTIONFKIDMAST65718 
+CREATE INDEX MINGREDIENTSSECTIONFKIDMAST98709 
        ON M_INGREDIENTSSECTION ( 
            FK_ID_MASTERLABELCONTENT ) ;
  
-
-COMMIT;
 /* Entity - M_IngredientsStatement */
 CREATE TABLE M_INGREDIENTSSTATEMENT ( 
            ID                               int                NOT NULL, 
@@ -928,28 +784,21 @@ CREATE TABLE M_INGREDIENTSSTATEMENT (
            FK_ID_M_INGREDIENTSSECTION       int                NOT NULL, 
            FK_ID_M_INGREDIENTSSTATEMENT     int                NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - M_IngredientsStatement */
-CREATE UNIQUE INDEX UM_INGREDIENTSSTATEMENT_ID_64977 
+CREATE UNIQUE INDEX UM_INGREDIENTSSTATEMENT_ID_97933 
        ON M_INGREDIENTSSTATEMENT ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'M_INGREDIENTSSECTION(has [0:m] ) M_INGREDIENTSSTATEMENT' */
-CREATE INDEX MINGREDIENTSSTATEMENTFKIDMI65708 
+CREATE INDEX MINGREDIENTSSTATEMENTFKIDMI98699 
        ON M_INGREDIENTSSTATEMENT ( 
            FK_ID_M_INGREDIENTSSECTION ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'M_INGREDIENTSSTATEMENT(has next version [0:m] ) M_INGREDIENTSSTATEMENT' */
-CREATE INDEX MINGREDIENTSSTATEMENTFKIDMI65714 
+CREATE INDEX MINGREDIENTSSTATEMENTFKIDMI98705 
        ON M_INGREDIENTSSTATEMENT ( 
            FK_ID_M_INGREDIENTSSTATEMENT ) ;
  
-
-COMMIT;
 /* Entity - M_MarketingSection */
 CREATE TABLE M_MARKETINGSECTION ( 
            ID                               int                NOT NULL, 
@@ -964,28 +813,21 @@ CREATE TABLE M_MARKETINGSECTION (
            FK_ID_MASTERLABELCONTENT         int                NOT NULL, 
            FK_ID_M_MARKETINGSECTION         int                NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - M_MarketingSection */
-CREATE UNIQUE INDEX UM_MARKETINGSECTION_ID_649870 
+CREATE UNIQUE INDEX UM_MARKETINGSECTION_ID_979430 
        ON M_MARKETINGSECTION ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'MASTERLABELCONTENT(has [0:m] ) M_MARKETINGSECTION' */
-CREATE INDEX MMARKETINGSECTIONFKIDMASTER65681 
+CREATE INDEX MMARKETINGSECTIONFKIDMASTER98672 
        ON M_MARKETINGSECTION ( 
            FK_ID_MASTERLABELCONTENT ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'M_MARKETINGSECTION(has next version [0:m] ) M_MARKETINGSECTION' */
-CREATE INDEX MMARKETINGSECTIONFKIDMMARKE65694 
+CREATE INDEX MMARKETINGSECTIONFKIDMMARKE98685 
        ON M_MARKETINGSECTION ( 
            FK_ID_M_MARKETINGSECTION ) ;
  
-
-COMMIT;
 /* Entity - M_MarketingStatement */
 CREATE TABLE M_MARKETINGSTATEMENT ( 
            ID                               int                NOT NULL, 
@@ -997,49 +839,37 @@ CREATE TABLE M_MARKETINGSTATEMENT (
            FK_ID_M_MARKETINGSECTION         int                NOT NULL, 
            FK_ID_M_MARKETINGSTATEMENT       int                NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - M_MarketingStatement */
-CREATE UNIQUE INDEX UM_MARKETINGSTATEMENT_ID_649970 
+CREATE UNIQUE INDEX UM_MARKETINGSTATEMENT_ID_979530 
        ON M_MARKETINGSTATEMENT ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'M_MARKETINGSECTION(has [0:m] ) M_MARKETINGSTATEMENT' */
-CREATE INDEX MMARKETINGSTATEMENTFKIDMMAR65628 
+CREATE INDEX MMARKETINGSTATEMENTFKIDMMAR98619 
        ON M_MARKETINGSTATEMENT ( 
            FK_ID_M_MARKETINGSECTION ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'M_MARKETINGSTATEMENT(has next version [0:m] ) M_MARKETINGSTATEMENT' */
-CREATE INDEX MMARKETINGSTATEMENTFKIDMMAR65686 
+CREATE INDEX MMARKETINGSTATEMENTFKIDMMAR98677 
        ON M_MARKETINGSTATEMENT ( 
            FK_ID_M_MARKETINGSTATEMENT ) ;
  
-
-COMMIT;
 /* Entity - M_StorageDisposalDrivingConVol */
 CREATE TABLE M_STORAGEDISPOSALDRIVINGCONVOL ( 
            ID                               int                NOT NULL, 
            CONTAINERVOLUME                  varchar( 3 )       NULL    , 
            FK_ID_M_STORAGEDISPOSALSECTION   int                NOT NULL ) ;
  
-COMMIT;
- 
 /* Main key for Entity - M_StorageDisposalDrivingConVol */
-CREATE UNIQUE INDEX UMSTORAGEDISPOSALDRIVINGCON65004 
+CREATE UNIQUE INDEX UMSTORAGEDISPOSALDRIVINGCON97960 
        ON M_STORAGEDISPOSALDRIVINGCONVOL ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'M_STORAGEDISPOSALSECTION(has [0:m] ) M_STORAGEDISPOSALDRIVINGCONVOL' */
-CREATE INDEX MSTORAGEDISPOSALDRIVINGCONV65594 
+CREATE INDEX MSTORAGEDISPOSALDRIVINGCONV98585 
        ON M_STORAGEDISPOSALDRIVINGCONVOL ( 
            FK_ID_M_STORAGEDISPOSALSECTION ) ;
  
-
-COMMIT;
 /* Entity - M_StorageDisposalSection */
 CREATE TABLE M_STORAGEDISPOSALSECTION ( 
            ID                               int                NOT NULL, 
@@ -1056,28 +886,21 @@ CREATE TABLE M_STORAGEDISPOSALSECTION (
            FK_ID_MASTERLABELCONTENT         int                NOT NULL, 
            FK_ID_M_STORAGEDISPOSALSECTION   int                NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - M_StorageDisposalSection */
-CREATE UNIQUE INDEX UM_STORAGEDISPOSALSECTIONID65008 
+CREATE UNIQUE INDEX UM_STORAGEDISPOSALSECTIONID97964 
        ON M_STORAGEDISPOSALSECTION ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'MASTERLABELCONTENT(has [0:m] ) M_STORAGEDISPOSALSECTION' */
-CREATE INDEX MSTORAGEDISPOSALSECTIONFKID65676 
+CREATE INDEX MSTORAGEDISPOSALSECTIONFKID98667 
        ON M_STORAGEDISPOSALSECTION ( 
            FK_ID_MASTERLABELCONTENT ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'M_STORAGEDISPOSALSECTION(has next version [0:m] ) M_STORAGEDISPOSALSECTION' */
-CREATE INDEX MSTORAGEDISPOSALSECTIONFKID65679 
+CREATE INDEX MSTORAGEDISPOSALSECTIONFKID98670 
        ON M_STORAGEDISPOSALSECTION ( 
            FK_ID_M_STORAGEDISPOSALSECTION ) ;
  
-
-COMMIT;
 /* Entity - M_StorageDisposalStatement */
 CREATE TABLE M_STORAGEDISPOSALSTATEMENT ( 
            ID                               int                NOT NULL, 
@@ -1093,28 +916,21 @@ CREATE TABLE M_STORAGEDISPOSALSTATEMENT (
            FK_ID_M_STORAGEDISPOSALSECTION   int                NOT NULL, 
            FK_ID_M_STORAGEDISPOSALSTATEMENT int                NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - M_StorageDisposalStatement */
-CREATE UNIQUE INDEX UMSTORAGEDISPOSALSTATEMENTI65020 
+CREATE UNIQUE INDEX UMSTORAGEDISPOSALSTATEMENTI97976 
        ON M_STORAGEDISPOSALSTATEMENT ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'M_STORAGEDISPOSALSECTION(has [0:m] ) M_STORAGEDISPOSALSTATEMENT' */
-CREATE INDEX MSTORAGEDISPOSALSTATEMENTFK65664 
+CREATE INDEX MSTORAGEDISPOSALSTATEMENTFK98655 
        ON M_STORAGEDISPOSALSTATEMENT ( 
            FK_ID_M_STORAGEDISPOSALSECTION ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'M_STORAGEDISPOSALSTATEMENT(has next version [0:m] ) M_STORAGEDISPOSALSTATEMENT' */
-CREATE INDEX MSTORAGEDISPOSALSTATEMENTFK65667 
+CREATE INDEX MSTORAGEDISPOSALSTATEMENTFK98658 
        ON M_STORAGEDISPOSALSTATEMENT ( 
            FK_ID_M_STORAGEDISPOSALSTATEMENT ) ;
  
-
-COMMIT;
 /* Entity - M_Usage */
 CREATE TABLE M_USAGE ( 
            ID                               int                NOT NULL, 
@@ -1131,63 +947,47 @@ CREATE TABLE M_USAGE (
            FK_ID_M_USAGE                    int                NULL    , 
            FK_ID_MASTERLABELCONTENT         int                NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - M_Usage */
-CREATE UNIQUE INDEX UM_USAGE_ID_650310 
+CREATE UNIQUE INDEX UM_USAGE_ID_979870 
        ON M_USAGE ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'M_USAGEFOOTNOTE(has [0:m] ) M_USAGE' */
-CREATE INDEX M_USAGE_FK_IDMUSAGEFOOTNOTE65582 
+CREATE INDEX M_USAGE_FK_IDMUSAGEFOOTNOTE98573 
        ON M_USAGE ( 
            FK_ID_M_USAGEFOOTNOTE ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'M_USAGETYPE(has [0:m] ) M_USAGE' */
-CREATE INDEX M_USAGE_FK_ID_M_USAGETYPE_655930 
+CREATE INDEX M_USAGE_FK_ID_M_USAGETYPE_985840 
        ON M_USAGE ( 
            FK_ID_M_USAGETYPE ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'M_USAGE(has next version [0:m] ) M_USAGE' */
-CREATE INDEX M_USAGE_FK_ID_M_USAGE_656910 
+CREATE INDEX M_USAGE_FK_ID_M_USAGE_986820 
        ON M_USAGE ( 
            FK_ID_M_USAGE ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'MASTERLABELCONTENT(has (delete) [0:m] ) M_USAGE' */
-CREATE INDEX MUSAGEFKIDMASTERLABELCONTEN65719 
+CREATE INDEX MUSAGEFKIDMASTERLABELCONTEN98710 
        ON M_USAGE ( 
            FK_ID_MASTERLABELCONTENT ) ;
  
-
-COMMIT;
 /* Entity - M_UsageFootnote */
 CREATE TABLE M_USAGEFOOTNOTE ( 
            ID                               int                NOT NULL, 
            z_TEXT                           varchar( 254 )     NULL    , 
            FK_ID_MASTERLABELCONTENT         int                NOT NULL ) ;
  
-COMMIT;
- 
 /* Main key for Entity - M_UsageFootnote */
-CREATE UNIQUE INDEX UM_USAGEFOOTNOTE_ID_650410 
+CREATE UNIQUE INDEX UM_USAGEFOOTNOTE_ID_979970 
        ON M_USAGEFOOTNOTE ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'MASTERLABELCONTENT(has [0:m] ) M_USAGEFOOTNOTE' */
-CREATE INDEX MUSAGEFOOTNOTEFKIDMASTERLAB65581 
+CREATE INDEX MUSAGEFOOTNOTEFKIDMASTERLAB98572 
        ON M_USAGEFOOTNOTE ( 
            FK_ID_MASTERLABELCONTENT ) ;
  
-
-COMMIT;
 /* Entity - M_UsageOrdering */
 CREATE TABLE M_USAGEORDERING ( 
            ID                               int                NOT NULL, 
@@ -1197,56 +997,42 @@ CREATE TABLE M_USAGEORDERING (
            FK_ID_M_DIRECTIONSFORUSESTATEMEN int                NULL    , 
            FK_ID_M_MARKETINGSTATEMENT       int                NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - M_UsageOrdering */
-CREATE UNIQUE INDEX UM_USAGEORDERING_ID_650450 
+CREATE UNIQUE INDEX UM_USAGEORDERING_ID_980010 
        ON M_USAGEORDERING ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'M_USAGE(has [0:m] ) M_USAGEORDERING' */
-CREATE INDEX M_USAGEORDERING_FK_IDMUSAGE65625 
+CREATE INDEX M_USAGEORDERING_FK_IDMUSAGE98616 
        ON M_USAGEORDERING ( 
            FK_ID_M_USAGE ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'M_DIRECTIONSFORUSESTATEMENT(has [0:m] ) M_USAGEORDERING' */
-CREATE INDEX MUSAGEORDERINGFKIDMDIRECTIO65626 
+CREATE INDEX MUSAGEORDERINGFKIDMDIRECTIO98617 
        ON M_USAGEORDERING ( 
            FK_ID_M_DIRECTIONSFORUSESTATEMEN ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'M_MARKETINGSTATEMENT(has [0:m] ) M_USAGEORDERING' */
-CREATE INDEX MUSAGEORDERINGFKIDMMARKETIN65722 
+CREATE INDEX MUSAGEORDERINGFKIDMMARKETIN98713 
        ON M_USAGEORDERING ( 
            FK_ID_M_MARKETINGSTATEMENT ) ;
  
-
-COMMIT;
 /* Entity - M_UsageType */
 CREATE TABLE M_USAGETYPE ( 
            ID                               int                NOT NULL, 
            USAGETYPE                        varchar( 1 )       NOT NULL, 
            FK_ID_MASTERLABELCONTENT         int                NOT NULL ) ;
  
-COMMIT;
- 
 /* Main key for Entity - M_UsageType */
-CREATE UNIQUE INDEX UM_USAGETYPE_ID_650480 
+CREATE UNIQUE INDEX UM_USAGETYPE_ID_980040 
        ON M_USAGETYPE ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'MASTERLABELCONTENT(has [0:m] ) M_USAGETYPE' */
-CREATE INDEX MUSAGETYPEFKIDMASTERLABELCO65592 
+CREATE INDEX MUSAGETYPEFKIDMASTERLABELCO98583 
        ON M_USAGETYPE ( 
            FK_ID_MASTERLABELCONTENT ) ;
  
-
-COMMIT;
 /* Entity - MasterLabelContent */
 CREATE TABLE MASTERLABELCONTENT ( 
            ID                               int                NOT NULL, 
@@ -1263,33 +1049,26 @@ CREATE TABLE MASTERLABELCONTENT (
            FK_ID_MASTERLABELCONTENT         int                NULL    , 
            FK_ID_MASTERPRODUCT              int                NOT NULL ) ;
  
-COMMIT;
- 
 /* Main key for Entity - MasterLabelContent */
-CREATE UNIQUE INDEX UMASTERLABELCONTENT_ID_650520 
+CREATE UNIQUE INDEX UMASTERLABELCONTENT_ID_980080 
        ON MASTERLABELCONTENT ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'MASTERLABELCONTENT(has next version (max 1) [0:m] ) MASTERLABELCONTENT' */
-CREATE INDEX MASTERLABELCONTENTFKIDMASTE65635 
+CREATE INDEX MASTERLABELCONTENTFKIDMASTE98626 
        ON MASTERLABELCONTENT ( 
            FK_ID_MASTERLABELCONTENT ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'MASTERPRODUCT(has [0:m] ) MASTERLABELCONTENT' */
-CREATE INDEX MASTERLABELCONTENTFKIDMASTE65723 
+CREATE INDEX MASTERLABELCONTENTFKIDMASTE98714 
        ON MASTERLABELCONTENT ( 
            FK_ID_MASTERPRODUCT ) ;
  
-
-COMMIT;
 /* Entity - MasterProduct */
 CREATE TABLE MASTERPRODUCT ( 
            ID                               int                NOT NULL, 
            NAME                             varchar( 254 )     NOT NULL, 
-           z_NUMBER                         varchar( 128 )     NOT NULL, 
+           z_NUMBER                         varchar( 5 )       NOT NULL, 
            DESCRIPTION                      varchar( 254 )     NULL    , 
            CHEMICALFAMILY                   varchar( 2 )       NOT NULL, 
            EPA_REGISTRATIONNUMBER           varchar( 128 )     NULL    , 
@@ -1300,38 +1079,34 @@ CREATE TABLE MASTERPRODUCT (
            AUTOSEQ                          int                NULL    , 
            FK_ID_PRIMARYREGISTRANT          int                NOT NULL ) ;
  
-COMMIT;
- 
 /* Main key for Entity - MasterProduct */
-CREATE UNIQUE INDEX UMASTERPRODUCT_ID_650620 
+CREATE UNIQUE INDEX UMASTERPRODUCT_ID_980180 
        ON MASTERPRODUCT ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'PRIMARYREGISTRANT(has [0:m] ) MASTERPRODUCT' */
-CREATE INDEX MASTERPRODUCTFKIDPRIMARYREG65728 
+CREATE INDEX MASTERPRODUCTFKIDPRIMARYREG98719 
        ON MASTERPRODUCT ( 
            FK_ID_PRIMARYREGISTRANT ) ;
  
-
-COMMIT;
 /* Entity - Organization */
 CREATE TABLE ORGANIZATION ( 
            ID                               int                NOT NULL, 
-           LOGINNAME                        varchar( 128 )     NOT NULL, 
            NAME                             varchar( 254 )     NOT NULL, 
            DESCRIPTION                      varchar( 254 )     NULL    , 
+           LOGINNAME                        varchar( 128 )     NOT NULL, 
            ADMINISTRATORPASSWORD            varchar( 128 )     NULL    , 
+           LASTLOGINDATETIME                datetime           NULL    , 
+           PASSWORDEXPIRESDATETIME          datetime           NULL    , 
+           EMAILADDRESS                     varchar( 254 )     NULL    , 
+           ACTIVE                           varchar( 1 )       NULL    , 
            ROLE                             varchar( 1 )       NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - Organization */
-CREATE UNIQUE INDEX UORGANIZATION_ID_650740 
+CREATE UNIQUE INDEX UORGANIZATION_ID_980300 
        ON ORGANIZATION ( 
            ID ) ;
  
-COMMIT;
 /* Entity - Person */
 CREATE TABLE PERSON ( 
            ID                               int                NOT NULL, 
@@ -1356,104 +1131,110 @@ CREATE TABLE PERSON (
            FK_ID_ORGANIZATION               int                NULL    , 
            HASCONTACTID_ORGANIZATION        int                NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - Person */
-CREATE UNIQUE INDEX UPERSON_ID_650820 
+CREATE UNIQUE INDEX UPERSON_ID_980420 
        ON PERSON ( 
            ID ) ;
 /* Main key for Entity - Person */
-CREATE INDEX PERSON_LASTNAME_650830 
+CREATE INDEX PERSON_LASTNAME_980430 
        ON PERSON ( 
            LASTNAME ) ;
 /* Main key for Entity - Person */
-CREATE INDEX PERSON_EMAILADDRESS_650930 
+CREATE INDEX PERSON_EMAILADDRESS_980530 
        ON PERSON ( 
            EMAILADDRESS ) ;
 /* Main key for Entity - Person */
-CREATE INDEX PERSON_HOMEPHONE_650880 
+CREATE INDEX PERSON_HOMEPHONE_980480 
        ON PERSON ( 
            HOMEPHONE ) ;
 /* Main key for Entity - Person */
-CREATE INDEX PERSON_GENDER_650870 
+CREATE INDEX PERSON_GENDER_980470 
        ON PERSON ( 
            GENDER ) ;
 /* Main key for Entity - Person */
-CREATE INDEX PERSON_WORKPHONE_650900 
+CREATE INDEX PERSON_WORKPHONE_980500 
        ON PERSON ( 
            WORKPHONE ) ;
  
-COMMIT;
 /* Index for Relationship - 'ADDRESS(for [0:1] ) PERSON' */
-CREATE INDEX PERSON_FK_ID_ADDRESS_657390 
+CREATE INDEX PERSON_FK_ID_ADDRESS_987300 
        ON PERSON ( 
            FK_ID_ADDRESS ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'ORGANIZATION(has employee [0:m] ) PERSON' */
-CREATE INDEX PERSON_FK_ID_ORGANIZATION_657400 
+CREATE INDEX PERSON_FK_ID_ORGANIZATION_987310 
        ON PERSON ( 
            FK_ID_ORGANIZATION ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'ORGANIZATION(has contact [0:1] ) PERSON' */
-CREATE INDEX PERSONHASCONTACTIDORGANIZAT65741 
+CREATE INDEX PERSONHASCONTACTIDORGANIZAT98732 
        ON PERSON ( 
            HASCONTACTID_ORGANIZATION ) ;
  
-
-COMMIT;
 /* Entity - PrimaryRegistrant */
 CREATE TABLE PRIMARYREGISTRANT ( 
            ID                               int                NOT NULL, 
-           EPA_COMPANYNUMBER                varchar( 128 )     NULL    , 
+           EPA_COMPANYNUMBER                varchar( 6 )       NULL    , 
+           FK_ID_EPAMMS                     int                NOT NULL, 
            FK_ID_ORGANIZATION               int                NOT NULL ) ;
  
-COMMIT;
- 
 /* Main key for Entity - PrimaryRegistrant */
-CREATE UNIQUE INDEX UPRIMARYREGISTRANT_ID_651070 
+CREATE UNIQUE INDEX UPRIMARYREGISTRANT_ID_980670 
        ON PRIMARYREGISTRANT ( 
            ID ) ;
  
-COMMIT;
+/* Index for Relationship - 'EPAMMS(has [0:m] ) PRIMARYREGISTRANT' */
+CREATE INDEX PRIMARYREGISTRANTFKIDEPAMMS98571 
+       ON PRIMARYREGISTRANT ( 
+           FK_ID_EPAMMS ) ;
+ 
 /* Index for Relationship - 'ORGANIZATION(has [0:1] ) PRIMARYREGISTRANT' */
-CREATE INDEX PRIMARYREGISTRANTFKIDORGANI65616 
+CREATE INDEX PRIMARYREGISTRANTFKIDORGANI98607 
        ON PRIMARYREGISTRANT ( 
            FK_ID_ORGANIZATION ) ;
  
-
-COMMIT;
 /* Entity - PrimarySub */
 CREATE TABLE PRIMARYSUB ( 
            ID                               int                NOT NULL, 
            FK_ID_PRIMARYREGISTRANT          int                NOT NULL, 
            FK_ID_SUBREGISTRANT              int                NOT NULL ) ;
  
-COMMIT;
- 
 /* Main key for Entity - PrimarySub */
-CREATE UNIQUE INDEX UPRIMARYSUB_ID_651110 
+CREATE UNIQUE INDEX UPRIMARYSUB_ID_980710 
        ON PRIMARYSUB ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'PRIMARYREGISTRANT(has [0:m] ) PRIMARYSUB' */
-CREATE INDEX PRIMARYSUBFKIDPRIMARYREGIST65580 
+CREATE INDEX PRIMARYSUBFKIDPRIMARYREGIST98556 
        ON PRIMARYSUB ( 
            FK_ID_PRIMARYREGISTRANT ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'SUBREGISTRANT(has [0:m] ) PRIMARYSUB' */
-CREATE INDEX PRIMARYSUBFKIDSUBREGISTRANT65733 
+CREATE INDEX PRIMARYSUBFKIDSUBREGISTRANT98724 
        ON PRIMARYSUB ( 
            FK_ID_SUBREGISTRANT ) ;
  
-
-COMMIT;
+/* Entity - S_DilutionGroup */
+CREATE TABLE S_DILUTIONGROUP ( 
+           ID                               int                NOT NULL, 
+           FK_ID_SUBREGLABELCONTENT         int                NOT NULL, 
+           FK_ID_M_DILUTIONGROUP            int                NOT NULL ) ;
+ 
+/* Main key for Entity - S_DilutionGroup */
+CREATE UNIQUE INDEX US_DILUTIONGROUP_ID_980740 
+       ON S_DILUTIONGROUP ( 
+           ID ) ;
+ 
+/* Index for Relationship - 'SUBREGLABELCONTENT(has [0:m] ) S_DILUTIONGROUP' */
+CREATE INDEX SDILUTIONGROUPFKIDSUBREGLAB98581 
+       ON S_DILUTIONGROUP ( 
+           FK_ID_SUBREGLABELCONTENT ) ;
+ 
+/* Index for Relationship - 'M_DILUTIONGROUP(has [0:m] ) S_DILUTIONGROUP' */
+CREATE INDEX SDILUTIONGROUPFKIDMDILUTION98582 
+       ON S_DILUTIONGROUP ( 
+           FK_ID_M_DILUTIONGROUP ) ;
+ 
 /* Entity - S_DirectionsForUseSection */
 CREATE TABLE S_DIRECTIONSFORUSESECTION ( 
            ID                               int                NOT NULL, 
@@ -1471,28 +1252,21 @@ CREATE TABLE S_DIRECTIONSFORUSESECTION (
            FK_ID_M_DIRECTIONSFORUSESECTION  int                NULL    , 
            FK_ID_SUBREGLABELCONTENT         int                NOT NULL ) ;
  
-COMMIT;
- 
 /* Main key for Entity - S_DirectionsForUseSection */
-CREATE UNIQUE INDEX USDIRECTIONSFORUSESECTIONID65114 
+CREATE UNIQUE INDEX USDIRECTIONSFORUSESECTIONID98077 
        ON S_DIRECTIONSFORUSESECTION ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'M_DIRECTIONSFORUSESECTION(has [0:m] ) S_DIRECTIONSFORUSESECTION' */
-CREATE INDEX SDIRECTIONSFORUSESECTIONFKI65683 
+CREATE INDEX SDIRECTIONSFORUSESECTIONFKI98674 
        ON S_DIRECTIONSFORUSESECTION ( 
            FK_ID_M_DIRECTIONSFORUSESECTION ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'SUBREGLABELCONTENT(has [0:m] ) S_DIRECTIONSFORUSESECTION' */
-CREATE INDEX SDIRECTIONSFORUSESECTIONFKI65702 
+CREATE INDEX SDIRECTIONSFORUSESECTIONFKI98693 
        ON S_DIRECTIONSFORUSESECTION ( 
            FK_ID_SUBREGLABELCONTENT ) ;
  
-
-COMMIT;
 /* Entity - S_DirectionsForUseStatement */
 CREATE TABLE S_DIRECTIONSFORUSESTATEMENT ( 
            ID                               int                NOT NULL, 
@@ -1507,28 +1281,21 @@ CREATE TABLE S_DIRECTIONSFORUSESTATEMENT (
            FK_ID_M_DIRECTIONSFORUSESTATEMEN int                NULL    , 
            FK_ID_S_DIRECTIONSFORUSESECTION  int                NOT NULL ) ;
  
-COMMIT;
- 
 /* Main key for Entity - S_DirectionsForUseStatement */
-CREATE UNIQUE INDEX USDIRECTIONSFORUSESTATEMENT65127 
+CREATE UNIQUE INDEX USDIRECTIONSFORUSESTATEMENT98090 
        ON S_DIRECTIONSFORUSESTATEMENT ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'M_DIRECTIONSFORUSESTATEMENT(has [0:m] ) S_DIRECTIONSFORUSESTATEMENT' */
-CREATE INDEX SDIRECTIONSFORUSESTATEMENTF65669 
+CREATE INDEX SDIRECTIONSFORUSESTATEMENTF98660 
        ON S_DIRECTIONSFORUSESTATEMENT ( 
            FK_ID_M_DIRECTIONSFORUSESTATEMEN ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'S_DIRECTIONSFORUSESECTION(has [0:m] ) S_DIRECTIONSFORUSESTATEMENT' */
-CREATE INDEX SDIRECTIONSFORUSESTATEMENTF65703 
+CREATE INDEX SDIRECTIONSFORUSESTATEMENTF98694 
        ON S_DIRECTIONSFORUSESTATEMENT ( 
            FK_ID_S_DIRECTIONSFORUSESECTION ) ;
  
-
-COMMIT;
 /* Entity - S_GeneralSection */
 CREATE TABLE S_GENERALSECTION ( 
            ID                               int                NOT NULL, 
@@ -1546,28 +1313,21 @@ CREATE TABLE S_GENERALSECTION (
            FK_ID_M_GENERALSECTION           int                NULL    , 
            FK_ID_SUBREGLABELCONTENT         int                NOT NULL ) ;
  
-COMMIT;
- 
 /* Main key for Entity - S_GeneralSection */
-CREATE UNIQUE INDEX US_GENERALSECTION_ID_651370 
+CREATE UNIQUE INDEX US_GENERALSECTION_ID_981000 
        ON S_GENERALSECTION ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'M_GENERALSECTION(has [0:m] ) S_GENERALSECTION' */
-CREATE INDEX SGENERALSECTIONFKIDMGENERAL65660 
+CREATE INDEX SGENERALSECTIONFKIDMGENERAL98651 
        ON S_GENERALSECTION ( 
            FK_ID_M_GENERALSECTION ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'SUBREGLABELCONTENT(has [0:m] ) S_GENERALSECTION' */
-CREATE INDEX SGENERALSECTIONFKIDSUBREGLA65695 
+CREATE INDEX SGENERALSECTIONFKIDSUBREGLA98686 
        ON S_GENERALSECTION ( 
            FK_ID_SUBREGLABELCONTENT ) ;
  
-
-COMMIT;
 /* Entity - S_GeneralStatement */
 CREATE TABLE S_GENERALSTATEMENT ( 
            ID                               int                NOT NULL, 
@@ -1579,28 +1339,21 @@ CREATE TABLE S_GENERALSTATEMENT (
            FK_ID_M_GENERALSTATEMENT         int                NULL    , 
            FK_ID_S_GENERALSECTION           int                NOT NULL ) ;
  
-COMMIT;
- 
 /* Main key for Entity - S_GeneralStatement */
-CREATE UNIQUE INDEX US_GENERALSTATEMENT_ID_651500 
+CREATE UNIQUE INDEX US_GENERALSTATEMENT_ID_981130 
        ON S_GENERALSTATEMENT ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'M_GENERALSTATEMENT(has [0:m] ) S_GENERALSTATEMENT' */
-CREATE INDEX SGENERALSTATEMENTFKIDMGENER65657 
+CREATE INDEX SGENERALSTATEMENTFKIDMGENER98648 
        ON S_GENERALSTATEMENT ( 
            FK_ID_M_GENERALSTATEMENT ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'S_GENERALSECTION(has [0:m] ) S_GENERALSTATEMENT' */
-CREATE INDEX SGENERALSTATEMENTFKIDSGENER65696 
+CREATE INDEX SGENERALSTATEMENTFKIDSGENER98687 
        ON S_GENERALSTATEMENT ( 
            FK_ID_S_GENERALSECTION ) ;
  
-
-COMMIT;
 /* Entity - S_HumanHazardSection */
 CREATE TABLE S_HUMANHAZARDSECTION ( 
            ID                               int                NOT NULL, 
@@ -1608,38 +1361,38 @@ CREATE TABLE S_HUMANHAZARDSECTION (
            EPA_CHILDHAZARDWARNING           varchar( 1 )       NULL    , 
            PRECAUTIONARYSTATEMENT           longtext           NULL    , 
            BOLDITALIC                       varchar( 1 )       NULL    , 
-           LOCATION1                        varchar( 254 )     NULL    , 
-           LOCATION2                        varchar( 254 )     NULL    , 
-           LOCATION3                        varchar( 254 )     NULL    , 
-           LOCATION4                        varchar( 254 )     NULL    , 
-           LOCATION5                        varchar( 254 )     NULL    , 
+           LOCATIONSEPARATOR                varchar( 2 )       NULL    , 
+           ENCLOSEFIRSTLOCATION             varchar( 1 )       NULL    , 
+           PANELLOC1                        varchar( 254 )     NULL    , 
+           PANELLOC2                        varchar( 254 )     NULL    , 
+           PANELLOC3                        varchar( 254 )     NULL    , 
+           PANELLOC4                        varchar( 254 )     NULL    , 
+           PANELLOC5                        varchar( 254 )     NULL    , 
+           LABELLOC1                        varchar( 254 )     NULL    , 
+           LABELLOC2                        varchar( 254 )     NULL    , 
+           LABELLOC3                        varchar( 254 )     NULL    , 
+           LABELLOC4                        varchar( 254 )     NULL    , 
+           LABELLOC5                        varchar( 254 )     NULL    , 
            SELECTED                         varchar( 1 )       NULL    , 
            AUTOSEQ                          int                NULL    , 
            FK_ID_M_HUMANHAZARDSECTION       int                NULL    , 
            FK_ID_SUBREGLABELCONTENT         int                NOT NULL ) ;
  
-COMMIT;
- 
 /* Main key for Entity - S_HumanHazardSection */
-CREATE UNIQUE INDEX US_HUMANHAZARDSECTION_ID_651570 
+CREATE UNIQUE INDEX US_HUMANHAZARDSECTION_ID_981200 
        ON S_HUMANHAZARDSECTION ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'M_HUMANHAZARDSECTION(has [0:m] ) S_HUMANHAZARDSECTION' */
-CREATE INDEX SHUMANHAZARDSECTIONFKIDMHUM65687 
+CREATE INDEX SHUMANHAZARDSECTIONFKIDMHUM98678 
        ON S_HUMANHAZARDSECTION ( 
            FK_ID_M_HUMANHAZARDSECTION ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'SUBREGLABELCONTENT(has [0:m] ) S_HUMANHAZARDSECTION' */
-CREATE INDEX SHUMANHAZARDSECTIONFKIDSUBR65699 
+CREATE INDEX SHUMANHAZARDSECTIONFKIDSUBR98690 
        ON S_HUMANHAZARDSECTION ( 
            FK_ID_SUBREGLABELCONTENT ) ;
  
-
-COMMIT;
 /* Entity - S_IngredientsSection */
 CREATE TABLE S_INGREDIENTSSECTION ( 
            ID                               int                NOT NULL, 
@@ -1655,28 +1408,21 @@ CREATE TABLE S_INGREDIENTSSECTION (
            FK_ID_SUBREGLABELCONTENT         int                NOT NULL, 
            FK_ID_M_INGREDIENTSSECTION       int                NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - S_IngredientsSection */
-CREATE UNIQUE INDEX US_INGREDIENTSSECTION_ID_651700 
+CREATE UNIQUE INDEX US_INGREDIENTSSECTION_ID_981400 
        ON S_INGREDIENTSSECTION ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'SUBREGLABELCONTENT(has [0:m] ) S_INGREDIENTSSECTION' */
-CREATE INDEX SINGREDIENTSSECTIONFKIDSUBR65697 
+CREATE INDEX SINGREDIENTSSECTIONFKIDSUBR98688 
        ON S_INGREDIENTSSECTION ( 
            FK_ID_SUBREGLABELCONTENT ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'M_INGREDIENTSSECTION(has [0:m] ) S_INGREDIENTSSECTION' */
-CREATE INDEX SINGREDIENTSSECTIONFKIDMING65709 
+CREATE INDEX SINGREDIENTSSECTIONFKIDMING98700 
        ON S_INGREDIENTSSECTION ( 
            FK_ID_M_INGREDIENTSSECTION ) ;
  
-
-COMMIT;
 /* Entity - S_IngredientsStatement */
 CREATE TABLE S_INGREDIENTSSTATEMENT ( 
            ID                               int                NOT NULL, 
@@ -1691,28 +1437,21 @@ CREATE TABLE S_INGREDIENTSSTATEMENT (
            FK_ID_S_INGREDIENTSSECTION       int                NOT NULL, 
            FK_ID_M_INGREDIENTSSTATEMENT     int                NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - S_IngredientsStatement */
-CREATE UNIQUE INDEX US_INGREDIENTSSTATEMENT_ID_65181 
+CREATE UNIQUE INDEX US_INGREDIENTSSTATEMENT_ID_98151 
        ON S_INGREDIENTSSTATEMENT ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'S_INGREDIENTSSECTION(has [0:m] ) S_INGREDIENTSSTATEMENT' */
-CREATE INDEX SINGREDIENTSSTATEMENTFKIDSI65698 
+CREATE INDEX SINGREDIENTSSTATEMENTFKIDSI98689 
        ON S_INGREDIENTSSTATEMENT ( 
            FK_ID_S_INGREDIENTSSECTION ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'M_INGREDIENTSSTATEMENT(has [0:m] ) S_INGREDIENTSSTATEMENT' */
-CREATE INDEX SINGREDIENTSSTATEMENTFKIDMI65712 
+CREATE INDEX SINGREDIENTSSTATEMENTFKIDMI98703 
        ON S_INGREDIENTSSTATEMENT ( 
            FK_ID_M_INGREDIENTSSTATEMENT ) ;
  
-
-COMMIT;
 /* Entity - S_MarketingSection */
 CREATE TABLE S_MARKETINGSECTION ( 
            ID                               int                NOT NULL, 
@@ -1728,35 +1467,26 @@ CREATE TABLE S_MARKETINGSECTION (
            FK_ID_M_MARKETINGSECTION         int                NULL    , 
            FK_ID_SUBREGLABELCONTENT         int                NOT NULL ) ;
  
-COMMIT;
- 
 /* Main key for Entity - S_MarketingSection */
-CREATE UNIQUE INDEX US_MARKETINGSECTION_ID_651910 
+CREATE UNIQUE INDEX US_MARKETINGSECTION_ID_981610 
        ON S_MARKETINGSECTION ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'S_MARKETINGSECTION(has next version [0:m] ) S_MARKETINGSECTION' */
-CREATE INDEX SMARKETINGSECTIONFKIDSMARKE65610 
+CREATE INDEX SMARKETINGSECTIONFKIDSMARKE98601 
        ON S_MARKETINGSECTION ( 
            FK_ID_S_MARKETINGSECTION ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'M_MARKETINGSECTION(has [0:m] ) S_MARKETINGSECTION' */
-CREATE INDEX SMARKETINGSECTIONFKIDMMARKE65692 
+CREATE INDEX SMARKETINGSECTIONFKIDMMARKE98683 
        ON S_MARKETINGSECTION ( 
            FK_ID_M_MARKETINGSECTION ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'SUBREGLABELCONTENT(has [0:m] ) S_MARKETINGSECTION' */
-CREATE INDEX SMARKETINGSECTIONFKIDSUBREG65707 
+CREATE INDEX SMARKETINGSECTIONFKIDSUBREG98698 
        ON S_MARKETINGSECTION ( 
            FK_ID_SUBREGLABELCONTENT ) ;
  
-
-COMMIT;
 /* Entity - S_MarketingStatement */
 CREATE TABLE S_MARKETINGSTATEMENT ( 
            ID                               int                NOT NULL, 
@@ -1769,35 +1499,26 @@ CREATE TABLE S_MARKETINGSTATEMENT (
            FK_ID_S_MARKETINGSECTION         int                NOT NULL, 
            FK_ID_M_MARKETINGSTATEMENT       int                NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - S_MarketingStatement */
-CREATE UNIQUE INDEX US_MARKETINGSTATEMENT_ID_652010 
+CREATE UNIQUE INDEX US_MARKETINGSTATEMENT_ID_981710 
        ON S_MARKETINGSTATEMENT ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'S_MARKETINGSTATEMENT(has next version [0:m] ) S_MARKETINGSTATEMENT' */
-CREATE INDEX SMARKETINGSTATEMENTFKIDSMAR65612 
+CREATE INDEX SMARKETINGSTATEMENTFKIDSMAR98603 
        ON S_MARKETINGSTATEMENT ( 
            FK_ID_S_MARKETINGSTATEMENT ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'S_MARKETINGSECTION(has [0:m] ) S_MARKETINGSTATEMENT' */
-CREATE INDEX SMARKETINGSTATEMENTFKIDSMAR65629 
+CREATE INDEX SMARKETINGSTATEMENTFKIDSMAR98620 
        ON S_MARKETINGSTATEMENT ( 
            FK_ID_S_MARKETINGSECTION ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'M_MARKETINGSTATEMENT(has [0:m] ) S_MARKETINGSTATEMENT' */
-CREATE INDEX SMARKETINGSTATEMENTFKIDMMAR65693 
+CREATE INDEX SMARKETINGSTATEMENTFKIDMMAR98684 
        ON S_MARKETINGSTATEMENT ( 
            FK_ID_M_MARKETINGSTATEMENT ) ;
  
-
-COMMIT;
 /* Entity - S_StorageDisposalSection */
 CREATE TABLE S_STORAGEDISPOSALSECTION ( 
            ID                               int                NOT NULL, 
@@ -1814,28 +1535,21 @@ CREATE TABLE S_STORAGEDISPOSALSECTION (
            FK_ID_M_STORAGEDISPOSALSECTION   int                NULL    , 
            FK_ID_SUBREGLABELCONTENT         int                NOT NULL ) ;
  
-COMMIT;
- 
 /* Main key for Entity - S_StorageDisposalSection */
-CREATE UNIQUE INDEX US_STORAGEDISPOSALSECTIONID65208 
+CREATE UNIQUE INDEX US_STORAGEDISPOSALSECTIONID98178 
        ON S_STORAGEDISPOSALSECTION ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'M_STORAGEDISPOSALSECTION(has [0:m] ) S_STORAGEDISPOSALSECTION' */
-CREATE INDEX SSTORAGEDISPOSALSECTIONFKID65677 
+CREATE INDEX SSTORAGEDISPOSALSECTIONFKID98668 
        ON S_STORAGEDISPOSALSECTION ( 
            FK_ID_M_STORAGEDISPOSALSECTION ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'SUBREGLABELCONTENT(has [0:m] ) S_STORAGEDISPOSALSECTION' */
-CREATE INDEX SSTORAGEDISPOSALSECTIONFKID65700 
+CREATE INDEX SSTORAGEDISPOSALSECTIONFKID98691 
        ON S_STORAGEDISPOSALSECTION ( 
            FK_ID_SUBREGLABELCONTENT ) ;
  
-
-COMMIT;
 /* Entity - S_StorageDisposalStatement */
 CREATE TABLE S_STORAGEDISPOSALSTATEMENT ( 
            ID                               int                NOT NULL, 
@@ -1851,28 +1565,21 @@ CREATE TABLE S_STORAGEDISPOSALSTATEMENT (
            FK_ID_M_STORAGEDISPOSALSTATEMENT int                NULL    , 
            FK_ID_S_STORAGEDISPOSALSECTION   int                NOT NULL ) ;
  
-COMMIT;
- 
 /* Main key for Entity - S_StorageDisposalStatement */
-CREATE UNIQUE INDEX USSTORAGEDISPOSALSTATEMENTI65220 
+CREATE UNIQUE INDEX USSTORAGEDISPOSALSTATEMENTI98190 
        ON S_STORAGEDISPOSALSTATEMENT ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'M_STORAGEDISPOSALSTATEMENT(has [0:m] ) S_STORAGEDISPOSALSTATEMENT' */
-CREATE INDEX SSTORAGEDISPOSALSTATEMENTFK65665 
+CREATE INDEX SSTORAGEDISPOSALSTATEMENTFK98656 
        ON S_STORAGEDISPOSALSTATEMENT ( 
            FK_ID_M_STORAGEDISPOSALSTATEMENT ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'S_STORAGEDISPOSALSECTION(has [0:m] ) S_STORAGEDISPOSALSTATEMENT' */
-CREATE INDEX SSTORAGEDISPOSALSTATEMENTFK65701 
+CREATE INDEX SSTORAGEDISPOSALSTATEMENTFK98692 
        ON S_STORAGEDISPOSALSTATEMENT ( 
            FK_ID_S_STORAGEDISPOSALSECTION ) ;
  
-
-COMMIT;
 /* Entity - S_Usage */
 CREATE TABLE S_USAGE ( 
            ID                               int                NOT NULL, 
@@ -1888,35 +1595,26 @@ CREATE TABLE S_USAGE (
            FK_ID_SUBREGLABELCONTENT         int                NULL    , 
            FK_ID_S_USAGETYPE                int                NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - S_Usage */
-CREATE UNIQUE INDEX US_USAGE_ID_652310 
+CREATE UNIQUE INDEX US_USAGE_ID_982010 
        ON S_USAGE ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'M_USAGE(has [0:m] ) S_USAGE' */
-CREATE INDEX S_USAGE_FK_ID_M_USAGE_656900 
+CREATE INDEX S_USAGE_FK_ID_M_USAGE_986810 
        ON S_USAGE ( 
            FK_ID_M_USAGE ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'SUBREGLABELCONTENT(has (delete) [0:m] ) S_USAGE' */
-CREATE INDEX SUSAGEFKIDSUBREGLABELCONTEN65704 
+CREATE INDEX SUSAGEFKIDSUBREGLABELCONTEN98695 
        ON S_USAGE ( 
            FK_ID_SUBREGLABELCONTENT ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'S_USAGETYPE(has [0:m] ) S_USAGE' */
-CREATE INDEX S_USAGE_FK_ID_S_USAGETYPE_657210 
+CREATE INDEX S_USAGE_FK_ID_S_USAGETYPE_987120 
        ON S_USAGE ( 
            FK_ID_S_USAGETYPE ) ;
  
-
-COMMIT;
 /* Entity - S_UsageOrdering */
 CREATE TABLE S_USAGEORDERING ( 
            ID                               int                NOT NULL, 
@@ -1926,56 +1624,42 @@ CREATE TABLE S_USAGEORDERING (
            FK_ID_S_DIRECTIONSFORUSESTATEMEN int                NULL    , 
            FK_ID_S_USAGE                    int                NOT NULL ) ;
  
-COMMIT;
- 
 /* Main key for Entity - S_UsageOrdering */
-CREATE UNIQUE INDEX US_USAGEORDERING_ID_652410 
+CREATE UNIQUE INDEX US_USAGEORDERING_ID_982110 
        ON S_USAGEORDERING ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'S_MARKETINGSTATEMENT(has [0:m] ) S_USAGEORDERING' */
-CREATE INDEX SUSAGEORDERINGFKIDSMARKETIN65613 
+CREATE INDEX SUSAGEORDERINGFKIDSMARKETIN98604 
        ON S_USAGEORDERING ( 
            FK_ID_S_MARKETINGSTATEMENT ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'S_DIRECTIONSFORUSESTATEMENT(has [0:m] ) S_USAGEORDERING' */
-CREATE INDEX SUSAGEORDERINGFKIDSDIRECTIO65672 
+CREATE INDEX SUSAGEORDERINGFKIDSDIRECTIO98663 
        ON S_USAGEORDERING ( 
            FK_ID_S_DIRECTIONSFORUSESTATEMEN ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'S_USAGE(has [0:m] ) S_USAGEORDERING' */
-CREATE INDEX S_USAGEORDERING_FK_IDSUSAGE65682 
+CREATE INDEX S_USAGEORDERING_FK_IDSUSAGE98673 
        ON S_USAGEORDERING ( 
            FK_ID_S_USAGE ) ;
  
-
-COMMIT;
 /* Entity - S_UsageType */
 CREATE TABLE S_USAGETYPE ( 
            ID                               int                NOT NULL, 
            USAGETYPE                        varchar( 1 )       NOT NULL, 
            FK_ID_SUBREGLABELCONTENT         int                NOT NULL ) ;
  
-COMMIT;
- 
 /* Main key for Entity - S_UsageType */
-CREATE UNIQUE INDEX US_USAGETYPE_ID_652440 
+CREATE UNIQUE INDEX US_USAGETYPE_ID_982140 
        ON S_USAGETYPE ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'SUBREGLABELCONTENT(has [0:m] ) S_USAGETYPE' */
-CREATE INDEX SUSAGETYPEFKIDSUBREGLABELCO65720 
+CREATE INDEX SUSAGETYPEFKIDSUBREGLABELCO98711 
        ON S_USAGETYPE ( 
            FK_ID_SUBREGLABELCONTENT ) ;
  
-
-COMMIT;
 /* Entity - SPLD_DirectionsForUseSection */
 CREATE TABLE SPLD_DIRECTIONSFORUSESECTION ( 
            ID                               int                NOT NULL, 
@@ -1996,35 +1680,26 @@ CREATE TABLE SPLD_DIRECTIONSFORUSESECTION (
            FK_ID_SUBREGPHYSICALLABELDEF     int                NOT NULL, 
            FK_ID_S_DIRECTIONSFORUSESECTION  int                NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - SPLD_DirectionsForUseSection */
-CREATE UNIQUE INDEX USPLDDIRECTIONSFORUSESECTIO65248 
+CREATE UNIQUE INDEX USPLDDIRECTIONSFORUSESECTIO98218 
        ON SPLD_DIRECTIONSFORUSESECTION ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'SPLD_SECTION(has [0:m] ) SPLD_DIRECTIONSFORUSESECTION' */
-CREATE INDEX SPLDDIRECTIONSFORUSESECTION65622 
+CREATE INDEX SPLDDIRECTIONSFORUSESECTION98613 
        ON SPLD_DIRECTIONSFORUSESECTION ( 
            FK_ID_SPLD_SECTION ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'SUBREGPHYSICALLABELDEF(has [0:m] ) SPLD_DIRECTIONSFORUSESECTION' */
-CREATE INDEX SPLDDIRECTIONSFORUSESECTION65634 
+CREATE INDEX SPLDDIRECTIONSFORUSESECTION98625 
        ON SPLD_DIRECTIONSFORUSESECTION ( 
            FK_ID_SUBREGPHYSICALLABELDEF ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'S_DIRECTIONSFORUSESECTION(has [0:m] ) SPLD_DIRECTIONSFORUSESECTION' */
-CREATE INDEX SPLDDIRECTIONSFORUSESECTION65684 
+CREATE INDEX SPLDDIRECTIONSFORUSESECTION98675 
        ON SPLD_DIRECTIONSFORUSESECTION ( 
            FK_ID_S_DIRECTIONSFORUSESECTION ) ;
  
-
-COMMIT;
 /* Entity - SPLD_DirectionsForUseStatement */
 CREATE TABLE SPLD_DIRECTIONSFORUSESTATEMENT ( 
            ID                               int                NOT NULL, 
@@ -2042,28 +1717,21 @@ CREATE TABLE SPLD_DIRECTIONSFORUSESTATEMENT (
            FK_ID_SPLDDIRECTIONSFORUSESECTIO int                NOT NULL, 
            FK_ID_S_DIRECTIONSFORUSESTATEMEN int                NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - SPLD_DirectionsForUseStatement */
-CREATE UNIQUE INDEX USPLDDIRECTIONSFORUSESTATEM65262 
+CREATE UNIQUE INDEX USPLDDIRECTIONSFORUSESTATEM98232 
        ON SPLD_DIRECTIONSFORUSESTATEMENT ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'SPLD_DIRECTIONSFORUSESECTION(has [0:m] ) SPLD_DIRECTIONSFORUSESTATEMENT' */
-CREATE INDEX SPLDDIRECTIONSFORUSESTATEME65645 
+CREATE INDEX SPLDDIRECTIONSFORUSESTATEME98636 
        ON SPLD_DIRECTIONSFORUSESTATEMENT ( 
            FK_ID_SPLDDIRECTIONSFORUSESECTIO ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'S_DIRECTIONSFORUSESTATEMENT(has [0:m] ) SPLD_DIRECTIONSFORUSESTATEMENT' */
-CREATE INDEX SPLDDIRECTIONSFORUSESTATEME65670 
+CREATE INDEX SPLDDIRECTIONSFORUSESTATEME98661 
        ON SPLD_DIRECTIONSFORUSESTATEMENT ( 
            FK_ID_S_DIRECTIONSFORUSESTATEMEN ) ;
  
-
-COMMIT;
 /* Entity - SPLD_GeneralSection */
 CREATE TABLE SPLD_GENERALSECTION ( 
            ID                               int                NOT NULL, 
@@ -2084,35 +1752,26 @@ CREATE TABLE SPLD_GENERALSECTION (
            FK_ID_SUBREGPHYSICALLABELDEF     int                NOT NULL, 
            FK_ID_S_GENERALSECTION           int                NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - SPLD_GeneralSection */
-CREATE UNIQUE INDEX USPLD_GENERALSECTION_ID_652750 
+CREATE UNIQUE INDEX USPLD_GENERALSECTION_ID_982450 
        ON SPLD_GENERALSECTION ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'SPLD_SECTION(has [0:m] ) SPLD_GENERALSECTION' */
-CREATE INDEX SPLDGENERALSECTIONFKIDSPLDS65623 
+CREATE INDEX SPLDGENERALSECTIONFKIDSPLDS98614 
        ON SPLD_GENERALSECTION ( 
            FK_ID_SPLD_SECTION ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'SUBREGPHYSICALLABELDEF(has [0:m] ) SPLD_GENERALSECTION' */
-CREATE INDEX SPLDGENERALSECTIONFKIDSUBRE65630 
+CREATE INDEX SPLDGENERALSECTIONFKIDSUBRE98621 
        ON SPLD_GENERALSECTION ( 
            FK_ID_SUBREGPHYSICALLABELDEF ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'S_GENERALSECTION(has [0:m] ) SPLD_GENERALSECTION' */
-CREATE INDEX SPLDGENERALSECTIONFKIDSGENE65662 
+CREATE INDEX SPLDGENERALSECTIONFKIDSGENE98653 
        ON SPLD_GENERALSECTION ( 
            FK_ID_S_GENERALSECTION ) ;
  
-
-COMMIT;
 /* Entity - SPLD_GeneralStatement */
 CREATE TABLE SPLD_GENERALSTATEMENT ( 
            ID                               int                NOT NULL, 
@@ -2127,28 +1786,21 @@ CREATE TABLE SPLD_GENERALSTATEMENT (
            FK_ID_SPLD_GENERALSECTION        int                NOT NULL, 
            FK_ID_S_GENERALSTATEMENT         int                NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - SPLD_GeneralStatement */
-CREATE UNIQUE INDEX USPLD_GENERALSTATEMENT_ID_652890 
+CREATE UNIQUE INDEX USPLD_GENERALSTATEMENT_ID_982590 
        ON SPLD_GENERALSTATEMENT ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'SPLD_GENERALSECTION(has [0:m] ) SPLD_GENERALSTATEMENT' */
-CREATE INDEX SPLDGENERALSTATEMENTFKIDSPL65642 
+CREATE INDEX SPLDGENERALSTATEMENTFKIDSPL98633 
        ON SPLD_GENERALSTATEMENT ( 
            FK_ID_SPLD_GENERALSECTION ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'S_GENERALSTATEMENT(has [0:m] ) SPLD_GENERALSTATEMENT' */
-CREATE INDEX SPLDGENERALSTATEMENTFKIDSGE65658 
+CREATE INDEX SPLDGENERALSTATEMENTFKIDSGE98649 
        ON SPLD_GENERALSTATEMENT ( 
            FK_ID_S_GENERALSTATEMENT ) ;
  
-
-COMMIT;
 /* Entity - SPLD_HumanHazardSection */
 CREATE TABLE SPLD_HUMANHAZARDSECTION ( 
            ID                               int                NOT NULL, 
@@ -2156,38 +1808,38 @@ CREATE TABLE SPLD_HUMANHAZARDSECTION (
            EPA_CHILDHAZARDWARNING           varchar( 1 )       NULL    , 
            PRECAUTIONARYSTATEMENT           longtext           NULL    , 
            BOLDITALIC                       varchar( 1 )       NULL    , 
-           LOCATION1                        varchar( 254 )     NULL    , 
-           LOCATION2                        varchar( 254 )     NULL    , 
-           LOCATION3                        varchar( 254 )     NULL    , 
-           LOCATION4                        varchar( 254 )     NULL    , 
-           LOCATION5                        varchar( 254 )     NULL    , 
+           LOCATIONSEPARATOR                varchar( 2 )       NULL    , 
+           ENCLOSEFIRSTLOCATION             varchar( 1 )       NULL    , 
+           PANELLOC1                        varchar( 254 )     NULL    , 
+           PANELLOC2                        varchar( 254 )     NULL    , 
+           PANELLOC3                        varchar( 254 )     NULL    , 
+           PANELLOC4                        varchar( 254 )     NULL    , 
+           PANELLOC5                        varchar( 254 )     NULL    , 
+           LABELLOC1                        varchar( 254 )     NULL    , 
+           LABELLOC2                        varchar( 254 )     NULL    , 
+           LABELLOC3                        varchar( 254 )     NULL    , 
+           LABELLOC4                        varchar( 254 )     NULL    , 
+           LABELLOC5                        varchar( 254 )     NULL    , 
            SELECTED                         varchar( 1 )       NULL    , 
            AUTOSEQ                          int                NULL    , 
            FK_ID_SUBREGPHYSICALLABELDEF     int                NOT NULL, 
            FK_ID_S_HUMANHAZARDSECTION       int                NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - SPLD_HumanHazardSection */
-CREATE UNIQUE INDEX USPLD_HUMANHAZARDSECTION_ID65299 
+CREATE UNIQUE INDEX USPLD_HUMANHAZARDSECTION_ID98269 
        ON SPLD_HUMANHAZARDSECTION ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'SUBREGPHYSICALLABELDEF(has [0:m] ) SPLD_HUMANHAZARDSECTION' */
-CREATE INDEX SPLDHUMANHAZARDSECTIONFKIDS65631 
+CREATE INDEX SPLDHUMANHAZARDSECTIONFKIDS98622 
        ON SPLD_HUMANHAZARDSECTION ( 
            FK_ID_SUBREGPHYSICALLABELDEF ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'S_HUMANHAZARDSECTION(has [0:m] ) SPLD_HUMANHAZARDSECTION' */
-CREATE INDEX SPLDHUMANHAZARDSECTIONFKIDS65688 
+CREATE INDEX SPLDHUMANHAZARDSECTIONFKIDS98679 
        ON SPLD_HUMANHAZARDSECTION ( 
            FK_ID_S_HUMANHAZARDSECTION ) ;
  
-
-COMMIT;
 /* Entity - SPLD_IngredientsSection */
 CREATE TABLE SPLD_INGREDIENTSSECTION ( 
            ID                               int                NOT NULL, 
@@ -2205,35 +1857,26 @@ CREATE TABLE SPLD_INGREDIENTSSECTION (
            FK_ID_SUBREGPHYSICALLABELDEF     int                NOT NULL, 
            FK_ID_S_INGREDIENTSSECTION       int                NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - SPLD_IngredientsSection */
-CREATE UNIQUE INDEX USPLD_INGREDIENTSSECTION_ID65312 
+CREATE UNIQUE INDEX USPLD_INGREDIENTSSECTION_ID98289 
        ON SPLD_INGREDIENTSSECTION ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'SPLD_SECTION(has [0:m] ) SPLD_INGREDIENTSSECTION' */
-CREATE INDEX SPLDINGREDIENTSSECTIONFKIDS65620 
+CREATE INDEX SPLDINGREDIENTSSECTIONFKIDS98611 
        ON SPLD_INGREDIENTSSECTION ( 
            FK_ID_SPLD_SECTION ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'SUBREGPHYSICALLABELDEF(has [0:m] ) SPLD_INGREDIENTSSECTION' */
-CREATE INDEX SPLDINGREDIENTSSECTIONFKIDS65632 
+CREATE INDEX SPLDINGREDIENTSSECTIONFKIDS98623 
        ON SPLD_INGREDIENTSSECTION ( 
            FK_ID_SUBREGPHYSICALLABELDEF ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'S_INGREDIENTSSECTION(has [0:m] ) SPLD_INGREDIENTSSECTION' */
-CREATE INDEX SPLDINGREDIENTSSECTIONFKIDS65710 
+CREATE INDEX SPLDINGREDIENTSSECTIONFKIDS98701 
        ON SPLD_INGREDIENTSSECTION ( 
            FK_ID_S_INGREDIENTSSECTION ) ;
  
-
-COMMIT;
 /* Entity - SPLD_IngredientsStatement */
 CREATE TABLE SPLD_INGREDIENTSSTATEMENT ( 
            ID                               int                NOT NULL, 
@@ -2248,28 +1891,21 @@ CREATE TABLE SPLD_INGREDIENTSSTATEMENT (
            FK_ID_SPLD_INGREDIENTSSECTION    int                NOT NULL, 
            FK_ID_S_INGREDIENTSSTATEMENT     int                NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - SPLD_IngredientsStatement */
-CREATE UNIQUE INDEX USPLDINGREDIENTSSTATEMENTID65323 
+CREATE UNIQUE INDEX USPLDINGREDIENTSSTATEMENTID98300 
        ON SPLD_INGREDIENTSSTATEMENT ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'SPLD_INGREDIENTSSECTION(has [0:m] ) SPLD_INGREDIENTSSTATEMENT' */
-CREATE INDEX SPLDINGREDIENTSSTATEMENTFKI65643 
+CREATE INDEX SPLDINGREDIENTSSTATEMENTFKI98634 
        ON SPLD_INGREDIENTSSTATEMENT ( 
            FK_ID_SPLD_INGREDIENTSSECTION ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'S_INGREDIENTSSTATEMENT(has [0:m] ) SPLD_INGREDIENTSSTATEMENT' */
-CREATE INDEX SPLDINGREDIENTSSTATEMENTFKI65713 
+CREATE INDEX SPLDINGREDIENTSSTATEMENTFKI98704 
        ON SPLD_INGREDIENTSSTATEMENT ( 
            FK_ID_S_INGREDIENTSSTATEMENT ) ;
  
-
-COMMIT;
 /* Entity - SPLD_LLD */
 CREATE TABLE SPLD_LLD ( 
            ID                               int                NOT NULL, 
@@ -2291,21 +1927,16 @@ CREATE TABLE SPLD_LLD (
            DEPTH                            int                NULL    , 
            FK_ID_SUBREGPHYSICALLABELDEF     int                NOT NULL ) ;
  
-COMMIT;
- 
 /* Main key for Entity - SPLD_LLD */
-CREATE UNIQUE INDEX USPLD_LLD_ID_653330 
+CREATE UNIQUE INDEX USPLD_LLD_ID_983100 
        ON SPLD_LLD ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'SUBREGPHYSICALLABELDEF(has [0:m] ) SPLD_LLD' */
-CREATE INDEX SPLDLLDFKIDSUBREGPHYSICALLA65641 
+CREATE INDEX SPLDLLDFKIDSUBREGPHYSICALLA98632 
        ON SPLD_LLD ( 
            FK_ID_SUBREGPHYSICALLABELDEF ) ;
  
-
-COMMIT;
 /* Entity - SPLD_MarketingSection */
 CREATE TABLE SPLD_MARKETINGSECTION ( 
            ID                               int                NOT NULL, 
@@ -2323,35 +1954,26 @@ CREATE TABLE SPLD_MARKETINGSECTION (
            FK_ID_SPLD_SECTION               int                NULL    , 
            FK_ID_SUBREGPHYSICALLABELDEF     int                NOT NULL ) ;
  
-COMMIT;
- 
 /* Main key for Entity - SPLD_MarketingSection */
-CREATE UNIQUE INDEX USPLD_MARKETINGSECTION_ID_653520 
+CREATE UNIQUE INDEX USPLD_MARKETINGSECTION_ID_983290 
        ON SPLD_MARKETINGSECTION ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'S_MARKETINGSECTION(has [0:m] ) SPLD_MARKETINGSECTION' */
-CREATE INDEX SPLDMARKETINGSECTIONFKIDSMA65611 
+CREATE INDEX SPLDMARKETINGSECTIONFKIDSMA98602 
        ON SPLD_MARKETINGSECTION ( 
            FK_ID_S_MARKETINGSECTION ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'SPLD_SECTION(has [0:m] ) SPLD_MARKETINGSECTION' */
-CREATE INDEX SPLDMARKETINGSECTIONFKIDSPL65624 
+CREATE INDEX SPLDMARKETINGSECTIONFKIDSPL98615 
        ON SPLD_MARKETINGSECTION ( 
            FK_ID_SPLD_SECTION ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'SUBREGPHYSICALLABELDEF(has [0:m] ) SPLD_MARKETINGSECTION' */
-CREATE INDEX SPLDMARKETINGSECTIONFKIDSUB65636 
+CREATE INDEX SPLDMARKETINGSECTIONFKIDSUB98627 
        ON SPLD_MARKETINGSECTION ( 
            FK_ID_SUBREGPHYSICALLABELDEF ) ;
  
-
-COMMIT;
 /* Entity - SPLD_MarketingStatement */
 CREATE TABLE SPLD_MARKETINGSTATEMENT ( 
            ID                               int                NOT NULL, 
@@ -2360,34 +1982,27 @@ CREATE TABLE SPLD_MARKETINGSTATEMENT (
            BOLDITALIC                       varchar( 1 )       NULL    , 
            SELECTED                         varchar( 1 )       NULL    , 
            CONTINUATIONBREAKFLAG            varchar( 1 )       NULL    , 
-           CONTINUATIONLEADINGTEXT          varchar( 2 )       NULL    , 
+           CONTINUATIONLEADINGTEXT          longtext           NULL    , 
            CONTINUATIONTEXT                 longtext           NULL    , 
            AUTOSEQ                          int                NULL    , 
            FK_ID_S_MARKETINGSTATEMENT       int                NULL    , 
            FK_ID_SPLD_MARKETINGSECTION      int                NOT NULL ) ;
  
-COMMIT;
- 
 /* Main key for Entity - SPLD_MarketingStatement */
-CREATE UNIQUE INDEX USPLD_MARKETINGSTATEMENT_ID65363 
+CREATE UNIQUE INDEX USPLD_MARKETINGSTATEMENT_ID98340 
        ON SPLD_MARKETINGSTATEMENT ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'S_MARKETINGSTATEMENT(has [0:m] ) SPLD_MARKETINGSTATEMENT' */
-CREATE INDEX SPLDMARKETINGSTATEMENTFKIDS65618 
+CREATE INDEX SPLDMARKETINGSTATEMENTFKIDS98609 
        ON SPLD_MARKETINGSTATEMENT ( 
            FK_ID_S_MARKETINGSTATEMENT ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'SPLD_MARKETINGSECTION(has [0:m] ) SPLD_MARKETINGSTATEMENT' */
-CREATE INDEX SPLDMARKETINGSTATEMENTFKIDS65627 
+CREATE INDEX SPLDMARKETINGSTATEMENTFKIDS98618 
        ON SPLD_MARKETINGSTATEMENT ( 
            FK_ID_SPLD_MARKETINGSECTION ) ;
  
-
-COMMIT;
 /* Entity - SPLD_Section */
 CREATE TABLE SPLD_SECTION ( 
            ID                               int                NOT NULL, 
@@ -2411,14 +2026,11 @@ CREATE TABLE SPLD_SECTION (
            LEADINGUNITS                     varchar( 10 )      NULL    , 
            LEADINGHEIGHT                    double             NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - SPLD_Section */
-CREATE UNIQUE INDEX USPLD_SECTION_ID_653730 
+CREATE UNIQUE INDEX USPLD_SECTION_ID_983500 
        ON SPLD_SECTION ( 
            ID ) ;
  
-COMMIT;
 /* Entity - SPLD_StorageDisposalSection */
 CREATE TABLE SPLD_STORAGEDISPOSALSECTION ( 
            ID                               int                NOT NULL, 
@@ -2438,35 +2050,26 @@ CREATE TABLE SPLD_STORAGEDISPOSALSECTION (
            FK_ID_SUBREGPHYSICALLABELDEF     int                NOT NULL, 
            FK_ID_S_STORAGEDISPOSALSECTION   int                NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - SPLD_StorageDisposalSection */
-CREATE UNIQUE INDEX USPLDSTORAGEDISPOSALSECTION65395 
+CREATE UNIQUE INDEX USPLDSTORAGEDISPOSALSECTION98372 
        ON SPLD_STORAGEDISPOSALSECTION ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'SPLD_SECTION(has [0:m] ) SPLD_STORAGEDISPOSALSECTION' */
-CREATE INDEX SPLDSTORAGEDISPOSALSECTIONF65621 
+CREATE INDEX SPLDSTORAGEDISPOSALSECTIONF98612 
        ON SPLD_STORAGEDISPOSALSECTION ( 
            FK_ID_SPLD_SECTION ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'SUBREGPHYSICALLABELDEF(has [0:m] ) SPLD_STORAGEDISPOSALSECTION' */
-CREATE INDEX SPLDSTORAGEDISPOSALSECTIONF65633 
+CREATE INDEX SPLDSTORAGEDISPOSALSECTIONF98624 
        ON SPLD_STORAGEDISPOSALSECTION ( 
            FK_ID_SUBREGPHYSICALLABELDEF ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'S_STORAGEDISPOSALSECTION(has [0:m] ) SPLD_STORAGEDISPOSALSECTION' */
-CREATE INDEX SPLDSTORAGEDISPOSALSECTIONF65678 
+CREATE INDEX SPLDSTORAGEDISPOSALSECTIONF98669 
        ON SPLD_STORAGEDISPOSALSECTION ( 
            FK_ID_S_STORAGEDISPOSALSECTION ) ;
  
-
-COMMIT;
 /* Entity - SPLD_StorageDisposalStatement */
 CREATE TABLE SPLD_STORAGEDISPOSALSTATEMENT ( 
            ID                               int                NOT NULL, 
@@ -2485,28 +2088,21 @@ CREATE TABLE SPLD_STORAGEDISPOSALSTATEMENT (
            FK_ID_SPLD_STORAGEDISPOSALSECTIO int                NOT NULL, 
            FK_ID_S_STORAGEDISPOSALSTATEMENT int                NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - SPLD_StorageDisposalStatement */
-CREATE UNIQUE INDEX USPLDSTORAGEDISPOSALSTATEME65408 
+CREATE UNIQUE INDEX USPLDSTORAGEDISPOSALSTATEME98385 
        ON SPLD_STORAGEDISPOSALSTATEMENT ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'SPLD_STORAGEDISPOSALSECTION(has [0:m] ) SPLD_STORAGEDISPOSALSTATEMENT' */
-CREATE INDEX SPLDSTORAGEDISPOSALSTATEMEN65644 
+CREATE INDEX SPLDSTORAGEDISPOSALSTATEMEN98635 
        ON SPLD_STORAGEDISPOSALSTATEMENT ( 
            FK_ID_SPLD_STORAGEDISPOSALSECTIO ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'S_STORAGEDISPOSALSTATEMENT(has [0:m] ) SPLD_STORAGEDISPOSALSTATEMENT' */
-CREATE INDEX SPLDSTORAGEDISPOSALSTATEMEN65666 
+CREATE INDEX SPLDSTORAGEDISPOSALSTATEMEN98657 
        ON SPLD_STORAGEDISPOSALSTATEMENT ( 
            FK_ID_S_STORAGEDISPOSALSTATEMENT ) ;
  
-
-COMMIT;
 /* Entity - SPLD_Usage */
 CREATE TABLE SPLD_USAGE ( 
            ID                               int                NOT NULL, 
@@ -2522,35 +2118,26 @@ CREATE TABLE SPLD_USAGE (
            FK_ID_S_USAGE                    int                NULL    , 
            FK_ID_SPLD_USAGETYPE             int                NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - SPLD_Usage */
-CREATE UNIQUE INDEX USPLD_USAGE_ID_654220 
+CREATE UNIQUE INDEX USPLD_USAGE_ID_983990 
        ON SPLD_USAGE ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'SUBREGPHYSICALLABELDEF(has (delete) [0:m] ) SPLD_USAGE' */
-CREATE INDEX SPLDUSAGEFKIDSUBREGPHYSICAL65637 
+CREATE INDEX SPLDUSAGEFKIDSUBREGPHYSICAL98628 
        ON SPLD_USAGE ( 
            FK_ID_SUBREGPHYSICALLABELDEF ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'S_USAGE(has [0:m] ) SPLD_USAGE' */
-CREATE INDEX SPLD_USAGE_FK_ID_S_USAGE_656400 
+CREATE INDEX SPLD_USAGE_FK_ID_S_USAGE_986310 
        ON SPLD_USAGE ( 
            FK_ID_S_USAGE ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'SPLD_USAGETYPE(has [0:m] ) SPLD_USAGE' */
-CREATE INDEX SPLD_USAGEFKIDSPLDUSAGETYPE65706 
+CREATE INDEX SPLD_USAGEFKIDSPLDUSAGETYPE98697 
        ON SPLD_USAGE ( 
            FK_ID_SPLD_USAGETYPE ) ;
  
-
-COMMIT;
 /* Entity - SPLD_UsageOrdering */
 CREATE TABLE SPLD_USAGEORDERING ( 
            ID                               int                NOT NULL, 
@@ -2560,77 +2147,58 @@ CREATE TABLE SPLD_USAGEORDERING (
            FK_ID_SPLD_MARKETINGSTATEMENT    int                NULL    , 
            FKIDSPLDDIRECTIONSFORUSESTATEMEN int                NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - SPLD_UsageOrdering */
-CREATE UNIQUE INDEX USPLD_USAGEORDERING_ID_654320 
+CREATE UNIQUE INDEX USPLD_USAGEORDERING_ID_984090 
        ON SPLD_USAGEORDERING ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'SPLD_USAGE(has [0:m] ) SPLD_USAGEORDERING' */
-CREATE INDEX SPLDUSAGEORDERINGFKIDSPLDUS65605 
+CREATE INDEX SPLDUSAGEORDERINGFKIDSPLDUS98596 
        ON SPLD_USAGEORDERING ( 
            FK_ID_SPLD_USAGE ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'SPLD_MARKETINGSTATEMENT(has [0:m] ) SPLD_USAGEORDERING' */
-CREATE INDEX SPLDUSAGEORDERINGFKIDSPLDMA65619 
+CREATE INDEX SPLDUSAGEORDERINGFKIDSPLDMA98610 
        ON SPLD_USAGEORDERING ( 
            FK_ID_SPLD_MARKETINGSTATEMENT ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'SPLD_DIRECTIONSFORUSESTATEMENT(has [0:m] ) SPLD_USAGEORDERING' */
-CREATE INDEX SPLDUSAGEORDERINGFKIDSPLDDI65671 
+CREATE INDEX SPLDUSAGEORDERINGFKIDSPLDDI98662 
        ON SPLD_USAGEORDERING ( 
            FKIDSPLDDIRECTIONSFORUSESTATEMEN ) ;
  
-
-COMMIT;
 /* Entity - SPLD_UsageType */
 CREATE TABLE SPLD_USAGETYPE ( 
            ID                               int                NOT NULL, 
            USAGETYPE                        varchar( 1 )       NOT NULL, 
            FK_ID_SUBREGPHYSICALLABELDEF     int                NOT NULL ) ;
  
-COMMIT;
- 
 /* Main key for Entity - SPLD_UsageType */
-CREATE UNIQUE INDEX USPLD_USAGETYPE_ID_654350 
+CREATE UNIQUE INDEX USPLD_USAGETYPE_ID_984120 
        ON SPLD_USAGETYPE ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'SUBREGPHYSICALLABELDEF(has [0:m] ) SPLD_USAGETYPE' */
-CREATE INDEX SPLDUSAGETYPEFKIDSUBREGPHYS65705 
+CREATE INDEX SPLDUSAGETYPEFKIDSUBREGPHYS98696 
        ON SPLD_USAGETYPE ( 
            FK_ID_SUBREGPHYSICALLABELDEF ) ;
  
-
-COMMIT;
 /* Entity - Subregistrant */
 CREATE TABLE SUBREGISTRANT ( 
            ID                               int                NOT NULL, 
-           EPA_COMPANYNUMBER                varchar( 128 )     NULL    , 
+           EPA_COMPANYNUMBER                varchar( 6 )       NULL    , 
            FK_ID_ORGANIZATION               int                NOT NULL ) ;
  
-COMMIT;
- 
 /* Main key for Entity - Subregistrant */
-CREATE UNIQUE INDEX USUBREGISTRANT_ID_654390 
+CREATE UNIQUE INDEX USUBREGISTRANT_ID_984160 
        ON SUBREGISTRANT ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'ORGANIZATION(has [0:1] ) SUBREGISTRANT' */
-CREATE INDEX SUBREGISTRANTFKIDORGANIZATI65617 
+CREATE INDEX SUBREGISTRANTFKIDORGANIZATI98608 
        ON SUBREGISTRANT ( 
            FK_ID_ORGANIZATION ) ;
  
-
-COMMIT;
 /* Entity - SubregLabelContent */
 CREATE TABLE SUBREGLABELCONTENT ( 
            ID                               int                NOT NULL, 
@@ -2651,35 +2219,26 @@ CREATE TABLE SUBREGLABELCONTENT (
            FK_ID_SUBREGPRODUCT              int                NOT NULL, 
            FK_ID_MASTERLABELCONTENT         int                NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - SubregLabelContent */
-CREATE UNIQUE INDEX USUBREGLABELCONTENT_ID_654430 
+CREATE UNIQUE INDEX USUBREGLABELCONTENT_ID_984200 
        ON SUBREGLABELCONTENT ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'SUBREGLABELCONTENT(has next version [0:m] ) SUBREGLABELCONTENT' */
-CREATE INDEX SUBREGLABELCONTENTFKIDSUBRE65639 
+CREATE INDEX SUBREGLABELCONTENTFKIDSUBRE98630 
        ON SUBREGLABELCONTENT ( 
            FK_ID_SUBREGLABELCONTENT ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'SUBREGPRODUCT(has [0:m] ) SUBREGLABELCONTENT' */
-CREATE INDEX SUBREGLABELCONTENTFKIDSUBRE65730 
+CREATE INDEX SUBREGLABELCONTENTFKIDSUBRE98721 
        ON SUBREGLABELCONTENT ( 
            FK_ID_SUBREGPRODUCT ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'MASTERLABELCONTENT(has [0:m] ) SUBREGLABELCONTENT' */
-CREATE INDEX SUBREGLABELCONTENTFKIDMASTE65732 
+CREATE INDEX SUBREGLABELCONTENTFKIDMASTE98723 
        ON SUBREGLABELCONTENT ( 
            FK_ID_MASTERLABELCONTENT ) ;
  
-
-COMMIT;
 /* Entity - SubregPhysicalLabelDef */
 CREATE TABLE SUBREGPHYSICALLABELDEF ( 
            ID                               int                NOT NULL, 
@@ -2689,26 +2248,21 @@ CREATE TABLE SUBREGPHYSICALLABELDEF (
            MODIFIEDDATETIME                 datetime           NULL    , 
            FK_ID_SUBREGLABELCONTENT         int                NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - SubregPhysicalLabelDef */
-CREATE UNIQUE INDEX USUBREGPHYSICALLABELDEF_ID_65457 
+CREATE UNIQUE INDEX USUBREGPHYSICALLABELDEF_ID_98434 
        ON SUBREGPHYSICALLABELDEF ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'SUBREGLABELCONTENT(has [0:m] ) SUBREGPHYSICALLABELDEF' */
-CREATE INDEX SUBREGPHYSICALLABELDEFFKIDS65638 
+CREATE INDEX SUBREGPHYSICALLABELDEFFKIDS98629 
        ON SUBREGPHYSICALLABELDEF ( 
            FK_ID_SUBREGLABELCONTENT ) ;
  
-
-COMMIT;
 /* Entity - SubregProduct */
 CREATE TABLE SUBREGPRODUCT ( 
            ID                               int                NOT NULL, 
            NAME                             varchar( 254 )     NOT NULL, 
-           z_NUMBER                         varchar( 128 )     NOT NULL, 
+           z_NUMBER                         varchar( 5 )       NOT NULL, 
            DESCRIPTION                      varchar( 254 )     NULL    , 
            CHEMICALFAMILY                   varchar( 2 )       NOT NULL, 
            EPA_REGISTRATIONNUMBER           varchar( 128 )     NULL    , 
@@ -2720,28 +2274,21 @@ CREATE TABLE SUBREGPRODUCT (
            FK_ID_MASTERPRODUCT              int                NOT NULL, 
            FK_ID_SUBREGISTRANT              int                NOT NULL ) ;
  
-COMMIT;
- 
 /* Main key for Entity - SubregProduct */
-CREATE UNIQUE INDEX USUBREGPRODUCT_ID_654640 
+CREATE UNIQUE INDEX USUBREGPRODUCT_ID_984410 
        ON SUBREGPRODUCT ( 
            ID ) ;
  
-COMMIT;
 /* Index for Relationship - 'MASTERPRODUCT(has [0:m] ) SUBREGPRODUCT' */
-CREATE INDEX SUBREGPRODUCTFKIDMASTERPROD65729 
+CREATE INDEX SUBREGPRODUCTFKIDMASTERPROD98720 
        ON SUBREGPRODUCT ( 
            FK_ID_MASTERPRODUCT ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'SUBREGISTRANT(has [0:m] ) SUBREGPRODUCT' */
-CREATE INDEX SUBREGPRODUCTFKIDSUBREGISTR65731 
+CREATE INDEX SUBREGPRODUCTFKIDSUBREGISTR98722 
        ON SUBREGPRODUCT ( 
            FK_ID_SUBREGISTRANT ) ;
  
-
-COMMIT;
 /* Entity - Temp */
 CREATE TABLE z_TEMP ( 
            MARGINTOP                        double             NULL    , 
@@ -2749,47 +2296,38 @@ CREATE TABLE z_TEMP (
            MARGINLEFT                       double             NULL    , 
            MARGINRIGHT                      double             NULL     ) ;
  
-COMMIT;
  
- 
-COMMIT;
 /* Entity - User */
 CREATE TABLE z_USER ( 
            ID                               int                NOT NULL, 
            USERNAME                         varchar( 128 )     NOT NULL, 
            USERPASSWORD                     varchar( 128 )     NULL    , 
-           EMAILPASSWORD                    varchar( 128 )     NULL    , 
-           EMAILUSERNAME                    varchar( 254 )     NULL    , 
-           SMTPSERVER                       varchar( 254 )     NULL    , 
+           LASTLOGINDATETIME                datetime           NULL    , 
+           PASSWORDEXPIRESDATETIME          datetime           NULL    , 
+           EMAILADDRESS                     varchar( 254 )     NULL    , 
            ACTIVE                           varchar( 1 )       NULL    , 
            STATUS                           varchar( 1 )       NULL    , 
            z_NOTE                           longtext           NULL    , 
-           LASTLOGINDATETIME                datetime           NULL    , 
            CREATEDDATETIME                  datetime           NULL    , 
            MODIFIEDDATETIME                 datetime           NULL    , 
            CREATEDBY                        varchar( 128 )     NULL    , 
            LASTMODIFIEDBY                   varchar( 128 )     NULL    , 
            FK_ID_PERSON                     int                NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - User */
-CREATE UNIQUE INDEX Uz_USER_ID_654810 
+CREATE UNIQUE INDEX Uz_USER_ID_984580 
        ON z_USER ( 
            ID ) ;
 /* Main key for Entity - User */
-CREATE INDEX z_USER_USERNAME_654820 
+CREATE INDEX z_USER_USERNAME_984590 
        ON z_USER ( 
            USERNAME ) ;
  
-COMMIT;
 /* Index for Relationship - 'PERSON(for [0:1] ) z_USER' */
-CREATE INDEX z_USER_FK_ID_PERSON_657270 
+CREATE INDEX z_USER_FK_ID_PERSON_987180 
        ON z_USER ( 
            FK_ID_PERSON ) ;
  
-
-COMMIT;
 /* Entity - UserGroup */
 CREATE TABLE USERGROUP ( 
            ID                               int                NOT NULL, 
@@ -2800,27 +2338,21 @@ CREATE TABLE USERGROUP (
            CREATEDBY                        varchar( 128 )     NULL    , 
            LASTMODIFIEDBY                   varchar( 128 )     NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - UserGroup */
-CREATE UNIQUE INDEX UUSERGROUP_ID_654980 
+CREATE UNIQUE INDEX UUSERGROUP_ID_984740 
        ON USERGROUP ( 
            ID ) ;
  
-COMMIT;
 /* Entity - ZeidonGenkeyTable */
 CREATE TABLE ZEIDONGENKEYTABLE ( 
            CURRENTGENKEY                    int                NULL    , 
            TABLENAME                        varchar( 32 )      NOT NULL ) ;
  
-COMMIT;
- 
 /* Main key for Entity - ZeidonGenkeyTable */
-CREATE UNIQUE INDEX UZEIDONGENKEYTABLETABLENAME65508 
+CREATE UNIQUE INDEX UZEIDONGENKEYTABLETABLENAME98484 
        ON ZEIDONGENKEYTABLE ( 
            TABLENAME ) ;
  
-COMMIT;
 /* Entity - ZeidonLocking */
 CREATE TABLE ZEIDONLOCKING ( 
            LOD_NAME                         varchar( 35 )      NOT NULL, 
@@ -2830,142 +2362,189 @@ CREATE TABLE ZEIDONLOCKING (
            z_TIMESTAMP                      datetime           NOT NULL, 
            ID                               int                NULL     ) ;
  
-COMMIT;
- 
 /* Main key for Entity - ZeidonLocking */
-CREATE UNIQUE INDEX UZEIDONLOCKING_LOCKINGKEY_655110 
+CREATE UNIQUE INDEX UZEIDONLOCKING_LOCKINGKEY_984870 
        ON ZEIDONLOCKING ( 
            LOD_NAME, 
            KEYVALUE ) ;
  
-COMMIT;
+CREATE TABLE MMSUSAGEDRVSSDIRECTIONSFORUSESEC ( 
+           FK_ID_S_DIRECTIONSFORUSESECTION  int                NOT NULL, 
+           FK_ID_S_USAGE                    int                NOT NULL ) ;
+ 
+CREATE UNIQUE INDEX UMMSUSAGEDRVSSDIRECTIONSFOR98558 
+       ON MMSUSAGEDRVSSDIRECTIONSFORUSESEC ( 
+           FK_ID_S_DIRECTIONSFORUSESECTION, 
+           FK_ID_S_USAGE ) ;
+ 
+/* Index for Relationship - 'S_DIRECTIONSFORUSESECTION(is driven by [0:m] ) MMSUSAGEDRVSSDIRECTIONSFORUSESEC' */
+CREATE INDEX MMSUSAGEDRVSSDIRECTIONSFORU98558 
+       ON MMSUSAGEDRVSSDIRECTIONSFORUSESEC ( 
+           FK_ID_S_DIRECTIONSFORUSESECTION ) ;
+ 
+/* Index for Relationship - 'S_USAGE(drives [0:m] ) MMSUSAGEDRVSSDIRECTIONSFORUSESEC' */
+CREATE INDEX MMSUSAGEDRVSSDIRECTIONSFORU98560 
+       ON MMSUSAGEDRVSSDIRECTIONSFORUSESEC ( 
+           FK_ID_S_USAGE ) ;
+ 
+CREATE TABLE MM_COLOR_FOR_LLD_PANEL ( 
+           FK_ID_LLD_PANEL                  int                NOT NULL, 
+           FK_ID_COLOR                      int                NOT NULL ) ;
+ 
+CREATE UNIQUE INDEX UMMCOLORFORLLDPANELIDMMCOLO98563 
+       ON MM_COLOR_FOR_LLD_PANEL ( 
+           FK_ID_LLD_PANEL, 
+           FK_ID_COLOR ) ;
+ 
+/* Index for Relationship - 'LLD_PANEL(has [0:m] ) MM_COLOR_FOR_LLD_PANEL' */
+CREATE INDEX MMCOLORFORLLDPANELFKIDLLDPA98563 
+       ON MM_COLOR_FOR_LLD_PANEL ( 
+           FK_ID_LLD_PANEL ) ;
+ 
+/* Index for Relationship - 'COLOR(for [0:m] ) MM_COLOR_FOR_LLD_PANEL' */
+CREATE INDEX MMCOLORFORLLDPANELFKIDCOLOR98565 
+       ON MM_COLOR_FOR_LLD_PANEL ( 
+           FK_ID_COLOR ) ;
+ 
+CREATE TABLE MM_COLOR_FOR_LLD_BLOCK ( 
+           FK_ID_LLD_BLOCK                  int                NOT NULL, 
+           FK_ID_COLOR                      int                NOT NULL ) ;
+ 
+CREATE UNIQUE INDEX UMMCOLORFORLLDBLOCKIDMMCOLO98567 
+       ON MM_COLOR_FOR_LLD_BLOCK ( 
+           FK_ID_LLD_BLOCK, 
+           FK_ID_COLOR ) ;
+ 
+/* Index for Relationship - 'LLD_BLOCK(has [0:m] ) MM_COLOR_FOR_LLD_BLOCK' */
+CREATE INDEX MMCOLORFORLLDBLOCKFKIDLLDBL98567 
+       ON MM_COLOR_FOR_LLD_BLOCK ( 
+           FK_ID_LLD_BLOCK ) ;
+ 
+/* Index for Relationship - 'COLOR(for [0:m] ) MM_COLOR_FOR_LLD_BLOCK' */
+CREATE INDEX MMCOLORFORLLDBLOCKFKIDCOLOR98569 
+       ON MM_COLOR_FOR_LLD_BLOCK ( 
+           FK_ID_COLOR ) ;
+ 
 CREATE TABLE MMMUSAGEDRVSMDIRECTIONSFORUSESEC ( 
            FK_ID_M_DIRECTIONSFORUSESECTION  int                NOT NULL, 
            FK_ID_M_USAGE                    int                NOT NULL ) ;
  
-COMMIT;
- 
-CREATE UNIQUE INDEX UMMMUSAGEDRVSMDIRECTIONSFOR65587 
+CREATE UNIQUE INDEX UMMMUSAGEDRVSMDIRECTIONSFOR98578 
        ON MMMUSAGEDRVSMDIRECTIONSFORUSESEC ( 
            FK_ID_M_DIRECTIONSFORUSESECTION, 
            FK_ID_M_USAGE ) ;
  
-COMMIT;
 /* Index for Relationship - 'M_DIRECTIONSFORUSESECTION(is driven by [0:m] ) MMMUSAGEDRVSMDIRECTIONSFORUSESEC' */
-CREATE INDEX MMMUSAGEDRVSMDIRECTIONSFORU65587 
+CREATE INDEX MMMUSAGEDRVSMDIRECTIONSFORU98578 
        ON MMMUSAGEDRVSMDIRECTIONSFORUSESEC ( 
            FK_ID_M_DIRECTIONSFORUSESECTION ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'M_USAGE(drives [0:m] ) MMMUSAGEDRVSMDIRECTIONSFORUSESEC' */
-CREATE INDEX MMMUSAGEDRVSMDIRECTIONSFORU65589 
+CREATE INDEX MMMUSAGEDRVSMDIRECTIONSFORU98580 
        ON MMMUSAGEDRVSMDIRECTIONSFORUSESEC ( 
            FK_ID_M_USAGE ) ;
  
-
-COMMIT;
 CREATE TABLE MM_MASTERPRODUCT_FR_SUBREGISTRAN ( 
            FK_ID_SUBREGISTRANT              int                NOT NULL, 
            FK_ID_MASTERPRODUCT              int                NOT NULL ) ;
  
-COMMIT;
- 
-CREATE UNIQUE INDEX UMMMASTERPRODUCTFRSUBREGIST65607 
+CREATE UNIQUE INDEX UMMMASTERPRODUCTFRSUBREGIST98598 
        ON MM_MASTERPRODUCT_FR_SUBREGISTRAN ( 
            FK_ID_SUBREGISTRANT, 
            FK_ID_MASTERPRODUCT ) ;
  
-COMMIT;
 /* Index for Relationship - 'SUBREGISTRANT(has [0:m] ) MM_MASTERPRODUCT_FR_SUBREGISTRAN' */
-CREATE INDEX MMMASTERPRODUCTFRSUBREGISTR65607 
+CREATE INDEX MMMASTERPRODUCTFRSUBREGISTR98598 
        ON MM_MASTERPRODUCT_FR_SUBREGISTRAN ( 
            FK_ID_SUBREGISTRANT ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'MASTERPRODUCT(for [0:m] ) MM_MASTERPRODUCT_FR_SUBREGISTRAN' */
-CREATE INDEX MMMASTERPRODUCTFRSUBREGISTR65609 
+CREATE INDEX MMMASTERPRODUCTFRSUBREGISTR98600 
        ON MM_MASTERPRODUCT_FR_SUBREGISTRAN ( 
            FK_ID_MASTERPRODUCT ) ;
  
-
-COMMIT;
 CREATE TABLE MMSPLDDIRECTIONSFORUSESECTIONFRS ( 
            FK_ID_SPLD_USAGE                 int                NOT NULL, 
            FK_ID_SPLDDIRECTIONSFORUSESECTIO int                NOT NULL ) ;
  
-COMMIT;
- 
-CREATE UNIQUE INDEX UMMSPLDDIRECTIONSFORUSESECT65647 
+CREATE UNIQUE INDEX UMMSPLDDIRECTIONSFORUSESECT98638 
        ON MMSPLDDIRECTIONSFORUSESECTIONFRS ( 
            FK_ID_SPLD_USAGE, 
            FK_ID_SPLDDIRECTIONSFORUSESECTIO ) ;
  
-COMMIT;
 /* Index for Relationship - 'SPLD_USAGE(has [0:m] ) MMSPLDDIRECTIONSFORUSESECTIONFRS' */
-CREATE INDEX MMSPLDDIRECTIONSFORUSESECTI65647 
+CREATE INDEX MMSPLDDIRECTIONSFORUSESECTI98638 
        ON MMSPLDDIRECTIONSFORUSESECTIONFRS ( 
            FK_ID_SPLD_USAGE ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'SPLD_DIRECTIONSFORUSESECTION(for [0:m] ) MMSPLDDIRECTIONSFORUSESECTIONFRS' */
-CREATE INDEX MMSPLDDIRECTIONSFORUSESECTI65649 
+CREATE INDEX MMSPLDDIRECTIONSFORUSESECTI98640 
        ON MMSPLDDIRECTIONSFORUSESECTIONFRS ( 
            FK_ID_SPLDDIRECTIONSFORUSESECTIO ) ;
  
-
-COMMIT;
 CREATE TABLE MMSPLDMARKETINGSECTIONFRSPLDUSAG ( 
            FK_ID_SPLD_USAGE                 int                NOT NULL, 
            FK_ID_SPLD_MARKETINGSECTION      int                NOT NULL ) ;
  
-COMMIT;
- 
-CREATE UNIQUE INDEX UMMSPLDMARKETINGSECTIONFRSP65651 
+CREATE UNIQUE INDEX UMMSPLDMARKETINGSECTIONFRSP98642 
        ON MMSPLDMARKETINGSECTIONFRSPLDUSAG ( 
            FK_ID_SPLD_USAGE, 
            FK_ID_SPLD_MARKETINGSECTION ) ;
  
-COMMIT;
 /* Index for Relationship - 'SPLD_USAGE(has [0:m] ) MMSPLDMARKETINGSECTIONFRSPLDUSAG' */
-CREATE INDEX MMSPLDMARKETINGSECTIONFRSPL65651 
+CREATE INDEX MMSPLDMARKETINGSECTIONFRSPL98642 
        ON MMSPLDMARKETINGSECTIONFRSPLDUSAG ( 
            FK_ID_SPLD_USAGE ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'SPLD_MARKETINGSECTION(for [0:m] ) MMSPLDMARKETINGSECTIONFRSPLDUSAG' */
-CREATE INDEX MMSPLDMARKETINGSECTIONFRSPL65653 
+CREATE INDEX MMSPLDMARKETINGSECTIONFRSPL98644 
        ON MMSPLDMARKETINGSECTIONFRSPLDUSAG ( 
            FK_ID_SPLD_MARKETINGSECTION ) ;
  
-
-COMMIT;
 CREATE TABLE MM_USERGROUP_CONTAINSMEMBR_Z_USE ( 
            FK_ID_Z_USER                     int                NOT NULL, 
            FK_ID_USERGROUP                  int                NOT NULL ) ;
  
-COMMIT;
- 
-CREATE UNIQUE INDEX UMMUSERGROUPCONTAINSMEMBRZU65736 
+CREATE UNIQUE INDEX UMMUSERGROUPCONTAINSMEMBRZU98727 
        ON MM_USERGROUP_CONTAINSMEMBR_Z_USE ( 
            FK_ID_Z_USER, 
            FK_ID_USERGROUP ) ;
  
-COMMIT;
 /* Index for Relationship - 'z_USER(belongs to [0:m] ) MM_USERGROUP_CONTAINSMEMBR_Z_USE' */
-CREATE INDEX MMUSERGROUPCONTAINSMEMBRZUS65736 
+CREATE INDEX MMUSERGROUPCONTAINSMEMBRZUS98727 
        ON MM_USERGROUP_CONTAINSMEMBR_Z_USE ( 
            FK_ID_Z_USER ) ;
  
-
-COMMIT;
 /* Index for Relationship - 'USERGROUP(contains member [0:m] ) MM_USERGROUP_CONTAINSMEMBR_Z_USE' */
-CREATE INDEX MMUSERGROUPCONTAINSMEMBRZUS65738 
+CREATE INDEX MMUSERGROUPCONTAINSMEMBRZUS98729 
        ON MM_USERGROUP_CONTAINSMEMBR_Z_USE ( 
            FK_ID_USERGROUP ) ;
  
-
-COMMIT;
+DROP TABLE columns_priv ;
+DROP TABLE db ;
+DROP TABLE event ;
+DROP TABLE func ;
+DROP TABLE general_log ;
+DROP TABLE help_category ;
+DROP TABLE help_keyword ;
+DROP TABLE help_relation ;
+DROP TABLE help_topic ;
+DROP TABLE innodb_index_stats ;
+DROP TABLE innodb_table_stats ;
+DROP TABLE ndb_binlog_index ;
+DROP TABLE plugin ;
+DROP TABLE proc ;
+DROP TABLE procs_priv ;
+DROP TABLE proxies_priv ;
+DROP TABLE servers ;
+DROP TABLE slave_master_info ;
+DROP TABLE slave_relay_log_info ;
+DROP TABLE slave_worker_info ;
+DROP TABLE slow_log ;
+DROP TABLE tables_priv ;
+DROP TABLE time_zone ;
+DROP TABLE time_zone_leap_second ;
+DROP TABLE time_zone_name ;
+DROP TABLE time_zone_transition ;
+DROP TABLE time_zone_transition_type ;
+DROP TABLE user ;

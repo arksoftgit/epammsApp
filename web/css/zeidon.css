@@ -1422,6 +1422,12 @@ img {
    font-size: 11px;
    }
 
+.text9light{
+   text-align: right;
+   font-size: 9px;
+   font-weight: 100;
+   }
+
 .text10Red {
    font-size: 11px;
    color: #ff0000;

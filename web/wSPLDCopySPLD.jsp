@@ -447,11 +447,11 @@ else
 <%
    View lMLC = null;
    View lSPLDLST = null;
-   View mSPLDefBlock = null;
    View mLLD_LST = null;
    View mMasLC = null;
    View mPrimReg = null;
    View mSPLDef = null;
+   View mSPLDefBlock = null;
    View mSPLDefPanel = null;
    View mSubLC = null;
    View mSubProd = null;
@@ -599,7 +599,7 @@ else
             task.log( ).debug( "Root.SearchName: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "wWebXfer.Root" );
+            task.log( ).debug( "Entity does not exist for SPLD_Name: " + "wWebXfer.Root" );
       }
    }
 %>

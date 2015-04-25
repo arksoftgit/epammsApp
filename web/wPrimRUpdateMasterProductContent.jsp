@@ -1457,7 +1457,7 @@ else
             task.log( ).debug( "MasterLabelContent.Version: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasLC.MasterLabelContent" );
+            task.log( ).debug( "Entity does not exist for ContentName: " + "mMasLC.MasterLabelContent" );
       }
    }
 %>
@@ -1513,7 +1513,7 @@ else
             task.log( ).debug( "MasterProduct.Description: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasLC.MasterProduct" );
+            task.log( ).debug( "Entity does not exist for ContentDescription: " + "mMasLC.MasterProduct" );
       }
    }
 %>

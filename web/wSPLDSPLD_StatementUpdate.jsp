@@ -883,7 +883,7 @@ else
             task.log( ).debug( "CompositeComponentList.BreakupText: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSPLDef.CompositeComponentList" );
+            task.log( ).debug( "Entity does not exist for MLEdit2: " + "mSPLDef.CompositeComponentList" );
       }
    }
 %>
@@ -990,7 +990,7 @@ else
             task.log( ).debug( "CompositeComponentList.ContinuationLeadingText: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSPLDef.CompositeComponentList" );
+            task.log( ).debug( "Entity does not exist for MLEdit3: " + "mSPLDef.CompositeComponentList" );
       }
    }
 %>
@@ -1051,7 +1051,7 @@ else
             task.log( ).debug( "CompositeComponentList.ContinuationText: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSPLDef.CompositeComponentList" );
+            task.log( ).debug( "Entity does not exist for MLEdit4: " + "mSPLDef.CompositeComponentList" );
       }
    }
 %>

@@ -673,7 +673,7 @@ else
             task.log( ).info( "M_GeneralStatement.Text: " + strErrorMapValue );
          }
          else
-            task.log( ).info( "Entity does not exist: " + "mMasLC.M_GeneralStatement" );
+            task.log( ).info( "Entity does not exist for StatementText: " + "mMasLC.M_GeneralStatement" );
       }
    }
 %>

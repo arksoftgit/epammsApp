@@ -442,11 +442,11 @@ else
 <%
    View lMLC = null;
    View lSPLDLST = null;
-   View mSPLDefBlock = null;
    View mLLD_LST = null;
    View mMasLC = null;
    View mPrimReg = null;
    View mSPLDef = null;
+   View mSPLDefBlock = null;
    View mSPLDefPanel = null;
    View mSubLC = null;
    View mSubProd = null;
@@ -604,7 +604,7 @@ else
             task.log( ).debug( "SubregPhysicalLabelDef.wSavedLLD_Name: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSPLDef.SubregPhysicalLabelDef" );
+            task.log( ).debug( "Entity does not exist for EditBox2: " + "mSPLDef.SubregPhysicalLabelDef" );
       }
    }
 %>

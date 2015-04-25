@@ -1408,7 +1408,7 @@ else
             task.log( ).debug( "Person.FirstName: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mPerson.Person" );
+            task.log( ).debug( "Entity does not exist for EBFirstName: " + "mPerson.Person" );
       }
    }
 %>
@@ -1459,7 +1459,7 @@ else
             task.log( ).debug( "Person.LastName: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mPerson.Person" );
+            task.log( ).debug( "Entity does not exist for EBLastName: " + "mPerson.Person" );
       }
    }
 %>
@@ -1510,7 +1510,7 @@ else
             task.log( ).debug( "Person.Title: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mPerson.Person" );
+            task.log( ).debug( "Entity does not exist for EBTitle: " + "mPerson.Person" );
       }
    }
 %>
@@ -1561,7 +1561,7 @@ else
             task.log( ).debug( "Person.WorkPhone: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mPerson.Person" );
+            task.log( ).debug( "Entity does not exist for EBCPhone: " + "mPerson.Person" );
       }
    }
 %>
@@ -1612,7 +1612,7 @@ else
             task.log( ).debug( "Person.Fax: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mPerson.Person" );
+            task.log( ).debug( "Entity does not exist for EBFax: " + "mPerson.Person" );
       }
    }
 %>
@@ -1663,7 +1663,7 @@ else
             task.log( ).debug( "Person.EmailAddress: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mPerson.Person" );
+            task.log( ).debug( "Entity does not exist for EBEmail: " + "mPerson.Person" );
       }
    }
 %>
@@ -1837,7 +1837,7 @@ else
             task.log( ).debug( "Address.Address: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mPerson.Address" );
+            task.log( ).debug( "Entity does not exist for EBPStreetAddress: " + "mPerson.Address" );
       }
    }
 %>
@@ -1887,7 +1887,7 @@ else
             task.log( ).debug( "Address.AddressLine2: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mPerson.Address" );
+            task.log( ).debug( "Entity does not exist for EBPAddress: " + "mPerson.Address" );
       }
    }
 %>
@@ -1938,7 +1938,7 @@ else
             task.log( ).debug( "Address.City: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mPerson.Address" );
+            task.log( ).debug( "Entity does not exist for EBPCity: " + "mPerson.Address" );
       }
    }
 %>
@@ -2077,7 +2077,7 @@ else
             task.log( ).debug( "Address.ZipCode: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mPerson.Address" );
+            task.log( ).debug( "Entity does not exist for EBPZipCode: " + "mPerson.Address" );
       }
    }
 %>
@@ -2161,7 +2161,7 @@ else
             task.log( ).debug( "User.UserName: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mCurrentUser.User" );
+            task.log( ).debug( "Entity does not exist for EBUserName: " + "mCurrentUser.User" );
       }
    }
 %>
@@ -2212,7 +2212,7 @@ else
             task.log( ).debug( "Root.AttemptPassword: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "wWebXfer.Root" );
+            task.log( ).debug( "Entity does not exist for EBPassword: " + "wWebXfer.Root" );
       }
    }
 %>
@@ -2263,7 +2263,7 @@ else
             task.log( ).debug( "Root.ConfirmPassword: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "wWebXfer.Root" );
+            task.log( ).debug( "Entity does not exist for EBConfirmPassword: " + "wWebXfer.Root" );
       }
    }
 %>

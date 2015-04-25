@@ -277,7 +277,6 @@ $(function() {
             if ( found === false && parent_array.length > 0 && g_selected_first === this ) {
                el = parent_array[0];
             }
-
          }
          setCurrentBlockData( $(el), "on click" );
          clearListAndSelection( el ); // clear the list and set current selection
@@ -736,6 +735,7 @@ $(function() {
    }
 */
    function mapElementDataToUiData( $current_element ) {
+      $("#SpecialAttrToggle").hide();
       if ( $current_element ) {
       // displayElementData( "mapElementDataToUiData", $current_element );
          var entityAttr;
@@ -744,6 +744,7 @@ $(function() {
          var key;
          var value;
          var sectionType;
+         var blockName;
          var element_id = $current_element.attr( "id" );
          if ( element_id !== "label" && element_id !== "page" ) {
             element_id = "block";
@@ -762,6 +763,8 @@ $(function() {
                   }
                   if ( key === "z_^l^l^d_^section^type" ) {
                      sectionType = value;
+                  } else if ( key === "z_^name" ) {
+                     blockName = value;
                   }
                   /* not using colorwell at present
                   if ( $(this).hasClass( "colorwell" ) ) {
@@ -778,6 +781,7 @@ $(function() {
          });
          if ( element_id === "block" ) {
             console.log( "Processing block type: " + sectionType );
+            var options = "<option value=\"Title\">Title</option><option value=\"Text\">Text</option>";  // default
             // The .prop() method should be used to set disabled and checked instead of the .attr() method.
             // $('#id').prop('disabled', false);
             // $('#id').prop('disabled', 'disabled');
@@ -785,32 +789,69 @@ $(function() {
                $("#zImageNameToggle").show();
                $("#zCheckContinuationBlockToggle").hide()
                $("#zClaimListTypeToggle").hide();
-            } else if ( sectionType === "Marketing" || sectionType === "DirectionsForUse" ||
+               $("#zMarketingSectionToggle").hide();
+            } else if ( sectionType === "Marketing" || sectionType === "DirectionsForUse" || sectionType === "FirstAid" ||
                         sectionType === "StorageDisposal" || sectionType === "Hazards" || sectionType === "Precautionary" ) {
                $("#zCheckContinuationBlockToggle").show();
                $("#zImageNameToggle").hide();
                if ( sectionType === "Marketing" ) {
                   $("#zClaimListTypeToggle").show();
+                  $("#zMarketingSectionToggle").show();
+                  $('#zMarketingSection option[value="' + blockName + '"]').prop( 'selected', true );
+                  // Marketing:   Title / Text / Header / Column List
+                  options += "<option value=\"Header\">Header</option><option value=\"Column List\">Column List</option>";
                } else {
                   $("#zClaimListTypeToggle").hide();
+                  $("#zMarketingSectionToggle").hide();
+                  if ( sectionType === "DirectionsForUse" || sectionType === "FirstAid" ) {
+                     // Directions for Use:   Title / Text / Header
+                     // First Aid:   Title / Text / Header
+                     options += "<option value=\"Header\">Header</option>";
+                  }
                }
             } else {
                $("#zCheckContinuationBlockToggle").hide();
                $("#zImageNameToggle").hide();
                $("#zClaimListTypeToggle").hide();
+               $("#zMarketingSectionToggle").hide();
+               if ( sectionType === "HumanHazard" ) {
+                  // Human Hazard:  Hazards Warning / Hazards Signal Word / Hazards Precautionary
+                  options = "<option value=\"Hazards Warning\">Hazards Warning</option><option value=\"Hazards Signal Word\">Hazards Signal Word</option><option value=\"Hazards Precautionary\">Hazards Precautionary</option>";
+               } else if ( sectionType === "Ingredients" ) {
+                  // Ingredients:   Title / Ingredients Items / Ingredients Inert / Ingredients Total
+                  options = "<option value=\"Title\">Title</option><option value=\"Ingredients Items\">Ingredients Items</option><option value=\"Ingredients Inert\">Ingredients Inert</option><option value=\"Ingredients Total\">Ingredients Total</option>";
+               }
+               // Default:   Title / Text
+            }
+            $("#zBlockFormatType")
+               .find('option:not(:first)')
+               .remove()
+               .end()
+               .append(options)
+               .val('')
+            ;
+
+            if ( $(this).hasClass( "panel" ) ) {
+               $("#zBlockFormatTypeToggle").hide();
+            } else {
+               $("#zBlockFormatTypeToggle").show();
             }
          } else {
-            $("#zCheckContinuationBlockToggle").hide()
+            $("#zBlockFormatTypeToggle").hide();
+            $("#zCheckContinuationBlockToggle").hide();
             $("#zImageNameToggle").hide();
             $("#zClaimListTypeToggle").hide();
+            $("#zMarketingSectionToggle").hide();
          }
       } else {
          $("input.zeidon, select.zeidonToggle").each( function() {
             this.type === "checkbox" ? this.checked = false : $(this).val( "" );
          });
+         $("#zBlockFormatTypeToggle").hide();
          $("#zCheckContinuationBlockToggle").hide();
          $("#zImageNameToggle").hide();
          $("#zClaimListTypeToggle").hide();
+         $("#zMarketingSectionToggle").hide();
       }
 
       /*
@@ -1387,9 +1428,30 @@ $(function() {
       // displayElementData( "zeidon blur (after)", $(this) );
       });
 
+   $("#zBlockFormatType")
+      .change( function() {
+         var val = $(this).val();
+         if ( val === "" ) {
+            $("#SpecialAttrToggle").hide(200);
+         } else {
+            $("#SpecialAttrToggle").show(400);
+         }
+      });
+
+   $("#zMarketingSection")
+      .change( function() {
+         var val = $(this).val();
+         $("#zBlockName").val( val );
+
+      // alert( "Selected value: " + val );
+      // g_$current_block.text( $('#zSectionType').val() );  this wipes out all child nodes of the div ... but the complicated next line works where
+      // nodeType === 3 restricts this to TEXT_NODE.
+         g_$current_block.contents().filter( function() { return this.nodeType === 3; }).replaceWith( "Marketing: " + val );
+      });
+
    $("#zSectionType")
       .change( function() {
-         var val = $('#zSectionType').val();
+         var val = $(this).val();
          if ( val === "" ) {
             val = "?";
          }
@@ -1777,12 +1839,112 @@ public class FileServer {
             "Left" : "1.0",
             "Height" : "10.0",
             "Width" : "10.0",
-            "FK_ID_LLD_PAGE" : "27"
+            "FK_ID_LLD_PAGE" : "27",
+            "LLD_Block" : [ {
+                "ID" : "622",
+                "Tag" : "Tag622",
+                "Name" : "Bactericidal Claims",
+                "LLD_SectionType" : "Marketing",
+                "LLD_ColumnListType" : "C2",
+                "Top" : "2.02",
+                "Left" : "0.11",
+                "Height" : "2.2",
+                "Width" : "4.76",
+                "BorderColorOverride" : "Y",
+                "Depth" : "3",
+                "wComputedTopPosition" : "2.02",
+                "FK_ID_LLD_BLOCK" : "620",
+                "LLD_SpecialSectionAttribute" : [ {
+                  "ID" : "201",
+                  "Name" : "Column List",
+                  "PF1ID_LLD_BLOCK" : "622",
+                  "PF2ID_LLD_BLOCK" : "631",
+                  "LLD_SpecialSectionAttrBlock" : [ {
+                    "ID" : "631",
+                    "BorderStyle" : "dashed",
+                    "MarginTop" : "0.5",
+                    "MarginLeft" : "0.02"
+                  } ]
+                }, {
+                  "ID" : "202",
+                  "Name" : "Text",
+                  "PF1ID_LLD_BLOCK" : "622",
+                  "PF2ID_LLD_BLOCK" : "632",
+                  "LLD_SpecialSectionAttrBlock" : [ {
+                    "ID" : "632",
+                    "BorderStyle" : "dotted"
+                  } ]
+                } ]
+              } ],
+              "LLD_SpecialSectionAttribute" : [ {
+                "ID" : "198",
+                "Name" : "Block",
+                "PF1ID_LLD_BLOCK" : "620",
+                "PF2ID_LLD_BLOCK" : "624",
+                "LLD_SpecialSectionAttrBlock" : [ {
+                  "ID" : "624",
+                  "BorderColor" : "red",
+                  "BorderStyle" : "solid",
+                  "BorderWidth" : "2.0"
+                } ]
+              } ]
+            }, {
+              "ID" : "625",
+              "Tag" : "Tag625",
+              "LLD_SectionType" : "Graphic",
+              "ImageName" : "AlphaTechPetBase.jpg",
+              "Top" : "5.51",
+              "Left" : "0.0",
+              "Height" : "1.05",
+              "Width" : "5.05",
+              "Depth" : "2",
+              "wComputedTopPosition" : "5.51",
+              "AUTOSEQ" : "2",
+              "FK_ID_LLD_PANEL" : "52"
+            } ]
           } ]
         } ]
       } ]
    } ]
 } ] }
+ [LLD_SubBlock]  (353678bf:8706)
+    (~)ID: 622
+    (~)Tag: Tag622
+    (~)Name: Bactericidal Claims
+    (~)LLD_SectionType: Marketing
+    (~)LLD_ColumnListType: Usage List - 2 Column
+    (~)Top: 2.02
+    (~)Left: 0.11
+    (~)Height: 2.2
+    (~)Width: 4.76
+    (~)BorderColorOverride: Y
+    (~)Depth: 3
+    (#)wComputedTopPosition: 2.02
+    (~)FK_ID_LLD_BLOCK: 620
+     [LLD_SpecialSectionAttribute]  (b315ee4:8714)
+        (~)ID: 201
+        (~)Name: Column List
+        (~)PF1ID_LLD_BLOCK: 622
+        (~)PF2ID_LLD_BLOCK: 631
+         [LLD_SpecialSectionAttrBlock]  (564cd079:8715)
+            (~)ID: 631
+            (~)BorderStyle: Dashed
+            (~)MarginTop: 0.5
+            (~)MarginLeft: 0.02
+     [LLD_SpecialSectionAttribute]  (4d0ae432:8716)
+        (~)ID: 202
+        (~)Name: Text
+        (~)PF1ID_LLD_BLOCK: 622
+        (~)PF2ID_LLD_BLOCK: 632
+         [LLD_SpecialSectionAttrBlock]  (60bb622:8717)
+            (~)ID: 632
+            (~)BorderStyle: Dotted
+     [LLD_SpecialSectionAttribute]  Updated Created (1a9ca132:8855)
+        (#)Name: Title
+         [LLD_SpecialSectionAttrBlock]  Created (211ae744:8856)
+     [LLD_SpecialSectionAttribute]  Updated Created (6d453256:8857)
+        (#)Name: MARKETING Header
+         [LLD_SpecialSectionAttrBlock]  Created (59ebe425:8858)
 */
    function CaptureZeidonLabelJsonFromDomJson( jsonDom ) {
    // var jsonObj = eval( "[" + json + "]" );
@@ -2327,6 +2489,28 @@ public class FileServer {
       return $element;
    }
 
+   function AddSpecialAttributes( $block, obj ) {
+      var objSpecial = obj["LLD_SpecialSectionAttribute"];
+      if ( objSpecial ) {
+         for ( var k = 0; k < objSpecial.length; k++ ) {
+            var objSpecialAttr = objSpecial[k];
+            if ( objSpecialAttr ) {
+               console.log( "SpecialSection: " + objSpecialAttr["Name"] );
+               var objSpecialBlock = objSpecialAttr["LLD_SpecialSectionAttrBlock"];
+               if ( objSpecialBlock ) {
+                  var objSpecialBlockProp = objSpecialBlock[0];
+                  if ( objSpecialBlockProp ) {
+                     for ( var prop in objSpecialBlockProp ) {
+                        if ( prop !== ".meta" ) {
+                           console.log( "   SpecialBlock: " + prop + "." + objSpecialBlockProp[prop] );
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      }
+   }
    // for ( var k = 0; k < objPage.length; k++ ) {
    //    AddHtmlWysiwygLabelElements( $("#page" + (k + 1)), $parentElement, parentId, objPage[k], "page", 0 );
 
@@ -2338,6 +2522,9 @@ public class FileServer {
          addZeidonAttributeToElement( $el, "wE", div );
          addZeidonAttributeToElement( $el, "wPID", parentId );
          addZeidonAttributeToElement( $el, "wPE", $parentElement.data( "z_w^e" ) );
+         if ( div === "block" ) {
+            AddSpecialAttributes( $el, obj );
+         }
       // console.log( "Setting4 wPID: " + parentId + "  wPE: " + $parentElement.data( "z_w^e" ) );
       // displayElementData( "AddHtmlWysiwygLabelElements Parent", $parentElement );
       // displayElementData( "AddHtmlWysiwygLabelElements Element", $el );
@@ -2507,6 +2694,7 @@ public class FileServer {
                g_metaVersion = jsonMeta["version"];
                g_metaDate = jsonMeta["date"];
                var jsonColors = jsonObj["Colors"];
+               var jsonMarketing = jsonObj["Marketing"];
                jsonObj = jsonObj["OIs"];
 
                // Display the JSON coming back (to the client) from Zeidon (server).
@@ -2519,6 +2707,7 @@ public class FileServer {
                   resizeImg();
             // }
                setColors( jsonColors );
+               setMarketing( jsonMarketing );
             } catch(e) {
                $id("zFormattedJsonLabel").innerHTML = jsonZeidon;
                alert( "JSON is not well formatted:\n" + e.message );
@@ -3230,6 +3419,16 @@ public class FileServer {
       initColorPicker( '#colorText', jsonColors, colors, names, 0 );
       initColorPicker( '#colorBack', jsonColors, colors, names, 1 );
       initColorPicker( '#colorBord', jsonColors, colors, names, 2 );
+   }
+
+   function setMarketing( jsonMarketing )
+   {
+      if ( $.isArray( jsonMarketing ) ) {
+         var list = $("#zMarketingSection");
+         $.each(jsonMarketing, function(index, item) {
+            list.append( new Option( item.Name, item.Name ) );
+         });
+      }
    }
 
 // Initialize everything (first time in).

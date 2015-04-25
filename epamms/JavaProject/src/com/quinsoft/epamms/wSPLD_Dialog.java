@@ -547,6 +547,25 @@ o_fnLocalBuildQual_16( View     vSubtask,
 } 
 
 
+private int 
+o_fnLocalBuildQual_0( View     vSubtask,
+                      zVIEW    vQualObject,
+                      String   szTempString_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "Subregistrant" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregOrganization" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "Name" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Value", szTempString_0.toString( ) );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
 //:DIALOG OPERATION
 //:ConfirmDeleteSubregProduct( VIEW ViewToWindow )
 
@@ -4681,37 +4700,194 @@ CLEAN_ClaimEntries( View     ViewToWindow )
 //:DIALOG OPERATION
 //:PostbuildBlockDefinitionUpdate( VIEW ViewToWindow )
 
-//:   VIEW mSPLDef REGISTERED AS mSPLDef
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
 public int 
 PostbuildBlockDefinitionUpdate( View     ViewToWindow )
 {
-   zVIEW    mSPLDef = new zVIEW( );
+   zVIEW    wWebXfer = new zVIEW( );
    int      RESULT = 0;
+   //:VIEW mSPLDef REGISTERED AS mSPLDef
+   zVIEW    mSPLDef = new zVIEW( );
    //:VIEW mSPLDefPanel REGISTERED AS mSPLDefPanel
    zVIEW    mSPLDefPanel = new zVIEW( );
    //:VIEW mSPLDefBlock REGISTERED AS mSPLDefBlock
    zVIEW    mSPLDefBlock = new zVIEW( );
+   //:STRING ( 2 )   szSpace
+   String   szSpace = null;
    //:STRING ( 64 )  szName
    String   szName = null;
    //:STRING ( 64 )  szType
    String   szType = null;
-   //:STRING ( 256 ) szMsg
+   //:STRING ( 256 ) szGraphic
+   String   szGraphic = null;
+   //:STRING ( 512 ) szMsg
    String   szMsg = null;
-   String   szTempString_0 = null;
-   String   szTempString_1 = null;
    int      lTempInteger_0 = 0;
    int      lTempInteger_1 = 0;
+   int      lTempInteger_2 = 0;
+   String   szTempString_0 = null;
 
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
    RESULT = GetViewByName( mSPLDef, "mSPLDef", ViewToWindow, zLEVEL_TASK );
    RESULT = GetViewByName( mSPLDefPanel, "mSPLDefPanel", ViewToWindow, zLEVEL_TASK );
    RESULT = GetViewByName( mSPLDefBlock, "mSPLDefBlock", ViewToWindow, zLEVEL_TASK );
+
+   //:szName = mSPLDefBlock.LLD_Block.Name
+   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+   StringBuilder sb_szName;
+   if ( szName == null )
+      sb_szName = new StringBuilder( 32 );
+   else
+      sb_szName = new StringBuilder( szName );
+       GetVariableFromAttribute( sb_szName, mi_lTempInteger_0, 'S', 65, mSPLDefBlock, "LLD_Block", "Name", "", 0 );
+   lTempInteger_0 = mi_lTempInteger_0.intValue( );
+   szName = sb_szName.toString( );}
+   //:szType = mSPLDefBlock.LLD_Block.LLD_SectionType
+   {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+   StringBuilder sb_szType;
+   if ( szType == null )
+      sb_szType = new StringBuilder( 32 );
+   else
+      sb_szType = new StringBuilder( szType );
+       GetVariableFromAttribute( sb_szType, mi_lTempInteger_1, 'S', 65, mSPLDefBlock, "LLD_Block", "LLD_SectionType", "", 0 );
+   lTempInteger_1 = mi_lTempInteger_1.intValue( );
+   szType = sb_szType.toString( );}
+   //:szGraphic = mSPLDefBlock.LLD_Block.ImageName 
+   {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
+   StringBuilder sb_szGraphic;
+   if ( szGraphic == null )
+      sb_szGraphic = new StringBuilder( 32 );
+   else
+      sb_szGraphic = new StringBuilder( szGraphic );
+       GetVariableFromAttribute( sb_szGraphic, mi_lTempInteger_2, 'S', 257, mSPLDefBlock, "LLD_Block", "ImageName", "", 0 );
+   lTempInteger_2 = mi_lTempInteger_2.intValue( );
+   szGraphic = sb_szGraphic.toString( );}
+
+   //:IF szType != ""
+   if ( ZeidonStringCompare( szType, 1, 0, "", 1, 0, 65 ) != 0 )
+   { 
+      //:szMsg = szType
+       {StringBuilder sb_szMsg;
+      if ( szMsg == null )
+         sb_szMsg = new StringBuilder( 32 );
+      else
+         sb_szMsg = new StringBuilder( szMsg );
+            ZeidonStringCopy( sb_szMsg, 1, 0, szType, 1, 0, 513 );
+      szMsg = sb_szMsg.toString( );}
+      //:szSpace = ": "
+       {StringBuilder sb_szSpace;
+      if ( szSpace == null )
+         sb_szSpace = new StringBuilder( 32 );
+      else
+         sb_szSpace = new StringBuilder( szSpace );
+            ZeidonStringCopy( sb_szSpace, 1, 0, ": ", 1, 0, 3 );
+      szSpace = sb_szSpace.toString( );}
+      //:ELSE
+   } 
+   else
+   { 
+      //:szMsg = ""
+       {StringBuilder sb_szMsg;
+      if ( szMsg == null )
+         sb_szMsg = new StringBuilder( 32 );
+      else
+         sb_szMsg = new StringBuilder( szMsg );
+            ZeidonStringCopy( sb_szMsg, 1, 0, "", 1, 0, 513 );
+      szMsg = sb_szMsg.toString( );}
+      //:szSpace = ""
+       {StringBuilder sb_szSpace;
+      if ( szSpace == null )
+         sb_szSpace = new StringBuilder( 32 );
+      else
+         sb_szSpace = new StringBuilder( szSpace );
+            ZeidonStringCopy( sb_szSpace, 1, 0, "", 1, 0, 3 );
+      szSpace = sb_szSpace.toString( );}
+   } 
+
+   //:END
+   //:IF mSPLDefBlock.LLD_Block.ContinuationBlockFlag = "Y"
+   if ( CompareAttributeToString( mSPLDefBlock, "LLD_Block", "ContinuationBlockFlag", "Y" ) == 0 )
+   { 
+      //:szMsg = szMsg + "[**continued**]"
+       {StringBuilder sb_szMsg;
+      if ( szMsg == null )
+         sb_szMsg = new StringBuilder( 32 );
+      else
+         sb_szMsg = new StringBuilder( szMsg );
+            ZeidonStringConcat( sb_szMsg, 1, 0, "[**continued**]", 1, 0, 513 );
+      szMsg = sb_szMsg.toString( );}
+      //:szSpace = ": "
+       {StringBuilder sb_szSpace;
+      if ( szSpace == null )
+         sb_szSpace = new StringBuilder( 32 );
+      else
+         sb_szSpace = new StringBuilder( szSpace );
+            ZeidonStringCopy( sb_szSpace, 1, 0, ": ", 1, 0, 3 );
+      szSpace = sb_szSpace.toString( );}
+   } 
+
+   //:END
+   //:IF szName != ""
+   if ( ZeidonStringCompare( szName, 1, 0, "", 1, 0, 65 ) != 0 )
+   { 
+      //:szMsg = szMsg + szSpace + szName
+       {StringBuilder sb_szMsg;
+      if ( szMsg == null )
+         sb_szMsg = new StringBuilder( 32 );
+      else
+         sb_szMsg = new StringBuilder( szMsg );
+            ZeidonStringConcat( sb_szMsg, 1, 0, szSpace, 1, 0, 513 );
+      szMsg = sb_szMsg.toString( );}
+       {StringBuilder sb_szMsg;
+      if ( szMsg == null )
+         sb_szMsg = new StringBuilder( 32 );
+      else
+         sb_szMsg = new StringBuilder( szMsg );
+            ZeidonStringConcat( sb_szMsg, 1, 0, szName, 1, 0, 513 );
+      szMsg = sb_szMsg.toString( );}
+      //:szSpace = " - "
+       {StringBuilder sb_szSpace;
+      if ( szSpace == null )
+         sb_szSpace = new StringBuilder( 32 );
+      else
+         sb_szSpace = new StringBuilder( szSpace );
+            ZeidonStringCopy( sb_szSpace, 1, 0, " - ", 1, 0, 3 );
+      szSpace = sb_szSpace.toString( );}
+   } 
+
+   //:END
+   //:IF szGraphic != ""
+   if ( ZeidonStringCompare( szGraphic, 1, 0, "", 1, 0, 257 ) != 0 )
+   { 
+      //:szMsg = szMsg + szSpace + szGraphic
+       {StringBuilder sb_szMsg;
+      if ( szMsg == null )
+         sb_szMsg = new StringBuilder( 32 );
+      else
+         sb_szMsg = new StringBuilder( szMsg );
+            ZeidonStringConcat( sb_szMsg, 1, 0, szSpace, 1, 0, 513 );
+      szMsg = sb_szMsg.toString( );}
+       {StringBuilder sb_szMsg;
+      if ( szMsg == null )
+         sb_szMsg = new StringBuilder( 32 );
+      else
+         sb_szMsg = new StringBuilder( szMsg );
+            ZeidonStringConcat( sb_szMsg, 1, 0, szGraphic, 1, 0, 513 );
+      szMsg = sb_szMsg.toString( );}
+   } 
+
+   //:END
+
+   //:wWebXfer.Root.CurrentSectionTitle = szMsg
+   SetAttributeFromString( wWebXfer, "Root", "CurrentSectionTitle", szMsg );
 
    //:// mSPLDefBlock should have been set up before transferring to this page.
    //:TraceLineS( "PostbuildBlockDefinitionUpdate Display ", "LLD_Block" )
    TraceLineS( "PostbuildBlockDefinitionUpdate Display ", "LLD_Block" );
    //:DisplayEntityInstance( mSPLDefBlock, "LLD_Block" )
    DisplayEntityInstance( mSPLDefBlock, "LLD_Block" );
-   //:SetUpFormattingSelect( mSPLDefPanel, mSPLDefBlock.LLD_Block.LLD_SectionType ) 
+   //:// SetUpFormattingSelect( mSPLDefPanel, mSPLDefBlock.LLD_Block.LLD_SectionType ) 
+   //:SetUpKeywordEntries( mSPLDefBlock, mSPLDefBlock.LLD_Block.LLD_SectionType )
    {StringBuilder sb_szTempString_0;
    if ( szTempString_0 == null )
       sb_szTempString_0 = new StringBuilder( 32 );
@@ -4720,24 +4896,14 @@ PostbuildBlockDefinitionUpdate( View     ViewToWindow )
        GetStringFromAttribute( sb_szTempString_0, mSPLDefBlock, "LLD_Block", "LLD_SectionType" );
    szTempString_0 = sb_szTempString_0.toString( );}
    {
-    mSPLDef_Object m_mSPLDef_Object = new mSPLDef_Object( mSPLDefPanel );
-    m_mSPLDef_Object.omSPLDef_SetUpFormattingSelect( mSPLDefPanel, szTempString_0 );
-    // m_mSPLDef_Object = null;  // permit gc  (unnecessary)
-   }
-   //:SetUpKeywordEntries( mSPLDefBlock, mSPLDefBlock.LLD_Block.LLD_SectionType )
-   {StringBuilder sb_szTempString_1;
-   if ( szTempString_1 == null )
-      sb_szTempString_1 = new StringBuilder( 32 );
-   else
-      sb_szTempString_1 = new StringBuilder( szTempString_1 );
-       GetStringFromAttribute( sb_szTempString_1, mSPLDefBlock, "LLD_Block", "LLD_SectionType" );
-   szTempString_1 = sb_szTempString_1.toString( );}
-   {
     mSPLDef_Object m_mSPLDef_Object = new mSPLDef_Object( mSPLDefBlock );
-    m_mSPLDef_Object.omSPLDef_SetUpKeywordEntries( mSPLDefBlock, szTempString_1 );
+    m_mSPLDef_Object.omSPLDef_SetUpKeywordEntries( mSPLDefBlock, szTempString_0 );
     // m_mSPLDef_Object = null;  // permit gc  (unnecessary)
    }
-
+   //:TraceLineS( "PostbuildBlockDefinitionUpdate Display2 ", "LLD_Block" )
+   TraceLineS( "PostbuildBlockDefinitionUpdate Display2 ", "LLD_Block" );
+   //:DisplayEntityInstance( mSPLDefBlock, "LLD_Block" )
+   DisplayEntityInstance( mSPLDefBlock, "LLD_Block" );
    //:// Select which of the CompositeComponentList entities are to be displayed
    //:FOR EACH mSPLDef.Display WITHIN mSPLDef.SubregPhysicalLabelDef 
    RESULT = SetCursorFirstEntity( mSPLDef, "Display", "SubregPhysicalLabelDef" );
@@ -4749,29 +4915,10 @@ PostbuildBlockDefinitionUpdate( View     ViewToWindow )
    } 
 
    //:END
-   //:szName = mSPLDefBlock.LLD_Block.Name
-   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
-   StringBuilder sb_szName;
-   if ( szName == null )
-      sb_szName = new StringBuilder( 32 );
-   else
-      sb_szName = new StringBuilder( szName );
-       GetVariableFromAttribute( sb_szName, mi_lTempInteger_0, 'S', 65, mSPLDefBlock, "LLD_Block", "Name", "", 0 );
-   lTempInteger_0 = mi_lTempInteger_0.intValue( );
-   szName = sb_szName.toString( );}
+
    //:IF szName != ""
    if ( ZeidonStringCompare( szName, 1, 0, "", 1, 0, 65 ) != 0 )
    { 
-      //:szType = mSPLDefBlock.LLD_Block.LLD_SectionType
-      {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
-      StringBuilder sb_szType;
-      if ( szType == null )
-         sb_szType = new StringBuilder( 32 );
-      else
-         sb_szType = new StringBuilder( szType );
-             GetVariableFromAttribute( sb_szType, mi_lTempInteger_1, 'S', 65, mSPLDefBlock, "LLD_Block", "LLD_SectionType", "", 0 );
-      lTempInteger_1 = mi_lTempInteger_1.intValue( );
-      szType = sb_szType.toString( );}
       //:SET CURSOR FIRST mSPLDef.CompositeComponentList WHERE mSPLDef.CompositeComponentList.DisplayType = szType AND
       //:                                                   mSPLDef.CompositeComponentList.Value = szName
       RESULT = SetCursorFirstEntity( mSPLDef, "CompositeComponentList", "" );
@@ -4793,28 +4940,28 @@ PostbuildBlockDefinitionUpdate( View     ViewToWindow )
             sb_szMsg = new StringBuilder( 32 );
          else
             sb_szMsg = new StringBuilder( szMsg );
-                  ZeidonStringCopy( sb_szMsg, 1, 0, "Unable to locate ", 1, 0, 257 );
+                  ZeidonStringCopy( sb_szMsg, 1, 0, "Unable to locate ", 1, 0, 513 );
          szMsg = sb_szMsg.toString( );}
           {StringBuilder sb_szMsg;
          if ( szMsg == null )
             sb_szMsg = new StringBuilder( 32 );
          else
             sb_szMsg = new StringBuilder( szMsg );
-                  ZeidonStringConcat( sb_szMsg, 1, 0, szName, 1, 0, 257 );
+                  ZeidonStringConcat( sb_szMsg, 1, 0, szName, 1, 0, 513 );
          szMsg = sb_szMsg.toString( );}
           {StringBuilder sb_szMsg;
          if ( szMsg == null )
             sb_szMsg = new StringBuilder( 32 );
          else
             sb_szMsg = new StringBuilder( szMsg );
-                  ZeidonStringConcat( sb_szMsg, 1, 0, " within ", 1, 0, 257 );
+                  ZeidonStringConcat( sb_szMsg, 1, 0, " within ", 1, 0, 513 );
          szMsg = sb_szMsg.toString( );}
           {StringBuilder sb_szMsg;
          if ( szMsg == null )
             sb_szMsg = new StringBuilder( 32 );
          else
             sb_szMsg = new StringBuilder( szMsg );
-                  ZeidonStringConcat( sb_szMsg, 1, 0, szType, 1, 0, 257 );
+                  ZeidonStringConcat( sb_szMsg, 1, 0, szType, 1, 0, 513 );
          szMsg = sb_szMsg.toString( );}
          //:MessageSend( ViewToWindow, "", "Block Update",
          //:             szMsg,
@@ -4830,28 +4977,28 @@ PostbuildBlockDefinitionUpdate( View     ViewToWindow )
             sb_szMsg = new StringBuilder( 32 );
          else
             sb_szMsg = new StringBuilder( szMsg );
-                  ZeidonStringCopy( sb_szMsg, 1, 0, "Looking for: ", 1, 0, 257 );
+                  ZeidonStringCopy( sb_szMsg, 1, 0, "Looking for: ", 1, 0, 513 );
          szMsg = sb_szMsg.toString( );}
           {StringBuilder sb_szMsg;
          if ( szMsg == null )
             sb_szMsg = new StringBuilder( 32 );
          else
             sb_szMsg = new StringBuilder( szMsg );
-                  ZeidonStringConcat( sb_szMsg, 1, 0, szName, 1, 0, 257 );
+                  ZeidonStringConcat( sb_szMsg, 1, 0, szName, 1, 0, 513 );
          szMsg = sb_szMsg.toString( );}
           {StringBuilder sb_szMsg;
          if ( szMsg == null )
             sb_szMsg = new StringBuilder( 32 );
          else
             sb_szMsg = new StringBuilder( szMsg );
-                  ZeidonStringConcat( sb_szMsg, 1, 0, "  within: ", 1, 0, 257 );
+                  ZeidonStringConcat( sb_szMsg, 1, 0, "  within: ", 1, 0, 513 );
          szMsg = sb_szMsg.toString( );}
           {StringBuilder sb_szMsg;
          if ( szMsg == null )
             sb_szMsg = new StringBuilder( 32 );
          else
             sb_szMsg = new StringBuilder( szMsg );
-                  ZeidonStringConcat( sb_szMsg, 1, 0, szType, 1, 0, 257 );
+                  ZeidonStringConcat( sb_szMsg, 1, 0, szType, 1, 0, 513 );
          szMsg = sb_szMsg.toString( );}
          //:TraceLineS( szMsg, "" )
          TraceLineS( szMsg, "" );
@@ -5973,25 +6120,6 @@ GOTO_UpdateSpecialFormatDef( View     ViewToWindow )
    return( 0 );
 //    // Just for positioning
 // END
-} 
-
-
-private int 
-o_fnLocalBuildQual_0( View     vSubtask,
-                      zVIEW    vQualObject,
-                      String   szTempString_0 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "Subregistrant" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregOrganization" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "Name" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Value", szTempString_0.toString( ) );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
 } 
 
 

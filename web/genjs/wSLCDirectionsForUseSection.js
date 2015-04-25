@@ -102,6 +102,19 @@ function _DisableFormElements( bDisabled )
       timerID = null;
    }
 
+   // Controls on the window may have been set as disabled through javascript but
+   // when we try to get the values for these controls in jsp (response.getParameter)
+   // they will always be null.  Set any disabled fields to enabled for this reason.
+   for ( j = 0; j < document.forms.length; j++ )
+   {
+      theForm = document.forms[ j ];
+      for ( k = 0; k < theForm.length; k++ )
+      {
+         if (theForm.elements[ k ].disabled == true)
+             theForm.elements[ k ].disabled = false;
+      }
+   }
+
    var $el = $("#zDisable");
    if ( $el.length > 0 ) {
       $el[0].disabled = true;

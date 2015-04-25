@@ -799,11 +799,11 @@ else
 <%
    View lMLC = null;
    View lSPLDLST = null;
-   View mSPLDefBlock = null;
    View mLLD_LST = null;
    View mMasLC = null;
    View mPrimReg = null;
    View mSPLDef = null;
+   View mSPLDefBlock = null;
    View mSPLDefPanel = null;
    View mSubLC = null;
    View mSubProd = null;
@@ -1134,7 +1134,7 @@ else
             task.log( ).debug( "SubregLabelContent.Description: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSubLC.SubregLabelContent" );
+            task.log( ).debug( "Entity does not exist for EditBox1: " + "mSubLC.SubregLabelContent" );
       }
    }
 %>
@@ -1185,7 +1185,7 @@ else
             task.log( ).debug( "SubregLabelContent.Version: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSubLC.SubregLabelContent" );
+            task.log( ).debug( "Entity does not exist for EditBox2: " + "mSubLC.SubregLabelContent" );
       }
    }
 %>

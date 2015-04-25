@@ -212,22 +212,22 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
-      // EditBox: EBTextColor
+      // ComboBox: TextColor
       nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
+      if ( nRC >= 0 )
       {
-         strMapValue = request.getParameter( "EBTextColor" );
+         strMapValue = request.getParameter( "hTextColor" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "EBTextColor", "", strMapValue );
+               VmlOperation.CreateMessage( task, "TextColor", "", strMapValue );
             else
                mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "TextColor" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "EBTextColor", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "TextColor", e.getReason( ), strMapValue );
          }
       }
 
@@ -288,11 +288,11 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
-      // EditBox: BorderColor
+      // ComboBox: BorderColor
       nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
+      if ( nRC >= 0 )
       {
-         strMapValue = request.getParameter( "BorderColor" );
+         strMapValue = request.getParameter( "hBorderColor" );
          try
          {
             if ( webMapping )
@@ -865,15 +865,15 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox1:GroupBox */ %>
-<div id="GroupBox1" name="GroupBox1" style="float:left;width:456px;" >
+<div id="GroupBox1" name="GroupBox1" style="float:left;width:592px;" >
 
-<table cols=3 style="width:456px;"  class="grouptable">
+<table cols=3 style="width:592px;"  class="grouptable">
 
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:158px;">
 <% /* TXFormattingType::Text */ %>
 
-<span  id="TXFormattingType:" name="TXFormattingType:" style="width:130px;height:26px;">Formatting Type:</span>
+<span  id="TXFormattingType:" name="TXFormattingType:" style="width:146px;height:26px;">Formatting Type:</span>
 
 </td>
 <td valign="top" style="width:192px;">
@@ -884,12 +884,12 @@ else
       task.log( ).debug( "Invalid View: " + "Type" );
    else
    {
-      nRC = mSPLDefBlock.cursor( "SpecialFormattingSelectEntry" ).checkExistenceOfEntity( ).toInt();
+      nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttribute" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
       try
       {
-         strTextDisplayValue = mSPLDefBlock.cursor( "SpecialFormattingSelectEntry" ).getAttribute( "KeywordName" ).getString( "" );
+         strTextDisplayValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttribute" ).getAttribute( "Name" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -902,18 +902,18 @@ else
    }
 %>
 
-<span  id="Type" name="Type" style="width:192px;height:24px;"><%=strTextDisplayValue%></span>
+<label  id="Type" name="Type" style="width:192px;height:24px;"><%=strTextDisplayValue%></label>
 
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:158px;">
 <% /* TXTopMargin::Text */ %>
 
-<span  id="TXTopMargin:" name="TXTopMargin:" style="width:130px;height:26px;">Top Margin:</span>
+<span  id="TXTopMargin:" name="TXTopMargin:" style="width:146px;height:26px;">Top Margin:</span>
 
 </td>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:184px;">
 <% /* MarginTop:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "MarginTop", strError );
@@ -967,13 +967,13 @@ else
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:158px;">
 <% /* TXBottomMargin::Text */ %>
 
-<span  id="TXBottomMargin:" name="TXBottomMargin:" style="width:130px;height:26px;">Bottom Margin:</span>
+<span  id="TXBottomMargin:" name="TXBottomMargin:" style="width:146px;height:26px;">Bottom Margin:</span>
 
 </td>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:184px;">
 <% /* MarginBottom:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "MarginBottom", strError );
@@ -1024,13 +1024,13 @@ else
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:158px;">
 <% /* TXLeftMargin::Text */ %>
 
-<span  id="TXLeftMargin:" name="TXLeftMargin:" style="width:130px;height:26px;">Left Margin:</span>
+<span  id="TXLeftMargin:" name="TXLeftMargin:" style="width:146px;height:26px;">Left Margin:</span>
 
 </td>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:184px;">
 <% /* MarginLeft:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "MarginLeft", strError );
@@ -1081,13 +1081,13 @@ else
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:158px;">
 <% /* TXRightMargin::Text */ %>
 
-<span  id="TXRightMargin:" name="TXRightMargin:" style="width:130px;height:26px;">Right Margin:</span>
+<span  id="TXRightMargin:" name="TXRightMargin:" style="width:146px;height:26px;">Right Margin:</span>
 
 </td>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:184px;">
 <% /* MarginRight:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "MarginRight", strError );
@@ -1138,10 +1138,10 @@ else
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:158px;">
 <% /* TXTextAlignment::Text */ %>
 
-<span  id="TXTextAlignment:" name="TXTextAlignment:" style="width:130px;height:28px;">Text Alignment:</span>
+<span  id="TXTextAlignment:" name="TXTextAlignment:" style="width:146px;height:28px;">Text Alignment:</span>
 
 </td>
 <td valign="top" style="width:98px;">
@@ -1229,10 +1229,10 @@ else
 <td>&nbsp</td>
 </tr>
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:158px;">
 <% /* TXFontFamily::Text */ %>
 
-<span  id="TXFontFamily:" name="TXFontFamily:" style="width:130px;height:30px;">Font Family:</span>
+<span  id="TXFontFamily:" name="TXFontFamily:" style="width:146px;height:30px;">Font Family:</span>
 
 </td>
 <td valign="top" style="width:98px;">
@@ -1320,10 +1320,10 @@ else
 <td>&nbsp</td>
 </tr>
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:158px;">
 <% /* TXFontSize::Text */ %>
 
-<span  id="TXFontSize:" name="TXFontSize:" style="width:130px;height:30px;">Font Size:</span>
+<span  id="TXFontSize:" name="TXFontSize:" style="width:146px;height:30px;">Font Size:</span>
 
 </td>
 <td valign="top" style="width:98px;">
@@ -1411,10 +1411,10 @@ else
 <td>&nbsp</td>
 </tr>
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:158px;">
 <% /* TXFontWeight::Text */ %>
 
-<span  id="TXFontWeight:" name="TXFontWeight:" style="width:130px;height:30px;">Font Weight:</span>
+<span  id="TXFontWeight:" name="TXFontWeight:" style="width:146px;height:30px;">Font Weight:</span>
 
 </td>
 <td valign="top" style="width:98px;">
@@ -1502,65 +1502,104 @@ else
 <td>&nbsp</td>
 </tr>
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:158px;">
 <% /* TXFontColor::Text */ %>
 
-<span  id="TXFontColor:" name="TXFontColor:" style="width:130px;height:30px;">Font Color:</span>
+<span  id="TXFontColor:" name="TXFontColor:" style="width:146px;height:30px;">Font Color:</span>
 
 </td>
 <td valign="top" style="width:98px;">
-<% /* EBTextColor:EditBox */ %>
+<% /* TextColor:ComboBox */ %>
+<% strErrorMapValue = "";  %>
+
+<select  name="TextColor" id="TextColor" size="1" style="width:98px;" onchange="TextColorOnChange( )">
+
 <%
-   strErrorMapValue = VmlOperation.CheckError( "EBTextColor", strError );
-   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   boolean inListTextColor = false;
+
+   mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
+   if ( VmlOperation.isValid( mSPLDefBlock ) )
    {
-      if ( StringUtils.equals( strErrorFlag, "Y" ) )
-         strErrorColor = "color:red;";
-   }
-   else
-   {
-      strErrorColor = "";
-      mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
-      if ( VmlOperation.isValid( mSPLDefBlock ) == false )
-         task.log( ).debug( "Invalid View: " + "EBTextColor" );
+      List<TableEntry> list = JspWebUtils.getTableDomainValues( mSPLDefBlock , "LLD_SpecialSectionAttrBlock", "TextColor", "" );
+
+      nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+         strComboCurrentValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "TextColor" ).getString( "" );
+         if ( strComboCurrentValue == null )
+            strComboCurrentValue = "";
+      }
       else
       {
-         nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            try
-            {
-            strErrorMapValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "TextColor" ).getString( "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on EBTextColor: " + e.getMessage());
-               task.log().error( "*** Error on ctrl EBTextColor", e );
-            }
-            if ( strErrorMapValue == null )
-               strErrorMapValue = "";
-
-            task.log( ).debug( "LLD_SpecialSectionAttrBlock.TextColor: " + strErrorMapValue );
-         }
-         else
-            task.log( ).debug( "Entity does not exist for TextColor: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
+         strComboCurrentValue = "";
       }
-   }
+
+      // Code for NOT required attribute, which makes sure a blank entry exists.
+      if ( strComboCurrentValue == "" )
+      {
+         inListTextColor = true;
 %>
+         <option selected="selected" value=""></option>
+<%
+      }
+      else
+      {
+%>
+         <option value=""></option>
+<%
+      }
+      for ( TableEntry entry : list )
+      {
+         String internalValue = entry.getInternalValue( );
+         String externalValue = entry.getExternalValue( );
+         // Perhaps getInternalValue and getExternalValue should return an empty string, 
+         // but currently it returns null.  Set to empty string. 
+         if ( externalValue == null )
+         {
+            internalValue = "";
+            externalValue = "";
+         }
 
-<input name="EBTextColor" id="EBTextColor" style="width:98px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+         if ( !StringUtils.isBlank( externalValue ) )
+         {
+            if ( StringUtils.equals( strComboCurrentValue, externalValue ) )
+            {
+               inListTextColor = true;
+%>
+               <option selected="selected" value="<%=externalValue%>"><%=externalValue%></option>
+<%
+            }
+            else
+            {
+%>
+               <option value="<%=externalValue%>"><%=externalValue%></option>
+<%
+            }
+         }
+      }  // for ( TableEntry entry
+      // The value from the database isn't in the domain, add it to the list as disabled.
+      if ( !inListTextColor )
+      { 
+%>
+         <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
+<%
+      }  
+   }  // if view != null
+%>
+</select>
 
+<input name="hTextColor" id="hTextColor" type="hidden" value="<%=strComboCurrentValue%>" >
 </td>
 <td>&nbsp</td>
 </tr>
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:158px;">
 <% /* TXLineHeight::Text */ %>
 
-<span  id="TXLineHeight:" name="TXLineHeight:" style="width:130px;height:26px;">Line Height:</span>
+<span  id="TXLineHeight:" name="TXLineHeight:" style="width:146px;height:26px;">Line Height:</span>
 
 </td>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:184px;">
 <% /* TextLineHeight:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "TextLineHeight", strError );
@@ -1611,10 +1650,10 @@ else
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:158px;">
 <% /* TXBorderStyle::Text */ %>
 
-<span  id="TXBorderStyle:" name="TXBorderStyle:" style="width:130px;height:30px;">Border Style:</span>
+<span  id="TXBorderStyle:" name="TXBorderStyle:" style="width:146px;height:30px;">Border Style:</span>
 
 </td>
 <td valign="top" style="width:98px;">
@@ -1702,13 +1741,13 @@ else
 <td>&nbsp</td>
 </tr>
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:158px;">
 <% /* TXBorderWidth::Text */ %>
 
-<span  id="TXBorderWidth:" name="TXBorderWidth:" style="width:130px;height:30px;">Border Width:</span>
+<span  id="TXBorderWidth:" name="TXBorderWidth:" style="width:146px;height:30px;">Border Width:</span>
 
 </td>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:184px;">
 <% /* BorderWidth:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "BorderWidth", strError );
@@ -1759,62 +1798,101 @@ else
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:158px;">
 <% /* TXBorderColor::Text */ %>
 
-<span  id="TXBorderColor:" name="TXBorderColor:" style="width:130px;height:30px;">Border Color:</span>
+<span  id="TXBorderColor:" name="TXBorderColor:" style="width:146px;height:30px;">Border Color:</span>
 
 </td>
 <td valign="top" style="width:98px;">
-<% /* BorderColor:EditBox */ %>
+<% /* BorderColor:ComboBox */ %>
+<% strErrorMapValue = "";  %>
+
+<select  name="BorderColor" id="BorderColor" size="1" style="width:98px;" onchange="BorderColorOnChange( )">
+
 <%
-   strErrorMapValue = VmlOperation.CheckError( "BorderColor", strError );
-   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   boolean inListBorderColor = false;
+
+   mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
+   if ( VmlOperation.isValid( mSPLDefBlock ) )
    {
-      if ( StringUtils.equals( strErrorFlag, "Y" ) )
-         strErrorColor = "color:red;";
-   }
-   else
-   {
-      strErrorColor = "";
-      mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
-      if ( VmlOperation.isValid( mSPLDefBlock ) == false )
-         task.log( ).debug( "Invalid View: " + "BorderColor" );
+      List<TableEntry> list = JspWebUtils.getTableDomainValues( mSPLDefBlock , "LLD_SpecialSectionAttrBlock", "BorderColor", "" );
+
+      nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+         strComboCurrentValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "BorderColor" ).getString( "" );
+         if ( strComboCurrentValue == null )
+            strComboCurrentValue = "";
+      }
       else
       {
-         nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            try
-            {
-            strErrorMapValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "BorderColor" ).getString( "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on BorderColor: " + e.getMessage());
-               task.log().error( "*** Error on ctrl BorderColor", e );
-            }
-            if ( strErrorMapValue == null )
-               strErrorMapValue = "";
-
-            task.log( ).debug( "LLD_SpecialSectionAttrBlock.BorderColor: " + strErrorMapValue );
-         }
-         else
-            task.log( ).debug( "Entity does not exist for BorderColor: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
+         strComboCurrentValue = "";
       }
-   }
+
+      // Code for NOT required attribute, which makes sure a blank entry exists.
+      if ( strComboCurrentValue == "" )
+      {
+         inListBorderColor = true;
 %>
+         <option selected="selected" value=""></option>
+<%
+      }
+      else
+      {
+%>
+         <option value=""></option>
+<%
+      }
+      for ( TableEntry entry : list )
+      {
+         String internalValue = entry.getInternalValue( );
+         String externalValue = entry.getExternalValue( );
+         // Perhaps getInternalValue and getExternalValue should return an empty string, 
+         // but currently it returns null.  Set to empty string. 
+         if ( externalValue == null )
+         {
+            internalValue = "";
+            externalValue = "";
+         }
 
-<input name="BorderColor" id="BorderColor" style="width:98px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+         if ( !StringUtils.isBlank( externalValue ) )
+         {
+            if ( StringUtils.equals( strComboCurrentValue, externalValue ) )
+            {
+               inListBorderColor = true;
+%>
+               <option selected="selected" value="<%=externalValue%>"><%=externalValue%></option>
+<%
+            }
+            else
+            {
+%>
+               <option value="<%=externalValue%>"><%=externalValue%></option>
+<%
+            }
+         }
+      }  // for ( TableEntry entry
+      // The value from the database isn't in the domain, add it to the list as disabled.
+      if ( !inListBorderColor )
+      { 
+%>
+         <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
+<%
+      }  
+   }  // if view != null
+%>
+</select>
 
+<input name="hBorderColor" id="hBorderColor" type="hidden" value="<%=strComboCurrentValue%>" >
 </td>
 <td>&nbsp</td>
 </tr>
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:158px;">
 <% /* TXTitlePosition::Text */ %>
 
-<span  id="TXTitlePosition:" name="TXTitlePosition:" style="width:130px;height:30px;">Title Position:</span>
+<span  id="TXTitlePosition:" name="TXTitlePosition:" style="width:146px;height:30px;">Title Position:</span>
 
 </td>
 <td valign="top" style="width:252px;">

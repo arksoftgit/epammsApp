@@ -1133,7 +1133,7 @@ else
             task.log( ).debug( "Root.AttemptContentVersion: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "wWebXfer.Root" );
+            task.log( ).debug( "Entity does not exist for EBSectionName: " + "wWebXfer.Root" );
       }
    }
 %>

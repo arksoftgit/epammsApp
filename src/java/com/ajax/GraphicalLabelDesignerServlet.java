@@ -287,7 +287,20 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
          }
       }
       jsonColors += " ]";
-   // StringWriter sw = null;
+      
+      String jsonMarketing = "[";
+      ec = vLLD.cursor( "SPLD_MarketingSection" );
+      cr = ec.setFirst();
+      while ( cr.isSet() ) {
+         jsonMarketing += " { \"Name\" : \"" + ec.getAttribute( "Name" ).getString() + "\" }";
+         cr = ec.setNext();
+         if ( cr.isSet() ) {
+            jsonMarketing += ", ";
+         }
+      }
+      jsonMarketing += " ]";
+
+      // StringWriter sw = null;
    // BufferedWriter writer = null;
       try {
       /*
@@ -348,8 +361,8 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
 
          // Remove everything after SPLD_LLD and its children, and then add back termination for
          // OIs, SubregPhysicalLabelDef, and the opening brace.
-         jsonLabel = sb.substring( 0, pos ) + " } ] } ], \"Colors\" : " + jsonColors + " }";
-      // logger.debug( "Reduced Json Label from OI: " + jsonLabel );
+         jsonLabel = sb.substring( 0, pos ) + " } ] } ], \"Colors\" : " + jsonColors + ", \"Marketing\" : " + jsonMarketing + " }";
+         logger.debug( "Reduced Json Label from OI: " + jsonLabel );
 
       } catch( ZeidonException ze ) {
          logger.debug( "Error loading Json Label: " + ze.getMessage() );
@@ -973,9 +986,10 @@ end debug code */
       // We are just going to get the SPLD_LLD and its children and rename SPLD_LLD to LLD
          try {
          // displaySPLD( vLLD, null, "" );
+         // logger.debug( "LoadLabel OI: " );
          // vLLD.logObjectInstance();
             jsonLabel = convertLLD_ToJSON( vLLD );
-         // logger.debug( "LoadLabel JSON: " + jsonLabel );
+            logger.debug( "LoadLabel JSON: " + jsonLabel );
          // jsonLabel = jsonLabel.replaceFirst( "\"TZLLD\",", "\"TZLLD\",\n      \"fileName\" : \"" + fileName + "\"," );
          } catch( ZeidonException ze ) {
             logger.debug( "Error loading Json Label: " + ze.getMessage() );

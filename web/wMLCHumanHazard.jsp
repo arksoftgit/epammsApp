@@ -1706,7 +1706,7 @@ else
             task.log( ).info( "M_HumanHazardSection.PrecautionaryStatement: " + strErrorMapValue );
          }
          else
-            task.log( ).info( "Entity does not exist: " + "mMasLC.M_HumanHazardSection" );
+            task.log( ).info( "Entity does not exist for Statement: " + "mMasLC.M_HumanHazardSection" );
       }
    }
 %>
@@ -1855,7 +1855,7 @@ else
             task.log( ).debug( "M_HumanHazardSection.PanelLoc1: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_HumanHazardSection" );
+            task.log( ).debug( "Entity does not exist for PanelLocation1: " + "mMasLC.M_HumanHazardSection" );
       }
    }
 %>
@@ -1900,7 +1900,7 @@ else
             task.log( ).debug( "M_HumanHazardSection.LabelLoc1: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_HumanHazardSection" );
+            task.log( ).debug( "Entity does not exist for LabelLocation1: " + "mMasLC.M_HumanHazardSection" );
       }
    }
 %>
@@ -1945,7 +1945,7 @@ else
             task.log( ).debug( "M_HumanHazardSection.PanelLoc2: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_HumanHazardSection" );
+            task.log( ).debug( "Entity does not exist for PanelLocation2: " + "mMasLC.M_HumanHazardSection" );
       }
    }
 %>
@@ -1990,7 +1990,7 @@ else
             task.log( ).debug( "M_HumanHazardSection.LabelLoc2: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_HumanHazardSection" );
+            task.log( ).debug( "Entity does not exist for LabelLocation2: " + "mMasLC.M_HumanHazardSection" );
       }
    }
 %>
@@ -2035,7 +2035,7 @@ else
             task.log( ).debug( "M_HumanHazardSection.PanelLoc3: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_HumanHazardSection" );
+            task.log( ).debug( "Entity does not exist for PanelLocation3: " + "mMasLC.M_HumanHazardSection" );
       }
    }
 %>
@@ -2080,7 +2080,7 @@ else
             task.log( ).debug( "M_HumanHazardSection.LabelLoc3: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_HumanHazardSection" );
+            task.log( ).debug( "Entity does not exist for LabelLocation3: " + "mMasLC.M_HumanHazardSection" );
       }
    }
 %>
@@ -2125,7 +2125,7 @@ else
             task.log( ).debug( "M_HumanHazardSection.PanelLoc4: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_HumanHazardSection" );
+            task.log( ).debug( "Entity does not exist for PanelLocation4: " + "mMasLC.M_HumanHazardSection" );
       }
    }
 %>
@@ -2170,7 +2170,7 @@ else
             task.log( ).debug( "M_HumanHazardSection.LabelLoc4: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_HumanHazardSection" );
+            task.log( ).debug( "Entity does not exist for LabelLocation4: " + "mMasLC.M_HumanHazardSection" );
       }
    }
 %>
@@ -2215,7 +2215,7 @@ else
             task.log( ).debug( "M_HumanHazardSection.PanelLoc5: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_HumanHazardSection" );
+            task.log( ).debug( "Entity does not exist for PanelLocation5: " + "mMasLC.M_HumanHazardSection" );
       }
    }
 %>
@@ -2260,7 +2260,7 @@ else
             task.log( ).debug( "M_HumanHazardSection.LabelLoc5: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_HumanHazardSection" );
+            task.log( ).debug( "Entity does not exist for LabelLocation5: " + "mMasLC.M_HumanHazardSection" );
       }
    }
 %>
@@ -2333,7 +2333,7 @@ else
             task.log( ).info( "M_HumanHazardSection.dFullStatement: " + strErrorMapValue );
          }
          else
-            task.log( ).info( "Entity does not exist: " + "mMasLC.M_HumanHazardSection" );
+            task.log( ).info( "Entity does not exist for MLEditFullStatement: " + "mMasLC.M_HumanHazardSection" );
       }
    }
 %>

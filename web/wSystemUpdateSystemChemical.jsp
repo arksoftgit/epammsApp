@@ -1332,7 +1332,7 @@ else
             task.log( ).info( "EPA_ChemicalFamily.Name: " + strErrorMapValue );
          }
          else
-            task.log( ).info( "Entity does not exist: " + "mEPA.EPA_ChemicalFamily" );
+            task.log( ).info( "Entity does not exist for Name: " + "mEPA.EPA_ChemicalFamily" );
       }
    }
 %>
@@ -1370,7 +1370,7 @@ else
             task.log( ).info( "EPA_ChemicalFamily.Description: " + strErrorMapValue );
          }
          else
-            task.log( ).info( "Entity does not exist: " + "mEPA.EPA_ChemicalFamily" );
+            task.log( ).info( "Entity does not exist for Description: " + "mEPA.EPA_ChemicalFamily" );
       }
    }
 %>

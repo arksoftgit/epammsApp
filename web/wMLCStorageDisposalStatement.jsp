@@ -775,7 +775,7 @@ else
             task.log( ).debug( "M_StorageDisposalStatement.Title: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_StorageDisposalStatement" );
+            task.log( ).debug( "Entity does not exist for MLEdit3: " + "mMasLC.M_StorageDisposalStatement" );
       }
    }
 %>
@@ -819,7 +819,7 @@ else
             task.log( ).debug( "M_StorageDisposalStatement.Text: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_StorageDisposalStatement" );
+            task.log( ).debug( "Entity does not exist for MLEdit2: " + "mMasLC.M_StorageDisposalStatement" );
       }
    }
 %>

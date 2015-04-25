@@ -838,7 +838,7 @@ else
             task.log( ).debug( "Color.Name: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSubreg.Color" );
+            task.log( ).debug( "Entity does not exist for ColorName: " + "mSubreg.Color" );
       }
    }
 %>
@@ -883,7 +883,7 @@ else
             task.log( ).debug( "Color.RGB: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSubreg.Color" );
+            task.log( ).debug( "Entity does not exist for RGB: " + "mSubreg.Color" );
       }
    }
 %>
@@ -928,7 +928,7 @@ else
             task.log( ).debug( "Color.C: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSubreg.Color" );
+            task.log( ).debug( "Entity does not exist for C: " + "mSubreg.Color" );
       }
    }
 %>
@@ -973,7 +973,7 @@ else
             task.log( ).debug( "Color.M: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSubreg.Color" );
+            task.log( ).debug( "Entity does not exist for M: " + "mSubreg.Color" );
       }
    }
 %>
@@ -1018,7 +1018,7 @@ else
             task.log( ).debug( "Color.Y: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSubreg.Color" );
+            task.log( ).debug( "Entity does not exist for Y: " + "mSubreg.Color" );
       }
    }
 %>
@@ -1063,7 +1063,7 @@ else
             task.log( ).debug( "Color.K: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSubreg.Color" );
+            task.log( ).debug( "Entity does not exist for K: " + "mSubreg.Color" );
       }
    }
 %>
@@ -1108,7 +1108,7 @@ else
             task.log( ).debug( "Color.Pantone: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSubreg.Color" );
+            task.log( ).debug( "Entity does not exist for Pantone: " + "mSubreg.Color" );
       }
    }
 %>

@@ -1249,7 +1249,7 @@ else
             task.log( ).debug( "Root.SplitHTML_Before: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "wWebXfer.Root" );
+            task.log( ).debug( "Entity does not exist for TextPrevious: " + "wWebXfer.Root" );
       }
    }
 %>
@@ -1313,7 +1313,7 @@ else
             task.log( ).debug( "Root.SplitHTML_After: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "wWebXfer.Root" );
+            task.log( ).debug( "Entity does not exist for TextNext: " + "wWebXfer.Root" );
       }
    }
 %>
@@ -1397,7 +1397,7 @@ else
             task.log( ).debug( "Root.NameBefore: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "wWebXfer.Root" );
+            task.log( ).debug( "Entity does not exist for PrevName: " + "wWebXfer.Root" );
       }
    }
 %>
@@ -1490,7 +1490,7 @@ else
             task.log( ).debug( "Root.NameAfter: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "wWebXfer.Root" );
+            task.log( ).debug( "Entity does not exist for NextName: " + "wWebXfer.Root" );
       }
    }
 %>

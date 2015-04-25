@@ -647,7 +647,7 @@ else
             task.log( ).debug( "M_DilutionChartEntry.ProductAmountText: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_DilutionChartEntry" );
+            task.log( ).debug( "Entity does not exist for EditBox3: " + "mMasLC.M_DilutionChartEntry" );
       }
    }
 %>
@@ -698,7 +698,7 @@ else
             task.log( ).debug( "M_DilutionChartEntry.WaterAmountText: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_DilutionChartEntry" );
+            task.log( ).debug( "Entity does not exist for EditBox2: " + "mMasLC.M_DilutionChartEntry" );
       }
    }
 %>

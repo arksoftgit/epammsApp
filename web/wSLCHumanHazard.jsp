@@ -1605,7 +1605,7 @@ else
             task.log( ).info( "S_HumanHazardSection.dFullStatement: " + strErrorMapValue );
          }
          else
-            task.log( ).info( "Entity does not exist: " + "mSubLC.S_HumanHazardSection" );
+            task.log( ).info( "Entity does not exist for MLEditFullStatement: " + "mSubLC.S_HumanHazardSection" );
       }
    }
 %>

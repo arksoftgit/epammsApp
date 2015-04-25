@@ -855,7 +855,7 @@ else
             task.log( ).debug( "M_DirectionsForUseSection.Name: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_DirectionsForUseSection" );
+            task.log( ).debug( "Entity does not exist for DirectionsUseTitle: " + "mMasLC.M_DirectionsForUseSection" );
       }
    }
 %>
@@ -906,7 +906,7 @@ else
             task.log( ).debug( "M_DirectionsForUseSection.Title: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_DirectionsForUseSection" );
+            task.log( ).debug( "Entity does not exist for EditBox1: " + "mMasLC.M_DirectionsForUseSection" );
       }
    }
 %>

@@ -1317,7 +1317,7 @@ else
             task.log( ).debug( "MasterLabelContent.Version: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasLC.MasterLabelContent" );
+            task.log( ).debug( "Entity does not exist for MasterLabelContentVersion: " + "mMasLC.MasterLabelContent" );
       }
    }
 %>

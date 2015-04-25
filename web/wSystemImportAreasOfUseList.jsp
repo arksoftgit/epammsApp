@@ -1015,7 +1015,7 @@ else
             task.log( ).debug( "Root.String: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "wWebXfer.Root" );
+            task.log( ).debug( "Entity does not exist for FileName: " + "wWebXfer.Root" );
       }
    }
 %>
@@ -1053,7 +1053,7 @@ else
             task.log( ).info( "Root.CurrentStatementText: " + strErrorMapValue );
          }
          else
-            task.log( ).info( "Entity does not exist: " + "wWebXfer.Root" );
+            task.log( ).info( "Entity does not exist for Import: " + "wWebXfer.Root" );
       }
    }
 %>
@@ -1107,7 +1107,7 @@ else
             task.log( ).info( "Root.CurrentStatement: " + strErrorMapValue );
          }
          else
-            task.log( ).info( "Entity does not exist: " + "wWebXfer.Root" );
+            task.log( ).info( "Entity does not exist for Work: " + "wWebXfer.Root" );
       }
    }
 %>

@@ -637,7 +637,7 @@ else
             task.log( ).info( "MasterLabelContent.wDeleteText: " + strErrorMapValue );
          }
          else
-            task.log( ).info( "Entity does not exist: " + "mMasLC.MasterLabelContent" );
+            task.log( ).info( "Entity does not exist for StatementText: " + "mMasLC.MasterLabelContent" );
       }
    }
 %>

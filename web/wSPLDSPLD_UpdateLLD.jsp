@@ -940,11 +940,11 @@ else
 <%
    View lMLC = null;
    View lSPLDLST = null;
-   View mSPLDefBlock = null;
    View mLLD_LST = null;
    View mMasLC = null;
    View mPrimReg = null;
    View mSPLDef = null;
+   View mSPLDefBlock = null;
    View mSPLDefPanel = null;
    View mSubLC = null;
    View mSubProd = null;
@@ -1065,18 +1065,18 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox6:GroupBox */ %>
-<div id="GroupBox6" name="GroupBox6" style="float:left;width:534px;" >
+<div id="GroupBox6" name="GroupBox6" style="float:left;width:606px;" >
 
-<table cols=2 style="width:534px;"  class="grouptable">
+<table cols=2 style="width:606px;"  class="grouptable">
 
 <tr>
-<td valign="top" style="width:140px;">
+<td valign="top" style="width:196px;">
 <% /* PrimaryRegistrantName:2:Text */ %>
 
-<span  id="PrimaryRegistrantName:2" name="PrimaryRegistrantName:2" style="width:130px;height:16px;">Registrant Product:</span>
+<span  id="PrimaryRegistrantName:2" name="PrimaryRegistrantName:2" style="width:186px;height:16px;">Registrant Product:</span>
 
 </td>
-<td valign="top"  class="text14bold" style="width:366px;">
+<td valign="top"  class="text14bold" style="width:394px;">
 <% /* TXName2:Text */ %>
 <% strTextDisplayValue = "";
    mSPLDef = task.getViewByName( "mSPLDef" );
@@ -1102,18 +1102,18 @@ else
    }
 %>
 
-<span class="text14bold"  id="TXName2" name="TXName2" style="width:366px;height:16px;"><%=strTextDisplayValue%></span>
+<span class="text14bold"  id="TXName2" name="TXName2" style="width:394px;height:16px;"><%=strTextDisplayValue%></span>
 
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:140px;">
-<% /* Subregistrant:2:Text */ %>
+<td valign="top" style="width:196px;">
+<% /* Subregistrant::Text */ %>
 
-<span  id="Subregistrant:2" name="Subregistrant:2" style="width:130px;height:16px;">Subreg Product:</span>
+<span  id="Subregistrant:" name="Subregistrant:" style="width:186px;height:16px;">Subregistrant Product:</span>
 
 </td>
-<td valign="top" style="width:366px;">
+<td valign="top" style="width:394px;">
 <% /* Text3:Text */ %>
 <% strTextDisplayValue = "";
    mSPLDef = task.getViewByName( "mSPLDef" );
@@ -1139,18 +1139,18 @@ else
    }
 %>
 
-<span  id="Text3" name="Text3" style="width:366px;height:16px;"><%=strTextDisplayValue%></span>
+<span  id="Text3" name="Text3" style="width:394px;height:16px;"><%=strTextDisplayValue%></span>
 
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:140px;">
+<td valign="top" style="width:196px;">
 <% /* Text4:Text */ %>
 
-<span  id="Text4" name="Text4" style="width:130px;height:18px;">SLC Name:</span>
+<span  id="Text4" name="Text4" style="width:186px;height:18px;">SLC Name:</span>
 
 </td>
-<td valign="top" style="width:366px;">
+<td valign="top" style="width:394px;">
 <% /* Subregistrant2:Text */ %>
 <% strTextDisplayValue = "";
    mSPLDef = task.getViewByName( "mSPLDef" );
@@ -1176,18 +1176,18 @@ else
    }
 %>
 
-<span  id="Subregistrant2" name="Subregistrant2" style="width:366px;height:16px;"><%=strTextDisplayValue%></span>
+<span  id="Subregistrant2" name="Subregistrant2" style="width:394px;height:16px;"><%=strTextDisplayValue%></span>
 
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:140px;">
+<td valign="top" style="width:196px;">
 <% /* Text5:Text */ %>
 
-<span  id="Text5" name="Text5" style="width:130px;height:18px;">SLC Version:</span>
+<span  id="Text5" name="Text5" style="width:186px;height:18px;">SLC Version:</span>
 
 </td>
-<td valign="top" style="width:366px;">
+<td valign="top" style="width:394px;">
 <% /* Text6:Text */ %>
 <% strTextDisplayValue = "";
    mSPLDef = task.getViewByName( "mSPLDef" );
@@ -1213,7 +1213,7 @@ else
    }
 %>
 
-<span  id="Text6" name="Text6" style="width:366px;height:18px;"><%=strTextDisplayValue%></span>
+<span  id="Text6" name="Text6" style="width:394px;height:18px;"><%=strTextDisplayValue%></span>
 
 </td>
 </tr>
@@ -1229,18 +1229,18 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox7:GroupBox */ %>
-<div id="GroupBox7" name="GroupBox7" style="float:left;width:534px;" >
+<div id="GroupBox7" name="GroupBox7" style="float:left;width:606px;" >
 
-<table cols=2 style="width:534px;"  class="grouptable">
+<table cols=2 style="width:606px;"  class="grouptable">
 
 <tr>
-<td valign="top" style="width:188px;">
+<td valign="top" style="width:196px;">
 <% /* Text7:Text */ %>
 
 <span  id="Text7" name="Text7" style="width:186px;height:18px;">SPLD Name:</span>
 
 </td>
-<td valign="top" style="width:338px;">
+<td valign="top" style="width:394px;">
 <% /* EditBox1:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "EditBox1", strError );
@@ -1275,23 +1275,23 @@ else
             task.log( ).debug( "SubregPhysicalLabelDef.Name: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSPLDef.SubregPhysicalLabelDef" );
+            task.log( ).debug( "Entity does not exist for EditBox1: " + "mSPLDef.SubregPhysicalLabelDef" );
       }
    }
 %>
 
-<input name="EditBox1" id="EditBox1" style="width:338px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EditBox1" id="EditBox1" style="width:394px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:188px;">
+<td valign="top" style="width:196px;">
 <% /* Text10:Text */ %>
 
 <span  id="Text10" name="Text10" style="width:186px;height:18px;">Display Product Name:</span>
 
 </td>
-<td valign="top" style="width:338px;">
+<td valign="top" style="width:394px;">
 <% /* EditBox5:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "EditBox5", strError );
@@ -1326,12 +1326,12 @@ else
             task.log( ).debug( "SubregPhysicalLabelDef.ProductName: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSPLDef.SubregPhysicalLabelDef" );
+            task.log( ).debug( "Entity does not exist for EditBox5: " + "mSPLDef.SubregPhysicalLabelDef" );
       }
    }
 %>
 
-<input name="EditBox5" id="EditBox5" style="width:338px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EditBox5" id="EditBox5" style="width:394px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

@@ -375,7 +375,7 @@ else
 <head>
 
    <meta http-equiv="content-type" content="text/html; charset=utf-8">
-<title>SPLD Graphical View</title>
+   <title>SPLD Graphical View</title>
 
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
 <!-- log a user out.  Timeout.inc is not used if the dialog or window has a timeout value set. -->
@@ -814,37 +814,12 @@ else
                   </div> <!-- zpool -->  <!-- End of: Block Types -->
                   <!--
                   // Make sure that the appropriate Keyword entries are set up for a given Section/Block Type.
-
-                  // Human Hazard
-                  Hazards Warning
-                  Hazards Signal Word
-                  Hazards Precautionary
-
-                  // Ingredients
-                  Title
-                  Ingredients Items
-                  Ingredients Inert
-                  Ingredients Total 
-
-                  // Directions for Use
-                  Title
-                  Text
-                  DIRECTIONS Header
-
-                  // Marketing
-                  Title
-                  Text
-                  Column List
-                  MARKETING Header
-
-                  // First Aid
-                  Title
-                  Text
-                  FIRST AID Header
-
-                  // Default
-                  Title
-                  Text
+                  // Directions for Use:   Title / Text / Header
+                  // First Aid:   Title / Text / Header
+                  // Human Hazard:  Hazards Warning / Hazards Signal Word / Hazards Precautionary
+                  // Ingredients:   Title / Ingredients Items / Ingredients Inert / Ingredients Total 
+                  // Marketing:   Title / Text / Column List / Header
+                  // Default:   Title / Text
 
                   Fields Common to All Block Types
                      1. Block Tag (display)
@@ -856,7 +831,6 @@ else
                      7. Formatting Keyword Listbox
 
                   Fields Unique by Type
-
                      Graphic
                      1. Graphic Name
 
@@ -866,15 +840,14 @@ else
                      3. Marketing Section Select Button
                      4. Claim List Type (combo box)
 
-                     Directions for Use / Storage and Disposal / Hazards
+                     Directions for Use / Storage and Disposal / Hazards / First Aid
                      1. Continuation Checkbox
                   -->
                   <h3>Block Properties</h3>
                   <div>
                      <span>
                      <div style="overflow:hidden; white-space:nowrap;">
-                        <label for="zBlockId">ID:</label>
-                        <input type="text" id="zBlockId" class="zeidon" data-zmap="block.z_^i^d" style="float:right" disabled />
+                        <input type="text" id="zBlockId" class="zeidon" data-zmap="block.z_^i^d" style="float:right; font-size:9px; text-align:right; font-weight:100;" disabled />
                      </div>
                      <div style="overflow:hidden; white-space:nowrap;">
                         <label for="zBlockTag">Tag:</label>
@@ -906,12 +879,14 @@ else
                            <option value="NetContents">Net Contents</option>
                            <option value="PhysicalHazard">Physical Hazard</option>
                            <option value="Precautionary">Precautionary</option>
-                           <option value="Product">Product Specific</option>
+                           <option value="ProductDescription">Product Description</option>
+                           <option value="ProductName">Product Name</option>
+                           <option value="ProductSpecific">Product Specific</option>
                            <option value="StorageDisposal">Storage and Disposal</option>
                         </select>
                      </div>
                      &nbsp;
-                     <div style="overflow:hidden; white-space:nowrap;">
+                     <div style="overflow:hidden; white-space:nowrap; display:none">
                         <label for="zBlockTitle">Block Name:</label>
                         <input type="text" id="zBlockName" class="zeidon" data-zmap="block.z_^name" style="float:right" />
                      </div>
@@ -931,8 +906,22 @@ else
                         <label for="zBlockWidth">Block Width:</label>
                         <input type="text" id="zBlockWidth" class="zeidon" data-zmap="block.z_^width" style="float:right" />
                      </div>
-<!--
+                     <!--
+                     // Directions for Use:   Title / Text / Header
+                     // First Aid:   Title / Text / Header
+                     // Human Hazard:  Hazards Warning / Hazards Signal Word / Hazards Precautionary
+                     // Ingredients:   Title / Ingredients Items / Ingredients Inert / Ingredients Total 
+                     // Marketing:   Title / Text / Header / Column List
+                     // Default:   Title / Text
+                     -->
+                     <div id="zBlockFormatTypeToggle" style="overflow:hidden; white-space:nowrap;display:hidden;">
+                        <label for="zBlockFormatType">Special Formatting:</label>
+                        <select id="zBlockFormatType" style="float:right">
+                           <option value="">Update Format Type...</option>
+                        </select>
+                     </div>
                      &nbsp;
+<!--
                      <p style="clear:both;position:relative"></p>
                      <div style="overflow:hidden; white-space:nowrap;">
                 <!-- <fieldset class="border"><legend>Override CSS</legend> *->
@@ -962,6 +951,34 @@ else
                      &nbsp;
                      </div>
 -->
+                     <p style="clear:both;position:relative"></p>
+                     <hr>
+                     <div id="zCheckContinuationBlockToggle" style="overflow:hidden; white-space:nowrap; padding-bottom:12px;">
+                        <input type="checkbox" id="zCheckContinuationBlock" name="zCheckContinuationBlock" class="zeidon" data-zmap="block.z_^continuation^block^flag" /><label for="zCheckContinuationBlock">Continuation from Previous Section/Statement</label>
+                     </div>
+                     <p style="clear:both;position:relative"></p>
+                     <div id="zMarketingSectionToggle" style="overflow:hidden; white-space:nowrap;">
+                        <label for="zMarketingSection">Marketing Section: </label>
+                        <select id="zMarketingSection" style="float:right">
+                           <option value="">Select Marketing Section...</option>
+                        </select>
+                     </div>
+                     <p style="clear:both;position:relative"></p>
+                     <div id="zClaimListTypeToggle" style="overflow:hidden; white-space:nowrap;">
+                        <label for="zClaimListType">Claim List Type: </label>
+                        <select id="zClaimListType" class="zeidon" data-zmap="block.z_^l^l^d_^column^list^type" style="float:right">
+                           <option value="">Select Claim List Type...</option>
+                           <option value="C2">Usage List - 2 Column</option>
+                           <option value="C3">Usage List - 3 Column</option>
+                        </select>
+                     </div>
+                     <div id="zImageNameToggle" style="overflow:hidden; white-space:nowrap; padding-top:12px; padding-bottom:12px;">
+                        <label for="zImageName">Graphic Image Name:</label>
+                        <input type="text" id="zImageName" class="zeidon" data-zmap="block.z_^image^name" style="float:right" />
+                     </div>
+                     <!-- Add a <div> element where the dynatree should appear: -->
+                     <hr>
+                     <div id="SpecialAttrToggle" style="display:none">
                      <div id="zmbp">
                         <ul>
                            <li><a href="#zMargins">Margins</a></li>
@@ -970,7 +987,7 @@ else
                         </ul>
                         <div id="zMargins">
                            <div style="overflow:hidden; white-space:nowrap;">
-                             <label for="zMargin">Margins:</label>
+                             <label for="zMargin" style="font-weight:bold">Margins:</label>
                              <input type="text" id="zMargin" class="zeidon" data-zmap="block.z_^margin" style="float:right" />
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
@@ -995,7 +1012,7 @@ else
                         </div>
                         <div id="zBorders">
                            <div style="overflow:hidden; white-space:nowrap;">
-                             <label for="zBorder">Borders:</label>
+                             <label for="zBorder" style="font-weight:bold">Borders:</label>
                              <input type="text" id="zBorder" class="zeidon" data-zmap="block.z_^border" style="float:right" />
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
@@ -1020,7 +1037,7 @@ else
                         </div>
                         <div id="zPaddings">
                            <div style="overflow:hidden; white-space:nowrap;">
-                             <label for="zPadding">Padding:</label>
+                             <label for="zPadding" style="font-weight:bold">Padding:</label>
                              <input type="text" id="zPadding" class="zeidon" data-zmap="block.z_^padding" style="float:right" />
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
@@ -1043,8 +1060,29 @@ else
                              <input type="checkbox" id="zPaddingOverride" name="zPaddingOverride" class="zeidon" data-zmap="block.z_^padding^override" /><label for="zPaddingOverride">Override CSS</label>
                            </div>
                         </div>
+                     </div> <!-- end of: zmbp -->
+                     &nbsp;
+                     <div>
+                        <label for="colorText">Text Color</label>
+                        <div class="colorPicker-frame" style="float:right">
+                           <input id="colorText" name="colorText" type="text" value="#ffffff" data-text="n/a" />
+                        </div>
                      </div>
                      &nbsp;
+                     <div>
+                        <label for="colorBack">Background Color</label>
+                        <div class="colorPicker-frame" style="float:right">
+                           <input id="colorBack" name="colorBack" type="text" value="#ffffff" data-text="n/b" />
+                        </div>
+                     </div>
+                     &nbsp;
+                     <div style="padding-bottom:12px;">
+                        <label for="colorBack">Border Color</label>
+                        <div class="colorPicker-frame" style="float:right">
+                           <input id="colorBord" name="colorBorder" type="text" value="#ffffff" data-text="n/c" />
+                        </div>
+                     </div>
+                     </div> <!-- end of SpecialAttrToggle -->
                 <!-- <select id="colorselector">
                         <option value="106" data-color="#A0522D">sienna</option>
                         <option value="47" data-color="#CD5C5C" selected="selected">indianred</option>
@@ -1064,49 +1102,6 @@ else
                         <option value="123" data-color="#000000">black</option>
                         
                      </select> -->
-                     <div>
-                        <label for="colorText">Text Color</label>
-                        <div class="colorPicker-frame">
-                           <input id="colorText" name="colorText" type="text" value="#ffffff" data-text="n/a" />
-                        </div>
-                     </div>
-                     &nbsp;
-                     <div>
-                        <label for="colorBack">Background Color</label>
-                        <div class="colorPicker-frame">
-                           <input id="colorBack" name="colorBack" type="text" value="#ffffff" data-text="n/b" />
-                        </div>
-                     </div>
-                     &nbsp;
-                     <div>
-                        <label for="colorBack">Border Color</label>
-                        <div class="colorPicker-frame">
-                           <input id="colorBord" name="colorBorder" type="text" value="#ffffff" data-text="n/c" />
-                        </div>
-                     </div>
-                     &nbsp;
-                     <p style="clear:both;position:relative"></p>
-                     <hr>
-                     <div id="zCheckContinuationBlockToggle" style="overflow:hidden; white-space:nowrap; padding-top:6px; padding-bottom:12px;">
-                        <input type="checkbox" id="zCheckContinuationBlock" name="zCheckContinuationBlock" class="zeidon" data-zmap="block.z_^continuation^block^flag" /><label for="zCheckContinuationBlock">Continuation from Previous Section/Statement</label>
-                     </div>
-                     <p style="clear:both;position:relative"></p>
-                     <div id="zImageNameToggle" style="overflow:hidden; white-space:nowrap; padding-top:6px; padding-bottom:6px;">
-                        <label for="zImageName">Graphic Image Name:</label>
-                        <input type="text" id="zImageName" class="zeidon" data-zmap="block.z_^image^name" style="float:right" />
-                     </div>
-                     <p style="clear:both;position:relative"></p>
-                     <div id="zClaimListTypeToggle" style="overflow:hidden; white-space:nowrap; padding-top:6px; padding-bottom:6px;">
-                        <label for="zClaimListType">Claim List Type: </label>
-                        <select id="zClaimListType" class="zeidon" data-zmap="block.z_^l^l^d_^column^list^type" style="float:right">
-                           <option value="">Select Claim List Type...</option>
-                           <option value="C2">Usage List - 2 Column</option>
-                           <option value="C3">Usage List - 3 Column</option>
-                        </select>
-                     </div>
-
-                     <!-- Add a <div> element where the dynatree should appear: -->
-                     <hr>
                   </div> <!-- End of: Block Properties -->
 
                   <h3>Page Properties</h3>

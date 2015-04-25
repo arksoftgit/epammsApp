@@ -1184,7 +1184,7 @@ else
             task.log( ).debug( "Root.CurrentPassword: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "wWebXfer.Root" );
+            task.log( ).debug( "Entity does not exist for Password: " + "wWebXfer.Root" );
       }
    }
 %>
@@ -1240,7 +1240,7 @@ else
             task.log( ).debug( "Root.AttemptPassword: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "wWebXfer.Root" );
+            task.log( ).debug( "Entity does not exist for NewPassword: " + "wWebXfer.Root" );
       }
    }
 %>
@@ -1296,7 +1296,7 @@ else
             task.log( ).debug( "Root.ConfirmPassword: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "wWebXfer.Root" );
+            task.log( ).debug( "Entity does not exist for ConfirmPassword: " + "wWebXfer.Root" );
       }
    }
 %>

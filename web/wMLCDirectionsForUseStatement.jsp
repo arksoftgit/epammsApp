@@ -699,7 +699,7 @@ else
             task.log( ).debug( "M_DirectionsForUseStatement.Title: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_DirectionsForUseStatement" );
+            task.log( ).debug( "Entity does not exist for MLEdit1: " + "mMasLC.M_DirectionsForUseStatement" );
       }
    }
 %>
@@ -743,7 +743,7 @@ else
             task.log( ).debug( "M_DirectionsForUseStatement.Text: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_DirectionsForUseStatement" );
+            task.log( ).debug( "Entity does not exist for MLEdit2: " + "mMasLC.M_DirectionsForUseStatement" );
       }
    }
 %>

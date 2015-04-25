@@ -37,6 +37,7 @@ public int DoInputMapping( HttpServletRequest request,
 
    View mSPLDef = null;
    View mSPLDefBlock = null;
+   View wWebXfer = null;
    View vGridTmp = null; // temp view to grid view
    View vRepeatingGrp = null; // temp view to repeating group view
    String strDateFormat = "";
@@ -102,6 +103,11 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       vGridTmp.drop( );
+   }
+
+   wWebXfer = task.getViewByName( "wWebXfer" );
+   if ( VmlOperation.isValid( wWebXfer ) )
+   {
    }
 
    if ( webMapping == true )
@@ -932,17 +938,17 @@ else
 <div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox3:GroupBox */ %>
 
-<div id="GroupBox3" name="GroupBox3" style="width:340px;height:30px;float:left;">  <!-- GroupBox3 --> 
+<div id="GroupBox3" name="GroupBox3" style="width:140px;height:30px;float:left;">  <!-- GroupBox3 --> 
 
 
  <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
+<div style="height:8px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <span style="height:20px;">&nbsp</span>
-<% /* TXRelatedMarketingSection:Text */ %>
+<% /* TXRelatedSection:Text */ %>
 
-<span  id="TXRelatedMarketingSection" name="TXRelatedMarketingSection" style="width:286px;height:20px;">Related Marketing Section</span>
+<label  id="TXRelatedSection" name="TXRelatedSection" style="width:118px;height:20px;">Related Section</label>
 
 </div>  <!-- End of a new line -->
 
@@ -951,221 +957,72 @@ else
 <div style="height:1px;width:24px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox1:GroupBox */ %>
 
-<div id="GroupBox1" name="GroupBox1" style="width:246px;height:28px;float:left;">  <!-- GroupBox1 --> 
+<div id="GroupBox1" name="GroupBox1" style="width:500px;height:30px;float:left;">  <!-- GroupBox1 --> 
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:8px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:20px;">&nbsp&nbsp</span>
+<% /* SectionType:Text */ %>
+<% strTextDisplayValue = "";
+   wWebXfer = task.getViewByName( "wWebXfer" );
+   if ( VmlOperation.isValid( wWebXfer ) == false )
+      task.log( ).debug( "Invalid View: " + "SectionType" );
+   else
+   {
+      nRC = wWebXfer.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = wWebXfer.cursor( "Root" ).getAttribute( "CurrentSectionTitle" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on SectionType: " + e.getMessage());
+         task.log().info( "*** Error on ctrl SectionType" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<label  id="SectionType" name="SectionType" style="width:468px;height:20px;"><%=strTextDisplayValue%></label>
+
+</div>  <!-- End of a new line -->
 
 
 </div>  <!--  GroupBox1 --> 
-<span style="height:26px;">&nbsp&nbsp&nbsp&nbsp</span>
-<% /* Tag:EditBox */ %>
-<%
-   strErrorMapValue = VmlOperation.CheckError( "Tag", strError );
-   if ( !StringUtils.isBlank( strErrorMapValue ) )
-   {
-      if ( StringUtils.equals( strErrorFlag, "Y" ) )
-         strErrorColor = "color:red;";
-   }
-   else
-   {
-      strErrorColor = "";
-      mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
-      if ( VmlOperation.isValid( mSPLDefBlock ) == false )
-         task.log( ).debug( "Invalid View: " + "Tag" );
-      else
-      {
-         nRC = mSPLDefBlock.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            try
-            {
-            strErrorMapValue = mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "Tag" ).getString( "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on Tag: " + e.getMessage());
-               task.log().error( "*** Error on ctrl Tag", e );
-            }
-            if ( strErrorMapValue == null )
-               strErrorMapValue = "";
-
-            task.log( ).debug( "LLD_Block.Tag: " + strErrorMapValue );
-         }
-         else
-            task.log( ).debug( "Entity does not exist: " + "mSPLDefBlock.LLD_Block" );
-      }
-   }
-%>
-
-<input name="Tag" id="Tag"  disabled style="width:224px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
-
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:12px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox9:GroupBox */ %>
-<div id="GroupBox9" name="GroupBox9" style="float:left;width:574px;" >
-
-<table cols=3 style="width:574px;"  class="grouptable">
-
-<tr>
-<td valign="top" style="width:124px;">
-<% /* BlockName::Text */ %>
-
-<span  id="BlockName:" name="BlockName:" style="width:110px;height:26px;">Block Name:</span>
-
-</td>
-<td valign="top" style="width:250px;">
-<% /* BlockName:EditBox */ %>
-<%
-   strErrorMapValue = VmlOperation.CheckError( "BlockName", strError );
-   if ( !StringUtils.isBlank( strErrorMapValue ) )
-   {
-      if ( StringUtils.equals( strErrorFlag, "Y" ) )
-         strErrorColor = "color:red;";
-   }
-   else
-   {
-      strErrorColor = "";
-      mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
-      if ( VmlOperation.isValid( mSPLDefBlock ) == false )
-         task.log( ).debug( "Invalid View: " + "BlockName" );
-      else
-      {
-         nRC = mSPLDefBlock.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            try
-            {
-            strErrorMapValue = mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "Name" ).getString( "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on BlockName: " + e.getMessage());
-               task.log().error( "*** Error on ctrl BlockName", e );
-            }
-            if ( strErrorMapValue == null )
-               strErrorMapValue = "";
-
-            task.log( ).debug( "LLD_Block.Name: " + strErrorMapValue );
-         }
-         else
-            task.log( ).debug( "Entity does not exist: " + "mSPLDefBlock.LLD_Block" );
-      }
-   }
-%>
-
-<input name="BlockName" id="BlockName"  disabled style="width:224px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
-
-</td>
-<td valign="top" style="width:68px;">
-<% /* PushBtn3:PushBtn */ %>
-<button type="button"  id="PushBtn3" name="PushBtn3" value="Select" onclick="GOTO_SelectMarketingSection( )"  style="width:68px;height:24px;">Select</button>
-
-</td>
-</tr>
-<tr>
-<td valign="top" style="width:124px;">
-<% /* TXDataType::Text */ %>
-
-<span  id="TXDataType:" name="TXDataType:" style="width:110px;height:26px;">Data Type:</span>
-
-</td>
-<td valign="top" style="width:250px;">
-<% /* ComboSectionType:ComboBox */ %>
-<% strErrorMapValue = "";  %>
-
-<select  name="ComboSectionType" id="ComboSectionType" size="1" style="width:224px;"  disabled onchange="ComboSectionTypeOnChange( )">
-
-<%
-   boolean inListComboSectionType = false;
-
+<span style="height:20px;">&nbsp&nbsp&nbsp&nbsp</span>
+<% /* Tag:Text */ %>
+<% strTextDisplayValue = "";
    mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
-   if ( VmlOperation.isValid( mSPLDefBlock ) )
+   if ( VmlOperation.isValid( mSPLDefBlock ) == false )
+      task.log( ).debug( "Invalid View: " + "Tag" );
+   else
    {
-      List<TableEntry> list = JspWebUtils.getTableDomainValues( mSPLDefBlock , "LLD_Block", "LLD_SectionType", "" );
-
       nRC = mSPLDefBlock.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "LLD_SectionType" ).getString( "" );
-         if ( strComboCurrentValue == null )
-            strComboCurrentValue = "";
-      }
-      else
+      try
       {
-         strComboCurrentValue = "";
+         strTextDisplayValue = mSPLDefBlock.cursor( "LLD_Block" ).getAttribute( "Tag" ).getString( "" );
       }
-
-      // Code for NOT required attribute, which makes sure a blank entry exists.
-      if ( strComboCurrentValue == "" )
+      catch (Exception e)
       {
-         inListComboSectionType = true;
-%>
-         <option selected="selected" value=""></option>
-<%
+         out.println("There is an error on Tag: " + e.getMessage());
+         task.log().info( "*** Error on ctrl Tag" + e.getMessage() );
       }
-      else
-      {
-%>
-         <option value=""></option>
-<%
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
       }
-      for ( TableEntry entry : list )
-      {
-         String internalValue = entry.getInternalValue( );
-         String externalValue = entry.getExternalValue( );
-         // Perhaps getInternalValue and getExternalValue should return an empty string, 
-         // but currently it returns null.  Set to empty string. 
-         if ( externalValue == null )
-         {
-            internalValue = "";
-            externalValue = "";
-         }
+   }
+%>
 
-         if ( !StringUtils.isBlank( externalValue ) )
-         {
-            if ( StringUtils.equals( strComboCurrentValue, externalValue ) )
-            {
-               inListComboSectionType = true;
-%>
-               <option selected="selected" value="<%=externalValue%>"><%=externalValue%></option>
-<%
-            }
-            else
-            {
-%>
-               <option value="<%=externalValue%>"><%=externalValue%></option>
-<%
-            }
-         }
-      }  // for ( TableEntry entry
-      // The value from the database isn't in the domain, add it to the list as disabled.
-      if ( !inListComboSectionType )
-      { 
-%>
-         <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
-<%
-      }  
-   }  // if view != null
-%>
-</select>
-
-<input name="hComboSectionType" id="hComboSectionType" type="hidden" value="<%=strComboCurrentValue%>" >
-</td>
-<td valign="top" style="width:130px;">
-<% /* GroupBox2:GroupBox */ %>
-<div id="GroupBox2" name="GroupBox2" style="width:130px;height:24px;float:left;">
-</div>  <!-- GroupBox2 --> 
-</td>
-</tr>
-</table>
-
-</div>  <!-- GroupBox9 --> 
+<span class="text9light"  id="Tag" name="Tag" style="width:178px;height:20px;"><%=strTextDisplayValue%></span>
 
 </div>  <!-- End of a new line -->
 
@@ -1173,7 +1030,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:12px;width:100px;"></div>
+<div style="height:14px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
@@ -1214,7 +1071,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:12px;width:100px;"></div>
+<div style="height:8px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
@@ -1361,7 +1218,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 
  <!-- This is added as a line spacer -->
-<div style="height:14px;width:100px;"></div>
+<div style="height:22px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
@@ -1383,7 +1240,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <div>  <!-- Beginning of a new line -->
 <% /* GridComponentList:Grid */ %>
-<table  cols=3 style="width:828px;"  name="GridComponentList" id="GridComponentList">
+<table  cols=3 style="width:852px;"  name="GridComponentList" id="GridComponentList">
 
 <thead><tr>
 

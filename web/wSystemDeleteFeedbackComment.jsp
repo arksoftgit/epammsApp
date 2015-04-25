@@ -757,7 +757,7 @@ else
             task.log( ).debug( "Organization.LoginName: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mOrganiz.Organization" );
+            task.log( ).debug( "Entity does not exist for Organization: " + "mOrganiz.Organization" );
       }
    }
 %>
@@ -808,7 +808,7 @@ else
             task.log( ).debug( "Feedback.UserId: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mOrganiz.Feedback" );
+            task.log( ).debug( "Entity does not exist for UserId: " + "mOrganiz.Feedback" );
       }
    }
 %>
@@ -859,7 +859,7 @@ else
             task.log( ).debug( "Feedback.Dialog: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mOrganiz.Feedback" );
+            task.log( ).debug( "Entity does not exist for Dialog: " + "mOrganiz.Feedback" );
       }
    }
 %>
@@ -910,7 +910,7 @@ else
             task.log( ).debug( "Feedback.Window: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mOrganiz.Feedback" );
+            task.log( ).debug( "Entity does not exist for Window: " + "mOrganiz.Feedback" );
       }
    }
 %>
@@ -961,7 +961,7 @@ else
             task.log( ).debug( "Feedback.Comment: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mOrganiz.Feedback" );
+            task.log( ).debug( "Entity does not exist for Comment: " + "mOrganiz.Feedback" );
       }
    }
 %>

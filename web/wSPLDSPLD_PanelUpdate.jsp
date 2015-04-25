@@ -895,11 +895,11 @@ else
 <%
    View lMLC = null;
    View lSPLDLST = null;
-   View mSPLDefBlock = null;
    View mLLD_LST = null;
    View mMasLC = null;
    View mPrimReg = null;
    View mSPLDef = null;
+   View mSPLDefBlock = null;
    View mSPLDefPanel = null;
    View mSubLC = null;
    View mSubProd = null;
@@ -1085,7 +1085,7 @@ else
             task.log( ).debug( "LLD_Panel.Left: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSPLDef.LLD_Panel" );
+            task.log( ).debug( "Entity does not exist for EditBox2: " + "mSPLDef.LLD_Panel" );
       }
    }
 %>
@@ -1136,7 +1136,7 @@ else
             task.log( ).debug( "LLD_Panel.Top: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSPLDef.LLD_Panel" );
+            task.log( ).debug( "Entity does not exist for EditBox1: " + "mSPLDef.LLD_Panel" );
       }
    }
 %>
@@ -1187,7 +1187,7 @@ else
             task.log( ).debug( "LLD_Panel.Height: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSPLDef.LLD_Panel" );
+            task.log( ).debug( "Entity does not exist for EditBox3: " + "mSPLDef.LLD_Panel" );
       }
    }
 %>
@@ -1238,7 +1238,7 @@ else
             task.log( ).debug( "LLD_Panel.Width: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSPLDef.LLD_Panel" );
+            task.log( ).debug( "Entity does not exist for EditBox4: " + "mSPLDef.LLD_Panel" );
       }
    }
 %>

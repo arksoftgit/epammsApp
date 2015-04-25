@@ -902,7 +902,7 @@ else
    }
 %>
 
-<span  id="Type" name="Type" style="width:192px;height:24px;"><%=strTextDisplayValue%></span>
+<label  id="Type" name="Type" style="width:192px;height:24px;"><%=strTextDisplayValue%></label>
 
 </td>
 </tr>
@@ -948,7 +948,10 @@ else
             task.log( ).debug( "LLD_SpecialSectionAttrBlock.MarginTop: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
+         {
+            task.log( ).debug( "Entity does not exist for MarginTop: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
+            mSPLDefBlock.cursor( "LLD_Block" ).logEntity( true );
+         }
       }
    }
 %>
@@ -1005,7 +1008,7 @@ else
             task.log( ).debug( "LLD_SpecialSectionAttrBlock.MarginBottom: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
+            task.log( ).debug( "Entity does not exist for MarginBottom: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
       }
    }
 %>
@@ -1062,7 +1065,7 @@ else
             task.log( ).debug( "LLD_SpecialSectionAttrBlock.MarginLeft: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
+            task.log( ).debug( "Entity does not exist for MarginLeft: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
       }
    }
 %>
@@ -1119,7 +1122,7 @@ else
             task.log( ).debug( "LLD_SpecialSectionAttrBlock.MarginRight: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
+            task.log( ).debug( "Entity does not exist for MarginRight: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
       }
    }
 %>
@@ -1631,7 +1634,7 @@ else
             task.log( ).debug( "LLD_SpecialSectionAttrBlock.TextLineHeight: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
+            task.log( ).debug( "Entity does not exist for TextLineHeight: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
       }
    }
 %>
@@ -1779,7 +1782,7 @@ else
             task.log( ).debug( "LLD_SpecialSectionAttrBlock.BorderWidth: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
+            task.log( ).debug( "Entity does not exist for BorderWidth: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
       }
    }
 %>

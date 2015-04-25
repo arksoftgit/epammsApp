@@ -706,7 +706,7 @@ else
             task.log( ).debug( "Root.AttemptLoginName: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "wWebXfer.Root" );
+            task.log( ).debug( "Entity does not exist for EBRegistrantName: " + "wWebXfer.Root" );
       }
    }
 %>
@@ -754,7 +754,7 @@ else
             task.log( ).debug( "Root.AttemptUserName: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "wWebXfer.Root" );
+            task.log( ).debug( "Entity does not exist for EBUserName: " + "wWebXfer.Root" );
       }
    }
 %>
@@ -803,7 +803,7 @@ else
             task.log( ).debug( "Root.AttemptPassword: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "wWebXfer.Root" );
+            task.log( ).debug( "Entity does not exist for EBPassword: " + "wWebXfer.Root" );
       }
    }
 %>

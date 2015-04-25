@@ -785,7 +785,7 @@ else
             task.log( ).debug( "M_IngredientsStatement.ChemicalName: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_IngredientsStatement" );
+            task.log( ).debug( "Entity does not exist for ChemicalName: " + "mMasLC.M_IngredientsStatement" );
       }
    }
 %>
@@ -912,7 +912,7 @@ else
             task.log( ).debug( "M_IngredientsStatement.Percent: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_IngredientsStatement" );
+            task.log( ).debug( "Entity does not exist for Percent: " + "mMasLC.M_IngredientsStatement" );
       }
    }
 %>

@@ -1099,7 +1099,7 @@ else
             task.log( ).debug( "ePamms.Name: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mePamms.ePamms" );
+            task.log( ).debug( "Entity does not exist for EBName: " + "mePamms.ePamms" );
       }
    }
 %>
@@ -1180,7 +1180,7 @@ else
             task.log( ).debug( "Root.AttemptPassword: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "wWebXfer.Root" );
+            task.log( ).debug( "Entity does not exist for EBPassword: " + "wWebXfer.Root" );
       }
    }
 %>
@@ -1231,7 +1231,7 @@ else
             task.log( ).debug( "Root.ConfirmPassword: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "wWebXfer.Root" );
+            task.log( ).debug( "Entity does not exist for EBConfirmPassword: " + "wWebXfer.Root" );
       }
    }
 %>

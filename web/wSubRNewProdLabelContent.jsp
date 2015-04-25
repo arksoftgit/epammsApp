@@ -1267,7 +1267,7 @@ else
             task.log( ).debug( "SubregProduct.Name: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSubreg.SubregProduct" );
+            task.log( ).debug( "Entity does not exist for ProductName: " + "mSubreg.SubregProduct" );
       }
    }
 %>
@@ -1318,7 +1318,7 @@ else
             task.log( ).debug( "SubregProduct.Description: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSubreg.SubregProduct" );
+            task.log( ).debug( "Entity does not exist for Description: " + "mSubreg.SubregProduct" );
       }
    }
 %>
@@ -1369,7 +1369,7 @@ else
             task.log( ).debug( "SubregProduct.Number: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSubreg.SubregProduct" );
+            task.log( ).debug( "Entity does not exist for Number: " + "mSubreg.SubregProduct" );
       }
    }
 %>
@@ -1420,7 +1420,7 @@ else
             task.log( ).debug( "SubregProduct.EPA_RegistrationNumber: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSubreg.SubregProduct" );
+            task.log( ).debug( "Entity does not exist for EPARegistrationNumber: " + "mSubreg.SubregProduct" );
       }
    }
 %>
@@ -1463,7 +1463,7 @@ else
             task.log( ).debug( "SubregProduct.ESL_Date: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSubreg.SubregProduct" );
+            task.log( ).debug( "Entity does not exist for ESL_Date: " + "mSubreg.SubregProduct" );
       }
    }
 %>
@@ -1551,7 +1551,7 @@ else
             task.log( ).debug( "SubregProduct.Name: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSubLC.SubregProduct" );
+            task.log( ).debug( "Entity does not exist for LabelName: " + "mSubLC.SubregProduct" );
       }
    }
 %>
@@ -1602,7 +1602,7 @@ else
             task.log( ).debug( "SubregLabelContent.Description: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSubLC.SubregLabelContent" );
+            task.log( ).debug( "Entity does not exist for ContentDescription: " + "mSubLC.SubregLabelContent" );
       }
    }
 %>

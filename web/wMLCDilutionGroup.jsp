@@ -802,7 +802,7 @@ else
             task.log( ).debug( "M_DilutionGroup.DilutionRatioText: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_DilutionGroup" );
+            task.log( ).debug( "Entity does not exist for EditBox3: " + "mMasLC.M_DilutionGroup" );
       }
    }
 %>
@@ -853,7 +853,7 @@ else
             task.log( ).debug( "M_DilutionGroup.DilutionQuatText: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_DilutionGroup" );
+            task.log( ).debug( "Entity does not exist for EditBox2: " + "mMasLC.M_DilutionGroup" );
       }
    }
 %>

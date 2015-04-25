@@ -801,7 +801,7 @@ else
             task.log( ).debug( "M_MarketingSection.Name: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_MarketingSection" );
+            task.log( ).debug( "Entity does not exist for EditBox1: " + "mMasLC.M_MarketingSection" );
       }
    }
 %>
@@ -852,7 +852,7 @@ else
             task.log( ).debug( "M_MarketingSection.Title: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_MarketingSection" );
+            task.log( ).debug( "Entity does not exist for DirectionsUseTitle1: " + "mMasLC.M_MarketingSection" );
       }
    }
 %>

@@ -1483,7 +1483,7 @@ else
             task.log( ).debug( "SubregOrganization.Name: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSubreg.SubregOrganization" );
+            task.log( ).debug( "Entity does not exist for EBName: " + "mSubreg.SubregOrganization" );
       }
    }
 %>
@@ -1642,7 +1642,7 @@ else
             task.log( ).debug( "PhysicalAddress.Address: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSubreg.PhysicalAddress" );
+            task.log( ).debug( "Entity does not exist for EBPStreetAddress: " + "mSubreg.PhysicalAddress" );
       }
    }
 %>
@@ -1693,7 +1693,7 @@ else
             task.log( ).debug( "PhysicalAddress.AddressLine2: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSubreg.PhysicalAddress" );
+            task.log( ).debug( "Entity does not exist for EBPAddress2: " + "mSubreg.PhysicalAddress" );
       }
    }
 %>
@@ -1749,7 +1749,7 @@ else
             task.log( ).debug( "PhysicalAddress.City: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSubreg.PhysicalAddress" );
+            task.log( ).debug( "Entity does not exist for EBPCity: " + "mSubreg.PhysicalAddress" );
       }
    }
 %>
@@ -1891,7 +1891,7 @@ else
             task.log( ).debug( "PhysicalAddress.ZipCode: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSubreg.PhysicalAddress" );
+            task.log( ).debug( "Entity does not exist for EBPZipCode: " + "mSubreg.PhysicalAddress" );
       }
    }
 %>
@@ -1947,7 +1947,7 @@ else
             task.log( ).debug( "PhysicalAddress.TollFreePhone: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSubreg.PhysicalAddress" );
+            task.log( ).debug( "Entity does not exist for EBPEmergencyPhone: " + "mSubreg.PhysicalAddress" );
       }
    }
 %>
@@ -2045,7 +2045,7 @@ else
             task.log( ).debug( "MailingAddress.Address: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSubreg.MailingAddress" );
+            task.log( ).debug( "Entity does not exist for EBStreetAddress: " + "mSubreg.MailingAddress" );
       }
    }
 %>
@@ -2096,7 +2096,7 @@ else
             task.log( ).debug( "MailingAddress.AddressLine2: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSubreg.MailingAddress" );
+            task.log( ).debug( "Entity does not exist for EBAddress2: " + "mSubreg.MailingAddress" );
       }
    }
 %>
@@ -2152,7 +2152,7 @@ else
             task.log( ).debug( "MailingAddress.City: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSubreg.MailingAddress" );
+            task.log( ).debug( "Entity does not exist for EBCity: " + "mSubreg.MailingAddress" );
       }
    }
 %>
@@ -2294,7 +2294,7 @@ else
             task.log( ).debug( "MailingAddress.ZipCode: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSubreg.MailingAddress" );
+            task.log( ).debug( "Entity does not exist for EBZipCode: " + "mSubreg.MailingAddress" );
       }
    }
 %>
@@ -2365,7 +2365,7 @@ else
             task.log( ).debug( "ContactPerson.FirstName: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSubreg.ContactPerson" );
+            task.log( ).debug( "Entity does not exist for EBFirstName: " + "mSubreg.ContactPerson" );
       }
    }
 %>
@@ -2421,7 +2421,7 @@ else
             task.log( ).debug( "ContactPerson.LastName: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSubreg.ContactPerson" );
+            task.log( ).debug( "Entity does not exist for EBLastName: " + "mSubreg.ContactPerson" );
       }
    }
 %>
@@ -2477,7 +2477,7 @@ else
             task.log( ).debug( "ContactPerson.Title: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSubreg.ContactPerson" );
+            task.log( ).debug( "Entity does not exist for EBTitle: " + "mSubreg.ContactPerson" );
       }
    }
 %>
@@ -2533,7 +2533,7 @@ else
             task.log( ).debug( "ContactPerson.WorkPhone: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSubreg.ContactPerson" );
+            task.log( ).debug( "Entity does not exist for EBCPhone: " + "mSubreg.ContactPerson" );
       }
    }
 %>
@@ -2589,7 +2589,7 @@ else
             task.log( ).debug( "ContactPerson.Fax: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSubreg.ContactPerson" );
+            task.log( ).debug( "Entity does not exist for EBFax: " + "mSubreg.ContactPerson" );
       }
    }
 %>
@@ -2645,7 +2645,7 @@ else
             task.log( ).debug( "ContactPerson.EmailAddress: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSubreg.ContactPerson" );
+            task.log( ).debug( "Entity does not exist for EBEmail: " + "mSubreg.ContactPerson" );
       }
    }
 %>

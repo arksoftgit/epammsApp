@@ -1408,7 +1408,7 @@ else
             task.log( ).debug( "Employee.FirstName: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mCurrentUser.Employee" );
+            task.log( ).debug( "Entity does not exist for EBFirstName: " + "mCurrentUser.Employee" );
       }
    }
 %>
@@ -1459,7 +1459,7 @@ else
             task.log( ).debug( "Employee.LastName: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mCurrentUser.Employee" );
+            task.log( ).debug( "Entity does not exist for EBLastName: " + "mCurrentUser.Employee" );
       }
    }
 %>
@@ -1510,7 +1510,7 @@ else
             task.log( ).debug( "Employee.Title: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mCurrentUser.Employee" );
+            task.log( ).debug( "Entity does not exist for EBTitle: " + "mCurrentUser.Employee" );
       }
    }
 %>
@@ -1561,7 +1561,7 @@ else
             task.log( ).debug( "Employee.WorkPhone: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mCurrentUser.Employee" );
+            task.log( ).debug( "Entity does not exist for EBCPhone: " + "mCurrentUser.Employee" );
       }
    }
 %>
@@ -1612,7 +1612,7 @@ else
             task.log( ).debug( "Employee.Fax: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mCurrentUser.Employee" );
+            task.log( ).debug( "Entity does not exist for EBFax: " + "mCurrentUser.Employee" );
       }
    }
 %>
@@ -1663,7 +1663,7 @@ else
             task.log( ).debug( "Employee.EmailAddress: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mCurrentUser.Employee" );
+            task.log( ).debug( "Entity does not exist for EBEmail: " + "mCurrentUser.Employee" );
       }
    }
 %>
@@ -1837,7 +1837,7 @@ else
             task.log( ).debug( "Address.Address: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mCurrentUser.Address" );
+            task.log( ).debug( "Entity does not exist for EBPStreetAddress: " + "mCurrentUser.Address" );
       }
    }
 %>
@@ -1888,7 +1888,7 @@ else
             task.log( ).debug( "Address.AddressLine2: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mCurrentUser.Address" );
+            task.log( ).debug( "Entity does not exist for EBPAddress: " + "mCurrentUser.Address" );
       }
    }
 %>
@@ -1939,7 +1939,7 @@ else
             task.log( ).debug( "Address.City: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mCurrentUser.Address" );
+            task.log( ).debug( "Entity does not exist for EBPCity: " + "mCurrentUser.Address" );
       }
    }
 %>
@@ -2078,7 +2078,7 @@ else
             task.log( ).debug( "Address.ZipCode: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mCurrentUser.Address" );
+            task.log( ).debug( "Entity does not exist for EBPZipCode: " + "mCurrentUser.Address" );
       }
    }
 %>
@@ -2162,7 +2162,7 @@ else
             task.log( ).debug( "User.UserName: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mCurrentUser.User" );
+            task.log( ).debug( "Entity does not exist for EBUserName: " + "mCurrentUser.User" );
       }
    }
 %>

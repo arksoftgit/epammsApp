@@ -628,7 +628,7 @@ else
             task.log( ).debug( "M_DilutionGroupItem.Text: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_DilutionGroupItem" );
+            task.log( ).debug( "Entity does not exist for EditBox3: " + "mMasLC.M_DilutionGroupItem" );
       }
    }
 %>

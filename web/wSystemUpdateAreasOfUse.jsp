@@ -1219,7 +1219,7 @@ else
             task.log( ).debug( "Root.CurrentStatement: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "wWebXfer.Root" );
+            task.log( ).debug( "Entity does not exist for AreasOfUse: " + "wWebXfer.Root" );
       }
    }
 %>

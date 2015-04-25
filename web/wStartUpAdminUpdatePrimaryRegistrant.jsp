@@ -1619,7 +1619,7 @@ else
             task.log( ).debug( "Organization.Name: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mPrimReg.Organization" );
+            task.log( ).debug( "Entity does not exist for EBName: " + "mPrimReg.Organization" );
       }
    }
 %>
@@ -1670,7 +1670,7 @@ else
             task.log( ).debug( "Organization.Description: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mPrimReg.Organization" );
+            task.log( ).debug( "Entity does not exist for EBDescription: " + "mPrimReg.Organization" );
       }
    }
 %>
@@ -1721,7 +1721,7 @@ else
             task.log( ).debug( "PrimaryRegistrant.EPA_CompanyNumber: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mPrimReg.PrimaryRegistrant" );
+            task.log( ).debug( "Entity does not exist for EPA_ID: " + "mPrimReg.PrimaryRegistrant" );
       }
    }
 %>
@@ -1862,7 +1862,7 @@ else
             task.log( ).debug( "Organization.LoginName: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mPrimReg.Organization" );
+            task.log( ).debug( "Entity does not exist for LoginName: " + "mPrimReg.Organization" );
       }
    }
 %>
@@ -1957,7 +1957,7 @@ else
             task.log( ).debug( "PhysicalAddress.Address: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mPrimReg.PhysicalAddress" );
+            task.log( ).debug( "Entity does not exist for EBPStreetAddress: " + "mPrimReg.PhysicalAddress" );
       }
    }
 %>
@@ -2007,7 +2007,7 @@ else
             task.log( ).debug( "PhysicalAddress.AddressLine2: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mPrimReg.PhysicalAddress" );
+            task.log( ).debug( "Entity does not exist for EBPAddress2: " + "mPrimReg.PhysicalAddress" );
       }
    }
 %>
@@ -2058,7 +2058,7 @@ else
             task.log( ).debug( "PhysicalAddress.City: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mPrimReg.PhysicalAddress" );
+            task.log( ).debug( "Entity does not exist for EBPCity: " + "mPrimReg.PhysicalAddress" );
       }
    }
 %>
@@ -2204,7 +2204,7 @@ else
             task.log( ).debug( "PhysicalAddress.ZipCode: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mPrimReg.PhysicalAddress" );
+            task.log( ).debug( "Entity does not exist for EBPZipCode: " + "mPrimReg.PhysicalAddress" );
       }
    }
 %>
@@ -2261,7 +2261,7 @@ else
             task.log( ).debug( "PhysicalAddress.TollFreePhone: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mPrimReg.PhysicalAddress" );
+            task.log( ).debug( "Entity does not exist for EBPEmergencyPhone: " + "mPrimReg.PhysicalAddress" );
       }
    }
 %>
@@ -2401,7 +2401,7 @@ else
             task.log( ).debug( "MailingAddress.Address: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mPrimReg.MailingAddress" );
+            task.log( ).debug( "Entity does not exist for EBStreetAddress: " + "mPrimReg.MailingAddress" );
       }
    }
 %>
@@ -2451,7 +2451,7 @@ else
             task.log( ).debug( "MailingAddress.AddressLine2: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mPrimReg.MailingAddress" );
+            task.log( ).debug( "Entity does not exist for EBAddress2: " + "mPrimReg.MailingAddress" );
       }
    }
 %>
@@ -2502,7 +2502,7 @@ else
             task.log( ).debug( "MailingAddress.City: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mPrimReg.MailingAddress" );
+            task.log( ).debug( "Entity does not exist for EBCity: " + "mPrimReg.MailingAddress" );
       }
    }
 %>
@@ -2648,7 +2648,7 @@ else
             task.log( ).debug( "MailingAddress.ZipCode: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mPrimReg.MailingAddress" );
+            task.log( ).debug( "Entity does not exist for EBZipCode: " + "mPrimReg.MailingAddress" );
       }
    }
 %>
@@ -2748,7 +2748,7 @@ else
             task.log( ).debug( "ContactPerson.FirstName: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mPrimReg.ContactPerson" );
+            task.log( ).debug( "Entity does not exist for EBFirstName: " + "mPrimReg.ContactPerson" );
       }
    }
 %>
@@ -2799,7 +2799,7 @@ else
             task.log( ).debug( "ContactPerson.LastName: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mPrimReg.ContactPerson" );
+            task.log( ).debug( "Entity does not exist for EBLastName: " + "mPrimReg.ContactPerson" );
       }
    }
 %>
@@ -2850,7 +2850,7 @@ else
             task.log( ).debug( "ContactPerson.Title: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mPrimReg.ContactPerson" );
+            task.log( ).debug( "Entity does not exist for EBTitle: " + "mPrimReg.ContactPerson" );
       }
    }
 %>
@@ -2901,7 +2901,7 @@ else
             task.log( ).debug( "ContactPerson.WorkPhone: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mPrimReg.ContactPerson" );
+            task.log( ).debug( "Entity does not exist for EBCPhone: " + "mPrimReg.ContactPerson" );
       }
    }
 %>
@@ -2952,7 +2952,7 @@ else
             task.log( ).debug( "ContactPerson.Fax: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mPrimReg.ContactPerson" );
+            task.log( ).debug( "Entity does not exist for EBFax: " + "mPrimReg.ContactPerson" );
       }
    }
 %>
@@ -3003,7 +3003,7 @@ else
             task.log( ).debug( "ContactPerson.EmailAddress: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mPrimReg.ContactPerson" );
+            task.log( ).debug( "Entity does not exist for EBEmail: " + "mPrimReg.ContactPerson" );
       }
    }
 %>

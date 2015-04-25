@@ -1044,7 +1044,7 @@ else
             task.log( ).debug( "Root.AttemptPassword: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "wWebXfer.Root" );
+            task.log( ).debug( "Entity does not exist for EBPassword: " + "wWebXfer.Root" );
       }
    }
 %>

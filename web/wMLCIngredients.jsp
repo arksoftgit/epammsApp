@@ -1452,7 +1452,7 @@ else
             task.log( ).debug( "M_IngredientsSection.ActiveTitle: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_IngredientsSection" );
+            task.log( ).debug( "Entity does not exist for ActiveTitle: " + "mMasLC.M_IngredientsSection" );
       }
    }
 %>
@@ -1508,7 +1508,7 @@ else
             task.log( ).debug( "M_IngredientsSection.InertTitle: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_IngredientsSection" );
+            task.log( ).debug( "Entity does not exist for InertTitle: " + "mMasLC.M_IngredientsSection" );
       }
    }
 %>
@@ -1564,7 +1564,7 @@ else
             task.log( ).debug( "M_IngredientsSection.GeneralInactivePercent: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_IngredientsSection" );
+            task.log( ).debug( "Entity does not exist for GeneralInertPercentage: " + "mMasLC.M_IngredientsSection" );
       }
    }
 %>

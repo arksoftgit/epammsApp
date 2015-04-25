@@ -872,11 +872,11 @@ else
 <%
    View lMLC = null;
    View lSPLDLST = null;
-   View mSPLDefBlock = null;
    View mLLD_LST = null;
    View mMasLC = null;
    View mPrimReg = null;
    View mSPLDef = null;
+   View mSPLDefBlock = null;
    View mSPLDefPanel = null;
    View mSubLC = null;
    View mSubProd = null;
@@ -1184,7 +1184,7 @@ else
             task.log( ).debug( "SubregProduct.ESL_Date: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSubProd.SubregProduct" );
+            task.log( ).debug( "Entity does not exist for Calendar1: " + "mSubProd.SubregProduct" );
       }
    }
 %>

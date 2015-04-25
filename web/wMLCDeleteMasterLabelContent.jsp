@@ -578,7 +578,7 @@ else
             task.log( ).debug( "MasterLabelContent.Version: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasProd.MasterLabelContent" );
+            task.log( ).debug( "Entity does not exist for Version: " + "mMasProd.MasterLabelContent" );
       }
    }
 %>
@@ -629,7 +629,7 @@ else
             task.log( ).debug( "MasterLabelContent.RevisionDate: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasProd.MasterLabelContent" );
+            task.log( ).debug( "Entity does not exist for Revision Date: " + "mMasProd.MasterLabelContent" );
       }
    }
 %>

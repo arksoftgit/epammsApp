@@ -614,7 +614,7 @@ else
             task.log( ).debug( "M_UsageFootnote.Text: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasLC.M_UsageFootnote" );
+            task.log( ).debug( "Entity does not exist for Footnote: " + "mMasLC.M_UsageFootnote" );
       }
    }
 %>

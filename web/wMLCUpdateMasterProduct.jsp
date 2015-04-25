@@ -929,7 +929,7 @@ else
             task.log( ).debug( "Root.AttemptProductName: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "wWebXfer.Root" );
+            task.log( ).debug( "Entity does not exist for MasterProductName: " + "wWebXfer.Root" );
       }
    }
 %>
@@ -974,7 +974,7 @@ else
             task.log( ).debug( "Root.AttemptProductNumber: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "wWebXfer.Root" );
+            task.log( ).debug( "Entity does not exist for MasterProductNumber: " + "wWebXfer.Root" );
       }
    }
 %>
@@ -1089,7 +1089,7 @@ else
             task.log( ).debug( "MasterProduct.EPA_EstablishmentNumber: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mMasProd.MasterProduct" );
+            task.log( ).debug( "Entity does not exist for EstablishmentNumber: " + "mMasProd.MasterProduct" );
       }
    }
 %>
@@ -1211,7 +1211,7 @@ else
             task.log( ).info( "MasterProduct.Description: " + strErrorMapValue );
          }
          else
-            task.log( ).info( "Entity does not exist: " + "mMasProd.MasterProduct" );
+            task.log( ).info( "Entity does not exist for MasterProductDescription: " + "mMasProd.MasterProduct" );
       }
    }
 %>
