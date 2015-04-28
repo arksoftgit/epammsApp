@@ -163,22 +163,22 @@ omSPLDef_GeneratePDF_Label( View     mSPLDef )
    //:// SysConvertEnvironmentString( szXslDirectory, szXslDirectory )
    //:// szXslDirectory = "C:/Program Files/Apache Group/tomcat 7.0/webapps/ROOT/epamms/"
 
-   //:SysGetEnvVar( szXslDirectory, "CATALINA_HOME", 256 )
+   //:SysGetEnvVar( szXslName, "CATALINA_HOME", 256 ) // borrow szXslName for a couple of lines
+   {StringBuilder sb_szXslName;
+   if ( szXslName == null )
+      sb_szXslName = new StringBuilder( 32 );
+   else
+      sb_szXslName = new StringBuilder( szXslName );
+       m_KZOEP1AA.SysGetEnvVar( sb_szXslName, "CATALINA_HOME", 256 );
+   szXslName = sb_szXslName.toString( );}
+   //:// SysAppendcDirSep( szXslName )
+   //:SysConvertEnvironmentString( szXslDirectory, szXslName )
    {StringBuilder sb_szXslDirectory;
    if ( szXslDirectory == null )
       sb_szXslDirectory = new StringBuilder( 32 );
    else
       sb_szXslDirectory = new StringBuilder( szXslDirectory );
-       m_KZOEP1AA.SysGetEnvVar( sb_szXslDirectory, "CATALINA_HOME", 256 );
-   szXslDirectory = sb_szXslDirectory.toString( );}
-   //:// SysAppendcDirSep( szXslDirectory )
-   //:SysConvertEnvironmentString( szXslDirectory, szXslDirectory )
-   {StringBuilder sb_szXslDirectory;
-   if ( szXslDirectory == null )
-      sb_szXslDirectory = new StringBuilder( 32 );
-   else
-      sb_szXslDirectory = new StringBuilder( szXslDirectory );
-       m_KZOEP1AA.SysConvertEnvironmentString( sb_szXslDirectory, szXslDirectory );
+       m_KZOEP1AA.SysConvertEnvironmentString( sb_szXslDirectory, szXslName );
    szXslDirectory = sb_szXslDirectory.toString( );}
    //:szXslDirectory = szXslDirectory + "/webapps/ROOT/" + mSPLDef.SubregOrganization.LoginName + "/"
     {StringBuilder sb_szXslDirectory;
@@ -222,7 +222,6 @@ omSPLDef_GeneratePDF_Label( View     mSPLDef )
        GetVariableFromAttribute( sb_szLabelName, mi_lTempInteger_1, 'S', 65, mSPLDef, "SubregProduct", "Name", "", 0 );
    lTempInteger_1 = mi_lTempInteger_1.intValue( );
    szLabelName = sb_szLabelName.toString( );}
-
 
    //:szXmlName = szXslDirectory + "xml/"
     {StringBuilder sb_szXmlName;
@@ -4418,8 +4417,8 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
                      sb_szTitle = new StringBuilder( szTitle );
                                     ZeidonStringCopy( sb_szTitle, 1, 0, "Directions for Use", 1, 0, 91 );
                   szTitle = sb_szTitle.toString( );}
-                  //:SET CURSOR FIRST mSPLDefPDF.LLD_SpecialSectionAttribute WHERE mSPLDefPDF.LLD_SpecialSectionAttribute.Name = "FIRST AID Header"
-                  RESULT = SetCursorFirstEntityByString( mSPLDefPDF, "LLD_SpecialSectionAttribute", "Name", "FIRST AID Header", "" );
+                  //:SET CURSOR FIRST mSPLDefPDF.LLD_SpecialSectionAttribute WHERE mSPLDefPDF.LLD_SpecialSectionAttribute.Name = "Header"
+                  RESULT = SetCursorFirstEntityByString( mSPLDefPDF, "LLD_SpecialSectionAttribute", "Name", "Header", "" );
                   //:IF RESULT >= zCURSOR_SET
                   if ( RESULT >= zCURSOR_SET )
                   { 
@@ -4451,13 +4450,13 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
                      sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
                                     ZeidonStringConcat( sb_szWriteBuffer, 1, 0, "   <fo:block ", 1, 0, 32001 );
                   szWriteBuffer = sb_szWriteBuffer.toString( );}
-                  //:AddFormatToSpecialText( mSPLDefPDF, "DIRECTIONS Header", szWriteBuffer )
+                  //:AddFormatToSpecialText( mSPLDefPDF, "Header", szWriteBuffer )
                   {StringBuilder sb_szWriteBuffer;
                   if ( szWriteBuffer == null )
                      sb_szWriteBuffer = new StringBuilder( 32 );
                   else
                      sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-                                     omSPLDef_AddFormatToSpecialText( mSPLDefPDF, "DIRECTIONS Header", sb_szWriteBuffer );
+                                     omSPLDef_AddFormatToSpecialText( mSPLDefPDF, "Header", sb_szWriteBuffer );
                   szWriteBuffer = sb_szWriteBuffer.toString( );}
                   //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
                   try
@@ -4579,9 +4578,9 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
                      //:IF RESULT >= zCURSOR_SET 
                      if ( RESULT >= zCURSOR_SET )
                      { 
-                        //:// If there is a "MARKETING Header" entry, add it.
-                        //:SET CURSOR FIRST mSPLDefPDF.LLD_SpecialSectionAttribute WHERE mSPLDefPDF.LLD_SpecialSectionAttribute.Name = "MARKETING Header"
-                        RESULT = SetCursorFirstEntityByString( mSPLDefPDF, "LLD_SpecialSectionAttribute", "Name", "MARKETING Header", "" );
+                        //:// If there is a Marketing "Header" entry, add it.
+                        //:SET CURSOR FIRST mSPLDefPDF.LLD_SpecialSectionAttribute WHERE mSPLDefPDF.LLD_SpecialSectionAttribute.Name = "Header"
+                        RESULT = SetCursorFirstEntityByString( mSPLDefPDF, "LLD_SpecialSectionAttribute", "Name", "Header", "" );
                         //:IF RESULT >= zCURSOR_SET
                         if ( RESULT >= zCURSOR_SET )
                         { 
@@ -4600,13 +4599,13 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
                               sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
                                                       ZeidonStringConcat( sb_szWriteBuffer, 1, 0, "   <fo:block ", 1, 0, 32001 );
                            szWriteBuffer = sb_szWriteBuffer.toString( );}
-                           //:AddFormatToSpecialText( mSPLDefPDF, "MARKETING Header", szWriteBuffer )
+                           //:AddFormatToSpecialText( mSPLDefPDF, "Header", szWriteBuffer )
                            {StringBuilder sb_szWriteBuffer;
                            if ( szWriteBuffer == null )
                               sb_szWriteBuffer = new StringBuilder( 32 );
                            else
                               sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-                                                       omSPLDef_AddFormatToSpecialText( mSPLDefPDF, "MARKETING Header", sb_szWriteBuffer );
+                                                       omSPLDef_AddFormatToSpecialText( mSPLDefPDF, "Header", sb_szWriteBuffer );
                            szWriteBuffer = sb_szWriteBuffer.toString( );}
                            //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
                            try
@@ -4831,8 +4830,8 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
                                  sb_szTitle = new StringBuilder( szTitle );
                                                             ZeidonStringCopy( sb_szTitle, 1, 0, "First Aid", 1, 0, 91 );
                               szTitle = sb_szTitle.toString( );}
-                              //:SET CURSOR FIRST mSPLDefPDF.LLD_SpecialSectionAttribute WHERE mSPLDefPDF.LLD_SpecialSectionAttribute.Name = "FIRST AID Header"
-                              RESULT = SetCursorFirstEntityByString( mSPLDefPDF, "LLD_SpecialSectionAttribute", "Name", "FIRST AID Header", "" );
+                              //:SET CURSOR FIRST mSPLDefPDF.LLD_SpecialSectionAttribute WHERE mSPLDefPDF.LLD_SpecialSectionAttribute.Name = "Header"
+                              RESULT = SetCursorFirstEntityByString( mSPLDefPDF, "LLD_SpecialSectionAttribute", "Name", "Header", "" );
                               //:IF RESULT >= zCURSOR_SET
                               if ( RESULT >= zCURSOR_SET )
                               { 
@@ -4864,13 +4863,13 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
                                  sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
                                                             ZeidonStringConcat( sb_szWriteBuffer, 1, 0, "   <fo:block ", 1, 0, 32001 );
                               szWriteBuffer = sb_szWriteBuffer.toString( );}
-                              //:AddFormatToSpecialText( mSPLDefPDF, "FIRST AID Header", szWriteBuffer )
+                              //:AddFormatToSpecialText( mSPLDefPDF, "Header", szWriteBuffer )
                               {StringBuilder sb_szWriteBuffer;
                               if ( szWriteBuffer == null )
                                  sb_szWriteBuffer = new StringBuilder( 32 );
                               else
                                  sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-                                                             omSPLDef_AddFormatToSpecialText( mSPLDefPDF, "FIRST AID Header", sb_szWriteBuffer );
+                                                             omSPLDef_AddFormatToSpecialText( mSPLDefPDF, "Header", sb_szWriteBuffer );
                               szWriteBuffer = sb_szWriteBuffer.toString( );}
                               //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
                               try
@@ -12709,6 +12708,455 @@ omSPLDef_BuildSPLD_FromSPLD( View     NewSPLD,
 } 
 
 
+//:TRANSFORMATION OPERATION
+public int 
+omSPLDef_DuplicateSPLD( View     NewSPLD,
+                        View     SourceSPLD )
+{
+   int      RESULT = 0;
+   String   szTempString_0 = null;
+   int      lTempInteger_0 = 0;
+   int      lTempInteger_1 = 0;
+   int      lTempInteger_2 = 0;
+   int      lTempInteger_3 = 0;
+   int      lTempInteger_4 = 0;
+   int      lTempInteger_5 = 0;
+
+   //:DuplicateSPLD( VIEW NewSPLD    BASED ON LOD mSPLDef,
+   //:            VIEW SourceSPLD BASED ON LOD mSPLDef )
+
+   //:// Build an new SPLD from an existing SPLD.
+   //:CREATE ENTITY NewSPLD.SubregPhysicalLabelDef 
+   RESULT = CreateEntity( NewSPLD, "SubregPhysicalLabelDef", zPOS_AFTER );
+   //:SetMatchingAttributesByName( NewSPLD, "SubregPhysicalLabelDef", SourceSPLD, "SubregPhysicalLabelDef", zSET_NULL )
+   SetMatchingAttributesByName( NewSPLD, "SubregPhysicalLabelDef", SourceSPLD, "SubregPhysicalLabelDef", zSET_NULL );
+   //:NewSPLD.SubregPhysicalLabelDef.Name = SourceSPLD.SubregPhysicalLabelDef.Name + " (Duplicate)"
+   {StringBuilder sb_szTempString_0;
+   if ( szTempString_0 == null )
+      sb_szTempString_0 = new StringBuilder( 32 );
+   else
+      sb_szTempString_0 = new StringBuilder( szTempString_0 );
+       GetStringFromAttribute( sb_szTempString_0, SourceSPLD, "SubregPhysicalLabelDef", "Name" );
+   szTempString_0 = sb_szTempString_0.toString( );}
+    {StringBuilder sb_szTempString_0;
+   if ( szTempString_0 == null )
+      sb_szTempString_0 = new StringBuilder( 32 );
+   else
+      sb_szTempString_0 = new StringBuilder( szTempString_0 );
+      ZeidonStringConcat( sb_szTempString_0, 1, 0, " (Duplicate)", 1, 0, 255 );
+   szTempString_0 = sb_szTempString_0.toString( );}
+   SetAttributeFromString( NewSPLD, "SubregPhysicalLabelDef", "Name", szTempString_0 );
+   //:INCLUDE NewSPLD.SubregLabelContent FROM SourceSPLD.SubregLabelContent
+   RESULT = IncludeSubobjectFromSubobject( NewSPLD, "SubregLabelContent", SourceSPLD, "SubregLabelContent", zPOS_AFTER );
+
+   //:// SPLD_UsageType Entries
+   //:FOR EACH SourceSPLD.SPLD_UsageType 
+   RESULT = SetCursorFirstEntity( SourceSPLD, "SPLD_UsageType", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:CREATE ENTITY NewSPLD.SPLD_UsageType 
+      RESULT = CreateEntity( NewSPLD, "SPLD_UsageType", zPOS_AFTER );
+      //:SetMatchingAttributesByName( NewSPLD, "SPLD_UsageType", SourceSPLD, "SPLD_UsageType", zSET_NULL )
+      SetMatchingAttributesByName( NewSPLD, "SPLD_UsageType", SourceSPLD, "SPLD_UsageType", zSET_NULL );
+      //:FOR EACH SourceSPLD.SPLD_Usage 
+      RESULT = SetCursorFirstEntity( SourceSPLD, "SPLD_Usage", "" );
+      while ( RESULT > zCURSOR_UNCHANGED )
+      { 
+         //:CREATE ENTITY NewSPLD.SPLD_Usage 
+         RESULT = CreateEntity( NewSPLD, "SPLD_Usage", zPOS_AFTER );
+         //:SetMatchingAttributesByName( NewSPLD, "SPLD_Usage", SourceSPLD, "SPLD_Usage", zSET_NULL )
+         SetMatchingAttributesByName( NewSPLD, "SPLD_Usage", SourceSPLD, "SPLD_Usage", zSET_NULL );
+         //:INCLUDE NewSPLD.S_Usage FROM SourceSPLD.S_Usage 
+         RESULT = IncludeSubobjectFromSubobject( NewSPLD, "S_Usage", SourceSPLD, "S_Usage", zPOS_AFTER );
+         RESULT = SetCursorNextEntity( SourceSPLD, "SPLD_Usage", "" );
+      } 
+
+      RESULT = SetCursorNextEntity( SourceSPLD, "SPLD_UsageType", "" );
+      //:END
+   } 
+
+   //:END
+
+   //:// SPLD_GeneralSection 
+   //:FOR EACH SourceSPLD.SPLD_GeneralSection 
+   RESULT = SetCursorFirstEntity( SourceSPLD, "SPLD_GeneralSection", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:CREATE ENTITY NewSPLD.SPLD_GeneralSection 
+      RESULT = CreateEntity( NewSPLD, "SPLD_GeneralSection", zPOS_AFTER );
+      //:SetMatchingAttributesByName( NewSPLD, "SPLD_GeneralSection", SourceSPLD, "SPLD_GeneralSection", zSET_NULL )
+      SetMatchingAttributesByName( NewSPLD, "SPLD_GeneralSection", SourceSPLD, "SPLD_GeneralSection", zSET_NULL );
+      //:INCLUDE NewSPLD.S_GeneralSection FROM SourceSPLD.S_GeneralSection 
+      RESULT = IncludeSubobjectFromSubobject( NewSPLD, "S_GeneralSection", SourceSPLD, "S_GeneralSection", zPOS_AFTER );
+      //:FOR EACH SourceSPLD.SPLD_GeneralStatement 
+      RESULT = SetCursorFirstEntity( SourceSPLD, "SPLD_GeneralStatement", "" );
+      while ( RESULT > zCURSOR_UNCHANGED )
+      { 
+         //:CREATE ENTITY NewSPLD.SPLD_GeneralStatement 
+         RESULT = CreateEntity( NewSPLD, "SPLD_GeneralStatement", zPOS_AFTER );
+         //:SetMatchingAttributesByName( NewSPLD, "SPLD_GeneralStatement", SourceSPLD, "SPLD_GeneralStatement", zSET_NULL )
+         SetMatchingAttributesByName( NewSPLD, "SPLD_GeneralStatement", SourceSPLD, "SPLD_GeneralStatement", zSET_NULL );
+         //:INCLUDE NewSPLD.S_GeneralStatement FROM SourceSPLD.S_GeneralStatement 
+         RESULT = IncludeSubobjectFromSubobject( NewSPLD, "S_GeneralStatement", SourceSPLD, "S_GeneralStatement", zPOS_AFTER );
+         RESULT = SetCursorNextEntity( SourceSPLD, "SPLD_GeneralStatement", "" );
+      } 
+
+      RESULT = SetCursorNextEntity( SourceSPLD, "SPLD_GeneralSection", "" );
+      //:END
+   } 
+
+   //:END
+
+   //:// Ingredients
+   //:FOR EACH SourceSPLD.SPLD_IngredientsSection 
+   RESULT = SetCursorFirstEntity( SourceSPLD, "SPLD_IngredientsSection", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:CREATE ENTITY NewSPLD.SPLD_IngredientsSection 
+      RESULT = CreateEntity( NewSPLD, "SPLD_IngredientsSection", zPOS_AFTER );
+      //:SetMatchingAttributesByName( NewSPLD, "SPLD_IngredientsSection", SourceSPLD, "SPLD_IngredientsSection", zSET_NULL )
+      SetMatchingAttributesByName( NewSPLD, "SPLD_IngredientsSection", SourceSPLD, "SPLD_IngredientsSection", zSET_NULL );
+      //:INCLUDE NewSPLD.S_IngredientsSection FROM SourceSPLD.S_IngredientsSection 
+      RESULT = IncludeSubobjectFromSubobject( NewSPLD, "S_IngredientsSection", SourceSPLD, "S_IngredientsSection", zPOS_AFTER );
+      //:FOR EACH SourceSPLD.SPLD_IngredientsStatement 
+      RESULT = SetCursorFirstEntity( SourceSPLD, "SPLD_IngredientsStatement", "" );
+      while ( RESULT > zCURSOR_UNCHANGED )
+      { 
+         //:CREATE ENTITY NewSPLD.SPLD_IngredientsStatement 
+         RESULT = CreateEntity( NewSPLD, "SPLD_IngredientsStatement", zPOS_AFTER );
+         //:SetMatchingAttributesByName( NewSPLD, "SPLD_IngredientsStatement", SourceSPLD, "SPLD_IngredientsStatement", zSET_NULL )
+         SetMatchingAttributesByName( NewSPLD, "SPLD_IngredientsStatement", SourceSPLD, "SPLD_IngredientsStatement", zSET_NULL );
+         //:INCLUDE NewSPLD.S_IngredientsStatement FROM SourceSPLD.S_IngredientsStatement 
+         RESULT = IncludeSubobjectFromSubobject( NewSPLD, "S_IngredientsStatement", SourceSPLD, "S_IngredientsStatement", zPOS_AFTER );
+         RESULT = SetCursorNextEntity( SourceSPLD, "SPLD_IngredientsStatement", "" );
+      } 
+
+      RESULT = SetCursorNextEntity( SourceSPLD, "SPLD_IngredientsSection", "" );
+      //:END
+   } 
+
+   //:END
+
+   //:// SPLD_StorageDisposalSection 
+   //:FOR EACH SourceSPLD.SPLD_StorageDisposalSection 
+   RESULT = SetCursorFirstEntity( SourceSPLD, "SPLD_StorageDisposalSection", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:CREATE ENTITY NewSPLD.SPLD_StorageDisposalSection 
+      RESULT = CreateEntity( NewSPLD, "SPLD_StorageDisposalSection", zPOS_AFTER );
+      //:SetMatchingAttributesByName( NewSPLD, "SPLD_StorageDisposalSection", SourceSPLD, "SPLD_StorageDisposalSection", zSET_NULL )
+      SetMatchingAttributesByName( NewSPLD, "SPLD_StorageDisposalSection", SourceSPLD, "SPLD_StorageDisposalSection", zSET_NULL );
+      //:INCLUDE NewSPLD.S_StorageDisposalSection FROM SourceSPLD.S_StorageDisposalSection 
+      RESULT = IncludeSubobjectFromSubobject( NewSPLD, "S_StorageDisposalSection", SourceSPLD, "S_StorageDisposalSection", zPOS_AFTER );
+      //:FOR EACH SourceSPLD.SPLD_StorageDisposalStatement 
+      RESULT = SetCursorFirstEntity( SourceSPLD, "SPLD_StorageDisposalStatement", "" );
+      while ( RESULT > zCURSOR_UNCHANGED )
+      { 
+         //:CREATE ENTITY NewSPLD.SPLD_StorageDisposalStatement 
+         RESULT = CreateEntity( NewSPLD, "SPLD_StorageDisposalStatement", zPOS_AFTER );
+         //:SetMatchingAttributesByName( NewSPLD, "SPLD_StorageDisposalStatement", SourceSPLD, "SPLD_StorageDisposalStatement", zSET_NULL )
+         SetMatchingAttributesByName( NewSPLD, "SPLD_StorageDisposalStatement", SourceSPLD, "SPLD_StorageDisposalStatement", zSET_NULL );
+         //:INCLUDE NewSPLD.S_StorageDisposalStatement FROM SourceSPLD.S_StorageDisposalStatement 
+         RESULT = IncludeSubobjectFromSubobject( NewSPLD, "S_StorageDisposalStatement", SourceSPLD, "S_StorageDisposalStatement", zPOS_AFTER );
+         RESULT = SetCursorNextEntity( SourceSPLD, "SPLD_StorageDisposalStatement", "" );
+      } 
+
+      RESULT = SetCursorNextEntity( SourceSPLD, "SPLD_StorageDisposalSection", "" );
+      //:END
+   } 
+
+   //:END
+
+   //:// SPLD_DirectionsForUseSection
+   //:FOR EACH SourceSPLD.SPLD_DirectionsForUseSection
+   RESULT = SetCursorFirstEntity( SourceSPLD, "SPLD_DirectionsForUseSection", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:CREATE ENTITY NewSPLD.SPLD_DirectionsForUseSection
+      RESULT = CreateEntity( NewSPLD, "SPLD_DirectionsForUseSection", zPOS_AFTER );
+      //:SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseSection", SourceSPLD, "SPLD_DirectionsForUseSection", zSET_NULL )
+      SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseSection", SourceSPLD, "SPLD_DirectionsForUseSection", zSET_NULL );
+      //:INCLUDE NewSPLD.S_DirectionsForUseSection FROM SourceSPLD.S_DirectionsForUseSection
+      RESULT = IncludeSubobjectFromSubobject( NewSPLD, "S_DirectionsForUseSection", SourceSPLD, "S_DirectionsForUseSection", zPOS_AFTER );
+      //:FOR EACH SourceSPLD.SPLD_DirectionsForUseStatement
+      RESULT = SetCursorFirstEntity( SourceSPLD, "SPLD_DirectionsForUseStatement", "" );
+      while ( RESULT > zCURSOR_UNCHANGED )
+      { 
+         //:CREATE ENTITY NewSPLD.SPLD_DirectionsForUseStatement
+         RESULT = CreateEntity( NewSPLD, "SPLD_DirectionsForUseStatement", zPOS_AFTER );
+         //:SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseStatement", SourceSPLD, "SPLD_DirectionsForUseStatement", zSET_NULL )
+         SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseStatement", SourceSPLD, "SPLD_DirectionsForUseStatement", zSET_NULL );
+         //:INCLUDE NewSPLD.S_DirectionsForUseStatement FROM SourceSPLD.S_DirectionsForUseStatement
+         RESULT = IncludeSubobjectFromSubobject( NewSPLD, "S_DirectionsForUseStatement", SourceSPLD, "S_DirectionsForUseStatement", zPOS_AFTER );
+
+         //:// UsageOrder entries
+         //:FOR EACH SourceSPLD.SPLD_DirectionsUsageOrdering 
+         RESULT = SetCursorFirstEntity( SourceSPLD, "SPLD_DirectionsUsageOrdering", "" );
+         while ( RESULT > zCURSOR_UNCHANGED )
+         { 
+            //:SET CURSOR FIRST NewSPLD.S_Usage WITHIN NewSPLD.SubregPhysicalLabelDef 
+            //:           WHERE NewSPLD.S_Usage.ID = SourceSPLD.S_Usage.ID 
+            {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+                         GetIntegerFromAttribute( mi_lTempInteger_0, SourceSPLD, "S_Usage", "ID" );
+            lTempInteger_0 = mi_lTempInteger_0.intValue( );}
+            RESULT = SetCursorFirstEntityByInteger( NewSPLD, "S_Usage", "ID", lTempInteger_0, "SubregPhysicalLabelDef" );
+            //:IF RESULT >= zCURSOR_SET
+            if ( RESULT >= zCURSOR_SET )
+            { 
+               //:CREATE ENTITY NewSPLD.SPLD_DirectionsUsageOrdering 
+               RESULT = CreateEntity( NewSPLD, "SPLD_DirectionsUsageOrdering", zPOS_AFTER );
+               //:SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsUsageOrdering", SourceSPLD, "SPLD_DirectionsUsageOrdering", zSET_NULL )
+               SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsUsageOrdering", SourceSPLD, "SPLD_DirectionsUsageOrdering", zSET_NULL );
+               //:// We need to include the new SPLD_Usage entry created in the NewSPLD.
+               //:INCLUDE NewSPLD.SPLD_DirectionsUsage FROM NewSPLD.SPLD_Usage
+               RESULT = IncludeSubobjectFromSubobject( NewSPLD, "SPLD_DirectionsUsage", NewSPLD, "SPLD_Usage", zPOS_AFTER );
+            } 
+
+            RESULT = SetCursorNextEntity( SourceSPLD, "SPLD_DirectionsUsageOrdering", "" );
+            //:END
+         } 
+
+         RESULT = SetCursorNextEntity( SourceSPLD, "SPLD_DirectionsForUseStatement", "" );
+         //:END
+      } 
+
+      RESULT = SetCursorNextEntity( SourceSPLD, "SPLD_DirectionsForUseSection", "" );
+      //:END
+   } 
+
+   //:END
+
+   //:// SPLD_MarketingSection
+   //:FOR EACH SourceSPLD.SPLD_MarketingSection
+   RESULT = SetCursorFirstEntity( SourceSPLD, "SPLD_MarketingSection", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:CREATE ENTITY NewSPLD.SPLD_MarketingSection
+      RESULT = CreateEntity( NewSPLD, "SPLD_MarketingSection", zPOS_AFTER );
+      //:SetMatchingAttributesByName( NewSPLD, "SPLD_MarketingSection", SourceSPLD, "SPLD_MarketingSection", zSET_NULL )
+      SetMatchingAttributesByName( NewSPLD, "SPLD_MarketingSection", SourceSPLD, "SPLD_MarketingSection", zSET_NULL );
+      //:INCLUDE NewSPLD.S_MarketingSection FROM SourceSPLD.S_MarketingSection
+      RESULT = IncludeSubobjectFromSubobject( NewSPLD, "S_MarketingSection", SourceSPLD, "S_MarketingSection", zPOS_AFTER );
+      //:FOR EACH SourceSPLD.SPLD_MarketingStatement
+      RESULT = SetCursorFirstEntity( SourceSPLD, "SPLD_MarketingStatement", "" );
+      while ( RESULT > zCURSOR_UNCHANGED )
+      { 
+         //:CREATE ENTITY NewSPLD.SPLD_MarketingStatement
+         RESULT = CreateEntity( NewSPLD, "SPLD_MarketingStatement", zPOS_AFTER );
+         //:SetMatchingAttributesByName( NewSPLD, "SPLD_MarketingStatement", SourceSPLD, "SPLD_MarketingStatement", zSET_NULL )
+         SetMatchingAttributesByName( NewSPLD, "SPLD_MarketingStatement", SourceSPLD, "SPLD_MarketingStatement", zSET_NULL );
+         //:INCLUDE NewSPLD.S_MarketingStatement FROM SourceSPLD.S_MarketingStatement
+         RESULT = IncludeSubobjectFromSubobject( NewSPLD, "S_MarketingStatement", SourceSPLD, "S_MarketingStatement", zPOS_AFTER );
+
+         //:// UsageOrder entries
+         //:FOR EACH SourceSPLD.SPLD_MarketingUsageOrdering 
+         RESULT = SetCursorFirstEntity( SourceSPLD, "SPLD_MarketingUsageOrdering", "" );
+         while ( RESULT > zCURSOR_UNCHANGED )
+         { 
+            //:SET CURSOR FIRST NewSPLD.S_Usage WITHIN NewSPLD.SubregPhysicalLabelDef 
+            //:           WHERE NewSPLD.S_Usage.ID = SourceSPLD.S_Usage.ID 
+            {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+                         GetIntegerFromAttribute( mi_lTempInteger_1, SourceSPLD, "S_Usage", "ID" );
+            lTempInteger_1 = mi_lTempInteger_1.intValue( );}
+            RESULT = SetCursorFirstEntityByInteger( NewSPLD, "S_Usage", "ID", lTempInteger_1, "SubregPhysicalLabelDef" );
+            //:IF RESULT >= zCURSOR_SET
+            if ( RESULT >= zCURSOR_SET )
+            { 
+               //:CREATE ENTITY NewSPLD.SPLD_MarketingUsageOrdering 
+               RESULT = CreateEntity( NewSPLD, "SPLD_MarketingUsageOrdering", zPOS_AFTER );
+               //:SetMatchingAttributesByName( NewSPLD, "SPLD_MarketingUsageOrdering", SourceSPLD, "SPLD_MarketingUsageOrdering", zSET_NULL )
+               SetMatchingAttributesByName( NewSPLD, "SPLD_MarketingUsageOrdering", SourceSPLD, "SPLD_MarketingUsageOrdering", zSET_NULL );
+               //:// We need to include the new SPLD_Usage entry created in the NewSPLD.
+               //:INCLUDE NewSPLD.SPLD_MarketingUsage FROM NewSPLD.SPLD_Usage 
+               RESULT = IncludeSubobjectFromSubobject( NewSPLD, "SPLD_MarketingUsage", NewSPLD, "SPLD_Usage", zPOS_AFTER );
+            } 
+
+            RESULT = SetCursorNextEntity( SourceSPLD, "SPLD_MarketingUsageOrdering", "" );
+            //:END
+         } 
+
+         RESULT = SetCursorNextEntity( SourceSPLD, "SPLD_MarketingStatement", "" );
+         //:END
+      } 
+
+      RESULT = SetCursorNextEntity( SourceSPLD, "SPLD_MarketingSection", "" );
+      //:END
+   } 
+
+   //:END
+
+   //:// SPLD_HumanHazardSection 
+   //:FOR EACH SourceSPLD.SPLD_HumanHazardSection 
+   RESULT = SetCursorFirstEntity( SourceSPLD, "SPLD_HumanHazardSection", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:CREATE ENTITY NewSPLD.SPLD_HumanHazardSection 
+      RESULT = CreateEntity( NewSPLD, "SPLD_HumanHazardSection", zPOS_AFTER );
+      //:SetMatchingAttributesByName( NewSPLD, "SPLD_HumanHazardSection", SourceSPLD, "SPLD_HumanHazardSection", zSET_NULL )
+      SetMatchingAttributesByName( NewSPLD, "SPLD_HumanHazardSection", SourceSPLD, "SPLD_HumanHazardSection", zSET_NULL );
+      //:IF SourceSPLD.S_HumanHazardSection EXISTS
+      lTempInteger_2 = CheckExistenceOfEntity( SourceSPLD, "S_HumanHazardSection" );
+      if ( lTempInteger_2 == 0 )
+      { 
+         //:INCLUDE NewSPLD.S_HumanHazardSection FROM SourceSPLD.S_HumanHazardSection 
+         RESULT = IncludeSubobjectFromSubobject( NewSPLD, "S_HumanHazardSection", SourceSPLD, "S_HumanHazardSection", zPOS_AFTER );
+      } 
+
+      RESULT = SetCursorNextEntity( SourceSPLD, "SPLD_HumanHazardSection", "" );
+      //:END
+   } 
+
+   //:END
+
+   //:// SPLD_LLD 
+   //:CREATE ENTITY NewSPLD.SPLD_LLD 
+   RESULT = CreateEntity( NewSPLD, "SPLD_LLD", zPOS_AFTER );
+   //:SetMatchingAttributesByName( NewSPLD, "S_HumanHazardSection", SourceSPLD, "S_HumanHazardSection", zSET_NULL )
+   SetMatchingAttributesByName( NewSPLD, "S_HumanHazardSection", SourceSPLD, "S_HumanHazardSection", zSET_NULL );
+   //:FOR EACH SourceSPLD.LLD_Page 
+   RESULT = SetCursorFirstEntity( SourceSPLD, "LLD_Page", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:CREATE ENTITY NewSPLD.LLD_Page 
+      RESULT = CreateEntity( NewSPLD, "LLD_Page", zPOS_AFTER );
+      //:SetMatchingAttributesByName( NewSPLD, "LLD_Page", SourceSPLD, "LLD_Page", zSET_NULL )
+      SetMatchingAttributesByName( NewSPLD, "LLD_Page", SourceSPLD, "LLD_Page", zSET_NULL );
+      //:IF SourceSPLD.PageBackgroundColor EXISTS
+      lTempInteger_3 = CheckExistenceOfEntity( SourceSPLD, "PageBackgroundColor" );
+      if ( lTempInteger_3 == 0 )
+      { 
+         //:INCLUDE NewSPLD.PageBackgroundColor FROM SourceSPLD.PageBackgroundColor 
+         RESULT = IncludeSubobjectFromSubobject( NewSPLD, "PageBackgroundColor", SourceSPLD, "PageBackgroundColor", zPOS_AFTER );
+      } 
+
+      //:END
+      //:FOR EACH SourceSPLD.LLD_Panel 
+      RESULT = SetCursorFirstEntity( SourceSPLD, "LLD_Panel", "" );
+      while ( RESULT > zCURSOR_UNCHANGED )
+      { 
+         //:CREATE ENTITY NewSPLD.LLD_Panel 
+         RESULT = CreateEntity( NewSPLD, "LLD_Panel", zPOS_AFTER );
+         //:SetMatchingAttributesByName( NewSPLD, "LLD_Panel", SourceSPLD, "LLD_Panel", zSET_NULL )
+         SetMatchingAttributesByName( NewSPLD, "LLD_Panel", SourceSPLD, "LLD_Panel", zSET_NULL );
+         //:IF SourceSPLD.PanelBackgroundColor EXISTS
+         lTempInteger_4 = CheckExistenceOfEntity( SourceSPLD, "PanelBackgroundColor" );
+         if ( lTempInteger_4 == 0 )
+         { 
+            //:INCLUDE NewSPLD.PanelBackgroundColor FROM SourceSPLD.PanelBackgroundColor 
+            RESULT = IncludeSubobjectFromSubobject( NewSPLD, "PanelBackgroundColor", SourceSPLD, "PanelBackgroundColor", zPOS_AFTER );
+         } 
+
+         //:END
+         //:IF SourceSPLD.PanelBorderColor EXISTS
+         lTempInteger_5 = CheckExistenceOfEntity( SourceSPLD, "PanelBorderColor" );
+         if ( lTempInteger_5 == 0 )
+         { 
+            //:INCLUDE NewSPLD.PanelBorderColor FROM SourceSPLD.PanelBorderColor 
+            RESULT = IncludeSubobjectFromSubobject( NewSPLD, "PanelBorderColor", SourceSPLD, "PanelBorderColor", zPOS_AFTER );
+         } 
+
+         //:END
+         //:FOR EACH SourceSPLD.LLD_Block 
+         RESULT = SetCursorFirstEntity( SourceSPLD, "LLD_Block", "" );
+         while ( RESULT > zCURSOR_UNCHANGED )
+         { 
+            //:// Use recursive routine to duplicate Block.
+            //:DuplicateSPLD_Block( NewSPLD, SourceSPLD )
+            omSPLDef_DuplicateSPLD_Block( NewSPLD, SourceSPLD );
+            RESULT = SetCursorNextEntity( SourceSPLD, "LLD_Block", "" );
+         } 
+
+         RESULT = SetCursorNextEntity( SourceSPLD, "LLD_Panel", "" );
+         //:END 
+      } 
+
+      RESULT = SetCursorNextEntity( SourceSPLD, "LLD_Page", "" );
+      //:END 
+   } 
+
+   //:END
+   return( 0 );
+// END
+} 
+
+
+//:TRANSFORMATION OPERATION
+public int 
+omSPLDef_DuplicateSPLD_Block( View     NewSPLD,
+                              View     SourceSPLD )
+{
+   int      RESULT = 0;
+   int      lTempInteger_0 = 0;
+   int      lTempInteger_1 = 0;
+
+   //:DuplicateSPLD_Block( VIEW NewSPLD    BASED ON LOD mSPLDef,
+   //:                  VIEW SourceSPLD BASED ON LOD mSPLDef )
+
+   //:// This is a recursive routine to dupplicate an LLD_Block / LLD_SubBlock.
+   //:CREATE ENTITY NewSPLD.LLD_Block  
+   RESULT = CreateEntity( NewSPLD, "LLD_Block", zPOS_AFTER );
+   //:SetMatchingAttributesByName( NewSPLD, "LLD_Block", SourceSPLD, "LLD_Block", zSET_NULL ) 
+   SetMatchingAttributesByName( NewSPLD, "LLD_Block", SourceSPLD, "LLD_Block", zSET_NULL );
+   //:IF SourceSPLD.BlockBackgroundColor EXISTS
+   lTempInteger_0 = CheckExistenceOfEntity( SourceSPLD, "BlockBackgroundColor" );
+   if ( lTempInteger_0 == 0 )
+   { 
+      //:INCLUDE NewSPLD.BlockBackgroundColor FROM SourceSPLD.BlockBackgroundColor 
+      RESULT = IncludeSubobjectFromSubobject( NewSPLD, "BlockBackgroundColor", SourceSPLD, "BlockBackgroundColor", zPOS_AFTER );
+   } 
+
+   //:END
+   //:IF SourceSPLD.BlockBorderColor EXISTS
+   lTempInteger_1 = CheckExistenceOfEntity( SourceSPLD, "BlockBorderColor" );
+   if ( lTempInteger_1 == 0 )
+   { 
+      //:INCLUDE NewSPLD.BlockBorderColor FROM SourceSPLD.BlockBorderColor 
+      RESULT = IncludeSubobjectFromSubobject( NewSPLD, "BlockBorderColor", SourceSPLD, "BlockBorderColor", zPOS_AFTER );
+   } 
+
+   //:END
+   //:FOR EACH SourceSPLD.LLD_SpecialSectionAttribute 
+   RESULT = SetCursorFirstEntity( SourceSPLD, "LLD_SpecialSectionAttribute", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:CREATE ENTITY NewSPLD.LLD_SpecialSectionAttribute 
+      RESULT = CreateEntity( NewSPLD, "LLD_SpecialSectionAttribute", zPOS_AFTER );
+      //:SetMatchingAttributesByName( NewSPLD, "LLD_SpecialSectionAttribute", SourceSPLD, "LLD_SpecialSectionAttribute", zSET_NULL )
+      SetMatchingAttributesByName( NewSPLD, "LLD_SpecialSectionAttribute", SourceSPLD, "LLD_SpecialSectionAttribute", zSET_NULL );
+      //:CREATE ENTITY NewSPLD.LLD_SpecialSectionAttrBlock 
+      RESULT = CreateEntity( NewSPLD, "LLD_SpecialSectionAttrBlock", zPOS_AFTER );
+      //:SetMatchingAttributesByName( NewSPLD, "LLD_SpecialSectionAttrBlock", SourceSPLD, "LLD_SpecialSectionAttrBlock", zSET_NULL )  
+      SetMatchingAttributesByName( NewSPLD, "LLD_SpecialSectionAttrBlock", SourceSPLD, "LLD_SpecialSectionAttrBlock", zSET_NULL );
+      RESULT = SetCursorNextEntity( SourceSPLD, "LLD_SpecialSectionAttribute", "" );
+   } 
+
+   //:END
+   //:FOR EACH SourceSPLD.LLD_SubBlock 
+   RESULT = SetCursorFirstEntity( SourceSPLD, "LLD_SubBlock", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:SetViewToSubobject( SourceSPLD, "LLD_SubBlock" )
+      SetViewToSubobject( SourceSPLD, "LLD_SubBlock" );
+      //:SetViewToSubobject( NewSPLD, "LLD_SubBlock" )
+      SetViewToSubobject( NewSPLD, "LLD_SubBlock" );
+
+      //:DuplicateSPLD_Block( NewSPLD, SourceSPLD )
+      omSPLDef_DuplicateSPLD_Block( NewSPLD, SourceSPLD );
+
+      //:ResetViewFromSubobject( SourceSPLD )
+      ResetViewFromSubobject( SourceSPLD );
+      //:ResetViewFromSubobject( NewSPLD )
+      ResetViewFromSubobject( NewSPLD );
+      RESULT = SetCursorNextEntity( SourceSPLD, "LLD_SubBlock", "" );
+   } 
+
+   //:END
+   return( 0 );
+//    
+// END
+} 
+
+
 //:DERIVED ATTRIBUTE OPERATION
 //:dFullHazardStatement( VIEW mSPLDef BASED ON LOD mSPLDef,
 //:                      STRING ( 32 ) InternalEntityStructure,
@@ -17068,6 +17516,8 @@ omSPLDef_ObjectConstraints( View     mSPLDef,
                             Integer   State )
 {
    int      RESULT = 0;
+   int      lTempInteger_0 = 0;
+   String   szTempString_0 = null;
 
    //:ObjectConstraints( VIEW mSPLDef BASED ON LOD mSPLDef,
    //:                SHORT Event,
@@ -17110,6 +17560,48 @@ omSPLDef_ObjectConstraints( View     mSPLDef,
          //:END
          //:SET CURSOR FIRST mSPLDef.LLD_Page  
          RESULT = SetCursorFirstEntity( mSPLDef, "LLD_Page", "" );
+
+         //:// Make sure the new SPLD_UsageType subobject structure is used.
+         //:IF mSPLDef.SPLD_UsageType DOES NOT EXIST
+         lTempInteger_0 = CheckExistenceOfEntity( mSPLDef, "SPLD_UsageType" );
+         if ( lTempInteger_0 != 0 )
+         { 
+            //:FOR EACH mSPLDef.SPLD_UsageDelete 
+            RESULT = SetCursorFirstEntity( mSPLDef, "SPLD_UsageDelete", "" );
+            while ( RESULT > zCURSOR_UNCHANGED )
+            { 
+               //:SET CURSOR FIRST mSPLDef.SPLD_UsageType WHERE mSPLDef.SPLD_UsageType.UsageType = mSPLDef.SPLD_UsageDelete.UsageType 
+               {StringBuilder sb_szTempString_0;
+               if ( szTempString_0 == null )
+                  sb_szTempString_0 = new StringBuilder( 32 );
+               else
+                  sb_szTempString_0 = new StringBuilder( szTempString_0 );
+                               GetStringFromAttribute( sb_szTempString_0, mSPLDef, "SPLD_UsageDelete", "UsageType" );
+               szTempString_0 = sb_szTempString_0.toString( );}
+               RESULT = SetCursorFirstEntityByString( mSPLDef, "SPLD_UsageType", "UsageType", szTempString_0, "" );
+               //:IF RESULT < zCURSOR_SET
+               if ( RESULT < zCURSOR_SET )
+               { 
+                  //:CREATE ENTITY mSPLDef.SPLD_UsageType 
+                  RESULT = CreateEntity( mSPLDef, "SPLD_UsageType", zPOS_AFTER );
+                  //:mSPLDef.SPLD_UsageType.UsageType = mSPLDef.SPLD_UsageDelete.UsageType  
+                  SetAttributeFromAttribute( mSPLDef, "SPLD_UsageType", "UsageType", mSPLDef, "SPLD_UsageDelete", "UsageType" );
+               } 
+
+               //:END 
+               //:CREATE ENTITY mSPLDef.SPLD_Usage 
+               RESULT = CreateEntity( mSPLDef, "SPLD_Usage", zPOS_AFTER );
+               //:SetMatchingAttributesByName( mSPLDef, "SPLD_Usage", mSPLDef, "SPLD_UsageDelete", zSET_NULL )
+               SetMatchingAttributesByName( mSPLDef, "SPLD_Usage", mSPLDef, "SPLD_UsageDelete", zSET_NULL );
+               //:INCLUDE mSPLDef.S_Usage FROM mSPLDef.S_UsageDelete 
+               RESULT = IncludeSubobjectFromSubobject( mSPLDef, "S_Usage", mSPLDef, "S_UsageDelete", zPOS_AFTER );
+               RESULT = SetCursorNextEntity( mSPLDef, "SPLD_UsageDelete", "" );
+            } 
+
+            //:END
+         } 
+
+         //:END
          break ;
 
       //:  /* end zOCE_ACTIVATE */
@@ -17346,7 +17838,7 @@ omSPLDef_CheckAddKeywordEntry( View     mSPLDefBlock,
       RESULT = CreateEntity( mSPLDefBlock, "LLD_SpecialSectionAttribute", zPOS_AFTER );
       //:mSPLDefBlock.LLD_SpecialSectionAttribute.Name = szKeywordName
       SetAttributeFromString( mSPLDefBlock, "LLD_SpecialSectionAttribute", "Name", szKeywordName );
-      //:CREATE ENTITY mSPLDefBlock.LLD_SpecialSectionAttrBlock 
+      //:CREATE ENTITY mSPLDefBlock.LLD_SpecialSectionAttrBlock  
       RESULT = CreateEntity( mSPLDefBlock, "LLD_SpecialSectionAttrBlock", zPOS_AFTER );
       //:ELSE
    } 
@@ -17356,7 +17848,7 @@ omSPLDef_CheckAddKeywordEntry( View     mSPLDefBlock,
       TraceLineS( "CheckAddKeyordEntry located: ", szKeywordName );
    } 
 
-   //:END
+   //:END 
    return( 0 );
 //    
 // END
@@ -17411,8 +17903,8 @@ omSPLDef_SetUpKeywordEntries( View     mSPLDefBlock,
             omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Title" );
             //:CheckAddKeywordEntry( mSPLDefBlock, "Text" )
             omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Text" );
-            //:CheckAddKeywordEntry( mSPLDefBlock, "DIRECTIONS Header" )
-            omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "DIRECTIONS Header" );
+            //:CheckAddKeywordEntry( mSPLDefBlock, "Header" )
+            omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Header" );
             //:ELSE
          } 
          else
@@ -17427,8 +17919,8 @@ omSPLDef_SetUpKeywordEntries( View     mSPLDefBlock,
                omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Text" );
                //:CheckAddKeywordEntry( mSPLDefBlock, "Column List" )
                omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Column List" );
-               //:CheckAddKeywordEntry( mSPLDefBlock, "MARKETING Header" )
-               omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "MARKETING Header" );
+               //:CheckAddKeywordEntry( mSPLDefBlock, "Header" )
+               omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Header" );
                //:ELSE
             } 
             else
@@ -17441,8 +17933,8 @@ omSPLDef_SetUpKeywordEntries( View     mSPLDefBlock,
                   omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Title" );
                   //:CheckAddKeywordEntry( mSPLDefBlock, "Text" )
                   omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Text" );
-                  //:CheckAddKeywordEntry( mSPLDefBlock, "FIRST AID Header" )
-                  omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "FIRST AID Header" );
+                  //:CheckAddKeywordEntry( mSPLDefBlock, "Header" )
+                  omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Header" );
                   //:ELSE
                } 
                else

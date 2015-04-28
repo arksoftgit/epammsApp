@@ -16,7 +16,7 @@ $(function() {
 // var g_cursorsLabel;
    var g_currentSnapX = 0.50;
    var g_currentSnapY = 0.50;
-
+   var g_currentType = null;
    var g_scale = 1;
    var g_pixelsPerInch = 81;
    var g_pixelsBorder = 2;
@@ -736,6 +736,7 @@ $(function() {
 */
    function mapElementDataToUiData( $current_element ) {
       $("#SpecialAttrToggle").hide();
+      g_currentType = null;
       if ( $current_element ) {
       // displayElementData( "mapElementDataToUiData", $current_element );
          var entityAttr;
@@ -781,7 +782,7 @@ $(function() {
          });
          if ( element_id === "block" ) {
             console.log( "Processing block type: " + sectionType );
-            var options = "<option value=\"Title\">Title</option><option value=\"Text\">Text</option>";  // default
+            var options = "<option value=\"^title\">Title</option><option value=\"^text\">Text</option>";  // default
             // The .prop() method should be used to set disabled and checked instead of the .attr() method.
             // $('#id').prop('disabled', false);
             // $('#id').prop('disabled', 'disabled');
@@ -799,14 +800,14 @@ $(function() {
                   $("#zMarketingSectionToggle").show();
                   $('#zMarketingSection option[value="' + blockName + '"]').prop( 'selected', true );
                   // Marketing:   Title / Text / Header / Column List
-                  options += "<option value=\"Header\">Header</option><option value=\"Column List\">Column List</option>";
+                  options += "<option value=\"^header\">Header</option><option value=\"^column ^list\">Column List</option>";
                } else {
                   $("#zClaimListTypeToggle").hide();
                   $("#zMarketingSectionToggle").hide();
                   if ( sectionType === "DirectionsForUse" || sectionType === "FirstAid" ) {
                      // Directions for Use:   Title / Text / Header
                      // First Aid:   Title / Text / Header
-                     options += "<option value=\"Header\">Header</option>";
+                     options += "<option value=\"^header\">Header</option>";
                   }
                }
             } else {
@@ -816,10 +817,10 @@ $(function() {
                $("#zMarketingSectionToggle").hide();
                if ( sectionType === "HumanHazard" ) {
                   // Human Hazard:  Hazards Warning / Hazards Signal Word / Hazards Precautionary
-                  options = "<option value=\"Hazards Warning\">Hazards Warning</option><option value=\"Hazards Signal Word\">Hazards Signal Word</option><option value=\"Hazards Precautionary\">Hazards Precautionary</option>";
+                  options = "<option value=\"^hazards ^warning\">Hazards Warning</option><option value=\"^hazards ^signal ^word\">Hazards Signal Word</option><option value=\"^hazards ^precautionary\">Hazards Precautionary</option>";
                } else if ( sectionType === "Ingredients" ) {
                   // Ingredients:   Title / Ingredients Items / Ingredients Inert / Ingredients Total
-                  options = "<option value=\"Title\">Title</option><option value=\"Ingredients Items\">Ingredients Items</option><option value=\"Ingredients Inert\">Ingredients Inert</option><option value=\"Ingredients Total\">Ingredients Total</option>";
+                  options = "<option value=\"^title\">Title</option><option value=\"^ingredients ^items\">Ingredients Items</option><option value=\"^ingredients ^inert\">Ingredients Inert</option><option value=\"^ingredients ^total\">Ingredients Total</option>";
                }
                // Default:   Title / Text
             }
@@ -1427,13 +1428,84 @@ $(function() {
          }
       // displayElementData( "zeidon blur (after)", $(this) );
       });
+/*
+labeldesigner.js:2587 SpecialSection: StorageDisposal.Title
+labeldesigner.js:2594    SpecialBlock: ID.661
+labeldesigner.js:2594    SpecialBlock: MarginTop.0.04
+labeldesigner.js:2594    SpecialBlock: TextAlign.center
+labeldesigner.js:2587 SpecialSection: StorageDisposal.Text
+labeldesigner.js:2594    SpecialBlock: ID.662
+labeldesigner.js:2594    SpecialBlock: FontSize.9pt
+labeldesigner.js:2594    SpecialBlock: MarginTop.0.01
+jsoeUtils.js:1135 AddHtmlWysiwygLabelElements Element... Element Data for: Tag660
+jsoeUtils.js:1139    ~ z_^i^d : 660
+jsoeUtils.js:1139    ~ z_^tag : Tag660
+jsoeUtils.js:1139    ~ z_^l^l^d_^section^type : StorageDisposal
+jsoeUtils.js:1139    ~ z_^top : 0.1
+jsoeUtils.js:1139    ~ z_^left : 0.2
+jsoeUtils.js:1139    ~ z_^height : 2.5
+jsoeUtils.js:1139    ~ z_^width : 3.8
+jsoeUtils.js:1139    ~ z_^depth : 3
+jsoeUtils.js:1139    ~ z_w^computed^top^position : 0.1
+jsoeUtils.js:1139    ~ z_^f^k_^i^d_^l^l^d_^b^l^o^c^k : 659
+jsoeUtils.js:1139    ~ z_w^i^d : 660
+jsoeUtils.js:1139    ~ z__^e^o^i : Y
+jsoeUtils.js:1139    ~ z_w^e : block
+jsoeUtils.js:1139    ~ z_w^p^i^d : 659
+jsoeUtils.js:1139    ~ z_w^p^e : block
+jsoeUtils.js:1139    ~ z_^storage^disposal.^title.^i^d : 661
+jsoeUtils.js:1139    ~ z_^storage^disposal.^title.^margin^top : 0.04
+jsoeUtils.js:1139    ~ z_^storage^disposal.^title.^text^align : center
+jsoeUtils.js:1139    ~ z_^storage^disposal.^text.^i^d : 662
+jsoeUtils.js:1139    ~ z_^storage^disposal.^text.^font^size : 9pt
+jsoeUtils.js:1139    ~ z_^storage^disposal.^text.^margin^top : 0.01
+*/
+var g_BlockAttrList = [ "^text^color", "^text^color^override",
+                        "^background^color", "^background^color^override",
+                        "^border^color", "^border^color^override", "^border^style", "^border^width",
+                        "^font^family", "^font^size", "^font^weight",
+                        "^margin", "^margin^top", "^margin^left", "^margin^bottom", "^margin^right", "^margin^override",
+                        "^border", "^border^top", "^border^bottom", "^border^left", "^borderRight", "^border^override",
+                        "^padding", "^padding^top", "^padding^bottom", "^padding^left", "^padding^right", "^padding^override",
+                        "^title^position", "^text^align", "^text^line^height" ];
+   function mapToSpecialBlockFromBlock( currentType ) {
+      if ( g_$current_block && g_$current_block.data() ) {
+         var section = zeidonAttributeToKey( g_$current_block.data( "z_^l^l^d_^section^type" ) ) + "." + currentType + ".";
+         $.each(g_BlockAttrList, function( index, attributeName ) {
+            var specialBlockAttribute = section + attributeName;
+            console.log( "ToSpecial: " + attributeName + "  to: " + specialBlockAttribute + "  current: " + g_$current_block.data( attributeName ) );
+            g_$current_block.data( specialBlockAttribute, g_$current_block.data( attributeName ) ); 
+            g_$current_block.data( attributeName, "" );
+         });
+         displayElementData( "mapToSpecialBlockFromBlock", g_$current_block );
+      }
+   }
+
+   function mapFromSpecialBlockToBlock( currentType ) {
+      if ( g_$current_block && g_$current_block.data() ) {
+         var section = zeidonAttributeToKey( g_$current_block.data( "z_^l^l^d_^section^type" ) ) + "." + currentType + ".";
+         $.each(g_BlockAttrList, function( index, attributeName ) {
+            var specialBlockAttribute = section + attributeName;
+            console.log( "FromSpecial: " + attributeName + "  from: " + specialBlockAttribute + "  current: " + g_$current_block.data( specialBlockAttribute ) );
+            g_$current_block.data( attributeName, g_$current_block.data( specialBlockAttribute ) ); 
+            g_$current_block.data( specialBlockAttribute, "" );
+         });
+         displayElementData( "mapFromSpecialBlockToBlock", g_$current_block );
+      }
+   }
 
    $("#zBlockFormatType")
       .change( function() {
+         if ( g_currentType ) {
+            mapToSpecialBlockFromBlock( g_currentType );
+         }
          var val = $(this).val();
          if ( val === "" ) {
+            g_currentType = null;
             $("#SpecialAttrToggle").hide(200);
          } else {
+            g_currentType = val;
+            mapFromSpecialBlockToBlock( g_currentType );
             $("#SpecialAttrToggle").show(400);
          }
       });
@@ -2028,27 +2100,13 @@ public class FileServer {
       return true;
    }
 
-   function propertyToZeidonAttribute( property ) {
-      var hat = property.indexOf( "^" );
-      var start;
-      var end;
-      while ( hat >= 0 ) {
-         start = property.substring( 0, hat );
-         end = property.substring( hat + 1 );
-         property = start + end.substring( 0, 1 ).toUpperCase() + end.substring( 1 );
-         hat = property.indexOf( "^", hat );
-      }
-
-      return property;
-   }
-
    function elementDataToJSON( id ) {
       var $element = $("#" + id);
       var json = "";
       if ( $element ) {
          $.each( $element.data(), function( key, value ) {
             if ( key.indexOf( "z_" ) === 0 && (typeof value === "string" || typeof value === "number") ) {
-               var zeidonAttribute = propertyToZeidonAttribute( key.substring( 2 ) );
+               var zeidonAttribute = keyToZeidonAttribute( key.substring( 2 ) );
                json += ", \"" + zeidonAttribute + "\" : \"" + value + "\"";
             }
          });
@@ -2490,19 +2548,26 @@ public class FileServer {
    }
 
    function AddSpecialAttributes( $block, obj ) {
-      var objSpecial = obj["LLD_SpecialSectionAttribute"];
-      if ( objSpecial ) {
-         for ( var k = 0; k < objSpecial.length; k++ ) {
-            var objSpecialAttr = objSpecial[k];
-            if ( objSpecialAttr ) {
-               console.log( "SpecialSection: " + objSpecialAttr["Name"] );
-               var objSpecialBlock = objSpecialAttr["LLD_SpecialSectionAttrBlock"];
-               if ( objSpecialBlock ) {
-                  var objSpecialBlockProp = objSpecialBlock[0];
-                  if ( objSpecialBlockProp ) {
-                     for ( var prop in objSpecialBlockProp ) {
-                        if ( prop !== ".meta" ) {
-                           console.log( "   SpecialBlock: " + prop + "." + objSpecialBlockProp[prop] );
+      var sectionType = obj["LLD_SectionType"]; // if there is no section type, we have nothing
+      if ( ! sectionType || sectionType === "" ) {
+      // console.log( "SpecialSection undefined" );
+      } else {
+         var objSpecial = obj["LLD_SpecialSectionAttribute"];
+         if ( objSpecial ) {
+            for ( var k = 0; k < objSpecial.length; k++ ) {
+               var objSpecialAttr = objSpecial[k];
+               if ( objSpecialAttr ) {
+                  var specialSection = objSpecialAttr["Name"];
+               // console.log( "SpecialSection: " + sectionType + "." + specialSection );
+                  var objSpecialBlock = objSpecialAttr["LLD_SpecialSectionAttrBlock"];
+                  if ( objSpecialBlock ) {
+                     var objSpecialBlockProp = objSpecialBlock[0];
+                     if ( objSpecialBlockProp ) {
+                        for ( var prop in objSpecialBlockProp ) {
+                           if ( prop !== ".meta" ) {
+                           // console.log( "   SpecialBlock: " + prop + "." + objSpecialBlockProp[prop] );
+                              addZeidonAttributeToElement( $block, sectionType + "." + specialSection + "." + zeidonAttributeToKey( prop ), objSpecialBlockProp[prop] );
+                           }
                         }
                      }
                   }
@@ -2511,6 +2576,7 @@ public class FileServer {
          }
       }
    }
+
    // for ( var k = 0; k < objPage.length; k++ ) {
    //    AddHtmlWysiwygLabelElements( $("#page" + (k + 1)), $parentElement, parentId, objPage[k], "page", 0 );
 
@@ -2527,7 +2593,7 @@ public class FileServer {
          }
       // console.log( "Setting4 wPID: " + parentId + "  wPE: " + $parentElement.data( "z_w^e" ) );
       // displayElementData( "AddHtmlWysiwygLabelElements Parent", $parentElement );
-      // displayElementData( "AddHtmlWysiwygLabelElements Element", $el );
+         displayElementData( "AddHtmlWysiwygLabelElements Element", $el );
          $parentElement = $el;
          parentId = obj["ID"];
       /*

@@ -54,13 +54,12 @@ GeneratePDF_Label( VIEW mSPLDef BASED ON LOD mSPLDef )
 // SysConvertEnvironmentString( szXslDirectory, szXslDirectory )
 // szXslDirectory = "C:/Program Files/Apache Group/tomcat 7.0/webapps/ROOT/epamms/"
 
-   SysGetEnvVar( szXslDirectory, "CATALINA_HOME", 256 )
-// SysAppendcDirSep( szXslDirectory )
-   SysConvertEnvironmentString( szXslDirectory, szXslDirectory )
+   SysGetEnvVar( szXslName, "CATALINA_HOME", 256 ) // borrow szXslName for a couple of lines
+// SysAppendcDirSep( szXslName )
+   SysConvertEnvironmentString( szXslDirectory, szXslName )
    szXslDirectory = szXslDirectory + "/webapps/ROOT/" + mSPLDef.SubregOrganization.LoginName + "/"
 
    szLabelName = mSPLDef.SubregProduct.Name
-
 
    szXmlName = szXslDirectory + "xml/"
    szXslName = szXslDirectory + "xsl/"
@@ -790,14 +789,14 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
                
                // Check if Title should be converted to upper case.
                szTitle = "Directions for Use"
-               SET CURSOR FIRST mSPLDefPDF.LLD_SpecialSectionAttribute WHERE mSPLDefPDF.LLD_SpecialSectionAttribute.Name = "FIRST AID Header"
+               SET CURSOR FIRST mSPLDefPDF.LLD_SpecialSectionAttribute WHERE mSPLDefPDF.LLD_SpecialSectionAttribute.Name = "Header"
                IF RESULT >= zCURSOR_SET
                   szTitle = "DIRECTIONS FOR USE"
                END 
                
                // Set up Directions for Use Title.
                szWriteBuffer = szLeadingBlanks + "   <fo:block "
-               AddFormatToSpecialText( mSPLDefPDF, "DIRECTIONS Header", szWriteBuffer )
+               AddFormatToSpecialText( mSPLDefPDF, "Header", szWriteBuffer )
                WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
                
                szWriteBuffer = szLeadingBlanks + "      " + szTitle
@@ -825,11 +824,11 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
                // For Marketing, we will process a Section if it's Name matches the name in the Block.
                SET CURSOR FIRST mSPLDef.SPLD_MarketingSection WHERE mSPLDef.SPLD_MarketingSection.Name = mSPLDefPDF.LLD_Block.Name 
                IF RESULT >= zCURSOR_SET 
-                  // If there is a "MARKETING Header" entry, add it.
-                  SET CURSOR FIRST mSPLDefPDF.LLD_SpecialSectionAttribute WHERE mSPLDefPDF.LLD_SpecialSectionAttribute.Name = "MARKETING Header"
+                  // If there is a Marketing "Header" entry, add it.
+                  SET CURSOR FIRST mSPLDefPDF.LLD_SpecialSectionAttribute WHERE mSPLDefPDF.LLD_SpecialSectionAttribute.Name = "Header"
                   IF RESULT >= zCURSOR_SET
                      szWriteBuffer = szLeadingBlanks + "   <fo:block "
-                     AddFormatToSpecialText( mSPLDefPDF, "MARKETING Header", szWriteBuffer )
+                     AddFormatToSpecialText( mSPLDefPDF, "Header", szWriteBuffer )
                      WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
                        
                      szWriteBuffer = szLeadingBlanks + "      Marketing"
@@ -913,14 +912,14 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
                
                // Check if Title should be converted to upper case.
                szTitle = "First Aid"
-               SET CURSOR FIRST mSPLDefPDF.LLD_SpecialSectionAttribute WHERE mSPLDefPDF.LLD_SpecialSectionAttribute.Name = "FIRST AID Header"
+               SET CURSOR FIRST mSPLDefPDF.LLD_SpecialSectionAttribute WHERE mSPLDefPDF.LLD_SpecialSectionAttribute.Name = "Header"
                IF RESULT >= zCURSOR_SET
                   szTitle = "FIRST AID"
                END 
                
                // Set up First Aid Title.
                szWriteBuffer = szLeadingBlanks + "   <fo:block "
-               AddFormatToSpecialText( mSPLDefPDF, "FIRST AID Header", szWriteBuffer )
+               AddFormatToSpecialText( mSPLDefPDF, "Header", szWriteBuffer )
                WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
                
                szWriteBuffer = szLeadingBlanks + "      " + szTitle
@@ -3166,6 +3165,188 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+// OPERATION: DuplicateSPLD
+//
+/////////////////////////////////////////////////////////////////////////////
+TRANSFORMATION OPERATION
+DuplicateSPLD( VIEW NewSPLD    BASED ON LOD mSPLDef,
+               VIEW SourceSPLD BASED ON LOD mSPLDef )
+
+   // Build an new SPLD from an existing SPLD.
+   CREATE ENTITY NewSPLD.SubregPhysicalLabelDef 
+   SetMatchingAttributesByName( NewSPLD, "SubregPhysicalLabelDef", SourceSPLD, "SubregPhysicalLabelDef", zSET_NULL )
+   NewSPLD.SubregPhysicalLabelDef.Name = SourceSPLD.SubregPhysicalLabelDef.Name + " (Duplicate)"
+   INCLUDE NewSPLD.SubregLabelContent FROM SourceSPLD.SubregLabelContent
+   
+   // SPLD_UsageType Entries
+   FOR EACH SourceSPLD.SPLD_UsageType 
+      CREATE ENTITY NewSPLD.SPLD_UsageType 
+      SetMatchingAttributesByName( NewSPLD, "SPLD_UsageType", SourceSPLD, "SPLD_UsageType", zSET_NULL )
+      FOR EACH SourceSPLD.SPLD_Usage 
+         CREATE ENTITY NewSPLD.SPLD_Usage 
+         SetMatchingAttributesByName( NewSPLD, "SPLD_Usage", SourceSPLD, "SPLD_Usage", zSET_NULL )
+         INCLUDE NewSPLD.S_Usage FROM SourceSPLD.S_Usage 
+      END
+   END
+   
+   // SPLD_GeneralSection 
+   FOR EACH SourceSPLD.SPLD_GeneralSection 
+      CREATE ENTITY NewSPLD.SPLD_GeneralSection 
+      SetMatchingAttributesByName( NewSPLD, "SPLD_GeneralSection", SourceSPLD, "SPLD_GeneralSection", zSET_NULL )
+      INCLUDE NewSPLD.S_GeneralSection FROM SourceSPLD.S_GeneralSection 
+      FOR EACH SourceSPLD.SPLD_GeneralStatement 
+         CREATE ENTITY NewSPLD.SPLD_GeneralStatement 
+         SetMatchingAttributesByName( NewSPLD, "SPLD_GeneralStatement", SourceSPLD, "SPLD_GeneralStatement", zSET_NULL )
+         INCLUDE NewSPLD.S_GeneralStatement FROM SourceSPLD.S_GeneralStatement 
+      END
+   END
+   
+   // Ingredients
+   FOR EACH SourceSPLD.SPLD_IngredientsSection 
+      CREATE ENTITY NewSPLD.SPLD_IngredientsSection 
+      SetMatchingAttributesByName( NewSPLD, "SPLD_IngredientsSection", SourceSPLD, "SPLD_IngredientsSection", zSET_NULL )
+      INCLUDE NewSPLD.S_IngredientsSection FROM SourceSPLD.S_IngredientsSection 
+      FOR EACH SourceSPLD.SPLD_IngredientsStatement 
+         CREATE ENTITY NewSPLD.SPLD_IngredientsStatement 
+         SetMatchingAttributesByName( NewSPLD, "SPLD_IngredientsStatement", SourceSPLD, "SPLD_IngredientsStatement", zSET_NULL )
+         INCLUDE NewSPLD.S_IngredientsStatement FROM SourceSPLD.S_IngredientsStatement 
+      END
+   END
+   
+   // SPLD_StorageDisposalSection 
+   FOR EACH SourceSPLD.SPLD_StorageDisposalSection 
+      CREATE ENTITY NewSPLD.SPLD_StorageDisposalSection 
+      SetMatchingAttributesByName( NewSPLD, "SPLD_StorageDisposalSection", SourceSPLD, "SPLD_StorageDisposalSection", zSET_NULL )
+      INCLUDE NewSPLD.S_StorageDisposalSection FROM SourceSPLD.S_StorageDisposalSection 
+      FOR EACH SourceSPLD.SPLD_StorageDisposalStatement 
+         CREATE ENTITY NewSPLD.SPLD_StorageDisposalStatement 
+         SetMatchingAttributesByName( NewSPLD, "SPLD_StorageDisposalStatement", SourceSPLD, "SPLD_StorageDisposalStatement", zSET_NULL )
+         INCLUDE NewSPLD.S_StorageDisposalStatement FROM SourceSPLD.S_StorageDisposalStatement 
+      END
+   END
+   
+   // SPLD_DirectionsForUseSection
+   FOR EACH SourceSPLD.SPLD_DirectionsForUseSection
+      CREATE ENTITY NewSPLD.SPLD_DirectionsForUseSection
+      SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseSection", SourceSPLD, "SPLD_DirectionsForUseSection", zSET_NULL )
+      INCLUDE NewSPLD.S_DirectionsForUseSection FROM SourceSPLD.S_DirectionsForUseSection
+      FOR EACH SourceSPLD.SPLD_DirectionsForUseStatement
+         CREATE ENTITY NewSPLD.SPLD_DirectionsForUseStatement
+         SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseStatement", SourceSPLD, "SPLD_DirectionsForUseStatement", zSET_NULL )
+         INCLUDE NewSPLD.S_DirectionsForUseStatement FROM SourceSPLD.S_DirectionsForUseStatement
+         
+         // UsageOrder entries
+         FOR EACH SourceSPLD.SPLD_DirectionsUsageOrdering 
+            SET CURSOR FIRST NewSPLD.S_Usage WITHIN NewSPLD.SubregPhysicalLabelDef 
+                       WHERE NewSPLD.S_Usage.ID = SourceSPLD.S_Usage.ID 
+            IF RESULT >= zCURSOR_SET
+               CREATE ENTITY NewSPLD.SPLD_DirectionsUsageOrdering 
+               SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsUsageOrdering", SourceSPLD, "SPLD_DirectionsUsageOrdering", zSET_NULL )
+               // We need to include the new SPLD_Usage entry created in the NewSPLD.
+               INCLUDE NewSPLD.SPLD_DirectionsUsage FROM NewSPLD.SPLD_Usage
+            END
+         END
+      END
+   END
+   
+   // SPLD_MarketingSection
+   FOR EACH SourceSPLD.SPLD_MarketingSection
+      CREATE ENTITY NewSPLD.SPLD_MarketingSection
+      SetMatchingAttributesByName( NewSPLD, "SPLD_MarketingSection", SourceSPLD, "SPLD_MarketingSection", zSET_NULL )
+      INCLUDE NewSPLD.S_MarketingSection FROM SourceSPLD.S_MarketingSection
+      FOR EACH SourceSPLD.SPLD_MarketingStatement
+         CREATE ENTITY NewSPLD.SPLD_MarketingStatement
+         SetMatchingAttributesByName( NewSPLD, "SPLD_MarketingStatement", SourceSPLD, "SPLD_MarketingStatement", zSET_NULL )
+         INCLUDE NewSPLD.S_MarketingStatement FROM SourceSPLD.S_MarketingStatement
+         
+         // UsageOrder entries
+         FOR EACH SourceSPLD.SPLD_MarketingUsageOrdering 
+            SET CURSOR FIRST NewSPLD.S_Usage WITHIN NewSPLD.SubregPhysicalLabelDef 
+                       WHERE NewSPLD.S_Usage.ID = SourceSPLD.S_Usage.ID 
+            IF RESULT >= zCURSOR_SET
+               CREATE ENTITY NewSPLD.SPLD_MarketingUsageOrdering 
+               SetMatchingAttributesByName( NewSPLD, "SPLD_MarketingUsageOrdering", SourceSPLD, "SPLD_MarketingUsageOrdering", zSET_NULL )
+               // We need to include the new SPLD_Usage entry created in the NewSPLD.
+               INCLUDE NewSPLD.SPLD_MarketingUsage FROM NewSPLD.SPLD_Usage 
+            END
+         END
+      END
+   END
+   
+   // SPLD_HumanHazardSection 
+   FOR EACH SourceSPLD.SPLD_HumanHazardSection 
+      CREATE ENTITY NewSPLD.SPLD_HumanHazardSection 
+      SetMatchingAttributesByName( NewSPLD, "SPLD_HumanHazardSection", SourceSPLD, "SPLD_HumanHazardSection", zSET_NULL )
+      IF SourceSPLD.S_HumanHazardSection EXISTS
+         INCLUDE NewSPLD.S_HumanHazardSection FROM SourceSPLD.S_HumanHazardSection 
+      END
+   END
+   
+   // SPLD_LLD 
+   CREATE ENTITY NewSPLD.SPLD_LLD 
+   SetMatchingAttributesByName( NewSPLD, "S_HumanHazardSection", SourceSPLD, "S_HumanHazardSection", zSET_NULL )
+   FOR EACH SourceSPLD.LLD_Page 
+      CREATE ENTITY NewSPLD.LLD_Page 
+      SetMatchingAttributesByName( NewSPLD, "LLD_Page", SourceSPLD, "LLD_Page", zSET_NULL )
+      IF SourceSPLD.PageBackgroundColor EXISTS
+         INCLUDE NewSPLD.PageBackgroundColor FROM SourceSPLD.PageBackgroundColor 
+      END
+      FOR EACH SourceSPLD.LLD_Panel 
+         CREATE ENTITY NewSPLD.LLD_Panel 
+         SetMatchingAttributesByName( NewSPLD, "LLD_Panel", SourceSPLD, "LLD_Panel", zSET_NULL )
+         IF SourceSPLD.PanelBackgroundColor EXISTS
+            INCLUDE NewSPLD.PanelBackgroundColor FROM SourceSPLD.PanelBackgroundColor 
+         END
+         IF SourceSPLD.PanelBorderColor EXISTS
+            INCLUDE NewSPLD.PanelBorderColor FROM SourceSPLD.PanelBorderColor 
+         END
+         FOR EACH SourceSPLD.LLD_Block 
+            // Use recursive routine to duplicate Block.
+            DuplicateSPLD_Block( NewSPLD, SourceSPLD )
+         END 
+      END 
+   END
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: DuplicateSPLD
+//
+/////////////////////////////////////////////////////////////////////////////
+TRANSFORMATION OPERATION
+DuplicateSPLD_Block( VIEW NewSPLD    BASED ON LOD mSPLDef,
+                     VIEW SourceSPLD BASED ON LOD mSPLDef )
+   
+   // This is a recursive routine to dupplicate an LLD_Block / LLD_SubBlock.
+   CREATE ENTITY NewSPLD.LLD_Block  
+   SetMatchingAttributesByName( NewSPLD, "LLD_Block", SourceSPLD, "LLD_Block", zSET_NULL ) 
+   IF SourceSPLD.BlockBackgroundColor EXISTS
+      INCLUDE NewSPLD.BlockBackgroundColor FROM SourceSPLD.BlockBackgroundColor 
+   END
+   IF SourceSPLD.BlockBorderColor EXISTS
+      INCLUDE NewSPLD.BlockBorderColor FROM SourceSPLD.BlockBorderColor 
+   END
+   FOR EACH SourceSPLD.LLD_SpecialSectionAttribute 
+      CREATE ENTITY NewSPLD.LLD_SpecialSectionAttribute 
+      SetMatchingAttributesByName( NewSPLD, "LLD_SpecialSectionAttribute", SourceSPLD, "LLD_SpecialSectionAttribute", zSET_NULL )
+      CREATE ENTITY NewSPLD.LLD_SpecialSectionAttrBlock 
+      SetMatchingAttributesByName( NewSPLD, "LLD_SpecialSectionAttrBlock", SourceSPLD, "LLD_SpecialSectionAttrBlock", zSET_NULL )  
+   END
+   FOR EACH SourceSPLD.LLD_SubBlock 
+      SetViewToSubobject( SourceSPLD, "LLD_SubBlock" )
+      SetViewToSubobject( NewSPLD, "LLD_SubBlock" )
+      
+      DuplicateSPLD_Block( NewSPLD, SourceSPLD )
+      
+      ResetViewFromSubobject( SourceSPLD )
+      ResetViewFromSubobject( NewSPLD )
+   END
+   
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
 //    OPERATION: dFullNameLFM
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -4186,8 +4367,8 @@ END
 **  No longer used ... incorrectly deletes everything up front.  Replaced by SetUpKeywordEntries.
 **    
 **    OPERATION: SetUpFormattingSelect
-**
-  
+**    
+
 TRANSFORMATION OPERATION
 SetUpFormattingSelect( VIEW mSPLDefPanel BASED ON LOD mSPLDef,
                        STRING ( 50 ) szSectionType )
@@ -4223,7 +4404,7 @@ SetUpFormattingSelect( VIEW mSPLDefPanel BASED ON LOD mSPLDef,
             CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
             mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Text" 
             CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
-            mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "DIRECTIONS Header" 
+            mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Header" 
          ELSE
             IF szSectionType = "Marketing"
                // Marketing
@@ -4234,7 +4415,7 @@ SetUpFormattingSelect( VIEW mSPLDefPanel BASED ON LOD mSPLDef,
                CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
                mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Column List" 
                CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
-               mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "MARKETING Header" 
+               mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Header" 
             ELSE
                IF szSectionType = "FirstAid"
                   // First Aid
@@ -4243,7 +4424,7 @@ SetUpFormattingSelect( VIEW mSPLDefPanel BASED ON LOD mSPLDef,
                   CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
                   mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Text" 
                   CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
-                  mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "FIRST AID Header" 
+                  mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Header" 
                ELSE
                   // Default
                   CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
@@ -4325,6 +4506,20 @@ ObjectConstraints( VIEW mSPLDef BASED ON LOD mSPLDef,
       END 
    END
    SET CURSOR FIRST mSPLDef.LLD_Page  
+   
+   // Make sure the new SPLD_UsageType subobject structure is used.
+   IF mSPLDef.SPLD_UsageType DOES NOT EXIST
+      FOR EACH mSPLDef.SPLD_UsageDelete 
+         SET CURSOR FIRST mSPLDef.SPLD_UsageType WHERE mSPLDef.SPLD_UsageType.UsageType = mSPLDef.SPLD_UsageDelete.UsageType 
+         IF RESULT < zCURSOR_SET
+            CREATE ENTITY mSPLDef.SPLD_UsageType 
+            mSPLDef.SPLD_UsageType.UsageType = mSPLDef.SPLD_UsageDelete.UsageType  
+         END 
+         CREATE ENTITY mSPLDef.SPLD_Usage 
+         SetMatchingAttributesByName( mSPLDef, "SPLD_Usage", mSPLDef, "SPLD_UsageDelete", zSET_NULL )
+         INCLUDE mSPLDef.S_Usage FROM mSPLDef.S_UsageDelete 
+      END
+   END
 
         /* end zOCE_ACTIVATE */
    OF   zOCE_ACTIVATE_EMPTY:
@@ -4357,10 +4552,10 @@ CheckAddKeywordEntry( VIEW mSPLDefBlock BASED ON LOD mSPLDef,
       SET CURSOR LAST mSPLDefBlock.LLD_SpecialSectionAttribute  
       CREATE ENTITY mSPLDefBlock.LLD_SpecialSectionAttribute
       mSPLDefBlock.LLD_SpecialSectionAttribute.Name = szKeywordName
-      CREATE ENTITY mSPLDefBlock.LLD_SpecialSectionAttrBlock 
+      CREATE ENTITY mSPLDefBlock.LLD_SpecialSectionAttrBlock  
    ELSE
       TraceLineS( "CheckAddKeyordEntry located: ", szKeywordName )
-   END
+   END 
    
 END
 
@@ -4392,20 +4587,20 @@ SetUpKeywordEntries( VIEW mSPLDefBlock BASED ON LOD mSPLDef,
             // Directions for Use
             CheckAddKeywordEntry( mSPLDefBlock, "Title" )
             CheckAddKeywordEntry( mSPLDefBlock, "Text" )
-            CheckAddKeywordEntry( mSPLDefBlock, "DIRECTIONS Header" )
+            CheckAddKeywordEntry( mSPLDefBlock, "Header" )
          ELSE
             IF szSectionType = "Marketing"
                // Marketing
                CheckAddKeywordEntry( mSPLDefBlock, "Title" )
                CheckAddKeywordEntry( mSPLDefBlock, "Text" )
                CheckAddKeywordEntry( mSPLDefBlock, "Column List" )
-               CheckAddKeywordEntry( mSPLDefBlock, "MARKETING Header" )
+               CheckAddKeywordEntry( mSPLDefBlock, "Header" )
             ELSE
                IF szSectionType = "FirstAid"
                   // First Aid
                   CheckAddKeywordEntry( mSPLDefBlock, "Title" )
                   CheckAddKeywordEntry( mSPLDefBlock, "Text" )
-                  CheckAddKeywordEntry( mSPLDefBlock, "FIRST AID Header" )
+                  CheckAddKeywordEntry( mSPLDefBlock, "Header" )
                ELSE
                   // Default
                   CheckAddKeywordEntry( mSPLDefBlock, "Title" )

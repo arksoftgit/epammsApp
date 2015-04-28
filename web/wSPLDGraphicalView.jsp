@@ -375,7 +375,7 @@ else
 <head>
 
    <meta http-equiv="content-type" content="text/html; charset=utf-8">
-   <title>SPLD Graphical View</title>
+<title>SPLD Graphical View</title>
 
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
 <!-- log a user out.  Timeout.inc is not used if the dialog or window has a timeout value set. -->
@@ -1061,6 +1061,11 @@ else
                            </div>
                         </div>
                      </div> <!-- end of: zmbp -->
+                     &nbsp;
+                     <div style="overflow:hidden; white-space:nowrap;">
+                       <label for="zTextLineHeight">Text Line Height:</label>
+                       <input type="text" id="zTextLineHeight" class="zeidon" data-zmap="block.z_^text^line^height" style="float:right" />
+                     </div>
                      &nbsp;
                      <div>
                         <label for="colorText">Text Color</label>

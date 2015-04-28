@@ -517,6 +517,158 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+// OPERATION: DuplicateSLC
+//
+/////////////////////////////////////////////////////////////////////////////
+TRANSFORMATION OPERATION
+DuplicateSLC( VIEW NewSLC      BASED ON LOD mSubLC,
+              VIEW PreviousSLC BASED ON LOD mSubLC )
+
+// STRING ( 10 ) szVersion
+   STRING ( 1 )  szEntityFoundFlag
+
+   // Create a new SLC from a previous SLC, tying the new back to the original.
+   // This differs from BuildNewSLC_Version in that the new SLC created here is tied back to the
+   // same MLC as the source SLC.
+
+   // Root and single includes
+   CREATE ENTITY NewSLC.SubregLabelContent
+   SetMatchingAttributesByName( NewSLC, "SubregLabelContent", PreviousSLC, "SubregLabelContent", zSET_NULL )
+   SetAttributeFromCurrentDateTime( NewSLC, "SubregLabelContent", "RevisionDate" )
+   NewSLC.SubregLabelContent.Description = PreviousSLC.SubregLabelContent.Description + " (Duplicate)"
+   INCLUDE NewSLC.SubregProduct FROM PreviousSLC.SubregProduct
+   INCLUDE NewSLC.MasterLabelContent FROM PreviousSLC.MasterLabelContent
+
+   // S_Usage
+   FOR EACH PreviousSLC.S_UsageType 
+      CREATE ENTITY NewSLC.S_UsageType 
+      SetMatchingAttributesByName( NewSLC, "S_UsageType", PreviousSLC, "S_UsageType", zSET_NULL )
+      FOR EACH PreviousSLC.S_Usage 
+         CREATE ENTITY NewSLC.S_Usage
+         SetMatchingAttributesByName( NewSLC, "S_Usage", PreviousSLC, "S_Usage", zSET_NULL )
+         INCLUDE NewSLC.M_Usage FROM PreviousSLC.M_Usage 
+      END 
+   END
+
+   // S_GeneralSection
+   FOR EACH PreviousSLC.S_GeneralSection 
+      CREATE ENTITY NewSLC.S_GeneralSection 
+      SetMatchingAttributesByName( NewSLC, "S_GeneralSection", PreviousSLC, "S_GeneralSection", zSET_NULL )
+      INCLUDE NewSLC.M_GeneralSection FROM PreviousSLC.M_GeneralSection
+      FOR EACH PreviousSLC.S_GeneralStatement
+         CREATE ENTITY NewSLC.S_GeneralStatement
+         SetMatchingAttributesByName( NewSLC, "S_GeneralStatement", PreviousSLC, "S_GeneralStatement", zSET_NULL )
+         INCLUDE NewSLC.M_GeneralStatement FROM PreviousSLC.M_GeneralStatement
+      END
+   END
+
+   // S_IngredientsSection
+   FOR EACH PreviousSLC.S_IngredientsSection
+      CREATE ENTITY NewSLC.S_IngredientsSection
+      SetMatchingAttributesByName( NewSLC, "S_IngredientsSection", PreviousSLC, "S_IngredientsSection", zSET_NULL )
+      INCLUDE NewSLC.M_IngredientsSection FROM PreviousSLC.M_IngredientsSection
+      FOR EACH PreviousSLC.S_IngredientsStatement
+         CREATE ENTITY NewSLC.S_IngredientsStatement
+         SetMatchingAttributesByName( NewSLC, "S_IngredientsStatement", PreviousSLC, "S_IngredientsStatement", zSET_NULL )
+         INCLUDE NewSLC.M_IngredientsStatement FROM PreviousSLC.M_IngredientsStatement
+      END
+   END
+
+   // S_StorageDisposalSection
+   FOR EACH PreviousSLC.S_StorageDisposalSection
+      CREATE ENTITY NewSLC.S_StorageDisposalSection
+      SetMatchingAttributesByName( NewSLC, "S_StorageDisposalSection", PreviousSLC, "S_StorageDisposalSection", zSET_NULL )
+      INCLUDE NewSLC.M_StorageDisposalSection FROM PreviousSLC.M_StorageDisposalSection
+      FOR EACH PreviousSLC.S_StorageDisposalStatement
+         CREATE ENTITY NewSLC.S_StorageDisposalStatement
+         SetMatchingAttributesByName( NewSLC, "S_StorageDisposalStatement", PreviousSLC, "S_StorageDisposalStatement", zSET_NULL )
+         INCLUDE NewSLC.M_StorageDisposalStatement FROM PreviousSLC.M_StorageDisposalStatement
+      END
+   END
+
+   // S_DirectionsForUseSection
+   FOR EACH PreviousSLC.S_DirectionsForUseSection
+      CREATE ENTITY NewSLC.S_DirectionsForUseSection
+      SetMatchingAttributesByName( NewSLC, "S_DirectionsForUseSection", PreviousSLC, "S_DirectionsForUseSection", zSET_NULL )
+      INCLUDE NewSLC.M_DirectionsForUseSection FROM PreviousSLC.M_DirectionsForUseSection
+      FOR EACH PreviousSLC.S_DirectionsForUseStatement
+         CREATE ENTITY NewSLC.S_DirectionsForUseStatement
+         SetMatchingAttributesByName( NewSLC, "S_DirectionsForUseStatement", PreviousSLC, "S_DirectionsForUseStatement", zSET_NULL )
+         INCLUDE NewSLC.M_DirectionsForUseStatement FROM PreviousSLC.M_DirectionsForUseStatement
+         
+         // UsageOrder entries
+         FOR EACH PreviousSLC.S_DirectionsUsageOrdering 
+            CREATE ENTITY NewSLC.S_DirectionsUsageOrdering 
+            SetMatchingAttributesByName( NewSLC, "S_DirectionsUsageOrdering", PreviousSLC, "S_DirectionsUsageOrdering", zSET_NULL )
+            
+            // We need to include the new S_Usage entry created in the NewSLC.
+            SET CURSOR FIRST PreviousSLC.S_Usage WITHIN NewSLC.SubregLabelContent 
+                       WHERE PreviousSLC.S_Usage.ID = PreviousSLC.S_DirectionsUsage.ID 
+            IF RESULT >= zCURSOR_SET
+               SET CURSOR FIRST NewSLC.M_Usage WITHIN NewSLC.SubregLabelContent 
+                          WHERE NewSLC.M_Usage.ID = PreviousSLC.M_Usage.ID 
+               IF RESULT >= zCURSOR_SET
+                  INCLUDE NewSLC.S_DirectionsUsage FROM NewSLC.S_Usage 
+               END
+            END 
+         END
+      END
+      
+      // We need to include any NewSLC.S_ClaimsDrivingUsage from the S_Usage entry created in the NewSLC.
+      FOR EACH PreviousSLC.S_ClaimsDrivingUsage 
+         SET CURSOR FIRST PreviousSLC.S_Usage WITHIN PreviousSLC.SubregLabelContent 
+                    WHERE PreviousSLC.S_Usage.ID = PreviousSLC.S_ClaimsDrivingUsage.ID
+         IF RESULT >= zCURSOR_SET
+            SET CURSOR FIRST NewSLC.M_Usage WITHIN NewSLC.SubregLabelContent 
+                       WHERE NewSLC.M_Usage.ID = PreviousSLC.M_Usage.ID 
+            IF RESULT >= zCURSOR_SET
+               INCLUDE NewSLC.S_ClaimsDrivingUsage FROM NewSLC.S_Usage 
+            END
+         END
+      END
+   END
+   
+   // S_MarketingSection
+   FOR EACH PreviousSLC.S_MarketingSection
+      CREATE ENTITY NewSLC.S_MarketingSection
+      SetMatchingAttributesByName( NewSLC, "S_MarketingSection", PreviousSLC, "S_MarketingSection", zSET_NULL )
+      INCLUDE NewSLC.M_MarketingSection FROM PreviousSLC.M_MarketingSection
+      FOR EACH PreviousSLC.S_MarketingStatement
+         CREATE ENTITY NewSLC.S_MarketingStatement
+         SetMatchingAttributesByName( NewSLC, "S_MarketingStatement", PreviousSLC, "S_MarketingStatement", zSET_NULL )
+         INCLUDE NewSLC.M_MarketingStatement FROM PreviousSLC.M_MarketingStatement
+         
+         // UsageOrder entries
+         FOR EACH PreviousSLC.S_MarketingUsageOrdering 
+            CREATE ENTITY NewSLC.S_MarketingUsageOrdering 
+            SetMatchingAttributesByName( NewSLC, "S_MarketingUsageOrdering", PreviousSLC, "S_MarketingUsageOrdering", zSET_NULL )
+            
+            // We need to include the new S_Usage entry created in the NewSLC.
+            SET CURSOR FIRST PreviousSLC.S_Usage WITHIN PreviousSLC.SubregLabelContent 
+                       WHERE PreviousSLC.S_Usage.ID = PreviousSLC.S_MarketingUsage.ID 
+            IF RESULT >= zCURSOR_SET
+               SET CURSOR FIRST NewSLC.M_Usage WITHIN NewSLC.SubregLabelContent 
+                          WHERE NewSLC.M_Usage.ID = PreviousSLC.M_Usage.ID 
+               IF RESULT >= zCURSOR_SET
+                  INCLUDE NewSLC.S_MarketingUsage FROM NewSLC.S_Usage 
+               END
+            END 
+         END
+      END
+   END
+
+
+   // S_HumanHazardSection
+   FOR EACH PreviousSLC.S_HumanHazardSection 
+      CREATE ENTITY NewSLC.S_HumanHazardSection
+      SetMatchingAttributesByName( NewSLC, "S_HumanHazardSection", PreviousSLC, "S_HumanHazardSection", zSET_NULL )
+      INCLUDE NewSLC.M_HumanHazardSection FROM PreviousSLC.M_HumanHazardSection
+   END
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
 // OPERATION: BuildSLC_FromMLC
 //
 /////////////////////////////////////////////////////////////////////////////

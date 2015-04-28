@@ -1,4 +1,4 @@
-z1000-Zeidon    EPAMMS   TZCMLPLO 04/24/15   18:19:37 1.0a2    
+z1000-Zeidon    EPAMMS   TZCMLPLO 04/27/15   16:49:49 1.0a2    
 eLPLR      1
 aName      epamms
 aDesc      ePamms Application
@@ -12,7 +12,7 @@ aCurrentCompilerSpec DKS
 aTempDesc  ePamms Application
 aCurrentDateTime 20071026104553250
 aJavaPackageName com\quinsoft\epamms
-awFullyQualifiedFileName %kzd%:\lplr\epamms\back
+awFullyQualifiedFileName c:\lplr\dks\wspld.pwd
 awFullyQualifiedDirectoryName %kzd%:\lplr\epamms\back
 
 eW_MetaType 2
@@ -1033,8 +1033,8 @@ aStatus    1
 aUpdateInd 2
 aName      ePamms
 aDesc      ePamms Application
-aLastSyncDate 20150423141647704
-aLastUpdateDate 20150423141647704
+aLastSyncDate 20150427164949908
+aLastUpdateDate 20150427164949908
 
 eW_MetaType 2
 aType      7
@@ -1985,8 +1985,8 @@ aStatus    1
 aUpdateInd 2
 aName      wSPLD
 aDesc      Subregistrant Physical Label Definition
-aLastSyncDate 20150424161751572
-aLastUpdateDate 20150424161751572
+aLastSyncDate 20150427154032704
+aLastUpdateDate 20150427154032704
 
 eW_MetaDef 3
 aCPLR_ZKey 93086489

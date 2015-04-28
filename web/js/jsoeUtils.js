@@ -1143,6 +1143,20 @@ function displayElementData( message, $element ) {
    }
 }
 
+function keyToZeidonAttribute( key ) {
+   var hat = key.indexOf( "^" );
+   var start;
+   var end;
+   while ( hat >= 0 ) {
+      start = key.substring( 0, hat );
+      end = key.substring( hat + 1 );
+      key = start + end.substring( 0, 1 ).toUpperCase() + end.substring( 1 );
+      hat = key.indexOf( "^", hat );
+   }
+
+   return key;
+}
+
 function zeidonAttributeToKey( attribute ) {
    var ch;
    var k;

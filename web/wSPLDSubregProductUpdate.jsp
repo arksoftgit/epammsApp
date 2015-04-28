@@ -62,7 +62,7 @@ public int DoInputMapping( HttpServletRequest request,
    lSPLDLST = task.getViewByName( "lSPLDLST" );
    if ( VmlOperation.isValid( lSPLDLST ) )
    {
-      // Grid: Grid1
+      // Grid: Grid2
       iTableRowCnt = 0;
 
       // We are creating a temp view to the grid view so that if there are 
@@ -106,7 +106,7 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
 
-      // Grid: GridSubregProducts1
+      // Grid: GridSubregProducts2
       iTableRowCnt = 0;
 
       // We are creating a temp view to the grid view so that if there are 
@@ -359,6 +359,136 @@ if ( strActionToProcess != null )
 
       // Next Window
       strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_StartModalSubwindow, "wSPLD", "DeleteSubregProductSLC" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "DuplicateSubregProductSLC" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDSubregProductUpdate", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mSubProd;
+      mSubProd = task.getViewByName( "mSubProd" );
+      if ( VmlOperation.isValid( mSubProd ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mSubProd.cursor( "SubregLabelContent" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mSubProd.cursor( "SubregLabelContent" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mSubProd.cursor( "SubregLabelContent" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mSubProd.cursor( "SubregLabelContent" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSubregProductUpdate.jsp", "wSPLD.DuplicateSubregProductSLC" );
+         nOptRC = wSPLD.DuplicateSubregProductSLC( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wSPLD.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "DuplicateSubregProductSPLD" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDSubregProductUpdate", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View lSPLDLST;
+      lSPLDLST = task.getViewByName( "lSPLDLST" );
+      if ( VmlOperation.isValid( lSPLDLST ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = lSPLDLST.cursor( "SubregPhysicalLabelDef" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = lSPLDLST.cursor( "SubregPhysicalLabelDef" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = lSPLDLST.cursor( "SubregPhysicalLabelDef" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = lSPLDLST.cursor( "SubregPhysicalLabelDef" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSubregProductUpdate.jsp", "wSPLD.DuplicateSubregProductSPLD" );
+         nOptRC = wSPLD.DuplicateSubregProductSPLD( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wSPLD.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -1267,8 +1397,8 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GridSubregProducts1:Grid */ %>
-<table  cols=5 style=""  name="GridSubregProducts1" id="GridSubregProducts1">
+<% /* GridSubregProducts2:Grid */ %>
+<table  cols=6 style=""  name="GridSubregProducts2" id="GridSubregProducts2">
 
 <thead><tr>
 
@@ -1277,6 +1407,7 @@ else
    <th>Last Modified Date</th>
    <th>Update</th>
    <th>Delete</th>
+   <th>Duplicate</th>
 
 </tr></thead>
 
@@ -1294,79 +1425,81 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
-      String strGESubregProductName1;
-      String strGEPrimRegProductName1;
-      String strGridESL_Date1;
-      String strBMBUpdateSubregProduct1;
-      String strBMBDeleteSubregProduct1;
+      String strGESubregProductName2;
+      String strGEPrimRegProductName2;
+      String strGridESL_Date2;
+      String strBMBUpdateSubregProduct2;
+      String strBMBDeleteSubregProduct2;
+      String strBitmapBtn4;
       
-      View vGridSubregProducts1;
-      vGridSubregProducts1 = mSubProd.newView( );
-      csrRC2 = vGridSubregProducts1.cursor( "SubregLabelContent" ).setFirst(  );
+      View vGridSubregProducts2;
+      vGridSubregProducts2 = mSubProd.newView( );
+      csrRC2 = vGridSubregProducts2.cursor( "SubregLabelContent" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGridSubregProducts1.cursor( "SubregLabelContent" ).getEntityKey( );
+         lEntityKey = vGridSubregProducts2.cursor( "SubregLabelContent" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          strButtonName = "SelectButton" + strEntityKey;
 
-         strGESubregProductName1 = "";
-         nRC = vGridSubregProducts1.cursor( "SubregLabelContent" ).checkExistenceOfEntity( ).toInt();
+         strGESubregProductName2 = "";
+         nRC = vGridSubregProducts2.cursor( "SubregLabelContent" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGESubregProductName1 = vGridSubregProducts1.cursor( "SubregLabelContent" ).getAttribute( "Description" ).getString( "" );
+            strGESubregProductName2 = vGridSubregProducts2.cursor( "SubregLabelContent" ).getAttribute( "Description" ).getString( "" );
 
-            if ( strGESubregProductName1 == null )
-               strGESubregProductName1 = "";
+            if ( strGESubregProductName2 == null )
+               strGESubregProductName2 = "";
          }
 
-         if ( StringUtils.isBlank( strGESubregProductName1 ) )
-            strGESubregProductName1 = "&nbsp";
+         if ( StringUtils.isBlank( strGESubregProductName2 ) )
+            strGESubregProductName2 = "&nbsp";
 
-         strGEPrimRegProductName1 = "";
-         nRC = vGridSubregProducts1.cursor( "SubregLabelContent" ).checkExistenceOfEntity( ).toInt();
+         strGEPrimRegProductName2 = "";
+         nRC = vGridSubregProducts2.cursor( "SubregLabelContent" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGEPrimRegProductName1 = vGridSubregProducts1.cursor( "SubregLabelContent" ).getAttribute( "Version" ).getString( "" );
+            strGEPrimRegProductName2 = vGridSubregProducts2.cursor( "SubregLabelContent" ).getAttribute( "Version" ).getString( "" );
 
-            if ( strGEPrimRegProductName1 == null )
-               strGEPrimRegProductName1 = "";
+            if ( strGEPrimRegProductName2 == null )
+               strGEPrimRegProductName2 = "";
          }
 
-         if ( StringUtils.isBlank( strGEPrimRegProductName1 ) )
-            strGEPrimRegProductName1 = "&nbsp";
+         if ( StringUtils.isBlank( strGEPrimRegProductName2 ) )
+            strGEPrimRegProductName2 = "&nbsp";
 
-         strGridESL_Date1 = "";
-         nRC = vGridSubregProducts1.cursor( "SubregLabelContent" ).checkExistenceOfEntity( ).toInt();
+         strGridESL_Date2 = "";
+         nRC = vGridSubregProducts2.cursor( "SubregLabelContent" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridESL_Date1 = vGridSubregProducts1.cursor( "SubregLabelContent" ).getAttribute( "NetContents" ).getString( "" );
+            strGridESL_Date2 = vGridSubregProducts2.cursor( "SubregLabelContent" ).getAttribute( "NetContents" ).getString( "" );
 
-            if ( strGridESL_Date1 == null )
-               strGridESL_Date1 = "";
+            if ( strGridESL_Date2 == null )
+               strGridESL_Date2 = "";
          }
 
-         if ( StringUtils.isBlank( strGridESL_Date1 ) )
-            strGridESL_Date1 = "&nbsp";
+         if ( StringUtils.isBlank( strGridESL_Date2 ) )
+            strGridESL_Date2 = "&nbsp";
 
 %>
 
 <tr<%=strOdd%>>
 
-   <td><a href="#" onclick="GOTO_UpdateSubregProductSLC( this.id )" id="GESubregProductName1::<%=strEntityKey%>"><%=strGESubregProductName1%></a></td>
-   <td><%=strGEPrimRegProductName1%></td>
-   <td><%=strGridESL_Date1%></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateSubregProduct1" onclick="GOTO_UpdateSubregProductSLC( this.id )" id="BMBUpdateSubregProduct1::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteSubregProduct1" onclick="DeleteSubregProductSLC( this.id )" id="BMBDeleteSubregProduct1::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
+   <td><a href="#" onclick="GOTO_UpdateSubregProductSLC( this.id )" id="GESubregProductName2::<%=strEntityKey%>"><%=strGESubregProductName2%></a></td>
+   <td><%=strGEPrimRegProductName2%></td>
+   <td><%=strGridESL_Date2%></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateSubregProduct2" onclick="GOTO_UpdateSubregProductSLC( this.id )" id="BMBUpdateSubregProduct2::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteSubregProduct2" onclick="DeleteSubregProductSLC( this.id )" id="BMBDeleteSubregProduct2::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn4" onclick="DuplicateSubregProductSLC( this.id )" id="BitmapBtn4::<%=strEntityKey%>"><img src="./images/ePammsNew.jpg" alt="Duplicate"></a></td>
 
 </tr>
 
 <%
-         csrRC2 = vGridSubregProducts1.cursor( "SubregLabelContent" ).setNextContinue( );
+         csrRC2 = vGridSubregProducts2.cursor( "SubregLabelContent" ).setNextContinue( );
       }
-      vGridSubregProducts1.drop( );
+      vGridSubregProducts2.drop( );
    }
 }
 catch (Exception e)
@@ -1443,8 +1576,8 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
-<% /* Grid1:Grid */ %>
-<table  cols=5 style=""  name="Grid1" id="Grid1">
+<% /* Grid2:Grid */ %>
+<table  cols=6 style=""  name="Grid2" id="Grid2">
 
 <thead><tr>
 
@@ -1453,6 +1586,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
    <th>SLC Version</th>
    <th>Update</th>
    <th>Delete</th>
+   <th>Duplicate</th>
 
 </tr></thead>
 
@@ -1470,42 +1604,30 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
-      String strGridEditCtl1;
       String strGridEditCtl2;
       String strGridEditCtl3;
-      String strBitmapBtn1;
+      String strGridEditCtl4;
       String strBitmapBtn2;
+      String strBitmapBtn3;
+      String strBitmapBtn5;
       
-      View vGrid1;
-      vGrid1 = lSPLDLST.newView( );
-      csrRC2 = vGrid1.cursor( "SubregPhysicalLabelDef" ).setFirst(  );
+      View vGrid2;
+      vGrid2 = lSPLDLST.newView( );
+      csrRC2 = vGrid2.cursor( "SubregPhysicalLabelDef" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGrid1.cursor( "SubregPhysicalLabelDef" ).getEntityKey( );
+         lEntityKey = vGrid2.cursor( "SubregPhysicalLabelDef" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          strButtonName = "SelectButton" + strEntityKey;
 
-         strGridEditCtl1 = "";
-         nRC = vGrid1.cursor( "SubregPhysicalLabelDef" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strGridEditCtl1 = vGrid1.cursor( "SubregPhysicalLabelDef" ).getAttribute( "Name" ).getString( "" );
-
-            if ( strGridEditCtl1 == null )
-               strGridEditCtl1 = "";
-         }
-
-         if ( StringUtils.isBlank( strGridEditCtl1 ) )
-            strGridEditCtl1 = "&nbsp";
-
          strGridEditCtl2 = "";
-         nRC = vGrid1.cursor( "SubregLabelContent" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGrid2.cursor( "SubregPhysicalLabelDef" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl2 = vGrid1.cursor( "SubregLabelContent" ).getAttribute( "Description" ).getString( "" );
+            strGridEditCtl2 = vGrid2.cursor( "SubregPhysicalLabelDef" ).getAttribute( "Name" ).getString( "" );
 
             if ( strGridEditCtl2 == null )
                strGridEditCtl2 = "";
@@ -1515,10 +1637,10 @@ try
             strGridEditCtl2 = "&nbsp";
 
          strGridEditCtl3 = "";
-         nRC = vGrid1.cursor( "SubregLabelContent" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGrid2.cursor( "SubregLabelContent" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl3 = vGrid1.cursor( "SubregLabelContent" ).getAttribute( "Version" ).getString( "" );
+            strGridEditCtl3 = vGrid2.cursor( "SubregLabelContent" ).getAttribute( "Description" ).getString( "" );
 
             if ( strGridEditCtl3 == null )
                strGridEditCtl3 = "";
@@ -1527,22 +1649,36 @@ try
          if ( StringUtils.isBlank( strGridEditCtl3 ) )
             strGridEditCtl3 = "&nbsp";
 
+         strGridEditCtl4 = "";
+         nRC = vGrid2.cursor( "SubregLabelContent" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strGridEditCtl4 = vGrid2.cursor( "SubregLabelContent" ).getAttribute( "Version" ).getString( "" );
+
+            if ( strGridEditCtl4 == null )
+               strGridEditCtl4 = "";
+         }
+
+         if ( StringUtils.isBlank( strGridEditCtl4 ) )
+            strGridEditCtl4 = "&nbsp";
+
 %>
 
 <tr<%=strOdd%>>
 
-   <td><a href="#" onclick="GOTO_UpdateSubregProductSPLD( this.id )" id="GridEditCtl1::<%=strEntityKey%>"><%=strGridEditCtl1%></a></td>
-   <td><%=strGridEditCtl2%></td>
+   <td><a href="#" onclick="GOTO_UpdateSubregProductSPLD( this.id )" id="GridEditCtl2::<%=strEntityKey%>"><%=strGridEditCtl2%></a></td>
    <td><%=strGridEditCtl3%></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn1" onclick="GOTO_UpdateSubregProductSPLD( this.id )" id="BitmapBtn1::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn2" onclick="GOTO_DeleteSPLD( this.id )" id="BitmapBtn2::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
+   <td><%=strGridEditCtl4%></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn2" onclick="GOTO_UpdateSubregProductSPLD( this.id )" id="BitmapBtn2::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn3" onclick="GOTO_DeleteSPLD( this.id )" id="BitmapBtn3::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn5" onclick="DuplicateSubregProductSPLD( this.id )" id="BitmapBtn5::<%=strEntityKey%>"><img src="./images/ePammsNew.jpg" alt="Duplicate"></a></td>
 
 </tr>
 
 <%
-         csrRC2 = vGrid1.cursor( "SubregPhysicalLabelDef" ).setNextContinue( );
+         csrRC2 = vGrid2.cursor( "SubregPhysicalLabelDef" ).setNextContinue( );
       }
-      vGrid1.drop( );
+      vGrid2.drop( );
    }
 }
 catch (Exception e)

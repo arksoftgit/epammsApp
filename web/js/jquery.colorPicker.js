@@ -138,7 +138,7 @@
             }
 
             if (controlText = element.data('text'))  // intended assignment
-                newControl.html(controlText)
+                newControl.html(controlText);
 
             element.after(newControl);
 
@@ -153,9 +153,9 @@
             // Hide the original input.
             if (element[0].tagName.toLowerCase() === 'input') {
                 try {
-                    element.attr('type', 'hidden')
+                    element.attr('type', 'hidden');
                 } catch(err) { // oldIE doesn't allow changing of input.type
-                    element.css('visibility', 'hidden').css('position', 'absolute')
+                    element.css('visibility', 'hidden').css('position', 'absolute');
                 }
             } else {
                 element.hide();

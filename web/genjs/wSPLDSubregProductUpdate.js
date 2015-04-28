@@ -236,6 +236,44 @@ function DeleteSubregProductSLC( strTagEntityKey )
    }
 }
 
+function DuplicateSubregProductSLC( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wSPLDSubregProductUpdate.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wSPLDSubregProductUpdate.zAction.value = "DuplicateSubregProductSLC";
+      document.wSPLDSubregProductUpdate.submit( );
+   }
+}
+
+function DuplicateSubregProductSPLD( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wSPLDSubregProductUpdate.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wSPLDSubregProductUpdate.zAction.value = "DuplicateSubregProductSPLD";
+      document.wSPLDSubregProductUpdate.submit( );
+   }
+}
+
 function GOTO_DeleteSPLD( strTagEntityKey )
 {
 

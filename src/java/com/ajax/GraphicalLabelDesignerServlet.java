@@ -631,6 +631,28 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
       }
    }
 
+   private void checkSetValue( EntityInstance ei, String entity, String attribute, String valueNew ) {
+      String valueOld = ei.getAttribute( attribute ).getString();
+      if ( valueOld.equals( valueNew ) == false ) { // if the value has changed ...
+      // logger.debug( "Changing entity.attribute: " + entity + "." + key + ": " + valueOld + "  to: " + valueNew );
+      // ei.logEntity( false );
+         try {
+         // logger.debug( "AfterChange entity.attribute: " + entity + "." + key + ": " + valueOld + "  to: " + valueNew );
+            ei.getAttribute( attribute ).setValue( valueNew );
+         // ei.logEntity( false );
+         } catch ( ZeidonException ze ) {
+            if ( attribute.startsWith( "FK_ID_" ) || attribute.startsWith( "FKID" ) || attribute.startsWith( "AUTOSEQ" ) ) {
+               String v = ei.getAttribute( attribute ).getString();
+               if ( v.compareTo( valueNew ) != 0 ) {
+                  logger.debug( "System entity.attribute changed: " + entity + "." + attribute + "  value: " + valueNew + " ==> " + v );
+               }
+            } else {
+               logger.debug( "Failed to set entity.attribute: " + entity + "." + attribute + "  value: " + valueNew );
+            }
+         }
+      }
+   }
+
    private void applyJsonPropertiesToZeidonAttributes( View vLLD, JSONObject jsonObject, String entity, int depth, EntityInstance ei ) {
       if ( ei != null ) {
       // logger.debug( "Apply Json Start" );
@@ -643,30 +665,40 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
          // for ( String key : keys ) {                           // a warning ... replaced by next two lines
             for ( Iterator iterator = jsonObject.keySet().iterator(); iterator.hasNext(); ) {
                String key = (String) iterator.next();
-            // logger.debug( "OTag: " + entity + "   Key: " + key + "   Depth: " + depth );
+               logger.debug( "OTag: " + entity + "   Key: " + key + "   Depth: " + depth );
                Object obj = jsonObject.get( key );
                if ( obj instanceof String ) {
                   String valueNew = (String) obj;
                // logger.debug( StringUtils.repeat( " ", (depth + 2) * 3 ) + "E.Attr: " + entity + "." + key + " : " + valueNew );
                   if ( key.compareTo( "ID" ) != 0 && key.charAt( 0 ) != '_' ) {  // attribute is not ID (which is immutable)
-                     String valueOld = ei.getAttribute( key ).getString();
-                     if ( valueOld.equals( valueNew ) == false ) { // if the value has changed ...
-                     // logger.debug( "Changing entity.attribute: " + entity + "." + key + ": " + valueOld + "  to: " + valueNew );
-                     // ei.logEntity( false );
-                        try {
-                        // logger.debug( "AfterChange entity.attribute: " + entity + "." + key + ": " + valueOld + "  to: " + valueNew );
-                           ei.getAttribute( key ).setValue( valueNew );
-                        // ei.logEntity( false );
-                        } catch ( ZeidonException ze ) {
-                           if ( key.startsWith( "FK_ID_" ) || key.startsWith( "FKID" ) || key.startsWith( "AUTOSEQ" ) ) {
-                              String v = ei.getAttribute( key ).getString();
-                              if ( v.compareTo( valueNew ) != 0 ) {
-                                 logger.debug( "System entity.attribute changed: " + entity + "." + key + "  value: " + valueNew + " ==> " + v );
+                     // this is where we need to handle special entity/attributes such as: z_^marketing.^text.^font^weight - which
+                     // should be mapped to the "Marketing" LLD_SpecialSectionAttribute entity and the "Text" LLD_SpecialSectionAttrBlock
+                     // entity FontWeight attribute.
+                     int idx1 = key.indexOf( "." );
+                     if ( idx1 >= 0 ) {
+                        String blockType = key.substring( 0, idx1 );
+                        idx1++;
+                        int idx2 = key.indexOf( ".", idx1 );
+                        if ( idx2 >= 0 ) {
+                           String sectionType = key.substring( idx1, idx2++ );
+                           String attribute = key.substring( idx2 );
+                           EntityCursor ec = vLLD.cursor( "LLD_SpecialSectionAttribute" );
+                           CursorResult cr = ec.setFirst( blockType );
+                           if ( cr.isSet() == false ) {
+                              ec.createEntity();
+                              ec.getAttribute( "Name" ).setValue( blockType );
+                              ec = vLLD.cursor( "LLD_SpecialSectionAttrBlock" );
+                              cr = ec.setFirst( sectionType );
+                              if ( cr.isSet() == false ) {
+                                 ec.createEntity();
+                                 ec.getAttribute( "LLD_SectionType" ).setValue( sectionType );
                               }
-                           } else {
-                              logger.debug( "Failed to set entity.attribute: " + entity + "." + key + "  value: " + valueNew );
+                              EntityInstance eib = ec.getEntityInstance();
+                              checkSetValue( eib, "LLD_SectionType", attribute, valueNew );
                            }
                         }
+                     } else {
+                        checkSetValue( ei, entity, key, valueNew );
                      }
                   }
                }

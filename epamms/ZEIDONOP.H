@@ -1,4 +1,4 @@
-//start mSPLDef 2015.04.23 14:13:51
+//start mSPLDef 2015.04.27 16:49:25
 zOPER_EXPORT zSHORT OPERATION
 omSPLDef_GeneratePDF_Label( zVIEW vViewToInstance0 );
 
@@ -101,6 +101,14 @@ omSPLDef_BuildSPLD_FromSPLD( zVIEW vViewToInstance0,
                              zVIEW vParentSLC2 );
 
 zOPER_EXPORT zSHORT OPERATION
+omSPLDef_DuplicateSPLD( zVIEW vNewSPLD0,
+                        zVIEW vSourceSPLD1 );
+
+zOPER_EXPORT zSHORT OPERATION
+omSPLDef_DuplicateSPLD_Block( zVIEW vNewSPLD0,
+                              zVIEW vSourceSPLD1 );
+
+zOPER_EXPORT zSHORT OPERATION
 omSPLDef_FormatBlockContainer( zVIEW vViewToInstance0,
                                zVIEW vmSPLDefRoot1,
                                zLONG llFile2,
@@ -154,7 +162,7 @@ zOPER_EXPORT zSHORT OPERATION
 omTempl_BuildDisplayStructure( zVIEW vViewToInstance0 );
 
 //end
-//start mMasLC 2015.04.23 14:13:49
+//start mMasLC 2015.04.27 16:49:24
 zOPER_EXPORT zSHORT OPERATION
 omMasLC_MergeUsageSelectEnts( zVIEW vViewToInstance0 );
 
@@ -192,7 +200,7 @@ omMasLC_SetMLC_SelectedFlags( zVIEW vViewToInstance0,
                               zVIEW vmSubLC1 );
 
 //end
-//start mSubLC 2015.04.23 14:13:51
+//start mSubLC 2015.04.27 16:49:26
 zOPER_EXPORT zSHORT OPERATION
 omSubLC_BuildNewSLC_Version( zVIEW vViewToInstance0,
                              zVIEW vOriginalSLC1,
@@ -200,11 +208,18 @@ omSubLC_BuildNewSLC_Version( zVIEW vViewToInstance0,
                              zVIEW vPreviousMLC3 );
 
 zOPER_EXPORT zSHORT OPERATION
+omSubLC_DuplicateSLC( zVIEW vNewSLC0,
+                      zVIEW vPreviousSLC1 );
+
+zOPER_EXPORT zSHORT OPERATION
 omSubLC_BuildSLC_FromMLC( zVIEW vViewToInstance0,
                           zVIEW vSourceMLC1 );
 
 zOPER_EXPORT zSHORT OPERATION
 omSubLC_BuildCompositeEntries( zVIEW vmSubLC0 );
+
+zOPER_EXPORT zSHORT OPERATION
+omSubLC_BuildCompositeEntriesOld( zVIEW vmSubLC0 );
 
 zOPER_EXPORT zSHORT OPERATION
 omSubLC_BuildUsageWorkEnts( zVIEW vmSubLC0,
@@ -219,7 +234,7 @@ omSubLC_BuildWorkVariables( zVIEW vViewToInstance0,
                             zVIEW vmMasLC1 );
 
 //end
-//start DOMAINT 2015.04.23 14:13:46
+//start DOMAINT 2015.04.27 16:49:22
 zOPER_EXPORT zSHORT OPERATION
 oDOMAINT_ActivateDomainList( zPVIEW vViewToInstance0,
                              zVIEW vViewToWindow1 );
@@ -240,7 +255,7 @@ oDOMAINT_PreloadSystemDomains( zVIEW vViewToInstance0,
                                zPCHAR pchInstallApp2 );
 
 //end
-//start lMLCATgt 2015.04.23 14:13:47
+//start lMLCATgt 2015.04.27 16:49:23
 zOPER_EXPORT zSHORT OPERATION
 olMLCATgt_BuildDifferencesMLC( zVIEW vViewToInstance0,
                                zVIEW vSourceCompareObject1 );
