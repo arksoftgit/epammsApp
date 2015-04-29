@@ -32,7 +32,7 @@ $(function() {
    var g_metaVersion = "";
    var g_metaDate = "";
    
-   var g_jsonLabel1;
+   var g_jsonColors = [];
    var g_jsonLabel2;
 
 // var storageSession = window.sessionStorage;
@@ -701,6 +701,10 @@ $(function() {
    // <div class="block draggable canvas-element block-element ui-draggable ui-resizable" style="position:absolute;top:-0.78125px;height:253px;width:266px;left:0px;background-color: #ccffcc; display: block; float: left; color: red; border: 2px solid;" id="Tag100" name="Tag100">
    // <input type="text" id="zLabelBackgroundColor" name="zLabelBackgroundColor" class="zeidon" data-zmap="label.z_^background^color"  value="#ffffed" />
    function mapUiDataToElementData( $current_element ) {
+      if ( g_currentType ) {
+         mapToSpecialBlockFromBlock( g_currentType );
+         g_currentType = null;
+      }
       if ( $current_element ) {
       // displayElementData( "mapUiDataToElementData (before)", $current_element );
          var entityAttr;
@@ -718,7 +722,11 @@ $(function() {
                entity = entityAttr.substring( 0, n );
                key = entityAttr.substring( n + 1 );
                if ( entity === element_id ) {
-                  $current_element.data( key, this.type === "checkbox" ? (this.checked === true ? "Y" : "") : $(this).val() );
+                  if ( key === "z_^border^color" || key === "z_^background^color" ) {
+                     $current_element.data( key, getColorPickerByRGB( $(this).val() ) );
+                  } else {
+                     $current_element.data( key, this.type === "checkbox" ? (this.checked === true ? "Y" : "") : $(this).val() );
+                  }
                }
             }
          });
@@ -736,7 +744,6 @@ $(function() {
 */
    function mapElementDataToUiData( $current_element ) {
       $("#SpecialAttrToggle").hide();
-      g_currentType = null;
       if ( $current_element ) {
       // displayElementData( "mapElementDataToUiData", $current_element );
          var entityAttr;
@@ -767,16 +774,11 @@ $(function() {
                   } else if ( key === "z_^name" ) {
                      blockName = value;
                   }
-                  /* not using colorwell at present
-                  if ( $(this).hasClass( "colorwell" ) ) {
-                     if ( value.indexOf( '#' ) !== 0 ) {
-                        value = "#ffffff";
-                     }
-                     var colorPicker = $.farbtastic( "#" + $(this).attr( "id" ) );
-                     colorPicker.setColor( value );
+                  if ( key === "z_^border^color" || key === "z_^background^color" ) {
+                     setColorPickerByName( $(this), value );
+                  } else {
+                     this.type === "checkbox" ? (value === "Y" ? this.checked = true : this.checked = false) : $(this).val( value );
                   }
-                  */
-                  this.type === "checkbox" ? (value === "Y" ? this.checked = true : this.checked = false) : $(this).val( value );
                }
             }
          });
@@ -1307,7 +1309,8 @@ $(function() {
          g_$current_block.css({ width : width });
       });
 
-   $("input.zeidon, select.zeidon")
+   $("input.zeidon, select.zeidon input.zeidon-special, select.zeidon-special")
+ 
       .change( function(e) {
          e.stopPropagation();
          return false;
@@ -1350,6 +1353,7 @@ $(function() {
          }
       // displayElementData( "zeidon blur (after)", $(this) );
       });
+
 /*
 labeldesigner.js:2587 SpecialSection: StorageDisposal.Title
 labeldesigner.js:2594    SpecialBlock: ID.661
@@ -1395,7 +1399,7 @@ var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
       if ( g_$current_block && g_$current_block.data() ) {
          var sectionType = g_$current_block.data( "z_^l^l^d_^section^type" );
          if ( sectionType ) {
-            displayElementData( "mapToSpecialBlockFromBlock Before", g_$current_block );
+         // displayElementData( "mapToSpecialBlockFromBlock Before", g_$current_block );
             
             var entityAttr;
             var n;
@@ -1407,9 +1411,16 @@ var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
                if ( entityAttr ) {
                   n = entityAttr.indexOf( ".z_" );
                   entity = entityAttr.substring( 0, n );
-                  key = entityAttr.substring( n + 1 );
                   if ( entity === "block" ) {
-                     g_$current_block.data( key, this.type === "checkbox" ? (this.checked === true ? "Y" : "") : $(this).val() );
+                     key = entityAttr.substring( n + 1 );
+                     if ( key === "z_^text^color" ) {
+                     // console.log( "Processing color1" );
+                        g_$current_block.data( key, getColorPickerByRGB( $(this).val() ) );
+                     } else if ( key === "z_^font^size" ) {
+                        g_$current_block.data( key, $(this).val() + "pt" );
+                     } else {
+                        g_$current_block.data( key, this.type === "checkbox" ? (this.checked === true ? "Y" : "") : $(this).val() );
+                     }
                   }
                }
             });
@@ -1421,7 +1432,7 @@ var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
                g_$current_block.data( specialBlockAttribute, g_$current_block.data( attributeName ) ); 
                g_$current_block.data( attributeName, "" );
             });
-            displayElementData( "mapToSpecialBlockFromBlock After", g_$current_block );
+         // displayElementData( "mapToSpecialBlockFromBlock After", g_$current_block );
          }
       }
    }
@@ -1431,11 +1442,11 @@ var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
       if ( g_$current_block && g_$current_block.data() ) {
          var sectionType = g_$current_block.data( "z_^l^l^d_^section^type" );
          if ( sectionType ) {
-            displayElementData( "Before mapFromSpecialBlockToBlock", g_$current_block );
+         // displayElementData( "Before mapFromSpecialBlockToBlock", g_$current_block );
             var section = zeidonAttributeToKey( sectionType ) + "." + currentType + ".";
             $.each( g_BlockAttrList, function( index, attributeName ) {
                var specialBlockAttribute = section + attributeName;
-               console.log( "FromSpecial: " + attributeName + "  from: " + specialBlockAttribute + "  current: " + g_$current_block.data( specialBlockAttribute ) );
+            // console.log( "FromSpecial: " + attributeName + "  from: " + specialBlockAttribute + "  current: " + g_$current_block.data( specialBlockAttribute ) );
                g_$current_block.data( attributeName, g_$current_block.data( specialBlockAttribute ) ); 
                g_$current_block.data( specialBlockAttribute, "" );
             });
@@ -1445,8 +1456,6 @@ var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
             var entity;
             var key;
             var value;
-            var sectionType;
-
             $("input.zeidon-special, select.zeidon-special").each( function() {
                entityAttr = $(this).data( "zmap" );
                if ( entityAttr ) {
@@ -1458,12 +1467,24 @@ var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
                      if ( ! value ) {
                         value = "";
                      }
-                     this.type === "checkbox" ? (value === "Y" ? this.checked = true : this.checked = false) : $(this).val( value );
+
+                     if ( key === "z_^font^size" ) {
+                        n = value.indexOf( "pt" );
+                        if ( n >= 0 ) {
+                           value = value.substring( 0, n );
+                        }
+                     }
+                     if ( key === "z_^text^color" ) {
+                     // console.log( "Processing color2" );
+                        setColorPickerByName( $(this), value );
+                     } else {
+                        this.type === "checkbox" ? (value === "Y" ? this.checked = true : this.checked = false) : $(this).val( value );
+                     }
                   }
                }
             });
 
-            displayElementData( "After mapFromSpecialBlockToBlock", g_$current_block );
+         // displayElementData( "After mapFromSpecialBlockToBlock", g_$current_block );
          }
       }
    }
@@ -1472,6 +1493,7 @@ var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
       .change( function() {
          if ( g_currentType ) {
             mapToSpecialBlockFromBlock( g_currentType );
+            g_currentType = null;
          }
          var val = $(this).val();
          if ( val === "" ) {
@@ -3414,20 +3436,48 @@ public class FileServer {
          mapElementDataToUiData( g_$current_block );
       }
    }
-/*
-   function initColorPicker( id, colors, names ) {
-      var $el = $('#' + id);
-      if ( $el.parent().hasClass( "colorPicker-frame" ) === false )
-      {
-      // $('#colorText').colorPicker( { colors: ["1111ff", "333333", "ff1111", "eeeeee", "feeeee"], names: ["Blue", "Black", "Red", "Gray", "Pink"], showHexField: false,
-      //                               onColorChange : function(id, newValue) { console.log("ID: '" + id + "' has been changed to " + newValue); } } );
-         $el.colorPicker( { colors: colors, names: names, showHexField: false,
-                          onColorChange : function(id, newValue) { console.log("ID: '" + id + "' has been changed to " + newValue); } } );
+
+   function getColorPickerByRGB( hexColor ) {
+      var lth = g_jsonColors.length;
+      var idx = lth - 1;
+      if ( hexColor.indexOf( "#" ) == 0 ) {
+         hexColor = hexColor.substring( 1 );
       }
-      return $el;
+      for ( var k = 0; k < lth; k++ ) {
+         if ( hexColor === g_jsonColors[k].RGB ) {
+            idx = k;
+            break;
+         }
+      }
+      var name = g_jsonColors[idx].Pantone;
+      if ( name === "" ) {
+         name = g_jsonColors[idx].Name;
+      }
+      return name;
    }
-*/
-   function initColorPicker( id, jsonColors, colors, names, idx ) {
+
+   function setColorPickerByName( $elColor, name ) {
+      var lth = g_jsonColors.length;
+      var idx = lth - 1;
+      if ( name !== "" ) {
+         for ( var k = 0; k < lth; k++ ) {
+            if ( name === g_jsonColors[k].Pantone || name === g_jsonColors[k].Name ) {
+               idx = k;
+               break;
+            }
+         }
+      }
+
+      name = g_jsonColors[idx].Pantone;
+      if ( name === "" ) {
+         name = g_jsonColors[idx].Name;
+      }
+      var sib = $elColor.siblings('.colorPicker-picker')[0];
+      $(sib).css( "background-color", "#" + g_jsonColors[idx].RGB ).css( "color", "#" + invertHexColor( g_jsonColors[idx].RGB ) ).text( name );
+      $elColor.val( "#" + g_jsonColors[idx].RGB );
+   }
+
+   function initColorPicker( id, colors, names, idx ) {
       var $el = $(id);
       if ( ! $el.data( '_init' ) )
       {
@@ -3437,39 +3487,42 @@ public class FileServer {
          $el.colorPicker( { colors: colors, names: names, showHexField: false,
                           onColorChange : function(id, newValue) { console.log("ID: '" + id + "' has been changed to " + newValue); } } );
       }
-      if ( idx >= names.length || idx >= colors.length ) {
-         idx = 0;
+      if ( idx >= g_jsonColors.length ) {
+         idx = g_jsonColors.length - 1;
       }
 
       // Plain English of "#header .callout":
       //  - Select all elements with the class name 'callout' that are decendents of the element with an ID of 'header'.
       var sib = $el.siblings('.colorPicker-picker')[0];
-      $(sib).css( "background-color", "#" + jsonColors[idx].RGB ).css( "color", "#" + invertHexColor( jsonColors[idx].RGB ) ).text( names[idx] );
-      $el.val( "#" + jsonColors[idx].RGB );
+      $(sib).css( "background-color", "#" + g_jsonColors[idx].RGB ).css( "color", "#" + invertHexColor( g_jsonColors[idx].RGB ) ).text( names[idx] );
+      $el.val( "#" + g_jsonColors[idx].RGB );
 
       return $el;
    }
 
    function setColors( jsonColors )
    {
+      var lth = jsonColors.length;
       var colors = [];
       var names = [];
       if ( $.isArray( jsonColors ) ) {
          var name;
-         for ( var k = 0; k < jsonColors.length; k++ ) {
+         for ( var k = 0; k < lth; k++ ) {
             name = jsonColors[k].Pantone;
             if ( name === "" ) {
                name = jsonColors[k].Name;
             }
             colors.push( jsonColors[k].RGB );
             names.push( name );
+            g_jsonColors.push( jsonColors[k] );
          }
-         colors.push( "EFEFEF" );
-         names.push( "n/a" );
       }
-      initColorPicker( '#zTextColor', jsonColors, colors, names, 0 );
-      initColorPicker( '#colorBack', jsonColors, colors, names, 1 );
-      initColorPicker( '#colorBord', jsonColors, colors, names, 2 );
+      colors.push( "EFEFEF" );
+      names.push( "n/a" );
+      g_jsonColors.push( { "Name" : "n/a", "RGB" : "EFEFEF", "Pantone" : "" } );
+      initColorPicker( '#zTextColor', colors, names, lth );
+      initColorPicker( '#zBackgroundColor', colors, names, lth );
+      initColorPicker( '#zBorderColor', colors, names, lth );
    }
 
    function setMarketing( jsonMarketing )

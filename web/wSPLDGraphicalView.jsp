@@ -907,16 +907,16 @@ else
                         <input type="text" id="zBlockWidth" class="zeidon" data-zmap="block.z_^width" style="float:right" />
                      </div>
                      <div>
-                        <label for="colorBack">Background Color</label>
+                        <label for="zBackgroundColor">Background Color</label>
                         <div class="colorPicker-frame" style="float:right">
-                           <input id="colorBack" name="colorBack" type="text" value="#ffffff" data-text="n/b" />
+                           <input type="text" id="zBackgroundColor" class="zeidon" data-zmap="block.z_^background^color" value="#ffffff" data-text="n/b" />
                         </div>
                      </div>
                      &nbsp;
                      <div style="padding-bottom:12px;">
-                        <label for="colorBack">Border Color</label>
+                        <label for="zBorderColor">Border Color</label>
                         <div class="colorPicker-frame" style="float:right">
-                           <input id="colorBord" name="colorBorder" type="text" value="#ffffff" data-text="n/c" />
+                           <input type="text" id="zBorderColor" class="zeidon" data-zmap="block.z_^border^color"  value="#ffffff" data-text="n/c" />
                         </div>
                      </div>
                      <p style="clear:both;position:relative"></p>
@@ -1006,11 +1006,21 @@ else
                         <div id="zFormatting">
                            <div style="overflow:hidden; white-space:nowrap;">
                              <label for="zTitlePosition">Title Position:</label>
-                             <input type="text" id="zTitlePosition" class="zeidon-special" data-zmap="block.z_^title^position" style="float:right" />
+                             <select id="zTitlePosition" class="zeidon-special" data-zmap="block.z_^title^position" style="float:right" />
+                                 <option value="">Select Title Position...</option>
+                                 <option value="SL">Separate Line</option>
+                                 <option value="CF">Combined with First Paragraph</option>
+                                 <option value="SK">Skip Title</option>
+                              </select>
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
                              <label for="zTextAlign">Text Align:</label>
-                             <input type="text" id="zTextAlign" class="zeidon-special" data-zmap="block.z_^text^align" style="float:right" />
+                             <select id="zTextAlign" class="zeidon-special" data-zmap="block.z_^text^align" style="float:right" />
+                                 <option value="">Select Text Align...</option>
+                                 <option value="left">Left</option>
+                                 <option value="center">Center</option>
+                                 <option value="right">Right</option>
+                              </select>
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
                              <label for="zTextLineHeight">Text Line Height:</label>
@@ -1020,11 +1030,11 @@ else
                              <label for="zBorderStyle">Border Style:</label>
                              <select id="zBorderStyle" class="zeidon-special" data-zmap="block.z_^border^style" style="float:right" />
                                  <option value="">Select Border Style...</option>
-                                 <option value="Solid">Solid</option>
-                                 <option value="Dotted">Dotted</option>
-                                 <option value="Dashed">Dashed</option>
-                                 <option value="Double">Double</option>
-                                 <option value="Groove">Groove</option>
+                                 <option value="solid">Solid</option>
+                                 <option value="dotted">Dotted</option>
+                                 <option value="dashed">Dashed</option>
+                                 <option value="double">Double</option>
+                                 <option value="groove">Groove</option>
                               </select>
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
@@ -1033,21 +1043,30 @@ else
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
                              <label for="zFontFamily">Font Family:</label>
-                             <input type="text" id="zFontFamily" class="zeidon-special" data-zmap="block.z_^font^family" style="float:right" />
+                             <select id="zFontFamily" class="zeidon-special" data-zmap="block.z_^font^family" style="float:right" />
+                                 <option value="">Select Font Family...</option>
+                                 <option value="arial">Arial</option>
+                                 <option value="verdana">Verdana</option>
+                                 <option value="serif">Serif</option>
+                              </select>
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
                              <label for="zFontSizeSpinner">Font Size:</label>
-                             <input type="text" id="zFontSizeSpinner" value="11" style="width:20px;"/>
+                             <input type="text" id="zFontSizeSpinner" value="11" class="zeidon-special" data-zmap="block.z_^font^size" style="float:right;width:20px;"/>
                        <!-- <input type="text" id="zFontSize" class="zeidon-special" data-zmap="block.z_^font^size" style="float:right" /> -->
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
                              <label for="zFontWeight">Font Weight:</label>
-                             <input type="text" id="zFontWeight" class="zeidon-special" data-zmap="block.z_^font^weight" style="float:right" />
+                             <select id="zFontWeight" class="zeidon-special" data-zmap="block.z_^font^weight" style="float:right" />
+                                 <option value="">Select Font Weight...</option>
+                                 <option value="bold">Bold</option>
+                                 <option value="normal">Normal</option>
+                              </select>
                            </div>
                            <div>
                               <label for="zTextColor">Text Color</label>
                               <div class="colorPicker-frame" style="float:right">
-                                 <input id="zTextColor" name="colorText" type="text" value="#ffffff" data-text="n/a" />
+                                 <input type="text" id="zTextColor" class="zeidon-special" data-zmap="block.z_^text^color" value="#ffffff" data-text="n/a" />
                               </div>
                            </div>
                         </div>
