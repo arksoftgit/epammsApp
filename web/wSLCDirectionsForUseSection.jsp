@@ -592,7 +592,7 @@ else
 
 <% /* Text1:Text */ %>
 
-<label class="listheader"  id="Text1" name="Text1" style="">Directions for Use Section</label>
+<label class="listheader"  id="Text1" name="Text1" style="width:434px;height:16px;position:absolute;left:8px;top:6px;">Directions for Use Section</label>
 
 <% /* GroupBox2:GroupBox */ %>
 
@@ -600,7 +600,7 @@ else
 
 <% /* DirectionsUseTitle::Text */ %>
 
-<label  id="DirectionsUseTitle:" name="DirectionsUseTitle:" style="">Name:</label>
+<label  id="DirectionsUseTitle:" name="DirectionsUseTitle:" style="width:130px;height:16px;position:absolute;left:10px;top:12px;">Name:</label>
 
 <% /* Text6:Text */ %>
 <% strTextDisplayValue = "";
@@ -627,11 +627,11 @@ else
    }
 %>
 
-<label  id="Text6" name="Text6" style=""><%=strTextDisplayValue%></label>
+<label  id="Text6" name="Text6" style="width:254px;height:16px;position:absolute;left:142px;top:12px;"><%=strTextDisplayValue%></label>
 
 <% /* Text2:Text */ %>
 
-<label  id="Text2" name="Text2" style="">Title:</label>
+<label  id="Text2" name="Text2" style="width:130px;height:16px;position:absolute;left:10px;top:30px;">Title:</label>
 
 <% /* Text3:Text */ %>
 <% strTextDisplayValue = "";
@@ -658,7 +658,7 @@ else
    }
 %>
 
-<label  id="Text3" name="Text3" style=""><%=strTextDisplayValue%></label>
+<label  id="Text3" name="Text3" style="width:586px;height:16px;position:absolute;left:142px;top:30px;"><%=strTextDisplayValue%></label>
 
 
 </div>  <!--  GroupBox2 --> 
@@ -701,7 +701,7 @@ else
 
 <% /* Text5:Text */ %>
 
-<label class="listheader"  id="Text5" name="Text5" style="">Directions for Use Statements</label>
+<label class="listheader"  id="Text5" name="Text5" style="width:434px;height:16px;position:absolute;left:4px;top:4px;">Directions for Use Statements</label>
 
 
 </div>  <!--  GroupBox9 --> 
@@ -821,7 +821,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <% /* Text4:Text */ %>
 
-<label class="listheader"  id="Text4" name="Text4" style="">Claims that Drive the current Section to be included in the SLC</label>
+<label class="listheader"  id="Text4" name="Text4" style="width:480px;height:16px;position:absolute;left:4px;top:4px;">Claims that Drive the current Section to be included in the SLC</label>
 
 
 </div>  <!--  GroupBox8 --> 
@@ -891,7 +891,7 @@ try
          nRC = vGrid1.cursor( "S_ClaimsDrivingUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl2 = vGrid1.cursor( "S_ClaimsDrivingUsage" ).getAttribute( "UsageType" ).getString( "" );
+            strGridEditCtl2 = vGrid1.cursor( "S_ClaimsDrivingUsage" ).getAttribute( "dDisplayUsageName" ).getString( "" );
 
             if ( strGridEditCtl2 == null )
                strGridEditCtl2 = "";
@@ -957,7 +957,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <% /* Text7:Text */ %>
 
-<label class="listheader"  id="Text7" name="Text7" style="">Claims that Drive the current Section to be included in the SLC</label>
+<label class="listheader"  id="Text7" name="Text7" style="width:480px;height:16px;position:absolute;left:4px;top:4px;">Claims that Drive the current Section to be included in the SLC</label>
 
 
 </div>  <!--  GroupBox10 --> 

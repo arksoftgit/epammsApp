@@ -341,29 +341,23 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
-      // Action Operation
+      // Action Auto Object Function
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCUsageEntriesSelect.jsp", "wSLC.IfItIsAClaim" );
-         nOptRC = wSLC.IfItIsAClaim( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
+      View mSubLC = task.getViewByName( "mSubLC" );
+      EntityCursor cursor = mSubLC.cursor( "S_UsageType" );
+      if ( cursor.isNull() )
+         nRC = 0;
       else
-      if ( nOptRC == 1 )
       {
-         // Dynamic Next Window
-         strNextJSP_Name = wSLC.GetWebRedirection( vKZXMLPGO );
+         if ( cursor.isVersioned( ) )
+         {
+           cursor.acceptSubobject( );
+           nRC = 0;
+         }
       }
 
-      if ( strNextJSP_Name.equals( "" ) )
-      {
          // Next Window
          strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReturnToParent, "", "" );
-      }
-
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;

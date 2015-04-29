@@ -854,84 +854,6 @@ $(function() {
          $("#zClaimListTypeToggle").hide();
          $("#zMarketingSectionToggle").hide();
       }
-
-      /*
-         if ( element_id === "block" ) {
-            console.log( "Processing block type: " + sectionType );
-            // The .prop() method should be used to set disabled and checked instead of the .attr() method.
-            // $('#id').prop('disabled', false);
-            // $('#id').prop('disabled', 'disabled');
-            if ( sectionType === "Graphic" ) {
-               showHideTandem( "zImageName", true );
-               showHideTandem( "zCheckContinuationBlock", false );
-               showHideTandem( "zClaimListType", false );;
-            } else if ( sectionType === "Marketing" || sectionType === "DirectionsForUse" ||
-                        sectionType === "StorageDisposal" || sectionType === "Hazards" || sectionType === "Precautionary" ) {
-               showHideTandem( "zCheckContinuationBlock", true );
-               showHideTandem( "zImageName", false );
-               if ( sectionType === "Marketing" ) {
-                  showHideTandem( "zClaimListType", true );
-               } else {
-                  showHideTandem( "zClaimListType", false );
-               }
-            } else {
-               showHideTandem( "zCheckContinuationBlock", false );;
-               showHideTandem( "zImageName", false );
-               showHideTandem( "zClaimListType", false );
-            }
-         } else {
-            showHideTandem( "zCheckContinuationBlock", false );
-            showHideTandem( "zImageName", false );
-            showHideTandem( "zClaimListType", false );
-         }
-      } else {
-         $("input.zeidon, select.zeidon").each( function() {
-            this.type === "checkbox" ? this.checked = false : $(this).val( "" );
-         });
-         showHideTandem( "zCheckContinuationBlock", false );
-         showHideTandem( "zImageName", false );
-         showHideTandem( "zClaimListType", false );
-      }
-      */
-/*      
-         if ( element_id === "block" ) {
-            console.log( "Processing block type: " + sectionType );
-            // The .prop() method should be used to set disabled and checked instead of the .attr() method.
-            // $('#id').prop('disabled', false);
-            // $('#id').prop('disabled', 'disabled');
-            if ( sectionType === "Graphic" ) {
-               $("#zImageName").prop('disabled', false);
-               $("#zCheckContinuationBlock").prop('disabled', true);
-               $("#zClaimListType").prop('disabled', 'disabled');
-            } else if ( sectionType === "Marketing" || sectionType === "DirectionsForUse" ||
-                        sectionType === "StorageDisposal" || sectionType === "Hazards" || sectionType === "Precautionary" ) {
-               $("#zCheckContinuationBlock").prop('disabled', false);
-               $("#zImageName").prop('disabled', true);
-               if ( sectionType === "Marketing" ) {
-                  $("#zClaimListType").prop('disabled', false);
-               } else {
-                  $("#zClaimListType").prop('disabled', 'disabled');
-               }
-            } else {
-               $("#zCheckContinuationBlock").prop('disabled', true);
-               $("#zImageName").prop('disabled', true);
-               $("#zClaimListType").prop('disabled', 'disabled');
-            }
-         } else {
-            $("#zCheckContinuationBlock").prop('disabled', true);
-            $("#zImageName").prop('disabled', true);
-            $("#zClaimListType").prop('disabled', 'disabled');
-         }
-      } else {
-         $("input.zeidon, select.zeidon").each( function() {
-            this.type === "checkbox" ? this.checked = false : $(this).val( "" );
-         });
-         $("#zCheckContinuationBlock").prop('disabled', true);
-         $("#zImageName").prop('disabled', true);
-         $("#zClaimListType").prop('disabled', 'disabled');
-      }
-*/
-      
    }
 
 /* 1 ELEMENT_NODE
@@ -1460,37 +1382,89 @@ jsoeUtils.js:1139    ~ z_^storage^disposal.^text.^i^d : 662
 jsoeUtils.js:1139    ~ z_^storage^disposal.^text.^font^size : 9pt
 jsoeUtils.js:1139    ~ z_^storage^disposal.^text.^margin^top : 0.01
 */
-var g_BlockAttrList = [ "^text^color", "^text^color^override",
-                        "^background^color", "^background^color^override",
-                        "^border^color", "^border^color^override", "^border^style", "^border^width",
-                        "^font^family", "^font^size", "^font^weight",
-                        "^margin", "^margin^top", "^margin^left", "^margin^bottom", "^margin^right", "^margin^override",
-                        "^border", "^border^top", "^border^bottom", "^border^left", "^borderRight", "^border^override",
-                        "^padding", "^padding^top", "^padding^bottom", "^padding^left", "^padding^right", "^padding^override",
-                        "^title^position", "^text^align", "^text^line^height" ];
+var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
+                        "z_^background^color", "z_^background^color^override",
+                        "z_^border^color", "z_^border^color^override", "z_^border^style", "z_^border^width",
+                        "z_^font^family", "z_^font^size", "z_^font^weight",
+                        "z_^margin", "z_^margin^top", "z_^margin^left", "z_^margin^bottom", "z_^margin^right", "z_^margin^override",
+                        "z_^border", "z_^border^top", "z_^border^bottom", "z_^border^left", "z_^borderRight", "z_^border^override",
+                        "z_^padding", "z_^padding^top", "z_^padding^bottom", "z_^padding^left", "z_^padding^right", "z_^padding^override",
+                        "z_^title^position", "z_^text^align", "z_^text^line^height" ];
+
    function mapToSpecialBlockFromBlock( currentType ) {
       if ( g_$current_block && g_$current_block.data() ) {
-         var section = zeidonAttributeToKey( g_$current_block.data( "z_^l^l^d_^section^type" ) ) + "." + currentType + ".";
-         $.each(g_BlockAttrList, function( index, attributeName ) {
-            var specialBlockAttribute = section + attributeName;
-            console.log( "ToSpecial: " + attributeName + "  to: " + specialBlockAttribute + "  current: " + g_$current_block.data( attributeName ) );
-            g_$current_block.data( specialBlockAttribute, g_$current_block.data( attributeName ) ); 
-            g_$current_block.data( attributeName, "" );
-         });
-         displayElementData( "mapToSpecialBlockFromBlock", g_$current_block );
+         var sectionType = g_$current_block.data( "z_^l^l^d_^section^type" );
+         if ( sectionType ) {
+            displayElementData( "mapToSpecialBlockFromBlock Before", g_$current_block );
+            
+            var entityAttr;
+            var n;
+            var entity;
+            var key;
+
+            $("input.zeidon-special, select.zeidon-special").each( function() {
+               entityAttr = $(this).data( "zmap" );
+               if ( entityAttr ) {
+                  n = entityAttr.indexOf( ".z_" );
+                  entity = entityAttr.substring( 0, n );
+                  key = entityAttr.substring( n + 1 );
+                  if ( entity === "block" ) {
+                     g_$current_block.data( key, this.type === "checkbox" ? (this.checked === true ? "Y" : "") : $(this).val() );
+                  }
+               }
+            });
+            
+            var section = zeidonAttributeToKey( sectionType ) + "." + currentType + ".";
+            $.each( g_BlockAttrList, function( index, attributeName ) {
+               var specialBlockAttribute = section + attributeName;
+               console.log( "ToSpecial: " + attributeName + "  to: " + specialBlockAttribute + "  current: " + g_$current_block.data( attributeName ) );
+               g_$current_block.data( specialBlockAttribute, g_$current_block.data( attributeName ) ); 
+               g_$current_block.data( attributeName, "" );
+            });
+            displayElementData( "mapToSpecialBlockFromBlock After", g_$current_block );
+         }
       }
    }
 
+   // Process data of the form: z_^marketing.^text.^font^family : verdana
    function mapFromSpecialBlockToBlock( currentType ) {
       if ( g_$current_block && g_$current_block.data() ) {
-         var section = zeidonAttributeToKey( g_$current_block.data( "z_^l^l^d_^section^type" ) ) + "." + currentType + ".";
-         $.each(g_BlockAttrList, function( index, attributeName ) {
-            var specialBlockAttribute = section + attributeName;
-            console.log( "FromSpecial: " + attributeName + "  from: " + specialBlockAttribute + "  current: " + g_$current_block.data( specialBlockAttribute ) );
-            g_$current_block.data( attributeName, g_$current_block.data( specialBlockAttribute ) ); 
-            g_$current_block.data( specialBlockAttribute, "" );
-         });
-         displayElementData( "mapFromSpecialBlockToBlock", g_$current_block );
+         var sectionType = g_$current_block.data( "z_^l^l^d_^section^type" );
+         if ( sectionType ) {
+            displayElementData( "Before mapFromSpecialBlockToBlock", g_$current_block );
+            var section = zeidonAttributeToKey( sectionType ) + "." + currentType + ".";
+            $.each( g_BlockAttrList, function( index, attributeName ) {
+               var specialBlockAttribute = section + attributeName;
+               console.log( "FromSpecial: " + attributeName + "  from: " + specialBlockAttribute + "  current: " + g_$current_block.data( specialBlockAttribute ) );
+               g_$current_block.data( attributeName, g_$current_block.data( specialBlockAttribute ) ); 
+               g_$current_block.data( specialBlockAttribute, "" );
+            });
+
+            var entityAttr;
+            var n;
+            var entity;
+            var key;
+            var value;
+            var sectionType;
+
+            $("input.zeidon-special, select.zeidon-special").each( function() {
+               entityAttr = $(this).data( "zmap" );
+               if ( entityAttr ) {
+                  n = entityAttr.indexOf( ".z_" );
+                  entity = entityAttr.substring( 0, n );
+                  if ( entity === "block" ) {
+                     key = entityAttr.substring( n + 1 );
+                     value = g_$current_block.data( key );
+                     if ( ! value ) {
+                        value = "";
+                     }
+                     this.type === "checkbox" ? (value === "Y" ? this.checked = true : this.checked = false) : $(this).val( value );
+                  }
+               }
+            });
+
+            displayElementData( "After mapFromSpecialBlockToBlock", g_$current_block );
+         }
       }
    }
 
@@ -1569,6 +1543,17 @@ var g_BlockAttrList = [ "^text^color", "^text^color^override",
 
 // $("#zBlockTextAlign").combobox();
 // $("#zHazardPanel").combobox();
+
+   var $FontSizeSpinner = $("#zFontSizeSpinner").spinner();
+   $FontSizeSpinner.spinner( "option", "min", 3 );
+   $FontSizeSpinner.spinner( "option", "max", 26 );
+   $FontSizeSpinner.spinner( "option", "numberFormat", "nn" );
+   $FontSizeSpinner[0].readOnly = true;  // prevent invalid input
+
+   // Handle the Spinner change event.
+   $FontSizeSpinner.on( "spinstop", function( event, ui ) {
+      selectFontSize( $FontSizeSpinner.spinner( "value" ) );
+   });
 
    var $PageSpinner = $("#zPageSpinner").spinner();
    $PageSpinner.spinner( "option", "min", 1 );
@@ -3482,7 +3467,7 @@ public class FileServer {
          colors.push( "EFEFEF" );
          names.push( "n/a" );
       }
-      initColorPicker( '#colorText', jsonColors, colors, names, 0 );
+      initColorPicker( '#zTextColor', jsonColors, colors, names, 0 );
       initColorPicker( '#colorBack', jsonColors, colors, names, 1 );
       initColorPicker( '#colorBord', jsonColors, colors, names, 2 );
    }
