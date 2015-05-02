@@ -87,15 +87,13 @@ function checkRegexp( o, regexp, n ) {
  function invertHexColor( hexColor ) {
    //javascript code
 
-    if ( hexColor.charAt(0) == "#" ) {
+    if ( hexColor.charAt(0) === "#" ) {
        hexColor = hexColor.substring( 1,7 );
     }
     var r = parseInt( hexColor.substring( 0, 2 ), 16 ) / 255;
     var g = parseInt( hexColor.substring( 2, 4 ), 16 ) / 255;
     var b = parseInt( hexColor.substring( 4, 6 ), 16 ) / 255;
-    console.log( 'Red  :' + r );
-    console.log( 'Green:' + g );
-    console.log( 'Blue :' + b );
+// console.log( 'Red:' + r + '  Green:' + g + '   Blue:' + b );
     var L = 0.2126 * r*r + 0.7152 * g*g + 0.0722 * b*b;
     var color;
     if ( L > 0.5 ) {

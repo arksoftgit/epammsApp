@@ -906,17 +906,32 @@ else
                         <label for="zBlockWidth">Block Width:</label>
                         <input type="text" id="zBlockWidth" class="zeidon" data-zmap="block.z_^width" style="float:right" />
                      </div>
+                     <div style="overflow:hidden; white-space:nowrap;">
+                       <label for="zBorderStyle">Border Style:</label>
+                       <select id="zBorderStyle" class="zeidon" data-zmap="block.z_^border^style" style="float:right" />
+                           <option value="">Select Border Style...</option>
+                           <option value="solid">Solid</option>
+                           <option value="dotted">Dotted</option>
+                           <option value="dashed">Dashed</option>
+                           <option value="double">Double</option>
+                           <option value="groove">Groove</option>
+                        </select>
+                     </div>
+                     <div style="overflow:hidden; white-space:nowrap;">
+                       <label for="zBorderWidth">Border Width:</label>
+                       <input type="text" id="zBorderWidth" class="zeidon" data-zmap="block.z_^border^width" style="float:right" />
+                     </div>
+                     <div style="padding-bottom:6px;">
+                        <label for="zBorderColor">Border Color</label>
+                        <div class="colorPicker-frame" style="float:right">
+                           <input type="text" id="zBorderColor" class="zeidon" data-zmap="block.z_^border^color"  value="#ffffff" data-text="n/c" />
+                        </div>
+                     </div>
+                     &nbsp;
                      <div>
                         <label for="zBackgroundColor">Background Color</label>
                         <div class="colorPicker-frame" style="float:right">
                            <input type="text" id="zBackgroundColor" class="zeidon" data-zmap="block.z_^background^color" value="#ffffff" data-text="n/b" />
-                        </div>
-                     </div>
-                     &nbsp;
-                     <div style="padding-bottom:12px;">
-                        <label for="zBorderColor">Border Color</label>
-                        <div class="colorPicker-frame" style="float:right">
-                           <input type="text" id="zBorderColor" class="zeidon" data-zmap="block.z_^border^color"  value="#ffffff" data-text="n/c" />
                         </div>
                      </div>
                      <p style="clear:both;position:relative"></p>
@@ -1027,21 +1042,6 @@ else
                              <input type="text" id="zTextLineHeight" class="zeidon-special" data-zmap="block.z_^text^line^height" style="float:right" />
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
-                             <label for="zBorderStyle">Border Style:</label>
-                             <select id="zBorderStyle" class="zeidon-special" data-zmap="block.z_^border^style" style="float:right" />
-                                 <option value="">Select Border Style...</option>
-                                 <option value="solid">Solid</option>
-                                 <option value="dotted">Dotted</option>
-                                 <option value="dashed">Dashed</option>
-                                 <option value="double">Double</option>
-                                 <option value="groove">Groove</option>
-                              </select>
-                           </div>
-                           <div style="overflow:hidden; white-space:nowrap;">
-                             <label for="zBorderWidth">Border Width:</label>
-                             <input type="text" id="zBorderWidth" class="zeidon-special" data-zmap="block.z_^border^width" style="float:right" />
-                           </div>
-                           <div style="overflow:hidden; white-space:nowrap;">
                              <label for="zFontFamily">Font Family:</label>
                              <select id="zFontFamily" class="zeidon-special" data-zmap="block.z_^font^family" style="float:right" />
                                  <option value="">Select Font Family...</option>
@@ -1062,6 +1062,10 @@ else
                                  <option value="bold">Bold</option>
                                  <option value="normal">Normal</option>
                               </select>
+                           </div>
+                           <p style="clear:both;position:relative"></p>
+                           <div id="zCapitalizeTitleTextFlagToggle" style="overflow:hidden; white-space:nowrap; padding-bottom:12px;">
+                              <input type="checkbox" id="zCapitalizeTitleTextFlag" name="zCapitalizeTitleTextFlag" class="zeidon" data-zmap="block.z_^continuation^block^flag" /><label for="zCapitalizeTitleTextFlag">Capitalize Title Text</label>
                            </div>
                            <div>
                               <label for="zTextColor">Text Color</label>
@@ -1198,6 +1202,13 @@ else
                         </span>
                      </p>
                      <div id="tree" class="aciTree">
+                     </div>
+                     &nbsp;
+                     <div>
+                        <label for="zPageColor">Background Color</label>
+                        <div class="colorPicker-frame" style="float:right">
+                           <input type="text" id="zPageColor" class="zeidon" data-zmap="page.z_^background^color" value="#ffffff" data-text="n/p" />
+                        </div>
                      </div>
                   </div> <!-- End of: Page Properties -->
 

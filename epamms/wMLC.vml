@@ -1003,9 +1003,7 @@ ConfirmDeleteUsageEntry( VIEW ViewToWindow )
    VIEW mMasLC REGISTERED AS mMasLC
    VIEW mMasLC2 BASED ON LOD mMasLC
    SHORT nContinue
-
    CreateViewFromView( mMasLC2, mMasLC )
-
    // Delete all selected Usage entries.
    FOR EACH mMasLC.M_Usage
       IF mMasLC.M_Usage.wSelected = "Y"
@@ -1059,7 +1057,7 @@ ConfirmDeleteUsageEntry( VIEW ViewToWindow )
             END
             SET CURSOR FIRST mMasLC.M_DrivingUsage WHERE mMasLC.M_DrivingUsage.ID = mMasLC.M_Usage.ID 
             IF RESULT >= zCURSOR_SET
-               DELETE ENTITY mMasLC.M_DrivingUsage
+               EXCLUDE mMasLC.M_DrivingUsage 
             END
          END
          

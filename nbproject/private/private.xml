@@ -12,7 +12,7 @@
             <line>1024</line>
         </file>
     </editor-bookmarks>
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="37">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="40">
         <file>
             <url>web/wSPLDSPLD_UpdateLLD.jsp</url>
             <bookmark id="3">
@@ -51,32 +51,37 @@
                 <line>676</line>
                 <key/>
             </bookmark>
+            <bookmark id="38">
+                <name/>
+                <line>686</line>
+                <key/>
+            </bookmark>
         </file>
         <file>
             <url>web/js/labeldesigner.js</url>
+            <bookmark id="40">
+                <name/>
+                <line>154</line>
+                <key/>
+            </bookmark>
             <bookmark id="29">
                 <name/>
-                <line>180</line>
+                <line>181</line>
                 <key/>
             </bookmark>
             <bookmark id="33">
                 <name/>
-                <line>736</line>
-                <key/>
-            </bookmark>
-            <bookmark id="35">
-                <name/>
-                <line>826</line>
+                <line>738</line>
                 <key/>
             </bookmark>
             <bookmark id="34">
                 <name/>
-                <line>1496</line>
+                <line>1503</line>
                 <key/>
             </bookmark>
-            <bookmark id="36">
+            <bookmark id="39">
                 <name/>
-                <line>2549</line>
+                <line>3485</line>
                 <key/>
             </bookmark>
         </file>

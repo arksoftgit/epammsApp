@@ -2920,6 +2920,8 @@ BuildCompositeEntries( VIEW mSPLDef BASED ON LOD mSPLDef )
       mSPLDef.CompositeComponentList.SelectLevel        = 1
       mSPLDef.CompositeComponentList.DisplayType        = "Marketing"
       mSPLDef.CompositeComponentList.OriginalTypeID     = mSPLDef.SPLD_MarketingSection.ID 
+      mSPLDef.CompositeComponentList.Name               = mSPLDef.SPLD_MarketingSection.Name
+      TraceLineS( "SPLD BuildCompositeEntries Name: ", mSPLDef.SPLD_MarketingSection.Name )
       IF mSPLDef.SPLD_MarketingSection.Title != ""
          IF mSPLDef.SPLD_MarketingSection.Name = ""
             mSPLDef.CompositeComponentList.DisplayValue = mSPLDef.SPLD_MarketingSection.Title
@@ -4368,11 +4370,9 @@ END
 **    
 **    OPERATION: SetUpFormattingSelect
 **    
-
 TRANSFORMATION OPERATION
 SetUpFormattingSelect( VIEW mSPLDefPanel BASED ON LOD mSPLDef,
                        STRING ( 50 ) szSectionType )
-
    // Initialize the SpecialFormattingSelectEntry entries depending on Section Type.
    FOR EACH mSPLDefPanel.SpecialFormattingSelectEntry 
       DELETE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry NONE 
@@ -4611,4 +4611,36 @@ SetUpKeywordEntries( VIEW mSPLDefBlock BASED ON LOD mSPLDef,
       END
    END
    
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: dColorName
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dColorName( VIEW mSPLDef BASED ON LOD mSPLDef,
+            STRING ( 32 ) InternalEntityStructure,
+            STRING ( 32 ) InternalAttribStructure,
+            SHORT GetOrSetFlag )
+
+   STRING ( 32 ) szName
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+       GetStringFromAttribute( szName, mSPLDef, InternalEntityStructure, "Pantone" )
+       IF szName = ""
+          GetStringFromAttribute( szName, mSPLDef, InternalEntityStructure, "Name" )
+       END
+       // Store the calculated value in the object.
+       StoreStringInRecord( mSPLDef, InternalEntityStructure, InternalAttribStructure, szName )
+       RETURN 0
+       
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
 END

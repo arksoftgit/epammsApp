@@ -35,6 +35,7 @@ public int DoInputMapping( HttpServletRequest request,
    String taskId = (String) session.getAttribute( "ZeidonTaskId" );
    Task task = objectEngine.getTaskById( taskId );
 
+   View mSPLDef = null;
    View mSPLDefBlock = null;
    View vGridTmp = null; // temp view to grid view
    View vRepeatingGrp = null; // temp view to repeating group view
@@ -56,6 +57,11 @@ public int DoInputMapping( HttpServletRequest request,
 
    if ( webMapping == false )
       session.setAttribute( "ZeidonError", null );
+
+   mSPLDef = task.getViewByName( "mSPLDef" );
+   if ( VmlOperation.isValid( mSPLDef ) )
+   {
+   }
 
    mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
    if ( VmlOperation.isValid( mSPLDefBlock ) )
@@ -213,24 +219,50 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       // ComboBox: TextColor
-      nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
+      mSPLDef = task.getViewByName( "mSPLDef" );
+      if ( VmlOperation.isValid( mSPLDef ) )
       {
-         strMapValue = request.getParameter( "hTextColor" );
-         try
+         nRC = mSPLDef.cursor( "Color" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
          {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "TextColor", "", strMapValue );
+            strMapValue = request.getParameter( "hTextColor" );
+            if ( strMapValue != null )
+            {
+               nRelPos = java.lang.Integer.parseInt( strMapValue );
+               nRelPos--;    // For Auto Include combos, we need to decrement for the blank entry.
+               mSPLDef.cursor( "Color" ).setPosition( nRelPos, "" );
+            }
+ 
+            // Auto Include Code 
+            // If the value is "0" then the user has selected the null entry, we do not want to do an include.
+            // If there is an entity, we want to exclude it. 
+            if ( !StringUtils.equals( strMapValue, "0" ) )
+            {
+               nRC = mSPLDefBlock.cursor( "SpecialAttributeTextColor" ).checkExistenceOfEntity( ).toInt();
+               if ( nRC >= 0 )
+               {
+                  // Only do the automatic include if this is a different entity
+                  strTemp = mSPLDefBlock.cursor( "SpecialAttributeTextColor" ).getAttribute( "dColorName" ).getString( "" );
+                  if ( !StringUtils.equals( strTemp, mSPLDef.cursor( "Color" ).getAttribute( "dColorName" ).getString( "" ) ) )
+                  {
+                     mSPLDefBlock.cursor( "SpecialAttributeTextColor" ).excludeEntity( CursorPosition.NONE );
+                     mSPLDefBlock.cursor( "SpecialAttributeTextColor" ).includeSubobject( mSPLDef.cursor( "Color" ), CursorPosition.NEXT );
+                  }
+               }
+               else
+                     mSPLDefBlock.cursor( "SpecialAttributeTextColor" ).includeSubobject( mSPLDef.cursor( "Color" ), CursorPosition.NEXT );
+            }
             else
-               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "TextColor" ).setValue( strMapValue, "" );
+            {
+               nRC = mSPLDefBlock.cursor( "SpecialAttributeTextColor" ).checkExistenceOfEntity( ).toInt();
+               if ( nRC >= 0 )
+               {
+                     mSPLDefBlock.cursor( "SpecialAttributeTextColor" ).excludeEntity( CursorPosition.NONE );
+               }
+            }
          }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "TextColor", e.getReason( ), strMapValue );
-         }
-      }
 
+         }  // checkExistenceofEntity
       // EditBox: TextLineHeight
       nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
@@ -247,63 +279,6 @@ public int DoInputMapping( HttpServletRequest request,
          {
             nMapError = -16;
             VmlOperation.CreateMessage( task, "TextLineHeight", e.getReason( ), strMapValue );
-         }
-      }
-
-      // ComboBox: BorderStyle
-      nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strMapValue = request.getParameter( "hBorderStyle" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "BorderStyle", "", strMapValue );
-            else
-               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "BorderStyle" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "BorderStyle", e.getReason( ), strMapValue );
-         }
-      }
-
-      // EditBox: BorderWidth
-      nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
-      {
-         strMapValue = request.getParameter( "BorderWidth" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "BorderWidth", "", strMapValue );
-            else
-               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "BorderWidth" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "BorderWidth", e.getReason( ), strMapValue );
-         }
-      }
-
-      // ComboBox: BorderColor
-      nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strMapValue = request.getParameter( "hBorderColor" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "BorderColor", "", strMapValue );
-            else
-               mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "BorderColor" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "BorderColor", e.getReason( ), strMapValue );
          }
       }
 
@@ -948,10 +923,7 @@ else
             task.log( ).debug( "LLD_SpecialSectionAttrBlock.MarginTop: " + strErrorMapValue );
          }
          else
-         {
             task.log( ).debug( "Entity does not exist for MarginTop: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
-            mSPLDefBlock.cursor( "LLD_Block" ).logEntity( true );
-         }
       }
    }
 %>
@@ -1512,83 +1484,76 @@ else
 <% /* TextColor:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="TextColor" id="TextColor" size="1" style="width:98px;" onchange="TextColorOnChange( )">
+<select  name="TextColor" id="TextColor" size="1"style="width:98px;" onchange="TextColorOnChange( )">
 
 <%
-   boolean inListTextColor = false;
-
-   mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
-   if ( VmlOperation.isValid( mSPLDefBlock ) )
+   mSPLDef = task.getViewByName( "mSPLDef" );
+   if ( VmlOperation.isValid( mSPLDef ) )
    {
-      List<TableEntry> list = JspWebUtils.getTableDomainValues( mSPLDefBlock , "LLD_SpecialSectionAttrBlock", "TextColor", "" );
-
-      nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strComboCurrentValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "TextColor" ).getString( "" );
-         if ( strComboCurrentValue == null )
-            strComboCurrentValue = "";
-      }
-      else
-      {
          strComboCurrentValue = "";
-      }
-
-      // Code for NOT required attribute, which makes sure a blank entry exists.
-      if ( strComboCurrentValue == "" )
+      View vTextColor;
+      mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
+      if ( VmlOperation.isValid( mSPLDefBlock ) )
       {
-         inListTextColor = true;
+         nRC = mSPLDefBlock.cursor( "SpecialAttributeTextColor" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strComboCurrentValue = mSPLDefBlock.cursor( "SpecialAttributeTextColor" ).getAttribute( "dColorName" ).getString( "" );
+            if ( strComboCurrentValue == null )
+               strComboCurrentValue = "";
+         }
+      }
+      vTextColor = mSPLDef.newView( );
+      ComboCount = 0;
+      strComboSelectedValue = "0";
+
+      // For Auto Include, always add a null entry to the combo box.
+      ComboCount++;
+      if ( StringUtils.isBlank( strComboCurrentValue ) )
+      {
 %>
-         <option selected="selected" value=""></option>
+         <option selected="selected"></option>
 <%
       }
       else
       {
 %>
-         <option value=""></option>
+         <option></option>
 <%
       }
-      for ( TableEntry entry : list )
+
+      csrRC = vTextColor.cursor( "Color" ).setFirst(  );
+      while ( csrRC.isSet() )
       {
-         String internalValue = entry.getInternalValue( );
-         String externalValue = entry.getExternalValue( );
-         // Perhaps getInternalValue and getExternalValue should return an empty string, 
-         // but currently it returns null.  Set to empty string. 
-         if ( externalValue == null )
+         strErrorMapValue = vTextColor.cursor( "Color" ).getAttribute( "dColorName" ).getString( "" );
+         if ( strErrorMapValue == null )
+            strErrorMapValue = "";
+
+         if ( StringUtils.equals( strComboCurrentValue, strErrorMapValue ) )
          {
-            internalValue = "";
-            externalValue = "";
+%>
+            <option selected="selected"><%=strErrorMapValue%></option>
+<%
+            strComboSelectedValue = Integer.toString( ComboCount );
+         }
+         else
+         {
+%>
+            <option><%=strErrorMapValue%></option>
+<%
          }
 
-         if ( !StringUtils.isBlank( externalValue ) )
-         {
-            if ( StringUtils.equals( strComboCurrentValue, externalValue ) )
-            {
-               inListTextColor = true;
-%>
-               <option selected="selected" value="<%=externalValue%>"><%=externalValue%></option>
-<%
-            }
-            else
-            {
-%>
-               <option value="<%=externalValue%>"><%=externalValue%></option>
-<%
-            }
-         }
-      }  // for ( TableEntry entry
-      // The value from the database isn't in the domain, add it to the list as disabled.
-      if ( !inListTextColor )
-      { 
-%>
-         <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
-<%
-      }  
-   }  // if view != null
+         ComboCount++;
+         csrRC =  vTextColor.cursor( "Color" ).setNextContinue( );
+      }
+
+      vTextColor.drop( );
+
+   }
 %>
 </select>
+<input name="hTextColor" id="hTextColor" type="hidden" value="<%=strComboSelectedValue%>" >
 
-<input name="hTextColor" id="hTextColor" type="hidden" value="<%=strComboCurrentValue%>" >
 </td>
 <td>&nbsp</td>
 </tr>
@@ -1648,245 +1613,6 @@ else
 <span  id="TX(1.16isaboutnormal)" name="TX(1.16isaboutnormal)" style="width:162px;height:26px;">  (1.16 is about normal)</span>
 
 </td>
-</tr>
-<tr>
-<td valign="top" style="width:158px;">
-<% /* TXBorderStyle::Text */ %>
-
-<span  id="TXBorderStyle:" name="TXBorderStyle:" style="width:146px;height:30px;">Border Style:</span>
-
-</td>
-<td valign="top" style="width:98px;">
-<% /* BorderStyle:ComboBox */ %>
-<% strErrorMapValue = "";  %>
-
-<select  name="BorderStyle" id="BorderStyle" size="1" style="width:98px;" onchange="BorderStyleOnChange( )">
-
-<%
-   boolean inListBorderStyle = false;
-
-   mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
-   if ( VmlOperation.isValid( mSPLDefBlock ) )
-   {
-      List<TableEntry> list = JspWebUtils.getTableDomainValues( mSPLDefBlock , "LLD_SpecialSectionAttrBlock", "BorderStyle", "" );
-
-      nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strComboCurrentValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "BorderStyle" ).getString( "" );
-         if ( strComboCurrentValue == null )
-            strComboCurrentValue = "";
-      }
-      else
-      {
-         strComboCurrentValue = "";
-      }
-
-      // Code for NOT required attribute, which makes sure a blank entry exists.
-      if ( strComboCurrentValue == "" )
-      {
-         inListBorderStyle = true;
-%>
-         <option selected="selected" value=""></option>
-<%
-      }
-      else
-      {
-%>
-         <option value=""></option>
-<%
-      }
-      for ( TableEntry entry : list )
-      {
-         String internalValue = entry.getInternalValue( );
-         String externalValue = entry.getExternalValue( );
-         // Perhaps getInternalValue and getExternalValue should return an empty string, 
-         // but currently it returns null.  Set to empty string. 
-         if ( externalValue == null )
-         {
-            internalValue = "";
-            externalValue = "";
-         }
-
-         if ( !StringUtils.isBlank( externalValue ) )
-         {
-            if ( StringUtils.equals( strComboCurrentValue, externalValue ) )
-            {
-               inListBorderStyle = true;
-%>
-               <option selected="selected" value="<%=externalValue%>"><%=externalValue%></option>
-<%
-            }
-            else
-            {
-%>
-               <option value="<%=externalValue%>"><%=externalValue%></option>
-<%
-            }
-         }
-      }  // for ( TableEntry entry
-      // The value from the database isn't in the domain, add it to the list as disabled.
-      if ( !inListBorderStyle )
-      { 
-%>
-         <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
-<%
-      }  
-   }  // if view != null
-%>
-</select>
-
-<input name="hBorderStyle" id="hBorderStyle" type="hidden" value="<%=strComboCurrentValue%>" >
-</td>
-<td>&nbsp</td>
-</tr>
-<tr>
-<td valign="top" style="width:158px;">
-<% /* TXBorderWidth::Text */ %>
-
-<span  id="TXBorderWidth:" name="TXBorderWidth:" style="width:146px;height:30px;">Border Width:</span>
-
-</td>
-<td valign="top" style="width:184px;">
-<% /* BorderWidth:EditBox */ %>
-<%
-   strErrorMapValue = VmlOperation.CheckError( "BorderWidth", strError );
-   if ( !StringUtils.isBlank( strErrorMapValue ) )
-   {
-      if ( StringUtils.equals( strErrorFlag, "Y" ) )
-         strErrorColor = "color:red;";
-   }
-   else
-   {
-      strErrorColor = "";
-      mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
-      if ( VmlOperation.isValid( mSPLDefBlock ) == false )
-         task.log( ).debug( "Invalid View: " + "BorderWidth" );
-      else
-      {
-         nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            try
-            {
-            strErrorMapValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "BorderWidth" ).getString( "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on BorderWidth: " + e.getMessage());
-               task.log().error( "*** Error on ctrl BorderWidth", e );
-            }
-            if ( strErrorMapValue == null )
-               strErrorMapValue = "";
-
-            task.log( ).debug( "LLD_SpecialSectionAttrBlock.BorderWidth: " + strErrorMapValue );
-         }
-         else
-            task.log( ).debug( "Entity does not exist for BorderWidth: " + "mSPLDefBlock.LLD_SpecialSectionAttrBlock" );
-      }
-   }
-%>
-
-<input name="BorderWidth" id="BorderWidth" style="width:98px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
-
-</td>
-<td valign="top" style="width:128px;">
-<% /* TX(Ex.1.0):Text */ %>
-
-<span  id="TX(Ex.1.0)" name="TX(Ex.1.0)" style="width:128px;height:26px;">  (Ex. 1.0)</span>
-
-</td>
-</tr>
-<tr>
-<td valign="top" style="width:158px;">
-<% /* TXBorderColor::Text */ %>
-
-<span  id="TXBorderColor:" name="TXBorderColor:" style="width:146px;height:30px;">Border Color:</span>
-
-</td>
-<td valign="top" style="width:98px;">
-<% /* BorderColor:ComboBox */ %>
-<% strErrorMapValue = "";  %>
-
-<select  name="BorderColor" id="BorderColor" size="1" style="width:98px;" onchange="BorderColorOnChange( )">
-
-<%
-   boolean inListBorderColor = false;
-
-   mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
-   if ( VmlOperation.isValid( mSPLDefBlock ) )
-   {
-      List<TableEntry> list = JspWebUtils.getTableDomainValues( mSPLDefBlock , "LLD_SpecialSectionAttrBlock", "BorderColor", "" );
-
-      nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strComboCurrentValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "BorderColor" ).getString( "" );
-         if ( strComboCurrentValue == null )
-            strComboCurrentValue = "";
-      }
-      else
-      {
-         strComboCurrentValue = "";
-      }
-
-      // Code for NOT required attribute, which makes sure a blank entry exists.
-      if ( strComboCurrentValue == "" )
-      {
-         inListBorderColor = true;
-%>
-         <option selected="selected" value=""></option>
-<%
-      }
-      else
-      {
-%>
-         <option value=""></option>
-<%
-      }
-      for ( TableEntry entry : list )
-      {
-         String internalValue = entry.getInternalValue( );
-         String externalValue = entry.getExternalValue( );
-         // Perhaps getInternalValue and getExternalValue should return an empty string, 
-         // but currently it returns null.  Set to empty string. 
-         if ( externalValue == null )
-         {
-            internalValue = "";
-            externalValue = "";
-         }
-
-         if ( !StringUtils.isBlank( externalValue ) )
-         {
-            if ( StringUtils.equals( strComboCurrentValue, externalValue ) )
-            {
-               inListBorderColor = true;
-%>
-               <option selected="selected" value="<%=externalValue%>"><%=externalValue%></option>
-<%
-            }
-            else
-            {
-%>
-               <option value="<%=externalValue%>"><%=externalValue%></option>
-<%
-            }
-         }
-      }  // for ( TableEntry entry
-      // The value from the database isn't in the domain, add it to the list as disabled.
-      if ( !inListBorderColor )
-      { 
-%>
-         <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
-<%
-      }  
-   }  // if view != null
-%>
-</select>
-
-<input name="hBorderColor" id="hBorderColor" type="hidden" value="<%=strComboCurrentValue%>" >
-</td>
-<td>&nbsp</td>
 </tr>
 <tr>
 <td valign="top" style="width:158px;">
@@ -1989,7 +1715,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:14px;width:100px;"></div>
+<div style="height:16px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <span style="height:24px;">&nbsp&nbsp</span>

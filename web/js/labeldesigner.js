@@ -153,6 +153,7 @@ $(function() {
    }
 
    function saveLabel( commit, callback ) {
+      mapUiDataToElementData( g_$current_block );
       if ( g_updatedLLD || commit === "Commit" ) {
          ConvertWysiwygLabelDesignToZeidonJson( "saveLabel" + commit , "mSPLDef", callback, null );
          g_updatedLLD = false;
@@ -195,6 +196,7 @@ $(function() {
    });
 
    $("#UpdateBlock").click( function() {
+      mapUiDataToElementData( g_$current_block );
       if ( g_$current_block ) {
          if ( g_$current_block.hasClass( "panel" ) === false ) {
             if ( g_updatedLLD ) {
@@ -783,19 +785,21 @@ $(function() {
             }
          });
          if ( element_id === "block" ) {
-            console.log( "Processing block type: " + sectionType );
+         // console.log( "Processing block type: " + sectionType );
             var options = "<option value=\"^title\">Title</option><option value=\"^text\">Text</option>";  // default
             // The .prop() method should be used to set disabled and checked instead of the .attr() method.
             // $('#id').prop('disabled', false);
             // $('#id').prop('disabled', 'disabled');
             if ( sectionType === "Graphic" ) {
                $("#zImageNameToggle").show();
-               $("#zCheckContinuationBlockToggle").hide()
+               $("#zCheckContinuationBlockToggle").hide();
+               $("#zCapitalizeTitleTextFlagToggle").hide();
                $("#zClaimListTypeToggle").hide();
                $("#zMarketingSectionToggle").hide();
             } else if ( sectionType === "Marketing" || sectionType === "DirectionsForUse" || sectionType === "FirstAid" ||
                         sectionType === "StorageDisposal" || sectionType === "Hazards" || sectionType === "Precautionary" ) {
                $("#zCheckContinuationBlockToggle").show();
+               $("#zCapitalizeTitleTextFlagToggle").show();
                $("#zImageNameToggle").hide();
                if ( sectionType === "Marketing" ) {
                   $("#zClaimListTypeToggle").show();
@@ -814,6 +818,7 @@ $(function() {
                }
             } else {
                $("#zCheckContinuationBlockToggle").hide();
+               $("#zCapitalizeTitleTextFlagToggle").hide();
                $("#zImageNameToggle").hide();
                $("#zClaimListTypeToggle").hide();
                $("#zMarketingSectionToggle").hide();
@@ -842,6 +847,7 @@ $(function() {
          } else {
             $("#zBlockFormatTypeToggle").hide();
             $("#zCheckContinuationBlockToggle").hide();
+            $("#zCapitalizeTitleTextFlagToggle").hide();
             $("#zImageNameToggle").hide();
             $("#zClaimListTypeToggle").hide();
             $("#zMarketingSectionToggle").hide();
@@ -852,6 +858,7 @@ $(function() {
          });
          $("#zBlockFormatTypeToggle").hide();
          $("#zCheckContinuationBlockToggle").hide();
+         $("#zCapitalizeTitleTextFlagToggle").hide();
          $("#zImageNameToggle").hide();
          $("#zClaimListTypeToggle").hide();
          $("#zMarketingSectionToggle").hide();
@@ -1309,8 +1316,47 @@ $(function() {
          g_$current_block.css({ width : width });
       });
 
-   $("input.zeidon, select.zeidon input.zeidon-special, select.zeidon-special")
- 
+   function blurZeidon( el, value ) {
+      // console.log( "updated zeidon block attributes" );
+      // var jsonObj = null;
+      var $el = $(el);
+      var entityAttr = $el.data( "zmap" );
+      if ( entityAttr ) {
+         var n = entityAttr.indexOf( ".z_" );
+         var entity = entityAttr.substring( 0, n );
+         var key = entityAttr.substring( n + 1 );
+         if ( ! value ) {
+            value = $el.is( ":checkbox" ) ? el.checked ? "Y" : "N" : $el.val();
+         }
+         if ( entity === "block" ) {
+            if ( g_$current_block ) {
+               g_updatedLLD = true;
+               // console.log( "updated block attribute: " + key + "  value: " + value );
+               g_$current_block.data( key, value );
+            }
+            // jsonObj = dataToJSON( $current_block );
+         } else if ( entity === "page" ) {
+            g_updatedLLD = true;
+            // console.log( "updated page attribute: " + key + "  value: " + value );
+            $("#page").data( key, value );
+            // jsonObj = dataToJSON( $("#page") );
+         } else if ( entity === "label" ) {
+            g_updatedLLD = true;
+            // console.log( "updated label attribute: " + key + "  value: " + value );
+            $("#label").data( key, value );
+         }
+      }
+      // displayElementData( "zeidon blur (after)", $el );
+   }
+/*
+   $("div.colorPicker-picker")
+      .blur( function () {
+         $(this).siblings( "input.zeidon-special").each( function() {
+            blurZeidon( this, null );
+         });
+      });
+*/
+   $("input.zeidon, select.zeidon, input.zeidon-special, select.zeidon-special")
       .change( function(e) {
          e.stopPropagation();
          return false;
@@ -1318,40 +1364,7 @@ $(function() {
       // alert( "Handler for .change() called." );
       })
       .blur( function () {
-         // console.log( "updated zeidon block attributes" );
-         // var jsonObj = null;
-         var entityAttr = $(this).data( "zmap" );
-         if ( entityAttr ) {
-            var n = entityAttr.indexOf( ".z_" );
-            var entity = entityAttr.substring( 0, n );
-            var key = entityAttr.substring( n + 1 );
-            var value = $(this).is( ":checkbox" ) ? $(this)[0].checked ? "Y" : "N" : $(this).val();
-            if ( entity === "block" ) {
-               if ( g_$current_block ) {
-                  g_updatedLLD = true;
-                  // console.log( "updated block attribute: " + key + "  value: " + value );
-                  g_$current_block.data( key, value );
-               }
-               // jsonObj = dataToJSON( $current_block );
-            } else if ( entity === "page" ) {
-               g_updatedLLD = true;
-               // console.log( "updated page attribute: " + key + "  value: " + value );
-               $("#page").data( key, value );
-               // jsonObj = dataToJSON( $("#page") );
-            } else if ( entity === "label" ) {
-               g_updatedLLD = true;
-               // console.log( "updated label attribute: " + key + "  value: " + value );
-               $("#label").data( key, value );
-            }
-         /*
-            var jsonOut = "jsonOut: \n";
-            jQuery.each( jsonObj, function(i, val) {
-            jsonOut += "  ==> " + i + " - " + val + "\n";
-            });
-            alert( "jsonOut: " + jsonOut );
-         */
-         }
-      // displayElementData( "zeidon blur (after)", $(this) );
+         blurZeidon( this, null );
       });
 
 /*
@@ -1388,7 +1401,6 @@ jsoeUtils.js:1139    ~ z_^storage^disposal.^text.^margin^top : 0.01
 */
 var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
                         "z_^background^color", "z_^background^color^override",
-                        "z_^border^color", "z_^border^color^override", "z_^border^style", "z_^border^width",
                         "z_^font^family", "z_^font^size", "z_^font^weight",
                         "z_^margin", "z_^margin^top", "z_^margin^left", "z_^margin^bottom", "z_^margin^right", "z_^margin^override",
                         "z_^border", "z_^border^top", "z_^border^bottom", "z_^border^left", "z_^borderRight", "z_^border^override",
@@ -1428,7 +1440,7 @@ var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
             var section = zeidonAttributeToKey( sectionType ) + "." + currentType + ".";
             $.each( g_BlockAttrList, function( index, attributeName ) {
                var specialBlockAttribute = section + attributeName;
-               console.log( "ToSpecial: " + attributeName + "  to: " + specialBlockAttribute + "  current: " + g_$current_block.data( attributeName ) );
+            // console.log( "ToSpecial: " + attributeName + "  to: " + specialBlockAttribute + "  current: " + g_$current_block.data( attributeName ) );
                g_$current_block.data( specialBlockAttribute, g_$current_block.data( attributeName ) ); 
                g_$current_block.data( attributeName, "" );
             });
@@ -1475,7 +1487,6 @@ var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
                         }
                      }
                      if ( key === "z_^text^color" ) {
-                     // console.log( "Processing color2" );
                         setColorPickerByName( $(this), value );
                      } else {
                         this.type === "checkbox" ? (value === "Y" ? this.checked = true : this.checked = false) : $(this).val( value );
@@ -3485,7 +3496,19 @@ public class FileServer {
       // $('#colorText').colorPicker( { colors: ["1111ff", "333333", "ff1111", "eeeeee", "feeeee"], names: ["Blue", "Black", "Red", "Gray", "Pink"], showHexField: false,
       //                               onColorChange : function(id, newValue) { console.log("ID: '" + id + "' has been changed to " + newValue); } } );
          $el.colorPicker( { colors: colors, names: names, showHexField: false,
-                          onColorChange : function(id, newValue) { console.log("ID: '" + id + "' has been changed to " + newValue); } } );
+                          onColorChange : function(id, newValue) {
+                                             var lth = g_jsonColors.length;
+                                             var idx = lth - 1;
+                                             for ( var k = 0; k < lth; k++ ) {
+                                                if ( newValue === "#" + g_jsonColors[k].RGB ) {
+                                                   idx = k;
+                                                   break;
+                                                }
+                                             }
+                                          // console.log( "ID: '" + id + "' has been changed to: " + newValue + "  color: " + g_jsonColors[idx].Name );
+                                             blurZeidon( $id(id), g_jsonColors[idx].Name );
+                                          }
+                          } );
       }
       if ( idx >= g_jsonColors.length ) {
          idx = g_jsonColors.length - 1;
@@ -3523,6 +3546,7 @@ public class FileServer {
       initColorPicker( '#zTextColor', colors, names, lth );
       initColorPicker( '#zBackgroundColor', colors, names, lth );
       initColorPicker( '#zBorderColor', colors, names, lth );
+      initColorPicker( '#zPageColor', colors, names, lth );
    }
 
    function setMarketing( jsonMarketing )

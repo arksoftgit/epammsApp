@@ -1082,17 +1082,5 @@ GOTO_SelectMarketingUsageEntries( View     ViewToWindow )
 } 
 
 
-//:DIALOG OPERATION
-//:IfItIsAClaim( VIEW ViewToWindow )
-
-public int 
-IfItIsAClaim( View     ViewToWindow )
-{
-
-   return( 0 );
-// END
-} 
-
-
 
 }

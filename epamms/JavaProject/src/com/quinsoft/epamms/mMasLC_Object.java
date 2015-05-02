@@ -2243,6 +2243,7 @@ omMasLC_BuildCompositeEntries( View     mMasLC )
    int      RESULT = 0;
    String   szTempString_0 = null;
    String   szTempString_1 = null;
+   String   szTempString_2 = null;
    int      lTempInteger_0 = 0;
    int      lTempInteger_1 = 0;
 
@@ -2262,6 +2263,17 @@ omMasLC_BuildCompositeEntries( View     mMasLC )
       SetAttributeFromString( mMasLC, "CompositeComponentList", "DisplayType", "Marketing" );
       //:mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_MarketingSection.ID 
       SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "OriginalTypeID", mMasLC, "M_MarketingSection", "ID" );
+      //:mMasLC.CompositeComponentList.Name              = mMasLC.M_MarketingSection.Name 
+      SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "Name", mMasLC, "M_MarketingSection", "Name" );
+      //:TraceLineS( "BuildComposite Name: ", mMasLC.M_MarketingSection.Name )
+      {StringBuilder sb_szTempString_0;
+      if ( szTempString_0 == null )
+         sb_szTempString_0 = new StringBuilder( 32 );
+      else
+         sb_szTempString_0 = new StringBuilder( szTempString_0 );
+             GetStringFromAttribute( sb_szTempString_0, mMasLC, "M_MarketingSection", "Name" );
+      szTempString_0 = sb_szTempString_0.toString( );}
+      TraceLineS( "BuildComposite Name: ", szTempString_0 );
       //:IF mMasLC.M_MarketingSection.Title != ""
       if ( CompareAttributeToString( mMasLC, "M_MarketingSection", "Title", "" ) != 0 )
       { 
@@ -2276,37 +2288,37 @@ omMasLC_BuildCompositeEntries( View     mMasLC )
          { 
             //:mMasLC.CompositeComponentList.DisplayValue = mMasLC.M_MarketingSection.Name + " - " +
             //:                                             mMasLC.M_MarketingSection.Title 
-            {StringBuilder sb_szTempString_0;
-            if ( szTempString_0 == null )
-               sb_szTempString_0 = new StringBuilder( 32 );
-            else
-               sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                         GetStringFromAttribute( sb_szTempString_0, mMasLC, "M_MarketingSection", "Name" );
-            szTempString_0 = sb_szTempString_0.toString( );}
-             {StringBuilder sb_szTempString_0;
-            if ( szTempString_0 == null )
-               sb_szTempString_0 = new StringBuilder( 32 );
-            else
-               sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                        ZeidonStringConcat( sb_szTempString_0, 1, 0, " - ", 1, 0, 32001 );
-            szTempString_0 = sb_szTempString_0.toString( );}
-            {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
-            StringBuilder sb_szTempString_1;
+            {StringBuilder sb_szTempString_1;
             if ( szTempString_1 == null )
                sb_szTempString_1 = new StringBuilder( 32 );
             else
                sb_szTempString_1 = new StringBuilder( szTempString_1 );
-                         GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_0, 'S', 255, mMasLC, "M_MarketingSection", "Title", "", 0 );
-            lTempInteger_0 = mi_lTempInteger_0.intValue( );
+                         GetStringFromAttribute( sb_szTempString_1, mMasLC, "M_MarketingSection", "Name" );
             szTempString_1 = sb_szTempString_1.toString( );}
-             {StringBuilder sb_szTempString_0;
-            if ( szTempString_0 == null )
-               sb_szTempString_0 = new StringBuilder( 32 );
+             {StringBuilder sb_szTempString_1;
+            if ( szTempString_1 == null )
+               sb_szTempString_1 = new StringBuilder( 32 );
             else
-               sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                        ZeidonStringConcat( sb_szTempString_0, 1, 0, szTempString_1, 1, 0, 32001 );
-            szTempString_0 = sb_szTempString_0.toString( );}
-            SetAttributeFromString( mMasLC, "CompositeComponentList", "DisplayValue", szTempString_0 );
+               sb_szTempString_1 = new StringBuilder( szTempString_1 );
+                        ZeidonStringConcat( sb_szTempString_1, 1, 0, " - ", 1, 0, 32001 );
+            szTempString_1 = sb_szTempString_1.toString( );}
+            {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+            StringBuilder sb_szTempString_2;
+            if ( szTempString_2 == null )
+               sb_szTempString_2 = new StringBuilder( 32 );
+            else
+               sb_szTempString_2 = new StringBuilder( szTempString_2 );
+                         GetVariableFromAttribute( sb_szTempString_2, mi_lTempInteger_0, 'S', 255, mMasLC, "M_MarketingSection", "Title", "", 0 );
+            lTempInteger_0 = mi_lTempInteger_0.intValue( );
+            szTempString_2 = sb_szTempString_2.toString( );}
+             {StringBuilder sb_szTempString_1;
+            if ( szTempString_1 == null )
+               sb_szTempString_1 = new StringBuilder( 32 );
+            else
+               sb_szTempString_1 = new StringBuilder( szTempString_1 );
+                        ZeidonStringConcat( sb_szTempString_1, 1, 0, szTempString_2, 1, 0, 32001 );
+            szTempString_1 = sb_szTempString_1.toString( );}
+            SetAttributeFromString( mMasLC, "CompositeComponentList", "DisplayValue", szTempString_1 );
          } 
 
          //:END

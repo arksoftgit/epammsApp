@@ -910,6 +910,8 @@ BuildCompositeEntries( VIEW mMasLC BASED ON LOD mMasLC )
       mMasLC.CompositeComponentList.SelectLevel       = 1
       mMasLC.CompositeComponentList.DisplayType       = "Marketing"
       mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_MarketingSection.ID 
+      mMasLC.CompositeComponentList.Name              = mMasLC.M_MarketingSection.Name 
+      TraceLineS( "BuildComposite Name: ", mMasLC.M_MarketingSection.Name )
       IF mMasLC.M_MarketingSection.Title != ""
          IF mMasLC.M_MarketingSection.Name = ""
             mMasLC.CompositeComponentList.DisplayValue = mMasLC.M_MarketingSection.Title

@@ -2157,8 +2157,9 @@ PostbuildBlockDefinitionUpdate( VIEW ViewToWindow )
    VIEW mSPLDefPanel REGISTERED AS mSPLDefPanel
    VIEW mSPLDefBlock REGISTERED AS mSPLDefBlock
    STRING ( 2 )   szSpace
-   STRING ( 64 )  szName
-   STRING ( 64 )  szType
+   STRING ( 256 ) szSearch
+   STRING ( 256 ) szName
+   STRING ( 256 ) szType
    STRING ( 256 ) szGraphic
    STRING ( 512 ) szMsg
 
@@ -2186,10 +2187,12 @@ PostbuildBlockDefinitionUpdate( VIEW ViewToWindow )
    END
    
    wWebXfer.Root.CurrentSectionTitle = szMsg
+   szSearch = mSPLDefBlock.LLD_Block.Name
+   TraceLineS( "PosbuildBlock Name: ", szSearch )
    
    // mSPLDefBlock should have been set up before transferring to this page.
-   TraceLineS( "PostbuildBlockDefinitionUpdate Display ", "LLD_Block" )
-   DisplayEntityInstance( mSPLDefBlock, "LLD_Block" )
+// TraceLineS( "PostbuildBlockDefinitionUpdate Display ", "LLD_Block" )
+// DisplayEntityInstance( mSPLDefBlock, "LLD_Block" )
 // SetUpFormattingSelect( mSPLDefPanel, mSPLDefBlock.LLD_Block.LLD_SectionType ) 
    SetUpKeywordEntries( mSPLDefBlock, mSPLDefBlock.LLD_Block.LLD_SectionType )
    TraceLineS( "PostbuildBlockDefinitionUpdate Display2 ", "LLD_Block" )
@@ -2201,16 +2204,21 @@ PostbuildBlockDefinitionUpdate( VIEW ViewToWindow )
    
    IF szName != ""
       SET CURSOR FIRST mSPLDef.CompositeComponentList WHERE mSPLDef.CompositeComponentList.DisplayType = szType AND
-                                                         mSPLDef.CompositeComponentList.Value = szName
+                                                            mSPLDef.CompositeComponentList.Name = szSearch
       IF RESULT < zCURSOR_SET
          szMsg = "Unable to locate " + szName + " within " + szType
          MessageSend( ViewToWindow, "", "Block Update",
                       szMsg,
                       zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         FOR EACH mSPLDef.CompositeComponentList 
+            szMsg = "Component Type: " + mSPLDef.CompositeComponentList.DisplayType
+            szMsg = szMsg + "   Name: " + mSPLDef.CompositeComponentList.Value
+            TraceLineS( szMsg, "" )
+         END
+         DisplayObjectInstance( mSPLDef, "", "" )
       ELSE
          szMsg = "Looking for: " + szName + "  within: " + szType
          TraceLineS( szMsg, "" )
-   
          SET CURSOR NEXT mSPLDef.CompositeComponentList
          LOOP WHILE RESULT = zCURSOR_SET AND mSPLDef.CompositeComponentList.SelectLevel > 1
             IF mSPLDef.CompositeComponentList.SelectLevel = 2

@@ -1173,10 +1173,10 @@ try
             strWeight = "&nbsp";
 
          strColor = "";
-         nRC = vSpecialSectionAttributes.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
+         nRC = vSpecialSectionAttributes.cursor( "SpecialAttributeTextColor" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strColor = vSpecialSectionAttributes.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "TextColor" ).getString( "" );
+            strColor = vSpecialSectionAttributes.cursor( "SpecialAttributeTextColor" ).getAttribute( "dColorName" ).getString( "" );
 
             if ( strColor == null )
                strColor = "";

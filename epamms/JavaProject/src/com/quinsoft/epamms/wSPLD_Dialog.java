@@ -4934,9 +4934,11 @@ PostbuildBlockDefinitionUpdate( View     ViewToWindow )
    zVIEW    mSPLDefBlock = new zVIEW( );
    //:STRING ( 2 )   szSpace
    String   szSpace = null;
-   //:STRING ( 64 )  szName
+   //:STRING ( 256 ) szSearch
+   String   szSearch = null;
+   //:STRING ( 256 ) szName
    String   szName = null;
-   //:STRING ( 64 )  szType
+   //:STRING ( 256 ) szType
    String   szType = null;
    //:STRING ( 256 ) szGraphic
    String   szGraphic = null;
@@ -4945,7 +4947,12 @@ PostbuildBlockDefinitionUpdate( View     ViewToWindow )
    int      lTempInteger_0 = 0;
    int      lTempInteger_1 = 0;
    int      lTempInteger_2 = 0;
+   int      lTempInteger_3 = 0;
    String   szTempString_0 = null;
+   String   szTempString_1 = null;
+   int      lTempInteger_4 = 0;
+   String   szTempString_2 = null;
+   int      lTempInteger_5 = 0;
 
    RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
    RESULT = GetViewByName( mSPLDef, "mSPLDef", ViewToWindow, zLEVEL_TASK );
@@ -4959,7 +4966,7 @@ PostbuildBlockDefinitionUpdate( View     ViewToWindow )
       sb_szName = new StringBuilder( 32 );
    else
       sb_szName = new StringBuilder( szName );
-       GetVariableFromAttribute( sb_szName, mi_lTempInteger_0, 'S', 65, mSPLDefBlock, "LLD_Block", "Name", "", 0 );
+       GetVariableFromAttribute( sb_szName, mi_lTempInteger_0, 'S', 257, mSPLDefBlock, "LLD_Block", "Name", "", 0 );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );
    szName = sb_szName.toString( );}
    //:szType = mSPLDefBlock.LLD_Block.LLD_SectionType
@@ -4969,7 +4976,7 @@ PostbuildBlockDefinitionUpdate( View     ViewToWindow )
       sb_szType = new StringBuilder( 32 );
    else
       sb_szType = new StringBuilder( szType );
-       GetVariableFromAttribute( sb_szType, mi_lTempInteger_1, 'S', 65, mSPLDefBlock, "LLD_Block", "LLD_SectionType", "", 0 );
+       GetVariableFromAttribute( sb_szType, mi_lTempInteger_1, 'S', 257, mSPLDefBlock, "LLD_Block", "LLD_SectionType", "", 0 );
    lTempInteger_1 = mi_lTempInteger_1.intValue( );
    szType = sb_szType.toString( );}
    //:szGraphic = mSPLDefBlock.LLD_Block.ImageName 
@@ -4984,7 +4991,7 @@ PostbuildBlockDefinitionUpdate( View     ViewToWindow )
    szGraphic = sb_szGraphic.toString( );}
 
    //:IF szType != ""
-   if ( ZeidonStringCompare( szType, 1, 0, "", 1, 0, 65 ) != 0 )
+   if ( ZeidonStringCompare( szType, 1, 0, "", 1, 0, 257 ) != 0 )
    { 
       //:szMsg = szType
        {StringBuilder sb_szMsg;
@@ -5048,7 +5055,7 @@ PostbuildBlockDefinitionUpdate( View     ViewToWindow )
 
    //:END
    //:IF szName != ""
-   if ( ZeidonStringCompare( szName, 1, 0, "", 1, 0, 65 ) != 0 )
+   if ( ZeidonStringCompare( szName, 1, 0, "", 1, 0, 257 ) != 0 )
    { 
       //:szMsg = szMsg + szSpace + szName
        {StringBuilder sb_szMsg;
@@ -5100,12 +5107,22 @@ PostbuildBlockDefinitionUpdate( View     ViewToWindow )
 
    //:wWebXfer.Root.CurrentSectionTitle = szMsg
    SetAttributeFromString( wWebXfer, "Root", "CurrentSectionTitle", szMsg );
+   //:szSearch = mSPLDefBlock.LLD_Block.Name
+   {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
+   StringBuilder sb_szSearch;
+   if ( szSearch == null )
+      sb_szSearch = new StringBuilder( 32 );
+   else
+      sb_szSearch = new StringBuilder( szSearch );
+       GetVariableFromAttribute( sb_szSearch, mi_lTempInteger_3, 'S', 257, mSPLDefBlock, "LLD_Block", "Name", "", 0 );
+   lTempInteger_3 = mi_lTempInteger_3.intValue( );
+   szSearch = sb_szSearch.toString( );}
+   //:TraceLineS( "PosbuildBlock Name: ", szSearch )
+   TraceLineS( "PosbuildBlock Name: ", szSearch );
 
    //:// mSPLDefBlock should have been set up before transferring to this page.
-   //:TraceLineS( "PostbuildBlockDefinitionUpdate Display ", "LLD_Block" )
-   TraceLineS( "PostbuildBlockDefinitionUpdate Display ", "LLD_Block" );
-   //:DisplayEntityInstance( mSPLDefBlock, "LLD_Block" )
-   DisplayEntityInstance( mSPLDefBlock, "LLD_Block" );
+   //:// TraceLineS( "PostbuildBlockDefinitionUpdate Display ", "LLD_Block" )
+   //:// DisplayEntityInstance( mSPLDefBlock, "LLD_Block" )
    //:// SetUpFormattingSelect( mSPLDefPanel, mSPLDefBlock.LLD_Block.LLD_SectionType ) 
    //:SetUpKeywordEntries( mSPLDefBlock, mSPLDefBlock.LLD_Block.LLD_SectionType )
    {StringBuilder sb_szTempString_0;
@@ -5137,14 +5154,14 @@ PostbuildBlockDefinitionUpdate( View     ViewToWindow )
    //:END
 
    //:IF szName != ""
-   if ( ZeidonStringCompare( szName, 1, 0, "", 1, 0, 65 ) != 0 )
+   if ( ZeidonStringCompare( szName, 1, 0, "", 1, 0, 257 ) != 0 )
    { 
       //:SET CURSOR FIRST mSPLDef.CompositeComponentList WHERE mSPLDef.CompositeComponentList.DisplayType = szType AND
-      //:                                                   mSPLDef.CompositeComponentList.Value = szName
+      //:                                                      mSPLDef.CompositeComponentList.Name = szSearch
       RESULT = SetCursorFirstEntity( mSPLDef, "CompositeComponentList", "" );
       if ( RESULT > zCURSOR_UNCHANGED )
       { 
-         while ( RESULT > zCURSOR_UNCHANGED && ( CompareAttributeToString( mSPLDef, "CompositeComponentList", "DisplayType", szType ) != 0 || CompareAttributeToString( mSPLDef, "CompositeComponentList", "Value", szName ) != 0 ) )
+         while ( RESULT > zCURSOR_UNCHANGED && ( CompareAttributeToString( mSPLDef, "CompositeComponentList", "DisplayType", szType ) != 0 || CompareAttributeToString( mSPLDef, "CompositeComponentList", "Name", szSearch ) != 0 ) )
          { 
             RESULT = SetCursorNextEntity( mSPLDef, "CompositeComponentList", "" );
          } 
@@ -5187,6 +5204,66 @@ PostbuildBlockDefinitionUpdate( View     ViewToWindow )
          //:             szMsg,
          //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
          MessageSend( ViewToWindow, "", "Block Update", szMsg, zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+         //:FOR EACH mSPLDef.CompositeComponentList 
+         RESULT = SetCursorFirstEntity( mSPLDef, "CompositeComponentList", "" );
+         while ( RESULT > zCURSOR_UNCHANGED )
+         { 
+            //:szMsg = "Component Type: " + mSPLDef.CompositeComponentList.DisplayType
+            {MutableInt mi_lTempInteger_4 = new MutableInt( lTempInteger_4 );
+            StringBuilder sb_szTempString_1;
+            if ( szTempString_1 == null )
+               sb_szTempString_1 = new StringBuilder( 32 );
+            else
+               sb_szTempString_1 = new StringBuilder( szTempString_1 );
+                         GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_4, 'S', 255, mSPLDef, "CompositeComponentList", "DisplayType", "", 0 );
+            lTempInteger_4 = mi_lTempInteger_4.intValue( );
+            szTempString_1 = sb_szTempString_1.toString( );}
+             {StringBuilder sb_szMsg;
+            if ( szMsg == null )
+               sb_szMsg = new StringBuilder( 32 );
+            else
+               sb_szMsg = new StringBuilder( szMsg );
+                        ZeidonStringCopy( sb_szMsg, 1, 0, "Component Type: ", 1, 0, 513 );
+            szMsg = sb_szMsg.toString( );}
+             {StringBuilder sb_szMsg;
+            if ( szMsg == null )
+               sb_szMsg = new StringBuilder( 32 );
+            else
+               sb_szMsg = new StringBuilder( szMsg );
+                        ZeidonStringConcat( sb_szMsg, 1, 0, szTempString_1, 1, 0, 513 );
+            szMsg = sb_szMsg.toString( );}
+            //:szMsg = szMsg + "   Name: " + mSPLDef.CompositeComponentList.Value
+             {StringBuilder sb_szMsg;
+            if ( szMsg == null )
+               sb_szMsg = new StringBuilder( 32 );
+            else
+               sb_szMsg = new StringBuilder( szMsg );
+                        ZeidonStringConcat( sb_szMsg, 1, 0, "   Name: ", 1, 0, 513 );
+            szMsg = sb_szMsg.toString( );}
+            {MutableInt mi_lTempInteger_5 = new MutableInt( lTempInteger_5 );
+            StringBuilder sb_szTempString_2;
+            if ( szTempString_2 == null )
+               sb_szTempString_2 = new StringBuilder( 32 );
+            else
+               sb_szTempString_2 = new StringBuilder( szTempString_2 );
+                         GetVariableFromAttribute( sb_szTempString_2, mi_lTempInteger_5, 'S', 32001, mSPLDef, "CompositeComponentList", "Value", "", 0 );
+            lTempInteger_5 = mi_lTempInteger_5.intValue( );
+            szTempString_2 = sb_szTempString_2.toString( );}
+             {StringBuilder sb_szMsg;
+            if ( szMsg == null )
+               sb_szMsg = new StringBuilder( 32 );
+            else
+               sb_szMsg = new StringBuilder( szMsg );
+                        ZeidonStringConcat( sb_szMsg, 1, 0, szTempString_2, 1, 0, 513 );
+            szMsg = sb_szMsg.toString( );}
+            //:TraceLineS( szMsg, "" )
+            TraceLineS( szMsg, "" );
+            RESULT = SetCursorNextEntity( mSPLDef, "CompositeComponentList", "" );
+         } 
+
+         //:END
+         //:DisplayObjectInstance( mSPLDef, "", "" )
+         DisplayObjectInstance( mSPLDef, "", "" );
          //:ELSE
       } 
       else
@@ -5222,7 +5299,6 @@ PostbuildBlockDefinitionUpdate( View     ViewToWindow )
          szMsg = sb_szMsg.toString( );}
          //:TraceLineS( szMsg, "" )
          TraceLineS( szMsg, "" );
-
          //:SET CURSOR NEXT mSPLDef.CompositeComponentList
          RESULT = SetCursorNextEntity( mSPLDef, "CompositeComponentList", "" );
          //:LOOP WHILE RESULT = zCURSOR_SET AND mSPLDef.CompositeComponentList.SelectLevel > 1

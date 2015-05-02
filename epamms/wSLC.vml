@@ -581,16 +581,3 @@ GOTO_SelectRemoveMktgStatements( VIEW ViewToWindow )
    BuildCompositeEntries( mSubLC )
 
 END
-
-
-/*************************************************************************************************
-**    
-**    OPERATION: IfItIsAClaim
-**    
-*************************************************************************************************/
-DIALOG OPERATION
-IfItIsAClaim( VIEW ViewToWindow )
-
-
-
-END

@@ -276,7 +276,7 @@
             if ( reverseColor ) {
                var idx = $swatch.data( "idx" );
                var colorName = $swatch.data( "colorname" );
-               console.log( 'Setting reverse color:' + reverseColor + "  idx:" + idx + "   color: " + colorName );
+            // console.log( 'Setting reverse color:' + reverseColor + "  idx:" + idx + "   color: " + colorName );
                selectorOwner.css( "color", reverseColor );
                selectorOwner.text( colorName );
             }

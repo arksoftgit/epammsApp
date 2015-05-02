@@ -1629,9 +1629,7 @@ SaveAddNewUsage( View     ViewToWindow )
 //:   VIEW mMasLC REGISTERED AS mMasLC
 //:   VIEW mMasLC2 BASED ON LOD mMasLC
 //:   SHORT nContinue
-
 //:   CreateViewFromView( mMasLC2, mMasLC )
-
 //:   // Delete all selected Usage entries.
 //:   FOR EACH mMasLC.M_Usage
 //:      IF mMasLC.M_Usage.wSelected = "Y"
@@ -1739,8 +1737,8 @@ ConfirmDeleteUsageEntry( View     ViewToWindow )
             //:IF RESULT >= zCURSOR_SET
             if ( RESULT >= zCURSOR_SET )
             { 
-               //:DELETE ENTITY mMasLC.M_DrivingUsage
-               RESULT = DeleteEntity( mMasLC, "M_DrivingUsage", zPOS_NEXT );
+               //:EXCLUDE mMasLC.M_DrivingUsage 
+               RESULT = ExcludeEntity( mMasLC, "M_DrivingUsage", zREPOS_AFTER );
             } 
 
             RESULT = SetCursorNextEntity( mMasLC, "M_DirectionsForUseSection", "" );
