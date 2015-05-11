@@ -10506,13 +10506,13 @@ omSPLDef_BuildSPLD_FromSLC( View     NewSPLD,
    } 
 
    //:END
-   //:FOR EACH NewSPLD.SPLD_Usage 
-   RESULT = SetCursorFirstEntity( NewSPLD, "SPLD_Usage", "" );
+   //:FOR EACH NewSPLD.SPLD_UsageType 
+   RESULT = SetCursorFirstEntity( NewSPLD, "SPLD_UsageType", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
-      //:DELETE ENTITY NewSPLD.SPLD_Usage NONE 
-      RESULT = DeleteEntity( NewSPLD, "SPLD_Usage", zREPOS_NONE );
-      RESULT = SetCursorNextEntity( NewSPLD, "SPLD_Usage", "" );
+      //:DELETE ENTITY NewSPLD.SPLD_UsageType NONE 
+      RESULT = DeleteEntity( NewSPLD, "SPLD_UsageType", zREPOS_NONE );
+      RESULT = SetCursorNextEntity( NewSPLD, "SPLD_UsageType", "" );
    } 
 
    //:END
@@ -11365,7 +11365,7 @@ omSPLDef_BuildCompositeEntries( View     mSPLDef )
             SetAttributeFromAttribute( mSPLDef, "CompositeComponentList", "Value", mSPLDef, "SPLD_DirectionsUsage", "Name" );
             //:mSPLDef.CompositeComponentList.DisplayValue      = mSPLDef.SPLD_DirectionsUsage.Name 
             SetAttributeFromAttribute( mSPLDef, "CompositeComponentList", "DisplayValue", mSPLDef, "SPLD_DirectionsUsage", "Name" );
-            //:SET CURSOR FIRST mSPLDef.SPLD_Usage WHERE mSPLDef.SPLD_Usage.UsageType            = mSPLDef.SPLD_DirectionsUsage.UsageType 
+            //:SET CURSOR FIRST mSPLDef.SPLD_Usage WHERE mSPLDef.SPLD_Usage.UsageType        = mSPLDef.SPLD_DirectionsUsage.UsageType 
             //:                                  AND mSPLDef.SPLD_Usage.ClaimsClassification = mSPLDef.SPLD_DirectionsUsage.ClaimsClassification 
             //:                                  AND mSPLDef.SPLD_Usage.Name                 = mSPLDef.SPLD_DirectionsUsage.Name 
             RESULT = SetCursorFirstEntity( mSPLDef, "SPLD_Usage", "" );
@@ -13104,7 +13104,7 @@ omSPLDef_DuplicateSPLD_Block( View     NewSPLD,
    //:DuplicateSPLD_Block( VIEW NewSPLD    BASED ON LOD mSPLDef,
    //:                  VIEW SourceSPLD BASED ON LOD mSPLDef )
 
-   //:// This is a recursive routine to dupplicate an LLD_Block / LLD_SubBlock.
+   //:// This is a recursive routine to duplicate an LLD_Block / LLD_SubBlock.
    //:CREATE ENTITY NewSPLD.LLD_Block  
    RESULT = CreateEntity( NewSPLD, "LLD_Block", zPOS_AFTER );
    //:SetMatchingAttributesByName( NewSPLD, "LLD_Block", SourceSPLD, "LLD_Block", zSET_NULL ) 
@@ -17659,29 +17659,41 @@ omSPLDef_BuildUsageEntriesFrSLC( View     mSPLDef,
    //:// Build the Usage, Directions for Use and Marketing subobject structures from the creating SourceSLC.
 
    //:// Delete current entries.
-   //:FOR EACH mSPLDef.SPLD_Usage 
-   RESULT = SetCursorFirstEntity( mSPLDef, "SPLD_Usage", "" );
+   //:FOR EACH mSPLDef.SPLD_UsageType 
+   RESULT = SetCursorFirstEntity( mSPLDef, "SPLD_UsageType", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
-      //:DELETE ENTITY mSPLDef.SPLD_Usage NONE 
-      RESULT = DeleteEntity( mSPLDef, "SPLD_Usage", zREPOS_NONE );
-      RESULT = SetCursorNextEntity( mSPLDef, "SPLD_Usage", "" );
+      //:DELETE ENTITY mSPLDef.SPLD_UsageType NONE 
+      RESULT = DeleteEntity( mSPLDef, "SPLD_UsageType", zREPOS_NONE );
+      RESULT = SetCursorNextEntity( mSPLDef, "SPLD_UsageType", "" );
    } 
 
    //:END
 
    //:// Build Usage Entries (Surface, Application Type, Area of Use, Organism Claim)
-   //:FOR EACH SourceSLC.S_Usage WITHIN SourceSLC.SubregLabelContent 
-   RESULT = SetCursorFirstEntity( SourceSLC, "S_Usage", "SubregLabelContent" );
+   //:FOR EACH SourceSLC.S_UsageType WITHIN SourceSLC.SubregLabelContent 
+   RESULT = SetCursorFirstEntity( SourceSLC, "S_UsageType", "SubregLabelContent" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
-      //:CREATE ENTITY mSPLDef.SPLD_Usage
-      RESULT = CreateEntity( mSPLDef, "SPLD_Usage", zPOS_AFTER );
-      //:SetMatchingAttributesByName( mSPLDef, "SPLD_Usage", SourceSLC, "S_Usage", zSET_NULL )
-      SetMatchingAttributesByName( mSPLDef, "SPLD_Usage", SourceSLC, "S_Usage", zSET_NULL );
-      //:INCLUDE mSPLDef.S_Usage FROM SourceSLC.S_Usage 
-      RESULT = IncludeSubobjectFromSubobject( mSPLDef, "S_Usage", SourceSLC, "S_Usage", zPOS_AFTER );
-      RESULT = SetCursorNextEntity( SourceSLC, "S_Usage", "SubregLabelContent" );
+      //:CREATE ENTITY mSPLDef.SPLD_UsageType
+      RESULT = CreateEntity( mSPLDef, "SPLD_UsageType", zPOS_AFTER );
+      //:SetMatchingAttributesByName( mSPLDef, "SPLD_UsageType", SourceSLC, "S_UsageType", zSET_NULL )
+      SetMatchingAttributesByName( mSPLDef, "SPLD_UsageType", SourceSLC, "S_UsageType", zSET_NULL );
+      //:FOR EACH SourceSLC.S_Usage WITHIN SourceSLC.SubregLabelContent 
+      RESULT = SetCursorFirstEntity( SourceSLC, "S_Usage", "SubregLabelContent" );
+      while ( RESULT > zCURSOR_UNCHANGED )
+      { 
+         //:CREATE ENTITY mSPLDef.SPLD_Usage
+         RESULT = CreateEntity( mSPLDef, "SPLD_Usage", zPOS_AFTER );
+         //:SetMatchingAttributesByName( mSPLDef, "SPLD_Usage", SourceSLC, "S_Usage", zSET_NULL )
+         SetMatchingAttributesByName( mSPLDef, "SPLD_Usage", SourceSLC, "S_Usage", zSET_NULL );
+         //:INCLUDE mSPLDef.S_Usage FROM SourceSLC.S_Usage 
+         RESULT = IncludeSubobjectFromSubobject( mSPLDef, "S_Usage", SourceSLC, "S_Usage", zPOS_AFTER );
+         RESULT = SetCursorNextEntity( SourceSLC, "S_Usage", "SubregLabelContent" );
+      } 
+
+      RESULT = SetCursorNextEntity( SourceSLC, "S_UsageType", "SubregLabelContent" );
+      //:END
    } 
 
    //:END

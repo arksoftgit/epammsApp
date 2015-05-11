@@ -661,6 +661,11 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
          if ( entity.equals( entityDefName ) ||
               (entity.equals( "LLD_Block" ) && entityDefName.contains( "LLD_SubBlock" )) ||
               (entity.equals( "LLD_SubBlock" ) && entityDefName.contains( "LLD_Block" )) ) {
+            if ( entity.equals( "LLD_SubBlock" ) ) {
+               EntityCursor ec = vBlock.cursor( "LLD_SubBlock" );
+               ec.setToSubobject();
+               entity = "LLD_Block";
+            }
          // Set<String> keys = (Set<String>) jsonObject.keySet(); // these two lines work, but cause
          // for ( String key : keys ) {                           // a warning ... replaced by next two lines
             for ( Iterator iterator = jsonObject.keySet().iterator(); iterator.hasNext(); ) {
@@ -699,6 +704,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                                  ec.getAttribute( "LLD_SectionType" ).setValue( sectionType );
                               }
                               if ( attribute.equals( "TextColor" ) ) { // we need to include the color entity
+                                 logger.debug( "TextColor E.Attr: " + entity + "." + key + " : " + valueNew );
                                  ec.getAttribute( "TextColor" ).setValue( valueNew );
                                  ec = vBlock.cursor( "SpecialAttributeTextColor" );
                                  cr = ec.setFirst( "dColorName", valueNew );
@@ -713,6 +719,8 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                                        ec.includeSubobject( ecp );
                                     }
                                  }
+                              // ec = vBlock.cursor( entity );  // debug only
+                              // ec.logEntity( true );               // debug only
                               }
                         // } else {  no!!! we do not want to set ID
                         //   EntityInstance eib = ec.getEntityInstance();
@@ -1006,7 +1014,7 @@ end debug code */
          // jsonLabel = getPostData( request );
             JSONObject jsonPost = getPostData( request );
             String strJson = jsonPost.toJSONString();
-            logger.debug( "Save JSON: " + strJson );
+         // logger.debug( "Save JSON: " + strJson );
          // jsonLabel = request.getParameter( "jsonLabel" );
             try {
                vLLD.resetSubobjectTop();

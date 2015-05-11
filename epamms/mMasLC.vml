@@ -462,7 +462,6 @@ ObjectConstraints( VIEW mMasLC BASED ON LOD mMasLC,
       // Go to build the flat display of all components subobject.
       //BuildCompositeEntries( mMasLC )
    TraceLineS( "*** Object Constraints", "" )
-      
 
         /* end zOCE_ACTIVATE */
    OF   zOCE_ACTIVATE_EMPTY:
@@ -738,11 +737,11 @@ dCombinedContainerVol( VIEW mMasLC BASED ON LOD mMasLC,
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: dDisplayUsageName
-**    
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//    
+// OPERATION: dDisplayUsageName
+//    
+/////////////////////////////////////////////////////////////////////////////
 DERIVED ATTRIBUTE OPERATION
 dDisplayUsageName( VIEW mMasLC BASED ON LOD mMasLC,
                    STRING ( 32 ) InternalEntityStructure,
@@ -805,11 +804,11 @@ dDisplayUsageName( VIEW mMasLC BASED ON LOD mMasLC,
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: dDisplayPathogenName
-**    
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//    
+// OPERATION: dDisplayPathogenName
+//    
+/////////////////////////////////////////////////////////////////////////////
 DERIVED ATTRIBUTE OPERATION
 dDisplayPathogenName( VIEW mMasLC BASED ON LOD mMasLC,
                       STRING ( 32 ) InternalEntityStructure,
@@ -865,11 +864,11 @@ dDisplayPathogenName( VIEW mMasLC BASED ON LOD mMasLC,
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: BuildCompEntsWO_Usage
-**    
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//    
+// OPERATION: BuildCompEntsWO_Usage
+//    
+/////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
 BuildCompEntsWO_Usage( VIEW mMasLC BASED ON LOD mMasLC )
 
@@ -887,11 +886,11 @@ BuildCompEntsWO_Usage( VIEW mMasLC BASED ON LOD mMasLC )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: BuildCompositeEntries
-**    
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//    
+// OPERATION: BuildCompositeEntries
+//    
+/////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
 BuildCompositeEntries( VIEW mMasLC BASED ON LOD mMasLC )
 
@@ -1225,11 +1224,11 @@ BuildCompositeEntries( VIEW mMasLC BASED ON LOD mMasLC )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: BuildFullCompEntries
-**    
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//    
+// OPERATION: BuildFullCompEntries
+//    
+/////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
 BuildFullCompEntries( VIEW mMasLC BASED ON LOD mMasLC )
    
@@ -1399,11 +1398,11 @@ BuildFullCompEntries( VIEW mMasLC BASED ON LOD mMasLC )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: BuildUsageSelectEnts
-**    
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//    
+// OPERATION: BuildUsageSelectEnts
+//    
+/////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
 BuildUsageSelectEnts( VIEW mMasLC BASED ON LOD mMasLC )
 
@@ -1444,11 +1443,11 @@ BuildUsageSelectEnts( VIEW mMasLC BASED ON LOD mMasLC )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: BuildUsageWorkEnts
-**    
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//    
+// OPERATION: BuildUsageWorkEnts
+//    
+/////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
 BuildUsageWorkEnts( VIEW mMasLC BASED ON LOD mMasLC,
                     STRING ( 1 ) szDirUseOrMarketingType )
@@ -1558,11 +1557,11 @@ BuildUsageWorkEnts( VIEW mMasLC BASED ON LOD mMasLC,
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: SetMLC_SelectedFlags
-**    
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//    
+// OPERATION: SetMLC_SelectedFlags
+//    
+/////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
 SetMLC_SelectedFlags( VIEW mMasLC BASED ON LOD mMasLC,
                       VIEW mSubLC BASED ON LOD mSubLC )

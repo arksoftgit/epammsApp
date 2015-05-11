@@ -1,4 +1,4 @@
-z1000-Zeidon    EPAMMS   TZCMLPLO 05/01/15   18:22:18 1.0a2    
+z1000-Zeidon    EPAMMS   TZCMLPLO 05/06/15   10:59:39 1.0a2    
 eLPLR      1
 aName      epamms
 aDesc      ePamms Application
@@ -1216,8 +1216,8 @@ aStatus    1
 aUpdateInd 2
 aName      mSPLDef
 aDesc      Subregistrant Physical Label Maintenance
-aLastSyncDate 20150501182217539
-aLastUpdateDate 20150501182217539
+aLastSyncDate 20150504095406745
+aLastUpdateDate 20150504095406745
 
 eW_MetaDef 3
 aCPLR_ZKey 69035258
@@ -1906,8 +1906,8 @@ aStatus    1
 aUpdateInd 2
 aName      wSPLD
 aDesc      Subregistrant Physical Label Definition
-aLastSyncDate 20150430110109568
-aLastUpdateDate 20150430110109568
+aLastSyncDate 20150506105939520
+aLastUpdateDate 20150506105939520
 
 eW_MetaDef 3
 aCPLR_ZKey 93086489

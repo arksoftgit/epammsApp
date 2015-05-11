@@ -2505,8 +2505,8 @@ BuildSPLD_FromSLC( VIEW NewSPLD   BASED ON LOD mSPLDef,
    FOR EACH NewSPLD.SPLD_HumanHazardSection 
       DELETE ENTITY NewSPLD.SPLD_HumanHazardSection NONE 
    END
-   FOR EACH NewSPLD.SPLD_Usage 
-      DELETE ENTITY NewSPLD.SPLD_Usage NONE 
+   FOR EACH NewSPLD.SPLD_UsageType 
+      DELETE ENTITY NewSPLD.SPLD_UsageType NONE 
    END
    
    // General Section ... Precautionary, First Aid, Other Hazard
@@ -2647,15 +2647,19 @@ BuildUsageEntriesFrSLC( VIEW mSPLDef   BASED ON LOD mSPLDef,
    // Build the Usage, Directions for Use and Marketing subobject structures from the creating SourceSLC.
    
    // Delete current entries.
-   FOR EACH mSPLDef.SPLD_Usage 
-      DELETE ENTITY mSPLDef.SPLD_Usage NONE 
+   FOR EACH mSPLDef.SPLD_UsageType 
+      DELETE ENTITY mSPLDef.SPLD_UsageType NONE 
    END
    
    // Build Usage Entries (Surface, Application Type, Area of Use, Organism Claim)
-   FOR EACH SourceSLC.S_Usage WITHIN SourceSLC.SubregLabelContent 
-      CREATE ENTITY mSPLDef.SPLD_Usage
-      SetMatchingAttributesByName( mSPLDef, "SPLD_Usage", SourceSLC, "S_Usage", zSET_NULL )
-      INCLUDE mSPLDef.S_Usage FROM SourceSLC.S_Usage 
+   FOR EACH SourceSLC.S_UsageType WITHIN SourceSLC.SubregLabelContent 
+      CREATE ENTITY mSPLDef.SPLD_UsageType
+      SetMatchingAttributesByName( mSPLDef, "SPLD_UsageType", SourceSLC, "S_UsageType", zSET_NULL )
+      FOR EACH SourceSLC.S_Usage WITHIN SourceSLC.SubregLabelContent 
+         CREATE ENTITY mSPLDef.SPLD_Usage
+         SetMatchingAttributesByName( mSPLDef, "SPLD_Usage", SourceSLC, "S_Usage", zSET_NULL )
+         INCLUDE mSPLDef.S_Usage FROM SourceSLC.S_Usage 
+      END
    END
    
    // Build Directions for Use Usage Entries.
@@ -2900,7 +2904,7 @@ BuildCompositeEntries( VIEW mSPLDef BASED ON LOD mSPLDef )
             mSPLDef.CompositeComponentList.DisplayTypeIndent = "...DU " + szUsageType
             mSPLDef.CompositeComponentList.Value             = mSPLDef.SPLD_DirectionsUsage.Name 
             mSPLDef.CompositeComponentList.DisplayValue      = mSPLDef.SPLD_DirectionsUsage.Name 
-            SET CURSOR FIRST mSPLDef.SPLD_Usage WHERE mSPLDef.SPLD_Usage.UsageType            = mSPLDef.SPLD_DirectionsUsage.UsageType 
+            SET CURSOR FIRST mSPLDef.SPLD_Usage WHERE mSPLDef.SPLD_Usage.UsageType        = mSPLDef.SPLD_DirectionsUsage.UsageType 
                                               AND mSPLDef.SPLD_Usage.ClaimsClassification = mSPLDef.SPLD_DirectionsUsage.ClaimsClassification 
                                               AND mSPLDef.SPLD_Usage.Name                 = mSPLDef.SPLD_DirectionsUsage.Name 
             IF RESULT >= zCURSOR_SET
@@ -3320,7 +3324,7 @@ TRANSFORMATION OPERATION
 DuplicateSPLD_Block( VIEW NewSPLD    BASED ON LOD mSPLDef,
                      VIEW SourceSPLD BASED ON LOD mSPLDef )
    
-   // This is a recursive routine to dupplicate an LLD_Block / LLD_SubBlock.
+   // This is a recursive routine to duplicate an LLD_Block / LLD_SubBlock.
    CREATE ENTITY NewSPLD.LLD_Block  
    SetMatchingAttributesByName( NewSPLD, "LLD_Block", SourceSPLD, "LLD_Block", zSET_NULL ) 
    IF SourceSPLD.BlockBackgroundColor EXISTS
@@ -4386,55 +4390,45 @@ SetUpFormattingSelect( VIEW mSPLDefPanel BASED ON LOD mSPLDef,
       CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
       mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Hazards Precautionary"
    ELSE
-      IF szSectionType = "Ingredients" 
-         // Ingredients
-         CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
-         mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Title"
-         CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
-         mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Ingredients Items" 
-         CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
-         mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Ingredients Inert" 
-         CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
-         mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Ingredients Total" 
-      ELSE
-         IF szSectionType = "DirectionsForUse" 
-            // Directions for Use
-            CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
-            mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Title"
-            CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
-            mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Text" 
-            CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
-            mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Header" 
-         ELSE
-            IF szSectionType = "Marketing"
-               // Marketing
-               CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
-               mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Title"
-               CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
-               mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Text" 
-               CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
-               mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Column List" 
-               CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
-               mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Header" 
-            ELSE
-               IF szSectionType = "FirstAid"
-                  // First Aid
-                  CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
-                  mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Title"
-                  CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
-                  mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Text" 
-                  CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
-                  mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Header" 
-               ELSE
-                  // Default
-                  CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
-                  mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Title"
-                  CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
-                  mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Text" 
-               END
-            END
-         END
-      END
+   IF szSectionType = "Ingredients" 
+      // Ingredients
+      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Title"
+      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Ingredients Items" 
+      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Ingredients Inert" 
+      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Ingredients Total" 
+   ELSE
+   IF szSectionType = "DirectionsForUse" OR szSectionType = "FirstAid"
+      // Directions for Use or First Aid
+      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Header" 
+      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Title"
+      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Text" 
+   ELSE
+   IF szSectionType = "Marketing"
+      // Marketing
+      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Header" 
+      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Title"
+      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Text" 
+      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Column List" 
+   ELSE
+       // Default
+       CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+       mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Title"
+       CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
+       mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Text" 
+   END
+   END
+   END
    END
    CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry 
    mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Block"

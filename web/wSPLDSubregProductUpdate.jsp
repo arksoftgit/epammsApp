@@ -113,6 +113,7 @@ public int DoInputMapping( HttpServletRequest request,
       // grids on the same window with the same view we do not mess up the 
       // entity positions. 
       vGridTmp = mSubProd.newView( );
+      vGridTmp.copyCursors(mSubProd);
       csrRC = vGridTmp.cursor( "SubregLabelContent" ).setFirst(  );
       while ( csrRC.isSet() )
       {

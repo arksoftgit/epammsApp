@@ -769,13 +769,13 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:32px;width:100px;"></div>
+<div style="height:18px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* Registrants:GroupBox */ %>
 
-<div id="Registrants" name="Registrants" style="width:866px;height:94px;float:left;">  <!-- Registrants --> 
+<div id="Registrants" name="Registrants" style="width:866px;height:78px;float:left;">  <!-- Registrants --> 
 
 
  <!-- This is added as a line spacer -->
@@ -876,13 +876,13 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:14px;width:100px;"></div>
+<div style="height:16px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* SubregProducts:GroupBox */ %>
 
-<div id="SubregProducts" name="SubregProducts" style="width:866px;height:142px;float:left;">  <!-- SubregProducts --> 
+<div id="SubregProducts" name="SubregProducts" style="width:866px;height:174px;float:left;">  <!-- SubregProducts --> 
 
 
 <div>  <!-- Beginning of a new line -->
@@ -899,12 +899,12 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
+<div style="height:8px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <% /* Text1:Text */ %>
 
-<span  id="Text1" name="Text1" style="width:234px;height:24px;">Subregistrant Products</span>
+<label  id="Text1" name="Text1" style="width:234px;height:24px;">Subregistrant Products</label>
 
 </div>  <!-- End of a new line -->
 
@@ -917,7 +917,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
+<div style="height:4px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <span style="height:28px;">&nbsp</span>
@@ -1059,13 +1059,29 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 
  <!-- This is added as a line spacer -->
-<div style="height:18px;width:100px;"></div>
+<div style="height:8px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox8:GroupBox */ %>
+
+<div id="GroupBox8" name="GroupBox8" style="width:130px;height:24px;float:left;">  <!-- GroupBox8 --> 
+
+
+</div>  <!--  GroupBox8 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:4px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox5:GroupBox */ %>
 
-<div id="GroupBox5" name="GroupBox5" style="width:866px;height:142px;float:left;">  <!-- GroupBox5 --> 
+<div id="GroupBox5" name="GroupBox5" style="width:866px;height:158px;float:left;">  <!-- GroupBox5 --> 
 
 
 <div>  <!-- Beginning of a new line -->
@@ -1082,12 +1098,12 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 
  <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
+<div style="height:12px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <% /* Text2:Text */ %>
 
-<span  id="Text2" name="Text2" style="width:234px;height:24px;">LLD Entries</span>
+<label  id="Text2" name="Text2" style="width:234px;height:24px;">LLD Entries</label>
 
 </div>  <!-- End of a new line -->
 

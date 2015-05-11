@@ -294,7 +294,6 @@ DIALOG OPERATION
 SELECT_MLC_ForNewSLC( VIEW ViewToWindow )
 
    VIEW mSubProd REGISTERED AS mSubProd
-   VIEW mSubreg  REGISTERED AS mSubreg
    VIEW lMLC     REGISTERED AS lMLC
    VIEW mSubLC   BASED ON LOD  mSubLC 
    VIEW mMasLC   BASED ON LOD  mMasLC
@@ -308,15 +307,11 @@ SELECT_MLC_ForNewSLC( VIEW ViewToWindow )
       RETURN 2
    END 
    
-   // Create a new empty Subreg SLC..
+   // Create a new empty Subregistrant SLC.
    ACTIVATE mSubLC EMPTY 
    NAME VIEW mSubLC "mSubLC"
    CREATE ENTITY mSubLC.SubregLabelContent 
    INCLUDE mSubLC.SubregProduct FROM mSubProd.SubregProduct 
-   
-   //CREATE ENTITY mSubLC.CompositeComponentList 
-   //mSubLC.CompositeComponentList.DisplayType  = "-null-"
-   //mSubLC.CompositeComponentList.DisplayValue = "-----------null components------------   "
    
    // Activate the selected MLC, which has the selectable content.
    ACTIVATE mMasLC WHERE mMasLC.MasterLabelContent.ID = lMLC.MasterLabelContent.ID 

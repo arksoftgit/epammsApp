@@ -786,7 +786,8 @@ $(function() {
          });
          if ( element_id === "block" ) {
          // console.log( "Processing block type: " + sectionType );
-            var options = "<option value=\"^title\">Title</option><option value=\"^text\">Text</option>";  // default
+            var optionsDflt = "<option value=\"^title\">Title</option><option value=\"^text\">Text</option>";  // default
+            var options = "";
             // The .prop() method should be used to set disabled and checked instead of the .attr() method.
             // $('#id').prop('disabled', false);
             // $('#id').prop('disabled', 'disabled');
@@ -805,15 +806,15 @@ $(function() {
                   $("#zClaimListTypeToggle").show();
                   $("#zMarketingSectionToggle").show();
                   $('#zMarketingSection option[value="' + blockName + '"]').prop( 'selected', true );
-                  // Marketing:   Title / Text / Header / Column List
-                  options += "<option value=\"^header\">Header</option><option value=\"^column ^list\">Column List</option>";
+                  // Marketing:   Header / Title / Text / Column List
+                  options = "<option value=\"^header\">Header</option>" + optionsDflt + "<option value=\"^column ^list\">Column List</option>";
                } else {
                   $("#zClaimListTypeToggle").hide();
                   $("#zMarketingSectionToggle").hide();
                   if ( sectionType === "DirectionsForUse" || sectionType === "FirstAid" ) {
-                     // Directions for Use:   Title / Text / Header
-                     // First Aid:   Title / Text / Header
-                     options += "<option value=\"^header\">Header</option>";
+                     // Directions for Use:   Header / Title / Text
+                     // First Aid:   Header / Title / Text
+                     options = "<option value=\"^header\">Header</option>" + optionsDflt;
                   }
                }
             } else {
@@ -828,6 +829,8 @@ $(function() {
                } else if ( sectionType === "Ingredients" ) {
                   // Ingredients:   Title / Ingredients Items / Ingredients Inert / Ingredients Total
                   options = "<option value=\"^title\">Title</option><option value=\"^ingredients ^items\">Ingredients Items</option><option value=\"^ingredients ^inert\">Ingredients Inert</option><option value=\"^ingredients ^total\">Ingredients Total</option>";
+               } else {
+                  options = optionsDflt;
                }
                // Default:   Title / Text
             }
@@ -1400,7 +1403,6 @@ jsoeUtils.js:1139    ~ z_^storage^disposal.^text.^font^size : 9pt
 jsoeUtils.js:1139    ~ z_^storage^disposal.^text.^margin^top : 0.01
 */
 var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
-                        "z_^background^color", "z_^background^color^override",
                         "z_^font^family", "z_^font^size", "z_^font^weight",
                         "z_^margin", "z_^margin^top", "z_^margin^left", "z_^margin^bottom", "z_^margin^right", "z_^margin^override",
                         "z_^border", "z_^border^top", "z_^border^bottom", "z_^border^left", "z_^borderRight", "z_^border^override",
@@ -2581,12 +2583,25 @@ public class FileServer {
                   if ( objSpecialBlock ) {
                      var objSpecialBlockProp = objSpecialBlock[0];
                      if ( objSpecialBlockProp ) {
+                        var color = "";
                         for ( var prop in objSpecialBlockProp ) {
                            if ( prop !== ".meta" ) {
-                           // console.log( "   SpecialBlock: " + prop + "." + objSpecialBlockProp[prop] );
-                              addZeidonAttributeToElement( $block, sectionType + "." + specialSection + "." + zeidonAttributeToKey( prop ), objSpecialBlockProp[prop] );
+                              if ( prop === "SpecialAttributeTextColor" ) {
+                                 var objColor = objSpecialBlockProp[prop][0];
+                                 color = objColor.dColorName;
+                                 if ( !color ) {
+                                    color = objColor.Pantone;
+                                    if ( !color ) {
+                                       color = objColor.Name;
+                                    }
+                                 }
+                              } else {
+                              // console.log( "   SpecialBlock: " + prop + "." + objSpecialBlockProp[prop] );
+                                 addZeidonAttributeToElement( $block, sectionType + "." + specialSection + "." + zeidonAttributeToKey( prop ), objSpecialBlockProp[prop] );
+                              }
                            }
                         }
+                        addZeidonAttributeToElement( $block, sectionType + "." + specialSection + "." + "z_^text^color", color );
                      }
                   }
                }
@@ -2611,7 +2626,7 @@ public class FileServer {
          }
       // console.log( "Setting4 wPID: " + parentId + "  wPE: " + $parentElement.data( "z_w^e" ) );
       // displayElementData( "AddHtmlWysiwygLabelElements Parent", $parentElement );
-         displayElementData( "AddHtmlWysiwygLabelElements Element", $el );
+      // displayElementData( "AddHtmlWysiwygLabelElements Element", $el );
          $parentElement = $el;
          parentId = obj["ID"];
       /*
@@ -3451,7 +3466,7 @@ public class FileServer {
    function getColorPickerByRGB( hexColor ) {
       var lth = g_jsonColors.length;
       var idx = lth - 1;
-      if ( hexColor.indexOf( "#" ) == 0 ) {
+      if ( hexColor.indexOf( "#" ) === 0 ) {
          hexColor = hexColor.substring( 1 );
       }
       for ( var k = 0; k < lth; k++ ) {
@@ -3505,8 +3520,12 @@ public class FileServer {
                                                    break;
                                                 }
                                              }
-                                          // console.log( "ID: '" + id + "' has been changed to: " + newValue + "  color: " + g_jsonColors[idx].Name );
-                                             blurZeidon( $id(id), g_jsonColors[idx].Name );
+                                             var name = g_jsonColors[idx].Pantone;
+                                             if ( name === "" ) {
+                                                name = g_jsonColors[idx].Name;
+                                             }
+                                          // console.log( "ID: '" + id + "' has been changed to: " + newValue + "  color: " + name );
+                                             blurZeidon( $id(id), name );
                                           }
                           } );
       }
