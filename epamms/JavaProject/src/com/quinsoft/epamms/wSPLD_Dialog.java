@@ -1709,8 +1709,6 @@ SELECT_MLC_ForNewSLC( View     ViewToWindow )
 {
    zVIEW    mSubProd = new zVIEW( );
    int      RESULT = 0;
-   //:VIEW mSubreg  REGISTERED AS mSubreg
-   zVIEW    mSubreg = new zVIEW( );
    //:VIEW lMLC     REGISTERED AS lMLC
    zVIEW    lMLC = new zVIEW( );
    //:VIEW mSubLC   BASED ON LOD  mSubLC 
@@ -1721,7 +1719,6 @@ SELECT_MLC_ForNewSLC( View     ViewToWindow )
    zVIEW    vTempViewVar_0 = new zVIEW( );
 
    RESULT = GetViewByName( mSubProd, "mSubProd", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
    RESULT = GetViewByName( lMLC, "lMLC", ViewToWindow, zLEVEL_TASK );
 
    //:// Make sure that an MLC has been selected.
@@ -1740,7 +1737,7 @@ SELECT_MLC_ForNewSLC( View     ViewToWindow )
 
    //:END 
 
-   //:// Create a new empty Subreg SLC..
+   //:// Create a new empty Subregistrant SLC.
    //:ACTIVATE mSubLC EMPTY 
    RESULT = ActivateEmptyObjectInstance( mSubLC, "mSubLC", ViewToWindow, zSINGLE );
    //:NAME VIEW mSubLC "mSubLC"
@@ -1749,10 +1746,6 @@ SELECT_MLC_ForNewSLC( View     ViewToWindow )
    RESULT = CreateEntity( mSubLC, "SubregLabelContent", zPOS_AFTER );
    //:INCLUDE mSubLC.SubregProduct FROM mSubProd.SubregProduct 
    RESULT = IncludeSubobjectFromSubobject( mSubLC, "SubregProduct", mSubProd, "SubregProduct", zPOS_AFTER );
-
-   //://CREATE ENTITY mSubLC.CompositeComponentList 
-   //://mSubLC.CompositeComponentList.DisplayType  = "-null-"
-   //://mSubLC.CompositeComponentList.DisplayValue = "-----------null components------------   "
 
    //:// Activate the selected MLC, which has the selectable content.
    //:ACTIVATE mMasLC WHERE mMasLC.MasterLabelContent.ID = lMLC.MasterLabelContent.ID 
@@ -5137,10 +5130,8 @@ PostbuildBlockDefinitionUpdate( View     ViewToWindow )
     m_mSPLDef_Object.omSPLDef_SetUpKeywordEntries( mSPLDefBlock, szTempString_0 );
     // m_mSPLDef_Object = null;  // permit gc  (unnecessary)
    }
-   //:TraceLineS( "PostbuildBlockDefinitionUpdate Display2 ", "LLD_Block" )
-   TraceLineS( "PostbuildBlockDefinitionUpdate Display2 ", "LLD_Block" );
-   //:DisplayEntityInstance( mSPLDefBlock, "LLD_Block" )
-   DisplayEntityInstance( mSPLDefBlock, "LLD_Block" );
+   //:// TraceLineS( "PostbuildBlockDefinitionUpdate Display2 ", "LLD_Block" )
+   //:// DisplayEntityInstance( mSPLDefBlock, "LLD_Block" )
    //:// Select which of the CompositeComponentList entities are to be displayed
    //:FOR EACH mSPLDef.Display WITHIN mSPLDef.SubregPhysicalLabelDef 
    RESULT = SetCursorFirstEntity( mSPLDef, "Display", "SubregPhysicalLabelDef" );

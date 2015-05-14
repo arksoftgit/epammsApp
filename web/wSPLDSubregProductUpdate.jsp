@@ -113,7 +113,6 @@ public int DoInputMapping( HttpServletRequest request,
       // grids on the same window with the same view we do not mess up the 
       // entity positions. 
       vGridTmp = mSubProd.newView( );
-      vGridTmp.copyCursors(mSubProd);
       csrRC = vGridTmp.cursor( "SubregLabelContent" ).setFirst(  );
       while ( csrRC.isSet() )
       {
@@ -1668,8 +1667,8 @@ try
 <tr<%=strOdd%>>
 
    <td><a href="#" onclick="GOTO_UpdateSubregProductSPLD( this.id )" id="GridEditCtl2::<%=strEntityKey%>"><%=strGridEditCtl2%></a></td>
-   <td><%=strGridEditCtl3%></td>
-   <td><%=strGridEditCtl4%></td>
+   <td><a href="#" onclick="GOTO_UpdateSubregProductSPLD( this.id )" id="GridEditCtl3::<%=strEntityKey%>"><%=strGridEditCtl3%></a></td>
+   <td><a href="#" onclick="GOTO_UpdateSubregProductSPLD( this.id )" id="GridEditCtl4::<%=strEntityKey%>"><%=strGridEditCtl4%></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn2" onclick="GOTO_UpdateSubregProductSPLD( this.id )" id="BitmapBtn2::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn3" onclick="GOTO_DeleteSPLD( this.id )" id="BitmapBtn3::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn5" onclick="DuplicateSubregProductSPLD( this.id )" id="BitmapBtn5::<%=strEntityKey%>"><img src="./images/ePammsNew.jpg" alt="Duplicate"></a></td>

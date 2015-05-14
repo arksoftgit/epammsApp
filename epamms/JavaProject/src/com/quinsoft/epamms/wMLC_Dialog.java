@@ -1860,8 +1860,8 @@ InitHumanHazardSect( View     ViewToWindow )
    { 
       //:CREATE ENTITY mMasLC.M_HumanHazardSection  
       RESULT = CreateEntity( mMasLC, "M_HumanHazardSection", zPOS_AFTER );
-      //:mMasLC.M_HumanHazardSection.PrecautionaryStatement = "See {{Precautionary Panel Position}} Panel {{Precautionary Label Position}} for Precautionary Statements"
-      SetAttributeFromString( mMasLC, "M_HumanHazardSection", "PrecautionaryStatement", "See {{Precautionary Panel Position}} Panel {{Precautionary Label Position}} for Precautionary Statements" );
+      //:mMasLC.M_HumanHazardSection.PrecautionaryStatement = "See {{Precautionary Panel Location}} Panel {{Precautionary Label Location}} for Precautionary Statements"
+      SetAttributeFromString( mMasLC, "M_HumanHazardSection", "PrecautionaryStatement", "See {{Precautionary Panel Location}} Panel {{Precautionary Label Location}} for Precautionary Statements" );
       //:mMasLC.M_HumanHazardSection.PanelLoc1 = "[Back]"
       SetAttributeFromString( mMasLC, "M_HumanHazardSection", "PanelLoc1", "[Back]" );
       //:mMasLC.M_HumanHazardSection.PanelLoc2 = "[Side]"

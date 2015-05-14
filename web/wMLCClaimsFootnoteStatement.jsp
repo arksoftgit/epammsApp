@@ -65,7 +65,9 @@ public int DoInputMapping( HttpServletRequest request,
       if ( nRC >= 0 ) // CursorResult.SET
       {
          strMapValue = request.getParameter( "Footnote" );
+         task.log().debug( "Footnote prior to escape: " + strMapValue );
          strMapValue = StringEscapeUtils.escapeHtml4( strMapValue );
+         task.log().debug( "Footnote after escape: " + strMapValue );
          try
          {
             if ( webMapping )
@@ -600,8 +602,10 @@ else
          {
             try
             {
-            strErrorMapValue = mMasLC.cursor( "M_UsageFootnote" ).getAttribute( "Text" ).getString( "" );
-            StringEscapeUtils.unescapeHtml4( strErrorMapValue );
+               strErrorMapValue = mMasLC.cursor( "M_UsageFootnote" ).getAttribute( "Text" ).getString( "" );
+               task.log().debug( "Footnote prior to unescape: " + strErrorMapValue );
+               strErrorMapValue = StringEscapeUtils.unescapeHtml4( strErrorMapValue );
+               task.log().debug( "Footnote after unescape: " + strErrorMapValue );
             }
             catch (Exception e)
             {

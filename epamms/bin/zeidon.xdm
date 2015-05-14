@@ -1,4 +1,4 @@
-z1000-Zeidon    ZEIDON   TZDMXGPO 04/24/15   18:19:37 1.0a2    
+z1000-Zeidon    ZEIDON   TZDMXGPO 05/12/15   16:14:13 1.0a2    
 eDomainGroup 1
 aName      ePamms
 
@@ -2427,9 +2427,6 @@ aZKey      4321560
 aName      FullGeneralSectionType
 
 eTableEntry 4
-aZKey      4321564
-
-eTableEntry 4
 aZKey      4321561
 aExternalValue Precautionary
 aInternalValue P
@@ -2448,9 +2445,6 @@ eContext   3
 aZKey      69055598
 aName      GeneralSectionType
 aIsDefault Y
-
-eTableEntry 4
-aZKey      4321565
 
 eTableEntry 4
 aZKey      69055599
@@ -2705,7 +2699,7 @@ aName      LLD_SectionType
 aDesc      Template Section Types are usually the same as regular Section Types.
 aDomainType T
 aDataType  S
-aMaxStringLth 20
+aMaxStringLth 32
 aContextRestriction N
 
 eContext   3

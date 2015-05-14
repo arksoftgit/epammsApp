@@ -806,8 +806,8 @@ $(function() {
                   $("#zClaimListTypeToggle").show();
                   $("#zMarketingSectionToggle").show();
                   $('#zMarketingSection option[value="' + blockName + '"]').prop( 'selected', true );
-                  // Marketing:   Header / Title / Text / Column List
-                  options = "<option value=\"^header\">Header</option>" + optionsDflt + "<option value=\"^column ^list\">Column List</option>";
+                  // Marketing:   Title / Text / Column List
+                  options = optionsDflt + "<option value=\"^column ^list\">Column List</option>";
                } else {
                   $("#zClaimListTypeToggle").hide();
                   $("#zMarketingSectionToggle").hide();
@@ -1370,38 +1370,6 @@ $(function() {
          blurZeidon( this, null );
       });
 
-/*
-labeldesigner.js:2587 SpecialSection: StorageDisposal.Title
-labeldesigner.js:2594    SpecialBlock: ID.661
-labeldesigner.js:2594    SpecialBlock: MarginTop.0.04
-labeldesigner.js:2594    SpecialBlock: TextAlign.center
-labeldesigner.js:2587 SpecialSection: StorageDisposal.Text
-labeldesigner.js:2594    SpecialBlock: ID.662
-labeldesigner.js:2594    SpecialBlock: FontSize.9pt
-labeldesigner.js:2594    SpecialBlock: MarginTop.0.01
-jsoeUtils.js:1135 AddHtmlWysiwygLabelElements Element... Element Data for: Tag660
-jsoeUtils.js:1139    ~ z_^i^d : 660
-jsoeUtils.js:1139    ~ z_^tag : Tag660
-jsoeUtils.js:1139    ~ z_^l^l^d_^section^type : StorageDisposal
-jsoeUtils.js:1139    ~ z_^top : 0.1
-jsoeUtils.js:1139    ~ z_^left : 0.2
-jsoeUtils.js:1139    ~ z_^height : 2.5
-jsoeUtils.js:1139    ~ z_^width : 3.8
-jsoeUtils.js:1139    ~ z_^depth : 3
-jsoeUtils.js:1139    ~ z_w^computed^top^position : 0.1
-jsoeUtils.js:1139    ~ z_^f^k_^i^d_^l^l^d_^b^l^o^c^k : 659
-jsoeUtils.js:1139    ~ z_w^i^d : 660
-jsoeUtils.js:1139    ~ z__^e^o^i : Y
-jsoeUtils.js:1139    ~ z_w^e : block
-jsoeUtils.js:1139    ~ z_w^p^i^d : 659
-jsoeUtils.js:1139    ~ z_w^p^e : block
-jsoeUtils.js:1139    ~ z_^storage^disposal.^title.^i^d : 661
-jsoeUtils.js:1139    ~ z_^storage^disposal.^title.^margin^top : 0.04
-jsoeUtils.js:1139    ~ z_^storage^disposal.^title.^text^align : center
-jsoeUtils.js:1139    ~ z_^storage^disposal.^text.^i^d : 662
-jsoeUtils.js:1139    ~ z_^storage^disposal.^text.^font^size : 9pt
-jsoeUtils.js:1139    ~ z_^storage^disposal.^text.^margin^top : 0.01
-*/
 var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
                         "z_^font^family", "z_^font^size", "z_^font^weight",
                         "z_^margin", "z_^margin^top", "z_^margin^left", "z_^margin^bottom", "z_^margin^right", "z_^margin^override",
@@ -1535,6 +1503,15 @@ var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
          var val = $(this).val();
          if ( val === "" ) {
             val = "?";
+         } else if ( val === "Marketing" ) {
+            val += ": " + g_$current_block.data( "z_^name" );
+         } else if ( val === "Graphic" ) {
+            // div { background: url(img_flwr.gif); background-size: 80px 60px; background-repeat: no-repeat;
+         // var height = g_$current_block.height();
+         // var width = g_$current_block.width();
+            var graphic = g_$current_block.data( "z_^image^name" );
+            val += ": " + graphic;
+         // val = "<div style=\"text-align: center;\"><IMG height=" + height + " width=" + width + " SRC=\"./images/" + graphic + "\" ALT=\"" + val + "\"></div>";
          }
       // alert( "Selected value: " + val );
       // g_$current_block.text( $('#zSectionType').val() );  this wipes out all child nodes of the div ... but the complicated next line works where
@@ -1578,12 +1555,15 @@ var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
 
 // $("#zBlockTextAlign").combobox();
 // $("#zHazardPanel").combobox();
-
    var $FontSizeSpinner = $("#zFontSizeSpinner").spinner();
    $FontSizeSpinner.spinner( "option", "min", 3 );
    $FontSizeSpinner.spinner( "option", "max", 26 );
    $FontSizeSpinner.spinner( "option", "numberFormat", "nn" );
    $FontSizeSpinner[0].readOnly = true;  // prevent invalid input
+
+   $("#zFontSizeClear").click( function() {
+      $FontSizeSpinner.spinner( "value", null );
+   });
 
    // Handle the Spinner change event.
    $FontSizeSpinner.on( "spinstop", function( event, ui ) {
@@ -1883,160 +1863,6 @@ public class FileServer {
         bos.close();
     }
 } 
-*/
-
-/* Reduced Json Label from OI: ...
-{
-  ".meta" : {
-    "version" : "1",
-    "date" : "2015-03-26T18:19:15.663"
-  },
-  "OIs" : [ {
-    ".oimeta" : {
-      "application" : "epamms",
-      "odName" : "mSPLDef",
-      "incremental" : true
-    },
-    "SubregPhysicalLabelDef" : [ {
-      ".meta" : {
-        "selected" : true
-      },
-      "ID" : "6",
-      "Name" : "spld name",
-      "ProductName" : "product name",
-      "FK_ID_SUBREGLABELCONTENT" : "7",
-      "SPLD_LLD" : [ {
-        ".meta" : {
-          "selected" : true
-        },
-        "ID" : "11",
-        "ContinuationPreviousPageText" : "** Continued on Side Panel",
-        "ContNextPageTextMarketing" : "** Continued from Mrktg Previous Page",
-        "ContNextPageTextDirForUse" : "** Continued from DU Previous Page",
-        "FK_ID_SUBREGPHYSICALLABELDEF" : "6",
-        "LLD_Page" : [ {
-          ".meta" : {
-            "selected" : true
-          },
-          "ID" : "27",
-          "Height" : "14.6",
-          "Width" : "19.6",
-          "FK_ID_SPLD_LLD" : "11",
-          "LLD_Panel" : [ {
-            ".meta" : {
-              "selected" : true
-            },
-            "ID" : "54",
-            "Top" : "1.0",
-            "Left" : "1.0",
-            "Height" : "10.0",
-            "Width" : "10.0",
-            "FK_ID_LLD_PAGE" : "27",
-            "LLD_Block" : [ {
-                "ID" : "622",
-                "Tag" : "Tag622",
-                "Name" : "Bactericidal Claims",
-                "LLD_SectionType" : "Marketing",
-                "LLD_ColumnListType" : "C2",
-                "Top" : "2.02",
-                "Left" : "0.11",
-                "Height" : "2.2",
-                "Width" : "4.76",
-                "BorderColorOverride" : "Y",
-                "Depth" : "3",
-                "wComputedTopPosition" : "2.02",
-                "FK_ID_LLD_BLOCK" : "620",
-                "LLD_SpecialSectionAttribute" : [ {
-                  "ID" : "201",
-                  "Name" : "Column List",
-                  "PF1ID_LLD_BLOCK" : "622",
-                  "PF2ID_LLD_BLOCK" : "631",
-                  "LLD_SpecialSectionAttrBlock" : [ {
-                    "ID" : "631",
-                    "BorderStyle" : "dashed",
-                    "MarginTop" : "0.5",
-                    "MarginLeft" : "0.02"
-                  } ]
-                }, {
-                  "ID" : "202",
-                  "Name" : "Text",
-                  "PF1ID_LLD_BLOCK" : "622",
-                  "PF2ID_LLD_BLOCK" : "632",
-                  "LLD_SpecialSectionAttrBlock" : [ {
-                    "ID" : "632",
-                    "BorderStyle" : "dotted"
-                  } ]
-                } ]
-              } ],
-              "LLD_SpecialSectionAttribute" : [ {
-                "ID" : "198",
-                "Name" : "Block",
-                "PF1ID_LLD_BLOCK" : "620",
-                "PF2ID_LLD_BLOCK" : "624",
-                "LLD_SpecialSectionAttrBlock" : [ {
-                  "ID" : "624",
-                  "BorderColor" : "red",
-                  "BorderStyle" : "solid",
-                  "BorderWidth" : "2.0"
-                } ]
-              } ]
-            }, {
-              "ID" : "625",
-              "Tag" : "Tag625",
-              "LLD_SectionType" : "Graphic",
-              "ImageName" : "AlphaTechPetBase.jpg",
-              "Top" : "5.51",
-              "Left" : "0.0",
-              "Height" : "1.05",
-              "Width" : "5.05",
-              "Depth" : "2",
-              "wComputedTopPosition" : "5.51",
-              "AUTOSEQ" : "2",
-              "FK_ID_LLD_PANEL" : "52"
-            } ]
-          } ]
-        } ]
-      } ]
-   } ]
-} ] }
- [LLD_SubBlock]  (353678bf:8706)
-    (~)ID: 622
-    (~)Tag: Tag622
-    (~)Name: Bactericidal Claims
-    (~)LLD_SectionType: Marketing
-    (~)LLD_ColumnListType: Usage List - 2 Column
-    (~)Top: 2.02
-    (~)Left: 0.11
-    (~)Height: 2.2
-    (~)Width: 4.76
-    (~)BorderColorOverride: Y
-    (~)Depth: 3
-    (#)wComputedTopPosition: 2.02
-    (~)FK_ID_LLD_BLOCK: 620
-     [LLD_SpecialSectionAttribute]  (b315ee4:8714)
-        (~)ID: 201
-        (~)Name: Column List
-        (~)PF1ID_LLD_BLOCK: 622
-        (~)PF2ID_LLD_BLOCK: 631
-         [LLD_SpecialSectionAttrBlock]  (564cd079:8715)
-            (~)ID: 631
-            (~)BorderStyle: Dashed
-            (~)MarginTop: 0.5
-            (~)MarginLeft: 0.02
-     [LLD_SpecialSectionAttribute]  (4d0ae432:8716)
-        (~)ID: 202
-        (~)Name: Text
-        (~)PF1ID_LLD_BLOCK: 622
-        (~)PF2ID_LLD_BLOCK: 632
-         [LLD_SpecialSectionAttrBlock]  (60bb622:8717)
-            (~)ID: 632
-            (~)BorderStyle: Dotted
-     [LLD_SpecialSectionAttribute]  Updated Created (1a9ca132:8855)
-        (#)Name: Title
-         [LLD_SpecialSectionAttrBlock]  Created (211ae744:8856)
-     [LLD_SpecialSectionAttribute]  Updated Created (6d453256:8857)
-        (#)Name: MARKETING Header
-         [LLD_SpecialSectionAttrBlock]  Created (59ebe425:8858)
 */
    function CaptureZeidonLabelJsonFromDomJson( jsonDom ) {
    // var jsonObj = eval( "[" + json + "]" );
@@ -2651,15 +2477,6 @@ public class FileServer {
                AddHtmlWysiwygLabelElements( $root, $parentElement, parentId, objBlock[k], prop === "LLD_Panel" ? "panel" : "block", depth + 1 );
             }
          }
-      /*
-         else
-         if ( prop === "LLD_Panel" ) {
-            var objPanel = obj[prop];
-            for ( var k = 0; k < objPanel.length; k++ ) {
-               AddHtmlWysiwygLabelElements( $root, $parentElement, parentId, objPanel[k], "panel", depth + 1 );
-            }
-         }
-      */
       }
    }
 
@@ -2987,6 +2804,7 @@ public class FileServer {
 
       return "";
    }
+
 /*
    $("#zLLD_SaveRegisteredViews").click( function() {
       var name = $("#zLLD_Name").val();

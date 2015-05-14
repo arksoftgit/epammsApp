@@ -75,7 +75,9 @@ long lEKey = 0; // temp fix for SetCursorEntityKey
 String strKey = "";
 String strActionToProcess = "";
 String strURL = "";
+String strError = "";
 String strErrorFlag = "";
+String strErrorTitle = "";
 String strErrorMsg = "";
 String strFocusCtrl = "";
 String strBannerName = "";
@@ -814,11 +816,11 @@ else
                   </div> <!-- zpool -->  <!-- End of: Block Types -->
                   <!--
                   // Make sure that the appropriate Keyword entries are set up for a given Section/Block Type.
-                  // Directions for Use:   Title / Text / Header
-                  // First Aid:   Title / Text / Header
+                  // Directions for Use:   Header / Title / Text
+                  // First Aid:   Header / Title / Text
                   // Human Hazard:  Hazards Warning / Hazards Signal Word / Hazards Precautionary
                   // Ingredients:   Title / Ingredients Items / Ingredients Inert / Ingredients Total 
-                  // Marketing:   Title / Text / Column List / Header
+                  // Marketing:   Title / Text / Column List
                   // Default:   Title / Text
 
                   Fields Common to All Block Types
@@ -1001,7 +1003,7 @@ else
                      // First Aid:   Title / Text / Header
                      // Human Hazard:  Hazards Warning / Hazards Signal Word / Hazards Precautionary
                      // Ingredients:   Title / Ingredients Items / Ingredients Inert / Ingredients Total 
-                     // Marketing:   Title / Text / Header / Column List
+                     // Marketing:   Title / Text / Column List
                      // Default:   Title / Text
                      -->
                      <div id="zBlockFormatTypeToggle" style="overflow:hidden; white-space:nowrap;display:hidden;">
@@ -1052,8 +1054,9 @@ else
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
                              <label for="zFontSizeSpinner">Font Size:</label>
+                             <button id="zFontSizeClear" class = ".ui-button" style="float: right;">Clear Font Size</button>
                              <input type="text" id="zFontSizeSpinner" value="11" class="zeidon-special" data-zmap="block.z_^font^size" style="float:right;width:20px;"/>
-                       <!-- <input type="text" id="zFontSize" class="zeidon-special" data-zmap="block.z_^font^size" style="float:right" /> -->
+                             <!-- <input type="text" id="zFontSize" class="zeidon-special" data-zmap="block.z_^font^size" style="float:right" /> -->
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
                              <label for="zFontWeight">Font Weight:</label>
@@ -1317,6 +1320,56 @@ else
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
+String strErrorMapValue = "";
+   // FindErrorFields Processing
+   mMsgQ = new KZMSGQOO_Object( vKZXMLPGO );
+   mMsgQ.setView( VmlOperation.getMessageObject( task ) );
+   strError = mMsgQ.FindErrorFields( );
+
+   // strError is of the form: "Y\tChemicalName\tMax length exceeded\t\nMapping value in error\t\nY\tPercent\tInvalid numeric\t\n6.84%\t\n ..."
+   // We want to find the first "Y" error flag if it exists.
+   int nLth = strError.length( );
+   int nPos = strError.indexOf( "\t" );
+   while ( nPos > 0 && nPos < nLth )
+   {
+      strErrorFlag = strError.substring( nPos - 1, nPos );
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+      {
+         int nPos2 = strError.indexOf( "\t\n" );
+         if ( nPos2 >= 0 )
+         {
+            strErrorMapValue = strError.substring( nPos + 1, nPos2 );
+            nPos = strErrorMapValue.indexOf( "\t" );
+            if ( nPos >= 0 )
+            {
+               strErrorTitle = strErrorMapValue.substring( 0, nPos );
+               strErrorMsg = strErrorMapValue.substring( nPos + 1 );
+            }
+         }
+
+         break;
+      }
+      else
+      {
+         nPos = strError.indexOf( "\t\n", nPos + 1 );
+         if ( nPos > 0 )
+         {
+            strErrorTitle = strError.substring( nPos + 2 ); // debugging
+            int nPos2 = strError.indexOf( "\t\n", nPos + 2 );
+            if ( nPos2 >= 0 )
+            {
+               nPos = nPos2 + 2;
+               strErrorTitle = strError.substring( nPos ); // debugging
+               task.log().info( "Error: " + strErrorTitle ); // debugging
+               nPos = strError.indexOf( "\t", nPos );
+            }
+            else
+               nPos = -1;
+         }
+      }
+   }
+
+
    strOpenFile = VmlOperation.FindOpenFile( task );
 %>
 
@@ -1324,7 +1377,7 @@ else
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zErrorFlag" id="zErrorFlag" type="hidden" value="<%=strErrorFlag%>">
-   <input name="zTimeout" id="zTimeout" type="hidden" value="300">
+   <input name="zTimeout" id="zTimeout" type="hidden" value="360">
    <input name="zError" id="zError" type="hidden" value="<%=strErrorMsg%>">
 
 </form>

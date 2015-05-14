@@ -1,4 +1,4 @@
-z1000-Zeidon    TEMPLATE TZDGSRCO 04/24/15   18:19:37 1.0a2    
+z1000-Zeidon    TEMPLATE TZDGSRCO 05/12/15   16:13:52 1.0a2    
 eDomainGroup 1
 aZKey      69081339
 aName      Template
@@ -564,7 +564,7 @@ aName      LLD_SectionType
 aDesc      Template Section Types are usually the same as regular Section Types.
 aDomainType T
 aDataType  S
-aMaxStringLth 20
+aMaxStringLth 32
 aContextRestriction N
 
 eContext   3

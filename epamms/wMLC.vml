@@ -830,7 +830,7 @@ InitHumanHazardSect( VIEW ViewToWindow )
 
    IF mMasLC.M_HumanHazardSection DOES NOT EXIST
       CREATE ENTITY mMasLC.M_HumanHazardSection  
-      mMasLC.M_HumanHazardSection.PrecautionaryStatement = "See {{Precautionary Panel Position}} Panel {{Precautionary Label Position}} for Precautionary Statements"
+      mMasLC.M_HumanHazardSection.PrecautionaryStatement = "See {{Precautionary Panel Location}} Panel {{Precautionary Label Location}} for Precautionary Statements"
       mMasLC.M_HumanHazardSection.PanelLoc1 = "[Back]"
       mMasLC.M_HumanHazardSection.PanelLoc2 = "[Side]"
       mMasLC.M_HumanHazardSection.PanelLoc3 = "[Left]"

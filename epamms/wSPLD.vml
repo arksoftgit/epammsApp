@@ -2190,8 +2190,8 @@ PostbuildBlockDefinitionUpdate( VIEW ViewToWindow )
 // DisplayEntityInstance( mSPLDefBlock, "LLD_Block" )
 // SetUpFormattingSelect( mSPLDefPanel, mSPLDefBlock.LLD_Block.LLD_SectionType ) 
    SetUpKeywordEntries( mSPLDefBlock, mSPLDefBlock.LLD_Block.LLD_SectionType )
-   TraceLineS( "PostbuildBlockDefinitionUpdate Display2 ", "LLD_Block" )
-   DisplayEntityInstance( mSPLDefBlock, "LLD_Block" )
+// TraceLineS( "PostbuildBlockDefinitionUpdate Display2 ", "LLD_Block" )
+// DisplayEntityInstance( mSPLDefBlock, "LLD_Block" )
    // Select which of the CompositeComponentList entities are to be displayed
    FOR EACH mSPLDef.Display WITHIN mSPLDef.SubregPhysicalLabelDef 
       DELETE ENTITY mSPLDef.Display NONE

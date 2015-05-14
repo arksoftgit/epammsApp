@@ -120,7 +120,7 @@ function _DisableFormElements( bDisabled )
       bRC = true;
    }
 
-// $.blockUI({ message: '<h1><img src="./images/busy.gif" /></h1>', overlayCSS: { backgroundColor: '#eee' } });
+   $.blockUI({ message: '<h1><img src="./images/busy.gif" /></h1>', overlayCSS: { backgroundColor: '#eee' } });
    return bRC;
 }
 
@@ -233,7 +233,7 @@ function ApplySortOrder( )
       // Need some javascript here to apply the sort order
       var arrRowOrderIdx = getSortOrderArray( "DraggableSortTable" );
       document.wSystemDragDropSort.zOrderArray.value = arrRowOrderIdx.toString();
-      console.log( "New SortOrderArray: " + document.wSystemDragDropSort.zOrderArray.value );
+      // console.log( "New SortOrderArray: " + document.wSystemDragDropSort.zOrderArray.value );
 
       // END of Javascript code entered by user.
 
@@ -294,7 +294,7 @@ function mApplySortOrder( )
       // Need some javascript here to apply the sort order
       var arrRowOrderIdx = getSortOrderArray( "DraggableSortTable" );
       document.wSystemDragDropSort.zOrderArray.value = arrRowOrderIdx.toString();
-      console.log( "New SortOrderArray: " + document.wSystemDragDropSort.zOrderArray.value );
+      // console.log( "New SortOrderArray: " + document.wSystemDragDropSort.zOrderArray.value );
 
       // END of Javascript code entered by user.
 

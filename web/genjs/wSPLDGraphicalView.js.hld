@@ -128,6 +128,15 @@ function _AfterPageLoaded( )
 {
 // _DisableFormElements( false );
 
+   var szFocusCtrl = document.wSPLDGraphicalView.zFocusCtrl.value;
+   if ( szFocusCtrl != "" && szFocusCtrl != "null" )
+      eval( 'document.wSPLDGraphicalView.' + szFocusCtrl + '.focus( )' );
+
+   // This is where we put out a message from the previous iteration on this window
+   var szMsg = document.wSPLDGraphicalView.zError.value;
+   if ( szMsg != "" )
+      alert( szMsg ); // "Houston ... We have a problem"
+
    szMsg = document.wSPLDGraphicalView.zOpenFile.value;
    if ( szMsg != "" )
    {
@@ -140,6 +149,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   document.wSPLDGraphicalView.zError.value = "";
    document.wSPLDGraphicalView.zOpenFile.value = "";
 }
 
