@@ -389,7 +389,7 @@ else
    <link rel="stylesheet" type="text/css" href="css/style.css">
    <link rel="stylesheet" type="text/css" href="css/jquery.colorPicker.css">
 
-<!--
+<!--  
    <link href="../src/skin-win8/ui.fancytree.css" class="skinswitcher" rel="stylesheet" type="text/css">
    <script src="../src/jquery.fancytree.js" type="text/javascript"></script>
    <script src="../src/jquery.fancytree.dnd.js" type="text/javascript"></script>
@@ -485,7 +485,7 @@ else
    <script src="js/jquery-2.1.3.js"></script>
    <script src="js/jquery-ui.js"></script>
    <script src="js/jquery.nicescroll.min.js"></script>
-   <script src="js/jquery.blockUI.js"></script>
+       <script src="js/jquery.blockUI.js"></script>
 
    <script src="js/jquery.colorPicker.js" type="text/javascript"></script>
 
@@ -850,10 +850,10 @@ else
                      <span>
                      <div style="overflow:hidden; white-space:nowrap;">
                         <input type="text" id="zBlockId" class="zeidon" data-zmap="block.z_^i^d" style="float:right; font-size:9px; text-align:right; font-weight:100;" disabled />
-                     </div>
-                     <div style="overflow:hidden; white-space:nowrap;">
-                        <label for="zBlockTag">Tag:</label>
-                        <input type="text" id="zBlockTag" class="zeidon" data-zmap="block.z_^tag" style="float:right" />
+                        </div>
+                        <div style="overflow:hidden; white-space:nowrap;">
+                       <label for="zBlockTag">Tag:</label>
+                       <input type="text" id="zBlockTag" class="zeidon" data-zmap="block.z_^tag" style="float:right" />
                      </div>
                      </span>
                      <!-- 
@@ -866,47 +866,47 @@ else
                      -->
 
                      <div class="ui-widget">
-                        <label>Section Type: </label>
-                        <select id="zSectionType" class="zeidon" data-zmap="block.z_^l^l^d_^section^type" style="float:right">
-                           <option value="">Select Section Type...</option>
-                           <option value="ContainerDisposal">Container Disposal</option>
-                           <option value="DirectionsForUse">Directions For Use</option>
-                           <option value="EPA_RegAndEstNbr">EPA Reg. No. - EPA Est. No.</option>
-                           <option value="FirstAid">First Aid</option>
-                           <option value="Graphic">Graphic</option>
-                           <option value="Hazards">Hazards</option>
-                           <option value="HumanHazard">Human Hazard</option>
-                           <option value="Ingredients">Ingredients</option>
-                           <option value="Marketing">Marketing</option>
-                           <option value="NetContents">Net Contents</option>
-                           <option value="PhysicalHazard">Physical Hazard</option>
-                           <option value="Precautionary">Precautionary</option>
+                       <label>Section Type: </label>
+                       <select id="zSectionType" class="zeidon" data-zmap="block.z_^l^l^d_^section^type" style="float:right">
+                         <option value="">Select Section Type...</option>
+                         <option value="ContainerDisposal">Container Disposal</option>
+                         <option value="DirectionsForUse">Directions For Use</option>
+                         <option value="EPA_RegAndEstNbr">EPA Reg. No. - EPA Est. No.</option>
+                         <option value="FirstAid">First Aid</option>
+                         <option value="Graphic">Graphic</option>
+                         <option value="Hazards">Hazards</option>
+                         <option value="HumanHazard">Human Hazard</option>
+                         <option value="Ingredients">Ingredients</option>
+                         <option value="Marketing">Marketing</option>
+                         <option value="NetContents">Net Contents</option>
+                         <option value="PhysicalHazard">Physical Hazard</option>
+                         <option value="Precautionary">Precautionary</option>
                            <option value="ProductDescription">Product Description</option>
                            <option value="ProductName">Product Name</option>
                            <option value="ProductSpecific">Product Specific</option>
-                           <option value="StorageDisposal">Storage and Disposal</option>
+                         <option value="StorageDisposal">Storage and Disposal</option>
                         </select>
                      </div>
                      &nbsp;
                      <div style="overflow:hidden; white-space:nowrap; display:none">
-                        <label for="zBlockTitle">Block Name:</label>
-                        <input type="text" id="zBlockName" class="zeidon" data-zmap="block.z_^name" style="float:right" />
+                       <label for="zBlockTitle">Block Name:</label>
+                       <input type="text" id="zBlockName" class="zeidon" data-zmap="block.z_^name" style="float:right" />
                      </div>
                      <div style="overflow:hidden; white-space:nowrap;">
-                        <label for="zBlockTop">Block Top:</label>
-                        <input type="text" id="zBlockTop" class="zeidon" data-zmap="block.z_^top" style="float:right" />
+                       <label for="zBlockTop">Block Top:</label>
+                       <input type="text" id="zBlockTop" class="zeidon" data-zmap="block.z_^top" style="float:right" />
                      </div>
                      <div style="overflow:hidden; white-space:nowrap;">
-                        <label for="zBlockLeft">Block Left:</label>
-                        <input type="text" id="zBlockLeft" class="zeidon" data-zmap="block.z_^left" style="float:right" />
+                       <label for="zBlockLeft">Block Left:</label>
+                       <input type="text" id="zBlockLeft" class="zeidon" data-zmap="block.z_^left" style="float:right" />
                      </div>
                      <div style="overflow:hidden; white-space:nowrap;">
-                        <label for="zBlockHeight">Block Height:</label>
-                        <input type="text" id="zBlockHeight" class="zeidon" data-zmap="block.z_^height" style="float:right" />
+                       <label for="zBlockHeight">Block Height:</label>
+                       <input type="text" id="zBlockHeight" class="zeidon" data-zmap="block.z_^height" style="float:right" />
                      </div>
                      <div style="overflow:hidden; white-space:nowrap;">
-                        <label for="zBlockWidth">Block Width:</label>
-                        <input type="text" id="zBlockWidth" class="zeidon" data-zmap="block.z_^width" style="float:right" />
+                       <label for="zBlockWidth">Block Width:</label>
+                       <input type="text" id="zBlockWidth" class="zeidon" data-zmap="block.z_^width" style="float:right" />
                      </div>
                      <div style="overflow:hidden; white-space:nowrap;">
                        <label for="zBorderStyle">Border Style:</label>
@@ -1056,7 +1056,7 @@ else
                              <label for="zFontSizeSpinner">Font Size:</label>
                              <button id="zFontSizeClear" class = ".ui-button" style="float: right;">Clear Font Size</button>
                              <input type="text" id="zFontSizeSpinner" value="11" class="zeidon-special" data-zmap="block.z_^font^size" style="float:right;width:20px;"/>
-                             <!-- <input type="text" id="zFontSize" class="zeidon-special" data-zmap="block.z_^font^size" style="float:right" /> -->
+                       <!-- <input type="text" id="zFontSize" class="zeidon-special" data-zmap="block.z_^font^size" style="float:right" /> -->
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
                              <label for="zFontWeight">Font Weight:</label>
@@ -1068,7 +1068,8 @@ else
                            </div>
                            <p style="clear:both;position:relative"></p>
                            <div id="zCapitalizeTitleTextFlagToggle" style="overflow:hidden; white-space:nowrap; padding-bottom:12px;">
-                              <input type="checkbox" id="zCapitalizeTitleTextFlag" name="zCapitalizeTitleTextFlag" class="zeidon" data-zmap="block.z_^continuation^block^flag" /><label for="zCapitalizeTitleTextFlag">Capitalize Title Text</label>
+                              <label for="zCapitalizeTitleTextFlag">Capitalize Title Text</label>
+                              <input type="checkbox" id="zCapitalizeTitleTextFlag" name="zCapitalizeTitleTextFlag" class="zeidon" data-zmap="block.z_^continuation^block^flag" />
                            </div>
                            <div>
                               <label for="zTextColor">Text Color</label>
@@ -1172,7 +1173,7 @@ else
                         <option value="64" data-color="#87CEFA">lightskyblue</option>
                         <option value="13" data-color="#6495ED">cornflowerblue</option>
                         <option value="123" data-color="#000000">black</option>
-                        
+
                      </select> -->
                   </div> <!-- End of: Block Properties -->
 
@@ -1320,7 +1321,7 @@ else
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
-String strErrorMapValue = "";
+   String strErrorMapValue = "";
    // FindErrorFields Processing
    mMsgQ = new KZMSGQOO_Object( vKZXMLPGO );
    mMsgQ.setView( VmlOperation.getMessageObject( task ) );

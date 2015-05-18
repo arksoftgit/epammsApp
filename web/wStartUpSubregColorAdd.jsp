@@ -719,8 +719,41 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
+<script language="JavaScript" type="text/javascript" >
+      // Javascript code entered by user for Window action prebuild.
+
+   // We knock out Login and Template as options.
+   thisLi = document.getElementById( "lmLogin" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+   thisLi = document.getElementById( "lmTemplate" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+
+   if ( keyRole == "S" )
+   {
+      thisLi = document.getElementById( "lmSubregistrants" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+      thisLi = document.getElementById( "lmTrackingNotificationCompliance" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+   }
+   else
+   {
+      thisLi = document.getElementById( "lmStateRegistrations" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+   }
+
+   thisLi = document.getElementById( "lmAdministration" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+
+      // END of Javascript code entered by user.
+
+</script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wStartUpSubregColorAdd.js"></script>
 
 </head>
@@ -739,13 +772,13 @@ else
 
 <!-- Side Navigation *********************** -->
 <div id="sidenavigation">
-   <ul>
+   <ul id="Return" name="Return">
 <%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "SaveReturn" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smSaveReturn( )">Return</a></li>
+       <li id="smSaveReturn" name="smSaveReturn"><a href="#"  onclick="smSaveReturn()">Return</a></li>
 <%
    }
 %>
@@ -755,7 +788,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smSaveAddNew( )">Add New</a></li>
+       <li id="smSaveAddNew" name="smSaveAddNew"><a href="#"  onclick="smSaveAddNew()">Add New</a></li>
 <%
    }
 %>
@@ -765,7 +798,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smCancel( )">Cancel and Return</a></li>
+       <li id="smCancel" name="smCancel"><a href="#"  onclick="smCancel()">Cancel and Return</a></li>
 <%
    }
 %>
@@ -941,7 +974,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSubreg.cursor( "Color" ).getAttribute( "Name" ).getString( "" );
+               strErrorMapValue = mSubreg.cursor( "Color" ).getAttribute( "Name" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -986,7 +1019,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSubreg.cursor( "Color" ).getAttribute( "RGB" ).getString( "" );
+               strErrorMapValue = mSubreg.cursor( "Color" ).getAttribute( "RGB" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1031,7 +1064,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSubreg.cursor( "Color" ).getAttribute( "C" ).getString( "" );
+               strErrorMapValue = mSubreg.cursor( "Color" ).getAttribute( "C" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1076,7 +1109,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSubreg.cursor( "Color" ).getAttribute( "M" ).getString( "" );
+               strErrorMapValue = mSubreg.cursor( "Color" ).getAttribute( "M" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1121,7 +1154,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSubreg.cursor( "Color" ).getAttribute( "Y" ).getString( "" );
+               strErrorMapValue = mSubreg.cursor( "Color" ).getAttribute( "Y" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1166,7 +1199,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSubreg.cursor( "Color" ).getAttribute( "K" ).getString( "" );
+               strErrorMapValue = mSubreg.cursor( "Color" ).getAttribute( "K" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1211,7 +1244,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSubreg.cursor( "Color" ).getAttribute( "Pantone" ).getString( "" );
+               strErrorMapValue = mSubreg.cursor( "Color" ).getAttribute( "Pantone" ).getString( "" );
             }
             catch (Exception e)
             {

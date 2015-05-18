@@ -503,8 +503,35 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
+<script language="JavaScript" type="text/javascript" >
+      // Javascript code entered by user for Window action prebuild.
+
+  var thisLi;
+
+   // If the Role is not set when we get here, it is because there is no admin (KeyRole = "U"), so we will only permit the user to go to set up the administrator.
+   if ( keyRole == "U" )
+   {
+      thisLi = document.getElementById( "EBRegistrantName" );
+      thisLi .disabled = true;
+      thisLi = document.getElementById( "EBUserName" );
+      thisLi .disabled = true;
+      thisLi = document.getElementById( "EBPassword" );
+      thisLi .disabled = true;
+      thisLi = document.getElementById( "CBRole" );
+      thisLi .disabled = true;
+      thisLi = document.getElementById( "PBLogin");
+      thisLi.style.visibility = "hidden";
+   }
+   else
+   {
+      thisLi = document.getElementById( "PBSetupAdmin" );
+      thisLi.style.visibility = "hidden";
+   }
+
+      // END of Javascript code entered by user.
+
+</script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wStartUpUserLogin.js"></script>
 
 </head>
@@ -519,8 +546,8 @@ else
 
 <!-- Main Navigation *********************** -->
 <div id="mainnavigation">
-   <ul>
-       <li id="lmmLogout" name="lmmLogout"><a href="#" onclick="mmLogout()">Exit</a></li>
+   <ul id="Exit" name="Exit" >
+       <li id="lmmLogout" name="lmmLogout" ><a href="#" onclick="mmLogout()">Exit</a></li>
    </ul>
 </div>  <!-- end Navigation Bar -->
 
@@ -657,15 +684,22 @@ else
       <%=strVMLError%>
    </div>
 
+
+ <!-- This is added as a line spacer -->
+<div style="height:36px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox1:GroupBox */ %>
 
-<div id="GroupBox1" name="GroupBox1" style="width:46px;height:166px;position:absolute;left:6px;top:36px;">  <!-- GroupBox1 --> 
+<div id="GroupBox1" name="GroupBox1" style="width:46px;height:166px;float:left;">  <!-- GroupBox1 --> 
 
 
 </div>  <!--  GroupBox1 --> 
+<div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
 <% /* WelcomeContainer:GroupBox */ %>
 
-<div id="WelcomeContainer" name="WelcomeContainer" class="divborder" style="width:770px;height:220px;position:absolute;left:60px;top:36px;">  <!-- WelcomeContainer --> 
+<div id="WelcomeContainer" name="WelcomeContainer" class="divborder"   style="float:left;position:relative; width:770px; height:220px;">  <!-- WelcomeContainer --> 
 
 <div  id="WelcomeContainer" name="WelcomeContainer" >Welcome To ePamms</div>
 <% /* RegistrantName::Text */ %>
@@ -693,7 +727,7 @@ else
          {
             try
             {
-            strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "AttemptLoginName" ).getString( "" );
+               strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "AttemptLoginName" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -741,7 +775,7 @@ else
          {
             try
             {
-            strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "AttemptUserName" ).getString( "" );
+               strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "AttemptUserName" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -790,7 +824,7 @@ else
          {
             try
             {
-            strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "AttemptPassword" ).getString( "" );
+               strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "AttemptPassword" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -869,6 +903,8 @@ else
 
 
 </div>  <!--  WelcomeContainer --> 
+</div>  <!-- End of a new line -->
+
 
 <%
    if ( StringUtils.equals( strErrorFlag, "X" ) )
@@ -890,6 +926,8 @@ else
 </div>   <!-- This is the end tag for the div 'contentnosidemenu' -->
 
 </div>   <!-- This is the end tag for the div 'maincontent' -->
+
+<%@ include file="./include/footer.inc" %>
 
 </div>  <!-- This is the end tag for wrapper -->
 

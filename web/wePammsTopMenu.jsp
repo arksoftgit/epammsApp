@@ -353,7 +353,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wePammsTopMenu.js"></script>
 
@@ -373,13 +372,13 @@ else
 
 <!-- Side Navigation *********************** -->
 <div id="sidenavigation">
-   <ul>
+   <ul id="TopMenu" name="TopMenu">
 <%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Home Page" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="ReturnToHomePage( )">Home</a></li>
+       <li id="Home Page" name="Home Page"><a href="#"  onclick="ReturnToHomePage()">Home</a></li>
 <%
    }
 %>
@@ -389,7 +388,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="ChangePassword( )">Password</a></li>
+       <li id="ChangePassword" name="ChangePassword"><a href="#"  onclick="ChangePassword()">Password</a></li>
 <%
    }
 %>
@@ -399,7 +398,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="LINK_ToHelp( )">Help</a></li>
+       <li id="Help" name="Help"><a href="#"  onclick="LINK_ToHelp()">Help</a></li>
 <%
    }
 %>
@@ -409,7 +408,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="LOGOFF_Dialog( )">Logout</a></li>
+       <li id="Logout" name="Logout"><a href="#"  onclick="LOGOFF_Dialog()">Logout</a></li>
 <%
    }
 %>

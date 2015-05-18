@@ -503,7 +503,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wStartUpUserLogin.js"></script>
 
@@ -519,7 +518,7 @@ else
 
 <!-- Main Navigation *********************** -->
 <div id="mainnavigation">
-   <ul>
+   <ul id="Exit" name="Exit" >
        <li id="lmmLogout" name="lmmLogout"><a href="#" onclick="mmLogout()">Exit</a></li>
    </ul>
 </div>  <!-- end Navigation Bar -->

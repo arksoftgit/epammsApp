@@ -494,7 +494,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSPLDSPLD_StatementUpdate.js"></script>
 
@@ -514,13 +513,13 @@ else
 
 <!-- Side Navigation *********************** -->
 <div id="sidenavigation">
-   <ul>
+   <ul id="Menu" name="Menu">
 <%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "File" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="ACCEPT_SPLD_StatementUpdate( )">Accept and Return</a></li>
+       <li id="File" name="File"><a href="#"  onclick="ACCEPT_SPLD_StatementUpdate()">Accept and Return</a></li>
 <%
    }
 %>
@@ -530,7 +529,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="Cancel( )">Cancel and Return</a></li>
+       <li id="New1" name="New1"><a href="#"  onclick="Cancel()">Cancel and Return</a></li>
 <%
    }
 %>

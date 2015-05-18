@@ -1110,7 +1110,7 @@ FormatBlockContainer( VIEW mSPLDefPDF BASED ON LOD mSPLDef,
    STRING ( 256 ) szImg
 
    // Default font size will be set to 8pt for now.
-   szDefaultFontSize = "8pt"
+   szDefaultFontSize = "8"
 
    // Process a Block and its subcomponents, which builds the XSL statement for the Container.
    // Note that mSPLDefPDF is addressing ONLY the LLD subobject and that this subobject could be in a temporary
@@ -1130,6 +1130,16 @@ FormatBlockContainer( VIEW mSPLDefPDF BASED ON LOD mSPLDef,
       IF szColor != ""
          szWriteBuffer = szWriteBuffer + " border-color=^#" + szColor + "^"
       END
+   END
+
+   szBorderStyle = mSPLDefPDF.LLD_Block.BorderStyle
+   IF szBorderStyle != ""
+      szWriteBuffer = szWriteBuffer + " border-style=^" + szBorderStyle + "^"
+   END
+
+   szWidth = mSPLDefPDF.LLD_Block.BorderWidth
+   IF szWidth != ""
+      szWriteBuffer = szWriteBuffer + " border-width=^" + szWidth + "px^"
    END
 
    // Block Container Start, which is either passed in or specified in Block.
@@ -1163,28 +1173,14 @@ FormatBlockContainer( VIEW mSPLDefPDF BASED ON LOD mSPLDef,
    // Other Block parameters come from the "Block" LLD_SpecialSectionAttrBlock entry, if there is one.
    SET CURSOR FIRST mSPLDefPDF.LLD_SpecialSectionAttribute WHERE mSPLDefPDF.LLD_SpecialSectionAttribute.Name = "Block"
    IF RESULT >= zCURSOR_SET
-      szBorderStyle = mSPLDefPDF.LLD_SpecialSectionAttrBlock.BorderStyle
-      IF szBorderStyle != ""
-         szWriteBuffer = szWriteBuffer + " border-style=^" + szBorderStyle + "^"
-      END
-
-      szWidth = mSPLDefPDF.LLD_SpecialSectionAttrBlock.BorderWidth
-      IF szWidth != ""
-         szWriteBuffer = szWriteBuffer + " border-width=^" + szWidth + "^"
-      END
-
       szFontFamily = mSPLDefPDF.LLD_SpecialSectionAttrBlock.FontFamily
       IF szFontFamily != ""
          szWriteBuffer = szWriteBuffer + " font-family=^" + szFontFamily + "^"
       END
-
-      IF mSPLDefPDF.LLD_SpecialSectionAttrBlock.FontSize = ""
-         szFontSize = szDefaultFontSize
-      ELSE
-         szFontSize = mSPLDefPDF.LLD_SpecialSectionAttrBlock.FontSize
-      END
+      szFontSize = mSPLDefPDF.LLD_SpecialSectionAttrBlock.FontSize
       IF szFontSize != ""
-         szWriteBuffer = szWriteBuffer + " font-size=^" + szFontSize + "^"
+      TraceLineS( "1Font Size set to: ", szFontSize )
+         szWriteBuffer = szWriteBuffer + " font-size=^" + szFontSize + "pt^"
       END
       szFontWeight = mSPLDefPDF.LLD_SpecialSectionAttrBlock.FontWeight
       IF szFontWeight != ""
@@ -1270,7 +1266,7 @@ FormatBlockContainer( VIEW mSPLDefPDF BASED ON LOD mSPLDef,
 
    // Add default font size of 8pt, if font wasn't specified above.
    IF szFontSize = ""
-      szWriteBuffer = szWriteBuffer + " font-size=^" + szDefaultFontSize + "^"
+      szWriteBuffer = szWriteBuffer + " font-size=^" + szDefaultFontSize + "pt^"
    END
 
    // Close the entry.
@@ -1325,6 +1321,16 @@ FormatBlock( VIEW mSPLDef BASED ON LOD mSPLDef,
       END
    END
 
+   szBorderStyle = mSPLDef.LLD_Block.BorderStyle
+   IF szBorderStyle != ""
+      szWriteBuffer = szWriteBuffer + " border-style=^" + szBorderStyle + "^"
+   END
+
+   szWidth = mSPLDef.LLD_Block.BorderWidth
+   IF szWidth != ""
+      szWriteBuffer = szWriteBuffer + " border-width=^" + szWidth + "px^"
+   END
+
    szTop = mSPLDef.LLD_Block.Top
    IF szTop != ""
       szWriteBuffer = szWriteBuffer + " top=^" + szTop + "in^"
@@ -1345,11 +1351,7 @@ FormatBlock( VIEW mSPLDef BASED ON LOD mSPLDef,
       szWriteBuffer = szWriteBuffer + " left=^" + szLeft + "in^"
    END
 
-   szBorderStyle = mSPLDef.LLD_Block.BorderStyle
-   IF szBorderStyle != ""
-      szWriteBuffer = szWriteBuffer + " border-style=^" + szBorderStyle + "^"
-   END
-
+/*
    szFontFamily = mSPLDef.LLD_Block.FontFamily
    IF szFontFamily != ""
       szWriteBuffer = szWriteBuffer + " font-family=^" + szFontFamily + "^"
@@ -1357,7 +1359,8 @@ FormatBlock( VIEW mSPLDef BASED ON LOD mSPLDef,
 
    szFontSize = mSPLDef.LLD_Block.FontSize
    IF szFontSize != ""
-      szWriteBuffer = szWriteBuffer + " font-size=^" + szFontSize + "^"
+      TraceLineS( "2Font Size set to: ", szFontSize )
+      szWriteBuffer = szWriteBuffer + " font-size=^" + szFontSize + "pt^"
    END
 
    szFontWeight = mSPLDef.LLD_Block.FontWeight
@@ -1389,6 +1392,7 @@ FormatBlock( VIEW mSPLDef BASED ON LOD mSPLDef,
    IF szTextAlign != ""
       szWriteBuffer = szWriteBuffer + " text-align=^" + szTextAlign + "^"
    END
+*/
 
    // Close the entry.
    szWriteBuffer = szWriteBuffer + ">"
@@ -1449,7 +1453,8 @@ AddFormatToSpecialText( VIEW mSPLDef BASED ON LOD mSPLDef,
 
       szFontSize = mSPLDef.LLD_SpecialSectionAttrBlock.FontSize
       IF szFontSize != ""
-         szWriteBuffer = szWriteBuffer + " font-size=^" + szFontSize + "^"
+      TraceLineS( "3Font Size set to: ", szFontSize )
+         szWriteBuffer = szWriteBuffer + " font-size=^" + szFontSize + "pt^"
       END
 
       szFontWeight = mSPLDef.LLD_SpecialSectionAttrBlock.FontWeight
@@ -4453,7 +4458,7 @@ GenerateLine( VIEW mSPLDef BASED ON LOD mSPLDef,
               STRING ( 5000 ) szOutputLine )
 
    // This is just a SysWriteLine with an options TraceLineS statement.
-   //TraceLineS( "*** Line: ", szOutputLine )
+// TraceLineS( "*** Line: ", szOutputLine )
    SysWriteLine( mSPLDef, lFileHandle, szOutputLine )
 
 END

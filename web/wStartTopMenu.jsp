@@ -553,7 +553,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wStartTopMenu.js"></script>
 
@@ -573,13 +572,13 @@ else
 
 <!-- Side Navigation *********************** -->
 <div id="sidenavigation">
-   <ul>
+   <ul id="TopMenu" name="TopMenu">
 <%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "HomePage" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="GOTO_HomePage( )">Home Page</a></li>
+       <li id="HomePage" name="HomePage"><a href="#"  onclick="GOTO_HomePage()">Home Page</a></li>
 <%
    }
 %>
@@ -589,7 +588,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="GOTO_GeneralClassList( )">General Classes</a></li>
+       <li id="Classes" name="Classes"><a href="#"  onclick="GOTO_GeneralClassList()">General Classes</a></li>
 <%
    }
 %>
@@ -599,7 +598,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="GOTO_Password( )">My Account</a></li>
+       <li id="MyAccount" name="MyAccount"><a href="#"  onclick="GOTO_Password()">My Account</a></li>
 <%
    }
 %>
@@ -609,7 +608,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="GOTO_Directory( )">Directory</a></li>
+       <li id="Directory" name="Directory"><a href="#"  onclick="GOTO_Directory()">Directory</a></li>
 <%
    }
 %>
@@ -619,7 +618,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="GOTO_Reports( )">Reports</a></li>
+       <li id="Reports" name="Reports"><a href="#"  onclick="GOTO_Reports()">Reports</a></li>
 <%
    }
 %>
@@ -629,7 +628,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="GOTO_BudgetRpts( )">Budgets</a></li>
+       <li id="Budgets" name="Budgets"><a href="#"  onclick="GOTO_BudgetRpts()">Budgets</a></li>
 <%
    }
 %>
@@ -639,7 +638,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="LINK_ToHelp( )">Help</a></li>
+       <li id="Help" name="Help"><a href="#"  onclick="LINK_ToHelp()">Help</a></li>
 <%
    }
 %>
@@ -649,7 +648,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="LINK_ToReleaseNotes( )">Release Notes</a></li>
+       <li id="ReleastNotes" name="ReleastNotes"><a href="#"  onclick="LINK_ToReleaseNotes()">Release Notes</a></li>
 <%
    }
 %>
@@ -659,7 +658,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="LOGLOFF_Dialog( )">Log Off</a></li>
+       <li id="LogOff" name="LogOff"><a href="#"  onclick="LOGLOFF_Dialog()">Log Off</a></li>
 <%
    }
 %>

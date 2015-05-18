@@ -1,4 +1,4 @@
-z1000-Zeidon    EPAMMS   TZCMLPLO 05/13/15   08:48:27 1.0a2    
+z1000-Zeidon    EPAMMS   TZCMLPLO 05/15/15   14:02:07 1.0a2    
 eLPLR      1
 aName      epamms
 aDesc      ePamms Application
@@ -446,7 +446,7 @@ aCPLR_ZKey 68567480
 aStatus    1
 aUpdateInd 2
 aName      Blob
-aLastUpdateDate 20150411194744007
+aLastUpdateDate 20150512161413929
 
 eW_MetaDef 3
 aCPLR_ZKey 68568187
@@ -726,98 +726,98 @@ aCPLR_ZKey 69081340
 aStatus    1
 aUpdateInd 2
 aName      TemplateTitlePosition
-aLastUpdateDate 20150512161352856
+aLastUpdateDate 20150515132150851
 
 eW_MetaDef 3
 aCPLR_ZKey 120154151
 aStatus    1
 aUpdateInd 2
 aName      ContinuationBreakFlag
-aLastUpdateDate 20150512161352856
+aLastUpdateDate 20150515132150851
 
 eW_MetaDef 3
 aCPLR_ZKey 120150076
 aStatus    1
 aUpdateInd 2
 aName      LLD_ColumnListType
-aLastUpdateDate 20150512161352856
+aLastUpdateDate 20150515132150851
 
 eW_MetaDef 3
 aCPLR_ZKey 120129882
 aStatus    1
 aUpdateInd 2
 aName      SelectUsageType
-aLastUpdateDate 20150512161352856
+aLastUpdateDate 20150515132150851
 
 eW_MetaDef 3
 aCPLR_ZKey 4322672
 aStatus    1
 aUpdateInd 2
 aName      TextAlign
-aLastUpdateDate 20150512161352856
+aLastUpdateDate 20150515132150851
 
 eW_MetaDef 3
 aCPLR_ZKey 4322656
 aStatus    1
 aUpdateInd 2
 aName      FontSize
-aLastUpdateDate 20150512161352856
+aLastUpdateDate 20150515132150851
 
 eW_MetaDef 3
 aCPLR_ZKey 4322651
 aStatus    1
 aUpdateInd 2
 aName      FontWeight
-aLastUpdateDate 20150512161352856
+aLastUpdateDate 20150515132150851
 
 eW_MetaDef 3
 aCPLR_ZKey 4322644
 aStatus    1
 aUpdateInd 2
 aName      FontFamily
-aLastUpdateDate 20150512161352856
+aLastUpdateDate 20150515132150851
 
 eW_MetaDef 3
 aCPLR_ZKey 4322642
 aStatus    1
 aUpdateInd 2
 aName      Color
-aLastUpdateDate 20150512161352856
+aLastUpdateDate 20150515132150851
 
 eW_MetaDef 3
 aCPLR_ZKey 4322633
 aStatus    1
 aUpdateInd 2
 aName      BorderStyle
-aLastUpdateDate 20150512161352856
+aLastUpdateDate 20150515132150851
 
 eW_MetaDef 3
 aCPLR_ZKey 1181561
 aStatus    1
 aUpdateInd 2
 aName      UsageType
-aLastUpdateDate 20150512161352856
+aLastUpdateDate 20150515132150851
 
 eW_MetaDef 3
 aCPLR_ZKey 69080530
 aStatus    1
 aUpdateInd 2
 aName      TemplateUsageFormatType
-aLastUpdateDate 20150512161352856
+aLastUpdateDate 20150515132150851
 
 eW_MetaDef 3
 aCPLR_ZKey 69080546
 aStatus    1
 aUpdateInd 2
 aName      TemplateStatementFormat
-aLastUpdateDate 20150512161352856
+aLastUpdateDate 20150515132150851
 
 eW_MetaDef 3
 aCPLR_ZKey 69080516
 aStatus    1
 aUpdateInd 2
 aName      LLD_SectionType
-aLastUpdateDate 20150512161352856
+aLastUpdateDate 20150515132150851
 
 eW_MetaDef 3
 aCPLR_ZKey 1160409
@@ -845,154 +845,154 @@ aCPLR_ZKey 110003579
 aStatus    1
 aUpdateInd 2
 aName      HazardLocationSeparator
-aLastUpdateDate 20150411194744007
+aLastUpdateDate 20150512161413929
 
 eW_MetaDef 3
 aCPLR_ZKey 130001702
 aStatus    1
 aUpdateInd 2
 aName      DonTest
-aLastUpdateDate 20150411194744007
+aLastUpdateDate 20150512161413929
 
 eW_MetaDef 3
 aCPLR_ZKey 4730208
 aStatus    1
 aUpdateInd 2
 aName      DirectionsNotForUseType
-aLastUpdateDate 20150411194744007
+aLastUpdateDate 20150512161413929
 
 eW_MetaDef 3
 aCPLR_ZKey 1186473
 aStatus    1
 aUpdateInd 2
 aName      BoldItalic
-aLastUpdateDate 20150411194744007
+aLastUpdateDate 20150512161413929
 
 eW_MetaDef 3
 aCPLR_ZKey 3934625
 aStatus    1
 aUpdateInd 2
 aName      StorageDisposalSectionType
-aLastUpdateDate 20150411194744007
+aLastUpdateDate 20150512161413929
 
 eW_MetaDef 3
 aCPLR_ZKey 3898401
 aStatus    1
 aUpdateInd 2
 aName      HazardPanel
-aLastUpdateDate 20150411194744007
+aLastUpdateDate 20150512161413929
 
 eW_MetaDef 3
 aCPLR_ZKey 3785525
 aStatus    1
 aUpdateInd 2
 aName      HTML Units
-aLastUpdateDate 20150411194744007
+aLastUpdateDate 20150512161413929
 
 eW_MetaDef 3
 aCPLR_ZKey 2838041
 aStatus    1
 aUpdateInd 2
 aName      ContainerVolume
-aLastUpdateDate 20150411194744007
+aLastUpdateDate 20150512161413929
 
 eW_MetaDef 3
 aCPLR_ZKey 2294674
 aStatus    1
 aUpdateInd 2
 aName      REVDate
-aLastUpdateDate 20150411194744007
+aLastUpdateDate 20150512161413929
 
 eW_MetaDef 3
 aCPLR_ZKey 2294672
 aStatus    1
 aUpdateInd 2
 aName      ESLDate
-aLastUpdateDate 20150411194744007
+aLastUpdateDate 20150512161413929
 
 eW_MetaDef 3
 aCPLR_ZKey 70220060
 aStatus    1
 aUpdateInd 2
 aName      ClaimsClassification
-aLastUpdateDate 20150411194744007
+aLastUpdateDate 20150512161413929
 
 eW_MetaDef 3
 aCPLR_ZKey 1639285
 aStatus    1
 aUpdateInd 2
 aName      CompanyRole
-aLastUpdateDate 20150411194744007
+aLastUpdateDate 20150512161413929
 
 eW_MetaDef 3
 aCPLR_ZKey 1266501
 aStatus    1
 aUpdateInd 2
 aName      ActiveInert
-aLastUpdateDate 20150411194744007
+aLastUpdateDate 20150512161413929
 
 eW_MetaDef 3
 aCPLR_ZKey 1206938
 aStatus    1
 aUpdateInd 2
 aName      ContentSectionType
-aLastUpdateDate 20150411194744007
+aLastUpdateDate 20150512161413929
 
 eW_MetaDef 3
 aCPLR_ZKey 1164066
 aStatus    1
 aUpdateInd 2
 aName      ExperienceLevel
-aLastUpdateDate 20150411194744007
+aLastUpdateDate 20150512161413929
 
 eW_MetaDef 3
 aCPLR_ZKey 69055597
 aStatus    1
 aUpdateInd 2
 aName      GeneralSectionType
-aLastUpdateDate 20150411194744007
+aLastUpdateDate 20150512161413929
 
 eW_MetaDef 3
 aCPLR_ZKey 1178868
 aStatus    1
 aUpdateInd 2
 aName      EPA_StatementType
-aLastUpdateDate 20150411194744007
+aLastUpdateDate 20150512161413929
 
 eW_MetaDef 3
 aCPLR_ZKey 1178527
 aStatus    1
 aUpdateInd 2
 aName      ToxicityCategory
-aLastUpdateDate 20150411194744007
+aLastUpdateDate 20150512161413929
 
 eW_MetaDef 3
 aCPLR_ZKey 1178519
 aStatus    1
 aUpdateInd 2
 aName      ChemicalFamily
-aLastUpdateDate 20150411194744007
+aLastUpdateDate 20150512161413929
 
 eW_MetaDef 3
 aCPLR_ZKey 1178421
 aStatus    1
 aUpdateInd 2
 aName      ChildHazardWarning
-aLastUpdateDate 20150411194744007
+aLastUpdateDate 20150512161413929
 
 eW_MetaDef 3
 aCPLR_ZKey 1178406
 aStatus    1
 aUpdateInd 2
 aName      SignalWord
-aLastUpdateDate 20150411194744007
+aLastUpdateDate 20150512161413929
 
 eW_MetaDef 3
 aCPLR_ZKey 68567482
 aStatus    1
 aUpdateInd 2
 aName      Y/N
-aLastUpdateDate 20150411194744007
+aLastUpdateDate 20150512161413929
 
 eW_MetaType 2
 aType      4
@@ -1002,15 +1002,15 @@ aCPLR_ZKey 68568353
 aStatus    1
 aUpdateInd 2
 aName      epamms
-aDesc      286
+aDesc      255
 ePamms Application
 
 Additions:
 1. Added a relationship between M_UsageOrdering, S_UsageOrdering and SPLD_UsageOrdering and their corresponding DirectionsForUse and Marketing Statement entities.
 2. Added Default attributes to LLD and SPLD_LLD.
-3. Added TextLineHeight to LLD_Block. 
-aLastSyncDate 20150429152955713
-aLastUpdateDate 20150429152955713
+3. Add 
+aLastSyncDate 20150514221605018
+aLastUpdateDate 20150514221605018
 
 eW_MetaType 2
 aType      5
@@ -1033,8 +1033,8 @@ aStatus    1
 aUpdateInd 2
 aName      ePamms
 aDesc      ePamms Application
-aLastSyncDate 20150429153039981
-aLastUpdateDate 20150429153039981
+aLastSyncDate 20150515133404258
+aLastUpdateDate 20150515133404258
 
 eW_MetaType 2
 aType      7
@@ -1224,8 +1224,8 @@ aStatus    1
 aUpdateInd 2
 aName      mLLD
 aDesc      File LLD
-aLastSyncDate 20150403134050109
-aLastUpdateDate 20150403134050109
+aLastSyncDate 20150515133259925
+aLastUpdateDate 20150515133259925
 
 eW_MetaDef 3
 aCPLR_ZKey 69033382
@@ -1295,8 +1295,8 @@ aStatus    1
 aUpdateInd 2
 aName      mSPLDef
 aDesc      Subregistrant Physical Label Maintenance
-aLastSyncDate 20150504095406745
-aLastUpdateDate 20150504095406745
+aLastSyncDate 20150515133329809
+aLastUpdateDate 20150515133329809
 
 eW_MetaDef 3
 aCPLR_ZKey 69035258
@@ -1985,8 +1985,8 @@ aStatus    1
 aUpdateInd 2
 aName      wSPLD
 aDesc      Subregistrant Physical Label Definition
-aLastSyncDate 20150513084827615
-aLastUpdateDate 20150513084827615
+aLastSyncDate 20150515140207490
+aLastUpdateDate 20150515140207490
 
 eW_MetaDef 3
 aCPLR_ZKey 93086489
@@ -2060,8 +2060,8 @@ aCPLR_ZKey 69081339
 aStatus    1
 aUpdateInd 2
 aName      Template
-aLastSyncDate 20150512161352856
-aLastUpdateDate 20150512161352856
+aLastSyncDate 20150515132702007
+aLastUpdateDate 20150515132702007
 
 eW_MetaDef 3
 aCPLR_ZKey 68568034

@@ -1233,8 +1233,44 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
+<script language="JavaScript" type="text/javascript" >
+      // Javascript code entered by user for Window action prebuild.
+
+ // From new primary registrant, the only logical top menu option is Logout, so
+   // we only leave Logout as an option
+   var thisLi;
+
+      thisLi = document.getElementById( "lmTemplate" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+      thisLi = document.getElementById( "lmStateRegistrations" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+
+      thisLi = document.getElementById( "lmSubregistrants" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+      thisLi = document.getElementById( "lmTrackingNotificationCompliance" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+
+      thisLi = document.getElementById( "lmProductManagement" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+      thisLi = document.getElementById( "lmMarketingFulfillment" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+      thisLi = document.getElementById( "lmAdministration" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+      thisLi = document.getElementById( "lmLogin" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+
+      // END of Javascript code entered by user.
+
+</script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wStartUpAdminNewSubregistrant.js"></script>
 
 </head>
@@ -1249,16 +1285,16 @@ else
 
 <!-- Main Navigation *********************** -->
 <div id="mainnavigation">
-   <ul>
-       <li id="lmProductManagement" name="lmProductManagement"><a href="#" onclick="mProductManagement()">Products</a></li>
-       <li id="lmSubregistrants" name="lmSubregistrants"><a href="#" onclick="mSubregistrants()">Subregistrants</a></li>
-       <li id="lmTrackingNotificationCompliance" name="lmTrackingNotificationCompliance"><a href="#" onclick="mTrackingNotificationCompliance()">Tracking/Notification/Compliance</a></li>
-       <li id="lmStateRegistrations" name="lmStateRegistrations"><a href="#" onclick="mStateRegistrations()">State Registrations</a></li>
-       <li id="lmMarketingFulfillment" name="lmMarketingFulfillment"><a href="#" onclick="mMarketingFulfillment()">Marketing/Fulfillment</a></li>
-       <li id="lmWebDevelopment" name="lmWebDevelopment"><a href="#" onclick="mWebDevelopment()">Web Development</a></li>
-       <li id="lmAdministration" name="lmAdministration"><a href="#" onclick="mAdministration()">Company Profile</a></li>
-       <li id="lmLogin" name="lmLogin"><a href="#" onclick="mLogin()">Login</a></li>
-       <li id="lmLogout" name="lmLogout"><a href="#" onclick="mLogout()">Logout</a></li>
+   <ul id="TopMenu" name="TopMenu" >
+       <li id="lmProductManagement" name="lmProductManagement" ><a href="#" onclick="mProductManagement()">Products</a></li>
+       <li id="lmSubregistrants" name="lmSubregistrants" ><a href="#" onclick="mSubregistrants()">Subregistrants</a></li>
+       <li id="lmTrackingNotificationCompliance" name="lmTrackingNotificationCompliance" ><a href="#" onclick="mTrackingNotificationCompliance()">Tracking/Notification/Compliance</a></li>
+       <li id="lmStateRegistrations" name="lmStateRegistrations" ><a href="#" onclick="mStateRegistrations()">State Registrations</a></li>
+       <li id="lmMarketingFulfillment" name="lmMarketingFulfillment" ><a href="#" onclick="mMarketingFulfillment()">Marketing/Fulfillment</a></li>
+       <li id="lmWebDevelopment" name="lmWebDevelopment" ><a href="#" onclick="mWebDevelopment()">Web Development</a></li>
+       <li id="lmAdministration" name="lmAdministration" ><a href="#" onclick="mAdministration()">Company Profile</a></li>
+       <li id="lmLogin" name="lmLogin" ><a href="#" onclick="mLogin()">Login</a></li>
+       <li id="lmLogout" name="lmLogout" ><a href="#" onclick="mLogout()">Logout</a></li>
    </ul>
 </div>  <!-- end Navigation Bar -->
 
@@ -1269,13 +1305,13 @@ else
 
 <!-- Side Navigation *********************** -->
 <div id="sidenavigation">
-   <ul>
+   <ul id="Return" name="Return">
 <%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "SaveAndReturn" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smAdminAcceptNewSubreg( )">Save and Return</a></li>
+       <li id="smSaveAndReturn" name="smSaveAndReturn"><a href="#"  onclick="smAdminAcceptNewSubreg()">Save and Return</a></li>
 <%
    }
 %>
@@ -1285,7 +1321,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smAdminCancelNewSubreg( )">Cancel and Return</a></li>
+       <li id="smCancelAndReturn" name="smCancelAndReturn"><a href="#"  onclick="smAdminCancelNewSubreg()">Cancel and Return</a></li>
 <%
    }
 %>
@@ -1495,7 +1531,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSubreg.cursor( "SubregOrganization" ).getAttribute( "Name" ).getString( "" );
+               strErrorMapValue = mSubreg.cursor( "SubregOrganization" ).getAttribute( "Name" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1546,7 +1582,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSubreg.cursor( "SubregOrganization" ).getAttribute( "Description" ).getString( "" );
+               strErrorMapValue = mSubreg.cursor( "SubregOrganization" ).getAttribute( "Description" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1597,7 +1633,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSubreg.cursor( "Subregistrant" ).getAttribute( "EPA_CompanyNumber" ).getString( "" );
+               strErrorMapValue = mSubreg.cursor( "Subregistrant" ).getAttribute( "EPA_CompanyNumber" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1692,7 +1728,7 @@ else
          {
             try
             {
-            strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "AttemptLoginName" ).getString( "" );
+               strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "AttemptLoginName" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1743,7 +1779,7 @@ else
          {
             try
             {
-            strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "AttemptPassword" ).getString( "" );
+               strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "AttemptPassword" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1794,7 +1830,7 @@ else
          {
             try
             {
-            strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "ConfirmPassword" ).getString( "" );
+               strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "ConfirmPassword" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1889,7 +1925,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSubreg.cursor( "PhysicalAddress" ).getAttribute( "Address" ).getString( "" );
+               strErrorMapValue = mSubreg.cursor( "PhysicalAddress" ).getAttribute( "Address" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1939,7 +1975,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSubreg.cursor( "PhysicalAddress" ).getAttribute( "AddressLine2" ).getString( "" );
+               strErrorMapValue = mSubreg.cursor( "PhysicalAddress" ).getAttribute( "AddressLine2" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1990,7 +2026,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSubreg.cursor( "PhysicalAddress" ).getAttribute( "City" ).getString( "" );
+               strErrorMapValue = mSubreg.cursor( "PhysicalAddress" ).getAttribute( "City" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -2136,7 +2172,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSubreg.cursor( "PhysicalAddress" ).getAttribute( "ZipCode" ).getString( "" );
+               strErrorMapValue = mSubreg.cursor( "PhysicalAddress" ).getAttribute( "ZipCode" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -2193,7 +2229,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSubreg.cursor( "PhysicalAddress" ).getAttribute( "TollFreePhone" ).getString( "" );
+               strErrorMapValue = mSubreg.cursor( "PhysicalAddress" ).getAttribute( "TollFreePhone" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -2333,7 +2369,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSubreg.cursor( "MailingAddress" ).getAttribute( "Address" ).getString( "" );
+               strErrorMapValue = mSubreg.cursor( "MailingAddress" ).getAttribute( "Address" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -2383,7 +2419,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSubreg.cursor( "MailingAddress" ).getAttribute( "AddressLine2" ).getString( "" );
+               strErrorMapValue = mSubreg.cursor( "MailingAddress" ).getAttribute( "AddressLine2" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -2434,7 +2470,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSubreg.cursor( "MailingAddress" ).getAttribute( "City" ).getString( "" );
+               strErrorMapValue = mSubreg.cursor( "MailingAddress" ).getAttribute( "City" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -2580,7 +2616,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSubreg.cursor( "MailingAddress" ).getAttribute( "ZipCode" ).getString( "" );
+               strErrorMapValue = mSubreg.cursor( "MailingAddress" ).getAttribute( "ZipCode" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -2681,7 +2717,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSubreg.cursor( "ContactPerson" ).getAttribute( "FirstName" ).getString( "" );
+               strErrorMapValue = mSubreg.cursor( "ContactPerson" ).getAttribute( "FirstName" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -2732,7 +2768,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSubreg.cursor( "ContactPerson" ).getAttribute( "LastName" ).getString( "" );
+               strErrorMapValue = mSubreg.cursor( "ContactPerson" ).getAttribute( "LastName" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -2783,7 +2819,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSubreg.cursor( "ContactPerson" ).getAttribute( "Title" ).getString( "" );
+               strErrorMapValue = mSubreg.cursor( "ContactPerson" ).getAttribute( "Title" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -2834,7 +2870,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSubreg.cursor( "ContactPerson" ).getAttribute( "WorkPhone" ).getString( "" );
+               strErrorMapValue = mSubreg.cursor( "ContactPerson" ).getAttribute( "WorkPhone" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -2885,7 +2921,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSubreg.cursor( "ContactPerson" ).getAttribute( "Fax" ).getString( "" );
+               strErrorMapValue = mSubreg.cursor( "ContactPerson" ).getAttribute( "Fax" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -2936,7 +2972,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSubreg.cursor( "ContactPerson" ).getAttribute( "EmailAddress" ).getString( "" );
+               strErrorMapValue = mSubreg.cursor( "ContactPerson" ).getAttribute( "EmailAddress" ).getString( "" );
             }
             catch (Exception e)
             {

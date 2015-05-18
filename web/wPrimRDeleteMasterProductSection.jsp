@@ -784,7 +784,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wPrimRDeleteMasterProductSection.js"></script>
 
@@ -804,13 +803,13 @@ else
 
 <!-- Side Navigation *********************** -->
 <div id="sidenavigation">
-   <ul>
+   <ul id="TopMenu" name="TopMenu">
 <%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Template" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smTemplate( )">Template</a></li>
+       <li id="smTemplate" name="smTemplate"><a href="#"  onclick="smTemplate()">Template</a></li>
 <%
    }
 %>
@@ -820,7 +819,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smSystem( )">System</a></li>
+       <li id="smSystem" name="smSystem"><a href="#"  onclick="smSystem()">System</a></li>
 <%
    }
 %>
@@ -830,7 +829,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smShowFeedback( )">Feedback</a></li>
+       <li id="smFeedback" name="smFeedback"><a href="#"  onclick="smShowFeedback()">Feedback</a></li>
 <%
    }
 %>
@@ -840,7 +839,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smLogout( )">Logout</a></li>
+       <li id="smLogout" name="smLogout"><a href="#"  onclick="smLogout()">Logout</a></li>
 <%
    }
 %>
@@ -1080,7 +1079,7 @@ else
          {
             try
             {
-            strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "AttemptPassword" ).getString( "" );
+               strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "AttemptPassword" ).getString( "" );
             }
             catch (Exception e)
             {

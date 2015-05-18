@@ -748,7 +748,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSPLDSPLD_BlockDefinitionUpdate.js"></script>
 
@@ -768,13 +767,13 @@ else
 
 <!-- Side Navigation *********************** -->
 <div id="sidenavigation">
-   <ul>
+   <ul id="Return" name="Return">
 <%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "AcceptAndReturn" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="ACCEPT_BlockSubBlockDefinition( )">Return</a></li>
+       <li id="AcceptAndReturn" name="AcceptAndReturn"><a href="#"  onclick="ACCEPT_BlockSubBlockDefinition()">Return</a></li>
 <%
    }
 %>
@@ -784,7 +783,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="GENERATE_SPLD_LabelDottedBorders( )">Generate Label with Borders</a></li>
+       <li id="New1" name="New1"><a href="#"  onclick="GENERATE_SPLD_LabelDottedBorders()">Generate Label with Borders</a></li>
 <%
    }
 %>
@@ -794,7 +793,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="GENERATE_SPLD_Label( )">Generate Label</a></li>
+       <li id="New2" name="New2"><a href="#"  onclick="GENERATE_SPLD_Label()">Generate Label</a></li>
 <%
    }
 %>

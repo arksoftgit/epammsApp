@@ -492,7 +492,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSystemUsersDetail.js"></script>
 
@@ -715,7 +714,7 @@ else
          {
             try
             {
-            strErrorMapValue = mUser.cursor( "User" ).getAttribute( "UserName" ).getString( "" );
+               strErrorMapValue = mUser.cursor( "User" ).getAttribute( "UserName" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -770,7 +769,7 @@ else
          {
             try
             {
-            strErrorMapValue = mUser.cursor( "User" ).getAttribute( "UserPassword" ).getString( "" );
+               strErrorMapValue = mUser.cursor( "User" ).getAttribute( "UserPassword" ).getString( "" );
             }
             catch (Exception e)
             {

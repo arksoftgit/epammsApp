@@ -535,8 +535,37 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
+<script language="JavaScript" type="text/javascript" >
+      // Javascript code entered by user for Window action prebuild.
+
+   // We knock out Login and Template as options.
+   thisLi = document.getElementById( "lmLogin" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+   thisLi = document.getElementById( "lmTemplate" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+
+   if ( keyRole == "S" )
+   {
+      thisLi = document.getElementById( "lmSubregistrants" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+      thisLi = document.getElementById( "lmTrackingNotificationCompliance" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+   }
+   else
+   {
+      thisLi = document.getElementById( "lmStateRegistrations" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+   }
+
+      // END of Javascript code entered by user.
+
+</script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSubRChangeSubregPassword.js"></script>
 
 </head>
@@ -555,13 +584,13 @@ else
 
 <!-- Side Navigation *********************** -->
 <div id="sidenavigation">
-   <ul>
+   <ul id="Return" name="Return">
 <%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "ChangeAndReturn" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smConfirmChangeSubregPassword( )">Change Password and Return</a></li>
+       <li id="smChangeAndReturn" name="smChangeAndReturn"><a href="#"  onclick="smConfirmChangeSubregPassword()">Change Password and Return</a></li>
 <%
    }
 %>
@@ -571,7 +600,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smCancelChangeSubregPassword( )">Cancel Change and Return</a></li>
+       <li id="smCancelAndReturn" name="smCancelAndReturn"><a href="#"  onclick="smCancelChangeSubregPassword()">Cancel Change and Return</a></li>
 <%
    }
 %>
@@ -800,7 +829,7 @@ else
          {
             try
             {
-            strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "CurrentPassword" ).getString( "" );
+               strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "CurrentPassword" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -856,7 +885,7 @@ else
          {
             try
             {
-            strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "AttemptPassword" ).getString( "" );
+               strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "AttemptPassword" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -912,7 +941,7 @@ else
          {
             try
             {
-            strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "ConfirmPassword" ).getString( "" );
+               strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "ConfirmPassword" ).getString( "" );
             }
             catch (Exception e)
             {

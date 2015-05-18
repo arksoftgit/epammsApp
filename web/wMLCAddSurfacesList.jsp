@@ -513,8 +513,32 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
+<script language="JavaScript" type="text/javascript" >
+      // Javascript code entered by user for Window action prebuild.
+
+   var thisLi;
+
+// if ( keyRole == "P" || keyRole == "N" ) // If we are here, we have to be a Primary.
+   // We knock out Login and Template as options.
+   thisLi = document.getElementById( "lmLogin" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+   thisLi = document.getElementById( "lmTemplate" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+
+   thisLi = document.getElementById( "lmStateRegistrations" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+
+   // Cannot go to product management if already there.
+   thisLi = document.getElementById( "lmProductManagement" );
+   thisLi.disabled = true;
+
+      // END of Javascript code entered by user.
+
+</script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wMLCAddSurfacesList.js"></script>
 
 </head>
@@ -533,13 +557,13 @@ else
 
 <!-- Side Navigation *********************** -->
 <div id="sidenavigation">
-   <ul>
+   <ul id="Return" name="Return">
 <%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "AddSelectedSurfaces" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="ConfirmAddSelectedSurfacesStmts( )">Add Selected Surfaces</a></li>
+       <li id="AddSelectedSurfaces" name="AddSelectedSurfaces"><a href="#"  onclick="ConfirmAddSelectedSurfacesStmts()">Add Selected Surfaces</a></li>
 <%
    }
 %>
@@ -549,7 +573,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="ConfirmAddSurfacesStmtsAndReturn( )">Add and Return</a></li>
+       <li id="AddAndReturn" name="AddAndReturn"><a href="#"  onclick="ConfirmAddSurfacesStmtsAndReturn()">Add and Return</a></li>
 <%
    }
 %>
@@ -559,7 +583,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="CancelAddSurfacesStmts( )">Cancel and Return</a></li>
+       <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CancelAddSurfacesStmts()">Cancel and Return</a></li>
 <%
    }
 %>

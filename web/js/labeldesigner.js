@@ -33,7 +33,7 @@ $(function() {
    var g_metaDate = "";
    
    var g_jsonColors = [];
-   var g_jsonLabel2;
+// var g_jsonLabel2;
 
 // var storageSession = window.sessionStorage;
 // var storageLocal = window.localStorage;
@@ -155,10 +155,14 @@ $(function() {
    function saveLabel( commit, callback ) {
       mapUiDataToElementData( g_$current_block );
       if ( g_updatedLLD || commit === "Commit" ) {
+      // alert( "Changed" );
          ConvertWysiwygLabelDesignToZeidonJson( "saveLabel" + commit , "mSPLDef", callback, null );
          g_updatedLLD = false;
-      } else if ( callback ) {
-         callback();
+      } else {
+      // alert( "Not Changed" );
+         if ( callback ) {
+            callback();
+        }
       }      
    }
 
@@ -171,6 +175,7 @@ $(function() {
          saveLabel( "", returnCallback );
          g_updatedLLD = false;
       } else {
+      // alert( "Not Changed" );
          Return();
       }
    });
@@ -200,8 +205,10 @@ $(function() {
       if ( g_$current_block ) {
          if ( g_$current_block.hasClass( "panel" ) === false ) {
             if ( g_updatedLLD ) {
+            // alert( "Changed" );
                ConvertWysiwygLabelDesignToZeidonJson( "saveLabel", "mSPLDef", updateBlockCallback, g_$current_block );
             } else {
+            // alert( "Not Changed" );
                updateBlockCallback( g_$current_block );
             }
          } else {
@@ -480,6 +487,12 @@ $(function() {
             var $canvasElement = $(ui.helper);
             var $parent = $canvasElement.parent();
             var $canvas = determineTargetOfDrop( event, $(this), $canvasElement );
+            if ( $parent[0] !== $canvas[0] ) {
+               var r = confirm( "Do you want to move to a new parent?" );
+               if ( r !== true ) {
+                  return false;
+               }
+            }
             addZeidonAttributeToElement( $canvasElement, "wPID", $canvas.data( "z_w^i^d" ) );
             addZeidonAttributeToElement( $canvasElement, "wPE", $canvas.data( "z_w^e" ) );
          // console.log( "Setting1 wPID: " + $canvas.data( "z_w^i^d" ) + "  wPE: " + $canvas.data( "z_w^e" ) );
@@ -509,12 +522,12 @@ $(function() {
                addZeidonAttributeToElement( $canvasElement, "wPID", $canvas.data( "z_w^i^d" ) );
                addZeidonAttributeToElement( $canvasElement, "wPE", $canvas.data( "z_w^e" ) );
             // console.log( "Setting2 wPID: " + $canvas.data( "z_w^i^d" ) + "  wPE: " + $canvas.data( "z_w^e" ) );
-               g_updatedLLD = true;
                setChildrenDepth( $canvas, $canvasElement );
             // setCurrentBlockData( $canvasElement, "updated 7" );
             // $canvasElement.data( "z_^top", Math.round( top ).toString() );   done later
             // $canvasElement.data( "z_^left", Math.round( left ).toString() ); done later
             }
+            g_updatedLLD = true;
             setCurrentBlockData( $canvasElement, "updated block already on canvas" );
             clearListAndSelection( $canvasElement[0] ); // clear the list and set current selection
          } else {
@@ -785,7 +798,7 @@ $(function() {
             }
          });
          if ( element_id === "block" ) {
-         // console.log( "Processing block type: " + sectionType );
+            console.log( "Processing block type: " + sectionType );
             var optionsDflt = "<option value=\"^title\">Title</option><option value=\"^text\">Text</option>";  // default
             var options = "";
             // The .prop() method should be used to set disabled and checked instead of the .attr() method.
@@ -794,12 +807,15 @@ $(function() {
             if ( sectionType === "Graphic" ) {
                $("#zImageNameToggle").show();
                $("#zCheckContinuationBlockToggle").hide();
+               console.log( "   Hiding capitalize" );
                $("#zCapitalizeTitleTextFlagToggle").hide();
                $("#zClaimListTypeToggle").hide();
                $("#zMarketingSectionToggle").hide();
+               options = optionsDflt;
             } else if ( sectionType === "Marketing" || sectionType === "DirectionsForUse" || sectionType === "FirstAid" ||
                         sectionType === "StorageDisposal" || sectionType === "Hazards" || sectionType === "Precautionary" ) {
                $("#zCheckContinuationBlockToggle").show();
+               console.log( "   Showing capitalize" );
                $("#zCapitalizeTitleTextFlagToggle").show();
                $("#zImageNameToggle").hide();
                if ( sectionType === "Marketing" ) {
@@ -819,6 +835,7 @@ $(function() {
                }
             } else {
                $("#zCheckContinuationBlockToggle").hide();
+               console.log( "   Hiding capitalize" );
                $("#zCapitalizeTitleTextFlagToggle").hide();
                $("#zImageNameToggle").hide();
                $("#zClaimListTypeToggle").hide();
@@ -850,6 +867,7 @@ $(function() {
          } else {
             $("#zBlockFormatTypeToggle").hide();
             $("#zCheckContinuationBlockToggle").hide();
+            console.log( "   Hiding capitalize" );
             $("#zCapitalizeTitleTextFlagToggle").hide();
             $("#zImageNameToggle").hide();
             $("#zClaimListTypeToggle").hide();
@@ -861,6 +879,7 @@ $(function() {
          });
          $("#zBlockFormatTypeToggle").hide();
          $("#zCheckContinuationBlockToggle").hide();
+         console.log( "   Hiding capitalize" );
          $("#zCapitalizeTitleTextFlagToggle").hide();
          $("#zImageNameToggle").hide();
          $("#zClaimListTypeToggle").hide();
@@ -1149,14 +1168,6 @@ $(function() {
       return (json) ? JSON.stringify( treeObject ) : treeObject;
    }
 
-   function selectPage( value ) {
-      mapUiDataToElementData( $("#page") );
-      $("#page").attr( "id", "page" + g_currentPage ).attr( "name", "page" + g_currentPage ).removeClass( "page_active" ).addClass( "page_hidden" ).hide();
-      $("#page" + value).attr( "id", "page" ).attr( "name", "page" ).removeClass( "page_hidden" ).addClass( "page_active" ).show();
-      g_currentPage = value;
-      mapElementDataToUiData( $("#page") );
-   }
-
 /* not using colorwell at present
    var selected;
    var f = $.farbtastic('#zpicker');
@@ -1398,8 +1409,6 @@ var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
                      if ( key === "z_^text^color" ) {
                      // console.log( "Processing color1" );
                         g_$current_block.data( key, getColorPickerByRGB( $(this).val() ) );
-                     } else if ( key === "z_^font^size" ) {
-                        g_$current_block.data( key, $(this).val() + "pt" );
                      } else {
                         g_$current_block.data( key, this.type === "checkbox" ? (this.checked === true ? "Y" : "") : $(this).val() );
                      }
@@ -1448,13 +1457,6 @@ var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
                      value = g_$current_block.data( key );
                      if ( ! value ) {
                         value = "";
-                     }
-
-                     if ( key === "z_^font^size" ) {
-                        n = value.indexOf( "pt" );
-                        if ( n >= 0 ) {
-                           value = value.substring( 0, n );
-                        }
                      }
                      if ( key === "z_^text^color" ) {
                         setColorPickerByName( $(this), value );
@@ -1555,9 +1557,10 @@ var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
 
 // $("#zBlockTextAlign").combobox();
 // $("#zHazardPanel").combobox();
+
    var $FontSizeSpinner = $("#zFontSizeSpinner").spinner();
    $FontSizeSpinner.spinner( "option", "min", 3 );
-   $FontSizeSpinner.spinner( "option", "max", 26 );
+   $FontSizeSpinner.spinner( "option", "max", 40 );
    $FontSizeSpinner.spinner( "option", "numberFormat", "nn" );
    $FontSizeSpinner[0].readOnly = true;  // prevent invalid input
 
@@ -1567,8 +1570,16 @@ var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
 
    // Handle the Spinner change event.
    $FontSizeSpinner.on( "spinstop", function( event, ui ) {
-      selectFontSize( $FontSizeSpinner.spinner( "value" ) );
+      blurZeidon( this, $FontSizeSpinner.spinner( "value" ) );
    });
+
+   function selectPage( value ) {
+      mapUiDataToElementData( $("#page") );
+      $("#page").attr( "id", "page" + g_currentPage ).attr( "name", "page" + g_currentPage ).removeClass( "page_active" ).addClass( "page_hidden" ).hide();
+      $("#page" + value).attr( "id", "page" ).attr( "name", "page" ).removeClass( "page_hidden" ).addClass( "page_active" ).show();
+      g_currentPage = value;
+      mapElementDataToUiData( $("#page") );
+   }
 
    var $PageSpinner = $("#zPageSpinner").spinner();
    $PageSpinner.spinner( "option", "min", 1 );

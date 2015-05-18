@@ -820,8 +820,47 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/sts.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
+<script language="JavaScript" type="text/javascript" >
+      // Javascript code entered by user for Window action prebuild.
+
+   // From this subwindow, the only logical top menu option is Logout, so
+   // we leave Logout as the only option.
+   var thisLi;
+
+      thisLi = document.getElementById( "lmTemplate" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+      thisLi = document.getElementById( "lmStateRegistrations" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+
+      thisLi = document.getElementById( "lmSubregistrants" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+      thisLi = document.getElementById( "lmTrackingNotificationCompliance" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+
+      thisLi = document.getElementById( "lmProductManagement" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+      thisLi = document.getElementById( "lmMarketingFulfillment" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+      thisLi = document.getElementById( "lmWebDevelopment" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+      thisLi = document.getElementById( "lmAdministration" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+      thisLi = document.getElementById( "lmLogin" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+
+      // END of Javascript code entered by user.
+
+</script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wStartUpAdminListPrimRegUsers.js"></script>
 
 </head>
@@ -841,16 +880,16 @@ else
 
 <!-- Main Navigation *********************** -->
 <div id="mainnavigation">
-   <ul>
-       <li id="lmProductManagement" name="lmProductManagement"><a href="#" onclick="mProductManagement()">Products</a></li>
-       <li id="lmSubregistrants" name="lmSubregistrants"><a href="#" onclick="mSubregistrants()">Subregistrants</a></li>
-       <li id="lmTrackingNotificationCompliance" name="lmTrackingNotificationCompliance"><a href="#" onclick="mTrackingNotificationCompliance()">Tracking/Notification/Compliance</a></li>
-       <li id="lmStateRegistrations" name="lmStateRegistrations"><a href="#" onclick="mStateRegistrations()">State Registrations</a></li>
-       <li id="lmMarketingFulfillment" name="lmMarketingFulfillment"><a href="#" onclick="mMarketingFulfillment()">Marketing/Fulfillment</a></li>
-       <li id="lmWebDevelopment" name="lmWebDevelopment"><a href="#" onclick="mWebDevelopment()">Web Development</a></li>
-       <li id="lmAdministration" name="lmAdministration"><a href="#" onclick="mAdministration()">Company Profile</a></li>
-       <li id="lmLogin" name="lmLogin"><a href="#" onclick="mLogin()">Login</a></li>
-       <li id="lmLogout" name="lmLogout"><a href="#" onclick="mLogout()">Logout</a></li>
+   <ul id="TopMenu" name="TopMenu" >
+       <li id="lmProductManagement" name="lmProductManagement" ><a href="#" onclick="mProductManagement()">Products</a></li>
+       <li id="lmSubregistrants" name="lmSubregistrants" ><a href="#" onclick="mSubregistrants()">Subregistrants</a></li>
+       <li id="lmTrackingNotificationCompliance" name="lmTrackingNotificationCompliance" ><a href="#" onclick="mTrackingNotificationCompliance()">Tracking/Notification/Compliance</a></li>
+       <li id="lmStateRegistrations" name="lmStateRegistrations" ><a href="#" onclick="mStateRegistrations()">State Registrations</a></li>
+       <li id="lmMarketingFulfillment" name="lmMarketingFulfillment" ><a href="#" onclick="mMarketingFulfillment()">Marketing/Fulfillment</a></li>
+       <li id="lmWebDevelopment" name="lmWebDevelopment" ><a href="#" onclick="mWebDevelopment()">Web Development</a></li>
+       <li id="lmAdministration" name="lmAdministration" ><a href="#" onclick="mAdministration()">Company Profile</a></li>
+       <li id="lmLogin" name="lmLogin" ><a href="#" onclick="mLogin()">Login</a></li>
+       <li id="lmLogout" name="lmLogout" ><a href="#" onclick="mLogout()">Logout</a></li>
    </ul>
 </div>  <!-- end Navigation Bar -->
 
@@ -861,13 +900,13 @@ else
 
 <!-- Side Navigation *********************** -->
 <div id="sidenavigation">
-   <ul>
+   <ul id="Return" name="Return">
 <%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Return" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smReturnToPrimaryRegistrants( )">Return</a></li>
+       <li id="smReturn" name="smReturn"><a href="#"  onclick="smReturnToPrimaryRegistrants()">Return</a></li>
 <%
    }
 %>

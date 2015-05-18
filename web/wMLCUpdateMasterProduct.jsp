@@ -715,7 +715,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wMLCUpdateMasterProduct.js"></script>
 
@@ -735,13 +734,13 @@ else
 
 <!-- Side Navigation *********************** -->
 <div id="sidenavigation">
-   <ul>
+   <ul id="Return" name="Return">
 <%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "SaveAndReturn" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="SAVE_MasterProduct( )">Save & Return</a></li>
+       <li id="SaveAndReturn" name="SaveAndReturn"><a href="#"  onclick="SAVE_MasterProduct()">Save & Return</a></li>
 <%
    }
 %>
@@ -751,7 +750,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="CANCEL_MasterProduct( )">Cancel & Return</a></li>
+       <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CANCEL_MasterProduct()">Cancel & Return</a></li>
 <%
    }
 %>
@@ -916,7 +915,7 @@ else
          {
             try
             {
-            strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "AttemptProductName" ).getString( "" );
+               strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "AttemptProductName" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -961,7 +960,7 @@ else
          {
             try
             {
-            strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "AttemptProductNumber" ).getString( "" );
+               strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "AttemptProductNumber" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1076,7 +1075,7 @@ else
          {
             try
             {
-            strErrorMapValue = mMasProd.cursor( "MasterProduct" ).getAttribute( "EPA_EstablishmentNumber" ).getString( "" );
+               strErrorMapValue = mMasProd.cursor( "MasterProduct" ).getAttribute( "EPA_EstablishmentNumber" ).getString( "" );
             }
             catch (Exception e)
             {

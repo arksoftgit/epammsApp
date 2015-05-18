@@ -1036,8 +1036,21 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
+<script language="JavaScript" type="text/javascript" >
+      // Javascript code entered by user for Window action prebuild.
+
+   thisLi = document.getElementById( "lmTemplate" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+
+   thisLi = document.getElementById( "lmSystem" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+
+      // END of Javascript code entered by user.
+
+</script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSystemUpdateSystemChemical.js"></script>
 
 </head>
@@ -1052,11 +1065,11 @@ else
 
 <!-- Main Navigation *********************** -->
 <div id="mainnavigation">
-   <ul>
-       <li id="lmTemplate" name="lmTemplate"><a href="#" onclick="mTemplate()">Template</a></li>
-       <li id="lmSystem" name="lmSystem"><a href="#" onclick="mSystem()">System</a></li>
-       <li id="lmShowFeedback" name="lmShowFeedback"><a href="#" onclick="mShowFeedback()">Feedback</a></li>
-       <li id="lmLogout" name="lmLogout"><a href="#" onclick="mLogout()">Logout</a></li>
+   <ul id="TopMenu" name="TopMenu" >
+       <li id="lmTemplate" name="lmTemplate" ><a href="#" onclick="mTemplate()">Template</a></li>
+       <li id="lmSystem" name="lmSystem" ><a href="#" onclick="mSystem()">System</a></li>
+       <li id="lmShowFeedback" name="lmShowFeedback" ><a href="#" onclick="mShowFeedback()">Feedback</a></li>
+       <li id="lmLogout" name="lmLogout" ><a href="#" onclick="mLogout()">Logout</a></li>
    </ul>
 </div>  <!-- end Navigation Bar -->
 
@@ -1067,13 +1080,13 @@ else
 
 <!-- Side Navigation *********************** -->
 <div id="sidenavigation">
-   <ul>
+   <ul id="Return" name="Return">
 <%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "UpdateAreasOfUseList" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smUpdateAreasOfUseList( )">Update Areas of Use List</a></li>
+       <li id="smUpdateAreasOfUseList" name="smUpdateAreasOfUseList"><a href="#"  onclick="smUpdateAreasOfUseList()">Update Areas of Use List</a></li>
 <%
    }
 %>
@@ -1083,7 +1096,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smUpdateAppTypesList( )">Update Application Types List</a></li>
+       <li id="smUpdateAppTypesList" name="smUpdateAppTypesList"><a href="#"  onclick="smUpdateAppTypesList()">Update Application Types List</a></li>
 <%
    }
 %>
@@ -1093,7 +1106,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smUpdateSurfacesList( )">Update Surfaces List</a></li>
+       <li id="smUpdateSurfacesList" name="smUpdateSurfacesList"><a href="#"  onclick="smUpdateSurfacesList()">Update Surfaces List</a></li>
 <%
    }
 %>
@@ -1103,7 +1116,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smUpdateBacteriaList( )">Update Bacteria List</a></li>
+       <li id="smUpdateBacteriaList" name="smUpdateBacteriaList"><a href="#"  onclick="smUpdateBacteriaList()">Update Bacteria List</a></li>
 <%
    }
 %>
@@ -1113,7 +1126,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smUpdateFungiList( )">Update Fungi List</a></li>
+       <li id="smUpdateFungiList" name="smUpdateFungiList"><a href="#"  onclick="smUpdateFungiList()">Update Fungi List</a></li>
 <%
    }
 %>
@@ -1123,7 +1136,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smUpdateVirusesList( )">Update Viruses List</a></li>
+       <li id="smUpdateVirusesList" name="smUpdateVirusesList"><a href="#"  onclick="smUpdateVirusesList()">Update Viruses List</a></li>
 <%
    }
 %>
@@ -1133,7 +1146,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smAcceptUpdateSystemChemical( )">Save and Return</a></li>
+       <li id="smAcceptUpdateChemical" name="smAcceptUpdateChemical"><a href="#"  onclick="smAcceptUpdateSystemChemical()">Save and Return</a></li>
 <%
    }
 %>
@@ -1143,7 +1156,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smCancelUpdateSystemChemical( )">Cancel and Return</a></li>
+       <li id="smCancelUpdateChemical" name="smCancelUpdateChemical"><a href="#"  onclick="smCancelUpdateSystemChemical()">Cancel and Return</a></li>
 <%
    }
 %>

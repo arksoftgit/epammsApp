@@ -381,7 +381,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wMLCDeleteComponent.js"></script>
 
@@ -401,13 +400,13 @@ else
 
 <!-- Side Navigation *********************** -->
 <div id="sidenavigation">
-   <ul>
+   <ul id="Return" name="Return">
 <%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "DeleteAndReturn" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="ConfirmDeleteComponent( )">Confirm Delete & Return</a></li>
+       <li id="DeleteAndReturn" name="DeleteAndReturn"><a href="#"  onclick="ConfirmDeleteComponent()">Confirm Delete & Return</a></li>
 <%
    }
 %>
@@ -417,7 +416,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="CancelDeleteComponent( )">Cancel Delete & Return</a></li>
+       <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CancelDeleteComponent()">Cancel Delete & Return</a></li>
 <%
    }
 %>

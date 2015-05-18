@@ -499,7 +499,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSystemDragDropSort.js"></script>
 
@@ -523,10 +522,10 @@ else
 
 <!-- Main Navigation *********************** -->
 <div id="mainnavigation">
-   <ul>
-       <li id="lmApplySortOrder" name="lmApplySortOrder"><a href="#" onclick="mApplySortOrder()">Apply Sort Order  </a></li>
-       <li id="lmCancelSortDiv" name="lmCancelSortDiv"><a href="#" onclick="mCancelSortDiv()">  Cancel  </a></li>
-       <li id="lmmLogout" name="lmmLogout"><a href="#" onclick="mmLogout()">Logout</a></li>
+   <ul id="Exit" name="Exit" >
+       <li id="lmApplySortOrder" name="lmApplySortOrder" ><a href="#" onclick="mApplySortOrder()">Apply Sort Order  </a></li>
+       <li id="lmCancelSortDiv" name="lmCancelSortDiv" ><a href="#" onclick="mCancelSortDiv()">  Cancel  </a></li>
+       <li id="lmmLogout" name="lmmLogout" ><a href="#" onclick="mmLogout()">Logout</a></li>
    </ul>
 </div>  <!-- end Navigation Bar -->
 

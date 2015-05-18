@@ -444,8 +444,44 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
+<script language="JavaScript" type="text/javascript" >
+      // Javascript code entered by user for Window action prebuild.
+
+   // We knock out Login and Template as options.
+   var thisLi;
+
+   thisLi = document.getElementById( "lmTemplate" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+   thisLi = document.getElementById( "lmLogin" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+
+   if ( keyRole == "S" ) // if we are a Subregistrant
+   {
+      thisLi = document.getElementById( "lmSubregistrants" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+      thisLi = document.getElementById( "lmTrackingNotificationCompliance" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+    }
+   else
+   if ( keyRole == "P" ) // if we are a Primary Registrant
+   {
+      thisLi = document.getElementById( "lmStateRegistrations" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+   }
+
+   // Cannot go to product management if already there.
+   thisLi = document.getElementById( "lmProductManagement" );
+   thisLi.disabled = true;
+
+      // END of Javascript code entered by user.
+
+</script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSPLDDeleteSubregProduct.js"></script>
 
 </head>
@@ -464,13 +500,13 @@ else
 
 <!-- Side Navigation *********************** -->
 <div id="sidenavigation">
-   <ul>
+   <ul id="Return" name="Return">
 <%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "ConfirmDeleteAndReturn" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="ConfirmDeleteSubregProduct( )">Delete and Return</a></li>
+       <li id="ConfirmDeleteAndReturn" name="ConfirmDeleteAndReturn"><a href="#"  onclick="ConfirmDeleteSubregProduct()">Delete and Return</a></li>
 <%
    }
 %>
@@ -480,7 +516,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="CancelDeleteSubregProduct( )">Cancel Delete and Return</a></li>
+       <li id="CancelDeleteAndReturn" name="CancelDeleteAndReturn"><a href="#"  onclick="CancelDeleteSubregProduct()">Cancel Delete and Return</a></li>
 <%
    }
 %>

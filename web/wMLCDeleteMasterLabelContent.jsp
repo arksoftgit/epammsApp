@@ -360,7 +360,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wMLCDeleteMasterLabelContent.js"></script>
 
@@ -380,13 +379,13 @@ else
 
 <!-- Side Navigation *********************** -->
 <div id="sidenavigation">
-   <ul>
+   <ul id="Return" name="Return">
 <%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "DeleteAndReturn" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="ConfirmDeleteMasterLabelContent( )">Confirm Delete & Return</a></li>
+       <li id="DeleteAndReturn" name="DeleteAndReturn"><a href="#"  onclick="ConfirmDeleteMasterLabelContent()">Confirm Delete & Return</a></li>
 <%
    }
 %>
@@ -396,7 +395,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="CancelDeleteMasterLabelContent( )">Cancel Delete & Return</a></li>
+       <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CancelDeleteMasterLabelContent()">Cancel Delete & Return</a></li>
 <%
    }
 %>
@@ -565,7 +564,7 @@ else
          {
             try
             {
-            strErrorMapValue = mMasProd.cursor( "MasterLabelContent" ).getAttribute( "Version" ).getString( "" );
+               strErrorMapValue = mMasProd.cursor( "MasterLabelContent" ).getAttribute( "Version" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -616,7 +615,7 @@ else
          {
             try
             {
-            strErrorMapValue = mMasProd.cursor( "MasterLabelContent" ).getAttribute( "RevisionDate" ).getString( "" );
+               strErrorMapValue = mMasProd.cursor( "MasterLabelContent" ).getAttribute( "RevisionDate" ).getString( "" );
             }
             catch (Exception e)
             {

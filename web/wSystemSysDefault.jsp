@@ -603,7 +603,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/sts.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSystemSysDefault.js"></script>
 
@@ -624,11 +623,11 @@ else
 
 <!-- Main Navigation *********************** -->
 <div id="mainnavigation">
-   <ul>
-       <li id="lmReturnToHomePage" name="lmReturnToHomePage"><a href="#" onclick="mReturnToHomePage()">Home</a></li>
-       <li id="lmChangePassword" name="lmChangePassword"><a href="#" onclick="mChangePassword()">Password</a></li>
-       <li><a href="help\ePammsWeb.htm" target="_blank">Help</a></li>
-       <li id="lmLOGOFF_Dialog" name="lmLOGOFF_Dialog"><a href="#" onclick="mLOGOFF_Dialog()">Logout</a></li>
+   <ul id="TopMenu" name="TopMenu" >
+       <li id="lmReturnToHomePage" name="lmReturnToHomePage" ><a href="#" onclick="mReturnToHomePage()">Home</a></li>
+       <li id="lmChangePassword" name="lmChangePassword" ><a href="#" onclick="mChangePassword()">Password</a></li>
+       <li id="lmLINK_ToHelp" name="lmLINK_ToHelp" ><a href="help\ePammsWeb.htm" target="_blank">Help</a></li>
+       <li id="lmLOGOFF_Dialog" name="lmLOGOFF_Dialog" ><a href="#" onclick="mLOGOFF_Dialog()">Logout</a></li>
    </ul>
 </div>  <!-- end Navigation Bar -->
 
@@ -639,13 +638,13 @@ else
 
 <!-- Side Navigation *********************** -->
 <div id="sidenavigation">
-   <ul>
+   <ul id="TopMenu" name="TopMenu">
 <%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Template" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smTemplate( )">Template</a></li>
+       <li id="smTemplate" name="smTemplate"><a href="#"  onclick="smTemplate()">Template</a></li>
 <%
    }
 %>
@@ -655,7 +654,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smSystem( )">System</a></li>
+       <li id="smSystem" name="smSystem"><a href="#"  onclick="smSystem()">System</a></li>
 <%
    }
 %>
@@ -665,7 +664,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smShowFeedback( )">Feedback</a></li>
+       <li id="smFeedback" name="smFeedback"><a href="#"  onclick="smShowFeedback()">Feedback</a></li>
 <%
    }
 %>
@@ -675,7 +674,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smLogout( )">Logout</a></li>
+       <li id="smLogout" name="smLogout"><a href="#"  onclick="smLogout()">Logout</a></li>
 <%
    }
 %>

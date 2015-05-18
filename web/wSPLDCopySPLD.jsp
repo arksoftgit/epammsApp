@@ -384,7 +384,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSPLDCopySPLD.js"></script>
 
@@ -404,13 +403,13 @@ else
 
 <!-- Side Navigation *********************** -->
 <div id="sidenavigation">
-   <ul>
+   <ul id="Return" name="Return">
 <%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Save" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="CopySPLD( )">Save and Return</a></li>
+       <li id="Save" name="Save"><a href="#"  onclick="CopySPLD()">Save and Return</a></li>
 <%
    }
 %>
@@ -420,7 +419,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="Cancel( )">Cancel and Return</a></li>
+       <li id="Cancel" name="Cancel"><a href="#"  onclick="Cancel()">Cancel and Return</a></li>
 <%
    }
 %>
@@ -586,7 +585,7 @@ else
          {
             try
             {
-            strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "SearchName" ).getString( "" );
+               strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "SearchName" ).getString( "" );
             }
             catch (Exception e)
             {

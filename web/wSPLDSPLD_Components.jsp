@@ -538,7 +538,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSPLDSPLD_Components.js"></script>
 
@@ -558,13 +557,13 @@ else
 
 <!-- Side Navigation *********************** -->
 <div id="sidenavigation">
-   <ul>
+   <ul id="Return" name="Return">
 <%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "SaveAndReturn" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="SaveAndReturn( )">Save and Return</a></li>
+       <li id="SaveAndReturn" name="SaveAndReturn"><a href="#"  onclick="SaveAndReturn()">Save and Return</a></li>
 <%
    }
 %>
@@ -574,7 +573,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="CancelAndReturn( )">Cancel and Return</a></li>
+       <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CancelAndReturn()">Cancel and Return</a></li>
 <%
    }
 %>
@@ -584,7 +583,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="REFRESH_SPLD_FromSLC( )">Refresh from SLC</a></li>
+       <li id="New2" name="New2"><a href="#"  onclick="REFRESH_SPLD_FromSLC()">Refresh from SLC</a></li>
 <%
    }
 %>
@@ -594,7 +593,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="DisplayLLD( )">LLD</a></li>
+       <li id="New1" name="New1"><a href="#"  onclick="DisplayLLD()">LLD</a></li>
 <%
    }
 %>
@@ -943,7 +942,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSPLDef.cursor( "SubregPhysicalLabelDef" ).getAttribute( "Name" ).getString( "" );
+               strErrorMapValue = mSPLDef.cursor( "SubregPhysicalLabelDef" ).getAttribute( "Name" ).getString( "" );
             }
             catch (Exception e)
             {

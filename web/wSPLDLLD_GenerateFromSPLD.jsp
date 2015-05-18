@@ -379,7 +379,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSPLDLLD_GenerateFromSPLD.js"></script>
 
@@ -399,13 +398,13 @@ else
 
 <!-- Side Navigation *********************** -->
 <div id="sidenavigation">
-   <ul>
+   <ul id="Return" name="Return">
 <%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "GenerateAndReturn" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="GenerateAndReturn( )">Generate and Return</a></li>
+       <li id="GenerateAndReturn" name="GenerateAndReturn"><a href="#"  onclick="GenerateAndReturn()">Generate and Return</a></li>
 <%
    }
 %>
@@ -415,7 +414,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="CancelAndReturn( )">Cancel and Return</a></li>
+       <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CancelAndReturn()">Cancel and Return</a></li>
 <%
    }
 %>
@@ -591,7 +590,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSPLDef.cursor( "SubregPhysicalLabelDef" ).getAttribute( "wSavedLLD_Name" ).getString( "" );
+               strErrorMapValue = mSPLDef.cursor( "SubregPhysicalLabelDef" ).getAttribute( "wSavedLLD_Name" ).getString( "" );
             }
             catch (Exception e)
             {

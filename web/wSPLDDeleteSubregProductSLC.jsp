@@ -360,7 +360,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSPLDDeleteSubregProductSLC.js"></script>
 
@@ -380,13 +379,13 @@ else
 
 <!-- Side Navigation *********************** -->
 <div id="sidenavigation">
-   <ul>
+   <ul id="Return" name="Return">
 <%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "AcceptAndReturn" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="DELETE_SubregProductSLC( )">Delete SLC Entry</a></li>
+       <li id="AcceptAndReturn" name="AcceptAndReturn"><a href="#"  onclick="DELETE_SubregProductSLC()">Delete SLC Entry</a></li>
 <%
    }
 %>
@@ -396,7 +395,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="CANCEL_DeleteSLC( )">Cancel</a></li>
+       <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CANCEL_DeleteSLC()">Cancel</a></li>
 <%
    }
 %>

@@ -632,7 +632,6 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                   //    ei.logEntity( false );
                   // }
                   /*
-                     applyJsonLabelToView( vLLD, vBlock, (JSONObject)obj, entity, depth + 1, ec.getEntityInstance() );
                      if ( ID.equals( "893" ) || ID.equals( "892" ) || ID.equals( "890" ) ||
                           ID.equals( "901" ) || ID.equals( "900" ) || ID.equals( "899" ) ||
                           ID.equals( "894" ) || ID.equals( "861" ) || ID.equals( "871" ) ||
@@ -643,6 +642,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                         ec.logEntity( true );
                      }
                   */
+                     applyJsonLabelToView( vLLD, vBlock, (JSONObject)obj, entity, depth + 1, ec.getEntityInstance() );
                   // if ( ei != null ) {
                   //    logger.debug( "Entity Instance After: " + entity + "  ID: " + ID + "  Depth: " + depth );
                   //    ei.logEntity( false );
@@ -700,8 +700,8 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
             // logger.debug( "OTag: " + entity + "   Key: " + key + "   Depth: " + depth );
                if ( obj instanceof String ) {
                   String valueNew = (String) obj;
-                  logger.debug( StringUtils.repeat( " ", (depth + 2) * 3 ) + "E.Attr: " + entity + "." + key + " : " + valueNew );
-                  if ( key.compareTo( "ID" ) != 0 && key.charAt( 0 ) != '_' ) {  // attribute is not ID (which is immutable)
+               // logger.debug( StringUtils.repeat( " ", (depth + 2) * 3 ) + "E.Attr: " + entity + "." + key + " : " + valueNew );
+                  if ( key.compareTo( "ID" ) != 0 && key.charAt( 0 ) != '_' ) {  // attribute is not ID (which is immutable) or a label designer work (starts with '_')
                      // This is where we need to handle special entity/attributes such as: z_^marketing.^text.^font^weight - which
                      // should be mapped to the "Marketing" LLD_SpecialSectionAttribute entity and the "Text" LLD_SpecialSectionAttrBlock
                      // entity FontWeight attribute ... e.g. DirectionsForUse.Title.z_MarginTop
@@ -730,7 +730,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                                  ec.getAttribute( "LLD_SectionType" ).setValue( sectionType );
                               }
                               if ( attribute.equals( "TextColor" ) ) { // we need to include the color entity
-                                 logger.debug( "TextColor E.Attr: " + entity + "." + key + " : " + valueNew );
+                              // logger.debug( "TextColor E.Attr: " + entity + "." + key + " : " + valueNew );
                                  ec.getAttribute( "TextColor" ).setValue( valueNew );
                                  ec = vBlock.cursor( "SpecialAttributeTextColor" );
                                  cr = ec.setFirst( "dColorName", valueNew );
@@ -747,15 +747,18 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                                  }
                               // ec = vBlock.cursor( entity );  // debug only
                               // ec.logEntity( true );               // debug only
+                              } else {
+                                 checkSetValue( ec.getEntityInstance(), "LLD_SectionType", attribute, valueNew );
                               }
-                        // } else {  no!!! we do not want to set ID
-                        //   EntityInstance eib = ec.getEntityInstance();
-                        //    checkSetValue( eib, "LLD_SectionType", attribute, valueNew );
                            }
+                        // else {  no!!! we do not want to set ID
+                        //    EntityInstance eib = ec.getEntityInstance();
+                        //    checkSetValue( eib, "LLD_SectionType", attribute, valueNew );
+                        // }
                         }
                      } else {
                         if ( key.equals( "BackgroundColor" ) || key.equals( "BorderColor" ) ) { // we need to include the color entity
-                           logger.debug( key + " E.Attr: " + entity + "." + key + " : " + valueNew );
+                        // logger.debug( key + " E.Attr: " + entity + "." + key + " : " + valueNew );
                            EntityCursor ec = vBlock.cursor( entity );
                            ec.getAttribute( key ).setValue( valueNew );
                            String colorEntity;
@@ -1052,7 +1055,7 @@ end debug code */
             // displaySPLD( vLLD, null, "" );
                applyJsonLabelToView( vLLD, vBlock, jsonPost, "", -2, null );  // OIs, SPLD_LLD, depth == 0 for LLD_Page
                vBlock.drop();
-            // logger.debug( "Afer applyJsonLabelToView LLD OI: " );
+            // logger.debug( "After applyJsonLabelToView LLD OI: " );
             //vLLD.logObjectInstance();
             // logger.debug( "Saved JSON to OI" );
                vLLD.setName( "mSPLDefPanel", Level.TASK );
@@ -1064,8 +1067,8 @@ end debug code */
             } catch( ZeidonException ze ) {
                logger.error( "Error processing Json Label: " + ze.getMessage() );
             } finally {
-               jsonLabel = convertLLD_ToJSON( vLLD );  // we don't need to do this ... debugging only
-               logger.debug( "Completed processing Json Label: " + jsonLabel );
+            // jsonLabel = convertLLD_ToJSON( vLLD );  // we don't need to do this ... debugging only
+            // logger.debug( "Completed processing Json Label: " + jsonLabel );
                response.setContentType( "text/json" );
             // response.getWriter().write( jsonLabel );
                response.getWriter().write( new Gson().toJson( "{}" ) );

@@ -450,7 +450,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wePammsSideNavBarMain.js"></script>
 
@@ -470,13 +469,13 @@ else
 
 <!-- Side Navigation *********************** -->
 <div id="sidenavigation">
-   <ul>
+   <ul id="TopLevelSideNavBar" name="TopLevelSideNavBar">
 <%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Reports" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="GOTO_Reports( )">Reports</a></li>
+       <li id="Reports" name="Reports"><a href="#"  onclick="GOTO_Reports()">Reports</a></li>
 <%
    }
 %>
@@ -486,7 +485,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="GOTO_ImportEntry( )">Import/Export</a></li>
+       <li id="ImportExport" name="ImportExport"><a href="#"  onclick="GOTO_ImportEntry()">Import/Export</a></li>
 <%
    }
 %>
@@ -496,7 +495,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="GOTO_System( )">System</a></li>
+       <li id="System" name="System"><a href="#"  onclick="GOTO_System()">System</a></li>
 <%
    }
 %>

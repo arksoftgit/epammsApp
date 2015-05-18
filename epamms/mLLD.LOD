@@ -1,4 +1,4 @@
-z1000-Zeidon    MLLD     TZZOLODO 04/03/15   09:40:50 1.0a2    
+z1000-Zeidon    MLLD     TZZOLODO 05/15/15   13:32:59 1.0a2    
 eLOD       1
 aZKey      3
 aName      mLLD
@@ -174,7 +174,8 @@ aUpdate    Y
 eER_AttributeRec 8
 aName      BackgroundColor
 aZKey      44805073
-aLth       20
+aLth       32
+aCaseSens  Y
 
 eDomainRec 9
 
@@ -421,7 +422,7 @@ aZKey      69080516
 aName      LLD_SectionType
 aDomainType T
 aDataType  S
-aMaxStringLth 20
+aMaxStringLth 32
 aDesc      Template Section Types are usually the same as regular Section Types.
 aContextRestriction N
 
@@ -500,7 +501,8 @@ aZKey      120134873
 eER_AttributeRec 8
 aName      BorderColor
 aZKey      4322622
-aLth       20
+aLth       32
+aCaseSens  Y
 
 eDomainRec 9
 
@@ -519,7 +521,8 @@ aZKey      120134875
 eER_AttributeRec 8
 aName      TextColor
 aZKey      4322650
-aLth       20
+aLth       32
+aCaseSens  Y
 
 eDomainRec 9
 
@@ -1401,6 +1404,8 @@ eDomainRec 8
 
 eLOD_AttributeRec 6
 aZKey      120134853
+aUpdate    Y
+aSeqOrder  A
 
 eER_AttributeRec 7
 
@@ -1554,7 +1559,8 @@ aUpdate    Y
 eER_AttributeRec 6
 aName      TextColor
 aZKey      110000369
-aLth       20
+aLth       32
+aCaseSens  Y
 
 eDomainRec 7
 
@@ -1575,7 +1581,8 @@ aUpdate    Y
 eER_AttributeRec 6
 aName      BackgroundColor
 aZKey      110000371
-aLth       20
+aLth       32
+aCaseSens  Y
 
 eDomainRec 7
 
@@ -1596,7 +1603,8 @@ aUpdate    Y
 eER_AttributeRec 6
 aName      BorderColor
 aZKey      110000373
-aLth       20
+aLth       32
+aCaseSens  Y
 
 eDomainRec 7
 
@@ -2060,10 +2068,10 @@ aZKey      120085488
 aFact      Added thru ER Dialog
 aER_DiagramBendPosX 0
 aER_DiagramBendPosY 0
-aER_DiagramE1PosX 198
-aER_DiagramE1PosY 22
-aER_DiagramE2PosX 206
-aER_DiagramE2PosY 22
+aER_DiagramE1PosX 211
+aER_DiagramE1PosY 11
+aER_DiagramE2PosX 211
+aER_DiagramE2PosY 19
 
 eLOD_AttributeRec 3
 aZKey      5
@@ -2122,6 +2130,7 @@ aZKey      3898401
 aName      HazardPanel
 aDomainType T
 aDataType  L
+aMaxStringLth 4
 aDesc      Panel where additional hazard statements are found
 aContextRestriction N
 
@@ -2274,8 +2283,8 @@ eER_EntityRec 3
 aName      LLD
 aZKey      69011483
 aPurpose   F
-aER_DiagramPosX 189
-aER_DiagramPosY 20
+aER_DiagramPosX 207
+aER_DiagramPosY 6
 
 eLOD_Entity 2
 awkSelectedAttributeForDragSort 1
@@ -2805,7 +2814,7 @@ eER_RelLink 3
 eER_RelType 4
 
 eLOD_Entity 2
-awkSelectedAttributeForDragSort 1
+awkSelectedAttributeForDragSort 39
 
 eLOD_Attribute 3
 awkSequence 1
@@ -3882,7 +3891,7 @@ i98        29
 i101       29
 i104       29
 i110       11
-i113       29
+i113       8
 i116       11
 i128       29
 i131       29
@@ -3959,7 +3968,7 @@ i250       107
 i252       109
 i253       11
 i255       112
-i256       29
+i256       8
 i258       115
 i259       11
 i261       118
@@ -4054,7 +4063,7 @@ i400       107
 i402       109
 i403       11
 i405       112
-i406       29
+i406       8
 i408       115
 i409       11
 i411       118
@@ -4478,7 +4487,7 @@ i993       109
 i994       11
 i995       404
 i996       112
-i997       29
+i997       8
 i998       407
 i999       115
 i1000      11
@@ -4620,7 +4629,7 @@ i1135      109
 i1136      11
 i1137      111
 i1138      112
-i1139      29
+i1139      8
 i1140      114
 i1141      115
 i1142      11
@@ -4772,7 +4781,7 @@ i1287      109
 i1288      11
 i1289      254
 i1290      112
-i1291      29
+i1291      8
 i1292      257
 i1293      115
 i1294      11

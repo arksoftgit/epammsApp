@@ -483,7 +483,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wePammsHomePage.js"></script>
 
@@ -499,11 +498,11 @@ else
 
 <!-- Main Navigation *********************** -->
 <div id="mainnavigation">
-   <ul>
-       <li id="lmReturnToHomePage" name="lmReturnToHomePage"><a href="#" onclick="mReturnToHomePage()">Home</a></li>
-       <li id="lmChangePassword" name="lmChangePassword"><a href="#" onclick="mChangePassword()">Password</a></li>
-       <li><a href="help\ePammsWeb.htm" target="_blank">Help</a></li>
-       <li id="lmLOGOFF_Dialog" name="lmLOGOFF_Dialog"><a href="#" onclick="mLOGOFF_Dialog()">Logout</a></li>
+   <ul id="TopMenu" name="TopMenu" >
+       <li id="lmReturnToHomePage" name="lmReturnToHomePage" ><a href="#" onclick="mReturnToHomePage()">Home</a></li>
+       <li id="lmChangePassword" name="lmChangePassword" ><a href="#" onclick="mChangePassword()">Password</a></li>
+       <li id="lmLINK_ToHelp" name="lmLINK_ToHelp" ><a href="help\ePammsWeb.htm" target="_blank">Help</a></li>
+       <li id="lmLOGOFF_Dialog" name="lmLOGOFF_Dialog" ><a href="#" onclick="mLOGOFF_Dialog()">Logout</a></li>
    </ul>
 </div>  <!-- end Navigation Bar -->
 
@@ -514,13 +513,13 @@ else
 
 <!-- Side Navigation *********************** -->
 <div id="sidenavigation">
-   <ul>
+   <ul id="TopLevelSideNavBar" name="TopLevelSideNavBar">
 <%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Reports" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smGOTO_Reports( )">Reports</a></li>
+       <li id="smReports" name="smReports"><a href="#"  onclick="smGOTO_Reports()">Reports</a></li>
 <%
    }
 %>
@@ -530,7 +529,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smGOTO_ImportEntry( )">Import/Export</a></li>
+       <li id="smImportExport" name="smImportExport"><a href="#"  onclick="smGOTO_ImportEntry()">Import/Export</a></li>
 <%
    }
 %>
@@ -540,7 +539,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smGOTO_System( )">System</a></li>
+       <li id="smSystem" name="smSystem"><a href="#"  onclick="smGOTO_System()">System</a></li>
 <%
    }
 %>

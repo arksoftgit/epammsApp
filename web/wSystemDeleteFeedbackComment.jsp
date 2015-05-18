@@ -523,8 +523,21 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
+<script language="JavaScript" type="text/javascript" >
+      // Javascript code entered by user for Window action prebuild.
+
+   thisLi = document.getElementById( "lmTemplate" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+
+   thisLi = document.getElementById( "lmSystem" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+
+      // END of Javascript code entered by user.
+
+</script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSystemDeleteFeedbackComment.js"></script>
 
 </head>
@@ -539,11 +552,11 @@ else
 
 <!-- Main Navigation *********************** -->
 <div id="mainnavigation">
-   <ul>
-       <li id="lmTemplate" name="lmTemplate"><a href="#" onclick="mTemplate()">Template</a></li>
-       <li id="lmSystem" name="lmSystem"><a href="#" onclick="mSystem()">System</a></li>
-       <li id="lmShowFeedback" name="lmShowFeedback"><a href="#" onclick="mShowFeedback()">Feedback</a></li>
-       <li id="lmLogout" name="lmLogout"><a href="#" onclick="mLogout()">Logout</a></li>
+   <ul id="TopMenu" name="TopMenu" >
+       <li id="lmTemplate" name="lmTemplate" ><a href="#" onclick="mTemplate()">Template</a></li>
+       <li id="lmSystem" name="lmSystem" ><a href="#" onclick="mSystem()">System</a></li>
+       <li id="lmShowFeedback" name="lmShowFeedback" ><a href="#" onclick="mShowFeedback()">Feedback</a></li>
+       <li id="lmLogout" name="lmLogout" ><a href="#" onclick="mLogout()">Logout</a></li>
    </ul>
 </div>  <!-- end Navigation Bar -->
 
@@ -554,13 +567,13 @@ else
 
 <!-- Side Navigation *********************** -->
 <div id="sidenavigation">
-   <ul>
+   <ul id="Return" name="Return">
 <%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "ConfirmDeleteChemical" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smConfirmDeleteComment( )">Confirm Delete and Return</a></li>
+       <li id="smConfirmDeleteChemical" name="smConfirmDeleteChemical"><a href="#"  onclick="smConfirmDeleteComment()">Confirm Delete and Return</a></li>
 <%
    }
 %>
@@ -570,7 +583,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="smCancelDeleteFeedbackComment( )">Cancel Delete and Return</a></li>
+       <li id="smCancelDeleteFeedbackComment" name="smCancelDeleteFeedbackComment"><a href="#"  onclick="smCancelDeleteFeedbackComment()">Cancel Delete and Return</a></li>
 <%
    }
 %>
@@ -744,7 +757,7 @@ else
          {
             try
             {
-            strErrorMapValue = mOrganiz.cursor( "Organization" ).getAttribute( "LoginName" ).getString( "" );
+               strErrorMapValue = mOrganiz.cursor( "Organization" ).getAttribute( "LoginName" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -795,7 +808,7 @@ else
          {
             try
             {
-            strErrorMapValue = mOrganiz.cursor( "Feedback" ).getAttribute( "UserId" ).getString( "" );
+               strErrorMapValue = mOrganiz.cursor( "Feedback" ).getAttribute( "UserId" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -846,7 +859,7 @@ else
          {
             try
             {
-            strErrorMapValue = mOrganiz.cursor( "Feedback" ).getAttribute( "Dialog" ).getString( "" );
+               strErrorMapValue = mOrganiz.cursor( "Feedback" ).getAttribute( "Dialog" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -897,7 +910,7 @@ else
          {
             try
             {
-            strErrorMapValue = mOrganiz.cursor( "Feedback" ).getAttribute( "Window" ).getString( "" );
+               strErrorMapValue = mOrganiz.cursor( "Feedback" ).getAttribute( "Window" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -948,7 +961,7 @@ else
          {
             try
             {
-            strErrorMapValue = mOrganiz.cursor( "Feedback" ).getAttribute( "Comment" ).getString( "" );
+               strErrorMapValue = mOrganiz.cursor( "Feedback" ).getAttribute( "Comment" ).getString( "" );
             }
             catch (Exception e)
             {

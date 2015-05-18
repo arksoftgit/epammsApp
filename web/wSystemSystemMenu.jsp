@@ -355,7 +355,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSystemSystemMenu.js"></script>
 
@@ -375,13 +374,13 @@ else
 
 <!-- Side Navigation *********************** -->
 <div id="sidenavigation">
-   <ul>
+   <ul id="TopMenu" name="TopMenu">
 <%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Template" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="Template( )">Template</a></li>
+       <li id="Template" name="Template"><a href="#"  onclick="Template()">Template</a></li>
 <%
    }
 %>
@@ -391,7 +390,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="System( )">System</a></li>
+       <li id="System" name="System"><a href="#"  onclick="System()">System</a></li>
 <%
    }
 %>
@@ -401,7 +400,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="ShowFeedback( )">Feedback</a></li>
+       <li id="Feedback" name="Feedback"><a href="#"  onclick="ShowFeedback()">Feedback</a></li>
 <%
    }
 %>
@@ -411,7 +410,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="Logout( )">Logout</a></li>
+       <li id="Logout" name="Logout"><a href="#"  onclick="Logout()">Logout</a></li>
 <%
    }
 %>

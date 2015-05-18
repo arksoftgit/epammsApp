@@ -661,7 +661,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSPLDSPLD_BlockSpecialFormatDef.js"></script>
 
@@ -681,13 +680,13 @@ else
 
 <!-- Side Navigation *********************** -->
 <div id="sidenavigation">
-   <ul>
+   <ul id="Return" name="Return">
 <%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "AcceptAndReturn" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="ACCEPT_BlockSpecialFormat( )">Accept and Return</a></li>
+       <li id="AcceptAndReturn" name="AcceptAndReturn"><a href="#"  onclick="ACCEPT_BlockSpecialFormat()">Accept and Return</a></li>
 <%
    }
 %>
@@ -697,7 +696,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="CANCEL_BlockComponent( )">Cancel and Return</a></li>
+       <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CANCEL_BlockComponent()">Cancel and Return</a></li>
 <%
    }
 %>
@@ -910,7 +909,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "MarginTop" ).getString( "" );
+               strErrorMapValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "MarginTop" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -967,7 +966,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "MarginBottom" ).getString( "" );
+               strErrorMapValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "MarginBottom" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1024,7 +1023,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "MarginLeft" ).getString( "" );
+               strErrorMapValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "MarginLeft" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1081,7 +1080,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "MarginRight" ).getString( "" );
+               strErrorMapValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "MarginRight" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1586,7 +1585,7 @@ else
          {
             try
             {
-            strErrorMapValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "TextLineHeight" ).getString( "" );
+               strErrorMapValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "TextLineHeight" ).getString( "" );
             }
             catch (Exception e)
             {

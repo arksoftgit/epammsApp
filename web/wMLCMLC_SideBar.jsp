@@ -820,7 +820,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wMLCMLC_Sidebar.js"></script>
 
@@ -840,13 +839,13 @@ else
 
 <!-- Side Navigation *********************** -->
 <div id="sidenavigation">
-   <ul>
+   <ul id="MLC_SideBar" name="MLC_SideBar">
 <%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New4" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="SaveAndReturnMLC( )">Save & Return</a></li>
+       <li id="New4" name="New4"><a href="#"  onclick="SaveAndReturnMLC()">Save & Return</a></li>
 <%
    }
 %>
@@ -856,7 +855,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="SaveMLC( )">Save</a></li>
+       <li id="New6" name="New6"><a href="#"  onclick="SaveMLC()">Save</a></li>
 <%
    }
 %>
@@ -866,7 +865,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="CancelAndReturnMLC( )">Cancel & Return</a></li>
+       <li id="New5" name="New5"><a href="#"  onclick="CancelAndReturnMLC()">Cancel & Return</a></li>
 <%
    }
 %>
@@ -876,7 +875,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="EditMasterLabelVersionData( )">Version Data</a></li>
+       <li id="VersionData" name="VersionData"><a href="#"  onclick="EditMasterLabelVersionData()">Version Data</a></li>
 <%
    }
 %>
@@ -886,7 +885,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="EditIngredientsSect( )">Ingredients</a></li>
+       <li id="Ingredients" name="Ingredients"><a href="#"  onclick="EditIngredientsSect()">Ingredients</a></li>
 <%
    }
 %>
@@ -896,7 +895,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="EditStorDispSect( )">Storage and Disposal</a></li>
+       <li id="StorDisp" name="StorDisp"><a href="#"  onclick="EditStorDispSect()">Storage and Disposal</a></li>
 <%
    }
 %>
@@ -906,7 +905,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="EditHumanHazardSect( )">Human Hazard</a></li>
+       <li id="HumanHazard" name="HumanHazard"><a href="#"  onclick="EditHumanHazardSect()">Human Hazard</a></li>
 <%
    }
 %>
@@ -916,7 +915,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="EditPrecautionarySection( )">Precautionary</a></li>
+       <li id="Precautionary" name="Precautionary"><a href="#"  onclick="EditPrecautionarySection()">Precautionary</a></li>
 <%
    }
 %>
@@ -926,7 +925,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="EditFirstAidSect( )">First Aid</a></li>
+       <li id="FirstAid" name="FirstAid"><a href="#"  onclick="EditFirstAidSect()">First Aid</a></li>
 <%
    }
 %>
@@ -936,7 +935,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="EditHazardSection( )">Other Hazard</a></li>
+       <li id="OtherHazard" name="OtherHazard"><a href="#"  onclick="EditHazardSection()">Other Hazard</a></li>
 <%
    }
 %>
@@ -946,7 +945,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="GOTO_DilutionEntries( )">Dilution Entries</a></li>
+       <li id="New2" name="New2"><a href="#"  onclick="GOTO_DilutionEntries()">Dilution Entries</a></li>
 <%
    }
 %>
@@ -956,7 +955,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="EditClaimsSection( )">Organism Claims</a></li>
+       <li id="OrganismClaims" name="OrganismClaims"><a href="#"  onclick="EditClaimsSection()">Organism Claims</a></li>
 <%
    }
 %>
@@ -966,7 +965,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="EditSurfacesSection( )">Types of Surfaces</a></li>
+       <li id="TypesOfSurfaces" name="TypesOfSurfaces"><a href="#"  onclick="EditSurfacesSection()">Types of Surfaces</a></li>
 <%
    }
 %>
@@ -976,7 +975,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="EditAreasOfUseSection( )">Areas of Use</a></li>
+       <li id="AreasOfUse" name="AreasOfUse"><a href="#"  onclick="EditAreasOfUseSection()">Areas of Use</a></li>
 <%
    }
 %>
@@ -986,7 +985,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="EditApplicationTypesSection( )">Application Types</a></li>
+       <li id="AppTypes" name="AppTypes"><a href="#"  onclick="EditApplicationTypesSection()">Application Types</a></li>
 <%
    }
 %>
@@ -996,7 +995,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="GOTO_ClaimsFootnote( )">Claims Footnotes</a></li>
+       <li id="New1" name="New1"><a href="#"  onclick="GOTO_ClaimsFootnote()">Claims Footnotes</a></li>
 <%
    }
 %>
@@ -1006,7 +1005,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="EditDirectionsUseSect( )">Directions for Use</a></li>
+       <li id="DirectionsForUse" name="DirectionsForUse"><a href="#"  onclick="EditDirectionsUseSect()">Directions for Use</a></li>
 <%
    }
 %>
@@ -1016,7 +1015,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="EditMarketingSect( )">Marketing</a></li>
+       <li id="Marketing" name="Marketing"><a href="#"  onclick="EditMarketingSect()">Marketing</a></li>
 <%
    }
 %>

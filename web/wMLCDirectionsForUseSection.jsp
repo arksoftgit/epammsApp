@@ -612,7 +612,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/tabpane.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wMLCDirectionsForUseSection.js"></script>
@@ -633,13 +632,13 @@ else
 
 <!-- Side Navigation *********************** -->
 <div id="sidenavigation">
-   <ul>
+   <ul id="Return" name="Return">
 <%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "AcceptAndReturn" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="AcceptDirectionsUseSect( )">Accept and Return</a></li>
+       <li id="AcceptAndReturn" name="AcceptAndReturn"><a href="#"  onclick="AcceptDirectionsUseSect()">Accept and Return</a></li>
 <%
    }
 %>
@@ -649,7 +648,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="CancelDirectionsUseSect( )">Cancel and Return</a></li>
+       <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CancelDirectionsUseSect()">Cancel and Return</a></li>
 <%
    }
 %>
@@ -842,7 +841,7 @@ else
          {
             try
             {
-            strErrorMapValue = mMasLC.cursor( "M_DirectionsForUseSection" ).getAttribute( "Name" ).getString( "" );
+               strErrorMapValue = mMasLC.cursor( "M_DirectionsForUseSection" ).getAttribute( "Name" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -893,7 +892,7 @@ else
          {
             try
             {
-            strErrorMapValue = mMasLC.cursor( "M_DirectionsForUseSection" ).getAttribute( "Title" ).getString( "" );
+               strErrorMapValue = mMasLC.cursor( "M_DirectionsForUseSection" ).getAttribute( "Title" ).getString( "" );
             }
             catch (Exception e)
             {
