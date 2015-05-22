@@ -868,16 +868,6 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New7" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="New7" name="New7"><a href="#"  onclick="GENERATE_SPLD_LabelDottedBorders()">Generate Label with Borders</a></li>
-<%
-   }
-%>
-
-<%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "CopySPLD" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {

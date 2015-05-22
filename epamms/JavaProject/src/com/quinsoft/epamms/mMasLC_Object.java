@@ -1078,7 +1078,6 @@ omMasLC_ObjectConstraints( View     mMasLC,
          TraceLineS( "*** Object Constraints", "" );
          break ;
 
-
       //:  /* end zOCE_ACTIVATE */
       //:OF   zOCE_ACTIVATE_EMPTY:
       case zOCE_ACTIVATE_EMPTY :
@@ -2261,6 +2260,8 @@ omMasLC_BuildCompositeEntries( View     mMasLC )
       SetAttributeFromInteger( mMasLC, "CompositeComponentList", "SelectLevel", 1 );
       //:mMasLC.CompositeComponentList.DisplayType       = "Marketing"
       SetAttributeFromString( mMasLC, "CompositeComponentList", "DisplayType", "Marketing" );
+      //:mMasLC.CompositeComponentList.DisplayTypeIndent = "Marketing"
+      SetAttributeFromString( mMasLC, "CompositeComponentList", "DisplayTypeIndent", "Marketing" );
       //:mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_MarketingSection.ID 
       SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "OriginalTypeID", mMasLC, "M_MarketingSection", "ID" );
       //:mMasLC.CompositeComponentList.Name              = mMasLC.M_MarketingSection.Name 
@@ -2335,8 +2336,6 @@ omMasLC_BuildCompositeEntries( View     mMasLC )
       SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "Title", mMasLC, "M_MarketingSection", "Title" );
       //:mMasLC.CompositeComponentList.Value             = mMasLC.CompositeComponentList.DisplayValue
       SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "Value", mMasLC, "CompositeComponentList", "DisplayValue" );
-      //:mMasLC.CompositeComponentList.DisplayTypeIndent = mMasLC.CompositeComponentList.DisplayType
-      SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "DisplayTypeIndent", mMasLC, "CompositeComponentList", "DisplayType" );
 
       //:FOR EACH mMasLC.M_MarketingStatement 
       RESULT = SetCursorFirstEntity( mMasLC, "M_MarketingStatement", "" );
@@ -2431,11 +2430,11 @@ omMasLC_BuildCompositeEntries( View     mMasLC )
 //       mMasLC.CompositeComponentList.Type              = "M_GeneralSection"
 //       mMasLC.CompositeComponentList.SelectLevel       = 1
 //       mMasLC.CompositeComponentList.DisplayType       = "General"
+//       mMasLC.CompositeComponentList.DisplayTypeIndent = "General"
 //       mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_GeneralSection.ID 
 //       mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_GeneralSection.Title
 //       mMasLC.CompositeComponentList.Title             = mMasLC.M_GeneralSection.Title
 //       mMasLC.CompositeComponentList.Value             = mMasLC.CompositeComponentList.DisplayValue
-//       mMasLC.CompositeComponentList.DisplayTypeIndent = mMasLC.CompositeComponentList.DisplayType
 //       
 //       FOR EACH mMasLC.M_GeneralStatement 
 //          CREATE ENTITY mMasLC.CompositeComponentList 
@@ -2464,10 +2463,10 @@ omMasLC_BuildCompositeEntries( View     mMasLC )
 //       mMasLC.CompositeComponentList.Type              = "M_IngredientsSection"
 //       mMasLC.CompositeComponentList.SelectLevel       = 1
 //       mMasLC.CompositeComponentList.DisplayType       = "Ingredients"
+//       mMasLC.CompositeComponentList.DisplayTypeIndent = "Ingredients"
 //       mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_IngredientsSection.ID 
 //       mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_IngredientsSection.ActiveTitle 
 //       mMasLC.CompositeComponentList.Value             = mMasLC.CompositeComponentList.DisplayValue
-//       mMasLC.CompositeComponentList.DisplayTypeIndent = mMasLC.CompositeComponentList.DisplayType
 //       
 //       FOR EACH mMasLC.M_IngredientsStatement 
 //          CREATE ENTITY mMasLC.CompositeComponentList 
@@ -2486,12 +2485,12 @@ omMasLC_BuildCompositeEntries( View     mMasLC )
 //       CREATE ENTITY mMasLC.CompositeComponentList 
 //       mMasLC.CompositeComponentList.Type              = "M_StorageDisposalSection"
 //       mMasLC.CompositeComponentList.SelectLevel       = 1
-//       mMasLC.CompositeComponentList.DisplayType       = "StorageDisposal"
+//       mMasLC.CompositeComponentList.DisplayType       = "Storage and Disposal"
+//       mMasLC.CompositeComponentList.DisplayTypeIndent = "Storage and Disposal"
 //       mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_StorageDisposalSection.ID 
 //       mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_StorageDisposalSection.Title 
 //       mMasLC.CompositeComponentList.Title             = mMasLC.M_StorageDisposalSection.Title
 //       mMasLC.CompositeComponentList.Value             = mMasLC.CompositeComponentList.DisplayValue
-//       mMasLC.CompositeComponentList.DisplayTypeIndent = mMasLC.CompositeComponentList.DisplayType
 //       
 //       FOR EACH mMasLC.M_StorageDisposalStatement 
 //          CREATE ENTITY mMasLC.CompositeComponentList 
@@ -2519,7 +2518,8 @@ omMasLC_BuildCompositeEntries( View     mMasLC )
 //       CREATE ENTITY mMasLC.CompositeComponentList 
 //       mMasLC.CompositeComponentList.Type              = "M_DirectionsForUseSection"
 //       mMasLC.CompositeComponentList.SelectLevel       = 1
-//       mMasLC.CompositeComponentList.DisplayType       = "DirectionsForUse"
+//       mMasLC.CompositeComponentList.DisplayType       = "Directions For Use"
+//       mMasLC.CompositeComponentList.DisplayTypeIndent = "Directions For Use"
 //       mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_DirectionsForUseSection.ID 
 //       IF mMasLC.M_DirectionsForUseSection.Title != ""
 //          IF mMasLC.M_DirectionsForUseSection.Name = ""
@@ -2533,7 +2533,6 @@ omMasLC_BuildCompositeEntries( View     mMasLC )
 //       END
 //       mMasLC.CompositeComponentList.Title             = mMasLC.M_DirectionsForUseSection.Title
 //       mMasLC.CompositeComponentList.Value             = mMasLC.CompositeComponentList.DisplayValue
-//       mMasLC.CompositeComponentList.DisplayTypeIndent = mMasLC.CompositeComponentList.DisplayType
 //       
 //       FOR EACH mMasLC.M_DirectionsForUseStatement 
 //          CREATE ENTITY mMasLC.CompositeComponentList 
@@ -2582,6 +2581,7 @@ omMasLC_BuildCompositeEntries( View     mMasLC )
 //       mMasLC.CompositeComponentList.Type              = "M_MarketingSection"
 //       mMasLC.CompositeComponentList.SelectLevel       = 1
 //       mMasLC.CompositeComponentList.DisplayType       = "Marketing"
+//       mMasLC.CompositeComponentList.DisplayTypeIndent = "Marketing"
 //       mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_MarketingSection.ID 
 //       IF mMasLC.M_MarketingSection.Title != ""
 //          IF mMasLC.M_MarketingSection.Name = ""
@@ -2595,7 +2595,6 @@ omMasLC_BuildCompositeEntries( View     mMasLC )
 //       END
 //       mMasLC.CompositeComponentList.Title             = mMasLC.M_MarketingSection.Title
 //       mMasLC.CompositeComponentList.Value             = mMasLC.CompositeComponentList.DisplayValue
-//       mMasLC.CompositeComponentList.DisplayTypeIndent = mMasLC.CompositeComponentList.DisplayType
 //       
 //       FOR EACH mMasLC.M_MarketingStatement 
 //          CREATE ENTITY mMasLC.CompositeComponentList 
@@ -2642,26 +2641,31 @@ omMasLC_BuildCompositeEntries( View     mMasLC )
 //    CREATE ENTITY mMasLC.CompositeComponentList 
 //    mMasLC.CompositeComponentList.Type              = "M_HumanHazardSection"
 //    mMasLC.CompositeComponentList.SelectLevel       = 1
+//    mMasLC.CompositeComponentList.DisplayType       = "Hazards"
 //    mMasLC.CompositeComponentList.DisplayTypeIndent = "Hazards"
 //    mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_HumanHazardSection.ID 
 //    mMasLC.CompositeComponentList.DisplayValue      = ""
 //    
 //    CREATE ENTITY mMasLC.CompositeComponentList 
 //    mMasLC.CompositeComponentList.SelectLevel       = 2
+//    mMasLC.CompositeComponentList.DisplayType       = "Signal Word"
 //    mMasLC.CompositeComponentList.DisplayTypeIndent = "...Signal Word"
 //    mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_HumanHazardSection.EPA_SignalWord 
 //    
 //    CREATE ENTITY mMasLC.CompositeComponentList 
 //    mMasLC.CompositeComponentList.SelectLevel       = 2
+//    mMasLC.CompositeComponentList.DisplayType       = "Child Warning"
 //    mMasLC.CompositeComponentList.DisplayTypeIndent = "...Child Warning"
 //    mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_HumanHazardSection.EPA_ChildHazardWarning 
 //    
 //    CREATE ENTITY mMasLC.CompositeComponentList 
 //    mMasLC.CompositeComponentList.SelectLevel       = 2
+//    mMasLC.CompositeComponentList.DisplayType       = "Precautionary Stmt"
 //    mMasLC.CompositeComponentList.DisplayTypeIndent = "...Precautionary Stmt"
 //    mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_HumanHazardSection.PrecautionaryStatement 
 //    
 //    CREATE ENTITY mMasLC.CompositeComponentList 
+//    mMasLC.CompositeComponentList.DisplayType       = "Location"
 //    mMasLC.CompositeComponentList.DisplayTypeIndent = "Location"
 //    szCompositeLocation = "..." + mMasLC.M_HumanHazardSection.PanelLoc1 
 //    IF mMasLC.M_HumanHazardSection.PanelLoc2 != ""
@@ -2754,6 +2758,8 @@ omMasLC_BuildFullCompEntries( View     mMasLC )
       SetAttributeFromString( mMasLC, "CompositeComponentList", "Type", "M_GeneralSection" );
       //:mMasLC.CompositeComponentList.DisplayType       = "General"
       SetAttributeFromString( mMasLC, "CompositeComponentList", "DisplayType", "General" );
+      //:mMasLC.CompositeComponentList.DisplayTypeIndent = "General"
+      SetAttributeFromString( mMasLC, "CompositeComponentList", "DisplayTypeIndent", "General" );
       //:mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_GeneralSection.ID 
       SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "OriginalTypeID", mMasLC, "M_GeneralSection", "ID" );
       //:mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_GeneralSection.Title
@@ -2762,8 +2768,6 @@ omMasLC_BuildFullCompEntries( View     mMasLC )
       SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "Title", mMasLC, "M_GeneralSection", "Title" );
       //:mMasLC.CompositeComponentList.Value             = mMasLC.CompositeComponentList.DisplayValue
       SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "Value", mMasLC, "CompositeComponentList", "DisplayValue" );
-      //:mMasLC.CompositeComponentList.DisplayTypeIndent = mMasLC.CompositeComponentList.DisplayType
-      SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "DisplayTypeIndent", mMasLC, "CompositeComponentList", "DisplayType" );
 
       //:FOR EACH mMasLC.M_GeneralStatement 
       RESULT = SetCursorFirstEntity( mMasLC, "M_GeneralStatement", "" );
@@ -2805,14 +2809,14 @@ omMasLC_BuildFullCompEntries( View     mMasLC )
       SetAttributeFromString( mMasLC, "CompositeComponentList", "Type", "M_IngredientsSection" );
       //:mMasLC.CompositeComponentList.DisplayType       = "Ingredients"
       SetAttributeFromString( mMasLC, "CompositeComponentList", "DisplayType", "Ingredients" );
+      //:mMasLC.CompositeComponentList.DisplayTypeIndent = "Ingredients"
+      SetAttributeFromString( mMasLC, "CompositeComponentList", "DisplayTypeIndent", "Ingredients" );
       //:mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_IngredientsSection.ID 
       SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "OriginalTypeID", mMasLC, "M_IngredientsSection", "ID" );
       //:mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_IngredientsSection.ActiveTitle 
       SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "DisplayValue", mMasLC, "M_IngredientsSection", "ActiveTitle" );
       //:mMasLC.CompositeComponentList.Value             = mMasLC.CompositeComponentList.DisplayValue
       SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "Value", mMasLC, "CompositeComponentList", "DisplayValue" );
-      //:mMasLC.CompositeComponentList.DisplayTypeIndent = mMasLC.CompositeComponentList.DisplayType
-      SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "DisplayTypeIndent", mMasLC, "CompositeComponentList", "DisplayType" );
 
       //:FOR EACH mMasLC.M_IngredientsStatement 
       RESULT = SetCursorFirstEntity( mMasLC, "M_IngredientsStatement", "" );
@@ -2850,8 +2854,10 @@ omMasLC_BuildFullCompEntries( View     mMasLC )
       RESULT = CreateEntity( mMasLC, "CompositeComponentList", zPOS_AFTER );
       //:mMasLC.CompositeComponentList.Type              = "M_StorageDisposalSection"
       SetAttributeFromString( mMasLC, "CompositeComponentList", "Type", "M_StorageDisposalSection" );
-      //:mMasLC.CompositeComponentList.DisplayType       = "StorageDisposal"
-      SetAttributeFromString( mMasLC, "CompositeComponentList", "DisplayType", "StorageDisposal" );
+      //:mMasLC.CompositeComponentList.DisplayType       = "Storage and Disposal"
+      SetAttributeFromString( mMasLC, "CompositeComponentList", "DisplayType", "Storage and Disposal" );
+      //:mMasLC.CompositeComponentList.DisplayTypeIndent = "Storage and Disposal"
+      SetAttributeFromString( mMasLC, "CompositeComponentList", "DisplayTypeIndent", "Storage and Disposal" );
       //:mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_StorageDisposalSection.ID 
       SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "OriginalTypeID", mMasLC, "M_StorageDisposalSection", "ID" );
       //:mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_StorageDisposalSection.Title 
@@ -2860,8 +2866,6 @@ omMasLC_BuildFullCompEntries( View     mMasLC )
       SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "Title", mMasLC, "M_StorageDisposalSection", "Title" );
       //:mMasLC.CompositeComponentList.Value             = mMasLC.CompositeComponentList.DisplayValue
       SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "Value", mMasLC, "CompositeComponentList", "DisplayValue" );
-      //:mMasLC.CompositeComponentList.DisplayTypeIndent = mMasLC.CompositeComponentList.DisplayType
-      SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "DisplayTypeIndent", mMasLC, "CompositeComponentList", "DisplayType" );
 
       //:FOR EACH mMasLC.M_StorageDisposalStatement 
       RESULT = SetCursorFirstEntity( mMasLC, "M_StorageDisposalStatement", "" );
@@ -2901,8 +2905,10 @@ omMasLC_BuildFullCompEntries( View     mMasLC )
       RESULT = CreateEntity( mMasLC, "CompositeComponentList", zPOS_AFTER );
       //:mMasLC.CompositeComponentList.Type              = "M_DirectionsForUseSection"
       SetAttributeFromString( mMasLC, "CompositeComponentList", "Type", "M_DirectionsForUseSection" );
-      //:mMasLC.CompositeComponentList.DisplayType       = "DirectionsForUse"
-      SetAttributeFromString( mMasLC, "CompositeComponentList", "DisplayType", "DirectionsForUse" );
+      //:mMasLC.CompositeComponentList.DisplayType       = "Directions For Use"
+      SetAttributeFromString( mMasLC, "CompositeComponentList", "DisplayType", "Directions For Use" );
+      //:mMasLC.CompositeComponentList.DisplayTypeIndent = "Directions For Use"
+      SetAttributeFromString( mMasLC, "CompositeComponentList", "DisplayTypeIndent", "Directions For Use" );
       //:mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_DirectionsForUseSection.ID 
       SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "OriginalTypeID", mMasLC, "M_DirectionsForUseSection", "ID" );
       //:mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_DirectionsForUseSection.Title 
@@ -2911,8 +2917,6 @@ omMasLC_BuildFullCompEntries( View     mMasLC )
       SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "Title", mMasLC, "M_DirectionsForUseSection", "Title" );
       //:mMasLC.CompositeComponentList.Value             = mMasLC.CompositeComponentList.DisplayValue
       SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "Value", mMasLC, "CompositeComponentList", "DisplayValue" );
-      //:mMasLC.CompositeComponentList.DisplayTypeIndent = mMasLC.CompositeComponentList.DisplayType
-      SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "DisplayTypeIndent", mMasLC, "CompositeComponentList", "DisplayType" );
 
       //:FOR EACH mMasLC.M_DirectionsForUseStatement 
       RESULT = SetCursorFirstEntity( mMasLC, "M_DirectionsForUseStatement", "" );
@@ -2950,20 +2954,20 @@ omMasLC_BuildFullCompEntries( View     mMasLC )
    { 
       //:CREATE ENTITY mMasLC.CompositeComponentList 
       RESULT = CreateEntity( mMasLC, "CompositeComponentList", zPOS_AFTER );
-      //:mMasLC.CompositeComponentList.Type           = "M_MarketingSection"
+      //:mMasLC.CompositeComponentList.Type              = "M_MarketingSection"
       SetAttributeFromString( mMasLC, "CompositeComponentList", "Type", "M_MarketingSection" );
-      //:mMasLC.CompositeComponentList.DisplayType    = "Marketing"
+      //:mMasLC.CompositeComponentList.DisplayType       = "Marketing"
       SetAttributeFromString( mMasLC, "CompositeComponentList", "DisplayType", "Marketing" );
-      //:mMasLC.CompositeComponentList.OriginalTypeID = mMasLC.M_MarketingSection.ID 
+      //:mMasLC.CompositeComponentList.DisplayTypeIndent = "Marketing"
+      SetAttributeFromString( mMasLC, "CompositeComponentList", "DisplayTypeIndent", "Marketing" );
+      //:mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_MarketingSection.ID 
       SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "OriginalTypeID", mMasLC, "M_MarketingSection", "ID" );
-      //:mMasLC.CompositeComponentList.DisplayValue   = mMasLC.M_MarketingSection.Title 
+      //:mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_MarketingSection.Title 
       SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "DisplayValue", mMasLC, "M_MarketingSection", "Title" );
       //:mMasLC.CompositeComponentList.Title             = mMasLC.M_MarketingSection.Title
       SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "Title", mMasLC, "M_MarketingSection", "Title" );
       //:mMasLC.CompositeComponentList.Value             = mMasLC.CompositeComponentList.DisplayValue
       SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "Value", mMasLC, "CompositeComponentList", "DisplayValue" );
-      //:mMasLC.CompositeComponentList.DisplayTypeIndent = mMasLC.CompositeComponentList.DisplayType
-      SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "DisplayTypeIndent", mMasLC, "CompositeComponentList", "DisplayType" );
 
       //:FOR EACH mMasLC.M_MarketingStatement 
       RESULT = SetCursorFirstEntity( mMasLC, "M_MarketingStatement", "" );
@@ -2997,34 +3001,40 @@ omMasLC_BuildFullCompEntries( View     mMasLC )
    //:// Hazards Section
    //:CREATE ENTITY mMasLC.CompositeComponentList 
    RESULT = CreateEntity( mMasLC, "CompositeComponentList", zPOS_AFTER );
-   //:mMasLC.CompositeComponentList.Type           = "M_HumanHazardSection"
+   //:mMasLC.CompositeComponentList.Type              = "M_HumanHazardSection"
    SetAttributeFromString( mMasLC, "CompositeComponentList", "Type", "M_HumanHazardSection" );
-   //:mMasLC.CompositeComponentList.DisplayType    = "Hazards"
+   //:mMasLC.CompositeComponentList.DisplayType       = "Hazards"
    SetAttributeFromString( mMasLC, "CompositeComponentList", "DisplayType", "Hazards" );
-   //:mMasLC.CompositeComponentList.OriginalTypeID = mMasLC.M_HumanHazardSection.ID 
+   //:mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_HumanHazardSection.ID 
    SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "OriginalTypeID", mMasLC, "M_HumanHazardSection", "ID" );
-   //:mMasLC.CompositeComponentList.DisplayValue   = ""
+   //:mMasLC.CompositeComponentList.DisplayValue      = ""
    SetAttributeFromString( mMasLC, "CompositeComponentList", "DisplayValue", "" );
 
    //:CREATE ENTITY mMasLC.CompositeComponentList 
    RESULT = CreateEntity( mMasLC, "CompositeComponentList", zPOS_AFTER );
-   //:mMasLC.CompositeComponentList.DisplayType    = "...Signal Word"
-   SetAttributeFromString( mMasLC, "CompositeComponentList", "DisplayType", "...Signal Word" );
-   //:mMasLC.CompositeComponentList.DisplayValue   = mMasLC.M_HumanHazardSection.EPA_SignalWord 
+   //:mMasLC.CompositeComponentList.DisplayType       = "Signal Word"
+   SetAttributeFromString( mMasLC, "CompositeComponentList", "DisplayType", "Signal Word" );
+   //:mMasLC.CompositeComponentList.DisplayTypeIndent = "...Signal Word"
+   SetAttributeFromString( mMasLC, "CompositeComponentList", "DisplayTypeIndent", "...Signal Word" );
+   //:mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_HumanHazardSection.EPA_SignalWord 
    SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "DisplayValue", mMasLC, "M_HumanHazardSection", "EPA_SignalWord" );
 
    //:CREATE ENTITY mMasLC.CompositeComponentList 
    RESULT = CreateEntity( mMasLC, "CompositeComponentList", zPOS_AFTER );
-   //:mMasLC.CompositeComponentList.DisplayType    = "...Child Warning"
-   SetAttributeFromString( mMasLC, "CompositeComponentList", "DisplayType", "...Child Warning" );
-   //:mMasLC.CompositeComponentList.DisplayValue   = mMasLC.M_HumanHazardSection.EPA_ChildHazardWarning 
+   //:mMasLC.CompositeComponentList.DisplayType       = "Child Warning"
+   SetAttributeFromString( mMasLC, "CompositeComponentList", "DisplayType", "Child Warning" );
+   //:mMasLC.CompositeComponentList.DisplayTypeIndent = "...Child Warning"
+   SetAttributeFromString( mMasLC, "CompositeComponentList", "DisplayTypeIndent", "...Child Warning" );
+   //:mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_HumanHazardSection.EPA_ChildHazardWarning 
    SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "DisplayValue", mMasLC, "M_HumanHazardSection", "EPA_ChildHazardWarning" );
 
    //:CREATE ENTITY mMasLC.CompositeComponentList 
    RESULT = CreateEntity( mMasLC, "CompositeComponentList", zPOS_AFTER );
-   //:mMasLC.CompositeComponentList.DisplayType    = "...Precautionary Stmt"
-   SetAttributeFromString( mMasLC, "CompositeComponentList", "DisplayType", "...Precautionary Stmt" );
-   //:mMasLC.CompositeComponentList.DisplayValue   = mMasLC.M_HumanHazardSection.PrecautionaryStatement 
+   //:mMasLC.CompositeComponentList.DisplayType       = "Precautionary Stmt"
+   SetAttributeFromString( mMasLC, "CompositeComponentList", "DisplayType", "Precautionary Stmt" );
+   //:mMasLC.CompositeComponentList.DisplayTypeIndent = "...Precautionary Stmt"
+   SetAttributeFromString( mMasLC, "CompositeComponentList", "DisplayTypeIndent", "...Precautionary Stmt" );
+   //:mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_HumanHazardSection.PrecautionaryStatement 
    SetAttributeFromAttribute( mMasLC, "CompositeComponentList", "DisplayValue", mMasLC, "M_HumanHazardSection", "PrecautionaryStatement" );
 
    //:CREATE ENTITY mMasLC.CompositeComponentList 

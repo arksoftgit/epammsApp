@@ -452,8 +452,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockDefinitionUpdate.jsp", "wSPLD.GENERATE_SPLD_Label" );
-         nOptRC = wSPLD.GENERATE_SPLD_Label( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockDefinitionUpdate.jsp", "wSPLD.GENERATE_SPLD_LabelDottedBorders" );
+         nOptRC = wSPLD.GENERATE_SPLD_LabelDottedBorders( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -774,16 +774,6 @@ else
    {
 %>
        <li id="AcceptAndReturn" name="AcceptAndReturn"><a href="#"  onclick="ACCEPT_BlockSubBlockDefinition()">Return</a></li>
-<%
-   }
-%>
-
-<%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New1" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="New1" name="New1"><a href="#"  onclick="GENERATE_SPLD_LabelDottedBorders()">Generate Label with Borders</a></li>
 <%
    }
 %>
@@ -1221,25 +1211,46 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox7:GroupBox */ %>
+<% /* HideBox:GroupBox */ %>
 
-<div id="GroupBox7" name="GroupBox7" style="width:866px;float:left;">  <!-- GroupBox7 --> 
+<div id="HideBox" name="HideBox" style="width:866px;height:50px;float:left;">  <!-- HideBox --> 
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:12px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
+<% /* HideInnerBox:GroupBox */ %>
+
+<div id="HideInnerBox" name="HideInnerBox" style="width:532px;float:left;">  <!-- HideInnerBox --> 
 
 
 <div>  <!-- Beginning of a new line -->
-<span style="height:22px;">&nbsp&nbsp&nbsp</span>
-<% /* Text2:Text */ %>
+<% /* HideText:Text */ %>
 
-<span  id="Text2" name="Text2" style="width:254px;height:22px;">SPLD Components</span>
+<span  id="HideText" name="HideText" style="width:250px;height:22px;">SPLD Components</span>
 
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  HideInnerBox --> 
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  HideBox --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
+ <!-- This is added as a line spacer -->
+<div style="height:8px;width:100px;"></div>
+
 <div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridComponentList:Grid */ %>
-<table  cols=3 style="width:852px;"  name="GridComponentList" id="GridComponentList">
+<table  cols=3 style=""  name="GridComponentList" id="GridComponentList">
 
 <thead><tr>
 
@@ -1343,10 +1354,6 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </tbody>
 </table>
 
-</div>  <!-- End of a new line -->
-
-
-</div>  <!--  GroupBox7 --> 
 </div>  <!-- End of a new line -->
 
 

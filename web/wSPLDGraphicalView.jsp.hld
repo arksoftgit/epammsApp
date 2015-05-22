@@ -1068,7 +1068,8 @@ else
                            </div>
                            <p style="clear:both;position:relative"></p>
                            <div id="zCapitalizeTitleTextFlagToggle" style="overflow:hidden; white-space:nowrap; padding-bottom:12px;">
-                              <input type="checkbox" id="zCapitalizeTitleTextFlag" name="zCapitalizeTitleTextFlag" class="zeidon" data-zmap="block.z_^continuation^block^flag" /><label for="zCapitalizeTitleTextFlag">Capitalize Title Text</label>
+                              <label for="zCapitalizeTitleTextFlag">Capitalize Title Text</label>
+                              <input type="checkbox" id="zCapitalizeTitleTextFlag" name="zCapitalizeTitleTextFlag" class="zeidon" data-zmap="block.z_^continuation^block^flag" />
                            </div>
                            <div>
                               <label for="zTextColor">Text Color</label>

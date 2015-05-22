@@ -600,7 +600,7 @@ else
 <script language="JavaScript" type="text/javascript" >
       // Javascript code entered by user for Window action prebuild.
 
-   // We knock out Login and Template as options.
+   /*// We knock out Login and Template as options.
    var thisLi;
 
    thisLi = document.getElementById( "lmTemplate" );
@@ -630,6 +630,7 @@ else
    // Cannot go to product management if already there.
    thisLi = document.getElementById( "lmProductManagement" );
    thisLi.disabled = true;
+*/
 
       // END of Javascript code entered by user.
 

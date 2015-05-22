@@ -671,7 +671,7 @@ else
 <script language="JavaScript" type="text/javascript" >
       // Javascript code entered by user for Window action prebuild.
 
-   // We knock out Login and Template as options.
+ /*// We knock out Login and Template as options.
    var thisLi;
 
    thisLi = document.getElementById( "lmTemplate" );
@@ -699,6 +699,7 @@ else
       thisLi.style.visibility = "hidden";
       thisLi.style.display = "none";
    }
+*/
 
       // END of Javascript code entered by user.
 

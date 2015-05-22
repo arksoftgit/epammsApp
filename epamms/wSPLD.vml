@@ -2151,17 +2151,24 @@ PostbuildBlockDefinitionUpdate( VIEW ViewToWindow )
    VIEW mSPLDef REGISTERED AS mSPLDef
    VIEW mSPLDefPanel REGISTERED AS mSPLDefPanel
    VIEW mSPLDefBlock REGISTERED AS mSPLDefBlock
+   STRING ( 1 )   szSectionType
    STRING ( 2 )   szSpace
+   STRING ( 256 ) szType
    STRING ( 256 ) szSearch
    STRING ( 256 ) szName
-   STRING ( 256 ) szType
    STRING ( 256 ) szGraphic
    STRING ( 512 ) szMsg
 
-   szName = mSPLDefBlock.LLD_Block.Name
+   // Composite entity Section Types: Precautionary, Environmental/Physical Hazard, First Aid, Ingredients, Storage/Disposal, Directions For Use, Marketing (P,E,F,I,S,D,M)
+   //
+   // Textual LLD_SectionType: Precautionary, Human Hazard, Physical Hazard, First Aid, Ingredients, Storage and Disposal, Directions For Use, Marketing
+   //
+   // Non-textual LLD_SectionType:  Graphic, Product Name, Net Contents, EPA Reg. No. - EPA Est. No.
+   //
    szType = mSPLDefBlock.LLD_Block.LLD_SectionType
+   szName = mSPLDefBlock.LLD_Block.Name
+   szSearch = szName
    szGraphic = mSPLDefBlock.LLD_Block.ImageName 
-   
    IF szType != ""
       szMsg = szType
       szSpace = ": "
@@ -2180,26 +2187,46 @@ PostbuildBlockDefinitionUpdate( VIEW ViewToWindow )
    IF szGraphic != ""
       szMsg = szMsg + szSpace + szGraphic
    END
-   
+   TraceLineS( "PostbuildBlock: ", szMsg )  // e.g. StorageDisposal (Section Type)
+// DisplayEntityInstance( mSPLDefBlock, "LLD_Block" )
+// DisplayObjectInstance( mSPLDef, "", "" )
+
    wWebXfer.Root.CurrentSectionTitle = szMsg
-   szSearch = mSPLDefBlock.LLD_Block.Name
-   TraceLineS( "PosbuildBlock Name: ", szSearch )
-   
-   // mSPLDefBlock should have been set up before transferring to this page.
-// TraceLineS( "PostbuildBlockDefinitionUpdate Display ", "LLD_Block" )
-// DisplayEntityInstance( mSPLDefBlock, "LLD_Block" )
-// SetUpFormattingSelect( mSPLDefPanel, mSPLDefBlock.LLD_Block.LLD_SectionType ) 
+
    SetUpKeywordEntries( mSPLDefBlock, mSPLDefBlock.LLD_Block.LLD_SectionType )
-// TraceLineS( "PostbuildBlockDefinitionUpdate Display2 ", "LLD_Block" )
-// DisplayEntityInstance( mSPLDefBlock, "LLD_Block" )
+
    // Select which of the CompositeComponentList entities are to be displayed
    FOR EACH mSPLDef.Display WITHIN mSPLDef.SubregPhysicalLabelDef 
       DELETE ENTITY mSPLDef.Display NONE
    END
-   
-   IF szName != ""
-      SET CURSOR FIRST mSPLDef.CompositeComponentList WHERE mSPLDef.CompositeComponentList.DisplayType = szType AND
-                                                            mSPLDef.CompositeComponentList.Name = szSearch
+
+   IF szType != "Graphic" AND szType != "ProductName" AND szType != "NetContents" AND szType != "EPA_RegAndEstNbr"
+      // AND szType != "HumanHazard" AND szType != "FirstAid" AND szType != "PhysicalHazard" AND szType != "Precautionary"
+      IF szSearch = ""
+         IF szType = "Precautionary"
+            szSearch = "P"
+         ELSE IF szType = "Hazards" OR szType = "HumanHazard" OR szType = "PhysicalHazard"
+            szSearch = "E"
+         ELSE IF szType = "FirstAid"
+            szSearch = "F"
+         ELSE IF szType = "Ingredients"
+            szSearch = "I"
+         ELSE IF szType = "StorageDisposal"
+            szSearch = "S"
+         ELSE IF szType = "DirectionsForUse"
+            szSearch = "D"
+         END
+         END
+         END
+         END
+         END
+         END
+         TraceLineS( "Searching for Type: ", szSearch )
+         SET CURSOR FIRST mSPLDef.CompositeComponentList WHERE mSPLDef.CompositeComponentList.SectionType = szSearch
+      ELSE
+         SET CURSOR FIRST mSPLDef.CompositeComponentList WHERE mSPLDef.CompositeComponentList.DisplayType = szType AND
+                                                               mSPLDef.CompositeComponentList.Name = szSearch
+      END
       IF RESULT < zCURSOR_SET
          szMsg = "Unable to locate " + szName + " within " + szType
          MessageSend( ViewToWindow, "", "Block Update",
@@ -2212,12 +2239,12 @@ PostbuildBlockDefinitionUpdate( VIEW ViewToWindow )
          END
          DisplayObjectInstance( mSPLDef, "", "" )
       ELSE
-         szMsg = "Looking for: " + szName + "  within: " + szType
-         TraceLineS( szMsg, "" )
+      // TraceLineS( "Selecting Composite Entities for ", szType )
          SET CURSOR NEXT mSPLDef.CompositeComponentList
          LOOP WHILE RESULT = zCURSOR_SET AND mSPLDef.CompositeComponentList.SelectLevel > 1
             IF mSPLDef.CompositeComponentList.SelectLevel = 2
                CREATE ENTITY mSPLDef.Display
+               DisplayEntityInstance( mSPLDef, "CompositeComponentList" )
             END
             SET CURSOR NEXT mSPLDef.CompositeComponentList
          END

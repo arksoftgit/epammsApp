@@ -204,6 +204,8 @@ $(function() {
       mapUiDataToElementData( g_$current_block );
       if ( g_$current_block ) {
          if ( g_$current_block.hasClass( "panel" ) === false ) {
+            var sectionType = g_$current_block.data( "z_^l^l^d_^section^type" );
+            sessionStorage.setItem( "epamms_section_type", sectionType );
             if ( g_updatedLLD ) {
             // alert( "Changed" );
                ConvertWysiwygLabelDesignToZeidonJson( "saveLabel", "mSPLDef", updateBlockCallback, g_$current_block );
@@ -253,6 +255,8 @@ $(function() {
    $("body").on( "dblclick", ".canvas-element", function(e) {
    // console.log( "Double Click on canvas-element: " + this.id + " has been pressed!" );
       if ( $(this).hasClass( "panel" ) === false ) {
+         var sectionType = $(this).data( "z_^l^l^d_^section^type" );
+         sessionStorage.setItem( "epamms_section_type", sectionType );
          if ( g_updatedLLD ) {
             ConvertWysiwygLabelDesignToZeidonJson( "saveLabel", "mSPLDef", updateBlockCallback, this );
          } else {
@@ -807,7 +811,7 @@ $(function() {
             if ( sectionType === "Graphic" ) {
                $("#zImageNameToggle").show();
                $("#zCheckContinuationBlockToggle").hide();
-               console.log( "   Hiding capitalize" );
+            // console.log( "   Hiding capitalize" );
                $("#zCapitalizeTitleTextFlagToggle").hide();
                $("#zClaimListTypeToggle").hide();
                $("#zMarketingSectionToggle").hide();
@@ -815,21 +819,21 @@ $(function() {
             } else if ( sectionType === "Marketing" || sectionType === "DirectionsForUse" || sectionType === "FirstAid" ||
                         sectionType === "StorageDisposal" || sectionType === "Hazards" || sectionType === "Precautionary" ) {
                $("#zCheckContinuationBlockToggle").show();
-               console.log( "   Showing capitalize" );
+            // console.log( "   Showing capitalize" );
                $("#zCapitalizeTitleTextFlagToggle").show();
                $("#zImageNameToggle").hide();
                if ( sectionType === "Marketing" ) {
                   $("#zClaimListTypeToggle").show();
                   $("#zMarketingSectionToggle").show();
                   $('#zMarketingSection option[value="' + blockName + '"]').prop( 'selected', true );
-                  // Marketing:   Title / Text / Column List
+                  // Marketing:  Title / Text / Column List
                   options = optionsDflt + "<option value=\"^column ^list\">Column List</option>";
                } else {
                   $("#zClaimListTypeToggle").hide();
                   $("#zMarketingSectionToggle").hide();
                   if ( sectionType === "DirectionsForUse" || sectionType === "FirstAid" ) {
-                     // Directions for Use:   Header / Title / Text
-                     // First Aid:   Header / Title / Text
+                     // Directions for Use:  Header / Title / Text
+                     // First Aid:  Header / Title / Text
                      options = "<option value=\"^header\">Header</option>" + optionsDflt;
                   }
                }
@@ -846,10 +850,12 @@ $(function() {
                } else if ( sectionType === "Ingredients" ) {
                   // Ingredients:   Title / Ingredients Items / Ingredients Inert / Ingredients Total
                   options = "<option value=\"^title\">Title</option><option value=\"^ingredients ^items\">Ingredients Items</option><option value=\"^ingredients ^inert\">Ingredients Inert</option><option value=\"^ingredients ^total\">Ingredients Total</option>";
+               } else if ( sectionType === "NetContents" || sectionType === "EPA_RegAndEstNbr" ) {
+                  options = "<option value=\"^text\">Text</option>"
                } else {
+                  // Default:  Title / Text
                   options = optionsDflt;
                }
-               // Default:   Title / Text
             }
             $("#zBlockFormatType")
                .find('option:not(:first)')

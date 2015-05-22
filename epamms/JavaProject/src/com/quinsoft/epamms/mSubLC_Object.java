@@ -2777,6 +2777,8 @@ omSubLC_BuildCompositeEntries( View     mSubLC )
       SetAttributeFromInteger( mSubLC, "CompositeComponentList", "SelectLevel", 1 );
       //:mSubLC.CompositeComponentList.DisplayType        = "Section"
       SetAttributeFromString( mSubLC, "CompositeComponentList", "DisplayType", "Section" );
+      //:mSubLC.CompositeComponentList.DisplayTypeIndent  = "Section"
+      SetAttributeFromString( mSubLC, "CompositeComponentList", "DisplayTypeIndent", "Section" );
       //:mSubLC.CompositeComponentList.OriginalTypeID     = mSubLC.M_MarketingSection.ID 
       SetAttributeFromAttribute( mSubLC, "CompositeComponentList", "OriginalTypeID", mSubLC, "M_MarketingSection", "ID" );
       //:mSubLC.CompositeComponentList.SLC_OriginalTypeID = mSubLC.S_MarketingSection.ID
@@ -2840,8 +2842,6 @@ omSubLC_BuildCompositeEntries( View     mSubLC )
       //:END
       //:mSubLC.CompositeComponentList.Value              = mSubLC.CompositeComponentList.DisplayValue
       SetAttributeFromAttribute( mSubLC, "CompositeComponentList", "Value", mSubLC, "CompositeComponentList", "DisplayValue" );
-      //:mSubLC.CompositeComponentList.DisplayTypeIndent  = mSubLC.CompositeComponentList.DisplayType
-      SetAttributeFromAttribute( mSubLC, "CompositeComponentList", "DisplayTypeIndent", mSubLC, "CompositeComponentList", "DisplayType" );
 
       //:FOR EACH mSubLC.S_MarketingStatement 
       RESULT = SetCursorFirstEntity( mSubLC, "S_MarketingStatement", "" );

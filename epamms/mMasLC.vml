@@ -908,6 +908,7 @@ BuildCompositeEntries( VIEW mMasLC BASED ON LOD mMasLC )
       mMasLC.CompositeComponentList.Type              = "M_MarketingSection"
       mMasLC.CompositeComponentList.SelectLevel       = 1
       mMasLC.CompositeComponentList.DisplayType       = "Marketing"
+      mMasLC.CompositeComponentList.DisplayTypeIndent = "Marketing"
       mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_MarketingSection.ID 
       mMasLC.CompositeComponentList.Name              = mMasLC.M_MarketingSection.Name 
       TraceLineS( "BuildComposite Name: ", mMasLC.M_MarketingSection.Name )
@@ -923,7 +924,6 @@ BuildCompositeEntries( VIEW mMasLC BASED ON LOD mMasLC )
       END
       mMasLC.CompositeComponentList.Title             = mMasLC.M_MarketingSection.Title
       mMasLC.CompositeComponentList.Value             = mMasLC.CompositeComponentList.DisplayValue
-      mMasLC.CompositeComponentList.DisplayTypeIndent = mMasLC.CompositeComponentList.DisplayType
       
       FOR EACH mMasLC.M_MarketingStatement 
          CREATE ENTITY mMasLC.CompositeComponentList 
@@ -960,11 +960,11 @@ BuildCompositeEntries( VIEW mMasLC BASED ON LOD mMasLC )
       mMasLC.CompositeComponentList.Type              = "M_GeneralSection"
       mMasLC.CompositeComponentList.SelectLevel       = 1
       mMasLC.CompositeComponentList.DisplayType       = "General"
+      mMasLC.CompositeComponentList.DisplayTypeIndent = "General"
       mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_GeneralSection.ID 
       mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_GeneralSection.Title
       mMasLC.CompositeComponentList.Title             = mMasLC.M_GeneralSection.Title
       mMasLC.CompositeComponentList.Value             = mMasLC.CompositeComponentList.DisplayValue
-      mMasLC.CompositeComponentList.DisplayTypeIndent = mMasLC.CompositeComponentList.DisplayType
       
       FOR EACH mMasLC.M_GeneralStatement 
          CREATE ENTITY mMasLC.CompositeComponentList 
@@ -993,10 +993,10 @@ BuildCompositeEntries( VIEW mMasLC BASED ON LOD mMasLC )
       mMasLC.CompositeComponentList.Type              = "M_IngredientsSection"
       mMasLC.CompositeComponentList.SelectLevel       = 1
       mMasLC.CompositeComponentList.DisplayType       = "Ingredients"
+      mMasLC.CompositeComponentList.DisplayTypeIndent = "Ingredients"
       mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_IngredientsSection.ID 
       mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_IngredientsSection.ActiveTitle 
       mMasLC.CompositeComponentList.Value             = mMasLC.CompositeComponentList.DisplayValue
-      mMasLC.CompositeComponentList.DisplayTypeIndent = mMasLC.CompositeComponentList.DisplayType
       
       FOR EACH mMasLC.M_IngredientsStatement 
          CREATE ENTITY mMasLC.CompositeComponentList 
@@ -1015,12 +1015,12 @@ BuildCompositeEntries( VIEW mMasLC BASED ON LOD mMasLC )
       CREATE ENTITY mMasLC.CompositeComponentList 
       mMasLC.CompositeComponentList.Type              = "M_StorageDisposalSection"
       mMasLC.CompositeComponentList.SelectLevel       = 1
-      mMasLC.CompositeComponentList.DisplayType       = "StorageDisposal"
+      mMasLC.CompositeComponentList.DisplayType       = "Storage and Disposal"
+      mMasLC.CompositeComponentList.DisplayTypeIndent = "Storage and Disposal"
       mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_StorageDisposalSection.ID 
       mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_StorageDisposalSection.Title 
       mMasLC.CompositeComponentList.Title             = mMasLC.M_StorageDisposalSection.Title
       mMasLC.CompositeComponentList.Value             = mMasLC.CompositeComponentList.DisplayValue
-      mMasLC.CompositeComponentList.DisplayTypeIndent = mMasLC.CompositeComponentList.DisplayType
       
       FOR EACH mMasLC.M_StorageDisposalStatement 
          CREATE ENTITY mMasLC.CompositeComponentList 
@@ -1048,7 +1048,8 @@ BuildCompositeEntries( VIEW mMasLC BASED ON LOD mMasLC )
       CREATE ENTITY mMasLC.CompositeComponentList 
       mMasLC.CompositeComponentList.Type              = "M_DirectionsForUseSection"
       mMasLC.CompositeComponentList.SelectLevel       = 1
-      mMasLC.CompositeComponentList.DisplayType       = "DirectionsForUse"
+      mMasLC.CompositeComponentList.DisplayType       = "Directions For Use"
+      mMasLC.CompositeComponentList.DisplayTypeIndent = "Directions For Use"
       mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_DirectionsForUseSection.ID 
       IF mMasLC.M_DirectionsForUseSection.Title != ""
          IF mMasLC.M_DirectionsForUseSection.Name = ""
@@ -1062,7 +1063,6 @@ BuildCompositeEntries( VIEW mMasLC BASED ON LOD mMasLC )
       END
       mMasLC.CompositeComponentList.Title             = mMasLC.M_DirectionsForUseSection.Title
       mMasLC.CompositeComponentList.Value             = mMasLC.CompositeComponentList.DisplayValue
-      mMasLC.CompositeComponentList.DisplayTypeIndent = mMasLC.CompositeComponentList.DisplayType
       
       FOR EACH mMasLC.M_DirectionsForUseStatement 
          CREATE ENTITY mMasLC.CompositeComponentList 
@@ -1111,6 +1111,7 @@ BuildCompositeEntries( VIEW mMasLC BASED ON LOD mMasLC )
       mMasLC.CompositeComponentList.Type              = "M_MarketingSection"
       mMasLC.CompositeComponentList.SelectLevel       = 1
       mMasLC.CompositeComponentList.DisplayType       = "Marketing"
+      mMasLC.CompositeComponentList.DisplayTypeIndent = "Marketing"
       mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_MarketingSection.ID 
       IF mMasLC.M_MarketingSection.Title != ""
          IF mMasLC.M_MarketingSection.Name = ""
@@ -1124,7 +1125,6 @@ BuildCompositeEntries( VIEW mMasLC BASED ON LOD mMasLC )
       END
       mMasLC.CompositeComponentList.Title             = mMasLC.M_MarketingSection.Title
       mMasLC.CompositeComponentList.Value             = mMasLC.CompositeComponentList.DisplayValue
-      mMasLC.CompositeComponentList.DisplayTypeIndent = mMasLC.CompositeComponentList.DisplayType
       
       FOR EACH mMasLC.M_MarketingStatement 
          CREATE ENTITY mMasLC.CompositeComponentList 
@@ -1171,26 +1171,31 @@ BuildCompositeEntries( VIEW mMasLC BASED ON LOD mMasLC )
    CREATE ENTITY mMasLC.CompositeComponentList 
    mMasLC.CompositeComponentList.Type              = "M_HumanHazardSection"
    mMasLC.CompositeComponentList.SelectLevel       = 1
+   mMasLC.CompositeComponentList.DisplayType       = "Hazards"
    mMasLC.CompositeComponentList.DisplayTypeIndent = "Hazards"
    mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_HumanHazardSection.ID 
    mMasLC.CompositeComponentList.DisplayValue      = ""
    
    CREATE ENTITY mMasLC.CompositeComponentList 
    mMasLC.CompositeComponentList.SelectLevel       = 2
+   mMasLC.CompositeComponentList.DisplayType       = "Signal Word"
    mMasLC.CompositeComponentList.DisplayTypeIndent = "...Signal Word"
    mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_HumanHazardSection.EPA_SignalWord 
    
    CREATE ENTITY mMasLC.CompositeComponentList 
    mMasLC.CompositeComponentList.SelectLevel       = 2
+   mMasLC.CompositeComponentList.DisplayType       = "Child Warning"
    mMasLC.CompositeComponentList.DisplayTypeIndent = "...Child Warning"
    mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_HumanHazardSection.EPA_ChildHazardWarning 
    
    CREATE ENTITY mMasLC.CompositeComponentList 
    mMasLC.CompositeComponentList.SelectLevel       = 2
+   mMasLC.CompositeComponentList.DisplayType       = "Precautionary Stmt"
    mMasLC.CompositeComponentList.DisplayTypeIndent = "...Precautionary Stmt"
    mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_HumanHazardSection.PrecautionaryStatement 
    
    CREATE ENTITY mMasLC.CompositeComponentList 
+   mMasLC.CompositeComponentList.DisplayType       = "Location"
    mMasLC.CompositeComponentList.DisplayTypeIndent = "Location"
    szCompositeLocation = "..." + mMasLC.M_HumanHazardSection.PanelLoc1 
    IF mMasLC.M_HumanHazardSection.PanelLoc2 != ""
@@ -1252,11 +1257,11 @@ BuildFullCompEntries( VIEW mMasLC BASED ON LOD mMasLC )
       CREATE ENTITY mMasLC.CompositeComponentList 
       mMasLC.CompositeComponentList.Type              = "M_GeneralSection"
       mMasLC.CompositeComponentList.DisplayType       = "General"
+      mMasLC.CompositeComponentList.DisplayTypeIndent = "General"
       mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_GeneralSection.ID 
       mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_GeneralSection.Title
       mMasLC.CompositeComponentList.Title             = mMasLC.M_GeneralSection.Title
       mMasLC.CompositeComponentList.Value             = mMasLC.CompositeComponentList.DisplayValue
-      mMasLC.CompositeComponentList.DisplayTypeIndent = mMasLC.CompositeComponentList.DisplayType
       
       FOR EACH mMasLC.M_GeneralStatement 
          CREATE ENTITY mMasLC.CompositeComponentList 
@@ -1275,10 +1280,10 @@ BuildFullCompEntries( VIEW mMasLC BASED ON LOD mMasLC )
       CREATE ENTITY mMasLC.CompositeComponentList 
       mMasLC.CompositeComponentList.Type              = "M_IngredientsSection"
       mMasLC.CompositeComponentList.DisplayType       = "Ingredients"
+      mMasLC.CompositeComponentList.DisplayTypeIndent = "Ingredients"
       mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_IngredientsSection.ID 
       mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_IngredientsSection.ActiveTitle 
       mMasLC.CompositeComponentList.Value             = mMasLC.CompositeComponentList.DisplayValue
-      mMasLC.CompositeComponentList.DisplayTypeIndent = mMasLC.CompositeComponentList.DisplayType
       
       FOR EACH mMasLC.M_IngredientsStatement 
          CREATE ENTITY mMasLC.CompositeComponentList 
@@ -1295,12 +1300,12 @@ BuildFullCompEntries( VIEW mMasLC BASED ON LOD mMasLC )
    FOR EACH mMasLC.M_StorageDisposalSection 
       CREATE ENTITY mMasLC.CompositeComponentList 
       mMasLC.CompositeComponentList.Type              = "M_StorageDisposalSection"
-      mMasLC.CompositeComponentList.DisplayType       = "StorageDisposal"
+      mMasLC.CompositeComponentList.DisplayType       = "Storage and Disposal"
+      mMasLC.CompositeComponentList.DisplayTypeIndent = "Storage and Disposal"
       mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_StorageDisposalSection.ID 
       mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_StorageDisposalSection.Title 
       mMasLC.CompositeComponentList.Title             = mMasLC.M_StorageDisposalSection.Title
       mMasLC.CompositeComponentList.Value             = mMasLC.CompositeComponentList.DisplayValue
-      mMasLC.CompositeComponentList.DisplayTypeIndent = mMasLC.CompositeComponentList.DisplayType
       
       FOR EACH mMasLC.M_StorageDisposalStatement 
          CREATE ENTITY mMasLC.CompositeComponentList 
@@ -1318,12 +1323,12 @@ BuildFullCompEntries( VIEW mMasLC BASED ON LOD mMasLC )
    FOR EACH mMasLC.M_DirectionsForUseSection 
       CREATE ENTITY mMasLC.CompositeComponentList 
       mMasLC.CompositeComponentList.Type              = "M_DirectionsForUseSection"
-      mMasLC.CompositeComponentList.DisplayType       = "DirectionsForUse"
+      mMasLC.CompositeComponentList.DisplayType       = "Directions For Use"
+      mMasLC.CompositeComponentList.DisplayTypeIndent = "Directions For Use"
       mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_DirectionsForUseSection.ID 
       mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_DirectionsForUseSection.Title 
       mMasLC.CompositeComponentList.Title             = mMasLC.M_DirectionsForUseSection.Title
       mMasLC.CompositeComponentList.Value             = mMasLC.CompositeComponentList.DisplayValue
-      mMasLC.CompositeComponentList.DisplayTypeIndent = mMasLC.CompositeComponentList.DisplayType
       
       FOR EACH mMasLC.M_DirectionsForUseStatement 
          CREATE ENTITY mMasLC.CompositeComponentList 
@@ -1340,13 +1345,13 @@ BuildFullCompEntries( VIEW mMasLC BASED ON LOD mMasLC )
    // Marketing Section and Statements.
    FOR EACH mMasLC.M_MarketingSection 
       CREATE ENTITY mMasLC.CompositeComponentList 
-      mMasLC.CompositeComponentList.Type           = "M_MarketingSection"
-      mMasLC.CompositeComponentList.DisplayType    = "Marketing"
-      mMasLC.CompositeComponentList.OriginalTypeID = mMasLC.M_MarketingSection.ID 
-      mMasLC.CompositeComponentList.DisplayValue   = mMasLC.M_MarketingSection.Title 
+      mMasLC.CompositeComponentList.Type              = "M_MarketingSection"
+      mMasLC.CompositeComponentList.DisplayType       = "Marketing"
+      mMasLC.CompositeComponentList.DisplayTypeIndent = "Marketing"
+      mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_MarketingSection.ID 
+      mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_MarketingSection.Title 
       mMasLC.CompositeComponentList.Title             = mMasLC.M_MarketingSection.Title
       mMasLC.CompositeComponentList.Value             = mMasLC.CompositeComponentList.DisplayValue
-      mMasLC.CompositeComponentList.DisplayTypeIndent = mMasLC.CompositeComponentList.DisplayType
       
       FOR EACH mMasLC.M_MarketingStatement 
          CREATE ENTITY mMasLC.CompositeComponentList 
@@ -1362,22 +1367,25 @@ BuildFullCompEntries( VIEW mMasLC BASED ON LOD mMasLC )
    
    // Hazards Section
    CREATE ENTITY mMasLC.CompositeComponentList 
-   mMasLC.CompositeComponentList.Type           = "M_HumanHazardSection"
-   mMasLC.CompositeComponentList.DisplayType    = "Hazards"
-   mMasLC.CompositeComponentList.OriginalTypeID = mMasLC.M_HumanHazardSection.ID 
-   mMasLC.CompositeComponentList.DisplayValue   = ""
+   mMasLC.CompositeComponentList.Type              = "M_HumanHazardSection"
+   mMasLC.CompositeComponentList.DisplayType       = "Hazards"
+   mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_HumanHazardSection.ID 
+   mMasLC.CompositeComponentList.DisplayValue      = ""
    
    CREATE ENTITY mMasLC.CompositeComponentList 
-   mMasLC.CompositeComponentList.DisplayType    = "...Signal Word"
-   mMasLC.CompositeComponentList.DisplayValue   = mMasLC.M_HumanHazardSection.EPA_SignalWord 
+   mMasLC.CompositeComponentList.DisplayType       = "Signal Word"
+   mMasLC.CompositeComponentList.DisplayTypeIndent = "...Signal Word"
+   mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_HumanHazardSection.EPA_SignalWord 
    
    CREATE ENTITY mMasLC.CompositeComponentList 
-   mMasLC.CompositeComponentList.DisplayType    = "...Child Warning"
-   mMasLC.CompositeComponentList.DisplayValue   = mMasLC.M_HumanHazardSection.EPA_ChildHazardWarning 
+   mMasLC.CompositeComponentList.DisplayType       = "Child Warning"
+   mMasLC.CompositeComponentList.DisplayTypeIndent = "...Child Warning"
+   mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_HumanHazardSection.EPA_ChildHazardWarning 
    
    CREATE ENTITY mMasLC.CompositeComponentList 
-   mMasLC.CompositeComponentList.DisplayType    = "...Precautionary Stmt"
-   mMasLC.CompositeComponentList.DisplayValue   = mMasLC.M_HumanHazardSection.PrecautionaryStatement 
+   mMasLC.CompositeComponentList.DisplayType       = "Precautionary Stmt"
+   mMasLC.CompositeComponentList.DisplayTypeIndent = "...Precautionary Stmt"
+   mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_HumanHazardSection.PrecautionaryStatement 
    
    CREATE ENTITY mMasLC.CompositeComponentList 
    mMasLC.CompositeComponentList.DisplayType    = "Location"

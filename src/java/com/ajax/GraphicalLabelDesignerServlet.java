@@ -13,6 +13,7 @@ import com.quinsoft.zeidon.View;
 import com.quinsoft.zeidon.WriteOiFlags;
 import com.quinsoft.zeidon.ZeidonException;
 import com.quinsoft.zeidon.utils.JsonUtils;
+import com.quinsoft.epamms.ZGlobal1_Operation;
 
 import com.quinsoft.zeidon.zeidonoperations.KZOEP1AA;
 import java.net.URLDecoder;
@@ -82,6 +83,33 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
          }
       }
       return null;
+   }
+
+   private int sortBlocks( View mSPLDef ) {
+      int cnt = 0;
+      try {
+         CursorResult cr = mSPLDef.cursor( "LLD_Block" ).setFirst();
+         while ( cr.isSet() ) {
+            cnt++;
+            if ( mSPLDef.cursor( "LLD_SubBlock" ).hasAny() ) {
+               mSPLDef.cursor( "LLD_SubBlock" ).setToSubobject();
+               int rc = sortBlocks( mSPLDef );
+               mSPLDef.cursor( "LLD_Block" ).resetSubobjectToParent();
+               if ( rc < 0 ) {
+                  return rc;
+               }
+            }
+            cr = mSPLDef.cursor( "LLD_Block" ).setNext();
+         }
+
+         if ( cnt > 1 ) { // we had more than one block ... so sort 'em
+            mSPLDef.cursor( "LLD_Block" ).orderEntities( "Left A Top A Width A Height A" );
+         }
+      } catch( ZeidonException ze ) {
+         logger.error( "Error sorting blocks: " + ze.getMessage() );
+         return -1;
+      }
+      return 0;
    }
 
    private StringBuffer getSkeletalLodEntities( StringBuffer xod ) {
@@ -1055,11 +1083,17 @@ end debug code */
             // displaySPLD( vLLD, null, "" );
                applyJsonLabelToView( vLLD, vBlock, jsonPost, "", -2, null );  // OIs, SPLD_LLD, depth == 0 for LLD_Page
                vBlock.drop();
-            // logger.debug( "After applyJsonLabelToView LLD OI: " );
-            //vLLD.logObjectInstance();
-            // logger.debug( "Saved JSON to OI" );
                vLLD.setName( "mSPLDefPanel", Level.TASK );
-               
+               // Sort the blocks
+               CursorResult cr = vLLD.cursor( "LLD_Panel" ).setFirst();
+               while ( cr.isSet() ) {
+                  sortBlocks( vLLD );
+                  cr = vLLD.cursor( "LLD_Panel" ).setNext();
+               }
+            // logger.debug( "After Sort Blocks LLD OI: " );
+            // displaySPLD( vLLD, null, "" );
+            // vLLD.logObjectInstance();
+               logger.debug( "Saved JSON to OI" );
                if ( action.compareTo( "saveLabelCommit" ) == 0 ) {
                   vLLD.commit();
                // displaySPLD( vLLD, null, "" );

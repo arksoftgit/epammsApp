@@ -197,7 +197,7 @@ function InitPortal( )
    {
       // Javascript code entered by user.
 
-   // We knock out Login and Template as options.
+ /*// We knock out Login and Template as options.
    var thisLi;
 
    thisLi = document.getElementById( "lmTemplate" );
@@ -225,6 +225,7 @@ function InitPortal( )
       thisLi.style.visibility = "hidden";
       thisLi.style.display = "none";
    }
+*/
 
       // END of Javascript code entered by user.
 

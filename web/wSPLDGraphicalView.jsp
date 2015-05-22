@@ -881,9 +881,9 @@ else
                          <option value="NetContents">Net Contents</option>
                          <option value="PhysicalHazard">Physical Hazard</option>
                          <option value="Precautionary">Precautionary</option>
-                           <option value="ProductDescription">Product Description</option>
-                           <option value="ProductName">Product Name</option>
-                           <option value="ProductSpecific">Product Specific</option>
+                         <option value="ProductDescription">Product Description</option>
+                         <option value="ProductName">Product Name</option>
+                         <option value="ProductSpecific">Product Specific</option>
                          <option value="StorageDisposal">Storage and Disposal</option>
                         </select>
                      </div>

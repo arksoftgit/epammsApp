@@ -156,8 +156,10 @@ GeneratePDF_Label( VIEW mSPLDef BASED ON LOD mSPLDef )
    Left            = 1.0
    InterPanelSpace = 0.75
    IF mSPLDef.SubregPhysicalLabelDef.wFormatWithDottedBorders = "Y"
+   // TraceLineS( "Generate PDF Label with borders", "" )
       szPanelDottedBorder = " border=^1.0pt dotted green^"
    ELSE
+   // TraceLineS( "Generate PDF Label without borders", "" )
       szPanelDottedBorder = ""
    END
    FOR EACH mSPLDef.LLD_Panel
@@ -268,6 +270,88 @@ GeneratePDF_Label( VIEW mSPLDef BASED ON LOD mSPLDef )
    TraceLineS( "Output Xml Filename: ", szXmlName )
    GenerateXML_File( mSPLDef, "SubregPhysicalLabelDef", szXmlName )
 
+END
+
+LOCAL OPERATION
+AddBlockAttribute( VIEW mSPLDefBlock BASED ON LOD mSPLDef, STRING (33) strAttribute, STRING (4096) szDisplayMsg )
+   STRING ( 256 ) szAttributeValue
+
+   GetStringFromAttribute( szAttributeValue, mSPLDefBlock, "LLD_Block", strAttribute )
+// TraceLineS( "AddBlockAttribute: ", szAttributeValue )
+   IF szAttributeValue != ""
+      szDisplayMsg = szDisplayMsg + "  " + strAttribute + ": " + szAttributeValue
+   END
+END
+
+LOCAL OPERATION
+DisplayBlockAttributes( VIEW mSPLDefBlock BASED ON LOD mSPLDef, INTEGER bAll )
+
+   STRING ( 4096 ) szDisplayMsg
+   INTEGER lMinLth
+   INTEGER lLth
+
+   szDisplayMsg = " --- Block"
+   AddBlockAttribute( mSPLDefBlock, "ID", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "Top", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "Left", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "Height", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "Width", szDisplayMsg )
+
+   lMinLth = zstrlen( szDisplayMsg )
+
+   AddBlockAttribute( mSPLDefBlock, "Tag", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "Name", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "BlockTitle", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "LLD_SectionType", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "LLD_ColumnListType", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "ContinuationBlockFlag", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "ImageName", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "TextColor", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "TextColorOverride", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "BackgroundColor", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "BackgroundColorOverride", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "BorderColor", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "BorderColorOverride", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "BorderStyle", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "BorderWidth", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "FontFamily", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "FontSize", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "FontWeight", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "Margin", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "MarginTop", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "MarginLeft", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "MarginBottom", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "MarginRight", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "MarginOverride", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "Border", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "BorderTop", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "BorderBottom", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "BorderLeft", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "BorderRight", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "BorderOverride", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "Padding", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "PaddingTop", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "PaddingBottom", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "PaddingLeft", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "PaddingRight", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "PaddingOverride", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "TitlePosition", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "CapitalizeTitleTextFlag", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "TextAlign", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "TextLineHeight", szDisplayMsg )
+// AddBlockAttribute( mSPLDefBlock, "Depth", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "UsageColumn1BreakName", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "UsageColumn2BreakName", szDisplayMsg )
+// AddBlockAttribute( mSPLDefBlock, "wRelativeBlockNumber", szDisplayMsg )
+// AddBlockAttribute( mSPLDefBlock, "wComputedTopPosition", szDisplayMsg )
+   lLth = zstrlen( szDisplayMsg )
+   IF lLth > lMinLth
+      TraceLineS( "Has data ", szDisplayMsg )
+   ELSE
+   IF bAll != 0
+      TraceLineS( "~No data ", szDisplayMsg )
+   END
+   END
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -512,7 +596,7 @@ END
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
 FormatContinueBlock( VIEW mSPLDefPDF BASED ON LOD mSPLDef,
-                     VIEW mSPLDef      BASED ON LOD mSPLDef,
+                     VIEW mSPLDef    BASED ON LOD mSPLDef,
                      INTEGER lFile,
                      STRING ( 50 )    szPassedBlanks,
                      STRING ( 32000 ) szWriteBuffer,
@@ -831,10 +915,8 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
                      szWriteBuffer = szLeadingBlanks + "   <fo:block "
                      AddFormatToSpecialText( mSPLDefPDF, "Header", szWriteBuffer )
                      WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-
                      szWriteBuffer = szLeadingBlanks + "      Marketing"
                      WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-
                      szWriteBuffer = szLeadingBlanks + "   </fo:block>"
                      WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
                   END
@@ -868,7 +950,6 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
             /*IF szSectionType = "OtherHazard" OR
                szSectionType = "FirstAid" OR
                szSectionType = "Precautionary"
-
                // We can get by using the same operation because all 3 Section Types are handled the same way and the child entity,
                // SPLDT_GeneralSection, is pointing to the instance of the correct Type.
             // TraceLineS( "Major Block: ", szSectionType )
@@ -1033,7 +1114,7 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
                szWriteBuffer = szLeadingBlanks + "   <fo:block>"
                WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
 
-               szWriteBuffer = szLeadingBlanks + "      " + szTitle
+               szWriteBuffer = szLeadingBlanks + "      " + szTitle + "   " + szMsg
                WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
 
                szWriteBuffer = szLeadingBlanks + "   </fo:block>"
@@ -1108,6 +1189,16 @@ FormatBlockContainer( VIEW mSPLDefPDF BASED ON LOD mSPLDef,
    STRING ( 10 )  szRightMBP
    STRING ( 10 )  szTextAlign
    STRING ( 256 ) szImg
+
+   STRING ( 512 ) szDebugMsg
+   
+   szDebugMsg = mSPLDefPDF.LLD_Block.ID
+   szDebugMsg = szDebugMsg + "   Tag: " + mSPLDefPDF.LLD_Block.Tag
+   szDebugMsg = szDebugMsg + "   Name: " + mSPLDefPDF.LLD_Block.Name
+   szDebugMsg = szDebugMsg + "   Title: " + mSPLDefPDF.LLD_Block.BlockTitle
+   szDebugMsg = szDebugMsg + "   Section Type: " + mSPLDefPDF.LLD_Block.LLD_SectionType
+   TraceLineS( "FormatBlockContainer ID: ",  szDebugMsg )
+   DisplayBlockAttributes( mSPLDefPDF, 1 )
 
    // Default font size will be set to 8pt for now.
    szDefaultFontSize = "8"
@@ -1356,38 +1447,31 @@ FormatBlock( VIEW mSPLDef BASED ON LOD mSPLDef,
    IF szFontFamily != ""
       szWriteBuffer = szWriteBuffer + " font-family=^" + szFontFamily + "^"
    END
-
    szFontSize = mSPLDef.LLD_Block.FontSize
    IF szFontSize != ""
       TraceLineS( "2Font Size set to: ", szFontSize )
       szWriteBuffer = szWriteBuffer + " font-size=^" + szFontSize + "pt^"
    END
-
    szFontWeight = mSPLDef.LLD_Block.FontWeight
    IF szFontWeight != ""
       szWriteBuffer = szWriteBuffer + " font-weight=^" + szFontWeight + "^"
    END
-
    szMarginTop = mSPLDef.LLD_Block.MarginTop
    IF szMarginTop != ""
       szWriteBuffer = szWriteBuffer + " margin-top=^" + szMarginTop + "in^"
    END
-
    szMarginBottom = mSPLDef.LLD_Block.MarginBottom
    IF szMarginBottom != ""
       szWriteBuffer = szWriteBuffer + " margin-bottom=^" + szMarginBottom + "in^"
    END
-
    szMarginLeft = mSPLDef.LLD_Block.MarginLeft
    IF szMarginLeft != ""
       szWriteBuffer = szWriteBuffer + " margin-left=^" + szMarginLeft + "in^"
    END
-
    szMarginRight = mSPLDef.LLD_Block.MarginRight
    IF szMarginRight != ""
       szWriteBuffer = szWriteBuffer + " margin-right=^" + szMarginRight + "in^"
    END
-
    szTextAlign = mSPLDef.LLD_Block.TextAlign
    IF szTextAlign != ""
       szWriteBuffer = szWriteBuffer + " text-align=^" + szTextAlign + "^"
@@ -1558,11 +1642,11 @@ END
 /////////////////////////////////////////////////////////////////////////////
 //
 // OPERATION: GeneratePDF_DFU
-//    Generate both Directions For Use and Marketing
+//   Directions For Use / Storage and Disposal / General / Marketing
 //
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
-GeneratePDF_DFU( VIEW mSPLDef      BASED ON LOD mSPLDef,
+GeneratePDF_DFU( VIEW mSPLDef    BASED ON LOD mSPLDef,
                  VIEW mSPLDefPDF BASED ON LOD mSPLDef,
                  INTEGER lFile,
                  STRING ( 32 ) szSPLD_SectionName,
@@ -1597,6 +1681,9 @@ GeneratePDF_DFU( VIEW mSPLDef      BASED ON LOD mSPLDef,
    STRING ( 1 )      szConvertToCapsFlag
    INTEGER           lCnt
    SHORT             nRC
+
+   STRING ( 512 ) szDebugMsg
+   
 
    // Generate PDF for a "Directions of Use" or "Marketing" Section.
 
@@ -1780,9 +1867,30 @@ GeneratePDF_DFU( VIEW mSPLDef      BASED ON LOD mSPLDef,
             // be seen under view mSPLDefPDF. Thus the reason for the somewhat awkward code below where mSPLDefPanelLevel
             // is the same view as mSPLDefPDF for the case where the continuation is to the next Block.
 
+
+            szDebugMsg = mSPLDefPDF.LLD_Block.ID
+            szDebugMsg = szDebugMsg + "   Tag: " + mSPLDefPDF.LLD_Block.Tag
+            szDebugMsg = szDebugMsg + "   Name: " + mSPLDefPDF.LLD_Block.Name
+            szDebugMsg = szDebugMsg + "   Title: " + mSPLDefPDF.LLD_Block.BlockTitle
+            szDebugMsg = szDebugMsg + "   Section Type: " + mSPLDefPDF.LLD_Block.LLD_SectionType
+            szDebugMsg = szDebugMsg + "   Continuation: " + mSPLDefPDF.LLD_Block.ContinuationBlockFlag
+            TraceLineS( "Checking Continuation from Block ID: ",  szDebugMsg )
+
+
             // First look to see if the next Block is a Continuation Block and set flag.
             SET CURSOR NEXT mSPLDefPDF.LLD_Block
             IF RESULT >= zCURSOR_SET
+
+
+               szDebugMsg = mSPLDefPDF.LLD_Block.ID
+               szDebugMsg = szDebugMsg + "   Tag: " + mSPLDefPDF.LLD_Block.Tag
+               szDebugMsg = szDebugMsg + "   Name: " + mSPLDefPDF.LLD_Block.Name
+               szDebugMsg = szDebugMsg + "   Title: " + mSPLDefPDF.LLD_Block.BlockTitle
+               szDebugMsg = szDebugMsg + "   Section Type: " + mSPLDefPDF.LLD_Block.LLD_SectionType
+               szDebugMsg = szDebugMsg + "   Continuation: " + mSPLDefPDF.LLD_Block.ContinuationBlockFlag
+               TraceLineS( "Checking Continuation To Block ID: ",  szDebugMsg )
+
+
                IF mSPLDefPDF.LLD_Block.ContinuationBlockFlag = "Y"
                   szBlockContinuationType = "B"
                ELSE
@@ -1858,7 +1966,7 @@ GeneratePDF_DFU( VIEW mSPLDef      BASED ON LOD mSPLDef,
                END
 
                // Copy BlockSpecialAttributeBlock entries.
-               // I decided not to do the following but use the formatting characteristics specified on the Coninuation Block.
+               // I decided not to do the following but use the formatting characteristics specified on the Continuation Block.
                /*FOR EACH mSPLDefPanelLevel.LLD_SpecialSectionAttribute
                   DELETE ENTITY mSPLDefPanelLevel.LLD_SpecialSectionAttribute NONE
                END
@@ -1912,7 +2020,7 @@ END
 //
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
-GeneratePDF_ClmList( VIEW mSPLDef      BASED ON LOD mSPLDef,
+GeneratePDF_ClmList( VIEW mSPLDef    BASED ON LOD mSPLDef,
                      VIEW mSPLDefPDF BASED ON LOD mSPLDef,
                      INTEGER lFile,
                      STRING ( 256 )   szPassedBlanks,
@@ -2286,7 +2394,7 @@ END
 //
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
-GeneratePDF_Ingred( VIEW mSPLDef      BASED ON LOD mSPLDef,
+GeneratePDF_Ingred( VIEW mSPLDef    BASED ON LOD mSPLDef,
                     VIEW mSPLDefPDF BASED ON LOD mSPLDef,
                     INTEGER lFile,
                     STRING ( 50 )    szPassedBlanks,
@@ -2385,7 +2493,7 @@ END
 //
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
-GeneratePDF_Content( VIEW mSPLDef      BASED ON LOD mSPLDef,
+GeneratePDF_Content( VIEW mSPLDef    BASED ON LOD mSPLDef,
                      VIEW mSPLDefPDF BASED ON LOD mSPLDef,
                      INTEGER lFile,
                      STRING ( 50 )    szPassedBlanks,
@@ -2403,7 +2511,7 @@ GeneratePDF_Content( VIEW mSPLDef      BASED ON LOD mSPLDef,
    END
 
    szWriteBuffer = szLeadingBlanks + "<fo:block "
-   AddFormatToSpecialText( mSPLDefPDF, "Net Contents", szWriteBuffer )
+   AddFormatToSpecialText( mSPLDefPDF, "Text", szWriteBuffer )
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
 
    szWriteBuffer = szLeadingBlanks + "   " + szNetContentsText
@@ -2418,7 +2526,7 @@ END
 //
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
-GeneratePDF_EPA_Reg( VIEW mSPLDef      BASED ON LOD mSPLDef,
+GeneratePDF_EPA_Reg( VIEW mSPLDef    BASED ON LOD mSPLDef,
                      VIEW mSPLDefPDF BASED ON LOD mSPLDef,
                      INTEGER lFile,
                      STRING ( 50 )    szPassedBlanks,
@@ -2443,7 +2551,7 @@ GeneratePDF_EPA_Reg( VIEW mSPLDef      BASED ON LOD mSPLDef,
    szStatementText = "EPA Reg. No. " + szEPA_RegNbr + "   EPA Est. No. " + szEPA_EstNbr
 
    szWriteBuffer = szLeadingBlanks + "<fo:block "
-   AddFormatToSpecialText( mSPLDefPDF, "EPA Reg / Est No.", szWriteBuffer )
+   AddFormatToSpecialText( mSPLDefPDF, "Text", szWriteBuffer )
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
 
    szWriteBuffer = szLeadingBlanks + "   " + szStatementText
@@ -2461,7 +2569,7 @@ END
 //
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
-GeneratePDF_Hazards( VIEW mSPLDef      BASED ON LOD mSPLDef,
+GeneratePDF_Hazards( VIEW mSPLDef    BASED ON LOD mSPLDef,
                      VIEW mSPLDefPDF BASED ON LOD mSPLDef,
                      INTEGER lFile,
                      STRING ( 50 )    szPassedBlanks,
@@ -2521,7 +2629,7 @@ END
 //
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
-GeneratePDF_General( VIEW mSPLDef      BASED ON LOD mSPLDef,
+GeneratePDF_General( VIEW mSPLDef    BASED ON LOD mSPLDef,
                      VIEW mSPLDefPDF BASED ON LOD mSPLDef,
                      INTEGER lFile,
                      STRING ( 50 )    szPassedBlanks,
@@ -2570,7 +2678,7 @@ END
 //
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
-GeneratePDF_StorDisp( VIEW mSPLDef      BASED ON LOD mSPLDef,
+GeneratePDF_StorDisp( VIEW mSPLDef    BASED ON LOD mSPLDef,
                       VIEW mSPLDefPDF BASED ON LOD mSPLDef,
                       INTEGER lFile,
                       STRING ( 32 )    szSectionType,
@@ -2855,22 +2963,23 @@ BuildCompositeEntries( VIEW mSPLDef BASED ON LOD mSPLDef )
    // General Section and Statements.
    FOR EACH mSPLDef.SPLD_GeneralSection
       CREATE ENTITY mSPLDef.CompositeComponentList
-      mSPLDef.CompositeComponentList.Type               = "SPLD_GeneralSection"
-      mSPLDef.CompositeComponentList.SelectLevel        = 1
-      mSPLDef.CompositeComponentList.DisplayType        = "General"
-      mSPLDef.CompositeComponentList.OriginalTypeID     = mSPLDef.SPLD_GeneralSection.ID
-      mSPLDef.CompositeComponentList.DisplayValue       = mSPLDef.SPLD_GeneralSection.Title
-      mSPLDef.CompositeComponentList.Value              = mSPLDef.CompositeComponentList.DisplayValue
-      mSPLDef.CompositeComponentList.DisplayTypeIndent  = mSPLDef.CompositeComponentList.DisplayType
+      mSPLDef.CompositeComponentList.Type              = "SPLD_GeneralSection"
+      mSPLDef.CompositeComponentList.SelectLevel       = 1
+      mSPLDef.CompositeComponentList.DisplayType       = "General"
+      mSPLDef.CompositeComponentList.DisplayTypeIndent = "General"
+      mSPLDef.CompositeComponentList.SectionType       = mSPLDef.SPLD_GeneralSection.SectionType
+      mSPLDef.CompositeComponentList.OriginalTypeID    = mSPLDef.SPLD_GeneralSection.ID
+      mSPLDef.CompositeComponentList.DisplayValue      = mSPLDef.SPLD_GeneralSection.Title
+      mSPLDef.CompositeComponentList.Value             = mSPLDef.CompositeComponentList.DisplayValue
 
       FOR EACH mSPLDef.SPLD_GeneralStatement
          CREATE ENTITY mSPLDef.CompositeComponentList
-         mSPLDef.CompositeComponentList.Type               = "SPLD_GeneralStatement"
-         mSPLDef.CompositeComponentList.SelectLevel        = 2
-         mSPLDef.CompositeComponentList.DisplayType        = "Statement"
-         mSPLDef.CompositeComponentList.DisplayTypeIndent  = "...Statement"
-         mSPLDef.CompositeComponentList.OriginalTypeID     = mSPLDef.SPLD_GeneralStatement.ID
-         mSPLDef.CompositeComponentList.Value              = mSPLDef.SPLD_GeneralStatement.Text
+         mSPLDef.CompositeComponentList.Type              = "SPLD_GeneralStatement"
+         mSPLDef.CompositeComponentList.SelectLevel       = 2
+         mSPLDef.CompositeComponentList.DisplayType       = "Statement"
+         mSPLDef.CompositeComponentList.DisplayTypeIndent = "...Statement"
+         mSPLDef.CompositeComponentList.OriginalTypeID    = mSPLDef.SPLD_GeneralStatement.ID
+         mSPLDef.CompositeComponentList.Value             = mSPLDef.SPLD_GeneralStatement.Text
          SetMatchingAttributesByName( mSPLDef, "CompositeComponentList",
                                       mSPLDef, "SPLD_GeneralStatement", zSET_NULL )
 
@@ -2888,55 +2997,57 @@ BuildCompositeEntries( VIEW mSPLDef BASED ON LOD mSPLDef )
    // Ingredients Section and Statements.
    FOR EACH mSPLDef.SPLD_IngredientsSection
       CREATE ENTITY mSPLDef.CompositeComponentList
-      mSPLDef.CompositeComponentList.Type               = "SPLD_IngredientsSection"
-      mSPLDef.CompositeComponentList.SelectLevel        = 1
-      mSPLDef.CompositeComponentList.DisplayType        = "Ingredients"
-      mSPLDef.CompositeComponentList.OriginalTypeID     = mSPLDef.SPLD_IngredientsSection.ID
-      mSPLDef.CompositeComponentList.DisplayValue       = mSPLDef.SPLD_IngredientsSection.ActiveTitle
-      mSPLDef.CompositeComponentList.Value              = mSPLDef.CompositeComponentList.DisplayValue
-      mSPLDef.CompositeComponentList.DisplayTypeIndent  = mSPLDef.CompositeComponentList.DisplayType
+      mSPLDef.CompositeComponentList.Type              = "SPLD_IngredientsSection"
+      mSPLDef.CompositeComponentList.SelectLevel       = 1
+      mSPLDef.CompositeComponentList.DisplayType       = "Ingredients"
+      mSPLDef.CompositeComponentList.DisplayTypeIndent = "Ingredients"
+      mSPLDef.CompositeComponentList.SectionType       = "I"
+      mSPLDef.CompositeComponentList.OriginalTypeID    = mSPLDef.SPLD_IngredientsSection.ID
+      mSPLDef.CompositeComponentList.DisplayValue      = mSPLDef.SPLD_IngredientsSection.ActiveTitle
+      mSPLDef.CompositeComponentList.Value             = mSPLDef.CompositeComponentList.DisplayValue
 
       FOR EACH mSPLDef.SPLD_IngredientsStatement
          CREATE ENTITY mSPLDef.CompositeComponentList
-         mSPLDef.CompositeComponentList.Type               = "SPLD_IngredientsStatement"
-         mSPLDef.CompositeComponentList.SelectLevel        = 2
-         mSPLDef.CompositeComponentList.DisplayType        = "Statement"
-         mSPLDef.CompositeComponentList.DisplayTypeIndent  = "...Statement"
-         mSPLDef.CompositeComponentList.OriginalTypeID     = mSPLDef.SPLD_IngredientsStatement.ID
-         mSPLDef.CompositeComponentList.DisplayValue       = mSPLDef.SPLD_IngredientsStatement.ChemicalName
-         mSPLDef.CompositeComponentList.Value              = mSPLDef.SPLD_IngredientsStatement.ChemicalName
+         mSPLDef.CompositeComponentList.Type              = "SPLD_IngredientsStatement"
+         mSPLDef.CompositeComponentList.SelectLevel       = 2
+         mSPLDef.CompositeComponentList.DisplayType       = "Statement"
+         mSPLDef.CompositeComponentList.DisplayTypeIndent = "...Statement"
+         mSPLDef.CompositeComponentList.OriginalTypeID    = mSPLDef.SPLD_IngredientsStatement.ID
+         mSPLDef.CompositeComponentList.DisplayValue      = mSPLDef.SPLD_IngredientsStatement.ChemicalName
+         mSPLDef.CompositeComponentList.Value             = mSPLDef.SPLD_IngredientsStatement.ChemicalName
       END
    END
 
    // StorageDisposal Section and Statements.
    FOR EACH mSPLDef.SPLD_StorageDisposalSection
       CREATE ENTITY mSPLDef.CompositeComponentList
-      mSPLDef.CompositeComponentList.Type               = "SPLD_StorageDisposalSection"
-      mSPLDef.CompositeComponentList.SelectLevel        = 1
-      mSPLDef.CompositeComponentList.DisplayType        = "StorageDisposal"
-      mSPLDef.CompositeComponentList.OriginalTypeID     = mSPLDef.SPLD_StorageDisposalSection.ID
-      mSPLDef.CompositeComponentList.DisplayValue       = mSPLDef.SPLD_StorageDisposalSection.Title
-      mSPLDef.CompositeComponentList.Value              = mSPLDef.CompositeComponentList.DisplayValue
-      mSPLDef.CompositeComponentList.DisplayTypeIndent  = mSPLDef.CompositeComponentList.DisplayType
+      mSPLDef.CompositeComponentList.Type              = "SPLD_StorageDisposalSection"
+      mSPLDef.CompositeComponentList.SelectLevel       = 1
+      mSPLDef.CompositeComponentList.DisplayType       = "Storage and Disposal"
+      mSPLDef.CompositeComponentList.DisplayTypeIndent = "Storage and Disposal"
+      mSPLDef.CompositeComponentList.SectionType       = "S"
+      mSPLDef.CompositeComponentList.OriginalTypeID    = mSPLDef.SPLD_StorageDisposalSection.ID
+      mSPLDef.CompositeComponentList.DisplayValue      = mSPLDef.SPLD_StorageDisposalSection.Title
+      mSPLDef.CompositeComponentList.Value             = mSPLDef.CompositeComponentList.DisplayValue
 
       FOR EACH mSPLDef.SPLD_StorageDisposalStatement
          IF mSPLDef.SPLD_StorageDisposalStatement.Title != ""
             CREATE ENTITY mSPLDef.CompositeComponentList
-            mSPLDef.CompositeComponentList.Type               = "SPLD_StorageDisposalTitle"
-            mSPLDef.CompositeComponentList.SelectLevel        = 2
-            mSPLDef.CompositeComponentList.DisplayType        = "Title"
-            mSPLDef.CompositeComponentList.DisplayTypeIndent  = "...Stmt Title"
-            mSPLDef.CompositeComponentList.OriginalTypeID     = mSPLDef.SPLD_StorageDisposalStatement.ID
-            mSPLDef.CompositeComponentList.Value              = mSPLDef.SPLD_StorageDisposalStatement.Title
+            mSPLDef.CompositeComponentList.Type              = "SPLD_StorageDisposalTitle"
+            mSPLDef.CompositeComponentList.SelectLevel       = 2
+            mSPLDef.CompositeComponentList.DisplayType       = "Title"
+            mSPLDef.CompositeComponentList.DisplayTypeIndent = "...Stmt Title"
+            mSPLDef.CompositeComponentList.OriginalTypeID    = mSPLDef.SPLD_StorageDisposalStatement.ID
+            mSPLDef.CompositeComponentList.Value             = mSPLDef.SPLD_StorageDisposalStatement.Title
          END
 
          CREATE ENTITY mSPLDef.CompositeComponentList
-         mSPLDef.CompositeComponentList.Type               = "SPLD_StorageDisposalStatement"
-         mSPLDef.CompositeComponentList.SelectLevel        = 2
-         mSPLDef.CompositeComponentList.DisplayType        = "Statement"
-         mSPLDef.CompositeComponentList.DisplayTypeIndent  = "...Statement"
-         mSPLDef.CompositeComponentList.OriginalTypeID     = mSPLDef.SPLD_StorageDisposalStatement.ID
-         mSPLDef.CompositeComponentList.Value              = mSPLDef.SPLD_StorageDisposalStatement.Text
+         mSPLDef.CompositeComponentList.Type              = "SPLD_StorageDisposalStatement"
+         mSPLDef.CompositeComponentList.SelectLevel       = 2
+         mSPLDef.CompositeComponentList.DisplayType       = "Statement"
+         mSPLDef.CompositeComponentList.DisplayTypeIndent = "...Statement"
+         mSPLDef.CompositeComponentList.OriginalTypeID    = mSPLDef.SPLD_StorageDisposalStatement.ID
+         mSPLDef.CompositeComponentList.Value             = mSPLDef.SPLD_StorageDisposalStatement.Text
 
          szOriginalDisplayValue = mSPLDef.SPLD_StorageDisposalStatement.Text
          GetAttributeLength( OriginalStringLength, mSPLDef, "SPLD_StorageDisposalStatement", "Text" )
@@ -2954,10 +3065,12 @@ BuildCompositeEntries( VIEW mSPLDef BASED ON LOD mSPLDef )
    // DirectionsForUse Section and Statements.
    FOR EACH mSPLDef.SPLD_DirectionsForUseSection
       CREATE ENTITY mSPLDef.CompositeComponentList
-      mSPLDef.CompositeComponentList.Type               = "SPLD_DirectionsForUseSection"
-      mSPLDef.CompositeComponentList.SelectLevel        = 1
-      mSPLDef.CompositeComponentList.DisplayType        = "DirectionsForUse"
-      mSPLDef.CompositeComponentList.OriginalTypeID     = mSPLDef.SPLD_DirectionsForUseSection.ID
+      mSPLDef.CompositeComponentList.Type              = "SPLD_DirectionsForUseSection"
+      mSPLDef.CompositeComponentList.SelectLevel       = 1
+      mSPLDef.CompositeComponentList.DisplayType       = "Directions For Use"
+      mSPLDef.CompositeComponentList.DisplayTypeIndent = "Directions For Use"
+      mSPLDef.CompositeComponentList.SectionType       = "D"
+      mSPLDef.CompositeComponentList.OriginalTypeID    = mSPLDef.SPLD_DirectionsForUseSection.ID
       IF mSPLDef.SPLD_DirectionsForUseSection.Title != ""
          IF mSPLDef.SPLD_DirectionsForUseSection.Name = ""
             mSPLDef.CompositeComponentList.DisplayValue = mSPLDef.SPLD_DirectionsForUseSection.Title
@@ -2969,26 +3082,25 @@ BuildCompositeEntries( VIEW mSPLDef BASED ON LOD mSPLDef )
          mSPLDef.CompositeComponentList.DisplayValue = mSPLDef.SPLD_DirectionsForUseSection.Name
       END
       mSPLDef.CompositeComponentList.Value              = mSPLDef.CompositeComponentList.DisplayValue
-      mSPLDef.CompositeComponentList.DisplayTypeIndent  = mSPLDef.CompositeComponentList.DisplayType
 
       FOR EACH mSPLDef.SPLD_DirectionsForUseStatement
          IF mSPLDef.SPLD_DirectionsForUseStatement.Title != ""
             CREATE ENTITY mSPLDef.CompositeComponentList
-            mSPLDef.CompositeComponentList.Type               = "SPLD_DirectionsForUseTitle"
-            mSPLDef.CompositeComponentList.SelectLevel        = 2
-            mSPLDef.CompositeComponentList.DisplayType        = "Title"
-            mSPLDef.CompositeComponentList.DisplayTypeIndent  = "...Stmt Title"
-            mSPLDef.CompositeComponentList.OriginalTypeID     = mSPLDef.SPLD_DirectionsForUseStatement.ID
-            mSPLDef.CompositeComponentList.Value              = mSPLDef.SPLD_DirectionsForUseStatement.Title
+            mSPLDef.CompositeComponentList.Type              = "SPLD_DirectionsForUseTitle"
+            mSPLDef.CompositeComponentList.SelectLevel       = 2
+            mSPLDef.CompositeComponentList.DisplayType       = "Title"
+            mSPLDef.CompositeComponentList.DisplayTypeIndent = "...Stmt Title"
+            mSPLDef.CompositeComponentList.OriginalTypeID    = mSPLDef.SPLD_DirectionsForUseStatement.ID
+            mSPLDef.CompositeComponentList.Value             = mSPLDef.SPLD_DirectionsForUseStatement.Title
          END
 
          CREATE ENTITY mSPLDef.CompositeComponentList
-         mSPLDef.CompositeComponentList.Type               = "SPLD_DirectionsForUseStatement"
-         mSPLDef.CompositeComponentList.SelectLevel        = 2
-         mSPLDef.CompositeComponentList.DisplayType        = "Statement"
-         mSPLDef.CompositeComponentList.DisplayTypeIndent  = "...Statement"
-         mSPLDef.CompositeComponentList.OriginalTypeID     = mSPLDef.SPLD_DirectionsForUseStatement.ID
-         mSPLDef.CompositeComponentList.Value              = mSPLDef.SPLD_DirectionsForUseStatement.Text
+         mSPLDef.CompositeComponentList.Type              = "SPLD_DirectionsForUseStatement"
+         mSPLDef.CompositeComponentList.SelectLevel       = 2
+         mSPLDef.CompositeComponentList.DisplayType       = "Statement"
+         mSPLDef.CompositeComponentList.DisplayTypeIndent = "...Statement"
+         mSPLDef.CompositeComponentList.OriginalTypeID    = mSPLDef.SPLD_DirectionsForUseStatement.ID
+         mSPLDef.CompositeComponentList.Value             = mSPLDef.SPLD_DirectionsForUseStatement.Text
 
          szOriginalDisplayValue = mSPLDef.SPLD_DirectionsForUseStatement.Text
          GetAttributeLength( OriginalStringLength, mSPLDef, "SPLD_DirectionsForUseStatement", "Text" )
@@ -3034,11 +3146,13 @@ BuildCompositeEntries( VIEW mSPLDef BASED ON LOD mSPLDef )
    // Marketing Section and Statements.
    FOR EACH mSPLDef.SPLD_MarketingSection
       CREATE ENTITY mSPLDef.CompositeComponentList
-      mSPLDef.CompositeComponentList.Type               = "SPLD_MarketingSection"
-      mSPLDef.CompositeComponentList.SelectLevel        = 1
-      mSPLDef.CompositeComponentList.DisplayType        = "Marketing"
-      mSPLDef.CompositeComponentList.OriginalTypeID     = mSPLDef.SPLD_MarketingSection.ID
-      mSPLDef.CompositeComponentList.Name               = mSPLDef.SPLD_MarketingSection.Name
+      mSPLDef.CompositeComponentList.Type              = "SPLD_MarketingSection"
+      mSPLDef.CompositeComponentList.SelectLevel       = 1
+      mSPLDef.CompositeComponentList.DisplayType       = "Marketing"
+      mSPLDef.CompositeComponentList.DisplayTypeIndent = "Marketing"
+      mSPLDef.CompositeComponentList.SectionType       = "M"
+      mSPLDef.CompositeComponentList.OriginalTypeID    = mSPLDef.SPLD_MarketingSection.ID
+      mSPLDef.CompositeComponentList.Name              = mSPLDef.SPLD_MarketingSection.Name
       TraceLineS( "SPLD BuildCompositeEntries Name: ", mSPLDef.SPLD_MarketingSection.Name )
       IF mSPLDef.SPLD_MarketingSection.Title != ""
          IF mSPLDef.SPLD_MarketingSection.Name = ""
@@ -3051,26 +3165,25 @@ BuildCompositeEntries( VIEW mSPLDef BASED ON LOD mSPLDef )
          mSPLDef.CompositeComponentList.DisplayValue = mSPLDef.SPLD_MarketingSection.Name
       END
       mSPLDef.CompositeComponentList.Value              = mSPLDef.CompositeComponentList.DisplayValue
-      mSPLDef.CompositeComponentList.DisplayTypeIndent  = mSPLDef.CompositeComponentList.DisplayType
 
       FOR EACH mSPLDef.SPLD_MarketingStatement
          IF mSPLDef.SPLD_MarketingStatement.Title != ""
             CREATE ENTITY mSPLDef.CompositeComponentList
-            mSPLDef.CompositeComponentList.Type               = "SPLD_MarketingTitle"
-            mSPLDef.CompositeComponentList.SelectLevel        = 2
-            mSPLDef.CompositeComponentList.DisplayType        = "Title"
-            mSPLDef.CompositeComponentList.DisplayTypeIndent  = "...Stmt Title"
-            mSPLDef.CompositeComponentList.OriginalTypeID     = mSPLDef.SPLD_MarketingStatement.ID
-            mSPLDef.CompositeComponentList.Value              = mSPLDef.SPLD_MarketingStatement.Title
+            mSPLDef.CompositeComponentList.Type              = "SPLD_MarketingTitle"
+            mSPLDef.CompositeComponentList.SelectLevel       = 2
+            mSPLDef.CompositeComponentList.DisplayType       = "Title"
+            mSPLDef.CompositeComponentList.DisplayTypeIndent = "...Stmt Title"
+            mSPLDef.CompositeComponentList.OriginalTypeID    = mSPLDef.SPLD_MarketingStatement.ID
+            mSPLDef.CompositeComponentList.Value             = mSPLDef.SPLD_MarketingStatement.Title
          END
 
          CREATE ENTITY mSPLDef.CompositeComponentList
-         mSPLDef.CompositeComponentList.Type               = "SPLD_MarketingStatement"
-         mSPLDef.CompositeComponentList.SelectLevel        = 2
-         mSPLDef.CompositeComponentList.DisplayType        = "Statement"
-         mSPLDef.CompositeComponentList.DisplayTypeIndent  = "...Statement"
-         mSPLDef.CompositeComponentList.OriginalTypeID     = mSPLDef.SPLD_MarketingStatement.ID
-         mSPLDef.CompositeComponentList.Value              = mSPLDef.SPLD_MarketingStatement.Text
+         mSPLDef.CompositeComponentList.Type              = "SPLD_MarketingStatement"
+         mSPLDef.CompositeComponentList.SelectLevel       = 2
+         mSPLDef.CompositeComponentList.DisplayType       = "Statement"
+         mSPLDef.CompositeComponentList.DisplayTypeIndent = "...Statement"
+         mSPLDef.CompositeComponentList.OriginalTypeID    = mSPLDef.SPLD_MarketingStatement.ID
+         mSPLDef.CompositeComponentList.Value             = mSPLDef.SPLD_MarketingStatement.Text
 
          szOriginalDisplayValue = mSPLDef.SPLD_MarketingStatement.Text
          GetAttributeLength( OriginalStringLength, mSPLDef, "SPLD_MarketingStatement", "Text" )
@@ -3116,26 +3229,31 @@ BuildCompositeEntries( VIEW mSPLDef BASED ON LOD mSPLDef )
    CREATE ENTITY mSPLDef.CompositeComponentList
    mSPLDef.CompositeComponentList.Type               = "SPLD_HumanHazardSection"
    mSPLDef.CompositeComponentList.SelectLevel        = 1
+   mSPLDef.CompositeComponentList.DisplayType        = "Hazards"
    mSPLDef.CompositeComponentList.DisplayTypeIndent  = "Hazards"
    mSPLDef.CompositeComponentList.OriginalTypeID     = mSPLDef.SPLD_HumanHazardSection.ID
    mSPLDef.CompositeComponentList.DisplayValue       = ""
 
    CREATE ENTITY mSPLDef.CompositeComponentList
    mSPLDef.CompositeComponentList.SelectLevel       = 2
+   mSPLDef.CompositeComponentList.DisplayType       = "Signal Word"
    mSPLDef.CompositeComponentList.DisplayTypeIndent = "...Signal Word"
    mSPLDef.CompositeComponentList.DisplayValue      = mSPLDef.SPLD_HumanHazardSection.EPA_SignalWord
 
    CREATE ENTITY mSPLDef.CompositeComponentList
    mSPLDef.CompositeComponentList.SelectLevel       = 2
+   mSPLDef.CompositeComponentList.DisplayType       = "Child Warning"
    mSPLDef.CompositeComponentList.DisplayTypeIndent = "...Child Warning"
    mSPLDef.CompositeComponentList.DisplayValue      = mSPLDef.SPLD_HumanHazardSection.EPA_ChildHazardWarning
 
    CREATE ENTITY mSPLDef.CompositeComponentList
    mSPLDef.CompositeComponentList.SelectLevel       = 2
+   mSPLDef.CompositeComponentList.DisplayType       = "Precautionary Stmt"
    mSPLDef.CompositeComponentList.DisplayTypeIndent = "...Precautionary Stmt"
    mSPLDef.CompositeComponentList.DisplayValue      = mSPLDef.SPLD_HumanHazardSection.PrecautionaryStatement
 
    CREATE ENTITY mSPLDef.CompositeComponentList
+   mSPLDef.CompositeComponentList.DisplayType       = "Location"
    mSPLDef.CompositeComponentList.DisplayTypeIndent = "Location"
    szCompositeLocation = "..." + mSPLDef.SPLD_HumanHazardSection.PanelLoc1
    IF mSPLDef.SPLD_HumanHazardSection.PanelLoc2 != ""
@@ -4211,7 +4329,6 @@ GenerateXML_File( VIEW mSPLDef BASED ON LOD mSPLDef,
       szIndentation = "            "
       szValue = mSPLDef.SPLD_StorageDisposalSection.Title
       GenerateAttribute( mSPLDef, lFileHandle, "Title", szIndentation, szValue )
-
       // <SPLD_StorageDisposalStatement>
       FOR EACH mSPLDef.SPLD_StorageDisposalStatement
          szOutputLine = "            <SPLD_StorageDisposalStatement>"
@@ -4224,11 +4341,9 @@ GenerateXML_File( VIEW mSPLDef BASED ON LOD mSPLDef,
          szOutputLine = "            </SPLD_StorageDisposalStatement>"
          GenerateLine( mSPLDef, lFileHandle, szOutputLine )
       END
-
       szOutputLine = "         </SPLD_StorageDisposalSection>"
       GenerateLine( mSPLDef, lFileHandle, szOutputLine )
    END
-
    // <SPLD_DirectionsForUseSection>
    FOR EACH mSPLDef.SPLD_DirectionsForUseSection
       szOutputLine = "         <SPLD_DirectionsForUseSection>"
@@ -4236,7 +4351,6 @@ GenerateXML_File( VIEW mSPLDef BASED ON LOD mSPLDef,
       szIndentation = "            "
       szValue = mSPLDef.SPLD_DirectionsForUseSection.Title
       GenerateAttribute( mSPLDef, lFileHandle, "Title", szIndentation, szValue )
-
       // <SPLD_DirectionsForUseStatement>
       FOR EACH mSPLDef.SPLD_DirectionsForUseStatement
          szOutputLine = "            <SPLD_DirectionsForUseStatement>"
@@ -4249,7 +4363,6 @@ GenerateXML_File( VIEW mSPLDef BASED ON LOD mSPLDef,
          szOutputLine = "            </SPLD_DirectionsForUseStatement>"
          GenerateLine( mSPLDef, lFileHandle, szOutputLine )
       END
-
       // <SPLD_DirectionsUsageOrdering>
       FOR EACH mSPLDef.SPLD_DirectionsUsageOrdering
          szOutputLine = "         <SPLD_DirectionsUsageOrdering>"
@@ -4257,7 +4370,6 @@ GenerateXML_File( VIEW mSPLDef BASED ON LOD mSPLDef,
          szIndentation = "            "
          szValue = mSPLDef.SPLD_DirectionsUsageOrdering.wSortOrder
          GenerateAttribute( mSPLDef, lFileHandle, "wSortOrder", szIndentation, szValue )
-
          // <SPLD_DirectionsUsageOrdering>
          szOutputLine = "            <SPLD_DirectionsUsage>"
          GenerateLine( mSPLDef, lFileHandle, szOutputLine )
@@ -4268,15 +4380,12 @@ GenerateXML_File( VIEW mSPLDef BASED ON LOD mSPLDef,
          GenerateAttribute( mSPLDef, lFileHandle, "Name", szIndentation, szValue )
          szOutputLine = "            </SPLD_DirectionsUsage>"
          GenerateLine( mSPLDef, lFileHandle, szOutputLine )
-
          szOutputLine = "         </SPLD_DirectionsUsageOrdering>"
          GenerateLine( mSPLDef, lFileHandle, szOutputLine )
       END
-
       szOutputLine = "         </SPLD_DirectionsForUseSection>"
       GenerateLine( mSPLDef, lFileHandle, szOutputLine )
    END
-
    // <SPLD_MarketingSection>
    FOR EACH mSPLDef.SPLD_MarketingSection
       // The Marketing Section name includes the Sequence Number to get uniqueness
@@ -4286,7 +4395,6 @@ GenerateXML_File( VIEW mSPLDef BASED ON LOD mSPLDef,
       szIndentation = "            "
       szValue = mSPLDef.SPLD_MarketingSection.Title
       GenerateAttribute( mSPLDef, lFileHandle, "Title", szIndentation, szValue )
-
       // <SPLD_MarketingStatement>
       FOR EACH mSPLDef.SPLD_MarketingStatement
          szOutputLine = "            <SPLD_MarketingStatement>"
@@ -4299,7 +4407,6 @@ GenerateXML_File( VIEW mSPLDef BASED ON LOD mSPLDef,
          szOutputLine = "            </SPLD_MarketingStatement>"
          GenerateLine( mSPLDef, lFileHandle, szOutputLine )
       END
-
       // <SPLD_DirectionsUsageOrdering>
       FOR EACH mSPLDef.SPLD_DirectionsUsageOrdering
          szOutputLine = "         <SPLD_DirectionsUsageOrdering>"
@@ -4307,7 +4414,6 @@ GenerateXML_File( VIEW mSPLDef BASED ON LOD mSPLDef,
          szIndentation = "               "
          szValue = mSPLDef.SPLD_DirectionsUsageOrdering.wSortOrder
          GenerateAttribute( mSPLDef, lFileHandle, "wSortOrder", szIndentation, szValue )
-
          // <SPLD_DirectionsUsageOrdering>
          szOutputLine = "            <SPLD_DirectionsUsage>"
          GenerateLine( mSPLDef, lFileHandle, szOutputLine )
@@ -4318,11 +4424,9 @@ GenerateXML_File( VIEW mSPLDef BASED ON LOD mSPLDef,
          GenerateAttribute( mSPLDef, lFileHandle, "Name", szIndentation, szValue )
          szOutputLine = "            </SPLD_DirectionsUsage>"
          GenerateLine( mSPLDef, lFileHandle, szOutputLine )
-
          szOutputLine = "         </SPLD_DirectionsUsageOrdering>"
          GenerateLine( mSPLDef, lFileHandle, szOutputLine )
       END
-
       // <DisplayUsageColumn1>
       FOR EACH mSPLDef.DisplayUsageColumn1
          szOutputLine = "            <DisplayUsageColumn1>"
@@ -4333,7 +4437,6 @@ GenerateXML_File( VIEW mSPLDef BASED ON LOD mSPLDef,
          szOutputLine = "            </DisplayUsageColumn1>"
          GenerateLine( mSPLDef, lFileHandle, szOutputLine )
       END
-
       // <DisplayUsageColumn2>
       FOR EACH mSPLDef.DisplayUsageColumn2
          szOutputLine = "            <DisplayUsageColumn2>"
@@ -4344,7 +4447,6 @@ GenerateXML_File( VIEW mSPLDef BASED ON LOD mSPLDef,
          szOutputLine = "            </DisplayUsageColumn2>"
          GenerateLine( mSPLDef, lFileHandle, szOutputLine )
       END
-
       // <DisplayUsageColumn3>
       FOR EACH mSPLDef.DisplayUsageColumn3
          szOutputLine = "            <DisplayUsageColumn3>"
@@ -4355,7 +4457,6 @@ GenerateXML_File( VIEW mSPLDef BASED ON LOD mSPLDef,
          szOutputLine = "            </DisplayUsageColumn3>"
          GenerateLine( mSPLDef, lFileHandle, szOutputLine )
       END
-
       szOutputLine = "         </" + szSectionName + ">"
       GenerateLine( mSPLDef, lFileHandle, szOutputLine )
    END*/
@@ -4534,8 +4635,10 @@ SetUpFormattingSelect( VIEW mSPLDefPanel BASED ON LOD mSPLDef,
       mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Column List"
    ELSE
       // Default
-      CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
-      mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Title"
+      IF szSectionType != "NetContents" AND szSectionType != "EPA_RegAndEstNbr" 
+         CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
+         mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Title"
+      END
       CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
       mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Text"
    END
@@ -4545,7 +4648,6 @@ SetUpFormattingSelect( VIEW mSPLDefPanel BASED ON LOD mSPLDef,
    CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
    mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Block"
    SET CURSOR FIRST mSPLDefPanel.SpecialFormattingSelectEntry
-
 END
 *************************************************************************************************/
 

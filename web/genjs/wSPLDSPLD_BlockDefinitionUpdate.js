@@ -168,6 +168,8 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
+   // Postbuild actions that have javascript code.
+   PostbuildBlockDefinitionUpdate( );
    isWindowClosing = true;
 }
 
@@ -259,6 +261,20 @@ function GENERATE_SPLD_Label( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      // Javascript code entered by user.
+
+      var labelBorders = localStorage.getItem( "epamms_graphic_labelborders" );
+      _DisableFormElements( true );
+      if ( labelBorders === "Y" ) {
+         document.wSPLDSPLD_BlockDefinitionUpdate.zAction.value = "GENERATE_SPLD_LabelDottedBorders";
+      } else {
+         document.wSPLDSPLD_BlockDefinitionUpdate.zAction.value = "GENERATE_SPLD_Label";
+      }
+      document.wSPLDSPLD_BlockDefinitionUpdate.submit( );
+      return;
+
+      // END of Javascript code entered by user.
+
       _DisableFormElements( true );
 
       document.wSPLDSPLD_BlockDefinitionUpdate.zAction.value = "GENERATE_SPLD_Label";
@@ -338,10 +354,26 @@ function PostbuildBlockDefinitionUpdate( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      _DisableFormElements( true );
+      // Javascript code entered by user.
 
-      document.wSPLDSPLD_BlockDefinitionUpdate.zAction.value = "PostbuildBlockDefinitionUpdate";
-      document.wSPLDSPLD_BlockDefinitionUpdate.submit( );
+      var sectionType = sessionStorage.getItem( "epamms_section_type" );
+   // alert( "SectionType: " + sectionType );
+      if ( sectionType === "Graphic" || sectionType == "ProductName" ||
+           sectionType === "HumanHazard" || sectionType == "EPA_RegAndEstNbr" ||
+           sectionType === "NetContents" ) { // || sectionType == "FirstAid" ||
+       // sectionType === "PhysicalHazard" || sectionType == "Precautionary" ) {
+         var thisHide = document.getElementById( "HideBox" );
+         thisHide.style.visibility = "hidden";
+         thisHide = document.getElementById( "HideInnerBox" );
+         thisHide.style.visibility = "hidden";
+         thisHide = document.getElementById( "HideText" );
+         thisHide.style.visibility = "hidden";
+         var thisComponentList = document.getElementById( "GridComponentList" );
+         thisComponentList .style.visibility = "hidden";
+      }
+
+      // END of Javascript code entered by user.
+
    }
 }
 

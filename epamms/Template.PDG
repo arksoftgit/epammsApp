@@ -1,4 +1,4 @@
-z1000-Zeidon    TEMPLATE TZDGSRCO 05/15/15   13:27:02 1.0a2    
+z1000-Zeidon    TEMPLATE TZDGSRCO 05/20/15   09:22:52 1.0a2    
 eDomainGroup 1
 aZKey      69081339
 aName      Template
@@ -748,4 +748,49 @@ eTableEntry 4
 aZKey      110006004
 aExternalValue Product Specific
 aInternalValue ProductSpecific
+
+eTableEntry 4
+aZKey      110006307
+aExternalValue General
+aInternalValue General
+
+eTableEntry 4
+aZKey      110006308
+aExternalValue Statement
+aInternalValue Statement
+
+eTableEntry 4
+aZKey      110006309
+aExternalValue Title
+aInternalValue Title
+
+eTableEntry 4
+aZKey      110006310
+aExternalValue MarketingUsage
+aInternalValue MarketingUsage
+
+eTableEntry 4
+aZKey      110006311
+aExternalValue Signal Word
+aInternalValue Signal Word
+
+eTableEntry 4
+aZKey      110006312
+aExternalValue Child Warning
+aInternalValue Child Warning
+
+eTableEntry 4
+aZKey      110006313
+aExternalValue Precautionary Stmt
+aInternalValue Precautionary Stmt
+
+eTableEntry 4
+aZKey      110006314
+aExternalValue Location
+aInternalValue Location
+
+eTableEntry 4
+aZKey      110006587
+aExternalValue Section
+aInternalValue Section
 

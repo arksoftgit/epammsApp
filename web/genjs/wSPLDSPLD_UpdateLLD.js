@@ -255,6 +255,20 @@ function GENERATE_SPLD_Label( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      // Javascript code entered by user.
+
+      var labelBorders = localStorage.getItem( "epamms_graphic_labelborders" );
+      _DisableFormElements( true );
+      if ( labelBorders === "Y" ) {
+         document.wSPLDSPLD_UpdateLLD.zAction.value = "GENERATE_SPLD_LabelDottedBorders";
+      } else {
+         document.wSPLDSPLD_UpdateLLD.zAction.value = "GENERATE_SPLD_Label";
+      }
+      document.wSPLDSPLD_UpdateLLD.submit( );
+      return;
+
+      // END of Javascript code entered by user.
+
       _DisableFormElements( true );
 
       document.wSPLDSPLD_UpdateLLD.zAction.value = "GENERATE_SPLD_Label";

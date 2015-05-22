@@ -1,4 +1,4 @@
-z1000-Zeidon    MMASLC   TZZOLODO 05/01/15   18:19:02 1.0a2    
+z1000-Zeidon    MMASLC   TZZOLODO 05/19/15   08:26:20 1.0a2    
 eLOD       1
 aZKey      69033382
 aName      mMasLC
@@ -4887,6 +4887,13 @@ aName      DisplayType
 aZKey      144315
 
 eDomainRec 6
+aZKey      69080516
+aName      LLD_SectionType
+aDomainType T
+aDataType  S
+aMaxStringLth 32
+aDesc      Template Section Types are usually the same as regular Section Types.
+aContextRestriction N
 
 eLOD_AttributeRec 4
 aZKey      311720
@@ -7727,7 +7734,7 @@ eDomain    5
 eER_Entity 3
 
 eLOD_Entity 2
-awkSelectedAttributeForDragSort 2
+awkSelectedAttributeForDragSort 6
 
 eLOD_Attribute 3
 awkSequence 1
@@ -8828,7 +8835,6 @@ i1079      13
 i1082      13
 i1085      7
 i1088      126
-i1091      13
 i1094      13
 i1097      7
 i1100      126
@@ -9961,7 +9967,7 @@ i2273      1087
 i2274      126
 i2275      1089
 i2276      1090
-i2277      13
+i2277      1091
 i2278      1092
 i2279      1093
 i2280      13

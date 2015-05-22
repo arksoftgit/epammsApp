@@ -1021,6 +1021,7 @@ BuildCompositeEntries( VIEW mSubLC BASED ON LOD mSubLC )
       mSubLC.CompositeComponentList.Type               = "M_MarketingSection"
       mSubLC.CompositeComponentList.SelectLevel        = 1
       mSubLC.CompositeComponentList.DisplayType        = "Section"
+      mSubLC.CompositeComponentList.DisplayTypeIndent  = "Section"
       mSubLC.CompositeComponentList.OriginalTypeID     = mSubLC.M_MarketingSection.ID 
       mSubLC.CompositeComponentList.SLC_OriginalTypeID = mSubLC.S_MarketingSection.ID
       IF mSubLC.S_MarketingSection.Title != ""
@@ -1034,7 +1035,6 @@ BuildCompositeEntries( VIEW mSubLC BASED ON LOD mSubLC )
          mSubLC.CompositeComponentList.DisplayValue = mSubLC.S_MarketingSection.Name 
       END
       mSubLC.CompositeComponentList.Value              = mSubLC.CompositeComponentList.DisplayValue
-      mSubLC.CompositeComponentList.DisplayTypeIndent  = mSubLC.CompositeComponentList.DisplayType
       
       FOR EACH mSubLC.S_MarketingStatement 
          CREATE ENTITY mSubLC.CompositeComponentList 

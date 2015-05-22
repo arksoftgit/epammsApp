@@ -284,7 +284,7 @@ function InitListSubregProducts( )
    {
       // Javascript code entered by user.
 
-   // We knock out Login and Template as options.
+   /*// We knock out Login and Template as options.
    var thisLi;
 
    thisLi = document.getElementById( "lmTemplate" );
@@ -314,6 +314,7 @@ function InitListSubregProducts( )
    // Cannot go to product management if already there.
    thisLi = document.getElementById( "lmProductManagement" );
    thisLi.disabled = true;
+*/
 
       // END of Javascript code entered by user.
 

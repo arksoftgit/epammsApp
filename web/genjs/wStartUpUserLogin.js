@@ -267,7 +267,7 @@ function InitLoginWindow( )
    {
       // Javascript code entered by user.
 
-  var thisLi;
+/* var thisLi;
 
    // If the Role is not set when we get here, it is because there is no admin (KeyRole = "U"), so we will only permit the user to go to set up the administrator.
    if ( keyRole == "U" )
@@ -288,6 +288,7 @@ function InitLoginWindow( )
       thisLi = document.getElementById( "PBSetupAdmin" );
       thisLi.style.visibility = "hidden";
    }
+*/
 
       // END of Javascript code entered by user.
 

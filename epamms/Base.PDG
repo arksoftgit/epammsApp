@@ -1,4 +1,4 @@
-z1000-Zeidon    BASE     TZDGSRCO 05/12/15   16:14:13 1.0a2    
+z1000-Zeidon    BASE     TZDGSRCO 05/20/15   12:47:36 1.0a2    
 eDomainGroup 1
 aZKey      68567479
 aName      Base
@@ -18,6 +18,95 @@ eContext   3
 aZKey      68567481
 aName      BLOB
 aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      110006612
+aName      CompositeSectionType
+aDesc      Precautionary, Environmental/Physical Hazard, First Aid, Ingredients, Storage/Disposal, Directions For Use, Marketing (P,E,F,I,S,D,M)
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      110006613
+aName      CompositeSectionType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      110006615
+aExternalValue P
+aInternalValue P
+
+eTableEntry 4
+aZKey      110006614
+aExternalValue E
+aInternalValue E
+
+eTableEntry 4
+aZKey      110006616
+aExternalValue F
+aInternalValue F
+
+eTableEntry 4
+aZKey      110006625
+aExternalValue I
+aInternalValue I
+
+eTableEntry 4
+aZKey      110006626
+aExternalValue S
+aInternalValue S
+
+eTableEntry 4
+aZKey      110006627
+aExternalValue D
+aInternalValue D
+
+eTableEntry 4
+aZKey      110006628
+aExternalValue M
+aInternalValue M
+
+eContext   3
+aZKey      110006617
+aName      FullType
+
+eTableEntry 4
+aZKey      110006618
+aExternalValue Precautionary
+aInternalValue P
+
+eTableEntry 4
+aZKey      110006619
+aExternalValue Environmental
+aInternalValue E
+
+eTableEntry 4
+aZKey      110006620
+aExternalValue First Aid
+aInternalValue F
+
+eTableEntry 4
+aZKey      110006621
+aExternalValue Ingredients
+aInternalValue I
+
+eTableEntry 4
+aZKey      110006622
+aExternalValue Storage/Disposal
+aInternalValue S
+
+eTableEntry 4
+aZKey      110006623
+aExternalValue Directions For Use
+aInternalValue D
+
+eTableEntry 4
+aZKey      110006624
+aExternalValue Marketing
+aInternalValue M
 
 eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
