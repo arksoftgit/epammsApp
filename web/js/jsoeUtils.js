@@ -769,7 +769,7 @@ function openDebugWin()
       "<script>\n" +
          "$(document).ready( function() { // Once the page has loaded and is ready, the alert below will fire.\n" +
             "loadViewNames();\n" +
-            "alert('Your page has loaded - and Now this alert appears!');\n" +
+         // "alert('Your page has loaded - and Now this alert appears!');\n" +
          "});\n" +
       "</script>\n" +
       "</head>\n" +
@@ -1246,3 +1246,41 @@ function mapElementDataToUiData( $current_element ) {
       });
    }
 }
+
+function insertTag( tagList, tag ) {
+   var lower = 0;
+   var upper = tagList.length;
+   var mid;
+   var rc;
+   while ( lower <= upper ) {
+      mid = Math.floor( (lower + upper) / 2);
+      if ( mid < 0 || mid >= tagList.length ) {
+         break;
+      }
+      if ( tag > tagList[mid] ) {
+         lower = mid + 1;
+      } else if ( tag < tagList[mid] ) {
+         upper = mid - 1;
+      } else {
+         return -1;  // found a dup ... that's a problem
+      }
+   }
+   mid = Math.min( Math.max( 0, lower ), tagList.length );
+   tagList.splice( mid, 0, tag ); // will insert item into arr at the specified index.
+   return mid;
+}
+
+function getBlockTagList() {
+   var arrBlockTags = []; // new Array( arrIdx.length );
+   var rc;
+   var $blocks = $('.block'); // all elements with class 'block'
+   $blocks.each( function() {
+      var tag = $(this).data( "z_^tag" );
+      rc = insertTag( arrBlockTags, tag );
+      if ( rc < 0 ) {
+         return tag;
+      }
+   });
+   return null;
+}
+

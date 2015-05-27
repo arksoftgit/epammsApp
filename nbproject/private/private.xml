@@ -12,20 +12,20 @@
             <line>1024</line>
         </file>
     </editor-bookmarks>
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="43">
-        <file>
-            <url>web/wSPLDSPLD_UpdateLLD.jsp</url>
-            <bookmark id="3">
-                <name/>
-                <line>1729</line>
-                <key/>
-            </bookmark>
-        </file>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="44">
         <file>
             <url>web/wSPLDGraphicalView.jsp</url>
             <bookmark id="42">
                 <name/>
                 <line>1057</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>web/wSPLDSPLD_UpdateLLD.jsp</url>
+            <bookmark id="3">
+                <name/>
+                <line>1729</line>
                 <key/>
             </bookmark>
         </file>
@@ -46,22 +46,22 @@
             <url>src/java/com/ajax/GraphicalLabelDesignerServlet.java</url>
             <bookmark id="25">
                 <name/>
-                <line>462</line>
+                <line>552</line>
                 <key/>
             </bookmark>
             <bookmark id="13">
                 <name/>
-                <line>565</line>
+                <line>655</line>
                 <key/>
             </bookmark>
             <bookmark id="37">
                 <name/>
-                <line>730</line>
+                <line>820</line>
                 <key/>
             </bookmark>
             <bookmark id="38">
                 <name/>
-                <line>740</line>
+                <line>830</line>
                 <key/>
             </bookmark>
         </file>
@@ -69,27 +69,32 @@
             <url>web/js/labeldesigner.js</url>
             <bookmark id="40">
                 <name/>
-                <line>154</line>
+                <line>155</line>
                 <key/>
             </bookmark>
             <bookmark id="43">
                 <name/>
-                <line>208</line>
+                <line>213</line>
                 <key/>
             </bookmark>
             <bookmark id="33">
                 <name/>
-                <line>742</line>
+                <line>747</line>
                 <key/>
             </bookmark>
             <bookmark id="34">
                 <name/>
-                <line>1515</line>
+                <line>1522</line>
                 <key/>
             </bookmark>
             <bookmark id="41">
                 <name/>
-                <line>2588</line>
+                <line>2599</line>
+                <key/>
+            </bookmark>
+            <bookmark id="44">
+                <name/>
+                <line>3428</line>
                 <key/>
             </bookmark>
         </file>
@@ -107,6 +112,14 @@
             </bookmark>
         </file>
         <file>
+            <url>web/js/jquery.colorPicker.js</url>
+            <bookmark id="32">
+                <name/>
+                <line>353</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
             <url>web/wStartUpAdminUpdateSubregistrant.jsp</url>
             <bookmark id="0">
                 <name/>
@@ -116,14 +129,6 @@
             <bookmark id="0">
                 <name/>
                 <line>1258</line>
-                <key/>
-            </bookmark>
-        </file>
-        <file>
-            <url>web/js/jquery.colorPicker.js</url>
-            <bookmark id="32">
-                <name/>
-                <line>353</line>
                 <key/>
             </bookmark>
         </file>

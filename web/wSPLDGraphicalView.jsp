@@ -244,7 +244,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "SaveLLD" ) )
+   while ( bDone == false   && StringUtils.equals( strActionToProcess, "SaveLLD" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDGraphicalView", strActionToProcess );

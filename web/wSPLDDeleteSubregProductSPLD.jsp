@@ -35,7 +35,7 @@ public int DoInputMapping( HttpServletRequest request,
    String taskId = (String) session.getAttribute( "ZeidonTaskId" );
    Task task = objectEngine.getTaskById( taskId );
 
-   View mSubProd = null;
+   View lSPLDLST = null;
    View vGridTmp = null; // temp view to grid view
    View vRepeatingGrp = null; // temp view to repeating group view
    String strDateFormat = "";
@@ -57,8 +57,8 @@ public int DoInputMapping( HttpServletRequest request,
    if ( webMapping == false )
       session.setAttribute( "ZeidonError", null );
 
-   mSubProd = task.getViewByName( "mSubProd" );
-   if ( VmlOperation.isValid( mSubProd ) )
+   lSPLDLST = task.getViewByName( "lSPLDLST" );
+   if ( VmlOperation.isValid( lSPLDLST ) )
    {
    }
 
@@ -573,17 +573,17 @@ else
 <td valign="top"  class="text14bold" style="width:366px;">
 <% /* TXName2:Text */ %>
 <% strTextDisplayValue = "";
-   mSubProd = task.getViewByName( "mSubProd" );
-   if ( VmlOperation.isValid( mSubProd ) == false )
+   lSPLDLST = task.getViewByName( "lSPLDLST" );
+   if ( VmlOperation.isValid( lSPLDLST ) == false )
       task.log( ).debug( "Invalid View: " + "TXName2" );
    else
    {
-      nRC = mSubProd.cursor( "SubregPhysicalLabelDef" ).checkExistenceOfEntity( ).toInt();
+      nRC = lSPLDLST.cursor( "SubregPhysicalLabelDef" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
       try
       {
-         strTextDisplayValue = mSubProd.cursor( "SubregPhysicalLabelDef" ).getAttribute( "Name" ).getString( "" );
+         strTextDisplayValue = lSPLDLST.cursor( "SubregPhysicalLabelDef" ).getAttribute( "Name" ).getString( "" );
       }
       catch (Exception e)
       {

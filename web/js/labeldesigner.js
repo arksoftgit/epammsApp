@@ -33,6 +33,7 @@ $(function() {
    var g_metaDate = "";
    
    var g_jsonColors = [];
+   var g_jsonBlockTags = [];
 // var g_jsonLabel2;
 
 // var storageSession = window.sessionStorage;
@@ -155,7 +156,11 @@ $(function() {
    function saveLabel( commit, callback ) {
       mapUiDataToElementData( g_$current_block );
       if ( g_updatedLLD || commit === "Commit" ) {
-      // alert( "Changed" );
+         var dup = getBlockTagList();
+         if ( dup !== null ) {
+            alert( "Duplicate Tag: " + dup );
+            return;
+         }
          ConvertWysiwygLabelDesignToZeidonJson( "saveLabel" + commit , "mSPLDef", callback, null );
          g_updatedLLD = false;
       } else {
@@ -550,6 +555,9 @@ $(function() {
             $canvasElement.removeClass( "ui-draggable-dragging" ).addClass( "canvas-element block-element" );
             if ( $canvas[0].id === "page" ) {
                $canvasElement.addClass( "toppanel" );  // an element with class "panel" cannot become a "block" and vice-versa
+               addZeidonAttributeToElement( $canvasElement, "wE", "panel" );
+            } else {
+               addZeidonAttributeToElement( $canvasElement, "wE", "block" );
             }
 
             setBlockDraggableResizable( $canvas, $canvasElement, $(this) );
@@ -622,7 +630,7 @@ $(function() {
    }
 
    function setCurrentBlockData( $element, message ) {
-   //console.log( "setCurrentBlockData: " + message );
+   // console.log( "setCurrentBlockData: " + message );
    // g_updatedLLD = true; commented because this should be set prior to calling this function as necessary
       mapElementCssToElementData( $element );
       if ( g_$current_block && g_$current_block.attr( "id" ) !== $element.attr( "id" ) ) {
@@ -802,7 +810,7 @@ $(function() {
             }
          });
          if ( element_id === "block" ) {
-            console.log( "Processing block type: " + sectionType );
+         // console.log( "Processing block type: " + sectionType );
             var optionsDflt = "<option value=\"^title\">Title</option><option value=\"^text\">Text</option>";  // default
             var options = "";
             // The .prop() method should be used to set disabled and checked instead of the .attr() method.
@@ -839,7 +847,7 @@ $(function() {
                }
             } else {
                $("#zCheckContinuationBlockToggle").hide();
-               console.log( "   Hiding capitalize" );
+            // console.log( "   Hiding capitalize" );
                $("#zCapitalizeTitleTextFlagToggle").hide();
                $("#zImageNameToggle").hide();
                $("#zClaimListTypeToggle").hide();
@@ -873,7 +881,7 @@ $(function() {
          } else {
             $("#zBlockFormatTypeToggle").hide();
             $("#zCheckContinuationBlockToggle").hide();
-            console.log( "   Hiding capitalize" );
+         // console.log( "   Hiding capitalize" );
             $("#zCapitalizeTitleTextFlagToggle").hide();
             $("#zImageNameToggle").hide();
             $("#zClaimListTypeToggle").hide();
@@ -885,7 +893,7 @@ $(function() {
          });
          $("#zBlockFormatTypeToggle").hide();
          $("#zCheckContinuationBlockToggle").hide();
-         console.log( "   Hiding capitalize" );
+      // console.log( "   Hiding capitalize" );
          $("#zCapitalizeTitleTextFlagToggle").hide();
          $("#zImageNameToggle").hide();
          $("#zClaimListTypeToggle").hide();
@@ -1885,9 +1893,13 @@ public class FileServer {
    // var jsonObj = eval( "[" + json + "]" );
    // console.log( "Dom: " + jsonDom );
       var jsonObj = g_ViewNameMap.getViewByName( "LLD_Dom" );
-      g_ViewNameMap.dropNameForView( jsonObj, "LLD_Dom" );
+      if ( jsonObj != null ) {
+         g_ViewNameMap.dropNameForView( jsonObj, "LLD_Dom" );
+      }
       jsonObj = g_ViewNameMap.getViewByName( "LLD_New" );
-      g_ViewNameMap.dropNameForView( jsonObj, "LLD_New" );
+      if ( jsonObj != null ) {
+         g_ViewNameMap.dropNameForView( jsonObj, "LLD_New" );
+      }
 
       jsonObj = jsonStringToJsonObject( jsonDom );
       g_ViewNameMap.setNameForView( jsonObj, "LLD_Dom" );
@@ -1912,7 +1924,7 @@ public class FileServer {
          if ( jsonObj ) { 
             g_ViewNameMap.setNameForView( jsonObj, "LLD_New" );
          } else {
-            g_ViewNameMap.dropNameForView( jsonObj, "LLD_New" );
+         // g_ViewNameMap.dropNameForView( jsonObj, "LLD_New" );
          }
          return jsonLabel;
       }
@@ -2111,7 +2123,11 @@ public class FileServer {
                         jsonLabel += TranslateWysiwygDesignToJsonLabel( null, -1, obj["attributes"], 0, true, false, firstBlock );
                         lastPanel = CheckIfLastSibling( parentArray, parentIdx, "panel" );
                      } else if ( classlist.indexOf( "block" ) >= 0 ) {
-                        var $element = $("#" + obj["attributes"]["id"]);
+                        var idTag = obj["attributes"]["id"];
+                     // if ( idTag === "t_102" || idTag === "876" ) {
+                     //    console.log( "idTag: " + idTag );
+                     // }
+                        var $element = $("#" + idTag);
                         var blockDepth = parseInt( $element.data( "z_^depth" ) );
                         isBlock = true;
                         if ( firstBlock.isFirst || blockDepth > blockRecurse ) {
@@ -2314,7 +2330,12 @@ public class FileServer {
                style += prop.toLowerCase() + ":" + scaledInch2Pixel( obj[prop], 4 ) + ";"; // 2*g_pixelsBorder
             } else {
                if ( prop === "Depth" ) {
-                  depth = parseInt( obj[prop] );
+                  var objDepth = parseInt( obj[prop] );
+                  if ( objDepth !== depth ) {
+                     console.log( "AddHtmlLabelElementAttributes depth: " + depth + "  is not equal to object depth: " + objDepth +
+                                  "  for Tag: " + obj["Tag"] + "  within parent: " + parentId );
+                  }
+               // depth = parseInt( obj[prop] );
                }
             }
          }
@@ -2628,6 +2649,7 @@ public class FileServer {
                g_metaDate = jsonMeta["date"];
                var jsonColors = jsonObj["Colors"];
                var jsonMarketing = jsonObj["Marketing"];
+               var jsonBlockTags = jsonObj["BlockTags"]
                jsonObj = jsonObj["OIs"];
 
                // Display the JSON coming back (to the client) from Zeidon (server).
@@ -2641,6 +2663,7 @@ public class FileServer {
             // }
                setColors( jsonColors );
                setMarketing( jsonMarketing );
+               setBlockTags( jsonBlockTags );
             } catch(e) {
                $id("zFormattedJsonLabel").innerHTML = jsonZeidon;
                alert( "JSON is not well formatted:\n" + e.message );
@@ -2914,7 +2937,9 @@ public class FileServer {
             }
          } else if ( e.keyCode === 123 ) { // Ctrl + F12 keydown combo
             var jsonObj = g_ViewNameMap.getViewByName( "LLD_CurrentView" );
-            g_ViewNameMap.dropNameForView( jsonObj, "LLD_CurrentView" );
+            if ( jsonObj != null ) {
+               g_ViewNameMap.dropNameForView( jsonObj, "LLD_CurrentView" );
+            }
             var jsonLabel = GetCurrentLabel();
             jsonObj = jsonStringToJsonObject( jsonLabel );
             g_ViewNameMap.setNameForView( jsonObj, "LLD_CurrentView" );
@@ -3409,6 +3434,15 @@ public class FileServer {
          var list = $("#zMarketingSection");
          $.each(jsonMarketing, function(index, item) {
             list.append( new Option( item.Name, item.Name ) );
+         });
+      }
+   }
+
+   function setBlockTags( jsonBlockTags ) // g_jsonBlocks
+   {
+      if ( $.isArray( jsonBlockTags ) ) {
+         $.each(jsonBlockTags, function(index, item) {
+            g_jsonBlockTags.push( item );
          });
       }
    }

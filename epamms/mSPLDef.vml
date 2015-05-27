@@ -3153,7 +3153,7 @@ BuildCompositeEntries( VIEW mSPLDef BASED ON LOD mSPLDef )
       mSPLDef.CompositeComponentList.SectionType       = "M"
       mSPLDef.CompositeComponentList.OriginalTypeID    = mSPLDef.SPLD_MarketingSection.ID
       mSPLDef.CompositeComponentList.Name              = mSPLDef.SPLD_MarketingSection.Name
-      TraceLineS( "SPLD BuildCompositeEntries Name: ", mSPLDef.SPLD_MarketingSection.Name )
+   // TraceLineS( "SPLD BuildCompositeEntries Name: ", mSPLDef.SPLD_MarketingSection.Name )
       IF mSPLDef.SPLD_MarketingSection.Title != ""
          IF mSPLDef.SPLD_MarketingSection.Name = ""
             mSPLDef.CompositeComponentList.DisplayValue = mSPLDef.SPLD_MarketingSection.Title

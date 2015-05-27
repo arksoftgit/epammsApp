@@ -93,8 +93,16 @@ END
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 InitListSubregProducts( VIEW ViewToWindow )
+   VIEW mLLD_LST BASED ON LOD  mLLD
 
    SetDynamicBannerName( ViewToWindow, "wSPLD", "SubregistrantProduct" )
+
+   GET VIEW mLLD_LST NAMED "mLLD_LST"
+   IF RESULT >= 0
+      DropObjectInstance( mLLD_LST )
+   END
+   ACTIVATE mLLD_LST RootOnlyMultiple
+   NAME VIEW mLLD_LST "mLLD_LST" 
 
 END
 
@@ -1088,7 +1096,8 @@ GOTO_UpdateSubregProductSPLD( VIEW ViewToWindow )
    
    // Build the work components
    BuildCompositeEntries( mSPLDef )
-TraceLineS( "$$$$$$ end of oper", "" )
+// TraceLineS( "$$$$$$ end of oper", "GOTO_UpdateSubregProductSPLD" )
+// DisplayObjectInstance( mSPLDef, "", "" )
    
    // Also activate the corresponding SLC and build the composite subobject.
    //ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSPLDef.SubregLabelContent.ID 
