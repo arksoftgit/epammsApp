@@ -463,7 +463,7 @@ $(function() {
       });
       $canvasElement.resizable({
          containment: "#page",
-         start: function( event, ui ) {   // alert("Top: " +  $target.offset().top);
+         start: function( event, ui ) { // alert("Top: " +  $target.offset().top);
          // console.log( "Start yResize: " + $canvasElement[0].offsetHeight + "  xResize: " + $canvasElement[0].offsetWidth );
             updatePositionStatus( $canvasElement[0], $canvasElement[0].offsetTop, $canvasElement[0].offsetLeft, "Start yResize" );
             updateSizeStatus( $canvasElement[0], $canvasElement[0].offsetHeight, $canvasElement[0].offsetWidth, "Start yResize" );
@@ -492,11 +492,14 @@ $(function() {
       drop: function( event, ui ) {
       // console.log( ".page, .block-element drop" );
          var stopLoop = 1;
-         if ( ui.draggable.hasClass( "canvas-element" ) ) {  // dragging element already on canvas
+         if ( ui.draggable.hasClass( "canvas-element" ) ) { // dragging element already on canvas
             var $canvasElement = $(ui.helper);
             var $parent = $canvasElement.parent();
             var $canvas = determineTargetOfDrop( event, $(this), $canvasElement );
-            if ( $parent[0] !== $canvas[0] ) {
+            if ( $parent[0] !== $canvas[0] ) { // we don't change from panel to block or vice-versa
+               if ( $canvasElement.hasClass( "panel" ) === false && $canvas[0] === $("#page")[0] ) {
+                  return false;
+               }
                var r = confirm( "Do you want to move to a new parent?" );
                if ( r !== true ) {
                   return false;
@@ -512,7 +515,7 @@ $(function() {
                   top += $parent[0].offsetTop + $parent[0].clientTop;
                   left += $parent[0].offsetLeft + $parent[0].clientLeft;
                   $parent = $parent.parent();
-                  stopLoop++;  // using stopLoop just to prevent infinite loop
+                  stopLoop++; // using stopLoop just to prevent infinite loop
                }
 
                stopLoop = 1;
@@ -554,7 +557,7 @@ $(function() {
             addZeidonAttributeToElement( $canvasElement, "wID", uniqueTag );
             $canvasElement.removeClass( "ui-draggable-dragging" ).addClass( "canvas-element block-element" );
             if ( $canvas[0].id === "page" ) {
-               $canvasElement.addClass( "toppanel" );  // an element with class "panel" cannot become a "block" and vice-versa
+               $canvasElement.addClass( "panel" );  // an element with class "panel" cannot become a "block" and vice-versa
                addZeidonAttributeToElement( $canvasElement, "wE", "panel" );
             } else {
                addZeidonAttributeToElement( $canvasElement, "wE", "block" );
@@ -968,7 +971,11 @@ $(function() {
    }
 
    function setChildrenDepth( $parent, $child ) {
-      var depth = parseInt( $parent.data( "z_^depth" ), 10 ) + 1;
+      var parentDepth = $parent.data( "z_^depth" );
+      if ( isNaN( parentDepth ) ) {
+         parentDepth = "0";
+      }
+      var depth = parseInt( parentDepth, 10 ) + 1;
       $child.data( "z_^depth", depth );
       $child.css({
          background: getBackgroundColorForDepth( depth ),
@@ -996,8 +1003,8 @@ $(function() {
       var offset;
       var range;
       var $body = $('body').parents().addBack();
-      if ( $canvasElement.hasClass( "toppanel" ) ) {
-         $target = $("page");
+      if ( $canvasElement.hasClass( "panel" ) ) {
+         $target = $("#page");
          return $target;
       }
 
@@ -1076,7 +1083,7 @@ $(function() {
 
    function getUniqueId() {
       var stopLoop = 0; // prevent infinite loop
-      var arr = $(document.getElementById( "t_" + g_generateTag ));
+      var arr = $(document.getElementById( "Tag" + g_generateTag ));
       do
       {
          if ( $(arr).length <= 0 ) {
@@ -1084,10 +1091,10 @@ $(function() {
          }
 
          g_generateTag++;
-         arr = $(document.getElementById( "t_" + g_generateTag ));
+         arr = $(document.getElementById( "Tag" + g_generateTag ));
       } while ( stopLoop++ < 100 )
 
-      var tag = "t_" + g_generateTag;
+      var tag = "Tag" + g_generateTag;
    // console.log( "getUniqueId: " + tag );
       return tag;
    }
@@ -2124,7 +2131,7 @@ public class FileServer {
                         lastPanel = CheckIfLastSibling( parentArray, parentIdx, "panel" );
                      } else if ( classlist.indexOf( "block" ) >= 0 ) {
                         var idTag = obj["attributes"]["id"];
-                     // if ( idTag === "t_102" || idTag === "876" ) {
+                     // if ( idTag === "Tag102" || idTag === "876" ) {
                      //    console.log( "idTag: " + idTag );
                      // }
                         var $element = $("#" + idTag);
@@ -2311,6 +2318,14 @@ public class FileServer {
       if ( obj["ImageName"] ) {
          name += space + obj["ImageName"];
       }
+      if ( name === "" ) {
+         name = obj["ID"];
+         if ( name ) {
+            name += ":" + obj["Tag"];
+         } else {
+            name = obj["Tag"];
+         }
+      }
       return name;
    }
 
@@ -2347,7 +2362,7 @@ public class FileServer {
          var name = formatTitle( obj );
          var tag = obj["Tag"];
          if ( !tag ) {
-            tag = "t_" + id;
+            tag = "Tag" + id;
          }
          var identity = "id=\"" + tag + "\" name=\"" + tag + "\" ";
          var classes = "class=\"" + entity;
@@ -3325,52 +3340,60 @@ public class FileServer {
 
    function getColorPickerByRGB( hexColor ) {
       var lth = g_jsonColors.length;
-      var idx = lth - 1;
-      if ( hexColor.indexOf( "#" ) === 0 ) {
-         hexColor = hexColor.substring( 1 );
-      }
-      for ( var k = 0; k < lth; k++ ) {
-         if ( hexColor === g_jsonColors[k].RGB ) {
-            idx = k;
-            break;
+      if ( lth > 0 ) {
+         var idx = lth - 1;
+         if ( hexColor.indexOf( "#" ) === 0 ) {
+            hexColor = hexColor.substring( 1 );
          }
-      }
-      var name = g_jsonColors[idx].Pantone;
-      if ( name === "" ) {
-         name = g_jsonColors[idx].Name;
-      }
-      return name;
-   }
-
-   function setColorPickerByName( $elColor, name ) {
-      var lth = g_jsonColors.length;
-      var idx = lth - 1;
-      if ( name !== "" ) {
          for ( var k = 0; k < lth; k++ ) {
-            if ( name === g_jsonColors[k].Pantone || name === g_jsonColors[k].Name ) {
+            if ( hexColor === g_jsonColors[k].RGB ) {
                idx = k;
                break;
             }
          }
+         var name = g_jsonColors[idx].Pantone;
+         if ( name === "" ) {
+            name = g_jsonColors[idx].Name;
+         }
+         return name;
+      } else {
+         return "";
       }
+   }
 
-      name = g_jsonColors[idx].Pantone;
-      if ( name === "" ) {
-         name = g_jsonColors[idx].Name;
+   function setColorPickerByName( $elColor, name ) {
+      var lth = g_jsonColors.length;
+      if ( lth > 0 ) {
+         var idx = lth - 1;
+         if ( name !== "" ) {
+            for ( var k = 0; k < lth; k++ ) {
+               if ( name === g_jsonColors[k].Pantone || name === g_jsonColors[k].Name ) {
+                  idx = k;
+                  break;
+               }
+            }
+         }
+
+         name = g_jsonColors[idx].Pantone;
+         if ( name === "" ) {
+            name = g_jsonColors[idx].Name;
+         }
+         var sib = $elColor.siblings('.colorPicker-picker')[0];
+         $(sib).css( "background-color", "#" + g_jsonColors[idx].RGB ).css( "color", "#" + invertHexColor( g_jsonColors[idx].RGB ) ).text( name );
+         $elColor.val( "#" + g_jsonColors[idx].RGB );
+      } else {
+         $elColor.val( "" );
       }
-      var sib = $elColor.siblings('.colorPicker-picker')[0];
-      $(sib).css( "background-color", "#" + g_jsonColors[idx].RGB ).css( "color", "#" + invertHexColor( g_jsonColors[idx].RGB ) ).text( name );
-      $elColor.val( "#" + g_jsonColors[idx].RGB );
    }
 
    function initColorPicker( id, colors, names, idx ) {
-      var $el = $(id);
-      if ( ! $el.data( '_init' ) )
+      var $elColor = $(id);
+      if ( ! $elColor.data( '_init' ) )
       {
-         $el.data( '_init', "Y" );
+         $elColor.data( '_init', "Y" );
       // $('#colorText').colorPicker( { colors: ["1111ff", "333333", "ff1111", "eeeeee", "feeeee"], names: ["Blue", "Black", "Red", "Gray", "Pink"], showHexField: false,
       //                               onColorChange : function(id, newValue) { console.log("ID: '" + id + "' has been changed to " + newValue); } } );
-         $el.colorPicker( { colors: colors, names: names, showHexField: false,
+         $elColor.colorPicker( { colors: colors, names: names, showHexField: false,
                           onColorChange : function(id, newValue) {
                                              var lth = g_jsonColors.length;
                                              var idx = lth - 1;
@@ -3395,11 +3418,15 @@ public class FileServer {
 
       // Plain English of "#header .callout":
       //  - Select all elements with the class name 'callout' that are decendents of the element with an ID of 'header'.
-      var sib = $el.siblings('.colorPicker-picker')[0];
-      $(sib).css( "background-color", "#" + g_jsonColors[idx].RGB ).css( "color", "#" + invertHexColor( g_jsonColors[idx].RGB ) ).text( names[idx] );
-      $el.val( "#" + g_jsonColors[idx].RGB );
+      var sib = $elColor.siblings('.colorPicker-picker')[0];
+      if ( idx >= 0 ) {
+         $(sib).css( "background-color", "#" + g_jsonColors[idx].RGB ).css( "color", "#" + invertHexColor( g_jsonColors[idx].RGB ) ).text( names[idx] );
+         $elColor.val( "#" + g_jsonColors[idx].RGB );
+      } else {
+         $elColor.val( "" );
+      }
 
-      return $el;
+      return $elColor;
    }
 
    function setColors( jsonColors )
@@ -3422,6 +3449,7 @@ public class FileServer {
       colors.push( "EFEFEF" );
       names.push( "n/a" );
       g_jsonColors.push( { "Name" : "n/a", "RGB" : "EFEFEF", "Pantone" : "" } );
+      // since lth is 1 less than the true length, we are initializing to n/a
       initColorPicker( '#zTextColor', colors, names, lth );
       initColorPicker( '#zBackgroundColor', colors, names, lth );
       initColorPicker( '#zBorderColor', colors, names, lth );

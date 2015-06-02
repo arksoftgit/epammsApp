@@ -39,7 +39,7 @@ import org.json.simple.parser.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import static java.lang.Math.*;
-
+import java.util.StringTokenizer;
 /**
  * @author dks
  */
@@ -414,10 +414,9 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
          jsonTagList += "\"" + tagList.get(k) + "\"";
          if ( k < lth - 1 ) {
             jsonTagList += ", ";
-         } else {
-            jsonTagList += " ]";
          }
       }
+      jsonTagList += " ]";
 
       // StringWriter sw = null;
    // BufferedWriter writer = null;
@@ -668,8 +667,32 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                               ec = moveEntityIfNecessary( vBlock, entity, ID, ec );
                            }
                         } else {
+                           String setPE = null;
                            String wPE = (String) jo.get( "wPE" );
-                           if ( wPE.compareTo( "page" ) == 0 ) {
+                           if ( wPE == null ) {
+                              if ( entity.equals( "SPLD_LLD" ) ) {
+                                 wPE = "SubregPhysicalLabelDef";
+                                 setPE = "pagemenu";
+                              } else if ( entity.equals( "LLD_Page" ) ) {
+                                 wPE = "SPLD_LLD";
+                                 setPE = "label";
+                              } else if ( entity.equals( "LLD_Panel" ) ) {
+                                 wPE = "LLD_Page";
+                                 setPE = "page";
+                              } else if ( entity.equals( "LLD_Block" ) ) {
+                                 wPE = "LLD_Panel";
+                                 setPE = "panel";
+                              } else if ( entity.equals( "LLD_SubBlock" ) ) {
+                                 entity = "LLD_Block";
+                                 wPE = "LLD_Block";
+                                 setPE = "block";
+                              } else {
+                                 logger.error( "Cannot create unknown entity: " + entity + "  for null parent: " );
+                                 return;
+                              }
+                           } else if ( wPE.compareTo( "label" ) == 0 ) {
+                              wPE = "SPLD_LLD";
+                           } else if ( wPE.compareTo( "page" ) == 0 ) {
                               wPE = "LLD_Page";
                            } else if ( wPE.compareTo( "panel" ) == 0 ) {
                               wPE = "LLD_Panel";
@@ -681,7 +704,11 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                            }
                            String wPID = (String) jo.get( "wPID" );
                            ec = vBlock.getCursor( wPE );  // this is the parent entity
-                           cr = ec.setFirstWithinOi( "wID", wPID );
+                           if ( wPID == null ) {
+                              cr = CursorResult.SET;  // we must be on the correct parent (at least we really hope so)
+                           } else {
+                              cr = ec.setFirstWithinOi( "wID", wPID );
+                           }
                            if ( cr.isSet() ) {
                            // if ( ec.getEntityDef().getName().equals( "LLD_SubBlock" ) ) {
                               if ( wPE.equals( "LLD_Block" ) ) {
@@ -692,7 +719,15 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                                  ec = vBlock.getCursor( entity );
                               } else {
                                  ec = vBlock.getCursor( entity );
-                                 ec.createEntity( CursorPosition.LAST );
+                                 if ( entity.equals( "LLD_Block" ) || entity.equals( "LLD_Panel" ) ) {
+                                    if ( entity.equals( "LLD_Panel" ) ) {
+                                       vBlock.resetSubobjectTop();
+                                    }
+                                    ec.createEntity( CursorPosition.LAST );
+                                 }
+                                 if ( setPE != null ) {
+                                    ec.getAttribute( "wPE" ).setValue( setPE );
+                                 }
                               }
                               applyJsonPropertiesToZeidonAttributes( vLLD, vBlock, (JSONObject)obj, entity, depth, ec.getEntityInstance() );
                            }
@@ -719,13 +754,13 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                      // If we found it, things are hunky-dory.
                      if ( cr.isSet() ) {
                         EntityInstance ei = ec.getEntityInstance();
-                        //
+                        /*
                         if ( ID.compareTo( "600" ) == 0 || ID.compareTo( "812" ) == 0 || ID.compareTo( "878" ) == 0 ) {
                            EntityInstance eip = ei.getParent();
                            String IDP = eip.getAttribute( "ID" ).getString();
                            logger.debug( ID + " B Parent ID: " + IDP );
                         }
-                        //
+                        */
                         if ( deleteEntity ) {
                         // vBlock.logObjectInstance();
                         //ec.logEntity( true );
@@ -773,9 +808,9 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                   // }
                   }
                } catch ( ZeidonException ze ) {
-                 logger.error( "Failed to process entity: " + entity + "  Depth: " + depth + "   ID: " + ID + "   Error: " + ze.getMessage() );
+                  logger.error( "Failed to process entity: " + entity + "  Depth: " + depth + "   ID: " + ID + "   Error: " + ze.getMessage() );
                } finally {
-                  vBlock.resetSubobjectTop();
+               // vBlock.resetSubobjectTop();
                }
             // } not checking ec.isNull()
             } else {
@@ -1188,6 +1223,7 @@ end debug code */
                applyJsonLabelToView( vLLD, vBlock, jsonPost, "", -2, null );  // OIs, SPLD_LLD, depth == 0 for LLD_Page
                vBlock.drop();
                vLLD.setName( "mSPLDefPanel", Level.TASK );
+               displaySPLD( vLLD, null, "" );
                // Sort the blocks
                CursorResult cr = vLLD.cursor( "LLD_Panel" ).setFirst();
                while ( cr.isSet() ) {
@@ -1253,7 +1289,7 @@ end debug code */
          // displaySPLD( vLLD, null, "" );
          // vLLD.logObjectInstance();
             jsonLabel = convertLLD_ToJSON( vLLD );
-         // logger.debug( "LoadLabel JSON: " + jsonLabel );
+            logger.debug( "LoadLabel JSON: " + jsonLabel );
          // jsonLabel = jsonLabel.replaceFirst( "\"TZLLD\",", "\"TZLLD\",\n      \"fileName\" : \"" + fileName + "\"," );
          } catch( ZeidonException ze ) {
             logger.error( "Error loading Json Label: " + ze.getMessage() );

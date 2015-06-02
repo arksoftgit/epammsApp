@@ -2008,6 +2008,40 @@ public class ZGlobal1_Operation extends VmlOperation
       return( 0 );
    }
 
+   public int
+   SplitParagraphOnLinefeed( String paragraph,
+                             View   view,
+                             String entityName,
+                             String attributeName )
+   {
+      String delimiters = "\r\n";
+      String value;
+      int count = 0;
+      EntityCursor ec = view.cursor( entityName );
+      String[] tokens = paragraph.split( delimiters );
+      int rawCount = tokens.length;
+      for ( int k = 0; k < rawCount; k++ ) {
+         value = tokens[k];
+         if ( value.equals( "" ) == false ) {
+            count++;
+            ec.createEntity( CursorPosition.LAST );
+            ec.getAttribute( attributeName ).setValue( value );
+         }
+      }
+      return count;
+   }
+
+   public int
+   ConvertExternalValueOfAttribute( StringBuilder lpReturnedString,
+                                    String srcString,
+                                    View   lpView,
+                                    String entityName,
+                                    String attributeName )
+   {
+      // TODO - Convert code from "C"
+      return( 0 );
+   }
+
  /**
    public String
    GetGeneralPath( View  vSubtask, int lFlag, String stringFileType, String stringTarget )
