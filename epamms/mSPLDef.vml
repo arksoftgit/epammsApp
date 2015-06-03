@@ -75,7 +75,7 @@ GeneratePDF_Label( VIEW mSPLDef BASED ON LOD mSPLDef )
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
       RETURN 2
    END
-   TraceLineS( "##### After open: ", szXslName )
+// TraceLineS( "##### After open: ", szXslName )
 
    // Put out XSL header data.
    szWriteBuffer = "<?xml version=@1.0@ encoding='iso-8859-1'?>"
@@ -339,6 +339,7 @@ DisplayBlockAttributes( VIEW mSPLDefBlock BASED ON LOD mSPLDef, INTEGER bAll )
    AddBlockAttribute( mSPLDefBlock, "CapitalizeTitleTextFlag", szDisplayMsg )
    AddBlockAttribute( mSPLDefBlock, "TextAlign", szDisplayMsg )
    AddBlockAttribute( mSPLDefBlock, "TextLineHeight", szDisplayMsg )
+   AddBlockAttribute( mSPLDefBlock, "TextLetterSpace", szDisplayMsg )
 // AddBlockAttribute( mSPLDefBlock, "Depth", szDisplayMsg )
    AddBlockAttribute( mSPLDefBlock, "UsageColumn1BreakName", szDisplayMsg )
    AddBlockAttribute( mSPLDefBlock, "UsageColumn2BreakName", szDisplayMsg )
@@ -1512,6 +1513,7 @@ AddFormatToSpecialText( VIEW mSPLDef BASED ON LOD mSPLDef,
    STRING ( 10 )  szRightMBP
    STRING ( 10 )  szTextAlign
    STRING ( 10 )  szLineHeight
+   STRING ( 10 )  szLetterSpace
    STRING ( 200 ) szMsg
    STRING ( 256 ) szImg
 
@@ -1519,7 +1521,7 @@ AddFormatToSpecialText( VIEW mSPLDef BASED ON LOD mSPLDef,
    // Skip if the Special Text Attribute hasn't been defined.
 
    NAME VIEW mSPLDef "mSPLDefHazards"
-   TraceLineS( "$$$$ Special Text for: ", SpecialTextTitle )
+// TraceLineS( "$$$$ Special Text for: ", SpecialTextTitle )
    SET CURSOR FIRST mSPLDef.LLD_SpecialSectionAttribute WHERE mSPLDef.LLD_SpecialSectionAttribute.Name = SpecialTextTitle
    IF RESULT >= zCURSOR_SET
 
@@ -1537,7 +1539,7 @@ AddFormatToSpecialText( VIEW mSPLDef BASED ON LOD mSPLDef,
 
       szFontSize = mSPLDef.LLD_SpecialSectionAttrBlock.FontSize
       IF szFontSize != ""
-      TraceLineS( "3Font Size set to: ", szFontSize )
+      // TraceLineS( "3Font Size set to: ", szFontSize )
          szWriteBuffer = szWriteBuffer + " font-size=^" + szFontSize + "pt^"
       END
 
@@ -1549,6 +1551,11 @@ AddFormatToSpecialText( VIEW mSPLDef BASED ON LOD mSPLDef,
       szLineHeight = mSPLDef.LLD_SpecialSectionAttrBlock.TextLineHeight
       IF szLineHeight != ""
          szWriteBuffer = szWriteBuffer + " line-height=^" + szLineHeight + "^"
+      END
+
+      szLetterSpace = mSPLDef.LLD_SpecialSectionAttrBlock.TextLetterSpace
+      IF szLetterSpace != ""
+         szWriteBuffer = szWriteBuffer + " letter-spacing=^" + szLetterSpace + "px^"
       END
 
       szMBP = mSPLDef.LLD_SpecialSectionAttrBlock.Margin

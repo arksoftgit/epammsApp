@@ -1407,7 +1407,7 @@ var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
                         "z_^margin", "z_^margin^top", "z_^margin^left", "z_^margin^bottom", "z_^margin^right", "z_^margin^override",
                         "z_^border", "z_^border^top", "z_^border^bottom", "z_^border^left", "z_^borderRight", "z_^border^override",
                         "z_^padding", "z_^padding^top", "z_^padding^bottom", "z_^padding^left", "z_^padding^right", "z_^padding^override",
-                        "z_^title^position", "z_^text^align", "z_^text^line^height" ];
+                        "z_^title^position", "z_^text^align", "z_^text^line^height", "z_^text^letter^space" ];
 
    function mapToSpecialBlockFromBlock( currentType ) {
       if ( g_$current_block && g_$current_block.data() ) {
@@ -1580,7 +1580,7 @@ var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
 // $("#zHazardPanel").combobox();
 
    var $FontSizeSpinner = $("#zFontSizeSpinner").spinner();
-   $FontSizeSpinner.spinner( "option", "min", 3 );
+   $FontSizeSpinner.spinner( "option", "min", 6 );
    $FontSizeSpinner.spinner( "option", "max", 40 );
    $FontSizeSpinner.spinner( "option", "numberFormat", "nn" );
    $FontSizeSpinner[0].readOnly = true;  // prevent invalid input
@@ -2295,7 +2295,7 @@ public class FileServer {
       }
    });
 
-   function formatTitle( obj ) {
+   function formatTitle( entity, obj ) {
       var name;
       var space;
       if ( obj["LLD_SectionType"] ) {
@@ -2319,12 +2319,14 @@ public class FileServer {
          name += space + obj["ImageName"];
       }
       if ( name === "" ) {
-         name = obj["ID"];
-         if ( name ) {
-            name += ":" + obj["Tag"];
-         } else {
-            name = obj["Tag"];
+         if ( entity === "panel" ) {
+            name = "Panel: ";
          }
+         var id = obj["ID"];
+         if ( id ) {
+            name += id + " : ";
+         }
+         name += obj["Tag"];
       }
       return name;
    }
@@ -2359,7 +2361,7 @@ public class FileServer {
       var id = obj["ID"];
       // $(tag).innerHTML = attr + style;
       if ( entity === "block" || entity === "panel" ) {
-         var name = formatTitle( obj );
+         var name = formatTitle( entity, obj );
          var tag = obj["Tag"];
          if ( !tag ) {
             tag = "Tag" + id;

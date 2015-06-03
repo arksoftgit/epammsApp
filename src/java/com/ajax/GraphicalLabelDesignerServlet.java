@@ -1223,7 +1223,7 @@ end debug code */
                applyJsonLabelToView( vLLD, vBlock, jsonPost, "", -2, null );  // OIs, SPLD_LLD, depth == 0 for LLD_Page
                vBlock.drop();
                vLLD.setName( "mSPLDefPanel", Level.TASK );
-               displaySPLD( vLLD, null, "" );
+            // displaySPLD( vLLD, null, "" );
                // Sort the blocks
                CursorResult cr = vLLD.cursor( "LLD_Panel" ).setFirst();
                while ( cr.isSet() ) {
@@ -1268,7 +1268,7 @@ end debug code */
             } catch( ParseException pe ) {
                logger.error( "Unable to parse JSON: " + jsonLabel );
          // } catch( ZeidonException ze ) { already caught
-         //    logger.debug( "Error processing Json Label: " + ze.getMessage() );
+            // logger.debug( "Error processing Json Label: " + ze.getMessage() );
             } finally {
                jsonLabel = convertLLD_ToJSON( vLLD );
             // logger.debug( "Completed processing Json Label: " + jsonLabel );
@@ -1289,7 +1289,7 @@ end debug code */
          // displaySPLD( vLLD, null, "" );
          // vLLD.logObjectInstance();
             jsonLabel = convertLLD_ToJSON( vLLD );
-            logger.debug( "LoadLabel JSON: " + jsonLabel );
+         //logger.debug( "LoadLabel JSON: " + jsonLabel );
          // jsonLabel = jsonLabel.replaceFirst( "\"TZLLD\",", "\"TZLLD\",\n      \"fileName\" : \"" + fileName + "\"," );
          } catch( ZeidonException ze ) {
             logger.error( "Error loading Json Label: " + ze.getMessage() );
