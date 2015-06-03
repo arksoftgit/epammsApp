@@ -17,7 +17,7 @@
             <url>web/wSPLDGraphicalView.jsp</url>
             <bookmark id="42">
                 <name/>
-                <line>1057</line>
+                <line>1061</line>
                 <key/>
             </bookmark>
         </file>
@@ -46,12 +46,12 @@
             <url>src/java/com/ajax/GraphicalLabelDesignerServlet.java</url>
             <bookmark id="25">
                 <name/>
-                <line>552</line>
+                <line>551</line>
                 <key/>
             </bookmark>
             <bookmark id="13">
                 <name/>
-                <line>655</line>
+                <line>654</line>
                 <key/>
             </bookmark>
         </file>
@@ -67,14 +67,9 @@
                 <line>213</line>
                 <key/>
             </bookmark>
-            <bookmark id="33">
-                <name/>
-                <line>753</line>
-                <key/>
-            </bookmark>
             <bookmark id="34">
                 <name/>
-                <line>1532</line>
+                <line>1530</line>
                 <key/>
             </bookmark>
             <bookmark id="41">

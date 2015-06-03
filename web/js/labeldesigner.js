@@ -313,6 +313,7 @@ $(function() {
                   $(g_selected_first).css( "border", "2px solid #FF7777" );
                } else {
                   g_selected_first = null;
+                  g_$current_block = null;
                }
             }
          } else { // not in list, so add it if it has the same parent as others in the list
@@ -335,6 +336,12 @@ $(function() {
             }
          }
       }
+      if ( g_$current_block && g_$current_block.hasClass( "panel" ) === false ) {
+         $("#zSectionType").prop( 'disabled', false );
+      } else {
+         $("#zSectionType").prop( 'disabled', true );
+      }
+
       return false;  // prevent default propagation (otherwise, the click is propagated to parent elements ... which we do not want!)
    });
 
@@ -827,27 +834,25 @@ $(function() {
                $("#zClaimListTypeToggle").hide();
                $("#zMarketingSectionToggle").hide();
                options = optionsDflt;
-            } else if ( sectionType === "Marketing" || sectionType === "DirectionsForUse" || sectionType === "FirstAid" ||
+            } else if ( sectionType === "Marketing" ) {
+               $("#zCheckContinuationBlockToggle").show();
+            // console.log( "   Showing capitalize" );
+               $("#zCapitalizeTitleTextFlagToggle").show();
+               $("#zImageNameToggle").hide();
+               $("#zClaimListTypeToggle").show();
+               $("#zMarketingSectionToggle").show();
+               $('#zMarketingSection option[value="' + blockName + '"]').prop( 'selected', true );
+               // Marketing:  Title / Text / Column List
+               options = optionsDflt + "<option value=\"^column ^list\">Column List</option>";
+            } else if ( sectionType === "DirectionsForUse" || sectionType === "FirstAid" ||
                         sectionType === "StorageDisposal" || sectionType === "Hazards" || sectionType === "Precautionary" ) {
                $("#zCheckContinuationBlockToggle").show();
             // console.log( "   Showing capitalize" );
                $("#zCapitalizeTitleTextFlagToggle").show();
                $("#zImageNameToggle").hide();
-               if ( sectionType === "Marketing" ) {
-                  $("#zClaimListTypeToggle").show();
-                  $("#zMarketingSectionToggle").show();
-                  $('#zMarketingSection option[value="' + blockName + '"]').prop( 'selected', true );
-                  // Marketing:  Title / Text / Column List
-                  options = optionsDflt + "<option value=\"^column ^list\">Column List</option>";
-               } else {
-                  $("#zClaimListTypeToggle").hide();
-                  $("#zMarketingSectionToggle").hide();
-                  if ( sectionType === "DirectionsForUse" || sectionType === "FirstAid" ) {
-                     // Directions for Use:  Header / Title / Text
-                     // First Aid:  Header / Title / Text
-                     options = "<option value=\"^header\">Header</option>" + optionsDflt;
-                  }
-               }
+               $("#zClaimListTypeToggle").hide();
+               $("#zMarketingSectionToggle").hide();
+               options = optionsDflt;
             } else {
                $("#zCheckContinuationBlockToggle").hide();
             // console.log( "   Hiding capitalize" );
@@ -3480,7 +3485,7 @@ public class FileServer {
 // Initialize everything (first time in).
    scrollbarHeightWidth();  // call the function to set g_scrollbar
    setLLD_sizes();
-
+   $("#zSectionType").prop( 'disabled', true );
    LoadZeidonJsonFromLLD( "mSPLDef" );
 
    // set initial state.
