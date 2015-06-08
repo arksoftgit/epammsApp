@@ -971,7 +971,7 @@ else
 -->
                      <hr>
                      <p style="clear:both;position:relative"></p>
-                     <div id="zCheckContinuationBlockToggle" style="overflow:hidden; white-space:nowrap; padding-bottom:12px;">
+                     <div id="zCheckContinuationBlockToggle" style="overflow:hidden; white-space:nowrap; padding-bottom:20px;">
                         <input type="checkbox" id="zCheckContinuationBlock" name="zCheckContinuationBlock" class="zeidon" data-zmap="block.z_^continuation^block^flag" /><label for="zCheckContinuationBlock">Continuation from Previous Section/Statement</label>
                      </div>
                      <p style="clear:both;position:relative"></p>
@@ -1037,19 +1037,24 @@ else
                                  <option value="left">Left</option>
                                  <option value="center">Center</option>
                                  <option value="right">Right</option>
+                                 <option value="justify">Justify</option>
                               </select>
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
                              <label for="zTextLineHeight">Text Line Height:</label>
                              <input type="text" id="zTextLineHeight" class="zeidon-special" data-zmap="block.z_^text^line^height" style="float:right" />
+                           </div>                           <div style="overflow:hidden; white-space:nowrap;">
+                             <label for="zTextLetterSpace">Text Character Spacing:</label>
+                             <input type="text" id="zTextLetterSpace" class="zeidon-special" data-zmap="block.z_^text^letter^space" style="float:right" />
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
                              <label for="zFontFamily">Font Family:</label>
                              <select id="zFontFamily" class="zeidon-special" data-zmap="block.z_^font^family" style="float:right" />
                                  <option value="">Select Font Family...</option>
-                                 <option value="arial">Arial</option>
-                                 <option value="verdana">Verdana</option>
-                                 <option value="serif">Serif</option>
+                                 <option value="Arial">Arial</option>
+                                 <option value="Comic Sans MS Bold">Comic Sans MS Bold</option>
+                                 <option value="Verdana">Verdana</option>
+                                 <option value="Serif">Serif</option>
                               </select>
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
@@ -1069,7 +1074,7 @@ else
                            <p style="clear:both;position:relative"></p>
                            <div id="zCapitalizeTitleTextFlagToggle" style="overflow:hidden; white-space:nowrap; padding-bottom:12px;">
                               <label for="zCapitalizeTitleTextFlag">Capitalize Title Text</label>
-                              <input type="checkbox" id="zCapitalizeTitleTextFlag" name="zCapitalizeTitleTextFlag" class="zeidon" data-zmap="block.z_^continuation^block^flag" />
+                              <input type="checkbox" id="zCapitalizeTitleTextFlag" name="zCapitalizeTitleTextFlag" class="zeidon-special" data-zmap="block.z_^capitalize^title^text^flag" />
                            </div>
                            <div>
                               <label for="zTextColor">Text Color</label>
@@ -1234,6 +1239,9 @@ else
                            <label for="zCSS_File">CSS File:</label>
                            <input type="text" id="zCSS_File" class="zeidon" data-zmap="label.z_^c^s^s_^file^name" value="" style="float:right;width:180px;"/>
                         </span>
+                        <label for="usefopconfig" style="margin-right:2px;margin-top:12px;float:right;">Use Fop Config</label>
+                        <input type="checkbox" id="usefopconfig" name="usefopconfig" class="zeidon" data-zmap="label.z_^use^fop^config" style="margin-left:2px;margin-top:12px;float:right;">
+                        &nbsp;&nbsp;
                      </p>
                      <!--
                      <p style="clear:both;position:relative"></p>

@@ -1,4 +1,4 @@
-z1000-Zeidon    TEMPLATE TZDGSRCO 06/02/15   12:06:59 1.0a2    
+z1000-Zeidon    TEMPLATE TZDGSRCO 06/05/15   20:48:58 1.0a2    
 eDomainGroup 1
 aZKey      69081339
 aName      Template
@@ -412,17 +412,22 @@ aIsDefault Y
 eTableEntry 4
 aZKey      4322646
 aExternalValue Arial
-aInternalValue arial
+aInternalValue Arial
+
+eTableEntry 4
+aZKey      110006764
+aExternalValue Comic Sans MS Bold
+aInternalValue Comic Sans MS Bold
 
 eTableEntry 4
 aZKey      4322647
 aExternalValue Verdana
-aInternalValue verdana
+aInternalValue Verdana
 
 eTableEntry 4
 aZKey      4322648
 aExternalValue Serif
-aInternalValue serif
+aInternalValue Serif
 
 eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
@@ -670,8 +675,13 @@ aExternalValue First Aid
 aInternalValue FirstAid
 
 eTableEntry 4
+aZKey      69081355
+aExternalValue Human Hazard
+aInternalValue HumanHazard
+
+eTableEntry 4
 aZKey      69085283
-aExternalValue Hazards
+aExternalValue Environmental Hazard
 aInternalValue Hazards
 
 eTableEntry 4
@@ -703,11 +713,6 @@ eTableEntry 4
 aZKey      69081354
 aExternalValue Marketing
 aInternalValue Marketing
-
-eTableEntry 4
-aZKey      69081355
-aExternalValue Human Hazard
-aInternalValue HumanHazard
 
 eTableEntry 4
 aZKey      69765626

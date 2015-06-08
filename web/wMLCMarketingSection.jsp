@@ -98,6 +98,25 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
+      // EditBox: EditBox2
+      nRC = mMasLC.cursor( "M_MarketingSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "EditBox2" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "EditBox2", "", strMapValue );
+            else
+               mMasLC.cursor( "M_MarketingSection" ).getAttribute( "Subtitle" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "EditBox2", e.getReason( ), strMapValue );
+         }
+      }
+
       // Grid: GridDirectionsUse
       iTableRowCnt = 0;
 
@@ -305,14 +324,29 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
-      // Action Auto Object Function
+      // Action Operation
       nRC = 0;
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_MarketingStatement" );
-      cursor.createTemporalEntity( );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingSection.jsp", "wMLC.GOTO_MarketingStatementAdd" );
+         nOptRC = wMLC.GOTO_MarketingStatementAdd( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
 
+      if ( strNextJSP_Name.equals( "" ) )
+      {
       // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "MarketingStatement" );
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "AddItemsMultiple" );
+      }
+
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -728,44 +762,43 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:4px;width:100px;"></div>
+<div style="height:2px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* MarketingSection1:GroupBox */ %>
+<% /* GBStorDispSections1:GroupBox */ %>
 
-<div id="MarketingSection1" name="MarketingSection1" class="withborder" style="width:780px;height:110px;float:left;">  <!-- MarketingSection1 --> 
+<div id="GBStorDispSections1" name="GBStorDispSections1" class="listgroup"   style="float:left;position:relative; width:780px; height:36px;">  <!-- GBStorDispSections1 --> 
+
+<% /* OrganismClaimsStatements2:Text */ %>
+
+<label class="groupbox"  id="OrganismClaimsStatements2" name="OrganismClaimsStatements2" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Marketing Section</label>
 
 
- <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp</span>
-<% /* Text3:Text */ %>
-
-<span class="listheader"  id="Text3" name="Text3" style="width:434px;height:16px;">Marketing Section</span>
-
+</div>  <!--  GBStorDispSections1 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
+ <!-- This is added as a line spacer -->
+<div style="height:4px;width:100px;"></div>
+
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox5:GroupBox */ %>
 <div id="GroupBox5" name="GroupBox5" style="float:left;width:754px;" >
 
 <table cols=2 style="width:754px;"  class="grouptable">
 
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:62px;">
 <% /* Text2:Text */ %>
 
-<span  id="Text2" name="Text2" style="width:132px;height:16px;">Name:</span>
+<span  id="Text2" name="Text2" style="width:58px;height:16px;">Name:</span>
 
 </td>
-<td valign="top"  class="text12" style="width:202px;">
+<td valign="top"  class="text12" style="width:210px;">
 <% /* EditBox1:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "EditBox1", strError );
@@ -805,18 +838,18 @@ else
    }
 %>
 
-<input class="text12" name="EditBox1" id="EditBox1" style="width:202px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="EditBox1" id="EditBox1" style="width:210px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:62px;">
 <% /* DirectionsUseTitle:1:Text */ %>
 
-<span  id="DirectionsUseTitle:1" name="DirectionsUseTitle:1" style="width:130px;height:16px;">Title:</span>
+<span  id="DirectionsUseTitle:1" name="DirectionsUseTitle:1" style="width:56px;height:16px;">Title:</span>
 
 </td>
-<td valign="top"  class="text12" style="width:584px;">
+<td valign="top"  class="text12" style="width:592px;">
 <% /* DirectionsUseTitle1:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "DirectionsUseTitle1", strError );
@@ -856,7 +889,58 @@ else
    }
 %>
 
-<input class="text12" name="DirectionsUseTitle1" id="DirectionsUseTitle1" style="width:584px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="DirectionsUseTitle1" id="DirectionsUseTitle1" style="width:592px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
+</td>
+</tr>
+<tr>
+<td valign="top" style="width:62px;">
+<% /* Text1:Text */ %>
+
+<span  id="Text1" name="Text1" style="width:56px;height:16px;">Subtitle:</span>
+
+</td>
+<td valign="top"  class="text12" style="width:592px;">
+<% /* EditBox2:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "EditBox2", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "EditBox2" );
+      else
+      {
+         nRC = mMasLC.cursor( "M_MarketingSection" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = mMasLC.cursor( "M_MarketingSection" ).getAttribute( "Subtitle" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on EditBox2: " + e.getMessage());
+               task.log().error( "*** Error on ctrl EditBox2", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "M_MarketingSection.Subtitle: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for EditBox2: " + "mMasLC.M_MarketingSection" );
+      }
+   }
+%>
+
+<input class="text12" name="EditBox2" id="EditBox2" style="width:592px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -866,35 +950,21 @@ else
 
 </div>  <!-- End of a new line -->
 
-
-</div>  <!--  MarketingSection1 --> 
-</div>  <!-- End of a new line -->
-
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
  <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
+<div style="height:8px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GBDirectionsUseStatements:GroupBox */ %>
-
-<div id="GBDirectionsUseStatements" name="GBDirectionsUseStatements" style="width:780px;float:left;">  <!-- GBDirectionsUseStatements --> 
-
-
- <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox6:GroupBox */ %>
 
-<div id="GroupBox6" name="GroupBox6"   style="float:left;position:relative; width:686px; height:30px;">  <!-- GroupBox6 --> 
+<div id="GroupBox6" name="GroupBox6"   style="float:left;position:relative; width:780px; height:30px;">  <!-- GroupBox6 --> 
 
 <% /* Text4:Text */ %>
 
-<label class="listheader"  id="Text4" name="Text4" style="width:434px;height:16px;position:absolute;left:12px;top:4px;">Marketing Statements</label>
+<label class="listheader"  id="Text4" name="Text4" style="width:434px;height:16px;position:absolute;left:6px;top:4px;">Marketing Statements</label>
 
 <% /* PushBtn3:PushBtn */ %>
 <button type="button" class="newbutton" name="PushBtn3" id="PushBtn3" value="" onclick="GOTO_MarketingStatementAdd( )" style="width:78px;height:26px;position:absolute;left:560px;top:4px;">New</button>
@@ -906,8 +976,15 @@ else
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GBDirectionsUseStatements:GroupBox */ %>
+
+<div id="GBDirectionsUseStatements" name="GBDirectionsUseStatements" style="width:780px;float:left;">  <!-- GBDirectionsUseStatements --> 
+
+
  <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
+<div style="height:8px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
@@ -1000,7 +1077,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 
  <!-- This is added as a line spacer -->
-<div style="height:716px;width:100px;"></div>
+<div style="height:712px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:32px;float:left;"></div>   <!-- Width Spacer -->

@@ -1,4 +1,4 @@
-z1000-Zeidon    BASE     TZDGSRCO 05/20/15   12:47:36 1.0a2    
+z1000-Zeidon    BASE     TZDGSRCO 06/08/15   17:17:20 1.0a2    
 eDomainGroup 1
 aZKey      68567479
 aName      Base
@@ -18,6 +18,54 @@ eContext   3
 aZKey      68567481
 aName      BLOB
 aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      110059061
+aName      ContainerVolumeEnvironmentHazard
+aDomainType T
+aDataType  S
+aMaxStringLth 20
+aContextRestriction N
+
+eContext   3
+aZKey      110059062
+aName      ContainerVolumeEnvironmentHazard
+aIsDefault Y
+
+eTableEntry 4
+aZKey      110059063
+aExternalValue < 5 gallon
+aInternalValue <5
+
+eTableEntry 4
+aZKey      110059064
+aExternalValue >= 5 gallon
+aInternalValue >=5
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      110059057
+aName      ContainerVolumeStorageDisposal
+aDomainType T
+aDataType  S
+aMaxStringLth 3
+aContextRestriction N
+
+eContext   3
+aZKey      110059058
+aName      ContainerVolumeStorageDisposal
+aIsDefault Y
+
+eTableEntry 4
+aZKey      110059059
+aExternalValue <= 1 gallon
+aInternalValue <=1
+
+eTableEntry 4
+aZKey      110059060
+aExternalValue > 1 gallon
+aInternalValue >1
 
 eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
@@ -441,9 +489,6 @@ aName      ContainerVolume
 aIsDefault Y
 
 eTableEntry 4
-aZKey      120260123
-
-eTableEntry 4
 aZKey      2844697
 aExternalValue 1 gallon
 aInternalValue 1
@@ -796,8 +841,13 @@ aInternalValue P
 
 eTableEntry 4
 aZKey      4321562
-aExternalValue Physical Hazard
+aExternalValue Environmental Hazard
 aInternalValue E
+
+eTableEntry 4
+aZKey      110030907
+aExternalValue Physical or Chemical Hazard
+aInternalValue C
 
 eTableEntry 4
 aZKey      4321563
@@ -823,6 +873,11 @@ eTableEntry 4
 aZKey      69055601
 aExternalValue F
 aInternalValue F
+
+eTableEntry 4
+aZKey      110030906
+aExternalValue C
+aInternalValue C
 
 eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain

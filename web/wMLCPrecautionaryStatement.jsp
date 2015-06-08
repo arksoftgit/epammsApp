@@ -60,22 +60,41 @@ public int DoInputMapping( HttpServletRequest request,
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
    {
-      // MLEdit: StatementText
+      // MLEdit: MLEdit3
       nRC = mMasLC.cursor( "M_GeneralStatement" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "StatementText" );
+         strMapValue = request.getParameter( "MLEdit3" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "StatementText", "", strMapValue );
+               VmlOperation.CreateMessage( task, "MLEdit3", "", strMapValue );
+            else
+               mMasLC.cursor( "M_GeneralStatement" ).getAttribute( "Title" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "MLEdit3", e.getReason( ), strMapValue );
+         }
+      }
+
+      // MLEdit: MLEdit2
+      nRC = mMasLC.cursor( "M_GeneralStatement" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "MLEdit2" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "MLEdit2", "", strMapValue );
             else
                mMasLC.cursor( "M_GeneralStatement" ).getAttribute( "Text" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "StatementText", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "MLEdit2", e.getReason( ), strMapValue );
          }
       }
 
@@ -565,90 +584,58 @@ else
    </div>
 
 
-<div>  <!-- Beginning of a new line -->
-<% /* GBPrecautionaryStatement:GroupBox */ %>
-
-<div id="GBPrecautionaryStatement" name="GBPrecautionaryStatement" style="width:732px;height:24px;float:left;">  <!-- GBPrecautionaryStatement --> 
-
-
  <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
+<div style="height:2px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
-<% /* PrecautionaryTitle::Text */ %>
+<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox5:GroupBox */ %>
 
-<span  id="PrecautionaryTitle:" name="PrecautionaryTitle:" style="width:158px;height:16px;">Precautionary Title:</span>
+<div id="GroupBox5" name="GroupBox5"   style="float:left;position:relative; width:730px; height:28px;">  <!-- GroupBox5 --> 
 
-<% /* PrecautionaryTitle:Text */ %>
-<% strTextDisplayValue = "";
-   mMasLC = task.getViewByName( "mMasLC" );
-   if ( VmlOperation.isValid( mMasLC ) == false )
-      task.log( ).debug( "Invalid View: " + "PrecautionaryTitle" );
-   else
-   {
-      nRC = mMasLC.cursor( "M_GeneralSection" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-      try
-      {
-         strTextDisplayValue = mMasLC.cursor( "M_GeneralSection" ).getAttribute( "Title" ).getString( "" );
-      }
-      catch (Exception e)
-      {
-         out.println("There is an error on PrecautionaryTitle: " + e.getMessage());
-         task.log().info( "*** Error on ctrl PrecautionaryTitle" + e.getMessage() );
-      }
-         if ( strTextDisplayValue == null )
-            strTextDisplayValue = "";
-      }
-   }
-%>
+<% /* PrecautionarySection2:Text */ %>
 
-<span class="text14bold"  id="PrecautionaryTitle" name="PrecautionaryTitle" style="width:478px;height:16px;"><%=strTextDisplayValue%></span>
-
-</div>  <!-- End of a new line -->
+<label class="groupbox"  id="PrecautionarySection2" name="PrecautionarySection2" style="width:338px;height:16px;position:absolute;left:6px;top:6px;">Precautionary Statement</label>
 
 
-</div>  <!--  GBPrecautionaryStatement --> 
+</div>  <!--  GroupBox5 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
-<div>  <!-- Beginning of a new line -->
-<% /* GroupBox1:GroupBox */ %>
-
-<div id="GroupBox1" name="GroupBox1" style="width:732px;height:26px;float:left;">  <!-- GroupBox1 --> 
-
-
  <!-- This is added as a line spacer -->
-<div style="height:12px;width:100px;"></div>
+<div style="height:4px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
-<% /* Text4:Text */ %>
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* MarketingStatementGroup1:GroupBox */ %>
 
-<span class="groupbox"  id="Text4" name="Text4" style="width:226px;height:16px;">Precautionary Statement</span>
-
-</div>  <!-- End of a new line -->
-
-
-</div>  <!--  GroupBox1 --> 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+<div id="MarketingStatementGroup1" name="MarketingStatementGroup1" class="withborder" style="width:832px;height:394px;float:left;">  <!-- MarketingStatementGroup1 --> 
 
 
  <!-- This is added as a line spacer -->
 <div style="height:6px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<span style="height:316px;">&nbsp&nbsp</span>
-<% /* StatementText:MLEdit */ %>
+<div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox4:GroupBox */ %>
+<div id="GroupBox4" name="GroupBox4" style="float:left;width:820px;" >
+
+<table cols=2 style="width:820px;"  class="grouptable">
+
+<tr>
+<td valign="top" style="width:54px;">
+<% /* Text4:Text */ %>
+
+<span  id="Text4" name="Text4" style="width:46px;height:18px;">Title:</span>
+
+</td>
+<td valign="top" style="width:738px;">
+<% /* MLEdit3:MLEdit */ %>
 <%
-   // : StatementText
-   strErrorMapValue = VmlOperation.CheckError( "StatementText", strError );
+   // MLEdit: MLEdit3
+   strErrorMapValue = VmlOperation.CheckError( "MLEdit3", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -659,7 +646,51 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).info( "Invalid View: " + "StatementText" );
+         task.log( ).debug( "Invalid View: " + "MLEdit3" );
+      else
+      {
+         nRC = mMasLC.cursor( "M_GeneralStatement" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strErrorMapValue = mMasLC.cursor( "M_GeneralStatement" ).getAttribute( "Title" ).getString( "" );
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "M_GeneralStatement.Title: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for MLEdit3: " + "mMasLC.M_GeneralStatement" );
+      }
+   }
+%>
+
+<textarea id="MLEdit3" name="MLEdit3" class="" style="width:738px;height:46px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+
+</td>
+</tr>
+<tr>
+<td valign="top" style="width:54px;">
+<% /* Text2:Text */ %>
+
+<span  id="Text2" name="Text2" style="width:38px;height:18px;">Text:</span>
+
+</td>
+<td valign="top" style="width:754px;">
+<% /* MLEdit2:MLEdit */ %>
+<%
+   // MLEdit: MLEdit2
+   strErrorMapValue = VmlOperation.CheckError( "MLEdit2", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "MLEdit2" );
       else
       {
          nRC = mMasLC.cursor( "M_GeneralStatement" ).checkExistenceOfEntity( ).toInt();
@@ -669,16 +700,26 @@ else
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).info( "M_GeneralStatement.Text: " + strErrorMapValue );
+            task.log( ).debug( "M_GeneralStatement.Text: " + strErrorMapValue );
          }
          else
-            task.log( ).info( "Entity does not exist for StatementText: " + "mMasLC.M_GeneralStatement" );
+            task.log( ).debug( "Entity does not exist for MLEdit2: " + "mMasLC.M_GeneralStatement" );
       }
    }
 %>
 
-<textarea name="StatementText" id="StatementText" style="width:710px;height:316px;position:absolute;left:10px;top:56px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+<textarea id="MLEdit2" name="MLEdit2" class="" style="width:754px;height:302px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
+</td>
+</tr>
+</table>
+
+</div>  <!-- GroupBox4 --> 
+
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  MarketingStatementGroup1 --> 
 </div>  <!-- End of a new line -->
 
 

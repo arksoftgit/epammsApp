@@ -301,6 +301,7 @@ GOTO_StorageDispStatementAdd( VIEW ViewToWindow )
    
    // We are creating the new temporal entity in this operation, rather than as auto action, so that
    // the NotForUseType attribute can be set, since it's currently required in the database.
+   SET CURSOR LAST mMasLC.M_StorageDisposalStatement
    CreateTemporalEntity( mMasLC, "M_StorageDisposalStatement", zPOS_AFTER )
    mMasLC.M_StorageDisposalStatement.NotForUseType = "NA"
 
@@ -932,19 +933,38 @@ END
 
 /*************************************************************************************************
 **    
-**    OPERATION: EditHazardsSection
+**    OPERATION: EditEnvironmentalHazardsSection
 **    
 *************************************************************************************************/
 DIALOG OPERATION
-EditHazardsSection( VIEW ViewToWindow )
+EditEnvironmentalHazardsSection( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
    
-   // Position on "Hazards" General Statement.
+   // Position on "Environmental Hazards" General Statement.
    SET CURSOR FIRST mMasLC.M_GeneralSection WHERE mMasLC.M_GeneralSection.SectionType = "E"
    IF RESULT < zCURSOR_SET
       CREATE ENTITY mMasLC.M_GeneralSection 
       mMasLC.M_GeneralSection.SectionType = "E" 
+   END 
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: EditChemicalHazardsSection
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+EditChemicalHazardsSection( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   
+   // Position on "Physical and Chemical Hazards" General Statement.
+   SET CURSOR FIRST mMasLC.M_GeneralSection WHERE mMasLC.M_GeneralSection.SectionType = "C"
+   IF RESULT < zCURSOR_SET
+      CREATE ENTITY mMasLC.M_GeneralSection 
+      mMasLC.M_GeneralSection.SectionType = "C" 
    END 
 
 END
@@ -1839,3 +1859,117 @@ InitAppTypesStmtsForInsert( VIEW ViewToWindow )
    NAME VIEW mEPA "mEPA"
 
 END
+
+/*************************************************************************************************
+**    
+**    OPERATION: ConfirmAddItemsMultiple
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+ConfirmAddItemsMultiple( VIEW ViewToWindow )
+
+   VIEW  mMasLC REGISTERED AS mMasLC
+   SHORT nRC
+   
+   // Call operation to split text up into one or more entities, depending on the view, EntityName and 
+   // AttributeName passed in mMasLC root work entities.
+   SplitParagraphOnLinefeed( mMasLC.MasterLabelContent.wAddStatementsWorkText, 
+                             mMasLC,
+                             mMasLC.MasterLabelContent.wAddStatementsEntityName,
+                             mMasLC.MasterLabelContent.wAddStatementsAttributeName )
+
+   // Usage Type Processing
+   // Set Usage Type and Claims Classification for any entry for which the values haven't been set.
+   IF mMasLC.MasterLabelContent.wAddStatementsEntityName = "M_Usage" 
+      // Set Usage Type for any entry for which the value hasn't been set.
+      FOR EACH mMasLC.M_Usage 
+         IF mMasLC.M_Usage.UsageType = ""
+            mMasLC.M_Usage.UsageType = mMasLC.M_UsageType.UsageType 
+         END
+      END
+   END
+   
+   
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: ConfirmAddItemsMultipleClaims
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+ConfirmAddItemsMultipleClaims( VIEW ViewToWindow )
+
+   VIEW  mMasLC REGISTERED AS mMasLC
+   SHORT nRC
+   
+   // Make sure that a Claims Classification has been selected.
+   IF mMasLC.MasterLabelContent.wSelectedClaimsClassification = ""
+      MessageSend( ViewToWindow, "", "Add Claims Entries",
+                   "A Claims Classification value must be selected.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      RETURN 2
+   END
+   
+   // Call operation to split text up into one or more entities, depending on the view, EntityName and 
+   // AttributeName passed in mMasLC root work entities.
+   SplitParagraphOnLinefeed( mMasLC.MasterLabelContent.wAddStatementsWorkText, 
+                             mMasLC,
+                             mMasLC.MasterLabelContent.wAddStatementsEntityName,
+                             mMasLC.MasterLabelContent.wAddStatementsAttributeName )
+   
+   // Set Usage Type and Claims Classification for any entry for which the values haven't been set.
+   FOR EACH mMasLC.M_Usage 
+      IF mMasLC.M_Usage.UsageType = ""
+         mMasLC.M_Usage.UsageType            = "C"
+         mMasLC.M_Usage.ClaimsClassification = mMasLC.MasterLabelContent.wSelectedClaimsClassification
+      END
+   END
+   
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_MarketingStatementAdd
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_MarketingStatementAdd( VIEW ViewToWindow )
+
+   VIEW  mMasLC REGISTERED AS mMasLC
+   
+   // Set up the work areas that define to the Add Items page that the items being added are Marketing
+   // Statements.
+   mMasLC.MasterLabelContent.wAddStatementsEntityName    = "M_MarketingStatement"
+   mMasLC.MasterLabelContent.wAddStatementsAttributeName = "Text"
+   mMasLC.MasterLabelContent.wAddStatementsPageTitle     = "Marketing Statements"
+
+END
+
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_AddUsageStatements
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_AddUsageStatements( VIEW ViewToWindow )
+
+   VIEW  mMasLC REGISTERED AS mMasLC
+   
+   // Set up the work areas that define to the Add Items page that the items being added are Claims
+   // Usage entries.
+   mMasLC.MasterLabelContent.wAddStatementsEntityName    = "M_Usage"
+   mMasLC.MasterLabelContent.wAddStatementsAttributeName = "Name"
+   IF mMasLC.M_UsageType.UsageType = "S"
+      // Surfaces
+      mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Surfaces"
+   ELSE
+      // Areas of Use
+      mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Areas of Use"
+   END
+
+END
+

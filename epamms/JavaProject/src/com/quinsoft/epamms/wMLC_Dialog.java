@@ -32,6 +32,7 @@ import org.apache.commons.lang3.mutable.MutableInt;
 import com.quinsoft.epamms.ZGlobalV_Operation;
 import com.quinsoft.epamms.mMasLC_Object;
 import com.quinsoft.epamms.lMLCATgt_Object;
+import com.quinsoft.epamms.ZGlobal1_Operation;
 
 import com.quinsoft.zeidon.zeidonoperations.ZDRVROPR;
 
@@ -316,6 +317,70 @@ o_fnLocalBuildQual_2( View     vSubtask,
    SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
    return( 0 );
+} 
+
+
+//:DIALOG OPERATION
+//:GOTO_AddUsageStatements( VIEW ViewToWindow )
+
+//:   VIEW  mMasLC REGISTERED AS mMasLC
+public int 
+GOTO_AddUsageStatements( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:// Set up the work areas that define to the Add Items page that the items being added are Claims
+   //:// Usage entries.
+   //:mMasLC.MasterLabelContent.wAddStatementsEntityName    = "M_Usage"
+   SetAttributeFromString( mMasLC, "MasterLabelContent", "wAddStatementsEntityName", "M_Usage" );
+   //:mMasLC.MasterLabelContent.wAddStatementsAttributeName = "Name"
+   SetAttributeFromString( mMasLC, "MasterLabelContent", "wAddStatementsAttributeName", "Name" );
+   //:IF mMasLC.M_UsageType.UsageType = "S"
+   if ( CompareAttributeToString( mMasLC, "M_UsageType", "UsageType", "S" ) == 0 )
+   { 
+      //:// Surfaces
+      //:mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Surfaces"
+      SetAttributeFromString( mMasLC, "MasterLabelContent", "wAddStatementsPageTitle", "Surfaces" );
+      //:ELSE
+   } 
+   else
+   { 
+      //:// Areas of Use
+      //:mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Areas of Use"
+      SetAttributeFromString( mMasLC, "MasterLabelContent", "wAddStatementsPageTitle", "Areas of Use" );
+   } 
+
+   //:END
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:GOTO_MarketingStatementAdd( VIEW ViewToWindow )
+
+//:   VIEW  mMasLC REGISTERED AS mMasLC
+public int 
+GOTO_MarketingStatementAdd( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:// Set up the work areas that define to the Add Items page that the items being added are Marketing
+   //:// Statements.
+   //:mMasLC.MasterLabelContent.wAddStatementsEntityName    = "M_MarketingStatement"
+   SetAttributeFromString( mMasLC, "MasterLabelContent", "wAddStatementsEntityName", "M_MarketingStatement" );
+   //:mMasLC.MasterLabelContent.wAddStatementsAttributeName = "Text"
+   SetAttributeFromString( mMasLC, "MasterLabelContent", "wAddStatementsAttributeName", "Text" );
+   //:mMasLC.MasterLabelContent.wAddStatementsPageTitle     = "Marketing Statements"
+   SetAttributeFromString( mMasLC, "MasterLabelContent", "wAddStatementsPageTitle", "Marketing Statements" );
+   return( 0 );
+// END
 } 
 
 
@@ -3296,6 +3361,8 @@ GOTO_StorageDispStatementAdd( View     ViewToWindow )
 
    //:// We are creating the new temporal entity in this operation, rather than as auto action, so that
    //:// the NotForUseType attribute can be set, since it's currently required in the database.
+   //:SET CURSOR LAST mMasLC.M_StorageDisposalStatement
+   RESULT = SetCursorLastEntity( mMasLC, "M_StorageDisposalStatement", "" );
    //:CreateTemporalEntity( mMasLC, "M_StorageDisposalStatement", zPOS_AFTER )
    CreateTemporalEntity( mMasLC, "M_StorageDisposalStatement", zPOS_AFTER );
    //:mMasLC.M_StorageDisposalStatement.NotForUseType = "NA"
@@ -3431,18 +3498,18 @@ GOTO_HazardsStmtDelete( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
-//:EditHazardsSection( VIEW ViewToWindow )
+//:EditEnvironmentalHazardsSection( VIEW ViewToWindow )
 
 //:   VIEW mMasLC REGISTERED AS mMasLC
 public int 
-EditHazardsSection( View     ViewToWindow )
+EditEnvironmentalHazardsSection( View     ViewToWindow )
 {
    zVIEW    mMasLC = new zVIEW( );
    int      RESULT = 0;
 
    RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
 
-   //:// Position on "Hazards" General Statement.
+   //:// Position on "Environmental Hazards" General Statement.
    //:SET CURSOR FIRST mMasLC.M_GeneralSection WHERE mMasLC.M_GeneralSection.SectionType = "E"
    RESULT = SetCursorFirstEntityByString( mMasLC, "M_GeneralSection", "SectionType", "E", "" );
    //:IF RESULT < zCURSOR_SET
@@ -3452,6 +3519,36 @@ EditHazardsSection( View     ViewToWindow )
       RESULT = CreateEntity( mMasLC, "M_GeneralSection", zPOS_AFTER );
       //:mMasLC.M_GeneralSection.SectionType = "E" 
       SetAttributeFromString( mMasLC, "M_GeneralSection", "SectionType", "E" );
+   } 
+
+   //:END 
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:EditChemicalHazardsSection( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+EditChemicalHazardsSection( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:// Position on "Physical and Chemical Hazards" General Statement.
+   //:SET CURSOR FIRST mMasLC.M_GeneralSection WHERE mMasLC.M_GeneralSection.SectionType = "C"
+   RESULT = SetCursorFirstEntityByString( mMasLC, "M_GeneralSection", "SectionType", "C", "" );
+   //:IF RESULT < zCURSOR_SET
+   if ( RESULT < zCURSOR_SET )
+   { 
+      //:CREATE ENTITY mMasLC.M_GeneralSection 
+      RESULT = CreateEntity( mMasLC, "M_GeneralSection", zPOS_AFTER );
+      //:mMasLC.M_GeneralSection.SectionType = "C" 
+      SetAttributeFromString( mMasLC, "M_GeneralSection", "SectionType", "C" );
    } 
 
    //:END 
@@ -3730,6 +3827,179 @@ InitIngredientsSect( View     ViewToWindow )
    //:wWebXfer.Root.FormValidationOperation = "ValidateIngredientsSection"
    SetAttributeFromString( wWebXfer, "Root", "FormValidationOperation", "ValidateIngredientsSection" );
    return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:ConfirmAddItemsMultiple( VIEW ViewToWindow )
+
+//:   VIEW  mMasLC REGISTERED AS mMasLC
+public int 
+ConfirmAddItemsMultiple( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+   //:SHORT nRC
+   int      nRC = 0;
+   String   szTempString_0 = null;
+   String   szTempString_1 = null;
+   String   szTempString_2 = null;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:// Call operation to split text up into one or more entities, depending on the view, EntityName and 
+   //:// AttributeName passed in mMasLC root work entities.
+   //:SplitParagraphOnLinefeed( mMasLC.MasterLabelContent.wAddStatementsWorkText, 
+   //:                          mMasLC,
+   //:                          mMasLC.MasterLabelContent.wAddStatementsEntityName,
+   //:                          mMasLC.MasterLabelContent.wAddStatementsAttributeName )
+   {StringBuilder sb_szTempString_0;
+   if ( szTempString_0 == null )
+      sb_szTempString_0 = new StringBuilder( 32 );
+   else
+      sb_szTempString_0 = new StringBuilder( szTempString_0 );
+       GetStringFromAttribute( sb_szTempString_0, mMasLC, "MasterLabelContent", "wAddStatementsWorkText" );
+   szTempString_0 = sb_szTempString_0.toString( );}
+   {StringBuilder sb_szTempString_1;
+   if ( szTempString_1 == null )
+      sb_szTempString_1 = new StringBuilder( 32 );
+   else
+      sb_szTempString_1 = new StringBuilder( szTempString_1 );
+       GetStringFromAttribute( sb_szTempString_1, mMasLC, "MasterLabelContent", "wAddStatementsEntityName" );
+   szTempString_1 = sb_szTempString_1.toString( );}
+   {StringBuilder sb_szTempString_2;
+   if ( szTempString_2 == null )
+      sb_szTempString_2 = new StringBuilder( 32 );
+   else
+      sb_szTempString_2 = new StringBuilder( szTempString_2 );
+       GetStringFromAttribute( sb_szTempString_2, mMasLC, "MasterLabelContent", "wAddStatementsAttributeName" );
+   szTempString_2 = sb_szTempString_2.toString( );}
+   {
+    ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mMasLC );
+    m_ZGlobal1_Operation.SplitParagraphOnLinefeed( szTempString_0, mMasLC, szTempString_1, szTempString_2 );
+    // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+   }
+
+   //:// Usage Type Processing
+   //:// Set Usage Type and Claims Classification for any entry for which the values haven't been set.
+   //:IF mMasLC.MasterLabelContent.wAddStatementsEntityName = "M_Usage" 
+   if ( CompareAttributeToString( mMasLC, "MasterLabelContent", "wAddStatementsEntityName", "M_Usage" ) == 0 )
+   { 
+      //:// Set Usage Type for any entry for which the value hasn't been set.
+      //:FOR EACH mMasLC.M_Usage 
+      RESULT = SetCursorFirstEntity( mMasLC, "M_Usage", "" );
+      while ( RESULT > zCURSOR_UNCHANGED )
+      { 
+         //:IF mMasLC.M_Usage.UsageType = ""
+         if ( CompareAttributeToString( mMasLC, "M_Usage", "UsageType", "" ) == 0 )
+         { 
+            //:mMasLC.M_Usage.UsageType = mMasLC.M_UsageType.UsageType 
+            SetAttributeFromAttribute( mMasLC, "M_Usage", "UsageType", mMasLC, "M_UsageType", "UsageType" );
+         } 
+
+         RESULT = SetCursorNextEntity( mMasLC, "M_Usage", "" );
+         //:END
+      } 
+
+      //:END
+   } 
+
+   //:END
+   return( 0 );
+//    
+//    
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:ConfirmAddItemsMultipleClaims( VIEW ViewToWindow )
+
+//:   VIEW  mMasLC REGISTERED AS mMasLC
+public int 
+ConfirmAddItemsMultipleClaims( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+   //:SHORT nRC
+   int      nRC = 0;
+   String   szTempString_0 = null;
+   String   szTempString_1 = null;
+   String   szTempString_2 = null;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:// Make sure that a Claims Classification has been selected.
+   //:IF mMasLC.MasterLabelContent.wSelectedClaimsClassification = ""
+   if ( CompareAttributeToString( mMasLC, "MasterLabelContent", "wSelectedClaimsClassification", "" ) == 0 )
+   { 
+      //:MessageSend( ViewToWindow, "", "Add Claims Entries",
+      //:             "A Claims Classification value must be selected.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Add Claims Entries", "A Claims Classification value must be selected.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+
+   //:// Call operation to split text up into one or more entities, depending on the view, EntityName and 
+   //:// AttributeName passed in mMasLC root work entities.
+   //:SplitParagraphOnLinefeed( mMasLC.MasterLabelContent.wAddStatementsWorkText, 
+   //:                          mMasLC,
+   //:                          mMasLC.MasterLabelContent.wAddStatementsEntityName,
+   //:                          mMasLC.MasterLabelContent.wAddStatementsAttributeName )
+   {StringBuilder sb_szTempString_0;
+   if ( szTempString_0 == null )
+      sb_szTempString_0 = new StringBuilder( 32 );
+   else
+      sb_szTempString_0 = new StringBuilder( szTempString_0 );
+       GetStringFromAttribute( sb_szTempString_0, mMasLC, "MasterLabelContent", "wAddStatementsWorkText" );
+   szTempString_0 = sb_szTempString_0.toString( );}
+   {StringBuilder sb_szTempString_1;
+   if ( szTempString_1 == null )
+      sb_szTempString_1 = new StringBuilder( 32 );
+   else
+      sb_szTempString_1 = new StringBuilder( szTempString_1 );
+       GetStringFromAttribute( sb_szTempString_1, mMasLC, "MasterLabelContent", "wAddStatementsEntityName" );
+   szTempString_1 = sb_szTempString_1.toString( );}
+   {StringBuilder sb_szTempString_2;
+   if ( szTempString_2 == null )
+      sb_szTempString_2 = new StringBuilder( 32 );
+   else
+      sb_szTempString_2 = new StringBuilder( szTempString_2 );
+       GetStringFromAttribute( sb_szTempString_2, mMasLC, "MasterLabelContent", "wAddStatementsAttributeName" );
+   szTempString_2 = sb_szTempString_2.toString( );}
+   {
+    ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mMasLC );
+    m_ZGlobal1_Operation.SplitParagraphOnLinefeed( szTempString_0, mMasLC, szTempString_1, szTempString_2 );
+    // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+   }
+
+   //:// Set Usage Type and Claims Classification for any entry for which the values haven't been set.
+   //:FOR EACH mMasLC.M_Usage 
+   RESULT = SetCursorFirstEntity( mMasLC, "M_Usage", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:IF mMasLC.M_Usage.UsageType = ""
+      if ( CompareAttributeToString( mMasLC, "M_Usage", "UsageType", "" ) == 0 )
+      { 
+         //:mMasLC.M_Usage.UsageType            = "C"
+         SetAttributeFromString( mMasLC, "M_Usage", "UsageType", "C" );
+         //:mMasLC.M_Usage.ClaimsClassification = mMasLC.MasterLabelContent.wSelectedClaimsClassification
+         SetAttributeFromAttribute( mMasLC, "M_Usage", "ClaimsClassification", mMasLC, "MasterLabelContent", "wSelectedClaimsClassification" );
+      } 
+
+      RESULT = SetCursorNextEntity( mMasLC, "M_Usage", "" );
+      //:END
+   } 
+
+   //:END
+   return( 0 );
+//    
 // END
 } 
 

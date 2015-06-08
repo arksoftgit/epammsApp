@@ -565,86 +565,31 @@ else
    </div>
 
 
-<div>  <!-- Beginning of a new line -->
-<% /* GBPrecautionaryStatement:GroupBox */ %>
-
-<div id="GBPrecautionaryStatement" name="GBPrecautionaryStatement" style="width:732px;height:24px;float:left;">  <!-- GBPrecautionaryStatement --> 
-
-
  <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
+<div style="height:2px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
-<% /* PrecautionaryTitle::Text */ %>
+<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox4:GroupBox */ %>
 
-<span  id="PrecautionaryTitle:" name="PrecautionaryTitle:" style="width:158px;height:16px;">Hazards Title:</span>
+<div id="GroupBox4" name="GroupBox4"   style="float:left;position:relative; width:730px; height:28px;">  <!-- GroupBox4 --> 
 
-<% /* PrecautionaryTitle:Text */ %>
-<% strTextDisplayValue = "";
-   mMasLC = task.getViewByName( "mMasLC" );
-   if ( VmlOperation.isValid( mMasLC ) == false )
-      task.log( ).debug( "Invalid View: " + "PrecautionaryTitle" );
-   else
-   {
-      nRC = mMasLC.cursor( "M_GeneralSection" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-      try
-      {
-         strTextDisplayValue = mMasLC.cursor( "M_GeneralSection" ).getAttribute( "Title" ).getString( "" );
-      }
-      catch (Exception e)
-      {
-         out.println("There is an error on PrecautionaryTitle: " + e.getMessage());
-         task.log().info( "*** Error on ctrl PrecautionaryTitle" + e.getMessage() );
-      }
-         if ( strTextDisplayValue == null )
-            strTextDisplayValue = "";
-      }
-   }
-%>
+<% /* PrecautionarySection1:Text */ %>
 
-<span class="text14bold"  id="PrecautionaryTitle" name="PrecautionaryTitle" style="width:478px;height:16px;"><%=strTextDisplayValue%></span>
-
-</div>  <!-- End of a new line -->
+<label class="groupbox"  id="PrecautionarySection1" name="PrecautionarySection1" style="width:338px;height:16px;position:absolute;left:6px;top:6px;">Hazards Statement</label>
 
 
-</div>  <!--  GBPrecautionaryStatement --> 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
-<div>  <!-- Beginning of a new line -->
-<% /* GroupBox1:GroupBox */ %>
-
-<div id="GroupBox1" name="GroupBox1" style="width:732px;height:26px;float:left;">  <!-- GroupBox1 --> 
-
-
- <!-- This is added as a line spacer -->
-<div style="height:12px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
-<% /* Text4:Text */ %>
-
-<span class="groupbox"  id="Text4" name="Text4" style="width:226px;height:16px;">Hazards Statement</span>
-
-</div>  <!-- End of a new line -->
-
-
-</div>  <!--  GroupBox1 --> 
+</div>  <!--  GroupBox4 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
  <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
+<div style="height:4px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<span style="height:316px;">&nbsp&nbsp</span>
+<span style="height:316px;">&nbsp&nbsp&nbsp</span>
 <% /* StatementText:MLEdit */ %>
 <%
    // : StatementText
@@ -677,7 +622,7 @@ else
    }
 %>
 
-<textarea name="StatementText" id="StatementText" style="width:710px;height:316px;position:absolute;left:10px;top:56px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+<textarea name="StatementText" id="StatementText" style="width:710px;height:316px;position:absolute;left:18px;top:34px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 </div>  <!-- End of a new line -->
 

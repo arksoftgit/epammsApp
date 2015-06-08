@@ -1,4 +1,4 @@
-z1000-Zeidon    ZGLOBAL1 TZOGSRCO 03/26/14   14:39:55 1.0a2    
+z1000-Zeidon    ZGLOBAL1 TZOGSRCO 06/03/15   11:38:53 1.0a2    
 eGlobalOperationGroup 1
 aZKey      89816452
 aName      ZGlobal1
@@ -49,6 +49,55 @@ aDataType  L
 aPFlag     N
 aUFlag     N
 aZKey      89816458
+
+eOperation 2
+aName      RemoveInvalidCharactersFromFilename
+aZKey      100040677
+aDesc      Removes invalid filename characters from a string.
+aType      G
+aReturnDataType S
+
+eParameter 3
+aShortDesc InputFileName
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      100040678
+
+eOperation 2
+aName      SplitParagraphOnLinefeed
+aZKey      110040677
+aDesc      Splits a multi-line text into separate entity instances based on each line feed.
+aType      G
+aReturnDataType N
+
+eParameter 3
+aShortDesc MultiLineText
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      110040678
+
+eParameter 3
+aShortDesc TargetView
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      110040679
+
+eParameter 3
+aShortDesc TargetEntityName
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      110040680
+
+eParameter 3
+aShortDesc TargetAttributeName
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      110040681
 
 eOperation 2
 aName      DetermineNextVersion

@@ -779,24 +779,20 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:4px;width:100px;"></div>
+<div style="height:2px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* DirectionsForUseSection:GroupBox */ %>
+<% /* GBStorDispSections2:GroupBox */ %>
 
-<div id="DirectionsForUseSection" name="DirectionsForUseSection" class="withborder" style="width:780px;height:90px;float:left;">  <!-- DirectionsForUseSection --> 
+<div id="GBStorDispSections2" name="GBStorDispSections2" class="listgroup"   style="float:left;position:relative; width:780px; height:36px;">  <!-- GBStorDispSections2 --> 
+
+<% /* OrganismClaimsStatements3:Text */ %>
+
+<label class="groupbox"  id="OrganismClaimsStatements3" name="OrganismClaimsStatements3" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Directions for Use Section</label>
 
 
- <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp</span>
-<% /* Text1:Text */ %>
-
-<span class="listheader"  id="Text1" name="Text1" style="width:434px;height:16px;">Directions for Use Section</span>
-
+</div>  <!--  GBStorDispSections2 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -806,20 +802,20 @@ else
 <div style="height:6px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox2:GroupBox */ %>
-<div id="GroupBox2" name="GroupBox2" style="float:left;width:754px;" >
+<div id="GroupBox2" name="GroupBox2" style="float:left;width:780px;" >
 
-<table cols=2 style="width:754px;"  class="grouptable">
+<table cols=2 style="width:780px;"  class="grouptable">
 
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:60px;">
 <% /* DirectionsUseTitle::Text */ %>
 
-<span  id="DirectionsUseTitle:" name="DirectionsUseTitle:" style="width:130px;height:16px;">Name:</span>
+<span  id="DirectionsUseTitle:" name="DirectionsUseTitle:" style="width:50px;height:16px;">Name:</span>
 
 </td>
-<td valign="top"  class="text12" style="width:192px;">
+<td valign="top"  class="text12" style="width:264px;">
 <% /* DirectionsUseTitle:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "DirectionsUseTitle", strError );
@@ -859,18 +855,18 @@ else
    }
 %>
 
-<input class="text12" name="DirectionsUseTitle" id="DirectionsUseTitle" style="width:192px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="DirectionsUseTitle" id="DirectionsUseTitle" style="width:264px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:136px;">
+<td valign="top" style="width:60px;">
 <% /* Text2:Text */ %>
 
-<span  id="Text2" name="Text2" style="width:130px;height:16px;">Title:</span>
+<span  id="Text2" name="Text2" style="width:50px;height:16px;">Title:</span>
 
 </td>
-<td valign="top"  class="text12" style="width:584px;">
+<td valign="top"  class="text12" style="width:656px;">
 <% /* EditBox1:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "EditBox1", strError );
@@ -910,7 +906,7 @@ else
    }
 %>
 
-<input class="text12" name="EditBox1" id="EditBox1" style="width:584px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="EditBox1" id="EditBox1" style="width:656px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -920,15 +916,11 @@ else
 
 </div>  <!-- End of a new line -->
 
-
-</div>  <!--  DirectionsForUseSection --> 
-</div>  <!-- End of a new line -->
-
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
  <!-- This is added as a line spacer -->
-<div style="height:4px;width:100px;"></div>
+<div style="height:10px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
@@ -1212,7 +1204,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 
  <!-- This is added as a line spacer -->
-<div style="height:586px;width:100px;"></div>
+<div style="height:574px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:32px;float:left;"></div>   <!-- Width Spacer -->

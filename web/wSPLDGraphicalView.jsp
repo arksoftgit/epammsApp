@@ -1051,16 +1051,17 @@ else
                              <label for="zFontFamily">Font Family:</label>
                              <select id="zFontFamily" class="zeidon-special" data-zmap="block.z_^font^family" style="float:right" />
                                  <option value="">Select Font Family...</option>
-                                 <option value="arial">Arial</option>
-                                 <option value="verdana">Verdana</option>
-                                 <option value="serif">Serif</option>
+                                 <option value="Arial">Arial</option>
+                                 <option value="Comic Sans MS Bold">Comic Sans MS Bold</option>
+                                 <option value="Verdana">Verdana</option>
+                                 <option value="Serif">Serif</option>
                               </select>
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
                              <label for="zFontSizeSpinner">Font Size:</label>
                              <button id="zFontSizeClear" class = ".ui-button" style="float: right;">Clear Font Size</button>
                              <input type="text" id="zFontSizeSpinner" value="11" class="zeidon-special" data-zmap="block.z_^font^size" style="float:right;width:20px;"/>
-                       <!-- <input type="text" id="zFontSize" class="zeidon-special" data-zmap="block.z_^font^size" style="float:right" /> -->
+                        <!-- <input type="text" id="zFontSize" class="zeidon-special" data-zmap="block.z_^font^size" style="float:right" /> -->
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
                              <label for="zFontWeight">Font Weight:</label>
@@ -1238,6 +1239,9 @@ else
                            <label for="zCSS_File">CSS File:</label>
                            <input type="text" id="zCSS_File" class="zeidon" data-zmap="label.z_^c^s^s_^file^name" value="" style="float:right;width:180px;"/>
                         </span>
+                        <label for="usefopconfig" style="margin-right:2px;margin-top:12px;float:right;">Use Fop Config</label>
+                        <input type="checkbox" id="usefopconfig" name="usefopconfig" class="zeidon" data-zmap="label.z_^use^fop^config" style="margin-left:2px;margin-top:12px;float:right;">
+                        &nbsp;&nbsp;
                      </p>
                      <!--
                      <p style="clear:both;position:relative"></p>

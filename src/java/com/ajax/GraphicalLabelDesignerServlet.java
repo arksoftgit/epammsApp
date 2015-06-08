@@ -1285,9 +1285,9 @@ end debug code */
       } else if ( action.compareTo( "loadLabel" ) == 0 ) {
       // We are just going to get the SPLD_LLD and its children and rename SPLD_LLD to LLD
          try {
-         // logger.debug( "LoadLabel OI: " );
+            logger.debug( "LoadLabel OI: " );
          // displaySPLD( vLLD, null, "" );
-         // vLLD.logObjectInstance();
+            vLLD.logObjectInstance();
             jsonLabel = convertLLD_ToJSON( vLLD );
          //logger.debug( "LoadLabel JSON: " + jsonLabel );
          // jsonLabel = jsonLabel.replaceFirst( "\"TZLLD\",", "\"TZLLD\",\n      \"fileName\" : \"" + fileName + "\"," );

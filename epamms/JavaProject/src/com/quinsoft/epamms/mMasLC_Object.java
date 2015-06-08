@@ -1782,6 +1782,7 @@ omMasLC_dDisplayDU_Statement( View     mMasLC,
       //:OF   zDERIVED_GET:
       case zDERIVED_GET :
 
+         //:// Directions for Use Display Statement Text is a combination of Title and Text.
          //:IF mMasLC.M_DirectionsForUseStatement.Title != ""
          if ( CompareAttributeToString( mMasLC, "M_DirectionsForUseStatement", "Title", "" ) != 0 )
          { 
@@ -1839,6 +1840,129 @@ omMasLC_dDisplayDU_Statement( View     mMasLC,
             else
                sb_szStatementText = new StringBuilder( szStatementText );
                          GetVariableFromAttribute( sb_szStatementText, mi_lTempInteger_2, 'S', 10001, mMasLC, "M_DirectionsForUseStatement", "Text", "", 0 );
+            lTempInteger_2 = mi_lTempInteger_2.intValue( );
+            szStatementText = sb_szStatementText.toString( );}
+            //:szDisplayStatement = szStatementText
+             {StringBuilder sb_szDisplayStatement;
+            if ( szDisplayStatement == null )
+               sb_szDisplayStatement = new StringBuilder( 32 );
+            else
+               sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 10001 );
+            szDisplayStatement = sb_szDisplayStatement.toString( );}
+         } 
+
+         //:END
+
+
+         //:// Store the calculated value in the object.
+         //:StoreStringInRecord( mMasLC,
+         //:                  InternalEntityStructure,
+         //:                  InternalAttribStructure, szDisplayStatement )
+         StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement );
+         //:RETURN 0
+         if(8==8)return( 0 );
+
+         //:/* end zDERIVED_GET */
+         //:OF   zDERIVED_SET:
+         case zDERIVED_SET :
+            break ;
+      } 
+
+
+      //:  /* end zDERIVED_SET */
+      //:END  /* case */
+      return( 0 );
+   } 
+
+
+   //:DERIVED ATTRIBUTE OPERATION
+   //:dDisplaySD_Statement( VIEW mMasLC BASED ON LOD mMasLC,
+   //:                   STRING ( 32 ) InternalEntityStructure,
+   //:                   STRING ( 32 ) InternalAttribStructure,
+   //:                   SHORT GetOrSetFlag )
+
+   //:STRING ( 10000 ) szDisplayStatement
+public int 
+omMasLC_dDisplaySD_Statement( View     mMasLC,
+                              String InternalEntityStructure,
+                              String InternalAttribStructure,
+                              Integer   GetOrSetFlag )
+{
+   String   szDisplayStatement = null;
+   //:STRING ( 10000 ) szStatementText
+   String   szStatementText = null;
+   //:STRING ( 256 )   szTitle
+   String   szTitle = null;
+   int      lTempInteger_0 = 0;
+   int      lTempInteger_1 = 0;
+   int      lTempInteger_2 = 0;
+
+
+   //:CASE GetOrSetFlag
+   switch( GetOrSetFlag )
+   { 
+      //:OF   zDERIVED_GET:
+      case zDERIVED_GET :
+
+         //:// Storage and Disposal Display Statement Text is a combination of Title and Text.
+         //:IF mMasLC.M_StorageDisposalStatement.Title != ""
+         if ( CompareAttributeToString( mMasLC, "M_StorageDisposalStatement", "Title", "" ) != 0 )
+         { 
+            //:szTitle            = mMasLC.M_StorageDisposalStatement.Title 
+            {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+            StringBuilder sb_szTitle;
+            if ( szTitle == null )
+               sb_szTitle = new StringBuilder( 32 );
+            else
+               sb_szTitle = new StringBuilder( szTitle );
+                         GetVariableFromAttribute( sb_szTitle, mi_lTempInteger_0, 'S', 257, mMasLC, "M_StorageDisposalStatement", "Title", "", 0 );
+            lTempInteger_0 = mi_lTempInteger_0.intValue( );
+            szTitle = sb_szTitle.toString( );}
+            //:szStatementText    = mMasLC.M_StorageDisposalStatement.Text 
+            {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+            StringBuilder sb_szStatementText;
+            if ( szStatementText == null )
+               sb_szStatementText = new StringBuilder( 32 );
+            else
+               sb_szStatementText = new StringBuilder( szStatementText );
+                         GetVariableFromAttribute( sb_szStatementText, mi_lTempInteger_1, 'S', 10001, mMasLC, "M_StorageDisposalStatement", "Text", "", 0 );
+            lTempInteger_1 = mi_lTempInteger_1.intValue( );
+            szStatementText = sb_szStatementText.toString( );}
+            //:szDisplayStatement = szTitle + " --- " + szStatementText
+             {StringBuilder sb_szDisplayStatement;
+            if ( szDisplayStatement == null )
+               sb_szDisplayStatement = new StringBuilder( 32 );
+            else
+               sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                        ZeidonStringCopy( sb_szDisplayStatement, 1, 0, szTitle, 1, 0, 10001 );
+            szDisplayStatement = sb_szDisplayStatement.toString( );}
+             {StringBuilder sb_szDisplayStatement;
+            if ( szDisplayStatement == null )
+               sb_szDisplayStatement = new StringBuilder( 32 );
+            else
+               sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                        ZeidonStringConcat( sb_szDisplayStatement, 1, 0, " --- ", 1, 0, 10001 );
+            szDisplayStatement = sb_szDisplayStatement.toString( );}
+             {StringBuilder sb_szDisplayStatement;
+            if ( szDisplayStatement == null )
+               sb_szDisplayStatement = new StringBuilder( 32 );
+            else
+               sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                        ZeidonStringConcat( sb_szDisplayStatement, 1, 0, szStatementText, 1, 0, 10001 );
+            szDisplayStatement = sb_szDisplayStatement.toString( );}
+            //:ELSE
+         } 
+         else
+         { 
+            //:szStatementText    = mMasLC.M_StorageDisposalStatement.Text 
+            {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
+            StringBuilder sb_szStatementText;
+            if ( szStatementText == null )
+               sb_szStatementText = new StringBuilder( 32 );
+            else
+               sb_szStatementText = new StringBuilder( szStatementText );
+                         GetVariableFromAttribute( sb_szStatementText, mi_lTempInteger_2, 'S', 10001, mMasLC, "M_StorageDisposalStatement", "Text", "", 0 );
             lTempInteger_2 = mi_lTempInteger_2.intValue( );
             szStatementText = sb_szStatementText.toString( );}
             //:szDisplayStatement = szStatementText
@@ -2003,6 +2127,7 @@ omMasLC_dTitleText( View     mMasLC,
       //:OF   zDERIVED_GET:
       case zDERIVED_GET :
 
+         //:// DonC 6/4/2015 - As far as I know, this operation isn't used.
          //:IF mMasLC.M_IngredientsStatement EXISTS
          lTempInteger_0 = CheckExistenceOfEntity( mMasLC, "M_IngredientsStatement" );
          if ( lTempInteger_0 == 0 )

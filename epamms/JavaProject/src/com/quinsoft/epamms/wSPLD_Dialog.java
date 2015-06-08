@@ -94,44 +94,6 @@ InitLoginWindow( View     ViewToWindow )
 
 
 private int 
-o_fnLocalBuildQual_28( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lTempInteger_1 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregPhysicalLabelDef" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregProduct" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_1 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_25( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lTempInteger_0 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregLabelContent" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregLabelContent" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
 o_fnLocalBuildQual_26( View     vSubtask,
                        zVIEW    vQualObject,
                        int      SubProdID )
@@ -162,6 +124,44 @@ o_fnLocalBuildQual_27( View     vSubtask,
    SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregPhysicalLabelDef" );
    CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
    SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregPhysicalLabelDef" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_28( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lTempInteger_1 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregPhysicalLabelDef" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregProduct" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_1 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_25( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lTempInteger_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregLabelContent" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregLabelContent" );
    SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
    SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
@@ -276,6 +276,139 @@ o_fnLocalBuildQual_24( View     vSubtask,
    SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterLabelContent" );
    SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
    SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_10( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      SubregID )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "Subregistrant" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "Subregistrant" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", SubregID );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_11( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      SubregProductID )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregPhysicalLabelDef" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregProduct" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", SubregProductID );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_12( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lTempInteger_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregPhysicalLabelDef" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregPhysicalLabelDef" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_13( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lTempInteger_1 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregLabelContent" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregLabelContent" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_1 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_14( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lTempInteger_4 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregPhysicalLabelDef" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregPhysicalLabelDef" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_4 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_15( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lTempInteger_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregPhysicalLabelDef" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregPhysicalLabelDef" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_16( View     vSubtask,
+                       zVIEW    vQualObject,
+                       String   szTempString_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "LLD" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "LLD" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "Name" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Value", szTempString_0.toString( ) );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
    return( 0 );
 } 
@@ -485,139 +618,6 @@ o_fnLocalBuildQual_9( View     vSubtask,
    SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregLabelContent" );
    SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
    SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_10( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      SubregID )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "Subregistrant" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "Subregistrant" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", SubregID );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_11( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      SubregProductID )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregPhysicalLabelDef" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregProduct" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", SubregProductID );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_12( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lTempInteger_0 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregPhysicalLabelDef" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregPhysicalLabelDef" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_13( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lTempInteger_1 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregLabelContent" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregLabelContent" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_1 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_14( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lTempInteger_4 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregPhysicalLabelDef" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregPhysicalLabelDef" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_4 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_15( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lTempInteger_0 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregPhysicalLabelDef" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregPhysicalLabelDef" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_16( View     vSubtask,
-                       zVIEW    vQualObject,
-                       String   szTempString_0 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "LLD" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "LLD" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "Name" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Value", szTempString_0.toString( ) );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
    return( 0 );
 } 
@@ -3607,235 +3607,17 @@ DELETE_BlockComponentEntry( View     ViewToWindow )
 
 //:DIALOG OPERATION
 //:GENERATE_SPLD_Label( VIEW ViewToWindow )
-
-//:   VIEW mSPLDefPanel  BASED ON LOD  mSPLDef
+//:   SHORT nRC
 public int 
 GENERATE_SPLD_Label( View     ViewToWindow )
 {
-   zVIEW    mSPLDefPanel = new zVIEW( );
-   //:VIEW mSubLC   REGISTERED AS mSubLC
-   zVIEW    mSubLC = new zVIEW( );
-   int      RESULT = 0;
-   //:STRING ( 32 ) szLPLR_Name
-   String   szLPLR_Name = null;
-   //:STRING ( 64 ) szSystemIniApplName
-   String   szSystemIniApplName = null;
-   //:STRING ( 64 ) szLabelName
-   String   szLabelName = null;
-   //:STRING ( 256 ) szDirectory
-   String   szDirectory = null;
-   //:STRING ( 256 ) szApplication
-   String   szApplication = null;
-   //:STRING ( 256 ) szXmlName
-   String   szXmlName = null;
-   //:STRING ( 256 ) szXslName
-   String   szXslName = null;
-   //:SHORT         nRC
    int      nRC = 0;
-   String   szTempString_0 = null;
-   int      lTempInteger_0 = 0;
-   int      lTempInteger_1 = 0;
 
-   RESULT = GetViewByName( mSubLC, "mSubLC", ViewToWindow, zLEVEL_TASK );
 
-   //:// We will use mSPLDefPanel, if it exists, as it will always be pointing to the top of the LLD_Block
-   //:// subobject, while mSPLDef sometimes is pointing to a recursive subobject.
-   //:GET VIEW mSPLDefPanel NAMED "mSPLDefPanel"
-   RESULT = GetViewByName( mSPLDefPanel, "mSPLDefPanel", ViewToWindow, zLEVEL_TASK );
-   //:IF RESULT < 0
-   if ( RESULT < 0 )
-   { 
-      //:GET VIEW mSPLDefPanel NAMED "mSPLDef"
-      RESULT = GetViewByName( mSPLDefPanel, "mSPLDef", ViewToWindow, zLEVEL_TASK );
-      //:CreateViewFromView( mSPLDefPanel, mSPLDefPanel )
-      CreateViewFromView( mSPLDefPanel, mSPLDefPanel );
-      //:ResetViewFromSubobjectTop( mSPLDefPanel )
-      ResetViewFromSubobjectTop( mSPLDefPanel );
-      //:NAME VIEW mSPLDefPanel "mSPLDefPanel"
-      SetNameForView( mSPLDefPanel, "mSPLDefPanel", null, zLEVEL_TASK );
-   } 
-
-   //:END
-
-   //:// Generate the label using LLD and SLC data defined in mSPLDef. 
-   //:mSPLDefPanel.SubregPhysicalLabelDef.wFormatWithDottedBorders = ""
-   SetAttributeFromString( mSPLDefPanel, "SubregPhysicalLabelDef", "wFormatWithDottedBorders", "" );
-   //:nRC = GeneratePDF_Label( mSPLDefPanel )
-   {
-    mSPLDef_Object m_mSPLDef_Object = new mSPLDef_Object( mSPLDefPanel );
-    nRC = m_mSPLDef_Object.omSPLDef_GeneratePDF_Label( mSPLDefPanel );
-    // m_mSPLDef_Object = null;  // permit gc  (unnecessary)
-   }
-   //:IF nRC = 2
-   if ( nRC == 2 )
-   { 
-      //:RETURN 2
-      if(8==8)return( 2 );
-   } 
-
-   //:END
-
-   //:// Open the File
-   //:// SfGetApplicationForSubtask( szLPLR_Name, mSPLDef )
-   //:// szSystemIniApplName = "[App." + szLPLR_Name + "]"
-   //:// SysReadZeidonIni( -1, szSystemIniApplName, "WebDirectory", szDirectory )
-   //:// SysConvertEnvironmentString( szDirectory, szDirectory )
-   //:// szDirectory = "C:/Program Files/Apache Group/tomcat 7.0/webapps/ROOT/epamms/"
-
-   //:SysGetEnvVar( szDirectory, "CATALINA_HOME", 256 )
-   {StringBuilder sb_szDirectory;
-   if ( szDirectory == null )
-      sb_szDirectory = new StringBuilder( 32 );
-   else
-      sb_szDirectory = new StringBuilder( szDirectory );
-       m_KZOEP1AA.SysGetEnvVar( sb_szDirectory, "CATALINA_HOME", 256 );
-   szDirectory = sb_szDirectory.toString( );}
-   //:// SysAppendcDirSep( szDirectory )
-   //:SysConvertEnvironmentString( szDirectory, szDirectory )
-   {StringBuilder sb_szDirectory;
-   if ( szDirectory == null )
-      sb_szDirectory = new StringBuilder( 32 );
-   else
-      sb_szDirectory = new StringBuilder( szDirectory );
-       m_KZOEP1AA.SysConvertEnvironmentString( sb_szDirectory, szDirectory );
-   szDirectory = sb_szDirectory.toString( );}
-   //:szDirectory = szDirectory + "/webapps/ROOT"
-    {StringBuilder sb_szDirectory;
-   if ( szDirectory == null )
-      sb_szDirectory = new StringBuilder( 32 );
-   else
-      sb_szDirectory = new StringBuilder( szDirectory );
-      ZeidonStringConcat( sb_szDirectory, 1, 0, "/webapps/ROOT", 1, 0, 257 );
-   szDirectory = sb_szDirectory.toString( );}
-   //:szApplication = "/" + mSPLDefPanel.SubregOrganization.LoginName + "/"
-   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
-   StringBuilder sb_szTempString_0;
-   if ( szTempString_0 == null )
-      sb_szTempString_0 = new StringBuilder( 32 );
-   else
-      sb_szTempString_0 = new StringBuilder( szTempString_0 );
-       GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_0, 'S', 129, mSPLDefPanel, "SubregOrganization", "LoginName", "", 0 );
-   lTempInteger_0 = mi_lTempInteger_0.intValue( );
-   szTempString_0 = sb_szTempString_0.toString( );}
-    {StringBuilder sb_szApplication;
-   if ( szApplication == null )
-      sb_szApplication = new StringBuilder( 32 );
-   else
-      sb_szApplication = new StringBuilder( szApplication );
-      ZeidonStringCopy( sb_szApplication, 1, 0, "/", 1, 0, 257 );
-   szApplication = sb_szApplication.toString( );}
-    {StringBuilder sb_szApplication;
-   if ( szApplication == null )
-      sb_szApplication = new StringBuilder( 32 );
-   else
-      sb_szApplication = new StringBuilder( szApplication );
-      ZeidonStringConcat( sb_szApplication, 1, 0, szTempString_0, 1, 0, 257 );
-   szApplication = sb_szApplication.toString( );}
-    {StringBuilder sb_szApplication;
-   if ( szApplication == null )
-      sb_szApplication = new StringBuilder( 32 );
-   else
-      sb_szApplication = new StringBuilder( szApplication );
-      ZeidonStringConcat( sb_szApplication, 1, 0, "/", 1, 0, 257 );
-   szApplication = sb_szApplication.toString( );}
-
-   //:szLabelName = mSPLDefPanel.SubregProduct.Name
-   {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
-   StringBuilder sb_szLabelName;
-   if ( szLabelName == null )
-      sb_szLabelName = new StringBuilder( 32 );
-   else
-      sb_szLabelName = new StringBuilder( szLabelName );
-       GetVariableFromAttribute( sb_szLabelName, mi_lTempInteger_1, 'S', 65, mSPLDefPanel, "SubregProduct", "Name", "", 0 );
-   lTempInteger_1 = mi_lTempInteger_1.intValue( );
-   szLabelName = sb_szLabelName.toString( );}
-
-   //:szXmlName = szDirectory + szApplication + "xml/"
-    {StringBuilder sb_szXmlName;
-   if ( szXmlName == null )
-      sb_szXmlName = new StringBuilder( 32 );
-   else
-      sb_szXmlName = new StringBuilder( szXmlName );
-      ZeidonStringCopy( sb_szXmlName, 1, 0, szDirectory, 1, 0, 257 );
-   szXmlName = sb_szXmlName.toString( );}
-    {StringBuilder sb_szXmlName;
-   if ( szXmlName == null )
-      sb_szXmlName = new StringBuilder( 32 );
-   else
-      sb_szXmlName = new StringBuilder( szXmlName );
-      ZeidonStringConcat( sb_szXmlName, 1, 0, szApplication, 1, 0, 257 );
-   szXmlName = sb_szXmlName.toString( );}
-    {StringBuilder sb_szXmlName;
-   if ( szXmlName == null )
-      sb_szXmlName = new StringBuilder( 32 );
-   else
-      sb_szXmlName = new StringBuilder( szXmlName );
-      ZeidonStringConcat( sb_szXmlName, 1, 0, "xml/", 1, 0, 257 );
-   szXmlName = sb_szXmlName.toString( );}
-   //:szXslName = szDirectory + szApplication + "xsl/"
-    {StringBuilder sb_szXslName;
-   if ( szXslName == null )
-      sb_szXslName = new StringBuilder( 32 );
-   else
-      sb_szXslName = new StringBuilder( szXslName );
-      ZeidonStringCopy( sb_szXslName, 1, 0, szDirectory, 1, 0, 257 );
-   szXslName = sb_szXslName.toString( );}
-    {StringBuilder sb_szXslName;
-   if ( szXslName == null )
-      sb_szXslName = new StringBuilder( 32 );
-   else
-      sb_szXslName = new StringBuilder( szXslName );
-      ZeidonStringConcat( sb_szXslName, 1, 0, szApplication, 1, 0, 257 );
-   szXslName = sb_szXslName.toString( );}
-    {StringBuilder sb_szXslName;
-   if ( szXslName == null )
-      sb_szXslName = new StringBuilder( 32 );
-   else
-      sb_szXslName = new StringBuilder( szXslName );
-      ZeidonStringConcat( sb_szXslName, 1, 0, "xsl/", 1, 0, 257 );
-   szXslName = sb_szXslName.toString( );}
-   //:SysValidDirOrFile( szXmlName, 1, 1, 256 )
-   SysValidDirOrFile( szXmlName, 1, 1, 256 );
-   //:SysValidDirOrFile( szXslName, 1, 1, 256 )
-   SysValidDirOrFile( szXslName, 1, 1, 256 );
-   //:szXmlName = szXmlName + szLabelName + ".xml"
-    {StringBuilder sb_szXmlName;
-   if ( szXmlName == null )
-      sb_szXmlName = new StringBuilder( 32 );
-   else
-      sb_szXmlName = new StringBuilder( szXmlName );
-      ZeidonStringConcat( sb_szXmlName, 1, 0, szLabelName, 1, 0, 257 );
-   szXmlName = sb_szXmlName.toString( );}
-    {StringBuilder sb_szXmlName;
-   if ( szXmlName == null )
-      sb_szXmlName = new StringBuilder( 32 );
-   else
-      sb_szXmlName = new StringBuilder( szXmlName );
-      ZeidonStringConcat( sb_szXmlName, 1, 0, ".xml", 1, 0, 257 );
-   szXmlName = sb_szXmlName.toString( );}
-   //:szXslName = szXslName + szLabelName + ".xsl"
-    {StringBuilder sb_szXslName;
-   if ( szXslName == null )
-      sb_szXslName = new StringBuilder( 32 );
-   else
-      sb_szXslName = new StringBuilder( szXslName );
-      ZeidonStringConcat( sb_szXslName, 1, 0, szLabelName, 1, 0, 257 );
-   szXslName = sb_szXslName.toString( );}
-    {StringBuilder sb_szXslName;
-   if ( szXslName == null )
-      sb_szXslName = new StringBuilder( 32 );
-   else
-      sb_szXslName = new StringBuilder( szXslName );
-      ZeidonStringConcat( sb_szXslName, 1, 0, ".xsl", 1, 0, 257 );
-   szXslName = sb_szXslName.toString( );}
-   //:TraceLineS( "Output Xsl Filename: ", szXslName )
-   TraceLineS( "Output Xsl Filename: ", szXslName );
-
-   //:// ConvertXMLToPDF( "c:\lplr\epamms\xsl\TestLabel.xml", "c:\lplr\epamms\xsl\TestLabel.xsl", "TestLabel" )
-   //:// ConvertXMLToPDF( szXmlName, szXslName, szLabelName )
-   //:ConvertXML_ToPDF( szDirectory, szApplication, szLabelName )
-   m_ZDRVROPR.ConvertXML_ToPDF( szDirectory, szApplication, szLabelName );
-   return( 0 );
+   //:nRC = fnGenerateSPLD_Label( ViewToWindow, 0 )
+   nRC = o_fnGenerateSPLD_Label( ViewToWindow, 0 );
+   //:return nRC
+   return( nRC );
 // END
 } 
 
@@ -3994,6 +3776,398 @@ SELECT_MarketingSectionForBlock( View     ViewToWindow )
    } 
 
    //:END
+   return( 0 );
+// END
+} 
+
+
+//:LOCAL OPERATION
+//:fnGenerateSPLD_Label( VIEW ViewToWindow, SHORT bBorders )
+//:   VIEW mSPLDefPanel  BASED ON LOD  mSPLDef
+private int 
+o_fnGenerateSPLD_Label( View     ViewToWindow,
+                        int      bBorders )
+{
+   zVIEW    mSPLDefPanel = new zVIEW( );
+   //:VIEW mSubLC   REGISTERED AS mSubLC
+   zVIEW    mSubLC = new zVIEW( );
+   int      RESULT = 0;
+   //:STRING ( 32 ) szLPLR_Name
+   String   szLPLR_Name = null;
+   //:STRING ( 64 ) szSystemIniApplName
+   String   szSystemIniApplName = null;
+   //:STRING ( 64 ) szLabelName
+   String   szLabelName = null;
+   //:STRING ( 256 ) szDirectory
+   String   szDirectory = null;
+   //:STRING ( 256 ) szApplication
+   String   szApplication = null;
+   //:STRING ( 256 ) szXmlName
+   String   szXmlName = null;
+   //:STRING ( 256 ) szXslName
+   String   szXslName = null;
+   //:STRING ( 256 ) szFopConfigFile
+   String   szFopConfigFile = null;
+   //:STRING ( 1 )   szUseFopConfig
+   String   szUseFopConfig = null;
+   //:SHORT         nRC
+   int      nRC = 0;
+   String   szTempString_0 = null;
+   int      lTempInteger_0 = 0;
+   String   szTempString_1 = null;
+   int      lTempInteger_1 = 0;
+   String   szTempString_2 = null;
+   int      lTempInteger_2 = 0;
+   int      lTempInteger_3 = 0;
+
+   RESULT = GetViewByName( mSubLC, "mSubLC", ViewToWindow, zLEVEL_TASK );
+
+   //:// We will use mSPLDefPanel, if it exists, as it will always be pointing to the top of the LLD_Block
+   //:// subobject, while mSPLDef sometimes is pointing to a recursive subobject.
+   //:GET VIEW mSPLDefPanel NAMED "mSPLDefPanel"
+   RESULT = GetViewByName( mSPLDefPanel, "mSPLDefPanel", ViewToWindow, zLEVEL_TASK );
+   //:IF RESULT < 0
+   if ( RESULT < 0 )
+   { 
+      //:GET VIEW mSPLDefPanel NAMED "mSPLDef"
+      RESULT = GetViewByName( mSPLDefPanel, "mSPLDef", ViewToWindow, zLEVEL_TASK );
+      //:CreateViewFromView( mSPLDefPanel, mSPLDefPanel )
+      CreateViewFromView( mSPLDefPanel, mSPLDefPanel );
+      //:ResetViewFromSubobjectTop( mSPLDefPanel )
+      ResetViewFromSubobjectTop( mSPLDefPanel );
+      //:NAME VIEW mSPLDefPanel "mSPLDefPanel"
+      SetNameForView( mSPLDefPanel, "mSPLDefPanel", null, zLEVEL_TASK );
+   } 
+
+   //:END
+
+   //:// Generate the label using LLD and SLC data defined in mSPLDef.
+   //:IF bBorders = 1
+   if ( bBorders == 1 )
+   { 
+      //:mSPLDefPanel.SubregPhysicalLabelDef.wFormatWithDottedBorders = "Y"
+      SetAttributeFromString( mSPLDefPanel, "SubregPhysicalLabelDef", "wFormatWithDottedBorders", "Y" );
+      //:ELSE
+   } 
+   else
+   { 
+      //:mSPLDefPanel.SubregPhysicalLabelDef.wFormatWithDottedBorders = ""
+      SetAttributeFromString( mSPLDefPanel, "SubregPhysicalLabelDef", "wFormatWithDottedBorders", "" );
+   } 
+
+   //:END
+   //:nRC = GeneratePDF_Label( mSPLDefPanel )
+   {
+    mSPLDef_Object m_mSPLDef_Object = new mSPLDef_Object( mSPLDefPanel );
+    nRC = m_mSPLDef_Object.omSPLDef_GeneratePDF_Label( mSPLDefPanel );
+    // m_mSPLDef_Object = null;  // permit gc  (unnecessary)
+   }
+   //:IF nRC = 2
+   if ( nRC == 2 )
+   { 
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+
+   //:// Open the File
+   //:// SfGetApplicationForSubtask( szLPLR_Name, mSPLDef )
+   //:// szSystemIniApplName = "[App." + szLPLR_Name + "]"
+   //:// SysReadZeidonIni( -1, szSystemIniApplName, "WebDirectory", szDirectory )
+   //:// SysConvertEnvironmentString( szDirectory, szDirectory )
+   //:// szDirectory = "C:/Program Files/Apache Group/tomcat 7.0/webapps/ROOT/epamms/"
+
+   //:SysGetEnvVar( szDirectory, "CATALINA_HOME", 256 )
+   {StringBuilder sb_szDirectory;
+   if ( szDirectory == null )
+      sb_szDirectory = new StringBuilder( 32 );
+   else
+      sb_szDirectory = new StringBuilder( szDirectory );
+       m_KZOEP1AA.SysGetEnvVar( sb_szDirectory, "CATALINA_HOME", 256 );
+   szDirectory = sb_szDirectory.toString( );}
+   //:// SysAppendcDirSep( szDirectory )
+   //:SysConvertEnvironmentString( szDirectory, szDirectory )
+   {StringBuilder sb_szDirectory;
+   if ( szDirectory == null )
+      sb_szDirectory = new StringBuilder( 32 );
+   else
+      sb_szDirectory = new StringBuilder( szDirectory );
+       m_KZOEP1AA.SysConvertEnvironmentString( sb_szDirectory, szDirectory );
+   szDirectory = sb_szDirectory.toString( );}
+   //:szDirectory = szDirectory + "/webapps/ROOT"
+    {StringBuilder sb_szDirectory;
+   if ( szDirectory == null )
+      sb_szDirectory = new StringBuilder( 32 );
+   else
+      sb_szDirectory = new StringBuilder( szDirectory );
+      ZeidonStringConcat( sb_szDirectory, 1, 0, "/webapps/ROOT", 1, 0, 257 );
+   szDirectory = sb_szDirectory.toString( );}
+   //:szApplication = "/" + mSPLDefPanel.SubregOrganization.LoginName + "/"
+   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+   StringBuilder sb_szTempString_0;
+   if ( szTempString_0 == null )
+      sb_szTempString_0 = new StringBuilder( 32 );
+   else
+      sb_szTempString_0 = new StringBuilder( szTempString_0 );
+       GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_0, 'S', 129, mSPLDefPanel, "SubregOrganization", "LoginName", "", 0 );
+   lTempInteger_0 = mi_lTempInteger_0.intValue( );
+   szTempString_0 = sb_szTempString_0.toString( );}
+    {StringBuilder sb_szApplication;
+   if ( szApplication == null )
+      sb_szApplication = new StringBuilder( 32 );
+   else
+      sb_szApplication = new StringBuilder( szApplication );
+      ZeidonStringCopy( sb_szApplication, 1, 0, "/", 1, 0, 257 );
+   szApplication = sb_szApplication.toString( );}
+    {StringBuilder sb_szApplication;
+   if ( szApplication == null )
+      sb_szApplication = new StringBuilder( 32 );
+   else
+      sb_szApplication = new StringBuilder( szApplication );
+      ZeidonStringConcat( sb_szApplication, 1, 0, szTempString_0, 1, 0, 257 );
+   szApplication = sb_szApplication.toString( );}
+    {StringBuilder sb_szApplication;
+   if ( szApplication == null )
+      sb_szApplication = new StringBuilder( 32 );
+   else
+      sb_szApplication = new StringBuilder( szApplication );
+      ZeidonStringConcat( sb_szApplication, 1, 0, "/", 1, 0, 257 );
+   szApplication = sb_szApplication.toString( );}
+
+   //:szLabelName = mSPLDefPanel.SubregProduct.Name + "." + mSPLDefPanel.SubregLabelContent.Version + "." + mSPLDefPanel.SubregPhysicalLabelDef.Name
+   {StringBuilder sb_szLabelName;
+   if ( szLabelName == null )
+      sb_szLabelName = new StringBuilder( 32 );
+   else
+      sb_szLabelName = new StringBuilder( szLabelName );
+       GetStringFromAttribute( sb_szLabelName, mSPLDefPanel, "SubregProduct", "Name" );
+   szLabelName = sb_szLabelName.toString( );}
+    {StringBuilder sb_szLabelName;
+   if ( szLabelName == null )
+      sb_szLabelName = new StringBuilder( 32 );
+   else
+      sb_szLabelName = new StringBuilder( szLabelName );
+      ZeidonStringConcat( sb_szLabelName, 1, 0, ".", 1, 0, 65 );
+   szLabelName = sb_szLabelName.toString( );}
+   {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+   StringBuilder sb_szTempString_1;
+   if ( szTempString_1 == null )
+      sb_szTempString_1 = new StringBuilder( 32 );
+   else
+      sb_szTempString_1 = new StringBuilder( szTempString_1 );
+       GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_1, 'S', 255, mSPLDefPanel, "SubregLabelContent", "Version", "", 0 );
+   lTempInteger_1 = mi_lTempInteger_1.intValue( );
+   szTempString_1 = sb_szTempString_1.toString( );}
+    {StringBuilder sb_szLabelName;
+   if ( szLabelName == null )
+      sb_szLabelName = new StringBuilder( 32 );
+   else
+      sb_szLabelName = new StringBuilder( szLabelName );
+      ZeidonStringConcat( sb_szLabelName, 1, 0, szTempString_1, 1, 0, 65 );
+   szLabelName = sb_szLabelName.toString( );}
+    {StringBuilder sb_szLabelName;
+   if ( szLabelName == null )
+      sb_szLabelName = new StringBuilder( 32 );
+   else
+      sb_szLabelName = new StringBuilder( szLabelName );
+      ZeidonStringConcat( sb_szLabelName, 1, 0, ".", 1, 0, 65 );
+   szLabelName = sb_szLabelName.toString( );}
+   {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
+   StringBuilder sb_szTempString_2;
+   if ( szTempString_2 == null )
+      sb_szTempString_2 = new StringBuilder( 32 );
+   else
+      sb_szTempString_2 = new StringBuilder( szTempString_2 );
+       GetVariableFromAttribute( sb_szTempString_2, mi_lTempInteger_2, 'S', 255, mSPLDefPanel, "SubregPhysicalLabelDef", "Name", "", 0 );
+   lTempInteger_2 = mi_lTempInteger_2.intValue( );
+   szTempString_2 = sb_szTempString_2.toString( );}
+    {StringBuilder sb_szLabelName;
+   if ( szLabelName == null )
+      sb_szLabelName = new StringBuilder( 32 );
+   else
+      sb_szLabelName = new StringBuilder( szLabelName );
+      ZeidonStringConcat( sb_szLabelName, 1, 0, szTempString_2, 1, 0, 65 );
+   szLabelName = sb_szLabelName.toString( );}
+   //:RemoveInvalidCharsFromFilename( szLabelName )
+   try
+   {
+       {StringBuilder sb_szLabelName;
+   if ( szLabelName == null )
+      sb_szLabelName = new StringBuilder( 32 );
+   else
+      sb_szLabelName = new StringBuilder( szLabelName );
+       RemoveInvalidCharsFromFilename( sb_szLabelName );
+   szLabelName = sb_szLabelName.toString( );}
+   }
+   catch ( Exception e )
+   {
+      throw ZeidonException.wrapException( e );
+   }
+   //:szXmlName = szDirectory + szApplication + "xml/"
+    {StringBuilder sb_szXmlName;
+   if ( szXmlName == null )
+      sb_szXmlName = new StringBuilder( 32 );
+   else
+      sb_szXmlName = new StringBuilder( szXmlName );
+      ZeidonStringCopy( sb_szXmlName, 1, 0, szDirectory, 1, 0, 257 );
+   szXmlName = sb_szXmlName.toString( );}
+    {StringBuilder sb_szXmlName;
+   if ( szXmlName == null )
+      sb_szXmlName = new StringBuilder( 32 );
+   else
+      sb_szXmlName = new StringBuilder( szXmlName );
+      ZeidonStringConcat( sb_szXmlName, 1, 0, szApplication, 1, 0, 257 );
+   szXmlName = sb_szXmlName.toString( );}
+    {StringBuilder sb_szXmlName;
+   if ( szXmlName == null )
+      sb_szXmlName = new StringBuilder( 32 );
+   else
+      sb_szXmlName = new StringBuilder( szXmlName );
+      ZeidonStringConcat( sb_szXmlName, 1, 0, "xml/", 1, 0, 257 );
+   szXmlName = sb_szXmlName.toString( );}
+   //:szXslName = szDirectory + szApplication + "xsl/"
+    {StringBuilder sb_szXslName;
+   if ( szXslName == null )
+      sb_szXslName = new StringBuilder( 32 );
+   else
+      sb_szXslName = new StringBuilder( szXslName );
+      ZeidonStringCopy( sb_szXslName, 1, 0, szDirectory, 1, 0, 257 );
+   szXslName = sb_szXslName.toString( );}
+    {StringBuilder sb_szXslName;
+   if ( szXslName == null )
+      sb_szXslName = new StringBuilder( 32 );
+   else
+      sb_szXslName = new StringBuilder( szXslName );
+      ZeidonStringConcat( sb_szXslName, 1, 0, szApplication, 1, 0, 257 );
+   szXslName = sb_szXslName.toString( );}
+    {StringBuilder sb_szXslName;
+   if ( szXslName == null )
+      sb_szXslName = new StringBuilder( 32 );
+   else
+      sb_szXslName = new StringBuilder( szXslName );
+      ZeidonStringConcat( sb_szXslName, 1, 0, "xsl/", 1, 0, 257 );
+   szXslName = sb_szXslName.toString( );}
+   //:SysValidDirOrFile( szXmlName, 1, 1, 256 )
+   SysValidDirOrFile( szXmlName, 1, 1, 256 );
+   //:SysValidDirOrFile( szXslName, 1, 1, 256 )
+   SysValidDirOrFile( szXslName, 1, 1, 256 );
+   //:szXmlName = szXmlName + szLabelName + ".xml"
+    {StringBuilder sb_szXmlName;
+   if ( szXmlName == null )
+      sb_szXmlName = new StringBuilder( 32 );
+   else
+      sb_szXmlName = new StringBuilder( szXmlName );
+      ZeidonStringConcat( sb_szXmlName, 1, 0, szLabelName, 1, 0, 257 );
+   szXmlName = sb_szXmlName.toString( );}
+    {StringBuilder sb_szXmlName;
+   if ( szXmlName == null )
+      sb_szXmlName = new StringBuilder( 32 );
+   else
+      sb_szXmlName = new StringBuilder( szXmlName );
+      ZeidonStringConcat( sb_szXmlName, 1, 0, ".xml", 1, 0, 257 );
+   szXmlName = sb_szXmlName.toString( );}
+   //:szXslName = szXslName + szLabelName + ".xsl"
+    {StringBuilder sb_szXslName;
+   if ( szXslName == null )
+      sb_szXslName = new StringBuilder( 32 );
+   else
+      sb_szXslName = new StringBuilder( szXslName );
+      ZeidonStringConcat( sb_szXslName, 1, 0, szLabelName, 1, 0, 257 );
+   szXslName = sb_szXslName.toString( );}
+    {StringBuilder sb_szXslName;
+   if ( szXslName == null )
+      sb_szXslName = new StringBuilder( 32 );
+   else
+      sb_szXslName = new StringBuilder( szXslName );
+      ZeidonStringConcat( sb_szXslName, 1, 0, ".xsl", 1, 0, 257 );
+   szXslName = sb_szXslName.toString( );}
+   //:TraceLineS( "Output Xml Filename: ", szXmlName )
+   TraceLineS( "Output Xml Filename: ", szXmlName );
+   //:TraceLineS( "Output Xsl Filename: ", szXslName )
+   TraceLineS( "Output Xsl Filename: ", szXslName );
+
+   //:// ConvertXMLToPDF( "c:\lplr\epamms\xsl\TestLabel.xml", "c:\lplr\epamms\xsl\TestLabel.xsl", "TestLabel" )
+   //:// ConvertXMLToPDF( szXmlName, szXslName, szLabelName )
+
+
+   //:szUseFopConfig = mSPLDefPanel.SPLD_LLD.UseFopConfig
+   {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
+   StringBuilder sb_szUseFopConfig;
+   if ( szUseFopConfig == null )
+      sb_szUseFopConfig = new StringBuilder( 32 );
+   else
+      sb_szUseFopConfig = new StringBuilder( szUseFopConfig );
+       GetVariableFromAttribute( sb_szUseFopConfig, mi_lTempInteger_3, 'S', 2, mSPLDefPanel, "SPLD_LLD", "UseFopConfig", "", 0 );
+   lTempInteger_3 = mi_lTempInteger_3.intValue( );
+   szUseFopConfig = sb_szUseFopConfig.toString( );}
+   //:IF szUseFopConfig = "Y"
+   if ( ZeidonStringCompare( szUseFopConfig, 1, 0, "Y", 1, 0, 2 ) == 0 )
+   { 
+      //:SfGetApplicationForSubtask( szLPLR_Name, mSPLDefPanel )
+      {StringBuilder sb_szLPLR_Name;
+      if ( szLPLR_Name == null )
+         sb_szLPLR_Name = new StringBuilder( 32 );
+      else
+         sb_szLPLR_Name = new StringBuilder( szLPLR_Name );
+             SfGetApplicationForSubtask( sb_szLPLR_Name, mSPLDefPanel );
+      szLPLR_Name = sb_szLPLR_Name.toString( );}
+      //:szSystemIniApplName = "[App." + szLPLR_Name + "]"
+       {StringBuilder sb_szSystemIniApplName;
+      if ( szSystemIniApplName == null )
+         sb_szSystemIniApplName = new StringBuilder( 32 );
+      else
+         sb_szSystemIniApplName = new StringBuilder( szSystemIniApplName );
+            ZeidonStringCopy( sb_szSystemIniApplName, 1, 0, "[App.", 1, 0, 65 );
+      szSystemIniApplName = sb_szSystemIniApplName.toString( );}
+       {StringBuilder sb_szSystemIniApplName;
+      if ( szSystemIniApplName == null )
+         sb_szSystemIniApplName = new StringBuilder( 32 );
+      else
+         sb_szSystemIniApplName = new StringBuilder( szSystemIniApplName );
+            ZeidonStringConcat( sb_szSystemIniApplName, 1, 0, szLPLR_Name, 1, 0, 65 );
+      szSystemIniApplName = sb_szSystemIniApplName.toString( );}
+       {StringBuilder sb_szSystemIniApplName;
+      if ( szSystemIniApplName == null )
+         sb_szSystemIniApplName = new StringBuilder( 32 );
+      else
+         sb_szSystemIniApplName = new StringBuilder( szSystemIniApplName );
+            ZeidonStringConcat( sb_szSystemIniApplName, 1, 0, "]", 1, 0, 65 );
+      szSystemIniApplName = sb_szSystemIniApplName.toString( );}
+      //:SysReadZeidonIni( -1, szSystemIniApplName, "FopConfigFile", szFopConfigFile )
+      {StringBuilder sb_szFopConfigFile;
+      if ( szFopConfigFile == null )
+         sb_szFopConfigFile = new StringBuilder( 32 );
+      else
+         sb_szFopConfigFile = new StringBuilder( szFopConfigFile );
+             m_KZOEP1AA.SysReadZeidonIni( -1, szSystemIniApplName, "FopConfigFile", sb_szFopConfigFile );
+      szFopConfigFile = sb_szFopConfigFile.toString( );}
+      //:SysConvertEnvironmentString( szFopConfigFile, szFopConfigFile )
+      {StringBuilder sb_szFopConfigFile;
+      if ( szFopConfigFile == null )
+         sb_szFopConfigFile = new StringBuilder( 32 );
+      else
+         sb_szFopConfigFile = new StringBuilder( szFopConfigFile );
+             m_KZOEP1AA.SysConvertEnvironmentString( sb_szFopConfigFile, szFopConfigFile );
+      szFopConfigFile = sb_szFopConfigFile.toString( );}
+      //:ELSE
+   } 
+   else
+   { 
+      //:szFopConfigFile = ""
+       {StringBuilder sb_szFopConfigFile;
+      if ( szFopConfigFile == null )
+         sb_szFopConfigFile = new StringBuilder( 32 );
+      else
+         sb_szFopConfigFile = new StringBuilder( szFopConfigFile );
+            ZeidonStringCopy( sb_szFopConfigFile, 1, 0, "", 1, 0, 257 );
+      szFopConfigFile = sb_szFopConfigFile.toString( );}
+   } 
+
+   //:END
+
+   //:ConvertXML_ToPDF( szDirectory, szApplication, szLabelName, szFopConfigFile )
+   m_ZDRVROPR.ConvertXML_ToPDF( szDirectory, szApplication, szLabelName, szFopConfigFile );
    return( 0 );
 // END
 } 
@@ -5509,236 +5683,17 @@ PostbuildBlockSpecialFormatDef( View     ViewToWindow )
 
 //:DIALOG OPERATION
 //:GENERATE_SPLD_LabelDottedBorders( VIEW ViewToWindow )
-
-//:   VIEW mSPLDefPanel  BASED ON LOD  mSPLDef
+//:   SHORT nRC
 public int 
 GENERATE_SPLD_LabelDottedBorders( View     ViewToWindow )
 {
-   zVIEW    mSPLDefPanel = new zVIEW( );
-   //:VIEW mSubLC   REGISTERED AS mSubLC
-   zVIEW    mSubLC = new zVIEW( );
-   int      RESULT = 0;
-   //:STRING ( 32 ) szLPLR_Name
-   String   szLPLR_Name = null;
-   //:STRING ( 64 ) szSystemIniApplName
-   String   szSystemIniApplName = null;
-   //:STRING ( 64 ) szLabelName
-   String   szLabelName = null;
-   //:STRING ( 256 ) szDirectory
-   String   szDirectory = null;
-   //:STRING ( 256 ) szApplication
-   String   szApplication = null;
-   //:STRING ( 256 ) szXmlName
-   String   szXmlName = null;
-   //:STRING ( 256 ) szXslName
-   String   szXslName = null;
-   //:SHORT         nRC
    int      nRC = 0;
-   String   szTempString_0 = null;
-   int      lTempInteger_0 = 0;
-   int      lTempInteger_1 = 0;
-
-   RESULT = GetViewByName( mSubLC, "mSubLC", ViewToWindow, zLEVEL_TASK );
-
-   //:// We will use mSPLDefPanel, if it exists, as it will always be pointing to the top of the LLD_Block
-   //:// subobject, while mSPLDef sometimes is pointing to a recursive subobject.
-   //:GET VIEW mSPLDefPanel NAMED "mSPLDefPanel"
-   RESULT = GetViewByName( mSPLDefPanel, "mSPLDefPanel", ViewToWindow, zLEVEL_TASK );
-   //:IF RESULT < 0
-   if ( RESULT < 0 )
-   { 
-      //:GET VIEW mSPLDefPanel NAMED "mSPLDef"
-      RESULT = GetViewByName( mSPLDefPanel, "mSPLDef", ViewToWindow, zLEVEL_TASK );
-      //:CreateViewFromView( mSPLDefPanel, mSPLDefPanel )
-      CreateViewFromView( mSPLDefPanel, mSPLDefPanel );
-      //:ResetViewFromSubobjectTop( mSPLDefPanel )
-      ResetViewFromSubobjectTop( mSPLDefPanel );
-      //:NAME VIEW mSPLDefPanel "mSPLDefPanel"
-      SetNameForView( mSPLDefPanel, "mSPLDefPanel", null, zLEVEL_TASK );
-   } 
-
-   //:END
-
-   //:// Generate the label using LLD and SLC data defined in mSPLDef.    
-   //:mSPLDefPanel.SubregPhysicalLabelDef.wFormatWithDottedBorders = "Y"
-   SetAttributeFromString( mSPLDefPanel, "SubregPhysicalLabelDef", "wFormatWithDottedBorders", "Y" );
-   //:nRC = GeneratePDF_Label( mSPLDefPanel )
-   {
-    mSPLDef_Object m_mSPLDef_Object = new mSPLDef_Object( mSPLDefPanel );
-    nRC = m_mSPLDef_Object.omSPLDef_GeneratePDF_Label( mSPLDefPanel );
-    // m_mSPLDef_Object = null;  // permit gc  (unnecessary)
-   }
-   //:IF nRC = 2
-   if ( nRC == 2 )
-   { 
-      //:RETURN 2
-      if(8==8)return( 2 );
-   } 
-
-   //:END
 
 
-   //:// Open the File
-   //:// SfGetApplicationForSubtask( szLPLR_Name, mSPLDef )
-   //:// szSystemIniApplName = "[App." + szLPLR_Name + "]"
-   //:// SysReadZeidonIni( -1, szSystemIniApplName, "WebDirectory", szDirectory )
-   //:// SysConvertEnvironmentString( szDirectory, szDirectory )
-   //:// szDirectory = "C:/Program Files/Apache Group/tomcat 7.0/webapps/ROOT/epamms/"
-
-   //:SysGetEnvVar( szDirectory, "CATALINA_HOME", 256 )
-   {StringBuilder sb_szDirectory;
-   if ( szDirectory == null )
-      sb_szDirectory = new StringBuilder( 32 );
-   else
-      sb_szDirectory = new StringBuilder( szDirectory );
-       m_KZOEP1AA.SysGetEnvVar( sb_szDirectory, "CATALINA_HOME", 256 );
-   szDirectory = sb_szDirectory.toString( );}
-   //:// SysAppendcDirSep( szDirectory )
-   //:SysConvertEnvironmentString( szDirectory, szDirectory )
-   {StringBuilder sb_szDirectory;
-   if ( szDirectory == null )
-      sb_szDirectory = new StringBuilder( 32 );
-   else
-      sb_szDirectory = new StringBuilder( szDirectory );
-       m_KZOEP1AA.SysConvertEnvironmentString( sb_szDirectory, szDirectory );
-   szDirectory = sb_szDirectory.toString( );}
-   //:szDirectory = szDirectory + "/webapps/ROOT"
-    {StringBuilder sb_szDirectory;
-   if ( szDirectory == null )
-      sb_szDirectory = new StringBuilder( 32 );
-   else
-      sb_szDirectory = new StringBuilder( szDirectory );
-      ZeidonStringConcat( sb_szDirectory, 1, 0, "/webapps/ROOT", 1, 0, 257 );
-   szDirectory = sb_szDirectory.toString( );}
-   //:szApplication = "/" + mSPLDefPanel.SubregOrganization.LoginName + "/"
-   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
-   StringBuilder sb_szTempString_0;
-   if ( szTempString_0 == null )
-      sb_szTempString_0 = new StringBuilder( 32 );
-   else
-      sb_szTempString_0 = new StringBuilder( szTempString_0 );
-       GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_0, 'S', 129, mSPLDefPanel, "SubregOrganization", "LoginName", "", 0 );
-   lTempInteger_0 = mi_lTempInteger_0.intValue( );
-   szTempString_0 = sb_szTempString_0.toString( );}
-    {StringBuilder sb_szApplication;
-   if ( szApplication == null )
-      sb_szApplication = new StringBuilder( 32 );
-   else
-      sb_szApplication = new StringBuilder( szApplication );
-      ZeidonStringCopy( sb_szApplication, 1, 0, "/", 1, 0, 257 );
-   szApplication = sb_szApplication.toString( );}
-    {StringBuilder sb_szApplication;
-   if ( szApplication == null )
-      sb_szApplication = new StringBuilder( 32 );
-   else
-      sb_szApplication = new StringBuilder( szApplication );
-      ZeidonStringConcat( sb_szApplication, 1, 0, szTempString_0, 1, 0, 257 );
-   szApplication = sb_szApplication.toString( );}
-    {StringBuilder sb_szApplication;
-   if ( szApplication == null )
-      sb_szApplication = new StringBuilder( 32 );
-   else
-      sb_szApplication = new StringBuilder( szApplication );
-      ZeidonStringConcat( sb_szApplication, 1, 0, "/", 1, 0, 257 );
-   szApplication = sb_szApplication.toString( );}
-
-   //:szLabelName = mSPLDefPanel.SubregProduct.Name
-   {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
-   StringBuilder sb_szLabelName;
-   if ( szLabelName == null )
-      sb_szLabelName = new StringBuilder( 32 );
-   else
-      sb_szLabelName = new StringBuilder( szLabelName );
-       GetVariableFromAttribute( sb_szLabelName, mi_lTempInteger_1, 'S', 65, mSPLDefPanel, "SubregProduct", "Name", "", 0 );
-   lTempInteger_1 = mi_lTempInteger_1.intValue( );
-   szLabelName = sb_szLabelName.toString( );}
-
-   //:szXmlName = szDirectory + szApplication + "xml/"
-    {StringBuilder sb_szXmlName;
-   if ( szXmlName == null )
-      sb_szXmlName = new StringBuilder( 32 );
-   else
-      sb_szXmlName = new StringBuilder( szXmlName );
-      ZeidonStringCopy( sb_szXmlName, 1, 0, szDirectory, 1, 0, 257 );
-   szXmlName = sb_szXmlName.toString( );}
-    {StringBuilder sb_szXmlName;
-   if ( szXmlName == null )
-      sb_szXmlName = new StringBuilder( 32 );
-   else
-      sb_szXmlName = new StringBuilder( szXmlName );
-      ZeidonStringConcat( sb_szXmlName, 1, 0, szApplication, 1, 0, 257 );
-   szXmlName = sb_szXmlName.toString( );}
-    {StringBuilder sb_szXmlName;
-   if ( szXmlName == null )
-      sb_szXmlName = new StringBuilder( 32 );
-   else
-      sb_szXmlName = new StringBuilder( szXmlName );
-      ZeidonStringConcat( sb_szXmlName, 1, 0, "xml/", 1, 0, 257 );
-   szXmlName = sb_szXmlName.toString( );}
-   //:szXslName = szDirectory + szApplication + "xsl/"
-    {StringBuilder sb_szXslName;
-   if ( szXslName == null )
-      sb_szXslName = new StringBuilder( 32 );
-   else
-      sb_szXslName = new StringBuilder( szXslName );
-      ZeidonStringCopy( sb_szXslName, 1, 0, szDirectory, 1, 0, 257 );
-   szXslName = sb_szXslName.toString( );}
-    {StringBuilder sb_szXslName;
-   if ( szXslName == null )
-      sb_szXslName = new StringBuilder( 32 );
-   else
-      sb_szXslName = new StringBuilder( szXslName );
-      ZeidonStringConcat( sb_szXslName, 1, 0, szApplication, 1, 0, 257 );
-   szXslName = sb_szXslName.toString( );}
-    {StringBuilder sb_szXslName;
-   if ( szXslName == null )
-      sb_szXslName = new StringBuilder( 32 );
-   else
-      sb_szXslName = new StringBuilder( szXslName );
-      ZeidonStringConcat( sb_szXslName, 1, 0, "xsl/", 1, 0, 257 );
-   szXslName = sb_szXslName.toString( );}
-   //:SysValidDirOrFile( szXmlName, 1, 1, 256 )
-   SysValidDirOrFile( szXmlName, 1, 1, 256 );
-   //:SysValidDirOrFile( szXslName, 1, 1, 256 )
-   SysValidDirOrFile( szXslName, 1, 1, 256 );
-   //:szXmlName = szXmlName + szLabelName + ".xml"
-    {StringBuilder sb_szXmlName;
-   if ( szXmlName == null )
-      sb_szXmlName = new StringBuilder( 32 );
-   else
-      sb_szXmlName = new StringBuilder( szXmlName );
-      ZeidonStringConcat( sb_szXmlName, 1, 0, szLabelName, 1, 0, 257 );
-   szXmlName = sb_szXmlName.toString( );}
-    {StringBuilder sb_szXmlName;
-   if ( szXmlName == null )
-      sb_szXmlName = new StringBuilder( 32 );
-   else
-      sb_szXmlName = new StringBuilder( szXmlName );
-      ZeidonStringConcat( sb_szXmlName, 1, 0, ".xml", 1, 0, 257 );
-   szXmlName = sb_szXmlName.toString( );}
-   //:szXslName = szXslName + szLabelName + ".xsl"
-    {StringBuilder sb_szXslName;
-   if ( szXslName == null )
-      sb_szXslName = new StringBuilder( 32 );
-   else
-      sb_szXslName = new StringBuilder( szXslName );
-      ZeidonStringConcat( sb_szXslName, 1, 0, szLabelName, 1, 0, 257 );
-   szXslName = sb_szXslName.toString( );}
-    {StringBuilder sb_szXslName;
-   if ( szXslName == null )
-      sb_szXslName = new StringBuilder( 32 );
-   else
-      sb_szXslName = new StringBuilder( szXslName );
-      ZeidonStringConcat( sb_szXslName, 1, 0, ".xsl", 1, 0, 257 );
-   szXslName = sb_szXslName.toString( );}
-   //:TraceLineS( "Output Xsl Filename: ", szXslName )
-   TraceLineS( "Output Xsl Filename: ", szXslName );
-
-   //:// ConvertXMLToPDF( "c:\lplr\epamms\xsl\TestLabel.xml", "c:\lplr\epamms\xsl\TestLabel.xsl", "TestLabel" )
-   //:// ConvertXMLToPDF( szXmlName, szXslName, szLabelName )
-   //:ConvertXML_ToPDF( szDirectory, szApplication, szLabelName )
-   m_ZDRVROPR.ConvertXML_ToPDF( szDirectory, szApplication, szLabelName );
-   return( 0 );
+   //:nRC = fnGenerateSPLD_Label( ViewToWindow, 1 )
+   nRC = o_fnGenerateSPLD_Label( ViewToWindow, 1 );
+   //:return nRC
+   return( nRC );
 // END
 } 
 

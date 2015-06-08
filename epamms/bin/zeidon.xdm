@@ -1,4 +1,4 @@
-z1000-Zeidon    ZEIDON   TZDMXGPO 06/02/15   12:06:59 1.0a2    
+z1000-Zeidon    ZEIDON   TZDMXGPO 06/08/15   17:17:20 1.0a2    
 eDomainGroup 1
 aName      ePamms
 
@@ -550,6 +550,54 @@ eTableEntry 4
 aZKey      120260122
 aExternalValue 15 gallon
 aInternalValue 15
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      110059061
+aName      ContainerVolumeEnvironmentHazard
+aDomainType T
+aDataType  S
+aMaxStringLth 20
+aContextRestriction N
+
+eContext   3
+aZKey      110059062
+aName      ContainerVolumeEnvironmentHazard
+aIsDefault Y
+
+eTableEntry 4
+aZKey      110059063
+aExternalValue < 5 gallon
+aInternalValue <5
+
+eTableEntry 4
+aZKey      110059064
+aExternalValue >= 5 gallon
+aInternalValue >=5
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      110059057
+aName      ContainerVolumeStorageDisposal
+aDomainType T
+aDataType  S
+aMaxStringLth 3
+aContextRestriction N
+
+eContext   3
+aZKey      110059058
+aName      ContainerVolumeStorageDisposal
+aIsDefault Y
+
+eTableEntry 4
+aZKey      110059059
+aExternalValue <= 1 gallon
+aInternalValue <=1
+
+eTableEntry 4
+aZKey      110059060
+aExternalValue > 1 gallon
+aInternalValue >1
 
 eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
@@ -2303,17 +2351,22 @@ aIsDefault Y
 eTableEntry 4
 aZKey      4322646
 aExternalValue Arial
-aInternalValue arial
+aInternalValue Arial
+
+eTableEntry 4
+aZKey      110006764
+aExternalValue Comic Sans MS Bold
+aInternalValue Comic Sans MS Bold
 
 eTableEntry 4
 aZKey      4322647
 aExternalValue Verdana
-aInternalValue verdana
+aInternalValue Verdana
 
 eTableEntry 4
 aZKey      4322648
 aExternalValue Serif
-aInternalValue serif
+aInternalValue Serif
 
 eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
@@ -2889,8 +2942,13 @@ aExternalValue First Aid
 aInternalValue FirstAid
 
 eTableEntry 4
+aZKey      69081355
+aExternalValue Human Hazard
+aInternalValue HumanHazard
+
+eTableEntry 4
 aZKey      69085283
-aExternalValue Hazards
+aExternalValue Environmental Hazard
 aInternalValue Hazards
 
 eTableEntry 4
@@ -2922,11 +2980,6 @@ eTableEntry 4
 aZKey      69081354
 aExternalValue Marketing
 aInternalValue Marketing
-
-eTableEntry 4
-aZKey      69081355
-aExternalValue Human Hazard
-aInternalValue HumanHazard
 
 eTableEntry 4
 aZKey      69765626

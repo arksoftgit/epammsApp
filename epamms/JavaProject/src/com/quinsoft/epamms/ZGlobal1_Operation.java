@@ -4608,6 +4608,24 @@ public class ZGlobal1_Operation extends VmlOperation
       return count;
    }
 
+   public String
+   RemoveInvalidCharactersFromFilename( String in ) {
+      // Valid characters: Letters (a-z A-Z)  Digits (0-9)  Underscore (_)   Hyphen (-)   Space   Dot (.)
+      StringBuilder sbFileName = new StringBuilder( in.length() );
+      char ch;
+      int k;
+      int pos = 0;
+      for ( k = 0; k < sbFileName.length(); k++ ) {
+         ch = in.charAt( k );
+         // Not permitting spaces
+         if ( (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || (ch >= '0' && ch <= '9') || ch == '_' || ch == '-' || ch == '.' ) {
+            sbFileName.setCharAt( pos++, ch );
+         }
+      }
+      sbFileName.setLength( pos );
+      return sbFileName.toString();
+   }
+
    /////////////////////////////////////////////////////////////////////////////
    /////////////////////////////////////////////////////////////////////////////
    /////////////////////////////////////////////////////////////////////////////

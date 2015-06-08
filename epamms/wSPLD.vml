@@ -1298,14 +1298,8 @@ SELECT_MarketingSectionForBlock( VIEW ViewToWindow )
 
 END
 
-////////////////////////////////////////////////////////////////
-//
-// OPERATION: GENERATE_SPLD_Label
-//
-////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-GENERATE_SPLD_Label( VIEW ViewToWindow )
-
+LOCAL OPERATION
+fnGenerateSPLD_Label( VIEW ViewToWindow, SHORT bBorders )
    VIEW mSPLDefPanel  BASED ON LOD  mSPLDef
    VIEW mSubLC   REGISTERED AS mSubLC
    STRING ( 32 ) szLPLR_Name
@@ -1315,6 +1309,8 @@ GENERATE_SPLD_Label( VIEW ViewToWindow )
    STRING ( 256 ) szApplication
    STRING ( 256 ) szXmlName
    STRING ( 256 ) szXslName
+   STRING ( 256 ) szFopConfigFile
+   STRING ( 1 )   szUseFopConfig
    SHORT         nRC
    
    // We will use mSPLDefPanel, if it exists, as it will always be pointing to the top of the LLD_Block
@@ -1326,9 +1322,13 @@ GENERATE_SPLD_Label( VIEW ViewToWindow )
       ResetViewFromSubobjectTop( mSPLDefPanel )
       NAME VIEW mSPLDefPanel "mSPLDefPanel"
    END
-   
-   // Generate the label using LLD and SLC data defined in mSPLDef. 
-   mSPLDefPanel.SubregPhysicalLabelDef.wFormatWithDottedBorders = ""
+
+   // Generate the label using LLD and SLC data defined in mSPLDef.
+   IF bBorders = 1
+      mSPLDefPanel.SubregPhysicalLabelDef.wFormatWithDottedBorders = "Y"
+   ELSE
+      mSPLDefPanel.SubregPhysicalLabelDef.wFormatWithDottedBorders = ""
+   END
    nRC = GeneratePDF_Label( mSPLDefPanel )
    IF nRC = 2
       RETURN 2
@@ -1347,20 +1347,46 @@ GENERATE_SPLD_Label( VIEW ViewToWindow )
    szDirectory = szDirectory + "/webapps/ROOT"
    szApplication = "/" + mSPLDefPanel.SubregOrganization.LoginName + "/"
 
-   szLabelName = mSPLDefPanel.SubregProduct.Name
-
+   szLabelName = mSPLDefPanel.SubregProduct.Name + "." + mSPLDefPanel.SubregLabelContent.Version + "." + mSPLDefPanel.SubregPhysicalLabelDef.Name
+   RemoveInvalidCharsFromFilename( szLabelName )
    szXmlName = szDirectory + szApplication + "xml/"
    szXslName = szDirectory + szApplication + "xsl/"
    SysValidDirOrFile( szXmlName, 1, 1, 256 )
    SysValidDirOrFile( szXslName, 1, 1, 256 )
    szXmlName = szXmlName + szLabelName + ".xml"
    szXslName = szXslName + szLabelName + ".xsl"
+   TraceLineS( "Output Xml Filename: ", szXmlName )
    TraceLineS( "Output Xsl Filename: ", szXslName )
 
 // ConvertXMLToPDF( "c:\lplr\epamms\xsl\TestLabel.xml", "c:\lplr\epamms\xsl\TestLabel.xsl", "TestLabel" )
 // ConvertXMLToPDF( szXmlName, szXslName, szLabelName )
-   ConvertXML_ToPDF( szDirectory, szApplication, szLabelName )
 
+
+   szUseFopConfig = mSPLDefPanel.SPLD_LLD.UseFopConfig
+   IF szUseFopConfig = "Y"
+      SfGetApplicationForSubtask( szLPLR_Name, mSPLDefPanel )
+      szSystemIniApplName = "[App." + szLPLR_Name + "]"
+      SysReadZeidonIni( -1, szSystemIniApplName, "FopConfigFile", szFopConfigFile )
+      SysConvertEnvironmentString( szFopConfigFile, szFopConfigFile )
+   ELSE
+      szFopConfigFile = ""
+   END
+
+   ConvertXML_ToPDF( szDirectory, szApplication, szLabelName, szFopConfigFile )
+
+END
+
+////////////////////////////////////////////////////////////////
+//
+// OPERATION: GENERATE_SPLD_Label
+//
+////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+GENERATE_SPLD_Label( VIEW ViewToWindow )
+   SHORT nRC
+   
+   nRC = fnGenerateSPLD_Label( ViewToWindow, 0 )
+   return nRC
 END
 
 ////////////////////////////////////////////////////////////////
@@ -1370,63 +1396,10 @@ END
 ////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GENERATE_SPLD_LabelDottedBorders( VIEW ViewToWindow )
-
-   VIEW mSPLDefPanel  BASED ON LOD  mSPLDef
-   VIEW mSubLC   REGISTERED AS mSubLC
-   STRING ( 32 ) szLPLR_Name
-   STRING ( 64 ) szSystemIniApplName
-   STRING ( 64 ) szLabelName
-   STRING ( 256 ) szDirectory
-   STRING ( 256 ) szApplication
-   STRING ( 256 ) szXmlName
-   STRING ( 256 ) szXslName
-   SHORT         nRC
+   SHORT nRC
    
-   // We will use mSPLDefPanel, if it exists, as it will always be pointing to the top of the LLD_Block
-   // subobject, while mSPLDef sometimes is pointing to a recursive subobject.
-   GET VIEW mSPLDefPanel NAMED "mSPLDefPanel"
-   IF RESULT < 0
-      GET VIEW mSPLDefPanel NAMED "mSPLDef"
-      CreateViewFromView( mSPLDefPanel, mSPLDefPanel )
-      ResetViewFromSubobjectTop( mSPLDefPanel )
-      NAME VIEW mSPLDefPanel "mSPLDefPanel"
-   END
-   
-   // Generate the label using LLD and SLC data defined in mSPLDef.    
-   mSPLDefPanel.SubregPhysicalLabelDef.wFormatWithDottedBorders = "Y"
-   nRC = GeneratePDF_Label( mSPLDefPanel )
-   IF nRC = 2
-      RETURN 2
-   END
-
-
-   // Open the File
-// SfGetApplicationForSubtask( szLPLR_Name, mSPLDef )
-// szSystemIniApplName = "[App." + szLPLR_Name + "]"
-// SysReadZeidonIni( -1, szSystemIniApplName, "WebDirectory", szDirectory )
-// SysConvertEnvironmentString( szDirectory, szDirectory )
-// szDirectory = "C:/Program Files/Apache Group/tomcat 7.0/webapps/ROOT/epamms/"
-
-   SysGetEnvVar( szDirectory, "CATALINA_HOME", 256 )
-// SysAppendcDirSep( szDirectory )
-   SysConvertEnvironmentString( szDirectory, szDirectory )
-   szDirectory = szDirectory + "/webapps/ROOT"
-   szApplication = "/" + mSPLDefPanel.SubregOrganization.LoginName + "/"
-
-   szLabelName = mSPLDefPanel.SubregProduct.Name
-
-   szXmlName = szDirectory + szApplication + "xml/"
-   szXslName = szDirectory + szApplication + "xsl/"
-   SysValidDirOrFile( szXmlName, 1, 1, 256 )
-   SysValidDirOrFile( szXslName, 1, 1, 256 )
-   szXmlName = szXmlName + szLabelName + ".xml"
-   szXslName = szXslName + szLabelName + ".xsl"
-   TraceLineS( "Output Xsl Filename: ", szXslName )
-
-// ConvertXMLToPDF( "c:\lplr\epamms\xsl\TestLabel.xml", "c:\lplr\epamms\xsl\TestLabel.xsl", "TestLabel" )
-// ConvertXMLToPDF( szXmlName, szXslName, szLabelName )
-   ConvertXML_ToPDF( szDirectory, szApplication, szLabelName )
-
+   nRC = fnGenerateSPLD_Label( ViewToWindow, 1 )
+   return nRC
 END
 
 ////////////////////////////////////////////////////////////////

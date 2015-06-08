@@ -11,13 +11,13 @@ GeneratePDF_Label( VIEW mSPLDef BASED ON LOD mSPLDef )
    INTEGER lFile
    INTEGER lControl
    STRING ( 50 ) szLeadingBlanks
-   STRING ( 10 ) szSize
-   STRING ( 10 ) szTop
-   STRING ( 10 ) szHeight
-   STRING ( 10 ) szWidth
-   STRING ( 10 ) szPageHeight
-   STRING ( 10 ) szPageWidth
-   STRING ( 10 ) szLeft
+   STRING ( 32 ) szSize
+   STRING ( 32 ) szTop
+   STRING ( 32 ) szHeight
+   STRING ( 32 ) szWidth
+   STRING ( 32 ) szPageHeight
+   STRING ( 32 ) szPageWidth
+   STRING ( 32 ) szLeft
    STRING ( 32 ) szLastSectionType
    STRING ( 32 ) szVoid
    STRING ( 2 )  szCount
@@ -59,7 +59,8 @@ GeneratePDF_Label( VIEW mSPLDef BASED ON LOD mSPLDef )
    SysConvertEnvironmentString( szXslDirectory, szXslName )
    szXslDirectory = szXslDirectory + "/webapps/ROOT/" + mSPLDef.SubregOrganization.LoginName + "/"
 
-   szLabelName = mSPLDef.SubregProduct.Name
+   szLabelName = mSPLDef.SubregProduct.Name + "." + mSPLDef.SubregLabelContent.Version + "." + mSPLDef.SubregPhysicalLabelDef.Name
+   RemoveInvalidCharsFromFilename( szLabelName )
 
    szXmlName = szXslDirectory + "xml/"
    szXslName = szXslDirectory + "xsl/"
@@ -67,6 +68,7 @@ GeneratePDF_Label( VIEW mSPLDef BASED ON LOD mSPLDef )
    SysValidDirOrFile( szXslName, 1, 1, 256 )
    szXmlName = szXmlName + szLabelName + ".xml"
    szXslName = szXslName + szLabelName + ".xsl"
+   TraceLineS( "Output Xml Filename: ", szXmlName )
    TraceLineS( "Output Xsl Filename: ", szXslName )
    lFile = SysOpenFile( mSPLDef, szXslName, COREFILE_WRITE )
    IF lFile < 0
@@ -267,7 +269,7 @@ GeneratePDF_Label( VIEW mSPLDef BASED ON LOD mSPLDef )
    // Generate XML. We do this at the end because the process above built data (e.g.  DisplayText attributes) in the mSPLDef object instance.
 // szWriteBuffer = "c:\lplr\epamms\xsl\TestLabel.xml"
 // CommitOI_ToXML_File( mSPLDef, szWriteBuffer, 0 )
-   TraceLineS( "Output Xml Filename: ", szXmlName )
+   TraceLineS( "Output Xml Directory/File Name: ", szXmlName )
    GenerateXML_File( mSPLDef, "SubregPhysicalLabelDef", szXmlName )
 
 END
@@ -388,8 +390,8 @@ FormatPrintIcons( VIEW mSPLDef BASED ON LOD mSPLDef,
    DECIMAL IconCenterRightLeft
    DECIMAL IconCenterBottomLeft
 
-   STRING ( 10 ) szTop
-   STRING ( 10 ) szLeft
+   STRING ( 32 ) szTop
+   STRING ( 32 ) szLeft
    STRING ( 30 ) szDateTime
    STRING ( 30 ) szDateTimeDisplay
    STRING ( 90 ) szProductIdentifier
@@ -576,7 +578,7 @@ FormatPrintIcons( VIEW mSPLDef BASED ON LOD mSPLDef,
 
    GetStringFromAttributeByContext( szDateTimeDisplay, mSPLDef, "SubregPhysicalLabelDef", "wDateTime", "YYYY/MM/DD HH:MM:SS.S AM", 30 )
    //szDateTimeDisplay = "01/01/2000 00:00:00.0 AM"
-   szProductIdentifier = mSPLDef.SubregOrganization.Name + "   " + szDateTimeDisplay
+   szProductIdentifier = mSPLDef.SubregOrganization.Name + "   " + mSPLDef.MasterLabelContent.Version + ":" + mSPLDef.SubregLabelContent.Version + "   " + szDateTimeDisplay
    szWriteBuffer = "               <fo:block-container position=^absolute^ top=^0.4in^ left=^1.0in^>"
    WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
    szWriteBuffer = "                  <fo:block font-size=^7pt^ letter-spacing=^.2em^ text-align=^left^>"
@@ -607,7 +609,7 @@ FormatContinueBlock( VIEW mSPLDefPDF BASED ON LOD mSPLDef,
    STRING ( 32000 )  szStatementText
    STRING ( 32000 )  szTemporaryText
    STRING ( 256 )    szStatementTitle
-   STRING ( 10 )     szSeparatorCharacters
+   STRING ( 32 )     szSeparatorCharacters
    STRING ( 2 )      szTitleFormat
    STRING ( 2 )      szStatementFormat
    STRING ( 50 )     szLeadingBlanks
@@ -760,9 +762,9 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
    VIEW mSPLDef2        BASED ON LOD mSPLDef
    STRING ( 50 ) szLeadingBlanks
    STRING ( 50 ) szBlockBlanks
-   STRING ( 10 ) szHeight
-   STRING ( 10 ) szWidth
-   STRING ( 10 ) szTop
+   STRING ( 32 ) szHeight
+   STRING ( 32 ) szWidth
+   STRING ( 32 ) szTop
    STRING ( 50 ) szSectionType
    STRING ( 50 ) szLeft
    STRING ( 90 ) szTitle
@@ -893,12 +895,12 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
                // For Directions For Use, we will process all Sections.
                FOR EACH mSPLDef.SPLD_DirectionsForUseSection
                   GeneratePDF_DFU( mSPLDef, mSPLDefPDF, lFile,
-                                    "SPLD_DirectionsForUseSection",
-                                    "SPLD_DirectionsForUseStatement",
-                                    "SPLD_DirectionsUsage",
-                                    "SPLD_DirectionsUsageOrdering",
-                                    szLeadingBlanks,
-                                    szWriteBuffer )
+                                   "SPLD_DirectionsForUseSection",
+                                   "SPLD_DirectionsForUseStatement",
+                                   "SPLD_DirectionsUsage",
+                                   "SPLD_DirectionsUsageOrdering",
+                                   szLeadingBlanks,
+                                   szWriteBuffer )
                END
             ELSE
 
@@ -926,12 +928,12 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
                   // any marketing statement preceding it.
                   IF mSPLDef.SPLD_MarketingStatement.Text != ""
                      GeneratePDF_DFU( mSPLDef, mSPLDefPDF, lFile,
-                                       "SPLD_MarketingSection",
-                                       "SPLD_MarketingStatement",
-                                       "SPLD_MarketingUsage",
-                                       "SPLD_MarketingUsageOrdering",
-                                       szLeadingBlanks,
-                                       szWriteBuffer )
+                                      "SPLD_MarketingSection",
+                                      "SPLD_MarketingStatement",
+                                      "SPLD_MarketingUsage",
+                                      "SPLD_MarketingUsageOrdering",
+                                      szLeadingBlanks,
+                                      szWriteBuffer )
                   END
                ELSE
                   IF mSPLDefPDF.LLD_Block.Name = ""
@@ -1106,10 +1108,10 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
             ELSE
                // It is an error because there is no processing for the Block.
 
-               szMsg = "Error:  The Block is empty for Panel, " + mSPLDef.LLD_Panel.Tag + ", Block " + mSPLDefPDF.LLD_Block.Tag + "."
+               szMsg = "The Block is empty for Panel: " + mSPLDef.LLD_Panel.Tag + ", Block: " + mSPLDefPDF.LLD_Block.Tag + "."
                TraceLineS( szMsg, "" )
 
-               szTitle = "Error"
+               szTitle = "Error:"
 
                // Set up Error Title.
                szWriteBuffer = szLeadingBlanks + "   <fo:block>"
@@ -1171,24 +1173,24 @@ FormatBlockContainer( VIEW mSPLDefPDF BASED ON LOD mSPLDef,
                       INTEGER lFile,
                       STRING ( 50 )    szLeadingBlanks,
                       STRING ( 32000 ) szWriteBuffer,
-                      STRING ( 10 )    szTopPosition )
+                      STRING ( 32 )    szTopPosition )
 
-   STRING ( 10 )  szTop
-   STRING ( 10 )  szHeight
-   STRING ( 10 )  szWidth
-   STRING ( 10 )  szLeft
-   STRING ( 10 )  szBorderStyle
-   STRING ( 10 )  szColor
-   STRING ( 10 )  szFontFamily
-   STRING ( 10 )  szFontSize
-   STRING ( 10 )  szDefaultFontSize
-   STRING ( 10 )  szFontWeight
-   STRING ( 10 )  szMBP
-   STRING ( 10 )  szTopMBP
-   STRING ( 10 )  szBottomMBP
-   STRING ( 10 )  szLeftMBP
-   STRING ( 10 )  szRightMBP
-   STRING ( 10 )  szTextAlign
+   STRING ( 32 )  szTop
+   STRING ( 32 )  szHeight
+   STRING ( 32 )  szWidth
+   STRING ( 32 )  szLeft
+   STRING ( 32 )  szBorderStyle
+   STRING ( 32 )  szColor
+   STRING ( 32 )  szFontFamily
+   STRING ( 32 )  szFontSize
+   STRING ( 32 )  szDefaultFontSize
+   STRING ( 32 )  szFontWeight
+   STRING ( 32 )  szMBP
+   STRING ( 32 )  szTopMBP
+   STRING ( 32 )  szBottomMBP
+   STRING ( 32 )  szLeftMBP
+   STRING ( 32 )  szRightMBP
+   STRING ( 32 )  szTextAlign
    STRING ( 256 ) szImg
 
    STRING ( 512 ) szDebugMsg
@@ -1266,6 +1268,7 @@ FormatBlockContainer( VIEW mSPLDefPDF BASED ON LOD mSPLDef,
    SET CURSOR FIRST mSPLDefPDF.LLD_SpecialSectionAttribute WHERE mSPLDefPDF.LLD_SpecialSectionAttribute.Name = "Block"
    IF RESULT >= zCURSOR_SET
       szFontFamily = mSPLDefPDF.LLD_SpecialSectionAttrBlock.FontFamily
+      TraceLineS( "1Font Family set to: ", szFontFamily )
       IF szFontFamily != ""
          szWriteBuffer = szWriteBuffer + " font-family=^" + szFontFamily + "^"
       END
@@ -1380,20 +1383,20 @@ FormatBlock( VIEW mSPLDef BASED ON LOD mSPLDef,
              STRING ( 50 )    szLeadingBlanks,
              STRING ( 32000 ) szWriteBuffer )
 
-   STRING ( 10 )  szTop
-   STRING ( 10 )  szHeight
-   STRING ( 10 )  szWidth
-   STRING ( 10 )  szLeft
-   STRING ( 10 )  szBorderStyle
-   STRING ( 10 )  szColor
-   STRING ( 10 )  szFontFamily
-   STRING ( 10 )  szFontSize
-   STRING ( 10 )  szFontWeight
-   STRING ( 10 )  szMarginTop
-   STRING ( 10 )  szMarginBottom
-   STRING ( 10 )  szMarginLeft
-   STRING ( 10 )  szMarginRight
-   STRING ( 10 )  szTextAlign
+   STRING ( 32 )  szTop
+   STRING ( 32 )  szHeight
+   STRING ( 32 )  szWidth
+   STRING ( 32 )  szLeft
+   STRING ( 32 )  szBorderStyle
+   STRING ( 32 )  szColor
+   STRING ( 32 )  szFontFamily
+   STRING ( 32 )  szFontSize
+   STRING ( 32 )  szFontWeight
+   STRING ( 32 )  szMarginTop
+   STRING ( 32 )  szMarginBottom
+   STRING ( 32 )  szMarginLeft
+   STRING ( 32 )  szMarginRight
+   STRING ( 32 )  szTextAlign
    STRING ( 256 ) szImg
    // Process a Block and its subcomponents.
    // Block Container Start
@@ -1443,11 +1446,13 @@ FormatBlock( VIEW mSPLDef BASED ON LOD mSPLDef,
       szWriteBuffer = szWriteBuffer + " left=^" + szLeft + "in^"
    END
 
-/*
+
    szFontFamily = mSPLDef.LLD_Block.FontFamily
    IF szFontFamily != ""
-      szWriteBuffer = szWriteBuffer + " font-family=^" + szFontFamily + "^"
+      TraceLineS( "2Font Family skipped: ", szFontFamily )
+   // szWriteBuffer = szWriteBuffer + " font-family=^" + szFontFamily + "^"
    END
+/*
    szFontSize = mSPLDef.LLD_Block.FontSize
    IF szFontSize != ""
       TraceLineS( "2Font Size set to: ", szFontSize )
@@ -1497,23 +1502,23 @@ AddFormatToSpecialText( VIEW mSPLDef BASED ON LOD mSPLDef,
                         STRING ( 32 )    SpecialTextTitle,
                         STRING ( 32000 ) szWriteBuffer )
 
-   STRING ( 10 )  szTop
-   STRING ( 10 )  szHeight
-   STRING ( 10 )  szWidth
-   STRING ( 10 )  szLeft
-   STRING ( 10 )  szBorderStyle
-   STRING ( 10 )  szColor
-   STRING ( 10 )  szFontFamily
-   STRING ( 10 )  szFontSize
-   STRING ( 10 )  szFontWeight
-   STRING ( 10 )  szMBP
-   STRING ( 10 )  szTopMBP
-   STRING ( 10 )  szBottomMBP
-   STRING ( 10 )  szLeftMBP
-   STRING ( 10 )  szRightMBP
-   STRING ( 10 )  szTextAlign
-   STRING ( 10 )  szLineHeight
-   STRING ( 10 )  szLetterSpace
+   STRING ( 32 )  szTop
+   STRING ( 32 )  szHeight
+   STRING ( 32 )  szWidth
+   STRING ( 32 )  szLeft
+   STRING ( 32 )  szBorderStyle
+   STRING ( 32 )  szColor
+   STRING ( 32 )  szFontFamily
+   STRING ( 32 )  szFontSize
+   STRING ( 32 )  szFontWeight
+   STRING ( 32 )  szMBP
+   STRING ( 32 )  szTopMBP
+   STRING ( 32 )  szBottomMBP
+   STRING ( 32 )  szLeftMBP
+   STRING ( 32 )  szRightMBP
+   STRING ( 32 )  szTextAlign
+   STRING ( 32 )  szLineHeight
+   STRING ( 32 )  szLetterSpace
    STRING ( 200 ) szMsg
    STRING ( 256 ) szImg
 
@@ -1521,7 +1526,7 @@ AddFormatToSpecialText( VIEW mSPLDef BASED ON LOD mSPLDef,
    // Skip if the Special Text Attribute hasn't been defined.
 
    NAME VIEW mSPLDef "mSPLDefHazards"
-// TraceLineS( "$$$$ Special Text for: ", SpecialTextTitle )
+   TraceLineS( "$$$$ Special Text for: ", SpecialTextTitle )
    SET CURSOR FIRST mSPLDef.LLD_SpecialSectionAttribute WHERE mSPLDef.LLD_SpecialSectionAttribute.Name = SpecialTextTitle
    IF RESULT >= zCURSOR_SET
 
@@ -1533,13 +1538,14 @@ AddFormatToSpecialText( VIEW mSPLDef BASED ON LOD mSPLDef,
       END
 
       szFontFamily = mSPLDef.LLD_SpecialSectionAttrBlock.FontFamily
+      TraceLineS( "3Font Family set to: ", szFontFamily )
       IF szFontFamily != ""
          szWriteBuffer = szWriteBuffer + " font-family=^" + szFontFamily + "^"
       END
 
       szFontSize = mSPLDef.LLD_SpecialSectionAttrBlock.FontSize
       IF szFontSize != ""
-      // TraceLineS( "3Font Size set to: ", szFontSize )
+         TraceLineS( "3Font Size set to: ", szFontSize )
          szWriteBuffer = szWriteBuffer + " font-size=^" + szFontSize + "pt^"
       END
 
@@ -1671,10 +1677,10 @@ GeneratePDF_DFU( VIEW mSPLDef    BASED ON LOD mSPLDef,
    STRING ( 50 )     szSectionTitle
    STRING ( 50 )     szSectionName
    STRING ( 50 )     szSectionType
-   STRING ( 10 )     szSeparatorCharacters
-   STRING ( 10 )     szNumberedText
+   STRING ( 32 )     szSeparatorCharacters
+   STRING ( 32 )     szNumberedText
    STRING ( 32 )     szLineHeight
-   STRING ( 10 )     szStatementLeading
+   STRING ( 32 )     szStatementLeading
    STRING ( 2 )      szSectionTitlePosition
    STRING ( 2 )      szStatementTitlePosition
    STRING ( 2 )      szStatementFormat
@@ -2040,13 +2046,13 @@ GeneratePDF_ClmList( VIEW mSPLDef    BASED ON LOD mSPLDef,
    STRING ( 50 )     szLeadingBlanks
    STRING ( 50 )     szBreakName1
    STRING ( 50 )     szBreakName2
-   STRING ( 10 )     szMarginRight
-   STRING ( 10 )     szMarginLeft
+   STRING ( 32 )     szMarginRight
+   STRING ( 32 )     szMarginLeft
    STRING ( 100 )    szSectionTitle
    STRING ( 100 )    szStatementTitle
-   STRING ( 10 )     szTitleFormat
+   STRING ( 32 )     szTitleFormat
    STRING ( 50 )     szSectionName
-   STRING ( 10 )     szColumnTop
+   STRING ( 32 )     szColumnTop
    STRING ( 100 )    szCombinedName
    STRING ( 100 )    szFootnoteText
    STRING ( 3 )      szFootnoteNumber
@@ -2541,8 +2547,8 @@ GeneratePDF_EPA_Reg( VIEW mSPLDef    BASED ON LOD mSPLDef,
 
    STRING ( 50 )    szLeadingBlanks
    STRING ( 32000 ) szStatementText
-   STRING ( 20 )    szEPA_RegNbr
-   STRING ( 20 )    szEPA_EstNbr
+   STRING ( 32 )    szEPA_RegNbr
+   STRING ( 32 )    szEPA_EstNbr
    // Generate PDF for EPA Reg. No. and EPA Est. No..
 
    szLeadingBlanks = szPassedBlanks + "   "
@@ -2646,7 +2652,7 @@ GeneratePDF_General( VIEW mSPLDef    BASED ON LOD mSPLDef,
    STRING ( 32000 )  szStatementText
    STRING ( 256 )    szCombinedTitle
    STRING ( 32 )     szLineHeight
-   STRING ( 10 )     szStatementLeading
+   STRING ( 32 )     szStatementLeading
 
    // Generate PDF for a "General" Section, which can be Precautionary, Environmental/Physical Hazard or First Aid.
 
@@ -2954,7 +2960,7 @@ BuildCompositeEntries( VIEW mSPLDef BASED ON LOD mSPLDef )
    STRING ( 100 )   szCompositeLocation
    STRING ( 4000 )  szDisplayValue
    STRING ( 4000 )  szOriginalDisplayValue
-   STRING ( 20 )    szUsageType
+   STRING ( 32 )    szUsageType
    INTEGER          MaxDisplayLength
    INTEGER          OriginalStringLength
    INTEGER          Count
@@ -4220,7 +4226,7 @@ END
 TRANSFORMATION OPERATION
 GenerateXML_File( VIEW mSPLDef BASED ON LOD mSPLDef,
                   STRING ( 32 )  szTopEntityName,
-                  STRING ( 300 ) szDirectoryAndFileName )
+                  STRING ( 300 ) szXmlDirectoryAndFileName )
 
    STRING ( 50 )   szIndentation
    STRING ( 400 )  szMsg
@@ -4236,9 +4242,9 @@ GenerateXML_File( VIEW mSPLDef BASED ON LOD mSPLDef,
    // Build an XML object from selected entries in the mSPLDef object instance.
 
    // Open XML output file.
-   lFileHandle = SysOpenFile( mSPLDef, szDirectoryAndFileName, COREFILE_WRITE )
+   lFileHandle = SysOpenFile( mSPLDef, szXmlDirectoryAndFileName, COREFILE_WRITE )
    IF lFileHandle < 0
-      szMsg = "Cannot open XML Output File, " + szDirectoryAndFileName
+      szMsg = "Cannot open XML Output File, " + szXmlDirectoryAndFileName
       MessageSend( mSPLDef, "", "Generate XSLT",
                    szMsg, zMSGQ_OBJECT_CONSTRAINT_WARNING, 0 )
       RETURN -1

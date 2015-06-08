@@ -624,6 +624,7 @@ dDisplayDU_Statement( VIEW mMasLC BASED ON LOD mMasLC,
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
 
+      // Directions for Use Display Statement Text is a combination of Title and Text.
       IF mMasLC.M_DirectionsForUseStatement.Title != ""
          szTitle            = mMasLC.M_DirectionsForUseStatement.Title 
          szStatementText    = mMasLC.M_DirectionsForUseStatement.Text 
@@ -648,6 +649,48 @@ dDisplayDU_Statement( VIEW mMasLC BASED ON LOD mMasLC,
 
 END
 
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: dDisplaySD_Statement
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dDisplaySD_Statement( VIEW mMasLC BASED ON LOD mMasLC,
+                      STRING ( 32 ) InternalEntityStructure,
+                      STRING ( 32 ) InternalAttribStructure,
+                      SHORT GetOrSetFlag )
+
+   STRING ( 10000 ) szDisplayStatement
+   STRING ( 10000 ) szStatementText
+   STRING ( 256 )   szTitle
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Storage and Disposal Display Statement Text is a combination of Title and Text.
+      IF mMasLC.M_StorageDisposalStatement.Title != ""
+         szTitle            = mMasLC.M_StorageDisposalStatement.Title 
+         szStatementText    = mMasLC.M_StorageDisposalStatement.Text 
+         szDisplayStatement = szTitle + " --- " + szStatementText
+      ELSE
+         szStatementText    = mMasLC.M_StorageDisposalStatement.Text 
+         szDisplayStatement = szStatementText
+      END
+
+
+      // Store the calculated value in the object.
+      StoreStringInRecord( mMasLC,
+                           InternalEntityStructure,
+                           InternalAttribStructure, szDisplayStatement )
+      RETURN 0
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -666,6 +709,7 @@ dTitleText( VIEW mMasLC BASED ON LOD mMasLC,
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
 
+      // DonC 6/4/2015 - As far as I know, this operation isn't used.
       IF mMasLC.M_IngredientsStatement EXISTS
          szTitle = mMasLC.M_StorageDisposalStatement.Title
          IF szTitle != ""

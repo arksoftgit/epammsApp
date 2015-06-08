@@ -30,32 +30,6 @@
             </bookmark>
         </file>
         <file>
-            <url>web/wStartUpUserLogin.jsp</url>
-            <bookmark id="0">
-                <name/>
-                <line>608</line>
-                <key/>
-            </bookmark>
-            <bookmark id="0">
-                <name/>
-                <line>978</line>
-                <key/>
-            </bookmark>
-        </file>
-        <file>
-            <url>src/java/com/ajax/GraphicalLabelDesignerServlet.java</url>
-            <bookmark id="25">
-                <name/>
-                <line>551</line>
-                <key/>
-            </bookmark>
-            <bookmark id="13">
-                <name/>
-                <line>654</line>
-                <key/>
-            </bookmark>
-        </file>
-        <file>
             <url>web/js/labeldesigner.js</url>
             <bookmark id="40">
                 <name/>
@@ -114,6 +88,32 @@
             <bookmark id="0">
                 <name/>
                 <line>1258</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>web/wStartUpUserLogin.jsp</url>
+            <bookmark id="0">
+                <name/>
+                <line>608</line>
+                <key/>
+            </bookmark>
+            <bookmark id="0">
+                <name/>
+                <line>978</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>src/java/com/ajax/GraphicalLabelDesignerServlet.java</url>
+            <bookmark id="25">
+                <name/>
+                <line>551</line>
+                <key/>
+            </bookmark>
+            <bookmark id="13">
+                <name/>
+                <line>654</line>
                 <key/>
             </bookmark>
         </file>
