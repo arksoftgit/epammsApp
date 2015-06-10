@@ -375,7 +375,7 @@ function smEditFirstAidSect( )
    }
 }
 
-function smEditHazardSection( )
+function smEditEnvironmentalHazardSection( )
 {
 
       // This is for indicating whether the user hit the window close box.
@@ -385,7 +385,22 @@ function smEditHazardSection( )
    {
       _DisableFormElements( true );
 
-      document.wMLCClaimsFootnoteSection.zAction.value = "smEditHazardSection";
+      document.wMLCClaimsFootnoteSection.zAction.value = "smEditEnvironmentalHazardSection";
+      document.wMLCClaimsFootnoteSection.submit( );
+   }
+}
+
+function smEditChemicalHazardsSection( )
+{
+
+      // This is for indicating whether the user hit the window close box.
+      isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCClaimsFootnoteSection.zAction.value = "smEditChemicalHazardsSection";
       document.wMLCClaimsFootnoteSection.submit( );
    }
 }

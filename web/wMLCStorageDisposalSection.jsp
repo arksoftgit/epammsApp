@@ -103,16 +103,16 @@ public int DoInputMapping( HttpServletRequest request,
       if ( nRC >= 0 )
       {
          strMapValue = request.getParameter( "hComboBox1" );
-            try
-            {
-               if ( webMapping )
-                  VmlOperation.CreateMessage( task, "ComboBox1", "", strMapValue );
-               else
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "ComboBox1", "", strMapValue );
+            else
                mMasLC.cursor( "M_StorageDisposalSection" ).getAttribute( "ContainerVolume" ).setValue( strMapValue, "" );
-            }
-            catch ( InvalidAttributeValueException e )
-            {
-               nMapError = -16;
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
             VmlOperation.CreateMessage( task, "ComboBox1", e.getReason( ), strMapValue );
          }
       }
@@ -1105,31 +1105,31 @@ else
       List<TableEntry> list = JspWebUtils.getTableDomainValues( mMasLC , "M_StorageDisposalSection", "ContainerVolume", "" );
 
       nRC = mMasLC.cursor( "M_StorageDisposalSection" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
+      if ( nRC >= 0 )
+      {
          strComboCurrentValue = mMasLC.cursor( "M_StorageDisposalSection" ).getAttribute( "ContainerVolume" ).getString( "" );
-            if ( strComboCurrentValue == null )
-               strComboCurrentValue = "";
-         }
-         else
-         {
+         if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
-         }
+      }
+      else
+      {
+         strComboCurrentValue = "";
+      }
 
-            // Code for NOT required attribute, which makes sure a blank entry exists.
-            if ( strComboCurrentValue == "" )
-            {
+      // Code for NOT required attribute, which makes sure a blank entry exists.
+      if ( strComboCurrentValue == "" )
+      {
          inListComboBox1 = true;
 %>
-               <option selected="selected" value=""></option>
+         <option selected="selected" value=""></option>
 <%
-            }
-            else
-            {
+      }
+      else
+      {
 %>
-               <option value=""></option>
+         <option value=""></option>
 <%
-            }
+      }
       for ( TableEntry entry : list )
       {
          String internalValue = entry.getInternalValue( );
@@ -1168,7 +1168,7 @@ else
       }  
    }  // if view != null
 %>
-   </select>
+</select>
 
 <input name="hComboBox1" id="hComboBox1" type="hidden" value="<%=strComboCurrentValue%>" >
 </div>  <!-- End of a new line -->

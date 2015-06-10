@@ -249,7 +249,7 @@ if ( strActionToProcess != null )
 
       if ( strNextJSP_Name.equals( "" ) )
       {
-      // Next Window
+         // Next Window
          strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "AddItemsMultipleClaims" );
       }
 

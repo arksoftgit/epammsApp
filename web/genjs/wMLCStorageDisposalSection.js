@@ -159,6 +159,8 @@ function _AfterPageLoaded( )
       timerID = null;
    }
 
+   document.wMLCStorageDisposalSection.hComboBox1.value = document.wMLCStorageDisposalSection.ComboBox1.value
+
    var varTimeout = document.wMLCStorageDisposalSection.zTimeout.value;
    if ( varTimeout > 0 )
    {
@@ -262,7 +264,7 @@ function CleanStorDispStmtHTML( )
    }
 }
 
-function DELETE_StorageDisposalContainer( strTagEntityKey )
+function DELETE_StorageDisposalContainer( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -270,10 +272,6 @@ function DELETE_StorageDisposalContainer( strTagEntityKey )
 
    if ( _IsDocDisabled( ) == false )
    {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCStorageDisposalSection.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
       document.wMLCStorageDisposalSection.zAction.value = "DELETE_StorageDisposalContainer";
@@ -296,7 +294,7 @@ function GOTO_StorageDispStatementAdd( )
    }
 }
 
-function GOTO_DirsForUseStatementDelete( strTagEntityKey )
+function GOTO_StorageDispStatementDelete( strTagEntityKey )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -310,7 +308,7 @@ function GOTO_DirsForUseStatementDelete( strTagEntityKey )
       document.wMLCStorageDisposalSection.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
-      document.wMLCStorageDisposalSection.zAction.value = "GOTO_DirsForUseStatementDelete";
+      document.wMLCStorageDisposalSection.zAction.value = "GOTO_StorageDispStatementDelete";
       document.wMLCStorageDisposalSection.submit( );
    }
 }
@@ -334,7 +332,7 @@ function GOTO_StorageDispStatementUpdate( strTagEntityKey )
    }
 }
 
-function ComboBox1OnChange( hControl, Control, strEntityKey )
+function ComboBox1OnChange( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -342,8 +340,7 @@ function ComboBox1OnChange( hControl, Control, strEntityKey )
 
    if ( _IsDocDisabled( ) == false )
    {
-      document.getElementById( hControl ).value = Control.value;
-      document.wMLCStorageDisposalSection.zTableRowSelect.value = strEntityKey;
+      document.wMLCStorageDisposalSection.hComboBox1.value = document.wMLCStorageDisposalSection.ComboBox1.value;
    }
 }
 

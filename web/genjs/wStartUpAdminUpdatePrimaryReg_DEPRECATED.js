@@ -291,6 +291,14 @@ function smProfile( )
 
    if ( _IsDocDisabled( ) == false )
    {
+
+      // Javascript code entered by user.
+
+alert( "Not yet implemented");
+return;
+
+      // END of Javascript code entered by user.
+
       _DisableFormElements( true );
 
       document.wStartUpAdminUpdatePrimaryReg_DEPRECATED.zAction.value = "smProfile";

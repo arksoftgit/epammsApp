@@ -43,8 +43,8 @@ function _OnAlmostTimeout()
       // If the time is less than one minute, resubmit the page.  Otherwise, go to the timeout window.
       if (tDiff < 60000)
       {
-         document.wMLCSLC_ComponentSelect.zAction.value = "_OnResubmitPage";
-         document.wMLCSLC_ComponentSelect.submit( );
+         document.wMLCAddItemsMultiple.zAction.value = "_OnResubmitPage";
+         document.wMLCAddItemsMultiple.submit( );
       }
       else
       {
@@ -59,8 +59,8 @@ function _OnTimeout( )
    {
       _DisableFormElements( true );
 
-      document.wMLCSLC_ComponentSelect.zAction.value = "_OnTimeout";
-      document.wMLCSLC_ComponentSelect.submit( );
+      document.wMLCAddItemsMultiple.zAction.value = "_OnTimeout";
+      document.wMLCAddItemsMultiple.submit( );
    }
 }
 
@@ -74,39 +74,25 @@ function _BeforePageUnload( )
       // If the user clicked the window close box, unregister zeidon.
       if (isWindowClosing)
       {
-         document.wMLCSLC_ComponentSelect.zAction.value = "_OnUnload";
-         document.wMLCSLC_ComponentSelect.submit( );
+         document.wMLCAddItemsMultiple.zAction.value = "_OnUnload";
+         document.wMLCAddItemsMultiple.submit( );
       }
    }
 }
 
 function _IsDocDisabled( )
 {
-   var theForm;
-   var j;
-   var k;
+   var bRC = false;
 
-   for ( j = 0; j < document.forms.length; j++ )
-   {
-      theForm = document.forms[ j ];
-      for ( k = 0; k < theForm.length; k++ )
-      {
-         if ( theForm.elements[ k ].name == "zDisable" )
-            return theForm.elements[ k ].disabled;
-      }
+   var $el = $("#zDisable");
+   if ( $el.length > 0 ) {
+      bRC = $el[0].disabled;
    }
-
-   return false;
+   return bRC ? true : false;
 }
 
 function _DisableFormElements( bDisabled )
 {
-   var theForm;
-   var type;
-   var lis;
-   var thisLi;
-   var j;
-   var k;
    var bRC = false;
 
    if ( bDisabled && timerID != null )
@@ -128,35 +114,13 @@ function _DisableFormElements( bDisabled )
       }
    }
 
-   // We want to set some fields as disabled (like buttons and comboboxes) so that
-   // while the jsp code is processing, users can not select these controls.
-   for ( j = 0; j < document.forms.length; j++ )
-   {
-      theForm = document.forms[ j ];
-      for ( k = 0; k < theForm.length; k++ )
-      {
-         type = theForm.elements[ k ].type;
-
-         if ( type == "button" || type == "submit" || (type != null && type.indexOf( "select" ) == 0) )
-         {
-            theForm.elements[ k ].disabled = bDisabled;
-         }
-         else
-         if ( theForm.elements[ k ].name == "zDisable" )
-         {
-            theForm.elements[ k ].disabled = bDisabled;
-            bRC = true;
-         }
-      }
+   var $el = $("#zDisable");
+   if ( $el.length > 0 ) {
+      $el[0].disabled = true;
+      bRC = true;
    }
 
-   lis = document.getElementsByTagName( "li" );
-   for ( k = 0; k < lis.length; k++ )
-   {
-      thisLi = lis[ k ];
-      thisLi.disabled = bDisabled;
-   }
-
+   $.blockUI({ message: '<h1><img src="./images/busy.gif" /></h1>', overlayCSS: { backgroundColor: '#eee' } });
    return bRC;
 }
 
@@ -164,16 +128,16 @@ function _AfterPageLoaded( )
 {
 // _DisableFormElements( false );
 
-   var szFocusCtrl = document.wMLCSLC_ComponentSelect.zFocusCtrl.value;
+   var szFocusCtrl = document.wMLCAddItemsMultiple.zFocusCtrl.value;
    if ( szFocusCtrl != "" && szFocusCtrl != "null" )
-      eval( 'document.wMLCSLC_ComponentSelect.' + szFocusCtrl + '.focus( )' );
+      eval( 'document.wMLCAddItemsMultiple.' + szFocusCtrl + '.focus( )' );
 
    // This is where we put out a message from the previous iteration on this window
-   var szMsg = document.wMLCSLC_ComponentSelect.zError.value;
+   var szMsg = document.wMLCAddItemsMultiple.zError.value;
    if ( szMsg != "" )
       alert( szMsg ); // "Houston ... We have a problem"
 
-   szMsg = document.wMLCSLC_ComponentSelect.zOpenFile.value;
+   szMsg = document.wMLCAddItemsMultiple.zOpenFile.value;
    if ( szMsg != "" )
    {
       var NewWin = window.open( szMsg );
@@ -185,8 +149,9 @@ function _AfterPageLoaded( )
       }
    }
 
-   document.wMLCSLC_ComponentSelect.zError.value = "";
-   document.wMLCSLC_ComponentSelect.zOpenFile.value = "";
+   var keyRole = document.wMLCAddItemsMultiple.zKeyRole.value;
+   document.wMLCAddItemsMultiple.zError.value = "";
+   document.wMLCAddItemsMultiple.zOpenFile.value = "";
 
    if ( timerID != null )
    {
@@ -194,7 +159,7 @@ function _AfterPageLoaded( )
       timerID = null;
    }
 
-   var varTimeout = document.wMLCSLC_ComponentSelect.zTimeout.value;
+   var varTimeout = document.wMLCAddItemsMultiple.zTimeout.value;
    if ( varTimeout > 0 )
    {
       var varDelay = 60000 * varTimeout;  // Timeout value in timeout.inc
@@ -222,7 +187,7 @@ function CheckAllInGrid(id, CheckBoxName)
    }
 }
 
-function CancelAndReturn( )
+function CancelAddItems( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -232,12 +197,12 @@ function CancelAndReturn( )
    {
       _DisableFormElements( true );
 
-      document.wMLCSLC_ComponentSelect.zAction.value = "CancelAndReturn";
-      document.wMLCSLC_ComponentSelect.submit( );
+      document.wMLCAddItemsMultiple.zAction.value = "CancelAddItems";
+      document.wMLCAddItemsMultiple.submit( );
    }
 }
 
-function DeleteMLC_ComponentsForSLC( )
+function ConfirmAddItemsMultiple( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -247,12 +212,12 @@ function DeleteMLC_ComponentsForSLC( )
    {
       _DisableFormElements( true );
 
-      document.wMLCSLC_ComponentSelect.zAction.value = "DeleteMLC_ComponentsForSLC";
-      document.wMLCSLC_ComponentSelect.submit( );
+      document.wMLCAddItemsMultiple.zAction.value = "ConfirmAddItemsMultiple";
+      document.wMLCAddItemsMultiple.submit( );
    }
 }
 
-function SaveAndReturn( )
+function ConfirmAddItemsMultipleReturn( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -262,23 +227,8 @@ function SaveAndReturn( )
    {
       _DisableFormElements( true );
 
-      document.wMLCSLC_ComponentSelect.zAction.value = "SaveAndReturn";
-      document.wMLCSLC_ComponentSelect.submit( );
-   }
-}
-
-function SelectMLC_ComponentsForSLC( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCSLC_ComponentSelect.zAction.value = "SelectMLC_ComponentsForSLC";
-      document.wMLCSLC_ComponentSelect.submit( );
+      document.wMLCAddItemsMultiple.zAction.value = "ConfirmAddItemsMultipleReturn";
+      document.wMLCAddItemsMultiple.submit( );
    }
 }
 

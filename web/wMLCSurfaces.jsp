@@ -249,7 +249,7 @@ if ( strActionToProcess != null )
 
       if ( strNextJSP_Name.equals( "" ) )
       {
-      // Next Window
+         // Next Window
          strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "AddItemsMultiple" );
       }
 
@@ -1363,7 +1363,7 @@ else
 <button type="button" name="PBNew" id="PBNew" value="" onclick="ADD_SurfacesUsageItems( )" style="width:78px;height:26px;position:absolute;left:482px;top:12px;">New</button>
 
 
-</div>  <!-- GBClaimsStatements --> 
+</div>  <!--  GBClaimsStatements --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->

@@ -729,35 +729,6 @@ END
 
 /*************************************************************************************************
 **    
-**    OPERATION: ADD_StorageDisposalContainer
-**    
-*************************************************************************************************/
-DIALOG OPERATION
-ADD_StorageDisposalContainer( VIEW ViewToWindow )
-
-   VIEW mMasLC REGISTERED AS mMasLC
-   
-   CREATE ENTITY mMasLC.M_StorageDisposalDrivingConVol  
-
-END
-
-
-/*************************************************************************************************
-**    
-**    OPERATION: DELETE_StorageDisposalContainer
-**    
-*************************************************************************************************/
-DIALOG OPERATION
-DELETE_StorageDisposalContainer( VIEW ViewToWindow )
-
-   VIEW mMasLC REGISTERED AS mMasLC
-   
-   DELETE ENTITY mMasLC.M_StorageDisposalDrivingConVol 
-
-END
-
-/*************************************************************************************************
-**    
 **    OPERATION: GOTO_StorageDispSectionUpdate
 **    
 *************************************************************************************************/
@@ -766,11 +737,8 @@ GOTO_StorageDispSectionUpdate( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
    
-   // Create Temporal subobject version and create a Container entry if there isn't one currently.
+   // Create Temporal subobject version.
    CreateTemporalSubobjectVersion( mMasLC, "M_StorageDisposalSection" )
-   IF mMasLC.M_StorageDisposalDrivingConVol DOES NOT EXIST
-      CREATE ENTITY mMasLC.M_StorageDisposalDrivingConVol  
-   END
 
 END
 
@@ -1263,6 +1231,31 @@ GOTO_DirsForUseStatementAdd( VIEW ViewToWindow )
    
    // Add new temporal entity as last statement under section.
    SET CURSOR LAST mMasLC.M_DirectionsForUseStatement 
+   CreateTemporalEntity( mMasLC, "M_DirectionsForUseStatement", zPOS_AFTER )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: AcceptAddNewDU_Stmt
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+AcceptAddNewDU_Stmt( VIEW ViewToWindow )
+
+   VIEW  mMasLC   REGISTERED AS mMasLC
+   STRING ( 256 ) szPrompt
+   SHORT nRC
+   
+   // Accept Direction for Use Statement and add new temporal one.
+   nRC = AcceptSubobject( mMasLC, "M_DirectionsForUseStatement" )
+   IF nRC < 0
+      MessageSend( ViewToWindow, "", "Save And Add New Dirs for Use Statement",
+                   "Error saving Dirs for Use statement.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+   
    CreateTemporalEntity( mMasLC, "M_DirectionsForUseStatement", zPOS_AFTER )
 
 END
@@ -1967,8 +1960,16 @@ GOTO_AddUsageStatements( VIEW ViewToWindow )
       // Surfaces
       mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Surfaces"
    ELSE
-      // Areas of Use
-      mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Areas of Use"
+      IF mMasLC.M_UsageType.UsageType = "U"
+         // Areas of Use
+         mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Areas of Use"
+      ELSE
+         IF mMasLC.M_UsageType.UsageType = "T"
+            mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Application Use"
+         ELSE
+            mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Unknown"
+         END
+      END
    END
 
 END

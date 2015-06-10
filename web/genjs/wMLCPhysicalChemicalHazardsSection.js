@@ -43,8 +43,8 @@ function _OnAlmostTimeout()
       // If the time is less than one minute, resubmit the page.  Otherwise, go to the timeout window.
       if (tDiff < 60000)
       {
-         document.wMLCCompositeComponentListWO.zAction.value = "_OnResubmitPage";
-         document.wMLCCompositeComponentListWO.submit( );
+         document.wMLCPhysicalChemicalHazardsSection.zAction.value = "_OnResubmitPage";
+         document.wMLCPhysicalChemicalHazardsSection.submit( );
       }
       else
       {
@@ -59,8 +59,8 @@ function _OnTimeout( )
    {
       _DisableFormElements( true );
 
-      document.wMLCCompositeComponentListWO.zAction.value = "_OnTimeout";
-      document.wMLCCompositeComponentListWO.submit( );
+      document.wMLCPhysicalChemicalHazardsSection.zAction.value = "_OnTimeout";
+      document.wMLCPhysicalChemicalHazardsSection.submit( );
    }
 }
 
@@ -74,39 +74,25 @@ function _BeforePageUnload( )
       // If the user clicked the window close box, unregister zeidon.
       if (isWindowClosing)
       {
-         document.wMLCCompositeComponentListWO.zAction.value = "_OnUnload";
-         document.wMLCCompositeComponentListWO.submit( );
+         document.wMLCPhysicalChemicalHazardsSection.zAction.value = "_OnUnload";
+         document.wMLCPhysicalChemicalHazardsSection.submit( );
       }
    }
 }
 
 function _IsDocDisabled( )
 {
-   var theForm;
-   var j;
-   var k;
+   var bRC = false;
 
-   for ( j = 0; j < document.forms.length; j++ )
-   {
-      theForm = document.forms[ j ];
-      for ( k = 0; k < theForm.length; k++ )
-      {
-         if ( theForm.elements[ k ].name == "zDisable" )
-            return theForm.elements[ k ].disabled;
-      }
+   var $el = $("#zDisable");
+   if ( $el.length > 0 ) {
+      bRC = $el[0].disabled;
    }
-
-   return false;
+   return bRC ? true : false;
 }
 
 function _DisableFormElements( bDisabled )
 {
-   var theForm;
-   var type;
-   var lis;
-   var thisLi;
-   var j;
-   var k;
    var bRC = false;
 
    if ( bDisabled && timerID != null )
@@ -128,35 +114,13 @@ function _DisableFormElements( bDisabled )
       }
    }
 
-   // We want to set some fields as disabled (like buttons and comboboxes) so that
-   // while the jsp code is processing, users can not select these controls.
-   for ( j = 0; j < document.forms.length; j++ )
-   {
-      theForm = document.forms[ j ];
-      for ( k = 0; k < theForm.length; k++ )
-      {
-         type = theForm.elements[ k ].type;
-
-         if ( type == "button" || type == "submit" || (type != null && type.indexOf( "select" ) == 0) )
-         {
-            theForm.elements[ k ].disabled = bDisabled;
-         }
-         else
-         if ( theForm.elements[ k ].name == "zDisable" )
-         {
-            theForm.elements[ k ].disabled = bDisabled;
-            bRC = true;
-         }
-      }
+   var $el = $("#zDisable");
+   if ( $el.length > 0 ) {
+      $el[0].disabled = true;
+      bRC = true;
    }
 
-   lis = document.getElementsByTagName( "li" );
-   for ( k = 0; k < lis.length; k++ )
-   {
-      thisLi = lis[ k ];
-      thisLi.disabled = bDisabled;
-   }
-
+   $.blockUI({ message: '<h1><img src="./images/busy.gif" /></h1>', overlayCSS: { backgroundColor: '#eee' } });
    return bRC;
 }
 
@@ -164,16 +128,16 @@ function _AfterPageLoaded( )
 {
 // _DisableFormElements( false );
 
-   var szFocusCtrl = document.wMLCCompositeComponentListWO.zFocusCtrl.value;
+   var szFocusCtrl = document.wMLCPhysicalChemicalHazardsSection.zFocusCtrl.value;
    if ( szFocusCtrl != "" && szFocusCtrl != "null" )
-      eval( 'document.wMLCCompositeComponentListWO.' + szFocusCtrl + '.focus( )' );
+      eval( 'document.wMLCPhysicalChemicalHazardsSection.' + szFocusCtrl + '.focus( )' );
 
    // This is where we put out a message from the previous iteration on this window
-   var szMsg = document.wMLCCompositeComponentListWO.zError.value;
+   var szMsg = document.wMLCPhysicalChemicalHazardsSection.zError.value;
    if ( szMsg != "" )
       alert( szMsg ); // "Houston ... We have a problem"
 
-   szMsg = document.wMLCCompositeComponentListWO.zOpenFile.value;
+   szMsg = document.wMLCPhysicalChemicalHazardsSection.zOpenFile.value;
    if ( szMsg != "" )
    {
       var NewWin = window.open( szMsg );
@@ -185,8 +149,9 @@ function _AfterPageLoaded( )
       }
    }
 
-   document.wMLCCompositeComponentListWO.zError.value = "";
-   document.wMLCCompositeComponentListWO.zOpenFile.value = "";
+   var keyRole = document.wMLCPhysicalChemicalHazardsSection.zKeyRole.value;
+   document.wMLCPhysicalChemicalHazardsSection.zError.value = "";
+   document.wMLCPhysicalChemicalHazardsSection.zOpenFile.value = "";
 
    if ( timerID != null )
    {
@@ -194,7 +159,7 @@ function _AfterPageLoaded( )
       timerID = null;
    }
 
-   var varTimeout = document.wMLCCompositeComponentListWO.zTimeout.value;
+   var varTimeout = document.wMLCPhysicalChemicalHazardsSection.zTimeout.value;
    if ( varTimeout > 0 )
    {
       var varDelay = 60000 * varTimeout;  // Timeout value in timeout.inc
@@ -222,22 +187,7 @@ function CheckAllInGrid(id, CheckBoxName)
    }
 }
 
-function CancelAndReturn( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCCompositeComponentListWO.zAction.value = "CancelAndReturn";
-      document.wMLCCompositeComponentListWO.submit( );
-   }
-}
-
-function GOTO_UpdateComponent( strTagEntityKey )
+function GOTO_ChemicalHazardsDelete( strTagEntityKey )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -248,15 +198,34 @@ function GOTO_UpdateComponent( strTagEntityKey )
       var nIdx = strTagEntityKey.lastIndexOf( '::' );
       var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
 
-      document.wMLCCompositeComponentListWO.zTableRowSelect.value = strEntityKey;
+      document.wMLCPhysicalChemicalHazardsSection.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
-      document.wMLCCompositeComponentListWO.zAction.value = "GOTO_UpdateComponent";
-      document.wMLCCompositeComponentListWO.submit( );
+      document.wMLCPhysicalChemicalHazardsSection.zAction.value = "GOTO_ChemicalHazardsDelete";
+      document.wMLCPhysicalChemicalHazardsSection.submit( );
    }
 }
 
-function SaveAndReturn( )
+function GOTO_ChemicalHazardsUpdate( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCPhysicalChemicalHazardsSection.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCPhysicalChemicalHazardsSection.zAction.value = "GOTO_ChemicalHazardsUpdate";
+      document.wMLCPhysicalChemicalHazardsSection.submit( );
+   }
+}
+
+function GOTO_ChemicalHazardsAdd( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -266,8 +235,53 @@ function SaveAndReturn( )
    {
       _DisableFormElements( true );
 
-      document.wMLCCompositeComponentListWO.zAction.value = "SaveAndReturn";
-      document.wMLCCompositeComponentListWO.submit( );
+      document.wMLCPhysicalChemicalHazardsSection.zAction.value = "GOTO_ChemicalHazardsAdd";
+      document.wMLCPhysicalChemicalHazardsSection.submit( );
+   }
+}
+
+function smSaveAndReturnMLC( )
+{
+
+      // This is for indicating whether the user hit the window close box.
+      isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCPhysicalChemicalHazardsSection.zAction.value = "smSaveAndReturnMLC";
+      document.wMLCPhysicalChemicalHazardsSection.submit( );
+   }
+}
+
+function smSaveMLC( )
+{
+
+      // This is for indicating whether the user hit the window close box.
+      isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCPhysicalChemicalHazardsSection.zAction.value = "smSaveMLC";
+      document.wMLCPhysicalChemicalHazardsSection.submit( );
+   }
+}
+
+function smCancelAndReturnMLC( )
+{
+
+      // This is for indicating whether the user hit the window close box.
+      isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCPhysicalChemicalHazardsSection.zAction.value = "smCancelAndReturnMLC";
+      document.wMLCPhysicalChemicalHazardsSection.submit( );
    }
 }
 
@@ -281,8 +295,8 @@ function smEditMasterLabelVersionData( )
    {
       _DisableFormElements( true );
 
-      document.wMLCCompositeComponentListWO.zAction.value = "smEditMasterLabelVersionData";
-      document.wMLCCompositeComponentListWO.submit( );
+      document.wMLCPhysicalChemicalHazardsSection.zAction.value = "smEditMasterLabelVersionData";
+      document.wMLCPhysicalChemicalHazardsSection.submit( );
    }
 }
 
@@ -296,8 +310,8 @@ function smEditIngredientsSect( )
    {
       _DisableFormElements( true );
 
-      document.wMLCCompositeComponentListWO.zAction.value = "smEditIngredientsSect";
-      document.wMLCCompositeComponentListWO.submit( );
+      document.wMLCPhysicalChemicalHazardsSection.zAction.value = "smEditIngredientsSect";
+      document.wMLCPhysicalChemicalHazardsSection.submit( );
    }
 }
 
@@ -311,8 +325,8 @@ function smEditStorDispSect( )
    {
       _DisableFormElements( true );
 
-      document.wMLCCompositeComponentListWO.zAction.value = "smEditStorDispSect";
-      document.wMLCCompositeComponentListWO.submit( );
+      document.wMLCPhysicalChemicalHazardsSection.zAction.value = "smEditStorDispSect";
+      document.wMLCPhysicalChemicalHazardsSection.submit( );
    }
 }
 
@@ -326,12 +340,12 @@ function smEditHumanHazardSect( )
    {
       _DisableFormElements( true );
 
-      document.wMLCCompositeComponentListWO.zAction.value = "smEditHumanHazardSect";
-      document.wMLCCompositeComponentListWO.submit( );
+      document.wMLCPhysicalChemicalHazardsSection.zAction.value = "smEditHumanHazardSect";
+      document.wMLCPhysicalChemicalHazardsSection.submit( );
    }
 }
 
-function smEditPrecautionarySect( )
+function smEditPrecautionarySection( )
 {
 
       // This is for indicating whether the user hit the window close box.
@@ -341,8 +355,8 @@ function smEditPrecautionarySect( )
    {
       _DisableFormElements( true );
 
-      document.wMLCCompositeComponentListWO.zAction.value = "smEditPrecautionarySect";
-      document.wMLCCompositeComponentListWO.submit( );
+      document.wMLCPhysicalChemicalHazardsSection.zAction.value = "smEditPrecautionarySection";
+      document.wMLCPhysicalChemicalHazardsSection.submit( );
    }
 }
 
@@ -356,12 +370,12 @@ function smEditFirstAidSect( )
    {
       _DisableFormElements( true );
 
-      document.wMLCCompositeComponentListWO.zAction.value = "smEditFirstAidSect";
-      document.wMLCCompositeComponentListWO.submit( );
+      document.wMLCPhysicalChemicalHazardsSection.zAction.value = "smEditFirstAidSect";
+      document.wMLCPhysicalChemicalHazardsSection.submit( );
    }
 }
 
-function smEditHazardSect( )
+function smEditEnvironmentalHazardSection( )
 {
 
       // This is for indicating whether the user hit the window close box.
@@ -371,12 +385,12 @@ function smEditHazardSect( )
    {
       _DisableFormElements( true );
 
-      document.wMLCCompositeComponentListWO.zAction.value = "smEditHazardSect";
-      document.wMLCCompositeComponentListWO.submit( );
+      document.wMLCPhysicalChemicalHazardsSection.zAction.value = "smEditEnvironmentalHazardSection";
+      document.wMLCPhysicalChemicalHazardsSection.submit( );
    }
 }
 
-function smEditClaimsSect( )
+function smEditChemicalHazardsSection( )
 {
 
       // This is for indicating whether the user hit the window close box.
@@ -386,12 +400,12 @@ function smEditClaimsSect( )
    {
       _DisableFormElements( true );
 
-      document.wMLCCompositeComponentListWO.zAction.value = "smEditClaimsSect";
-      document.wMLCCompositeComponentListWO.submit( );
+      document.wMLCPhysicalChemicalHazardsSection.zAction.value = "smEditChemicalHazardsSection";
+      document.wMLCPhysicalChemicalHazardsSection.submit( );
    }
 }
 
-function smEditSurfacesSect( )
+function smGOTO_DilutionEntries( )
 {
 
       // This is for indicating whether the user hit the window close box.
@@ -401,12 +415,12 @@ function smEditSurfacesSect( )
    {
       _DisableFormElements( true );
 
-      document.wMLCCompositeComponentListWO.zAction.value = "smEditSurfacesSect";
-      document.wMLCCompositeComponentListWO.submit( );
+      document.wMLCPhysicalChemicalHazardsSection.zAction.value = "smGOTO_DilutionEntries";
+      document.wMLCPhysicalChemicalHazardsSection.submit( );
    }
 }
 
-function smEditAreasOfUseSect( )
+function smEditClaimsSection( )
 {
 
       // This is for indicating whether the user hit the window close box.
@@ -416,12 +430,12 @@ function smEditAreasOfUseSect( )
    {
       _DisableFormElements( true );
 
-      document.wMLCCompositeComponentListWO.zAction.value = "smEditAreasOfUseSect";
-      document.wMLCCompositeComponentListWO.submit( );
+      document.wMLCPhysicalChemicalHazardsSection.zAction.value = "smEditClaimsSection";
+      document.wMLCPhysicalChemicalHazardsSection.submit( );
    }
 }
 
-function smEditAppTypesSect( )
+function smEditSurfacesSection( )
 {
 
       // This is for indicating whether the user hit the window close box.
@@ -431,8 +445,53 @@ function smEditAppTypesSect( )
    {
       _DisableFormElements( true );
 
-      document.wMLCCompositeComponentListWO.zAction.value = "smEditAppTypesSect";
-      document.wMLCCompositeComponentListWO.submit( );
+      document.wMLCPhysicalChemicalHazardsSection.zAction.value = "smEditSurfacesSection";
+      document.wMLCPhysicalChemicalHazardsSection.submit( );
+   }
+}
+
+function smEditAreasOfUseSection( )
+{
+
+      // This is for indicating whether the user hit the window close box.
+      isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCPhysicalChemicalHazardsSection.zAction.value = "smEditAreasOfUseSection";
+      document.wMLCPhysicalChemicalHazardsSection.submit( );
+   }
+}
+
+function smEditApplicationTypesSection( )
+{
+
+      // This is for indicating whether the user hit the window close box.
+      isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCPhysicalChemicalHazardsSection.zAction.value = "smEditApplicationTypesSection";
+      document.wMLCPhysicalChemicalHazardsSection.submit( );
+   }
+}
+
+function smGOTO_ClaimsFootnote( )
+{
+
+      // This is for indicating whether the user hit the window close box.
+      isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCPhysicalChemicalHazardsSection.zAction.value = "smGOTO_ClaimsFootnote";
+      document.wMLCPhysicalChemicalHazardsSection.submit( );
    }
 }
 
@@ -446,8 +505,8 @@ function smEditDirectionsUseSect( )
    {
       _DisableFormElements( true );
 
-      document.wMLCCompositeComponentListWO.zAction.value = "smEditDirectionsUseSect";
-      document.wMLCCompositeComponentListWO.submit( );
+      document.wMLCPhysicalChemicalHazardsSection.zAction.value = "smEditDirectionsUseSect";
+      document.wMLCPhysicalChemicalHazardsSection.submit( );
    }
 }
 
@@ -461,53 +520,8 @@ function smEditMarketingSect( )
    {
       _DisableFormElements( true );
 
-      document.wMLCCompositeComponentListWO.zAction.value = "smEditMarketingSect";
-      document.wMLCCompositeComponentListWO.submit( );
-   }
-}
-
-function smGOTO_ListUsageEntries( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCCompositeComponentListWO.zAction.value = "smGOTO_ListUsageEntries";
-      document.wMLCCompositeComponentListWO.submit( );
-   }
-}
-
-function smGOTO_CompositeEntries( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCCompositeComponentListWO.zAction.value = "smGOTO_CompositeEntries";
-      document.wMLCCompositeComponentListWO.submit( );
-   }
-}
-
-function smGOTO_CompositeWO_Usage( )
-{
-
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCCompositeComponentListWO.zAction.value = "smGOTO_CompositeWO_Usage";
-      document.wMLCCompositeComponentListWO.submit( );
+      document.wMLCPhysicalChemicalHazardsSection.zAction.value = "smEditMarketingSect";
+      document.wMLCPhysicalChemicalHazardsSection.submit( );
    }
 }
 

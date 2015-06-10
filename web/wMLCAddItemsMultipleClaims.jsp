@@ -1,6 +1,6 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 
-<%-- wMLCCreateNewProductSLC --%>
+<%-- wMLCAddItemsMultipleClaims --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -15,7 +15,7 @@
 
 <%! 
 
-ObjectEngine objectEngine = JavaObjectEngine.getInstance();
+ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
 public String ReplaceXSSValues( String szFieldValue )
 {
@@ -35,7 +35,7 @@ public int DoInputMapping( HttpServletRequest request,
    String taskId = (String) session.getAttribute( "ZeidonTaskId" );
    Task task = objectEngine.getTaskById( taskId );
 
-   View mSubProd = null;
+   View mMasLC = null;
    View vGridTmp = null; // temp view to grid view
    View vRepeatingGrp = null; // temp view to repeating group view
    String strDateFormat = "";
@@ -57,25 +57,44 @@ public int DoInputMapping( HttpServletRequest request,
    if ( webMapping == false )
       session.setAttribute( "ZeidonError", null );
 
-   mSubProd = task.getViewByName( "mSubProd" );
-   if ( VmlOperation.isValid( mSubProd ) )
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) )
    {
-      // EditBox: EditBox1
-      nRC = mSubProd.cursor( "SubregProduct" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
+      // ComboBox: ComboBox2
+      nRC = mMasLC.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         strMapValue = request.getParameter( "EditBox1" );
+         strMapValue = request.getParameter( "hComboBox2" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "EditBox1", "", strMapValue );
+               VmlOperation.CreateMessage( task, "ComboBox2", "", strMapValue );
             else
-               mSubProd.cursor( "SubregProduct" ).setAttribute( "Name", strMapValue, "" );
+               mMasLC.cursor( "MasterLabelContent" ).getAttribute( "wSelectedClaimsClassification" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "EditBox1", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "ComboBox2", e.getReason( ), strMapValue );
+         }
+      }
+
+      // MLEdit: MLEdit2
+      nRC = mMasLC.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "MLEdit2" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "MLEdit2", "", strMapValue );
+            else
+               mMasLC.cursor( "MasterLabelContent" ).getAttribute( "wAddStatementsWorkText" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "MLEdit2", e.getReason( ), strMapValue );
          }
       }
 
@@ -96,6 +115,7 @@ public int DoInputMapping( HttpServletRequest request,
 
 session = request.getSession( );
 Task task = null;
+View wWebXA = null;
 KZMSGQOO_Object mMsgQ = null; // view to Message Queue
 View vKZXMLPGO = null;
 String strLastPage = "";
@@ -125,6 +145,7 @@ String strOpenPopupWindow = "";
 String strPopupWindowSZX = "";
 String strPopupWindowSZY = "";
 String strDateFormat = "";
+String strKeyRole = "";
 String strDialogName = "";
 String strWindowName = "";
 String strLastWindow;
@@ -141,7 +162,7 @@ if ( StringUtils.isBlank( strLastWindow ) )
 
 strLastAction = (String) session.getAttribute( "ZeidonAction" );
 
-if ( strLastWindow.equals("wMLCCreateNewProductSLC") && StringUtils.isBlank( strActionToProcess ) && StringUtils.isBlank( strLastAction ) )
+if ( strLastWindow.equals("wMLCAddItemsMultipleClaims") && StringUtils.isBlank( strActionToProcess ) && StringUtils.isBlank( strLastAction ) )
 {
    strURL = response.encodeRedirectURL( "logout.jsp" );
    response.sendRedirect( strURL );
@@ -164,6 +185,7 @@ else
 
 if ( task == null )
 {
+   session.setAttribute( "ZeidonTaskId", null );
     strURL = response.encodeRedirectURL( "logout.jsp" );
     response.sendRedirect( strURL );
    return; // something really bad has happened!!!
@@ -178,9 +200,9 @@ strURL = "";
 bDone = false;
 nRC = 0;
 
-task.log().info("*** wMLCCreateNewProductSLC strActionToProcess *** " + strActionToProcess );
-task.log().info("*** wMLCCreateNewProductSLC LastWindow *** " + strLastWindow );
-task.log().info("*** wMLCCreateNewProductSLC LastAction *** " + strLastAction );
+task.log().info("*** wMLCAddItemsMultipleClaims strActionToProcess *** " + strActionToProcess );
+task.log().info("*** wMLCAddItemsMultipleClaims LastWindow *** " + strLastWindow );
+task.log().info("*** wMLCAddItemsMultipleClaims LastAction *** " + strLastAction );
 
 if ( strActionToProcess != null )
 {
@@ -196,82 +218,22 @@ if ( strActionToProcess != null )
 
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelSLC" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelAddItems" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCCreateNewProductSLC", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAddItemsMultipleClaims", strActionToProcess );
 
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCCreateNewProductSLC.jsp", "wMLC.CancelSLC" );
-      try
-      {
-         nOptRC = wMLC.CancelSLC( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation CancelSLC: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-
-      // Dynamic Next Window
-      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
-         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
-         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
-         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
-         strURL = response.encodeRedirectURL( strNextJSP_Name );
-         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
-         else
-            strFunctionCall = "";
-
-         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
-         {
-            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
-            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCCreateNewProductSLC" );
-         }
-
-         nRC = 1;  // do the redirection
-         break;
-      }
-
-      // Return to Last Window
-      nRC = vKZXMLPGO.cursor( "PagePath" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strLastPage = vKZXMLPGO.cursor( "PagePath" ).getStringFromAttribute( "LastPageName" );
-         vKZXMLPGO.cursor( "PagePath" ).deleteEntity( CursorPosition.PREV );
-         strLastPage = strLastPage + ".jsp";
-      }
-      else
-         strLastPage = "wMLCCreateNewProductSLC.jsp";
-
-      strURL = response.encodeRedirectURL( strLastPage );
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "GenerateNewSLC_FromMLC" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "ConfirmAddItemsMultiple" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCCreateNewProductSLC", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAddItemsMultipleClaims", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -280,62 +242,66 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCCreateNewProductSLC.jsp", "wMLC.GenerateNewSLC_FromMLC" );
-      try
-      {
-         nOptRC = wMLC.GenerateNewSLC_FromMLC( new zVIEW( vKZXMLPGO ) );
-      }
-      catch (Exception e)
-      {
-         // Set the error return code.
-         nOptRC = 2;
-         strVMLError = "<br><br>*** Error running Operation GenerateNewSLC_FromMLC: " + e.getMessage();
-         task.log().info( strVMLError );
-      }
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddItemsMultipleClaims.jsp", "wMLC.ConfirmAddItemsMultipleClaims" );
+         nOptRC = wMLC.ConfirmAddItemsMultipleClaims( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
          session.setAttribute( "ZeidonError", "Y" );
          break;
       }
-
-      // Dynamic Next Window
-      nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
+      else
+      if ( nOptRC == 1 )
       {
-         strDialogName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "DialogName" );
-         strWindowName = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "WindowName" );
-         strNextJSP_Name = strDialogName + strWindowName + ".jsp";
-         vKZXMLPGO.cursor( "NextDialogWindow" ).deleteEntity( CursorPosition.NEXT );
-         strURL = response.encodeRedirectURL( strNextJSP_Name );
-         nRC = vKZXMLPGO.cursor( "NextDialogWindow" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-            strFunctionCall = vKZXMLPGO.cursor( "NextDialogWindow" ).getStringFromAttribute( "FunctionCall" );
-         else
-            strFunctionCall = "";
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
 
-         if ( strFunctionCall != null && StringUtils.equals( strFunctionCall, "StartSubwindow" ) )
-         {
-            vKZXMLPGO.cursor( "PagePath" ).createEntity( CursorPosition.NEXT );
-            vKZXMLPGO.cursor( "PagePath" ).setAttribute( "LastPageName", "wMLCCreateNewProductSLC" );
-         }
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
 
-         nRC = 1;  // do the redirection
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "ConfirmAddItemsMultipleReturn" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAddItemsMultipleClaims", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddItemsMultipleClaims.jsp", "wMLC.ConfirmAddItemsMultipleClaims" );
+         nOptRC = wMLC.ConfirmAddItemsMultipleClaims( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
          break;
       }
-
-      // Return to Last Window
-      nRC = vKZXMLPGO.cursor( "PagePath" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strLastPage = vKZXMLPGO.cursor( "PagePath" ).getStringFromAttribute( "LastPageName" );
-         vKZXMLPGO.cursor( "PagePath" ).deleteEntity( CursorPosition.PREV );
-         strLastPage = strLastPage + ".jsp";
-      }
       else
-         strLastPage = "wMLCCreateNewProductSLC.jsp";
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
 
-      strURL = response.encodeRedirectURL( strLastPage );
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
    }
@@ -359,7 +325,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ----------------------------------->>> " + "wMLCCreateNewProductSLC" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wMLCAddItemsMultipleClaims" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -376,7 +342,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ----------------------------------->>> " + "wMLCCreateNewProductSLC" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ------->>> " + "wMLCAddItemsMultipleClaims" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -391,14 +357,14 @@ if ( strActionToProcess != null )
    while ( bDone == false && strActionToProcess.equals( "_OnResubmitPage" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCCreateNewProductSLC", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAddItemsMultipleClaims", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
       if ( nRC < 0 )
          break;
 
-      strURL = response.encodeRedirectURL( "wMLCCreateNewProductSLC.jsp" );
+      strURL = response.encodeRedirectURL( "wMLCAddItemsMultipleClaims.jsp" );
       nRC = 1;  //do the redirection
       break;
    }
@@ -409,11 +375,11 @@ if ( strActionToProcess != null )
       {
          if ( nRC > 1 )
          {
-            strURL = response.encodeRedirectURL( "wMLCCreateNewProductSLC.jsp" );
+            strURL = response.encodeRedirectURL( "wMLCAddItemsMultipleClaims.jsp" );
             task.log().info( "Action Error Redirect to: " + strURL );
          }
 
-         if ( ! strURL.equals("wMLCCreateNewProductSLC.jsp") ) 
+         if ( ! strURL.equals("wMLCAddItemsMultipleClaims.jsp") ) 
          {
             response.sendRedirect( strURL );
             // If we are redirecting to a new page, then we need this return so that the rest of this page doesn't get built.
@@ -424,7 +390,7 @@ if ( strActionToProcess != null )
       {
          if ( nRC > -128 )
          {
-            strURL = response.encodeRedirectURL( "wMLCCreateNewProductSLC.jsp" );
+            strURL = response.encodeRedirectURL( "wMLCAddItemsMultipleClaims.jsp" );
             task.log().info( "Mapping Error Redirect to: " + strURL );
          }
          else
@@ -441,20 +407,26 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
 else
 {
 }
-
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wMLC", "" );
    if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getStringFromAttribute( "BannerName" );
+      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
 
    if ( StringUtils.isBlank( strBannerName ) )
       strBannerName = "./include/banner.inc";
+
+   wWebXA = task.getViewByName( "wWebXfer" );
+   if ( VmlOperation.isValid( wWebXA ) )
+   {
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wMLC", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "AddItemsMultipleClaims", "" );
+   }
 
 %>
 
 <html>
 <head>
 
-<title>Create New Product SLC</title>
+<title>Add Items Single or Multiple</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
@@ -462,11 +434,10 @@ else
 <%@ include file="./include/timeout.inc" %>
 <link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/validations.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/md5.js"></script>
-<script language="JavaScript" type="text/javascript" src="./genjs/wMLCCreateNewProductSLC.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
+<script language="JavaScript" type="text/javascript" src="./genjs/wMLCAddItemsMultipleClaims.js"></script>
 
 </head>
 
@@ -484,13 +455,23 @@ else
 
 <!-- Side Navigation *********************** -->
 <div id="sidenavigation">
-   <ul>
+   <ul id="Return" name="Return">
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "CreateAndReturn" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "AddItems" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="GenerateNewSLC_FromMLC( )">Create Product SLC and Return</a></li>
+       <li id="AddItems" name="AddItems"><a href="#"  onclick="ConfirmAddItemsMultiple()">Add Items</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "AddAndReturn" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="AddAndReturn" name="AddAndReturn"><a href="#"  onclick="ConfirmAddItemsMultipleReturn()">Add and Return</a></li>
 <%
    }
 %>
@@ -500,7 +481,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li><a href="#"  onclick="CancelSLC( )">Cancel and Return</a></li>
+       <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CancelAddItems()">Cancel and Return</a></li>
 <%
    }
 %>
@@ -511,7 +492,6 @@ else
 </div>  <!-- leftcontent -->
 
 <div id="content">
-
 <!--System Maintenance-->
 
 <%@ include file="./include/systemmaintenance.inc" %>
@@ -519,19 +499,17 @@ else
 <!-- END System Maintenance-->
 
 
-<form name="wMLCCreateNewProductSLC" id="wMLCCreateNewProductSLC" method="post">
+<form name="wMLCAddItemsMultipleClaims" id="wMLCAddItemsMultipleClaims" method="post">
    <input name="zAction" id="zAction" type="hidden" value="NOVALUE">
    <input name="zTableRowSelect" id="zTableRowSelect" type="hidden" value="NOVALUE">
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
-   View mEPA = null;
    View mMasLC = null;
+   View mEPA = null;
    View mMasProd = null;
+   View mMasProdLST = null;
    View mPrimReg = null;
-   View mSubLC = null;
-   View mSubProd = null;
-   View wMLCList = null;
    View wWebXfer = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
@@ -596,17 +574,31 @@ else
       }
    }
 
-   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getStringFromAttribute( "SolicitSaveFlag" );
+   strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
 
-   strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wMLC", "CreateNewProductSLC" );
+   strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wMLC", "AddItemsMultipleClaims" );
    strOpenFile = VmlOperation.FindOpenFile( task );
-   strDateFormat = "MM/DD/YYYY";
+   strDateFormat = "YYYY.MM.DD";
 
+   wWebXA = task.getViewByName( "wWebXfer" );
+   if ( VmlOperation.isValid( wWebXA ) )
+   {
+      nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+         strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
+         if ( strKeyRole == null )
+            strKeyRole = "";
+
+         task.log().info( "Root.KeyRole: " + strKeyRole );
+      }
+   }
 %>
 
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
    <input name="zPopupWindowSZX" id="zPopupWindowSZX" type="hidden" value="<%=strPopupWindowSZX%>">
    <input name="zPopupWindowSZY" id="zPopupWindowSZY" type="hidden" value="<%=strPopupWindowSZY%>">
@@ -620,18 +612,119 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:14px;width:100px;"></div>
+<div style="height:12px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
-<% /* Text1:Text */ %>
+<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox2:GroupBox */ %>
 
-<span  id="Text1" name="Text1" style="width:136px;height:16px;">New Product Name:</span>
+<div id="GroupBox2" name="GroupBox2"   style="float:left;position:relative; width:778px; height:36px;">  <!-- GroupBox2 --> 
 
-<span style="height:16px;">&nbsp</span>
-<% /* EditBox1:EditBox */ %>
+<% /* Text2:Text */ %>
+
+<label  id="Text2" name="Text2" style="width:98px;height:24px;position:absolute;left:6px;top:0px;">Type of Claim:</label>
+
+<% /* ComboBox2:ComboBox */ %>
+<% strErrorMapValue = "";  %>
+
+<select  name="ComboBox2" id="ComboBox2" size="1" style="width:208px;position:absolute;left:114px;top:0px;" onchange="ComboBox2OnChange( )">
+
 <%
-   strErrorMapValue = VmlOperation.CheckError( "EditBox1", strError );
+   boolean inListComboBox2 = false;
+
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) )
+   {
+      List<TableEntry> list = JspWebUtils.getTableDomainValues( mMasLC , "MasterLabelContent", "wSelectedClaimsClassification", "" );
+
+      nRC = mMasLC.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+         strComboCurrentValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "wSelectedClaimsClassification" ).getString( "" );
+         if ( strComboCurrentValue == null )
+            strComboCurrentValue = "";
+      }
+      else
+      {
+         strComboCurrentValue = "";
+      }
+
+      // Code for NOT required attribute, which makes sure a blank entry exists.
+      if ( strComboCurrentValue == "" )
+      {
+         inListComboBox2 = true;
+%>
+         <option selected="selected" value=""></option>
+<%
+      }
+      else
+      {
+%>
+         <option value=""></option>
+<%
+      }
+      for ( TableEntry entry : list )
+      {
+         String internalValue = entry.getInternalValue( );
+         String externalValue = entry.getExternalValue( );
+         // Perhaps getInternalValue and getExternalValue should return an empty string, 
+         // but currently it returns null.  Set to empty string. 
+         if ( externalValue == null )
+         {
+            internalValue = "";
+            externalValue = "";
+         }
+
+         if ( !StringUtils.isBlank( externalValue ) )
+         {
+            if ( StringUtils.equals( strComboCurrentValue, externalValue ) )
+            {
+               inListComboBox2 = true;
+%>
+               <option selected="selected" value="<%=externalValue%>"><%=externalValue%></option>
+<%
+            }
+            else
+            {
+%>
+               <option value="<%=externalValue%>"><%=externalValue%></option>
+<%
+            }
+         }
+      }  // for ( TableEntry entry
+      // The value from the database isn't in the domain, add it to the list as disabled.
+      if ( !inListComboBox2 )
+      { 
+%>
+         <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
+<%
+      }  
+   }  // if view != null
+%>
+</select>
+
+<input name="hComboBox2" id="hComboBox2" type="hidden" value="<%=strComboCurrentValue%>" >
+
+</div>  <!--  GroupBox2 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GBAddSurfacesList:GroupBox */ %>
+
+<div id="GBAddSurfacesList" name="GBAddSurfacesList"   style="float:left;position:relative; width:778px; height:490px;">  <!-- GBAddSurfacesList --> 
+
+<% /* AddSurfacesList:Text */ %>
+
+<label class="groupbox"  id="AddSurfacesList" name="AddSurfacesList" style="width:374px;height:16px;position:absolute;left:6px;top:12px;">Add One or Multiple Items Separated by Line Feeds</label>
+
+<% /* MLEdit2:MLEdit */ %>
+<%
+   // : MLEdit2
+   strErrorMapValue = VmlOperation.CheckError( "MLEdit2", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -640,36 +733,30 @@ else
    else
    {
       strErrorColor = "";
-      mSubProd = task.getViewByName( "mSubProd" );
-      if ( VmlOperation.isValid( mSubProd ) == false )
-         task.log( ).debug( "Invalid View: " + "EditBox1" );
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).info( "Invalid View: " + "MLEdit2" );
       else
       {
-         nRC = mSubProd.cursor( "SubregProduct" ).checkExistenceOfEntity( ).toInt();
+         nRC = mMasLC.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            try
-            {
-            strErrorMapValue = mSubProd.cursor( "SubregProduct" ).getStringFromAttribute( "Name", "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on EditBox1: " + e.getMessage());
-               task.log().info( "*** Error on ctrl EditBox1" + e.getMessage() );
-            }
+            strErrorMapValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "wAddStatementsWorkText" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "SubregProduct.Name: " + strErrorMapValue );
+            task.log( ).info( "MasterLabelContent.wAddStatementsWorkText: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist: " + "mSubProd.SubregProduct" );
+            task.log( ).info( "Entity does not exist for MLEdit2: " + "mMasLC.MasterLabelContent" );
       }
    }
 %>
 
-<input name="EditBox1" id="EditBox1" style="width:276px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<textarea name="MLEdit2" id="MLEdit2" style="width:754px;height:440px;position:absolute;left:6px;top:36px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
+
+</div>  <!--  GBAddSurfacesList --> 
 </div>  <!-- End of a new line -->
 
 
@@ -701,7 +788,7 @@ else
 </body>
 </html>
 <%
-   session.setAttribute( "ZeidonWindow", "wMLCCreateNewProductSLC" );
+   session.setAttribute( "ZeidonWindow", "wMLCAddItemsMultipleClaims" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

@@ -187,7 +187,7 @@ function CheckAllInGrid(id, CheckBoxName)
    }
 }
 
-function ADD_SurfacesStatement( )
+function ADD_SurfacesUsageItems( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -197,7 +197,7 @@ function ADD_SurfacesStatement( )
    {
       _DisableFormElements( true );
 
-      document.wMLCSurfaces.zAction.value = "ADD_SurfacesStatement";
+      document.wMLCSurfaces.zAction.value = "ADD_SurfacesUsageItems";
       document.wMLCSurfaces.submit( );
    }
 }
@@ -371,7 +371,7 @@ function smEditFirstAidSect( )
    }
 }
 
-function smEditHazardSection( )
+function smEditEnvironmentalHazardSection( )
 {
 
       // This is for indicating whether the user hit the window close box.
@@ -381,7 +381,22 @@ function smEditHazardSection( )
    {
       _DisableFormElements( true );
 
-      document.wMLCSurfaces.zAction.value = "smEditHazardSection";
+      document.wMLCSurfaces.zAction.value = "smEditEnvironmentalHazardSection";
+      document.wMLCSurfaces.submit( );
+   }
+}
+
+function smEditChemicalHazardsSection( )
+{
+
+      // This is for indicating whether the user hit the window close box.
+      isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCSurfaces.zAction.value = "smEditChemicalHazardsSection";
       document.wMLCSurfaces.submit( );
    }
 }

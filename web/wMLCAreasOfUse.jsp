@@ -249,7 +249,7 @@ if ( strActionToProcess != null )
 
       if ( strNextJSP_Name.equals( "" ) )
       {
-      // Next Window
+         // Next Window
          strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "AddItemsMultiple" );
       }
 
@@ -1344,39 +1344,38 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
+<div style="height:4px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBClaimsStatements:GroupBox */ %>
-<div id="GBClaimsStatements" name="GBClaimsStatements" style="float:left;width:616px;"  class="withborder">
 
-<table cols=0 style="width:616px;"  class="grouptable">
+<div id="GBClaimsStatements" name="GBClaimsStatements" class="withborder"   style="float:left;position:relative; width:616px; height:36px;">  <!-- GBClaimsStatements --> 
 
-<tr>
-<td valign="top"  class="groupbox" style="width:250px;">
 <% /* OrganismClaimsStatements:Text */ %>
 
 <label class="groupbox"  id="OrganismClaimsStatements" name="OrganismClaimsStatements" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Areas of Use Statements</label>
 
-</td>
-<td valign="top" style="width:210px;">
 <% /* PushBtn1:PushBtn */ %>
-<button type="button"  id="PushBtn1" name="PushBtn1" value="Delete Selected Areas of Use" onclick="GOTO_DeleteSelectedEntries( )"  style="width:204px;height:26px;">Delete Selected Areas of Use</button>
+<button type="button" name="PushBtn1" id="PushBtn1" value="" onclick="GOTO_DeleteSelectedEntries( )" style="width:198px;height:26px;position:absolute;left:274px;top:12px;">Delete Selected Areas of Use</button>
 
-</td>
-<td valign="top" style="width:78px;">
 <% /* PBNew:PushBtn */ %>
-<button type="button"  id="PBNew" name="PBNew" value="New" onclick="ADD_AreasOfUseStatement( )"  style="width:78px;height:26px;">New</button>
+<button type="button" name="PBNew" id="PBNew" value="" onclick="ADD_AreasOfUseStatement( )" style="width:78px;height:26px;position:absolute;left:482px;top:12px;">New</button>
 
-</td>
-</tr>
-</table>
 
-</div>  <!-- GBClaimsStatements --> 
+</div>  <!--  GBClaimsStatements --> 
+</div>  <!-- End of a new line -->
 
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:10px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridClaims:Grid */ %>
-<table  cols=3 style="position:absolute;top:44px;left:10px;width:616px;"  name="GridClaims" id="GridClaims">
+<table  cols=3 style="width:616px;"  name="GridClaims" id="GridClaims">
 
 <thead><tr>
 
@@ -1402,7 +1401,7 @@ try
       String strTag;
       String strGS_Select;
       String strGS_SelectValue;
-      String strGEPathogen;
+      String strAreasOfUse;
       String strBMBUpdateClaimsStatement;
       
       View vGridClaims;
@@ -1438,25 +1437,25 @@ try
             strGS_Select = "<input name='" + strGS_SelectValue + "' id='" + strGS_SelectValue + "' value='Y' type='checkbox' > ";
          }
 
-         strGEPathogen = "";
+         strAreasOfUse = "";
          nRC = vGridClaims.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGEPathogen = vGridClaims.cursor( "M_Usage" ).getAttribute( "Name" ).getString( "" );
+            strAreasOfUse = vGridClaims.cursor( "M_Usage" ).getAttribute( "Name" ).getString( "" );
 
-            if ( strGEPathogen == null )
-               strGEPathogen = "";
+            if ( strAreasOfUse == null )
+               strAreasOfUse = "";
          }
 
-         if ( StringUtils.isBlank( strGEPathogen ) )
-            strGEPathogen = "&nbsp";
+         if ( StringUtils.isBlank( strAreasOfUse ) )
+            strAreasOfUse = "&nbsp";
 
 %>
 
 <tr<%=strOdd%>>
 
    <td nowrap><%=strGS_Select%></td>
-   <td><a href="#" onclick="GOTO_UpdateAreasOfUseStatement( this.id )" id="GEPathogen::<%=strEntityKey%>"><%=strGEPathogen%></a></td>
+   <td><a href="#" onclick="GOTO_UpdateAreasOfUseStatement( this.id )" id="AreasOfUse::<%=strEntityKey%>"><%=strAreasOfUse%></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateClaimsStatement" onclick="GOTO_UpdateAreasOfUseStatement( this.id )" id="BMBUpdateClaimsStatement::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
 
 </tr>
@@ -1475,6 +1474,8 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 %>
 </tbody>
 </table>
+
+</div>  <!-- End of a new line -->
 
 
 <%
@@ -1497,6 +1498,8 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </div>   <!-- This is the end tag for the div 'content' -->
 
 </div>   <!-- This is the end tag for the div 'maincontent' -->
+
+<%@ include file="./include/footer.inc" %>
 
 </div>  <!-- This is the end tag for wrapper -->
 

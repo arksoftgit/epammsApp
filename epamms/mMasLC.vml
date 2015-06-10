@@ -757,15 +757,15 @@ dCombinedContainerVol( VIEW mMasLC BASED ON LOD mMasLC,
 
       // Combine each volume name that drives this section.
       szCombinedName = "" 
-      FOR EACH mMasLC.M_StorageDisposalDrivingConVol 
-         GetStringFromAttributeByContext( szContainerVolume, mMasLC, "M_StorageDisposalDrivingConVol", "ContainerVolume", "", 20 )
+/*    FOR EACH mMasLC.M_StorageDisposalDrivingConVol
+  ???         GetStringFromAttributeByContext( szContainerVolume, mMasLC, "M_StorageDisposalDrivingConVol", "ContainerVolume", "", 20 )
          IF szCombinedName = ""
             szCombinedName = szContainerVolume
          ELSE
             szCombinedName = szCombinedName + ", " + szContainerVolume
          END
       END
-
+*/
 
       // Store the calculated value in the object.
       StoreStringInRecord( mMasLC,

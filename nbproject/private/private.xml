@@ -17,7 +17,7 @@
             <url>web/wSPLDGraphicalView.jsp</url>
             <bookmark id="42">
                 <name/>
-                <line>1061</line>
+                <line>1062</line>
                 <key/>
             </bookmark>
         </file>
@@ -30,6 +30,32 @@
             </bookmark>
         </file>
         <file>
+            <url>web/wStartUpUserLogin.jsp</url>
+            <bookmark id="0">
+                <name/>
+                <line>608</line>
+                <key/>
+            </bookmark>
+            <bookmark id="0">
+                <name/>
+                <line>978</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>src/java/com/ajax/GraphicalLabelDesignerServlet.java</url>
+            <bookmark id="25">
+                <name/>
+                <line>551</line>
+                <key/>
+            </bookmark>
+            <bookmark id="13">
+                <name/>
+                <line>654</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
             <url>web/js/labeldesigner.js</url>
             <bookmark id="40">
                 <name/>
@@ -38,22 +64,22 @@
             </bookmark>
             <bookmark id="43">
                 <name/>
-                <line>213</line>
+                <line>243</line>
                 <key/>
             </bookmark>
             <bookmark id="34">
                 <name/>
-                <line>1530</line>
+                <line>1546</line>
                 <key/>
             </bookmark>
             <bookmark id="41">
                 <name/>
-                <line>2610</line>
+                <line>2636</line>
                 <key/>
             </bookmark>
             <bookmark id="44">
                 <name/>
-                <line>3444</line>
+                <line>3470</line>
                 <key/>
             </bookmark>
         </file>
@@ -88,32 +114,6 @@
             <bookmark id="0">
                 <name/>
                 <line>1258</line>
-                <key/>
-            </bookmark>
-        </file>
-        <file>
-            <url>web/wStartUpUserLogin.jsp</url>
-            <bookmark id="0">
-                <name/>
-                <line>608</line>
-                <key/>
-            </bookmark>
-            <bookmark id="0">
-                <name/>
-                <line>978</line>
-                <key/>
-            </bookmark>
-        </file>
-        <file>
-            <url>src/java/com/ajax/GraphicalLabelDesignerServlet.java</url>
-            <bookmark id="25">
-                <name/>
-                <line>551</line>
-                <key/>
-            </bookmark>
-            <bookmark id="13">
-                <name/>
-                <line>654</line>
                 <key/>
             </bookmark>
         </file>

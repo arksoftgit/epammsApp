@@ -187,7 +187,7 @@ function CheckAllInGrid(id, CheckBoxName)
    }
 }
 
-function ADD_ClaimsStatement( )
+function GOTO_AddUsageStatements( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -197,7 +197,7 @@ function ADD_ClaimsStatement( )
    {
       _DisableFormElements( true );
 
-      document.wMLCOrganismClaims.zAction.value = "ADD_ClaimsStatement";
+      document.wMLCOrganismClaims.zAction.value = "GOTO_AddUsageStatements";
       document.wMLCOrganismClaims.submit( );
    }
 }
@@ -371,7 +371,7 @@ function smEditFirstAidSect( )
    }
 }
 
-function smEditHazardSection( )
+function smEditEnvironmentalHazardSection( )
 {
 
       // This is for indicating whether the user hit the window close box.
@@ -381,7 +381,22 @@ function smEditHazardSection( )
    {
       _DisableFormElements( true );
 
-      document.wMLCOrganismClaims.zAction.value = "smEditHazardSection";
+      document.wMLCOrganismClaims.zAction.value = "smEditEnvironmentalHazardSection";
+      document.wMLCOrganismClaims.submit( );
+   }
+}
+
+function smEditChemicalHazardsSection( )
+{
+
+      // This is for indicating whether the user hit the window close box.
+      isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCOrganismClaims.zAction.value = "smEditChemicalHazardsSection";
       document.wMLCOrganismClaims.submit( );
    }
 }

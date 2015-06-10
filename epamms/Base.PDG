@@ -1,4 +1,4 @@
-z1000-Zeidon    BASE     TZDGSRCO 06/08/15   17:17:20 1.0a2    
+z1000-Zeidon    BASE     TZDGSRCO 06/09/15   11:01:22 1.0a2    
 eDomainGroup 1
 aZKey      68567479
 aName      Base
@@ -23,6 +23,7 @@ eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      110059061
 aName      ContainerVolumeEnvironmentHazard
+aDesc      Environmental split <5 or >=5
 aDomainType T
 aDataType  S
 aMaxStringLth 20
@@ -47,6 +48,7 @@ eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      110059057
 aName      ContainerVolumeStorageDisposal
+aDesc      Storage/Disposal split <=1 or >1
 aDomainType T
 aDataType  S
 aMaxStringLth 3
@@ -88,14 +90,19 @@ aExternalValue P
 aInternalValue P
 
 eTableEntry 4
+aZKey      110006616
+aExternalValue F
+aInternalValue F
+
+eTableEntry 4
 aZKey      110006614
 aExternalValue E
 aInternalValue E
 
 eTableEntry 4
-aZKey      110006616
-aExternalValue F
-aInternalValue F
+aZKey      110006781
+aExternalValue C
+aInternalValue C
 
 eTableEntry 4
 aZKey      110006625
@@ -127,14 +134,19 @@ aExternalValue Precautionary
 aInternalValue P
 
 eTableEntry 4
+aZKey      110006620
+aExternalValue First Aid
+aInternalValue F
+
+eTableEntry 4
 aZKey      110006619
 aExternalValue Environmental
 aInternalValue E
 
 eTableEntry 4
-aZKey      110006620
-aExternalValue First Aid
-aInternalValue F
+aZKey      110006782
+aExternalValue Physical/Chemical
+aInternalValue C
 
 eTableEntry 4
 aZKey      110006621
@@ -475,45 +487,6 @@ aExternalValue auto
 aInternalValue auto
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
-aZKey      2838041
-aName      ContainerVolume
-aDomainType T
-aDataType  S
-aMaxStringLth 3
-aContextRestriction N
-
-eContext   3
-aZKey      2838042
-aName      ContainerVolume
-aIsDefault Y
-
-eTableEntry 4
-aZKey      2844697
-aExternalValue 1 gallon
-aInternalValue 1
-
-eTableEntry 4
-aZKey      120260120
-aExternalValue 2 gallon
-aInternalValue 2
-
-eTableEntry 4
-aZKey      2844698
-aExternalValue 5 gallon
-aInternalValue 5
-
-eTableEntry 4
-aZKey      120260121
-aExternalValue 10 gallon
-aInternalValue 10
-
-eTableEntry 4
-aZKey      120260122
-aExternalValue 15 gallon
-aInternalValue 15
-
-eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.StringDomain
 aZKey      2294674
 aName      REVDate
@@ -840,19 +813,19 @@ aExternalValue Precautionary
 aInternalValue P
 
 eTableEntry 4
+aZKey      4321563
+aExternalValue FirstAid
+aInternalValue F
+
+eTableEntry 4
 aZKey      4321562
 aExternalValue Environmental Hazard
 aInternalValue E
 
 eTableEntry 4
 aZKey      110030907
-aExternalValue Physical or Chemical Hazard
+aExternalValue Physical/Chemical Hazard
 aInternalValue C
-
-eTableEntry 4
-aZKey      4321563
-aExternalValue FirstAid
-aInternalValue F
 
 eContext   3
 aZKey      69055598
@@ -865,14 +838,14 @@ aExternalValue P
 aInternalValue P
 
 eTableEntry 4
-aZKey      69055600
-aExternalValue E
-aInternalValue E
-
-eTableEntry 4
 aZKey      69055601
 aExternalValue F
 aInternalValue F
+
+eTableEntry 4
+aZKey      69055600
+aExternalValue E
+aInternalValue E
 
 eTableEntry 4
 aZKey      110030906

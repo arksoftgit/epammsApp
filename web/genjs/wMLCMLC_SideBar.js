@@ -202,36 +202,6 @@ function CancelAndReturnMLC( )
    }
 }
 
-function GOTO_DilutionEntries( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCMLC_Sidebar.zAction.value = "GOTO_DilutionEntries";
-      document.wMLCMLC_Sidebar.submit( );
-   }
-}
-
-function GOTO_ClaimsFootnote( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCMLC_Sidebar.zAction.value = "GOTO_ClaimsFootnote";
-      document.wMLCMLC_Sidebar.submit( );
-   }
-}
-
 function EditApplicationTypesSection( )
 {
 
@@ -258,6 +228,21 @@ function EditAreasOfUseSection( )
       _DisableFormElements( true );
 
       document.wMLCMLC_Sidebar.zAction.value = "EditAreasOfUseSection";
+      document.wMLCMLC_Sidebar.submit( );
+   }
+}
+
+function EditChemicalHazardsSection( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCMLC_Sidebar.zAction.value = "EditChemicalHazardsSection";
       document.wMLCMLC_Sidebar.submit( );
    }
 }
@@ -292,6 +277,21 @@ function EditDirectionsUseSect( )
    }
 }
 
+function EditEnvironmentalHazardSection( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCMLC_Sidebar.zAction.value = "EditEnvironmentalHazardSection";
+      document.wMLCMLC_Sidebar.submit( );
+   }
+}
+
 function EditFirstAidSect( )
 {
 
@@ -303,21 +303,6 @@ function EditFirstAidSect( )
       _DisableFormElements( true );
 
       document.wMLCMLC_Sidebar.zAction.value = "EditFirstAidSect";
-      document.wMLCMLC_Sidebar.submit( );
-   }
-}
-
-function EditHazardSection( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCMLC_Sidebar.zAction.value = "EditHazardSection";
       document.wMLCMLC_Sidebar.submit( );
    }
 }
@@ -423,6 +408,36 @@ function EditSurfacesSection( )
       _DisableFormElements( true );
 
       document.wMLCMLC_Sidebar.zAction.value = "EditSurfacesSection";
+      document.wMLCMLC_Sidebar.submit( );
+   }
+}
+
+function GOTO_ClaimsFootnote( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCMLC_Sidebar.zAction.value = "GOTO_ClaimsFootnote";
+      document.wMLCMLC_Sidebar.submit( );
+   }
+}
+
+function GOTO_DilutionEntries( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCMLC_Sidebar.zAction.value = "GOTO_DilutionEntries";
       document.wMLCMLC_Sidebar.submit( );
    }
 }

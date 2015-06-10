@@ -43,8 +43,8 @@ function _OnAlmostTimeout()
       // If the time is less than one minute, resubmit the page.  Otherwise, go to the timeout window.
       if (tDiff < 60000)
       {
-         document.wMLCHazardsSection.zAction.value = "_OnResubmitPage";
-         document.wMLCHazardsSection.submit( );
+         document.wMLCEnvironmentalHazardsSection.zAction.value = "_OnResubmitPage";
+         document.wMLCEnvironmentalHazardsSection.submit( );
       }
       else
       {
@@ -59,8 +59,8 @@ function _OnTimeout( )
    {
       _DisableFormElements( true );
 
-      document.wMLCHazardsSection.zAction.value = "_OnTimeout";
-      document.wMLCHazardsSection.submit( );
+      document.wMLCEnvironmentalHazardsSection.zAction.value = "_OnTimeout";
+      document.wMLCEnvironmentalHazardsSection.submit( );
    }
 }
 
@@ -74,8 +74,8 @@ function _BeforePageUnload( )
       // If the user clicked the window close box, unregister zeidon.
       if (isWindowClosing)
       {
-         document.wMLCHazardsSection.zAction.value = "_OnUnload";
-         document.wMLCHazardsSection.submit( );
+         document.wMLCEnvironmentalHazardsSection.zAction.value = "_OnUnload";
+         document.wMLCEnvironmentalHazardsSection.submit( );
       }
    }
 }
@@ -128,16 +128,16 @@ function _AfterPageLoaded( )
 {
 // _DisableFormElements( false );
 
-   var szFocusCtrl = document.wMLCHazardsSection.zFocusCtrl.value;
+   var szFocusCtrl = document.wMLCEnvironmentalHazardsSection.zFocusCtrl.value;
    if ( szFocusCtrl != "" && szFocusCtrl != "null" )
-      eval( 'document.wMLCHazardsSection.' + szFocusCtrl + '.focus( )' );
+      eval( 'document.wMLCEnvironmentalHazardsSection.' + szFocusCtrl + '.focus( )' );
 
    // This is where we put out a message from the previous iteration on this window
-   var szMsg = document.wMLCHazardsSection.zError.value;
+   var szMsg = document.wMLCEnvironmentalHazardsSection.zError.value;
    if ( szMsg != "" )
       alert( szMsg ); // "Houston ... We have a problem"
 
-   szMsg = document.wMLCHazardsSection.zOpenFile.value;
+   szMsg = document.wMLCEnvironmentalHazardsSection.zOpenFile.value;
    if ( szMsg != "" )
    {
       var NewWin = window.open( szMsg );
@@ -149,9 +149,9 @@ function _AfterPageLoaded( )
       }
    }
 
-   var keyRole = document.wMLCHazardsSection.zKeyRole.value;
-   document.wMLCHazardsSection.zError.value = "";
-   document.wMLCHazardsSection.zOpenFile.value = "";
+   var keyRole = document.wMLCEnvironmentalHazardsSection.zKeyRole.value;
+   document.wMLCEnvironmentalHazardsSection.zError.value = "";
+   document.wMLCEnvironmentalHazardsSection.zOpenFile.value = "";
 
    if ( timerID != null )
    {
@@ -159,7 +159,9 @@ function _AfterPageLoaded( )
       timerID = null;
    }
 
-   var varTimeout = document.wMLCHazardsSection.zTimeout.value;
+   document.wMLCEnvironmentalHazardsSection.hComboBox1.value = document.wMLCEnvironmentalHazardsSection.ComboBox1.value
+
+   var varTimeout = document.wMLCEnvironmentalHazardsSection.zTimeout.value;
    if ( varTimeout > 0 )
    {
       var varDelay = 60000 * varTimeout;  // Timeout value in timeout.inc
@@ -187,22 +189,7 @@ function CheckAllInGrid(id, CheckBoxName)
    }
 }
 
-function GOTO_AddHazardsStatement( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCHazardsSection.zAction.value = "GOTO_AddHazardsStatement";
-      document.wMLCHazardsSection.submit( );
-   }
-}
-
-function GOTO_HazardsStmtDelete( strTagEntityKey )
+function GOTO_EnvironmentalHazardsDelete( strTagEntityKey )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -213,15 +200,15 @@ function GOTO_HazardsStmtDelete( strTagEntityKey )
       var nIdx = strTagEntityKey.lastIndexOf( '::' );
       var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
 
-      document.wMLCHazardsSection.zTableRowSelect.value = strEntityKey;
+      document.wMLCEnvironmentalHazardsSection.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
-      document.wMLCHazardsSection.zAction.value = "GOTO_HazardsStmtDelete";
-      document.wMLCHazardsSection.submit( );
+      document.wMLCEnvironmentalHazardsSection.zAction.value = "GOTO_EnvironmentalHazardsDelete";
+      document.wMLCEnvironmentalHazardsSection.submit( );
    }
 }
 
-function GOTO_UpdateHazardsStmt( strTagEntityKey )
+function GOTO_EnvironmentalHazardsUpdate( strTagEntityKey )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -232,11 +219,26 @@ function GOTO_UpdateHazardsStmt( strTagEntityKey )
       var nIdx = strTagEntityKey.lastIndexOf( '::' );
       var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
 
-      document.wMLCHazardsSection.zTableRowSelect.value = strEntityKey;
+      document.wMLCEnvironmentalHazardsSection.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
-      document.wMLCHazardsSection.zAction.value = "GOTO_UpdateHazardsStmt";
-      document.wMLCHazardsSection.submit( );
+      document.wMLCEnvironmentalHazardsSection.zAction.value = "GOTO_EnvironmentalHazardsUpdate";
+      document.wMLCEnvironmentalHazardsSection.submit( );
+   }
+}
+
+function GOTO_EnvironmentHazardsAdd( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCEnvironmentalHazardsSection.zAction.value = "GOTO_EnvironmentHazardsAdd";
+      document.wMLCEnvironmentalHazardsSection.submit( );
    }
 }
 
@@ -250,8 +252,8 @@ function smSaveAndReturnMLC( )
    {
       _DisableFormElements( true );
 
-      document.wMLCHazardsSection.zAction.value = "smSaveAndReturnMLC";
-      document.wMLCHazardsSection.submit( );
+      document.wMLCEnvironmentalHazardsSection.zAction.value = "smSaveAndReturnMLC";
+      document.wMLCEnvironmentalHazardsSection.submit( );
    }
 }
 
@@ -265,8 +267,8 @@ function smSaveMLC( )
    {
       _DisableFormElements( true );
 
-      document.wMLCHazardsSection.zAction.value = "smSaveMLC";
-      document.wMLCHazardsSection.submit( );
+      document.wMLCEnvironmentalHazardsSection.zAction.value = "smSaveMLC";
+      document.wMLCEnvironmentalHazardsSection.submit( );
    }
 }
 
@@ -280,8 +282,8 @@ function smCancelAndReturnMLC( )
    {
       _DisableFormElements( true );
 
-      document.wMLCHazardsSection.zAction.value = "smCancelAndReturnMLC";
-      document.wMLCHazardsSection.submit( );
+      document.wMLCEnvironmentalHazardsSection.zAction.value = "smCancelAndReturnMLC";
+      document.wMLCEnvironmentalHazardsSection.submit( );
    }
 }
 
@@ -295,8 +297,8 @@ function smEditMasterLabelVersionData( )
    {
       _DisableFormElements( true );
 
-      document.wMLCHazardsSection.zAction.value = "smEditMasterLabelVersionData";
-      document.wMLCHazardsSection.submit( );
+      document.wMLCEnvironmentalHazardsSection.zAction.value = "smEditMasterLabelVersionData";
+      document.wMLCEnvironmentalHazardsSection.submit( );
    }
 }
 
@@ -310,8 +312,8 @@ function smEditIngredientsSect( )
    {
       _DisableFormElements( true );
 
-      document.wMLCHazardsSection.zAction.value = "smEditIngredientsSect";
-      document.wMLCHazardsSection.submit( );
+      document.wMLCEnvironmentalHazardsSection.zAction.value = "smEditIngredientsSect";
+      document.wMLCEnvironmentalHazardsSection.submit( );
    }
 }
 
@@ -325,8 +327,8 @@ function smEditStorDispSect( )
    {
       _DisableFormElements( true );
 
-      document.wMLCHazardsSection.zAction.value = "smEditStorDispSect";
-      document.wMLCHazardsSection.submit( );
+      document.wMLCEnvironmentalHazardsSection.zAction.value = "smEditStorDispSect";
+      document.wMLCEnvironmentalHazardsSection.submit( );
    }
 }
 
@@ -340,8 +342,8 @@ function smEditHumanHazardSect( )
    {
       _DisableFormElements( true );
 
-      document.wMLCHazardsSection.zAction.value = "smEditHumanHazardSect";
-      document.wMLCHazardsSection.submit( );
+      document.wMLCEnvironmentalHazardsSection.zAction.value = "smEditHumanHazardSect";
+      document.wMLCEnvironmentalHazardsSection.submit( );
    }
 }
 
@@ -355,8 +357,8 @@ function smEditPrecautionarySection( )
    {
       _DisableFormElements( true );
 
-      document.wMLCHazardsSection.zAction.value = "smEditPrecautionarySection";
-      document.wMLCHazardsSection.submit( );
+      document.wMLCEnvironmentalHazardsSection.zAction.value = "smEditPrecautionarySection";
+      document.wMLCEnvironmentalHazardsSection.submit( );
    }
 }
 
@@ -370,12 +372,12 @@ function smEditFirstAidSect( )
    {
       _DisableFormElements( true );
 
-      document.wMLCHazardsSection.zAction.value = "smEditFirstAidSect";
-      document.wMLCHazardsSection.submit( );
+      document.wMLCEnvironmentalHazardsSection.zAction.value = "smEditFirstAidSect";
+      document.wMLCEnvironmentalHazardsSection.submit( );
    }
 }
 
-function smEditHazardSection( )
+function smEditEnvironmentalHazardSection( )
 {
 
       // This is for indicating whether the user hit the window close box.
@@ -385,8 +387,23 @@ function smEditHazardSection( )
    {
       _DisableFormElements( true );
 
-      document.wMLCHazardsSection.zAction.value = "smEditHazardSection";
-      document.wMLCHazardsSection.submit( );
+      document.wMLCEnvironmentalHazardsSection.zAction.value = "smEditEnvironmentalHazardSection";
+      document.wMLCEnvironmentalHazardsSection.submit( );
+   }
+}
+
+function smEditChemicalHazardsSection( )
+{
+
+      // This is for indicating whether the user hit the window close box.
+      isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCEnvironmentalHazardsSection.zAction.value = "smEditChemicalHazardsSection";
+      document.wMLCEnvironmentalHazardsSection.submit( );
    }
 }
 
@@ -400,8 +417,8 @@ function smGOTO_DilutionEntries( )
    {
       _DisableFormElements( true );
 
-      document.wMLCHazardsSection.zAction.value = "smGOTO_DilutionEntries";
-      document.wMLCHazardsSection.submit( );
+      document.wMLCEnvironmentalHazardsSection.zAction.value = "smGOTO_DilutionEntries";
+      document.wMLCEnvironmentalHazardsSection.submit( );
    }
 }
 
@@ -415,8 +432,8 @@ function smEditClaimsSection( )
    {
       _DisableFormElements( true );
 
-      document.wMLCHazardsSection.zAction.value = "smEditClaimsSection";
-      document.wMLCHazardsSection.submit( );
+      document.wMLCEnvironmentalHazardsSection.zAction.value = "smEditClaimsSection";
+      document.wMLCEnvironmentalHazardsSection.submit( );
    }
 }
 
@@ -430,8 +447,8 @@ function smEditSurfacesSection( )
    {
       _DisableFormElements( true );
 
-      document.wMLCHazardsSection.zAction.value = "smEditSurfacesSection";
-      document.wMLCHazardsSection.submit( );
+      document.wMLCEnvironmentalHazardsSection.zAction.value = "smEditSurfacesSection";
+      document.wMLCEnvironmentalHazardsSection.submit( );
    }
 }
 
@@ -445,8 +462,8 @@ function smEditAreasOfUseSection( )
    {
       _DisableFormElements( true );
 
-      document.wMLCHazardsSection.zAction.value = "smEditAreasOfUseSection";
-      document.wMLCHazardsSection.submit( );
+      document.wMLCEnvironmentalHazardsSection.zAction.value = "smEditAreasOfUseSection";
+      document.wMLCEnvironmentalHazardsSection.submit( );
    }
 }
 
@@ -460,8 +477,8 @@ function smEditApplicationTypesSection( )
    {
       _DisableFormElements( true );
 
-      document.wMLCHazardsSection.zAction.value = "smEditApplicationTypesSection";
-      document.wMLCHazardsSection.submit( );
+      document.wMLCEnvironmentalHazardsSection.zAction.value = "smEditApplicationTypesSection";
+      document.wMLCEnvironmentalHazardsSection.submit( );
    }
 }
 
@@ -475,8 +492,8 @@ function smGOTO_ClaimsFootnote( )
    {
       _DisableFormElements( true );
 
-      document.wMLCHazardsSection.zAction.value = "smGOTO_ClaimsFootnote";
-      document.wMLCHazardsSection.submit( );
+      document.wMLCEnvironmentalHazardsSection.zAction.value = "smGOTO_ClaimsFootnote";
+      document.wMLCEnvironmentalHazardsSection.submit( );
    }
 }
 
@@ -490,8 +507,8 @@ function smEditDirectionsUseSect( )
    {
       _DisableFormElements( true );
 
-      document.wMLCHazardsSection.zAction.value = "smEditDirectionsUseSect";
-      document.wMLCHazardsSection.submit( );
+      document.wMLCEnvironmentalHazardsSection.zAction.value = "smEditDirectionsUseSect";
+      document.wMLCEnvironmentalHazardsSection.submit( );
    }
 }
 
@@ -505,8 +522,20 @@ function smEditMarketingSect( )
    {
       _DisableFormElements( true );
 
-      document.wMLCHazardsSection.zAction.value = "smEditMarketingSect";
-      document.wMLCHazardsSection.submit( );
+      document.wMLCEnvironmentalHazardsSection.zAction.value = "smEditMarketingSect";
+      document.wMLCEnvironmentalHazardsSection.submit( );
+   }
+}
+
+function ComboBox1OnChange( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      document.wMLCEnvironmentalHazardsSection.hComboBox1.value = document.wMLCEnvironmentalHazardsSection.ComboBox1.value;
    }
 }
 
