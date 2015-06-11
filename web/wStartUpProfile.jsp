@@ -78,6 +78,24 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       vGridTmp.drop( );
+      // Grid: ReusableBlocks
+      iTableRowCnt = 0;
+
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
+      vGridTmp = mSubreg.newView( );
+      csrRC = vGridTmp.cursor( "ReusableBlockDefinition" ).setFirst(  );
+      while ( csrRC.isSet() )
+      {
+         lEntityKey = vGridTmp.cursor( "ReusableBlockDefinition" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         iTableRowCnt++;
+
+         csrRC = vGridTmp.cursor( "ReusableBlockDefinition" ).setNextContinue( );
+      }
+
+      vGridTmp.drop( );
    }
 
    if ( webMapping == true )
@@ -215,6 +233,131 @@ if ( strActionToProcess != null )
       break;
    }
 
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "DeleteeReusableBlock" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wStartUpProfile", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mSubreg;
+      mSubreg = task.getViewByName( "mSubreg" );
+      if ( VmlOperation.isValid( mSubreg ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mSubreg.cursor( "ReusableBlockDefinition" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mSubreg.cursor( "ReusableBlockDefinition" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mSubreg.cursor( "ReusableBlockDefinition" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mSubreg.cursor( "ReusableBlockDefinition" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpProfile.jsp", "wStartUp.DeleteReusableBlock" );
+         nOptRC = wStartUp.DeleteReusableBlock( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wStartUp.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "DeleteColor" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wStartUpProfile", strActionToProcess );
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mSubreg;
+      mSubreg = task.getViewByName( "mSubreg" );
+      if ( VmlOperation.isValid( mSubreg ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mSubreg.cursor( "Color" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mSubreg.cursor( "Color" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mSubreg.cursor( "Color" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mSubreg.cursor( "Color" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpProfile.jsp", "wStartUp.DeleteColor" );
+         nOptRC = wStartUp.DeleteColor( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wStartUp.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
    while ( bDone == false && StringUtils.equals( strActionToProcess, "InitProfileForUpdate" ) )
    {
       bDone = true;
@@ -286,66 +429,6 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "DeleteColor" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wStartUpProfile", strActionToProcess );
-
-      // Position on the entity that was selected in the grid.
-      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
-      View mSubreg;
-      mSubreg = task.getViewByName( "mSubreg" );
-      if ( VmlOperation.isValid( mSubreg ) )
-      {
-         lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mSubreg.cursor( "Color" ).setByEntityKey( lEKey );
-         if ( !csrRC.isSet() )
-         {
-            boolean bFound = false;
-            csrRCk = mSubreg.cursor( "Color" ).setFirst( );
-            while ( csrRCk.isSet() && !bFound )
-            {
-               lEKey = mSubreg.cursor( "Color" ).getEntityKey( );
-               strKey = Long.toString( lEKey );
-               if ( StringUtils.equals( strKey, strEntityKey ) )
-               {
-                  // Stop while loop because we have positioned on the correct entity.
-                  bFound = true;
-               }
-               else
-                  csrRCk = mSubreg.cursor( "Color" ).setNextContinue( );
-            } // Grid
-         }
-      }
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpProfile.jsp", "wStartUp.DeleteColor" );
-         nOptRC = wStartUp.DeleteColor( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wStartUp.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StayOnWindowWithRefresh, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
    while ( bDone == false && StringUtils.equals( strActionToProcess, "UpdateColor" ) )
    {
       bDone = true;
@@ -404,6 +487,71 @@ if ( strActionToProcess != null )
       {
          // Next Window
          strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StartModalSubwindow, "wStartUp", "SubregColorUpdate" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "UpdateReusableBlock" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wStartUpProfile", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mSubreg;
+      mSubreg = task.getViewByName( "mSubreg" );
+      if ( VmlOperation.isValid( mSubreg ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mSubreg.cursor( "ReusableBlockDefinition" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mSubreg.cursor( "ReusableBlockDefinition" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mSubreg.cursor( "ReusableBlockDefinition" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mSubreg.cursor( "ReusableBlockDefinition" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpProfile.jsp", "wStartUp.UpdateReusableBlock" );
+         nOptRC = wStartUp.UpdateReusableBlock( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wStartUp.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StartModalSubwindow, "wStartUp", "SubregReusableBlockUpdate" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -1211,6 +1359,158 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 
 </div>  <!--  ColorList --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:22px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
+<% /* ReusableBlockList:GroupBox */ %>
+
+<div id="ReusableBlockList" name="ReusableBlockList" style="width:814px;height:264px;float:left;">  <!-- ReusableBlockList --> 
+
+<div  id="ReusableBlockList" name="ReusableBlockList" >Reusable Blocks</div>
+
+ <!-- This is added as a line spacer -->
+<div style="height:20px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:138px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox2:GroupBox */ %>
+
+<div id="GroupBox2" name="GroupBox2" style="width:192px;height:30px;float:left;">  <!-- GroupBox2 --> 
+
+
+</div>  <!--  GroupBox2 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:10px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:30px;float:left;"></div>   <!-- Width Spacer -->
+<% /* ReusableBlocks:Grid */ %>
+<table  cols=5 style=""  name="ReusableBlocks" id="ReusableBlocks">
+
+<thead><tr>
+
+   <th>Name</th>
+   <th>Description</th>
+   <th>Section Type</th>
+   <th>Update</th>
+   <th>Delete</th>
+
+</tr></thead>
+
+<tbody>
+
+<%
+try
+{
+   iTableRowCnt = 0;
+   mSubreg = task.getViewByName( "mSubreg" );
+   if ( VmlOperation.isValid( mSubreg ) )
+   {
+      long   lEntityKey;
+      String strEntityKey;
+      String strButtonName;
+      String strOdd;
+      String strTag;
+      String strReusableBlockName;
+      String strDescription;
+      String strSectionType;
+      String strBMBUpdateReusableBlock;
+      String strBMBDeleteReusableBlock;
+      
+      View vReusableBlocks;
+      vReusableBlocks = mSubreg.newView( );
+      csrRC2 = vReusableBlocks.cursor( "ReusableBlockDefinition" ).setFirst(  );
+      while ( csrRC2.isSet() )
+      {
+         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
+         iTableRowCnt++;
+
+         lEntityKey = vReusableBlocks.cursor( "ReusableBlockDefinition" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         strButtonName = "SelectButton" + strEntityKey;
+
+         strReusableBlockName = "";
+         nRC = vReusableBlocks.cursor( "ReusableBlockDefinition" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strReusableBlockName = vReusableBlocks.cursor( "ReusableBlockDefinition" ).getAttribute( "Name" ).getString( "" );
+
+            if ( strReusableBlockName == null )
+               strReusableBlockName = "";
+         }
+
+         if ( StringUtils.isBlank( strReusableBlockName ) )
+            strReusableBlockName = "&nbsp";
+
+         strDescription = "";
+         nRC = vReusableBlocks.cursor( "ReusableBlockDefinition" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strDescription = vReusableBlocks.cursor( "ReusableBlockDefinition" ).getAttribute( "Description" ).getString( "" );
+
+            if ( strDescription == null )
+               strDescription = "";
+         }
+
+         if ( StringUtils.isBlank( strDescription ) )
+            strDescription = "&nbsp";
+
+         strSectionType = "";
+         nRC = vReusableBlocks.cursor( "ReusableBlockDefinition" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strSectionType = vReusableBlocks.cursor( "ReusableBlockDefinition" ).getAttribute( "LLD_SectionType" ).getString( "" );
+
+            if ( strSectionType == null )
+               strSectionType = "";
+         }
+
+         if ( StringUtils.isBlank( strSectionType ) )
+            strSectionType = "&nbsp";
+
+%>
+
+<tr<%=strOdd%>>
+
+   <td nowrap><a href="#" onclick="UpdateReusableBlock( this.id )" id="ReusableBlockName::<%=strEntityKey%>"><%=strReusableBlockName%></a></td>
+   <td nowrap><a href="#" onclick="UpdateReusableBlock( this.id )" id="Description::<%=strEntityKey%>"><%=strDescription%></a></td>
+   <td nowrap><a href="#" onclick="UpdateReusableBlock( this.id )" id="SectionType::<%=strEntityKey%>"><%=strSectionType%></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateReusableBlock" onclick="UpdateReusableBlock( this.id )" id="BMBUpdateReusableBlock::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteReusableBlock" onclick="DeleteeReusableBlock( this.id )" id="BMBDeleteReusableBlock::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
+
+</tr>
+
+<%
+         csrRC2 = vReusableBlocks.cursor( "ReusableBlockDefinition" ).setNextContinue( );
+      }
+      vReusableBlocks.drop( );
+   }
+}
+catch (Exception e)
+{
+out.println("There is an error in grid: " + e.getMessage());
+task.log().info( "*** Error in grid" + e.getMessage() );
+}
+%>
+</tbody>
+</table>
+
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  ReusableBlockList --> 
 </div>  <!-- End of a new line -->
 
 

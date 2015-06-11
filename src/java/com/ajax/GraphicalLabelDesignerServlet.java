@@ -1240,6 +1240,7 @@ end debug code */
       EntityCursor ec = vBlock.getCursor( "LLD_Block" );
       ec.createEntity( CursorPosition.LAST );
       ec.setMatchingAttributesByName( ecb, SetMatchingFlags.DEFAULT );
+      ec.getAttribute( "wID" ).setValue( ec.getAttribute( "Tag" ).getString() );
       ecb = mBlockRU.getCursor( "LLD_SpecialSectionAttribute" );
       CursorResult cr = ecb.setFirst();
       while ( cr.isSet() ) {

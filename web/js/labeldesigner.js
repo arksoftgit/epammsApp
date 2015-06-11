@@ -513,7 +513,7 @@ $(function() {
       drop: function( event, ui ) {
       // console.log( ".page, .block-element drop" );
          var stopLoop = 1;
-         if ( ui.draggable.hasClass( "canvas-element" ) ) { // dropping element already on canvas
+         if ( ui.draggable.hasClass( "canvas-element" ) ) { // dropping panel/block already on canvas
             var $canvasElement = $(ui.helper);
             var $parent = $canvasElement.parent();
             var $canvas = determineTargetOfDrop( event, $(this), $canvasElement );
@@ -564,7 +564,7 @@ $(function() {
             setCurrentBlockData( $canvasElement, "updated block already on canvas" );
             clearListAndSelection( $canvasElement[0] ); // clear the list and set current selection
          } else {
-            var $canvasElement = $(ui.helper).clone(); // ui.draggable.clone();  dropping new block
+            var $canvasElement = $(ui.helper).clone(); // ui.draggable.clone();  dropping new panel/block
          // console.log( ".page, .block-element new block top:" + event.pageY + "  left: " + event.pageX +
          //              "   height: " + $(ui.helper).height() + "   width: " + $(ui.helper).width() );
                       // "   height: " + ($(ui.helper).height() + g_pixelsBorder) + "   width: " + ($(ui.helper).width() + g_pixelsBorder) );
@@ -572,18 +572,21 @@ $(function() {
             $canvasElement.css({ top: event.pageY, left: event.pageX });
             var uniqueTag = getUniqueId();
             $canvasElement.attr( "id", uniqueTag );
-            var reuseBlockName = "";
             var $canvas = determineTargetOfDrop( event, $(this), $canvasElement );
             if ( $canvasElement.hasClass( "reusable" ) ) {
-               if ( $canvas[0].id === "page" ) {
-                  alert( "Reusable blocks must be dropped within a panel" );
-                  return;
-               }
-               reuseBlockName = $("#zReusableBlocks").val();
+               var reuseBlockName = $("#zReusableBlocks").val();
                if ( reuseBlockName === "" ) {
                   alert( "Reusable block must be selected from list" );
                   return;
                }
+               if ( $canvas[0].id === "page" ) {
+                  alert( "Reusable blocks must be dropped within a panel" );
+                  return;
+               }
+               addZeidonAttributeToElement( $canvasElement, "wID", uniqueTag );
+               addZeidonAttributeToElement( $canvasElement, "wE", "block" );
+               addZeidonAttributeToElement( $canvasElement, "wPE", "panel" );
+               addZeidonAttributeToElement( $canvasElement, "wPID", $canvas.data( "z_w^i^d" ) );
                var t = Math.floor( ui.position.top - $canvas.offset().top );
                var l = Math.floor( ui.position.left - $canvas.offset().left );
                var s = g_pixelsPerInch * g_scale;
@@ -1751,23 +1754,23 @@ var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
    }
 
 function ConvertWysiwygLabelDesignToZeidonJson( action, viewName, callback_func, $block, jsonString ) {
-   var blockName = "";
+   var reuseBlockName = "";
    var tag = "";
    if ( $block ) {
       tag = $block.data( "z_^tag" );
    }
    if ( action === "saveReusableBlock" ) {
-      blockName = prompt( "Please enter the reusable block name", tag );
-      if ( blockName === "" ) {
+      reuseBlockName = prompt( "Please enter the reusable block name", tag );
+      if ( reuseBlockName === "" ) {
          return;
       }
-      if ( $("#zReusableBlocks option[value='" + blockName + "']").length > 0 ) {
-         if ( confirm( "Do you want to replace the current reusable block: " + blockName ) === false ) {
+      if ( $("#zReusableBlocks option[value='" + reuseBlockName + "']").length > 0 ) {
+         if ( confirm( "Do you want to replace the current reusable block: " + reuseBlockName ) === false ) {
             return;
          }
       }
    } else if ( action === "applyReusableBlock" ) {
-      blockName = $("#zReusableBlocks").val();  
+      reuseBlockName = $("#zReusableBlocks").val();  
    }
    var jsonLabel = GetCurrentLabel();
    if ( jsonString === null ) {
@@ -1781,7 +1784,7 @@ function ConvertWysiwygLabelDesignToZeidonJson( action, viewName, callback_func,
       try {
          // Assign handlers immediately after making the request and remember the jqxhr object for this request
          // Retrieve the JSON version of the label from Zeidon (on the server) in a saved LLD.
-         var url = "labeldesigner?action=" + action + "&viewName=" + escape( viewName ) + "&blockTag=" + escape( tag ) + "&blockName=" + escape( blockName ) + "&parms=" + escape( jsonString );
+         var url = "labeldesigner?action=" + action + "&viewName=" + escape( viewName ) + "&blockTag=" + escape( tag ) + "&blockName=" + escape( reuseBlockName ) + "&parms=" + escape( jsonString );
          $.ajax({ url: url,
                   type: "post", // string defining the HTTP method to use for the request: GET (default) or POST
                   contentType: "application/json; charset=utf-8",
@@ -2427,7 +2430,12 @@ public class FileServer {
          var name = formatTitle( entity, obj );
          var tag = obj["Tag"];
          if ( !tag ) {
-            tag = "Tag" + id;
+            if ( id === null || id === "" ) {
+               id = getUniqueId();
+               tag = id;
+            } else {
+               tag = "Tag" + id;
+            }
          }
          var identity = "id=\"" + tag + "\" name=\"" + tag + "\" ";
          var classes = "class=\"" + entity;
@@ -2506,7 +2514,7 @@ public class FileServer {
          }
       }
 
-      addZeidonAttributeToElement( $element, "wID", id );
+      addZeidonAttributeToElement( $element, "wID", (id === null || id === "") ? tag : id );
       addZeidonAttributeToElement( $element, "Depth", depth );
       return $element;
    }

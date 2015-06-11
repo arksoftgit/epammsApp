@@ -202,6 +202,52 @@ function AddNewColor( )
    }
 }
 
+function DeleteeReusableBlock( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wStartUpProfile.zTableRowSelect.value = strEntityKey;
+      // Javascript code entered by user.
+
+if ( confirm( "Delete the reusable block?" ) === false ) {
+   return;
+}
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wStartUpProfile.zAction.value = "DeleteeReusableBlock";
+      document.wStartUpProfile.submit( );
+   }
+}
+
+function DeleteColor( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wStartUpProfile.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wStartUpProfile.zAction.value = "DeleteColor";
+      document.wStartUpProfile.submit( );
+   }
+}
+
 function InitProfileForUpdate( )
 {
 
@@ -260,25 +306,6 @@ function Return( )
    }
 }
 
-function DeleteColor( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wStartUpProfile.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wStartUpProfile.zAction.value = "DeleteColor";
-      document.wStartUpProfile.submit( );
-   }
-}
-
 function UpdateColor( strTagEntityKey )
 {
 
@@ -294,6 +321,25 @@ function UpdateColor( strTagEntityKey )
       _DisableFormElements( true );
 
       document.wStartUpProfile.zAction.value = "UpdateColor";
+      document.wStartUpProfile.submit( );
+   }
+}
+
+function UpdateReusableBlock( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wStartUpProfile.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wStartUpProfile.zAction.value = "UpdateReusableBlock";
       document.wStartUpProfile.submit( );
    }
 }
