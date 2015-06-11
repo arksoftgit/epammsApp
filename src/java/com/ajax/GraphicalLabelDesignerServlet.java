@@ -1149,7 +1149,7 @@ end debug code */
       return ec;
    }
 
-   private void copyBlock( View vLLD, View vBlock, View mBlockRU ) {
+   private void copyBlockToReuse( View vLLD, View vBlock, View mBlockRU ) {
       EntityCursor ecb = mBlockRU.getCursor( "LLD_Block" );
       EntityCursor ec = vBlock.getCursor( "LLD_Block" );
       ecb.createEntity( CursorPosition.LAST );
@@ -1193,7 +1193,7 @@ end debug code */
       while ( cr.isSet() ) {
          vBlock.cursor( "LLD_SubBlock" ).setToSubobject();
          mBlockRU.cursor( "LLD_SubBlock" ).setToSubobject();
-         copyBlock( vLLD, vBlock, mBlockRU );
+         copyBlockToReuse( vLLD, vBlock, mBlockRU );
          mBlockRU.cursor( "LLD_Block" ).resetSubobjectToParent();
          vBlock.cursor( "LLD_Block" ).resetSubobjectToParent();
          cr = ec.setNext();
@@ -1225,13 +1225,96 @@ end debug code */
 
          ecb = mBlockRU.getCursor( "Subregistrant" );
          ecb.includeSubobject( vLLD.getCursor( "Subregistrant" ) );
-
-         copyBlock( vLLD, vBlock, mBlockRU );
+         copyBlockToReuse( vLLD, vBlock, mBlockRU );
+      // logger.debug( "Reusable Block OI: " );
+      // mBlockRU.logObjectInstance();
          mBlockRU.commit();
          return true;
       } else {
          return false;
       }
+   }
+
+   private void copyReuseToBlock( View vLLD, View vBlock, View mBlockRU ) {
+      EntityCursor ecb = mBlockRU.getCursor( "LLD_Block" );
+      EntityCursor ec = vBlock.getCursor( "LLD_Block" );
+      ec.createEntity( CursorPosition.LAST );
+      ec.setMatchingAttributesByName( ecb, SetMatchingFlags.DEFAULT );
+      ecb = mBlockRU.getCursor( "LLD_SpecialSectionAttribute" );
+      CursorResult cr = ecb.setFirst();
+      while ( cr.isSet() ) {
+         ec = vBlock.getCursor( "LLD_SpecialSectionAttribute" );
+         ec.createEntity();
+         ec.setMatchingAttributesByName( ecb, SetMatchingFlags.DEFAULT );
+         EntityCursor ecs = mBlockRU.getCursor( "LLD_SpecialSectionAttrBlock" );
+         CursorResult crs = ecs.setFirst();
+         while ( crs.isSet() ) {
+            ec = vBlock.getCursor( "LLD_SpecialSectionAttrBlock" );
+            ec.createEntity();
+            ec.setMatchingAttributesByName( ecs, SetMatchingFlags.DEFAULT );
+            EntityCursor ecc = mBlockRU.getCursor( "SpecialAttributeTextColor" );
+            CursorResult crc = ecc.setFirst();
+            if ( crc.isSet() ) {
+               ec = vBlock.getCursor( "SpecialAttributeTextColor" );
+               ec.includeSubobject( ecc );
+            }
+            crs = ecs.setNext();
+         }
+         cr = ecb.setNext();
+      }
+      ecb = mBlockRU.getCursor( "BlockBackgroundColor" );
+      cr = ecb.setFirst();
+      if ( cr.isSet() ) {
+         ec = vBlock.getCursor( "BlockBackgroundColor" );
+         ec.includeSubobject( ecb );
+      }
+      ecb = mBlockRU.getCursor( "BlockBorderColor" );
+      cr = ecb.setFirst();
+      if ( cr.isSet() ) {
+         ec = vBlock.getCursor( "BlockBorderColor" );
+         ec.includeSubobject( ecb );
+      }
+      ecb = mBlockRU.getCursor( "LLD_SubBlock" );
+      cr = ecb.setFirst();
+      while ( cr.isSet() ) {
+         vBlock.cursor( "LLD_SubBlock" ).setToSubobject();
+         mBlockRU.cursor( "LLD_SubBlock" ).setToSubobject();
+         copyReuseToBlock( vLLD, vBlock, mBlockRU );
+         mBlockRU.cursor( "LLD_Block" ).resetSubobjectToParent();
+         vBlock.cursor( "LLD_Block" ).resetSubobjectToParent();
+         cr = ecb.setNext();
+      }
+   }
+
+   private boolean applyReusableBlock( View vLLD, View vBlock, String panelTag, String blockName, String parms ) {
+      EntityCursor ec = vBlock.getCursor( "LLD_Panel" );
+      CursorResult cr = ec.setFirstWithinOi( "Tag", panelTag );
+      if ( cr.isSet() ) {
+         View mBlockRU;
+         mBlockRU = new QualificationBuilder( vLLD )
+                    .setLodDef( "mBlockRU" )
+                    .addAttribQual( "ReusableBlockDefinition", "Name", "=", blockName )
+                    .activate();
+         if ( mBlockRU.cursor( "ReusableBlockDefinition" ).hasAny() ) {
+            try {
+               // parms = "{ \"top\": \"" + event.pageY + "\", \"left\": \"" + event.pageX + "\" }"
+               JSONParser jsonParser = new JSONParser();
+               JSONObject jsonObj = (JSONObject)jsonParser.parse( parms );
+               ec = mBlockRU.getCursor( "LLD_Block" );
+               ec.getAttribute( "Top" ).setValue( jsonObj.get( "top" ) );
+               ec.getAttribute( "Left" ).setValue( jsonObj.get( "left" ) );
+            // logger.debug( "Reusable Block Entity: " );
+            // ec.logEntity();
+               copyReuseToBlock( vLLD, vBlock, mBlockRU );
+            } catch( ParseException pe ) {
+               logger.error( "Unable to parse parms JSON: " + parms );
+               logger.error( "Parse Error: " + pe.getMessage() );
+               logger.error( "*********************************" );
+            }
+            return true;
+         }
+      }
+      return false;
    }
 
    /**
@@ -1308,7 +1391,7 @@ end debug code */
             response.getWriter().write( new Gson().toJson( "{}" ) );
          }
       } else if ( action.equals( "saveLabel" ) || action.equals( "saveLabelCommit" ) ||
-                  action.equals( "saveLabelRefresh" ) || action.equals( "saveReusableBlock" ) ) {
+                  action.equals( "saveLabelRefresh" ) || action.equals( "saveReusableBlock" ) || action.equals( "applyReusableBlock" ) ) {
          if ( vLLD != null ) {
             View vBlock = null;
             JSONObject jsonPost = getPostData( request );
@@ -1337,21 +1420,28 @@ end debug code */
                   vLLD.commit();
                // displaySPLD( vLLD, null, "" );
                }
-               if ( action.equals( "saveLabelRefresh" ) || action.equals( "saveReusableBlock" ) ) {
-                  if ( action.equals( "saveReusableBlock" ) ) {
+               if ( action.equals( "saveLabelRefresh" ) || action.equals( "saveReusableBlock" ) || action.equals( "applyReusableBlock" ) ) {
+                  if ( action.equals( "saveReusableBlock" ) || action.equals( "applyReusableBlock" ) ) {
                      String blockTag = request.getParameter( "blockTag" );
                      String blockName = request.getParameter( "blockName" );
-                     addReusableBlock( vLLD, vBlock, blockTag, blockName );
+                     if ( action.equals( "saveReusableBlock" ) ) {
+                        addReusableBlock( vLLD, vBlock, blockTag, blockName );
+                     } else {
+                        String parms = request.getParameter( "parms" );
+                        applyReusableBlock( vLLD, vBlock, blockTag, blockName, parms );
+                     }
                   // logger.debug( "After saveReusableBlock" + blockName );
                   // vLLD.logObjectInstance();
                   }
-                  String id = vLLD.cursor( "SubregPhysicalLabelDef" ).getAttribute( "ID" ).getString();
-                  vLLD.drop();
-                  vLLD = new QualificationBuilder( epamms )
-                            .setLodDef( "mSPLDef" )
-                            .addAttribQual( "SubregPhysicalLabelDef", "ID", "=", id )
-                            .activate();
-                  vLLD.setName( viewName, Level.TASK );
+                  if ( action.equals( "applyReusableBlock" ) == false ) {
+                     String id = vLLD.cursor( "SubregPhysicalLabelDef" ).getAttribute( "ID" ).getString();
+                     vLLD.drop();
+                     vLLD = new QualificationBuilder( epamms )
+                               .setLodDef( "mSPLDef" )
+                               .addAttribQual( "SubregPhysicalLabelDef", "ID", "=", id )
+                               .activate();
+                     vLLD.setName( viewName, Level.TASK );
+                  }
                // logger.debug( "After RefreshLabel" );
                // vLLD.logObjectInstance();
                   jsonLabel = convertLLD_ToJSON( vLLD );

@@ -161,7 +161,7 @@ $(function() {
             alert( "Duplicate Tag: " + dup );
             return;
          }
-         ConvertWysiwygLabelDesignToZeidonJson( "saveLabel" + commit , "mSPLDef", callback, null );
+         ConvertWysiwygLabelDesignToZeidonJson( "saveLabel" + commit , "mSPLDef", callback, null, null );
          g_updatedLLD = false;
       } else {
       // alert( "Not Changed" );
@@ -214,7 +214,7 @@ $(function() {
             sessionStorage.setItem( "epamms_section_type", sectionType );
             if ( g_updatedLLD ) {
             // alert( "Changed" );
-               ConvertWysiwygLabelDesignToZeidonJson( "saveLabel", "mSPLDef", updateBlockCallback, g_$current_block );
+               ConvertWysiwygLabelDesignToZeidonJson( "saveLabel", "mSPLDef", updateBlockCallback, g_$current_block, null );
             } else {
             // alert( "Not Changed" );
                updateBlockCallback( g_$current_block );
@@ -231,13 +231,7 @@ $(function() {
       if ( g_$current_block ) {
          mapUiDataToElementData( g_$current_block );
          if ( g_$current_block.hasClass( "panel" ) === false ) {
-            var tag = g_$current_block.data( "z_^tag" );
-            if ( $("#zReusableBlocks option[value='" + tag + "']").length > 0 ) {
-               if ( confirm( "Do you want to replace the current reusable block: " + tag ) === false ) {
-                  return;
-               }
-            }
-            ConvertWysiwygLabelDesignToZeidonJson( "saveReusableBlock", "mSPLDef", reloadCallback, g_$current_block );
+            ConvertWysiwygLabelDesignToZeidonJson( "saveReusableBlock", "mSPLDef", reloadCallback, g_$current_block, null );
          } else {
             alert( "Cannot save panel" );
          }
@@ -283,7 +277,7 @@ $(function() {
          var sectionType = $(this).data( "z_^l^l^d_^section^type" );
          sessionStorage.setItem( "epamms_section_type", sectionType );
          if ( g_updatedLLD ) {
-            ConvertWysiwygLabelDesignToZeidonJson( "saveLabel", "mSPLDef", updateBlockCallback, this );
+            ConvertWysiwygLabelDesignToZeidonJson( "saveLabel", "mSPLDef", updateBlockCallback, this, null );
          } else {
             updateBlockCallback( this );
          }
@@ -480,8 +474,8 @@ $(function() {
          // console.log( "Stop yOffset: " + $canvasElement[0].offsetTop + "  xOffset: " + $canvasElement[0].offsetLeft );
             g_updatedLLD = true;
             var scale = g_pixelsPerInch * g_scale;
-            $canvasElement.data( "z_^top", ($canvasElement[0].offsetTop / scale).toFixed( 2 ) );
-            $canvasElement.data( "z_^left", ($canvasElement[0].offsetLeft / scale).toFixed( 2 ) );
+            $canvasElement.data( "z_^top", ($canvasElement[0].offsetTop / scale).toFixed( 3 ) );
+            $canvasElement.data( "z_^left", ($canvasElement[0].offsetLeft / scale).toFixed( 3 ) );
             setCurrentBlockData( $canvasElement, "updated 2" );
             updatePositionStatus( $canvasElement[0], $canvasElement[0].offsetTop, $canvasElement[0].offsetLeft, "Stop yOffset ... z_^top and z_^left" );
          // updatePositionStatus( $canvasElement[0], -9999, -9999 );
@@ -503,8 +497,8 @@ $(function() {
          // console.log( "Stop yResize: " + $canvasElement[0].offsetHeight + "  xResize: " + $canvasElement[0].offsetWidth );
             g_updatedLLD = true;
             var scale = g_pixelsPerInch * g_scale;
-            $canvasElement.data( "z_^height", (($canvasElement[0].offsetHeight) / scale).toFixed( 2 ) );
-            $canvasElement.data( "z_^width", (($canvasElement[0].offsetWidth) / scale).toFixed( 2 ) );
+            $canvasElement.data( "z_^height", (($canvasElement[0].offsetHeight) / scale).toFixed( 3 ) );
+            $canvasElement.data( "z_^width", (($canvasElement[0].offsetWidth) / scale).toFixed( 3 ) );
             setCurrentBlockData( $canvasElement, "updated 3" );
             updateSizeStatus( $canvasElement[0], $canvasElement[0].offsetHeight, $canvasElement[0].offsetWidth, "Stop yResize ... z_^height and z_^width" );
          // updatePositionStatus( $canvasElement[0], -9999, -9999 );
@@ -582,7 +576,7 @@ $(function() {
             var $canvas = determineTargetOfDrop( event, $(this), $canvasElement );
             if ( $canvasElement.hasClass( "reusable" ) ) {
                if ( $canvas[0].id === "page" ) {
-                  alert( "Reusable blocks must be created within a panel or a block" );
+                  alert( "Reusable blocks must be dropped within a panel" );
                   return;
                }
                reuseBlockName = $("#zReusableBlocks").val();
@@ -590,7 +584,11 @@ $(function() {
                   alert( "Reusable block must be selected from list" );
                   return;
                }
-               $("#zReusableBlocks").val( "" );
+               var t = Math.floor( ui.position.top - $canvas.offset().top );
+               var l = Math.floor( ui.position.left - $canvas.offset().left );
+               var s = g_pixelsPerInch * g_scale;
+               ConvertWysiwygLabelDesignToZeidonJson( "applyReusableBlock", "mSPLDef", reloadCallback, $canvas, "{ \"top\": \"" + (t / s).toFixed( 3 ) + "\", \"left\": \"" + (l / s).toFixed( 3 ) + "\" }" );
+               return;
             }
             $canvasElement.attr( "name", uniqueTag );
             $canvasElement.text( uniqueTag );
@@ -633,11 +631,11 @@ $(function() {
             var top = Math.floor( ui.position.top - $canvas.offset().top );
             var left = Math.floor( ui.position.left - $canvas.offset().left );
             var scale = g_pixelsPerInch * g_scale;
-         // console.log( ".page, .block-element new block data z_^top:" + (top / scale).toFixed( 2 ) +
-         //              "  z_^left: " + (left / scale).toFixed( 2 ) +
+         // console.log( ".page, .block-element new block data z_^top:" + (top / scale).toFixed( 3 ) +
+         //              "  z_^left: " + (left / scale).toFixed( 3 ) +
          //              "   z_^height: " +  "1.00" + "   z_^width: " +  "1.00" );
-            $canvasElement.data( "z_^top", (top / scale).toFixed( 2 ) );
-            $canvasElement.data( "z_^left", (left / scale).toFixed( 2 ) );
+            $canvasElement.data( "z_^top", (top / scale).toFixed( 3 ) );
+            $canvasElement.data( "z_^left", (left / scale).toFixed( 3 ) );
             $canvasElement.data( "z_^height", "1.00" );
             $canvasElement.data( "z_^width", "1.00" );
             setCurrentBlockData( $canvasElement, "updated new block" );
@@ -745,7 +743,7 @@ $(function() {
          pixels = 0;
       }
       var n = (pixels - border) / (g_pixelsPerInch * g_scale);
-      n = n.toFixed( 2 );
+      n = n.toFixed( 3 );
    // console.log( "scalePixel2Inch attr: " + attr + "   " + message + ": " + n.toString() + "in" );
       return n;
    }
@@ -1114,7 +1112,15 @@ $(function() {
             }
          }
       }
-
+      if ( $canvasElement.hasClass( "reusable" ) ) {
+         var stopLoop = 0;
+         while ( $target.parent()[0].id !== "label" && stopLoop < 40 ) {
+            if ( $target.hasClass( "panel" ) ) {
+               break;
+            }
+            $target = $target.parent();
+         }
+      }
    // console.log( "Target of drop: " + $target[0].id );
       return $target;
    }
@@ -1145,7 +1151,7 @@ $(function() {
       } else {
          var x = offset_left / (g_pixelsPerInch * g_scale);
          var y = offset_top / (g_pixelsPerInch * g_scale);
-         new_position = "Position: " + y.toFixed( 2 ) + "in, " + x.toFixed( 2 ) + "in";
+         new_position = "Position: " + y.toFixed( 3 ) + "in, " + x.toFixed( 3 ) + "in";
       }
 
    // console.log( "UpdatePositionStatus " + message + " (" + offset_top + "," + offset_left + ") : " + new_position );
@@ -1165,7 +1171,7 @@ $(function() {
       } else {
          var x = width / (g_pixelsPerInch * g_scale);
          var y = height / (g_pixelsPerInch * g_scale);
-         new_size = "Size: " + y.toFixed( 2 ) + "in, " + x.toFixed( 2 ) + "in";
+         new_size = "Size: " + y.toFixed( 3 ) + "in, " + x.toFixed( 3 ) + "in";
       }
 
    // console.log( "UpdateSizeStatus " + message + " (" + height + "," + width + ") : " + new_size );
@@ -1744,20 +1750,29 @@ var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
       return jsonLabel;
    }
 
-function ConvertWysiwygLabelDesignToZeidonJson( action, name, callback_func, $block ) {
+function ConvertWysiwygLabelDesignToZeidonJson( action, viewName, callback_func, $block, jsonString ) {
    var blockName = "";
    var tag = "";
+   if ( $block ) {
+      tag = $block.data( "z_^tag" );
+   }
    if ( action === "saveReusableBlock" ) {
-      if ( $block ) {
-         tag = $block.data( "z_^tag" );
-      }
-      var blockName = prompt( "Please enter the reusable block name", tag );
+      blockName = prompt( "Please enter the reusable block name", tag );
       if ( blockName === "" ) {
          return;
       }
+      if ( $("#zReusableBlocks option[value='" + blockName + "']").length > 0 ) {
+         if ( confirm( "Do you want to replace the current reusable block: " + blockName ) === false ) {
+            return;
+         }
+      }
+   } else if ( action === "applyReusableBlock" ) {
+      blockName = $("#zReusableBlocks").val();  
    }
    var jsonLabel = GetCurrentLabel();
-
+   if ( jsonString === null ) {
+      jsonString = "{}";
+   }
    // Display the resultant JSON that will be passed to Zeidon to be saved as an LLD.
    // console.log( "\nJsonLabel: " + jsonLabel );
 
@@ -1766,7 +1781,7 @@ function ConvertWysiwygLabelDesignToZeidonJson( action, name, callback_func, $bl
       try {
          // Assign handlers immediately after making the request and remember the jqxhr object for this request
          // Retrieve the JSON version of the label from Zeidon (on the server) in a saved LLD.
-         var url = "labeldesigner?action=" + action + "&viewName=" + escape( name ) + "&blockTag=" + escape( tag ) + "&blockName=" + escape( blockName );
+         var url = "labeldesigner?action=" + action + "&viewName=" + escape( viewName ) + "&blockTag=" + escape( tag ) + "&blockName=" + escape( blockName ) + "&parms=" + escape( jsonString );
          $.ajax({ url: url,
                   type: "post", // string defining the HTTP method to use for the request: GET (default) or POST
                   contentType: "application/json; charset=utf-8",
@@ -1788,7 +1803,7 @@ function ConvertWysiwygLabelDesignToZeidonJson( action, name, callback_func, $bl
                            }
          });
       } catch(e) {
-         alert( "Could not load OI: " + name + "\n" + e.message );
+         alert( "Could not load OI: " + viewName + "\n" + e.message );
       } finally { // TODO:  this should not be done here ... it happens way too early ... the success/error/complete function? should do it 
          g_$current_block = null;
 
@@ -3041,7 +3056,7 @@ public class FileServer {
                   change = true;
                   height += $el.cssInt( 'height' );
                   $el.css({ height: height });
-                  $el.data( "z_^height", (height / scale).toFixed( 2 ) );
+                  $el.data( "z_^height", (height / scale).toFixed( 3 ) );
                   if ( $el[0] === g_$current_block[0] ) {
                      mapElementDataToUiData( g_$current_block );
                   }
@@ -3050,7 +3065,7 @@ public class FileServer {
                   change = true;
                   width += $el.cssInt( 'width' );
                   $el.css({ width: width });
-                  $el.data( "z_^width", (width / scale).toFixed( 2 ) );
+                  $el.data( "z_^width", (width / scale).toFixed( 3 ) );
                   if ( $el[0] === g_$current_block[0] ) {
                      mapElementDataToUiData( g_$current_block );
                   }
@@ -3099,7 +3114,7 @@ public class FileServer {
                   change = true;
                   top += $el.cssInt( 'top' );
                   $el.css({ top: top });
-                  $el.data( "z_^top", (top / scale).toFixed( 2 ) );
+                  $el.data( "z_^top", (top / scale).toFixed( 3 ) );
                   if ( $el[0] === g_$current_block[0] ) {
                      mapElementDataToUiData( g_$current_block );
                   }
@@ -3108,7 +3123,7 @@ public class FileServer {
                   change = true;
                   left += $el.cssInt( 'left' );
                   $el.css({ left: left });
-                  $el.data( "z_^left", (left / scale).toFixed( 2 ) );
+                  $el.data( "z_^left", (left / scale).toFixed( 3 ) );
                   if ( $el[0] === g_$current_block[0] ) {
                      mapElementDataToUiData( g_$current_block );
                   }
@@ -3273,11 +3288,11 @@ public class FileServer {
             $item = $(item);
             if ( id === "esh" ) {
                $item.css({ left: pos });
-               $item.data( "z_^left", (pos / scale).toFixed( 2 ) );
+               $item.data( "z_^left", (pos / scale).toFixed( 3 ) );
                pos += $item.cssInt( 'width' ) + space;
             } else {
                $item.css({ top: pos });
-               $item.data( "z_^top", (pos / scale).toFixed( 2 ) );
+               $item.data( "z_^top", (pos / scale).toFixed( 3 ) );
                pos += $item.cssInt( 'height' ) + space;
             }
          });
@@ -3332,13 +3347,13 @@ public class FileServer {
                         case "at": // Align Top
                            coord = $el.cssInt( 'top' );
                            $item.css({ top: coord });
-                           $item.data( "z_^top", (coord / scale).toFixed( 2 ) );
+                           $item.data( "z_^top", (coord / scale).toFixed( 3 ) );
                            break;
 
                         case "al": // Align Left
                            coord = $el.cssInt( 'left' );
                            $item.css({ left: coord });
-                           $item.data( "z_^left", (coord / scale).toFixed( 2 ) );
+                           $item.data( "z_^left", (coord / scale).toFixed( 3 ) );
                            break;
 
                         case "ab": // Align Bottom
@@ -3347,7 +3362,7 @@ public class FileServer {
                               coord = 0;
                            }
                            $item.css({ top: coord });
-                           $item.data( "z_^top", (coord / scale).toFixed( 2 ) );
+                           $item.data( "z_^top", (coord / scale).toFixed( 3 ) );
                            break;
 
                         case "ar": // Align Right
@@ -3356,28 +3371,28 @@ public class FileServer {
                               coord = 0;
                            }
                            $item.css({ left: coord });
-                           $item.data( "z_^left", (coord / scale).toFixed( 2 ) );
+                           $item.data( "z_^left", (coord / scale).toFixed( 3 ) );
                            break;
 
                         case "ew": // Equal Width
                            coord = $el.cssInt( 'width' );
                            $item.css({ width: coord });
-                           $item.data( "z_^width", (coord / scale).toFixed( 2 ) );
+                           $item.data( "z_^width", (coord / scale).toFixed( 3 ) );
                            break;
 
                         case "eh": // Equal Height
                            coord = $el.cssInt( 'height' );
                            $item.css({ height: coord });
-                           $item.data( "z_^height", (coord / scale).toFixed( 2 ) );
+                           $item.data( "z_^height", (coord / scale).toFixed( 3 ) );
                            break;
 
                         case "ewh": // Equal Width & Height
                            coord = $el.cssInt( 'width' );
                            $item.css({ width: coord });
-                           $item.data( "z_^width", (coord / scale).toFixed( 2 ) );
+                           $item.data( "z_^width", (coord / scale).toFixed( 3 ) );
                            coord = $el.cssInt( 'height' );
                            $item.css({ height: coord });
-                           $item.data( "z_^height", (coord / scale).toFixed( 2 ) );
+                           $item.data( "z_^height", (coord / scale).toFixed( 3 ) );
                            break;
 
                   } // end of: inner switch

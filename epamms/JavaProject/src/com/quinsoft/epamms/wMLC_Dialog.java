@@ -348,9 +348,33 @@ GOTO_AddUsageStatements( View     ViewToWindow )
    } 
    else
    { 
-      //:// Areas of Use
-      //:mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Areas of Use"
-      SetAttributeFromString( mMasLC, "MasterLabelContent", "wAddStatementsPageTitle", "Areas of Use" );
+      //:IF mMasLC.M_UsageType.UsageType = "U"
+      if ( CompareAttributeToString( mMasLC, "M_UsageType", "UsageType", "U" ) == 0 )
+      { 
+         //:// Areas of Use
+         //:mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Areas of Use"
+         SetAttributeFromString( mMasLC, "MasterLabelContent", "wAddStatementsPageTitle", "Areas of Use" );
+         //:ELSE
+      } 
+      else
+      { 
+         //:IF mMasLC.M_UsageType.UsageType = "T"
+         if ( CompareAttributeToString( mMasLC, "M_UsageType", "UsageType", "T" ) == 0 )
+         { 
+            //:mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Application Use"
+            SetAttributeFromString( mMasLC, "MasterLabelContent", "wAddStatementsPageTitle", "Application Use" );
+            //:ELSE
+         } 
+         else
+         { 
+            //:mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Unknown"
+            SetAttributeFromString( mMasLC, "MasterLabelContent", "wAddStatementsPageTitle", "Unknown" );
+         } 
+
+         //:END
+      } 
+
+      //:END
    } 
 
    //:END

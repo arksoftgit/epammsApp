@@ -2254,7 +2254,6 @@ omMasLC_dCombinedContainerVol( View     mMasLC,
    String   szCombinedName = null;
    //:STRING ( 20 )  szContainerVolume
    String   szContainerVolume = null;
-   int      RESULT = 0;
 
 
    //:CASE GetOrSetFlag
@@ -2272,56 +2271,15 @@ omMasLC_dCombinedContainerVol( View     mMasLC,
             sb_szCombinedName = new StringBuilder( szCombinedName );
                   ZeidonStringCopy( sb_szCombinedName, 1, 0, "", 1, 0, 257 );
          szCombinedName = sb_szCombinedName.toString( );}
-         //:FOR EACH mMasLC.M_StorageDisposalDrivingConVol 
-         RESULT = SetCursorFirstEntity( mMasLC, "M_StorageDisposalDrivingConVol", "" );
-         while ( RESULT > zCURSOR_UNCHANGED )
-         { 
-            //:GetStringFromAttributeByContext( szContainerVolume, mMasLC, "M_StorageDisposalDrivingConVol", "ContainerVolume", "", 20 )
-            {StringBuilder sb_szContainerVolume;
-            if ( szContainerVolume == null )
-               sb_szContainerVolume = new StringBuilder( 32 );
-            else
-               sb_szContainerVolume = new StringBuilder( szContainerVolume );
-                         GetStringFromAttributeByContext( sb_szContainerVolume, mMasLC, "M_StorageDisposalDrivingConVol", "ContainerVolume", "", 20 );
-            szContainerVolume = sb_szContainerVolume.toString( );}
-            //:IF szCombinedName = ""
-            if ( ZeidonStringCompare( szCombinedName, 1, 0, "", 1, 0, 257 ) == 0 )
-            { 
-               //:szCombinedName = szContainerVolume
-                {StringBuilder sb_szCombinedName;
-               if ( szCombinedName == null )
-                  sb_szCombinedName = new StringBuilder( 32 );
-               else
-                  sb_szCombinedName = new StringBuilder( szCombinedName );
-                              ZeidonStringCopy( sb_szCombinedName, 1, 0, szContainerVolume, 1, 0, 257 );
-               szCombinedName = sb_szCombinedName.toString( );}
-               //:ELSE
-            } 
-            else
-            { 
-               //:szCombinedName = szCombinedName + ", " + szContainerVolume
-                {StringBuilder sb_szCombinedName;
-               if ( szCombinedName == null )
-                  sb_szCombinedName = new StringBuilder( 32 );
-               else
-                  sb_szCombinedName = new StringBuilder( szCombinedName );
-                              ZeidonStringConcat( sb_szCombinedName, 1, 0, ", ", 1, 0, 257 );
-               szCombinedName = sb_szCombinedName.toString( );}
-                {StringBuilder sb_szCombinedName;
-               if ( szCombinedName == null )
-                  sb_szCombinedName = new StringBuilder( 32 );
-               else
-                  sb_szCombinedName = new StringBuilder( szCombinedName );
-                              ZeidonStringConcat( sb_szCombinedName, 1, 0, szContainerVolume, 1, 0, 257 );
-               szCombinedName = sb_szCombinedName.toString( );}
-            } 
-
-            RESULT = SetCursorNextEntity( mMasLC, "M_StorageDisposalDrivingConVol", "" );
-            //:END
-         } 
-
+         //:/*    FOR EACH mMasLC.M_StorageDisposalDrivingConVol 
+         //:???         GetStringFromAttributeByContext( szContainerVolume, mMasLC, "M_StorageDisposalDrivingConVol", "ContainerVolume", "", 20 )
+         //:IF szCombinedName = ""
+         //:   szCombinedName = szContainerVolume
+         //:ELSE
+         //:   szCombinedName = szCombinedName + ", " + szContainerVolume
          //:END
-
+         //:END
+         //:*/
 
          //:// Store the calculated value in the object.
          //:StoreStringInRecord( mMasLC,

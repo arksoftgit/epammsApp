@@ -20,36 +20,58 @@
 package com.quinsoft.epamms;
 
 //import java.io.File;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 //import java.lang.Math;
 //import java.text.NumberFormat;
 //import java.util.*;
 import java.nio.CharBuffer;
 
+import org.apache.commons.lang3.StringUtils;
 //import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.mutable.MutableDouble;
 import org.apache.commons.lang3.mutable.MutableInt;
+import org.joda.time.Days;
+import java.util.Date;
+import org.joda.time.DateTime;
+//import org.joda.time.Days;
 
 //import com.quinsoft.zeidon.ActivateFlags;
 import com.quinsoft.zeidon.CursorPosition;
+import com.quinsoft.zeidon.CursorResult;
+import com.quinsoft.zeidon.EntityCursor;
 import com.quinsoft.zeidon.TaskQualification;
 import com.quinsoft.zeidon.Task;
 import com.quinsoft.zeidon.View;
 import com.quinsoft.zeidon.vml.VmlOperation;
 import com.quinsoft.zeidon.vml.zVIEW;
 //import com.quinsoft.zeidon.utils.JoeUtils;
+import com.quinsoft.zeidon.zeidonoperations.ZDRVROPR;
+import com.quinsoft.zeidon.zeidonoperations.KZOEP1AA;
+import com.quinsoft.zeidon.zeidonoperations.ActiveDirectory;
 
 /**
  * @author QuinSoft
  *
+ * Admin password zPrefixCF6j8nasPa8FAO7iwIB8fR6YDeupqBTOcqJwU9kP1v3kLB8fRpSarg==
  */
 
 public class ZGlobal1_Operation extends VmlOperation
 {
-    public ZGlobal1_Operation( TaskQualification taskQual )
-    {
-       super( taskQual );
-    }
+   private final ZDRVROPR m_ZDRVROPR;
+   private final KZOEP1AA m_KZOEP1AA;
+   private final ActiveDirectory m_ActiveDirectory;
+   //public ZGLOBAL1_Operation( TaskQualification taskQual )
+   public ZGlobal1_Operation( View view )
+   {
+      super( view );
+      m_ZDRVROPR = new ZDRVROPR( view );
+      m_KZOEP1AA = new KZOEP1AA( view );
+      m_ActiveDirectory = new ActiveDirectory( );
+      //private final KZOEP1AA m_KZOEP1AA;
+   }
 
    /////////////////////////////////////////////////////////////////////////////////////////////////////
    //
@@ -75,12 +97,15 @@ public class ZGlobal1_Operation extends VmlOperation
                                     String entityName,
                                     String attributeName )
    {
-     String  stringTimeStamp = null;
-     int rc;
+      String  stringTimeStamp = null;
+      int rc;
 
-     stringTimeStamp = SysGetDateTime( stringTimeStamp );
-     rc = SetAttributeFromString( View, entityName, attributeName, stringTimeStamp );
-     return rc;
+      stringTimeStamp = KZOEP1AA.SysGetDateTime( stringTimeStamp );
+      StringBuilder sb_szDate = new StringBuilder( 32 );
+      KZOEP1AA.SysGetDateTime( sb_szDate );
+
+      rc = SetAttributeFromString( View, entityName, attributeName, stringTimeStamp );
+      return rc;
    }
 
    /*
@@ -113,15 +138,15 @@ public class ZGlobal1_Operation extends VmlOperation
    {
       Double decimalSum;
       Double decimalValue = null;
-      int RESULT;
+      int rc;
 
       decimalSum = 0.0;
 
-      RESULT = SetCursorFirstEntity( vSum, entityName, stringParentName );
-      while ( RESULT > zCURSOR_UNCHANGED )
+      rc = SetCursorFirstEntity( vSum, entityName, stringParentName );
+      while ( rc > zCURSOR_UNCHANGED )
       {
-        decimalSum += GetDecimalFromAttribute( decimalValue, vSum, entityName, attributeName );
-         RESULT = SetCursorNextEntity( vSum, entityName, stringParentName );
+         decimalSum += GetDecimalFromAttribute( decimalValue, vSum, entityName, attributeName );
+         rc = SetCursorNextEntity( vSum, entityName, stringParentName );
       }
 
       return decimalSum;
@@ -141,15 +166,18 @@ public class ZGlobal1_Operation extends VmlOperation
    }
 
    public int
-   GetIntFromAttrByContext( MutableInt    lValue,
+   GetIntFromAttrByContext( MutableInt lValue,
                             View   view,
                             String stringEntity,
                             String stringAttribute,
                             String stringContext )
    {
-      GetVariableFromAttribute( lValue, 0, zTYPE_INTEGER, 0,
-                                view, stringEntity, stringAttribute, stringContext, 0 );
-      return lValue.intValue( );
+      int lValueInt = 0;
+
+      lValueInt = GetVariableFromAttribute( lValueInt, 0, zTYPE_INTEGER, 0,
+                                             view, stringEntity, stringAttribute, stringContext, 0 );
+      lValue.setValue( lValueInt );
+      return lValue.intValue();
    }
 
    public int
@@ -187,11 +215,11 @@ public class ZGlobal1_Operation extends VmlOperation
                             int    lValue,
                             String stringContext )
    {
-     int rc;
+      int rc;
 
-     rc = SetAttributeFromVariable( view, stringEntity, stringAttribute,
-                                    lValue, zTYPE_INTEGER, 0, stringContext, 0);
-     return rc;
+      rc = SetAttributeFromVariable( view, stringEntity, stringAttribute,
+                                     lValue, zTYPE_INTEGER, 0, stringContext, 0);
+      return rc;
    }
 
    public int
@@ -201,11 +229,11 @@ public class ZGlobal1_Operation extends VmlOperation
                               int    lValue,
                               String stringContext )
    {
-     int rc;
+      int rc;
 
-     rc = AddToAttributeFromVariable( view, stringEntity, stringAttribute,
-                                      lValue, zTYPE_INTEGER, 0, stringContext );
-     return rc;
+      rc = AddToAttributeFromVariable( view, stringEntity, stringAttribute,
+                                       lValue, zTYPE_INTEGER, 0, stringContext );
+      return rc;
    }
 
    /*
@@ -232,7 +260,7 @@ public class ZGlobal1_Operation extends VmlOperation
                    String stringVariableName,
                    int    nMaxReturnLth )
    {
-      stringReturnValue = SysGetEnvVar( stringReturnValue, stringVariableName, nMaxReturnLth );
+      stringReturnValue = KZOEP1AA.SysGetEnvVar( stringReturnValue, stringVariableName, nMaxReturnLth );
       return stringReturnValue;
    }
 
@@ -284,6 +312,9 @@ public class ZGlobal1_Operation extends VmlOperation
    public Double
    StrToDecimal( String stringStr )
    {
+      if ( stringStr == null || stringStr.equals("") )
+         return 0.0;
+
       return Double.valueOf( stringStr );
    }
 
@@ -311,10 +342,10 @@ public class ZGlobal1_Operation extends VmlOperation
    {
       char[] arrayChar = new char[ 2 ];
 
-       arrayChar[ 0 ] = (char) (sCode & 0x00ff);
-       arrayChar[ 1 ] = (char) 0;
-       arrayChar[ 2 ] = 'x';  // testing to ensure array bounds checking occurs at run time
-       return stringStr = arrayChar.toString( );
+      arrayChar[ 0 ] = (char) (sCode & 0x00ff);
+      arrayChar[ 1 ] = (char) 0;
+      arrayChar[ 2 ] = 'x';  // testing to ensure array bounds checking occurs at run time
+      return stringStr = arrayChar.toString( );
    }
 
    /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -342,8 +373,8 @@ public class ZGlobal1_Operation extends VmlOperation
       return nCode;
    }
 
-   public int
-   GetDateAttributeDifferenceInDays( MutableInt miDays,
+   public MutableInt
+   GetDateAttributeDifferenceInDays( MutableInt    lDays,
                                      View   srcView,
                                      String srcEntityName,
                                      String srcAttributeName,
@@ -355,35 +386,47 @@ public class ZGlobal1_Operation extends VmlOperation
       DateTimeRecord  TargetDate = null;
       String          stringSourceDate = null;
       String          stringTargetDate = null;
-      int             lDays = 0;
+      int             lDaysTmp;
 
       // read the attributes
-      stringSourceDate = GetStringFromAttribute( stringSourceDate, srcView, srcEntityName, srcAttributeName );
-      stringTargetDate = GetStringFromAttribute( stringTargetDate, tgtView, tgtEntityName, tgtAttributeName );
+      //stringSourceDate = GetStringFromAttribute( stringSourceDate, srcView, srcEntityName, srcAttributeName );
+      //stringTargetDate = GetStringFromAttribute( stringTargetDate, tgtView, tgtEntityName, tgtAttributeName );
 
+      DateTime BeginDate = srcView.cursor(srcEntityName).getAttribute(srcAttributeName).getDateTime();
+      DateTime EndDate = tgtView.cursor(tgtEntityName).getAttribute(tgtAttributeName).getDateTime();
+
+      //DateTime BeginDate = new DateTime(stringSourceDate);
+      //DateTime EndDate = new DateTime(stringTargetDate);
+
+      //int days = Days.daysBetween( BeginDate, EndDate).getDays();
+      int days = Days.daysBetween( EndDate, BeginDate).getDays();
+      /*
       UfStringToDateTime( stringSourceDate, SourceDate );
       UfStringToDateTime( stringTargetDate, TargetDate );
 
       // subtract the values
-      lDays = UfDateTimeDiff( lDays, TargetDate, SourceDate, zDT_DAY );
+      lDaysTmp = lDays.intValue();
+      lDaysTmp = UfDateTimeDiff( lDaysTmp, TargetDate, SourceDate, zDT_DAY );
 
-      miDays.setValue( lDays );
+      lDays.setValue(lDaysTmp);
+      */
+
+      lDays.setValue(days);
+
       return lDays;
    }
 
-   public int
-   GetEntityNameFromStructure( String stringInternalEntityStructure, StringBuilder returnEntityName )
+   public int GetEntityNameFromStructure( String stringInternalEntityStructure, StringBuilder returnEntityName )
    {
-       returnEntityName.setLength( 0 );
-       returnEntityName.append( stringInternalEntityStructure );
-       return 0;
+      returnEntityName.setLength( 0 );
+      returnEntityName.append( stringInternalEntityStructure );
+      return 0;
    }
 
-   public String
-   GetEntityNameFromStructure( String stringInternalEntityStructure, String returnEntityName )
+   public String GetEntityNameFromStructure( String stringInternalEntityStructure, String returnEntityName )
    {
-    // returnEntityName = stringInternalEntityStructure;
-    // return returnEntityName;
+   // returnEntityName = stringInternalEntityStructure;
+   // return returnEntityName;
       return stringInternalEntityStructure;
    }
 
@@ -418,12 +461,12 @@ public class ZGlobal1_Operation extends VmlOperation
                                   String compareValue )
 
    {
-       String  stringTempString = null;
-       int nLth = 0;
-       int nRC;
+      String  stringTempString = null;
+      int nLth = 0;
+      int nRC;
 
-       stringTempString = GetVariableFromAttribute( stringTempString, nLth, zTYPE_STRING, 254,
-                                                    view, entityName, attributeName, "", 0 );
+      stringTempString = GetVariableFromAttribute( stringTempString, nLth, zTYPE_STRING, 254,
+                                                   view, entityName, attributeName, "", 0 );
 
    // nLth = stringStringValue.length( );
       nRC = stringTempString.compareTo( compareValue );
@@ -446,11 +489,11 @@ public class ZGlobal1_Operation extends VmlOperation
       int  nRC;
 
       // First make sure the file exists. If not, return an error code.
-      file = SysOpenFile( ViewToWindow, stringFileName, COREFILE_READ );
+      file = m_KZOEP1AA.SysOpenFile( ViewToWindow, stringFileName, COREFILE_READ );
       if ( file == -1 )
          return -1;
 
-      SysCloseFile( ViewToWindow, file, 0 );
+      m_KZOEP1AA.SysCloseFile( ViewToWindow, file, 0 );
 
       // Next Activate the OI from the file just created.
       nRC = ActivateOI_FromFile( vWorkView, stringLOD_Name, ViewToWindow,
@@ -532,7 +575,7 @@ public class ZGlobal1_Operation extends VmlOperation
       {
          for ( lpNext = sb; *lpNext != '\t'; lpNext++ )
          {
-           ;
+            ;
          }
 
          sb = lpNext + 1;
@@ -577,8 +620,8 @@ public class ZGlobal1_Operation extends VmlOperation
       if ( s.charAt( k ) == 'M' && (s.charAt( k + 1 ) == 'r' || s.charAt( k + 1 ) == 's') && s.charAt( k + 2 ) == '.' )
       {
          k = 3;
-          while ( s.charAt( k ) == ' ' )
-             k++;
+         while ( s.charAt( k ) == ' ' )
+            k++;
       }
 
       // put original string into an array of chars
@@ -617,7 +660,7 @@ public class ZGlobal1_Operation extends VmlOperation
       return 0;
    } // SeparateName
 
-/** fortunately these next two methods are not used anywhere
+ /** fortunately these next two methods are not used anywhere
    ////////////////////////////////////////////////////////////////////////////////////////////////////
    //
    //  Method Name: GetViewFromBlobAttribute
@@ -658,7 +701,7 @@ public class ZGlobal1_Operation extends VmlOperation
 
       return nRC;
    } // SetBlobAttributeFromView
-**/
+ **/
 
    ////////////////////////////////////////////////////////////////////////////////////////////////////
    //
@@ -706,25 +749,28 @@ public class ZGlobal1_Operation extends VmlOperation
       String entityName = null;
       String stringAttribName = null;
       String stringMultiLineAddress = null;
-      StringBuilder sb = new StringBuilder( "" );
+      StringBuilder sb = new StringBuilder( );
       String stringAttn = null;
       String stringCity = null;
       String stringState = null;
       String stringZipCode = null;
       String stringZipCodeFormatted = null;
       String stringCountry = null;
-      StringBuilder stringSep = null;      // set to /r/n or "; "
+      StringBuilder stringSep = new StringBuilder();      // set to /r/n or "; "
 
-      zstrcpy( entityName, stringInternalEntityStructure );
-      zstrcpy( stringAttribName, stringInternalAttribStructure );
+      // NEED TO FIX THIS CAUSE I GET TOO MANY ERRORS MAINLY WITH IsValidAttribute
+      return "";
+/*
+      entityName = zstrcpy( entityName, stringInternalEntityStructure );
+      stringAttribName = zstrcpy( stringAttribName, stringInternalAttribStructure );
       if ( ZeidonStringCompare( stringAttribName, 1, 5, "dLine", 1, 5, 33 ) == 0 )
          zstrcpy( stringSep, "; " );
       else
-         zstrcpy( stringSep, "\r\n" );
+         zstrcpy( stringSep, "\\r\\n" );
 
       stringMultiLineAddress = "";
       stringAttn = "";
-      sb.setCharAt( 0, '\0' );
+      //sb.setCharAt( 0, '\0' );
 
       if ( IsValidAttribute ( "AttentionLine1", stringInternalEntityStructure ) == 0 )
          GetStringFromAttribute( sb, vAnyObject, entityName, "AttentionLine1" );
@@ -732,7 +778,7 @@ public class ZGlobal1_Operation extends VmlOperation
       if ( sb.length( ) != 0 )
       {
          stringAttn = zsprintf( stringAttn, "Attn:  %s%s", sb, stringSep );
-         sb.setCharAt( 0, '\0' );
+         sb.setLength( 0 );
       }
 
       if ( IsValidAttribute ( "AttentionLine2", stringInternalEntityStructure ) == 0 )
@@ -740,8 +786,8 @@ public class ZGlobal1_Operation extends VmlOperation
 
       if ( sb.length( ) != 0 )
       {
-        stringAttn = zsprintf( stringAttn, "%s         %s%s", stringAttn, sb, stringSep );
-         sb.setCharAt( 0, '\0' );
+         stringAttn = zsprintf( stringAttn, "%s         %s%s", stringAttn, sb, stringSep );
+         sb.setLength( 0 );
       }
 
       if ( stringAttn.length( ) != 0 )
@@ -756,7 +802,7 @@ public class ZGlobal1_Operation extends VmlOperation
       if ( IsValidAttribute ( "Line2", stringInternalEntityStructure ) == 0 )
          GetStringFromAttribute( sb, vAnyObject, entityName, "Line2" );
       else
-         sb.setCharAt( 0, '\0' );
+         sb.setLength( 0 );
 
       if ( sb.length( ) != 0 )
          stringMultiLineAddress = zsprintf( stringMultiLineAddress, "%s%s%s", stringMultiLineAddress, sb, stringSep );
@@ -764,7 +810,7 @@ public class ZGlobal1_Operation extends VmlOperation
       if ( IsValidAttribute ( "Line3", stringInternalEntityStructure ) == 0 )
          GetStringFromAttribute( sb, vAnyObject, entityName, "Line3" );
       else
-         sb.setCharAt( 0, '\0' );
+         sb.setLength( 0 );
 
       if ( sb.length( ) != 0 )
          stringMultiLineAddress = zsprintf( stringMultiLineAddress, "%s%s%s", stringMultiLineAddress, sb, stringSep );
@@ -777,9 +823,9 @@ public class ZGlobal1_Operation extends VmlOperation
       if ( stringState.length( ) == 0 )
       {
          if ( IsValidAttribute ( "InternationalRegion", stringInternalEntityStructure ) == 0 )
-           stringState = GetVariableFromAttribute( stringState, 0, zTYPE_STRING, 120,
-                                                 vAnyObject, entityName,
-                                                 "InternationalRegion", "", 0 );
+            stringState = GetVariableFromAttribute( stringState, 0, zTYPE_STRING, 120,
+                                                    vAnyObject, entityName,
+                                                    "InternationalRegion", "", 0 );
       }
 
       // For ZipCodes larger than five characters, we want to format them with a
@@ -787,9 +833,9 @@ public class ZGlobal1_Operation extends VmlOperation
       stringZipCode = GetVariableFromAttribute( stringZipCode, 0, zTYPE_STRING, 11,
                                            vAnyObject, entityName, "PostalCode", "", 0 );
       if ( stringZipCode.length( ) > 5 && stringZipCode.charAt( 5 ) != '-' )
-           stringZipCodeFormatted = stringZipCode.substring( 0, 4 ) + "-" + stringZipCode.substring( 5, -1 );
+          stringZipCodeFormatted = stringZipCode.substring( 0, 4 ) + "-" + stringZipCode.substring( 5, -1 );
       else
-        stringZipCodeFormatted = stringZipCode;
+         stringZipCodeFormatted = stringZipCode;
 
       stringCountry = "";
       if ( IsValidAttribute ( "Country", stringInternalEntityStructure ) == 0 )
@@ -810,6 +856,7 @@ public class ZGlobal1_Operation extends VmlOperation
       stringReturnText = ZeidonStringCopy( stringReturnText, 1, 0, stringMultiLineAddress, 1, 0, 255 );
 
       return stringReturnText;
+      */
    } // fnAdressLabelText
 
    ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -838,8 +885,8 @@ public class ZGlobal1_Operation extends VmlOperation
 
       StoreStringInRecord( vAnyObject, stringInternalEntityStructure,
                            stringInternalAttribStructure, stringMultiLineAddress );
-
       return 0;
+
    } // dAdressLabel
 
    ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -867,8 +914,8 @@ public class ZGlobal1_Operation extends VmlOperation
 
       stringMultiLineAddress = "";
       stringCompanyName = "";
-      if ( IsValidAttribute ( "CompanyName", stringInternalEntityStructure ) == 0 )
-         stringCompanyName = GetStringFromAttribute( stringCompanyName, vAnyObject, entityName, "CompanyName" );
+      //if ( IsValidAttribute ( "CompanyName", stringInternalEntityStructure ) == 0 )
+      //   stringCompanyName = GetStringFromAttribute( stringCompanyName, vAnyObject, entityName, "CompanyName" );
 
       if ( stringCompanyName.length( ) != 0 )
          stringMultiLineAddress = zsprintf( stringMultiLineAddress, "%s\r\n", stringCompanyName );
@@ -879,7 +926,6 @@ public class ZGlobal1_Operation extends VmlOperation
 
       StoreStringInRecord( vAnyObject, stringInternalEntityStructure,
                            stringInternalAttribStructure, stringMultiLineAddress );
-
       return 0;
    } // dAdressLabelFull
 
@@ -945,7 +991,6 @@ public class ZGlobal1_Operation extends VmlOperation
 
       StoreStringInRecord( vAnyObject, stringInternalEntityStructure,
                            stringInternalAttribStructure, stringLastFirstMiddle );
-
       return 0;
    } // dAdressLabel
 
@@ -961,13 +1006,13 @@ public class ZGlobal1_Operation extends VmlOperation
                                String stringInternalAttribStructure,
                                int nGetOrSetFlag )
    {
-      String stringReturnName;
+      StringBuilder stringReturnName = new StringBuilder( );
       String entityName = null;
-      String string;
+      StringBuilder string = new StringBuilder( );
 
       entityName = zstrcpy( entityName, stringInternalEntityStructure );
-      stringReturnName = "";
-      string = "";
+      stringReturnName.append("");
+      string.append("");
 
       // Last Name
       if ( IsValidAttribute ( "FirstName", stringInternalEntityStructure ) == 0 )
@@ -983,7 +1028,7 @@ public class ZGlobal1_Operation extends VmlOperation
          if ( zstrlen( string ) == 1 )
             ZeidonStringConcat( stringReturnName, 1, 0, ".", 1, 0, 101 );
 
-         string = "";
+         string.append("");
       }
 
       // Last Name
@@ -994,7 +1039,7 @@ public class ZGlobal1_Operation extends VmlOperation
       {
          ZeidonStringConcat( stringReturnName, 1, 0, " ", 1, 0, 101 );
          ZeidonStringConcat( stringReturnName, 1, 0, string, 1, 0, 101 );
-         string = "";
+         string.append("");
       }
 
       // Suffix
@@ -1005,11 +1050,11 @@ public class ZGlobal1_Operation extends VmlOperation
       {
          ZeidonStringConcat( stringReturnName, 1, 0, " ", 1, 0, 101 );
          ZeidonStringConcat( stringReturnName, 1, 0, string, 1, 0, 101 );
-         string = "";
+         string.append("");
       }
 
       StoreStringInRecord( vAnyObject, stringInternalEntityStructure,
-                           stringInternalAttribStructure, stringReturnName );
+                           stringInternalAttribStructure, stringReturnName.toString() );
 
       return 0;
    } // dAdressLabel
@@ -1025,8 +1070,8 @@ public class ZGlobal1_Operation extends VmlOperation
    public int
    zTrim( StringBuilder stringStringInOut )
    {
-      String s = stringStringInOut.toString( ).trim( );
-      stringStringInOut.replace( 0, -1, s );
+      String s = StringUtils.trim( stringStringInOut.toString() );
+      stringStringInOut.replace( 0, stringStringInOut.length(), s );
       return 0;
    } // zTrim
 
@@ -1073,7 +1118,6 @@ public class ZGlobal1_Operation extends VmlOperation
       if ( sb.charAt( 0 ) == ' ' )
       {
          k = 1;
-
          while ( sb.charAt( k ) == ' ' )
             k++;
 
@@ -1954,7 +1998,7 @@ public class ZGlobal1_Operation extends VmlOperation
    } // FindStringInAttribute
 
    public int
-   ConvertExternalValueOfAttribute( StringBuilder sbReturnedString,
+   ConvertExternalValueOfAttribute( StringBuilder lpReturnedString,
                                     String srcString,
                                     View   lpView,
                                     String entityName,
@@ -1964,7 +2008,7 @@ public class ZGlobal1_Operation extends VmlOperation
       return( 0 );
    }
 
-/**
+ /**
    public String
    GetGeneralPath( View  vSubtask, int lFlag, String stringFileType, String stringTarget )
    {
@@ -2035,7 +2079,7 @@ public class ZGlobal1_Operation extends VmlOperation
          return -16;
 
       // Position on attribute.
-#ifdef VIEWENTITY_OD
+ #ifdef VIEWENTITY_OD
       lpViewAttrib = String zGETPTR( lpViewEntity->hFirstOD_Attrib );
       nRC = 1;
       while ( lpViewAttrib > 0 && nRC > 0 )
@@ -2046,7 +2090,7 @@ public class ZGlobal1_Operation extends VmlOperation
          if ( nRC > 0 )
             lpViewAttrib = String zGETPTR( lpViewAttrib->hNextOD_Attrib );
       }
-#else
+ #else
       lpViewAttrib = String zGETPTR( lpViewEntity->hFirstViewAttrib );
       nRC = 1;
       while ( lpViewAttrib > 0 && nRC > 0 )
@@ -2057,7 +2101,7 @@ public class ZGlobal1_Operation extends VmlOperation
          if ( nRC > 0 )
             lpViewAttrib = String zGETPTR( lpViewAttrib->hNextViewAttrib );
       }
-// #endif
+ // #endif
       if ( nRC > 0 )
       {
          MessageSend( lpView, "", "Data Conversion",
@@ -2272,7 +2316,7 @@ public class ZGlobal1_Operation extends VmlOperation
 
       return 0;
    } // ConvertExternalValueOfAttribute
-**/
+ **/
 
    ////////////////////////////////////////////////////////////////////////////////////////////////////
    //
@@ -2300,7 +2344,7 @@ public class ZGlobal1_Operation extends VmlOperation
 
    } // AddSpacesToString
 
-/**
+ /**
    ////////////////////////////////////////////////////////////////////////////////////////////////////
    //
    //  Method Name: GetDataTypeForAttribute
@@ -2360,7 +2404,7 @@ public class ZGlobal1_Operation extends VmlOperation
 
       return 0;
    } // GetDataTypeForAttribute
-**/
+ **/
 
    //
    int
@@ -2374,7 +2418,7 @@ public class ZGlobal1_Operation extends VmlOperation
       // Initialize entityName and attributeName.
       entityName.replace( 0, -1, entityDotAttribute );
       attributeName.delete( 0, -1 );
-            // entityDotAttribute is pointing to the first character of the entity name on entry to this routine.
+      // entityDotAttribute is pointing to the first character of the entity name on entry to this routine.
       // Parse out Entity Name
 
       for ( k = 0; k < entityName.length( ); k++ )
@@ -2384,7 +2428,7 @@ public class ZGlobal1_Operation extends VmlOperation
          {
             entityName.setCharAt( k, '\0' );
             if ( ch == '}' )
-              return -2;
+               return -2;
 
             if ( ch != ']' )  // there is an attribute, so keep going
             {
@@ -2415,8 +2459,8 @@ public class ZGlobal1_Operation extends VmlOperation
 
    int
    ConvertCharacterString( StringBuilder sbTarget,
-                     StringBuilder sbSource,
-                     StringBuilder sbOrigMemory,
+                           StringBuilder sbSource,
+                           StringBuilder sbOrigMemory,
                            int  nFileType )  // 1-Text   2-HTML
    {
       char   ch;
@@ -2448,8 +2492,8 @@ public class ZGlobal1_Operation extends VmlOperation
          if ( ch == 13 && sbSource.charAt( j + 1 ) == 10 )
          {
             // Copy carriage control and line feed characters.
-           sbTarget.setCharAt( i++ , sbSource.charAt( j++ ) );
-           sbTarget.setCharAt( i++ , sbSource.charAt( j++ ) );
+            sbTarget.setCharAt( i++ , sbSource.charAt( j++ ) );
+            sbTarget.setCharAt( i++ , sbSource.charAt( j++ ) );
 
             // Insert \par and \tab characters.
             if ( nFileType == 1 )
@@ -2468,16 +2512,16 @@ public class ZGlobal1_Operation extends VmlOperation
          }
          else
          {
-          sbTarget.setCharAt( i++ , sbSource.charAt( j++ ) );
+            sbTarget.setCharAt( i++ , sbSource.charAt( j++ ) );
          }
       }
 
       sbTarget.setCharAt( i++ , '\0' );
 
       return( 0 );
-}
+   }
 
-/**
+ /**
    int
    CopyWithInsertMemoryArea( zVIEW   vResultSet,
                              StringBuilder sbTemplateMemory,
@@ -2681,7 +2725,7 @@ public class ZGlobal1_Operation extends VmlOperation
       *sbMemoryNew = pchMemoryNew;
       return 0;
    }
-**/
+ **/
 
    int
    ReadFileDataIntoMemory( View    vResultSet,
@@ -2696,19 +2740,19 @@ public class ZGlobal1_Operation extends VmlOperation
       sbDocumentData.setLength( 0 );
       lDocumentLth = 0;
 
-      hDocumentFile = SysOpenFile( vResultSet, stringDocumentFile, COREFILE_READ );
+      hDocumentFile = m_KZOEP1AA.SysOpenFile( vResultSet, stringDocumentFile, COREFILE_READ );
       if ( hDocumentFile < 0 )
       {
       // IssueError( vResultSet, 0, 0, "Can't open Document file." );
          return -1;
       }
 
-      lDocumentLth = SysGetFileSize( vResultSet, hDocumentFile );
+      lDocumentLth = m_KZOEP1AA.SysGetFileSize( vResultSet, hDocumentFile );
 
       // Exit if the document file is empty.
       if ( lDocumentLth == 0 )
       {
-         SysCloseFile( vResultSet, hDocumentFile, 0 );
+         m_KZOEP1AA.SysCloseFile( vResultSet, hDocumentFile, 0 );
          return 0;
       }
 
@@ -2718,8 +2762,8 @@ public class ZGlobal1_Operation extends VmlOperation
    //            (int) *ppvDocumentData, lDocumentLth );
 
    // **ppvDocumentData = 0;
-      SysReadFile( vResultSet, hDocumentFile, sbDocumentData, lDocumentLth );
-      SysCloseFile( vResultSet, hDocumentFile, 0 );
+      m_KZOEP1AA.SysReadFile( vResultSet, hDocumentFile, sbDocumentData, lDocumentLth );
+      m_KZOEP1AA.SysCloseFile( vResultSet, hDocumentFile, 0 );
 
       if ( sbDocumentData == null )
       {
@@ -2733,6 +2777,69 @@ public class ZGlobal1_Operation extends VmlOperation
       }
 
       return lDocumentLth;
+   }
+
+   public int
+   ParseBooleanExpression( View zqFrame )
+   {
+      //zPCHAR pchValue;
+      //zPCHAR pchNext;
+      String  szBooleanExpression=null;
+      StringBuilder sbBooleanExpression=null;
+      String  szConditionValue=null;
+
+      // Parse the Boolean Expression and create each component value as an entity Component.
+
+      GetStringFromAttributeByContext( sbBooleanExpression,
+                                       zqFrame, "BooleanExpression",
+                                       "TextValue", "", 254 );
+ /*
+      // Skip to first nonblank.
+      for ( pchNext = szBooleanExpression;
+           *pchNext == ' ' && *pchNext != 0;
+           pchNext++ )
+      {
+      }
+
+      // Loop through all parameters.
+      while ( *pchNext != 0 )
+      {
+         // Find next parameter
+         if ( *pchNext == ')' || *pchNext == '(' )
+         {
+            pchValue = szConditionValue;
+            *pchValue = *pchNext;
+            pchValue++;
+            *pchValue = 0;
+            if ( *pchNext == ')' )
+               pchNext++;    // We need to do the skip here for close paren
+         }
+         else
+         {
+            for ( pchValue = szConditionValue;
+                  *pchNext != ' ' && *pchNext != 0 && *pchNext != ')';
+                  pchNext++ )
+            {
+               *pchValue = *pchNext;
+               pchValue++;
+            }
+
+            *pchValue = 0;
+
+         }
+
+         CreateEntity( zqFrame, "Component", zPOS_AFTER );
+         SetAttributeFromString( zqFrame, "Component", "Value", szConditionValue );
+
+         if ( *pchNext != 0 && *pchNext != ')' )
+            pchNext++;
+
+         // Skip to next nonblank.
+         while ( *pchNext == ' ' && *pchNext != 0 )
+            pchNext++;
+      }
+ */
+      return 0;
    }
 
    ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2757,7 +2864,7 @@ public class ZGlobal1_Operation extends VmlOperation
                                     int    lMaxReturnedLth,
                                     int    nFileType ) throws IOException // 1-Text   2-HTML
    {
-/**
+ /**
       long  hFileTo;
       StringBuilder sbTemplateMemory = new StringBuilder( );
    // String stringMemoryEndOrig = null;
@@ -2844,7 +2951,7 @@ public class ZGlobal1_Operation extends VmlOperation
 
       SysFreeMemory( selMemoryNew );
    // DrFreeTaskMemory( stringMemoryStartNew );
-**/
+ **/
       return 0;
 
    } // MergeSingleRS_EntryWithTemplate
@@ -3013,8 +3120,8 @@ public class ZGlobal1_Operation extends VmlOperation
    // TraceLine( "InsertOI_DataIntoEmailTemplate: 0x%x   Size: %d",
    //            (int) stringMemoryNewHold, lTotalOutputSize );
 
-      lConnection = CreateSeeConnection( stringSMTPServer, stringSenderEMailAddress,
-                                         stringEMailUserName, stringEMailPassword );
+      lConnection = m_ZDRVROPR.CreateSeeConnection( stringSMTPServer, stringSenderEMailAddress,
+                                                    stringEMailUserName, stringEMailPassword );
 
       // For each selected item, map the repeatable data in the template to the output buffer.
       lCurrentCount = 0;
@@ -3108,14 +3215,14 @@ public class ZGlobal1_Operation extends VmlOperation
 
             // lLthNew = (int) (stringMemoryNew - stringMemoryStartEmailBody);  TODO  This is all wrong ... recode correctly in Java when needed
 
-               CreateSeeMessage( lConnection, stringSMTPServer,
-                                 stringSenderEMailAddress,
-                                 stringRecipientEMailAddress,
-                                 "", "", stringSubjectLine, nMimeType,
-                                 stringMemoryStartEmailBody,
-                                 stringAltMemory, stringEmbeddedImages,
-                                 nHasAttachment, stringAttachmentFileName,
-                                 stringEMailUserName, stringEMailPassword );
+               m_ZDRVROPR.CreateSeeMessage( lConnection, stringSMTPServer,
+                                            stringSenderEMailAddress,
+                                            stringRecipientEMailAddress,
+                                            "", "", stringSubjectLine, nMimeType,
+                                            stringMemoryStartEmailBody,
+                                            stringAltMemory, stringEmbeddedImages,
+                                            nHasAttachment, stringAttachmentFileName,
+                                            stringEMailUserName, stringEMailPassword );
 
             // SysOpenFile( stringAttachmentFileName, COREFILE_DELETE );
             }
@@ -3124,7 +3231,7 @@ public class ZGlobal1_Operation extends VmlOperation
          nRC = SetCursorNextEntity( vResultSet, stringRootEntityName, "" );
       }
 
-      CloseSeeConnection( lConnection );
+      m_ZDRVROPR.CloseSeeConnection( lConnection );
    //? SysFreeMemory( selMemory );
    //? SysFreeMemory( selMemoryNew );
       if ( lAltTemplateLth != 0 )
@@ -3148,12 +3255,122 @@ public class ZGlobal1_Operation extends VmlOperation
    //
    ////////////////////////////////////////////////////////////////////////////////////////////////////
    public int
-   InsertOI_DataIntoTemplateFile( View   ViewToWindow,
-                                  View   vResultSet,
-                                  String stringOutputFileName,
-                                  String stringTemplateFileName,
-                                  String stringAltFileName,
-                                  String stringRootEntityName ) throws IOException
+   InsertOI_DataIntoTemplateFile( View view,
+                                  View workView,
+                                  String toFile,
+                                  String fromFile,
+                                  String stringRootEntityName) throws IOException
+   {
+      BufferedWriter bw;
+      StringBuilder sbInsertTemplate  = new StringBuilder();
+      StringBuilder sbRawTemplate = new StringBuilder();
+      StringBuilder sbEntityBuffer;
+      StringBuilder sbAttributeBuffer;
+      String swapString = null;
+      String stringStart  = "{";
+      String stringEnd    = "}";
+      String szTmp    = null;
+      int nRC = 0;
+      int lSelectedCount = 0;
+      int lTemplateLth = 0;
+
+      nRC = SetCursorFirstEntity( workView, stringRootEntityName, "" );
+      while ( nRC > zCURSOR_UNCHANGED )
+      {
+         lSelectedCount++;
+         nRC = SetCursorNextEntity( workView, stringRootEntityName, "" );
+      }
+
+      if ( lSelectedCount <= 0 )
+         return 0;
+
+      lTemplateLth = ReadFileDataIntoMemory( workView, fromFile, lTemplateLth, sbRawTemplate );
+
+      if ( lTemplateLth > Integer.MAX_VALUE )
+         return 0;
+
+      // File not found.
+      if ( lTemplateLth < 0 )
+         return -1;
+
+      swapString = sbRawTemplate.substring(1, (lTemplateLth - 1));
+      lTemplateLth = swapString.length();
+      sbRawTemplate = new StringBuilder();
+
+      nRC = SetCursorFirstEntity(workView, stringRootEntityName, "");
+      while(nRC > zCURSOR_UNCHANGED)
+      {
+         sbRawTemplate.insert(0, swapString);
+
+         for(int i = 0; i < sbRawTemplate.length(); i++)
+         {
+            sbEntityBuffer = new StringBuilder();
+            sbAttributeBuffer = new StringBuilder();
+            if (sbRawTemplate.charAt(i) == '[' && sbRawTemplate.charAt(i + 1) == 'Z')
+            {
+               int j = i;
+               i += 2;
+               while(sbRawTemplate.charAt(++i) != '.')
+                  sbEntityBuffer.append(sbRawTemplate.charAt(i));
+
+               while(sbRawTemplate.charAt(++i) != ']')
+                  sbAttributeBuffer.append(sbRawTemplate.charAt(i));
+
+               i++;
+               szTmp = sbRawTemplate.substring(j, i + 10).toString();
+               sbRawTemplate.replace(j, i, GetStringFromAttribute(workView,
+                                                      sbEntityBuffer.toString(),
+                                                      sbAttributeBuffer.toString()));
+               szTmp = sbRawTemplate.substring(j, j+12).toString();
+
+            }
+         }
+
+         sbInsertTemplate.append(sbRawTemplate);
+         //szTmp = sbInsertTemplate.substring(87284, 87296).toString();
+         sbRawTemplate = new StringBuilder();
+         nRC = SetCursorNextEntity(workView, stringRootEntityName, "");
+      }
+
+      sbInsertTemplate.insert(0, stringStart);
+      sbInsertTemplate.append(stringEnd);
+      //szTmp = sbInsertTemplate.substring(87285, 87297).toString();
+      szTmp = sbInsertTemplate.substring(13917, 13929).toString();
+
+      bw = new BufferedWriter(new FileWriter(toFile));
+      //bw.write(sbInsertTemplate.toString());
+      szTmp = sbInsertTemplate.toString();
+      bw.write(szTmp);
+      bw.flush();
+      bw.close();
+
+      return 0;
+   }
+
+   public int
+   InsertOI_DataIntoTemplateFile( View view,
+                                  zVIEW workView,
+                                  String toFile,
+                                  String fromFile,
+                                  String altFile,
+                                  String stringRootEntityName) throws IOException
+   {
+      return (InsertOI_DataIntoTemplateFile(view, workView.getView(), toFile, fromFile, stringRootEntityName));
+   }
+   ////////////////////////////////////////////////////////////////////////////////////////////////////
+   //
+   //  Method Name: InsertOI_DataIntoTemplateFile
+   //
+   //    Insert OI variable data in Template File
+   //
+   ////////////////////////////////////////////////////////////////////////////////////////////////////
+   public int
+   InsertOI_DataIntoTemplateFileOld( View   ViewToWindow,
+                                     View   vResultSet,
+                                     String stringOutputFileName,
+                                     String stringTemplateFileName,
+                                     String stringAltFileName,
+                                     String stringRootEntityName ) throws IOException
    {
       int   hFileTo;
       @SuppressWarnings("unused") String stringMemory;
@@ -3215,7 +3432,7 @@ public class ZGlobal1_Operation extends VmlOperation
 
       // Copy the first brace that starts the file.
    // stringMemory = cbMemoryStartOld.toString( );  TODO  This is all wrong ... recode correctly in Java when needed
-   // stringMemoryNew = stringMemory;
+   //  stringMemoryNew = stringMemory;
    // stringMemory++;
    // stringMemoryNew++;
 
@@ -3257,13 +3474,13 @@ public class ZGlobal1_Operation extends VmlOperation
 
       // Finally copy the closing brace to the output file.
    // stringMemoryNew = stringMemoryEndArea;  TODO  This is all wrong ... recode correctly in Java when needed
-   // stringMemory++;
+   //  stringMemory++;
    // stringMemoryNew++;
 
    // lLthNew = (int) (stringMemoryNew - stringMemoryStartNew);
    //? SysFreeMemory( selMemory );
    // DrFreeTaskMemory( stringMemoryStartOld );
-      hFileTo = SysOpenFile( ViewToWindow, stringOutputFileName, COREFILE_WRITE );
+      hFileTo = m_KZOEP1AA.SysOpenFile( ViewToWindow, stringOutputFileName, COREFILE_WRITE );
       if ( hFileTo < 0 )
       {
       //? SysFreeMemory( selMemoryNew );
@@ -3273,7 +3490,7 @@ public class ZGlobal1_Operation extends VmlOperation
       }
 
    // WriteFile( hFileTo, stringMemoryStartNew, lLthNew, ulRC, 0 );  TODO  This is all wrong ... recode correctly in Java when needed
-      SysCloseFile( ViewToWindow, hFileTo, 0 );
+      m_KZOEP1AA.SysCloseFile( ViewToWindow, hFileTo, 0 );
    //? SysFreeMemory( selMemoryNew );
    // DrFreeTaskMemory( stringMemoryNew );
 
@@ -3293,7 +3510,9 @@ public class ZGlobal1_Operation extends VmlOperation
                  StringBuilder sbLineBuffer,
                  int    FileHandle ) throws IOException
    {
-      SysReadLine( ViewToWindow, sbLineBuffer, FileHandle );
+      int nRC = 0;
+
+      nRC = m_KZOEP1AA.SysReadLine( ViewToWindow, sbLineBuffer, FileHandle );
       if ( sbLineBuffer.length( ) == 0 )
          return 0;
 
@@ -3303,7 +3522,8 @@ public class ZGlobal1_Operation extends VmlOperation
          sbLineBuffer.setCharAt( 5000, '\0' );
       }
 
-      return sbLineBuffer.length( );
+      //return sbLineBuffer.toString( );
+      return nRC;
 
    } // ReadLine5000
 
@@ -3321,7 +3541,7 @@ public class ZGlobal1_Operation extends VmlOperation
                         String stringDelimiterType,
                         int    lMaxRecordLth )
    {
-/** TODO
+ /** TODO
       String  cDelimiter;
       String  stringDataValue;
       String  entityName;
@@ -3381,14 +3601,13 @@ public class ZGlobal1_Operation extends VmlOperation
 
          nRC = SetCursorNextEntity( vXOD, "ATTRIB", "" );
       }
-**/
+ **/
       return 0;
    } // ConvertLineToEntity
 
-   public int
-   SetAttrFromStrByContext( View view, String entityName, String attributeName, String value, String context )
+   public int SetAttrFromStrByContext( View view, String entityName, String attributeName, String value, String context )
    {
-      view.cursor( entityName ).setAttribute( attributeName, value, context );
+      view.getCursor( entityName ).getAttribute( attributeName ).setValue( value, context );
       return 0;
    }
 
@@ -3422,17 +3641,17 @@ public class ZGlobal1_Operation extends VmlOperation
                          String value,
                          int  bExists )
    {
-     if ( entityName.length() == 0 )
-        entityName = null;
+      if ( entityName.length() == 0 )
+         entityName = null;
 
-     if ( attributeName.length() == 0 )
-        attributeName = null;
+      if ( attributeName.length() == 0 )
+         attributeName = null;
 
-     if ( operationName.length() == 0 )
-        operationName = null;
+      if ( operationName.length() == 0 )
+         operationName = null;
 
-     if ( value.length() == 0 )
-        value = null;
+      if ( value.length() == 0 )
+         value = null;
 
       // add qualification
       CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
@@ -3456,7 +3675,7 @@ public class ZGlobal1_Operation extends VmlOperation
       return 0;
    } // DBQualEntityByString
 
-/**  TODO when we get some time
+ /**  TODO when we get some time
    ////////////////////////////////////////////////////////////////////////////////////////////////////
    //
    //  Method Name: ParseBooleanExpression
@@ -3522,9 +3741,9 @@ public class ZGlobal1_Operation extends VmlOperation
 
       return 0;
    } // ParseBooleanExpression
-**/
+ **/
 
-/**
+ /**
    ////////////////////////////////////////////////////////////////////////////////////////////////////
    //
    //  Method Name: WinShellExecute
@@ -3572,7 +3791,7 @@ public class ZGlobal1_Operation extends VmlOperation
 
        return 0;
    } // WinShellExecute
-**/
+ **/
 
    public String
    GetRTFPath( View vSubtask, int lFlag,  String stringTarget )
@@ -3614,7 +3833,7 @@ public class ZGlobal1_Operation extends VmlOperation
          }
       }
 
-      zstrcpy( stringTarget, stringReturn );
+      stringTarget = zstrcpy( stringTarget, stringReturn );
       return stringTarget;
    }
 
@@ -3685,10 +3904,10 @@ public class ZGlobal1_Operation extends VmlOperation
             {
                s = cbMemory.toString( );
 
-               lEntityCnt *= 2;
-               lTotalSize = lEntityCnt * (int) ulAttributeLth;
-            cbMemory = CharBuffer.allocate( lTotalSize + 1 );
-             zstrcpy( cbMemory, 0, s );
+                lEntityCnt *= 2;
+                lTotalSize = lEntityCnt * (int) ulAttributeLth;
+                cbMemory = CharBuffer.allocate( lTotalSize + 1 );
+                zstrcpy( cbMemory, 0, s );
             }
 
             if ( lLth > 0 && cbMemory.charAt( lLth - 1 ) != ',' )
@@ -3703,7 +3922,7 @@ public class ZGlobal1_Operation extends VmlOperation
       {
          // Email Addresses are to be put in Blind Copy parameter.
          TraceLineS( "Blind Copies: ", cbMemory.toString( ) );
-         lRC = StartEmailClient( stringBlindCopy, // Regular send parameter
+         lRC = m_ZDRVROPR.StartEmailClient( stringBlindCopy, // Regular send parameter
                                  stringSubject,
                                  stringCopyTo,    // comma separated list
                                  cbMemory.toString( ),     // Blind Copy parameter
@@ -3716,7 +3935,7 @@ public class ZGlobal1_Operation extends VmlOperation
       {
          // Email Addresses are to be put in regular Send parameter.
          TraceLineS( "Regular Copies: ", cbMemory.toString( ) );
-         lRC = StartEmailClient( cbMemory.toString( ),  // comma separated list
+         lRC = m_ZDRVROPR.StartEmailClient( cbMemory.toString( ),  // comma separated list
                                  stringSubject,
                                  stringCopyTo,        // comma separated list
                                  stringBlindCopy,     // comma separated list
@@ -3907,12 +4126,12 @@ public class ZGlobal1_Operation extends VmlOperation
       if ( stringAttachmentFileName.isEmpty( ) == false )
       {
          hAttachmentMemory = ReadFileDataIntoMemory( AnyView, stringAttachmentFileName,
-                                                      hAttachmentMemory, sbAttachmentMemoryStart );
+                                                     hAttachmentMemory, sbAttachmentMemoryStart );
          // Exit if the file is empty or if there is an error opening it.
          if ( lFileLth <= 0 )
             return -1;
 
-         StartEmailClient( stringEmailAddress,
+         m_ZDRVROPR.StartEmailClient( stringEmailAddress,
                            stringSubjectLine,
                            stringCopyToEmailAddress,
                            stringBlindCopyEmailAddress,
@@ -3925,7 +4144,7 @@ public class ZGlobal1_Operation extends VmlOperation
       }
       else
       {
-         StartEmailClient( stringEmailAddress,
+       m_ZDRVROPR.StartEmailClient( stringEmailAddress,
                            stringSubjectLine,
                            stringCopyToEmailAddress,
                            stringBlindCopyEmailAddress,
@@ -3953,7 +4172,7 @@ public class ZGlobal1_Operation extends VmlOperation
    IsEmailAddressValid( String stringEmailAddress )
    {
    // TODO return ValidateEmailAddressFormat( stringEmailAddress ) ? true : false;
-       return true;
+      return true;
 
    /** #if 0
 
@@ -4106,7 +4325,7 @@ public class ZGlobal1_Operation extends VmlOperation
       // Then call CreateSeeMessage with or without an attachment.
       if ( stringAttachmentFileName.isEmpty( ) == false )
       {
-         nRC = CreateSeeMessage( lConnection,
+         nRC = m_ZDRVROPR.CreateSeeMessage( lConnection,
                                  stringSmtpServer,
                                  stringSenderEMailAddress,
                                  stringRecipientEMailAddress,
@@ -4123,7 +4342,7 @@ public class ZGlobal1_Operation extends VmlOperation
       }
       else
       {
-         nRC = CreateSeeMessage( lConnection,
+         nRC = m_ZDRVROPR.CreateSeeMessage( lConnection,
                                  stringSmtpServer,
                                  stringSenderEMailAddress,
                                  stringRecipientEMailAddress,
@@ -4247,7 +4466,7 @@ public class ZGlobal1_Operation extends VmlOperation
       // Then call CreateSeeMessage with or without an attachment.
       if ( stringAttachmentFileName != null && stringAttachmentFileName.isEmpty( ) == false )
       {
-         nRC = CreateSeeMessage( lConnection,
+         nRC = m_ZDRVROPR.CreateSeeMessage( lConnection,
                                  stringSmtpServer,
                                  stringSenderEMailAddress,
                                  stringRecipientEMailAddress,
@@ -4265,7 +4484,7 @@ public class ZGlobal1_Operation extends VmlOperation
       }
       else
       {
-         nRC = CreateSeeMessage( lConnection,
+         nRC = m_ZDRVROPR.CreateSeeMessage( lConnection,
                                  stringSmtpServer,
                                  stringSenderEMailAddress,
                                  stringRecipientEMailAddress,
@@ -4294,11 +4513,10 @@ public class ZGlobal1_Operation extends VmlOperation
    //  Method Name: ReturnSuffixOfFileName
    //
    ////////////////////////////////////////////////////////////////////////////////////////////////////
-   public int
-   ReturnSuffixOfFileName( StringBuilder sbReturnedSuffix,
+   public String
+   ReturnSuffixOfFileName( String stringReturnedSuffix,
                            String stringFileName )
    {
-      String stringReturnedSuffix = sbReturnedSuffix.toString( );
       int nPosition;
 
       nPosition = zstrrchr( stringFileName, '.' );  // find last period
@@ -4310,9 +4528,7 @@ public class ZGlobal1_Operation extends VmlOperation
       else
          stringReturnedSuffix = "";  // initialize to empty extension
 
-      sbReturnedSuffix.setLength( 0 );
-      sbReturnedSuffix.append( stringReturnedSuffix );
-      return sbReturnedSuffix.length( );
+      return stringReturnedSuffix;
 
    } // ReturnSuffixOfFileName
 
@@ -4345,18 +4561,78 @@ public class ZGlobal1_Operation extends VmlOperation
    //
    ////////////////////////////////////////////////////////////////////////////////////////////////////
    public int
-   WL_QC( View   taskView,
+   WL_QC( View vAnyView,
           int    lFile,
           String stringInput,
           String stringTransChar,
           int    nBlankLineCnt ) throws IOException
    {
-      stringInput = stringInput.replaceAll( stringTransChar, "\"" );
-      SysWriteLine( taskView, lFile, stringInput );
+      //stringInput = stringInput.replaceAll( stringTransChar, "\"" );
+      stringInput = stringInput.replace( stringTransChar, "\"" );
+   // TraceLineS( "#### WL_QC: ", stringInput );
+      m_KZOEP1AA.SysWriteLine( vAnyView, lFile, stringInput );
       while ( nBlankLineCnt-- > 0 )
-         SysWriteLine( taskView, lFile, "" );
+         m_KZOEP1AA.SysWriteLine( vAnyView, lFile, "" );
 
       return 0;
+   }
+
+   ////////////////////////////////////////////////////////////////////////////////////////////////////
+   //
+   //  Method Name: SplitParagraphOnLinefeed
+   //
+   //  PURPOSE: Convert several lines of string data into separate entity instances.
+   //
+   ////////////////////////////////////////////////////////////////////////////////////////////////////
+   /*
+   private String trimEnd( String raw ) {
+      int pos = raw.length();
+      while ( (pos > 0) && Character.isWhitespace( raw.charAt( pos - 1 ) ) ) {
+         pos--;
+      }
+      return (pos < raw.length()) ? raw.substring( 0, pos ) : raw;
+   }
+   */
+   public int
+   SplitParagraphOnLinefeed( String paragraph,
+                             View   view,
+                             String entityName,
+                             String attributeName )
+   {
+      String delimiters = "\r\n";
+      String value;
+      int count = 0;
+      EntityCursor ec = view.cursor( entityName );
+      String[] tokens = paragraph.split( delimiters );
+      int rawCount = tokens.length;
+      for ( int k = 0; k < rawCount; k++ ) {
+         value = tokens[k].trim();
+         if ( value.equals( "" ) == false ) {
+         // TraceLineS( value, "|" );
+            count++;
+            ec.createEntity( CursorPosition.LAST );
+            ec.getAttribute( attributeName ).setValue( value );
+         }
+      }
+      return count;
+   }
+
+   public String
+   RemoveInvalidCharactersFromFilename( String in ) {
+      // Valid characters: Letters (a-z A-Z)  Digits (0-9)  Underscore (_)   Hyphen (-)   Space   Dot (.)
+      StringBuilder sbFileName = new StringBuilder( in.length() );
+      char ch;
+      int k;
+      int pos = 0;
+      for ( k = 0; k < sbFileName.length(); k++ ) {
+         ch = in.charAt( k );
+         // Not permitting spaces or dashes or periods
+         if ( (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || (ch >= '0' && ch <= '9') || ch == '_' ) {
+            sbFileName.setCharAt( pos++, ch );
+         }
+      }
+      sbFileName.setLength( pos );
+      return sbFileName.toString();
    }
 
    /////////////////////////////////////////////////////////////////////////////
@@ -4376,7 +4652,7 @@ public class ZGlobal1_Operation extends VmlOperation
 
       if ( lSearchLth != 0 )
       {
-        stringDate = GetStringFromAttributeByContext( stringDate, wWebXfer, "Root",
+         stringDate = GetStringFromAttributeByContext( stringDate, wWebXfer, "Root",
                                                        "dCurrentDate", "MonthDDYYYY", 64 );
       // lLth = stringDate.length( );
          stringBlob = GetAddrForAttribute( stringBlob, vLegacyTranscript, stringEntity, stringAttribute );
@@ -4410,7 +4686,7 @@ public class ZGlobal1_Operation extends VmlOperation
    AddAttributeToCSV( CharBuffer cb, int nLth, View  lLibPers,
                       String entityName, String attributeName, boolean bNumeric )
    {
-       String s = null;
+      String s = null;
 
       cb.put( 0, '"' );  // opening quote
 
@@ -4497,11 +4773,11 @@ public class ZGlobal1_Operation extends VmlOperation
       }
       else
       {
-        charBuffer.put(  nLth++, ',' );
-        charBuffer.put(  nLth++, ',' );
-        charBuffer.put(  nLth++, ',' );
-        charBuffer.put(  nLth++, ',' );
-        charBuffer.put(  nLth++, ',' );
+         charBuffer.put(  nLth++, ',' );
+         charBuffer.put(  nLth++, ',' );
+         charBuffer.put(  nLth++, ',' );
+         charBuffer.put(  nLth++, ',' );
+         charBuffer.put(  nLth++, ',' );
       }
 
       nLth += AddAttributeToCSV( charBuffer, nLth, lLibPers, entityName,
@@ -4531,7 +4807,7 @@ public class ZGlobal1_Operation extends VmlOperation
       else
         charBuffer.put(  nLth++, '\0' );    // ensure null termination
 
-      SysWriteLine( lLibPers, lFile, charBuffer.toString( ) );
+      m_KZOEP1AA.SysWriteLine( lLibPers, lFile, charBuffer.toString( ) );
       return nLth;
    }
 
@@ -4573,7 +4849,7 @@ public class ZGlobal1_Operation extends VmlOperation
       return lCnt;
    }
 
-/**
+ /**
    int
    TraceLastError( DWORD dwError )
    {
@@ -4683,7 +4959,7 @@ public class ZGlobal1_Operation extends VmlOperation
 
       return nRC;
    }
-**/
+ **/
 
    //////////////////////////////////////////////////////////////////////////////////////////////////
    //
@@ -5077,6 +5353,63 @@ public class ZGlobal1_Operation extends VmlOperation
 
    } // CheckForTableAttribute
 
+   public int
+   AD_TestAdmin( )
+   {
+      String ldapurl = "ldap://10.150.0.10";
+      String stringADUserName = "";
+      String szAD_Password = "";
+      // This is using fastbind.
+      return m_ActiveDirectory.ActiveDirectoryLoginAuthentication( ldapurl, "enc-ad\\zmail", "F82b7mk,9j" );
+   }
+
+   public int
+   AD_TestAdminNotFast( )
+   {
+      String ldapurl = "ldap://10.150.0.10";
+      String stringADUserName = "";
+      String szAD_Password = "";
+      // Try binding w/o fastbind.
+      return m_ActiveDirectory.ActiveDirectoryLoginAuthenticationNF( ldapurl, "enc-ad\\zmail", "F82b7mk,9j" );
+      //IsAuthenticated = ctx.Authenticate("enc-ad\\zmailxx","F82b7mk,9jssss");
+   }
+
+   public int
+   AD_TestUserNotFast( )
+   {
+      String ldapurl = "ldap://10.150.0.10";
+      String stringADUserName = "";
+      String szAD_Password = "";
+      // Try binding w/o fastbind.
+      return m_ActiveDirectory.ActiveDirectoryLoginAuthenticationNF( ldapurl, stringADUserName, szAD_Password );
+   }
+
+   public int
+   AD_TestUser( )
+   {
+      String ldapurl = "ldap://10.150.0.10";
+      String stringADUserName = "";
+      String szAD_Password = "";
+      // This is using fastbind.
+      return m_ActiveDirectory.ActiveDirectoryLoginAuthentication( ldapurl, stringADUserName, szAD_Password );
+   }
+
+   public int
+   AD_TestChangePassword( )
+   {
+      String ldapurl = "ldap://10.150.0.10";
+      String stringADAdminUserName = "enc-ad\\zmail";
+      String stringADAdminPassword = "F82b7mk,9j";
+      String stringADUserName = "";
+      String stringADOldPassword = "";
+      String stringADNewPassword = "";
+      int nRC;
+
+      nRC = m_ActiveDirectory.ActiveDirectoryChangePassword( ldapurl, stringADAdminUserName,
+                                                             stringADAdminPassword, stringADUserName, stringADOldPassword, stringADNewPassword );
+      return 0;
+   }
+
    ////////////////////////////////////////////////////////////////////////////////////////////////////
    //
    //  Method Name: AD_AuthenticateUserPassword
@@ -5084,11 +5417,15 @@ public class ZGlobal1_Operation extends VmlOperation
    //
    ////////////////////////////////////////////////////////////////////////////////////////////////////
    public int
-   AD_AuthenticateUserPassword( String stringAD_Pathname,
-                                String stringAD_UserName,
-                                String stringAD_Password )
+   AD_AuthenticateUserPassword( String szAD_Pathname,
+                                String szAD_UserName,
+                                String szAD_Password )
    {
-      return ActiveDirectoryLoginAuthentication( stringAD_Pathname, stringAD_UserName, stringAD_Password );
+      // In the "c" world this is "LDAP://DC=ENC-AD,DC=ENC,DC=EDU"
+      // But I couldn't get a connection using that in java, so I am using the
+      // ldap server id.
+      szAD_Pathname = "ldap://10.150.0.10";
+      return m_ActiveDirectory.ActiveDirectoryLoginAuthentication( szAD_Pathname, szAD_UserName, szAD_Password );
 
    } // AD_AuthenticateUserPassword
 
@@ -5105,7 +5442,7 @@ public class ZGlobal1_Operation extends VmlOperation
                        String stringUserName,
                        String stringUserPassword )
    {
-      return ActiveDirectoryAddUser( stringServerName, stringServerPort, stringOrganization, stringUserName, stringUserPassword );
+      return m_ActiveDirectory.ActiveDirectoryAddUser( stringServerName, stringServerPort, stringOrganization, stringUserName, stringUserPassword );
 
    } // AD_AddUserPassword
 
@@ -5121,7 +5458,7 @@ public class ZGlobal1_Operation extends VmlOperation
                           String stringOrganization,
                           String stringUserName )
    {
-      return ActiveDirectoryRemoveUser( stringServerName, stringServerPort, stringOrganization, stringUserName );
+      return m_ActiveDirectory.ActiveDirectoryRemoveUser( stringServerName, stringServerPort, stringOrganization, stringUserName );
 
    } // AD_RemoveUserPassword
 
@@ -5139,8 +5476,16 @@ public class ZGlobal1_Operation extends VmlOperation
                           String stringAD_OldPassword,
                           String stringAD_NewPassword )
    {
-      return ActiveDirectoryChangePassword( stringAD_Pathname, stringAD_LoginUserName, stringAD_LoginPassword, stringAD_UserName, stringAD_OldPassword, stringAD_NewPassword );
-
+      // In the "c" world this is "LDAP://DC=ENC-AD,DC=ENC,DC=EDU"
+      // But I couldn't get a connection using that in java, so I am using the
+      // ldap server id.
+      stringAD_Pathname = "ldap://10.150.0.10";
+      // Also, in "c" we store password on the database but I need to do some
+      // work with that because we are using different encyrption right now for java and
+      // I can't decrypt a password.
+      stringAD_LoginUserName = "enc-ad\\zmail";
+      stringAD_LoginPassword = "F82b7mk,9j";
+      return m_ActiveDirectory.ActiveDirectoryChangePassword( stringAD_Pathname, stringAD_LoginUserName, stringAD_LoginPassword, stringAD_UserName, stringAD_OldPassword, stringAD_NewPassword );
    } // AD_ChangeUserPassword
 
    ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -5156,7 +5501,7 @@ public class ZGlobal1_Operation extends VmlOperation
                    String stringAD_UserName,
                    String stringAD_Password )
    {
-      return ActiveDirectorySetPassword( stringAD_Pathname, stringAD_LoginUserName, stringAD_LoginPassword, stringAD_UserName, stringAD_Password );
+      return m_ActiveDirectory.ActiveDirectorySetPassword( stringAD_Pathname, stringAD_LoginUserName, stringAD_LoginPassword, stringAD_UserName, stringAD_Password );
    }
 
    // AD_SetPassword
@@ -5174,7 +5519,7 @@ public class ZGlobal1_Operation extends VmlOperation
                   String stringAD_NewUserName,
                   String stringAD_NewUserPassword )
    {
-      return ActiveDirectoryAddUser( stringAD_Pathname, stringAD_LoginUserName, stringAD_LoginPassword, stringAD_NewUserName, stringAD_NewUserPassword );
+      return m_ActiveDirectory.ActiveDirectoryAddUser( stringAD_Pathname, stringAD_LoginUserName, stringAD_LoginPassword, stringAD_NewUserName, stringAD_NewUserPassword );
 
    }  // AD_AddNewUser
 
@@ -5191,7 +5536,7 @@ public class ZGlobal1_Operation extends VmlOperation
                        String stringAD_Property,
                        StringBuilder stringReturnProperty )
    {
-      return ActiveDirectoryGetProperty( stringAD_Pathname, stringAD_UserName, stringAD_Password, stringAD_Property, stringReturnProperty );
+      return m_ActiveDirectory.ActiveDirectoryGetProperty( stringAD_Pathname, stringAD_UserName, stringAD_Password, stringAD_Property, stringReturnProperty );
 
    } // AD_GetUserProperty
 
@@ -5310,6 +5655,7 @@ public class ZGlobal1_Operation extends VmlOperation
 
    } // SetStringUpperLowerCase
 
+
    ////////////////////////////////////////////////////////////////////////////////////////////////////
    //
    //  Method Name: SetAttributeFromUC_String
@@ -5369,8 +5715,8 @@ public class ZGlobal1_Operation extends VmlOperation
    {
       int nRC;
 
-      nRC = ActiveDirectorySetProperty( stringAD_Pathname, stringAD_AdminName, stringAD_AdminPassword,
-                                        stringAD_UserName, stringAD_PropertyName, stringAD_PropertyValue );
+      nRC = m_ActiveDirectory.ActiveDirectorySetProperty( stringAD_Pathname, stringAD_AdminName, stringAD_AdminPassword,
+                                                          stringAD_UserName, stringAD_PropertyName, stringAD_PropertyValue );
       return nRC;
 
    } // AD_SetUserProperty
@@ -5381,16 +5727,16 @@ public class ZGlobal1_Operation extends VmlOperation
    //
    /////////////////////////////////////////////////////////////////////////////
    public int
-   InsertUsageWordsIntoString( View   view,
-                               StringBuilder sbString, // original data and return data
-                               int    lMaxLth,
-                               String szUsageType,
-                               String szUsageKeyword,
-                               String szUsageEntityName,
-                               String szUsageEntityNameScope,
-                               String szSeparatorCharacters )
+   InsertUsageWordsIntoStringX( View   view,
+                                StringBuilder sbString, // original data and return data
+                                int    lMaxLth,
+                                String szUsageType,
+                                String szUsageKeyword,
+                                String szUsageEntityName,
+                                String szUsageEntityNameScope,
+                                String szSeparatorCharacters )
    {
-    /****
+   /*****
       zVIEW  viewT;
       String  szCurrentType[ 2 ];
       String  szCurrentName[ 51 ];
@@ -5503,87 +5849,320 @@ public class ZGlobal1_Operation extends VmlOperation
                               int    lMaxLth,
                               String pchNumberedText )
    {
-       String pchRemainingText;
-       int    lMemHandle;
-       int    nCount;
+      String pchRemainingText;
+      int    lMemHandle;
+      int    nCount;
    /***
-       // Separate a numbered statement into the number and the rest of the statement.
-       // A return code of -1 means the text didn't start with a number.
+      // Separate a numbered statement into the number and the rest of the statement.
+      // A return code of -1 means the text didn't start with a number.
 
-       lMemHandle = SysAllocMemory( &pchRemainingText, lMaxLth, 0, zCOREMEM_ALLOC, 0 );
-       pchRemainingText[ 0 ] = 0;
-       if ( isdigit( *pchOriginalStatement ))
-       {
-          // The first character is a digit, so separate the non-blank chars from the rest.
+      lMemHandle = SysAllocMemory( &pchRemainingText, lMaxLth, 0, zCOREMEM_ALLOC, 0 );
+      pchRemainingText[ 0 ] = 0;
+      if ( isdigit( *pchOriginalStatement ))
+      {
+         // The first character is a digit, so separate the non-blank chars from the rest.
 
-          // First separate numbered text.
-          nCount = 0;
-          while ( *pchOriginalStatement != ' ' && *pchOriginalStatement != 0 )
-          {
-             // Make sure text doesn't go over 5 characters.
-             nCount++;
-             if ( nCount > 5 )
-             {
-                SysFreeMemory( lMemHandle  );
-                return( -2 );
-             }
+         // First separate numbered text.
+         nCount = 0;
+         while ( *pchOriginalStatement != ' ' && *pchOriginalStatement != 0 )
+         {
+            // Make sure text doesn't go over 5 characters.
+            nCount++;
+            if ( nCount > 5 )
+            {
+               SysFreeMemory( lMemHandle  );
+               return( -2 );
+            }
 
-             *pchNumberedText = *pchOriginalStatement;
-             pchNumberedText++;
-             pchOriginalStatement++;
-          }
+            *pchNumberedText = *pchOriginalStatement;
+            pchNumberedText++;
+            pchOriginalStatement++;
+         }
 
-          *pchNumberedText = 0;
+         *pchNumberedText = 0;
 
-          // Skip next nonblank text.
-          while ( *pchOriginalStatement == ' ' && *pchOriginalStatement != 0 )
-             pchOriginalStatement++;
+         // Skip next nonblank text.
+         while ( *pchOriginalStatement == ' ' && *pchOriginalStatement != 0 )
+            pchOriginalStatement++;
 
-          // Copy rest of text.
-          zstrcpy( pchRemainingText, pchOriginalStatement );
-       }
-       else
-       {
-          // The first character is not a digit, so return with RC -1.
-          SysFreeMemory( lMemHandle  );
-          return( -1 );
-       }
+         // Copy rest of text.
+         zstrcpy( pchRemainingText, pchOriginalStatement );
+      }
+      else
+      {
+         // The first character is not a digit, so return with RC -1.
+         SysFreeMemory( lMemHandle  );
+         return( -1 );
+      }
 
-       zstrcpy( pchOriginalStatement, pchRemainingText );  // copy data back into original string
-       SysFreeMemory( lMemHandle  );
+      zstrcpy( pchOriginalStatement, pchRemainingText );  // copy data back into original string
+      SysFreeMemory( lMemHandle  );
    ***/
 
-       return( 0 );
+      return( 0 );
 
    } // SeparateNumberedStatement
 
-   public int
-   WinShellExecute( View view, String szTempString_0, String string, String string2 )
-   {
+   public int WinShellExecute( View viewToWindow, String szTempString_0,
+                               String string, String string2 ) {
       // TODO Auto-generated method stub
       return 0;
    }
 
-   public int
-   GetImagingPath( View view, int i, StringBuilder sbPathName )
+   public String GetImagingPath( View viewToWindow, int i, String szPathName )
    {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   public int FTPSendFile( View viewToSubtask, String szURL, String szLoginName,
+                           String szPassword, String szFullFileName, String szTargetFileName,
+                           int i) {
       // TODO Auto-generated method stub
       return 0;
    }
 
-   public int
-   FTPSendFile( View viewToSubtask, String szURL, String szLoginName,
-                String szPassword, String szFullFileName, String szTargetFileName, int i )
+
+   /*************************************************************************************************
+   **
+   **    OPERATION: CopyFileToPDF
+   **    Copy a file to a pdf file.
+   **
+   *************************************************************************************************/
+   public int CopyFileToPDF( View vMapObject,
+                             String szFileToCopy,
+                             String szPDFName )
    {
-      // TODO Auto-generated method stub
-      return 0;
+      zVIEW   vKZXMLPGO = new zVIEW( );
+      String  szCommandLine = null;
+      String  szPathFileName = null;
+      String  szFileName = null;
+
+      szCommandLine = "copypdf.bat \"" + szFileToCopy + "\"";
+
+      // KJS 01/05/11 - When we move to java I don't think we will be able to do this anymore.
+      // Need to keep JODConverter in mind:http://stackoverflow.com/questions/586411/is-there-a-free-way-to-convert-rtf-to-pdf
+
+      try
+      {
+        Process proc = Runtime.getRuntime().exec( szCommandLine );
+        int exitCode = proc.waitFor();
+      }
+      catch (IOException e)
+      {
+        return -1;
+      }
+      catch (InterruptedException e)
+      {
+        return -1;
+      }
+/*
+ * Also , you can invoke apps like notepad ;
+Runtime rt = Runtime.getRuntime();
+try {
+rt.exec("notepad");
+} catch (IOException ioe) {
+ioe.printStackTrace();
+}
+*/
+
+      // KJS 02/20/2009 - We would like our pdfs to be created in a separate directory.
+      // Use PDF_PathFileName to get this.  Currently I have this set as /zencas/pdf/ but
+      // I know Aadit would like to put these in a totally different directory not under
+      // zencas.  Might need to change something because I had a hard time getting a file
+      // to open when PDF_PathFileName was something like "C:\Program Files...".
+      StringBuilder sb_szPathName;
+      sb_szPathName = new StringBuilder( 200 );
+      //SysReadZeidonIni( -1, "[App.Zencas]", "WebDirectory", sb_szDirectoryName );
+      m_KZOEP1AA.SysReadZeidonIni( -1, "Workstation", "PDF_PathFileName", sb_szPathName );
+      szPathFileName = sb_szPathName.toString( );
+
+      /*
+      nZRetCode = GetWorkstationApplicationValues( vMapObject, "PDF_PathFileName",
+         szPathFileName, 32, &lFontSize, &lWork, &lWork, &lWork, &lWork, &lWork,
+         &lWork, &lWork, &lWork, &lWork );
+      */
+
+      //szFileName = szPathFileName + szPDFName;
+      szFileName = szPDFName + ".pdf";
+
+      // We set the report name in KZXMLPGO so that
+      // we can retrieve this name in FindOpenFile (kzoejava.c) when trying to
+      // open the file in the jsp files.
+      GetViewByName( vKZXMLPGO, "_KZXMLPGO", vMapObject, zLEVEL_TASK );
+      SetAttributeFromString( vKZXMLPGO, "Session", "PrintFileName", szFileName );  //pchReportName );
+      SetAttributeFromString( vKZXMLPGO, "Session", "PrintFileType", "pdf" );
+      return( 0 );
+   } // CopyFileToPDF
+
+   /////////////////////////////////////////////////////////////////////////////
+   //
+   //  SortEntityWithinParent
+   //
+   //  PURPOSE:    This routine will sort an Entity (keeping its dependents)
+   //              by any given 4 attributes (if the attr's 2 - 4 are null
+   //              strings, the only the first attr is used).
+   //
+   //              It is not efficient?, but it tends to work.
+   //
+   //  PARAMETERS: bDescending  -- Indicator for ascending or descending
+   //                          (zASCENDING or zDESCENDING)
+   //              vIn            -- view that contains the entity to be
+   //                               sorted AND its' parent
+   //              pchEntityName  -- Entity to be sorted
+   //              pchAttribName  -- Name of the attribute for primary sort
+   //              bDescending    -- Indicator for ascending or descending
+   //              pchAttribName2 -- Name of a second sort attribute or null string
+   //              bDescending2   -- Indicator for ascending or descending
+   //              pchAttribName3 -- Name of a second sort attribute or null string
+   //              bDescending3   -- Indicator for ascending or descending
+   //              pchAttribName4 -- Name of a second sort attribute or null string
+   //              bDescending4   -- Indicator for ascending or descending
+   //
+   //  RETURNS: number of entity swaps required to sort
+   //             -1 - more than 32000 swaps required
+   //
+   /////////////////////////////////////////////////////////////////////////////
+/*
+   private int
+   SortEntityWithinParent( View   vIn,
+                           String strEntityName,
+                           String strAttribName1,
+                           boolean bDescending,
+                           String strAttribName2,
+                           boolean bDescending2,
+                           String strAttribName3,
+                           boolean bDescending3,
+                           String strAttribName4,
+                           boolean bDescending4 )
+   {
+      View   vSort1;
+      View   vSort2;
+      int    nSwap;
+      int    nSwapPrev;
+      int    nMoves;
+      int    lCompares;
+      int    nEntities;
+      int    nRC;
+      int    nRC2;
+      int    nRC3;
+      int    nRC4;
+
+      nEntities = 0;
+      lCompares = 0;
+      nMoves = 0;
+      nSwap = 0;
+      nSwapPrev = 2;
+      vSort1 = vIn.newView();
+      vSort1.copyCursors( vIn );
+      vSort2 = vIn.newView();
+
+      CursorResult cr = vSort1.cursor( strEntityName ).setFirst();
+      if ( cr.isSet() )
+      {
+         vSort2.copyCursors( vSort1 );
+         for ( ; ; )
+         {
+            nEntities++;
+            cr = vSort2.cursor( strEntityName ).setNext();
+            if ( cr.isSet() )
+            {
+               if ( nSwap == 0 )
+               {
+                  break;
+               }
+               else
+               {
+                  vSort1.cursor( strEntityName ).setFirst();
+                  vSort2.cursor( strEntityName ).setFirst();
+                  vSort2.cursor( strEntityName ).setNext();
+                  nEntities = 1;
+                  nSwapPrev = nSwap;
+                  nSwap = 0;
+               }
+               lCompares++;
+
+               // Compare Attr 1
+               nRC = vSort1.cursor( strEntityName ).getAttribute( strAttribName1 ).compare( vSort2.cursor( strEntityName ).getAttribute( strAttribName1 ) );
+               if ( bDescending )
+                  nRC = nRC * -1;
+
+               // Compare Attr 2
+               if ( strAttribName2 != null && strAttribName2.equals( "" ) == false )
+               {
+                  nRC2 = 0;
+               }
+               else
+               {
+                  nRC2 = vSort1.cursor( strEntityName ).getAttribute( strAttribName2 ).compare( vSort2.cursor( strEntityName ).getAttribute( strAttribName2 ) );
+                  if ( bDescending2 )
+                     nRC2 = nRC2 * -1;
+               }
+
+               // Compare Attr 3
+               if ( strAttribName3!= null && strAttribName3.equals( "" ) == false )
+               {
+                  nRC3 = 0;
+               }
+               else
+               {
+                  nRC3 = vSort1.cursor( strEntityName ).getAttribute( strAttribName3 ).compare( vSort2.cursor( strEntityName ).getAttribute( strAttribName3 ) );
+                  if ( bDescending3 )
+                     nRC3 = nRC3 * -1;
+               }
+               // Compare Attr 4
+               if ( strAttribName4!= null && strAttribName4.equals( "" ) == false )
+               {
+                  nRC4 = 0;
+               }
+               else
+               {
+                  nRC4 = vSort1.cursor( strEntityName ).getAttribute( strAttribName4 ).compare( vSort2.cursor( strEntityName ).getAttribute( strAttribName4 ) );
+                  if ( bDescending4 )
+                     nRC4 = nRC4 * -1;
+               }
+
+               // See if swap required
+               if ( nRC > 0 || (nRC == 0 && nRC2 > 0) || (nRC == 0 && nRC2 == 0 && nRC3 > 0) || (nRC == 0 && nRC2 == 0 && nRC3 == 0 && nRC4 > 0) )
+               {
+               // nRC = MoveSubobject( vSort2, strEntityName, vSort1, strEntityName, zPOS_AFTER, zREPOS_NONE );
+                  cr = vSort2.cursor( strEntityName ).moveSubobject( CursorPosition.NEXT, vSort1.cursor( strEntityName ), CursorPosition.NONE );
+                  if ( cr.isSet() == false )
+                     return( -16 );
+
+                  nMoves++;
+                  if ( nMoves > 32000 )
+                     return( -1 );
+
+                  nSwap++;
+                  if ( nSwapPrev > 1 )
+                  {
+                     // the next two lines pump v1 up - v2 is done at front of loop
+                     vSort1.cursor( strEntityName ).setNext();
+                     vSort2.cursor( strEntityName ).setNext();
+                  }
+                  else
+                  {
+                     vSort1.cursor( strEntityName ).setFirst();
+                     vSort2.cursor( strEntityName ).setFirst();
+                     nEntities = 0;
+                  }
+               }
+               else
+               {
+                  vSort1.cursor( strEntityName ).setNext();
+               }
+            }
+         }
+      }
+
+      vSort1.drop();
+      vSort2.drop();
+
+      logger.debug( "Stats SortEntityWithinParent: " + strEntityName + " -- " + nEntities + " Entities,  " + nMoves + " Moves,  " + lCompares + " Compares" );
+      return( nMoves );
    }
 
-   public int
-   ParseBooleanExpression( View view )
-   {
-      // TODO Auto-generated method stub
-      return 0;
-   }
+*/
 
 }

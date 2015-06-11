@@ -4583,8 +4583,16 @@ public class ZGlobal1_Operation extends VmlOperation
    //
    //  PURPOSE: Convert several lines of string data into separate entity instances.
    //
-   //
    ////////////////////////////////////////////////////////////////////////////////////////////////////
+   /*
+   private String trimEnd( String raw ) {
+      int pos = raw.length();
+      while ( (pos > 0) && Character.isWhitespace( raw.charAt( pos - 1 ) ) ) {
+         pos--;
+      }
+      return (pos < raw.length()) ? raw.substring( 0, pos ) : raw;
+   }
+   */
    public int
    SplitParagraphOnLinefeed( String paragraph,
                              View   view,
@@ -4598,8 +4606,9 @@ public class ZGlobal1_Operation extends VmlOperation
       String[] tokens = paragraph.split( delimiters );
       int rawCount = tokens.length;
       for ( int k = 0; k < rawCount; k++ ) {
-         value = tokens[k];
+         value = tokens[k].trim();
          if ( value.equals( "" ) == false ) {
+         // TraceLineS( value, "|" );
             count++;
             ec.createEntity( CursorPosition.LAST );
             ec.getAttribute( attributeName ).setValue( value );
@@ -4617,8 +4626,8 @@ public class ZGlobal1_Operation extends VmlOperation
       int pos = 0;
       for ( k = 0; k < sbFileName.length(); k++ ) {
          ch = in.charAt( k );
-         // Not permitting spaces
-         if ( (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || (ch >= '0' && ch <= '9') || ch == '_' || ch == '-' || ch == '.' ) {
+         // Not permitting spaces or dashes or periods
+         if ( (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || (ch >= '0' && ch <= '9') || ch == '_' ) {
             sbFileName.setCharAt( pos++, ch );
          }
       }
