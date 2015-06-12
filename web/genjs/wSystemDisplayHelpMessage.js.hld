@@ -43,8 +43,8 @@ function _OnAlmostTimeout()
       // If the time is less than one minute, resubmit the page.  Otherwise, go to the timeout window.
       if (tDiff < 60000)
       {
-         document.wStartUpUserLogin.zAction.value = "_OnResubmitPage";
-         document.wStartUpUserLogin.submit( );
+         document.wSystemDisplayHelpMessage.zAction.value = "_OnResubmitPage";
+         document.wSystemDisplayHelpMessage.submit( );
       }
       else
       {
@@ -59,8 +59,8 @@ function _OnTimeout( )
    {
       _DisableFormElements( true );
 
-      document.wStartUpUserLogin.zAction.value = "_OnTimeout";
-      document.wStartUpUserLogin.submit( );
+      document.wSystemDisplayHelpMessage.zAction.value = "_OnTimeout";
+      document.wSystemDisplayHelpMessage.submit( );
    }
 }
 
@@ -74,11 +74,8 @@ function _BeforePageUnload( )
       // If the user clicked the window close box, unregister zeidon.
       if (isWindowClosing)
       {
-         // These lines are commented out because either we are registering zeidon on this
-         // window or this is a popup window so we don't want to do an unload if the user
-         // closes the window using the red close button.
-         //document.wStartUpUserLogin.zAction.value = "_OnUnload";
-         //document.wStartUpUserLogin.submit( );
+         document.wSystemDisplayHelpMessage.zAction.value = "_OnUnload";
+         document.wSystemDisplayHelpMessage.submit( );
       }
    }
 }
@@ -127,42 +124,20 @@ function _DisableFormElements( bDisabled )
    return bRC;
 }
 
-function _OnEnter( e )
-{
-   var keycode;
-   if ( window.event )
-      keycode = window.event.keyCode;
-   else
-   {
-      if ( e )
-         keycode = e.which;
-      else
-         return true;
-   }
-
-   if ( keycode == 13 )
-   {
-      ProcessUserLogin( );
-      return false;
-   }
-   else
-      return true;
-   }
-
 function _AfterPageLoaded( )
 {
 // _DisableFormElements( false );
 
-   var szFocusCtrl = document.wStartUpUserLogin.zFocusCtrl.value;
+   var szFocusCtrl = document.wSystemDisplayHelpMessage.zFocusCtrl.value;
    if ( szFocusCtrl != "" && szFocusCtrl != "null" )
-      eval( 'document.wStartUpUserLogin.' + szFocusCtrl + '.focus( )' );
+      eval( 'document.wSystemDisplayHelpMessage.' + szFocusCtrl + '.focus( )' );
 
    // This is where we put out a message from the previous iteration on this window
-   var szMsg = document.wStartUpUserLogin.zError.value;
+   var szMsg = document.wSystemDisplayHelpMessage.zError.value;
    if ( szMsg != "" )
       alert( szMsg ); // "Houston ... We have a problem"
 
-   szMsg = document.wStartUpUserLogin.zOpenFile.value;
+   szMsg = document.wSystemDisplayHelpMessage.zOpenFile.value;
    if ( szMsg != "" )
    {
       var NewWin = window.open( szMsg );
@@ -174,9 +149,9 @@ function _AfterPageLoaded( )
       }
    }
 
-   var keyRole = document.wStartUpUserLogin.zKeyRole.value;
-   document.wStartUpUserLogin.zError.value = "";
-   document.wStartUpUserLogin.zOpenFile.value = "";
+   var keyRole = document.wSystemDisplayHelpMessage.zKeyRole.value;
+   document.wSystemDisplayHelpMessage.zError.value = "";
+   document.wSystemDisplayHelpMessage.zOpenFile.value = "";
 
    if ( timerID != null )
    {
@@ -184,7 +159,7 @@ function _AfterPageLoaded( )
       timerID = null;
    }
 
-   var varTimeout = document.wStartUpUserLogin.zTimeout.value;
+   var varTimeout = document.wSystemDisplayHelpMessage.zTimeout.value;
    if ( varTimeout > 0 )
    {
       var varDelay = 60000 * varTimeout;  // Timeout value in timeout.inc
@@ -212,7 +187,7 @@ function CheckAllInGrid(id, CheckBoxName)
    }
 }
 
-function FORGOT_Password( )
+function EditHelpMessage( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -222,12 +197,12 @@ function FORGOT_Password( )
    {
       _DisableFormElements( true );
 
-      document.wStartUpUserLogin.zAction.value = "FORGOT_Password";
-      document.wStartUpUserLogin.submit( );
+      document.wSystemDisplayHelpMessage.zAction.value = "EditHelpMessage";
+      document.wSystemDisplayHelpMessage.submit( );
    }
 }
 
-function AutoLogin( )
+function Return( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -237,80 +212,27 @@ function AutoLogin( )
    {
       _DisableFormElements( true );
 
-      document.wStartUpUserLogin.zAction.value = "AutoLogin";
-      document.wStartUpUserLogin.submit( );
-   }
-}
-
-function Logout( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wStartUpUserLogin.zAction.value = "_OnUnload";
-      document.wStartUpUserLogin.submit( );
-   }
-}
-
-function InitLoginWindow( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      // Javascript code entered by user.
-
-/* var thisLi;
-
-   // If the Role is not set when we get here, it is because there is no admin (KeyRole = "U"), so we will only permit the user to go to set up the administrator.
-   if ( keyRole == "U" )
-   {
-      thisLi = document.getElementById( "EBRegistrantName" );
-      thisLi .disabled = true;
-      thisLi = document.getElementById( "EBUserName" );
-      thisLi .disabled = true;
-      thisLi = document.getElementById( "EBPassword" );
-      thisLi .disabled = true;
-      thisLi = document.getElementById( "CBRole" );
-      thisLi .disabled = true;
-      thisLi = document.getElementById( "PBLogin");
-      thisLi.style.visibility = "hidden";
-   }
-   else
-   {
-      thisLi = document.getElementById( "PBSetupAdmin" );
-      thisLi.style.visibility = "hidden";
-   }
-*/
-
-      // END of Javascript code entered by user.
-
-   }
-}
-
-function ProcessUserLogin( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wStartUpUserLogin.zAction.value = "ProcessUserLogin";
-      document.wStartUpUserLogin.submit( );
+      document.wSystemDisplayHelpMessage.zAction.value = "Return";
+      document.wSystemDisplayHelpMessage.submit( );
    }
 }
 
 function mLogout( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSystemDisplayHelpMessage.zAction.value = "_OnUnload";
+      document.wSystemDisplayHelpMessage.submit( );
+   }
+}
+
+function mEditHelpMessage( )
 {
 
       // This is for indicating whether the user hit the window close box.
@@ -320,20 +242,23 @@ function mLogout( )
    {
       _DisableFormElements( true );
 
-      document.wStartUpUserLogin.zAction.value = "_OnUnload";
-      document.wStartUpUserLogin.submit( );
+      document.wSystemDisplayHelpMessage.zAction.value = "mEditHelpMessage";
+      document.wSystemDisplayHelpMessage.submit( );
    }
 }
 
-function PrimaryRegistrantsOnChange( )
+function mReturn( )
 {
 
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
+      // This is for indicating whether the user hit the window close box.
+      isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
-      document.wStartUpUserLogin.hPrimaryRegistrants.value = document.wStartUpUserLogin.PrimaryRegistrants.selectedIndex;
+      _DisableFormElements( true );
+
+      document.wSystemDisplayHelpMessage.zAction.value = "mReturn";
+      document.wSystemDisplayHelpMessage.submit( );
    }
 }
 

@@ -8,4 +8,8 @@ call wd "\Program Files\Apache Group\tomcat 7.0\webapps\ROOT\epamms\wSLCMarketin
 call wd "\Program Files\Apache Group\tomcat 7.0\webapps\ROOT\epamms\genjs\wSLCMarketingStatement.js" genjs\wSLCMarketingStatement.js.hld
 call wd "\Program Files\Apache Group\tomcat 7.0\webapps\ROOT\epamms\wMLCClaimsFootnoteStatement.jsp" wMLCClaimsFootnoteStatement.jsp.hld
 call wd "\Program Files\Apache Group\tomcat 7.0\webapps\ROOT\epamms\genjs\wMLCClaimsFootnoteStatement.js" genjs\wMLCClaimsFootnoteStatement.js.hld
+call wd "\Program Files\Apache Group\tomcat 7.0\webapps\ROOT\epamms\wSystemUpdateHelpMessage.jsp" wSystemUpdateHelpMessage.jsp.hld
+call wd "\Program Files\Apache Group\tomcat 7.0\webapps\ROOT\epamms\genjs\wSystemUpdateHelpMessage.js" genjs\wSystemUpdateHelpMessage.js.hld
+call wd "\Program Files\Apache Group\tomcat 7.0\webapps\ROOT\epamms\wSystemDisplayHelpMessage.jsp" wSystemDisplayHelpMessage.jsp.hld
+call wd "\Program Files\Apache Group\tomcat 7.0\webapps\ROOT\epamms\genjs\wSystemDisplayHelpMessage.js" genjs\wSystemDisplayHelpMessage.js.hld
                                                                                                            

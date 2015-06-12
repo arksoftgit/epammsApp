@@ -265,7 +265,7 @@ function CancelSortDiv( )
    }
 }
 
-function mLogout( )
+function Logout( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -327,7 +327,7 @@ function mCancelSortDiv( )
    }
 }
 
-function mmLogout( )
+function mLogout( )
 {
 
       // This is for indicating whether the user hit the window close box.

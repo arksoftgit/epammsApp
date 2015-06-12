@@ -747,7 +747,7 @@ else
       </span>
       <div id="zclient" style="margin:0"> <!-- client area -->
          <div id="pagemenu" class="ui-widget-content" style="position:relative;margin:0">
-            <div id="label" class="label" style="top:0px;left:0px;float:left;position:absolute;">Drop area ...    <!-- without position:relative, target position is off -->
+            <div id="label" class="label" style="top:0px;left:0px;float:left;position:absolute;background-color:#AAA;">Drop area ...    <!-- without position:relative, target position is off -->
                <div id="page" name="page" class="page" style="display:block;">1</div> <!-- page -->
                <div id="page2" name="page2" class="page" style="display:none;">2</div> <!-- page -->
                <div id="page3" name="page3" class="page" style="display:none;">3</div> <!-- page -->
@@ -773,7 +773,7 @@ else
                            </div>
                            &nbsp;
                            &nbsp;
-                           <div style="position:absolute;top:105px;left:20px;">
+                           <div style="position:absolute;top:105px;left:15px;">
                               <label for="zReusableBlocks">Reusable Blocks: </label>
                               <select id="zReusableBlocks">
                                  <option value="">Select Reusable Block...</option>
@@ -890,9 +890,9 @@ else
                          <option value="NetContents">Net Contents</option>
                          <option value="PhysicalHazard">Physical Hazard</option>
                          <option value="Precautionary">Precautionary</option>
-                           <option value="ProductDescription">Product Description</option>
-                           <option value="ProductName">Product Name</option>
-                           <option value="ProductSpecific">Product Specific</option>
+                         <option value="ProductDescription">Product Description</option>
+                         <option value="ProductName">Product Name</option>
+                         <option value="ProductSpecific">Product Specific</option>
                          <option value="StorageDisposal">Storage and Disposal</option>
                         </select>
                      </div>
@@ -1070,7 +1070,7 @@ else
                              <label for="zFontSizeSpinner">Font Size:</label>
                              <button id="zFontSizeClear" class = ".ui-button" style="float: right;">Clear Font Size</button>
                              <input type="text" id="zFontSizeSpinner" value="11" class="zeidon-special" data-zmap="block.z_^font^size" style="float:right;width:20px;"/>
-                       <!-- <input type="text" id="zFontSize" class="zeidon-special" data-zmap="block.z_^font^size" style="float:right" /> -->
+                        <!-- <input type="text" id="zFontSize" class="zeidon-special" data-zmap="block.z_^font^size" style="float:right" /> -->
                            </div>
                            <div style="overflow:hidden; white-space:nowrap;">
                              <label for="zFontWeight">Font Weight:</label>
@@ -1338,7 +1338,7 @@ else
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
-String strErrorMapValue = "";
+   String strErrorMapValue = "";
    // FindErrorFields Processing
    mMsgQ = new KZMSGQOO_Object( vKZXMLPGO );
    mMsgQ.setView( VmlOperation.getMessageObject( task ) );

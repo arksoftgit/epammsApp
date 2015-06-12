@@ -219,8 +219,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -941,11 +941,11 @@ else
    if ( task != null && strActionToProcess == null  )
    {
       task.log().info( "After building the page UnregisterZeidonApplication: ------>>> " + "wStartUpUserLogin" );
-      task.dropTask();
-      task = null;
-      session.setAttribute( "ZeidonTaskId", task );
-  }
+   // task.dropTask();
+   // task = null;
+   // session.setAttribute( "ZeidonTaskId", task );
+   }
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

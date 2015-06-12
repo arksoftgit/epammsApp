@@ -80,6 +80,13 @@ ol,ul,ul li{list-style:none;list-style-type:none}ins{text-decoration:none}del{te
 	padding-left:25px;
 
 }
+#loginline ul li.helpicon  a{
+	background-image: url(../images/help2.png);
+	background-repeat: no-repeat;
+	background-position: 2px 1px;
+	padding-left:25px;
+
+}
 #megatopregion #headerblock    {
 	text-align:left;
 	float: left;

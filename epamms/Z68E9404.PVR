@@ -1,0 +1,11 @@
+z1000-Zeidon    Z68E9404 TZWDVORO 06/12/15   10:46:58 1.0a2    
+eViewObjRef 1
+aZKey      110007300
+aName      sHelp
+aDesc      VOR automatically built from LOD Dialog
+
+eLOD       2
+aZKey      110007291
+aName      sHelp
+aDesc      For activating a single Help message
+

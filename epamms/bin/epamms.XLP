@@ -1,4 +1,4 @@
-z1000-Zeidon    EPAMMS   TZCMLPLO 06/11/15   14:43:41 1.0a2    
+z1000-Zeidon    EPAMMS   TZCMLPLO 06/12/15   14:36:48 1.0a2    
 eLPLR      1
 aName      epamms
 aDesc      ePamms Application
@@ -1424,6 +1424,15 @@ aLastSyncDate 20150310140731548
 aLastUpdateDate 20150310140731548
 
 eW_MetaDef 3
+aCPLR_ZKey 110007308
+aStatus    1
+aUpdateInd 2
+aName      rePamms
+aDesc      For include purposes
+aLastSyncDate 20150612135711007
+aLastUpdateDate 20150612135711007
+
+eW_MetaDef 3
 aCPLR_ZKey 1157074
 aStatus    1
 aUpdateInd 2
@@ -1451,6 +1460,15 @@ aLastSyncDate 20150316143132101
 aLastUpdateDate 20150316143132101
 
 eW_MetaDef 3
+aCPLR_ZKey 110007291
+aStatus    1
+aUpdateInd 2
+aName      sHelp
+aDesc      For activating a single Help message
+aLastSyncDate 20150612141532604
+aLastUpdateDate 20150612141532604
+
+eW_MetaDef 3
 aCPLR_ZKey 1182246
 aStatus    1
 aUpdateInd 2
@@ -1465,8 +1483,8 @@ aStatus    1
 aUpdateInd 2
 aName      wWebXfer
 aDesc      Web Work/Transfer object
-aLastSyncDate 20150310180726254
-aLastUpdateDate 20150310180726254
+aLastSyncDate 20150612092208917
+aLastUpdateDate 20150612092208917
 
 eW_MetaDef 3
 aCPLR_ZKey 68568663
@@ -1938,6 +1956,15 @@ aLastSyncDate 20130702023522000
 aLastUpdateDate 20130702023522000
 
 eW_MetaDef 3
+aCPLR_ZKey 110007313
+aStatus    1
+aUpdateInd 2
+aName      rePamms
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20150612110252529
+aLastUpdateDate 20150612110252529
+
+eW_MetaDef 3
 aCPLR_ZKey 1163363
 aStatus    1
 aUpdateInd 2
@@ -1963,6 +1990,15 @@ aName      sePamms
 aDesc      VOR automatically built from LOD Dialog
 aLastSyncDate 20150310194246526
 aLastUpdateDate 20150310194246526
+
+eW_MetaDef 3
+aCPLR_ZKey 110007300
+aStatus    1
+aUpdateInd 2
+aName      sHelp
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20150612104658387
+aLastUpdateDate 20150612104658387
 
 eW_MetaDef 3
 aCPLR_ZKey 1182250
@@ -2074,8 +2110,8 @@ aStatus    1
 aUpdateInd 2
 aName      wSystem
 aDesc      ePamms System Settings
-aLastSyncDate 20150611144341132
-aLastUpdateDate 20150611144341132
+aLastSyncDate 20150612143648944
+aLastUpdateDate 20150612143648944
 
 eW_MetaType 2
 aType      12
@@ -2689,6 +2725,52 @@ eW_MetaDef 3
 eW_MetaDef 3
 
 eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
 aCPLR_ZKey 70129897
 aStatus    1
 aUpdateInd 2
@@ -2721,53 +2803,15 @@ eW_MetaDef 3
 
 eW_MetaDef 3
 
-eW_MetaDef 3
-
-eW_MetaDef 3
-
-eW_MetaDef 3
-
-eW_MetaDef 3
-
-eW_MetaDef 3
-
-eW_MetaDef 3
-
-eW_MetaDef 3
-
-eW_MetaDef 3
-
-eW_MetaDef 3
-
-eW_MetaDef 3
-
-eW_MetaDef 3
-
-eW_MetaDef 3
-
-eW_MetaDef 3
-
-eW_MetaDef 3
-
-eW_MetaDef 3
-
-eW_MetaDef 3
-
-eW_MetaDef 3
-
-eW_MetaDef 3
-
-eW_MetaDef 3
-
-eW_MetaDef 3
-
-eW_MetaDef 3
-
 eW_MetaType 2
 aType      2008
 
 eW_MetaType 2
 aType      2009
+
+eW_MetaDef 3
+
+eW_MetaDef 3
 
 eW_MetaDef 3
 
@@ -3251,281 +3295,285 @@ aName      ZGlobalV
 aZKey      1399843
 aMetaType  2014
 
-i299       4
-i300       5
-i301       6
-i302       7
-i303       8
-i304       9
-i305       10
-i306       11
-i307       12
-i308       13
-i309       14
-i310       15
-i311       16
-i312       17
-i313       18
-i314       19
-i315       20
-i316       21
-i317       22
-i318       23
-i319       24
-i320       25
-i321       26
-i322       27
-i323       28
-i324       29
-i325       30
-i326       31
-i327       32
-i328       33
-i329       34
-i330       35
-i331       36
-i332       37
-i333       38
-i334       39
-i335       40
-i336       41
-i337       42
-i338       43
-i339       44
-i340       45
-i341       46
-i342       47
-i343       48
-i344       49
-i345       50
-i346       51
-i347       52
-i348       53
-i349       54
-i350       55
-i351       56
-i352       57
-i353       58
-i354       59
-i355       60
-i356       61
-i357       62
-i358       63
-i359       64
-i360       65
-i361       66
-i362       67
-i363       68
-i364       69
-i365       70
-i366       71
-i367       72
-i368       73
-i369       74
-i371       147
-i372       96
-i373       132
-i374       76
-i375       139
-i376       125
-i377       153
-i378       154
-i379       145
-i380       124
-i381       146
-i382       135
-i383       133
-i384       134
-i385       148
-i386       117
-i387       90
-i388       95
-i389       101
-i390       77
-i391       89
-i392       88
-i393       87
-i394       86
-i395       85
-i396       84
-i397       83
-i398       82
-i399       81
-i400       80
-i401       79
-i402       138
-i403       137
-i404       110
-i405       151
-i406       144
-i407       149
-i408       93
-i409       98
-i410       106
-i411       123
-i412       121
-i413       122
-i414       112
-i415       115
-i416       105
-i417       150
-i418       136
-i419       141
-i420       142
-i421       103
-i422       107
-i423       118
-i424       129
-i425       104
-i426       92
-i427       97
-i428       114
-i429       100
-i430       99
-i431       78
-i432       113
-i433       143
-i434       131
-i435       119
-i436       109
-i437       108
-i438       155
-i439       130
-i440       140
-i441       128
-i442       116
-i443       127
-i444       102
-i445       120
-i446       94
-i447       152
-i448       126
-i449       156
-i450       91
-i451       111
-i453       158
-i455       160
-i457       162
-i459       164
-i460       165
-i461       166
-i462       167
-i463       168
-i464       169
-i465       170
-i466       171
-i467       172
-i468       173
-i469       174
-i470       175
-i471       176
-i473       177
-i474       178
-i475       179
-i476       180
-i477       181
-i478       182
-i479       183
-i480       184
-i481       185
-i482       186
-i483       187
-i484       188
-i485       189
-i486       190
-i487       191
-i488       192
-i489       193
-i490       194
-i491       195
-i492       196
-i493       197
-i494       198
-i495       199
-i496       200
-i497       201
-i498       202
-i499       203
-i500       204
-i501       205
-i502       206
-i503       207
-i504       208
-i505       209
-i508       212
-i509       213
-i510       214
-i511       215
-i512       216
-i513       217
-i514       218
-i515       219
-i516       220
-i517       221
-i518       222
-i519       223
-i520       224
-i521       225
-i522       226
-i523       227
-i524       228
-i525       229
-i526       230
-i527       231
-i528       232
-i529       233
-i530       234
-i531       235
-i532       236
-i533       237
-i534       238
-i535       239
-i536       240
-i537       241
-i538       242
-i539       243
-i540       244
-i541       245
-i542       246
-i543       247
-i544       248
-i545       249
-i546       250
-i547       251
-i548       252
-i549       253
-i550       254
-i551       255
-i552       256
-i553       257
-i554       258
-i555       259
-i556       260
-i557       261
-i558       262
-i559       263
-i560       264
-i561       265
-i562       266
-i563       267
-i564       268
-i565       269
-i568       272
-i569       273
-i570       274
-i571       275
-i572       276
-i573       277
-i574       278
-i575       279
-i576       280
-i579       283
-i580       284
-i581       285
-i582       286
-i583       287
-i584       288
-i585       289
-i586       290
-i588       292
-i589       293
+i303       4
+i304       5
+i305       6
+i306       7
+i307       8
+i308       9
+i309       10
+i310       11
+i311       12
+i312       13
+i313       14
+i314       15
+i315       16
+i316       17
+i317       18
+i318       19
+i319       20
+i320       21
+i321       22
+i322       23
+i323       24
+i324       25
+i325       26
+i326       27
+i327       28
+i328       29
+i329       30
+i330       31
+i331       32
+i332       33
+i333       34
+i334       35
+i335       36
+i336       37
+i337       38
+i338       39
+i339       40
+i340       41
+i341       42
+i342       43
+i343       44
+i344       45
+i345       46
+i346       47
+i347       48
+i348       49
+i349       50
+i350       51
+i351       52
+i352       53
+i353       54
+i354       55
+i355       56
+i356       57
+i357       58
+i358       59
+i359       60
+i360       61
+i361       62
+i362       63
+i363       64
+i364       65
+i365       66
+i366       67
+i367       68
+i368       69
+i369       70
+i370       71
+i371       72
+i372       73
+i373       74
+i375       147
+i376       96
+i377       132
+i378       76
+i379       139
+i380       125
+i381       153
+i382       154
+i383       145
+i384       124
+i385       146
+i386       135
+i387       133
+i388       134
+i389       148
+i390       117
+i391       90
+i392       95
+i393       101
+i394       77
+i395       89
+i396       88
+i397       87
+i398       86
+i399       85
+i400       84
+i401       83
+i402       82
+i403       81
+i404       80
+i405       79
+i406       138
+i407       137
+i408       110
+i409       151
+i410       144
+i411       149
+i412       93
+i413       98
+i414       106
+i415       123
+i416       121
+i417       122
+i418       112
+i419       115
+i420       105
+i421       150
+i422       136
+i423       141
+i424       142
+i425       103
+i426       107
+i427       118
+i428       129
+i429       104
+i430       92
+i431       97
+i432       114
+i433       100
+i434       99
+i435       78
+i436       113
+i437       143
+i438       131
+i439       119
+i440       109
+i441       108
+i442       155
+i443       130
+i444       140
+i445       128
+i446       116
+i447       127
+i448       102
+i449       120
+i450       94
+i451       152
+i452       126
+i453       156
+i454       91
+i455       111
+i457       158
+i459       160
+i461       162
+i463       204
+i464       208
+i465       210
+i466       185
+i467       198
+i468       194
+i469       187
+i470       195
+i471       182
+i472       188
+i473       186
+i474       199
+i475       192
+i476       190
+i477       201
+i478       197
+i479       193
+i480       167
+i481       207
+i482       200
+i483       184
+i484       203
+i485       181
+i486       174
+i487       189
+i488       168
+i489       176
+i490       172
+i491       171
+i492       211
+i493       178
+i494       170
+i495       166
+i496       169
+i497       173
+i498       175
+i500       177
+i501       179
+i502       180
+i503       183
+i504       191
+i505       196
+i506       202
+i507       205
+i508       206
+i509       209
+i510       164
+i511       165
+i514       214
+i515       266
+i516       215
+i517       216
+i518       217
+i519       218
+i520       219
+i521       220
+i522       221
+i523       222
+i524       223
+i525       224
+i526       225
+i527       226
+i528       227
+i529       228
+i530       229
+i531       231
+i532       230
+i533       232
+i534       233
+i535       234
+i536       235
+i537       236
+i538       237
+i539       238
+i540       239
+i541       240
+i542       241
+i543       242
+i544       243
+i545       244
+i546       245
+i547       246
+i548       247
+i549       248
+i550       249
+i551       250
+i552       251
+i553       252
+i554       253
+i555       254
+i556       255
+i557       256
+i558       257
+i559       258
+i560       259
+i561       260
+i562       261
+i563       262
+i564       263
+i565       264
+i566       265
+i567       267
+i568       268
+i569       269
+i570       270
+i571       271
+i572       272
+i573       273
+i576       276
+i577       277
+i578       278
+i579       279
+i580       280
+i581       281
+i582       282
+i583       283
+i584       284
+i587       287
+i588       288
+i589       289
+i590       290
+i591       291
+i592       292
+i593       293
+i594       294
+i596       296
+i597       297
