@@ -747,7 +747,7 @@ else
       </span>
       <div id="zclient" style="margin:0"> <!-- client area -->
          <div id="pagemenu" class="ui-widget-content" style="position:relative;margin:0">
-            <div id="label" class="label" style="top:0px;left:0px;float:left;position:absolute;">Drop area ...    <!-- without position:relative, target position is off -->
+            <div id="label" class="label" style="top:0px;left:0px;float:left;position:absolute;background-color:#AAA;">Drop area ...    <!-- without position:relative, target position is off -->
                <div id="page" name="page" class="page" style="display:block;">1</div> <!-- page -->
                <div id="page2" name="page2" class="page" style="display:none;">2</div> <!-- page -->
                <div id="page3" name="page3" class="page" style="display:none;">3</div> <!-- page -->
@@ -773,7 +773,7 @@ else
                            </div>
                            &nbsp;
                            &nbsp;
-                           <div style="position:absolute;top:105px;left:20px;">
+                           <div style="position:absolute;top:105px;left:15px;">
                               <label for="zReusableBlocks">Reusable Blocks: </label>
                               <select id="zReusableBlocks">
                                  <option value="">Select Reusable Block...</option>

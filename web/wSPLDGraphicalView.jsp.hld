@@ -731,7 +731,8 @@ else
                <button id="GenerateSPLD_Label">Generate Label</button>
                <input type="checkbox" id="labelBorders" name="labelBorders" style="margin:2px;">
                <label for="labelBorders" style="margin-right:2px;margin-top:0px;">Borders</label>
-               <button id="UpdateBlock">Update Current Block</button>
+               <button id="UpdateBlock">Update Block</button>
+               <button id="ReuseBlock">Reuse Block</button>
             </div> <!-- ztoolbar -->
             <img src="./images/epamms.jpg" width="64" height="25" alt="ePamms" style="margin:5px;float:right;border-style:double;">
             &nbsp;&nbsp;
@@ -764,11 +765,19 @@ else
                 <!-- <fieldset class="border" style="position:absolute;top:80px;left:15px;width:260px;height:200px;"><legend>Drag left onto page to create a new</legend> -->
                      <fieldset class="border" style="height:200px;"><legend>Drag left onto page to create a new</legend>
                         <div style="position:relative;">  <!-- without position:relative, initial position is off -->
-                      <!-- <div id="z__drag1" class="panel draggable ui-widget-content" style="position:absolute;top:5px;left:15px;width:60px;height:60px;background:lightgrey;display:block;float:left;color:black;border:2px solid;">
-                              <p>Panel</p>
-                           </div> -->
-                           <div id="z__drag2" class="draggable ui-widget-content" style="position:absolute;top:5px;left:85px;width:79px;height:79px;background:lightblue;display:block;float:left;color:black;border:2px solid;">
+                           <div id="z__drag1" class="draggable ui-widget-content" style="position:absolute;top:5px;left:15px;width:79px;height:79px;background:lightblue;display:block;float:left;color:black;border:2px solid;">
                               <p>Block</p>
+                           </div>
+                           <div id="z__drag2" class="reusable draggable ui-widget-content" style="position:absolute;top:5px;left:105px;width:60px;height:60px;background:lightgrey;display:block;float:left;color:black;border:2px solid;">
+                              <p>Reusable</p>
+                           </div>
+                           &nbsp;
+                           &nbsp;
+                           <div style="position:absolute;top:105px;left:20px;">
+                              <label for="zReusableBlocks">Reusable Blocks: </label>
+                              <select id="zReusableBlocks">
+                                 <option value="">Select Reusable Block...</option>
+                              </select>
                            </div>
                         </div>
                      </fieldset>

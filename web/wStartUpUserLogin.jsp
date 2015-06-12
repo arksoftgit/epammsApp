@@ -548,7 +548,7 @@ else
 <!-- Main Navigation *********************** -->
 <div id="mainnavigation">
    <ul id="Exit" name="Exit" >
-       <li id="lmmLogout" name="lmmLogout" ><a href="#" onclick="mmLogout()">Exit</a></li>
+       <li id="lmLogout" name="lmLogout" ><a href="#" onclick="mLogout()">Exit</a></li>
    </ul>
 </div>  <!-- end Navigation Bar -->
 

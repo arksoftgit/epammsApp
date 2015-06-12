@@ -1438,6 +1438,7 @@ $(function() {
          });
       });
 */
+   
    $("input.zeidon, select.zeidon, input.zeidon-special, select.zeidon-special")
       .change( function(e) {
          e.stopPropagation();
@@ -1447,6 +1448,9 @@ $(function() {
       })
       .blur( function () {
          blurZeidon( this, null );
+         if ( this === $("#zPageHeight")[0] || this === $("#zPageWidth")[0] ) {
+            setPageBackgroundSize();
+         }
       });
 
 var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
@@ -1647,6 +1651,16 @@ var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
       $("#page" + value).attr( "id", "page" ).attr( "name", "page" ).removeClass( "page_hidden" ).addClass( "page_active" ).show();
       g_currentPage = value;
       mapElementDataToUiData( $("#page") );
+      setPageBackgroundSize();
+   }
+
+   function setPageBackgroundSize() {
+      var $page = $("#page");
+      var height = $page.data( "z_^height" ); // convert inches to px
+      var h = scaledInch2Pixel( height, 0 );
+      var width = $page.data( "z_^width" ); // convert inches to px
+      var w = scaledInch2Pixel( width, 0 );
+      $page.height( h ).width( w );
    }
 
    var $PageSpinner = $("#zPageSpinner").spinner();
@@ -2777,6 +2791,7 @@ public class FileServer {
                $(".block").each( function() {
                   setBlockDraggableResizable( $(this).parent(), $(this), $(this) );
                });
+               setPageBackgroundSize();
 
 /* debug code
    $("#page").attr( "id", "page" + g_currentPage ).attr( "name", "page" + g_currentPage );
@@ -3581,7 +3596,7 @@ public class FileServer {
    if ( ! g_scale ) {
       g_scale = 1;
    }
-   var spinner = $( "#zZoomSpinner" ).spinner();
+   var spinner = $("#zZoomSpinner").spinner();
    spinner.spinner( "value", g_scale );
 
 /**

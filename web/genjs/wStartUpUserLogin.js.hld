@@ -242,7 +242,7 @@ function AutoLogin( )
    }
 }
 
-function mLogout( )
+function Logout( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -310,7 +310,7 @@ function ProcessUserLogin( )
    }
 }
 
-function mmLogout( )
+function mLogout( )
 {
 
       // This is for indicating whether the user hit the window close box.

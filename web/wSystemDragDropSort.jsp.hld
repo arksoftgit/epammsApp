@@ -525,7 +525,7 @@ else
    <ul id="Exit" name="Exit" >
        <li id="lmApplySortOrder" name="lmApplySortOrder"><a href="#" onclick="mApplySortOrder()">Apply Sort Order  </a></li>
        <li id="lmCancelSortDiv" name="lmCancelSortDiv"><a href="#" onclick="mCancelSortDiv()">  Cancel  </a></li>
-       <li id="lmmLogout" name="lmmLogout"><a href="#" onclick="mmLogout()">Logout</a></li>
+       <li id="lmLogout" name="lmLogout" ><a href="#" onclick="mLogout()">Logout</a></li>
    </ul>
 </div>  <!-- end Navigation Bar -->
 
@@ -555,6 +555,7 @@ else
    View mEPA = null;
    View mOrganiz = null;
    View mUser = null;
+   View mHelp = null;
    View wWebXfer = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
