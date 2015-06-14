@@ -167,8 +167,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -375,13 +375,9 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
 else
 {
 }
-   csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSystem", "" );
-   if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
-
-   if ( StringUtils.isBlank( strBannerName ) )
-      strBannerName = "./include/banner.inc";
-
+// hand coded
+   strBannerName = "./include/ePammsBannerHelp.inc";
+// end of: hand coded
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
@@ -406,6 +402,28 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSystemUpdateHelpMessage.js"></script>
+
+<script type="text/javascript" src="./js/tinymce/js/tinymce/tinymce.min.js"></script>
+<script type="text/javascript">
+tinymce.init({
+    selector: "textarea",
+    theme: "modern",
+    plugins: [
+        "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+        "searchreplace wordcount visualblocks visualchars code fullscreen",
+        "insertdatetime media nonbreaking save table contextmenu directionality",
+        "emoticons template paste textcolor colorpicker textpattern"
+    ],
+    toolbar1: "fullpage | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect | link image",
+    toolbar2: "cut copy paste | searchreplace | bullist numlist | outdent indent blockquote | undo redo | link unlink anchor image media code | insertdatetime preview | forecolor backcolor",
+    toolbar3: "table | hr removeformat | subscript superscript | charmap emoticons | print fullscreen | ltr rtl | spellchecker | visualchars visualblocks nonbreaking template pagebreak restoredraft",
+    image_advtab: true,
+    templates: [
+        {title: 'Test template 1', content: 'Test 1'},
+        {title: 'Test template 2', content: 'Test 2'}
+    ]
+});
+</script>
 
 </head>
 
@@ -570,12 +588,15 @@ else
    {
       strErrorColor = "";
       sHelp = task.getViewByName( "sHelp" );
-      task.log().info("*** wSystemUpdateHelpMessage OI 222 " );
-      sHelp.logObjectInstance();
+   // task.log().info("*** wSystemUpdateHelpMessage OI 222 " );
+   // sHelp.logObjectInstance();
       if ( VmlOperation.isValid( sHelp ) == false )
+      {
          task.log( ).debug( "Invalid View: " + "HelpMsg" );
+      }
       else
       {
+      // sHelp.logObjectInstance();
          nRC = sHelp.cursor( "Help" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
@@ -599,7 +620,7 @@ else
    }
 %>
 
-<input class="mceSimple" name="HelpMsg" id="HelpMsg" style="width:988px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+   <textarea name="HelpMsg" id="HelpMsg" style="width:100%"><%=strErrorMapValue%></textarea>
 
 </div>  <!-- End of a new line -->
 

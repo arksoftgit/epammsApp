@@ -159,6 +159,7 @@ mMsgQ.setView( VmlOperation.getMessageObject( task ) );
 wSystem_Dialog wSystem = new wSystem_Dialog( vKZXMLPGO );
 
 // hand coded
+// task.log().info("*** wSystemDisplayHelpMessage Last Window: " + strLastWindow + "************************************************************************************" );
 wWebXA = task.getViewByName( "wWebXfer" );
 if ( strLastWindow == "wSystemUpdateHelpMessage" || strLastWindow == "wSystemDisplayHelpMessage" ) {
    strLastWindow = wWebXA.cursor( "Root" ).getAttribute( "HelpDialogWindow" ).getString();
@@ -178,6 +179,7 @@ if ( strLastWindow == "wSystemUpdateHelpMessage" || strLastWindow == "wSystemDis
    */
    wWebXA.cursor( "Root" ).getAttribute( "HelpDialogWindow" ).setValue( strLastWindow );
 }
+// task.log().info("*** wSystemDisplayHelpMessage Last Window: " + strLastWindow + "#####################################################################################" );
 View sHelp = task.getViewByName( "sHelp" );
 if ( VmlOperation.isValid( sHelp ) ) {
    sHelp.drop();
@@ -187,8 +189,8 @@ sHelp = new QualificationBuilder( task )
                     .addAttribQual( "Help", "DialogWindow", "=", strLastWindow )
                     .activate();
 sHelp.setName( "sHelp" );
-task.log().info("*** wSystemDisplayHelpMessage OI 111 " );
-sHelp.logObjectInstance();
+// task.log().info("*** wSystemDisplayHelpMessage OI 111 - LastWindow: " + strLastWindow );
+// sHelp.logObjectInstance();
 EntityCursor ec = sHelp.cursor( "Help" );
 CursorResult cr = ec.setFirst();
 if ( cr.isSet() == false ) {
@@ -204,8 +206,8 @@ if ( cr.isSet() == false ) {
    ec.includeSubobject( rePamms.cursor( "ePamms" ) );
    sHelp.commit();
 }
-task.log().info("*** wSystemDisplayHelpMessage OI *** " );
-sHelp.logObjectInstance();
+// task.log().info("*** wSystemDisplayHelpMessage OI *** LastWindow: " + strLastWindow );
+// sHelp.logObjectInstance();
 // end of: hand coded
 
 strURL = "";
@@ -236,7 +238,7 @@ if ( strActionToProcess != null )
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemDisplayHelpMessage", strActionToProcess );
 
       // Next Window
-      strNextJSP_Name = wSystem.SetWebRedirection( vKZXMLPGO, wSystem.zWAB_StartModalSubwindow, "wSystem", "UpdateHelpMessage" );
+      strNextJSP_Name = "wSystemUpdateHelpMessage.jsp";
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -250,7 +252,7 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemDisplayHelpMessage.jsp", "wSystem.ReturnFromHelp" );
-         nOptRC = wSystem.ReturnFromHelp( new zVIEW( vKZXMLPGO ) );
+      nOptRC = wSystem.ReturnFromHelp( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -295,7 +297,7 @@ if ( strActionToProcess != null )
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemDisplayHelpMessage", strActionToProcess );
 
       // Next Window
-      strNextJSP_Name = wSystem.SetWebRedirection( vKZXMLPGO, wSystem.zWAB_StartModalSubwindow, "wSystem", "UpdateHelpMessage" );
+      strNextJSP_Name = "wSystemUpdateHelpMessage.jsp";
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -309,7 +311,7 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemDisplayHelpMessage.jsp", "wSystem.ReturnFromHelp" );
-         nOptRC = wSystem.ReturnFromHelp( new zVIEW( vKZXMLPGO ) );
+      nOptRC = wSystem.ReturnFromHelp( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -421,13 +423,9 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
 else
 {
 }
-   csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSystem", "" );
-   if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
-
-   if ( StringUtils.isBlank( strBannerName ) )
-      strBannerName = "./include/banner.inc";
-
+// hand coded
+   strBannerName = "./include/ePammsBannerHelp.inc";
+// end of: hand coded   
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
@@ -629,7 +627,7 @@ else
    }
 %>
 
-<span  id="HelpMsg" name="HelpMsg" style="width:988px;height:636px;"><%=strTextDisplayValue%></span>
+<span id="HelpMsg" name="HelpMsg" style="width:100%;height:636px;"><%=strTextDisplayValue%></span>
 
 </div>  <!-- End of a new line -->
 
