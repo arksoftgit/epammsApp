@@ -2,9 +2,8 @@
    <div id="loginline"><ul>
 
       <li class="home"><a href="http://www.epa.gov" target="_blank">7EPA Home</a></li>
-      <li class="emailicon"><a href=".\wStartUpUserLogin.jsp" target="_blank">Login</a></li>
-      <li class="logoff"><a href="#" onclick="mLogout()">Log Out</a></li>
-      <li class="emailicon"><a href="#" onclick="mHelp()">Help</a></li>
+      <li class="logoff"><a href="#" onclick="mLogout()">Logout</a></li>
+      <li class="helpicon"><a href=".\wSystemDisplayHelpMessage.jsp" target="_blank">Help</a></li>
    </ul></div>
 </div>
 

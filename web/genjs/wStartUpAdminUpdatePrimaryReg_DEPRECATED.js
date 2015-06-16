@@ -172,6 +172,25 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
+   // Prebuild action has javascript code entered by user.
+   // From UpdatePrimaryRegistrant, the only invalid top menu options are (currently Template and) State Registrations and Login.
+   var thisLi;
+
+   thisLi = document.getElementById( "lmTemplate" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+   thisLi = document.getElementById( "lmStateRegistrations" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+   thisLi = document.getElementById( "lmLogin" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+
+   // Cannot go to administration if already there.
+   thisLi = document.getElementById( "lmCompanyProfile" );
+   thisLi.disabled = true;
+   // END of Javascript code entered by user.
+
    isWindowClosing = true;
 }
 
@@ -260,7 +279,7 @@ function InitPrimRegForUpdate( )
    thisLi.style.display = "none";
 
    // Cannot go to administration if already there.
-   thisLi = document.getElementById( "lmAdministration" );
+   thisLi = document.getElementById( "lmCompanyProfile" );
    thisLi.disabled = true;
 
       // END of Javascript code entered by user.
@@ -493,7 +512,7 @@ function mWebDevelopment( )
    }
 }
 
-function mAdministration( )
+function mCompanyProfile( )
 {
 
       // This is for indicating whether the user hit the window close box.
@@ -504,7 +523,7 @@ function mAdministration( )
 
       // Javascript code entered by user.
 
-   var thisLi = document.getElementById( "lmAdministration" );
+   var thisLi = document.getElementById( "lmCompanyProfile" );
    if ( thisLi.disabled == true )
       return;
 
@@ -512,7 +531,7 @@ function mAdministration( )
 
       _DisableFormElements( true );
 
-      document.wStartUpAdminUpdatePrimaryReg_DEPRECATED.zAction.value = "mAdministration";
+      document.wStartUpAdminUpdatePrimaryReg_DEPRECATED.zAction.value = "mCompanyProfile";
       document.wStartUpAdminUpdatePrimaryReg_DEPRECATED.submit( );
    }
 }

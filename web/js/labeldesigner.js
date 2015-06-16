@@ -1775,7 +1775,7 @@ function ConvertWysiwygLabelDesignToZeidonJson( action, viewName, callback_func,
    }
    if ( action === "saveReusableBlock" ) {
       reuseBlockName = prompt( "Please enter the reusable block name", tag );
-      if ( reuseBlockName === "" ) {
+      if ( reuseBlockName === null || reuseBlockName === "" ) {
          return;
       }
       if ( $("#zReusableBlocks option[value='" + reuseBlockName + "']").length > 0 ) {
@@ -3552,9 +3552,69 @@ public class FileServer {
          var list = $("#zReusableBlocks");
          list.find('option:not(:first)').remove(); // wipe out all but the first options
          $.each(jsonReusable, function(index, item) {
-            list.append( new Option( item.Name, item.Name ) );
+            list.append( new Option( item.Name, item.LLD_SectionType + " " + item.Name + " " + item.Description ) );
          });
       }
+      
+      
+      <h2><a name="optgroup-support" class="anchor" href="#optgroup-support">&lt;optgroup&gt; Support</a></h2>
+      <div class="side-by-side clearfix">
+        <div>
+          <em>Single Select with Groups</em>
+          <select data-placeholder="Your Favorite Football Team" style="width:350px;" class="chosen-select" tabindex="5">
+            <option value=""></option>
+            <optgroup label="NFC EAST">
+              <option>Dallas Cowboys</option>
+              <option>New York Giants</option>
+              <option>Philadelphia Eagles</option>
+              <option>Washington Redskins</option>
+            </optgroup>
+            <optgroup label="NFC NORTH">
+              <option>Chicago Bears</option>
+              <option>Detroit Lions</option>
+              <option>Green Bay Packers</option>
+              <option>Minnesota Vikings</option>
+            </optgroup>
+            <optgroup label="NFC SOUTH">
+              <option>Atlanta Falcons</option>
+              <option>Carolina Panthers</option>
+              <option>New Orleans Saints</option>
+              <option>Tampa Bay Buccaneers</option>
+            </optgroup>
+            <optgroup label="NFC WEST">
+              <option>Arizona Cardinals</option>
+              <option>St. Louis Rams</option>
+              <option>San Francisco 49ers</option>
+              <option>Seattle Seahawks</option>
+            </optgroup>
+            <optgroup label="AFC EAST">
+              <option>Buffalo Bills</option>
+              <option>Miami Dolphins</option>
+              <option>New England Patriots</option>
+              <option>New York Jets</option>
+            </optgroup>
+            <optgroup label="AFC NORTH">
+              <option>Baltimore Ravens</option>
+              <option>Cincinnati Bengals</option>
+              <option>Cleveland Browns</option>
+              <option>Pittsburgh Steelers</option>
+            </optgroup>
+            <optgroup label="AFC SOUTH">
+              <option>Houston Texans</option>
+              <option>Indianapolis Colts</option>
+              <option>Jacksonville Jaguars</option>
+              <option>Tennessee Titans</option>
+            </optgroup>
+            <optgroup label="AFC WEST">
+              <option>Denver Broncos</option>
+              <option>Kansas City Chiefs</option>
+              <option>Oakland Raiders</option>
+              <option>San Diego Chargers</option>
+            </optgroup>
+          </select>
+        </div>
+
+      
    }
 
    function setMarketing( jsonMarketing )

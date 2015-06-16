@@ -211,8 +211,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -256,7 +256,7 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminNewAdministrator.jsp", "wStartUp.AcceptNewAdministrator" );
-         nOptRC = wStartUp.AcceptNewAdministrator( new zVIEW( vKZXMLPGO ) );
+      nOptRC = wStartUp.AcceptNewAdministrator( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -289,7 +289,7 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminNewAdministrator.jsp", "wStartUp.CancelNewAdministrator" );
-         nOptRC = wStartUp.CancelNewAdministrator( new zVIEW( vKZXMLPGO ) );
+      nOptRC = wStartUp.CancelNewAdministrator( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -341,7 +341,7 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminNewAdministrator.jsp", "wStartUp.AcceptNewAdministrator" );
-         nOptRC = wStartUp.AcceptNewAdministrator( new zVIEW( vKZXMLPGO ) );
+      nOptRC = wStartUp.AcceptNewAdministrator( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -374,7 +374,7 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminNewAdministrator.jsp", "wStartUp.CancelNewAdministrator" );
-         nOptRC = wStartUp.CancelNewAdministrator( new zVIEW( vKZXMLPGO ) );
+      nOptRC = wStartUp.CancelNewAdministrator( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -412,7 +412,7 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminNewAdministrator.jsp", "wStartUp.ProductManagement" );
-         nOptRC = wStartUp.ProductManagement( new zVIEW( vKZXMLPGO ) );
+      nOptRC = wStartUp.ProductManagement( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -429,7 +429,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StartTopWindow, "wSPLD", "SubregProductsList" );
+         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StartTopWindow, "wSPLD", "" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -450,7 +450,7 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminNewAdministrator.jsp", "wStartUp.SubregistrantManagement" );
-         nOptRC = wStartUp.SubregistrantManagement( new zVIEW( vKZXMLPGO ) );
+      nOptRC = wStartUp.SubregistrantManagement( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -488,7 +488,7 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminNewAdministrator.jsp", "wStartUp.TrackingNotificationCompliance" );
-         nOptRC = wStartUp.TrackingNotificationCompliance( new zVIEW( vKZXMLPGO ) );
+      nOptRC = wStartUp.TrackingNotificationCompliance( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -526,7 +526,7 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminNewAdministrator.jsp", "wStartUp.StateRegistrations" );
-         nOptRC = wStartUp.StateRegistrations( new zVIEW( vKZXMLPGO ) );
+      nOptRC = wStartUp.StateRegistrations( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -564,7 +564,7 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminNewAdministrator.jsp", "wStartUp.MarketingFulfillment" );
-         nOptRC = wStartUp.MarketingFulfillment( new zVIEW( vKZXMLPGO ) );
+      nOptRC = wStartUp.MarketingFulfillment( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -602,7 +602,7 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminNewAdministrator.jsp", "wStartUp.WebDevelopment" );
-         nOptRC = wStartUp.WebDevelopment( new zVIEW( vKZXMLPGO ) );
+      nOptRC = wStartUp.WebDevelopment( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -627,7 +627,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mAdministration" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "mCompanyProfile" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wStartUpAdminNewAdministrator", strActionToProcess );
@@ -635,7 +635,7 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminNewAdministrator.jsp", "wStartUp.PrimaryRegistrantCompanySetup" );
-         nOptRC = wStartUp.PrimaryRegistrantCompanySetup( new zVIEW( vKZXMLPGO ) );
+      nOptRC = wStartUp.PrimaryRegistrantCompanySetup( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -673,7 +673,7 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminNewAdministrator.jsp", "wStartUp.ProcessLogin" );
-         nOptRC = wStartUp.ProcessLogin( new zVIEW( vKZXMLPGO ) );
+      nOptRC = wStartUp.ProcessLogin( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -836,7 +836,7 @@ else
        <li id="lmStateRegistrations" name="lmStateRegistrations" ><a href="#" onclick="mStateRegistrations()">State Registrations</a></li>
        <li id="lmMarketingFulfillment" name="lmMarketingFulfillment" ><a href="#" onclick="mMarketingFulfillment()">Marketing/Fulfillment</a></li>
        <li id="lmWebDevelopment" name="lmWebDevelopment" ><a href="#" onclick="mWebDevelopment()">Web Development</a></li>
-       <li id="lmAdministration" name="lmAdministration" ><a href="#" onclick="mAdministration()">Company Profile</a></li>
+       <li id="lmCompanyProfile" name="lmCompanyProfile" ><a href="#" onclick="mCompanyProfile()">Company Profile</a></li>
        <li id="lmLogin" name="lmLogin" ><a href="#" onclick="mLogin()">Login</a></li>
        <li id="lmLogout" name="lmLogout" ><a href="#" onclick="mLogout()">Logout</a></li>
    </ul>
@@ -1297,6 +1297,6 @@ else
    session.setAttribute( "ZeidonWindow", "wStartUpAdminNewAdministrator" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

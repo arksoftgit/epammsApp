@@ -251,27 +251,6 @@ if ( strActionToProcess != null )
 
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "FORGOT_Password" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wStartUpUserLogin", strActionToProcess );
-
-      // Prebuild/Postbuild Operations.
-      // These are called because we Unregister Zeidon when this page is finished loading, so
-      // these operations need to be called before any action code (for recreating objects etc).
-         nOptRC = wStartUp.InitLoginWindow( new zVIEW( vKZXMLPGO ) );
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Next Window
-      strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StartTopWindow, "wStartUp", "SecurityValidations" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
    while ( bDone == false && StringUtils.equals( strActionToProcess, "AutoLogin" ) )
    {
       bDone = true;
@@ -280,11 +259,11 @@ if ( strActionToProcess != null )
       // Prebuild/Postbuild Operations.
       // These are called because we Unregister Zeidon when this page is finished loading, so
       // these operations need to be called before any action code (for recreating objects etc).
-         nOptRC = wStartUp.InitLoginWindow( new zVIEW( vKZXMLPGO ) );
+      nOptRC = wStartUp.InitLoginWindow( new zVIEW( vKZXMLPGO ) );
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpUserLogin.jsp", "wStartUp.AutoLoginSubregistrant" );
-         nOptRC = wStartUp.AutoLoginSubregistrant( new zVIEW( vKZXMLPGO ) );
+      nOptRC = wStartUp.AutoLoginSubregistrant( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -309,6 +288,27 @@ if ( strActionToProcess != null )
       break;
    }
 
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "FORGOT_Password" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wStartUpUserLogin", strActionToProcess );
+
+      // Prebuild/Postbuild Operations.
+      // These are called because we Unregister Zeidon when this page is finished loading, so
+      // these operations need to be called before any action code (for recreating objects etc).
+      nOptRC = wStartUp.InitLoginWindow( new zVIEW( vKZXMLPGO ) );
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StartTopWindow, "wStartUp", "SecurityValidations" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
    while ( bDone == false && StringUtils.equals( strActionToProcess, "ProcessUserLogin" ) )
    {
       bDone = true;
@@ -317,7 +317,7 @@ if ( strActionToProcess != null )
       // Prebuild/Postbuild Operations.
       // These are called because we Unregister Zeidon when this page is finished loading, so
       // these operations need to be called before any action code (for recreating objects etc).
-         nOptRC = wStartUp.InitLoginWindow( new zVIEW( vKZXMLPGO ) );
+      nOptRC = wStartUp.InitLoginWindow( new zVIEW( vKZXMLPGO ) );
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
       if ( nRC < 0 )
@@ -326,7 +326,7 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpUserLogin.jsp", "wStartUp.ProcessUserLogin" );
-         nOptRC = wStartUp.ProcessUserLogin( new zVIEW( vKZXMLPGO ) );
+      nOptRC = wStartUp.ProcessUserLogin( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -454,7 +454,7 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
 else
 {
    VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpUserLogin.jsp", "wStartUp.InitLoginWindow" );
-         nOptRC = wStartUp.InitLoginWindow( new zVIEW( vKZXMLPGO ) );
+   nOptRC = wStartUp.InitLoginWindow( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -504,35 +504,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-<script language="JavaScript" type="text/javascript" >
-      // Javascript code entered by user for Window action prebuild.
-
-/* var thisLi;
-
-   // If the Role is not set when we get here, it is because there is no admin (KeyRole = "U"), so we will only permit the user to go to set up the administrator.
-   if ( keyRole == "U" )
-   {
-      thisLi = document.getElementById( "EBRegistrantName" );
-      thisLi .disabled = true;
-      thisLi = document.getElementById( "EBUserName" );
-      thisLi .disabled = true;
-      thisLi = document.getElementById( "EBPassword" );
-      thisLi .disabled = true;
-      thisLi = document.getElementById( "CBRole" );
-      thisLi .disabled = true;
-      thisLi = document.getElementById( "PBLogin");
-      thisLi.style.visibility = "hidden";
-   }
-   else
-   {
-      thisLi = document.getElementById( "PBSetupAdmin" );
-      thisLi.style.visibility = "hidden";
-   }
-*/
-
-      // END of Javascript code entered by user.
-
-</script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wStartUpUserLogin.js"></script>
 
 </head>
@@ -935,12 +906,12 @@ else
 </body>
 </html>
 <%
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wStartUpUserLogin" );
    session.setAttribute( "ZeidonWindow", "wStartUpUserLogin" );
    session.setAttribute( "ZeidonAction", null );
 
    if ( task != null && strActionToProcess == null  )
    {
-      task.log().info( "After building the page UnregisterZeidonApplication: ------>>> " + "wStartUpUserLogin" );
    // task.dropTask();
    // task = null;
    // session.setAttribute( "ZeidonTaskId", task );

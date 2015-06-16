@@ -130,7 +130,7 @@ body{
            <p align="center">&nbsp;</p>
     <p align="center">&nbsp;</p>
            <p align="center">Logout from ePamms.</p>
-           <p align="center"><a href="wStartUpUserLogin.jsp" style="text-decoration:underline">Click here to log back in to ePamms</a></p>
+           <p align="center"><a href="wStartUpUserLogin.jsp" style="text-decoration:underline">Click here to login to ePamms</a></p>
            <p align="center"><a href="wStartUpUserLogin.jsp" style="text-decoration:underline">Secure Log In</font><font size="2"> <img src="images/secure_login.gif" alt="Secure Login" width="16" height="17" /><br />
                             </a>
     </div>

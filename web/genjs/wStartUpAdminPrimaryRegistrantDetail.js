@@ -168,6 +168,30 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
+   // Prebuild action has javascript code entered by user.
+   var thisLi;
+
+   thisLi = document.getElementById( "lmLogin" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+   thisLi = document.getElementById( "lmLogout" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none"
+   thisLi = document.getElementById( "lmSubregistrants" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+   thisLi = document.getElementById( "lmProductManagement" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+   if ( keyRole == "Primary Registrant" || keyRole == "None" )
+   {
+      thisLi = document.getElementById( "lmStateRegistrations" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+   }
+
+   // END of Javascript code entered by user.
+
    isWindowClosing = true;
 }
 
@@ -187,6 +211,51 @@ function CheckAllInGrid(id, CheckBoxName)
    }
 }
 
+function AddNewMasterProduct( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wStartUpAdminPrimaryRegistrantDetail.zAction.value = "AddNewMasterProduct";
+      document.wStartUpAdminPrimaryRegistrantDetail.submit( );
+   }
+}
+
+function AdminListPrimRegUsers( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wStartUpAdminPrimaryRegistrantDetail.zAction.value = "AdminListPrimRegUsers";
+      document.wStartUpAdminPrimaryRegistrantDetail.submit( );
+   }
+}
+
+function AdminListSubregistrants( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wStartUpAdminPrimaryRegistrantDetail.zAction.value = "AdminListSubregistrants";
+      document.wStartUpAdminPrimaryRegistrantDetail.submit( );
+   }
+}
+
 function ChangePrimRegPassword( )
 {
 
@@ -202,7 +271,7 @@ function ChangePrimRegPassword( )
    }
 }
 
-function SelectMasterProductForDelete( strTagEntityKey )
+function InitPrimaryRegistrant( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -210,14 +279,32 @@ function SelectMasterProductForDelete( strTagEntityKey )
 
    if ( _IsDocDisabled( ) == false )
    {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+      // Javascript code entered by user.
 
-      document.wStartUpAdminPrimaryRegistrantDetail.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
+   var thisLi;
 
-      document.wStartUpAdminPrimaryRegistrantDetail.zAction.value = "SelectMasterProductForDelete";
-      document.wStartUpAdminPrimaryRegistrantDetail.submit( );
+   thisLi = document.getElementById( "lmLogin" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+   thisLi = document.getElementById( "lmLogout" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none"
+   thisLi = document.getElementById( "lmSubregistrants" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+   thisLi = document.getElementById( "lmProductManagement" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+   if ( keyRole == "Primary Registrant" || keyRole == "None" )
+   {
+      thisLi = document.getElementById( "lmStateRegistrations" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+   }
+
+
+      // END of Javascript code entered by user.
+
    }
 }
 
@@ -259,7 +346,7 @@ function MoveMasterProductUp( strTagEntityKey )
    }
 }
 
-function AddNewMasterProduct( )
+function ReturnFromAdminPrimReg( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -269,7 +356,26 @@ function AddNewMasterProduct( )
    {
       _DisableFormElements( true );
 
-      document.wStartUpAdminPrimaryRegistrantDetail.zAction.value = "AddNewMasterProduct";
+      document.wStartUpAdminPrimaryRegistrantDetail.zAction.value = "ReturnFromAdminPrimReg";
+      document.wStartUpAdminPrimaryRegistrantDetail.submit( );
+   }
+}
+
+function SelectMasterProductForDelete( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wStartUpAdminPrimaryRegistrantDetail.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wStartUpAdminPrimaryRegistrantDetail.zAction.value = "SelectMasterProductForDelete";
       document.wStartUpAdminPrimaryRegistrantDetail.submit( );
    }
 }
@@ -289,91 +395,6 @@ function SelectMasterProductForUpdate( strTagEntityKey )
       _DisableFormElements( true );
 
       document.wStartUpAdminPrimaryRegistrantDetail.zAction.value = "SelectMasterProductForUpdate";
-      document.wStartUpAdminPrimaryRegistrantDetail.submit( );
-   }
-}
-
-function AdminListPrimRegUsers( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wStartUpAdminPrimaryRegistrantDetail.zAction.value = "AdminListPrimRegUsers";
-      document.wStartUpAdminPrimaryRegistrantDetail.submit( );
-   }
-}
-
-function AdminListSubregistrants( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wStartUpAdminPrimaryRegistrantDetail.zAction.value = "AdminListSubregistrants";
-      document.wStartUpAdminPrimaryRegistrantDetail.submit( );
-   }
-}
-
-function InitPrimaryRegistrant( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      // Javascript code entered by user.
-
-   var thisLi;
-
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-   thisLi = document.getElementById( "lmLogin" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   thisLi = document.getElementById( "lmSubregistrants" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   thisLi = document.getElementById( "lmProductManagement" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   if ( keyRole == "P" || keyRole == "N" )
-   {
-      thisLi = document.getElementById( "lmStateRegistrations" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-   }
-
-
-      // END of Javascript code entered by user.
-
-   }
-}
-
-function ReturnFromAdminPrimReg( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wStartUpAdminPrimaryRegistrantDetail.zAction.value = "ReturnFromAdminPrimReg";
       document.wStartUpAdminPrimaryRegistrantDetail.submit( );
    }
 }
@@ -582,7 +603,7 @@ function mWebDevelopment( )
    }
 }
 
-function mAdministration( )
+function mCompanyProfile( )
 {
 
       // This is for indicating whether the user hit the window close box.
@@ -593,7 +614,7 @@ function mAdministration( )
 
       // Javascript code entered by user.
 
-   var thisLi = document.getElementById( "lmAdministration" );
+   var thisLi = document.getElementById( "lmCompanyProfile" );
    if ( thisLi.disabled == true )
       return;
 
@@ -601,7 +622,7 @@ function mAdministration( )
 
       _DisableFormElements( true );
 
-      document.wStartUpAdminPrimaryRegistrantDetail.zAction.value = "mAdministration";
+      document.wStartUpAdminPrimaryRegistrantDetail.zAction.value = "mCompanyProfile";
       document.wStartUpAdminPrimaryRegistrantDetail.submit( );
    }
 }

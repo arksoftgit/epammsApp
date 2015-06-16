@@ -193,6 +193,31 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
+   // Prebuild action has javascript code entered by user.
+/* var thisLi;
+
+   // If the Role is not set when we get here, it is because there is no admin (KeyRole = "U"), so we will only permit the user to go to set up the administrator.
+   if ( keyRole == "U" )
+   {
+      thisLi = document.getElementById( "EBRegistrantName" );
+      thisLi .disabled = true;
+      thisLi = document.getElementById( "EBUserName" );
+      thisLi .disabled = true;
+      thisLi = document.getElementById( "EBPassword" );
+      thisLi .disabled = true;
+      thisLi = document.getElementById( "CBRole" );
+      thisLi .disabled = true;
+      thisLi = document.getElementById( "PBLogin");
+      thisLi.style.visibility = "hidden";
+   }
+   else
+   {
+      thisLi = document.getElementById( "PBSetupAdmin" );
+      thisLi.style.visibility = "hidden";
+   }
+*/
+   // END of Javascript code entered by user.
+
    isWindowClosing = true;
 }
 
@@ -212,21 +237,6 @@ function CheckAllInGrid(id, CheckBoxName)
    }
 }
 
-function FORGOT_Password( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wStartUpUserLogin.zAction.value = "FORGOT_Password";
-      document.wStartUpUserLogin.submit( );
-   }
-}
-
 function AutoLogin( )
 {
 
@@ -242,7 +252,7 @@ function AutoLogin( )
    }
 }
 
-function Logout( )
+function FORGOT_Password( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -252,7 +262,7 @@ function Logout( )
    {
       _DisableFormElements( true );
 
-      document.wStartUpUserLogin.zAction.value = "_OnUnload";
+      document.wStartUpUserLogin.zAction.value = "FORGOT_Password";
       document.wStartUpUserLogin.submit( );
    }
 }
@@ -292,6 +302,21 @@ function InitLoginWindow( )
 
       // END of Javascript code entered by user.
 
+   }
+}
+
+function Logout( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wStartUpUserLogin.zAction.value = "_OnUnload";
+      document.wStartUpUserLogin.submit( );
    }
 }
 

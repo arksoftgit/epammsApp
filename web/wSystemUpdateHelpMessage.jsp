@@ -32,7 +32,7 @@ public int DoInputMapping( HttpServletRequest request,
                            ServletContext application,
                            boolean webMapping )
 {
-   String taskId = (String) session.getAttribute( "ZeidonTaskId" );
+   String taskId = (String) session.getAttribute( "epammsHelpTaskId" );
    Task task = objectEngine.getTaskById( taskId );
 
    View sHelp = null;
@@ -152,7 +152,7 @@ if ( strLastWindow.equals("wSystemUpdateHelpMessage") && StringUtils.isBlank( st
 
 // Check to see if the Zeidon subtask view already exists.  If not, create
 // it and copy it into the application object.
-String taskId = (String) session.getAttribute( "ZeidonTaskId" );
+String taskId = (String) session.getAttribute( "epammsHelpTaskId" );
 if ( StringUtils.isBlank( taskId ) )
 {
    strURL = response.encodeRedirectURL( "logout.jsp" );
@@ -166,7 +166,7 @@ else
 
 if ( task == null )
 {
-   session.setAttribute( "ZeidonTaskId", null );
+   session.setAttribute( "epammsHelpTaskId", null );
    strURL = response.encodeRedirectURL( "logout.jsp" );
    response.sendRedirect( strURL );
    return; // something really bad has happened!!!
@@ -296,7 +296,7 @@ if ( strActionToProcess != null )
          task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wSystemUpdateHelpMessage" );
          task.dropTask();
          task = null;
-         session.setAttribute( "ZeidonTaskId", task );
+         session.setAttribute( "epammsHelpTaskId", task );
       }
 
       // Next Window is HTML termination
@@ -313,7 +313,7 @@ if ( strActionToProcess != null )
          task.log().info( "OnUnload UnregisterZeidonApplication: ------->>> " + "wSystemUpdateHelpMessage" );
          task.dropTask();
          task = null;
-         session.setAttribute( "ZeidonTaskId", task );
+         session.setAttribute( "epammsHelpTaskId", task );
       }
 
       // Next Window is HTML termination
@@ -376,7 +376,7 @@ else
 {
 }
 // hand coded
-   strBannerName = "./include/ePammsBannerHelp.inc";
+   strBannerName = "./include/ePammsBannerUpdateHelp.inc";
 // end of: hand coded
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )

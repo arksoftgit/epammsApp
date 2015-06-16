@@ -168,6 +168,34 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
+   // Prebuild action has javascript code entered by user.
+   // We knock out Login and Template as options.
+   var thisLi;
+
+   thisLi = document.getElementById( "lmLogin" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+   thisLi = document.getElementById( "lmLogout" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+   if ( keyRole === "Subregistrant" ) // if we are a Subregistrant
+   {
+      thisLi = document.getElementById( "lmSubregistrants" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+      thisLi = document.getElementById( "lmTrackingNotificationCompliance" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+    }
+   else
+   if ( keyRole === "Primary Registrant" ) // if we are a Primary Registrant
+   {
+      thisLi = document.getElementById( "lmStateRegistrations" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+   }
+   // END of Javascript code entered by user.
+
    isWindowClosing = true;
 }
 
@@ -197,19 +225,16 @@ function InitPortal( )
    {
       // Javascript code entered by user.
 
- /*// We knock out Login and Template as options.
+   // We knock out Login and Template as options.
    var thisLi;
 
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
    thisLi = document.getElementById( "lmLogin" );
    thisLi.style.visibility = "hidden";
    thisLi.style.display = "none";
    thisLi = document.getElementById( "lmLogout" );
    thisLi.style.visibility = "hidden";
    thisLi.style.display = "none";
-   if ( keyRole == "S" ) // if we are a Subregistrant
+   if ( keyRole === "Subregistrant" ) // if we are a Subregistrant
    {
       thisLi = document.getElementById( "lmSubregistrants" );
       thisLi.style.visibility = "hidden";
@@ -219,13 +244,12 @@ function InitPortal( )
       thisLi.style.display = "none";
     }
    else
-   if ( keyRole == "P" ) // if we are a Primary Registrant
+   if ( keyRole === "Primary Registrant" ) // if we are a Primary Registrant
    {
       thisLi = document.getElementById( "lmStateRegistrations" );
       thisLi.style.visibility = "hidden";
       thisLi.style.display = "none";
    }
-*/
 
       // END of Javascript code entered by user.
 
@@ -391,7 +415,7 @@ function mWebDevelopment( )
    }
 }
 
-function mAdministration( )
+function mCompanyProfile( )
 {
 
       // This is for indicating whether the user hit the window close box.
@@ -402,7 +426,7 @@ function mAdministration( )
 
       // Javascript code entered by user.
 
-   var thisLi = document.getElementById( "lmAdministration" );
+   var thisLi = document.getElementById( "lmCompanyProfile" );
    if ( thisLi.disabled == true )
       return;
 
@@ -410,7 +434,7 @@ function mAdministration( )
 
       _DisableFormElements( true );
 
-      document.wStartUpePammsPortal.zAction.value = "mAdministration";
+      document.wStartUpePammsPortal.zAction.value = "mCompanyProfile";
       document.wStartUpePammsPortal.submit( );
    }
 }

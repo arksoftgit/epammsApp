@@ -168,6 +168,40 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
+   // Prebuild action has javascript code entered by user.
+   // From this subwindow, the only logical top menu option is Logout, so
+   // we leave Logout as the only option.
+   var thisLi;
+
+      thisLi = document.getElementById( "lmStateRegistrations" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+      thisLi = document.getElementById( "lmSubregistrants" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+      thisLi = document.getElementById( "lmTrackingNotificationCompliance" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+      thisLi = document.getElementById( "lmProductManagement" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+      thisLi = document.getElementById( "lmMarketingFulfillment" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+      thisLi = document.getElementById( "lmWebDevelopment" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+      thisLi = document.getElementById( "lmCompanyProfile" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+      thisLi = document.getElementById( "lmLogin" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+      thisLi = document.getElementById( "lmLogout" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none"
+   // END of Javascript code entered by user.
+
    isWindowClosing = true;
 }
 
@@ -187,7 +221,7 @@ function CheckAllInGrid(id, CheckBoxName)
    }
 }
 
-function ProcessLogout( )
+function AdminSelectSubregistrant( strTagEntityKey )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -195,9 +229,13 @@ function ProcessLogout( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wStartUpAdminSelectSubregistrant.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
-      document.wStartUpAdminSelectSubregistrant.zAction.value = "_OnUnload";
+      document.wStartUpAdminSelectSubregistrant.zAction.value = "AdminSelectSubregistrant";
       document.wStartUpAdminSelectSubregistrant.submit( );
    }
 }
@@ -216,20 +254,15 @@ function InitSelectSubregistrant( )
    // we leave Logout as the only option.
    var thisLi;
 
-      thisLi = document.getElementById( "lmTemplate" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
       thisLi = document.getElementById( "lmStateRegistrations" );
       thisLi.style.visibility = "hidden";
       thisLi.style.display = "none";
-
       thisLi = document.getElementById( "lmSubregistrants" );
       thisLi.style.visibility = "hidden";
       thisLi.style.display = "none";
       thisLi = document.getElementById( "lmTrackingNotificationCompliance" );
       thisLi.style.visibility = "hidden";
       thisLi.style.display = "none";
-
       thisLi = document.getElementById( "lmProductManagement" );
       thisLi.style.visibility = "hidden";
       thisLi.style.display = "none";
@@ -239,19 +272,22 @@ function InitSelectSubregistrant( )
       thisLi = document.getElementById( "lmWebDevelopment" );
       thisLi.style.visibility = "hidden";
       thisLi.style.display = "none";
-      thisLi = document.getElementById( "lmAdministration" );
+      thisLi = document.getElementById( "lmCompanyProfile" );
       thisLi.style.visibility = "hidden";
       thisLi.style.display = "none";
       thisLi = document.getElementById( "lmLogin" );
       thisLi.style.visibility = "hidden";
       thisLi.style.display = "none";
+      thisLi = document.getElementById( "lmLogout" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none"
 
       // END of Javascript code entered by user.
 
    }
 }
 
-function AdminSelectSubregistrant( strTagEntityKey )
+function ProcessLogout( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -259,13 +295,9 @@ function AdminSelectSubregistrant( strTagEntityKey )
 
    if ( _IsDocDisabled( ) == false )
    {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wStartUpAdminSelectSubregistrant.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
-      document.wStartUpAdminSelectSubregistrant.zAction.value = "AdminSelectSubregistrant";
+      document.wStartUpAdminSelectSubregistrant.zAction.value = "_OnUnload";
       document.wStartUpAdminSelectSubregistrant.submit( );
    }
 }
@@ -474,7 +506,7 @@ function mWebDevelopment( )
    }
 }
 
-function mAdministration( )
+function mCompanyProfile( )
 {
 
       // This is for indicating whether the user hit the window close box.
@@ -485,7 +517,7 @@ function mAdministration( )
 
       // Javascript code entered by user.
 
-   var thisLi = document.getElementById( "lmAdministration" );
+   var thisLi = document.getElementById( "lmCompanyProfile" );
    if ( thisLi.disabled == true )
       return;
 
@@ -493,7 +525,7 @@ function mAdministration( )
 
       _DisableFormElements( true );
 
-      document.wStartUpAdminSelectSubregistrant.zAction.value = "mAdministration";
+      document.wStartUpAdminSelectSubregistrant.zAction.value = "mCompanyProfile";
       document.wStartUpAdminSelectSubregistrant.submit( );
    }
 }

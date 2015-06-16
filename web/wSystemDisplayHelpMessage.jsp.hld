@@ -201,7 +201,7 @@ if ( cr.isSet() == false ) {
    rePamms.logObjectInstance();
    ec.createEntity();
    ec.getAttribute( "DialogWindow" ).setValue( strLastWindow );
-   ec.getAttribute( "Message" ).setValue( "No help available" );
+   ec.getAttribute( "Message" ).setValue( "No help available for: " + strLastWindow );
    ec = sHelp.cursor( "ePamms" );
    ec.includeSubobject( rePamms.cursor( "ePamms" ) );
    sHelp.commit();

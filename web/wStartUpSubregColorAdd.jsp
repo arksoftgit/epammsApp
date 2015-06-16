@@ -281,8 +281,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -321,7 +321,7 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpSubregColorAdd.jsp", "wStartUp.CancelColor" );
-         nOptRC = wStartUp.CancelColor( new zVIEW( vKZXMLPGO ) );
+      nOptRC = wStartUp.CancelColor( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -359,7 +359,7 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpSubregColorAdd.jsp", "wStartUp.SaveAndAddNewColor" );
-         nOptRC = wStartUp.SaveAndAddNewColor( new zVIEW( vKZXMLPGO ) );
+      nOptRC = wStartUp.SaveAndAddNewColor( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -397,7 +397,7 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpSubregColorAdd.jsp", "wStartUp.SaveColor" );
-         nOptRC = wStartUp.SaveColor( new zVIEW( vKZXMLPGO ) );
+      nOptRC = wStartUp.SaveColor( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -435,7 +435,7 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpSubregColorAdd.jsp", "wStartUp.UpdateColor" );
-         nOptRC = wStartUp.UpdateColor( new zVIEW( vKZXMLPGO ) );
+      nOptRC = wStartUp.UpdateColor( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -487,7 +487,7 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpSubregColorAdd.jsp", "wStartUp.SaveColor" );
-         nOptRC = wStartUp.SaveColor( new zVIEW( vKZXMLPGO ) );
+      nOptRC = wStartUp.SaveColor( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -525,7 +525,7 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpSubregColorAdd.jsp", "wStartUp.SaveAndAddNewColor" );
-         nOptRC = wStartUp.SaveAndAddNewColor( new zVIEW( vKZXMLPGO ) );
+      nOptRC = wStartUp.SaveAndAddNewColor( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -558,7 +558,7 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpSubregColorAdd.jsp", "wStartUp.CancelColor" );
-         nOptRC = wStartUp.CancelColor( new zVIEW( vKZXMLPGO ) );
+      nOptRC = wStartUp.CancelColor( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -670,7 +670,7 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
 else
 {
    VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpSubregColorAdd.jsp", "wStartUp.InitColorForAdd" );
-         nOptRC = wStartUp.InitColorForAdd( new zVIEW( vKZXMLPGO ) );
+   nOptRC = wStartUp.InitColorForAdd( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -720,40 +720,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-<script language="JavaScript" type="text/javascript" >
-      // Javascript code entered by user for Window action prebuild.
-
-   // We knock out Login and Template as options.
-   thisLi = document.getElementById( "lmLogin" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   if ( keyRole == "S" )
-   {
-      thisLi = document.getElementById( "lmSubregistrants" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-      thisLi = document.getElementById( "lmTrackingNotificationCompliance" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-   }
-   else
-   {
-      thisLi = document.getElementById( "lmStateRegistrations" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-   }
-
-   thisLi = document.getElementById( "lmAdministration" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-      // END of Javascript code entered by user.
-
-</script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wStartUpSubregColorAdd.js"></script>
 
 </head>
@@ -1300,6 +1266,6 @@ else
    session.setAttribute( "ZeidonWindow", "wStartUpSubregColorAdd" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

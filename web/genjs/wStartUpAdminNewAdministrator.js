@@ -450,7 +450,7 @@ function mWebDevelopment( )
    }
 }
 
-function mAdministration( )
+function mCompanyProfile( )
 {
 
       // This is for indicating whether the user hit the window close box.
@@ -461,7 +461,7 @@ function mAdministration( )
 
       // Javascript code entered by user.
 
-   var thisLi = document.getElementById( "lmAdministration" );
+   var thisLi = document.getElementById( "lmCompanyProfile" );
    if ( thisLi.disabled == true )
       return;
 
@@ -469,7 +469,7 @@ function mAdministration( )
 
       _DisableFormElements( true );
 
-      document.wStartUpAdminNewAdministrator.zAction.value = "mAdministration";
+      document.wStartUpAdminNewAdministrator.zAction.value = "mCompanyProfile";
       document.wStartUpAdminNewAdministrator.submit( );
    }
 }

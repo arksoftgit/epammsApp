@@ -171,6 +171,41 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
+   // Prebuild action has javascript code entered by user.
+   // We knock out Login and Template as options.
+   var thisLi;
+
+   thisLi = document.getElementById( "lmLogin" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+   thisLi = document.getElementById( "lmLogout" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none"
+   thisLi = document.getElementById( "lmCompanyProfile" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none"
+   if ( keyRole == "Subregistrant" ) // if we are a Subregistrant
+   {
+      thisLi = document.getElementById( "lmSubregistrants" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+      thisLi = document.getElementById( "lmTrackingNotificationCompliance" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+    }
+   else
+   if ( keyRole == "Primary Registrant" ) // if we are a Primary Registrant
+   {
+      thisLi = document.getElementById( "lmStateRegistrations" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+   }
+
+   // Cannot go to subregistrant maintenance if already there.
+   thisLi = document.getElementById( "lmSubregistrants" );
+   thisLi.disabled = true;
+   // END of Javascript code entered by user.
+
    isWindowClosing = true;
 }
 
@@ -217,7 +252,7 @@ if ( szValue == "" )
    }
 }
 
-function Profile( )
+function AdminCancelUpdateSubreg( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -227,7 +262,7 @@ function Profile( )
    {
       _DisableFormElements( true );
 
-      document.wStartUpAdminUpdateSubregistrant.zAction.value = "Profile";
+      document.wStartUpAdminUpdateSubregistrant.zAction.value = "AdminCancelUpdateSubreg";
       document.wStartUpAdminUpdateSubregistrant.submit( );
    }
 }
@@ -247,21 +282,6 @@ function ChangeSubregPassword( )
    }
 }
 
-function AdminCancelUpdateSubreg( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wStartUpAdminUpdateSubregistrant.zAction.value = "AdminCancelUpdateSubreg";
-      document.wStartUpAdminUpdateSubregistrant.submit( );
-   }
-}
-
 function InitSubregistrantForUpdate( )
 {
 
@@ -275,14 +295,16 @@ function InitSubregistrantForUpdate( )
    // We knock out Login and Template as options.
    var thisLi;
 
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
    thisLi = document.getElementById( "lmLogin" );
    thisLi.style.visibility = "hidden";
    thisLi.style.display = "none";
-
-   if ( keyRole == "S" ) // if we are a Subregistrant
+   thisLi = document.getElementById( "lmLogout" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none"
+   thisLi = document.getElementById( "lmCompanyProfile" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none"
+   if ( keyRole == "Subregistrant" ) // if we are a Subregistrant
    {
       thisLi = document.getElementById( "lmSubregistrants" );
       thisLi.style.visibility = "hidden";
@@ -292,7 +314,7 @@ function InitSubregistrantForUpdate( )
       thisLi.style.display = "none";
     }
    else
-   if ( keyRole == "P" ) // if we are a Primary Registrant
+   if ( keyRole == "Primary Registrant" ) // if we are a Primary Registrant
    {
       thisLi = document.getElementById( "lmStateRegistrations" );
       thisLi.style.visibility = "hidden";
@@ -305,6 +327,21 @@ function InitSubregistrantForUpdate( )
 
       // END of Javascript code entered by user.
 
+   }
+}
+
+function Profile( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wStartUpAdminUpdateSubregistrant.zAction.value = "Profile";
+      document.wStartUpAdminUpdateSubregistrant.submit( );
    }
 }
 
@@ -525,7 +562,7 @@ function mWebDevelopment( )
    }
 }
 
-function mAdministration( )
+function mCompanyProfile( )
 {
 
       // This is for indicating whether the user hit the window close box.
@@ -536,7 +573,7 @@ function mAdministration( )
 
       // Javascript code entered by user.
 
-   var thisLi = document.getElementById( "lmAdministration" );
+   var thisLi = document.getElementById( "lmCompanyProfile" );
    if ( thisLi.disabled == true )
       return;
 
@@ -544,7 +581,7 @@ function mAdministration( )
 
       _DisableFormElements( true );
 
-      document.wStartUpAdminUpdateSubregistrant.zAction.value = "mAdministration";
+      document.wStartUpAdminUpdateSubregistrant.zAction.value = "mCompanyProfile";
       document.wStartUpAdminUpdateSubregistrant.submit( );
    }
 }

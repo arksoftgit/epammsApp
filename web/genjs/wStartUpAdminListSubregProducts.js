@@ -168,6 +168,31 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
+   // Prebuild action has javascript code entered by user.
+   // We knock out Login and Template as options.
+   thisLi = document.getElementById( "lmLogin" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+   thisLi = document.getElementById( "lmLogout" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none"
+   if ( keyRole == "Subregistrant" )
+   {
+      thisLi = document.getElementById( "lmSubregistrants" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+      thisLi = document.getElementById( "lmTrackingNotificationCompliance" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+   }
+   else
+   {
+      thisLi = document.getElementById( "lmStateRegistrations" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+   }
+   // END of Javascript code entered by user.
+
    isWindowClosing = true;
 }
 
@@ -216,11 +241,10 @@ function InitListSubregProducts( )
    thisLi = document.getElementById( "lmLogin" );
    thisLi.style.visibility = "hidden";
    thisLi.style.display = "none";
-   thisLi = document.getElementById( "lmTemplate" );
+   thisLi = document.getElementById( "lmLogout" );
    thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   if ( keyRole == "S" )
+   thisLi.style.display = "none"
+   if ( keyRole == "Subregistrant" )
    {
       thisLi = document.getElementById( "lmSubregistrants" );
       thisLi.style.visibility = "hidden";
@@ -453,7 +477,7 @@ function mWebDevelopment( )
    }
 }
 
-function mAdministration( )
+function mCompanyProfile( )
 {
 
       // This is for indicating whether the user hit the window close box.
@@ -464,7 +488,7 @@ function mAdministration( )
 
       // Javascript code entered by user.
 
-   var thisLi = document.getElementById( "lmAdministration" );
+   var thisLi = document.getElementById( "lmCompanyProfile" );
    if ( thisLi.disabled == true )
       return;
 
@@ -472,7 +496,7 @@ function mAdministration( )
 
       _DisableFormElements( true );
 
-      document.wStartUpAdminListSubregProducts.zAction.value = "mAdministration";
+      document.wStartUpAdminListSubregProducts.zAction.value = "mCompanyProfile";
       document.wStartUpAdminListSubregProducts.submit( );
    }
 }

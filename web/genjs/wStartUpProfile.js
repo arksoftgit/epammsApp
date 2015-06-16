@@ -282,7 +282,7 @@ function InitProfileForUpdate( )
       thisLi.style.display = "none";
    }
 
-   thisLi = document.getElementById( "lmAdministration" );
+   thisLi = document.getElementById( "lmCompanyProfile" );
    thisLi.style.visibility = "hidden";
    thisLi.style.display = "none";
 
@@ -503,7 +503,7 @@ function mWebDevelopment( )
    }
 }
 
-function mAdministration( )
+function mCompanyProfile( )
 {
 
       // This is for indicating whether the user hit the window close box.
@@ -514,7 +514,7 @@ function mAdministration( )
 
       // Javascript code entered by user.
 
-   var thisLi = document.getElementById( "lmAdministration" );
+   var thisLi = document.getElementById( "lmCompanyProfile" );
    if ( thisLi.disabled == true )
       return;
 
@@ -522,7 +522,7 @@ function mAdministration( )
 
       _DisableFormElements( true );
 
-      document.wStartUpProfile.zAction.value = "mAdministration";
+      document.wStartUpProfile.zAction.value = "mCompanyProfile";
       document.wStartUpProfile.submit( );
    }
 }

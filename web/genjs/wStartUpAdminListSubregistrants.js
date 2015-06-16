@@ -168,6 +168,23 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
+   // Prebuild action has javascript code entered by user.
+   var thisLi;
+
+   thisLi = document.getElementById( "lmStateRegistrations" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+   thisLi = document.getElementById( "lmLogin" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+   thisLi = document.getElementById( "lmLogout" );
+    thisLi.style.visibility = "hidden";
+    thisLi.style.display = "none"
+   // Cannot go to subregistrant maintenance if already there.
+   thisLi = document.getElementById( "lmSubregistrants" );
+   thisLi.disabled = true;
+   // END of Javascript code entered by user.
+
    isWindowClosing = true;
 }
 
@@ -187,63 +204,6 @@ function CheckAllInGrid(id, CheckBoxName)
    }
 }
 
-function SelectSubregistrantForDelete( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wStartUpAdminListSubregistrants.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wStartUpAdminListSubregistrants.zAction.value = "SelectSubregistrantForDelete";
-      document.wStartUpAdminListSubregistrants.submit( );
-   }
-}
-
-function SelectListSubregistrantProducts( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wStartUpAdminListSubregistrants.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wStartUpAdminListSubregistrants.zAction.value = "SelectListSubregistrantProducts";
-      document.wStartUpAdminListSubregistrants.submit( );
-   }
-}
-
-function SelectListSubregistrantsUsers( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wStartUpAdminListSubregistrants.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wStartUpAdminListSubregistrants.zAction.value = "SelectListSubregistrantsUsers";
-      document.wStartUpAdminListSubregistrants.submit( );
-   }
-}
-
 function AddNewSubregistrant( )
 {
 
@@ -255,25 +215,6 @@ function AddNewSubregistrant( )
       _DisableFormElements( true );
 
       document.wStartUpAdminListSubregistrants.zAction.value = "AddNewSubregistrant";
-      document.wStartUpAdminListSubregistrants.submit( );
-   }
-}
-
-function SelectSubregistrantForUpdate( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wStartUpAdminListSubregistrants.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wStartUpAdminListSubregistrants.zAction.value = "SelectSubregistrantForUpdate";
       document.wStartUpAdminListSubregistrants.submit( );
    }
 }
@@ -386,21 +327,17 @@ function InitListSubregistrants( )
    {
       // Javascript code entered by user.
 
-   // From this list of primary registrants, the only logical top menu option is Logout, so
-   // we only leave Logout as an option
    var thisLi;
 
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
    thisLi = document.getElementById( "lmStateRegistrations" );
    thisLi.style.visibility = "hidden";
    thisLi.style.display = "none";
-
    thisLi = document.getElementById( "lmLogin" );
    thisLi.style.visibility = "hidden";
    thisLi.style.display = "none";
-
+   thisLi = document.getElementById( "lmLogout" );
+    thisLi.style.visibility = "hidden";
+    thisLi.style.display = "none"
    // Cannot go to subregistrant maintenance if already there.
    thisLi = document.getElementById( "lmSubregistrants" );
    thisLi.disabled = true;
@@ -465,6 +402,82 @@ function SelectAll( )
 
       // END of Javascript code entered by user.
 
+   }
+}
+
+function SelectListSubregistrantProducts( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wStartUpAdminListSubregistrants.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wStartUpAdminListSubregistrants.zAction.value = "SelectListSubregistrantProducts";
+      document.wStartUpAdminListSubregistrants.submit( );
+   }
+}
+
+function SelectListSubregistrantsUsers( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wStartUpAdminListSubregistrants.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wStartUpAdminListSubregistrants.zAction.value = "SelectListSubregistrantsUsers";
+      document.wStartUpAdminListSubregistrants.submit( );
+   }
+}
+
+function SelectSubregistrantForDelete( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wStartUpAdminListSubregistrants.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wStartUpAdminListSubregistrants.zAction.value = "SelectSubregistrantForDelete";
+      document.wStartUpAdminListSubregistrants.submit( );
+   }
+}
+
+function SelectSubregistrantForUpdate( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wStartUpAdminListSubregistrants.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wStartUpAdminListSubregistrants.zAction.value = "SelectSubregistrantForUpdate";
+      document.wStartUpAdminListSubregistrants.submit( );
    }
 }
 
@@ -627,7 +640,7 @@ function mWebDevelopment( )
    }
 }
 
-function mAdministration( )
+function mCompanyProfile( )
 {
 
       // This is for indicating whether the user hit the window close box.
@@ -638,7 +651,7 @@ function mAdministration( )
 
       // Javascript code entered by user.
 
-   var thisLi = document.getElementById( "lmAdministration" );
+   var thisLi = document.getElementById( "lmCompanyProfile" );
    if ( thisLi.disabled == true )
       return;
 
@@ -646,7 +659,7 @@ function mAdministration( )
 
       _DisableFormElements( true );
 
-      document.wStartUpAdminListSubregistrants.zAction.value = "mAdministration";
+      document.wStartUpAdminListSubregistrants.zAction.value = "mCompanyProfile";
       document.wStartUpAdminListSubregistrants.submit( );
    }
 }

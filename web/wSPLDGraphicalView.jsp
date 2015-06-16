@@ -774,8 +774,8 @@ else
                            &nbsp;
                            &nbsp;
                            <div style="position:absolute;top:105px;left:15px;">
-                              <label for="zReusableBlocks">Reusable Blocks: </label>
-                              <select id="zReusableBlocks">
+                              <label for="zReusableBlocks">Reusable Blocks: </label></br>
+                              <select id="zReusableBlocks" style="float:left;"> >
                                  <option value="">Select Reusable Block...</option>
                               </select>
                            </div>

@@ -168,6 +168,36 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
+   // Prebuild action has javascript code entered by user.
+   // We knock out Login and Template as options.
+   thisLi = document.getElementById( "lmLogin" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+   thisLi = document.getElementById( "lmLogout" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none"
+
+   if ( keyRole == "Subregistrant" )
+   {
+      thisLi = document.getElementById( "lmSubregistrants" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+      thisLi = document.getElementById( "lmTrackingNotificationCompliance" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+   }
+   else
+   {
+      thisLi = document.getElementById( "lmStateRegistrations" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+   }
+
+   thisLi = document.getElementById( "lmCompanyProfile" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+   // END of Javascript code entered by user.
+
    isWindowClosing = true;
 }
 
@@ -216,11 +246,11 @@ function InitColorForUpdate( )
    thisLi = document.getElementById( "lmLogin" );
    thisLi.style.visibility = "hidden";
    thisLi.style.display = "none";
-   thisLi = document.getElementById( "lmTemplate" );
+   thisLi = document.getElementById( "lmLogout" );
    thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
+   thisLi.style.display = "none"
 
-   if ( keyRole == "S" )
+   if ( keyRole == "Subregistrant" )
    {
       thisLi = document.getElementById( "lmSubregistrants" );
       thisLi.style.visibility = "hidden";
@@ -236,7 +266,7 @@ function InitColorForUpdate( )
       thisLi.style.display = "none";
    }
 
-   thisLi = document.getElementById( "lmAdministration" );
+   thisLi = document.getElementById( "lmCompanyProfile" );
    thisLi.style.visibility = "hidden";
    thisLi.style.display = "none";
 

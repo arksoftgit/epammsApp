@@ -187,7 +187,7 @@ function CheckAllInGrid(id, CheckBoxName)
    }
 }
 
-function Administration( )
+function CompanyProfile( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -197,7 +197,7 @@ function Administration( )
    {
       // Javascript code entered by user.
 
-   var thisLi = document.getElementById( "lmAdministration" );
+   var thisLi = document.getElementById( "lmCompanyProfile" );
    if ( thisLi.disabled == true )
       return;
 
@@ -205,7 +205,7 @@ function Administration( )
 
       _DisableFormElements( true );
 
-      document.wStartUpTopMenu.zAction.value = "Administration";
+      document.wStartUpTopMenu.zAction.value = "CompanyProfile";
       document.wStartUpTopMenu.submit( );
    }
 }
@@ -538,7 +538,7 @@ function mWebDevelopment( )
    }
 }
 
-function mAdministration( )
+function mCompanyProfile( )
 {
 
       // This is for indicating whether the user hit the window close box.
@@ -549,7 +549,7 @@ function mAdministration( )
 
       // Javascript code entered by user.
 
-   var thisLi = document.getElementById( "lmAdministration" );
+   var thisLi = document.getElementById( "lmCompanyProfile" );
    if ( thisLi.disabled == true )
       return;
 
@@ -557,7 +557,7 @@ function mAdministration( )
 
       _DisableFormElements( true );
 
-      document.wStartUpTopMenu.zAction.value = "mAdministration";
+      document.wStartUpTopMenu.zAction.value = "mCompanyProfile";
       document.wStartUpTopMenu.submit( );
    }
 }

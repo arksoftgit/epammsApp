@@ -171,6 +171,40 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
+   // Prebuild action has javascript code entered by user.
+   // From this subwindow, the only logical top menu option is Logout, so
+   // we leave Logout as the only option.
+   var thisLi;
+
+      thisLi = document.getElementById( "lmStateRegistrations" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+      thisLi = document.getElementById( "lmSubregistrants" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+      thisLi = document.getElementById( "lmTrackingNotificationCompliance" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+      thisLi = document.getElementById( "lmProductManagement" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+      thisLi = document.getElementById( "lmMarketingFulfillment" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+      thisLi = document.getElementById( "lmWebDevelopment" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+      thisLi = document.getElementById( "lmCompanyProfile" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+      thisLi = document.getElementById( "lmLogin" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+      thisLi = document.getElementById( "lmLogout" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none"
+   // END of Javascript code entered by user.
+
    isWindowClosing = true;
 }
 
@@ -205,21 +239,6 @@ function AdminAcceptUpdatePrimRegUser( )
    }
 }
 
-function Profile( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wStartUpAdminUpdatePrimRegUser.zAction.value = "Profile";
-      document.wStartUpAdminUpdatePrimRegUser.submit( );
-   }
-}
-
 function AdminCancelUpdatePrimRegUser( )
 {
 
@@ -249,20 +268,15 @@ function InitPrimRegUserForUpdate( )
    // we leave Logout as the only option.
    var thisLi;
 
-      thisLi = document.getElementById( "lmTemplate" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
       thisLi = document.getElementById( "lmStateRegistrations" );
       thisLi.style.visibility = "hidden";
       thisLi.style.display = "none";
-
       thisLi = document.getElementById( "lmSubregistrants" );
       thisLi.style.visibility = "hidden";
       thisLi.style.display = "none";
       thisLi = document.getElementById( "lmTrackingNotificationCompliance" );
       thisLi.style.visibility = "hidden";
       thisLi.style.display = "none";
-
       thisLi = document.getElementById( "lmProductManagement" );
       thisLi.style.visibility = "hidden";
       thisLi.style.display = "none";
@@ -272,15 +286,33 @@ function InitPrimRegUserForUpdate( )
       thisLi = document.getElementById( "lmWebDevelopment" );
       thisLi.style.visibility = "hidden";
       thisLi.style.display = "none";
-      thisLi = document.getElementById( "lmAdministration" );
+      thisLi = document.getElementById( "lmCompanyProfile" );
       thisLi.style.visibility = "hidden";
       thisLi.style.display = "none";
       thisLi = document.getElementById( "lmLogin" );
       thisLi.style.visibility = "hidden";
       thisLi.style.display = "none";
+      thisLi = document.getElementById( "lmLogout" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none"
 
       // END of Javascript code entered by user.
 
+   }
+}
+
+function Profile( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wStartUpAdminUpdatePrimRegUser.zAction.value = "Profile";
+      document.wStartUpAdminUpdatePrimRegUser.submit( );
    }
 }
 
@@ -473,7 +505,7 @@ function mWebDevelopment( )
    }
 }
 
-function mAdministration( )
+function mCompanyProfile( )
 {
 
       // This is for indicating whether the user hit the window close box.
@@ -484,7 +516,7 @@ function mAdministration( )
 
       // Javascript code entered by user.
 
-   var thisLi = document.getElementById( "lmAdministration" );
+   var thisLi = document.getElementById( "lmCompanyProfile" );
    if ( thisLi.disabled == true )
       return;
 
@@ -492,7 +524,7 @@ function mAdministration( )
 
       _DisableFormElements( true );
 
-      document.wStartUpAdminUpdatePrimRegUser.zAction.value = "mAdministration";
+      document.wStartUpAdminUpdatePrimRegUser.zAction.value = "mCompanyProfile";
       document.wStartUpAdminUpdatePrimRegUser.submit( );
    }
 }

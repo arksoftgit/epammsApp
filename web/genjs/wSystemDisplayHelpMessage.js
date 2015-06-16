@@ -10,7 +10,7 @@ function handleErr( msg, url, l )
    txt += "URL: " + url + "\n";
    txt += "Line: " + l + "\n\n";
    txt += "Click OK to continue.\n\n";
-// alert( txt );
+   alert( txt );
    return true;
 }
 
@@ -202,26 +202,11 @@ function EditHelpMessage( )
    }
 }
 
-function Return( )
+function ExitHelp( )
 {
 
    // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemDisplayHelpMessage.zAction.value = "Return";
-      document.wSystemDisplayHelpMessage.submit( );
-   }
-}
-
-function mLogout( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
+   isWindowClosing = true;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -229,14 +214,31 @@ function mLogout( )
 
       document.wSystemDisplayHelpMessage.zAction.value = "_OnUnload";
       document.wSystemDisplayHelpMessage.submit( );
+      window.close();
+   }
+}
+
+function mLogout( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = true;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSystemDisplayHelpMessage.zAction.value = "_OnUnload";
+      document.wSystemDisplayHelpMessage.submit( );
+      window.close();
    }
 }
 
 function mEditHelpMessage( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -247,18 +249,19 @@ function mEditHelpMessage( )
    }
 }
 
-function mReturn( )
+function mExitHelp( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = true;
 
    if ( _IsDocDisabled( ) == false )
    {
       _DisableFormElements( true );
 
-      document.wSystemDisplayHelpMessage.zAction.value = "mReturn";
+      document.wSystemDisplayHelpMessage.zAction.value = "_OnUnload";
       document.wSystemDisplayHelpMessage.submit( );
+      window.close();
    }
 }
 
