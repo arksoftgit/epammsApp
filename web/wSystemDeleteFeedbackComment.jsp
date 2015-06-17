@@ -1019,6 +1019,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSystemDeleteFeedbackComment" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSystemDeleteFeedbackComment" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

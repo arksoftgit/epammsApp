@@ -1392,6 +1392,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCUpdateMasterProduct" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wMLCUpdateMasterProduct" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

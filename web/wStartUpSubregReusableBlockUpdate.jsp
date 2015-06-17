@@ -873,6 +873,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wStartUpSubregReusableBlockUpdate" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wStartUpSubregReusableBlockUpdate" );
    session.setAttribute( "ZeidonAction", null );
 
    strActionToProcess = "";

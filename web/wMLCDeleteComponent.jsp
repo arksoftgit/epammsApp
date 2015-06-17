@@ -679,6 +679,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCDeleteComponent" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wMLCDeleteComponent" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

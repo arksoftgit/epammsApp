@@ -993,6 +993,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCOrganismClaimsStatement" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wMLCOrganismClaimsStatement" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

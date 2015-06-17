@@ -132,7 +132,7 @@ InitLoginWindow( VIEW ViewToWindow )
    ACTIVATE pePamms WHERE pePamms.ePamms.ID = 1
    NAME VIEW pePamms "pePamms"
 
-   SetDynamicBannerName( ViewToWindow, "wStartUp", "Default" )
+   SetDynamicBannerName( ViewToWindow, "wStartUp", "Login" )
 
 END
 
@@ -391,6 +391,7 @@ ProcessUserLogin( VIEW ViewToWindow )
    wWebXfer.Root.Banner4 = ""
    wWebXfer.Root.Banner5 = ""
    wWebXfer.Root.Banner6 = ""
+   SetDynamicBannerName( ViewToWindow, "wStartUp", "Default" )
 
    RETURN nRC
 

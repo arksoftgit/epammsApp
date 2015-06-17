@@ -1011,6 +1011,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSubRChangeSubregPassword" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSubRChangeSubregPassword" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

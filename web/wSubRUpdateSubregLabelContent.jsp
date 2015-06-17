@@ -1660,6 +1660,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSubRUpdateSubregLabelContent" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSubRUpdateSubregLabelContent" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

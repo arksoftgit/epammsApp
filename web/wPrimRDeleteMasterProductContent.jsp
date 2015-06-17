@@ -1283,6 +1283,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wPrimRDeleteMasterProductContent" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wPrimRDeleteMasterProductContent" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

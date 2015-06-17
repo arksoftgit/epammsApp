@@ -648,6 +648,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSPLDLLD_GenerateFromSPLD" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSPLDLLD_GenerateFromSPLD" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

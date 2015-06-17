@@ -677,6 +677,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSPLDDeleteSubregProductSLC" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSPLDDeleteSubregProductSLC" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

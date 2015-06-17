@@ -1084,6 +1084,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wStartUpDEPRECATED_SelectPrimaryReg" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wStartUpDEPRECATED_SelectPrimaryReg" );
    session.setAttribute( "ZeidonAction", null );
 
    strActionToProcess = "";

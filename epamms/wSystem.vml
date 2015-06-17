@@ -2347,13 +2347,19 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: ReturnFromHelp
+// OPERATION: ExitHelp
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
-ReturnFromHelp( VIEW ViewToWindow )
+ExitHelp( VIEW ViewToWindow )
 
+// VIEW wWebXfer BASED ON LOD wWebXfer
    VIEW sHelp REGISTERED AS sHelp
+
+// GetViewByName( wWebXfer, "wWebXferHelp", ViewToWindow, zLEVEL_TASK )
+// SetAttributeFromString( wWebXfer, "Root", "HelpDialogWindow", "" )
+// DropNameForView( wWebXfer, "wWebXferHelp", 0, zLEVEL_TASK )
    DropView( sHelp )
 
 END
+

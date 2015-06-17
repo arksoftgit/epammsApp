@@ -1238,6 +1238,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wPrimRUpdateMasterProductSection" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wPrimRUpdateMasterProductSection" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

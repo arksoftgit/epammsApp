@@ -1118,6 +1118,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSLCSLC_Sidebar" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSLCSLC_Sidebar" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

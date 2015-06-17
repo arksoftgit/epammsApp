@@ -1043,6 +1043,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSubRDesignSubregProductLabel" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSubRDesignSubregProductLabel" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

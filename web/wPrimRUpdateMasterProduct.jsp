@@ -1897,6 +1897,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wPrimRUpdateMasterProduct" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wPrimRUpdateMasterProduct" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

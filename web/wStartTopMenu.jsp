@@ -814,6 +814,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wStartTopMenu" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wStartTopMenu" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

@@ -1645,6 +1645,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSLCHumanHazard" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSLCHumanHazard" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

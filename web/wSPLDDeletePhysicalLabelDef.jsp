@@ -1708,6 +1708,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSPLDDeletePhysicalLabelDef" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSPLDDeletePhysicalLabelDef" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

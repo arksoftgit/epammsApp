@@ -1020,6 +1020,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wStartUpListSubregProducts" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wStartUpListSubregProducts" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

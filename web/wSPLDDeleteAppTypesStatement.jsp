@@ -1439,6 +1439,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSPLDDeleteAppTypesStatement" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSPLDDeleteAppTypesStatement" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

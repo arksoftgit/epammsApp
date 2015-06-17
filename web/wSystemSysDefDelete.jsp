@@ -721,6 +721,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSystemSysDefDelete" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSystemSysDefDelete" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

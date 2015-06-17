@@ -751,6 +751,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSPLDNewSLC_SelectMLC" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSPLDNewSLC_SelectMLC" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

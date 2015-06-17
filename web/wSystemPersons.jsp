@@ -913,6 +913,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSystemPersons" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSystemPersons" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

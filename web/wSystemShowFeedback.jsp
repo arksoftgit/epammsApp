@@ -981,6 +981,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSystemShowFeedback" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSystemShowFeedback" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

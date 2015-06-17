@@ -1095,6 +1095,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSPLDSPLD_StatementUpdate" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSPLDSPLD_StatementUpdate" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

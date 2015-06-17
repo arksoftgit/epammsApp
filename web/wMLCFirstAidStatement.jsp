@@ -711,6 +711,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCFirstAidStatement" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wMLCFirstAidStatement" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

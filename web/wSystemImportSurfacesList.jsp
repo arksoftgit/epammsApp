@@ -1161,6 +1161,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSystemImportSurfacesList" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSystemImportSurfacesList" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

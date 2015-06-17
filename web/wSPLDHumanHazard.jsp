@@ -2350,6 +2350,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSPLDHumanHazard" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSPLDHumanHazard" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

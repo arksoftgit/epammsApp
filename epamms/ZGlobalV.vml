@@ -28,7 +28,7 @@ SetDynamicBannerName( VIEW  ViewToWindow,
    GET VIEW KZXMLPGO NAMED "KZXMLPGO"
 
    IF KZXMLPGO != 0
-      // We should ever have at most one DynamicBannerName entity, so check first to see if it exists.
+      // We should have at most one DynamicBannerName entity, so check first to see if it exists.
       SET CURSOR FIRST KZXMLPGO.DynamicBannerName
       IF RESULT < zCURSOR_SET
          CREATE ENTITY KZXMLPGO.DynamicBannerName

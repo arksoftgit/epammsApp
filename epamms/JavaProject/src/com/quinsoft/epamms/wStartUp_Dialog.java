@@ -656,6 +656,12 @@ ProcessUserLogin( View     ViewToWindow )
    SetAttributeFromString( wWebXfer, "Root", "Banner5", "" );
    //:wWebXfer.Root.Banner6 = ""
    SetAttributeFromString( wWebXfer, "Root", "Banner6", "" );
+   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "Default" )
+   {
+    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
+    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "Default" );
+    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
+   }
 
    //:RETURN nRC
    return( nRC );
@@ -7294,10 +7300,10 @@ InitLoginWindow( View     ViewToWindow )
    //:NAME VIEW pePamms "pePamms"
    SetNameForView( pePamms, "pePamms", null, zLEVEL_TASK );
 
-   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "Default" )
+   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "Login" )
    {
     ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "Default" );
+    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "Login" );
     // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
    }
    return( 0 );

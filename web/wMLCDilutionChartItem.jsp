@@ -746,6 +746,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCDilutionChartItem" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wMLCDilutionChartItem" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

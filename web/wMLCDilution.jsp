@@ -2002,6 +2002,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCDilution" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wMLCDilution" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

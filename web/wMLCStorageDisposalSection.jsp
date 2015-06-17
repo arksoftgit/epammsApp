@@ -1330,6 +1330,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCStorageDisposalSection" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wMLCStorageDisposalSection" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

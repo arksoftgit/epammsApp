@@ -637,6 +637,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSPLDCopySPLD" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSPLDCopySPLD" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

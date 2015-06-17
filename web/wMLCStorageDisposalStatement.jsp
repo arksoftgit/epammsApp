@@ -880,6 +880,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCStorageDisposalStatement" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wMLCStorageDisposalStatement" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

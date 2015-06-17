@@ -2974,6 +2974,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wStartUpAdminUpdatePrimaryReg_DEPRECATED" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wStartUpAdminUpdatePrimaryReg_DEPRECATED" );
    session.setAttribute( "ZeidonAction", null );
 
    strActionToProcess = "";

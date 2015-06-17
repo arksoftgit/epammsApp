@@ -1082,6 +1082,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSubRDeleteSubregProduct" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSubRDeleteSubregProduct" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

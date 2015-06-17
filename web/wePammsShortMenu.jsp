@@ -496,6 +496,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wePammsShortMenu" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wePammsShortMenu" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

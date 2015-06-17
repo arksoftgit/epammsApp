@@ -1461,6 +1461,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSPLDDeleteHazardStatement" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSPLDDeleteHazardStatement" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

@@ -752,6 +752,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCPrecautionaryStatement" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wMLCPrecautionaryStatement" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

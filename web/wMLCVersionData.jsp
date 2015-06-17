@@ -1492,6 +1492,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCVersionData" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wMLCVersionData" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

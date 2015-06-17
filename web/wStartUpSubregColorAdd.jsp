@@ -1264,6 +1264,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wStartUpSubregColorAdd" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wStartUpSubregColorAdd" );
    session.setAttribute( "ZeidonAction", null );
 
    strActionToProcess = "";

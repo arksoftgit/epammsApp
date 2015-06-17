@@ -2800,6 +2800,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSPLDPrecautionary" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSPLDPrecautionary" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

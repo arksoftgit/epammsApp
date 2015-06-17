@@ -1287,6 +1287,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wPrimRDeleteMasterProduct" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wPrimRDeleteMasterProduct" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

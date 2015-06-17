@@ -1439,6 +1439,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSPLDOrganismClaimsStatement" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSPLDOrganismClaimsStatement" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

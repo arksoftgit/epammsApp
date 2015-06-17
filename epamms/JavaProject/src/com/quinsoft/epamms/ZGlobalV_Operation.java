@@ -2949,7 +2949,7 @@ SetDynamicBannerName( View     ViewToWindow,
    //:IF KZXMLPGO != 0
    if ( getView( KZXMLPGO ) != null )
    { 
-      //:// We should ever have at most one DynamicBannerName entity, so check first to see if it exists.
+      //:// We should have at most one DynamicBannerName entity, so check first to see if it exists.
       //:SET CURSOR FIRST KZXMLPGO.DynamicBannerName
       RESULT = SetCursorFirstEntity( KZXMLPGO, "DynamicBannerName", "" );
       //:IF RESULT < zCURSOR_SET

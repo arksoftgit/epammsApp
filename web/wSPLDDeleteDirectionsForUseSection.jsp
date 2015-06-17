@@ -1973,6 +1973,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSPLDDeleteDirectionsForUseSection" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSPLDDeleteDirectionsForUseSection" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

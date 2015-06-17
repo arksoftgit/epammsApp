@@ -1412,6 +1412,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSystemUpdateViruses" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSystemUpdateViruses" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

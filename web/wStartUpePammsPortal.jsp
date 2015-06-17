@@ -890,8 +890,8 @@ else
 </body>
 </html>
 <%
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wStartUpePammsPortal" );
    session.setAttribute( "ZeidonWindow", "wStartUpePammsPortal" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wStartUpePammsPortal" );
    session.setAttribute( "ZeidonAction", null );
 
    strActionToProcess = "";

@@ -789,6 +789,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCAddItemsMultipleClaims" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wMLCAddItemsMultipleClaims" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

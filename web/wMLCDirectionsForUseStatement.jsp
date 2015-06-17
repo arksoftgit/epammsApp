@@ -927,6 +927,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCDirectionsForUseStatement" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wMLCDirectionsForUseStatement" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

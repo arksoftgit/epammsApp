@@ -574,6 +574,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSystemSystemMenu" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSystemSystemMenu" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

@@ -1295,6 +1295,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wStartUpAdminNewAdministrator" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wStartUpAdminNewAdministrator" );
    session.setAttribute( "ZeidonAction", null );
 
    strActionToProcess = "";

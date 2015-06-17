@@ -804,6 +804,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wePammsReports" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wePammsReports" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

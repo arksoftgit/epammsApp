@@ -1077,6 +1077,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSystemUsersDetail" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSystemUsersDetail" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

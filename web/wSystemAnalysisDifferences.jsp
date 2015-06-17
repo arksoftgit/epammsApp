@@ -1049,6 +1049,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSystemAnalysisDifferences" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSystemAnalysisDifferences" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

@@ -1828,6 +1828,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCEnvironmentalHazardsSection" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wMLCEnvironmentalHazardsSection" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

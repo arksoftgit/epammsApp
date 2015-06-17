@@ -1426,6 +1426,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSPLDAppTypesStatement" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSPLDAppTypesStatement" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

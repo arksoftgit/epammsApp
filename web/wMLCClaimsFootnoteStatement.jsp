@@ -658,6 +658,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCClaimsFootnoteStatement" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wMLCClaimsFootnoteStatement" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

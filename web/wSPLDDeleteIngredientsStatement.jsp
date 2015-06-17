@@ -1644,6 +1644,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSPLDDeleteIngredientsStatement" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSPLDDeleteIngredientsStatement" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

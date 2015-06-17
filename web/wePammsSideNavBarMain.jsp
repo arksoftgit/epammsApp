@@ -650,6 +650,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wePammsSideNavBarMain" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wePammsSideNavBarMain" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

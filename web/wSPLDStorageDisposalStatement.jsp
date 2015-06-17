@@ -1620,6 +1620,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSPLDStorageDisposalStatement" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSPLDStorageDisposalStatement" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

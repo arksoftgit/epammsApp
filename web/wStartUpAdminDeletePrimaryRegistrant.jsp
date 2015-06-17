@@ -1142,6 +1142,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wStartUpAdminDeletePrimaryRegistrant" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wStartUpAdminDeletePrimaryRegistrant" );
    session.setAttribute( "ZeidonAction", null );
 
    strActionToProcess = "";

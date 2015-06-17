@@ -696,6 +696,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wStartChangePassword" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wStartChangePassword" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

@@ -1275,6 +1275,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wStartUpChangePrimRegPassword" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wStartUpChangePrimRegPassword" );
    session.setAttribute( "ZeidonAction", null );
 
    strActionToProcess = "";

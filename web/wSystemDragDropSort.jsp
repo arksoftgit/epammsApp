@@ -707,6 +707,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSystemDragDropSort" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSystemDragDropSort" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

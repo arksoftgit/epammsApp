@@ -716,6 +716,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCAddItemsMultiple" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wMLCAddItemsMultiple" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

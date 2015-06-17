@@ -744,6 +744,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSPLDSPLD_BlockMarketingSectionSelect" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSPLDSPLD_BlockMarketingSectionSelect" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

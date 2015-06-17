@@ -2889,6 +2889,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wStartUpAdminUpdateSubregistrant" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wStartUpAdminUpdateSubregistrant" );
    session.setAttribute( "ZeidonAction", null );
 
    strActionToProcess = "";

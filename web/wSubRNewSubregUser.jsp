@@ -2330,6 +2330,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSubRNewSubregUser" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSubRNewSubregUser" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

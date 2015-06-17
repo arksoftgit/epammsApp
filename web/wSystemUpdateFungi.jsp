@@ -1413,6 +1413,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSystemUpdateFungi" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSystemUpdateFungi" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

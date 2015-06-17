@@ -563,6 +563,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wePammsTopMenu" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wePammsTopMenu" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

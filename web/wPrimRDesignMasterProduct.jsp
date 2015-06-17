@@ -1074,6 +1074,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wPrimRDesignMasterProduct" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wPrimRDesignMasterProduct" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

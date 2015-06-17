@@ -17,41 +17,17 @@
 
 ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
-public String ReplaceXSSValues( String szFieldValue )
-{
-   String szOutput;
-   szOutput = szFieldValue.replace( "<","&lt;" );
-   szOutput = szOutput.replace( ">", "&gt;" );
-   szOutput = szOutput.replace( "\"", "&quot;" );
-   szOutput = szOutput.replace( "\'", "&apos;" );
-   return( szOutput );
-}
-
 public int DoInputMapping( HttpServletRequest request,
                            HttpSession session,
                            ServletContext application,
                            boolean webMapping )
 {
-   String taskId = (String) session.getAttribute( "epammsHelpTaskId" );
+   String taskId = (String) session.getAttribute( "ZeidonTaskId" );
    Task task = objectEngine.getTaskById( taskId );
 
-   View sHelp = null;
-   View vGridTmp = null; // temp view to grid view
-   View vRepeatingGrp = null; // temp view to repeating group view
-   String strDateFormat = "";
+   View   sHelp = null;
    String strMapValue = "";
-   int    iView = 0;
-   long   lEntityKey = 0;
-   String strEntityKey = "";
-   long   lEntityKeyRG = 0;
-   String strEntityKeyRG = "";
-   String strTag = "";
-   String strTemp = "";
-   int    iTableRowCnt = 0;
-   String strSuffix = "";
-   int    nRelPos = 0;
    int    nRC = 0;
-   CursorResult csrRC = null;
    int    nMapError = 1;
 
    if ( webMapping == false )
@@ -78,7 +54,6 @@ public int DoInputMapping( HttpServletRequest request,
             VmlOperation.CreateMessage( task, "HelpMsg", e.getReason( ), strMapValue );
          }
       }
-
    }
 
    if ( webMapping == true )
@@ -99,17 +74,9 @@ Task task = null;
 View wWebXA = null;
 KZMSGQOO_Object mMsgQ = null; // view to Message Queue
 View vKZXMLPGO = null;
-String strLastPage = "";
-short  nRepos = 0;
 boolean bDone = false;
 int nOptRC = 0;
 int nRC = 0;
-CursorResult csrRC = null;
-CursorResult csrRCk = null;
-
-int nRCk = 0;  // temp fix for SetCursorEntityKey
-
-long lEKey = 0; // temp fix for SetCursorEntityKey
 
 String strKey = "";
 String strActionToProcess = "";
@@ -127,13 +94,8 @@ String strPopupWindowSZX = "";
 String strPopupWindowSZY = "";
 String strDateFormat = "";
 String strKeyRole = "";
-String strDialogName = "";
-String strWindowName = "";
 String strLastWindow;
 String strLastAction;
-String strFunctionCall = "";
-String strNextJSP_Name = "";
-String strInputFileName = "";
 
 strActionToProcess = (String) request.getParameter( "zAction" );
 
@@ -152,7 +114,7 @@ if ( strLastWindow.equals("wSystemUpdateHelpMessage") && StringUtils.isBlank( st
 
 // Check to see if the Zeidon subtask view already exists.  If not, create
 // it and copy it into the application object.
-String taskId = (String) session.getAttribute( "epammsHelpTaskId" );
+String taskId = (String) session.getAttribute( "ZeidonTaskId" );
 if ( StringUtils.isBlank( taskId ) )
 {
    strURL = response.encodeRedirectURL( "logout.jsp" );
@@ -166,7 +128,7 @@ else
 
 if ( task == null )
 {
-   session.setAttribute( "epammsHelpTaskId", null );
+   session.setAttribute( "ZeidonTaskId", null );
    strURL = response.encodeRedirectURL( "logout.jsp" );
    response.sendRedirect( strURL );
    return; // something really bad has happened!!!
@@ -196,13 +158,13 @@ if ( strActionToProcess != null )
          mMsgQ.setView( null );
          vMsgQ.drop( );
       }
-
    }
 
    while ( bDone == false && StringUtils.equals( strActionToProcess, "Cancel" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemUpdateHelpMessage", strActionToProcess );
+   // VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemUpdateHelpMessage", strActionToProcess );
+      session.setAttribute( "ZeidonAction", strActionToProcess );
 
       // Next Window
       strURL = response.encodeRedirectURL( "wSystemDisplayHelpMessage.jsp" );
@@ -213,7 +175,8 @@ if ( strActionToProcess != null )
    while ( bDone == false && StringUtils.equals( strActionToProcess, "SaveHelp" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemUpdateHelpMessage", strActionToProcess );
+   // VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemUpdateHelpMessage", strActionToProcess );
+      session.setAttribute( "ZeidonAction", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -222,7 +185,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateHelpMessage.jsp", "wSystem.SaveHelpMessage" );
+   // VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateHelpMessage.jsp", "wSystem.SaveHelpMessage" );
       nOptRC = wSystem.SaveHelpMessage( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -230,57 +193,6 @@ if ( strActionToProcess != null )
          session.setAttribute( "ZeidonError", "Y" );
          break;
       }
-
-      // Next Window
-      strURL = response.encodeRedirectURL( "wSystemDisplayHelpMessage.jsp" );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && strActionToProcess.equals( "ZEIDON_ComboBoxSubmit" ) )
-   {
-      bDone = true;
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // No redirection, we are staying on this page.
-      nRC = 0;
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mSaveHelp" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemUpdateHelpMessage", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateHelpMessage.jsp", "wSystem.SaveHelpMessage" );
-      nOptRC = wSystem.SaveHelpMessage( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      // Next Window
-      strURL = response.encodeRedirectURL( "wSystemDisplayHelpMessage.jsp" );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mCancel" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemUpdateHelpMessage", strActionToProcess );
 
       // Next Window
       strURL = response.encodeRedirectURL( "wSystemDisplayHelpMessage.jsp" );
@@ -296,7 +208,7 @@ if ( strActionToProcess != null )
          task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wSystemUpdateHelpMessage" );
          task.dropTask();
          task = null;
-         session.setAttribute( "epammsHelpTaskId", task );
+         session.setAttribute( "ZeidonTaskId", task );
       }
 
       // Next Window is HTML termination
@@ -313,7 +225,7 @@ if ( strActionToProcess != null )
          task.log().info( "OnUnload UnregisterZeidonApplication: ------->>> " + "wSystemUpdateHelpMessage" );
          task.dropTask();
          task = null;
-         session.setAttribute( "epammsHelpTaskId", task );
+         session.setAttribute( "ZeidonTaskId", task );
       }
 
       // Next Window is HTML termination
@@ -325,7 +237,8 @@ if ( strActionToProcess != null )
    while ( bDone == false && strActionToProcess.equals( "_OnResubmitPage" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemUpdateHelpMessage", strActionToProcess );
+   // VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemUpdateHelpMessage", strActionToProcess );
+      session.setAttribute( "ZeidonAction", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -654,6 +567,7 @@ tinymce.init({
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSystemUpdateHelpMessage" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSystemUpdateHelpMessage" );
    session.setAttribute( "ZeidonAction", null );
 
    strActionToProcess = "";

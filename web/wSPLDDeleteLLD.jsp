@@ -640,6 +640,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSPLDDeleteLLD" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSPLDDeleteLLD" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

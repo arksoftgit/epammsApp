@@ -1530,6 +1530,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSystemUpdateBacteria" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSystemUpdateBacteria" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

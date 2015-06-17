@@ -607,6 +607,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSystemUsersDetailDelete" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSystemUsersDetailDelete" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

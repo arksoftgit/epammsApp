@@ -1092,6 +1092,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wStartUpTopMenu" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wStartUpTopMenu" );
    session.setAttribute( "ZeidonAction", null );
 
    strActionToProcess = "";

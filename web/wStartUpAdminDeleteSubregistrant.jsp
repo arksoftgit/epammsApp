@@ -1183,6 +1183,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wStartUpAdminDeleteSubregistrant" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wStartUpAdminDeleteSubregistrant" );
    session.setAttribute( "ZeidonAction", null );
 
    strActionToProcess = "";

@@ -735,6 +735,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSPLDSPLD_BlockDefinitionAdd" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSPLDSPLD_BlockDefinitionAdd" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

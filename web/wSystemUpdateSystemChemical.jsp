@@ -1494,6 +1494,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSystemUpdateSystemChemical" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSystemUpdateSystemChemical" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

@@ -710,6 +710,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCDeleteUsageStatements" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wMLCDeleteUsageStatements" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

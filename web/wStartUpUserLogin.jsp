@@ -908,6 +908,7 @@ else
 <%
    task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wStartUpUserLogin" );
    session.setAttribute( "ZeidonWindow", "wStartUpUserLogin" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wStartUpUserLogin" );
    session.setAttribute( "ZeidonAction", null );
 
    if ( task != null && strActionToProcess == null  )

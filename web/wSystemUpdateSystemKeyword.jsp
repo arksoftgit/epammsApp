@@ -906,6 +906,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSystemUpdateSystemKeyword" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSystemUpdateSystemKeyword" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

@@ -1024,6 +1024,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wStartSecurityQuestionsUpdate" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wStartSecurityQuestionsUpdate" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

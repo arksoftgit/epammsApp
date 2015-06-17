@@ -1761,6 +1761,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSPLDNewPhysicalLabelDef" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSPLDNewPhysicalLabelDef" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

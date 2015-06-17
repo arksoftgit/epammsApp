@@ -999,6 +999,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSystemNewSystemChemical" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSystemNewSystemChemical" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

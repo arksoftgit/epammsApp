@@ -1399,6 +1399,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSPLDSPLD_SideBar" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSPLDSPLD_SideBar" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

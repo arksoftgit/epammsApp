@@ -2721,6 +2721,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSubRUpdateSubregistrant" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSubRUpdateSubregistrant" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

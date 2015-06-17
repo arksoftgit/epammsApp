@@ -756,6 +756,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wStartSecurityValidations" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wStartSecurityValidations" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

@@ -2,7 +2,7 @@
    <div id="loginline"><ul>
 
       <li class="home"><a href="http://www.epa.gov" target="_blank">hdEPA Home</a></li>
-      <li class="emailicon"><a href="javascript:void(0);" onclick="ExitHelp();window.close();">Exit</a></li>
+      <li class="emailicon"><a href="javascript:void(0);" onclick="ExitHelp();">Exit</a></li>
    </ul></div>
 </div>
 

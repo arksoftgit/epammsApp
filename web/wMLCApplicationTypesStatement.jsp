@@ -777,6 +777,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCApplicationTypesStatement" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wMLCApplicationTypesStatement" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";

@@ -1770,6 +1770,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSPLDSPLD_BlockSpecialFormatDef" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSPLDSPLD_BlockSpecialFormatDef" );
    session.setAttribute( "ZeidonAction", null );
 
      strActionToProcess = "";
