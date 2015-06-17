@@ -41,7 +41,7 @@ KZMSGQOO_Object mMsgQ = null; // view to Message Queue
 View vKZXMLPGO = null;
 boolean bDone = false;
 int nRC = 0;
-//String strKey = "";
+
 String strActionToProcess = "";
 String strURL = "";
 String strError = "";
@@ -54,16 +54,12 @@ String strVMLError = "";
 String strOpenFile = "";
 String strDateFormat = "";
 String strKeyRole = "";
+String strHelpDialogWindow = "";
 String strLastWindow;
 String strLastAction;
 String strNextJSP_Name = "";
 
 // hand coded
-strActionToProcess = (String) request.getParameter( "zAction" );
-strLastAction = (String) session.getAttribute( "ZeidonAction" );
-
-// Check to see if the Zeidon help subtask view already exists.  If not, create
-// it and copy it into the application object.
 String taskId = (String) session.getAttribute( "ZeidonTaskId" );
 if ( StringUtils.isBlank( taskId ) )
 {
@@ -73,23 +69,6 @@ if ( StringUtils.isBlank( taskId ) )
 }
 
 task = objectEngine.getTaskById( taskId );
-wWebXA = task.getViewByName( "wWebXferHelp" );
-if ( VmlOperation.isValid( wWebXA ) ) {
-   strLastWindow = wWebXA.cursor( "Root" ).getAttribute( "HelpDialogWindow" ).getString();
-} else {
-   wWebXA = task.getViewByName( "wWebXfer" );
-   wWebXA.setName( "wWebXferHelp" );
-   strLastWindow = (String) session.getAttribute( "ZeidonWindow" );
-   wWebXA.cursor( "Root" ).getAttribute( "HelpDialogWindow" ).setValue( strLastWindow );
-}
-
-if ( strLastWindow.equals("wSystemDisplayHelpMessage") && StringUtils.isBlank( strActionToProcess ) && StringUtils.isBlank( strLastAction ) )
-{
-   strURL = response.encodeRedirectURL( "logout.jsp" );
-   response.sendRedirect( strURL );
-   return;
-}
-
 if ( task == null )
 {
    session.removeAttribute( "ZeidonTaskId" );
@@ -98,12 +77,37 @@ if ( task == null )
    return; // something really bad has happened!!!
 }
 
+strActionToProcess = (String) request.getParameter( "zAction" );
+strLastAction = (String) session.getAttribute( "ZeidonAction" );
+strLastWindow = (String) session.getAttribute( "ZeidonWindow" );
+task.log().info( "session: " + session );
+task.log().info("*** wSystemDisplayHelpMessage strActionToProcess *** " + strActionToProcess );
+task.log().info("*** wSystemDisplayHelpMessage LastWindow *** " + strLastWindow );
+task.log().info("*** wSystemDisplayHelpMessage LastAction *** " + strLastAction );
+
+if ( strLastWindow.equals("wSystemDisplayHelpMessage") ) {
+   if ( StringUtils.isBlank( strActionToProcess ) && StringUtils.isBlank( strLastAction ) ) {
+      strURL = response.encodeRedirectURL( "logout.jsp" );
+      response.sendRedirect( strURL );
+      return;
+   }
+   strHelpDialogWindow = (String) session.getAttribute( "HelpDialogWindow" );
+} else if ( strLastWindow.equals("wSystemUpdateHelpMessage") ) {
+   strHelpDialogWindow = (String) session.getAttribute( "HelpDialogWindow" );
+} else {
+   session.setAttribute( "HelpDialogWindow", strLastWindow );
+   strHelpDialogWindow = strLastWindow;
+}
+
+task.log().info("*** wSystemDisplayHelpMessage HelpDialogWindow *** " + strHelpDialogWindow );
+
 vKZXMLPGO = JspWebUtils.createWebSession( null, task, "" );
 mMsgQ = new KZMSGQOO_Object( vKZXMLPGO );
 mMsgQ.setView( VmlOperation.getMessageObject( task ) );
 wSystem_Dialog wSystem = new wSystem_Dialog( vKZXMLPGO );
 
 task.log().info("*** wSystemDisplayHelpMessage Last Window: " + strLastWindow + "************************************************************************************" );
+task.log().info("*** wSystemDisplayHelpMessage Help Window: " + strHelpDialogWindow + "#####################################################################################" );
 /*
 View mHelp = new QualificationBuilder( task )
                  .setLodDef( "mHelp" )
@@ -117,17 +121,16 @@ while ( r.isSet() ) {
 }
 mHelp.commit();
 */
-task.log().info("*** wSystemDisplayHelpMessage Last Window: " + strLastWindow + "#####################################################################################" );
 View sHelp = task.getViewByName( "sHelp" );
 if ( VmlOperation.isValid( sHelp ) ) {
    sHelp.drop();
 }
 sHelp = new QualificationBuilder( task )
                     .setLodDef( "sHelp" )
-                    .addAttribQual( "Help", "DialogWindow", "=", strLastWindow )
+                    .addAttribQual( "Help", "DialogWindow", "=", strHelpDialogWindow )
                     .activate();
 sHelp.setName( "sHelp" );
-task.log().info("*** wSystemDisplayHelpMessage OI 111 - LastWindow: " + strLastWindow );
+task.log().info("*** wSystemDisplayHelpMessage OI 111 - HelpDialogWindow: " + strHelpDialogWindow );
 sHelp.logObjectInstance();
 EntityCursor ec = sHelp.cursor( "Help" );
 CursorResult cr = ec.setFirst();
@@ -138,23 +141,19 @@ if ( cr.isSet() == false ) {
                  .activate();
    rePamms.logObjectInstance();
    ec.createEntity();
-   ec.getAttribute( "DialogWindow" ).setValue( strLastWindow );
-   ec.getAttribute( "Message" ).setValue( "No help available for: " + strLastWindow );
+   ec.getAttribute( "DialogWindow" ).setValue( strHelpDialogWindow );
+   ec.getAttribute( "Message" ).setValue( "No help available for: " + strHelpDialogWindow );
    ec = sHelp.cursor( "ePamms" );
    ec.includeSubobject( rePamms.cursor( "ePamms" ) );
    sHelp.commit();
 }
-   task.log().info("*** wSystemDisplayHelpMessage OI *** LastWindow: " + strLastWindow );
+   task.log().info("*** wSystemDisplayHelpMessage OI *** HelpDialogWindow: " + strHelpDialogWindow );
    sHelp.logObjectInstance();
 // end of: hand coded
 
 strURL = "";
 bDone = false;
 nRC = 0;
-
-task.log().info("*** wSystemDisplayHelpMessage strActionToProcess *** " + strActionToProcess );
-task.log().info("*** wSystemDisplayHelpMessage LastWindow *** " + strLastWindow );
-task.log().info("*** wSystemDisplayHelpMessage LastAction *** " + strLastAction );
 
 if ( strActionToProcess != null )
 {
@@ -191,24 +190,27 @@ if ( strActionToProcess != null )
       // Action Operation
    // VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemDisplayHelpMessage.jsp", "wSystem.ExitHelp" );
       wSystem.ExitHelp( new zVIEW( vKZXMLPGO ) );
-      session.removeAttribute( "ZeidonTaskId" );
-      if ( task != null )
-      {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wSystemDisplayHelpMessage" );
-         task.dropTask();
-         task = null;
-      }
-      return;
+   // session.removeAttribute( "ZeidonTaskId" );
+      String s = (String) session.getAttribute( "HelpDialogWindow" );
+      session.setAttribute( "ZeidonWindow", s );
+      session.removeAttribute( "HelpDialogWindow" );
+      task.log().info( "ExitHelp: ----->>> " + s );
+      strNextJSP_Name = "wSystemExitHelpMessage.jsp";
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
    }
 
    while ( bDone == false && strActionToProcess.equals( "_OnUnload" ) )
    {
       bDone = true;
-      session.removeAttribute( "ZeidonTaskId" );
+   // session.removeAttribute( "ZeidonTaskId" );
+      String s = (String) session.getAttribute( "HelpDialogWindow" );
+      session.setAttribute( "ZeidonWindow", s );
+      session.removeAttribute( "HelpDialogWindow" );
+      task.log().info( "_OnUnload: ----->>> " + s );
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wSystemDisplayHelpMessage" );
-         task.dropTask();
          task = null;
       }
       return;
@@ -217,11 +219,13 @@ if ( strActionToProcess != null )
    while ( bDone == false && strActionToProcess.equals( "_OnTimeout" ) )
    {
       bDone = true;
-      session.removeAttribute( "ZeidonTaskId" );
+   // session.removeAttribute( "ZeidonTaskId" );
+      String s = (String) session.getAttribute( "HelpDialogWindow" );
+      session.setAttribute( "ZeidonWindow", s );
+      session.removeAttribute( "HelpDialogWindow" );
+      task.log().info( "_OnTimeout: ------->>> " + s );
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ------->>> " + "wSystemDisplayHelpMessage" );
-         task.dropTask();
          task = null;
       }
       return;
@@ -232,7 +236,7 @@ if ( strActionToProcess != null )
       bDone = true;
    // VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemDisplayHelpMessage", strActionToProcess );
       session.setAttribute( "ZeidonAction", strActionToProcess );
-
+      task.log().info( "_OnResubmitPage ------->>> " + "wSystemDisplayHelpMessage" );
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
       if ( nRC < 0 )

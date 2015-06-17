@@ -1,4 +1,4 @@
-z1000-Zeidon    EPAMMS   TZCMLPLO 06/16/15   20:32:06 1.0a2    
+z1000-Zeidon    EPAMMS   TZCMLPLO 06/17/15   13:56:37 1.0a2    
 eLPLR      1
 aName      epamms
 aDesc      ePamms Application
@@ -2110,8 +2110,8 @@ aStatus    1
 aUpdateInd 2
 aName      wSystem
 aDesc      ePamms System Settings
-aLastSyncDate 20150616203206896
-aLastUpdateDate 20150616203206896
+aLastSyncDate 20150617135637087
+aLastUpdateDate 20150617135637087
 
 eW_MetaType 2
 aType      12

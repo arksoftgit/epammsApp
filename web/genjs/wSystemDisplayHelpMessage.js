@@ -10,7 +10,7 @@ function handleErr( msg, url, l )
    txt += "URL: " + url + "\n";
    txt += "Line: " + l + "\n\n";
    txt += "Click OK to continue.\n\n";
-   alert( txt );
+// alert( txt );
    return true;
 }
 
@@ -171,22 +171,6 @@ function _AfterPageLoaded( )
    isWindowClosing = true;
 }
 
-function CheckAllInGrid(id, CheckBoxName)
-{
-   var wcontrols = id.form.elements;
-   var check = id.checked;
-   var wcontrol, i = 0;
-
-   while ( (wcontrol = wcontrols[ i++ ]) != null )
-   {
-      //Check to see if the checkbox belongs to this table then check it.
-      if ( wcontrol.name.indexOf( CheckBoxName ) != -1 && wcontrol.type == 'checkbox' )
-      {
-         wcontrol.checked = check;
-      }
-   }
-}
-
 function EditHelpMessage( )
 {
    // This is for indicating whether the user hit the window close box.
@@ -208,6 +192,7 @@ function mEditHelpMessage( )
 
 function ExitHelp( )
 {
+// alert( "calling ExitHelp" );
    // This is for indicating whether the user hit the window close box.
    isWindowClosing = true;
 
@@ -217,7 +202,6 @@ function ExitHelp( )
 
       document.wSystemDisplayHelpMessage.zAction.value = "ExitHelp";
       document.wSystemDisplayHelpMessage.submit( );
-      window.close();
    }
 }
 
@@ -238,6 +222,5 @@ function mLogout( )
 
       document.wSystemDisplayHelpMessage.zAction.value = "_OnUnload";
       document.wSystemDisplayHelpMessage.submit( );
-      window.close();
    }
 }
