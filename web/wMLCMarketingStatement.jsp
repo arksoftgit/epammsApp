@@ -98,7 +98,7 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
-      // Grid: Grid3
+      // Grid: Grid1
       iTableRowCnt = 0;
 
       // We are creating a temp view to the grid view so that if there are 
@@ -204,8 +204,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -268,6 +268,151 @@ if ( strActionToProcess != null )
       break;
    }
 
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_MarketingKeywordStmtDelete" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCMarketingStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+       = task.getViewByName( "" );
+      if ( VmlOperation.isValid(  ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = .cursor( "" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = .cursor( "" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = .cursor( "" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = .cursor( "" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingStatement", "wMLC.GOTO_MarketingKeywordStmtDelete" );
+      nOptRC = wMLC.GOTO_MarketingKeywordStmtDelete( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "DeleteComponent" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_MarketingKeywordStmtAdd" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCMarketingStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingStatement", "wMLC.GOTO_MarketingKeywordStmtAdd" );
+      nOptRC = wMLC.GOTO_MarketingKeywordStmtAdd( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "AddItemsMultipleKeyword" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_MarketingKeywordUpdate" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCMarketingStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+       = task.getViewByName( "" );
+      if ( VmlOperation.isValid(  ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = .cursor( "" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = .cursor( "" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = .cursor( "" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = .cursor( "" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "MarketingKeywordTextUpdate" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
    while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelMarketingStatement" ) )
    {
       bDone = true;
@@ -307,8 +452,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingStatement.jsp", "wMLC.GOTO_SelectRemoveMktgEntries" );
-         nOptRC = wMLC.GOTO_SelectRemoveMktgEntries( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingStatement", "wMLC.GOTO_SelectRemoveMktgEntries" );
+      nOptRC = wMLC.GOTO_SelectRemoveMktgEntries( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -326,6 +471,44 @@ if ( strActionToProcess != null )
       {
          // Next Window
          strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "MarketingSelectByType" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DisplayGeneratedText" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCMarketingStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingStatement", "wMLC.GOTO_DisplayGeneratedText" );
+      nOptRC = wMLC.GOTO_DisplayGeneratedText( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "GeneratedTextDisplay" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -634,34 +817,27 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* MarketingStatementGroup:GroupBox */ %>
+<% /* GBStorDispSections2:GroupBox */ %>
 
-<div id="MarketingStatementGroup" name="MarketingStatementGroup" class="withborder" style="width:832px;height:172px;float:left;">  <!-- MarketingStatementGroup --> 
+<div id="GBStorDispSections2" name="GBStorDispSections2" class="listgroup"   style="float:left;position:relative; width:780px; height:36px;">  <!-- GBStorDispSections2 --> 
+
+<% /* OrganismClaimsStatements3:Text */ %>
+
+<label class="groupbox"  id="OrganismClaimsStatements3" name="OrganismClaimsStatements3" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Marketing Statement</label>
 
 
- <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp</span>
-<% /* Text6:Text */ %>
-
-<span class="listheader"  id="Text6" name="Text6" style="width:434px;height:16px;">Marketing Statement</span>
-
+</div>  <!--  GBStorDispSections2 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
- <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
-
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox3:GroupBox */ %>
-<div id="GroupBox3" name="GroupBox3" style="float:left;width:820px;" >
+<div id="GroupBox3" name="GroupBox3" style="float:left;width:832px;" >
 
-<table cols=2 style="width:820px;"  class="grouptable">
+<table cols=2 style="width:832px;"  class="grouptable">
 
 <tr>
 <td valign="top" style="width:54px;">
@@ -703,7 +879,7 @@ else
    }
 %>
 
-<textarea id="MLEdit2" name="MLEdit2" class="" style="width:738px;height:36px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+<textarea id="MLEdit2" name="MLEdit2" class="" style="width:738px;height:30px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 </td>
 </tr>
@@ -757,15 +933,11 @@ else
 
 </div>  <!-- End of a new line -->
 
-
-</div>  <!--  MarketingStatementGroup --> 
-</div>  <!-- End of a new line -->
-
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
  <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
+<div style="height:2px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
@@ -781,14 +953,17 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox2:GroupBox */ %>
 
-<div id="GroupBox2" name="GroupBox2"   style="float:left;position:relative; width:686px; height:30px;">  <!-- GroupBox2 --> 
+<div id="GroupBox2" name="GroupBox2"   style="float:left;position:relative; width:756px; height:30px;">  <!-- GroupBox2 --> 
+
+<% /* PushBtn3:PushBtn */ %>
+<button type="button" class="newbutton" name="PushBtn3" id="PushBtn3" value="" onclick="GOTO_DisplayGeneratedText( )" style="width:158px;height:26px;position:absolute;left:490px;top:4px;">Show Generated Text</button>
+
+<% /* PushBtn2:PushBtn */ %>
+<button type="button" class="newbutton" name="PushBtn2" id="PushBtn2" value="" onclick="GOTO_MarketingKeywordStmtAdd( )" style="width:66px;height:26px;position:absolute;left:672px;top:4px;">New</button>
 
 <% /* Text4:Text */ %>
 
-<label class="listheader"  id="Text4" name="Text4" style="width:434px;height:16px;position:absolute;left:12px;top:4px;">Usage Entries for Embedding in Statement Text</label>
-
-<% /* PushBtn2:PushBtn */ %>
-<button type="button" class="newbutton" name="PushBtn2" id="PushBtn2" value="" onclick="GOTO_SelectRemoveMktgEntries( )" style="width:118px;height:26px;position:absolute;left:560px;top:4px;">Select/Remove</button>
+<label class="listheader"  id="Text4" name="Text4" style="width:434px;height:16px;position:absolute;left:12px;top:8px;">Keyword text for Embedding in Statement Text</label>
 
 
 </div>  <!--  GroupBox2 --> 
@@ -803,7 +978,81 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* Grid3:Grid */ %>
-<table  cols=2 style=""  name="Grid3" id="Grid3">
+<table  cols=4 style=""  name="Grid3" id="Grid3">
+
+<thead><tr>
+
+   <th>Keyword</th>
+   <th>Keyword Text</th>
+   <th>Update</th>
+   <th>Delete</th>
+
+</tr></thead>
+
+<tbody>
+
+<%
+try
+{
+}
+catch (Exception e)
+{
+out.println("There is an error in grid: " + e.getMessage());
+task.log().info( "*** Error in grid" + e.getMessage() );
+}
+%>
+</tbody>
+</table>
+
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  GroupBox7 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:2px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox1:GroupBox */ %>
+
+<div id="GroupBox1" name="GroupBox1" style="width:832px;float:left;">  <!-- GroupBox1 --> 
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:8px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox4:GroupBox */ %>
+
+<div id="GroupBox4" name="GroupBox4"   style="float:left;position:relative; width:686px; height:30px;">  <!-- GroupBox4 --> 
+
+<% /* Text2:Text */ %>
+
+<label class="listheader"  id="Text2" name="Text2" style="width:434px;height:16px;position:absolute;left:12px;top:4px;">Usage Entries for Embedding in Statement Text</label>
+
+<% /* PushBtn1:PushBtn */ %>
+<button type="button" class="newbutton" name="PushBtn1" id="PushBtn1" value="" onclick="GOTO_SelectRemoveMktgEntries( )" style="width:118px;height:26px;position:absolute;left:560px;top:4px;">Select/Remove</button>
+
+
+</div>  <!--  GroupBox4 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:8px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* Grid1:Grid */ %>
+<table  cols=2 style=""  name="Grid1" id="Grid1">
 
 <thead><tr>
 
@@ -826,60 +1075,60 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
-      String strGridEditCtl3;
-      String strGridEditCtl4;
+      String strGridEditCtl1;
+      String strGridEditCtl2;
       
-      View vGrid3;
-      vGrid3 = mMasLC.newView( );
-      csrRC2 = vGrid3.cursor( "M_MarketingUsageOrdering" ).setFirst(  );
+      View vGrid1;
+      vGrid1 = mMasLC.newView( );
+      csrRC2 = vGrid1.cursor( "M_MarketingUsageOrdering" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGrid3.cursor( "M_MarketingUsageOrdering" ).getEntityKey( );
+         lEntityKey = vGrid1.cursor( "M_MarketingUsageOrdering" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          strButtonName = "SelectButton" + strEntityKey;
 
-         strGridEditCtl3 = "";
-         nRC = vGrid3.cursor( "M_MarketingUsage" ).checkExistenceOfEntity( ).toInt();
+         strGridEditCtl1 = "";
+         nRC = vGrid1.cursor( "M_MarketingUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl3 = vGrid3.cursor( "M_MarketingUsage" ).getAttribute( "UsageType" ).getString( "FullUsageType" );
+            strGridEditCtl1 = vGrid1.cursor( "M_MarketingUsage" ).getAttribute( "UsageType" ).getString( "FullUsageType" );
 
-            if ( strGridEditCtl3 == null )
-               strGridEditCtl3 = "";
+            if ( strGridEditCtl1 == null )
+               strGridEditCtl1 = "";
          }
 
-         if ( StringUtils.isBlank( strGridEditCtl3 ) )
-            strGridEditCtl3 = "&nbsp";
+         if ( StringUtils.isBlank( strGridEditCtl1 ) )
+            strGridEditCtl1 = "&nbsp";
 
-         strGridEditCtl4 = "";
-         nRC = vGrid3.cursor( "M_MarketingUsage" ).checkExistenceOfEntity( ).toInt();
+         strGridEditCtl2 = "";
+         nRC = vGrid1.cursor( "M_MarketingUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl4 = vGrid3.cursor( "M_MarketingUsage" ).getAttribute( "dDisplayUsageName" ).getString( "" );
+            strGridEditCtl2 = vGrid1.cursor( "M_MarketingUsage" ).getAttribute( "dDisplayUsageName" ).getString( "" );
 
-            if ( strGridEditCtl4 == null )
-               strGridEditCtl4 = "";
+            if ( strGridEditCtl2 == null )
+               strGridEditCtl2 = "";
          }
 
-         if ( StringUtils.isBlank( strGridEditCtl4 ) )
-            strGridEditCtl4 = "&nbsp";
+         if ( StringUtils.isBlank( strGridEditCtl2 ) )
+            strGridEditCtl2 = "&nbsp";
 
 %>
 
 <tr<%=strOdd%>>
 
-   <td><%=strGridEditCtl3%></td>
-   <td><%=strGridEditCtl4%></td>
+   <td><%=strGridEditCtl1%></td>
+   <td><%=strGridEditCtl2%></td>
 
 </tr>
 
 <%
-         csrRC2 = vGrid3.cursor( "M_MarketingUsageOrdering" ).setNextContinue( );
+         csrRC2 = vGrid1.cursor( "M_MarketingUsageOrdering" ).setNextContinue( );
       }
-      vGrid3.drop( );
+      vGrid1.drop( );
    }
 }
 catch (Exception e)
@@ -894,7 +1143,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </div>  <!-- End of a new line -->
 
 
-</div>  <!--  GroupBox7 --> 
+</div>  <!--  GroupBox1 --> 
 </div>  <!-- End of a new line -->
 
 
@@ -927,9 +1176,8 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCMarketingStatement" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wMLCMarketingStatement" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

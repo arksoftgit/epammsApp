@@ -166,8 +166,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -260,8 +260,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCClaimsFootnoteSection.jsp", "wMLC.GOTO_FootnoteStmtDelete" );
-         nOptRC = wMLC.GOTO_FootnoteStmtDelete( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCClaimsFootnoteSection", "wMLC.GOTO_FootnoteStmtDelete" );
+      nOptRC = wMLC.GOTO_FootnoteStmtDelete( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -361,8 +361,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCClaimsFootnoteSection.jsp", "wMLC.SaveAndReturnMLC" );
-         nOptRC = wMLC.SaveAndReturnMLC( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCClaimsFootnoteSection", "wMLC.SaveAndReturnMLC" );
+      nOptRC = wMLC.SaveAndReturnMLC( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -399,8 +399,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCClaimsFootnoteSection.jsp", "wMLC.SaveMLC" );
-         nOptRC = wMLC.SaveMLC( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCClaimsFootnoteSection", "wMLC.SaveMLC" );
+      nOptRC = wMLC.SaveMLC( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -437,8 +437,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCClaimsFootnoteSection.jsp", "wMLC.CancelAndReturnMLC" );
-         nOptRC = wMLC.CancelAndReturnMLC( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCClaimsFootnoteSection", "wMLC.CancelAndReturnMLC" );
+      nOptRC = wMLC.CancelAndReturnMLC( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -543,8 +543,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCClaimsFootnoteSection.jsp", "wMLC.EditPrecautionarySection" );
-         nOptRC = wMLC.EditPrecautionarySection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCClaimsFootnoteSection", "wMLC.EditPrecautionarySection" );
+      nOptRC = wMLC.EditPrecautionarySection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -581,8 +581,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCClaimsFootnoteSection.jsp", "wMLC.EditFirstAidSection" );
-         nOptRC = wMLC.EditFirstAidSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCClaimsFootnoteSection", "wMLC.EditFirstAidSection" );
+      nOptRC = wMLC.EditFirstAidSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -619,8 +619,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCClaimsFootnoteSection.jsp", "wMLC.EditEnvironmentalHazardsSection" );
-         nOptRC = wMLC.EditEnvironmentalHazardsSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCClaimsFootnoteSection", "wMLC.EditEnvironmentalHazardsSection" );
+      nOptRC = wMLC.EditEnvironmentalHazardsSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -657,8 +657,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCClaimsFootnoteSection.jsp", "wMLC.EditChemicalHazardsSection" );
-         nOptRC = wMLC.EditChemicalHazardsSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCClaimsFootnoteSection", "wMLC.EditChemicalHazardsSection" );
+      nOptRC = wMLC.EditChemicalHazardsSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -712,8 +712,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCClaimsFootnoteSection.jsp", "wMLC.EditClaimsSection" );
-         nOptRC = wMLC.EditClaimsSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCClaimsFootnoteSection", "wMLC.EditClaimsSection" );
+      nOptRC = wMLC.EditClaimsSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -750,8 +750,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCClaimsFootnoteSection.jsp", "wMLC.EditSurfacesSection" );
-         nOptRC = wMLC.EditSurfacesSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCClaimsFootnoteSection", "wMLC.EditSurfacesSection" );
+      nOptRC = wMLC.EditSurfacesSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -788,8 +788,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCClaimsFootnoteSection.jsp", "wMLC.EditAreasOfUseSection" );
-         nOptRC = wMLC.EditAreasOfUseSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCClaimsFootnoteSection", "wMLC.EditAreasOfUseSection" );
+      nOptRC = wMLC.EditAreasOfUseSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -826,8 +826,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCClaimsFootnoteSection.jsp", "wMLC.EditApplicationTypesSection" );
-         nOptRC = wMLC.EditApplicationTypesSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCClaimsFootnoteSection", "wMLC.EditApplicationTypesSection" );
+      nOptRC = wMLC.EditApplicationTypesSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -1361,19 +1361,11 @@ else
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox3:GroupBox */ %>
 
-<div id="GroupBox3" name="GroupBox3" style="width:730px;height:28px;float:left;">  <!-- GroupBox3 --> 
+<div id="GroupBox3" name="GroupBox3"   style="float:left;position:relative; width:730px; height:28px;">  <!-- GroupBox3 --> 
 
-
- <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp</span>
 <% /* PrecautionarySection:Text */ %>
 
-<span class="groupbox"  id="PrecautionarySection" name="PrecautionarySection" style="width:338px;height:16px;">Claims Footnote Section</span>
-
-</div>  <!-- End of a new line -->
+<label class="groupbox"  id="PrecautionarySection" name="PrecautionarySection" style="width:338px;height:16px;position:absolute;left:6px;top:6px;">Claims Footnote Section</label>
 
 
 </div>  <!--  GroupBox3 --> 
@@ -1389,11 +1381,8 @@ else
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox2:GroupBox */ %>
 
-<div id="GroupBox2" name="GroupBox2" style="width:730px;height:34px;float:left;">  <!-- GroupBox2 --> 
+<div id="GroupBox2" name="GroupBox2"   style="float:left;position:relative; width:730px; height:34px;">  <!-- GroupBox2 --> 
 
-
-<div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBPrecautionaryStatements:GroupBox */ %>
 <div id="GBPrecautionaryStatements" name="GBPrecautionaryStatements" style="float:left;width:486px;"  class="listgroup">
 
@@ -1403,7 +1392,7 @@ else
 <td valign="top"  class="listheader" style="width:332px;">
 <% /* FirstAidStatements:Text */ %>
 
-<span class="listheader"  id="FirstAidStatements" name="FirstAidStatements" style="width:238px;height:16px;">Footnote Statements</span>
+<label class="listheader"  id="FirstAidStatements" name="FirstAidStatements" style="width:238px;height:16px;position:absolute;left:10px;top:2px;">Footnote Statements</label>
 
 </td>
 <td valign="top"  class="newbutton" style="width:78px;">
@@ -1415,8 +1404,6 @@ else
 </table>
 
 </div>  <!-- GBPrecautionaryStatements --> 
-
-</div>  <!-- End of a new line -->
 
 
 </div>  <!--  GroupBox2 --> 
@@ -1541,9 +1528,8 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCClaimsFootnoteSection" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wMLCClaimsFootnoteSection" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

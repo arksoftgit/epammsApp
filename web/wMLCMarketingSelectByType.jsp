@@ -244,8 +244,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -305,8 +305,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingSelectByType.jsp", "wMLC.CLEAR_MLC_UsageSource" );
-         nOptRC = wMLC.CLEAR_MLC_UsageSource( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingSelectByType", "wMLC.CLEAR_MLC_UsageSource" );
+      nOptRC = wMLC.CLEAR_MLC_UsageSource( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -343,8 +343,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingSelectByType.jsp", "wMLC.CLEAR_MLC_UsageTarget" );
-         nOptRC = wMLC.CLEAR_MLC_UsageTarget( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingSelectByType", "wMLC.CLEAR_MLC_UsageTarget" );
+      nOptRC = wMLC.CLEAR_MLC_UsageTarget( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -381,8 +381,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingSelectByType.jsp", "wMLC.RemoveMLC_UsageEntries" );
-         nOptRC = wMLC.RemoveMLC_UsageEntries( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingSelectByType", "wMLC.RemoveMLC_UsageEntries" );
+      nOptRC = wMLC.RemoveMLC_UsageEntries( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -436,8 +436,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingSelectByType.jsp", "wMLC.SelectMLC_UsageEntries" );
-         nOptRC = wMLC.SelectMLC_UsageEntries( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingSelectByType", "wMLC.SelectMLC_UsageEntries" );
+      nOptRC = wMLC.SelectMLC_UsageEntries( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -474,8 +474,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingSelectByType.jsp", "wMLC.SETALL_MLC_UsageSource" );
-         nOptRC = wMLC.SETALL_MLC_UsageSource( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingSelectByType", "wMLC.SETALL_MLC_UsageSource" );
+      nOptRC = wMLC.SETALL_MLC_UsageSource( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -512,8 +512,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingSelectByType.jsp", "wMLC.SETALL_MLC_UsageTarget" );
-         nOptRC = wMLC.SETALL_MLC_UsageTarget( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingSelectByType", "wMLC.SETALL_MLC_UsageTarget" );
+      nOptRC = wMLC.SETALL_MLC_UsageTarget( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -1035,7 +1035,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <div>  <!-- Beginning of a new line -->
 <% /* GroupBox5:GroupBox */ %>
 
-<div id="GroupBox5" name="GroupBox5" style="width:22px;height:76px;float:left;">  <!-- GroupBox5 --> 
+<div id="GroupBox5" name="GroupBox5" style="width:22px;height:62px;float:left;">  <!-- GroupBox5 --> 
 
 
 </div>  <!--  GroupBox5 --> 
@@ -1302,9 +1302,8 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCMarketingSelectByType" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wMLCMarketingSelectByType" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

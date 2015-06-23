@@ -197,6 +197,7 @@ function _AfterPageLoaded( )
    thisLi.style.display = "none";
    // END of Javascript code entered by user.
 
+   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title + "%" ); }
    isWindowClosing = true;
 }
 
@@ -239,37 +240,6 @@ function InitColorForAdd( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      // Javascript code entered by user.
-
-   // We knock out Login and Template as options.
-   thisLi = document.getElementById( "lmLogin" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-   thisLi = document.getElementById( "lmLogout" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none"
-   if ( keyRole == "Subregistrant" )
-   {
-      thisLi = document.getElementById( "lmSubregistrants" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-      thisLi = document.getElementById( "lmTrackingNotificationCompliance" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-   }
-   else
-   {
-      thisLi = document.getElementById( "lmStateRegistrations" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-   }
-
-   thisLi = document.getElementById( "lmCompanyProfile" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-      // END of Javascript code entered by user.
-
    }
 }
 
@@ -281,26 +251,6 @@ function SaveAddNew( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      // Javascript code entered by user.
-
-var strName = document.getElementById( "ColorName" ).value;
-if ( strName === "" ) {
-   alert( "Color Name is required" );
-   return;
-}
-strName = document.getElementById( "RGB" ).value;
-if ( strName === "" ) {
-   alert( "Color RGB is required" );
-   return;
-}
-var isOk  = /[0-9A-F]{6}$/i.test(strName);
-if ( isOk === false ) {
-   alert( "Invalid RGB color" );
-   return;
-}
-
-      // END of Javascript code entered by user.
-
    }
 }
 
@@ -357,8 +307,8 @@ function UpdateColor( )
 function smSaveReturn( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -393,8 +343,8 @@ if ( isOk === false ) {
 function smSaveAddNew( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -429,8 +379,8 @@ if ( isOk === false ) {
 function smCancel( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {

@@ -60,6 +60,22 @@ public int DoInputMapping( HttpServletRequest request,
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
    {
+      // ComboBox: ComboBox1
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
+      {
+         nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strMapValue = request.getParameter( "hComboBox1" );
+            if ( strMapValue != null )
+            {
+               nRelPos = java.lang.Integer.parseInt( strMapValue );
+               mMasLC.cursor( "M_UsageType" ).setPosition( nRelPos, "MasterLabelContent" );
+            }
+         }
+
+         }  // checkExistenceofEntity
       // Grid: Grid1
       iTableRowCnt = 0;
 
@@ -228,8 +244,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -289,8 +305,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirsForUseDrivingUsageSelect.jsp", "wMLC.CLEAR_MLC_UsageSource" );
-         nOptRC = wMLC.CLEAR_MLC_UsageSource( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirsForUseDrivingUsageSelect", "wMLC.CLEAR_MLC_UsageSource" );
+      nOptRC = wMLC.CLEAR_MLC_UsageSource( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -327,8 +343,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirsForUseDrivingUsageSelect.jsp", "wMLC.CLEAR_MLC_UsageTarget" );
-         nOptRC = wMLC.CLEAR_MLC_UsageTarget( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirsForUseDrivingUsageSelect", "wMLC.CLEAR_MLC_UsageTarget" );
+      nOptRC = wMLC.CLEAR_MLC_UsageTarget( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -365,8 +381,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirsForUseDrivingUsageSelect.jsp", "wMLC.RemoveMLC_UsageEntries" );
-         nOptRC = wMLC.RemoveMLC_UsageEntries( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirsForUseDrivingUsageSelect", "wMLC.RemoveMLC_UsageEntries" );
+      nOptRC = wMLC.RemoveMLC_UsageEntries( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -391,6 +407,23 @@ if ( strActionToProcess != null )
       break;
    }
 
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "SELECT_UsageType" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirsForUseDrivingUsageSelect", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
    while ( bDone == false && StringUtils.equals( strActionToProcess, "SelectMLC_UsageEntries" ) )
    {
       bDone = true;
@@ -403,8 +436,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirsForUseDrivingUsageSelect.jsp", "wMLC.SelectMLC_UsageEntries" );
-         nOptRC = wMLC.SelectMLC_UsageEntries( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirsForUseDrivingUsageSelect", "wMLC.SelectMLC_UsageEntries" );
+      nOptRC = wMLC.SelectMLC_UsageEntries( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -441,8 +474,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirsForUseDrivingUsageSelect.jsp", "wMLC.SETALL_MLC_UsageSource" );
-         nOptRC = wMLC.SETALL_MLC_UsageSource( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirsForUseDrivingUsageSelect", "wMLC.SETALL_MLC_UsageSource" );
+      nOptRC = wMLC.SETALL_MLC_UsageSource( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -479,8 +512,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirsForUseDrivingUsageSelect.jsp", "wMLC.SETALL_MLC_UsageTarget" );
-         nOptRC = wMLC.SETALL_MLC_UsageTarget( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirsForUseDrivingUsageSelect", "wMLC.SETALL_MLC_UsageTarget" );
+      nOptRC = wMLC.SETALL_MLC_UsageTarget( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -798,19 +831,11 @@ else
 <div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBAddAppTypesList1:GroupBox */ %>
 
-<div id="GBAddAppTypesList1" name="GBAddAppTypesList1" style="width:504px;height:32px;float:left;">  <!-- GBAddAppTypesList1 --> 
+<div id="GBAddAppTypesList1" name="GBAddAppTypesList1"   style="float:left;position:relative; width:402px; height:32px;">  <!-- GBAddAppTypesList1 --> 
 
-
- <!-- This is added as a line spacer -->
-<div style="height:12px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp</span>
 <% /* AddAppTypesList1:Text */ %>
 
-<span class="groupbox"  id="AddAppTypesList1" name="AddAppTypesList1" style="width:394px;height:16px;">Selection of Directions for Use Driving Claim Entries</span>
-
-</div>  <!-- End of a new line -->
+<label class="groupbox"  id="AddAppTypesList1" name="AddAppTypesList1" style="width:382px;height:16px;position:absolute;left:6px;top:12px;">Selection of Directions for Use Driving Usage Entries</label>
 
 
 </div>  <!--  GBAddAppTypesList1 --> 
@@ -820,10 +845,112 @@ else
 
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
+<div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox8:GroupBox */ %>
+
+<div id="GroupBox8" name="GroupBox8"   style="float:left;position:relative; width:402px; height:32px;">  <!-- GroupBox8 --> 
+
+<% /* Text5:Text */ %>
+
+<label class="groupbox"  id="Text5" name="Text5" style="width:350px;height:16px;position:absolute;left:18px;top:12px;">Currently Selected Driving Usage Entries</label>
+
+
+</div>  <!--  GroupBox8 --> 
+<div style="height:1px;width:34px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox9:GroupBox */ %>
+
+<div id="GroupBox9" name="GroupBox9"   style="float:left;position:relative; width:402px; height:32px;">  <!-- GroupBox9 --> 
+
+<% /* Text6:Text */ %>
+
+<label class="groupbox"  id="Text6" name="Text6" style="width:350px;height:16px;position:absolute;left:18px;top:12px;">Potential Driving Usage Entries for Type</label>
+
+
+</div>  <!--  GroupBox9 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:444px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox10:GroupBox */ %>
+
+<div id="GroupBox10" name="GroupBox10"   style="float:left;position:relative; width:402px; height:38px;">  <!-- GroupBox10 --> 
+
+<% /* Text1:Text */ %>
+
+<label class="groupbox"  id="Text1" name="Text1" style="width:116px;height:16px;position:absolute;left:46px;top:12px;">Current Type:</label>
+
+<% /* ComboBox1:ComboBox */ %>
+<% strErrorMapValue = "";  %>
+
+<select  name="ComboBox1" id="ComboBox1" size="1"style="width:150px;position:absolute;left:170px;top:12px;" onchange="ComboBox1OnChange( )">
+
+<%
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) )
+   {
+         strComboCurrentValue = "";
+      View vComboBox1;
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
+      {
+         nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strComboCurrentValue = mMasLC.cursor( "M_UsageType" ).getAttribute( "UsageType" ).getString( "FullUsageType" );
+            if ( strComboCurrentValue == null )
+               strComboCurrentValue = "";
+         }
+      }
+      vComboBox1 = mMasLC.newView( );
+      ComboCount = 0;
+      strComboSelectedValue = "0";
+      csrRC = vComboBox1.cursor( "M_UsageType" ).setFirst( "MasterLabelContent" );
+      while ( csrRC.isSet() )
+      {
+         strErrorMapValue = vComboBox1.cursor( "M_UsageType" ).getAttribute( "UsageType" ).getString( "FullUsageType" );
+         if ( strErrorMapValue == null )
+            strErrorMapValue = "";
+
+         if ( StringUtils.equals( strComboCurrentValue, strErrorMapValue ) )
+         {
+%>
+            <option selected="selected"><%=strErrorMapValue%></option>
+<%
+            strComboSelectedValue = Integer.toString( ComboCount );
+         }
+         else
+         {
+%>
+            <option><%=strErrorMapValue%></option>
+<%
+         }
+
+         ComboCount++;
+         csrRC =  vComboBox1.cursor( "M_UsageType" ).setNextContinue( );
+      }
+
+      vComboBox1.drop( );
+
+   }
+%>
+</select>
+<input name="hComboBox1" id="hComboBox1" type="hidden" value="<%=strComboSelectedValue%>" >
+
+
+</div>  <!--  GroupBox10 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox4:GroupBox */ %>
 
-<div id="GroupBox4" name="GroupBox4" style="width:866px;float:left;">  <!-- GroupBox4 --> 
+<div id="GroupBox4" name="GroupBox4" style="width:838px;float:left;">  <!-- GroupBox4 --> 
 
 
  <!-- This is added as a line spacer -->
@@ -832,38 +959,29 @@ else
 <div>  <!-- Beginning of a new line -->
 <% /* GroupBox1:GroupBox */ %>
 
-<div id="GroupBox1" name="GroupBox1" style="width:360px;float:left;">  <!-- GroupBox1 --> 
+<div id="GroupBox1" name="GroupBox1" style="width:418px;float:left;">  <!-- GroupBox1 --> 
 
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox6:GroupBox */ %>
 
-<div id="GroupBox6" name="GroupBox6" style="width:342px;height:42px;float:left;">  <!-- GroupBox6 --> 
-
-
-<div>  <!-- Beginning of a new line -->
-<% /* Text1:Text */ %>
-
-<span  id="Text1" name="Text1" style="width:300px;height:22px;">Currently Selected Driving Claim Entries</span>
-
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+<div id="GroupBox6" name="GroupBox6" style="width:342px;height:28px;float:left;">  <!-- GroupBox6 --> 
 
 
  <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
+<div style="height:4px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp</span>
+<span style="height:16px;">&nbsp&nbsp&nbsp</span>
 <% /* HTSelectAllAreasOfUse2:Text */ %>
 
 <a href="#" id="HTSelectAllAreasOfUse2" name="HTSelectAllAreasOfUse2"  onclick="CLEAR_MLC_UsageTarget( );" style="width:134px;height:16px;">Clear Target Entries</a>
 
+<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
 <% /* Text4:Text */ %>
 
-<a href="#" id="Text4" name="Text4"  onclick="SETALL_MLC_UsageTarget( );" style="width:178px;height:16px;">         Set All Target Entries</a>
+<a href="#" id="Text4" name="Text4"  onclick="SETALL_MLC_UsageTarget( );" style="width:178px;height:16px;">Set All Target Entries</a>
 
 </div>  <!-- End of a new line -->
 
@@ -876,13 +994,13 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <% /* Grid1:Grid */ %>
-<table  cols=3 style="width:354px;"  name="Grid1" id="Grid1">
+<table  cols=3 style="width:414px;"  name="Grid1" id="Grid1">
 
 <thead><tr>
 
    <th class="gridheading"><input type="checkbox" onclick="CheckAllInGrid(this,'GridCheckCtl2')"></th>
-   <th style="width:114px;">Classification</th>
-   <th style="width:198px;">Name</th>
+   <th style="width:98px;">Type</th>
+   <th style="width:276px;">Name</th>
 
 </tr></thead>
 
@@ -942,7 +1060,7 @@ try
          nRC = vGrid1.cursor( "M_DrivingUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl2 = vGrid1.cursor( "M_DrivingUsage" ).getAttribute( "ClaimsClassification" ).getString( "" );
+            strGridEditCtl2 = vGrid1.cursor( "M_DrivingUsage" ).getAttribute( "UsageType" ).getString( "FullUsageType" );
 
             if ( strGridEditCtl2 == null )
                strGridEditCtl2 = "";
@@ -955,7 +1073,7 @@ try
          nRC = vGrid1.cursor( "M_DrivingUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl3 = vGrid1.cursor( "M_DrivingUsage" ).getAttribute( "Name" ).getString( "" );
+            strGridEditCtl3 = vGrid1.cursor( "M_DrivingUsage" ).getAttribute( "dDisplayUsageName" ).getString( "" );
 
             if ( strGridEditCtl3 == null )
                strGridEditCtl3 = "";
@@ -969,8 +1087,8 @@ try
 <tr<%=strOdd%>>
 
    <td nowrap><%=strGridCheckCtl2%></td>
-   <td nowrap style="width:114px;"><%=strGridEditCtl2%></td>
-   <td nowrap style="width:198px;"><%=strGridEditCtl3%></td>
+   <td nowrap style="width:98px;"><%=strGridEditCtl2%></td>
+   <td nowrap style="width:276px;"><%=strGridEditCtl3%></td>
 
 </tr>
 
@@ -993,6 +1111,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 
 </div>  <!--  GroupBox1 --> 
+<div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox3:GroupBox */ %>
 
 <div id="GroupBox3" name="GroupBox3" style="width:28px;height:224px;float:left;">  <!-- GroupBox3 --> 
@@ -1032,35 +1151,29 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </div>  <!--  GroupBox3 --> 
 <% /* GroupBox2:GroupBox */ %>
 
-<div id="GroupBox2" name="GroupBox2" style="width:468px;float:left;">  <!-- GroupBox2 --> 
+<div id="GroupBox2" name="GroupBox2" style="width:382px;float:left;">  <!-- GroupBox2 --> 
 
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox7:GroupBox */ %>
 
-<div id="GroupBox7" name="GroupBox7" style="width:452px;height:42px;float:left;">  <!-- GroupBox7 --> 
+<div id="GroupBox7" name="GroupBox7" style="width:412px;height:28px;float:left;">  <!-- GroupBox7 --> 
 
 
-<div>  <!-- Beginning of a new line -->
-<% /* Text3:Text */ %>
-
-<span  id="Text3" name="Text3" style="width:244px;height:24px;">Potential Driving Claim Entries</span>
-
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
+ <!-- This is added as a line spacer -->
+<div style="height:4px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
 <% /* HTSelectAllAreasOfUse1:Text */ %>
 
 <a href="#" id="HTSelectAllAreasOfUse1" name="HTSelectAllAreasOfUse1"  onclick="CLEAR_MLC_UsageSource( );" style="width:152px;height:16px;">Clear Source Entries</a>
 
+<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
 <% /* Text2:Text */ %>
 
-<a href="#" id="Text2" name="Text2"  onclick="SETALL_MLC_UsageSource( );" style="width:184px;height:16px;">         Set All Source Entries</a>
+<a href="#" id="Text2" name="Text2"  onclick="SETALL_MLC_UsageSource( );" style="width:184px;height:16px;">Set All Source Entries</a>
 
 </div>  <!-- End of a new line -->
 
@@ -1073,13 +1186,12 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <div>  <!-- Beginning of a new line -->
 <% /* Grid2:Grid */ %>
-<table  cols=3 style="width:410px;"  name="Grid2" id="Grid2">
+<table  cols=2 style="width:378px;"  name="Grid2" id="Grid2">
 
 <thead><tr>
 
    <th class="gridheading"><input type="checkbox" onclick="CheckAllInGrid(this,'GridCheckCtl1')"></th>
-   <th style="width:110px;">Classification</th>
-   <th style="width:248px;">Name</th>
+   <th style="width:330px;">Name</th>
 
 </tr></thead>
 
@@ -1100,7 +1212,6 @@ try
       String strGridCheckCtl1;
       String strGridCheckCtl1Value;
       String strGridEditCtl1;
-      String strGridEditCtl4;
       
       View vGrid2;
       vGrid2 = mMasLC.newView( );
@@ -1139,7 +1250,7 @@ try
          nRC = vGrid2.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl1 = vGrid2.cursor( "M_Usage" ).getAttribute( "ClaimsClassification" ).getString( "" );
+            strGridEditCtl1 = vGrid2.cursor( "M_Usage" ).getAttribute( "dDisplayUsageName" ).getString( "" );
 
             if ( strGridEditCtl1 == null )
                strGridEditCtl1 = "";
@@ -1148,26 +1259,12 @@ try
          if ( StringUtils.isBlank( strGridEditCtl1 ) )
             strGridEditCtl1 = "&nbsp";
 
-         strGridEditCtl4 = "";
-         nRC = vGrid2.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strGridEditCtl4 = vGrid2.cursor( "M_Usage" ).getAttribute( "Name" ).getString( "" );
-
-            if ( strGridEditCtl4 == null )
-               strGridEditCtl4 = "";
-         }
-
-         if ( StringUtils.isBlank( strGridEditCtl4 ) )
-            strGridEditCtl4 = "&nbsp";
-
 %>
 
 <tr<%=strOdd%>>
 
    <td nowrap><%=strGridCheckCtl1%></td>
-   <td nowrap style="width:110px;"><%=strGridEditCtl1%></td>
-   <td nowrap style="width:248px;"><%=strGridEditCtl4%></td>
+   <td nowrap style="width:330px;"><%=strGridEditCtl1%></td>
 
 </tr>
 
@@ -1226,9 +1323,8 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCDirsForUseDrivingUsageSelect" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wMLCDirsForUseDrivingUsageSelect" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

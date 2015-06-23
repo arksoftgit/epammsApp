@@ -408,8 +408,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -452,8 +452,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockSpecialFormatDef.jsp", "wSPLD.ACCEPT_BlockSpecialFormat" );
-         nOptRC = wSPLD.ACCEPT_BlockSpecialFormat( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockSpecialFormatDef", "wSPLD.ACCEPT_BlockSpecialFormat" );
+      nOptRC = wSPLD.ACCEPT_BlockSpecialFormat( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -485,8 +485,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockSpecialFormatDef.jsp", "wSPLD.CANCEL_BlockSpecialFormat" );
-         nOptRC = wSPLD.CANCEL_BlockSpecialFormat( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockSpecialFormatDef", "wSPLD.CANCEL_BlockSpecialFormat" );
+      nOptRC = wSPLD.CANCEL_BlockSpecialFormat( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -611,8 +611,8 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
    session.setAttribute( "ZeidonError", null );
 else
 {
-   VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockSpecialFormatDef.jsp", "wSPLD.PostbuildBlockSpecialFormatDef" );
-         nOptRC = wSPLD.PostbuildBlockSpecialFormatDef( new zVIEW( vKZXMLPGO ) );
+   VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockSpecialFormatDef", "wSPLD.PostbuildBlockSpecialFormatDef" );
+   nOptRC = wSPLD.PostbuildBlockSpecialFormatDef( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -1770,9 +1770,8 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSPLDSPLD_BlockSpecialFormatDef" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSPLDSPLD_BlockSpecialFormatDef" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

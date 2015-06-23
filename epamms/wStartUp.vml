@@ -591,7 +591,7 @@ ProductManagement( VIEW ViewToWindow )
       ACTIVATE mSubreg WHERE mSubreg.Subregistrant.ID = qOrganiz.Subregistrant.ID
       NAME VIEW mSubreg "mSubreg"
       SetWindowActionBehavior( ViewToWindow, zWAB_StartTopWindow,
-                               "wSPLD", "SubregProductsList" )
+                               "wSLC", "SubregProductsList" )
       wWebXfer.Root.Banner1 = mSubreg.Subregistrant.dNameEPA_Number
       SetDynamicBannerName( ViewToWindow, "wStartUp", "SubregistrantProduct" )
 

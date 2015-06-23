@@ -185,7 +185,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-   // VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateHelpMessage.jsp", "wSystem.SaveHelpMessage" );
+   // VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateHelpMessage", "wSystem.SaveHelpMessage" );
       nOptRC = wSystem.SaveHelpMessage( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {

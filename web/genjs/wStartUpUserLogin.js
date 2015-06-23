@@ -218,6 +218,7 @@ function _AfterPageLoaded( )
 */
    // END of Javascript code entered by user.
 
+   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title + "%" ); }
    isWindowClosing = true;
 }
 
@@ -338,8 +339,8 @@ function ProcessUserLogin( )
 function mLogout( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {

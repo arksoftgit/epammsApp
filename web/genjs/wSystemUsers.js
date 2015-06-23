@@ -168,6 +168,17 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
+   // Prebuild action has javascript code entered by user.
+   thisLi = document.getElementById( "lmTemplate" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+
+   thisLi = document.getElementById( "lmSystem" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+   // END of Javascript code entered by user.
+
+   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title + "%" ); }
    isWindowClosing = true;
 }
 
@@ -229,18 +240,6 @@ function InitUser( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      // Javascript code entered by user.
-
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   thisLi = document.getElementById( "lmSystem" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-      // END of Javascript code entered by user.
-
    }
 }
 

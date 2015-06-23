@@ -229,7 +229,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminDeleteSubregistrant.jsp", "wStartUp.DeleteSubregistrant" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminDeleteSubregistrant", "wStartUp.DeleteSubregistrant" );
       nOptRC = wStartUp.DeleteSubregistrant( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -281,7 +281,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminDeleteSubregistrant.jsp", "wStartUp.DeleteSubregistrant" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminDeleteSubregistrant", "wStartUp.DeleteSubregistrant" );
       nOptRC = wStartUp.DeleteSubregistrant( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -331,7 +331,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminDeleteSubregistrant.jsp", "wStartUp.ProductManagement" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminDeleteSubregistrant", "wStartUp.ProductManagement" );
       nOptRC = wStartUp.ProductManagement( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -349,7 +349,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StartTopWindow, "wSPLD", "" );
+         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StartTopWindow, "wSLC", "SubregProductsList" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -369,7 +369,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminDeleteSubregistrant.jsp", "wStartUp.SubregistrantManagement" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminDeleteSubregistrant", "wStartUp.SubregistrantManagement" );
       nOptRC = wStartUp.SubregistrantManagement( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -407,7 +407,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminDeleteSubregistrant.jsp", "wStartUp.TrackingNotificationCompliance" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminDeleteSubregistrant", "wStartUp.TrackingNotificationCompliance" );
       nOptRC = wStartUp.TrackingNotificationCompliance( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -445,7 +445,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminDeleteSubregistrant.jsp", "wStartUp.StateRegistrations" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminDeleteSubregistrant", "wStartUp.StateRegistrations" );
       nOptRC = wStartUp.StateRegistrations( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -483,7 +483,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminDeleteSubregistrant.jsp", "wStartUp.MarketingFulfillment" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminDeleteSubregistrant", "wStartUp.MarketingFulfillment" );
       nOptRC = wStartUp.MarketingFulfillment( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -521,7 +521,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminDeleteSubregistrant.jsp", "wStartUp.WebDevelopment" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminDeleteSubregistrant", "wStartUp.WebDevelopment" );
       nOptRC = wStartUp.WebDevelopment( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -554,7 +554,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminDeleteSubregistrant.jsp", "wStartUp.PrimaryRegistrantCompanySetup" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminDeleteSubregistrant", "wStartUp.PrimaryRegistrantCompanySetup" );
       nOptRC = wStartUp.PrimaryRegistrantCompanySetup( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -592,7 +592,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminDeleteSubregistrant.jsp", "wStartUp.ProcessLogin" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminDeleteSubregistrant", "wStartUp.ProcessLogin" );
       nOptRC = wStartUp.ProcessLogin( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -704,7 +704,7 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
    session.setAttribute( "ZeidonError", null );
 else
 {
-   VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminDeleteSubregistrant.jsp", "wStartUp.InitSubregistrantForDelete" );
+   VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminDeleteSubregistrant", "wStartUp.InitSubregistrantForDelete" );
    nOptRC = wStartUp.InitSubregistrantForDelete( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
@@ -1183,7 +1183,6 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wStartUpAdminDeleteSubregistrant" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wStartUpAdminDeleteSubregistrant" );
    session.setAttribute( "ZeidonAction", null );
 
    strActionToProcess = "";

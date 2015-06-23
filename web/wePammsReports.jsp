@@ -142,8 +142,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -186,8 +186,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wePammsReports.jsp", "wePamms.ePammsReportsSetup" );
-         nOptRC = wePamms.ePammsReportsSetup( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wePammsReports", "wePamms.ePammsReportsSetup" );
+      nOptRC = wePamms.ePammsReportsSetup( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -219,8 +219,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wePammsReports.jsp", "wePamms.PrebuildHomePage" );
-         nOptRC = wePamms.PrebuildHomePage( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wePammsReports", "wePamms.PrebuildHomePage" );
+      nOptRC = wePamms.PrebuildHomePage( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -305,8 +305,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wePammsReports.jsp", "wePamms.CheckReportOnlyUser" );
-         nOptRC = wePamms.CheckReportOnlyUser( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wePammsReports", "wePamms.CheckReportOnlyUser" );
+      nOptRC = wePamms.CheckReportOnlyUser( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -343,8 +343,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wePammsReports.jsp", "wePamms.GOTO_System" );
-         nOptRC = wePamms.GOTO_System( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wePammsReports", "wePamms.GOTO_System" );
+      nOptRC = wePamms.GOTO_System( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -504,8 +504,8 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
    session.setAttribute( "ZeidonError", null );
 else
 {
-   VmlOperation.SetZeidonSessionAttribute( null, task, "wePammsReports.jsp", "wePamms.PrebuildReportsPage" );
-         nOptRC = wePamms.PrebuildReportsPage( new zVIEW( vKZXMLPGO ) );
+   VmlOperation.SetZeidonSessionAttribute( null, task, "wePammsReports", "wePamms.PrebuildReportsPage" );
+   nOptRC = wePamms.PrebuildReportsPage( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -804,9 +804,8 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wePammsReports" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wePammsReports" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

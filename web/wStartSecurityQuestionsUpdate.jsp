@@ -142,8 +142,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -186,8 +186,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartSecurityQuestionsUpdate.jsp", "wStart.SET_Question1" );
-         nOptRC = wStart.SET_Question1( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartSecurityQuestionsUpdate", "wStart.SET_Question1" );
+      nOptRC = wStart.SET_Question1( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -224,8 +224,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartSecurityQuestionsUpdate.jsp", "wStart.SET_Question2" );
-         nOptRC = wStart.SET_Question2( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartSecurityQuestionsUpdate", "wStart.SET_Question2" );
+      nOptRC = wStart.SET_Question2( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -262,8 +262,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartSecurityQuestionsUpdate.jsp", "wStart.SET_Question3" );
-         nOptRC = wStart.SET_Question3( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartSecurityQuestionsUpdate", "wStart.SET_Question3" );
+      nOptRC = wStart.SET_Question3( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -300,8 +300,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartSecurityQuestionsUpdate.jsp", "wStart.UPDATE_SecurityQuestions" );
-         nOptRC = wStart.UPDATE_SecurityQuestions( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartSecurityQuestionsUpdate", "wStart.UPDATE_SecurityQuestions" );
+      nOptRC = wStart.UPDATE_SecurityQuestions( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -426,8 +426,8 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
    session.setAttribute( "ZeidonError", null );
 else
 {
-   VmlOperation.SetZeidonSessionAttribute( null, task, "wStartSecurityQuestionsUpdate.jsp", "wStart.CREATE_SecurityQuestionList" );
-         nOptRC = wStart.CREATE_SecurityQuestionList( new zVIEW( vKZXMLPGO ) );
+   VmlOperation.SetZeidonSessionAttribute( null, task, "wStartSecurityQuestionsUpdate", "wStart.CREATE_SecurityQuestionList" );
+   nOptRC = wStart.CREATE_SecurityQuestionList( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -1024,9 +1024,8 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wStartSecurityQuestionsUpdate" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wStartSecurityQuestionsUpdate" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

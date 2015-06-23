@@ -74,44 +74,6 @@ GOTO_PrecautionaryStmtDelete( View     ViewToWindow )
 
 
 private int 
-o_fnLocalBuildQual_3( View     vSubtask,
-                      zVIEW    vQualObject,
-                      int      lTempInteger_0 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterProduct" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_4( View     vSubtask,
-                      zVIEW    vQualObject,
-                      int      lTempInteger_0 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterLabelContent" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterLabelContent" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
 o_fnLocalBuildQual_5( View     vSubtask,
                       zVIEW    vQualObject,
                       int      lTempInteger_0 )
@@ -320,6 +282,44 @@ o_fnLocalBuildQual_2( View     vSubtask,
 } 
 
 
+private int 
+o_fnLocalBuildQual_3( View     vSubtask,
+                      zVIEW    vQualObject,
+                      int      lTempInteger_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterProduct" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_4( View     vSubtask,
+                      zVIEW    vQualObject,
+                      int      lTempInteger_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterLabelContent" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterLabelContent" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
 //:DIALOG OPERATION
 //:GOTO_AddUsageStatements( VIEW ViewToWindow )
 
@@ -338,6 +338,8 @@ GOTO_AddUsageStatements( View     ViewToWindow )
    SetAttributeFromString( mMasLC, "MasterLabelContent", "wAddStatementsEntityName", "M_Usage" );
    //:mMasLC.MasterLabelContent.wAddStatementsAttributeName = "Name"
    SetAttributeFromString( mMasLC, "MasterLabelContent", "wAddStatementsAttributeName", "Name" );
+   //:mMasLC.MasterLabelContent.wAddStatementsWorkText      = ""
+   SetAttributeFromString( mMasLC, "MasterLabelContent", "wAddStatementsWorkText", "" );
    //:IF mMasLC.M_UsageType.UsageType = "S"
    if ( CompareAttributeToString( mMasLC, "M_UsageType", "UsageType", "S" ) == 0 )
    { 
@@ -384,6 +386,29 @@ GOTO_AddUsageStatements( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
+//:GOTO_MarketingKeywordStmtDelete( VIEW ViewToWindow )
+
+//:   VIEW mMasLC   REGISTERED AS mMasLC
+public int 
+GOTO_MarketingKeywordStmtDelete( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:mMasLC.MasterLabelContent.wDeleteType       = "Marketing Keyword Statement"
+   SetAttributeFromString( mMasLC, "MasterLabelContent", "wDeleteType", "Marketing Keyword Statement" );
+   //:mMasLC.MasterLabelContent.wDeleteText       = mMasLC.M_InsertTextMarketing.Text 
+   SetAttributeFromAttribute( mMasLC, "MasterLabelContent", "wDeleteText", mMasLC, "M_InsertTextMarketing", "Text" );
+   //:mMasLC.MasterLabelContent.wDeleteEntityName = "M_InsertTextMarketing"
+   SetAttributeFromString( mMasLC, "MasterLabelContent", "wDeleteEntityName", "M_InsertTextMarketing" );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
 //:GOTO_MarketingStatementAdd( VIEW ViewToWindow )
 
 //:   VIEW  mMasLC REGISTERED AS mMasLC
@@ -403,6 +428,8 @@ GOTO_MarketingStatementAdd( View     ViewToWindow )
    SetAttributeFromString( mMasLC, "MasterLabelContent", "wAddStatementsAttributeName", "Text" );
    //:mMasLC.MasterLabelContent.wAddStatementsPageTitle     = "Marketing Statements"
    SetAttributeFromString( mMasLC, "MasterLabelContent", "wAddStatementsPageTitle", "Marketing Statements" );
+   //:mMasLC.MasterLabelContent.wAddStatementsWorkText      = ""
+   SetAttributeFromString( mMasLC, "MasterLabelContent", "wAddStatementsWorkText", "" );
    return( 0 );
 // END
 } 
@@ -1656,6 +1683,45 @@ GOTO_DirsForUseStatementAdd( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
+//:AcceptAddNewDU_Stmt( VIEW ViewToWindow )
+
+//:   VIEW  mMasLC   REGISTERED AS mMasLC
+public int 
+AcceptAddNewDU_Stmt( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+   //:STRING ( 256 ) szPrompt
+   String   szPrompt = null;
+   //:SHORT nRC
+   int      nRC = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:// Accept Direction for Use Statement and add new temporal one.
+   //:nRC = AcceptSubobject( mMasLC, "M_DirectionsForUseStatement" )
+   nRC = AcceptSubobject( mMasLC, "M_DirectionsForUseStatement" );
+   //:IF nRC < 0
+   if ( nRC < 0 )
+   { 
+      //:MessageSend( ViewToWindow, "", "Save And Add New Dirs for Use Statement",
+      //:             "Error saving Dirs for Use statement.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Save And Add New Dirs for Use Statement", "Error saving Dirs for Use statement.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+
+   //:CreateTemporalEntity( mMasLC, "M_DirectionsForUseStatement", zPOS_AFTER )
+   CreateTemporalEntity( mMasLC, "M_DirectionsForUseStatement", zPOS_AFTER );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
 //:GOTO_SelectRemoveDUEntries( VIEW ViewToWindow )
 
 //:   VIEW mMasLC  REGISTERED AS mMasLC
@@ -2021,41 +2087,12 @@ GOTO_StorageDispSectionUpdate( View     ViewToWindow )
 {
    zVIEW    mMasLC = new zVIEW( );
    int      RESULT = 0;
-   int      lTempInteger_0 = 0;
 
    RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
 
-   //:// Create Temporal subobject version and create a Container entry if there isn't one currently.
+   //:// Create Temporal subobject version.
    //:CreateTemporalSubobjectVersion( mMasLC, "M_StorageDisposalSection" )
    CreateTemporalSubobjectVersion( mMasLC, "M_StorageDisposalSection" );
-   //:IF mMasLC.M_StorageDisposalDrivingConVol DOES NOT EXIST
-   lTempInteger_0 = CheckExistenceOfEntity( mMasLC, "M_StorageDisposalDrivingConVol" );
-   if ( lTempInteger_0 != 0 )
-   { 
-      //:CREATE ENTITY mMasLC.M_StorageDisposalDrivingConVol  
-      RESULT = CreateEntity( mMasLC, "M_StorageDisposalDrivingConVol", zPOS_AFTER );
-   } 
-
-   //:END
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:DELETE_StorageDisposalContainer( VIEW ViewToWindow )
-
-//:   VIEW mMasLC REGISTERED AS mMasLC
-public int 
-DELETE_StorageDisposalContainer( View     ViewToWindow )
-{
-   zVIEW    mMasLC = new zVIEW( );
-   int      RESULT = 0;
-
-   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
-
-   //:DELETE ENTITY mMasLC.M_StorageDisposalDrivingConVol 
-   RESULT = DeleteEntity( mMasLC, "M_StorageDisposalDrivingConVol", zPOS_NEXT );
    return( 0 );
 // END
 } 
@@ -3385,31 +3422,12 @@ GOTO_StorageDispStatementAdd( View     ViewToWindow )
 
    //:// We are creating the new temporal entity in this operation, rather than as auto action, so that
    //:// the NotForUseType attribute can be set, since it's currently required in the database.
-   //:SET CURSOR LAST mMasLC.M_StorageDisposalStatement
+   //:SET CURSOR LAST mMasLC.M_StorageDisposalStatement  
    RESULT = SetCursorLastEntity( mMasLC, "M_StorageDisposalStatement", "" );
    //:CreateTemporalEntity( mMasLC, "M_StorageDisposalStatement", zPOS_AFTER )
    CreateTemporalEntity( mMasLC, "M_StorageDisposalStatement", zPOS_AFTER );
    //:mMasLC.M_StorageDisposalStatement.NotForUseType = "NA"
    SetAttributeFromString( mMasLC, "M_StorageDisposalStatement", "NotForUseType", "NA" );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:ADD_StorageDisposalContainer( VIEW ViewToWindow )
-
-//:   VIEW mMasLC REGISTERED AS mMasLC
-public int 
-ADD_StorageDisposalContainer( View     ViewToWindow )
-{
-   zVIEW    mMasLC = new zVIEW( );
-   int      RESULT = 0;
-
-   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
-
-   //:CREATE ENTITY mMasLC.M_StorageDisposalDrivingConVol  
-   RESULT = CreateEntity( mMasLC, "M_StorageDisposalDrivingConVol", zPOS_AFTER );
    return( 0 );
 // END
 } 
@@ -3872,26 +3890,104 @@ ConfirmAddItemsMultiple( View     ViewToWindow )
 
    RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
 
+   //:// If this is for a Keyword Text Add, we need to create/position on the specified Keyword.
+   //:IF mMasLC.MasterLabelContent.wAddStatementsEntityName = "M_InsertTextMarketing" 
+   if ( CompareAttributeToString( mMasLC, "MasterLabelContent", "wAddStatementsEntityName", "M_InsertTextMarketing" ) == 0 )
+   { 
+      //:IF mMasLC.MasterLabelContent.wAddStatementsPageTitle = ""
+      if ( CompareAttributeToString( mMasLC, "MasterLabelContent", "wAddStatementsPageTitle", "" ) == 0 )
+      { 
+         //:MessageSend( ViewToWindow, "", "Add Keyword Items",
+         //:             "A Keyword value must be specified.",
+         //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         MessageSend( ViewToWindow, "", "Add Keyword Items", "A Keyword value must be specified.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+         //:RETURN 2
+         if(8==8)return( 2 );
+      } 
+
+      //:END
+      //:SET CURSOR FIRST mMasLC.M_InsertTextKeywordMarketing 
+      //:           WHERE mMasLC.M_InsertTextKeywordMarketing.Name = mMasLC.MasterLabelContent.wAddStatementsPageTitle 
+      {StringBuilder sb_szTempString_0;
+      if ( szTempString_0 == null )
+         sb_szTempString_0 = new StringBuilder( 32 );
+      else
+         sb_szTempString_0 = new StringBuilder( szTempString_0 );
+             GetStringFromAttribute( sb_szTempString_0, mMasLC, "MasterLabelContent", "wAddStatementsPageTitle" );
+      szTempString_0 = sb_szTempString_0.toString( );}
+      RESULT = SetCursorFirstEntityByString( mMasLC, "M_InsertTextKeywordMarketing", "Name", szTempString_0, "" );
+      //:IF RESULT < zCURSOR_SET
+      if ( RESULT < zCURSOR_SET )
+      { 
+         //:CREATE ENTITY mMasLC.M_InsertTextKeywordMarketing
+         RESULT = CreateEntity( mMasLC, "M_InsertTextKeywordMarketing", zPOS_AFTER );
+         //:mMasLC.M_InsertTextKeywordMarketing.Name = mMasLC.MasterLabelContent.wAddStatementsPageTitle  
+         SetAttributeFromAttribute( mMasLC, "M_InsertTextKeywordMarketing", "Name", mMasLC, "MasterLabelContent", "wAddStatementsPageTitle" );
+      } 
+
+      //:END
+   } 
+
+   //:END
+   //:IF mMasLC.MasterLabelContent.wAddStatementsEntityName = "M_InsertTextDU" 
+   if ( CompareAttributeToString( mMasLC, "MasterLabelContent", "wAddStatementsEntityName", "M_InsertTextDU" ) == 0 )
+   { 
+      //:IF mMasLC.MasterLabelContent.wAddStatementsPageTitle = ""
+      if ( CompareAttributeToString( mMasLC, "MasterLabelContent", "wAddStatementsPageTitle", "" ) == 0 )
+      { 
+         //:MessageSend( ViewToWindow, "", "Add Keyword Items",
+         //:             "A Keyword value must be specified.",
+         //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         MessageSend( ViewToWindow, "", "Add Keyword Items", "A Keyword value must be specified.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+         //:RETURN 2
+         if(8==8)return( 2 );
+      } 
+
+      //:END
+      //:SET CURSOR FIRST mMasLC.M_InsertTextKeywordDU 
+      //:           WHERE mMasLC.M_InsertTextKeywordDU.Name = mMasLC.MasterLabelContent.wAddStatementsPageTitle 
+      {StringBuilder sb_szTempString_0;
+      if ( szTempString_0 == null )
+         sb_szTempString_0 = new StringBuilder( 32 );
+      else
+         sb_szTempString_0 = new StringBuilder( szTempString_0 );
+             GetStringFromAttribute( sb_szTempString_0, mMasLC, "MasterLabelContent", "wAddStatementsPageTitle" );
+      szTempString_0 = sb_szTempString_0.toString( );}
+      RESULT = SetCursorFirstEntityByString( mMasLC, "M_InsertTextKeywordDU", "Name", szTempString_0, "" );
+      //:IF RESULT < zCURSOR_SET
+      if ( RESULT < zCURSOR_SET )
+      { 
+         //:CREATE ENTITY mMasLC.M_InsertTextKeywordDU
+         RESULT = CreateEntity( mMasLC, "M_InsertTextKeywordDU", zPOS_AFTER );
+         //:mMasLC.M_InsertTextKeywordDU.Name = mMasLC.MasterLabelContent.wAddStatementsPageTitle  
+         SetAttributeFromAttribute( mMasLC, "M_InsertTextKeywordDU", "Name", mMasLC, "MasterLabelContent", "wAddStatementsPageTitle" );
+      } 
+
+      //:END
+   } 
+
+   //:END
+
    //:// Call operation to split text up into one or more entities, depending on the view, EntityName and 
    //:// AttributeName passed in mMasLC root work entities.
    //:SplitParagraphOnLinefeed( mMasLC.MasterLabelContent.wAddStatementsWorkText, 
    //:                          mMasLC,
    //:                          mMasLC.MasterLabelContent.wAddStatementsEntityName,
    //:                          mMasLC.MasterLabelContent.wAddStatementsAttributeName )
-   {StringBuilder sb_szTempString_0;
-   if ( szTempString_0 == null )
-      sb_szTempString_0 = new StringBuilder( 32 );
-   else
-      sb_szTempString_0 = new StringBuilder( szTempString_0 );
-       GetStringFromAttribute( sb_szTempString_0, mMasLC, "MasterLabelContent", "wAddStatementsWorkText" );
-   szTempString_0 = sb_szTempString_0.toString( );}
    {StringBuilder sb_szTempString_1;
    if ( szTempString_1 == null )
       sb_szTempString_1 = new StringBuilder( 32 );
    else
       sb_szTempString_1 = new StringBuilder( szTempString_1 );
-       GetStringFromAttribute( sb_szTempString_1, mMasLC, "MasterLabelContent", "wAddStatementsEntityName" );
+       GetStringFromAttribute( sb_szTempString_1, mMasLC, "MasterLabelContent", "wAddStatementsWorkText" );
    szTempString_1 = sb_szTempString_1.toString( );}
+   {StringBuilder sb_szTempString_0;
+   if ( szTempString_0 == null )
+      sb_szTempString_0 = new StringBuilder( 32 );
+   else
+      sb_szTempString_0 = new StringBuilder( szTempString_0 );
+       GetStringFromAttribute( sb_szTempString_0, mMasLC, "MasterLabelContent", "wAddStatementsEntityName" );
+   szTempString_0 = sb_szTempString_0.toString( );}
    {StringBuilder sb_szTempString_2;
    if ( szTempString_2 == null )
       sb_szTempString_2 = new StringBuilder( 32 );
@@ -3901,7 +3997,7 @@ ConfirmAddItemsMultiple( View     ViewToWindow )
    szTempString_2 = sb_szTempString_2.toString( );}
    {
     ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mMasLC );
-    m_ZGlobal1_Operation.SplitParagraphOnLinefeed( szTempString_0, mMasLC, szTempString_1, szTempString_2 );
+    m_ZGlobal1_Operation.SplitParagraphOnLinefeed( szTempString_1, mMasLC, szTempString_0, szTempString_2 );
     // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
    }
 
@@ -3931,8 +4027,6 @@ ConfirmAddItemsMultiple( View     ViewToWindow )
 
    //:END
    return( 0 );
-//    
-//    
 // END
 } 
 
@@ -4024,6 +4118,52 @@ ConfirmAddItemsMultipleClaims( View     ViewToWindow )
    //:END
    return( 0 );
 //    
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:GOTO_MarketingKeywordStmtAdd( VIEW ViewToWindow )
+
+//:   VIEW  mMasLC REGISTERED AS mMasLC
+public int 
+GOTO_MarketingKeywordStmtAdd( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:// Set up the work areas that define to the Add Items page that the items being added are Marketing
+   //:// Statements.
+   //:mMasLC.MasterLabelContent.wAddStatementsEntityName    = "M_InsertTextMarketing"
+   SetAttributeFromString( mMasLC, "MasterLabelContent", "wAddStatementsEntityName", "M_InsertTextMarketing" );
+   //:mMasLC.MasterLabelContent.wAddStatementsAttributeName = "Text"
+   SetAttributeFromString( mMasLC, "MasterLabelContent", "wAddStatementsAttributeName", "Text" );
+   //:mMasLC.MasterLabelContent.wAddStatementsPageTitle     = ""
+   SetAttributeFromString( mMasLC, "MasterLabelContent", "wAddStatementsPageTitle", "" );
+   //:mMasLC.MasterLabelContent.wAddStatementsWorkText      = ""
+   SetAttributeFromString( mMasLC, "MasterLabelContent", "wAddStatementsWorkText", "" );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:GOTO_DisplayGeneratedText( VIEW ViewToWindow )
+
+//:   VIEW  mMasLC REGISTERED AS mMasLC
+public int 
+GOTO_DisplayGeneratedText( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:mMasLC.MasterLabelContent.wGeneratedTextDisplay = mMasLC.M_MarketingStatement.dDisplayKeywordText  
+   SetAttributeFromAttribute( mMasLC, "MasterLabelContent", "wGeneratedTextDisplay", mMasLC, "M_MarketingStatement", "dDisplayKeywordText" );
+   return( 0 );
 // END
 } 
 

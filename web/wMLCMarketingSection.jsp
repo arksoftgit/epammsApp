@@ -223,8 +223,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -326,8 +326,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingSection.jsp", "wMLC.GOTO_MarketingStatementAdd" );
-         nOptRC = wMLC.GOTO_MarketingStatementAdd( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingSection", "wMLC.GOTO_MarketingStatementAdd" );
+      nOptRC = wMLC.GOTO_MarketingStatementAdd( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -391,8 +391,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingSection.jsp", "wMLC.GOTO_MarketingStatementDelete" );
-         nOptRC = wMLC.GOTO_MarketingStatementDelete( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingSection", "wMLC.GOTO_MarketingStatementDelete" );
+      nOptRC = wMLC.GOTO_MarketingStatementDelete( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -1119,9 +1119,8 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCMarketingSection" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wMLCMarketingSection" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

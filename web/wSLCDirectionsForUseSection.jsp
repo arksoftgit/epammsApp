@@ -208,8 +208,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -476,10 +476,13 @@ else
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
+   View lMLC = null;
+   View lSPLDLST = null;
+   View mLLD_LST = null;
    View mMasLC = null;
    View mSubLC = null;
-   View mSubreg = null;
    View mSubProd = null;
+   View mSubreg = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";
@@ -1119,9 +1122,8 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSLCDirectionsForUseSection" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSLCDirectionsForUseSection" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

@@ -228,8 +228,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -272,8 +272,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCMarketingUsageSelect.jsp", "wSLC.RemoveMarketingUsageEntries" );
-         nOptRC = wSLC.RemoveMarketingUsageEntries( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCMarketingUsageSelect", "wSLC.RemoveMarketingUsageEntries" );
+      nOptRC = wSLC.RemoveMarketingUsageEntries( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -327,8 +327,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCMarketingUsageSelect.jsp", "wSLC.SelectMarketingUsageEntries" );
-         nOptRC = wSLC.SelectMarketingUsageEntries( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCMarketingUsageSelect", "wSLC.SelectMarketingUsageEntries" );
+      nOptRC = wSLC.SelectMarketingUsageEntries( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -533,10 +533,13 @@ else
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
+   View lMLC = null;
+   View lSPLDLST = null;
+   View mLLD_LST = null;
    View mMasLC = null;
    View mSubLC = null;
-   View mSubreg = null;
    View mSubProd = null;
+   View mSubreg = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";
@@ -977,9 +980,8 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSLCMarketingUsageSelect" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSLCMarketingUsageSelect" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

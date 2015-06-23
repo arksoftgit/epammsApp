@@ -205,8 +205,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -249,8 +249,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemChemical.jsp", "wSystem.AcceptUpdateSystemChemical" );
-         nOptRC = wSystem.AcceptUpdateSystemChemical( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemChemical", "wSystem.AcceptUpdateSystemChemical" );
+      nOptRC = wSystem.AcceptUpdateSystemChemical( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -287,8 +287,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemChemical.jsp", "wSystem.UpdateAppType" );
-         nOptRC = wSystem.UpdateAppType( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemChemical", "wSystem.UpdateAppType" );
+      nOptRC = wSystem.UpdateAppType( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -320,8 +320,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemChemical.jsp", "wSystem.CancelUpdateSystemChemical" );
-         nOptRC = wSystem.CancelUpdateSystemChemical( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemChemical", "wSystem.CancelUpdateSystemChemical" );
+      nOptRC = wSystem.CancelUpdateSystemChemical( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -358,8 +358,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemChemical.jsp", "wSystem.UpdateAreasOfUse" );
-         nOptRC = wSystem.UpdateAreasOfUse( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemChemical", "wSystem.UpdateAreasOfUse" );
+      nOptRC = wSystem.UpdateAreasOfUse( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -396,8 +396,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemChemical.jsp", "wSystem.UpdateBacteria" );
-         nOptRC = wSystem.UpdateBacteria( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemChemical", "wSystem.UpdateBacteria" );
+      nOptRC = wSystem.UpdateBacteria( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -434,8 +434,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemChemical.jsp", "wSystem.UpdateFungi" );
-         nOptRC = wSystem.UpdateFungi( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemChemical", "wSystem.UpdateFungi" );
+      nOptRC = wSystem.UpdateFungi( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -472,8 +472,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemChemical.jsp", "wSystem.UpdateViruses" );
-         nOptRC = wSystem.UpdateViruses( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemChemical", "wSystem.UpdateViruses" );
+      nOptRC = wSystem.UpdateViruses( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -510,8 +510,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemChemical.jsp", "wSystem.UpdateSurface" );
-         nOptRC = wSystem.UpdateSurface( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemChemical", "wSystem.UpdateSurface" );
+      nOptRC = wSystem.UpdateSurface( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -562,8 +562,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemChemical.jsp", "wSystem.UpdateAreasOfUse" );
-         nOptRC = wSystem.UpdateAreasOfUse( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemChemical", "wSystem.UpdateAreasOfUse" );
+      nOptRC = wSystem.UpdateAreasOfUse( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -600,8 +600,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemChemical.jsp", "wSystem.UpdateAppType" );
-         nOptRC = wSystem.UpdateAppType( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemChemical", "wSystem.UpdateAppType" );
+      nOptRC = wSystem.UpdateAppType( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -638,8 +638,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemChemical.jsp", "wSystem.UpdateSurface" );
-         nOptRC = wSystem.UpdateSurface( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemChemical", "wSystem.UpdateSurface" );
+      nOptRC = wSystem.UpdateSurface( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -676,8 +676,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemChemical.jsp", "wSystem.UpdateBacteria" );
-         nOptRC = wSystem.UpdateBacteria( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemChemical", "wSystem.UpdateBacteria" );
+      nOptRC = wSystem.UpdateBacteria( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -714,8 +714,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemChemical.jsp", "wSystem.UpdateFungi" );
-         nOptRC = wSystem.UpdateFungi( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemChemical", "wSystem.UpdateFungi" );
+      nOptRC = wSystem.UpdateFungi( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -752,8 +752,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemChemical.jsp", "wSystem.UpdateViruses" );
-         nOptRC = wSystem.UpdateViruses( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemChemical", "wSystem.UpdateViruses" );
+      nOptRC = wSystem.UpdateViruses( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -790,8 +790,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemChemical.jsp", "wSystem.AcceptUpdateSystemChemical" );
-         nOptRC = wSystem.AcceptUpdateSystemChemical( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemChemical", "wSystem.AcceptUpdateSystemChemical" );
+      nOptRC = wSystem.AcceptUpdateSystemChemical( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -823,8 +823,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemChemical.jsp", "wSystem.CancelUpdateSystemChemical" );
-         nOptRC = wSystem.CancelUpdateSystemChemical( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemChemical", "wSystem.CancelUpdateSystemChemical" );
+      nOptRC = wSystem.CancelUpdateSystemChemical( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -986,8 +986,8 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
    session.setAttribute( "ZeidonError", null );
 else
 {
-   VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemChemical.jsp", "wSystem.InitSystemChemicalForUpdate" );
-         nOptRC = wSystem.InitSystemChemicalForUpdate( new zVIEW( vKZXMLPGO ) );
+   VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemChemical", "wSystem.InitSystemChemicalForUpdate" );
+   nOptRC = wSystem.InitSystemChemicalForUpdate( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -1037,20 +1037,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-<script language="JavaScript" type="text/javascript" >
-      // Javascript code entered by user for Window action prebuild.
-
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   thisLi = document.getElementById( "lmSystem" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-      // END of Javascript code entered by user.
-
-</script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSystemUpdateSystemChemical.js"></script>
 
 </head>
@@ -1190,6 +1176,7 @@ else
    View mEPA = null;
    View mOrganiz = null;
    View mUser = null;
+   View sHelp = null;
    View wWebXfer = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
@@ -1494,9 +1481,8 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSystemUpdateSystemChemical" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSystemUpdateSystemChemical" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

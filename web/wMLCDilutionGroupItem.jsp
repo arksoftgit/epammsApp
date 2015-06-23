@@ -167,8 +167,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -555,27 +555,30 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:4px;width:100px;"></div>
+<div style="height:2px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GBStorDispSections5:GroupBox */ %>
+
+<div id="GBStorDispSections5" name="GBStorDispSections5" class="listgroup"   style="float:left;position:relative; width:574px; height:36px;">  <!-- GBStorDispSections5 --> 
+
+<% /* DilutionGroupItem:Text */ %>
+
+<label class="groupbox"  id="DilutionGroupItem" name="DilutionGroupItem" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Dilution Group Item</label>
+
+
+</div>  <!--  GBStorDispSections5 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* MarketingSection3:GroupBox */ %>
 
-<div id="MarketingSection3" name="MarketingSection3" class="withborder" style="width:580px;height:84px;float:left;">  <!-- MarketingSection3 --> 
-
-
- <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp</span>
-<% /* Text5:Text */ %>
-
-<span class="listheader"  id="Text5" name="Text5" style="width:434px;height:16px;">Dilution Group Item</span>
-
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+<div id="MarketingSection3" name="MarketingSection3" class="withborder" style="width:580px;height:52px;float:left;">  <!-- MarketingSection3 --> 
 
 
 <div>  <!-- Beginning of a new line -->
@@ -586,10 +589,10 @@ else
 <table cols=0 style="width:544px;"  class="grouptable">
 
 <tr>
-<td valign="top" style="width:76px;">
+<td valign="top" style="width:44px;">
 <% /* Text4:Text */ %>
 
-<span  id="Text4" name="Text4" style="width:76px;height:16px;">Text:</span>
+<span  id="Text4" name="Text4" style="width:38px;height:16px;">Text:</span>
 
 </td>
 <td valign="top"  class="text12" style="width:426px;">
@@ -676,9 +679,8 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCDilutionGroupItem" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wMLCDilutionGroupItem" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

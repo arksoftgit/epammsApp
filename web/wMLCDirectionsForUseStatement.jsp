@@ -204,8 +204,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -307,8 +307,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseStatement.jsp", "wMLC.GOTO_SelectRemoveDUEntries" );
-         nOptRC = wMLC.GOTO_SelectRemoveDUEntries( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseStatement", "wMLC.GOTO_SelectRemoveDUEntries" );
+      nOptRC = wMLC.GOTO_SelectRemoveDUEntries( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -488,7 +488,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="AcceptAndReturn" name="AcceptAndReturn"><a href="#"  onclick="AcceptDirectionsStatement()">Accept and Return</a></li>
+       <li id="AcceptAndReturn" name="AcceptAndReturn"><a href="#"  onclick="AcceptDirectionsStatement()">Accept & Return</a></li>
 <%
    }
 %>
@@ -498,7 +498,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CancelDirectionsStatement()">Cancel and Return</a></li>
+       <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CancelDirectionsStatement()">Cancel & Return</a></li>
 <%
    }
 %>
@@ -634,34 +634,27 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* DirectionsForUseStatementGroup:GroupBox */ %>
+<% /* GBStorDispSections3:GroupBox */ %>
 
-<div id="DirectionsForUseStatementGroup" name="DirectionsForUseStatementGroup" class="withborder" style="width:830px;height:274px;float:left;">  <!-- DirectionsForUseStatementGroup --> 
+<div id="GBStorDispSections3" name="GBStorDispSections3" class="listgroup"   style="float:left;position:relative; width:780px; height:36px;">  <!-- GBStorDispSections3 --> 
+
+<% /* StatementText:Text */ %>
+
+<label class="groupbox"  id="StatementText" name="StatementText" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Directions for Use Statement</label>
 
 
- <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp</span>
-<% /* Text5:Text */ %>
-
-<span class="listheader"  id="Text5" name="Text5" style="width:434px;height:16px;">Directions for Use Statement</span>
-
+</div>  <!--  GBStorDispSections3 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
- <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
-
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox3:GroupBox */ %>
-<div id="GroupBox3" name="GroupBox3" style="float:left;width:814px;" >
+<div id="GroupBox3" name="GroupBox3" style="float:left;width:830px;" >
 
-<table cols=2 style="width:814px;"  class="grouptable">
+<table cols=2 style="width:830px;"  class="grouptable">
 
 <tr>
 <td valign="top" style="width:54px;">
@@ -757,15 +750,8 @@ else
 
 </div>  <!-- End of a new line -->
 
-
-</div>  <!--  DirectionsForUseStatementGroup --> 
-</div>  <!-- End of a new line -->
-
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
-
- <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
@@ -927,9 +913,8 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCDirectionsForUseStatement" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wMLCDirectionsForUseStatement" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

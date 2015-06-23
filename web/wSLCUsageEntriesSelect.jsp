@@ -234,8 +234,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -305,8 +305,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCUsageEntriesSelect.jsp", "wSLC.RemoveSLC_UsageEntries" );
-         nOptRC = wSLC.RemoveSLC_UsageEntries( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCUsageEntriesSelect", "wSLC.RemoveSLC_UsageEntries" );
+      nOptRC = wSLC.RemoveSLC_UsageEntries( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -341,23 +341,29 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
-      // Action Auto Object Function
+      // Action Operation
       nRC = 0;
-      View mSubLC = task.getViewByName( "mSubLC" );
-      EntityCursor cursor = mSubLC.cursor( "S_UsageType" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCUsageEntriesSelect", "wSLC.AcceptUsageTypeUpdate" );
+      nOptRC = wSLC.AcceptUsageTypeUpdate( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
       {
-         if ( cursor.isVersioned( ) )
-         {
-           cursor.acceptSubobject( );
-           nRC = 0;
-         }
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wSLC.GetWebRedirection( vKZXMLPGO );
       }
 
-      // Next Window
-      strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReturnToParent, "", "" );
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReturnToParent, "", "" );
+      }
+
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -375,8 +381,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCUsageEntriesSelect.jsp", "wSLC.SelectMLC_UsageEntries" );
-         nOptRC = wSLC.SelectMLC_UsageEntries( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCUsageEntriesSelect", "wSLC.SelectMLC_UsageEntries" );
+      nOptRC = wSLC.SelectMLC_UsageEntries( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -591,10 +597,13 @@ else
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
+   View lMLC = null;
+   View lSPLDLST = null;
+   View mLLD_LST = null;
    View mMasLC = null;
    View mSubLC = null;
-   View mSubreg = null;
    View mSubProd = null;
+   View mSubreg = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";
@@ -696,7 +705,52 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:4px;width:100px;"></div>
+<div style="height:2px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox10:GroupBox */ %>
+
+<div id="GroupBox10" name="GroupBox10"   style="float:left;position:relative; width:730px; height:26px;">  <!-- GroupBox10 --> 
+
+<% /* UsageSelectionPrompt:Text */ %>
+
+<label class="groupbox"  id="UsageSelectionPrompt" name="UsageSelectionPrompt" style="width:184px;height:16px;position:absolute;left:0px;top:4px;">Usage Selection for Type:</label>
+
+<% /* Text1:Text */ %>
+
+<label class="groupbox"  id="Text1" name="Text1" style="width:208px;height:16px;position:absolute;left:184px;top:4px;"></label>
+
+
+</div>  <!--  GroupBox10 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:4px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox9:GroupBox */ %>
+
+<div id="GroupBox9" name="GroupBox9"   style="float:left;position:relative; width:866px; height:28px;">  <!-- GroupBox9 --> 
+
+<% /* SLC_ProductText2:Text */ %>
+
+<label class="groupbox"  id="SLC_ProductText2" name="SLC_ProductText2" style="width:338px;height:16px;position:absolute;left:10px;top:12px;">Currently Selected SLC Components</label>
+
+<% /* Text3:Text */ %>
+
+<label class="groupbox"  id="Text3" name="Text3" style="width:338px;height:16px;position:absolute;left:432px;top:12px;">Potential SLC Components from MLC</label>
+
+
+</div>  <!--  GroupBox9 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:6px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:4px;float:left;"></div>   <!-- Width Spacer -->
@@ -713,23 +767,6 @@ else
 
 <div id="GroupBox1" name="GroupBox1" style="width:404px;float:left;">  <!-- GroupBox1 --> 
 
-
- <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:22px;">&nbsp</span>
-<% /* Text1:Text */ %>
-
-<span  id="Text1" name="Text1" style="width:338px;height:22px;">Currently Selected SLC Components</span>
-
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:4px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <% /* Grid1:Grid */ %>
@@ -842,7 +879,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <div>  <!-- Beginning of a new line -->
 <% /* GroupBox5:GroupBox */ %>
 
-<div id="GroupBox5" name="GroupBox5" style="width:22px;height:76px;float:left;">  <!-- GroupBox5 --> 
+<div id="GroupBox5" name="GroupBox5" style="width:22px;height:54px;float:left;">  <!-- GroupBox5 --> 
 
 
 </div>  <!--  GroupBox5 --> 
@@ -850,9 +887,6 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
-
- <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <% /* PushBtn1:PushBtn */ %>
@@ -864,7 +898,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 
  <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
+<div style="height:8px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <% /* PushBtn2:PushBtn */ %>
@@ -878,23 +912,6 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <div id="GroupBox2" name="GroupBox2" style="width:412px;float:left;">  <!-- GroupBox2 --> 
 
-
- <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:24px;">&nbsp</span>
-<% /* Text2:Text */ %>
-
-<span  id="Text2" name="Text2" style="width:306px;height:24px;">Potential SLC Components from MLC</span>
-
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <% /* Grid2:Grid */ %>
@@ -1035,9 +1052,8 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSLCUsageEntriesSelect" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSLCUsageEntriesSelect" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

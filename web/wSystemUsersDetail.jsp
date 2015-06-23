@@ -221,8 +221,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -260,8 +260,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUsersDetail.jsp", "wSystem.CancelUser" );
-         nOptRC = wSystem.CancelUser( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUsersDetail", "wSystem.CancelUser" );
+      nOptRC = wSystem.CancelUser( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -298,8 +298,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUsersDetail.jsp", "wSystem.IncludeUserPerson" );
-         nOptRC = wSystem.IncludeUserPerson( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUsersDetail", "wSystem.IncludeUserPerson" );
+      nOptRC = wSystem.IncludeUserPerson( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -336,8 +336,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUsersDetail.jsp", "wSystem.SaveUser" );
-         nOptRC = wSystem.SaveUser( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUsersDetail", "wSystem.SaveUser" );
+      nOptRC = wSystem.SaveUser( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -531,6 +531,7 @@ else
    View mEPA = null;
    View mOrganiz = null;
    View mUser = null;
+   View sHelp = null;
    View wWebXfer = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
@@ -1077,9 +1078,8 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSystemUsersDetail" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSystemUsersDetail" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

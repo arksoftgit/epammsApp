@@ -148,8 +148,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -192,8 +192,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemDeleteFeedbackComment.jsp", "wSystem.ConfirmDeleteFeedbackComment" );
-         nOptRC = wSystem.ConfirmDeleteFeedbackComment( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemDeleteFeedbackComment", "wSystem.ConfirmDeleteFeedbackComment" );
+      nOptRC = wSystem.ConfirmDeleteFeedbackComment( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -225,8 +225,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemDeleteFeedbackComment.jsp", "wSystem.CancelDeleteFeedbackComment" );
-         nOptRC = wSystem.CancelDeleteFeedbackComment( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemDeleteFeedbackComment", "wSystem.CancelDeleteFeedbackComment" );
+      nOptRC = wSystem.CancelDeleteFeedbackComment( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -277,8 +277,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemDeleteFeedbackComment.jsp", "wSystem.ConfirmDeleteFeedbackComment" );
-         nOptRC = wSystem.ConfirmDeleteFeedbackComment( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemDeleteFeedbackComment", "wSystem.ConfirmDeleteFeedbackComment" );
+      nOptRC = wSystem.ConfirmDeleteFeedbackComment( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -310,8 +310,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemDeleteFeedbackComment.jsp", "wSystem.CancelDeleteFeedbackComment" );
-         nOptRC = wSystem.CancelDeleteFeedbackComment( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemDeleteFeedbackComment", "wSystem.CancelDeleteFeedbackComment" );
+      nOptRC = wSystem.CancelDeleteFeedbackComment( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -473,8 +473,8 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
    session.setAttribute( "ZeidonError", null );
 else
 {
-   VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemDeleteFeedbackComment.jsp", "wSystem.InitFeedbackCommentForDelete" );
-         nOptRC = wSystem.InitFeedbackCommentForDelete( new zVIEW( vKZXMLPGO ) );
+   VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemDeleteFeedbackComment", "wSystem.InitFeedbackCommentForDelete" );
+   nOptRC = wSystem.InitFeedbackCommentForDelete( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -524,20 +524,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-<script language="JavaScript" type="text/javascript" >
-      // Javascript code entered by user for Window action prebuild.
-
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   thisLi = document.getElementById( "lmSystem" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-      // END of Javascript code entered by user.
-
-</script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSystemDeleteFeedbackComment.js"></script>
 
 </head>
@@ -617,6 +603,7 @@ else
    View mEPA = null;
    View mOrganiz = null;
    View mUser = null;
+   View sHelp = null;
    View wWebXfer = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
@@ -1019,9 +1006,8 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSystemDeleteFeedbackComment" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSystemDeleteFeedbackComment" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

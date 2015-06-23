@@ -142,8 +142,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -186,8 +186,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wePammsSideNavBarMain.jsp", "wePamms.CheckReportOnlyUser" );
-         nOptRC = wePamms.CheckReportOnlyUser( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wePammsSideNavBarMain", "wePamms.CheckReportOnlyUser" );
+      nOptRC = wePamms.CheckReportOnlyUser( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -241,8 +241,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wePammsSideNavBarMain.jsp", "wePamms.GOTO_System" );
-         nOptRC = wePamms.GOTO_System( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wePammsSideNavBarMain", "wePamms.GOTO_System" );
+      nOptRC = wePamms.GOTO_System( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -294,8 +294,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wePammsSideNavBarMain.jsp", "wePamms.ReturnToHomePage" );
-         nOptRC = wePamms.ReturnToHomePage( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wePammsSideNavBarMain", "wePamms.ReturnToHomePage" );
+      nOptRC = wePamms.ReturnToHomePage( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -650,9 +650,8 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wePammsSideNavBarMain" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wePammsSideNavBarMain" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

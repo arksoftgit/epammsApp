@@ -223,8 +223,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -317,8 +317,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCIngredients.jsp", "wMLC.GOTO_IngredientsStatementDelete" );
-         nOptRC = wMLC.GOTO_IngredientsStatementDelete( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCIngredients", "wMLC.GOTO_IngredientsStatementDelete" );
+      nOptRC = wMLC.GOTO_IngredientsStatementDelete( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -418,8 +418,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCIngredients.jsp", "wMLC.SaveAndReturnMLC" );
-         nOptRC = wMLC.SaveAndReturnMLC( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCIngredients", "wMLC.SaveAndReturnMLC" );
+      nOptRC = wMLC.SaveAndReturnMLC( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -456,8 +456,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCIngredients.jsp", "wMLC.SaveMLC" );
-         nOptRC = wMLC.SaveMLC( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCIngredients", "wMLC.SaveMLC" );
+      nOptRC = wMLC.SaveMLC( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -494,8 +494,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCIngredients.jsp", "wMLC.CancelAndReturnMLC" );
-         nOptRC = wMLC.CancelAndReturnMLC( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCIngredients", "wMLC.CancelAndReturnMLC" );
+      nOptRC = wMLC.CancelAndReturnMLC( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -600,8 +600,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCIngredients.jsp", "wMLC.EditPrecautionarySection" );
-         nOptRC = wMLC.EditPrecautionarySection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCIngredients", "wMLC.EditPrecautionarySection" );
+      nOptRC = wMLC.EditPrecautionarySection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -638,8 +638,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCIngredients.jsp", "wMLC.EditFirstAidSection" );
-         nOptRC = wMLC.EditFirstAidSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCIngredients", "wMLC.EditFirstAidSection" );
+      nOptRC = wMLC.EditFirstAidSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -676,8 +676,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCIngredients.jsp", "wMLC.EditEnvironmentalHazardsSection" );
-         nOptRC = wMLC.EditEnvironmentalHazardsSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCIngredients", "wMLC.EditEnvironmentalHazardsSection" );
+      nOptRC = wMLC.EditEnvironmentalHazardsSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -714,8 +714,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCIngredients.jsp", "wMLC.EditChemicalHazardsSection" );
-         nOptRC = wMLC.EditChemicalHazardsSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCIngredients", "wMLC.EditChemicalHazardsSection" );
+      nOptRC = wMLC.EditChemicalHazardsSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -769,8 +769,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCIngredients.jsp", "wMLC.EditClaimsSection" );
-         nOptRC = wMLC.EditClaimsSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCIngredients", "wMLC.EditClaimsSection" );
+      nOptRC = wMLC.EditClaimsSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -807,8 +807,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCIngredients.jsp", "wMLC.EditSurfacesSection" );
-         nOptRC = wMLC.EditSurfacesSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCIngredients", "wMLC.EditSurfacesSection" );
+      nOptRC = wMLC.EditSurfacesSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -845,8 +845,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCIngredients.jsp", "wMLC.EditAreasOfUseSection" );
-         nOptRC = wMLC.EditAreasOfUseSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCIngredients", "wMLC.EditAreasOfUseSection" );
+      nOptRC = wMLC.EditAreasOfUseSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -883,8 +883,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCIngredients.jsp", "wMLC.EditApplicationTypesSection" );
-         nOptRC = wMLC.EditApplicationTypesSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCIngredients", "wMLC.EditApplicationTypesSection" );
+      nOptRC = wMLC.EditApplicationTypesSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -1046,8 +1046,8 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
    session.setAttribute( "ZeidonError", null );
 else
 {
-   VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCIngredients.jsp", "wMLC.InitIngredientsSect" );
-         nOptRC = wMLC.InitIngredientsSect( new zVIEW( vKZXMLPGO ) );
+   VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCIngredients", "wMLC.InitIngredientsSect" );
+   nOptRC = wMLC.InitIngredientsSect( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -1432,34 +1432,37 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:8px;width:100px;"></div>
+<div style="height:2px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox1:GroupBox */ %>
+<% /* GBStorDispSections3:GroupBox */ %>
 
-<div id="GroupBox1" name="GroupBox1" style="width:786px;height:124px;float:left;">  <!-- GroupBox1 --> 
+<div id="GBStorDispSections3" name="GBStorDispSections3" class="listgroup"   style="float:left;position:relative; width:780px; height:36px;">  <!-- GBStorDispSections3 --> 
+
+<% /* IngredientsText:Text */ %>
+
+<label class="groupbox"  id="IngredientsText" name="IngredientsText" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Ingredients</label>
 
 
- <!-- This is added as a line spacer -->
-<div style="height:12px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp</span>
-<% /* OrganismClaimsStatements2:Text */ %>
-
-<span class="groupbox"  id="OrganismClaimsStatements2" name="OrganismClaimsStatements2" style="width:238px;height:16px;">Ingredients</span>
-
+</div>  <!--  GBStorDispSections3 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox1:GroupBox */ %>
+
+<div id="GroupBox1" name="GroupBox1" style="width:780px;height:80px;float:left;">  <!-- GroupBox1 --> 
+
+
  <!-- This is added as a line spacer -->
 <div style="height:12px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<span style="height:18px;">&nbsp&nbsp&nbsp</span>
+<span style="height:18px;">&nbsp&nbsp</span>
 <% /* Active Title::Text */ %>
 
 <span  id="Active Title:" name="Active Title:" style="width:118px;height:18px;">ActiveTitle:</span>
@@ -1512,10 +1515,10 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:8px;width:100px;"></div>
+<div style="height:6px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<span style="height:18px;">&nbsp&nbsp&nbsp</span>
+<span style="height:18px;">&nbsp&nbsp</span>
 <% /* InertTitle::Text */ %>
 
 <span  id="InertTitle:" name="InertTitle:" style="width:118px;height:18px;">Inert Title:</span>
@@ -1568,10 +1571,10 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:4px;width:100px;"></div>
+<div style="height:6px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp</span>
+<span style="height:16px;">&nbsp&nbsp</span>
 <% /* UnspecifiedInertPercentage::Text */ %>
 
 <span  id="UnspecifiedInertPercentage:" name="UnspecifiedInertPercentage:" style="width:210px;height:16px;">Unspecified Inert Percentage:</span>
@@ -1627,14 +1630,11 @@ else
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
- <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
-
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBIngredients:GroupBox */ %>
 
-<div id="GBIngredients" name="GBIngredients" class="listgroup"   style="float:left;position:relative; width:486px; height:40px;">  <!-- GBIngredients --> 
+<div id="GBIngredients" name="GBIngredients" class="listgroup"   style="float:left;position:relative; width:780px; height:40px;">  <!-- GBIngredients --> 
 
 <% /* IngredientsStatements:Text */ %>
 
@@ -1651,7 +1651,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
+<div style="height:2px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
@@ -1798,9 +1798,8 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCIngredients" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wMLCIngredients" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

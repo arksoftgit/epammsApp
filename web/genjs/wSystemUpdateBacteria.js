@@ -168,6 +168,25 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
+   // Prebuild action has javascript code entered by user.
+   thisLi = document.getElementById( "lmTemplate" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+
+   thisLi = document.getElementById( "lmSystem" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+
+   var oRows = document.getElementById( "GridBacteria" ).getElementsByTagName( 'tr' );
+   if ( oRows.length > 1 ) // 1 for header
+   {
+      thisLi = document.getElementById( "PBNewBacteria" );
+      thisLi.style.visibility = "hidden";
+      thisLi.style.display = "none";
+   }
+   // END of Javascript code entered by user.
+
+   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title + "%" ); }
    isWindowClosing = true;
 }
 
@@ -254,39 +273,6 @@ function ClearSelectedBacteria( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      // Javascript code entered by user.
-
-      var theForm;
-      var type;
-      var name;
-      var str;
-      var j;
-      var k;
-
-      for ( j = 0; j < document.forms.length; j++ )
-      {
-         theForm = document.forms[ j ];
-         for ( k = 0; k < theForm.length; k++ )
-         {
-            type = theForm.elements[ k ].type;
-
-            if ( type == "checkbox" )
-            {
-               name = theForm.elements[ k ].name;
-               str = name.substr( 0, 9 );
-               if ( str.match("GS_Select") )
-               {
-                  theForm.elements[ k ].checked = false;
-               }
-            }
-         }
-      }
-
-      return;
-
-
-      // END of Javascript code entered by user.
-
    }
 }
 
@@ -347,26 +333,6 @@ function InitBacteriaForUpdate( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      // Javascript code entered by user.
-
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   thisLi = document.getElementById( "lmSystem" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   var oRows = document.getElementById( "GridBacteria" ).getElementsByTagName( 'tr' );
-   if ( oRows.length > 1 ) // 1 for header
-   {
-      thisLi = document.getElementById( "PBNewBacteria" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-   }
-
-      // END of Javascript code entered by user.
-
    }
 }
 
@@ -403,39 +369,6 @@ function SelectAllBacteria( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      // Javascript code entered by user.
-
-      var theForm;
-      var type;
-      var name;
-      var str;
-      var j;
-      var k;
-
-      for ( j = 0; j < document.forms.length; j++ )
-      {
-         theForm = document.forms[ j ];
-         for ( k = 0; k < theForm.length; k++ )
-         {
-            type = theForm.elements[ k ].type;
-
-            if ( type == "checkbox" )
-            {
-               name = theForm.elements[ k ].name;
-               str = name.substr( 0, 9 );
-               if ( str.match("GS_Select") )
-               {
-                  theForm.elements[ k ].checked = true;
-               }
-            }
-         }
-      }
-
-      return;
-
-
-      // END of Javascript code entered by user.
-
    }
 }
 
@@ -524,8 +457,8 @@ function UpdateBacteria( strTagEntityKey )
 function smImportBacteriaList( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -539,8 +472,8 @@ function smImportBacteriaList( )
 function smAcceptUpdateBacteria( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -554,8 +487,8 @@ function smAcceptUpdateBacteria( )
 function smCancelUpdateBacteria( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -569,8 +502,8 @@ function smCancelUpdateBacteria( )
 function mTemplate( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -584,8 +517,8 @@ function mTemplate( )
 function mSystem( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -599,8 +532,8 @@ function mSystem( )
 function mShowFeedback( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -614,8 +547,8 @@ function mShowFeedback( )
 function mLogout( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {

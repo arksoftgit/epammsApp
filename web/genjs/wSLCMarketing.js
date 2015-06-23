@@ -168,6 +168,7 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
+   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title + "%" ); }
    isWindowClosing = true;
 }
 
@@ -231,8 +232,8 @@ function GOTO_SelectRemoveMktgStatements( )
 function smSaveAndReturnMLC( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -246,8 +247,8 @@ function smSaveAndReturnMLC( )
 function smSaveSLC( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -261,8 +262,8 @@ function smSaveSLC( )
 function smCancelAndReturnSLC( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -276,8 +277,8 @@ function smCancelAndReturnSLC( )
 function smDisplayVersionData( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -291,8 +292,8 @@ function smDisplayVersionData( )
 function smDisplayIngredientsSect( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -306,8 +307,8 @@ function smDisplayIngredientsSect( )
 function smDisplayStorDispSect( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -321,8 +322,8 @@ function smDisplayStorDispSect( )
 function smDisplayHumanHazardSect( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -336,8 +337,8 @@ function smDisplayHumanHazardSect( )
 function smDisplayPrecautionarySection( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -351,8 +352,8 @@ function smDisplayPrecautionarySection( )
 function smDisplayFirstAidSection( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -366,8 +367,8 @@ function smDisplayFirstAidSection( )
 function smDisplayHazardSection( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -381,8 +382,8 @@ function smDisplayHazardSection( )
 function smDisplayClaimsSection( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -396,8 +397,8 @@ function smDisplayClaimsSection( )
 function smDisplaySurfacesSection( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -411,8 +412,8 @@ function smDisplaySurfacesSection( )
 function smDisplayAreasOfUseSection( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -426,8 +427,8 @@ function smDisplayAreasOfUseSection( )
 function smDisplayApplicationTypesSection( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -441,8 +442,8 @@ function smDisplayApplicationTypesSection( )
 function smDisplayDirectionsUseSect( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -456,8 +457,8 @@ function smDisplayDirectionsUseSect( )
 function smDisplayMarketingSect( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {

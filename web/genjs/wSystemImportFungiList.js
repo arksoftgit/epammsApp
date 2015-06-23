@@ -168,6 +168,17 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
+   // Prebuild action has javascript code entered by user.
+   thisLi = document.getElementById( "lmTemplate" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+
+   thisLi = document.getElementById( "lmSystem" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+   // END of Javascript code entered by user.
+
+   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title + "%" ); }
    isWindowClosing = true;
 }
 
@@ -240,18 +251,6 @@ function InitImportFungiList( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      // Javascript code entered by user.
-
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   thisLi = document.getElementById( "lmSystem" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-      // END of Javascript code entered by user.
-
    }
 }
 
@@ -263,18 +262,6 @@ function SortImportList( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      // Javascript code entered by user.
-
-   var str = document.wSystemImportFungiList.Import.value;
-   var splitArray = str.split( '\n' );
-// alert( "SplitArray: " + splitArray );
-   splitArray.sort( );
-// alert( "SplitArray: " + splitArray );
-   document.wSystemImportFungiList.Import.value = splitArray.join( '\n' );
-   return;
-
-      // END of Javascript code entered by user.
-
    }
 }
 
@@ -286,26 +273,14 @@ function SortWorkList( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      // Javascript code entered by user.
-
-   var str = document.wSystemImportFungiList.Work.value;
-   var splitArray = str.split( '\n' );
-// alert( "SplitArray: " + splitArray );
-   splitArray.sort( );
-// alert( "SplitArray: " + splitArray );
-   document.wSystemImportFungiList.Work.value = splitArray.join( '\n' );
-   return;
-
-      // END of Javascript code entered by user.
-
    }
 }
 
 function smConfirmImportFungiAndReturn( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -319,8 +294,8 @@ function smConfirmImportFungiAndReturn( )
 function smImportFungiFromFile( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -334,8 +309,8 @@ function smImportFungiFromFile( )
 function smCancelImportFungiAndReturn( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -349,8 +324,8 @@ function smCancelImportFungiAndReturn( )
 function mTemplate( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -364,8 +339,8 @@ function mTemplate( )
 function mSystem( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -379,8 +354,8 @@ function mSystem( )
 function mShowFeedback( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -394,8 +369,8 @@ function mShowFeedback( )
 function mLogout( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {

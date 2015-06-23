@@ -166,8 +166,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -205,8 +205,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemSysDefault.jsp", "wSystem.AddSysDef" );
-         nOptRC = wSystem.AddSysDef( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemSysDefault", "wSystem.AddSysDef" );
+      nOptRC = wSystem.AddSysDef( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -265,8 +265,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemSysDefault.jsp", "wSystem.DeletePreSysDef" );
-         nOptRC = wSystem.DeletePreSysDef( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemSysDefault", "wSystem.DeletePreSysDef" );
+      nOptRC = wSystem.DeletePreSysDef( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -325,8 +325,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemSysDefault.jsp", "wSystem.UpdateSysDflt" );
-         nOptRC = wSystem.UpdateSysDflt( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemSysDefault", "wSystem.UpdateSysDflt" );
+      nOptRC = wSystem.UpdateSysDflt( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -551,8 +551,8 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
    session.setAttribute( "ZeidonError", null );
 else
 {
-   VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemSysDefault.jsp", "wSystem.InitSysDefaults" );
-         nOptRC = wSystem.InitSysDefaults( new zVIEW( vKZXMLPGO ) );
+   VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemSysDefault", "wSystem.InitSysDefaults" );
+   nOptRC = wSystem.InitSysDefaults( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -708,6 +708,7 @@ else
    View mEPA = null;
    View mOrganiz = null;
    View mUser = null;
+   View sHelp = null;
    View wWebXfer = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
@@ -965,9 +966,8 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSystemSysDefault" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSystemSysDefault" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

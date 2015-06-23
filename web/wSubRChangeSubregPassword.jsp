@@ -211,8 +211,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -250,8 +250,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRChangeSubregPassword.jsp", "wSubR.CancelChangeSubregPassword" );
-         nOptRC = wSubR.CancelChangeSubregPassword( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRChangeSubregPassword", "wSubR.CancelChangeSubregPassword" );
+      nOptRC = wSubR.CancelChangeSubregPassword( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -288,8 +288,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRChangeSubregPassword.jsp", "wSubR.ConfirmChangeSubregPassword" );
-         nOptRC = wSubR.ConfirmChangeSubregPassword( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRChangeSubregPassword", "wSubR.ConfirmChangeSubregPassword" );
+      nOptRC = wSubR.ConfirmChangeSubregPassword( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -340,8 +340,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRChangeSubregPassword.jsp", "wSubR.ConfirmChangeSubregPassword" );
-         nOptRC = wSubR.ConfirmChangeSubregPassword( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRChangeSubregPassword", "wSubR.ConfirmChangeSubregPassword" );
+      nOptRC = wSubR.ConfirmChangeSubregPassword( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -373,8 +373,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRChangeSubregPassword.jsp", "wSubR.CancelChangeSubregPassword" );
-         nOptRC = wSubR.CancelChangeSubregPassword( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRChangeSubregPassword", "wSubR.CancelChangeSubregPassword" );
+      nOptRC = wSubR.CancelChangeSubregPassword( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -485,8 +485,8 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
    session.setAttribute( "ZeidonError", null );
 else
 {
-   VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRChangeSubregPassword.jsp", "wSubR.InitChangeSubregPassword" );
-         nOptRC = wSubR.InitChangeSubregPassword( new zVIEW( vKZXMLPGO ) );
+   VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRChangeSubregPassword", "wSubR.InitChangeSubregPassword" );
+   nOptRC = wSubR.InitChangeSubregPassword( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -536,36 +536,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-<script language="JavaScript" type="text/javascript" >
-      // Javascript code entered by user for Window action prebuild.
-
-   // We knock out Login and Template as options.
-   thisLi = document.getElementById( "lmLogin" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   if ( keyRole == "S" )
-   {
-      thisLi = document.getElementById( "lmSubregistrants" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-      thisLi = document.getElementById( "lmTrackingNotificationCompliance" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-   }
-   else
-   {
-      thisLi = document.getElementById( "lmStateRegistrations" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-   }
-
-      // END of Javascript code entered by user.
-
-</script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSubRChangeSubregPassword.js"></script>
 
 </head>
@@ -1011,9 +981,8 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSubRChangeSubregPassword" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSubRChangeSubregPassword" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

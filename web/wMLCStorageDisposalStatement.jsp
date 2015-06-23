@@ -186,8 +186,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -230,8 +230,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCStorageDisposalStatement.jsp", "wMLC.AcceptAddNewStorDispStmt" );
-         nOptRC = wMLC.AcceptAddNewStorDispStmt( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCStorageDisposalStatement", "wMLC.AcceptAddNewStorDispStmt" );
+      nOptRC = wMLC.AcceptAddNewStorDispStmt( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -322,8 +322,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCStorageDisposalStatement.jsp", "wMLC.CleanStorDispStmtHTML" );
-         nOptRC = wMLC.CleanStorDispStmtHTML( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCStorageDisposalStatement", "wMLC.CleanStorDispStmtHTML" );
+      nOptRC = wMLC.CleanStorDispStmtHTML( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -880,9 +880,8 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCStorageDisposalStatement" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wMLCStorageDisposalStatement" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

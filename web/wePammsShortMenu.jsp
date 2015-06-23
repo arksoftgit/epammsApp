@@ -142,8 +142,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -496,9 +496,8 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wePammsShortMenu" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wePammsShortMenu" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

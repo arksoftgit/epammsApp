@@ -170,6 +170,7 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
+   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title + "%" ); }
    isWindowClosing = true;
 }
 
@@ -219,21 +220,6 @@ function AcceptStorDispSect( )
    }
 }
 
-function ADD_StorageDisposalContainer( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCStorageDisposalSection.zAction.value = "ADD_StorageDisposalContainer";
-      document.wMLCStorageDisposalSection.submit( );
-   }
-}
-
 function CancelStorDispSect( )
 {
 
@@ -260,21 +246,6 @@ function CleanStorDispStmtHTML( )
       _DisableFormElements( true );
 
       document.wMLCStorageDisposalSection.zAction.value = "CleanStorDispStmtHTML";
-      document.wMLCStorageDisposalSection.submit( );
-   }
-}
-
-function DELETE_StorageDisposalContainer( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCStorageDisposalSection.zAction.value = "DELETE_StorageDisposalContainer";
       document.wMLCStorageDisposalSection.submit( );
    }
 }

@@ -170,6 +170,7 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
+   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title + "%" ); }
    isWindowClosing = true;
 }
 
@@ -245,8 +246,8 @@ function GOTO_EnvironmentHazardsAdd( )
 function smSaveAndReturnMLC( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -260,8 +261,8 @@ function smSaveAndReturnMLC( )
 function smSaveMLC( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -275,8 +276,8 @@ function smSaveMLC( )
 function smCancelAndReturnMLC( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -290,8 +291,8 @@ function smCancelAndReturnMLC( )
 function smEditMasterLabelVersionData( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -305,8 +306,8 @@ function smEditMasterLabelVersionData( )
 function smEditIngredientsSect( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -320,8 +321,8 @@ function smEditIngredientsSect( )
 function smEditStorDispSect( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -335,8 +336,8 @@ function smEditStorDispSect( )
 function smEditHumanHazardSect( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -350,8 +351,8 @@ function smEditHumanHazardSect( )
 function smEditPrecautionarySection( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -365,8 +366,8 @@ function smEditPrecautionarySection( )
 function smEditFirstAidSect( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -380,8 +381,8 @@ function smEditFirstAidSect( )
 function smEditEnvironmentalHazardSection( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -395,8 +396,8 @@ function smEditEnvironmentalHazardSection( )
 function smEditChemicalHazardsSection( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -410,8 +411,8 @@ function smEditChemicalHazardsSection( )
 function smGOTO_DilutionEntries( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -425,8 +426,8 @@ function smGOTO_DilutionEntries( )
 function smEditClaimsSection( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -440,8 +441,8 @@ function smEditClaimsSection( )
 function smEditSurfacesSection( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -455,8 +456,8 @@ function smEditSurfacesSection( )
 function smEditAreasOfUseSection( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -470,8 +471,8 @@ function smEditAreasOfUseSection( )
 function smEditApplicationTypesSection( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -485,8 +486,8 @@ function smEditApplicationTypesSection( )
 function smGOTO_ClaimsFootnote( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -500,8 +501,8 @@ function smGOTO_ClaimsFootnote( )
 function smEditDirectionsUseSect( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -515,8 +516,8 @@ function smEditDirectionsUseSect( )
 function smEditMarketingSect( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {

@@ -203,8 +203,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -242,8 +242,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemSystem.jsp", "wSystem.CancelSystemProperties" );
-         nOptRC = wSystem.CancelSystemProperties( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemSystem", "wSystem.CancelSystemProperties" );
+      nOptRC = wSystem.CancelSystemProperties( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -307,8 +307,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemSystem.jsp", "wSystem.CopyToNewSystemChemical" );
-         nOptRC = wSystem.CopyToNewSystemChemical( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemSystem", "wSystem.CopyToNewSystemChemical" );
+      nOptRC = wSystem.CopyToNewSystemChemical( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -372,8 +372,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemSystem.jsp", "wSystem.DeleteSystemChemical" );
-         nOptRC = wSystem.DeleteSystemChemical( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemSystem", "wSystem.DeleteSystemChemical" );
+      nOptRC = wSystem.DeleteSystemChemical( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -437,8 +437,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemSystem.jsp", "wSystem.DeleteSystemKeyword" );
-         nOptRC = wSystem.DeleteSystemKeyword( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemSystem", "wSystem.DeleteSystemKeyword" );
+      nOptRC = wSystem.DeleteSystemKeyword( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -475,8 +475,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemSystem.jsp", "wSystem.NewSystemChemical" );
-         nOptRC = wSystem.NewSystemChemical( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemSystem", "wSystem.NewSystemChemical" );
+      nOptRC = wSystem.NewSystemChemical( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -513,8 +513,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemSystem.jsp", "wSystem.NewSystemKeyword" );
-         nOptRC = wSystem.NewSystemKeyword( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemSystem", "wSystem.NewSystemKeyword" );
+      nOptRC = wSystem.NewSystemKeyword( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -551,8 +551,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemSystem.jsp", "wSystem.AcceptSystemProperties" );
-         nOptRC = wSystem.AcceptSystemProperties( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemSystem", "wSystem.AcceptSystemProperties" );
+      nOptRC = wSystem.AcceptSystemProperties( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -616,8 +616,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemSystem.jsp", "wSystem.UpdateSystemChemical" );
-         nOptRC = wSystem.UpdateSystemChemical( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemSystem", "wSystem.UpdateSystemChemical" );
+      nOptRC = wSystem.UpdateSystemChemical( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -681,8 +681,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemSystem.jsp", "wSystem.UpdateSystemKeyword" );
-         nOptRC = wSystem.UpdateSystemKeyword( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemSystem", "wSystem.UpdateSystemKeyword" );
+      nOptRC = wSystem.UpdateSystemKeyword( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -733,8 +733,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemSystem.jsp", "wSystem.AcceptSystemProperties" );
-         nOptRC = wSystem.AcceptSystemProperties( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemSystem", "wSystem.AcceptSystemProperties" );
+      nOptRC = wSystem.AcceptSystemProperties( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -766,8 +766,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemSystem.jsp", "wSystem.CancelSystemProperties" );
-         nOptRC = wSystem.CancelSystemProperties( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemSystem", "wSystem.CancelSystemProperties" );
+      nOptRC = wSystem.CancelSystemProperties( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -929,8 +929,8 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
    session.setAttribute( "ZeidonError", null );
 else
 {
-   VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemSystem.jsp", "wSystem.InitSystemProperties" );
-         nOptRC = wSystem.InitSystemProperties( new zVIEW( vKZXMLPGO ) );
+   VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemSystem", "wSystem.InitSystemProperties" );
+   nOptRC = wSystem.InitSystemProperties( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -982,20 +982,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-<script language="JavaScript" type="text/javascript" >
-      // Javascript code entered by user for Window action prebuild.
-
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   thisLi = document.getElementById( "lmSystem" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-      // END of Javascript code entered by user.
-
-</script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSystemSystem.js"></script>
 
 </head>
@@ -1080,6 +1066,7 @@ else
    View mEPA = null;
    View mOrganiz = null;
    View mUser = null;
+   View sHelp = null;
    View wWebXfer = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
@@ -1541,9 +1528,8 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSystemSystem" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSystemSystem" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

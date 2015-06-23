@@ -267,8 +267,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -311,8 +311,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProduct.jsp", "wPrimR.AcceptUpdateMasterProduct" );
-         nOptRC = wPrimR.AcceptUpdateMasterProduct( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProduct", "wPrimR.AcceptUpdateMasterProduct" );
+      nOptRC = wPrimR.AcceptUpdateMasterProduct( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -344,8 +344,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProduct.jsp", "wPrimR.CancelNewMasterProduct" );
-         nOptRC = wPrimR.CancelNewMasterProduct( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProduct", "wPrimR.CancelNewMasterProduct" );
+      nOptRC = wPrimR.CancelNewMasterProduct( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -377,8 +377,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProduct.jsp", "wPrimR.CancelUpdateMasterProduct" );
-         nOptRC = wPrimR.CancelUpdateMasterProduct( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProduct", "wPrimR.CancelUpdateMasterProduct" );
+      nOptRC = wPrimR.CancelUpdateMasterProduct( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -442,8 +442,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProduct.jsp", "wPrimR.DeleteMasterProductContent" );
-         nOptRC = wPrimR.DeleteMasterProductContent( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProduct", "wPrimR.DeleteMasterProductContent" );
+      nOptRC = wPrimR.DeleteMasterProductContent( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -480,8 +480,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProduct.jsp", "wPrimR.MoveMasterProductContentDown" );
-         nOptRC = wPrimR.MoveMasterProductContentDown( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProduct", "wPrimR.MoveMasterProductContentDown" );
+      nOptRC = wPrimR.MoveMasterProductContentDown( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -518,8 +518,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProduct.jsp", "wPrimR.MoveMasterProductContentUp" );
-         nOptRC = wPrimR.MoveMasterProductContentUp( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProduct", "wPrimR.MoveMasterProductContentUp" );
+      nOptRC = wPrimR.MoveMasterProductContentUp( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -556,8 +556,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProduct.jsp", "wPrimR.NewMasterProductContent" );
-         nOptRC = wPrimR.NewMasterProductContent( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProduct", "wPrimR.NewMasterProductContent" );
+      nOptRC = wPrimR.NewMasterProductContent( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -621,8 +621,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProduct.jsp", "wPrimR.UpdateMasterProductContent" );
-         nOptRC = wPrimR.UpdateMasterProductContent( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProduct", "wPrimR.UpdateMasterProductContent" );
+      nOptRC = wPrimR.UpdateMasterProductContent( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -725,8 +725,8 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProduct.jsp", "wStartUp.ProductManagement" );
-         nOptRC = wStartUp.ProductManagement( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProduct", "wStartUp.ProductManagement" );
+      nOptRC = wStartUp.ProductManagement( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -743,7 +743,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wPrimR.SetWebRedirection( vKZXMLPGO, wPrimR.zWAB_StartTopWindow, "wSPLD", "SubregProductsList" );
+         strNextJSP_Name = wPrimR.SetWebRedirection( vKZXMLPGO, wPrimR.zWAB_StartTopWindow, "wSLC", "SubregProductsList" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -764,8 +764,8 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProduct.jsp", "wStartUp.SubregistrantManagement" );
-         nOptRC = wStartUp.SubregistrantManagement( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProduct", "wStartUp.SubregistrantManagement" );
+      nOptRC = wStartUp.SubregistrantManagement( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -803,8 +803,8 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProduct.jsp", "wStartUp.TrackingNotificationCompliance" );
-         nOptRC = wStartUp.TrackingNotificationCompliance( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProduct", "wStartUp.TrackingNotificationCompliance" );
+      nOptRC = wStartUp.TrackingNotificationCompliance( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -842,8 +842,8 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProduct.jsp", "wStartUp.StateRegistrations" );
-         nOptRC = wStartUp.StateRegistrations( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProduct", "wStartUp.StateRegistrations" );
+      nOptRC = wStartUp.StateRegistrations( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -881,8 +881,8 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProduct.jsp", "wStartUp.MarketingFulfillment" );
-         nOptRC = wStartUp.MarketingFulfillment( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProduct", "wStartUp.MarketingFulfillment" );
+      nOptRC = wStartUp.MarketingFulfillment( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -920,8 +920,8 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProduct.jsp", "wStartUp.WebDevelopment" );
-         nOptRC = wStartUp.WebDevelopment( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProduct", "wStartUp.WebDevelopment" );
+      nOptRC = wStartUp.WebDevelopment( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -946,7 +946,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mAdministration" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "mCompanyProfile" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wPrimRUpdateMasterProduct", strActionToProcess );
@@ -954,8 +954,8 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProduct.jsp", "wStartUp.PrimaryRegistrantCompanySetup" );
-         nOptRC = wStartUp.PrimaryRegistrantCompanySetup( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProduct", "wStartUp.PrimaryRegistrantCompanySetup" );
+      nOptRC = wStartUp.PrimaryRegistrantCompanySetup( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -993,8 +993,8 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProduct.jsp", "wStartUp.ProcessLogin" );
-         nOptRC = wStartUp.ProcessLogin( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProduct", "wStartUp.ProcessLogin" );
+      nOptRC = wStartUp.ProcessLogin( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -1105,8 +1105,8 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
    session.setAttribute( "ZeidonError", null );
 else
 {
-   VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProduct.jsp", "wPrimR.InitMasterProductForUpdate" );
-         nOptRC = wPrimR.InitMasterProductForUpdate( new zVIEW( vKZXMLPGO ) );
+   VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRUpdateMasterProduct", "wPrimR.InitMasterProductForUpdate" );
+   nOptRC = wPrimR.InitMasterProductForUpdate( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -1177,7 +1177,7 @@ else
        <li id="lmStateRegistrations" name="lmStateRegistrations" ><a href="#" onclick="mStateRegistrations()">State Registrations</a></li>
        <li id="lmMarketingFulfillment" name="lmMarketingFulfillment" ><a href="#" onclick="mMarketingFulfillment()">Marketing/Fulfillment</a></li>
        <li id="lmWebDevelopment" name="lmWebDevelopment" ><a href="#" onclick="mWebDevelopment()">Web Development</a></li>
-       <li id="lmCompanyProfile" name="lmCompanyProfile" ><a href="#" onclick="mAdministration()">Company Profile</a></li>
+       <li id="lmCompanyProfile" name="lmCompanyProfile" ><a href="#" onclick="mCompanyProfile()">Company Profile</a></li>
        <li id="lmLogin" name="lmLogin" ><a href="#" onclick="mLogin()">Login</a></li>
        <li id="lmLogout" name="lmLogout" ><a href="#" onclick="mLogout()">Logout</a></li>
    </ul>
@@ -1897,9 +1897,8 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wPrimRUpdateMasterProduct" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wPrimRUpdateMasterProduct" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

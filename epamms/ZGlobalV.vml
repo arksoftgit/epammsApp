@@ -28,7 +28,7 @@ SetDynamicBannerName( VIEW  ViewToWindow,
    GET VIEW KZXMLPGO NAMED "KZXMLPGO"
 
    IF KZXMLPGO != 0
-      // We should have at most one DynamicBannerName entity, so check first to see if it exists.
+      // We should ever have at most one DynamicBannerName entity, so check first to see if it exists.
       SET CURSOR FIRST KZXMLPGO.DynamicBannerName
       IF RESULT < zCURSOR_SET
          CREATE ENTITY KZXMLPGO.DynamicBannerName
@@ -541,19 +541,14 @@ AcceptSubLC_TemporalSubobject( VIEW  ViewToWindow,
    STRING ( 1 )   szSelected
    INTEGER lID
    SHORT   nRC
-
    IF szEntityName != "" AND mSubLC != 0
-
       IF szEntityName = "SI_FirstAidSection" OR
          szEntityName = "SI_PrecautionarySection" OR
          szEntityName = "SI_HazardSection" OR
          szEntityName = "SI_UsageList"
-
          szEntitySection = szEntityName
          CreateViewFromView( mTempLC, mSubLC )
-
          IF szEntitySection = "SI_UsageList"
-
             nRC = SetCursorFirstEntity( mTempLC, szEntitySection, "" )
             LOOP WHILE nRC = 0
                AcceptSubobject( mTempLC, szEntitySection )
@@ -564,13 +559,10 @@ AcceptSubLC_TemporalSubobject( VIEW  ViewToWindow,
                   GetStringFromAttribute( szSelected, mTempLC, szEntitySection, "Selected" )
                   mTempLC.S_Usage.Selected = szSelected
                END
-
                ExcludeEntity( mTempLC, szEntitySection, zREPOS_NONE )
                nRC = SetCursorFirstEntity( mTempLC, szEntitySection, "" )
             END
-
          ELSE
-
             IF szEntitySection = "SI_FirstAidSection"
                szEntityStatement = "S_FirstAidStatement"
             ELSE
@@ -582,7 +574,6 @@ AcceptSubLC_TemporalSubobject( VIEW  ViewToWindow,
             END
             END
             END
-
             nRC = SetCursorFirstEntity( mTempLC, szEntitySection, "" )
             LOOP WHILE nRC = 0
                GetIntegerFromAttribute( lID, mTempLC, szEntitySection, "ID" )
@@ -595,10 +586,8 @@ AcceptSubLC_TemporalSubobject( VIEW  ViewToWindow,
             // DisplayEntityInstance( mTempLC, szEntitySection )
                nRC = SetCursorFirstEntity( mTempLC, szEntityStatement, "" )
                LOOP WHILE nRC = 0
-
                // DisplayEntityInstance( mTempLC, szEntityStatement )
                // TraceLineS( "", "" )
-
                // nRC = SetCursorFirstEntityByEntityCsr( mTempLC, "S_GeneralStatement", mTempLC, szEntityStatement, "" )
                   GetIntegerFromAttribute( lID, mTempLC, szEntityStatement, "ID" )
                   nRC = SetCursorFirstEntityByInteger( mTempLC, "S_GeneralStatement", "ID", lID, "" )
@@ -613,7 +602,6 @@ AcceptSubLC_TemporalSubobject( VIEW  ViewToWindow,
                      IF szSelected = ""
                         szSelected = "N"
                      END
-
                      mTempLC.S_GeneralStatement.Selected = szSelected
                   // TraceLineS( "After set matching ////////////////* selected: ", szSelected )
                   // DisplayEntityInstance( mTempLC, "S_GeneralStatement" )
@@ -624,22 +612,16 @@ AcceptSubLC_TemporalSubobject( VIEW  ViewToWindow,
                      MessageSend( ViewToWindow, "", szEntitySection, szFullComment,
                                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
                   END
-
                   nRC = SetCursorNextEntity( mTempLC, szEntityStatement, "" )
-
                END
-
                ExcludeEntity( mTempLC, szEntitySection, zREPOS_NONE )
                nRC = SetCursorFirstEntity( mTempLC, szEntitySection, "" )
             END
-
          END
-
          DropView( mTempLC )
       ELSE
          AcceptSubobject( mSubLC, szEntityName )
       END
-
       IF bCommit = TRUE
          MiSetInstanceUpdateFlag( mSubLC, TRUE )  // here because the update flag was not always set automatically
          COMMIT mSubLC
@@ -647,17 +629,12 @@ AcceptSubLC_TemporalSubobject( VIEW  ViewToWindow,
       ELSE
          szFullComment = "Accept"
       END
-
       szFullComment = szFullComment + " mSubLC." + szEntityName + " ========================> "
-
       wWebXfer.Root.CurrentTemporalEntity = ""
    // MessageSend( ViewToWindow, "", szEntityName, szFullComment,
    //              zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-
    ELSE
-
       szFullComment = "Nothing to accept mSubLC." + szEntityName + "  //////////////////////////////*> "
-
    END*/
 
 // TraceLineS( szFullComment, szComment )
@@ -1452,5 +1429,120 @@ InsertMappingWordsIntoString( VIEW mSPLDef BASED ON LOD mSPLDef,
        zstrcpy( pchString, pchToStringHold );  // copy data back into original string
        SysFreeMemory( lMemHandle  );
     ****/
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GenerateKeywordTextIntoString
+**    
+*************************************************************************************************/
+GLOBAL OPERATION
+GenerateKeywordTextIntoString( VIEW mMasLC BASED ON LOD mMasLC,
+                               STRING ( 10000 ) szSourceString,
+                               STRING ( 32 ) szKeywordEntityName,
+                               STRING ( 32 ) szKeywordTextEntityName,
+                               STRING ( 32 ) szSeparatorCharacters )
+
+   VIEW mMasLC2 BASED ON LOD mMasLC
+   VIEW mMasLC3 BASED ON LOD mMasLC
+   STRING ( 10000 ) szToString
+   STRING ( 32 )    szKeywordName
+   STRING ( 32 )    szAttributeType
+   STRING ( 100 )   KeywordValue
+   STRING ( 100 )   szInsertValue
+   STRING ( 1 )     szSelectUsageType
+   INTEGER Count
+   INTEGER SourceIndex
+   INTEGER Length
+   INTEGER TypeLength
+   INTEGER SourceStringLength
+   INTEGER MoveStringLength
+   INTEGER TargetOffset
+   INTEGER SourceOffset
+   INTEGER TempLength
+   SHORT   nRC
+   
+   // Insert Keyword text items into a position in szStringArea that is identified by the Keyword.
+   // The entries inserted will be separated by one or more characters as identified by the variable szSeparatorCharacters.
+   // After determining the position of the insertion, we will loop through Keyword entries, formatting each entry as we go.
+TraceLineS( "### Insert szKeywordEntityName: ", szKeywordEntityName )
+TraceLineS( "### Insert szKeywordTextEntityName: ", szKeywordTextEntityName )
+   
+   SourceIndex  = 1
+   SourceOffset = 1
+   MoveStringLength = 1
+   szToString = ""
+   Length = zGetStringLen( szSourceString )
+   Length = Length - 4    // We need to back off the end of the string so that the two character compare doesn't go beyond the string.
+   LOOP WHILE SourceIndex <= Length
+      IF szSourceString[SourceIndex:2] = "{{"
+      
+         // First copy over the characters we've just skipped over and reset length (unless {{ are first two characters).
+         // ZeidonStringCopy( Target, TargetOffset, TargetMaxToReceive, Source, SourceOffset, NoCharsToCopy, TargetMaxLength )
+         IF SourceIndex > 1
+            TargetOffset = zstrlen( szToString )
+            TargetOffset = TargetOffset + 1
+            MoveStringLength = MoveStringLength - 1
+            ZeidonStringCopy( szToString, TargetOffset, 5000, szSourceString, SourceOffset, MoveStringLength, 10000 )
+            SourceOffset = SourceOffset + MoveStringLength   // Skip past characters just moved.
+            MoveStringLength = 0
+         END
+         
+         // Parse the Usage Type out of the string of the form {{xxxxx}}.
+         SourceIndex  = SourceIndex + 2
+         TypeLength  = 0
+         TempLength = Length + 4  // We need to add the characters back to the length in case the Type is at the end of the Source.
+         LOOP WHILE szSourceString[SourceIndex:2] != "}}" AND TypeLength <= 32 AND SourceIndex < TempLength
+            SourceIndex = SourceIndex + 1
+            TypeLength  = TypeLength + 1
+         END
+         SourceOffset = SourceOffset + 2  // Skip past closing double parens and length of keyword.
+         ZeidonStringCopy( szKeywordName, 1, 50, szSourceString, SourceOffset, TypeLength, 100 )
+         SourceIndex = SourceIndex + 2
+         SourceOffset = SourceOffset + TypeLength + 2  // Skip past closing double parens and length of keyword.
+  TraceLineS( "### szKeywordName: ", szKeywordName )
+         
+         // Copy any Keyword Text entries for the specified Keyword.
+         // Look for a Keyword entry that matches the one parsed out in text.
+         CreateViewFromView( mMasLC2, mMasLC )
+         nRC = SetCursorFirstEntityByString( mMasLC2, szKeywordEntityName, "Name", szKeywordName, "" )
+         IF nRC >= zCURSOR_SET
+            // There are Text entries for the Keyword specified, so loop through all.
+  TraceLineS( "### Keyword Found ", "" )
+            Count = 0
+            nRC = SetCursorFirstEntity( mMasLC2, szKeywordTextEntityName, "" )
+            LOOP WHILE nRC >= zCURSOR_SET
+               Count = Count + 1
+               GetStringFromAttribute( KeywordValue, mMasLC2, szKeywordTextEntityName, "Text" )
+               IF Count > 1
+                  // If szSeparatorCharacters are ", ", substitute " and " for the separator characters before the last
+                  // Usage entry.
+                  CreateViewFromView( mMasLC3, mMasLC2 )
+                  nRC = SetCursorNextEntity( mMasLC3, szKeywordTextEntityName, "" )
+                  IF nRC < zCURSOR_SET
+                     szToString = szToString + " and "
+                  ELSE
+                     szToString = szToString + szSeparatorCharacters
+                  END
+                  DropView( mMasLC3 )
+               END
+               szToString = szToString + KeywordValue
+               nRC = SetCursorNextEntity( mMasLC2, szKeywordTextEntityName, "" )
+            END
+         END
+      END
+      
+      SourceIndex      = SourceIndex + 1
+      MoveStringLength = MoveStringLength + 1
+   END
+   
+   // Move in remaining characters.
+   MoveStringLength = MoveStringLength + 10    // Add extra characters to length as above was not calculating them correctly.
+   TargetOffset = zstrlen( szToString )
+   TargetOffset = TargetOffset + 1
+   ZeidonStringCopy( szToString, TargetOffset, 5000, szSourceString, SourceOffset, MoveStringLength, 10000 )
+   szSourceString = szToString
+   DropView( mMasLC2 )
 
 END

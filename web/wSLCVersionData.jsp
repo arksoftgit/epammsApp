@@ -36,8 +36,8 @@ public int DoInputMapping( HttpServletRequest request,
    Task task = objectEngine.getTaskById( taskId );
 
    View mSubLC = null;
-   View mSubreg = null;
    View mSubProd = null;
+   View mSubreg = null;
    View vGridTmp = null; // temp view to grid view
    View vRepeatingGrp = null; // temp view to repeating group view
    String strDateFormat = "";
@@ -102,13 +102,13 @@ public int DoInputMapping( HttpServletRequest request,
 
    }
 
-   mSubreg = task.getViewByName( "mSubreg" );
-   if ( VmlOperation.isValid( mSubreg ) )
+   mSubProd = task.getViewByName( "mSubProd" );
+   if ( VmlOperation.isValid( mSubProd ) )
    {
    }
 
-   mSubProd = task.getViewByName( "mSubProd" );
-   if ( VmlOperation.isValid( mSubProd ) )
+   mSubreg = task.getViewByName( "mSubreg" );
+   if ( VmlOperation.isValid( mSubreg ) )
    {
    }
 
@@ -198,8 +198,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -256,8 +256,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wSLC.SaveSLC" );
-         nOptRC = wSLC.SaveSLC( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData", "wSLC.SaveSLC" );
+      nOptRC = wSLC.SaveSLC( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -294,8 +294,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wSLC.SaveSLC" );
-         nOptRC = wSLC.SaveSLC( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData", "wSLC.SaveSLC" );
+      nOptRC = wSLC.SaveSLC( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -332,8 +332,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wSLC.CancelAndReturnSLC" );
-         nOptRC = wSLC.CancelAndReturnSLC( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData", "wSLC.CancelAndReturnSLC" );
+      nOptRC = wSLC.CancelAndReturnSLC( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -438,8 +438,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wSLC.DisplayPrecautionarySection" );
-         nOptRC = wSLC.DisplayPrecautionarySection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData", "wSLC.DisplayPrecautionarySection" );
+      nOptRC = wSLC.DisplayPrecautionarySection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -476,8 +476,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wSLC.DisplayFirstAidSection" );
-         nOptRC = wSLC.DisplayFirstAidSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData", "wSLC.DisplayFirstAidSection" );
+      nOptRC = wSLC.DisplayFirstAidSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -514,8 +514,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wSLC.DisplayHazardsSection" );
-         nOptRC = wSLC.DisplayHazardsSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData", "wSLC.DisplayHazardsSection" );
+      nOptRC = wSLC.DisplayHazardsSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -552,8 +552,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wSLC.DisplayClaimsSection" );
-         nOptRC = wSLC.DisplayClaimsSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData", "wSLC.DisplayClaimsSection" );
+      nOptRC = wSLC.DisplayClaimsSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -590,8 +590,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wSLC.DisplaySurfacesSection" );
-         nOptRC = wSLC.DisplaySurfacesSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData", "wSLC.DisplaySurfacesSection" );
+      nOptRC = wSLC.DisplaySurfacesSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -628,8 +628,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wSLC.DisplayAreasOfUseSection" );
-         nOptRC = wSLC.DisplayAreasOfUseSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData", "wSLC.DisplayAreasOfUseSection" );
+      nOptRC = wSLC.DisplayAreasOfUseSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -666,8 +666,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData.jsp", "wSLC.DisplayApplicationTypesSection" );
-         nOptRC = wSLC.DisplayApplicationTypesSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData", "wSLC.DisplayApplicationTypesSection" );
+      nOptRC = wSLC.DisplayApplicationTypesSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -1042,10 +1042,13 @@ else
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
+   View lMLC = null;
+   View lSPLDLST = null;
+   View mLLD_LST = null;
    View mMasLC = null;
    View mSubLC = null;
-   View mSubreg = null;
    View mSubProd = null;
+   View mSubreg = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";
@@ -1450,9 +1453,8 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSLCVersionData" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSLCVersionData" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

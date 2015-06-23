@@ -191,8 +191,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -296,8 +296,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSurfaces.jsp", "wSystem.UpdateSurfaceFromCurrent" );
-         nOptRC = wSystem.UpdateSurfaceFromCurrent( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSurfaces", "wSystem.UpdateSurfaceFromCurrent" );
+      nOptRC = wSystem.UpdateSurfaceFromCurrent( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -334,8 +334,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSurfaces.jsp", "wSystem.NewSurface" );
-         nOptRC = wSystem.NewSurface( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSurfaces", "wSystem.NewSurface" );
+      nOptRC = wSystem.NewSurface( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -411,8 +411,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSurfaces.jsp", "wSystem.DeleteSurface" );
-         nOptRC = wSystem.DeleteSurface( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSurfaces", "wSystem.DeleteSurface" );
+      nOptRC = wSystem.DeleteSurface( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -449,8 +449,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSurfaces.jsp", "wSystem.ImportSurfacesList" );
-         nOptRC = wSystem.ImportSurfacesList( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSurfaces", "wSystem.ImportSurfacesList" );
+      nOptRC = wSystem.ImportSurfacesList( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -514,8 +514,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSurfaces.jsp", "wSystem.NewSurface" );
-         nOptRC = wSystem.NewSurface( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSurfaces", "wSystem.NewSurface" );
+      nOptRC = wSystem.NewSurface( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -610,8 +610,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSurfaces.jsp", "wSystem.ImportSurfacesList" );
-         nOptRC = wSystem.ImportSurfacesList( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSurfaces", "wSystem.ImportSurfacesList" );
+      nOptRC = wSystem.ImportSurfacesList( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -802,8 +802,8 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
    session.setAttribute( "ZeidonError", null );
 else
 {
-   VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSurfaces.jsp", "wSystem.InitSurfacesForUpdate" );
-         nOptRC = wSystem.InitSurfacesForUpdate( new zVIEW( vKZXMLPGO ) );
+   VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSurfaces", "wSystem.InitSurfacesForUpdate" );
+   nOptRC = wSystem.InitSurfacesForUpdate( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -853,28 +853,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-<script language="JavaScript" type="text/javascript" >
-      // Javascript code entered by user for Window action prebuild.
-
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   thisLi = document.getElementById( "lmSystem" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   var oRows = document.getElementById( "GridSurfaces" ).getElementsByTagName( 'tr' );
-   if ( oRows.length > 1 ) // 1 for header
-   {
-      thisLi = document.getElementById( "PBNewSurface" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-   }
-
-      // END of Javascript code entered by user.
-
-</script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSystemUpdateSurfaces.js"></script>
 
 </head>
@@ -964,6 +942,7 @@ else
    View mEPA = null;
    View mOrganiz = null;
    View mUser = null;
+   View sHelp = null;
    View wWebXfer = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
@@ -1413,9 +1392,8 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSystemUpdateSurfaces" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSystemUpdateSurfaces" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

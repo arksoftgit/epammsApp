@@ -184,8 +184,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -240,8 +240,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSelectLLD_ForSPLD.jsp", "wSPLD.SELECT_LLD_ForSPLD" );
-         nOptRC = wSPLD.SELECT_LLD_ForSPLD( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSelectLLD_ForSPLD", "wSPLD.SELECT_LLD_ForSPLD" );
+      nOptRC = wSPLD.SELECT_LLD_ForSPLD( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -717,9 +717,8 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSPLDSelectLLD_ForSPLD" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSPLDSelectLLD_ForSPLD" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

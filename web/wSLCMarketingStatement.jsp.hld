@@ -230,29 +230,6 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "SortMarketingStatements" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCMarketingStatement", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // We are borrowing zTableRowSelect for the moment and this code is hardwired for the moment
-      wWebXA = task.getViewByName( "wWebXfer" );
-      String strHtml = (String) request.getParameter( "zTableRowSelect" );
-      wWebXA.cursor( "Root" ).getAttribute( "HTML" ).setValue( strHtml, "" );
-      // We are borrowing zTableRowSelect for the moment and this code is hardwired for the moment
-
-      // Next Window
-      strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartModalSubwindow, "wSystem", "DragDropSort" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
    while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelMarketingStatement" ) )
    {
       bDone = true;
@@ -280,7 +257,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_SelectMarketingUsageEntries" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DisplayGeneratedText" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCMarketingStatement", strActionToProcess );
@@ -292,8 +269,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCMarketingStatement.jsp", "wSLC.GOTO_SelectMarketingUsageEntries" );
-         nOptRC = wSLC.GOTO_SelectMarketingUsageEntries( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCMarketingStatement", "wSLC.GOTO_DisplayGeneratedText" );
+      nOptRC = wSLC.GOTO_DisplayGeneratedText( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -310,9 +287,87 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartModalSubwindow, "wSLC", "MarketingUsageSelect" );
+         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartModalSubwindow, "wSLC", "GeneratedTextDisplay" );
       }
 
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_MarketingKeywordSelect" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCMarketingStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCMarketingStatement", "wSLC.GOTO_MarketingKeywordSelect" );
+      nOptRC = wSLC.GOTO_MarketingKeywordSelect( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wSLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartModalSubwindow, "wSLC", "MarketingKeywordSelect" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_SelectMarketingUsageEntries" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCMarketingStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+         // Next Window
+         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartModalSubwindow, "wSLC", "MarketingUsageSelect" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "SortMarketingStatements" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCMarketingStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // We are borrowing zTableRowSelect for the moment and this code is hardwired for the moment
+      wWebXA = task.getViewByName( "wWebXfer" );
+      String strHtml = (String) request.getParameter( "zTableRowSelect" );
+      wWebXA.cursor( "Root" ).getAttribute( "HTML" ).setValue( strHtml, "" );
+      // We are borrowing zTableRowSelect for the moment and this code is hardwired for the moment
+
+      // Next Window
+      strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartModalSubwindow, "wSystem", "DragDropSort" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -510,10 +565,13 @@ else
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
+   View lMLC = null;
+   View lSPLDLST = null;
+   View mLLD_LST = null;
    View mMasLC = null;
    View mSubLC = null;
-   View mSubreg = null;
    View mSubProd = null;
+   View mSubreg = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";
@@ -615,30 +673,30 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
+<div style="height:4px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* DirectionsForUseStatementGroup:GroupBox */ %>
+<% /* GroupBox10:GroupBox */ %>
 
-<div id="DirectionsForUseStatementGroup" name="DirectionsForUseStatementGroup" class="withborder" style="width:830px;float:left;">  <!-- DirectionsForUseStatementGroup --> 
+<div id="GroupBox10" name="GroupBox10"   style="float:left;position:relative; width:730px; height:28px;">  <!-- GroupBox10 --> 
+
+<% /* SLC_ProductText2:Text */ %>
+
+<label class="groupbox"  id="SLC_ProductText2" name="SLC_ProductText2" style="width:338px;height:16px;position:absolute;left:0px;top:12px;">Marketing Statement</label>
 
 
- <!-- This is added as a line spacer -->
-<div style="height:8px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<% /* Text5:Text */ %>
-
-<span class="listheader"  id="Text5" name="Text5" style="width:434px;height:16px;">Marketing Statement</span>
-
+</div>  <!--  GroupBox10 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
+ <!-- This is added as a line spacer -->
+<div style="height:4px;width:100px;"></div>
+
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox3:GroupBox */ %>
 <div id="GroupBox3" name="GroupBox3" style="float:left;width:814px;" >
 
@@ -714,7 +772,7 @@ else
    }
 %>
 
-<span  id="Text3" name="Text3" style="width:738px;height:176px;"><%=strTextDisplayValue%></span>
+<span  id="Text3" name="Text3" style="width:738px;height:50px;"><%=strTextDisplayValue%></span>
 
 </td>
 </tr>
@@ -724,15 +782,83 @@ else
 
 </div>  <!-- End of a new line -->
 
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
-</div>  <!--  DirectionsForUseStatementGroup --> 
+
+ <!-- This is added as a line spacer -->
+<div style="height:2px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox9:GroupBox */ %>
+
+<div id="GroupBox9" name="GroupBox9" style="width:832px;float:left;">  <!-- GroupBox9 --> 
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:8px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox5:GroupBox */ %>
+
+<div id="GroupBox5" name="GroupBox5"   style="float:left;position:relative; width:782px; height:30px;">  <!-- GroupBox5 --> 
+
+<% /* PushBtn4:PushBtn */ %>
+<button type="button" class="newbutton" name="PushBtn4" id="PushBtn4" value="" onclick="GOTO_DisplayGeneratedText( )" style="width:158px;height:26px;position:absolute;left:398px;top:4px;">Show Generated Text</button>
+
+<% /* PushBtn5:PushBtn */ %>
+<button type="button" class="newbutton" name="PushBtn5" id="PushBtn5" value="" onclick="GOTO_MarketingKeywordSelect( )" style="width:118px;height:26px;position:absolute;left:582px;top:4px;">Select/Remove</button>
+
+<% /* Text7:Text */ %>
+
+<label class="listheader"  id="Text7" name="Text7" style="width:366px;height:16px;position:absolute;left:12px;top:8px;">Keyword text for Embedding in Statement Text</label>
+
+
+</div>  <!--  GroupBox5 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
  <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
+<div style="height:8px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* Grid4:Grid */ %>
+<table  cols=2 style=""  name="Grid4" id="Grid4">
+
+<thead><tr>
+
+   <th>Keyword</th>
+   <th>Keyword Text</th>
+
+</tr></thead>
+
+<tbody>
+
+<%
+try
+{
+}
+catch (Exception e)
+{
+out.println("There is an error in grid: " + e.getMessage());
+task.log().info( "*** Error in grid" + e.getMessage() );
+}
+%>
+</tbody>
+</table>
+
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  GroupBox9 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
@@ -755,10 +881,10 @@ else
 <label class="listheader"  id="Text4" name="Text4" style="width:434px;height:16px;position:absolute;left:12px;top:4px;">Usage Entries for Embedding in Statement Text</label>
 
 <% /* PushBtn3:PushBtn */ %>
-<button type="button" class="newbutton" name="PushBtn3" id="PushBtn3" value="" onclick="GOTO_SelectMarketingUsageEntries( )" style="width:118px;height:26px;position:absolute;left:560px;top:4px;">Select/Remove</button>
+<button type="button" class="newbutton" name="PushBtn3" id="PushBtn3" value="" onclick="GOTO_SelectMarketingUsageEntries( )" style="width:118px;height:26px;position:absolute;left:490px;top:4px;">Select/Remove</button>
 
 <% /* PBSort:PushBtn */ %>
-<button type="button" class="newbutton" name="PBSort" id="PBSort" value="" onclick="SortMarketingStatements( )" style="width:78px;height:26px;position:absolute;left:698px;top:4px;">Sort</button>
+<button type="button" class="newbutton" name="PBSort" id="PBSort" value="" onclick="SortMarketingStatements( )" style="width:78px;height:26px;position:absolute;left:630px;top:4px;">Sort</button>
 
 
 </div>  <!--  GroupBox4 --> 

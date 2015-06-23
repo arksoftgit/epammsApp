@@ -170,8 +170,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -557,18 +557,27 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:8px;width:100px;"></div>
+<div style="height:2px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
-<% /* Text2:Text */ %>
+<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox4:GroupBox */ %>
 
-<span class="listheader"  id="Text2" name="Text2" style="width:250px;height:16px;">Claims Footnote Statement</span>
+<div id="GroupBox4" name="GroupBox4"   style="float:left;position:relative; width:730px; height:28px;">  <!-- GroupBox4 --> 
 
+<% /* PrecautionarySection1:Text */ %>
+
+<label class="groupbox"  id="PrecautionarySection1" name="PrecautionarySection1" style="width:338px;height:16px;position:absolute;left:6px;top:6px;">Claims Footnote Statement</label>
+
+
+</div>  <!--  GroupBox4 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
+
+ <!-- This is added as a line spacer -->
+<div style="height:4px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
@@ -658,9 +667,8 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCClaimsFootnoteStatement" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wMLCClaimsFootnoteStatement" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

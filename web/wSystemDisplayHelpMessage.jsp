@@ -188,7 +188,7 @@ if ( strActionToProcess != null )
       session.setAttribute( "ZeidonAction", strActionToProcess );
 
       // Action Operation
-   // VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemDisplayHelpMessage.jsp", "wSystem.ExitHelp" );
+   // VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemDisplayHelpMessage", "wSystem.ExitHelp" );
       wSystem.ExitHelp( new zVIEW( vKZXMLPGO ) );
    // session.removeAttribute( "ZeidonTaskId" );
       String s = (String) session.getAttribute( "HelpDialogWindow" );

@@ -167,8 +167,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -211,8 +211,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemKeyword.jsp", "wSystem.AcceptUpdateSystemKeyword" );
-         nOptRC = wSystem.AcceptUpdateSystemKeyword( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemKeyword", "wSystem.AcceptUpdateSystemKeyword" );
+      nOptRC = wSystem.AcceptUpdateSystemKeyword( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -249,8 +249,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemKeyword.jsp", "wSystem.UpdateKeywordAndAddNew" );
-         nOptRC = wSystem.UpdateKeywordAndAddNew( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemKeyword", "wSystem.UpdateKeywordAndAddNew" );
+      nOptRC = wSystem.UpdateKeywordAndAddNew( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -282,8 +282,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemKeyword.jsp", "wSystem.CancelUpdateSystemKeyword" );
-         nOptRC = wSystem.CancelUpdateSystemKeyword( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemKeyword", "wSystem.CancelUpdateSystemKeyword" );
+      nOptRC = wSystem.CancelUpdateSystemKeyword( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -334,8 +334,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemKeyword.jsp", "wSystem.AcceptUpdateSystemKeyword" );
-         nOptRC = wSystem.AcceptUpdateSystemKeyword( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemKeyword", "wSystem.AcceptUpdateSystemKeyword" );
+      nOptRC = wSystem.AcceptUpdateSystemKeyword( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -372,8 +372,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemKeyword.jsp", "wSystem.UpdateKeywordAndAddNew" );
-         nOptRC = wSystem.UpdateKeywordAndAddNew( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemKeyword", "wSystem.UpdateKeywordAndAddNew" );
+      nOptRC = wSystem.UpdateKeywordAndAddNew( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -405,8 +405,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemKeyword.jsp", "wSystem.CancelUpdateSystemKeyword" );
-         nOptRC = wSystem.CancelUpdateSystemKeyword( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemKeyword", "wSystem.CancelUpdateSystemKeyword" );
+      nOptRC = wSystem.CancelUpdateSystemKeyword( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -568,8 +568,8 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
    session.setAttribute( "ZeidonError", null );
 else
 {
-   VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemKeyword.jsp", "wSystem.InitSystemKeywordForUpdate" );
-         nOptRC = wSystem.InitSystemKeywordForUpdate( new zVIEW( vKZXMLPGO ) );
+   VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemKeyword", "wSystem.InitSystemKeywordForUpdate" );
+   nOptRC = wSystem.InitSystemKeywordForUpdate( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -619,20 +619,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-<script language="JavaScript" type="text/javascript" >
-      // Javascript code entered by user for Window action prebuild.
-
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   thisLi = document.getElementById( "lmSystem" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-      // END of Javascript code entered by user.
-
-</script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSystemUpdateSystemKeyword.js"></script>
 
 </head>
@@ -722,6 +708,7 @@ else
    View mEPA = null;
    View mOrganiz = null;
    View mUser = null;
+   View sHelp = null;
    View wWebXfer = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
@@ -906,9 +893,8 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSystemUpdateSystemKeyword" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSystemUpdateSystemKeyword" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

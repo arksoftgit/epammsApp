@@ -555,7 +555,7 @@ else
    View mEPA = null;
    View mOrganiz = null;
    View mUser = null;
-   View mHelp = null;
+   View sHelp = null;
    View wWebXfer = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";

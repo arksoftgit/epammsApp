@@ -433,8 +433,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -508,8 +508,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCHumanHazard.jsp", "wMLC.SaveAndReturnMLC" );
-         nOptRC = wMLC.SaveAndReturnMLC( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCHumanHazard", "wMLC.SaveAndReturnMLC" );
+      nOptRC = wMLC.SaveAndReturnMLC( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -546,8 +546,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCHumanHazard.jsp", "wMLC.SaveMLC" );
-         nOptRC = wMLC.SaveMLC( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCHumanHazard", "wMLC.SaveMLC" );
+      nOptRC = wMLC.SaveMLC( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -584,8 +584,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCHumanHazard.jsp", "wMLC.CancelAndReturnMLC" );
-         nOptRC = wMLC.CancelAndReturnMLC( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCHumanHazard", "wMLC.CancelAndReturnMLC" );
+      nOptRC = wMLC.CancelAndReturnMLC( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -690,8 +690,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCHumanHazard.jsp", "wMLC.EditPrecautionarySection" );
-         nOptRC = wMLC.EditPrecautionarySection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCHumanHazard", "wMLC.EditPrecautionarySection" );
+      nOptRC = wMLC.EditPrecautionarySection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -728,8 +728,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCHumanHazard.jsp", "wMLC.EditFirstAidSection" );
-         nOptRC = wMLC.EditFirstAidSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCHumanHazard", "wMLC.EditFirstAidSection" );
+      nOptRC = wMLC.EditFirstAidSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -766,8 +766,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCHumanHazard.jsp", "wMLC.EditEnvironmentalHazardsSection" );
-         nOptRC = wMLC.EditEnvironmentalHazardsSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCHumanHazard", "wMLC.EditEnvironmentalHazardsSection" );
+      nOptRC = wMLC.EditEnvironmentalHazardsSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -804,8 +804,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCHumanHazard.jsp", "wMLC.EditChemicalHazardsSection" );
-         nOptRC = wMLC.EditChemicalHazardsSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCHumanHazard", "wMLC.EditChemicalHazardsSection" );
+      nOptRC = wMLC.EditChemicalHazardsSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -859,8 +859,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCHumanHazard.jsp", "wMLC.EditClaimsSection" );
-         nOptRC = wMLC.EditClaimsSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCHumanHazard", "wMLC.EditClaimsSection" );
+      nOptRC = wMLC.EditClaimsSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -897,8 +897,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCHumanHazard.jsp", "wMLC.EditSurfacesSection" );
-         nOptRC = wMLC.EditSurfacesSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCHumanHazard", "wMLC.EditSurfacesSection" );
+      nOptRC = wMLC.EditSurfacesSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -935,8 +935,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCHumanHazard.jsp", "wMLC.EditAreasOfUseSection" );
-         nOptRC = wMLC.EditAreasOfUseSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCHumanHazard", "wMLC.EditAreasOfUseSection" );
+      nOptRC = wMLC.EditAreasOfUseSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -973,8 +973,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCHumanHazard.jsp", "wMLC.EditApplicationTypesSection" );
-         nOptRC = wMLC.EditApplicationTypesSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCHumanHazard", "wMLC.EditApplicationTypesSection" );
+      nOptRC = wMLC.EditApplicationTypesSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -1136,8 +1136,8 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
    session.setAttribute( "ZeidonError", null );
 else
 {
-   VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCHumanHazard.jsp", "wMLC.InitHumanHazardSect" );
-         nOptRC = wMLC.InitHumanHazardSect( new zVIEW( vKZXMLPGO ) );
+   VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCHumanHazard", "wMLC.InitHumanHazardSect" );
+   nOptRC = wMLC.InitHumanHazardSect( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -1522,21 +1522,24 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:4px;width:100px;"></div>
+<div style="height:2px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
-<% /* Text2:Text */ %>
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GBStorDispSections3:GroupBox */ %>
 
-<span class="listheader"  id="Text2" name="Text2" style="width:250px;height:16px;">Hazard Attributes</span>
+<div id="GBStorDispSections3" name="GBStorDispSections3" class="listgroup"   style="float:left;position:relative; width:780px; height:30px;">  <!-- GBStorDispSections3 --> 
 
+<% /* HumanHazardsText:Text */ %>
+
+<label class="groupbox"  id="HumanHazardsText" name="HumanHazardsText" style="width:238px;height:16px;position:absolute;left:2px;top:12px;">Human Hazard</label>
+
+
+</div>  <!--  GBStorDispSections3 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
-
- <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
@@ -1546,12 +1549,12 @@ else
 
 <% /* HazardText::Text */ %>
 
-<label  id="HazardText:" name="HazardText:" style="width:202px;height:16px;position:absolute;left:0px;top:0px;">Hazard Text:</label>
+<label  id="HazardText:" name="HazardText:" style="width:202px;height:16px;position:absolute;left:10px;top:6px;">Hazard Text:</label>
 
 <% /* ChildHazard:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select class="text12" name="ChildHazard" id="ChildHazard" size="1" style="width:498px;position:absolute;left:254px;top:0px;" onchange="ChildHazardOnChange( )">
+<select class="text12" name="ChildHazard" id="ChildHazard" size="1" style="width:498px;position:absolute;left:254px;top:6px;" onchange="ChildHazardOnChange( )">
 
 <%
    boolean inListChildHazard = false;
@@ -1630,12 +1633,12 @@ else
 <input name="hChildHazard" id="hChildHazard" type="hidden" value="<%=strComboCurrentValue%>" >
 <% /* SignalWord::Text */ %>
 
-<label  id="SignalWord:" name="SignalWord:" style="width:242px;height:16px;position:absolute;left:0px;top:32px;">Signal Word:</label>
+<label  id="SignalWord:" name="SignalWord:" style="width:242px;height:16px;position:absolute;left:10px;top:34px;">Signal Word:</label>
 
 <% /* SignalWord:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="SignalWord" id="SignalWord" size="1" style="width:214px;position:absolute;left:254px;top:32px;" onchange="SignalWordOnChange( )">
+<select  name="SignalWord" id="SignalWord" size="1" style="width:214px;position:absolute;left:254px;top:34px;" onchange="SignalWordOnChange( )">
 
 <%
    boolean inListSignalWord = false;
@@ -1712,20 +1715,10 @@ else
 </select>
 
 <input name="hSignalWord" id="hSignalWord" type="hidden" value="<%=strComboCurrentValue%>" >
-<% /* HazardStatement:GroupBox */ %>
-
-<div id="HazardStatement" name="HazardStatement" style="width:242px;height:56px;position:absolute;left:0px;top:66px;">  <!-- HazardStatement --> 
-
 <% /* PanelLoc:Text */ %>
 
-<label  id="PanelLoc" name="PanelLoc" style="width:226px;height:16px;position:absolute;left:4px;top:14px;">Precautionary Panel Location</label>
+<label  id="PanelLoc" name="PanelLoc" style="width:226px;height:16px;position:absolute;left:10px;top:60px;">Precautionary Location Text</label>
 
-<% /* LabelLoc:Text */ %>
-
-<label  id="LabelLoc" name="LabelLoc" style="width:226px;height:16px;position:absolute;left:4px;top:34px;">Precautionary Label Location</label>
-
-
-</div>  <!--  HazardStatement --> 
 <% /* Statement:MLEdit */ %>
 <%
    // : Statement
@@ -1758,16 +1751,16 @@ else
    }
 %>
 
-<textarea name="Statement" id="Statement" style="width:498px;height:56px;position:absolute;left:254px;top:66px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+<textarea name="Statement" id="Statement" style="width:498px;height:56px;position:absolute;left:254px;top:60px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 <% /* LocSeparator::Text */ %>
 
-<label  id="LocSeparator:" name="LocSeparator:" style="width:242px;height:16px;position:absolute;left:0px;top:134px;">Location Separator:</label>
+<label  id="LocSeparator:" name="LocSeparator:" style="width:234px;height:16px;position:absolute;left:10px;top:130px;">Location Separator:</label>
 
 <% /* LocSeparator:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="LocSeparator" id="LocSeparator" size="1" style="width:214px;position:absolute;left:254px;top:134px;" onchange="LocSeparatorOnChange( )">
+<select  name="LocSeparator" id="LocSeparator" size="1" style="width:214px;position:absolute;left:254px;top:130px;" onchange="LocSeparatorOnChange( )">
 
 <%
    boolean inListLocSeparator = false;
@@ -1861,12 +1854,12 @@ else
       strErrorMapValue = "checked=\"checked\"";
 %>
 
-<input type="checkbox" name="EncloseFirst" id="EncloseFirst"  value="Y" <%=strErrorMapValue%> style="position:absolute;left:546px;top:134px;">
-<span style="width:178px;height:24px;position:absolute;left:576px;top:134px;">Enclose First Location</span>
+<input type="checkbox" name="EncloseFirst" id="EncloseFirst"  value="Y" <%=strErrorMapValue%> style="position:absolute;left:546px;top:130px;">
+<span style="width:178px;height:24px;position:absolute;left:576px;top:130px;">Enclose First Location</span>
 
 <% /* PanelLocation1::Text */ %>
 
-<label  id="PanelLocation1:" name="PanelLocation1:" style="width:242px;height:16px;position:absolute;left:0px;top:160px;">Panel Location:</label>
+<label  id="PanelLocation1:" name="PanelLocation1:" style="width:234px;height:16px;position:absolute;left:10px;top:156px;">Panel Location:</label>
 
 <% /* PanelLocation1:EditBox */ %>
 <%
@@ -1907,11 +1900,11 @@ else
    }
 %>
 
-<input class="text12" name="PanelLocation1" id="PanelLocation1" style="width:162px;position:absolute;left:254px;top:160px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="PanelLocation1" id="PanelLocation1" style="width:162px;position:absolute;left:254px;top:156px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* LabelLocation1::Text */ %>
 
-<label  id="LabelLocation1:" name="LabelLocation1:" style="width:130px;height:16px;position:absolute;left:450px;top:160px;">Label Location:</label>
+<label  id="LabelLocation1:" name="LabelLocation1:" style="width:130px;height:16px;position:absolute;left:450px;top:156px;">Label Location:</label>
 
 <% /* LabelLocation1:EditBox */ %>
 <%
@@ -1952,11 +1945,11 @@ else
    }
 %>
 
-<input class="text12" name="LabelLocation1" id="LabelLocation1" style="width:162px;position:absolute;left:590px;top:160px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="LabelLocation1" id="LabelLocation1" style="width:162px;position:absolute;left:590px;top:156px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* PanelLocation2::Text */ %>
 
-<label  id="PanelLocation2:" name="PanelLocation2:" style="width:242px;height:16px;position:absolute;left:0px;top:186px;">Panel Location:</label>
+<label  id="PanelLocation2:" name="PanelLocation2:" style="width:234px;height:16px;position:absolute;left:10px;top:180px;">Panel Location:</label>
 
 <% /* PanelLocation2:EditBox */ %>
 <%
@@ -1997,11 +1990,11 @@ else
    }
 %>
 
-<input name="PanelLocation2" id="PanelLocation2" style="width:162px;position:absolute;left:254px;top:186px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="PanelLocation2" id="PanelLocation2" style="width:162px;position:absolute;left:254px;top:180px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* LabelLocation2::Text */ %>
 
-<label  id="LabelLocation2:" name="LabelLocation2:" style="width:130px;height:16px;position:absolute;left:450px;top:186px;">Label Location:</label>
+<label  id="LabelLocation2:" name="LabelLocation2:" style="width:130px;height:16px;position:absolute;left:450px;top:180px;">Label Location:</label>
 
 <% /* LabelLocation2:EditBox */ %>
 <%
@@ -2042,11 +2035,11 @@ else
    }
 %>
 
-<input name="LabelLocation2" id="LabelLocation2" style="width:162px;position:absolute;left:590px;top:186px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="LabelLocation2" id="LabelLocation2" style="width:162px;position:absolute;left:590px;top:180px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* PanelLocation3::Text */ %>
 
-<label  id="PanelLocation3:" name="PanelLocation3:" style="width:242px;height:16px;position:absolute;left:0px;top:212px;">Panel Location:</label>
+<label  id="PanelLocation3:" name="PanelLocation3:" style="width:234px;height:16px;position:absolute;left:10px;top:206px;">Panel Location:</label>
 
 <% /* PanelLocation3:EditBox */ %>
 <%
@@ -2087,11 +2080,11 @@ else
    }
 %>
 
-<input name="PanelLocation3" id="PanelLocation3" style="width:162px;position:absolute;left:254px;top:212px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="PanelLocation3" id="PanelLocation3" style="width:162px;position:absolute;left:254px;top:206px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* LabelLocation3::Text */ %>
 
-<label  id="LabelLocation3:" name="LabelLocation3:" style="width:130px;height:16px;position:absolute;left:450px;top:212px;">Label Location:</label>
+<label  id="LabelLocation3:" name="LabelLocation3:" style="width:130px;height:16px;position:absolute;left:450px;top:206px;">Label Location:</label>
 
 <% /* LabelLocation3:EditBox */ %>
 <%
@@ -2132,11 +2125,11 @@ else
    }
 %>
 
-<input name="LabelLocation3" id="LabelLocation3" style="width:162px;position:absolute;left:590px;top:212px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="LabelLocation3" id="LabelLocation3" style="width:162px;position:absolute;left:590px;top:206px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* PanelLocation4::Text */ %>
 
-<label  id="PanelLocation4:" name="PanelLocation4:" style="width:242px;height:16px;position:absolute;left:0px;top:238px;">Panel Location:</label>
+<label  id="PanelLocation4:" name="PanelLocation4:" style="width:234px;height:16px;position:absolute;left:10px;top:232px;">Panel Location:</label>
 
 <% /* PanelLocation4:EditBox */ %>
 <%
@@ -2177,11 +2170,11 @@ else
    }
 %>
 
-<input name="PanelLocation4" id="PanelLocation4" style="width:162px;position:absolute;left:254px;top:238px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="PanelLocation4" id="PanelLocation4" style="width:162px;position:absolute;left:254px;top:232px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* LabelLocation4::Text */ %>
 
-<label  id="LabelLocation4:" name="LabelLocation4:" style="width:130px;height:16px;position:absolute;left:450px;top:238px;">Label Location:</label>
+<label  id="LabelLocation4:" name="LabelLocation4:" style="width:130px;height:16px;position:absolute;left:450px;top:232px;">Label Location:</label>
 
 <% /* LabelLocation4:EditBox */ %>
 <%
@@ -2222,11 +2215,11 @@ else
    }
 %>
 
-<input name="LabelLocation4" id="LabelLocation4" style="width:162px;position:absolute;left:590px;top:238px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="LabelLocation4" id="LabelLocation4" style="width:162px;position:absolute;left:590px;top:232px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* PanelLocation5::Text */ %>
 
-<label  id="PanelLocation5:" name="PanelLocation5:" style="width:242px;height:16px;position:absolute;left:0px;top:264px;">Panel Location:</label>
+<label  id="PanelLocation5:" name="PanelLocation5:" style="width:234px;height:16px;position:absolute;left:10px;top:260px;">Panel Location:</label>
 
 <% /* PanelLocation5:EditBox */ %>
 <%
@@ -2267,11 +2260,11 @@ else
    }
 %>
 
-<input class="text12" name="PanelLocation5" id="PanelLocation5" style="width:162px;position:absolute;left:254px;top:264px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="PanelLocation5" id="PanelLocation5" style="width:162px;position:absolute;left:254px;top:260px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* LabelLocation5::Text */ %>
 
-<label  id="LabelLocation5:" name="LabelLocation5:" style="width:130px;height:16px;position:absolute;left:450px;top:264px;">Label Location:</label>
+<label  id="LabelLocation5:" name="LabelLocation5:" style="width:130px;height:16px;position:absolute;left:450px;top:260px;">Label Location:</label>
 
 <% /* LabelLocation5:EditBox */ %>
 <%
@@ -2312,7 +2305,7 @@ else
    }
 %>
 
-<input class="text12" name="LabelLocation5" id="LabelLocation5" style="width:162px;position:absolute;left:590px;top:264px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="LabelLocation5" id="LabelLocation5" style="width:162px;position:absolute;left:590px;top:260px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 
 </div>  <!--  GroupBox1 --> 
@@ -2320,9 +2313,6 @@ else
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
-
- <!-- This is added as a line spacer -->
-<div style="height:8px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
@@ -2421,9 +2411,8 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCHumanHazard" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wMLCHumanHazard" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

@@ -230,7 +230,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpSubregReusableBlockUpdate.jsp", "wStartUp.CancelReusableBlock" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpSubregReusableBlockUpdate", "wStartUp.CancelReusableBlock" );
       nOptRC = wStartUp.CancelReusableBlock( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -268,7 +268,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpSubregReusableBlockUpdate.jsp", "wStartUp.SaveReusableBlock" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpSubregReusableBlockUpdate", "wStartUp.SaveReusableBlock" );
       nOptRC = wStartUp.SaveReusableBlock( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -320,7 +320,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpSubregReusableBlockUpdate.jsp", "wStartUp.SaveReusableBlock" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpSubregReusableBlockUpdate", "wStartUp.SaveReusableBlock" );
       nOptRC = wStartUp.SaveReusableBlock( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -358,7 +358,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpSubregReusableBlockUpdate.jsp", "wStartUp.CancelReusableBlock" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpSubregReusableBlockUpdate", "wStartUp.CancelReusableBlock" );
       nOptRC = wStartUp.CancelReusableBlock( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -470,7 +470,7 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
    session.setAttribute( "ZeidonError", null );
 else
 {
-   VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpSubregReusableBlockUpdate.jsp", "wStartUp.InitReusableBlockForUpdate" );
+   VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpSubregReusableBlockUpdate", "wStartUp.InitReusableBlockForUpdate" );
    nOptRC = wStartUp.InitReusableBlockForUpdate( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
@@ -873,7 +873,6 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wStartUpSubregReusableBlockUpdate" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wStartUpSubregReusableBlockUpdate" );
    session.setAttribute( "ZeidonAction", null );
 
    strActionToProcess = "";

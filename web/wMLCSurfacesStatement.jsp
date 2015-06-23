@@ -167,8 +167,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -243,8 +243,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCSurfacesStatement.jsp", "wMLC.InitSurfacesStmtsForInsert" );
-         nOptRC = wMLC.InitSurfacesStmtsForInsert( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCSurfacesStatement", "wMLC.InitSurfacesStmtsForInsert" );
+      nOptRC = wMLC.InitSurfacesStmtsForInsert( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -308,8 +308,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCSurfacesStatement.jsp", "wMLC.SaveAddNewUsage" );
-         nOptRC = wMLC.SaveAddNewUsage( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCSurfacesStatement", "wMLC.SaveAddNewUsage" );
+      nOptRC = wMLC.SaveAddNewUsage( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -782,9 +782,8 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCSurfacesStatement" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wMLCSurfacesStatement" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

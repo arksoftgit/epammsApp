@@ -1,0 +1,11 @@
+z1000-Zeidon    Z68EF035 TZWDVORO 06/02/15   11:12:18 1.0a2    
+eViewObjRef 1
+aZKey      110030901
+aName      mBlockRU
+aDesc      VOR automatically built from LOD Dialog
+
+eLOD       2
+aZKey      110030723
+aName      mBlockRU
+aDesc      Reusable LLD_Block Maintenance object
+

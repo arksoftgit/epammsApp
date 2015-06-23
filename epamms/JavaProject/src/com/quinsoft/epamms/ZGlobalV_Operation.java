@@ -74,6 +74,273 @@ InitializeSLC_FromMLC( View     mMasLC,
 
 
 //:GLOBAL OPERATION
+//:GenerateKeywordTextIntoString( VIEW mMasLC BASED ON LOD mMasLC,
+//:                               STRING ( 10000 ) szSourceString,
+//:                               STRING ( 32 ) szKeywordEntityName,
+//:                               STRING ( 32 ) szKeywordTextEntityName,
+//:                               STRING ( 32 ) szSeparatorCharacters )
+
+//:   VIEW mMasLC2 BASED ON LOD mMasLC
+public int 
+GenerateKeywordTextIntoString( View     mMasLC,
+                               StringBuilder   szSourceString,
+                               String   szKeywordEntityName,
+                               String   szKeywordTextEntityName,
+                               String   szSeparatorCharacters )
+{
+   zVIEW    mMasLC2 = new zVIEW( );
+   //:VIEW mMasLC3 BASED ON LOD mMasLC
+   zVIEW    mMasLC3 = new zVIEW( );
+   //:STRING ( 10000 ) szToString
+   String   szToString = null;
+   //:STRING ( 32 )    szKeywordName
+   String   szKeywordName = null;
+   //:STRING ( 32 )    szAttributeType
+   String   szAttributeType = null;
+   //:STRING ( 100 )   KeywordValue
+   String   KeywordValue = null;
+   //:STRING ( 100 )   szInsertValue
+   String   szInsertValue = null;
+   //:STRING ( 1 )     szSelectUsageType
+   String   szSelectUsageType = null;
+   //:INTEGER Count
+   int      Count = 0;
+   //:INTEGER SourceIndex
+   int      SourceIndex = 0;
+   //:INTEGER Length
+   int      Length = 0;
+   //:INTEGER TypeLength
+   int      TypeLength = 0;
+   //:INTEGER SourceStringLength
+   int      SourceStringLength = 0;
+   //:INTEGER MoveStringLength
+   int      MoveStringLength = 0;
+   //:INTEGER TargetOffset
+   int      TargetOffset = 0;
+   //:INTEGER SourceOffset
+   int      SourceOffset = 0;
+   //:INTEGER TempLength
+   int      TempLength = 0;
+   //:SHORT   nRC
+   int      nRC = 0;
+
+
+   //:// Insert Keyword text items into a position in szStringArea that is identified by the Keyword.
+   //:// The entries inserted will be separated by one or more characters as identified by the variable szSeparatorCharacters.
+   //:// After determining the position of the insertion, we will loop through Keyword entries, formatting each entry as we go.
+   //:TraceLineS( "### Insert szKeywordEntityName: ", szKeywordEntityName )
+   TraceLineS( "### Insert szKeywordEntityName: ", szKeywordEntityName );
+   //:TraceLineS( "### Insert szKeywordTextEntityName: ", szKeywordTextEntityName )
+   TraceLineS( "### Insert szKeywordTextEntityName: ", szKeywordTextEntityName );
+
+   //:SourceIndex  = 1
+   SourceIndex = 1;
+   //:SourceOffset = 1
+   SourceOffset = 1;
+   //:MoveStringLength = 1
+   MoveStringLength = 1;
+   //:szToString = ""
+    {StringBuilder sb_szToString;
+   if ( szToString == null )
+      sb_szToString = new StringBuilder( 32 );
+   else
+      sb_szToString = new StringBuilder( szToString );
+      ZeidonStringCopy( sb_szToString, 1, 0, "", 1, 0, 10001 );
+   szToString = sb_szToString.toString( );}
+   //:Length = zGetStringLen( szSourceString )
+   Length = zGetStringLen( szSourceString.toString( ) );
+   //:Length = Length - 4    // We need to back off the end of the string so that the two character compare doesn't go beyond the string.
+   Length = Length - 4;
+   //:LOOP WHILE SourceIndex <= Length
+   while ( SourceIndex <= Length )
+   { 
+      //:IF szSourceString[SourceIndex:2] = "{{"
+      if ( ZeidonStringCompare( szSourceString.toString( ), SourceIndex, 2, "{{", 1, 0, 10001 ) == 0 )
+      { 
+
+         //:// First copy over the characters we've just skipped over and reset length (unless {{ are first two characters).
+         //:// ZeidonStringCopy( Target, TargetOffset, TargetMaxToReceive, Source, SourceOffset, NoCharsToCopy, TargetMaxLength )
+         //:IF SourceIndex > 1
+         if ( SourceIndex > 1 )
+         { 
+            //:TargetOffset = zstrlen( szToString )
+            TargetOffset = zstrlen( szToString );
+            //:TargetOffset = TargetOffset + 1
+            TargetOffset = TargetOffset + 1;
+            //:MoveStringLength = MoveStringLength - 1
+            MoveStringLength = MoveStringLength - 1;
+            //:ZeidonStringCopy( szToString, TargetOffset, 5000, szSourceString, SourceOffset, MoveStringLength, 10000 )
+            {StringBuilder sb_szToString;
+            if ( szToString == null )
+               sb_szToString = new StringBuilder( 32 );
+            else
+               sb_szToString = new StringBuilder( szToString );
+                         ZeidonStringCopy( sb_szToString, TargetOffset, 5000, szSourceString.toString( ), SourceOffset, MoveStringLength, 10000 );
+            szToString = sb_szToString.toString( );}
+            //:SourceOffset = SourceOffset + MoveStringLength   // Skip past characters just moved.
+            SourceOffset = SourceOffset + MoveStringLength;
+            //:MoveStringLength = 0
+            MoveStringLength = 0;
+         } 
+
+         //:END
+
+         //:// Parse the Usage Type out of the string of the form {{xxxxx}}.
+         //:SourceIndex  = SourceIndex + 2
+         SourceIndex = SourceIndex + 2;
+         //:TypeLength  = 0
+         TypeLength = 0;
+         //:TempLength = Length + 4  // We need to add the characters back to the length in case the Type is at the end of the Source.
+         TempLength = Length + 4;
+         //:LOOP WHILE szSourceString[SourceIndex:2] != "}}" AND TypeLength <= 32 AND SourceIndex < TempLength
+         while ( ZeidonStringCompare( szSourceString.toString( ), SourceIndex, 2, "}}", 1, 0, 10001 ) != 0 && TypeLength <= 32 && SourceIndex < TempLength )
+         { 
+            //:SourceIndex = SourceIndex + 1
+            SourceIndex = SourceIndex + 1;
+            //:TypeLength  = TypeLength + 1
+            TypeLength = TypeLength + 1;
+         } 
+
+         //:END
+         //:SourceOffset = SourceOffset + 2  // Skip past closing double parens and length of keyword.
+         SourceOffset = SourceOffset + 2;
+         //:ZeidonStringCopy( szKeywordName, 1, 50, szSourceString, SourceOffset, TypeLength, 100 )
+         {StringBuilder sb_szKeywordName;
+         if ( szKeywordName == null )
+            sb_szKeywordName = new StringBuilder( 32 );
+         else
+            sb_szKeywordName = new StringBuilder( szKeywordName );
+                   ZeidonStringCopy( sb_szKeywordName, 1, 50, szSourceString.toString( ), SourceOffset, TypeLength, 100 );
+         szKeywordName = sb_szKeywordName.toString( );}
+         //:SourceIndex = SourceIndex + 2
+         SourceIndex = SourceIndex + 2;
+         //:SourceOffset = SourceOffset + TypeLength + 2  // Skip past closing double parens and length of keyword.
+         SourceOffset = SourceOffset + TypeLength + 2;
+         //:TraceLineS( "### szKeywordName: ", szKeywordName )
+         TraceLineS( "### szKeywordName: ", szKeywordName );
+
+         //:// Copy any Keyword Text entries for the specified Keyword.
+         //:// Look for a Keyword entry that matches the one parsed out in text.
+         //:CreateViewFromView( mMasLC2, mMasLC )
+         CreateViewFromView( mMasLC2, mMasLC );
+         //:nRC = SetCursorFirstEntityByString( mMasLC2, szKeywordEntityName, "Name", szKeywordName, "" )
+         nRC = SetCursorFirstEntityByString( mMasLC2, szKeywordEntityName, "Name", szKeywordName, "" );
+         //:IF nRC >= zCURSOR_SET
+         if ( nRC >= zCURSOR_SET )
+         { 
+            //:// There are Text entries for the Keyword specified, so loop through all.
+            //:TraceLineS( "### Keyword Found ", "" )
+            TraceLineS( "### Keyword Found ", "" );
+            //:Count = 0
+            Count = 0;
+            //:nRC = SetCursorFirstEntity( mMasLC2, szKeywordTextEntityName, "" )
+            nRC = SetCursorFirstEntity( mMasLC2, szKeywordTextEntityName, "" );
+            //:LOOP WHILE nRC >= zCURSOR_SET
+            while ( nRC >= zCURSOR_SET )
+            { 
+               //:Count = Count + 1
+               Count = Count + 1;
+               //:GetStringFromAttribute( KeywordValue, mMasLC2, szKeywordTextEntityName, "Text" )
+               {StringBuilder sb_KeywordValue;
+               if ( KeywordValue == null )
+                  sb_KeywordValue = new StringBuilder( 32 );
+               else
+                  sb_KeywordValue = new StringBuilder( KeywordValue );
+                               GetStringFromAttribute( sb_KeywordValue, mMasLC2, szKeywordTextEntityName, "Text" );
+               KeywordValue = sb_KeywordValue.toString( );}
+               //:IF Count > 1
+               if ( Count > 1 )
+               { 
+                  //:// If szSeparatorCharacters are ", ", substitute " and " for the separator characters before the last
+                  //:// Usage entry.
+                  //:CreateViewFromView( mMasLC3, mMasLC2 )
+                  CreateViewFromView( mMasLC3, mMasLC2 );
+                  //:nRC = SetCursorNextEntity( mMasLC3, szKeywordTextEntityName, "" )
+                  nRC = SetCursorNextEntity( mMasLC3, szKeywordTextEntityName, "" );
+                  //:IF nRC < zCURSOR_SET
+                  if ( nRC < zCURSOR_SET )
+                  { 
+                     //:szToString = szToString + " and "
+                      {StringBuilder sb_szToString;
+                     if ( szToString == null )
+                        sb_szToString = new StringBuilder( 32 );
+                     else
+                        sb_szToString = new StringBuilder( szToString );
+                                          ZeidonStringConcat( sb_szToString, 1, 0, " and ", 1, 0, 10001 );
+                     szToString = sb_szToString.toString( );}
+                     //:ELSE
+                  } 
+                  else
+                  { 
+                     //:szToString = szToString + szSeparatorCharacters
+                      {StringBuilder sb_szToString;
+                     if ( szToString == null )
+                        sb_szToString = new StringBuilder( 32 );
+                     else
+                        sb_szToString = new StringBuilder( szToString );
+                                          ZeidonStringConcat( sb_szToString, 1, 0, szSeparatorCharacters, 1, 0, 10001 );
+                     szToString = sb_szToString.toString( );}
+                  } 
+
+                  //:END
+                  //:DropView( mMasLC3 )
+                  DropView( mMasLC3 );
+               } 
+
+               //:END
+               //:szToString = szToString + KeywordValue
+                {StringBuilder sb_szToString;
+               if ( szToString == null )
+                  sb_szToString = new StringBuilder( 32 );
+               else
+                  sb_szToString = new StringBuilder( szToString );
+                              ZeidonStringConcat( sb_szToString, 1, 0, KeywordValue, 1, 0, 10001 );
+               szToString = sb_szToString.toString( );}
+               //:nRC = SetCursorNextEntity( mMasLC2, szKeywordTextEntityName, "" )
+               nRC = SetCursorNextEntity( mMasLC2, szKeywordTextEntityName, "" );
+            } 
+
+            //:END
+         } 
+
+         //:END
+      } 
+
+      //:END
+
+      //:SourceIndex      = SourceIndex + 1
+      SourceIndex = SourceIndex + 1;
+      //:MoveStringLength = MoveStringLength + 1
+      MoveStringLength = MoveStringLength + 1;
+   } 
+
+   //:END
+
+   //:// Move in remaining characters.
+   //:MoveStringLength = MoveStringLength + 10    // Add extra characters to length as above was not calculating them correctly.
+   MoveStringLength = MoveStringLength + 10;
+   //:TargetOffset = zstrlen( szToString )
+   TargetOffset = zstrlen( szToString );
+   //:TargetOffset = TargetOffset + 1
+   TargetOffset = TargetOffset + 1;
+   //:ZeidonStringCopy( szToString, TargetOffset, 5000, szSourceString, SourceOffset, MoveStringLength, 10000 )
+   {StringBuilder sb_szToString;
+   if ( szToString == null )
+      sb_szToString = new StringBuilder( 32 );
+   else
+      sb_szToString = new StringBuilder( szToString );
+       ZeidonStringCopy( sb_szToString, TargetOffset, 5000, szSourceString.toString( ), SourceOffset, MoveStringLength, 10000 );
+   szToString = sb_szToString.toString( );}
+   //:szSourceString = szToString
+   ZeidonStringCopy( szSourceString, 1, 0, szToString, 1, 0, 10001 );
+   //:DropView( mMasLC2 )
+   DropView( mMasLC2 );
+   return( 0 );
+// END
+} 
+
+
+//:GLOBAL OPERATION
 //:InsertMappingWordsIntoString( VIEW mSPLDef BASED ON LOD mSPLDef,
 //:                              STRING ( 10000 ) szSourceString,
 //:                              STRING ( 32 ) szUsageTypeEntityName,
@@ -2949,7 +3216,7 @@ SetDynamicBannerName( View     ViewToWindow,
    //:IF KZXMLPGO != 0
    if ( getView( KZXMLPGO ) != null )
    { 
-      //:// We should have at most one DynamicBannerName entity, so check first to see if it exists.
+      //:// We should ever have at most one DynamicBannerName entity, so check first to see if it exists.
       //:SET CURSOR FIRST KZXMLPGO.DynamicBannerName
       RESULT = SetCursorFirstEntity( KZXMLPGO, "DynamicBannerName", "" );
       //:IF RESULT < zCURSOR_SET

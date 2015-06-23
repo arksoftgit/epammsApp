@@ -206,6 +206,7 @@ function _AfterPageLoaded( )
    thisLi.disabled = true;
    // END of Javascript code entered by user.
 
+   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title + "%" ); }
    isWindowClosing = true;
 }
 
@@ -290,43 +291,6 @@ function InitSubregistrantForUpdate( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      // Javascript code entered by user.
-
-   // We knock out Login and Template as options.
-   var thisLi;
-
-   thisLi = document.getElementById( "lmLogin" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-   thisLi = document.getElementById( "lmLogout" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none"
-   thisLi = document.getElementById( "lmCompanyProfile" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none"
-   if ( keyRole == "Subregistrant" ) // if we are a Subregistrant
-   {
-      thisLi = document.getElementById( "lmSubregistrants" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-      thisLi = document.getElementById( "lmTrackingNotificationCompliance" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-    }
-   else
-   if ( keyRole == "Primary Registrant" ) // if we are a Primary Registrant
-   {
-      thisLi = document.getElementById( "lmStateRegistrations" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-   }
-
-   // Cannot go to subregistrant maintenance if already there.
-   thisLi = document.getElementById( "lmSubregistrants" );
-   thisLi.disabled = true;
-
-      // END of Javascript code entered by user.
-
    }
 }
 
@@ -348,8 +312,8 @@ function Profile( )
 function smChangeSubregPassword( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -363,8 +327,8 @@ function smChangeSubregPassword( )
 function smProfile( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -378,8 +342,8 @@ function smProfile( )
 function smAdminAcceptUpdateSubreg( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -406,8 +370,8 @@ if ( szValue == "" )
 function smAdminCancelUpdateSubreg( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -421,8 +385,8 @@ function smAdminCancelUpdateSubreg( )
 function mProductManagement( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -445,8 +409,8 @@ function mProductManagement( )
 function mSubregistrants( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -469,8 +433,8 @@ function mSubregistrants( )
 function mTrackingNotificationCompliance( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -493,8 +457,8 @@ function mTrackingNotificationCompliance( )
 function mStateRegistrations( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -517,8 +481,8 @@ function mStateRegistrations( )
 function mMarketingFulfillment( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -541,8 +505,8 @@ function mMarketingFulfillment( )
 function mWebDevelopment( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -565,8 +529,8 @@ function mWebDevelopment( )
 function mCompanyProfile( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -589,8 +553,8 @@ function mCompanyProfile( )
 function mLogin( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -613,8 +577,8 @@ function mLogin( )
 function mLogout( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {

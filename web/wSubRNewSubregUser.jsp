@@ -439,8 +439,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -483,8 +483,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRNewSubregUser.jsp", "wSubR.AcceptNewSubregUser" );
-         nOptRC = wSubR.AcceptNewSubregUser( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRNewSubregUser", "wSubR.AcceptNewSubregUser" );
+      nOptRC = wSubR.AcceptNewSubregUser( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -516,8 +516,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRNewSubregUser.jsp", "wSubR.CancelNewSubregUser" );
-         nOptRC = wSubR.CancelNewSubregUser( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRNewSubregUser", "wSubR.CancelNewSubregUser" );
+      nOptRC = wSubR.CancelNewSubregUser( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -568,8 +568,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRNewSubregUser.jsp", "wSubR.AcceptNewSubregUser" );
-         nOptRC = wSubR.AcceptNewSubregUser( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRNewSubregUser", "wSubR.AcceptNewSubregUser" );
+      nOptRC = wSubR.AcceptNewSubregUser( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -601,8 +601,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRNewSubregUser.jsp", "wSubR.CancelNewSubregUser" );
-         nOptRC = wSubR.CancelNewSubregUser( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRNewSubregUser", "wSubR.CancelNewSubregUser" );
+      nOptRC = wSubR.CancelNewSubregUser( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -640,8 +640,8 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRNewSubregUser.jsp", "wStartUp.ProductManagement" );
-         nOptRC = wStartUp.ProductManagement( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRNewSubregUser", "wStartUp.ProductManagement" );
+      nOptRC = wStartUp.ProductManagement( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -658,7 +658,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wSubR.SetWebRedirection( vKZXMLPGO, wSubR.zWAB_StartTopWindow, "wSPLD", "SubregProductsList" );
+         strNextJSP_Name = wSubR.SetWebRedirection( vKZXMLPGO, wSubR.zWAB_StartTopWindow, "wSLC", "SubregProductsList" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -679,8 +679,8 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRNewSubregUser.jsp", "wStartUp.SubregistrantManagement" );
-         nOptRC = wStartUp.SubregistrantManagement( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRNewSubregUser", "wStartUp.SubregistrantManagement" );
+      nOptRC = wStartUp.SubregistrantManagement( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -718,8 +718,8 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRNewSubregUser.jsp", "wStartUp.TrackingNotificationCompliance" );
-         nOptRC = wStartUp.TrackingNotificationCompliance( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRNewSubregUser", "wStartUp.TrackingNotificationCompliance" );
+      nOptRC = wStartUp.TrackingNotificationCompliance( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -757,8 +757,8 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRNewSubregUser.jsp", "wStartUp.StateRegistrations" );
-         nOptRC = wStartUp.StateRegistrations( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRNewSubregUser", "wStartUp.StateRegistrations" );
+      nOptRC = wStartUp.StateRegistrations( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -796,8 +796,8 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRNewSubregUser.jsp", "wStartUp.MarketingFulfillment" );
-         nOptRC = wStartUp.MarketingFulfillment( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRNewSubregUser", "wStartUp.MarketingFulfillment" );
+      nOptRC = wStartUp.MarketingFulfillment( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -835,8 +835,8 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRNewSubregUser.jsp", "wStartUp.WebDevelopment" );
-         nOptRC = wStartUp.WebDevelopment( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRNewSubregUser", "wStartUp.WebDevelopment" );
+      nOptRC = wStartUp.WebDevelopment( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -861,7 +861,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mAdministration" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "mCompanyProfile" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSubRNewSubregUser", strActionToProcess );
@@ -869,8 +869,8 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRNewSubregUser.jsp", "wStartUp.PrimaryRegistrantCompanySetup" );
-         nOptRC = wStartUp.PrimaryRegistrantCompanySetup( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRNewSubregUser", "wStartUp.PrimaryRegistrantCompanySetup" );
+      nOptRC = wStartUp.PrimaryRegistrantCompanySetup( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -908,8 +908,8 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRNewSubregUser.jsp", "wStartUp.ProcessLogin" );
-         nOptRC = wStartUp.ProcessLogin( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRNewSubregUser", "wStartUp.ProcessLogin" );
+      nOptRC = wStartUp.ProcessLogin( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -1020,8 +1020,8 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
    session.setAttribute( "ZeidonError", null );
 else
 {
-   VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRNewSubregUser.jsp", "wSubR.InitSubregUserForInsert" );
-         nOptRC = wSubR.InitSubregUserForInsert( new zVIEW( vKZXMLPGO ) );
+   VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRNewSubregUser", "wSubR.InitSubregUserForInsert" );
+   nOptRC = wSubR.InitSubregUserForInsert( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -1071,36 +1071,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-<script language="JavaScript" type="text/javascript" >
-      // Javascript code entered by user for Window action prebuild.
-
-   // We knock out Login and Template as options.
-   thisLi = document.getElementById( "lmLogin" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   if ( keyRole == "S" )
-   {
-      thisLi = document.getElementById( "lmSubregistrants" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-      thisLi = document.getElementById( "lmTrackingNotificationCompliance" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-   }
-   else
-   {
-      thisLi = document.getElementById( "lmStateRegistrations" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-   }
-
-      // END of Javascript code entered by user.
-
-</script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSubRNewSubregUser.js"></script>
 
 </head>
@@ -1122,7 +1092,7 @@ else
        <li id="lmStateRegistrations" name="lmStateRegistrations" ><a href="#" onclick="mStateRegistrations()">State Registrations</a></li>
        <li id="lmMarketingFulfillment" name="lmMarketingFulfillment" ><a href="#" onclick="mMarketingFulfillment()">Marketing/Fulfillment</a></li>
        <li id="lmWebDevelopment" name="lmWebDevelopment" ><a href="#" onclick="mWebDevelopment()">Web Development</a></li>
-       <li id="lmCompanyProfile" name="lmCompanyProfile" ><a href="#" onclick="mAdministration()">Company Profile</a></li>
+       <li id="lmCompanyProfile" name="lmCompanyProfile" ><a href="#" onclick="mCompanyProfile()">Company Profile</a></li>
        <li id="lmLogin" name="lmLogin" ><a href="#" onclick="mLogin()">Login</a></li>
        <li id="lmLogout" name="lmLogout" ><a href="#" onclick="mLogout()">Logout</a></li>
    </ul>
@@ -2330,9 +2300,8 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSubRNewSubregUser" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSubRNewSubregUser" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

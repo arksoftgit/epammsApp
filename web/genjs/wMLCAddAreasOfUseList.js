@@ -168,6 +168,28 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
+   // Prebuild action has javascript code entered by user.
+   var thisLi;
+
+// if ( keyRole == "P" || keyRole == "N" ) // If we are here, we have to be a Primary.
+   // We knock out Login and Template as options.
+   thisLi = document.getElementById( "lmLogin" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+   thisLi = document.getElementById( "lmTemplate" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+
+   thisLi = document.getElementById( "lmStateRegistrations" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+
+   // Cannot go to product management if already there.
+   thisLi = document.getElementById( "lmProductManagement" );
+   thisLi.disabled = true;
+   // END of Javascript code entered by user.
+
+   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title + "%" ); }
    isWindowClosing = true;
 }
 
@@ -210,39 +232,6 @@ function ClearSelectedAreasOfUse( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      // Javascript code entered by user.
-
-      var theForm;
-      var type;
-      var name;
-      var str;
-      var j;
-      var k;
-
-      for ( j = 0; j < document.forms.length; j++ )
-      {
-         theForm = document.forms[ j ];
-         for ( k = 0; k < theForm.length; k++ )
-         {
-            type = theForm.elements[ k ].type;
-
-            if ( type == "checkbox" )
-            {
-               name = theForm.elements[ k ].name;
-               str = name.substr( 0, 9 );
-               if ( str.match("GS_Select") )
-               {
-                  theForm.elements[ k ].checked = false;
-               }
-            }
-         }
-      }
-
-      return;
-
-
-      // END of Javascript code entered by user.
-
    }
 }
 
@@ -284,29 +273,6 @@ function InitAreasOfUseStmtsForInsert( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      // Javascript code entered by user.
-
-   var thisLi;
-
-// if ( keyRole == "P" || keyRole == "N" ) // If we are here, we have to be a Primary.
-   // We knock out Login and Template as options.
-   thisLi = document.getElementById( "lmLogin" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   thisLi = document.getElementById( "lmStateRegistrations" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   // Cannot go to product management if already there.
-   thisLi = document.getElementById( "lmProductManagement" );
-   thisLi.disabled = true;
-
-      // END of Javascript code entered by user.
-
    }
 }
 
@@ -318,39 +284,6 @@ function SelectAllAreasOfUse( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      // Javascript code entered by user.
-
-      var theForm;
-      var type;
-      var name;
-      var str;
-      var j;
-      var k;
-
-      for ( j = 0; j < document.forms.length; j++ )
-      {
-         theForm = document.forms[ j ];
-         for ( k = 0; k < theForm.length; k++ )
-         {
-            type = theForm.elements[ k ].type;
-
-            if ( type == "checkbox" )
-            {
-               name = theForm.elements[ k ].name;
-               str = name.substr( 0, 9 );
-               if ( str.match("GS_Select") )
-               {
-                  theForm.elements[ k ].checked = true;
-               }
-            }
-         }
-      }
-
-      return;
-
-
-      // END of Javascript code entered by user.
-
    }
 }
 

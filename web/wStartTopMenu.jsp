@@ -142,8 +142,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -186,8 +186,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartTopMenu.jsp", "wStart.GOTO_Directory" );
-         nOptRC = wStart.GOTO_Directory( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartTopMenu", "wStart.GOTO_Directory" );
+      nOptRC = wStart.GOTO_Directory( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -241,8 +241,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartTopMenu.jsp", "wStart.GOTO_GeneralClassList" );
-         nOptRC = wStart.GOTO_GeneralClassList( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartTopMenu", "wStart.GOTO_GeneralClassList" );
+      nOptRC = wStart.GOTO_GeneralClassList( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -279,8 +279,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartTopMenu.jsp", "wStart.GOTO_HomePage" );
-         nOptRC = wStart.GOTO_HomePage( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartTopMenu", "wStart.GOTO_HomePage" );
+      nOptRC = wStart.GOTO_HomePage( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -317,8 +317,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartTopMenu.jsp", "wStart.GOTO_MyAccount" );
-         nOptRC = wStart.GOTO_MyAccount( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartTopMenu", "wStart.GOTO_MyAccount" );
+      nOptRC = wStart.GOTO_MyAccount( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -402,8 +402,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartTopMenu.jsp", "wStart.PRINT_Page" );
-         nOptRC = wStart.PRINT_Page( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartTopMenu", "wStart.PRINT_Page" );
+      nOptRC = wStart.PRINT_Page( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -814,9 +814,8 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wStartTopMenu" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wStartTopMenu" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

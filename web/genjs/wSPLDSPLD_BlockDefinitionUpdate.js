@@ -168,8 +168,9 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
-   // Postbuild actions that have javascript code.
+   // Postbuild action that has javascript code.
    PostbuildBlockDefinitionUpdate( );
+   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title + "%" ); }
    isWindowClosing = true;
 }
 
@@ -354,26 +355,6 @@ function PostbuildBlockDefinitionUpdate( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      // Javascript code entered by user.
-
-      var sectionType = sessionStorage.getItem( "epamms_section_type" );
-   // alert( "SectionType: " + sectionType );
-      if ( sectionType === "Graphic" || sectionType == "ProductName" ||
-           sectionType === "HumanHazard" || sectionType == "EPA_RegAndEstNbr" ||
-           sectionType === "NetContents" ) { // || sectionType == "FirstAid" ||
-       // sectionType === "PhysicalHazard" || sectionType == "Precautionary" ) {
-         var thisHide = document.getElementById( "HideBox" );
-         thisHide.style.visibility = "hidden";
-         thisHide = document.getElementById( "HideInnerBox" );
-         thisHide.style.visibility = "hidden";
-         thisHide = document.getElementById( "HideText" );
-         thisHide.style.visibility = "hidden";
-         var thisComponentList = document.getElementById( "GridComponentList" );
-         thisComponentList .style.visibility = "hidden";
-      }
-
-      // END of Javascript code entered by user.
-
    }
 }
 

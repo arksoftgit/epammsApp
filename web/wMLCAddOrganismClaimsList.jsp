@@ -268,8 +268,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -307,8 +307,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddOrganismClaimsList.jsp", "wMLC.CancelAddClaimsStmts" );
-         nOptRC = wMLC.CancelAddClaimsStmts( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddOrganismClaimsList", "wMLC.CancelAddClaimsStmts" );
+      nOptRC = wMLC.CancelAddClaimsStmts( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -362,8 +362,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddOrganismClaimsList.jsp", "wMLC.ConfirmAddClaimsStmts" );
-         nOptRC = wMLC.ConfirmAddClaimsStmts( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddOrganismClaimsList", "wMLC.ConfirmAddClaimsStmts" );
+      nOptRC = wMLC.ConfirmAddClaimsStmts( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -400,8 +400,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddOrganismClaimsList.jsp", "wMLC.ConfirmAddClaimsStmts" );
-         nOptRC = wMLC.ConfirmAddClaimsStmts( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddOrganismClaimsList", "wMLC.ConfirmAddClaimsStmts" );
+      nOptRC = wMLC.ConfirmAddClaimsStmts( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -543,8 +543,8 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
    session.setAttribute( "ZeidonError", null );
 else
 {
-   VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddOrganismClaimsList.jsp", "wMLC.InitClaimsStmtsForInsert" );
-         nOptRC = wMLC.InitClaimsStmtsForInsert( new zVIEW( vKZXMLPGO ) );
+   VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddOrganismClaimsList", "wMLC.InitClaimsStmtsForInsert" );
+   nOptRC = wMLC.InitClaimsStmtsForInsert( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -595,31 +595,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/tabpane.js"></script>
-<script language="JavaScript" type="text/javascript" >
-      // Javascript code entered by user for Window action prebuild.
-
-   var thisLi;
-
-// if ( keyRole == "P" || keyRole == "N" ) // If we are here, we have to be a Primary.
-   // We knock out Login and Template as options.
-   thisLi = document.getElementById( "lmLogin" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   thisLi = document.getElementById( "lmStateRegistrations" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   // Cannot go to product management if already there.
-   thisLi = document.getElementById( "lmProductManagement" );
-   thisLi.disabled = true;
-
-      // END of Javascript code entered by user.
-
-</script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wMLCAddOrganismClaimsList.js"></script>
 
 </head>
@@ -1285,9 +1260,8 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCAddOrganismClaimsList" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wMLCAddOrganismClaimsList" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

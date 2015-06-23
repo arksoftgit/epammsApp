@@ -166,8 +166,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -237,8 +237,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemListPrimaryRegistrants.jsp", "wSystem.SelectDeletePrimaryRegistrant" );
-         nOptRC = wSystem.SelectDeletePrimaryRegistrant( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemListPrimaryRegistrants", "wSystem.SelectDeletePrimaryRegistrant" );
+      nOptRC = wSystem.SelectDeletePrimaryRegistrant( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -275,8 +275,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemListPrimaryRegistrants.jsp", "wSystem.InitPrimaryRegistrantForInsert" );
-         nOptRC = wSystem.InitPrimaryRegistrantForInsert( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemListPrimaryRegistrants", "wSystem.InitPrimaryRegistrantForInsert" );
+      nOptRC = wSystem.InitPrimaryRegistrantForInsert( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -340,8 +340,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemListPrimaryRegistrants.jsp", "wSystem.SelectUpdatePrimaryRegistrant" );
-         nOptRC = wSystem.SelectUpdatePrimaryRegistrant( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemListPrimaryRegistrants", "wSystem.SelectUpdatePrimaryRegistrant" );
+      nOptRC = wSystem.SelectUpdatePrimaryRegistrant( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -529,8 +529,8 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
    session.setAttribute( "ZeidonError", null );
 else
 {
-   VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemListPrimaryRegistrants.jsp", "wSystem.InitListPrimaryRegistrants" );
-         nOptRC = wSystem.InitListPrimaryRegistrants( new zVIEW( vKZXMLPGO ) );
+   VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemListPrimaryRegistrants", "wSystem.InitListPrimaryRegistrants" );
+   nOptRC = wSystem.InitListPrimaryRegistrants( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -582,20 +582,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-<script language="JavaScript" type="text/javascript" >
-      // Javascript code entered by user for Window action prebuild.
-
-/* thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   thisLi = document.getElementById( "lmSystem" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none"; */
-
-      // END of Javascript code entered by user.
-
-</script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSystemListPrimaryRegistrants.js"></script>
 
 </head>
@@ -649,6 +635,7 @@ else
    View mEPA = null;
    View mOrganiz = null;
    View mUser = null;
+   View sHelp = null;
    View wWebXfer = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
@@ -934,9 +921,8 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSystemListPrimaryRegistrants" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSystemListPrimaryRegistrants" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

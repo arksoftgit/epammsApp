@@ -30,6 +30,7 @@ import org.apache.commons.lang3.mutable.MutableDouble;
 import org.apache.commons.lang3.mutable.MutableInt;
 
 import com.quinsoft.epamms.ZGlobal1_Operation;
+import com.quinsoft.epamms.ZGlobalV_Operation;
 
 /**
    @author QuinSoft
@@ -4037,8 +4038,184 @@ omMasLC_dDisplayPathogenName( View     mMasLC,
    //:     /* end zDERIVED_SET */
    //:END  /* case */
    return( 0 );
+// END/////////////////////////////////////////////////////////////////////////////
+} 
+
+
+//:DERIVED ATTRIBUTE OPERATION
+//:dDisplayGenStmtText( VIEW mMasLC BASED ON LOD mMasLC,
+//:                     STRING ( 32 ) InternalEntityStructure,
+//:                     STRING ( 32 ) InternalAttribStructure,
+//:                     SHORT GetOrSetFlag )
+
+//:   VIEW mMasLC2 BASED ON LOD mMasLC
+public int 
+omMasLC_dDisplayGenStmtText( View     mMasLC,
+                             String InternalEntityStructure,
+                             String InternalAttribStructure,
+                             Integer   GetOrSetFlag )
+{
+   zVIEW    mMasLC2 = new zVIEW( );
+   //:STRING ( 5000 )  szCombinedText
+   String   szCombinedText = null;
+   int      lTempInteger_0 = 0;
+   String   szTempString_0 = null;
+   int      lTempInteger_1 = 0;
+
+
+   //:CASE GetOrSetFlag
+   switch( GetOrSetFlag )
+   { 
+      //:OF   zDERIVED_GET:
+      case zDERIVED_GET :
+
+         //:// If a Title exists, concatenate Title and Text.
+         //:// Otherwise, just show text.
+
+         //:IF mMasLC.M_GeneralStatement.Title = ""
+         if ( CompareAttributeToString( mMasLC, "M_GeneralStatement", "Title", "" ) == 0 )
+         { 
+            //:szCombinedText = mMasLC.M_GeneralStatement.Text 
+            {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+            StringBuilder sb_szCombinedText;
+            if ( szCombinedText == null )
+               sb_szCombinedText = new StringBuilder( 32 );
+            else
+               sb_szCombinedText = new StringBuilder( szCombinedText );
+                         GetVariableFromAttribute( sb_szCombinedText, mi_lTempInteger_0, 'S', 5001, mMasLC, "M_GeneralStatement", "Text", "", 0 );
+            lTempInteger_0 = mi_lTempInteger_0.intValue( );
+            szCombinedText = sb_szCombinedText.toString( );}
+            //:ELSE
+         } 
+         else
+         { 
+            //:szCombinedText = mMasLC.M_GeneralStatement.Title + " " + mMasLC.M_GeneralStatement.Text 
+            {StringBuilder sb_szCombinedText;
+            if ( szCombinedText == null )
+               sb_szCombinedText = new StringBuilder( 32 );
+            else
+               sb_szCombinedText = new StringBuilder( szCombinedText );
+                         GetStringFromAttribute( sb_szCombinedText, mMasLC, "M_GeneralStatement", "Title" );
+            szCombinedText = sb_szCombinedText.toString( );}
+             {StringBuilder sb_szCombinedText;
+            if ( szCombinedText == null )
+               sb_szCombinedText = new StringBuilder( 32 );
+            else
+               sb_szCombinedText = new StringBuilder( szCombinedText );
+                        ZeidonStringConcat( sb_szCombinedText, 1, 0, " ", 1, 0, 5001 );
+            szCombinedText = sb_szCombinedText.toString( );}
+            {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+            StringBuilder sb_szTempString_0;
+            if ( szTempString_0 == null )
+               sb_szTempString_0 = new StringBuilder( 32 );
+            else
+               sb_szTempString_0 = new StringBuilder( szTempString_0 );
+                         GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_1, 'S', 32001, mMasLC, "M_GeneralStatement", "Text", "", 0 );
+            lTempInteger_1 = mi_lTempInteger_1.intValue( );
+            szTempString_0 = sb_szTempString_0.toString( );}
+             {StringBuilder sb_szCombinedText;
+            if ( szCombinedText == null )
+               sb_szCombinedText = new StringBuilder( 32 );
+            else
+               sb_szCombinedText = new StringBuilder( szCombinedText );
+                        ZeidonStringConcat( sb_szCombinedText, 1, 0, szTempString_0, 1, 0, 5001 );
+            szCombinedText = sb_szCombinedText.toString( );}
+         } 
+
+         //:END
+
+         //:// Store the calculated value in the object.
+         //:StoreStringInRecord( mMasLC,
+         //:                  InternalEntityStructure,
+         //:                  InternalAttribStructure, szCombinedText )
+         StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szCombinedText );
+         break ;
+
+      //:  /* end zDERIVED_GET */
+      //:OF   zDERIVED_SET:
+      case zDERIVED_SET :
+         break ;
+   } 
+
+
+   //:     /* end zDERIVED_SET */
+   //:END  /* case */
+   return( 0 );
 // END
 } 
+
+
+//:DERIVED ATTRIBUTE OPERATION
+//:dDisplayKeywordText( VIEW mMasLC BASED ON LOD mMasLC,
+//:                     STRING ( 32 ) InternalEntityStructure,
+//:                     STRING ( 32 ) InternalAttribStructure,
+//:                     SHORT GetOrSetFlag )
+
+//:   STRING ( 10000 ) szGeneratedString
+public int 
+omMasLC_dDisplayKeywordText( View     mMasLC,
+                             String InternalEntityStructure,
+                             String InternalAttribStructure,
+                             Integer   GetOrSetFlag )
+{
+   String   szGeneratedString = null;
+   int      lTempInteger_0 = 0;
+
+
+   //:CASE GetOrSetFlag
+   switch( GetOrSetFlag )
+   { 
+      //:OF   zDERIVED_GET:
+      case zDERIVED_GET :
+
+         //:// Expand the current Text attribute by replacing imbedded Keywords with the Keyword
+         //:// values in the M_InsertTextMarketing subentities.
+         //:szGeneratedString = mMasLC.M_MarketingStatement.Text 
+         {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+         StringBuilder sb_szGeneratedString;
+         if ( szGeneratedString == null )
+            sb_szGeneratedString = new StringBuilder( 32 );
+         else
+            sb_szGeneratedString = new StringBuilder( szGeneratedString );
+                   GetVariableFromAttribute( sb_szGeneratedString, mi_lTempInteger_0, 'S', 10001, mMasLC, "M_MarketingStatement", "Text", "", 0 );
+         lTempInteger_0 = mi_lTempInteger_0.intValue( );
+         szGeneratedString = sb_szGeneratedString.toString( );}
+         //:GenerateKeywordTextIntoString( mMasLC,
+         //:                            szGeneratedString,
+         //:                            "M_InsertTextKeywordMarketing",
+         //:                            "M_InsertTextMarketing",
+         //:                            ", " )
+         {
+          ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( mMasLC );
+          {StringBuilder sb_szGeneratedString;
+         if ( szGeneratedString == null )
+            sb_szGeneratedString = new StringBuilder( 32 );
+         else
+            sb_szGeneratedString = new StringBuilder( szGeneratedString );
+                   m_ZGlobalV_Operation.GenerateKeywordTextIntoString( mMasLC, sb_szGeneratedString, "M_InsertTextKeywordMarketing", "M_InsertTextMarketing", ", " );
+         szGeneratedString = sb_szGeneratedString.toString( );}
+          // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
+         }
+
+         //:// Store the resulting value in the object.
+         //:StoreStringInRecord( mMasLC,
+         //:                  InternalEntityStructure,
+         //:                  InternalAttribStructure, szGeneratedString )
+         StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szGeneratedString );
+         //:RETURN 0
+         if(8==8)return( 0 );
+
+         //:/* end zDERIVED_GET */
+         //:OF   zDERIVED_SET:
+         case zDERIVED_SET :
+            break ;
+      } 
+
+
+      //:  /* end zDERIVED_SET */
+      //:END  /* case */
+      return( 0 );
+   } 
 
 
 

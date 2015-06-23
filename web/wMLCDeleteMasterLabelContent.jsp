@@ -148,8 +148,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -204,8 +204,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDeleteMasterLabelContent.jsp", "wMLC.ConfirmDeleteMasterLabelContent" );
-         nOptRC = wMLC.ConfirmDeleteMasterLabelContent( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDeleteMasterLabelContent", "wMLC.ConfirmDeleteMasterLabelContent" );
+      nOptRC = wMLC.ConfirmDeleteMasterLabelContent( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -710,9 +710,8 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCDeleteMasterLabelContent" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wMLCDeleteMasterLabelContent" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

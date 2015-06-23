@@ -168,6 +168,7 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
+   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title + "%" ); }
    isWindowClosing = true;
 }
 
@@ -202,27 +203,6 @@ function AcceptMarketingStatement( )
    }
 }
 
-function SortMarketingStatements( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      // Javascript code entered by user.
-
-       document.wSLCMarketingStatement.zTableRowSelect.value = buildSortTableHtml( "mSubLC", "S_MarketingUsageOrdering", "GridMarketingUsage",  ["Usage Type","Usage Name"]  );
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wSLCMarketingStatement.zAction.value = "SortMarketingStatements";
-      document.wSLCMarketingStatement.submit( );
-   }
-}
-
 function CancelMarketingStatement( )
 {
 
@@ -234,6 +214,36 @@ function CancelMarketingStatement( )
       _DisableFormElements( true );
 
       document.wSLCMarketingStatement.zAction.value = "CancelMarketingStatement";
+      document.wSLCMarketingStatement.submit( );
+   }
+}
+
+function GOTO_DisplayGeneratedText( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCMarketingStatement.zAction.value = "GOTO_DisplayGeneratedText";
+      document.wSLCMarketingStatement.submit( );
+   }
+}
+
+function GOTO_MarketingKeywordSelect( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCMarketingStatement.zAction.value = "GOTO_MarketingKeywordSelect";
       document.wSLCMarketingStatement.submit( );
    }
 }
@@ -256,6 +266,27 @@ function GOTO_SelectMarketingUsageEntries( )
       _DisableFormElements( true );
 
       document.wSLCMarketingStatement.zAction.value = "GOTO_SelectMarketingUsageEntries";
+      document.wSLCMarketingStatement.submit( );
+   }
+}
+
+function SortMarketingStatements( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+       document.wSLCMarketingStatement.zTableRowSelect.value = buildSortTableHtml( "mSubLC", "S_MarketingUsageOrdering", "GridMarketingUsage",  ["Usage Type","Usage Name"]  );
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wSLCMarketingStatement.zAction.value = "SortMarketingStatements";
       document.wSLCMarketingStatement.submit( );
    }
 }

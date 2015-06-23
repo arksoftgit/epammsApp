@@ -168,6 +168,7 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
+   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title + "%" ); }
    isWindowClosing = true;
 }
 
@@ -198,21 +199,6 @@ function AcceptMLC_UsageEntries( )
       _DisableFormElements( true );
 
       document.wMLCDirsForUseSelectByType.zAction.value = "AcceptMLC_UsageEntries";
-      document.wMLCDirsForUseSelectByType.submit( );
-   }
-}
-
-function SELECT_UsageType( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCDirsForUseSelectByType.zAction.value = "SELECT_UsageType";
       document.wMLCDirsForUseSelectByType.submit( );
    }
 }
@@ -265,6 +251,21 @@ function RemoveMLC_UsageEntries( )
       _DisableFormElements( true );
 
       document.wMLCDirsForUseSelectByType.zAction.value = "RemoveMLC_UsageEntries";
+      document.wMLCDirsForUseSelectByType.submit( );
+   }
+}
+
+function SELECT_UsageType( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCDirsForUseSelectByType.zAction.value = "SELECT_UsageType";
       document.wMLCDirsForUseSelectByType.submit( );
    }
 }

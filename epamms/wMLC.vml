@@ -301,7 +301,7 @@ GOTO_StorageDispStatementAdd( VIEW ViewToWindow )
    
    // We are creating the new temporal entity in this operation, rather than as auto action, so that
    // the NotForUseType attribute can be set, since it's currently required in the database.
-   SET CURSOR LAST mMasLC.M_StorageDisposalStatement
+   SET CURSOR LAST mMasLC.M_StorageDisposalStatement  
    CreateTemporalEntity( mMasLC, "M_StorageDisposalStatement", zPOS_AFTER )
    mMasLC.M_StorageDisposalStatement.NotForUseType = "NA"
 
@@ -1864,6 +1864,36 @@ ConfirmAddItemsMultiple( VIEW ViewToWindow )
    VIEW  mMasLC REGISTERED AS mMasLC
    SHORT nRC
    
+   // If this is for a Keyword Text Add, we need to create/position on the specified Keyword.
+   IF mMasLC.MasterLabelContent.wAddStatementsEntityName = "M_InsertTextMarketing" 
+      IF mMasLC.MasterLabelContent.wAddStatementsPageTitle = ""
+         MessageSend( ViewToWindow, "", "Add Keyword Items",
+                      "A Keyword value must be specified.",
+                      zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         RETURN 2
+      END
+      SET CURSOR FIRST mMasLC.M_InsertTextKeywordMarketing 
+                 WHERE mMasLC.M_InsertTextKeywordMarketing.Name = mMasLC.MasterLabelContent.wAddStatementsPageTitle 
+      IF RESULT < zCURSOR_SET
+         CREATE ENTITY mMasLC.M_InsertTextKeywordMarketing
+         mMasLC.M_InsertTextKeywordMarketing.Name = mMasLC.MasterLabelContent.wAddStatementsPageTitle  
+      END
+   END
+   IF mMasLC.MasterLabelContent.wAddStatementsEntityName = "M_InsertTextDU" 
+      IF mMasLC.MasterLabelContent.wAddStatementsPageTitle = ""
+         MessageSend( ViewToWindow, "", "Add Keyword Items",
+                      "A Keyword value must be specified.",
+                      zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         RETURN 2
+      END
+      SET CURSOR FIRST mMasLC.M_InsertTextKeywordDU 
+                 WHERE mMasLC.M_InsertTextKeywordDU.Name = mMasLC.MasterLabelContent.wAddStatementsPageTitle 
+      IF RESULT < zCURSOR_SET
+         CREATE ENTITY mMasLC.M_InsertTextKeywordDU
+         mMasLC.M_InsertTextKeywordDU.Name = mMasLC.MasterLabelContent.wAddStatementsPageTitle  
+      END
+   END
+   
    // Call operation to split text up into one or more entities, depending on the view, EntityName and 
    // AttributeName passed in mMasLC root work entities.
    SplitParagraphOnLinefeed( mMasLC.MasterLabelContent.wAddStatementsWorkText, 
@@ -1881,8 +1911,6 @@ ConfirmAddItemsMultiple( VIEW ViewToWindow )
          END
       END
    END
-   
-   
 
 END
 
@@ -1938,9 +1966,9 @@ GOTO_MarketingStatementAdd( VIEW ViewToWindow )
    mMasLC.MasterLabelContent.wAddStatementsEntityName    = "M_MarketingStatement"
    mMasLC.MasterLabelContent.wAddStatementsAttributeName = "Text"
    mMasLC.MasterLabelContent.wAddStatementsPageTitle     = "Marketing Statements"
+   mMasLC.MasterLabelContent.wAddStatementsWorkText      = ""
 
 END
-
 
 /*************************************************************************************************
 **    
@@ -1956,6 +1984,7 @@ GOTO_AddUsageStatements( VIEW ViewToWindow )
    // Usage entries.
    mMasLC.MasterLabelContent.wAddStatementsEntityName    = "M_Usage"
    mMasLC.MasterLabelContent.wAddStatementsAttributeName = "Name"
+   mMasLC.MasterLabelContent.wAddStatementsWorkText      = ""
    IF mMasLC.M_UsageType.UsageType = "S"
       // Surfaces
       mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Surfaces"
@@ -1974,3 +2003,51 @@ GOTO_AddUsageStatements( VIEW ViewToWindow )
 
 END
 
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_MarketingKeywordStmtDelete
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_MarketingKeywordStmtDelete( VIEW ViewToWindow )
+
+   VIEW mMasLC   REGISTERED AS mMasLC
+
+   mMasLC.MasterLabelContent.wDeleteType       = "Marketing Keyword Statement"
+   mMasLC.MasterLabelContent.wDeleteText       = mMasLC.M_InsertTextMarketing.Text 
+   mMasLC.MasterLabelContent.wDeleteEntityName = "M_InsertTextMarketing"
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_MarketingKeywordStmtAdd
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_MarketingKeywordStmtAdd( VIEW ViewToWindow )
+
+   VIEW  mMasLC REGISTERED AS mMasLC
+   
+   // Set up the work areas that define to the Add Items page that the items being added are Marketing
+   // Statements.
+   mMasLC.MasterLabelContent.wAddStatementsEntityName    = "M_InsertTextMarketing"
+   mMasLC.MasterLabelContent.wAddStatementsAttributeName = "Text"
+   mMasLC.MasterLabelContent.wAddStatementsPageTitle     = ""
+   mMasLC.MasterLabelContent.wAddStatementsWorkText      = ""
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_DisplayGeneratedText
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_DisplayGeneratedText( VIEW ViewToWindow )
+
+   VIEW  mMasLC REGISTERED AS mMasLC
+
+   mMasLC.MasterLabelContent.wGeneratedTextDisplay = mMasLC.M_MarketingStatement.dDisplayKeywordText  
+
+END

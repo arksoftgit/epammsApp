@@ -262,7 +262,7 @@ if ( strActionToProcess != null )
       nOptRC = wStartUp.InitLoginWindow( new zVIEW( vKZXMLPGO ) );
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpUserLogin.jsp", "wStartUp.AutoLoginSubregistrant" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpUserLogin", "wStartUp.AutoLoginSubregistrant" );
       nOptRC = wStartUp.AutoLoginSubregistrant( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -325,7 +325,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpUserLogin.jsp", "wStartUp.ProcessUserLogin" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpUserLogin", "wStartUp.ProcessUserLogin" );
       nOptRC = wStartUp.ProcessUserLogin( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -453,7 +453,7 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
    session.setAttribute( "ZeidonError", null );
 else
 {
-   VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpUserLogin.jsp", "wStartUp.InitLoginWindow" );
+   VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpUserLogin", "wStartUp.InitLoginWindow" );
    nOptRC = wStartUp.InitLoginWindow( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {

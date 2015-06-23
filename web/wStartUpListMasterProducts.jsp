@@ -210,7 +210,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpListMasterProducts.jsp", "wStartUp.AddNewMasterProduct" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpListMasterProducts", "wStartUp.AddNewMasterProduct" );
       nOptRC = wStartUp.AddNewMasterProduct( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -248,7 +248,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpListMasterProducts.jsp", "wStartUp.MoveMasterProductDown" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpListMasterProducts", "wStartUp.MoveMasterProductDown" );
       nOptRC = wStartUp.MoveMasterProductDown( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -286,7 +286,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpListMasterProducts.jsp", "wStartUp.MoveMasterProductUp" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpListMasterProducts", "wStartUp.MoveMasterProductUp" );
       nOptRC = wStartUp.MoveMasterProductUp( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -363,7 +363,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpListMasterProducts.jsp", "wStartUp.SelectSubregProductForDelete" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpListMasterProducts", "wStartUp.SelectSubregProductForDelete" );
       nOptRC = wStartUp.SelectSubregProductForDelete( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -428,7 +428,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpListMasterProducts.jsp", "wStartUp.SelectSubregProductForUpdate" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpListMasterProducts", "wStartUp.SelectSubregProductForUpdate" );
       nOptRC = wStartUp.SelectSubregProductForUpdate( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -509,7 +509,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpListMasterProducts.jsp", "wStartUp.ProductManagement" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpListMasterProducts", "wStartUp.ProductManagement" );
       nOptRC = wStartUp.ProductManagement( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -527,7 +527,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StartTopWindow, "wSPLD", "" );
+         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StartTopWindow, "wSLC", "SubregProductsList" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -547,7 +547,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpListMasterProducts.jsp", "wStartUp.SubregistrantManagement" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpListMasterProducts", "wStartUp.SubregistrantManagement" );
       nOptRC = wStartUp.SubregistrantManagement( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -585,7 +585,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpListMasterProducts.jsp", "wStartUp.TrackingNotificationCompliance" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpListMasterProducts", "wStartUp.TrackingNotificationCompliance" );
       nOptRC = wStartUp.TrackingNotificationCompliance( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -623,7 +623,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpListMasterProducts.jsp", "wStartUp.StateRegistrations" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpListMasterProducts", "wStartUp.StateRegistrations" );
       nOptRC = wStartUp.StateRegistrations( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -661,7 +661,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpListMasterProducts.jsp", "wStartUp.MarketingFulfillment" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpListMasterProducts", "wStartUp.MarketingFulfillment" );
       nOptRC = wStartUp.MarketingFulfillment( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -699,7 +699,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpListMasterProducts.jsp", "wStartUp.WebDevelopment" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpListMasterProducts", "wStartUp.WebDevelopment" );
       nOptRC = wStartUp.WebDevelopment( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -732,7 +732,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpListMasterProducts.jsp", "wStartUp.PrimaryRegistrantCompanySetup" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpListMasterProducts", "wStartUp.PrimaryRegistrantCompanySetup" );
       nOptRC = wStartUp.PrimaryRegistrantCompanySetup( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -770,7 +770,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpListMasterProducts.jsp", "wStartUp.ProcessLogin" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpListMasterProducts", "wStartUp.ProcessLogin" );
       nOptRC = wStartUp.ProcessLogin( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -882,7 +882,7 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
    session.setAttribute( "ZeidonError", null );
 else
 {
-   VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpListMasterProducts.jsp", "wStartUp.InitListMasterProducts" );
+   VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpListMasterProducts", "wStartUp.InitListMasterProducts" );
    nOptRC = wStartUp.InitListMasterProducts( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
@@ -1316,7 +1316,6 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wStartUpListMasterProducts" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wStartUpListMasterProducts" );
    session.setAttribute( "ZeidonAction", null );
 
    strActionToProcess = "";

@@ -60,41 +60,41 @@ public int DoInputMapping( HttpServletRequest request,
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
    {
-      // EditBox: DirectionsUseTitle
+      // EditBox: DirectionsUseName
       nRC = mMasLC.cursor( "M_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "DirectionsUseTitle" );
+         strMapValue = request.getParameter( "DirectionsUseName" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "DirectionsUseTitle", "", strMapValue );
+               VmlOperation.CreateMessage( task, "DirectionsUseName", "", strMapValue );
             else
                mMasLC.cursor( "M_DirectionsForUseSection" ).getAttribute( "Name" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "DirectionsUseTitle", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "DirectionsUseName", e.getReason( ), strMapValue );
          }
       }
 
-      // EditBox: EditBox1
+      // EditBox: DirectionsForUseTitle
       nRC = mMasLC.cursor( "M_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "EditBox1" );
+         strMapValue = request.getParameter( "DirectionsForUseTitle" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "EditBox1", "", strMapValue );
+               VmlOperation.CreateMessage( task, "DirectionsForUseTitle", "", strMapValue );
             else
                mMasLC.cursor( "M_DirectionsForUseSection" ).getAttribute( "Title" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "EditBox1", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "DirectionsForUseTitle", e.getReason( ), strMapValue );
          }
       }
 
@@ -222,8 +222,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -325,8 +325,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseSection.jsp", "wMLC.GOTO_DirsForUseStatementAdd" );
-         nOptRC = wMLC.GOTO_DirsForUseStatementAdd( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseSection", "wMLC.GOTO_DirsForUseStatementAdd" );
+      nOptRC = wMLC.GOTO_DirsForUseStatementAdd( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -412,8 +412,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseSection.jsp", "wMLC.GOTO_SelectRemoveDrivingDU" );
-         nOptRC = wMLC.GOTO_SelectRemoveDrivingDU( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseSection", "wMLC.GOTO_SelectRemoveDrivingDU" );
+      nOptRC = wMLC.GOTO_SelectRemoveDrivingDU( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -638,7 +638,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="AcceptAndReturn" name="AcceptAndReturn"><a href="#"  onclick="AcceptDirectionsUseSect()">Accept and Return</a></li>
+       <li id="AcceptAndReturn" name="AcceptAndReturn"><a href="#"  onclick="AcceptDirectionsUseSect()">Accept & Return</a></li>
 <%
    }
 %>
@@ -648,7 +648,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CancelDirectionsUseSect()">Cancel and Return</a></li>
+       <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CancelDirectionsUseSect()">Cancel & Return</a></li>
 <%
    }
 %>
@@ -816,9 +816,9 @@ else
 
 </td>
 <td valign="top"  class="text12" style="width:264px;">
-<% /* DirectionsUseTitle:EditBox */ %>
+<% /* DirectionsUseName:EditBox */ %>
 <%
-   strErrorMapValue = VmlOperation.CheckError( "DirectionsUseTitle", strError );
+   strErrorMapValue = VmlOperation.CheckError( "DirectionsUseName", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -829,7 +829,7 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "DirectionsUseTitle" );
+         task.log( ).debug( "Invalid View: " + "DirectionsUseName" );
       else
       {
          nRC = mMasLC.cursor( "M_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
@@ -841,8 +841,8 @@ else
             }
             catch (Exception e)
             {
-               out.println("There is an error on DirectionsUseTitle: " + e.getMessage());
-               task.log().error( "*** Error on ctrl DirectionsUseTitle", e );
+               out.println("There is an error on DirectionsUseName: " + e.getMessage());
+               task.log().error( "*** Error on ctrl DirectionsUseName", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -850,12 +850,12 @@ else
             task.log( ).debug( "M_DirectionsForUseSection.Name: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for DirectionsUseTitle: " + "mMasLC.M_DirectionsForUseSection" );
+            task.log( ).debug( "Entity does not exist for DirectionsUseName: " + "mMasLC.M_DirectionsForUseSection" );
       }
    }
 %>
 
-<input class="text12" name="DirectionsUseTitle" id="DirectionsUseTitle" style="width:264px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="DirectionsUseName" id="DirectionsUseName"  title="Required Name to differentiate Directions for Use Sections within a list" style="width:264px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -867,9 +867,9 @@ else
 
 </td>
 <td valign="top"  class="text12" style="width:656px;">
-<% /* EditBox1:EditBox */ %>
+<% /* DirectionsForUseTitle:EditBox */ %>
 <%
-   strErrorMapValue = VmlOperation.CheckError( "EditBox1", strError );
+   strErrorMapValue = VmlOperation.CheckError( "DirectionsForUseTitle", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -880,7 +880,7 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "EditBox1" );
+         task.log( ).debug( "Invalid View: " + "DirectionsForUseTitle" );
       else
       {
          nRC = mMasLC.cursor( "M_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
@@ -892,8 +892,8 @@ else
             }
             catch (Exception e)
             {
-               out.println("There is an error on EditBox1: " + e.getMessage());
-               task.log().error( "*** Error on ctrl EditBox1", e );
+               out.println("There is an error on DirectionsForUseTitle: " + e.getMessage());
+               task.log().error( "*** Error on ctrl DirectionsForUseTitle", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -901,12 +901,12 @@ else
             task.log( ).debug( "M_DirectionsForUseSection.Title: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for EditBox1: " + "mMasLC.M_DirectionsForUseSection" );
+            task.log( ).debug( "Entity does not exist for DirectionsForUseTitle: " + "mMasLC.M_DirectionsForUseSection" );
       }
    }
 %>
 
-<input class="text12" name="EditBox1" id="EditBox1" style="width:656px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="DirectionsForUseTitle" id="DirectionsForUseTitle"  title="Optional Title to appear with text on generated label" style="width:656px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -954,7 +954,7 @@ else
 <label class="listheader"  id="Text5" name="Text5" style="width:434px;height:16px;position:absolute;left:4px;top:4px;">Directions for Use Statements</label>
 
 <% /* PushBtn2:PushBtn */ %>
-<button type="button" class="newbutton" name="PushBtn2" id="PushBtn2" value="" onclick="GOTO_DirsForUseStatementAdd( )" style="width:78px;height:26px;position:absolute;left:544px;top:4px;">New</button>
+<button type="button" class="newbutton"  title="Go to add one or more lines of Directions for Use Statement text" name="PushBtn2" id="PushBtn2" value="" onclick="GOTO_DirsForUseStatementAdd( )" style="width:78px;height:26px;position:absolute;left:544px;top:4px;">New</button>
 
 
 </div>  <!--  GroupBox9 --> 
@@ -1026,9 +1026,9 @@ try
 
 <tr<%=strOdd%>>
 
-   <td><a href="#" onclick="GOTO_DirsForUseStatementUpdate( this.id )" id="GridEditDirectionsUse::<%=strEntityKey%>"><%=strGridEditDirectionsUse%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateDirectionsUseStatement" onclick="GOTO_DirsForUseStatementUpdate( this.id )" id="BMBUpdateDirectionsUseStatement::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteDirectionsUseStatement" onclick="SelectDirectionsUseStmtForDelete( this.id )" id="BMBDeleteDirectionsUseStatement::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
+   <td title="Text for the Directions for Use Statement identified on this row" ><a href="#" onclick="GOTO_DirsForUseStatementUpdate( this.id )" id="GridEditDirectionsUse::<%=strEntityKey%>" title="Text for the Directions for Use Statement identified on this row" ><%=strGridEditDirectionsUse%></a></td>
+   <td nowrap title="Go to update the the Directions for Use Statement text identified on this row" ><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateDirectionsUseStatement" onclick="GOTO_DirsForUseStatementUpdate( this.id )" id="BMBUpdateDirectionsUseStatement::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg"  title="Go to update the the Directions for Use Statement text identified on this row" alt="Update"></a></td>
+   <td nowrap title="Delete the Directions for Use Statement entry identified on this row" ><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteDirectionsUseStatement" onclick="SelectDirectionsUseStmtForDelete( this.id )" id="BMBDeleteDirectionsUseStatement::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg"  title="Delete the Directions for Use Statement entry identified on this row" alt="Delete"></a></td>
 
 </tr>
 
@@ -1056,7 +1056,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </div> <!-- End of Tab item TabCtl1 -->
 
 <div id="TabCtl2" class="tab-page " > <!-- Tab item TabCtl2 -->
-<h2 class="tab"><span>Claims Driving Section</span></h2>
+<h2 class="tab"><span>Items Driving this Section</span></h2>
 <script type="text/javascript">Tab1.addTabPage( document.getElementById( "TabCtl2" ) );</script>
 
 
@@ -1076,14 +1076,14 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox8:GroupBox */ %>
 
-<div id="GroupBox8" name="GroupBox8"   style="float:left;position:relative; width:686px; height:30px;">  <!-- GroupBox8 --> 
+<div id="GroupBox8" name="GroupBox8"   style="float:left;position:relative; width:716px; height:30px;">  <!-- GroupBox8 --> 
 
 <% /* Text4:Text */ %>
 
-<label class="listheader"  id="Text4" name="Text4" style="width:480px;height:16px;position:absolute;left:4px;top:4px;">Claims that Drive the current Section to be included in the SLC</label>
+<label class="listheader"  id="Text4" name="Text4" style="width:402px;height:16px;position:absolute;left:4px;top:4px;">Claims/Applications/Areas of Use that Drive this Section to be Included in SLC entries created from this MLC</label>
 
 <% /* PushBtn3:PushBtn */ %>
-<button type="button" class="newbutton" name="PushBtn3" id="PushBtn3" value="" onclick="GOTO_SelectRemoveDrivingDU( )" style="width:122px;height:26px;position:absolute;left:502px;top:4px;">Select/Remove</button>
+<button type="button" class="newbutton"  title="Go to add or remove Usage entries to be tied to this Statement" name="PushBtn3" id="PushBtn3" value="" onclick="GOTO_SelectRemoveDrivingDU( )" style="width:130px;height:26px;position:absolute;left:502px;top:4px;">Select/Remove</button>
 
 
 </div>  <!--  GroupBox8 --> 
@@ -1093,7 +1093,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 
  <!-- This is added as a line spacer -->
-<div style="height:4px;width:100px;"></div>
+<div style="height:10px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
@@ -1102,7 +1102,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <thead><tr>
 
-   <th>Claim Classification</th>
+   <th>Usage Type</th>
    <th>Usage Name</th>
 
 </tr></thead>
@@ -1140,7 +1140,7 @@ try
          nRC = vGrid1.cursor( "M_DrivingUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl1 = vGrid1.cursor( "M_DrivingUsage" ).getAttribute( "ClaimsClassification" ).getString( "" );
+            strGridEditCtl1 = vGrid1.cursor( "M_DrivingUsage" ).getAttribute( "UsageType" ).getString( "FullUsageType" );
 
             if ( strGridEditCtl1 == null )
                strGridEditCtl1 = "";
@@ -1153,7 +1153,7 @@ try
          nRC = vGrid1.cursor( "M_DrivingUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl2 = vGrid1.cursor( "M_DrivingUsage" ).getAttribute( "Name" ).getString( "" );
+            strGridEditCtl2 = vGrid1.cursor( "M_DrivingUsage" ).getAttribute( "dDisplayUsageName" ).getString( "" );
 
             if ( strGridEditCtl2 == null )
                strGridEditCtl2 = "";
@@ -1166,8 +1166,8 @@ try
 
 <tr<%=strOdd%>>
 
-   <td><%=strGridEditCtl1%></td>
-   <td><%=strGridEditCtl2%></td>
+   <td title="The Type of Usage Entry (Claim, Surface, Area of Use, Application)" ><%=strGridEditCtl1%></td>
+   <td title="The particular Name/text for the selected Usage entry" ><%=strGridEditCtl2%></td>
 
 </tr>
 
@@ -1246,9 +1246,8 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCDirectionsForUseSection" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wMLCDirectionsForUseSection" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

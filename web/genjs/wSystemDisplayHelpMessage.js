@@ -168,6 +168,7 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
+   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title + "%" ); }
    isWindowClosing = true;
 }
 
@@ -194,7 +195,7 @@ function ExitHelp( )
 {
 // alert( "calling ExitHelp" );
    // This is for indicating whether the user hit the window close box.
-   isWindowClosing = true;
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -214,7 +215,7 @@ function mLogout( )
 {
 
    // This is for indicating whether the user hit the window close box.
-   isWindowClosing = true;
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {

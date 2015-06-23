@@ -185,8 +185,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -224,8 +224,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_Components.jsp", "wSPLD.CancelSPLD" );
-         nOptRC = wSPLD.CancelSPLD( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_Components", "wSPLD.CancelSPLD" );
+      nOptRC = wSPLD.CancelSPLD( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -289,8 +289,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_Components.jsp", "wSPLD.GOTO_UpdateSPLD_Statement" );
-         nOptRC = wSPLD.GOTO_UpdateSPLD_Statement( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_Components", "wSPLD.GOTO_UpdateSPLD_Statement" );
+      nOptRC = wSPLD.GOTO_UpdateSPLD_Statement( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -327,8 +327,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_Components.jsp", "wSPLD.REFRESH_SPLD_FromSLC" );
-         nOptRC = wSPLD.REFRESH_SPLD_FromSLC( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_Components", "wSPLD.REFRESH_SPLD_FromSLC" );
+      nOptRC = wSPLD.REFRESH_SPLD_FromSLC( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -382,8 +382,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_Components.jsp", "wSPLD.SaveSPLD" );
-         nOptRC = wSPLD.SaveSPLD( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_Components", "wSPLD.SaveSPLD" );
+      nOptRC = wSPLD.SaveSPLD( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -1139,9 +1139,8 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSPLDSPLD_Components" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSPLDSPLD_Components" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

@@ -23,26 +23,45 @@ SaveSLC( VIEW ViewToWindow )
 
    VIEW mSubLC REGISTERED AS mSubLC
    
-   COMMIT mSubLC
-
-END
-
-/*************************************************************************************************
-**    
-**    OPERATION: DisplaySurfacesSection
-**    
-*************************************************************************************************/
-DIALOG OPERATION
-DisplaySurfacesSection( VIEW ViewToWindow )
-
-   VIEW mSubLC REGISTERED AS mSubLC
-   
-   // Position on Claims Usage Type.
-   SET CURSOR FIRST mSubLC.S_UsageType WHERE mSubLC.S_UsageType.UsageType = "S" 
-   IF RESULT < zCURSOR_SET
-      CREATE ENTITY mSubLC.S_UsageType 
-      mSubLC.S_UsageType.UsageType = "S" 
+   // Temporary code to set MLC pointers from included MLC entities.
+   FOR EACH mSubLC.S_GeneralSection 
+      mSubLC.S_GeneralSection.PrimaryMLC_ID = mSubLC.M_GeneralSection.ID  
+      FOR EACH mSubLC.S_GeneralStatement 
+         mSubLC.S_GeneralStatement.PrimaryMLC_ID = mSubLC.M_GeneralStatement.ID 
+      END
    END
+   FOR EACH mSubLC.S_IngredientsSection 
+      mSubLC.S_IngredientsSection.PrimaryMLC_ID = mSubLC.M_IngredientsSection.ID 
+      FOR EACH mSubLC.S_IngredientsStatement 
+         mSubLC.S_IngredientsStatement.PrimaryMLC_ID = mSubLC.M_IngredientsStatement.ID 
+      END
+   END
+   FOR EACH mSubLC.S_StorageDisposalSection 
+      mSubLC.S_StorageDisposalSection.PrimaryMLC_ID = mSubLC.M_StorageDisposalSection.ID 
+      FOR EACH mSubLC.S_StorageDisposalStatement 
+         mSubLC.S_StorageDisposalStatement.PrimaryMLC_ID = mSubLC.M_StorageDisposalStatement.ID 
+      END
+   END
+   FOR EACH mSubLC.S_DirectionsForUseSection 
+      mSubLC.S_DirectionsForUseSection.PrimaryMLC_ID = mSubLC.M_DirectionsForUseSection.ID 
+      FOR EACH mSubLC.S_DirectionsForUseStatement 
+         mSubLC.S_DirectionsForUseStatement.PrimaryMLC_ID = mSubLC.M_DirectionsForUseStatement.ID 
+      END
+   END
+   FOR EACH mSubLC.S_MarketingSection 
+      mSubLC.S_MarketingSection.PrimaryMLC_ID = mSubLC.M_MarketingSection.ID 
+      FOR EACH mSubLC.S_MarketingStatement 
+         mSubLC.S_MarketingStatement.PrimaryMLC_ID = mSubLC.M_MarketingStatement.ID 
+      END
+   END
+   FOR EACH mSubLC.S_HumanHazardSection 
+      mSubLC.S_HumanHazardSection.PrimaryMLC_ID = mSubLC.M_HumanHazardSection.ID 
+   END
+   FOR EACH mSubLC.S_DilutionGroup 
+      mSubLC.S_DilutionGroup.PrimaryMLC_ID = mSubLC.M_DilutionGroup.ID 
+   END
+   
+   COMMIT mSubLC
 
 END
 
@@ -107,6 +126,27 @@ DisplayClaimsSection( VIEW ViewToWindow )
       CREATE ENTITY mSubLC.S_UsageType 
       mSubLC.S_UsageType.UsageType = "C" 
    END
+   mSubLC.SubregLabelContent.wUsageSelectionText = "Claims"
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: DisplaySurfacesSection
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+DisplaySurfacesSection( VIEW ViewToWindow )
+
+   VIEW mSubLC REGISTERED AS mSubLC
+   
+   // Position on Surfaces Usage Type.
+   SET CURSOR FIRST mSubLC.S_UsageType WHERE mSubLC.S_UsageType.UsageType = "S" 
+   IF RESULT < zCURSOR_SET
+      CREATE ENTITY mSubLC.S_UsageType 
+      mSubLC.S_UsageType.UsageType = "S" 
+   END
+   mSubLC.SubregLabelContent.wUsageSelectionText = "Surfaces"
 
 END
 
@@ -120,12 +160,13 @@ DisplayAreasOfUseSection( VIEW ViewToWindow )
 
    VIEW mSubLC REGISTERED AS mSubLC
    
-   // Position on Claims Usage Type.
+   // Position on Areas of Use Usage Type.
    SET CURSOR FIRST mSubLC.S_UsageType WHERE mSubLC.S_UsageType.UsageType = "U" 
    IF RESULT < zCURSOR_SET
       CREATE ENTITY mSubLC.S_UsageType 
       mSubLC.S_UsageType.UsageType = "U" 
    END
+   mSubLC.SubregLabelContent.wUsageSelectionText = "Areas of Use"
 
 END
 
@@ -139,12 +180,13 @@ DisplayApplicationTypesSection( VIEW ViewToWindow )
 
    VIEW mSubLC REGISTERED AS mSubLC
    
-   // Position on Claims Usage Type.
+   // Position on Application Types Usage Type.
    SET CURSOR FIRST mSubLC.S_UsageType WHERE mSubLC.S_UsageType.UsageType = "T" 
    IF RESULT < zCURSOR_SET
       CREATE ENTITY mSubLC.S_UsageType 
       mSubLC.S_UsageType.UsageType = "T" 
    END
+   mSubLC.SubregLabelContent.wUsageSelectionText = "Application Types"
 
 END
 
@@ -167,7 +209,7 @@ SelectMLC_UsageEntries( VIEW ViewToWindow )
             CREATE ENTITY mSubLC.S_Usage 
             SetMatchingAttributesByName( mSubLC, "S_Usage", mMasLC, "M_Usage", zSET_NULL ) 
             mSubLC.S_Usage.wSelected = ""
-            INCLUDE mSubLC.M_Usage FROM mMasLC.M_Usage 
+            mSubLC.S_Usage.PrimaryMLC_ID = mMasLC.M_Usage.ID 
          END 
          mMasLC.M_Usage.wSelected = ""
       END
@@ -431,36 +473,6 @@ END
 
 /*************************************************************************************************
 **    
-**    OPERATION: GOTO_SelectMarketingUsageEntries
-**    
-*************************************************************************************************/
-DIALOG OPERATION
-GOTO_SelectMarketingUsageEntries( VIEW ViewToWindow )
-
-   VIEW mSubLC REGISTERED AS mSubLC
-   VIEW mMasLC REGISTERED AS mMasLC
-   
-   FOR EACH mSubLC.S_SelectableMarketingUsage
-      EXCLUDE mSubLC.S_SelectableMarketingUsage NONE
-   END
-   
-   // Set up the list of selectable Usage Statements. This is the subset of MLC Usage Statements tied
-   // to the corresponding MLC Statement is ARE ALSO IN the list of Usage Statements selected for this SLC.
-   SET CURSOR FIRST mMasLC.M_MarketingStatement WITHIN mMasLC.MasterLabelContent 
-              WHERE mMasLC.M_MarketingStatement.ID = mSubLC.M_MarketingStatement.ID 
-   FOR EACH mMasLC.M_MarketingUsageOrdering 
-      SET CURSOR FIRST mSubLC.M_Usage WITHIN mSubLC.SubregLabelContent 
-                 WHERE mSubLC.M_Usage.ID = mMasLC.M_MarketingUsage.ID  
-      IF RESULT >= zCURSOR_SET
-         // An SLC Usage entry exists for the MLC Statement Usage entry.
-         INCLUDE mSubLC.S_SelectableMarketingUsage FROM mSubLC.S_Usage 
-      END
-   END
-
-END
-
-/*************************************************************************************************
-**    
 **    OPERATION: DeleteMLC_ComponentsForSLC
 **    
 *************************************************************************************************/
@@ -494,6 +506,46 @@ DeleteMLC_ComponentsForSLC( VIEW ViewToWindow )
    END
    
    // Rebuild the Marketing Components.
+   BuildCompositeEntries( mSubLC )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_MarketingStatementDetail
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_MarketingStatementDetail( VIEW ViewToWindow )
+
+   VIEW mSubLC REGISTERED AS mSubLC
+   
+   // Position on the correct Marketing Statement based on position on the corresponding Components entry.
+   // If we're positioned on a Marketing Section component, give error.
+   IF mSubLC.CompositeComponentList.Type = "M_MarketingSection"
+      MessageSend( ViewToWindow, "", "Marketing Statement Detail",
+                   "Only a Marketing Statement can be selected.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   ELSE
+      SET CURSOR FIRST mSubLC.S_MarketingStatement WITHIN mSubLC.SubregLabelContent 
+                 WHERE mSubLC.S_MarketingStatement.ID = mSubLC.CompositeComponentList.SLC_OriginalTypeID 
+   END
+
+END
+
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_SelectRemoveMktgStatements
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_SelectRemoveMktgStatements( VIEW ViewToWindow )
+
+   VIEW mSubLC REGISTERED AS mSubLC
+   
+   // Make sure the SLC Components are built.
    BuildCompositeEntries( mSubLC )
 
 END
@@ -544,40 +596,859 @@ END
 
 /*************************************************************************************************
 **    
-**    OPERATION: GOTO_MarketingStatementDetail
+**    OPERATION: SELECT_MLC_ForNewSLC
 **    
 *************************************************************************************************/
 DIALOG OPERATION
-GOTO_MarketingStatementDetail( VIEW ViewToWindow )
+SELECT_MLC_ForNewSLC( VIEW ViewToWindow )
 
-   VIEW mSubLC REGISTERED AS mSubLC
+   VIEW mSubProd REGISTERED AS mSubProd
+   VIEW lMLC     REGISTERED AS lMLC
+   VIEW mSubLC   BASED ON LOD  mSubLC 
+   VIEW mMasLC   BASED ON LOD  mMasLC
+   INTEGER SelectedContainerVolume
    
-   // Position on the correct Marketing Statement based on position on the corresponding Components entry.
-   // If we're positioned on a Marketing Section component, give error.
-   IF mSubLC.CompositeComponentList.Type = "M_MarketingSection"
-      MessageSend( ViewToWindow, "", "Marketing Statement Detail",
-                   "Only a Marketing Statement can be selected.",
+   // Make sure that a Container Volume has been specified.
+   // Note that this value is in the first one in the list, which can get reposition below.
+   IF lMLC.MasterLabelContent.wSelectedContainerVolume = ""
+      MessageSend( ViewToWindow, "", "Select Master Label Content",
+                   "A Container Size must be specified.",
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
       RETURN 2
+   END 
+   SelectedContainerVolume = lMLC.MasterLabelContent.wSelectedContainerVolume
+   
+   // Make sure that an MLC has been selected.
+   SET CURSOR FIRST lMLC.MasterLabelContent WHERE lMLC.MasterLabelContent.wSelected = "Y"
+   IF RESULT < zCURSOR_SET
+      MessageSend( ViewToWindow, "", "Select Master Label Content",
+                   "An MLC must be selected.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END 
+   
+   // Create a new empty Subregistrant SLC.
+   ACTIVATE mSubLC EMPTY 
+   NAME VIEW mSubLC "mSubLC"
+   CREATE ENTITY mSubLC.SubregLabelContent 
+   INCLUDE mSubLC.SubregProduct FROM mSubProd.SubregProduct 
+   mSubLC.SubregLabelContent.wContainerSize = SelectedContainerVolume 
+   
+   // Activate the selected MLC, which has the selectable content.
+   ACTIVATE mMasLC WHERE mMasLC.MasterLabelContent.ID = lMLC.MasterLabelContent.ID 
+   NAME VIEW mMasLC "mMasLC"
+   INCLUDE mSubLC.MasterLabelContent FROM mMasLC.MasterLabelContent 
+   BuildCompositeEntries( mMasLC )
+
+   // Initialize the data in the SLC from the MLC.
+   BuildSLC_FromMLC( mSubLC, mMasLC )
+   
+   // Build SLC Components subobject.
+   //BuildCompositeEntries( mSubLC )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: CancelSubregistrantLabelContent
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+CancelSubregistrantLabelContent( VIEW ViewToWindow )
+
+   VIEW mSubLC REGISTERED AS mSubLC
+   VIEW mMasLC REGISTERED AS mMasLC
+   
+   DropObjectInstance( mMasLC )
+   DropObjectInstance( mSubLC )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: PostbuildSLC_Update
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+PostbuildSLC_Update( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   VIEW mSubLC REGISTERED AS mSubLC
+   
+   // Remove any S_Usage statements not tied to M_Usage statements.
+   FOR EACH mSubLC.S_Usage 
+      IF mSubLC.M_Usage DOES NOT EXIST
+         DELETE ENTITY mSubLC.S_Usage NONE 
+      END
+   END
+
+   // Go to select any mMLC entries that are already in the mSLC.
+   SetMLC_SelectedFlags( mMasLC, mSubLC )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: SaveSubregistrantLabelContent
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+SaveSubregistrantLabelContent( VIEW ViewToWindow )
+
+   VIEW mSubLC REGISTERED AS mSubLC
+   VIEW mMasLC REGISTERED AS mMasLC
+   INTEGER OriginalTypeID
+   
+   // Name and Version must be entered.
+   IF mSubLC.SubregLabelContent.Description = "" OR mSubLC.SubregLabelContent.Version = ""
+      MessageSend( ViewToWindow, "", "Save Subregistrant Label Content",
+                   "Both a Name and Version must be entered. The SLC was not saved.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+   
+   // Make sure that any selected Components Usage entries have S_Usage entries.
+   /*FOR EACH mSubLC.CompositeComponentList
+      IF mSubLC.CompositeComponentList.Type = "M_DirectionsUsageOrdering" OR 
+         mSubLC.CompositeComponentList.Type = "M_MarketingUsageOrdering"
+         
+         OriginalTypeID = mSubLC.CompositeComponentList.OriginalTypeID 
+         SET CURSOR FIRST mSubLC.M_Usage WITHIN mSubLC.SubregLabelContent 
+                    WHERE mSubLC.M_Usage.ID = OriginalTypeID
+         IF RESULT < zCURSOR_SET
+            SET CURSOR FIRST mMasLC.M_Usage WHERE mMasLC.M_Usage.ID = OriginalTypeID
+            SET CURSOR LAST mSubLC.S_Usage 
+            CREATE ENTITY mSubLC.S_Usage 
+            SetMatchingAttributesByName( mSubLC, "S_Usage", mMasLC, "M_Usage", zSET_NULL )
+            INCLUDE mSubLC.M_Usage FROM mMasLC.M_Usage 
+         END
+      END
+   END*/
+   
+   // If the S_Usage Statements are null, then we need to first commit mSubLC to get the ID's set.
+   /*SET CURSOR FIRST mSubLC.S_Usage 
+   IF mSubLC.S_Usage.ID = ""
+      COMMIT mSubLC
+   END */
+   // Commit the mSubLC object to make sure any S_Usage statements have ID's.
+   COMMIT mSubLC
+   
+   // Process any Changes in the CompositeComponentList entries against the main subobject structure of the SLC.
+   // Note that only Marketing Statements and Usage entries under Directions for Use and Marketing are affected.
+   
+   // First delete any entries that are in the main structure but not in the Composite Component List.
+   // Note that we only consider Marketing Statements and Directions Usage and Marketing Usage Statements.
+   /*FOR EACH mSubLC.S_DirectionsForUseSection 
+      FOR EACH mSubLC.S_DirectionsUsageOrdering 
+         SET CURSOR FIRST mSubLC.CompositeComponentList 
+                    WHERE mSubLC.CompositeComponentList.SLC_OriginalTypeID = mSubLC.S_DirectionsUsage.ID 
+                      AND mSubLC.CompositeComponentList.Type               = "M_DirectionsUsageOrdering" 
+         IF RESULT < zCURSOR_SET
+            //SET CURSOR FIRST mSubLC.S_Usage WHERE mSubLC.S_Usage.ID = mSubLC.S_DirectionsUsage.ID 
+            //IF RESULT >= zCURSOR_SET
+            //   DELETE ENTITY mSubLC.S_Usage NONE 
+            //END 
+            DELETE ENTITY mSubLC.S_DirectionsUsageOrdering NONE 
+         END
+      END
+   END
+   FOR EACH mSubLC.S_MarketingSection 
+      SET CURSOR FIRST mSubLC.CompositeComponentList 
+                 WHERE mSubLC.CompositeComponentList.SLC_OriginalTypeID = mSubLC.S_MarketingSection.ID 
+                   AND mSubLC.CompositeComponentList.Type               = "M_MarketingSection" 
+      IF RESULT >= zCURSOR_SET
+         // The Marketing Section was NOT deleted.
+         FOR EACH mSubLC.S_MarketingStatement 
+            SET CURSOR FIRST mSubLC.CompositeComponentList 
+                       WHERE mSubLC.CompositeComponentList.SLC_OriginalTypeID = mSubLC.S_MarketingStatement.ID 
+                         AND mSubLC.CompositeComponentList.Type               = "M_MarketingStatement" 
+            IF RESULT < zCURSOR_SET
+               // Delete the Marketing Statement.
+               DELETE ENTITY mSubLC.S_MarketingStatement NONE
+            ELSE
+               // See if we need to delete any Marketing Usage entries.
+               FOR EACH mSubLC.S_MarketingUsageOrdering 
+                  SET CURSOR FIRST mSubLC.CompositeComponentList 
+                             WHERE mSubLC.CompositeComponentList.SLC_OriginalTypeID = mSubLC.S_MarketingUsage.ID 
+                               AND mSubLC.CompositeComponentList.Type               = "M_MarketingUsageOrdering" 
+                  IF RESULT < zCURSOR_SET
+                     DELETE ENTITY mSubLC.S_MarketingUsageOrdering NONE 
+                  END
+               END
+            END
+         END
+      ELSE
+         // The Marketing Section WAS deleted.
+         DELETE ENTITY mSubLC.S_MarketingSection NONE
+      END
+   END
+   
+   // Next add any new CompositeComponentList entries.
+   // Note that we only consider Marketing Statements and Directions and Marketing Usage Statements.
+   FOR EACH mSubLC.CompositeComponentList 
+      OriginalTypeID = mSubLC.CompositeComponentList.OriginalTypeID
+      // Directions for Use Section
+      IF mSubLC.CompositeComponentList.Type = "M_DirectionsForUseSection"
+         SET CURSOR FIRST mSubLC.M_DirectionsForUseSection WITHIN mSubLC.SubregLabelContent 
+                    WHERE mSubLC.M_DirectionsForUseSection.ID = OriginalTypeID 
+      END
+      
+      // Marketing Section
+      IF mSubLC.CompositeComponentList.Type = "M_MarketingSection" 
+         SET CURSOR FIRST mSubLC.M_MarketingSection WITHIN mSubLC.SubregLabelContent 
+                    WHERE mSubLC.M_MarketingSection.ID = OriginalTypeID 
+         IF RESULT < zCURSOR_SET
+            SET CURSOR FIRST mMasLC.M_MarketingSection 
+                       WHERE mMasLC.M_MarketingSection.ID = OriginalTypeID 
+            IF RESULT < zCURSOR_SET
+               TraceLineI( "######### No match on Marketing Section ID", OriginalTypeID )
+            END
+            // Add Marketing Section
+            CREATE ENTITY mSubLC.S_MarketingSection
+            SetMatchingAttributesByName( mSubLC, "S_MarketingSection", mMasLC, "M_MarketingSection", zSET_NULL )
+            INCLUDE mSubLC.M_MarketingSection FROM mMasLC.M_MarketingSection
+         END
+      END
+      
+      // Marketing Statement
+      IF mSubLC.CompositeComponentList.Type = "M_MarketingStatement" 
+         SET CURSOR FIRST mSubLC.M_MarketingStatement WITHIN mSubLC.S_MarketingSection 
+                    WHERE mSubLC.M_MarketingStatement.ID = OriginalTypeID 
+         IF RESULT < zCURSOR_SET
+            SET CURSOR FIRST mMasLC.M_MarketingStatement WITHIN mMasLC.MasterLabelContent 
+                       WHERE mMasLC.M_MarketingStatement.ID = OriginalTypeID 
+            IF RESULT < zCURSOR_SET
+               TraceLineI( "######### No match on Marketing Statement ID", OriginalTypeID )
+            END
+            // Add Marketing Statement
+            CREATE ENTITY mSubLC.S_MarketingStatement
+            SetMatchingAttributesByName( mSubLC, "S_MarketingStatement", mMasLC, "M_MarketingStatement", zSET_NULL )
+            INCLUDE mSubLC.M_MarketingStatement FROM mMasLC.M_MarketingStatement
+         END
+      END
+      
+      // Directions for Use Usage
+      IF mSubLC.CompositeComponentList.Type = "M_DirectionsUsageOrdering"
+         SET CURSOR FIRST mSubLC.M_Usage WITHIN mSubLC.SubregLabelContent 
+                    WHERE mSubLC.M_Usage.ID = OriginalTypeID 
+         SET CURSOR FIRST mSubLC.S_DirectionsUsage WITHIN mSubLC.S_DirectionsForUseSection 
+                    WHERE mSubLC.S_DirectionsUsage.ID = mSubLC.S_Usage.ID 
+         IF RESULT < zCURSOR_SET
+            CREATE ENTITY mSubLC.S_DirectionsUsageOrdering
+            INCLUDE mSubLC.S_DirectionsUsage FROM mSubLC.S_Usage
+         END
+      END
+      
+      // Marketing Usage
+      IF mSubLC.CompositeComponentList.Type = "M_MarketingUsageOrdering"
+         SET CURSOR FIRST mSubLC.M_Usage WITHIN mSubLC.SubregLabelContent 
+                    WHERE mSubLC.M_Usage.ID = OriginalTypeID 
+         SET CURSOR FIRST mSubLC.S_MarketingUsage WITHIN mSubLC.S_MarketingSection 
+                    WHERE mSubLC.S_MarketingUsage.ID = mSubLC.S_Usage.ID
+         IF RESULT < zCURSOR_SET
+            CREATE ENTITY mSubLC.S_MarketingUsageOrdering
+            INCLUDE mSubLC.S_MarketingUsage FROM mSubLC.S_Usage
+         END
+      END
+   END
+   
+   SetAttributeFromCurrentDateTime( mSubLC, "SubregLabelContent", "ModifiedDateTime" )
+   COMMIT mSubLC
+   IF RESULT < 0
+      MessageSend( ViewToWindow, "", "Save Subregistrant Label Content",
+                   "An error occurred during the commit. The SLC was not saved.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END*/
+   DropObjectInstance( mSubLC )
+   DropObjectInstance( mMasLC )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: DeleteSubregProduct
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+DeleteSubregProduct( VIEW ViewToWindow )
+
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_UpdateSubregProduct
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_UpdateSubregProduct( VIEW ViewToWindow )
+
+   VIEW mSubreg    REGISTERED AS mSubreg
+   VIEW mSubProd   BASED ON LOD  mSubProd 
+   VIEW mSubLC     BASED ON LOD  mSubLC 
+   VIEW lSPLDLST   BASED ON LOD  lSPLDLST
+   STRING ( 30 )  szDateTime
+   
+   // Activate selected Subreg Product.
+   ACTIVATE mSubProd WHERE mSubProd.SubregProduct.ID = mSubreg.SubregProduct.ID 
+   NAME VIEW mSubProd "mSubProd"
+   
+   ACTIVATE lSPLDLST Multiple WHERE lSPLDLST.SubregProduct.ID = mSubreg.SubregProduct.ID 
+   NAME VIEW lSPLDLST "lSPLDLST"
+   
+   // Temp code to correct name.
+   SET CURSOR FIRST mSubProd.SubregLabelContent WHERE mSubProd.SubregLabelContent.Description = ""
+   IF RESULT >= zCURSOR_SET
+      ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSubProd.SubregLabelContent.ID 
+      NAME VIEW mSubLC "mSubLCName"
+      mSubLC.SubregLabelContent.Description = "TempName"
+      COMMIT mSubLC
+      DropObjectInstance( mSubLC )
+   END 
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: InitListSubregProducts
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+InitListSubregProducts( VIEW ViewToWindow )
+
+   VIEW mLLD_LST BASED ON LOD  mLLD
+
+   SetDynamicBannerName( ViewToWindow, "wSPLD", "SubregistrantProduct" )
+
+   GET VIEW mLLD_LST NAMED "mLLD_LST"
+   IF RESULT >= 0
+      DropObjectInstance( mLLD_LST )
+   END
+   ACTIVATE mLLD_LST RootOnlyMultiple
+   NAME VIEW mLLD_LST "mLLD_LST" 
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_NewSubregProduct
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_NewSubregProduct( VIEW ViewToWindow )
+
+   VIEW mSubreg REGISTERED AS mSubreg
+
+   IF mSubreg.PrimaryRegistrant EXISTS
+      IF mSubreg.ListMasterProduct EXISTS
+         RETURN 0
+      ELSE
+         MessageSend( ViewToWindow, "", "New Subregistrant Product",
+                      "Primary Registrant must have at least one\nMaster Product to create a Subregistrant Product.",
+                      zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+         RETURN 2
+      END
    ELSE
-      SET CURSOR FIRST mSubLC.S_MarketingStatement WITHIN mSubLC.SubregLabelContent 
-                 WHERE mSubLC.S_MarketingStatement.ID = mSubLC.CompositeComponentList.SLC_OriginalTypeID 
+      // This should not be possible.
+      MessageSend( ViewToWindow, "", "New Subregistrant Product",
+                   "Subregistrant must be associated with a Primary Registrant\nto create a Subregistrant Product.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      RETURN 2
    END
 
 END
 
-
 /*************************************************************************************************
 **    
-**    OPERATION: GOTO_SelectRemoveMktgStatements
+**    OPERATION: CancelDeleteSubregProduct
 **    
 *************************************************************************************************/
 DIALOG OPERATION
-GOTO_SelectRemoveMktgStatements( VIEW ViewToWindow )
+CancelDeleteSubregProduct( VIEW ViewToWindow )
+
+   VIEW mSubProd REGISTERED AS mSubProd 
+   
+   // Simply drop the Subreg Product.
+   DropObjectInstance( mSubProd )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: ConfirmDeleteSubregProduct
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+ConfirmDeleteSubregProduct( VIEW ViewToWindow )
+
+   VIEW mSubreg REGISTERED AS mSubreg
+   INTEGER lID
+   SHORT   nRC
+
+   GET VIEW mSubreg NAMED "mSubreg"
+   lID = mSubreg.Subregistrant.ID
+
+   DELETE ENTITY mSubreg.SubregProduct
+   COMMIT mSubreg
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: InitSPLD_ForDelete
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+InitSPLD_ForDelete( VIEW ViewToWindow )
+
+
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: DELETE_SubregProductSLC
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+DELETE_SubregProductSLC( VIEW ViewToWindow )
+
+   VIEW mSubProd REGISTERED AS mSubProd
+   VIEW mSubLC   BASED ON LOD  mSubLC 
+   
+   // Delete selected mSubLC.
+   ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSubProd.SubregLabelContent.ID 
+   NAME VIEW mSubLC "mSubLCDelete"
+   DELETE ENTITY mSubLC.SubregLabelContent 
+   COMMIT mSubLC
+   DropObjectInstance( mSubLC )
+   DropEntity( mSubProd, "SubregLabelContent", zREPOS_NONE )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: BACKUP_Objects
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+BACKUP_Objects( VIEW ViewToWindow )
+
+   VIEW mSubreg  REGISTERED AS mSubreg
+   VIEW mSubProd REGISTERED AS mSubProd 
+   VIEW mSubLC   BASED ON LOD  mSubLC 
+   VIEW mMasLC   BASED ON LOD  mMasLC
+   STRING ( 100 )  szFileName
+   STRING ( 100 )  szNamedView
+   STRING ( 2 )    szCount
+   INTEGER         Count
+   
+   // Commit each object to a file.
+   CommitOI_ToFile( mSubreg, "c:\lplr\epamms\objectback\mSubreg.por", zASCII )
+   CommitOI_ToFile( mSubProd, "c:\lplr\epamms\objectback\mSubProd.por", zASCII )
+   Count = 0
+   FOR EACH mSubProd.SubregLabelContent 
+      Count = Count + 1
+      szCount = Count
+      szFileName = "c:\lplr\epamms\objectback\mSubLC" + szCount + ".por"
+      szNamedView = "mSubLC" + szCount
+      ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSubProd.SubregLabelContent.ID 
+      NAME VIEW mSubLC szNamedView
+      CommitOI_ToFile( mSubLC, szFileName, zASCII )
+   END
+   IF mSubProd.MasterLabelContent EXISTS
+      ACTIVATE mMasLC WHERE mMasLC.MasterLabelContent.ID = mSubProd.MasterLabelContent.ID 
+      NAME VIEW mMasLC "mMasLC"
+      CommitOI_ToFile( mSubProd, "c:\lplr\epamms\objectback\mMasLC.por", zASCII )
+   END
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: CancelSubregProduct
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+CancelSubregProduct( VIEW ViewToWindow )
+
+   VIEW mSubProd REGISTERED AS mSubProd 
+   
+   // Simply drop the Subreg Product.
+   DropObjectInstance( mSubProd )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: DuplicateSubregProductSLC
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+DuplicateSubregProductSLC( VIEW ViewToWindow )
+
+   VIEW mSubProd   REGISTERED AS mSubProd
+   VIEW mSubLCOrig BASED ON LOD  mSubLC 
+   VIEW mSubLCNew  BASED ON LOD  mSubLC 
+   INTEGER SubProdID
+   
+   // Activate selected Subreg SLC and duplicate it.
+   ACTIVATE mSubLCOrig WHERE mSubLCOrig.SubregLabelContent.ID = mSubProd.SubregLabelContent.ID 
+   NAME VIEW mSubLCOrig "mSubLCOrig"
+   
+   // Create empty target object.
+   ACTIVATE mSubLCNew EMPTY 
+   NAME VIEW mSubLCNew "mSubLCNew"
+   
+   // Execute duplication operation and commit it.
+   DuplicateSLC( mSubLCNew, mSubLCOrig )
+   COMMIT mSubLCNew
+   
+   DropObjectInstance( mSubLCOrig )
+   DropObjectInstance( mSubLCNew )
+   
+   // Reactivate mSubProd to pick up new SubLC.
+   SubProdID = mSubProd.SubregProduct.ID 
+   DropObjectInstance( mSubProd )
+   ACTIVATE mSubProd WHERE mSubProd.SubregProduct.ID = SubProdID
+   NAME VIEW mSubProd "mSubProd"
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: DuplicateSubregProductSPLD
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+DuplicateSubregProductSPLD( VIEW ViewToWindow )
+
+   VIEW mSubProd    REGISTERED AS mSubProd
+   VIEW lSPLDLST    REGISTERED AS lSPLDLST
+   VIEW mSPLDefOrig BASED ON LOD  mSPLDef 
+   VIEW mSPLDefNew  BASED ON LOD  mSPLDef 
+   
+   // Activate selected Subreg SLC and duplicate it.
+   //ACTIVATE mSPLDefOrig WHERE mSPLDefOrig.SubregPhysicalLabelDef.ID = mSubProd.SubregPhysicalLabelDef.ID 
+   ACTIVATE mSPLDefOrig WHERE mSPLDefOrig.SubregPhysicalLabelDef.ID = lSPLDLST.SubregPhysicalLabelDef.ID 
+   NAME VIEW mSPLDefOrig "mSPLDefOrig"
+
+   // Create empty target object.
+   ACTIVATE mSPLDefNew EMPTY 
+   NAME VIEW mSPLDefNew "mSPLDefNew"
+   
+   // Execute duplication operation and commit it.
+   DuplicateSPLD( mSPLDefNew, mSPLDefOrig )
+   COMMIT mSPLDefNew
+   
+   DropObjectInstance( mSPLDefOrig )
+   DropObjectInstance( mSPLDefNew )
+   
+   // Reactivate mSubProd to pick up new SubLC.
+   DropObjectInstance( lSPLDLST )
+   ACTIVATE lSPLDLST Multiple WHERE lSPLDLST.SubregProduct.ID = mSubProd.SubregProduct.ID 
+   NAME VIEW lSPLDLST "lSPLDLST"
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_NewSubregProductSLC
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_NewSubregProductSLC( VIEW ViewToWindow )
+
+   VIEW mSubreg  REGISTERED AS mSubreg
+   VIEW lMLC     BASED ON LOD  lMLC
+   
+   // Activate lMLC for selecting a MLC for creation of a new SLC.
+   GET VIEW lMLC NAMED "lMLC"
+   IF RESULT >= 0
+      DropObjectInstance( lMLC )
+   END
+   ACTIVATE lMLC Multiple WHERE lMLC.MasterProduct.ID = mSubreg.MasterProduct.ID 
+   NAME VIEW lMLC "lMLC"
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_UpdateSubregProductSLC
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_UpdateSubregProductSLC( VIEW ViewToWindow )
+
+   VIEW mSubProd REGISTERED AS mSubProd
+   VIEW mSubLC   BASED ON LOD  mSubLC 
+   VIEW mMasLC   BASED ON LOD  mMasLC
+   
+   // Activate selected Subreg SLC and build the Components work entries from persistent entries.
+   ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSubProd.SubregLabelContent.ID 
+   NAME VIEW mSubLC "mSubLC"
+   
+   // Delete any S_Usage entries that aren't tied to an MLC.
+   // Also delete any Directions for Use or Marketing Ordering entries not tied to a Usage.
+   /*FOR EACH mSubLC.S_UsageType 
+      FOR EACH mSubLC.S_Usage 
+         IF mSubLC.M_Usage DOES NOT EXIST
+            DELETE ENTITY mSubLC.S_Usage NONE 
+         END
+      END
+   END
+   FOR EACH mSubLC.S_DirectionsForUseStatement WITHIN mSubLC.SubregLabelContent 
+      FOR EACH mSubLC.S_DirectionsUsageOrdering 
+         IF mSubLC.S_DirectionsUsage DOES NOT EXIST
+            DELETE ENTITY mSubLC.S_DirectionsUsageOrdering NONE 
+         END
+      END
+   END
+   FOR EACH mSubLC.S_MarketingStatement WITHIN mSubLC.SubregLabelContent 
+      FOR EACH mSubLC.S_MarketingUsageOrdering 
+         IF mSubLC.S_MarketingUsage DOES NOT EXIST
+            DELETE ENTITY mSubLC.S_MarketingUsageOrdering NONE 
+         END
+      END
+   END
+   
+   FOR EACH mSubLC.S_MarketingSection 
+      FOR EACH mSubLC.S_MarketingStatement 
+         FOR EACH mSubLC.S_MarketingUsageOrdering 
+            IF mSubLC.S_MarketingUsage DOES NOT EXIST
+               MessageSend( ViewToWindow, "", "Test",
+                            "Missing usage.",
+                            zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+               SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+               RETURN 2            
+            END         
+         END      
+      END   
+   END
+   COMMIT mSubLC*/
+   
+   BuildCompositeEntries( mSubLC )
+   
+   // Relink Usage.
+   FOR EACH mSubLC.S_DirectionsForUseSection 
+      FOR EACH mSubLC.S_DirectionsUsageOrdering 
+         SET CURSOR FIRST mSubLC.S_Usage WHERE mSubLC.S_Usage.ID = mSubLC.S_DirectionsUsage.ID 
+         IF RESULT < zCURSOR_SET
+            TraceLineS( "######## No DU Link: ", mSubLC.S_DirectionsUsage.Name )
+         END 
+      END
+      FOR EACH mSubLC.S_MarketingUsageOrdering 
+         SET CURSOR FIRST mSubLC.S_Usage WHERE mSubLC.S_Usage.ID = mSubLC.S_MarketingUsage.ID 
+         IF RESULT < zCURSOR_SET
+            TraceLineS( "######## No Mkt Link: ", mSubLC.S_MarketingUsage.Name )
+         END
+      END
+   END
+   
+   // Activate related MLC, which has the selectable content.
+   ACTIVATE mMasLC WHERE mMasLC.MasterLabelContent.ID = mSubProd.MasterLabelContent.ID 
+   NAME VIEW mMasLC "mMasLC"
+   BuildCompositeEntries( mMasLC )
+   BuildWorkVariables( mSubLC, mMasLC )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_UpdateSubregProductSPLD
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_UpdateSubregProductSPLD( VIEW ViewToWindow )
+
+   VIEW lSPLDLST REGISTERED AS lSPLDLST
+   VIEW mSPLDef  BASED ON LOD  mSPLDef
+   VIEW mSubLC   BASED ON LOD  mSubLC
+   
+   // Activate the mSPLDef object selected in mSubProd.
+   ACTIVATE mSPLDef WHERE mSPLDef.SubregPhysicalLabelDef.ID = lSPLDLST.SubregPhysicalLabelDef.ID 
+   NAME VIEW mSPLDef "mSPLDef"
+   
+   // Activate the related mSubLC object.
+   ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSPLDef.SubregLabelContent.ID 
+   NAME VIEW mSubLC "mSubLC"
+   
+   // Rebuild DirectionsForUse and Marketing data.
+   // If the DirectionsForUse or Marketing Statements are not tied to their SLC counterparts, then rebuild them.
+   // (This is a correction to a data error.)
+   IF mSPLDef.S_DirectionsForUseStatement DOES NOT EXIST OR mSPLDef.S_DirectionsForUseSection DOES NOT EXIST
+      // The data is in error, so go to correct it.
+      RebuildSPLD_FromSLC( mSPLDef, mSubLC )
+   ELSE
+      BuildUsageEntriesFrSLC( mSPLDef, mSubLC )
+   END
+   
+   // Save and reactivate mSPLDef to make the object easier to see in the object browser.
+   COMMIT mSPLDef
+   DropObjectInstance( mSPLDef )
+   ACTIVATE mSPLDef WHERE mSPLDef.SubregPhysicalLabelDef.ID = lSPLDLST.SubregPhysicalLabelDef.ID 
+   NAME VIEW mSPLDef "mSPLDef"
+   
+   // Sort Panels and SubBlocks by position.
+   ComputeTopPositions( mSPLDef )
+   FOR EACH mSPLDef.LLD_Page 
+      OrderEntityForView( mSPLDef, "LLD_Panel", "Top A Left A" )
+      FOR EACH mSPLDef.LLD_Panel 
+         FOR EACH mSPLDef.LLD_Block 
+            OrderEntityForView( mSPLDef, "LLD_SubBlock", "LLD_SubBlock.Left A wComputedTopPosition A" )
+         END
+      END 
+   END 
+   SET CURSOR FIRST mSPLDef.LLD_Page 
+   
+   // Initialize LLD data, if it's not already initialized.
+   IF mSPLDef.SPLD_LLD DOES NOT EXIST
+      CREATE ENTITY mSPLDef.SPLD_LLD 
+      CREATE ENTITY mSPLDef.LLD_Page 
+      CREATE ENTITY mSPLDef.LLD_Panel 
+      mSPLDef.LLD_Panel.Left = 0
+      mSPLDef.LLD_Panel.Top = 0 
+   END
+   
+   // Build the work components
+   BuildCompositeEntries( mSPLDef )
+// TraceLineS( "$$$$$$ end of oper", "GOTO_UpdateSubregProductSPLD" )
+// DisplayObjectInstance( mSPLDef, "", "" )
+   
+   // Also activate the corresponding SLC and build the composite subobject.
+   //ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSPLDef.SubregLabelContent.ID 
+   //NAME VIEW mSubLC "mSubLC"
+   //BuildCompositeEntries( mSubLC )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: SaveSubregProduct
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+SaveSubregProduct( VIEW ViewToWindow )
+
+   VIEW mSubreg  REGISTERED AS mSubreg
+   VIEW mSubProd REGISTERED AS mSubProd 
+   INTEGER SubregID
+   
+   // Save the Subreg Product and reactivate the Product list.
+   COMMIT mSubProd
+   DropObjectInstance( mSubProd )
+   SubregID = mSubreg.Subregistrant.ID 
+   DropObjectInstance( mSubreg )
+   ACTIVATE mSubreg WHERE mSubreg.Subregistrant.ID = SubregID
+   NAME VIEW mSubreg "mSubreg"
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: AcceptUsageTypeUpdate
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+AcceptUsageTypeUpdate( VIEW ViewToWindow )
+
+   VIEW mSubLC REGISTERED AS mSubLC
+   VIEW mMasLC REGISTERED AS mMasLC
+   
+   // Accept the UsageType subobject and go to build Directions for Use entries based on Usage entries.
+   AcceptSubobject( mSubLC, "S_UsageType" )
+   BuildDirsForUseSects( mSubLC, mMasLC )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_DisplayGeneratedText
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_DisplayGeneratedText( VIEW ViewToWindow )
 
    VIEW mSubLC REGISTERED AS mSubLC
    
-   // Make sure the SLC Components are built.
-   BuildCompositeEntries( mSubLC )
+   mSubLC.SubregLabelContent.wGeneratedTextDisplay = mSubLC.S_MarketingStatement.dDisplayKeywordText 
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: RemoveMarketingKeywordEntries
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+RemoveMarketingKeywordEntries( VIEW ViewToWindow )
+
+   VIEW mSubLC REGISTERED AS mSubLC
+   
+   // Remove each selected Usage entry.
+   FOR EACH mSubLC.S_InsertTextMarketing WITHIN mSubLC.S_MarketingStatement 
+      IF mSubLC.S_InsertTextMarketing.wSelected = "Y"
+         DELETE ENTITY mSubLC.S_InsertTextMarketing NONE 
+      END
+   END
+   SET CURSOR FIRST mSubLC.S_InsertTextKeywordMarketing 
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: SelectMarketingKeywordEntries
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+SelectMarketingKeywordEntries( VIEW ViewToWindow )
+
+   VIEW mSubLC REGISTERED AS mSubLC
+   VIEW mMasLC REGISTERED AS mMasLC
+   
+   // Include each selected Usage Source entry in the Target subobject.
+   FOR EACH mMasLC.M_InsertTextMarketing WITHIN mMasLC.M_MarketingStatement 
+      IF mMasLC.M_InsertTextMarketing.wSelected = "Y"
+         SET CURSOR FIRST mSubLC.S_InsertTextKeywordMarketing 
+                    WHERE mSubLC.S_InsertTextKeywordMarketing.Name = mMasLC.M_InsertTextKeywordMarketing.Name  
+         IF RESULT < zCURSOR_SET
+            CREATE ENTITY mSubLC.S_InsertTextKeywordMarketing 
+            mSubLC.S_InsertTextKeywordMarketing.Name          = mMasLC.M_InsertTextKeywordMarketing.Name
+            mSubLC.S_InsertTextKeywordMarketing.PrimaryMLC_ID = mMasLC.M_InsertTextKeywordMarketing.ID 
+         END
+         SET CURSOR FIRST mSubLC.S_InsertTextMarketing 
+                    WHERE mSubLC.S_InsertTextMarketing.Text = mMasLC.M_InsertTextMarketing.Text 
+         IF RESULT < zCURSOR_SET
+            CREATE ENTITY mSubLC.S_InsertTextMarketing 
+            mSubLC.S_InsertTextMarketing.Text          = mMasLC.M_InsertTextMarketing.Text
+            mSubLC.S_InsertTextMarketing.PrimaryMLC_ID = mMasLC.M_InsertTextMarketing.ID 
+         END 
+         mMasLC.M_InsertTextMarketing.wSelected = ""
+      END
+   END
+   SET CURSOR FIRST mMasLC.M_InsertTextKeywordMarketing 
+   SET CURSOR FIRST mSubLC.S_InsertTextKeywordMarketing  
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_MarketingKeywordSelect
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_MarketingKeywordSelect( VIEW ViewToWindow )
+
+   VIEW mSubLC REGISTERED AS mSubLC
+   VIEW mMasLC REGISTERED AS mMasLC
+   
+   // Position on same Marketing Section and Statement in MLC as in SLC.
+   SET CURSOR FIRST mMasLC.M_MarketingSection 
+              WHERE mMasLC.M_MarketingSection.ID = mSubLC.S_MarketingSection.PrimaryMLC_ID 
+   SET CURSOR FIRST mMasLC.M_MarketingStatement 
+              WHERE mMasLC.M_MarketingStatement.ID = mSubLC.S_MarketingStatement.PrimaryMLC_ID  
 
 END

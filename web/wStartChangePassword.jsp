@@ -148,8 +148,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -209,8 +209,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartChangePassword.jsp", "wStart.CHANGE_Password" );
-         nOptRC = wStart.CHANGE_Password( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartChangePassword", "wStart.CHANGE_Password" );
+      nOptRC = wStart.CHANGE_Password( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -696,9 +696,8 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wStartChangePassword" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wStartChangePassword" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

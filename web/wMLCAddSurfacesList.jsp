@@ -188,8 +188,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -227,8 +227,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddSurfacesList.jsp", "wMLC.CancelAddSurfacesStmts" );
-         nOptRC = wMLC.CancelAddSurfacesStmts( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddSurfacesList", "wMLC.CancelAddSurfacesStmts" );
+      nOptRC = wMLC.CancelAddSurfacesStmts( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -282,8 +282,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddSurfacesList.jsp", "wMLC.ConfirmAddSurfacesStmts" );
-         nOptRC = wMLC.ConfirmAddSurfacesStmts( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddSurfacesList", "wMLC.ConfirmAddSurfacesStmts" );
+      nOptRC = wMLC.ConfirmAddSurfacesStmts( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -320,8 +320,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddSurfacesList.jsp", "wMLC.ConfirmAddSurfacesStmts" );
-         nOptRC = wMLC.ConfirmAddSurfacesStmts( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddSurfacesList", "wMLC.ConfirmAddSurfacesStmts" );
+      nOptRC = wMLC.ConfirmAddSurfacesStmts( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -463,8 +463,8 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
    session.setAttribute( "ZeidonError", null );
 else
 {
-   VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddSurfacesList.jsp", "wMLC.InitSurfacesStmtsForInsert" );
-         nOptRC = wMLC.InitSurfacesStmtsForInsert( new zVIEW( vKZXMLPGO ) );
+   VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddSurfacesList", "wMLC.InitSurfacesStmtsForInsert" );
+   nOptRC = wMLC.InitSurfacesStmtsForInsert( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -514,31 +514,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-<script language="JavaScript" type="text/javascript" >
-      // Javascript code entered by user for Window action prebuild.
-
-   var thisLi;
-
-// if ( keyRole == "P" || keyRole == "N" ) // If we are here, we have to be a Primary.
-   // We knock out Login and Template as options.
-   thisLi = document.getElementById( "lmLogin" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   thisLi = document.getElementById( "lmStateRegistrations" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   // Cannot go to product management if already there.
-   thisLi = document.getElementById( "lmProductManagement" );
-   thisLi.disabled = true;
-
-      // END of Javascript code entered by user.
-
-</script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wMLCAddSurfacesList.js"></script>
 
 </head>
@@ -895,9 +870,8 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCAddSurfacesList" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wMLCAddSurfacesList" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

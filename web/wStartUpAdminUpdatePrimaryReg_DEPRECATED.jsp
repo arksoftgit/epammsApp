@@ -635,7 +635,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminUpdatePrimaryReg_DEPRECATED.jsp", "wStartUp.AcceptUpdatePrimaryRegistrant" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminUpdatePrimaryReg_DEPRECATED", "wStartUp.AcceptUpdatePrimaryRegistrant" );
       nOptRC = wStartUp.AcceptUpdatePrimaryRegistrant( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -673,7 +673,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminUpdatePrimaryReg_DEPRECATED.jsp", "wStartUp.ValidatePrimaryRegistrant" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminUpdatePrimaryReg_DEPRECATED", "wStartUp.ValidatePrimaryRegistrant" );
       nOptRC = wStartUp.ValidatePrimaryRegistrant( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -706,7 +706,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminUpdatePrimaryReg_DEPRECATED.jsp", "wStartUp.CancelUpdatePrimaryRegistrant" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminUpdatePrimaryReg_DEPRECATED", "wStartUp.CancelUpdatePrimaryRegistrant" );
       nOptRC = wStartUp.CancelUpdatePrimaryRegistrant( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -758,7 +758,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminUpdatePrimaryReg_DEPRECATED.jsp", "wStartUp.ValidatePrimaryRegistrant" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminUpdatePrimaryReg_DEPRECATED", "wStartUp.ValidatePrimaryRegistrant" );
       nOptRC = wStartUp.ValidatePrimaryRegistrant( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -813,7 +813,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminUpdatePrimaryReg_DEPRECATED.jsp", "wStartUp.AcceptUpdatePrimaryRegistrant" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminUpdatePrimaryReg_DEPRECATED", "wStartUp.AcceptUpdatePrimaryRegistrant" );
       nOptRC = wStartUp.AcceptUpdatePrimaryRegistrant( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -846,7 +846,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminUpdatePrimaryReg_DEPRECATED.jsp", "wStartUp.CancelUpdatePrimaryRegistrant" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminUpdatePrimaryReg_DEPRECATED", "wStartUp.CancelUpdatePrimaryRegistrant" );
       nOptRC = wStartUp.CancelUpdatePrimaryRegistrant( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -884,7 +884,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminUpdatePrimaryReg_DEPRECATED.jsp", "wStartUp.ProductManagement" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminUpdatePrimaryReg_DEPRECATED", "wStartUp.ProductManagement" );
       nOptRC = wStartUp.ProductManagement( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -902,7 +902,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StartTopWindow, "wSPLD", "" );
+         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StartTopWindow, "wSLC", "SubregProductsList" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -922,7 +922,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminUpdatePrimaryReg_DEPRECATED.jsp", "wStartUp.SubregistrantManagement" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminUpdatePrimaryReg_DEPRECATED", "wStartUp.SubregistrantManagement" );
       nOptRC = wStartUp.SubregistrantManagement( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -960,7 +960,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminUpdatePrimaryReg_DEPRECATED.jsp", "wStartUp.TrackingNotificationCompliance" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminUpdatePrimaryReg_DEPRECATED", "wStartUp.TrackingNotificationCompliance" );
       nOptRC = wStartUp.TrackingNotificationCompliance( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -998,7 +998,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminUpdatePrimaryReg_DEPRECATED.jsp", "wStartUp.StateRegistrations" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminUpdatePrimaryReg_DEPRECATED", "wStartUp.StateRegistrations" );
       nOptRC = wStartUp.StateRegistrations( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -1036,7 +1036,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminUpdatePrimaryReg_DEPRECATED.jsp", "wStartUp.MarketingFulfillment" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminUpdatePrimaryReg_DEPRECATED", "wStartUp.MarketingFulfillment" );
       nOptRC = wStartUp.MarketingFulfillment( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -1074,7 +1074,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminUpdatePrimaryReg_DEPRECATED.jsp", "wStartUp.WebDevelopment" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminUpdatePrimaryReg_DEPRECATED", "wStartUp.WebDevelopment" );
       nOptRC = wStartUp.WebDevelopment( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -1107,7 +1107,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminUpdatePrimaryReg_DEPRECATED.jsp", "wStartUp.PrimaryRegistrantCompanySetup" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminUpdatePrimaryReg_DEPRECATED", "wStartUp.PrimaryRegistrantCompanySetup" );
       nOptRC = wStartUp.PrimaryRegistrantCompanySetup( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -1145,7 +1145,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminUpdatePrimaryReg_DEPRECATED.jsp", "wStartUp.ProcessLogin" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminUpdatePrimaryReg_DEPRECATED", "wStartUp.ProcessLogin" );
       nOptRC = wStartUp.ProcessLogin( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -1257,7 +1257,7 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
    session.setAttribute( "ZeidonError", null );
 else
 {
-   VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminUpdatePrimaryReg_DEPRECATED.jsp", "wStartUp.InitPrimaryRegistrantForUpdate" );
+   VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminUpdatePrimaryReg_DEPRECATED", "wStartUp.InitPrimaryRegistrantForUpdate" );
    nOptRC = wStartUp.InitPrimaryRegistrantForUpdate( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
@@ -2974,7 +2974,6 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wStartUpAdminUpdatePrimaryReg_DEPRECATED" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wStartUpAdminUpdatePrimaryReg_DEPRECATED" );
    session.setAttribute( "ZeidonAction", null );
 
    strActionToProcess = "";

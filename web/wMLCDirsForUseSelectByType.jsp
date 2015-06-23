@@ -60,6 +60,22 @@ public int DoInputMapping( HttpServletRequest request,
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
    {
+      // ComboBox: ComboBox1
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
+      {
+         nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strMapValue = request.getParameter( "hComboBox1" );
+            if ( strMapValue != null )
+            {
+               nRelPos = java.lang.Integer.parseInt( strMapValue );
+               mMasLC.cursor( "M_UsageType" ).setPosition( nRelPos, "MasterLabelContent" );
+            }
+         }
+
+         }  // checkExistenceofEntity
       // Grid: Grid1
       iTableRowCnt = 0;
 
@@ -100,22 +116,6 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       vGridTmp.drop( );
-      // ComboBox: ComboBox1
-      mMasLC = task.getViewByName( "mMasLC" );
-      if ( VmlOperation.isValid( mMasLC ) )
-      {
-         nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strMapValue = request.getParameter( "hComboBox1" );
-            if ( strMapValue != null )
-            {
-               nRelPos = java.lang.Integer.parseInt( strMapValue );
-               mMasLC.cursor( "M_UsageType" ).setPosition( nRelPos, "MasterLabelContent" );
-            }
-         }
-
-         }  // checkExistenceofEntity
       // Grid: Grid2
       iTableRowCnt = 0;
 
@@ -244,8 +244,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -293,23 +293,6 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "SELECT_UsageType" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirsForUseSelectByType", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
    while ( bDone == false && StringUtils.equals( strActionToProcess, "CLEAR_MLC_UsageSource" ) )
    {
       bDone = true;
@@ -322,8 +305,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirsForUseSelectByType.jsp", "wMLC.CLEAR_MLC_UsageSource" );
-         nOptRC = wMLC.CLEAR_MLC_UsageSource( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirsForUseSelectByType", "wMLC.CLEAR_MLC_UsageSource" );
+      nOptRC = wMLC.CLEAR_MLC_UsageSource( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -360,8 +343,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirsForUseSelectByType.jsp", "wMLC.CLEAR_MLC_UsageTarget" );
-         nOptRC = wMLC.CLEAR_MLC_UsageTarget( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirsForUseSelectByType", "wMLC.CLEAR_MLC_UsageTarget" );
+      nOptRC = wMLC.CLEAR_MLC_UsageTarget( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -398,8 +381,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirsForUseSelectByType.jsp", "wMLC.RemoveMLC_UsageEntries" );
-         nOptRC = wMLC.RemoveMLC_UsageEntries( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirsForUseSelectByType", "wMLC.RemoveMLC_UsageEntries" );
+      nOptRC = wMLC.RemoveMLC_UsageEntries( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -424,6 +407,23 @@ if ( strActionToProcess != null )
       break;
    }
 
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "SELECT_UsageType" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirsForUseSelectByType", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
    while ( bDone == false && StringUtils.equals( strActionToProcess, "SelectMLC_UsageEntries" ) )
    {
       bDone = true;
@@ -436,8 +436,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirsForUseSelectByType.jsp", "wMLC.SelectMLC_UsageEntries" );
-         nOptRC = wMLC.SelectMLC_UsageEntries( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirsForUseSelectByType", "wMLC.SelectMLC_UsageEntries" );
+      nOptRC = wMLC.SelectMLC_UsageEntries( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -474,8 +474,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirsForUseSelectByType.jsp", "wMLC.SETALL_MLC_UsageSource" );
-         nOptRC = wMLC.SETALL_MLC_UsageSource( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirsForUseSelectByType", "wMLC.SETALL_MLC_UsageSource" );
+      nOptRC = wMLC.SETALL_MLC_UsageSource( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -512,8 +512,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirsForUseSelectByType.jsp", "wMLC.SETALL_MLC_UsageTarget" );
-         nOptRC = wMLC.SETALL_MLC_UsageTarget( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirsForUseSelectByType", "wMLC.SETALL_MLC_UsageTarget" );
+      nOptRC = wMLC.SETALL_MLC_UsageTarget( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -831,19 +831,11 @@ else
 <div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBAddAppTypesList1:GroupBox */ %>
 
-<div id="GBAddAppTypesList1" name="GBAddAppTypesList1" style="width:504px;height:32px;float:left;">  <!-- GBAddAppTypesList1 --> 
+<div id="GBAddAppTypesList1" name="GBAddAppTypesList1"   style="float:left;position:relative; width:402px; height:32px;">  <!-- GBAddAppTypesList1 --> 
 
-
- <!-- This is added as a line spacer -->
-<div style="height:12px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp</span>
 <% /* AddAppTypesList1:Text */ %>
 
-<span class="groupbox"  id="AddAppTypesList1" name="AddAppTypesList1" style="width:350px;height:16px;">Selection of MLC Usage Entries</span>
-
-</div>  <!-- End of a new line -->
+<label class="groupbox"  id="AddAppTypesList1" name="AddAppTypesList1" style="width:350px;height:16px;position:absolute;left:6px;top:12px;">Selection of MLC Usage Entries</label>
 
 
 </div>  <!--  GBAddAppTypesList1 --> 
@@ -853,7 +845,109 @@ else
 
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
+<div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox8:GroupBox */ %>
+
+<div id="GroupBox8" name="GroupBox8"   style="float:left;position:relative; width:402px; height:32px;">  <!-- GroupBox8 --> 
+
+<% /* Text5:Text */ %>
+
+<label class="groupbox"  id="Text5" name="Text5" style="width:350px;height:16px;position:absolute;left:18px;top:12px;">Currently Selected MLC Usage Entries</label>
+
+
+</div>  <!--  GroupBox8 --> 
+<div style="height:1px;width:34px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox9:GroupBox */ %>
+
+<div id="GroupBox9" name="GroupBox9"   style="float:left;position:relative; width:402px; height:32px;">  <!-- GroupBox9 --> 
+
+<% /* Text6:Text */ %>
+
+<label class="groupbox"  id="Text6" name="Text6" style="width:350px;height:16px;position:absolute;left:18px;top:12px;">Potential MLC Usage Entries for Type</label>
+
+
+</div>  <!--  GroupBox9 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:444px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox10:GroupBox */ %>
+
+<div id="GroupBox10" name="GroupBox10"   style="float:left;position:relative; width:402px; height:38px;">  <!-- GroupBox10 --> 
+
+<% /* Text1:Text */ %>
+
+<label class="groupbox"  id="Text1" name="Text1" style="width:116px;height:16px;position:absolute;left:46px;top:12px;">Current Type:</label>
+
+<% /* ComboBox1:ComboBox */ %>
+<% strErrorMapValue = "";  %>
+
+<select  name="ComboBox1" id="ComboBox1" size="1"style="width:150px;position:absolute;left:170px;top:12px;" onchange="ComboBox1OnChange( )">
+
+<%
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) )
+   {
+         strComboCurrentValue = "";
+      View vComboBox1;
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
+      {
+         nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strComboCurrentValue = mMasLC.cursor( "M_UsageType" ).getAttribute( "UsageType" ).getString( "FullUsageType" );
+            if ( strComboCurrentValue == null )
+               strComboCurrentValue = "";
+         }
+      }
+      vComboBox1 = mMasLC.newView( );
+      ComboCount = 0;
+      strComboSelectedValue = "0";
+      csrRC = vComboBox1.cursor( "M_UsageType" ).setFirst( "MasterLabelContent" );
+      while ( csrRC.isSet() )
+      {
+         strErrorMapValue = vComboBox1.cursor( "M_UsageType" ).getAttribute( "UsageType" ).getString( "FullUsageType" );
+         if ( strErrorMapValue == null )
+            strErrorMapValue = "";
+
+         if ( StringUtils.equals( strComboCurrentValue, strErrorMapValue ) )
+         {
+%>
+            <option selected="selected"><%=strErrorMapValue%></option>
+<%
+            strComboSelectedValue = Integer.toString( ComboCount );
+         }
+         else
+         {
+%>
+            <option><%=strErrorMapValue%></option>
+<%
+         }
+
+         ComboCount++;
+         csrRC =  vComboBox1.cursor( "M_UsageType" ).setNextContinue( );
+      }
+
+      vComboBox1.drop( );
+
+   }
+%>
+</select>
+<input name="hComboBox1" id="hComboBox1" type="hidden" value="<%=strComboSelectedValue%>" >
+
+
+</div>  <!--  GroupBox10 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox4:GroupBox */ %>
 
 <div id="GroupBox4" name="GroupBox4" style="width:838px;float:left;">  <!-- GroupBox4 --> 
@@ -872,31 +966,22 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox6:GroupBox */ %>
 
-<div id="GroupBox6" name="GroupBox6" style="width:342px;height:42px;float:left;">  <!-- GroupBox6 --> 
-
-
-<div>  <!-- Beginning of a new line -->
-<% /* Text1:Text */ %>
-
-<span  id="Text1" name="Text1" style="width:254px;height:22px;">Currently Selected MLC Usage Entries</span>
-
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+<div id="GroupBox6" name="GroupBox6" style="width:342px;height:28px;float:left;">  <!-- GroupBox6 --> 
 
 
  <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
+<div style="height:4px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp</span>
+<span style="height:16px;">&nbsp&nbsp&nbsp</span>
 <% /* HTSelectAllAreasOfUse2:Text */ %>
 
 <a href="#" id="HTSelectAllAreasOfUse2" name="HTSelectAllAreasOfUse2"  onclick="CLEAR_MLC_UsageTarget( );" style="width:134px;height:16px;">Clear Target Entries</a>
 
+<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
 <% /* Text4:Text */ %>
 
-<a href="#" id="Text4" name="Text4"  onclick="SETALL_MLC_UsageTarget( );" style="width:178px;height:16px;">         Set All Target Entries</a>
+<a href="#" id="Text4" name="Text4"  onclick="SETALL_MLC_UsageTarget( );" style="width:178px;height:16px;">Set All Target Entries</a>
 
 </div>  <!-- End of a new line -->
 
@@ -1073,75 +1158,11 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox7:GroupBox */ %>
 
-<div id="GroupBox7" name="GroupBox7" style="width:412px;height:42px;float:left;">  <!-- GroupBox7 --> 
+<div id="GroupBox7" name="GroupBox7" style="width:412px;height:28px;float:left;">  <!-- GroupBox7 --> 
 
 
-<div>  <!-- Beginning of a new line -->
-<% /* Text3:Text */ %>
-
-<span  id="Text3" name="Text3" style="width:244px;height:24px;">Potential MLC Usage Entries for Type</span>
-
-<% /* ComboBox1:ComboBox */ %>
-<% strErrorMapValue = "";  %>
-
-<select  name="ComboBox1" id="ComboBox1" size="1"style="width:150px;" onchange="ComboBox1OnChange( )">
-
-<%
-   mMasLC = task.getViewByName( "mMasLC" );
-   if ( VmlOperation.isValid( mMasLC ) )
-   {
-         strComboCurrentValue = "";
-      View vComboBox1;
-      mMasLC = task.getViewByName( "mMasLC" );
-      if ( VmlOperation.isValid( mMasLC ) )
-      {
-         nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strComboCurrentValue = mMasLC.cursor( "M_UsageType" ).getAttribute( "UsageType" ).getString( "FullUsageType" );
-            if ( strComboCurrentValue == null )
-               strComboCurrentValue = "";
-         }
-      }
-      vComboBox1 = mMasLC.newView( );
-      ComboCount = 0;
-      strComboSelectedValue = "0";
-      csrRC = vComboBox1.cursor( "M_UsageType" ).setFirst( "MasterLabelContent" );
-      while ( csrRC.isSet() )
-      {
-         strErrorMapValue = vComboBox1.cursor( "M_UsageType" ).getAttribute( "UsageType" ).getString( "FullUsageType" );
-         if ( strErrorMapValue == null )
-            strErrorMapValue = "";
-
-         if ( StringUtils.equals( strComboCurrentValue, strErrorMapValue ) )
-         {
-%>
-            <option selected="selected"><%=strErrorMapValue%></option>
-<%
-            strComboSelectedValue = Integer.toString( ComboCount );
-         }
-         else
-         {
-%>
-            <option><%=strErrorMapValue%></option>
-<%
-         }
-
-         ComboCount++;
-         csrRC =  vComboBox1.cursor( "M_UsageType" ).setNextContinue( );
-      }
-
-      vComboBox1.drop( );
-
-   }
-%>
-</select>
-<input name="hComboBox1" id="hComboBox1" type="hidden" value="<%=strComboSelectedValue%>" >
-
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
+ <!-- This is added as a line spacer -->
+<div style="height:4px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
@@ -1152,7 +1173,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
 <% /* Text2:Text */ %>
 
-<a href="#" id="Text2" name="Text2"  onclick="SETALL_MLC_UsageSource( );" style="width:184px;height:16px;">         Set All Source Entries</a>
+<a href="#" id="Text2" name="Text2"  onclick="SETALL_MLC_UsageSource( );" style="width:184px;height:16px;">Set All Source Entries</a>
 
 </div>  <!-- End of a new line -->
 
@@ -1302,9 +1323,8 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCDirsForUseSelectByType" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wMLCDirsForUseSelectByType" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

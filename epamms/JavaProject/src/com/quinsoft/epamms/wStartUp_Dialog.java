@@ -1909,8 +1909,8 @@ ProductManagement( View     ViewToWindow )
       //:NAME VIEW mSubreg "mSubreg"
       SetNameForView( mSubreg, "mSubreg", null, zLEVEL_TASK );
       //:SetWindowActionBehavior( ViewToWindow, zWAB_StartTopWindow,
-      //:                         "wSPLD", "SubregProductsList" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StartTopWindow, "wSPLD", "SubregProductsList" );
+      //:                         "wSLC", "SubregProductsList" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StartTopWindow, "wSLC", "SubregProductsList" );
       //:wWebXfer.Root.Banner1 = mSubreg.Subregistrant.dNameEPA_Number
       SetAttributeFromAttribute( wWebXfer, "Root", "Banner1", mSubreg, "Subregistrant", "dNameEPA_Number" );
       //:SetDynamicBannerName( ViewToWindow, "wStartUp", "SubregistrantProduct" )

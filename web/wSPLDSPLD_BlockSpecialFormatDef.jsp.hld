@@ -477,7 +477,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockSpecialFormatDef.jsp", "wSPLD.ACCEPT_BlockSpecialFormat" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockSpecialFormatDef", "wSPLD.ACCEPT_BlockSpecialFormat" );
          nOptRC = wSPLD.ACCEPT_BlockSpecialFormat( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -510,7 +510,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockSpecialFormatDef.jsp", "wSPLD.CANCEL_BlockSpecialFormat" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockSpecialFormatDef", "wSPLD.CANCEL_BlockSpecialFormat" );
          nOptRC = wSPLD.CANCEL_BlockSpecialFormat( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -636,7 +636,7 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
    session.setAttribute( "ZeidonError", null );
 else
 {
-   VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockSpecialFormatDef.jsp", "wSPLD.PostbuildBlockSpecialFormatDef" );
+   VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockSpecialFormatDef", "wSPLD.PostbuildBlockSpecialFormatDef" );
          nOptRC = wSPLD.PostbuildBlockSpecialFormatDef( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {

@@ -256,7 +256,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpChangeSubregUserPassword.jsp", "wStartUp.CancelChangeSubregUserPassword" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpChangeSubregUserPassword", "wStartUp.CancelChangeSubregUserPassword" );
       nOptRC = wStartUp.CancelChangeSubregUserPassword( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -294,7 +294,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpChangeSubregUserPassword.jsp", "wStartUp.ConfirmChangeSubregUserPassword" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpChangeSubregUserPassword", "wStartUp.ConfirmChangeSubregUserPassword" );
       nOptRC = wStartUp.ConfirmChangeSubregUserPassword( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -346,7 +346,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpChangeSubregUserPassword.jsp", "wStartUp.ConfirmChangeSubregUserPassword" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpChangeSubregUserPassword", "wStartUp.ConfirmChangeSubregUserPassword" );
       nOptRC = wStartUp.ConfirmChangeSubregUserPassword( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -379,7 +379,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpChangeSubregUserPassword.jsp", "wStartUp.CancelChangeSubregUserPassword" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpChangeSubregUserPassword", "wStartUp.CancelChangeSubregUserPassword" );
       nOptRC = wStartUp.CancelChangeSubregUserPassword( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -417,7 +417,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpChangeSubregUserPassword.jsp", "wStartUp.ProductManagement" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpChangeSubregUserPassword", "wStartUp.ProductManagement" );
       nOptRC = wStartUp.ProductManagement( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -435,7 +435,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StartTopWindow, "wSPLD", "" );
+         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StartTopWindow, "wSLC", "SubregProductsList" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -455,7 +455,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpChangeSubregUserPassword.jsp", "wStartUp.SubregistrantManagement" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpChangeSubregUserPassword", "wStartUp.SubregistrantManagement" );
       nOptRC = wStartUp.SubregistrantManagement( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -493,7 +493,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpChangeSubregUserPassword.jsp", "wStartUp.TrackingNotificationCompliance" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpChangeSubregUserPassword", "wStartUp.TrackingNotificationCompliance" );
       nOptRC = wStartUp.TrackingNotificationCompliance( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -531,7 +531,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpChangeSubregUserPassword.jsp", "wStartUp.StateRegistrations" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpChangeSubregUserPassword", "wStartUp.StateRegistrations" );
       nOptRC = wStartUp.StateRegistrations( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -569,7 +569,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpChangeSubregUserPassword.jsp", "wStartUp.MarketingFulfillment" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpChangeSubregUserPassword", "wStartUp.MarketingFulfillment" );
       nOptRC = wStartUp.MarketingFulfillment( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -607,7 +607,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpChangeSubregUserPassword.jsp", "wStartUp.WebDevelopment" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpChangeSubregUserPassword", "wStartUp.WebDevelopment" );
       nOptRC = wStartUp.WebDevelopment( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -640,7 +640,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpChangeSubregUserPassword.jsp", "wStartUp.PrimaryRegistrantCompanySetup" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpChangeSubregUserPassword", "wStartUp.PrimaryRegistrantCompanySetup" );
       nOptRC = wStartUp.PrimaryRegistrantCompanySetup( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -678,7 +678,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpChangeSubregUserPassword.jsp", "wStartUp.ProcessLogin" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpChangeSubregUserPassword", "wStartUp.ProcessLogin" );
       nOptRC = wStartUp.ProcessLogin( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -1319,7 +1319,6 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wStartUpChangeSubregUserPassword" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wStartUpChangeSubregUserPassword" );
    session.setAttribute( "ZeidonAction", null );
 
    strActionToProcess = "";

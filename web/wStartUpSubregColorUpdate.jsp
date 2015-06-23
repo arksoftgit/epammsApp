@@ -325,7 +325,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpSubregColorUpdate.jsp", "wStartUp.CancelColor" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpSubregColorUpdate", "wStartUp.CancelColor" );
       nOptRC = wStartUp.CancelColor( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -363,7 +363,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpSubregColorUpdate.jsp", "wStartUp.SaveColor" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpSubregColorUpdate", "wStartUp.SaveColor" );
       nOptRC = wStartUp.SaveColor( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -415,7 +415,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpSubregColorUpdate.jsp", "wStartUp.SaveColor" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpSubregColorUpdate", "wStartUp.SaveColor" );
       nOptRC = wStartUp.SaveColor( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -453,7 +453,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpSubregColorUpdate.jsp", "wStartUp.CancelColor" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpSubregColorUpdate", "wStartUp.CancelColor" );
       nOptRC = wStartUp.CancelColor( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -565,7 +565,7 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
    session.setAttribute( "ZeidonError", null );
 else
 {
-   VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpSubregColorUpdate.jsp", "wStartUp.InitColorForUpdate" );
+   VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpSubregColorUpdate", "wStartUp.InitColorForUpdate" );
    nOptRC = wStartUp.InitColorForUpdate( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
@@ -1148,7 +1148,6 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wStartUpSubregColorUpdate" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wStartUpSubregColorUpdate" );
    session.setAttribute( "ZeidonAction", null );
 
    strActionToProcess = "";

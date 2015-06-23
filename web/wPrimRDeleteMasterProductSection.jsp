@@ -173,8 +173,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -217,8 +217,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRDeleteMasterProductSection.jsp", "wPrimR.ConfirmDeleteMasterProdSection" );
-         nOptRC = wPrimR.ConfirmDeleteMasterProdSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRDeleteMasterProductSection", "wPrimR.ConfirmDeleteMasterProdSection" );
+      nOptRC = wPrimR.ConfirmDeleteMasterProdSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -250,8 +250,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRDeleteMasterProductSection.jsp", "wPrimR.CancelDeleteMasterProductSection" );
-         nOptRC = wPrimR.CancelDeleteMasterProductSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRDeleteMasterProductSection", "wPrimR.CancelDeleteMasterProductSection" );
+      nOptRC = wPrimR.CancelDeleteMasterProductSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -354,8 +354,8 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRDeleteMasterProductSection.jsp", "wStartUp.ProductManagement" );
-         nOptRC = wStartUp.ProductManagement( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRDeleteMasterProductSection", "wStartUp.ProductManagement" );
+      nOptRC = wStartUp.ProductManagement( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -372,7 +372,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wPrimR.SetWebRedirection( vKZXMLPGO, wPrimR.zWAB_StartTopWindow, "wSPLD", "SubregProductsList" );
+         strNextJSP_Name = wPrimR.SetWebRedirection( vKZXMLPGO, wPrimR.zWAB_StartTopWindow, "wSLC", "SubregProductsList" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -393,8 +393,8 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRDeleteMasterProductSection.jsp", "wStartUp.SubregistrantManagement" );
-         nOptRC = wStartUp.SubregistrantManagement( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRDeleteMasterProductSection", "wStartUp.SubregistrantManagement" );
+      nOptRC = wStartUp.SubregistrantManagement( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -432,8 +432,8 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRDeleteMasterProductSection.jsp", "wStartUp.TrackingNotificationCompliance" );
-         nOptRC = wStartUp.TrackingNotificationCompliance( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRDeleteMasterProductSection", "wStartUp.TrackingNotificationCompliance" );
+      nOptRC = wStartUp.TrackingNotificationCompliance( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -471,8 +471,8 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRDeleteMasterProductSection.jsp", "wStartUp.StateRegistrations" );
-         nOptRC = wStartUp.StateRegistrations( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRDeleteMasterProductSection", "wStartUp.StateRegistrations" );
+      nOptRC = wStartUp.StateRegistrations( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -510,8 +510,8 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRDeleteMasterProductSection.jsp", "wStartUp.MarketingFulfillment" );
-         nOptRC = wStartUp.MarketingFulfillment( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRDeleteMasterProductSection", "wStartUp.MarketingFulfillment" );
+      nOptRC = wStartUp.MarketingFulfillment( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -549,8 +549,8 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRDeleteMasterProductSection.jsp", "wStartUp.WebDevelopment" );
-         nOptRC = wStartUp.WebDevelopment( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRDeleteMasterProductSection", "wStartUp.WebDevelopment" );
+      nOptRC = wStartUp.WebDevelopment( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -575,7 +575,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mAdministration" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "mCompanyProfile" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wPrimRDeleteMasterProductSection", strActionToProcess );
@@ -583,8 +583,8 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRDeleteMasterProductSection.jsp", "wStartUp.PrimaryRegistrantCompanySetup" );
-         nOptRC = wStartUp.PrimaryRegistrantCompanySetup( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRDeleteMasterProductSection", "wStartUp.PrimaryRegistrantCompanySetup" );
+      nOptRC = wStartUp.PrimaryRegistrantCompanySetup( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -622,8 +622,8 @@ if ( strActionToProcess != null )
       // Action Operation
       nRC = 0;
       wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRDeleteMasterProductSection.jsp", "wStartUp.ProcessLogin" );
-         nOptRC = wStartUp.ProcessLogin( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRDeleteMasterProductSection", "wStartUp.ProcessLogin" );
+      nOptRC = wStartUp.ProcessLogin( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -734,8 +734,8 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
    session.setAttribute( "ZeidonError", null );
 else
 {
-   VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRDeleteMasterProductSection.jsp", "wPrimR.InitMasterProdSectionForDelete" );
-         nOptRC = wPrimR.InitMasterProdSectionForDelete( new zVIEW( vKZXMLPGO ) );
+   VmlOperation.SetZeidonSessionAttribute( null, task, "wPrimRDeleteMasterProductSection", "wPrimR.InitMasterProdSectionForDelete" );
+   nOptRC = wPrimR.InitMasterProdSectionForDelete( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -1259,9 +1259,8 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wPrimRDeleteMasterProductSection" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wPrimRDeleteMasterProductSection" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

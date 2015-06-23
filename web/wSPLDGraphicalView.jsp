@@ -161,8 +161,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDGraphicalView.jsp", "wSPLD.GENERATE_SPLD_Label" );
-         nOptRC = wSPLD.GENERATE_SPLD_Label( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDGraphicalView", "wSPLD.GENERATE_SPLD_Label" );
+      nOptRC = wSPLD.GENERATE_SPLD_Label( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -194,8 +194,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDGraphicalView.jsp", "wSPLD.GENERATE_SPLD_LabelDottedBorders" );
-         nOptRC = wSPLD.GENERATE_SPLD_LabelDottedBorders( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDGraphicalView", "wSPLD.GENERATE_SPLD_LabelDottedBorders" );
+      nOptRC = wSPLD.GENERATE_SPLD_LabelDottedBorders( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -384,7 +384,7 @@ else
 <%@ include file="./include/timeout.inc" %>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSPLDGraphicalView.js"></script>
 
-   <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+   <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
    <link rel="stylesheet" type="text/css" href="css/result-light.css">
    <link rel="stylesheet" type="text/css" href="css/style.css">
    <link rel="stylesheet" type="text/css" href="css/jquery.colorPicker.css">
@@ -485,7 +485,7 @@ else
    <script src="js/jquery-2.1.3.js"></script>
    <script src="js/jquery-ui.js"></script>
    <script src="js/jquery.nicescroll.min.js"></script>
-       <script src="js/jquery.blockUI.js"></script>
+   <script src="js/jquery.blockUI.js"></script>
 
    <script src="js/jquery.colorPicker.js" type="text/javascript"></script>
 
@@ -1405,9 +1405,8 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSPLDGraphicalView" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSPLDGraphicalView" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

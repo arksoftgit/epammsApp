@@ -186,8 +186,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -574,27 +574,30 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:4px;width:100px;"></div>
+<div style="height:2px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* MarketingSection3:GroupBox */ %>
+<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GBStorDispSections3:GroupBox */ %>
 
-<div id="MarketingSection3" name="MarketingSection3" class="withborder" style="width:580px;height:84px;float:left;">  <!-- MarketingSection3 --> 
+<div id="GBStorDispSections3" name="GBStorDispSections3" class="listgroup"   style="float:left;position:relative; width:574px; height:36px;">  <!-- GBStorDispSections3 --> 
+
+<% /* DilutionChartEntry:Text */ %>
+
+<label class="groupbox"  id="DilutionChartEntry" name="DilutionChartEntry" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Dilution Chart Entry</label>
 
 
- <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp</span>
-<% /* Text5:Text */ %>
-
-<span class="listheader"  id="Text5" name="Text5" style="width:434px;height:16px;">Dilution Chart Entry</span>
-
+</div>  <!--  GBStorDispSections3 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
+<% /* MarketingSection3:GroupBox */ %>
+
+<div id="MarketingSection3" name="MarketingSection3" class="withborder" style="width:574px;height:64px;float:left;">  <!-- MarketingSection3 --> 
 
 
 <div>  <!-- Beginning of a new line -->
@@ -605,13 +608,13 @@ else
 <table cols=2 style="width:312px;"  class="grouptable">
 
 <tr>
-<td valign="top" style="width:76px;">
+<td valign="top" style="width:64px;">
 <% /* Text4:Text */ %>
 
-<span  id="Text4" name="Text4" style="width:76px;height:16px;">Product:</span>
+<span  id="Text4" name="Text4" style="width:58px;height:16px;">Product:</span>
 
 </td>
-<td valign="top"  class="text12" style="width:202px;">
+<td valign="top"  class="text12" style="width:214px;">
 <% /* EditBox3:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "EditBox3", strError );
@@ -651,18 +654,18 @@ else
    }
 %>
 
-<input class="text12" name="EditBox3" id="EditBox3" style="width:202px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="EditBox3" id="EditBox3" style="width:214px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:76px;">
+<td valign="top" style="width:64px;">
 <% /* DirectionsUseTitle:3:Text */ %>
 
-<span  id="DirectionsUseTitle:3" name="DirectionsUseTitle:3" style="width:74px;height:16px;">Water:</span>
+<span  id="DirectionsUseTitle:3" name="DirectionsUseTitle:3" style="width:56px;height:16px;">Water:</span>
 
 </td>
-<td valign="top"  class="text12" style="width:202px;">
+<td valign="top"  class="text12" style="width:214px;">
 <% /* EditBox2:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "EditBox2", strError );
@@ -702,7 +705,7 @@ else
    }
 %>
 
-<input class="text12" name="EditBox2" id="EditBox2" style="width:202px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="EditBox2" id="EditBox2" style="width:214px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -746,9 +749,8 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCDilutionChartItem" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wMLCDilutionChartItem" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

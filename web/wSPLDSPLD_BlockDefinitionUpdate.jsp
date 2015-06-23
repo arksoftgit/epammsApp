@@ -196,8 +196,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -240,8 +240,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockDefinitionUpdate.jsp", "wSPLD.ACCEPT_BlockSubBlockDefinition" );
-         nOptRC = wSPLD.ACCEPT_BlockSubBlockDefinition( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockDefinitionUpdate", "wSPLD.ACCEPT_BlockSubBlockDefinition" );
+      nOptRC = wSPLD.ACCEPT_BlockSubBlockDefinition( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -305,8 +305,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockDefinitionUpdate.jsp", "wSPLD.GOTO_UpdateSPLD_Statement" );
-         nOptRC = wSPLD.GOTO_UpdateSPLD_Statement( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockDefinitionUpdate", "wSPLD.GOTO_UpdateSPLD_Statement" );
+      nOptRC = wSPLD.GOTO_UpdateSPLD_Statement( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -338,8 +338,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockDefinitionUpdate.jsp", "wSPLD.CANCEL_BlockSubBlockDefinition" );
-         nOptRC = wSPLD.CANCEL_BlockSubBlockDefinition( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockDefinitionUpdate", "wSPLD.CANCEL_BlockSubBlockDefinition" );
+      nOptRC = wSPLD.CANCEL_BlockSubBlockDefinition( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -376,8 +376,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockDefinitionUpdate.jsp", "wSPLD.DELETE_SpecialFormatDef" );
-         nOptRC = wSPLD.DELETE_SpecialFormatDef( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockDefinitionUpdate", "wSPLD.DELETE_SpecialFormatDef" );
+      nOptRC = wSPLD.DELETE_SpecialFormatDef( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -414,8 +414,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockDefinitionUpdate.jsp", "wSPLD.GENERATE_SPLD_Label" );
-         nOptRC = wSPLD.GENERATE_SPLD_Label( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockDefinitionUpdate", "wSPLD.GENERATE_SPLD_Label" );
+      nOptRC = wSPLD.GENERATE_SPLD_Label( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -452,8 +452,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockDefinitionUpdate.jsp", "wSPLD.GENERATE_SPLD_LabelDottedBorders" );
-         nOptRC = wSPLD.GENERATE_SPLD_LabelDottedBorders( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockDefinitionUpdate", "wSPLD.GENERATE_SPLD_LabelDottedBorders" );
+      nOptRC = wSPLD.GENERATE_SPLD_LabelDottedBorders( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -490,8 +490,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockDefinitionUpdate.jsp", "wSPLD.GOTO_NewSpecialFormatDefinition" );
-         nOptRC = wSPLD.GOTO_NewSpecialFormatDefinition( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockDefinitionUpdate", "wSPLD.GOTO_NewSpecialFormatDefinition" );
+      nOptRC = wSPLD.GOTO_NewSpecialFormatDefinition( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -572,8 +572,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockDefinitionUpdate.jsp", "wSPLD.GOTO_UpdateSpecialFormatDef" );
-         nOptRC = wSPLD.GOTO_UpdateSpecialFormatDef( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockDefinitionUpdate", "wSPLD.GOTO_UpdateSpecialFormatDef" );
+      nOptRC = wSPLD.GOTO_UpdateSpecialFormatDef( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -698,8 +698,8 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
    session.setAttribute( "ZeidonError", null );
 else
 {
-   VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockDefinitionUpdate.jsp", "wSPLD.PostbuildBlockDefinitionUpdate" );
-         nOptRC = wSPLD.PostbuildBlockDefinitionUpdate( new zVIEW( vKZXMLPGO ) );
+   VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockDefinitionUpdate", "wSPLD.PostbuildBlockDefinitionUpdate" );
+   nOptRC = wSPLD.PostbuildBlockDefinitionUpdate( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -1386,9 +1386,8 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSPLDSPLD_BlockDefinitionUpdate" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSPLDSPLD_BlockDefinitionUpdate" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

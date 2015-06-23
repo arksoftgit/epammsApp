@@ -1,6 +1,5 @@
 <div id="megatopregion">
    <div id="loginline"><ul>
-
       <li class="home"><a href="http://www.epa.gov" target="_blank">lEPA Home</a></li>
       <li class="helpicon"><a href=".\wSystemDisplayHelpMessage.jsp" target="_blank">Help</a></li>
    </ul></div>
@@ -9,9 +8,11 @@
 <div id="header">
    <!-- Logo-->
    <div id="logo">
-      <!--Page Title --> <h1>&nbsp;</h1>
+      <!--Page Title <h1>&nbsp;</h1> --> 
+      <!--Page Title <h1 style="opacity: 0.4; margin-top:0;padding-top:0;float:right;"><%=strBannerTitle%></h1> -->
       <!-- Before Logo-->
-   </div>
+   </div><br /><br />
+   <div id="wai" style="color:#cccccc; opacity:0.6; margin-top:40;border-top:40;padding-top:40;padding-right:40;float:right;font-size: 200%;"></div>
 
    <!--Top Menu-->
    <!-- If we wanted to get the menu on the banner. Commented out for the moment- AS 7/31/2009-->

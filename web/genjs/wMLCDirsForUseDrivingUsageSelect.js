@@ -168,6 +168,7 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
+   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title + "%" ); }
    isWindowClosing = true;
 }
 
@@ -254,6 +255,21 @@ function RemoveMLC_UsageEntries( )
    }
 }
 
+function SELECT_UsageType( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCDirsForUseDrivingUsageSelect.zAction.value = "SELECT_UsageType";
+      document.wMLCDirsForUseDrivingUsageSelect.submit( );
+   }
+}
+
 function SelectMLC_UsageEntries( )
 {
 
@@ -295,6 +311,22 @@ function SETALL_MLC_UsageTarget( )
       _DisableFormElements( true );
 
       document.wMLCDirsForUseDrivingUsageSelect.zAction.value = "SETALL_MLC_UsageTarget";
+      document.wMLCDirsForUseDrivingUsageSelect.submit( );
+   }
+}
+
+function ComboBox1OnChange( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      document.wMLCDirsForUseDrivingUsageSelect.hComboBox1.value = document.wMLCDirsForUseDrivingUsageSelect.ComboBox1.selectedIndex;
+      _DisableFormElements( true );
+
+      document.wMLCDirsForUseDrivingUsageSelect.zAction.value = "SELECT_UsageType";
       document.wMLCDirsForUseDrivingUsageSelect.submit( );
    }
 }

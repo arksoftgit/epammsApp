@@ -168,6 +168,7 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
+   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title + "%" ); }
    isWindowClosing = true;
 }
 
@@ -198,6 +199,59 @@ function AcceptMarketingStatement( )
       _DisableFormElements( true );
 
       document.wMLCMarketingStatement.zAction.value = "AcceptMarketingStatement";
+      document.wMLCMarketingStatement.submit( );
+   }
+}
+
+function GOTO_MarketingKeywordStmtDelete( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCMarketingStatement.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCMarketingStatement.zAction.value = "GOTO_MarketingKeywordStmtDelete";
+      document.wMLCMarketingStatement.submit( );
+   }
+}
+
+function GOTO_MarketingKeywordStmtAdd( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCMarketingStatement.zAction.value = "GOTO_MarketingKeywordStmtAdd";
+      document.wMLCMarketingStatement.submit( );
+   }
+}
+
+function GOTO_MarketingKeywordUpdate( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCMarketingStatement.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCMarketingStatement.zAction.value = "GOTO_MarketingKeywordUpdate";
       document.wMLCMarketingStatement.submit( );
    }
 }
@@ -235,6 +289,21 @@ function GOTO_SelectRemoveMktgEntries( )
       _DisableFormElements( true );
 
       document.wMLCMarketingStatement.zAction.value = "GOTO_SelectRemoveMktgEntries";
+      document.wMLCMarketingStatement.submit( );
+   }
+}
+
+function GOTO_DisplayGeneratedText( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCMarketingStatement.zAction.value = "GOTO_DisplayGeneratedText";
       document.wMLCMarketingStatement.submit( );
    }
 }

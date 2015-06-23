@@ -191,8 +191,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -279,8 +279,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateAreasOfUse.jsp", "wSystem.NewAreasOfUse" );
-         nOptRC = wSystem.NewAreasOfUse( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateAreasOfUse", "wSystem.NewAreasOfUse" );
+      nOptRC = wSystem.NewAreasOfUse( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -356,8 +356,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateAreasOfUse.jsp", "wSystem.DeleteAreasOfUse" );
-         nOptRC = wSystem.DeleteAreasOfUse( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateAreasOfUse", "wSystem.DeleteAreasOfUse" );
+      nOptRC = wSystem.DeleteAreasOfUse( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -394,8 +394,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateAreasOfUse.jsp", "wSystem.ImportAreasOfUseList" );
-         nOptRC = wSystem.ImportAreasOfUseList( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateAreasOfUse", "wSystem.ImportAreasOfUseList" );
+      nOptRC = wSystem.ImportAreasOfUseList( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -432,8 +432,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateAreasOfUse.jsp", "wSystem.NewAreasOfUse" );
-         nOptRC = wSystem.NewAreasOfUse( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateAreasOfUse", "wSystem.NewAreasOfUse" );
+      nOptRC = wSystem.NewAreasOfUse( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -558,8 +558,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateAreasOfUse.jsp", "wSystem.UpdateAreasOfUseFromCurrent" );
-         nOptRC = wSystem.UpdateAreasOfUseFromCurrent( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateAreasOfUse", "wSystem.UpdateAreasOfUseFromCurrent" );
+      nOptRC = wSystem.UpdateAreasOfUseFromCurrent( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -610,8 +610,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateAreasOfUse.jsp", "wSystem.ImportAreasOfUseList" );
-         nOptRC = wSystem.ImportAreasOfUseList( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateAreasOfUse", "wSystem.ImportAreasOfUseList" );
+      nOptRC = wSystem.ImportAreasOfUseList( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -802,8 +802,8 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
    session.setAttribute( "ZeidonError", null );
 else
 {
-   VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateAreasOfUse.jsp", "wSystem.InitAreasOfUseForUpdate" );
-         nOptRC = wSystem.InitAreasOfUseForUpdate( new zVIEW( vKZXMLPGO ) );
+   VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateAreasOfUse", "wSystem.InitAreasOfUseForUpdate" );
+   nOptRC = wSystem.InitAreasOfUseForUpdate( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -853,28 +853,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-<script language="JavaScript" type="text/javascript" >
-      // Javascript code entered by user for Window action prebuild.
-
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   thisLi = document.getElementById( "lmSystem" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   var oRows = document.getElementById( "GridAreasOfUse" ).getElementsByTagName( 'tr' );
-   if ( oRows.length > 1 ) // 1 for header
-   {
-      thisLi = document.getElementById( "PBNewAreasOfUse" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-   }
-
-      // END of Javascript code entered by user.
-
-</script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSystemUpdateAreasOfUse.js"></script>
 
 </head>
@@ -964,6 +942,7 @@ else
    View mEPA = null;
    View mOrganiz = null;
    View mUser = null;
+   View sHelp = null;
    View wWebXfer = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
@@ -1412,9 +1391,8 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSystemUpdateAreasOfUse" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSystemUpdateAreasOfUse" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

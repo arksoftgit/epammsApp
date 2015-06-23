@@ -67,14 +67,14 @@ public int DoInputMapping( HttpServletRequest request,
       // grids on the same window with the same view we do not mess up the 
       // entity positions. 
       vGridTmp = mSubLC.newView( );
-      csrRC = vGridTmp.cursor( "S_StorageDisposalSection" ).setFirst(  );
+      csrRC = vGridTmp.cursor( "S_StorageDisposalStatement" ).setFirst(  );
       while ( csrRC.isSet() )
       {
-         lEntityKey = vGridTmp.cursor( "S_StorageDisposalSection" ).getEntityKey( );
+         lEntityKey = vGridTmp.cursor( "S_StorageDisposalStatement" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
 
-         csrRC = vGridTmp.cursor( "S_StorageDisposalSection" ).setNextContinue( );
+         csrRC = vGridTmp.cursor( "S_StorageDisposalStatement" ).setNextContinue( );
       }
 
       vGridTmp.drop( );
@@ -166,8 +166,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -224,8 +224,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCStorageDisposal.jsp", "wSLC.SaveSLC" );
-         nOptRC = wSLC.SaveSLC( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCStorageDisposal", "wSLC.SaveSLC" );
+      nOptRC = wSLC.SaveSLC( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -262,8 +262,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCStorageDisposal.jsp", "wSLC.SaveSLC" );
-         nOptRC = wSLC.SaveSLC( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCStorageDisposal", "wSLC.SaveSLC" );
+      nOptRC = wSLC.SaveSLC( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -300,8 +300,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCStorageDisposal.jsp", "wSLC.CancelAndReturnSLC" );
-         nOptRC = wSLC.CancelAndReturnSLC( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCStorageDisposal", "wSLC.CancelAndReturnSLC" );
+      nOptRC = wSLC.CancelAndReturnSLC( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -406,8 +406,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCStorageDisposal.jsp", "wSLC.DisplayPrecautionarySection" );
-         nOptRC = wSLC.DisplayPrecautionarySection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCStorageDisposal", "wSLC.DisplayPrecautionarySection" );
+      nOptRC = wSLC.DisplayPrecautionarySection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -444,8 +444,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCStorageDisposal.jsp", "wSLC.DisplayFirstAidSection" );
-         nOptRC = wSLC.DisplayFirstAidSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCStorageDisposal", "wSLC.DisplayFirstAidSection" );
+      nOptRC = wSLC.DisplayFirstAidSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -482,8 +482,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCStorageDisposal.jsp", "wSLC.DisplayHazardsSection" );
-         nOptRC = wSLC.DisplayHazardsSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCStorageDisposal", "wSLC.DisplayHazardsSection" );
+      nOptRC = wSLC.DisplayHazardsSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -520,8 +520,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCStorageDisposal.jsp", "wSLC.DisplayClaimsSection" );
-         nOptRC = wSLC.DisplayClaimsSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCStorageDisposal", "wSLC.DisplayClaimsSection" );
+      nOptRC = wSLC.DisplayClaimsSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -558,8 +558,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCStorageDisposal.jsp", "wSLC.DisplaySurfacesSection" );
-         nOptRC = wSLC.DisplaySurfacesSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCStorageDisposal", "wSLC.DisplaySurfacesSection" );
+      nOptRC = wSLC.DisplaySurfacesSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -596,8 +596,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCStorageDisposal.jsp", "wSLC.DisplayAreasOfUseSection" );
-         nOptRC = wSLC.DisplayAreasOfUseSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCStorageDisposal", "wSLC.DisplayAreasOfUseSection" );
+      nOptRC = wSLC.DisplayAreasOfUseSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -634,8 +634,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCStorageDisposal.jsp", "wSLC.DisplayApplicationTypesSection" );
-         nOptRC = wSLC.DisplayApplicationTypesSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCStorageDisposal", "wSLC.DisplayApplicationTypesSection" );
+      nOptRC = wSLC.DisplayApplicationTypesSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -1009,10 +1009,13 @@ else
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
+   View lMLC = null;
+   View lSPLDLST = null;
+   View mLLD_LST = null;
    View mMasLC = null;
    View mSubLC = null;
-   View mSubreg = null;
    View mSubProd = null;
+   View mSubreg = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";
@@ -1120,19 +1123,42 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBStorDispSections:GroupBox */ %>
 
-<div id="GBStorDispSections" name="GBStorDispSections" class="listgroup" style="width:830px;height:36px;float:left;">  <!-- GBStorDispSections --> 
+<div id="GBStorDispSections" name="GBStorDispSections" class="listgroup"   style="float:left;position:relative; width:830px; height:36px;">  <!-- GBStorDispSections --> 
 
-
- <!-- This is added as a line spacer -->
-<div style="height:12px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp</span>
 <% /* OrganismClaimsStatements1:Text */ %>
 
-<span class="groupbox"  id="OrganismClaimsStatements1" name="OrganismClaimsStatements1" style="width:238px;height:16px;">Storage and Disposal Sections</span>
+<label class="groupbox"  id="OrganismClaimsStatements1" name="OrganismClaimsStatements1" style="width:330px;height:16px;position:absolute;left:6px;top:12px;">Storage and Disposal Statements</label>
 
-</div>  <!-- End of a new line -->
+<% /* Text1:Text */ %>
+
+<label class="groupbox"  id="Text1" name="Text1" style="width:158px;height:16px;position:absolute;left:338px;top:12px;">Container Size Range:</label>
+
+<% /* Text2:Text */ %>
+<% strTextDisplayValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "Text2" );
+   else
+   {
+      nRC = mSubLC.cursor( "S_StorageDisposalSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSubLC.cursor( "S_StorageDisposalSection" ).getAttribute( "ContainerVolume" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on Text2: " + e.getMessage());
+         task.log().info( "*** Error on ctrl Text2" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<label class="groupbox"  id="Text2" name="Text2" style="width:188px;height:16px;position:absolute;left:496px;top:12px;"><%=strTextDisplayValue%></label>
 
 
 </div>  <!--  GBStorDispSections --> 
@@ -1145,14 +1171,14 @@ else
 <div style="height:10px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:22px;float:left;"></div>   <!-- Width Spacer -->
+<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridStorDisp:Grid */ %>
 <table  cols=2 style="width:792px;"  name="GridStorDisp" id="GridStorDisp">
 
 <thead><tr>
 
-   <th>Sections</th>
-   <th>MLC Container Sizes</th>
+   <th>Statement Title</th>
+   <th>Statement Text</th>
 
 </tr></thead>
 
@@ -1175,21 +1201,21 @@ try
       
       View vGridStorDisp;
       vGridStorDisp = mSubLC.newView( );
-      csrRC2 = vGridStorDisp.cursor( "S_StorageDisposalSection" ).setFirst(  );
+      csrRC2 = vGridStorDisp.cursor( "S_StorageDisposalStatement" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGridStorDisp.cursor( "S_StorageDisposalSection" ).getEntityKey( );
+         lEntityKey = vGridStorDisp.cursor( "S_StorageDisposalStatement" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          strButtonName = "SelectButton" + strEntityKey;
 
          strGridEditStorDisp = "";
-         nRC = vGridStorDisp.cursor( "S_StorageDisposalSection" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGridStorDisp.cursor( "S_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditStorDisp = vGridStorDisp.cursor( "S_StorageDisposalSection" ).getAttribute( "Title" ).getString( "" );
+            strGridEditStorDisp = vGridStorDisp.cursor( "S_StorageDisposalStatement" ).getAttribute( "Title" ).getString( "" );
 
             if ( strGridEditStorDisp == null )
                strGridEditStorDisp = "";
@@ -1199,10 +1225,10 @@ try
             strGridEditStorDisp = "&nbsp";
 
          strGridEditVolume = "";
-         nRC = vGridStorDisp.cursor( "S_StorageDisposalSection" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGridStorDisp.cursor( "S_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditVolume = vGridStorDisp.cursor( "S_StorageDisposalSection" ).getAttribute( "Title" ).getString( "" );
+            strGridEditVolume = vGridStorDisp.cursor( "S_StorageDisposalStatement" ).getAttribute( "Text" ).getString( "" );
 
             if ( strGridEditVolume == null )
                strGridEditVolume = "";
@@ -1221,7 +1247,7 @@ try
 </tr>
 
 <%
-         csrRC2 = vGridStorDisp.cursor( "S_StorageDisposalSection" ).setNextContinue( );
+         csrRC2 = vGridStorDisp.cursor( "S_StorageDisposalStatement" ).setNextContinue( );
       }
       vGridStorDisp.drop( );
    }
@@ -1267,9 +1293,8 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSLCStorageDisposal" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSLCStorageDisposal" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

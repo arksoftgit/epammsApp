@@ -167,8 +167,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -206,8 +206,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockDefinitionAdd.jsp", "wSPLD.CANCEL_BlockSubBlockDefinition" );
-         nOptRC = wSPLD.CANCEL_BlockSubBlockDefinition( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockDefinitionAdd", "wSPLD.CANCEL_BlockSubBlockDefinition" );
+      nOptRC = wSPLD.CANCEL_BlockSubBlockDefinition( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -244,8 +244,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockDefinitionAdd.jsp", "wSPLD.CONTINUE_BlockSubBlockDefAdd" );
-         nOptRC = wSPLD.CONTINUE_BlockSubBlockDefAdd( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockDefinitionAdd", "wSPLD.CONTINUE_BlockSubBlockDefAdd" );
+      nOptRC = wSPLD.CONTINUE_BlockSubBlockDefAdd( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -735,9 +735,8 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSPLDSPLD_BlockDefinitionAdd" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSPLDSPLD_BlockDefinitionAdd" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

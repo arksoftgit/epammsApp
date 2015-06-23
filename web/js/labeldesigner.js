@@ -3556,7 +3556,7 @@ public class FileServer {
          });
       }
       
-      
+/*      
       <h2><a name="optgroup-support" class="anchor" href="#optgroup-support">&lt;optgroup&gt; Support</a></h2>
       <div class="side-by-side clearfix">
         <div>
@@ -3613,7 +3613,7 @@ public class FileServer {
             </optgroup>
           </select>
         </div>
-
+*/
       
    }
 

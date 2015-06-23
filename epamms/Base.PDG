@@ -1,4 +1,4 @@
-z1000-Zeidon    BASE     TZDGSRCO 06/09/15   11:01:22 1.0a2    
+z1000-Zeidon    BASE     TZDGSRCO 06/10/15   14:05:03 1.0a2    
 eDomainGroup 1
 aZKey      68567479
 aName      Base
@@ -68,6 +68,16 @@ eTableEntry 4
 aZKey      110059060
 aExternalValue > 1 gallon
 aInternalValue >1
+
+eTableEntry 4
+aZKey      110183167
+aExternalValue Old Value 1
+aInternalValue 1
+
+eTableEntry 4
+aZKey      110183168
+aExternalValue Old Value 5
+aInternalValue 5
 
 eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain

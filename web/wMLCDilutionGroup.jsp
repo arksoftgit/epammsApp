@@ -204,8 +204,8 @@ else
 if ( task == null )
 {
    session.setAttribute( "ZeidonTaskId", null );
-    strURL = response.encodeRedirectURL( "logout.jsp" );
-    response.sendRedirect( strURL );
+   strURL = response.encodeRedirectURL( "logout.jsp" );
+   response.sendRedirect( strURL );
    return; // something really bad has happened!!!
 }
 
@@ -406,8 +406,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDilutionGroup.jsp", "wMLC.GOTO_DilutionGroupItemDelete" );
-         nOptRC = wMLC.GOTO_DilutionGroupItemDelete( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDilutionGroup", "wMLC.GOTO_DilutionGroupItemDelete" );
+      nOptRC = wMLC.GOTO_DilutionGroupItemDelete( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -729,27 +729,33 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:4px;width:100px;"></div>
+<div style="height:2px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GBStorDispSections4:GroupBox */ %>
+
+<div id="GBStorDispSections4" name="GBStorDispSections4" class="listgroup"   style="float:left;position:relative; width:574px; height:36px;">  <!-- GBStorDispSections4 --> 
+
+<% /* DilutionGroup:Text */ %>
+
+<label class="groupbox"  id="DilutionGroup" name="DilutionGroup" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Dilution Group</label>
+
+
+</div>  <!--  GBStorDispSections4 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:2px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* MarketingSection3:GroupBox */ %>
 
-<div id="MarketingSection3" name="MarketingSection3" class="withborder" style="width:580px;height:84px;float:left;">  <!-- MarketingSection3 --> 
-
-
- <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp</span>
-<% /* Text5:Text */ %>
-
-<span class="listheader"  id="Text5" name="Text5" style="width:434px;height:16px;">Dilution Group</span>
-
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+<div id="MarketingSection3" name="MarketingSection3" class="withborder" style="width:580px;height:60px;float:left;">  <!-- MarketingSection3 --> 
 
 
 <div>  <!-- Beginning of a new line -->
@@ -760,10 +766,10 @@ else
 <table cols=2 style="width:312px;"  class="grouptable">
 
 <tr>
-<td valign="top" style="width:76px;">
+<td valign="top" style="width:52px;">
 <% /* Text4:Text */ %>
 
-<span  id="Text4" name="Text4" style="width:76px;height:16px;">Ratio:</span>
+<span  id="Text4" name="Text4" style="width:46px;height:16px;">Ratio:</span>
 
 </td>
 <td valign="top"  class="text12" style="width:202px;">
@@ -811,10 +817,10 @@ else
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:76px;">
+<td valign="top" style="width:52px;">
 <% /* DirectionsUseTitle:3:Text */ %>
 
-<span  id="DirectionsUseTitle:3" name="DirectionsUseTitle:3" style="width:74px;height:16px;">Title:</span>
+<span  id="DirectionsUseTitle:3" name="DirectionsUseTitle:3" style="width:46px;height:16px;">Title:</span>
 
 </td>
 <td valign="top"  class="text12" style="width:202px;">
@@ -873,6 +879,9 @@ else
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
+
+ <!-- This is added as a line spacer -->
+<div style="height:6px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
@@ -1024,9 +1033,8 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCDilutionGroup" );
-   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wMLCDilutionGroup" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>
