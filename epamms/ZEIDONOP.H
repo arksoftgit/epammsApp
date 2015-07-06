@@ -1,4 +1,4 @@
-//start mSPLDef 2015.06.23 15:06:06
+//start mSPLDef 2015.07.02 18:22:00
 zOPER_EXPORT zSHORT OPERATION
 omSPLDef_GeneratePDF_Label( zVIEW vViewToInstance0 );
 

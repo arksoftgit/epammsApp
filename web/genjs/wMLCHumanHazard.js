@@ -172,7 +172,7 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
-   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title + "%" ); }
+var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
 }
 

@@ -60,6 +60,24 @@ public int DoInputMapping( HttpServletRequest request,
    mSubLC = task.getViewByName( "mSubLC" );
    if ( VmlOperation.isValid( mSubLC ) )
    {
+      // Grid: Grid4
+      iTableRowCnt = 0;
+
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
+      vGridTmp = mSubLC.newView( );
+      csrRC = vGridTmp.cursor( "S_InsertTextMarketing" ).setFirst( "S_MarketingStatement" );
+      while ( csrRC.isSet() )
+      {
+         lEntityKey = vGridTmp.cursor( "S_InsertTextMarketing" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         iTableRowCnt++;
+
+         csrRC = vGridTmp.cursor( "S_InsertTextMarketing" ).setNextContinue( );
+      }
+
+      vGridTmp.drop( );
       // Grid: GridMarketingUsage
       iTableRowCnt = 0;
 
@@ -841,6 +859,70 @@ else
 <%
 try
 {
+   iTableRowCnt = 0;
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) )
+   {
+      long   lEntityKey;
+      String strEntityKey;
+      String strButtonName;
+      String strOdd;
+      String strTag;
+      String strGridEditCtl6;
+      String strGridEditCtl7;
+      
+      View vGrid4;
+      vGrid4 = mSubLC.newView( );
+      csrRC2 = vGrid4.cursor( "S_InsertTextMarketing" ).setFirst( "S_MarketingStatement" );
+      while ( csrRC2.isSet() )
+      {
+         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
+         iTableRowCnt++;
+
+         lEntityKey = vGrid4.cursor( "S_InsertTextMarketing" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         strButtonName = "SelectButton" + strEntityKey;
+
+         strGridEditCtl6 = "";
+         nRC = vGrid4.cursor( "S_InsertTextKeywordMarketing" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strGridEditCtl6 = vGrid4.cursor( "S_InsertTextKeywordMarketing" ).getAttribute( "Name" ).getString( "" );
+
+            if ( strGridEditCtl6 == null )
+               strGridEditCtl6 = "";
+         }
+
+         if ( StringUtils.isBlank( strGridEditCtl6 ) )
+            strGridEditCtl6 = "&nbsp";
+
+         strGridEditCtl7 = "";
+         nRC = vGrid4.cursor( "S_InsertTextMarketing" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strGridEditCtl7 = vGrid4.cursor( "S_InsertTextMarketing" ).getAttribute( "Text" ).getString( "" );
+
+            if ( strGridEditCtl7 == null )
+               strGridEditCtl7 = "";
+         }
+
+         if ( StringUtils.isBlank( strGridEditCtl7 ) )
+            strGridEditCtl7 = "&nbsp";
+
+%>
+
+<tr<%=strOdd%>>
+
+   <td><%=strGridEditCtl6%></td>
+   <td><%=strGridEditCtl7%></td>
+
+</tr>
+
+<%
+         csrRC2 = vGrid4.cursor( "S_InsertTextMarketing" ).setNextContinue( );
+      }
+      vGrid4.drop( );
+   }
 }
 catch (Exception e)
 {

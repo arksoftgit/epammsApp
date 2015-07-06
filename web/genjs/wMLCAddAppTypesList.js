@@ -189,7 +189,7 @@ function _AfterPageLoaded( )
    thisLi.disabled = true;
    // END of Javascript code entered by user.
 
-   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title + "%" ); }
+   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
 }
 

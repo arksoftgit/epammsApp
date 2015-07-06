@@ -9,6 +9,7 @@ $(function() {
    var g_$current_block = null;
    var g_selected_first = null;
    var g_selected_list = [];
+   var g_click_list = [];
    var g_undo_list = [];
    var g_generateTag = 100;
    var g_xOffset = 0;
@@ -20,7 +21,7 @@ $(function() {
    var g_scale = 1;
    var g_pixelsPerInch = 81;
    var g_pixelsBorder = 2;
-   
+
    var g_scrollbar = null;
    var g_windowHeight = -1;
    var g_windowWidth = -1;
@@ -31,7 +32,7 @@ $(function() {
 
    var g_metaVersion = "";
    var g_metaDate = "";
-   
+
    var g_jsonColors = [];
    var g_jsonBlockTags = [];
 // var g_jsonLabel2;
@@ -102,7 +103,7 @@ $(function() {
       if ( $element.hasClass( "panel" ) ) {
          path += "Panel.";
       } else {
-         path += "Block."; 
+         path += "Block.";
       }
       path += $element.attr( "id" ) + ";";
       return path;
@@ -168,7 +169,7 @@ $(function() {
          if ( callback ) {
             callback();
         }
-      }      
+      }
    }
 
    function returnCallback() {
@@ -176,7 +177,7 @@ $(function() {
    }
 
    $("#Return").click( function() {
-      if ( g_updatedLLD ) {      
+      if ( g_updatedLLD ) {
          saveLabel( "", returnCallback );
          g_updatedLLD = false;
       } else {
@@ -286,31 +287,14 @@ $(function() {
          alert( "Update panel via tools" );
       }
    });
-   
+
+   // Click on canvas elements
    $("body").on( "click", ".canvas-element", function(e) {
-   // console.log( "Click on canvas-element: " + this.id + " has been pressed!" );
+      console.log( "Click on canvas-element: " + this.id + " has been pressed!" );
       if ( g_selected_first === null || e.ctrlKey === false ) {
-         var el = this;
-      // displayElementData( "on click: ", $(el) );
-         if ( g_selected_first ) { // try to select up through parentage
-            var parent_array = $(this).parents( ".canvas-element" );
-            var found = false;
-            for ( var k = 0; k < parent_array.length; k++ ){
-               if ( parent_array[k] === g_selected_first ) {
-                  if ( k < parent_array.length - 1 ) {
-                     el = parent_array[k + 1];
-                  } else {
-                     el = this;
-                  }
-                  found = true;
-                  break;
-               }
-            }
-            if ( found === false && parent_array.length > 0 && g_selected_first === this ) {
-               el = parent_array[0];
-            }
-         }
-         setCurrentBlockData( $(el), "on click" );
+         var $el = determineTargetOfSelect( event, g_$current_block, $(this) );
+         setCurrentBlockData( $el, "on click" );
+         var el = $el[0];
          clearListAndSelection( el ); // clear the list and set current selection
          updatePositionStatus( el, el.offsetTop, el.offsetLeft, "Start yOffset" );
          updateSizeStatus( el, el.offsetHeight, el.offsetWidth, "Start yOffset" );
@@ -368,7 +352,7 @@ $(function() {
    // return false;  // prevent propagation, otherwise the click will be passed on to any element underneath the accordion
    });
 
-   // Here is the complete order of events per drag and drop interaction: 
+   // Here is the complete order of events per drag and drop interaction:
    // draginit > dropinit > dragstart > drag > dropstart > drop > dropend > dragend
    // getter for zIndex:  var zIndex = $(".selector").draggable( "option", "zIndex" );
    // setter for zIndex:  $(".selector").draggable( "option", "zIndex", 100 );
@@ -380,8 +364,8 @@ $(function() {
       cursor: "move",
       start: function( event, ui ) {
       // alert("Top: " +  $(this).offset().top);
-      // console.log( "draggable start ui: " + ui );
-      // console.log(ui.draggable);
+         console.log( "draggable start ui: " + ui );
+         console.log(ui.draggable);
       // $(this).css( "z-index", 10 );
       // drag_zIndex = $(this).draggable( "option", "zIndex" );
       // $(this).draggable( "option", "zIndex", 100 );
@@ -419,15 +403,15 @@ $(function() {
          updateSizeStatus( $(this), $(this).height(), $(this).width(), "Start yDragPanel" );
       },
       drag: function( event, ui ) {
-      // console.log( "Drag yDragPanel: " + Math.round( ui.offset.top - g_yOffset ).toString() + "  xDragPanel: " + Math.round( ui.offset.left - g_xOffset ).toString() );
+         console.log( "Drag yDragPanel: " + Math.round( ui.offset.top - g_yOffset ).toString() + "  xDragPanel: " + Math.round( ui.offset.left - g_xOffset ).toString() );
          updatePositionStatus( $(this), ui.offset.top - g_yOffset, ui.offset.left - g_xOffset, "Drag yDragPanel" );
       },
       stop: function( event, ui ) {
       // $(this).draggable( "option", "zIndex", drag_zIndex );
       // $(this).css( "z-index", 0 );
       // updatePositionStatus( $(this), ui.offset.top - yOffset, ui.offset.left - xOffset );
-      // console.log( "Stop yDrag: " + Math.round( ui.offset.top - g_yOffset ).toString() + "  xDrag: " + Math.round( ui.offset.left - g_xOffset ).toString() );
-      // console.log( "Scroll #label top: " + $("#label").scrollTop() + "   left: " + $("#label").scrollLeft() );
+         console.log( "Stop yDrag: " + Math.round( ui.offset.top - g_yOffset ).toString() + "  xDrag: " + Math.round( ui.offset.left - g_xOffset ).toString() );
+         console.log( "Scroll #label top: " + $("#label").scrollTop() + "   left: " + $("#label").scrollLeft() );
       // $(this).data( "z_^top", Math.round( ui.offset.top - yOffset ).toString() );    not right ... done later
       // $(this).data( "z_^left", Math.round( ui.offset.left - xOffset ).toString() );  not right ... done later
       // setCurrentBlockData( $(this), "updated 1" );
@@ -459,12 +443,12 @@ $(function() {
          // drag_zIndex = $canvasElement.draggable( "option", "zIndex" );
          // $canvasElement.draggable( "option", "zIndex", 100 );
          // $target.css( "z-index", 10 );
-         // console.log( "Start yOffset: " + $canvasElement[0].offsetTop + "  xOffset: " + $canvasElement[0].offsetLeft );
+            console.log( "Start yOffset: " + $canvasElement[0].offsetTop + "  xOffset: " + $canvasElement[0].offsetLeft );
             updatePositionStatus( $canvasElement[0], $canvasElement[0].offsetTop, $canvasElement[0].offsetLeft, "Start yOffset" );
             updateSizeStatus( $canvasElement[0], $canvasElement[0].offsetHeight, $canvasElement[0].offsetWidth, "Start yOffset" );
          },
          drag: function( event, ui ) {
-         // console.log( "Drag yOffset: " + $canvasElement[0].offsetTop + "  xOffset: " + $canvasElement[0].offsetLeft );
+            console.log( "Drag yOffset: " + $canvasElement[0].offsetTop + "  xOffset: " + $canvasElement[0].offsetLeft );
             updatePositionStatus( $canvasElement[0], $canvasElement[0].offsetTop, $canvasElement[0].offsetLeft, "Drag yOffset" );
          },
          stop: function( event, ui ) {
@@ -485,16 +469,16 @@ $(function() {
       $canvasElement.resizable({
          containment: "#page",
          start: function( event, ui ) { // alert("Top: " +  $target.offset().top);
-         // console.log( "Start yResize: " + $canvasElement[0].offsetHeight + "  xResize: " + $canvasElement[0].offsetWidth );
+            console.log( "Start yResize: " + $canvasElement[0].offsetHeight + "  xResize: " + $canvasElement[0].offsetWidth );
             updatePositionStatus( $canvasElement[0], $canvasElement[0].offsetTop, $canvasElement[0].offsetLeft, "Start yResize" );
             updateSizeStatus( $canvasElement[0], $canvasElement[0].offsetHeight, $canvasElement[0].offsetWidth, "Start yResize" );
          },
          resize: function( event, ui ) {
-         // console.log( "Resize yResize: " + $canvasElement[0].offsetHeight + "  xResize: " + $canvasElement[0].offsetWidth );
+            console.log( "Resize yResize: " + $canvasElement[0].offsetHeight + "  xResize: " + $canvasElement[0].offsetWidth );
             updateSizeStatus( $canvasElement[0], $canvasElement[0].offsetHeight, $canvasElement[0].offsetWidth, "Resize yResize" );
          },
          stop: function( event, ui ) {
-         // console.log( "Stop yResize: " + $canvasElement[0].offsetHeight + "  xResize: " + $canvasElement[0].offsetWidth );
+            console.log( "Stop yResize: " + $canvasElement[0].offsetHeight + "  xResize: " + $canvasElement[0].offsetWidth );
             g_updatedLLD = true;
             var scale = g_pixelsPerInch * g_scale;
             $canvasElement.data( "z_^height", (($canvasElement[0].offsetHeight) / scale).toFixed( 3 ) );
@@ -653,6 +637,200 @@ $(function() {
    }
 */
 
+/* Fairly certain we don't need this ... it is taken care of in "Click on canvas elements"
+   $("div").on( "mousedown", ".block-element", function( event ) {
+      console.log( "mousedown, .block-element" );
+      if ( event.button === 0 ) {  // left button
+         mapUiDataToElementData( g_$current_block );
+         g_$current_block = $el;
+         $("#zBlockTag").val( $el.attr( "id" ) );
+         mapElementDataToUiData( g_$current_block );
+         return false;  // prevent default propagation
+      }
+   });
+*/
+
+   function getPossibleTargetsList( clickX, clickY ) {
+      var $list;
+      var offset;
+      var range;
+      var $body = $('body').parents().addBack();
+
+      $list = $('body *').filter( function() {
+        offset = $(this).offset();
+        range = {
+            x: [offset.left, offset.left + $(this).outerWidth()],
+            y: [offset.top, offset.top + $(this).outerHeight()]
+        };
+
+        return (clickX >= range.x[0] && clickX <= range.x[1]) && (clickY >= range.y[0] && clickY <= range.y[1]);
+      });
+
+      $list = $list.add($body);
+      var list = $list.map( function() {
+         if ( this.nodeName === "DIV" && this.id !== null && this.id !== "label" &&
+              this.id !== "zcontainer" && this.id.indexOf( "ui-accordion" ) < 0 &&
+              this.classList.contains( "ui-draggable-dragging") === false ) {
+            return $(this); //.nodeName + ' ' + this.className + '  id: ' + this.id;
+         }
+      }).get();
+
+      return list;
+   }
+
+   // attach the .equals method to Array's prototype to call it on any array
+   function compareTargetArrays( array1, array2 ) {
+      // if the other array is a falsy value, return
+      if ( !array1 || !array2 ) {
+         return false;
+      }
+      if ( array1 instanceof Array && array2 instanceof Array ) {
+         // compare lengths - can save a lot of time 
+         if ( array1.length !== array2.length )
+            return false;
+
+         for ( var k = 0; k < array1.length; k++ ) {
+            // Check if we have nested arrays
+            if ( array1[k] instanceof Object && array2[k] instanceof Object ) {
+               if ( array1[k][0].id !== array2[k][0].id )
+                  return false;       
+            }                 
+         }       
+         return true;
+      }
+      return false;
+   }
+
+   function determineTargetOfSelect( event, $lastSelect, $currentSelect ) {
+      var clickX = event.pageX;
+      var clickY = event.pageY;
+      var list = getPossibleTargetsList( clickX, clickY );
+
+   // console.log( "List possible targets: " + list );
+      var $el;
+      var elHeight;
+      var elWidth;
+      var contain_list = [];
+      var k;
+      for ( k = 0; k < list.length; k++ ) {
+         $el = list[k];
+         if ( $el.hasClass( "block" ) ) {   // clicked element is either a block or a panel
+            elHeight = Math.round( $el.height() );
+            elWidth = Math.round( $el.width() );
+            if ( clickY >= Math.round( $el.offset().top ) && clickX >= Math.round( $el.offset().left ) &&  // new element within clicked element boundaries
+                 clickY < Math.round( $el.offset().top ) + elHeight &&
+                 clickX < Math.round( $el.offset().left ) + elWidth ) {
+               contain_list.push( $el );
+            }
+         }
+      }
+
+      console.log( "List possible targets: " + contain_list );
+      if ( compareTargetArrays( g_click_list, contain_list ) ) {
+         $el = null;
+         for ( k = 0; k < g_click_list.length; k++ ) {
+            if ( $lastSelect === g_click_list[k] ) {
+               if ( k < g_click_list.length - 1 ) {
+                  $el = g_click_list[k + 1];
+                  break;
+               }
+            }
+         }
+         if ( $el === null ) {
+            $el = g_click_list[0];
+         }
+      } else {
+         g_click_list = contain_list;
+         $el = null;
+      }
+
+      if ( $el === null ) {
+         $el = $currentSelect;
+      }
+      console.log( "Target of select: " + $el[0].id );
+      return $el;
+   }
+
+   function determineTargetOfDrop( event, $parent, $canvasElement ) {
+      if ( $canvasElement.hasClass( "panel" ) ) {
+         return $("#page");
+      }
+
+      var $target = $parent;
+      var clickX = event.pageX;
+      var clickY = event.pageY;
+      var list = getPossibleTargetsList( clickX, clickY );
+
+   // console.log( "List: " + list );
+      var ceTop = Math.round( $canvasElement.offset().top );
+      var ceLeft = Math.round( $canvasElement.offset().left );
+      var ceHeight = Math.round( $canvasElement.height() - g_pixelsBorder ); // account for border
+      var ceWidth = Math.round( $canvasElement.width() - g_pixelsBorder ); // account for border
+   // var tgtTop = $target.offset().top;
+   // var tgtLeft = $target.offset().left;
+      var tgtHeight = Math.round( $target.height() );
+      var tgtWidth = Math.round( $target.width() );
+      var $el;
+      var elHeight;
+      var elWidth;
+
+      if ( ceTop === 0 && ceLeft === 0 ) {
+         ceTop = clickY;
+         ceLeft = clickX;
+      }
+
+      var contain_list = [];
+      var parents = [];
+      var k;
+      for ( k = 0; k < list.length; k++ ) {
+         $el = list[k];
+         if ( $el.parents("div#page").length && $el.is(":visible") ) {   // clicked element has div#page as parent
+            elHeight = Math.round( $el.height() );
+            elWidth = Math.round( $el.width() );
+
+            if ( elHeight < tgtHeight && elWidth < tgtWidth &&  // clicked element is smaller than current target
+                 ceTop >= Math.round( $el.offset().top ) && ceLeft >= Math.round( $el.offset().left ) &&  // new element within clicked element boundaries
+                 ceTop + ceHeight < Math.round( $el.offset().top ) + elHeight &&
+                 ceLeft + ceWidth < Math.round( $el.offset().left ) + elWidth ) {
+               contain_list.push( $el );
+            }
+         }
+      }
+
+      // Now look for the "deepest" (childmost) target.
+      if ( contain_list.length > 0 ) {
+         $target = contain_list[0];
+         for ( k = 1; k < contain_list.length; k++ ) {
+            $el = contain_list[k];
+            parents = $el.parents( "div.canvas-element" );
+            if ( $.inArray( $target, parents ) ) {
+               $target = $el;
+            }
+         }
+      }
+      if ( $canvasElement.hasClass( "reusable" ) ) {
+         var stopLoop = 0;
+         while ( $target.parent()[0].id !== "label" && stopLoop < 40 ) {
+            if ( $target.hasClass( "panel" ) ) {
+               break;
+            }
+            $target = $target.parent();
+         }
+      }
+   // console.log( "Target of drop: " + $target[0].id );
+      return $target;
+   }
+
+/*
+   $("body").on( "click", "div.ui-draggable", function() {
+      mapUiDataToElementData( $current_block );
+      $current_block = $(this);
+      $("#zBlockTag").val( $(this).attr( "id" ) );
+      mapElementDataToUiData( $current_block );
+      return false;  // prevent default propagation
+   });
+*/
+
    // this scales pixels with respect to the current zoom
    function pixel2Scale( attr ) {
       if ( g_scale === 1 ) {
@@ -696,7 +874,7 @@ $(function() {
          pixels = 0;
       }
    // console.log( "inch2px attr: " + attr + "  px: " + pixels );
-      return( pixels + "px" );      
+      return( pixels + "px" );
    }
 
    // this is used to get the number of pixels from the inches value respecting to scale
@@ -908,7 +1086,7 @@ $(function() {
                }
             }
             $("#zBlockFormatType")
-               .find('option:not(:first)') // wipe out all but the first options
+               .find('option:not(:first)') // wipe out all but the first option
                .remove()
                .end() // terminate the remove - pop up one level of the caller stack (to get to the combobox reference)
                .append(options)
@@ -968,26 +1146,6 @@ $(function() {
       return false;  // prevent default propagation
    });
 
-   $("div").on( "mousedown", ".block-element", function( event ) {
-   // console.log( "mousedown, .block-element" );
-      if ( event.button === 0 ) {  // left button
-         mapUiDataToElementData( g_$current_block );
-         g_$current_block = $(this);
-         $("#zBlockTag").val( $(this).attr( "id" ) );
-         mapElementDataToUiData( g_$current_block );
-         return false;  // prevent default propagation
-      }
-   });
-
-/*
-   $("body").on( "click", "div.ui-draggable", function() {
-      mapUiDataToElementData( $current_block );
-      $current_block = $(this);
-      $("#zBlockTag").val( $(this).attr( "id" ) );
-      mapElementDataToUiData( $current_block );
-      return false;  // prevent default propagation
-   });
-*/
    function getBackgroundColorForDepth( depth ) {
       if ( depth <= 0 )
          depth = 1;
@@ -1033,99 +1191,6 @@ $(function() {
       for ( var k = 0; k < list.length; k++ ) {
          setChildrenDepth( $child, list[k] );
       }
-   }
-
-   function determineTargetOfDrop( event, $parent, $canvasElement ) {
-      var clickX = event.pageX;
-      var clickY = event.pageY;
-      var $list;
-      var offset;
-      var range;
-      var $body = $('body').parents().addBack();
-      if ( $canvasElement.hasClass( "panel" ) ) {
-         $target = $("#page");
-         return $target;
-      }
-
-      $list = $('body *').filter( function() {
-        offset = $(this).offset();
-        range = {
-            x: [offset.left, offset.left + $(this).outerWidth()],
-            y: [offset.top, offset.top + $(this).outerHeight()]
-        };
-
-        return (clickX >= range.x[0] && clickX <= range.x[1]) && (clickY >= range.y[0] && clickY <= range.y[1]);
-      });
-
-      $list = $list.add($body);
-
-      var list = $list.map( function() {
-         if ( this.nodeName === "DIV" && this.id !== null && this.id !== "label" &&
-              this.id !== "zcontainer" && this.id.indexOf( "ui-accordion" ) < 0 &&
-              this.classList.contains( "ui-draggable-dragging") === false ) {
-            return $(this); //.nodeName + ' ' + this.className + '  id: ' + this.id;
-         }
-      }).get();
-
-   // console.log( "List: " + list );
-      var $target = $parent;
-      var ceTop = Math.round( $canvasElement.offset().top );
-      var ceLeft = Math.round( $canvasElement.offset().left );
-      var ceHeight = Math.round( $canvasElement.height() - g_pixelsBorder ); // account for border
-      var ceWidth = Math.round( $canvasElement.width() - g_pixelsBorder ); // account for border
-   // var tgtTop = $target.offset().top;
-   // var tgtLeft = $target.offset().left;
-      var tgtHeight = Math.round( $target.height() );
-      var tgtWidth = Math.round( $target.width() );
-      var $el;
-      var elHeight;
-      var elWidth;
-
-      if ( ceTop === 0 && ceLeft === 0 ) {
-         ceTop = clickY;
-         ceLeft = clickX;
-      }
-
-      var contain_list = [];
-      var parents = [];
-      var k;
-      for ( k = 0; k < list.length; k++ ) {
-         $el = list[k];
-         if ( $el.parents("div#page").length && $el.is(":visible") ) {   // clicked element has div#page as parent
-            elHeight = Math.round( $el.height() );
-            elWidth = Math.round( $el.width() );
-
-            if ( elHeight < tgtHeight && elWidth < tgtWidth &&  // clicked element is smaller than current target
-                 ceTop >= Math.round( $el.offset().top ) && ceLeft >= Math.round( $el.offset().left ) &&  // new element within clicked element boundaries
-                 ceTop + ceHeight < Math.round( $el.offset().top ) + elHeight &&
-                 ceLeft + ceWidth < Math.round( $el.offset().left ) + elWidth ) {
-               contain_list.push( $el );
-            }
-         }
-      }
-
-      // Now look for the "deepest" (childmost) target.
-      if ( contain_list.length > 0 ) {
-         $target = contain_list[0];
-         for ( k = 1; k < contain_list.length; k++ ) {
-            $el = contain_list[k];
-            parents = $el.parents( "div.canvas-element" );
-            if ( $.inArray( $target, parents ) ) {
-               $target = $el;
-            }
-         }
-      }
-      if ( $canvasElement.hasClass( "reusable" ) ) {
-         var stopLoop = 0;
-         while ( $target.parent()[0].id !== "label" && stopLoop < 40 ) {
-            if ( $target.hasClass( "panel" ) ) {
-               break;
-            }
-            $target = $target.parent();
-         }
-      }
-   // console.log( "Target of drop: " + $target[0].id );
-      return $target;
    }
 
    function getUniqueId() {
@@ -1370,7 +1435,7 @@ $(function() {
       // console.log( "scaled block top attribute: " + $(this).val() + " ==> " + top );
           g_$current_block.css({ top : top });
       });
-   
+
    $("#zBlockLeft")
       .blur( function () {
          var left = pixel2Scale( inch2px( $(this).val(), 0 ) );
@@ -1379,7 +1444,7 @@ $(function() {
       // console.log( "scaled block left attribute: " + $(this).val() + " ==> " + left );
          g_$current_block.css({ left : left });
       });
-   
+
    $("#zBlockHeight")
       .blur( function () {
          var height = pixel2Scale( inch2px( $(this).val(), 4 ) ); // 2*g_pixelsBorder
@@ -1388,7 +1453,7 @@ $(function() {
       // console.log( "scaled block height attribute: " + $(this).val() + " ==> " + height );
          g_$current_block.css({ height : height });
       });
-   
+
    $("#zBlockWidth")
       .blur( function () {
          var width = pixel2Scale( inch2px( $(this).val(), 4 ) ); // 2*g_pixelsBorder
@@ -1438,7 +1503,7 @@ $(function() {
          });
       });
 */
-   
+
    $("input.zeidon, select.zeidon, input.zeidon-special, select.zeidon-special")
       .change( function(e) {
          e.stopPropagation();
@@ -1465,7 +1530,7 @@ var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
          var sectionType = g_$current_block.data( "z_^l^l^d_^section^type" );
          if ( sectionType ) {
          // displayElementData( "mapToSpecialBlockFromBlock Before", g_$current_block );
-            
+
             var entityAttr;
             var n;
             var entity;
@@ -1487,12 +1552,12 @@ var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
                   }
                }
             });
-            
+
             var section = zeidonAttributeToKey( sectionType ) + "." + currentType + ".";
             $.each( g_BlockAttrList, function( index, attributeName ) {
                var specialBlockAttribute = section + attributeName;
             // console.log( "ToSpecial: " + attributeName + "  to: " + specialBlockAttribute + "  current: " + g_$current_block.data( attributeName ) );
-               g_$current_block.data( specialBlockAttribute, g_$current_block.data( attributeName ) ); 
+               g_$current_block.data( specialBlockAttribute, g_$current_block.data( attributeName ) );
                g_$current_block.data( attributeName, "" );
             });
          // displayElementData( "mapToSpecialBlockFromBlock After", g_$current_block );
@@ -1510,7 +1575,7 @@ var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
             $.each( g_BlockAttrList, function( index, attributeName ) {
                var specialBlockAttribute = section + attributeName;
             // console.log( "FromSpecial: " + attributeName + "  from: " + specialBlockAttribute + "  current: " + g_$current_block.data( specialBlockAttribute ) );
-               g_$current_block.data( attributeName, g_$current_block.data( specialBlockAttribute ) ); 
+               g_$current_block.data( attributeName, g_$current_block.data( specialBlockAttribute ) );
                g_$current_block.data( specialBlockAttribute, "" );
             });
 
@@ -1784,7 +1849,7 @@ function ConvertWysiwygLabelDesignToZeidonJson( action, viewName, callback_func,
          }
       }
    } else if ( action === "applyReusableBlock" ) {
-      reuseBlockName = $("#zReusableBlocks").val();  
+      reuseBlockName = $("#zReusableBlocks").val();
    }
    var jsonLabel = GetCurrentLabel();
    if ( jsonString === null ) {
@@ -1821,7 +1886,7 @@ function ConvertWysiwygLabelDesignToZeidonJson( action, viewName, callback_func,
          });
       } catch(e) {
          alert( "Could not load OI: " + viewName + "\n" + e.message );
-      } finally { // TODO:  this should not be done here ... it happens way too early ... the success/error/complete function? should do it 
+      } finally { // TODO:  this should not be done here ... it happens way too early ... the success/error/complete function? should do it
          g_$current_block = null;
 
          // TODO: display the label/page/block properties
@@ -1835,7 +1900,7 @@ function ConvertWysiwygLabelDesignToZeidonJson( action, viewName, callback_func,
    $ZoomSpinner.spinner( "option", "page", 0.5 );
    $ZoomSpinner.spinner( "option", "numberFormat", "n.n" );
    $ZoomSpinner[0].readOnly = true;  // prevent invalid input
- 
+
     // Handle the Spinner change event.
    $ZoomSpinner.on( "spinstop", function( event, ui ) {
       g_scale = $ZoomSpinner.spinner( "value" );
@@ -1908,7 +1973,7 @@ public class FileClient {
         bos.flush();
         bos.close();
     }
-} 
+}
 */
 
 /* FTP Server
@@ -1974,7 +2039,7 @@ public class FileServer {
         bos.flush();
         bos.close();
     }
-} 
+}
 */
    function CaptureZeidonLabelJsonFromDomJson( jsonDom ) {
    // var jsonObj = eval( "[" + json + "]" );
@@ -2008,7 +2073,7 @@ public class FileServer {
          jsonObj = null;
          jsonLabel = "";
       } finally {
-         if ( jsonObj ) { 
+         if ( jsonObj ) {
             g_ViewNameMap.setNameForView( jsonObj, "LLD_New" );
          } else {
          // g_ViewNameMap.dropNameForView( jsonObj, "LLD_New" );
@@ -2867,7 +2932,7 @@ public class FileServer {
       dropOnEmpty: false
    });
 
- /*  
+ /*
    $("#zLLD_LoadRegisteredViews").click( function() {
       var name = $("#zLLD_Name").val();
       if ( name === "" ) {
@@ -3231,7 +3296,7 @@ public class FileServer {
          <div id="zheader" style="display: block; font-size: 1em; font-weight: bold;">
             Label Designer&nbsp;&nbsp;&nbsp;&nbsp;
             <div id="ztoolbar" class="ui-widget-header ui-corner-all">
-               ...  
+               ...
             </div> // ztoolbar
             <img src="./images/epamms.jpg" height="25" width="64" alt="ePamms" style="margin:5px; float:right; border-style:double;">
          </div> // zheader
@@ -3243,7 +3308,7 @@ public class FileServer {
             </div> // label
             <div id="zmenu" name="zmenu" class="toggler" style="background-color:#00D7FF;top:0px;height:9in;width:3.5in;float:right;position:absolute;">   // without position:relative, clone position is off
                <div id="zaccordion" name="zaccordion" style="margin-left:0;padding-left:0">
-                  ...            
+                  ...
                </div> // zaccordion
             </div> // zmenu
          </div> // pagemenu
@@ -3304,7 +3369,7 @@ public class FileServer {
                extent = space;
             }
          });
-         
+
          // we've gotten dimensions ... now determine amount of space between each element
          space = (extent - used) / el_array.length - 1;
          el_array.forEach( function( item ) {
@@ -3546,75 +3611,41 @@ public class FileServer {
       initColorPicker( '#zPageColor', colors, names, lth );
    }
 
+   function xx( $select ) {
+      $.each(opt, function(key, value){
+           var $group = $('<optgroup label="' + key + '" />');
+           $.each(value, function(){
+               $('<option />').html(this.name).appendTo($group);
+           });
+           $group.appendTo($select);
+       });
+   }
+
    function setReusableBlocks( jsonReusable )
    {
       if ( $.isArray( jsonReusable ) ) {
-         var list = $("#zReusableBlocks");
-         list.find('option:not(:first)').remove(); // wipe out all but the first options
-         $.each(jsonReusable, function(index, item) {
-            list.append( new Option( item.Name, item.LLD_SectionType + " " + item.Name + " " + item.Description ) );
+         var $select = $("#zReusableBlocks");
+         $select.children().remove("optgroup");
+         $select.find('option:not(:first)').remove(); // wipe out all but the first option
+      // $select.find('optgroup:not(:first)').remove(); // wipe out all but the first optgroup
+         var sectionType = "";
+         var $optgroup = null;
+         $.each( jsonReusable, function( index, item ) {
+            if ( item.LLD_SectionType !== sectionType ) {
+               if ( $optgroup !== null ) {
+                  $optgroup.appendTo( $select );
+               }
+               $optgroup = $('<optgroup label="' + item.LLD_SectionType + '"></optgroup>');
+            }
+            var $option = $("<option></option>");
+            $option.val( item.Name );
+            $option.text( item.Name + ":" + item.Description );
+            $optgroup.append( $option );
          });
+         if ( $optgroup !== null ) {
+            $optgroup.appendTo( $select );
+         }
       }
-      
-/*      
-      <h2><a name="optgroup-support" class="anchor" href="#optgroup-support">&lt;optgroup&gt; Support</a></h2>
-      <div class="side-by-side clearfix">
-        <div>
-          <em>Single Select with Groups</em>
-          <select data-placeholder="Your Favorite Football Team" style="width:350px;" class="chosen-select" tabindex="5">
-            <option value=""></option>
-            <optgroup label="NFC EAST">
-              <option>Dallas Cowboys</option>
-              <option>New York Giants</option>
-              <option>Philadelphia Eagles</option>
-              <option>Washington Redskins</option>
-            </optgroup>
-            <optgroup label="NFC NORTH">
-              <option>Chicago Bears</option>
-              <option>Detroit Lions</option>
-              <option>Green Bay Packers</option>
-              <option>Minnesota Vikings</option>
-            </optgroup>
-            <optgroup label="NFC SOUTH">
-              <option>Atlanta Falcons</option>
-              <option>Carolina Panthers</option>
-              <option>New Orleans Saints</option>
-              <option>Tampa Bay Buccaneers</option>
-            </optgroup>
-            <optgroup label="NFC WEST">
-              <option>Arizona Cardinals</option>
-              <option>St. Louis Rams</option>
-              <option>San Francisco 49ers</option>
-              <option>Seattle Seahawks</option>
-            </optgroup>
-            <optgroup label="AFC EAST">
-              <option>Buffalo Bills</option>
-              <option>Miami Dolphins</option>
-              <option>New England Patriots</option>
-              <option>New York Jets</option>
-            </optgroup>
-            <optgroup label="AFC NORTH">
-              <option>Baltimore Ravens</option>
-              <option>Cincinnati Bengals</option>
-              <option>Cleveland Browns</option>
-              <option>Pittsburgh Steelers</option>
-            </optgroup>
-            <optgroup label="AFC SOUTH">
-              <option>Houston Texans</option>
-              <option>Indianapolis Colts</option>
-              <option>Jacksonville Jaguars</option>
-              <option>Tennessee Titans</option>
-            </optgroup>
-            <optgroup label="AFC WEST">
-              <option>Denver Broncos</option>
-              <option>Kansas City Chiefs</option>
-              <option>Oakland Raiders</option>
-              <option>San Diego Chargers</option>
-            </optgroup>
-          </select>
-        </div>
-*/
-      
    }
 
    function setMarketing( jsonMarketing )
@@ -3649,7 +3680,7 @@ public class FileServer {
    $("#showtools").prop( "checked", show );
    runSlideToolsEffect( show );
 
-   var active = parseInt( localStorage.getItem( "epamms_graphic_accordion" ) ); 
+   var active = parseInt( localStorage.getItem( "epamms_graphic_accordion" ) );
    $("#zaccordion").accordion( "option", "active", active );
 
    var g_scale = parseFloat( localStorage.getItem( "epamms_graphic_spinstop" ) );
@@ -3703,7 +3734,7 @@ assignToDiv();
    // cannot get physical dimensions of screen.
    function getPPI() {
       if ( g_ppiX === -1 || g_ppiY === -1 ) {
-         var DOM_body = document.getElementsByTagName( 'body' )[0];	
+         var DOM_body = document.getElementsByTagName( 'body' )[0];
          var DOM_divI = document.createElement( 'div' );
       // var DOM_divM = document.createElement( 'div' );
          DOM_divI.style.height = "1in";

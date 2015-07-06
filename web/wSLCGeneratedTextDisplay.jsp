@@ -35,6 +35,7 @@ public int DoInputMapping( HttpServletRequest request,
    String taskId = (String) session.getAttribute( "ZeidonTaskId" );
    Task task = objectEngine.getTaskById( taskId );
 
+   View mSubLC = null;
    View vGridTmp = null; // temp view to grid view
    View vRepeatingGrp = null; // temp view to repeating group view
    String strDateFormat = "";
@@ -55,6 +56,30 @@ public int DoInputMapping( HttpServletRequest request,
 
    if ( webMapping == false )
       session.setAttribute( "ZeidonError", null );
+
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) )
+   {
+      // MLEdit: MLEdit3
+      nRC = mSubLC.cursor( "SubregLabelContent" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "MLEdit3" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "MLEdit3", "", strMapValue );
+            else
+               mSubLC.cursor( "SubregLabelContent" ).getAttribute( "wGeneratedTextDisplay" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "MLEdit3", e.getReason( ), strMapValue );
+         }
+      }
+
+   }
 
    if ( webMapping == true )
       return 2;
@@ -519,6 +544,39 @@ else
 <tr>
 <td valign="top" style="width:754px;">
 <% /* MLEdit3:MLEdit */ %>
+<%
+   // MLEdit: MLEdit3
+   strErrorMapValue = VmlOperation.CheckError( "MLEdit3", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mSubLC = task.getViewByName( "mSubLC" );
+      if ( VmlOperation.isValid( mSubLC ) == false )
+         task.log( ).debug( "Invalid View: " + "MLEdit3" );
+      else
+      {
+         nRC = mSubLC.cursor( "SubregLabelContent" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strErrorMapValue = mSubLC.cursor( "SubregLabelContent" ).getAttribute( "wGeneratedTextDisplay" ).getString( "" );
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "SubregLabelContent.wGeneratedTextDisplay: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for MLEdit3: " + "mSubLC.SubregLabelContent" );
+      }
+   }
+%>
+
+<textarea id="MLEdit3" name="MLEdit3" class="" style="width:754px;height:116px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+
 </td>
 </tr>
 </table>

@@ -3270,22 +3270,22 @@ omSubLC_RefreshSLC_FromMLC( View     mSubLC,
 
 
 //:TRANSFORMATION OPERATION
+//:BuildWorkVariables( VIEW mSubLC BASED ON LOD mSubLC,
+//:                    VIEW mMasLC BASED ON LOD mMasLC )
+
+//:   INTEGER ID
 public int 
 omSubLC_BuildWorkVariables( View     mSubLC,
                             View     mMasLC )
 {
+   int      ID = 0;
    int      RESULT = 0;
    int      lTempInteger_0 = 0;
    int      lTempInteger_1 = 0;
+   String   szTempString_0 = null;
    int      lTempInteger_2 = 0;
    int      lTempInteger_3 = 0;
-   int      lTempInteger_4 = 0;
-   String   szTempString_0 = null;
-   int      lTempInteger_5 = 0;
-   int      lTempInteger_6 = 0;
 
-   //:BuildWorkVariables( VIEW mSubLC BASED ON LOD mSubLC,
-   //:                 VIEW mMasLC BASED ON LOD mMasLC )
 
    //:// Build any work variable for the mSubLC.
 
@@ -3295,43 +3295,49 @@ omSubLC_BuildWorkVariables( View     mSubLC,
    RESULT = SetCursorFirstEntity( mSubLC, "S_DirectionsForUseSection", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
+      //:ID = mSubLC.S_DirectionsForUseSection.PrimaryMLC_ID
+      {MutableInt mi_ID = new MutableInt( ID );
+             GetIntegerFromAttribute( mi_ID, mSubLC, "S_DirectionsForUseSection", "PrimaryMLC_ID" );
+      ID = mi_ID.intValue( );}
       //:SET CURSOR FIRST mMasLC.M_DirectionsForUseSection 
-      //:           WHERE mMasLC.M_DirectionsForUseSection.ID = mSubLC.S_DirectionsForUseSection.PrimaryMLC_ID 
-      {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
-             GetIntegerFromAttribute( mi_lTempInteger_0, mSubLC, "S_DirectionsForUseSection", "PrimaryMLC_ID" );
-      lTempInteger_0 = mi_lTempInteger_0.intValue( );}
-      RESULT = SetCursorFirstEntityByInteger( mMasLC, "M_DirectionsForUseSection", "ID", lTempInteger_0, "" );
+      //:           WHERE mMasLC.M_DirectionsForUseSection.ID = ID 
+      RESULT = SetCursorFirstEntityByInteger( mMasLC, "M_DirectionsForUseSection", "ID", ID, "" );
       //:IF RESULT < zCURSOR_SET
       if ( RESULT < zCURSOR_SET )
       { 
-         //:IssueError( mSubLC,0,0,"Programming Error in BuildWorkVariables" )
-         IssueError( mSubLC, 0, 0, "Programming Error in BuildWorkVariables" );
+         //:TraceLineI( "Error in BuildWorkVariables locating S_DirectionsForUseSection PrimaryMLC_ID: ", ID )
+         TraceLineI( "Error in BuildWorkVariables locating S_DirectionsForUseSection PrimaryMLC_ID: ", ID );
+         //:// IssueError( mSubLC,0,0,"Programming Error in BuildWorkVariables" )
+         //:ELSE
       } 
-
-      //:END 
-      //:FOR EACH mMasLC.M_DrivingUsage 
-      RESULT = SetCursorFirstEntity( mMasLC, "M_DrivingUsage", "" );
-      while ( RESULT > zCURSOR_UNCHANGED )
+      else
       { 
-         //:SET CURSOR FIRST mSubLC.S_Usage WITHIN mSubLC.SubregLabelContent 
-         //:           WHERE mSubLC.S_Usage.PrimaryMLC_ID = mMasLC.M_DrivingUsage.ID 
-         {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
-                   GetIntegerFromAttribute( mi_lTempInteger_1, mMasLC, "M_DrivingUsage", "ID" );
-         lTempInteger_1 = mi_lTempInteger_1.intValue( );}
-         RESULT = SetCursorFirstEntityByInteger( mSubLC, "S_Usage", "PrimaryMLC_ID", lTempInteger_1, "SubregLabelContent" );
-         //:IF RESULT >= zCURSOR_SET
-         if ( RESULT >= zCURSOR_SET )
+         //:FOR EACH mMasLC.M_DrivingUsage 
+         RESULT = SetCursorFirstEntity( mMasLC, "M_DrivingUsage", "" );
+         while ( RESULT > zCURSOR_UNCHANGED )
          { 
-            //:INCLUDE mSubLC.S_ClaimsDrivingUsage FROM mSubLC.S_Usage
-            RESULT = IncludeSubobjectFromSubobject( mSubLC, "S_ClaimsDrivingUsage", mSubLC, "S_Usage", zPOS_AFTER );
+            //:SET CURSOR FIRST mSubLC.S_Usage WITHIN mSubLC.SubregLabelContent 
+            //:           WHERE mSubLC.S_Usage.PrimaryMLC_ID = mMasLC.M_DrivingUsage.ID 
+            {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+                         GetIntegerFromAttribute( mi_lTempInteger_0, mMasLC, "M_DrivingUsage", "ID" );
+            lTempInteger_0 = mi_lTempInteger_0.intValue( );}
+            RESULT = SetCursorFirstEntityByInteger( mSubLC, "S_Usage", "PrimaryMLC_ID", lTempInteger_0, "SubregLabelContent" );
+            //:IF RESULT >= zCURSOR_SET
+            if ( RESULT >= zCURSOR_SET )
+            { 
+               //:INCLUDE mSubLC.S_ClaimsDrivingUsage FROM mSubLC.S_Usage
+               RESULT = IncludeSubobjectFromSubobject( mSubLC, "S_ClaimsDrivingUsage", mSubLC, "S_Usage", zPOS_AFTER );
+            } 
+
+            RESULT = SetCursorNextEntity( mMasLC, "M_DrivingUsage", "" );
+            //:END
          } 
 
-         RESULT = SetCursorNextEntity( mMasLC, "M_DrivingUsage", "" );
          //:END
       } 
 
       RESULT = SetCursorNextEntity( mSubLC, "S_DirectionsForUseSection", "" );
-      //:END
+      //:END 
    } 
 
    //:END
@@ -3342,19 +3348,21 @@ omSubLC_BuildWorkVariables( View     mSubLC,
    RESULT = SetCursorFirstEntity( mSubLC, "S_DirectionsForUseStatement", "SubregLabelContent" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
-      //:SET CURSOR FIRST mMasLC.M_DirectionsForUseStatement WITHIN mMasLC.MasterLabelContent 
-      //:           WHERE mMasLC.M_DirectionsForUseStatement.ID = mSubLC.S_DirectionsForUseStatement.PrimaryMLC_ID 
-      {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
-             GetIntegerFromAttribute( mi_lTempInteger_2, mSubLC, "S_DirectionsForUseStatement", "PrimaryMLC_ID" );
-      lTempInteger_2 = mi_lTempInteger_2.intValue( );}
-      RESULT = SetCursorFirstEntityByInteger( mMasLC, "M_DirectionsForUseStatement", "ID", lTempInteger_2, "MasterLabelContent" );
+      //:ID = mSubLC.S_DirectionsForUseStatement.PrimaryMLC_ID 
+      {MutableInt mi_ID = new MutableInt( ID );
+             GetIntegerFromAttribute( mi_ID, mSubLC, "S_DirectionsForUseStatement", "PrimaryMLC_ID" );
+      ID = mi_ID.intValue( );}
       //:IF RESULT < zCURSOR_SET
       if ( RESULT < zCURSOR_SET )
       { 
-         //:IssueError( mSubLC,0,0,"Programming Error 2 in BuildWorkVariables" )
-         IssueError( mSubLC, 0, 0, "Programming Error 2 in BuildWorkVariables" );
+         //:SET CURSOR FIRST mMasLC.M_DirectionsForUseStatement WITHIN mMasLC.MasterLabelContent 
+         //:        WHERE mMasLC.M_DirectionsForUseStatement.ID = ID
+         RESULT = SetCursorFirstEntityByInteger( mMasLC, "M_DirectionsForUseStatement", "ID", ID, "MasterLabelContent" );
+         //:TraceLineI( "Error in BuildWorkVariables locating S_DirectionsForUseStatement PrimaryMLC_ID: ", ID )
+         TraceLineI( "Error in BuildWorkVariables locating S_DirectionsForUseStatement PrimaryMLC_ID: ", ID );
       } 
 
+      //:// IssueError( mSubLC,0,0,"Programming Error 2 in BuildWorkVariables" )
       //:END 
       //:FOR EACH mMasLC.M_DirectionsUsageOrdering 
       RESULT = SetCursorFirstEntity( mMasLC, "M_DirectionsUsageOrdering", "" );
@@ -3362,10 +3370,10 @@ omSubLC_BuildWorkVariables( View     mSubLC,
       { 
          //:SET CURSOR FIRST mSubLC.S_Usage WITHIN mSubLC.SubregLabelContent 
          //:           WHERE mSubLC.S_Usage.PrimaryMLC_ID = mMasLC.M_DirectionsUsage.ID 
-         {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
-                   GetIntegerFromAttribute( mi_lTempInteger_3, mMasLC, "M_DirectionsUsage", "ID" );
-         lTempInteger_3 = mi_lTempInteger_3.intValue( );}
-         RESULT = SetCursorFirstEntityByInteger( mSubLC, "S_Usage", "PrimaryMLC_ID", lTempInteger_3, "SubregLabelContent" );
+         {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+                   GetIntegerFromAttribute( mi_lTempInteger_1, mMasLC, "M_DirectionsUsage", "ID" );
+         lTempInteger_1 = mi_lTempInteger_1.intValue( );}
+         RESULT = SetCursorFirstEntityByInteger( mSubLC, "S_Usage", "PrimaryMLC_ID", lTempInteger_1, "SubregLabelContent" );
          //:IF RESULT >= zCURSOR_SET
          if ( RESULT >= zCURSOR_SET )
          { 
@@ -3385,23 +3393,25 @@ omSubLC_BuildWorkVariables( View     mSubLC,
 
    //:// Build list of Marketing Statement Usage entries by selecting the Statement Usage entries
    //:// from the MLC that have been selected for the SLC.
-   //:FOR EACH mSubLC.S_MarketingStatement WITHIN mSubLC.SubregLabelContent 
+   //:FOR EACH mSubLC.S_MarketingStatement WITHIN mSubLC.SubregLabelContent
    RESULT = SetCursorFirstEntity( mSubLC, "S_MarketingStatement", "SubregLabelContent" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
+      //:ID = mSubLC.S_MarketingStatement.PrimaryMLC_ID  
+      {MutableInt mi_ID = new MutableInt( ID );
+             GetIntegerFromAttribute( mi_ID, mSubLC, "S_MarketingStatement", "PrimaryMLC_ID" );
+      ID = mi_ID.intValue( );}
       //:SET CURSOR FIRST mMasLC.M_MarketingStatement WITHIN mMasLC.MasterLabelContent 
-      //:           WHERE mMasLC.M_MarketingStatement.ID = mSubLC.S_MarketingStatement.PrimaryMLC_ID 
-      {MutableInt mi_lTempInteger_4 = new MutableInt( lTempInteger_4 );
-             GetIntegerFromAttribute( mi_lTempInteger_4, mSubLC, "S_MarketingStatement", "PrimaryMLC_ID" );
-      lTempInteger_4 = mi_lTempInteger_4.intValue( );}
-      RESULT = SetCursorFirstEntityByInteger( mMasLC, "M_MarketingStatement", "ID", lTempInteger_4, "MasterLabelContent" );
+      //:           WHERE mMasLC.M_MarketingStatement.ID = ID 
+      RESULT = SetCursorFirstEntityByInteger( mMasLC, "M_MarketingStatement", "ID", ID, "MasterLabelContent" );
       //:IF RESULT < zCURSOR_SET
       if ( RESULT < zCURSOR_SET )
       { 
-         //:IssueError( mSubLC,0,0,"Programming Error 3 in BuildWorkVariables" )
-         IssueError( mSubLC, 0, 0, "Programming Error 3 in BuildWorkVariables" );
+         //:TraceLineI( "Error in BuildWorkVariables locating S_MarketingStatement PrimaryMLC_ID: ", ID )
+         TraceLineI( "Error in BuildWorkVariables locating S_MarketingStatement PrimaryMLC_ID: ", ID );
       } 
 
+      //:// IssueError( mSubLC,0,0,"Programming Error 3 in BuildWorkVariables" )
       //:END 
       //:TraceLineS( "############ Marketing Section: ", mMasLC.M_MarketingSection.Name )
       {StringBuilder sb_szTempString_0;
@@ -3418,10 +3428,10 @@ omSubLC_BuildWorkVariables( View     mSubLC,
       { 
          //:SET CURSOR FIRST mSubLC.S_Usage WITHIN mSubLC.SubregLabelContent 
          //:           WHERE mSubLC.S_Usage.PrimaryMLC_ID = mMasLC.M_MarketingUsage.ID 
-         {MutableInt mi_lTempInteger_5 = new MutableInt( lTempInteger_5 );
-                   GetIntegerFromAttribute( mi_lTempInteger_5, mMasLC, "M_MarketingUsage", "ID" );
-         lTempInteger_5 = mi_lTempInteger_5.intValue( );}
-         RESULT = SetCursorFirstEntityByInteger( mSubLC, "S_Usage", "PrimaryMLC_ID", lTempInteger_5, "SubregLabelContent" );
+         {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
+                   GetIntegerFromAttribute( mi_lTempInteger_2, mMasLC, "M_MarketingUsage", "ID" );
+         lTempInteger_2 = mi_lTempInteger_2.intValue( );}
+         RESULT = SetCursorFirstEntityByInteger( mSubLC, "S_Usage", "PrimaryMLC_ID", lTempInteger_2, "SubregLabelContent" );
          //:IF RESULT >= zCURSOR_SET
          if ( RESULT >= zCURSOR_SET )
          { 
@@ -3433,10 +3443,10 @@ omSubLC_BuildWorkVariables( View     mSubLC,
 
          //:END
          //:TraceLineI( "############ Marketing PrimaryMLC_ID: ", mSubLC.S_Usage.PrimaryMLC_ID )
-         {MutableInt mi_lTempInteger_6 = new MutableInt( lTempInteger_6 );
-                   GetIntegerFromAttribute( mi_lTempInteger_6, mSubLC, "S_Usage", "PrimaryMLC_ID" );
-         lTempInteger_6 = mi_lTempInteger_6.intValue( );}
-         TraceLineI( "############ Marketing PrimaryMLC_ID: ", lTempInteger_6 );
+         {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
+                   GetIntegerFromAttribute( mi_lTempInteger_3, mSubLC, "S_Usage", "PrimaryMLC_ID" );
+         lTempInteger_3 = mi_lTempInteger_3.intValue( );}
+         TraceLineI( "############ Marketing PrimaryMLC_ID: ", lTempInteger_3 );
          RESULT = SetCursorNextEntity( mMasLC, "M_MarketingUsageOrdering", "" );
       } 
 

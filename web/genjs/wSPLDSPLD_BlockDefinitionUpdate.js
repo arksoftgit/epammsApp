@@ -170,7 +170,7 @@ function _AfterPageLoaded( )
 
    // Postbuild action that has javascript code.
    PostbuildBlockDefinitionUpdate( );
-   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title + "%" ); }
+   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
 }
 
@@ -205,7 +205,7 @@ function ACCEPT_BlockSubBlockDefinition( )
    }
 }
 
-function GOTO_UpdateSPLD_Statement( strTagEntityKey )
+function SelectReusableBlock( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -213,13 +213,9 @@ function GOTO_UpdateSPLD_Statement( strTagEntityKey )
 
    if ( _IsDocDisabled( ) == false )
    {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wSPLDSPLD_BlockDefinitionUpdate.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
-      document.wSPLDSPLD_BlockDefinitionUpdate.zAction.value = "GOTO_UpdateSPLD_Statement";
+      document.wSPLDSPLD_BlockDefinitionUpdate.zAction.value = "SelectReusableBlock";
       document.wSPLDSPLD_BlockDefinitionUpdate.submit( );
    }
 }
@@ -347,6 +343,25 @@ function GOTO_UpdateSpecialFormatDef( strTagEntityKey )
    }
 }
 
+function GOTO_UpdateSPLD_Statement( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wSPLDSPLD_BlockDefinitionUpdate.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wSPLDSPLD_BlockDefinitionUpdate.zAction.value = "GOTO_UpdateSPLD_Statement";
+      document.wSPLDSPLD_BlockDefinitionUpdate.submit( );
+   }
+}
+
 function PostbuildBlockDefinitionUpdate( )
 {
 
@@ -355,6 +370,26 @@ function PostbuildBlockDefinitionUpdate( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      // Javascript code entered by user.
+
+      var sectionType = sessionStorage.getItem( "epamms_section_type" );
+   // alert( "SectionType: " + sectionType );
+      if ( sectionType === "Graphic" || sectionType == "ProductName" ||
+           sectionType === "HumanHazard" || sectionType == "EPA_RegAndEstNbr" ||
+           sectionType === "NetContents" ) { // || sectionType == "FirstAid" ||
+       // sectionType === "PhysicalHazard" || sectionType == "Precautionary" ) {
+         var thisHide = document.getElementById( "HideBox" );
+         thisHide.style.visibility = "hidden";
+         thisHide = document.getElementById( "HideInnerBox" );
+         thisHide.style.visibility = "hidden";
+         thisHide = document.getElementById( "HideText" );
+         thisHide.style.visibility = "hidden";
+         var thisComponentList = document.getElementById( "GridComponentList" );
+         thisComponentList .style.visibility = "hidden";
+      }
+
+      // END of Javascript code entered by user.
+
    }
 }
 

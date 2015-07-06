@@ -12,7 +12,15 @@
             <line>1024</line>
         </file>
     </editor-bookmarks>
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="44">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="52">
+        <file>
+            <url>file:/C:/workspace/NetBeansProjects/epammsApp/src/java/com/ajax/GraphicalLabelDesignerServlet.java</url>
+            <bookmark id="45">
+                <name/>
+                <line>367</line>
+                <key/>
+            </bookmark>
+        </file>
         <file>
             <url>web/wSPLDSPLD_UpdateLLD.jsp</url>
             <bookmark id="3">
@@ -25,7 +33,7 @@
             <url>web/wSPLDGraphicalView.jsp</url>
             <bookmark id="42">
                 <name/>
-                <line>1062</line>
+                <line>1080</line>
                 <key/>
             </bookmark>
         </file>
@@ -56,30 +64,33 @@
             </bookmark>
         </file>
         <file>
+            <url>file:/C:/Workspace/NetBeansProjects/epammsApp/web/js/labeldesigner.js</url>
+            <bookmark id="46">
+                <name/>
+                <line>970</line>
+                <key/>
+            </bookmark>
+            <bookmark id="47">
+                <name/>
+                <line>1128</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
             <url>web/js/labeldesigner.js</url>
             <bookmark id="40">
                 <name/>
-                <line>155</line>
+                <line>156</line>
                 <key/>
             </bookmark>
-            <bookmark id="43">
+            <bookmark id="48">
                 <name/>
-                <line>243</line>
+                <line>291</line>
                 <key/>
             </bookmark>
-            <bookmark id="34">
+            <bookmark id="52">
                 <name/>
-                <line>1546</line>
-                <key/>
-            </bookmark>
-            <bookmark id="41">
-                <name/>
-                <line>2636</line>
-                <key/>
-            </bookmark>
-            <bookmark id="44">
-                <name/>
-                <line>3470</line>
+                <line>652</line>
                 <key/>
             </bookmark>
         </file>
@@ -120,23 +131,12 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/wSystemDisplayHelpMessage.jsp</file>
-            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/wSystemExitHelpMessage.jsp</file>
-            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/js/labeldesigner.js</file>
-            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/js/jsoeUtils.js</file>
-            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/wSPLDGraphicalView.jsp</file>
-            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/js/jsoeObjectBrowser.js</file>
-            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/genjs/wSystemDisplayHelpMessage.js</file>
-            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/wSystemUpdateHelpMessage.jsp</file>
-            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/genjs/wStartUpUserLogin.js</file>
-            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/genjs/wSPLDGraphicalView.js</file>
-            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/genjs/wStartUpePammsPortal.js</file>
-            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/genjs/wSystemUpdateHelpMessage.js</file>
-            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/wStartUpePammsPortal.jsp</file>
+            <file>file:/C:/Workspace/NetBeansProjects/epammsApp/web/wSystemUpdateHelpMessage.jsp</file>
+            <file>file:/C:/Workspace/NetBeansProjects/epammsApp/web/genjs/wSystemUpdateHelpMessage.js</file>
+            <file>file:/C:/Workspace/NetBeansProjects/epammsApp/web/wSPLDGraphicalView.jsp</file>
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/src/java/com/ajax/GraphicalLabelDesignerServlet.java</file>
-            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/genjs/wSystemExitHelpMessage.js</file>
-            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/wStartUpUserLogin.jsp</file>
-            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/js/jsoe.js</file>
+            <file>file:/C:/Workspace/NetBeansProjects/epammsApp/web/js/labeldesigner.js</file>
+            <file>file:/C:/Workspace/NetBeansProjects/epammsApp/web/js/jsoeUtils.js</file>
         </group>
     </open-files>
 </project-private>

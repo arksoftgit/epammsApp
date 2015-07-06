@@ -35,6 +35,8 @@ public int DoInputMapping( HttpServletRequest request,
    String taskId = (String) session.getAttribute( "ZeidonTaskId" );
    Task task = objectEngine.getTaskById( taskId );
 
+   View mMasLC = null;
+   View mSubLC = null;
    View vGridTmp = null; // temp view to grid view
    View vRepeatingGrp = null; // temp view to repeating group view
    String strDateFormat = "";
@@ -55,6 +57,96 @@ public int DoInputMapping( HttpServletRequest request,
 
    if ( webMapping == false )
       session.setAttribute( "ZeidonError", null );
+
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) )
+   {
+      // Grid: Grid2
+      iTableRowCnt = 0;
+
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
+      vGridTmp = mMasLC.newView( );
+      csrRC = vGridTmp.cursor( "M_InsertTextMarketing" ).setFirst( "M_MarketingStatement" );
+      while ( csrRC.isSet() )
+      {
+         lEntityKey = vGridTmp.cursor( "M_InsertTextMarketing" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         iTableRowCnt++;
+
+         strTag = "GridCheckCtl1" + strEntityKey;
+         strMapValue = request.getParameter( strTag );
+         // If the checkbox is not checked, then set to the unchecked value.
+         if (strMapValue == null || strMapValue.isEmpty() )
+            strMapValue = "N";
+
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "GridCheckCtl1", "", strMapValue );
+            else
+               if ( strMapValue != null )
+                  vGridTmp.cursor( "M_InsertTextMarketing" ).getAttribute( "wSelected" ).setValue( strMapValue, "" );
+               else
+                  vGridTmp.cursor( "M_InsertTextMarketing" ).getAttribute( "wSelected" ).setValue( "", "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
+         }
+
+         csrRC = vGridTmp.cursor( "M_InsertTextMarketing" ).setNextContinue( );
+      }
+
+      vGridTmp.drop( );
+   }
+
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) )
+   {
+      // Grid: Grid1
+      iTableRowCnt = 0;
+
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
+      vGridTmp = mSubLC.newView( );
+      csrRC = vGridTmp.cursor( "S_InsertTextMarketing" ).setFirst( "S_MarketingStatement" );
+      while ( csrRC.isSet() )
+      {
+         lEntityKey = vGridTmp.cursor( "S_InsertTextMarketing" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         iTableRowCnt++;
+
+         strTag = "GridCheckCtl2" + strEntityKey;
+         strMapValue = request.getParameter( strTag );
+         // If the checkbox is not checked, then set to the unchecked value.
+         if (strMapValue == null || strMapValue.isEmpty() )
+            strMapValue = "N";
+
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "GridCheckCtl2", "", strMapValue );
+            else
+               if ( strMapValue != null )
+                  vGridTmp.cursor( "S_InsertTextMarketing" ).getAttribute( "wSelected" ).setValue( strMapValue, "" );
+               else
+                  vGridTmp.cursor( "S_InsertTextMarketing" ).getAttribute( "wSelected" ).setValue( "", "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
+         }
+
+         csrRC = vGridTmp.cursor( "S_InsertTextMarketing" ).setNextContinue( );
+      }
+
+      vGridTmp.drop( );
+   }
 
    if ( webMapping == true )
       return 2;
@@ -607,6 +699,94 @@ else
 <%
 try
 {
+   iTableRowCnt = 0;
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) )
+   {
+      long   lEntityKey;
+      String strEntityKey;
+      String strButtonName;
+      String strOdd;
+      String strTag;
+      String strGridCheckCtl2;
+      String strGridCheckCtl2Value;
+      String strGridEditCtl2;
+      String strGridEditCtl3;
+      
+      View vGrid1;
+      vGrid1 = mSubLC.newView( );
+      csrRC2 = vGrid1.cursor( "S_InsertTextMarketing" ).setFirst( "S_MarketingStatement" );
+      while ( csrRC2.isSet() )
+      {
+         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
+         iTableRowCnt++;
+
+         lEntityKey = vGrid1.cursor( "S_InsertTextMarketing" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         strButtonName = "SelectButton" + strEntityKey;
+
+         strGridCheckCtl2 = "";
+         nRC = vGrid1.cursor( "S_InsertTextMarketing" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strGridCheckCtl2 = vGrid1.cursor( "S_InsertTextMarketing" ).getAttribute( "wSelected" ).getString( "" );
+
+            if ( strGridCheckCtl2 == null )
+               strGridCheckCtl2 = "";
+         }
+
+         if ( StringUtils.equals( strGridCheckCtl2, "Y" ) )
+         {
+            strGridCheckCtl2Value = "GridCheckCtl2" + strEntityKey;
+            strGridCheckCtl2 = "<input name='" + strGridCheckCtl2Value + "' id='" + strGridCheckCtl2Value + "' value='Y' type='checkbox'  CHECKED > ";
+         }
+         else
+         {
+            strGridCheckCtl2Value = "GridCheckCtl2" + strEntityKey;
+            strGridCheckCtl2 = "<input name='" + strGridCheckCtl2Value + "' id='" + strGridCheckCtl2Value + "' value='Y' type='checkbox' > ";
+         }
+
+         strGridEditCtl2 = "";
+         nRC = vGrid1.cursor( "S_InsertTextKeywordMarketing" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strGridEditCtl2 = vGrid1.cursor( "S_InsertTextKeywordMarketing" ).getAttribute( "Name" ).getString( "" );
+
+            if ( strGridEditCtl2 == null )
+               strGridEditCtl2 = "";
+         }
+
+         if ( StringUtils.isBlank( strGridEditCtl2 ) )
+            strGridEditCtl2 = "&nbsp";
+
+         strGridEditCtl3 = "";
+         nRC = vGrid1.cursor( "S_InsertTextMarketing" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strGridEditCtl3 = vGrid1.cursor( "S_InsertTextMarketing" ).getAttribute( "Text" ).getString( "" );
+
+            if ( strGridEditCtl3 == null )
+               strGridEditCtl3 = "";
+         }
+
+         if ( StringUtils.isBlank( strGridEditCtl3 ) )
+            strGridEditCtl3 = "&nbsp";
+
+%>
+
+<tr<%=strOdd%>>
+
+   <td nowrap><%=strGridCheckCtl2%></td>
+   <td nowrap style="width:142px;"><%=strGridEditCtl2%></td>
+   <td nowrap style="width:206px;"><%=strGridEditCtl3%></td>
+
+</tr>
+
+<%
+         csrRC2 = vGrid1.cursor( "S_InsertTextMarketing" ).setNextContinue( );
+      }
+      vGrid1.drop( );
+   }
 }
 catch (Exception e)
 {
@@ -700,6 +880,94 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <%
 try
 {
+   iTableRowCnt = 0;
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) )
+   {
+      long   lEntityKey;
+      String strEntityKey;
+      String strButtonName;
+      String strOdd;
+      String strTag;
+      String strGridCheckCtl1;
+      String strGridCheckCtl1Value;
+      String strGridEditCtl1;
+      String strGridEditCtl4;
+      
+      View vGrid2;
+      vGrid2 = mMasLC.newView( );
+      csrRC2 = vGrid2.cursor( "M_InsertTextMarketing" ).setFirst( "M_MarketingStatement" );
+      while ( csrRC2.isSet() )
+      {
+         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
+         iTableRowCnt++;
+
+         lEntityKey = vGrid2.cursor( "M_InsertTextMarketing" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         strButtonName = "SelectButton" + strEntityKey;
+
+         strGridCheckCtl1 = "";
+         nRC = vGrid2.cursor( "M_InsertTextMarketing" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strGridCheckCtl1 = vGrid2.cursor( "M_InsertTextMarketing" ).getAttribute( "wSelected" ).getString( "" );
+
+            if ( strGridCheckCtl1 == null )
+               strGridCheckCtl1 = "";
+         }
+
+         if ( StringUtils.equals( strGridCheckCtl1, "Y" ) )
+         {
+            strGridCheckCtl1Value = "GridCheckCtl1" + strEntityKey;
+            strGridCheckCtl1 = "<input name='" + strGridCheckCtl1Value + "' id='" + strGridCheckCtl1Value + "' value='Y' type='checkbox'  CHECKED > ";
+         }
+         else
+         {
+            strGridCheckCtl1Value = "GridCheckCtl1" + strEntityKey;
+            strGridCheckCtl1 = "<input name='" + strGridCheckCtl1Value + "' id='" + strGridCheckCtl1Value + "' value='Y' type='checkbox' > ";
+         }
+
+         strGridEditCtl1 = "";
+         nRC = vGrid2.cursor( "M_InsertTextKeywordMarketing" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strGridEditCtl1 = vGrid2.cursor( "M_InsertTextKeywordMarketing" ).getAttribute( "Name" ).getString( "" );
+
+            if ( strGridEditCtl1 == null )
+               strGridEditCtl1 = "";
+         }
+
+         if ( StringUtils.isBlank( strGridEditCtl1 ) )
+            strGridEditCtl1 = "&nbsp";
+
+         strGridEditCtl4 = "";
+         nRC = vGrid2.cursor( "M_InsertTextMarketing" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strGridEditCtl4 = vGrid2.cursor( "M_InsertTextMarketing" ).getAttribute( "Text" ).getString( "" );
+
+            if ( strGridEditCtl4 == null )
+               strGridEditCtl4 = "";
+         }
+
+         if ( StringUtils.isBlank( strGridEditCtl4 ) )
+            strGridEditCtl4 = "&nbsp";
+
+%>
+
+<tr<%=strOdd%>>
+
+   <td nowrap><%=strGridCheckCtl1%></td>
+   <td nowrap style="width:142px;"><%=strGridEditCtl1%></td>
+   <td nowrap style="width:220px;"><%=strGridEditCtl4%></td>
+
+</tr>
+
+<%
+         csrRC2 = vGrid2.cursor( "M_InsertTextMarketing" ).setNextContinue( );
+      }
+      vGrid2.drop( );
+   }
 }
 catch (Exception e)
 {

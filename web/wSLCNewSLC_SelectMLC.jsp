@@ -60,6 +60,25 @@ public int DoInputMapping( HttpServletRequest request,
    lMLC = task.getViewByName( "lMLC" );
    if ( VmlOperation.isValid( lMLC ) )
    {
+      // EditBox: PrecautionaryTitle1
+      nRC = lMLC.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "PrecautionaryTitle1" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "PrecautionaryTitle1", "", strMapValue );
+            else
+               lMLC.cursor( "MasterLabelContent" ).getAttribute( "wSelectedContainerVolume" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "PrecautionaryTitle1", e.getReason( ), strMapValue );
+         }
+      }
+
       // Grid: Grid
       iTableRowCnt = 0;
 
@@ -601,6 +620,44 @@ else
 <label  id="PrecautionaryTitle:1" name="PrecautionaryTitle:1" style="width:202px;height:16px;position:absolute;left:6px;top:14px;">Container Size in Gallons:</label>
 
 <% /* PrecautionaryTitle1:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "PrecautionaryTitle1", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      lMLC = task.getViewByName( "lMLC" );
+      if ( VmlOperation.isValid( lMLC ) == false )
+         task.log( ).debug( "Invalid View: " + "PrecautionaryTitle1" );
+      else
+      {
+         nRC = lMLC.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = lMLC.cursor( "MasterLabelContent" ).getAttribute( "wSelectedContainerVolume" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on PrecautionaryTitle1: " + e.getMessage());
+               task.log().error( "*** Error on ctrl PrecautionaryTitle1", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "MasterLabelContent.wSelectedContainerVolume: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for PrecautionaryTitle1: " + "lMLC.MasterLabelContent" );
+      }
+   }
+%>
+
 <input class="text12" name="PrecautionaryTitle1" id="PrecautionaryTitle1" style="width:42px;position:absolute;left:208px;top:14px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 

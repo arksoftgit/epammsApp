@@ -93,6 +93,7 @@ END
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 InitListSubregProducts( VIEW ViewToWindow )
+
    VIEW mLLD_LST BASED ON LOD  mLLD
 
    SetDynamicBannerName( ViewToWindow, "wSPLD", "SubregistrantProduct" )
@@ -1570,7 +1571,7 @@ ExecuteJOE_Test1( VIEW ViewToWindow )
    mSPLDef.LLD_Block.Name = "Block Level 2"
    CREATE ENTITY mSPLDef.LLD_SpecialSectionAttribute 
    mSPLDef.LLD_SpecialSectionAttribute.Name = "Spec Attribute 2" 
-   
+
    ResetViewFromSubobject( mSPLDef )
    
    // See if we can now read what we created.
@@ -2835,11 +2836,11 @@ GOTO_UpdateSpecialFormatDef( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: DuplicateSubregProductSLC
-**    
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//    
+// OPERATION: DuplicateSubregProductSLC
+//    
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 DuplicateSubregProductSLC( VIEW ViewToWindow )
 
@@ -2871,18 +2872,18 @@ DuplicateSubregProductSLC( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**    
-**    OPERATION: DuplicateSubregProductSPLD
-**    
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//    
+// OPERATION: DuplicateSubregProductSPLD
+//    
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 DuplicateSubregProductSPLD( VIEW ViewToWindow )
 
    VIEW mSubProd    REGISTERED AS mSubProd
    VIEW lSPLDLST    REGISTERED AS lSPLDLST
-   VIEW mSPLDefOrig BASED ON LOD  mSPLDef 
-   VIEW mSPLDefNew  BASED ON LOD  mSPLDef 
+   VIEW mSPLDefOrig BASED ON LOD  mSPLDef
+   VIEW mSPLDefNew  BASED ON LOD  mSPLDef
    
    // Activate selected Subreg SLC and duplicate it.
    //ACTIVATE mSPLDefOrig WHERE mSPLDefOrig.SubregPhysicalLabelDef.ID = mSubProd.SubregPhysicalLabelDef.ID 
@@ -2904,5 +2905,155 @@ DuplicateSubregProductSPLD( VIEW ViewToWindow )
    DropObjectInstance( lSPLDLST )
    ACTIVATE lSPLDLST Multiple WHERE lSPLDLST.SubregProduct.ID = mSubProd.SubregProduct.ID 
    NAME VIEW lSPLDLST "lSPLDLST"
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: PreviewSelectedBlock
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+PreviewSelectedBlock( VIEW ViewToWindow )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: SaveReusableBlock
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+SaveReusableBlock( VIEW ViewToWindow )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: InitReusableBlockForUpdate
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+InitReusableBlockForUpdate( VIEW ViewToWindow )
+
+END
+
+LOCAL OPERATION
+CopyBlock( VIEW mSPLDef )
+
+  VIEW mSPLDefBlock REGISTERED AS mSPLDefBlock
+  VIEW mBlockRU BASED ON LOD mBlockRU
+
+  GET VIEW mBlockRU NAMED "ReusableBlock"
+  SetMatchingAttributesByName( mSPLDefBlock, "LLD_Block", mBlockRU, "LLD_Block", zSET_NOTNULL )
+
+  FOR EACH mSPLDefBlock.LLD_SubBlock
+     DELETE ENTITY mSPLDefBlock.LLD_SubBlock NONE 
+  END
+
+  IF mSPLDefBlock.BlockBackgroundColor EXISTS 
+     EXCLUDE mSPLDefBlock.BlockBackgroundColor NONE 
+  END
+
+  IF mSPLDefBlock.BlockBorderColor EXISTS
+     EXCLUDE mSPLDefBlock.BlockBorderColor NONE 
+  END
+
+  FOR EACH mBlockRU.LLD_SpecialSectionAttribute 
+     CREATE ENTITY mSPLDefBlock.LLD_SpecialSectionAttribute
+     SetMatchingAttributesByName( mSPLDefBlock, "LLD_SpecialSectionAttribute", mBlockRU, "LLD_SpecialSectionAttribute", zSET_NOTNULL )
+     FOR EACH mBlockRU.LLD_SpecialSectionAttrBlock
+        CREATE ENTITY mSPLDefBlock.LLD_SpecialSectionAttrBlock
+        SetMatchingAttributesByName( mSPLDefBlock, "LLD_SpecialSectionAttrBlock", mBlockRU, "LLD_SpecialSectionAttrBlock", zSET_NOTNULL )
+        IF mBlockRU.SpecialAttributeTextColor EXISTS
+           INCLUDE mSPLDefBlock.SpecialAttributeTextColor FROM mBlockRU.SpecialAttributeTextColor 
+        END
+     END
+  END
+
+  IF mBlockRU.BlockBackgroundColor EXISTS
+     INCLUDE mSPLDefBlock.BlockBackgroundColor FROM mBlockRU.BlockBackgroundColor 
+  END
+
+  IF mBlockRU.BlockBorderColor EXISTS
+     INCLUDE mSPLDefBlock.BlockBorderColor FROM mBlockRU.BlockBorderColor 
+  END
+
+  FOR EACH mBlockRU.LLD_SubBlock
+     SetViewToSubobject( mBlockRU, "LLD_SubBlock" )
+     SetViewToSubobject( mSPLDefBlock, "LLD_SubBlock" )
+     SetMatchingAttributesByName( mSPLDefBlock, "LLD_Block", mBlockRU, "LLD_Block", zSET_NOTNULL )
+     CopyBlock( mSPLDef )
+     ResetViewFromSubobject( mSPLDefBlock )
+     ResetViewFromSubobject( mBlockRU )
+  END
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: ACCEPT_ReusableBlock
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+ACCEPT_ReusableBlock( VIEW ViewToWindow )
+
+  VIEW mSPLDef REGISTERED AS mSPLDef
+  VIEW mSPLDefBlock REGISTERED AS mSPLDefBlock
+  VIEW mBlockRU BASED ON LOD mBlockRU
+  STRING (64) szTag
+  DECIMAL dTop
+  DECIMAL dLeft
+
+  SET CURSOR FIRST mSPLDef.ReusableBlockDefinition WHERE mSPLDef.ReusableBlockDefinition.wkSelected = "Y"
+  IF RESULT < zCURSOR_SET
+     MessageSend( ViewToWindow, "", "Select Reusable Block",
+                  "One reusable block must be selected",
+                  zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+     RETURN 2
+  END
+ 
+  SET CURSOR NEXT mSPLDef.ReusableBlockDefinition WHERE mSPLDef.ReusableBlockDefinition.wkSelected = "Y"
+  IF RESULT >= zCURSOR_SET
+     MessageSend( ViewToWindow, "", "Select Reusable Block",
+                  "Only one reusable block can be selected",
+                  zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+     RETURN 2
+  END
+
+  // Ensure position
+  SET CURSOR FIRST mSPLDef.ReusableBlockDefinition WHERE mSPLDef.ReusableBlockDefinition.wkSelected = "Y"
+  ACTIVATE mBlockRU WHERE mBlockRU.ReusableBlockDefinition.ID  = mSPLDef.ReusableBlockDefinition.ID
+  IF mBlockRU.LLD_Block EXISTS
+     NAME VIEW mBlockRU "ReusableBlock"
+     szTag = mSPLDefBlock.LLD_Block.Tag
+     dTop = mSPLDefBlock.LLD_Block.Top
+     dLeft = mSPLDefBlock.LLD_Block.Left
+  // TraceLineS( "Selecting reusable block: ", szTag )
+  // TraceLineI( "          reusable top: ", dTop )
+  // TraceLineI( "          reusable left: ", dLeft )
+     CopyBlock( mSPLDef )
+     mSPLDefBlock.LLD_Block.Tag = szTag
+     mSPLDefBlock.LLD_Block.Top = dTop
+     mSPLDefBlock.LLD_Block.Left = dLeft
+  END
+  DropObjectInstance( mBlockRU )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: ClearReusableBlockSelections
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+ClearReusableBlockSelections( VIEW ViewToWindow )
+
+  VIEW mSPLDef REGISTERED AS mSPLDef
+
+  SET CURSOR FIRST mSPLDef.ReusableBlockDefinition WHERE mSPLDef.ReusableBlockDefinition.wkSelected = "Y"
+  LOOP WHILE RESULT >= zCURSOR_SET
+     mSPLDef.ReusableBlockDefinition.wkSelected = ""
+     SET CURSOR NEXT mSPLDef.ReusableBlockDefinition WHERE mSPLDef.ReusableBlockDefinition.wkSelected = "Y"
+  END
 
 END

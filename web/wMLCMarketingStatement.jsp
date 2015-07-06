@@ -98,6 +98,24 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
+      // Grid: Grid3
+      iTableRowCnt = 0;
+
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
+      vGridTmp = mMasLC.newView( );
+      csrRC = vGridTmp.cursor( "M_InsertTextMarketing" ).setFirst( "M_MarketingStatement" );
+      while ( csrRC.isSet() )
+      {
+         lEntityKey = vGridTmp.cursor( "M_InsertTextMarketing" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         iTableRowCnt++;
+
+         csrRC = vGridTmp.cursor( "M_InsertTextMarketing" ).setNextContinue( );
+      }
+
+      vGridTmp.drop( );
       // Grid: Grid1
       iTableRowCnt = 0;
 
@@ -280,18 +298,19 @@ if ( strActionToProcess != null )
 
       // Position on the entity that was selected in the grid.
       String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
-       = task.getViewByName( "" );
-      if ( VmlOperation.isValid(  ) )
+      View mMasLC;
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
       {
          lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = .cursor( "" ).setByEntityKey( lEKey );
+         csrRC = mMasLC.cursor( "M_InsertTextMarketing" ).setByEntityKey( lEKey );
          if ( !csrRC.isSet() )
          {
             boolean bFound = false;
-            csrRCk = .cursor( "" ).setFirst( );
+            csrRCk = mMasLC.cursor( "M_InsertTextMarketing" ).setFirst("M_MarketingStatement" );
             while ( csrRCk.isSet() && !bFound )
             {
-               lEKey = .cursor( "" ).getEntityKey( );
+               lEKey = mMasLC.cursor( "M_InsertTextMarketing" ).getEntityKey( );
                strKey = Long.toString( lEKey );
                if ( StringUtils.equals( strKey, strEntityKey ) )
                {
@@ -299,7 +318,7 @@ if ( strActionToProcess != null )
                   bFound = true;
                }
                else
-                  csrRCk = .cursor( "" ).setNextContinue( );
+                  csrRCk = mMasLC.cursor( "M_InsertTextMarketing" ).setNextContinue( );
             } // Grid
          }
       }
@@ -382,18 +401,19 @@ if ( strActionToProcess != null )
 
       // Position on the entity that was selected in the grid.
       String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
-       = task.getViewByName( "" );
-      if ( VmlOperation.isValid(  ) )
+      View mMasLC;
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
       {
          lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = .cursor( "" ).setByEntityKey( lEKey );
+         csrRC = mMasLC.cursor( "M_InsertTextMarketing" ).setByEntityKey( lEKey );
          if ( !csrRC.isSet() )
          {
             boolean bFound = false;
-            csrRCk = .cursor( "" ).setFirst( );
+            csrRCk = mMasLC.cursor( "M_InsertTextMarketing" ).setFirst("M_MarketingStatement" );
             while ( csrRCk.isSet() && !bFound )
             {
-               lEKey = .cursor( "" ).getEntityKey( );
+               lEKey = mMasLC.cursor( "M_InsertTextMarketing" ).getEntityKey( );
                strKey = Long.toString( lEKey );
                if ( StringUtils.equals( strKey, strEntityKey ) )
                {
@@ -401,7 +421,7 @@ if ( strActionToProcess != null )
                   bFound = true;
                }
                else
-                  csrRCk = .cursor( "" ).setNextContinue( );
+                  csrRCk = mMasLC.cursor( "M_InsertTextMarketing" ).setNextContinue( );
             } // Grid
          }
       }
@@ -994,6 +1014,74 @@ else
 <%
 try
 {
+   iTableRowCnt = 0;
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) )
+   {
+      long   lEntityKey;
+      String strEntityKey;
+      String strButtonName;
+      String strOdd;
+      String strTag;
+      String strGridEditCtl3;
+      String strGridEditCtl4;
+      String strBMBUpdateDirectionsUseStatement1;
+      String strBMBDeleteDirectionsUseStatement1;
+      
+      View vGrid3;
+      vGrid3 = mMasLC.newView( );
+      csrRC2 = vGrid3.cursor( "M_InsertTextMarketing" ).setFirst( "M_MarketingStatement" );
+      while ( csrRC2.isSet() )
+      {
+         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
+         iTableRowCnt++;
+
+         lEntityKey = vGrid3.cursor( "M_InsertTextMarketing" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         strButtonName = "SelectButton" + strEntityKey;
+
+         strGridEditCtl3 = "";
+         nRC = vGrid3.cursor( "M_InsertTextKeywordMarketing" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strGridEditCtl3 = vGrid3.cursor( "M_InsertTextKeywordMarketing" ).getAttribute( "Name" ).getString( "" );
+
+            if ( strGridEditCtl3 == null )
+               strGridEditCtl3 = "";
+         }
+
+         if ( StringUtils.isBlank( strGridEditCtl3 ) )
+            strGridEditCtl3 = "&nbsp";
+
+         strGridEditCtl4 = "";
+         nRC = vGrid3.cursor( "M_InsertTextMarketing" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strGridEditCtl4 = vGrid3.cursor( "M_InsertTextMarketing" ).getAttribute( "Text" ).getString( "" );
+
+            if ( strGridEditCtl4 == null )
+               strGridEditCtl4 = "";
+         }
+
+         if ( StringUtils.isBlank( strGridEditCtl4 ) )
+            strGridEditCtl4 = "&nbsp";
+
+%>
+
+<tr<%=strOdd%>>
+
+   <td><%=strGridEditCtl3%></td>
+   <td><%=strGridEditCtl4%></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateDirectionsUseStatement1" onclick="GOTO_MarketingKeywordUpdate( this.id )" id="BMBUpdateDirectionsUseStatement1::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteDirectionsUseStatement1" onclick="GOTO_MarketingKeywordStmtDelete( this.id )" id="BMBDeleteDirectionsUseStatement1::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
+
+</tr>
+
+<%
+         csrRC2 = vGrid3.cursor( "M_InsertTextMarketing" ).setNextContinue( );
+      }
+      vGrid3.drop( );
+   }
 }
 catch (Exception e)
 {

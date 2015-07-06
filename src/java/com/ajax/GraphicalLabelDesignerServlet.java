@@ -369,18 +369,19 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
       String jsonLabel = null;
       String jsonReuse = "[";
       EntityCursor ec = vLLD.cursor( "ReusableBlockDefinition" );
+      ec.orderEntities( "LLD_SectionType A Name A" );
       CursorResult cr = ec.setFirst();
       while ( cr.isSet() ) {
-         jsonReuse += " { \"Name\" : \"" + ec.getAttribute( "Name" ).getString() +
-                      "\", \"Description\" : \"" + ec.getAttribute( "Description" ).getString() +
-                      "\", \"LLD_SectionType\" : \"" + ec.getAttribute( "LLD_SectionType" ).getString() + "\" }";
+         jsonReuse += " { \"LLD_SectionType\" : \"" + ec.getAttribute( "LLD_SectionType" ).getString() +
+                      "\", \"Name\" : \"" + ec.getAttribute( "Name" ).getString() +
+                      "\", \"Description\" : \"" + ec.getAttribute( "Description" ).getString() + "\" }";
          cr = ec.setNext();
          if ( cr.isSet() ) {
             jsonReuse += ", ";
          }
       }
       jsonReuse += " ]";
-      
+
       String jsonColors = "[";
       ec = vLLD.cursor( "Color" );
       cr = ec.setFirst();

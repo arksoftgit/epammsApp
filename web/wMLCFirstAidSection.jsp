@@ -1552,6 +1552,19 @@ try
          strEntityKey = Long.toString( lEntityKey );
          strButtonName = "SelectButton" + strEntityKey;
 
+         strGridEditPrecautionary = "";
+         nRC = vGridPrecautionary.cursor( "M_GeneralStatement" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strGridEditPrecautionary = vGridPrecautionary.cursor( "M_GeneralStatement" ).getAttribute( "dDisplayCombinedText" ).getString( "" );
+
+            if ( strGridEditPrecautionary == null )
+               strGridEditPrecautionary = "";
+         }
+
+         if ( StringUtils.isBlank( strGridEditPrecautionary ) )
+            strGridEditPrecautionary = "&nbsp";
+
 %>
 
 <tr<%=strOdd%>>

@@ -168,7 +168,6 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
-   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title + "%" ); }
    $(function() {
       $( "#DraggableSortTable" ).sortable();
       $( "#DraggableSortTable" ).disableSelection();
@@ -201,7 +200,7 @@ function _AfterPageLoaded( )
 
    });
 
-
+   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
 }
 

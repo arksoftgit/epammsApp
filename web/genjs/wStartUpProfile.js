@@ -168,7 +168,7 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
-   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title + "%" ); }
+   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
 }
 
@@ -203,7 +203,7 @@ function AddNewColor( )
    }
 }
 
-function DeleteeReusableBlock( strTagEntityKey )
+function DeleteReusableBlock( strTagEntityKey )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -225,7 +225,7 @@ if ( confirm( "Delete the reusable block?" ) === false ) {
 
       _DisableFormElements( true );
 
-      document.wStartUpProfile.zAction.value = "DeleteeReusableBlock";
+      document.wStartUpProfile.zAction.value = "DeleteReusableBlock";
       document.wStartUpProfile.submit( );
    }
 }

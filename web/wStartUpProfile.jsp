@@ -233,7 +233,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "DeleteeReusableBlock" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "DeleteReusableBlock" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wStartUpProfile", strActionToProcess );
@@ -1488,7 +1488,7 @@ try
    <td nowrap><a href="#" onclick="UpdateReusableBlock( this.id )" id="Description::<%=strEntityKey%>"><%=strDescription%></a></td>
    <td nowrap><a href="#" onclick="UpdateReusableBlock( this.id )" id="SectionType::<%=strEntityKey%>"><%=strSectionType%></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateReusableBlock" onclick="UpdateReusableBlock( this.id )" id="BMBUpdateReusableBlock::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteReusableBlock" onclick="DeleteeReusableBlock( this.id )" id="BMBDeleteReusableBlock::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteReusableBlock" onclick="DeleteReusableBlock( this.id )" id="BMBDeleteReusableBlock::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
 
 </tr>
 

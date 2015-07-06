@@ -35,6 +35,7 @@ public int DoInputMapping( HttpServletRequest request,
    String taskId = (String) session.getAttribute( "ZeidonTaskId" );
    Task task = objectEngine.getTaskById( taskId );
 
+   View mMasLC = null;
    View vGridTmp = null; // temp view to grid view
    View vRepeatingGrp = null; // temp view to repeating group view
    String strDateFormat = "";
@@ -55,6 +56,49 @@ public int DoInputMapping( HttpServletRequest request,
 
    if ( webMapping == false )
       session.setAttribute( "ZeidonError", null );
+
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) )
+   {
+      // EditBox: DirectionsUseName
+      nRC = mMasLC.cursor( "M_InsertTextKeywordMarketing" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "DirectionsUseName" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "DirectionsUseName", "", strMapValue );
+            else
+               mMasLC.cursor( "M_InsertTextKeywordMarketing" ).getAttribute( "Name" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "DirectionsUseName", e.getReason( ), strMapValue );
+         }
+      }
+
+      // EditBox: DirectionsForUseTitle
+      nRC = mMasLC.cursor( "M_InsertTextMarketing" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "DirectionsForUseTitle" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "DirectionsForUseTitle", "", strMapValue );
+            else
+               mMasLC.cursor( "M_InsertTextMarketing" ).getAttribute( "Text" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "DirectionsForUseTitle", e.getReason( ), strMapValue );
+         }
+      }
+
+   }
 
    if ( webMapping == true )
       return 2;
@@ -537,6 +581,44 @@ else
 </td>
 <td valign="top"  class="text12" style="width:264px;">
 <% /* DirectionsUseName:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "DirectionsUseName", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "DirectionsUseName" );
+      else
+      {
+         nRC = mMasLC.cursor( "M_InsertTextKeywordMarketing" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = mMasLC.cursor( "M_InsertTextKeywordMarketing" ).getAttribute( "Name" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on DirectionsUseName: " + e.getMessage());
+               task.log().error( "*** Error on ctrl DirectionsUseName", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "M_InsertTextKeywordMarketing.Name: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for DirectionsUseName: " + "mMasLC.M_InsertTextKeywordMarketing" );
+      }
+   }
+%>
+
 <input class="text12" name="DirectionsUseName" id="DirectionsUseName"  title="Required Name to differentiate Directions for Use Sections within a list" style="width:264px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
@@ -550,6 +632,44 @@ else
 </td>
 <td valign="top"  class="text12" style="width:656px;">
 <% /* DirectionsForUseTitle:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "DirectionsForUseTitle", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "DirectionsForUseTitle" );
+      else
+      {
+         nRC = mMasLC.cursor( "M_InsertTextMarketing" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = mMasLC.cursor( "M_InsertTextMarketing" ).getAttribute( "Text" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on DirectionsForUseTitle: " + e.getMessage());
+               task.log().error( "*** Error on ctrl DirectionsForUseTitle", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "M_InsertTextMarketing.Text: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for DirectionsForUseTitle: " + "mMasLC.M_InsertTextMarketing" );
+      }
+   }
+%>
+
 <input class="text12" name="DirectionsForUseTitle" id="DirectionsForUseTitle"  title="Optional Title to appear with text on generated label" style="width:656px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>

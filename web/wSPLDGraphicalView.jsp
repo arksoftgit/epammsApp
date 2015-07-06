@@ -389,6 +389,9 @@ else
    <link rel="stylesheet" type="text/css" href="css/style.css">
    <link rel="stylesheet" type="text/css" href="css/jquery.colorPicker.css">
 
+<!-- <link rel="stylesheet" href="css/docsupport/style.css"> -->
+   <link rel="stylesheet" href="css/chosen.css">
+
 <!--  
    <link href="../src/skin-win8/ui.fancytree.css" class="skinswitcher" rel="stylesheet" type="text/css">
    <script src="../src/jquery.fancytree.js" type="text/javascript"></script>
@@ -485,7 +488,7 @@ else
    <script src="js/jquery-2.1.3.js"></script>
    <script src="js/jquery-ui.js"></script>
    <script src="js/jquery.nicescroll.min.js"></script>
-   <script src="js/jquery.blockUI.js"></script>
+       <script src="js/jquery.blockUI.js"></script>
 
    <script src="js/jquery.colorPicker.js" type="text/javascript"></script>
 
@@ -501,6 +504,21 @@ else
 
 <!-- the jScrollPane script -->
    <script src="js/jquery.jscrollpane.min.js"></script>
+
+
+  <script src="js/chosen.jquery.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    var config = {
+      '.chosen-select'           : {},
+      '.chosen-select-deselect'  : {allow_single_deselect:true},
+      '.chosen-select-no-single' : {disable_search_threshold:10},
+      '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
+      '.chosen-select-width'     : {width:"95%"}
+    }
+    for (var selector in config) {
+      $(selector).chosen(config[selector]);
+    }
+  </script>
 
 <script>
 
@@ -775,7 +793,7 @@ else
                            &nbsp;
                            <div style="position:absolute;top:105px;left:15px;">
                               <label for="zReusableBlocks">Reusable Blocks: </label></br>
-                              <select id="zReusableBlocks" style="float:left;"> >
+                              <select id="zReusableBlocks" style="float:left;width:95%;" class="chosen-select">
                                  <option value="">Select Reusable Block...</option>
                               </select>
                            </div>

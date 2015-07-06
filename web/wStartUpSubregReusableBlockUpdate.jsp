@@ -79,7 +79,7 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
-      // EditBox: Description
+      // MLEdit: Description
       nRC = mSubreg.cursor( "ReusableBlockDefinition" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
@@ -701,102 +701,12 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* ReusableBlock:GroupBox */ %>
 
-<div id="ReusableBlock" name="ReusableBlock"   style="float:left;position:relative; width:616px; height:128px;">  <!-- ReusableBlock --> 
+<div id="ReusableBlock" name="ReusableBlock"   style="float:left;position:relative; width:616px; height:404px;">  <!-- ReusableBlock --> 
 
 <div  id="ReusableBlock" name="ReusableBlock" >Subregistrant Reusable Block</div>
-<% /* Name::Text */ %>
-
-<label  id="Name:" name="Name:" style="width:94px;height:20px;position:absolute;left:12px;top:24px;">Name:</label>
-
-<% /* ReusableBlockName:EditBox */ %>
-<%
-   strErrorMapValue = VmlOperation.CheckError( "ReusableBlockName", strError );
-   if ( !StringUtils.isBlank( strErrorMapValue ) )
-   {
-      if ( StringUtils.equals( strErrorFlag, "Y" ) )
-         strErrorColor = "color:red;";
-   }
-   else
-   {
-      strErrorColor = "";
-      mSubreg = task.getViewByName( "mSubreg" );
-      if ( VmlOperation.isValid( mSubreg ) == false )
-         task.log( ).debug( "Invalid View: " + "ReusableBlockName" );
-      else
-      {
-         nRC = mSubreg.cursor( "ReusableBlockDefinition" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            try
-            {
-               strErrorMapValue = mSubreg.cursor( "ReusableBlockDefinition" ).getAttribute( "Name" ).getString( "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on ReusableBlockName: " + e.getMessage());
-               task.log().error( "*** Error on ctrl ReusableBlockName", e );
-            }
-            if ( strErrorMapValue == null )
-               strErrorMapValue = "";
-
-            task.log( ).debug( "ReusableBlockDefinition.Name: " + strErrorMapValue );
-         }
-         else
-            task.log( ).debug( "Entity does not exist for ReusableBlockName: " + "mSubreg.ReusableBlockDefinition" );
-      }
-   }
-%>
-
-<input name="ReusableBlockName" id="ReusableBlockName" style="width:346px;position:absolute;left:114px;top:24px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
-
-<% /* Description::Text */ %>
-
-<label  id="Description:" name="Description:" style="width:94px;height:20px;position:absolute;left:12px;top:52px;">Description:</label>
-
-<% /* Description:EditBox */ %>
-<%
-   strErrorMapValue = VmlOperation.CheckError( "Description", strError );
-   if ( !StringUtils.isBlank( strErrorMapValue ) )
-   {
-      if ( StringUtils.equals( strErrorFlag, "Y" ) )
-         strErrorColor = "color:red;";
-   }
-   else
-   {
-      strErrorColor = "";
-      mSubreg = task.getViewByName( "mSubreg" );
-      if ( VmlOperation.isValid( mSubreg ) == false )
-         task.log( ).debug( "Invalid View: " + "Description" );
-      else
-      {
-         nRC = mSubreg.cursor( "ReusableBlockDefinition" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            try
-            {
-               strErrorMapValue = mSubreg.cursor( "ReusableBlockDefinition" ).getAttribute( "Description" ).getString( "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on Description: " + e.getMessage());
-               task.log().error( "*** Error on ctrl Description", e );
-            }
-            if ( strErrorMapValue == null )
-               strErrorMapValue = "";
-
-            task.log( ).debug( "ReusableBlockDefinition.Description: " + strErrorMapValue );
-         }
-         else
-            task.log( ).debug( "Entity does not exist for Description: " + "mSubreg.ReusableBlockDefinition" );
-      }
-   }
-%>
-
-<input name="Description" id="Description" style="width:346px;position:absolute;left:114px;top:52px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
-
 <% /* SectionType::Text */ %>
 
-<label  id="SectionType:" name="SectionType:" style="width:94px;height:20px;position:absolute;left:12px;top:84px;">Section Type:</label>
+<label  id="SectionType:" name="SectionType:" style="width:94px;height:20px;position:absolute;left:12px;top:24px;">Section Type:</label>
 
 <% /* SectionType:EditBox */ %>
 <%
@@ -837,7 +747,90 @@ else
    }
 %>
 
-<input name="SectionType" id="SectionType"  disabled style="width:346px;position:absolute;left:114px;top:84px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="SectionType" id="SectionType"  disabled style="width:346px;position:absolute;left:114px;top:24px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
+<% /* Name::Text */ %>
+
+<label  id="Name:" name="Name:" style="width:94px;height:20px;position:absolute;left:12px;top:52px;">Name:</label>
+
+<% /* ReusableBlockName:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "ReusableBlockName", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mSubreg = task.getViewByName( "mSubreg" );
+      if ( VmlOperation.isValid( mSubreg ) == false )
+         task.log( ).debug( "Invalid View: " + "ReusableBlockName" );
+      else
+      {
+         nRC = mSubreg.cursor( "ReusableBlockDefinition" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = mSubreg.cursor( "ReusableBlockDefinition" ).getAttribute( "Name" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on ReusableBlockName: " + e.getMessage());
+               task.log().error( "*** Error on ctrl ReusableBlockName", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "ReusableBlockDefinition.Name: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for ReusableBlockName: " + "mSubreg.ReusableBlockDefinition" );
+      }
+   }
+%>
+
+<input name="ReusableBlockName" id="ReusableBlockName" style="width:346px;position:absolute;left:114px;top:52px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
+<% /* Description::Text */ %>
+
+<label  id="Description:" name="Description:" style="width:94px;height:20px;position:absolute;left:12px;top:84px;">Description:</label>
+
+<% /* Description:MLEdit */ %>
+<%
+   // : Description
+   strErrorMapValue = VmlOperation.CheckError( "Description", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mSubreg = task.getViewByName( "mSubreg" );
+      if ( VmlOperation.isValid( mSubreg ) == false )
+         task.log( ).info( "Invalid View: " + "Description" );
+      else
+      {
+         nRC = mSubreg.cursor( "ReusableBlockDefinition" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strErrorMapValue = mSubreg.cursor( "ReusableBlockDefinition" ).getAttribute( "Description" ).getString( "" );
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).info( "ReusableBlockDefinition.Description: " + strErrorMapValue );
+         }
+         else
+            task.log( ).info( "Entity does not exist for Description: " + "mSubreg.ReusableBlockDefinition" );
+      }
+   }
+%>
+
+<textarea name="Description" id="Description" style="width:488px;height:308px;position:absolute;left:114px;top:84px;border:solid;border-width:2px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 
 </div>  <!--  ReusableBlock --> 

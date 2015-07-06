@@ -718,8 +718,31 @@ else
 <label class="groupbox"  id="UsageSelectionPrompt" name="UsageSelectionPrompt" style="width:184px;height:16px;position:absolute;left:0px;top:4px;">Usage Selection for Type:</label>
 
 <% /* Text1:Text */ %>
+<% strTextDisplayValue = "";
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) == false )
+      task.log( ).debug( "Invalid View: " + "Text1" );
+   else
+   {
+      nRC = mSubLC.cursor( "SubregLabelContent" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mSubLC.cursor( "SubregLabelContent" ).getAttribute( "wUsageSelectionText" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on Text1: " + e.getMessage());
+         task.log().info( "*** Error on ctrl Text1" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
 
-<label class="groupbox"  id="Text1" name="Text1" style="width:208px;height:16px;position:absolute;left:184px;top:4px;"></label>
+<label class="groupbox"  id="Text1" name="Text1" style="width:208px;height:16px;position:absolute;left:184px;top:4px;"><%=strTextDisplayValue%></label>
 
 
 </div>  <!--  GroupBox10 --> 

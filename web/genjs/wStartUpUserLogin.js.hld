@@ -218,7 +218,7 @@ function _AfterPageLoaded( )
 */
    // END of Javascript code entered by user.
 
-   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title + "%" ); }
+   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
 }
 
@@ -276,33 +276,6 @@ function InitLoginWindow( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      // Javascript code entered by user.
-
-/* var thisLi;
-
-   // If the Role is not set when we get here, it is because there is no admin (KeyRole = "U"), so we will only permit the user to go to set up the administrator.
-   if ( keyRole == "U" )
-   {
-      thisLi = document.getElementById( "EBRegistrantName" );
-      thisLi .disabled = true;
-      thisLi = document.getElementById( "EBUserName" );
-      thisLi .disabled = true;
-      thisLi = document.getElementById( "EBPassword" );
-      thisLi .disabled = true;
-      thisLi = document.getElementById( "CBRole" );
-      thisLi .disabled = true;
-      thisLi = document.getElementById( "PBLogin");
-      thisLi.style.visibility = "hidden";
-   }
-   else
-   {
-      thisLi = document.getElementById( "PBSetupAdmin" );
-      thisLi.style.visibility = "hidden";
-   }
-*/
-
-      // END of Javascript code entered by user.
-
    }
 }
 

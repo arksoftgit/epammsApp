@@ -972,32 +972,39 @@ TRANSFORMATION OPERATION
 BuildWorkVariables( VIEW mSubLC BASED ON LOD mSubLC,
                     VIEW mMasLC BASED ON LOD mMasLC )
 
+   INTEGER ID
+
    // Build any work variable for the mSubLC.
    
    // Build list of Directions for Use Section Driving Usage entries by selecting the Driving Usage entries
    // from the MLC that have been selected for the SLC.
    FOR EACH mSubLC.S_DirectionsForUseSection 
+      ID = mSubLC.S_DirectionsForUseSection.PrimaryMLC_ID
       SET CURSOR FIRST mMasLC.M_DirectionsForUseSection 
-                 WHERE mMasLC.M_DirectionsForUseSection.ID = mSubLC.S_DirectionsForUseSection.PrimaryMLC_ID 
+                 WHERE mMasLC.M_DirectionsForUseSection.ID = ID 
       IF RESULT < zCURSOR_SET
-         IssueError( mSubLC,0,0,"Programming Error in BuildWorkVariables" )
-      END 
-      FOR EACH mMasLC.M_DrivingUsage 
-         SET CURSOR FIRST mSubLC.S_Usage WITHIN mSubLC.SubregLabelContent 
-                    WHERE mSubLC.S_Usage.PrimaryMLC_ID = mMasLC.M_DrivingUsage.ID 
-         IF RESULT >= zCURSOR_SET
-            INCLUDE mSubLC.S_ClaimsDrivingUsage FROM mSubLC.S_Usage
+         TraceLineI( "Error in BuildWorkVariables locating S_DirectionsForUseSection PrimaryMLC_ID: ", ID )
+      // IssueError( mSubLC,0,0,"Programming Error in BuildWorkVariables" )
+      ELSE
+         FOR EACH mMasLC.M_DrivingUsage 
+            SET CURSOR FIRST mSubLC.S_Usage WITHIN mSubLC.SubregLabelContent 
+                       WHERE mSubLC.S_Usage.PrimaryMLC_ID = mMasLC.M_DrivingUsage.ID 
+            IF RESULT >= zCURSOR_SET
+               INCLUDE mSubLC.S_ClaimsDrivingUsage FROM mSubLC.S_Usage
+            END
          END
-      END
+      END 
    END
    
    // Build list of Directions for Use Statement Usage entries by selecting the Statement Usage entries
    // from the MLC that have been selected for the SLC.
    FOR EACH mSubLC.S_DirectionsForUseStatement WITHIN mSubLC.SubregLabelContent 
-      SET CURSOR FIRST mMasLC.M_DirectionsForUseStatement WITHIN mMasLC.MasterLabelContent 
-                 WHERE mMasLC.M_DirectionsForUseStatement.ID = mSubLC.S_DirectionsForUseStatement.PrimaryMLC_ID 
+      ID = mSubLC.S_DirectionsForUseStatement.PrimaryMLC_ID 
       IF RESULT < zCURSOR_SET
-         IssueError( mSubLC,0,0,"Programming Error 2 in BuildWorkVariables" )
+      SET CURSOR FIRST mMasLC.M_DirectionsForUseStatement WITHIN mMasLC.MasterLabelContent 
+                 WHERE mMasLC.M_DirectionsForUseStatement.ID = ID
+         TraceLineI( "Error in BuildWorkVariables locating S_DirectionsForUseStatement PrimaryMLC_ID: ", ID )
+      // IssueError( mSubLC,0,0,"Programming Error 2 in BuildWorkVariables" )
       END 
       FOR EACH mMasLC.M_DirectionsUsageOrdering 
          SET CURSOR FIRST mSubLC.S_Usage WITHIN mSubLC.SubregLabelContent 
@@ -1010,11 +1017,13 @@ BuildWorkVariables( VIEW mSubLC BASED ON LOD mSubLC,
    
    // Build list of Marketing Statement Usage entries by selecting the Statement Usage entries
    // from the MLC that have been selected for the SLC.
-   FOR EACH mSubLC.S_MarketingStatement WITHIN mSubLC.SubregLabelContent 
+   FOR EACH mSubLC.S_MarketingStatement WITHIN mSubLC.SubregLabelContent
+      ID = mSubLC.S_MarketingStatement.PrimaryMLC_ID  
       SET CURSOR FIRST mMasLC.M_MarketingStatement WITHIN mMasLC.MasterLabelContent 
-                 WHERE mMasLC.M_MarketingStatement.ID = mSubLC.S_MarketingStatement.PrimaryMLC_ID 
+                 WHERE mMasLC.M_MarketingStatement.ID = ID 
       IF RESULT < zCURSOR_SET
-         IssueError( mSubLC,0,0,"Programming Error 3 in BuildWorkVariables" )
+         TraceLineI( "Error in BuildWorkVariables locating S_MarketingStatement PrimaryMLC_ID: ", ID )
+      // IssueError( mSubLC,0,0,"Programming Error 3 in BuildWorkVariables" )
       END 
 TraceLineS( "############ Marketing Section: ", mMasLC.M_MarketingSection.Name )
       FOR EACH mMasLC.M_MarketingUsageOrdering 
