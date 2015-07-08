@@ -546,7 +546,7 @@ table tr:hover td {
 
 tr.odd{
    border: 1px solid #ccc;  /* light gray */
-   background-color: #fdf;
+   background-color: #def;
 }
 
 /************ Table Sort styles ************/
@@ -566,7 +566,7 @@ table tr:hover{ /* can't get this to work!!! */
 
 tbody tr.odd{
    border: 1px solid #ccc;  /* light gray */
-   background-color: #ddf;  /* somewhere between light blue and light purple */
+   background-color: #def; //? #ddf;  /* somewhere between light blue and light purple */
 }
 
 tbody tr{
@@ -618,7 +618,7 @@ table.sortable thead th{
 }
 
 table.sortable tr.odd{
-   background-color: #ddf;
+   background-color: #def; //? #ddf;
 }
 
 table.sortable tr{
@@ -630,7 +630,7 @@ table.sortable tr:hover{
 
 table.tableStyle1 tr.odd{
    border: 1px solid #ccc;
-   background-color: #ffb;
+   background-color: #def; //? #ffb;
 }
 
 table.tableStyle1 tr{
@@ -697,7 +697,7 @@ table.tableStyle1 tr{
 
 .budget tbody tr.odd{
    border: 1px solid #ccc;
-   background-color: #ddf;
+   background-color: #def; //? #ddf;
 }
 
 .budget tbody tr{
@@ -793,7 +793,7 @@ table.sortable thead th{
 }
 
 table.sortable tr.odd{
-   background-color: #ddf;
+   background-color: #def; //? #ddf;
 }
 
 table.sortable tr{

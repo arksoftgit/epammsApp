@@ -1219,7 +1219,12 @@ $(function() {
       } else {
          var x = offset_left / (g_pixelsPerInch * g_scale);
          var y = offset_top / (g_pixelsPerInch * g_scale);
-         new_position = "Position: " + y.toFixed( 3 ) + "in, " + x.toFixed( 3 ) + "in";
+         if ( $(el).hasClass( "panel" ) ) {
+            new_position = "Panel Position: ";
+         } else {
+            new_position = "Block Position: ";
+         }
+         new_position += y.toFixed( 3 ) + "in, " + x.toFixed( 3 ) + "in";
       }
 
    // console.log( "UpdatePositionStatus " + message + " (" + offset_top + "," + offset_left + ") : " + new_position );

@@ -781,7 +781,7 @@ else
                   <h3>Block Types</h3>
                   <div id="zpool">
                 <!-- <fieldset class="border" style="position:absolute;top:80px;left:15px;width:260px;height:200px;"><legend>Drag left onto page to create a new</legend> -->
-                     <fieldset class="border" style="height:200px;"><legend>Drag left onto page to create a new</legend>
+                     <fieldset class="border" style="height:200px;"><legend>Drag left onto page to create a new block</legend>
                         <div style="position:relative;">  <!-- without position:relative, initial position is off -->
                            <div id="z__drag1" class="draggable ui-widget-content" style="position:absolute;top:5px;left:15px;width:79px;height:79px;background:lightblue;display:block;float:left;color:black;border:2px solid;">
                               <p>Block</p>
