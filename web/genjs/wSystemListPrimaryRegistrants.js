@@ -259,6 +259,8 @@ function InitListPrimaryRegistrants( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wSystemListPrimaryRegistrants.zAction.value = "InitListPrimaryRegistrants";
+      document.wSystemListPrimaryRegistrants.submit( );
    }
 }
 

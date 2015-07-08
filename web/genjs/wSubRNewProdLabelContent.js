@@ -262,6 +262,8 @@ function InitProdLabelContentForInsert( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wSubRNewProdLabelContent.zAction.value = "InitProdLabelContentForInsert";
+      document.wSubRNewProdLabelContent.submit( );
    }
 }
 

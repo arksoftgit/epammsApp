@@ -292,6 +292,8 @@ function InitChangeSubregPassword( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wStartUpChangeSubregistrantPassword.zAction.value = "InitChangeSubregPassword";
+      document.wStartUpChangeSubregistrantPassword.submit( );
    }
 }
 

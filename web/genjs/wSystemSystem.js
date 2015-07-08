@@ -302,6 +302,8 @@ function InitSystemProperties( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wSystemSystem.zAction.value = "InitSystemProperties";
+      document.wSystemSystem.submit( );
    }
 }
 

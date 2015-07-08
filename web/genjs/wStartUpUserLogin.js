@@ -218,7 +218,7 @@ function _AfterPageLoaded( )
 */
    // END of Javascript code entered by user.
 
-var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
+   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
 }
 
@@ -276,6 +276,8 @@ function InitLoginWindow( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wStartUpUserLogin.zAction.value = "InitLoginWindow";
+      document.wStartUpUserLogin.submit( );
    }
 }
 

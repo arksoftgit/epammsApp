@@ -284,6 +284,8 @@ function InitSubregUserForInsert( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wSubRNewSubregUser.zAction.value = "InitSubregUserForInsert";
+      document.wSubRNewSubregUser.submit( );
    }
 }
 

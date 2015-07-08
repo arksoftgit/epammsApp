@@ -260,6 +260,8 @@ function InitDeleteSubreg( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wStartUpAdminDeleteSubregistrant.zAction.value = "InitDeleteSubreg";
+      document.wStartUpAdminDeleteSubregistrant.submit( );
    }
 }
 

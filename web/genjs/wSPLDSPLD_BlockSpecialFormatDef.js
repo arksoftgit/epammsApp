@@ -209,21 +209,6 @@ function ACCEPT_BlockSpecialFormat( )
    }
 }
 
-function PostbuildBlockSpecialFormatDef( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSPLDSPLD_BlockSpecialFormatDef.zAction.value = "PostbuildBlockSpecialFormatDef";
-      document.wSPLDSPLD_BlockSpecialFormatDef.submit( );
-   }
-}
-
 function CANCEL_BlockComponent( )
 {
 
@@ -235,6 +220,21 @@ function CANCEL_BlockComponent( )
       _DisableFormElements( true );
 
       document.wSPLDSPLD_BlockSpecialFormatDef.zAction.value = "CANCEL_BlockComponent";
+      document.wSPLDSPLD_BlockSpecialFormatDef.submit( );
+   }
+}
+
+function PrebuildBlockSpecialFormatDef( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSPLDSPLD_BlockSpecialFormatDef.zAction.value = "PrebuildBlockSpecialFormatDef";
       document.wSPLDSPLD_BlockSpecialFormatDef.submit( );
    }
 }

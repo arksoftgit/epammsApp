@@ -252,6 +252,8 @@ function InitDesignSubregProductLabel( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wSubRDesignSubregProductLabel.zAction.value = "InitDesignSubregProductLabel";
+      document.wSubRDesignSubregProductLabel.submit( );
    }
 }
 

@@ -245,6 +245,8 @@ function InitListMasterProducts( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wStartUpListMasterProducts.zAction.value = "InitListMasterProducts";
+      document.wStartUpListMasterProducts.submit( );
    }
 }
 

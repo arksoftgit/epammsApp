@@ -231,6 +231,8 @@ function InitAnalysisDifferences( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wSystemAnalysisDifferences.zAction.value = "InitAnalysisDifferences";
+      document.wSystemAnalysisDifferences.submit( );
    }
 }
 

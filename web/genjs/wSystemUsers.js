@@ -240,6 +240,8 @@ function InitUser( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wSystemUsers.zAction.value = "InitUser";
+      document.wSystemUsers.submit( );
    }
 }
 

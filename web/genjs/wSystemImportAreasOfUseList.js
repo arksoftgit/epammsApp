@@ -178,7 +178,7 @@ function _AfterPageLoaded( )
    thisLi.style.display = "none";
    // END of Javascript code entered by user.
 
-   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
+var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
 }
 
@@ -221,6 +221,20 @@ function SortWorkList( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      // Javascript code entered by user.
+
+   var str = document.wSystemImportAreasOfUseList.Work.value;
+   var splitArray = str.split( '\n' );
+// alert( "SplitArray: " + splitArray );
+   splitArray.sort( );
+// alert( "SplitArray: " + splitArray );
+   document.wSystemImportAreasOfUseList.Work.value = splitArray.join( '\n' );
+   return;
+
+      // END of Javascript code entered by user.
+
+      document.wSystemImportAreasOfUseList.zAction.value = "SortWorkList";
+      document.wSystemImportAreasOfUseList.submit( );
    }
 }
 
@@ -262,6 +276,8 @@ function InitImportAreasOfUseList( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wSystemImportAreasOfUseList.zAction.value = "InitImportAreasOfUseList";
+      document.wSystemImportAreasOfUseList.submit( );
    }
 }
 
@@ -273,6 +289,20 @@ function SortAreasOfUseList( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      // Javascript code entered by user.
+
+   var str = document.wSystemImportAreasOfUseList.Import.value;
+   var splitArray = str.split( '\n' );
+// alert( "SplitArray: " + splitArray );
+   splitArray.sort( );
+// alert( "SplitArray: " + splitArray );
+   document.wSystemImportAreasOfUseList.Import.value = splitArray.join( '\n' );
+   return;
+
+      // END of Javascript code entered by user.
+
+      document.wSystemImportAreasOfUseList.zAction.value = "SortAreasOfUseList";
+      document.wSystemImportAreasOfUseList.submit( );
    }
 }
 

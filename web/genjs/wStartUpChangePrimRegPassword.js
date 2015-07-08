@@ -299,6 +299,8 @@ function InitChangePrimRegPassword( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wStartUpChangePrimRegPassword.zAction.value = "InitChangePrimRegPassword";
+      document.wStartUpChangePrimRegPassword.submit( );
    }
 }
 

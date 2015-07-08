@@ -357,6 +357,8 @@ function InitSurfacesForUpdate( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wSystemUpdateSurfaces.zAction.value = "InitSurfacesForUpdate";
+      document.wSystemUpdateSurfaces.submit( );
    }
 }
 

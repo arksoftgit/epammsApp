@@ -267,6 +267,8 @@ function InitShowFeedback( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wSystemShowFeedback.zAction.value = "InitShowFeedback";
+      document.wSystemShowFeedback.submit( );
    }
 }
 

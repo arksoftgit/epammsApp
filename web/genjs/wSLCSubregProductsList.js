@@ -302,6 +302,8 @@ function InitListSubregProducts( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wSLCSubregProductsList.zAction.value = "InitListSubregProducts";
+      document.wSLCSubregProductsList.submit( );
    }
 }
 

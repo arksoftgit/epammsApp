@@ -178,7 +178,7 @@ function _AfterPageLoaded( )
    thisLi.style.display = "none";
    // END of Javascript code entered by user.
 
-   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
+var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
 }
 
@@ -221,6 +221,20 @@ function SortWorkList( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      // Javascript code entered by user.
+
+   var str = document.wSystemImportSurfacesList.Work.value;
+   var splitArray = str.split( '\n' );
+// alert( "SplitArray: " + splitArray );
+   splitArray.sort( );
+// alert( "SplitArray: " + splitArray );
+   document.wSystemImportSurfacesList.Work.value = splitArray.join( '\n' );
+   return;
+
+      // END of Javascript code entered by user.
+
+      document.wSystemImportSurfacesList.zAction.value = "SortWorkList";
+      document.wSystemImportSurfacesList.submit( );
    }
 }
 
@@ -262,6 +276,8 @@ function InitImportSurfacesList( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wSystemImportSurfacesList.zAction.value = "InitImportSurfacesList";
+      document.wSystemImportSurfacesList.submit( );
    }
 }
 
@@ -273,6 +289,20 @@ function SortSurfacesList( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      // Javascript code entered by user.
+
+   var str = document.wSystemImportSurfacesList.Import.value;
+   var splitArray = str.split( '\n' );
+// alert( "SplitArray: " + splitArray );
+   splitArray.sort( );
+// alert( "SplitArray: " + splitArray );
+   document.wSystemImportSurfacesList.Import.value = splitArray.join( '\n' );
+   return;
+
+      // END of Javascript code entered by user.
+
+      document.wSystemImportSurfacesList.zAction.value = "SortSurfacesList";
+      document.wSystemImportSurfacesList.submit( );
    }
 }
 

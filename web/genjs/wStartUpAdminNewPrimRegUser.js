@@ -232,6 +232,8 @@ function AddAddNewPrimRegUser( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wStartUpAdminNewPrimRegUser.zAction.value = "AddAddNewPrimRegUser";
+      document.wStartUpAdminNewPrimRegUser.submit( );
    }
 }
 

@@ -324,6 +324,8 @@ function InitFungiForUpdate( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wSystemUpdateFungi.zAction.value = "InitFungiForUpdate";
+      document.wSystemUpdateFungi.submit( );
    }
 }
 

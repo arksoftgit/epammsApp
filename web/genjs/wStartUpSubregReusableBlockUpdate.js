@@ -241,6 +241,8 @@ function InitReusableBlocksForUpdate( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wStartUpSubregReusableBlockUpdate.zAction.value = "InitReusableBlocksForUpdate";
+      document.wStartUpSubregReusableBlockUpdate.submit( );
    }
 }
 

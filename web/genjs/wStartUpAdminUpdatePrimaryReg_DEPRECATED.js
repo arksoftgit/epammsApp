@@ -264,6 +264,8 @@ function InitPrimRegForUpdate( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wStartUpAdminUpdatePrimaryReg_DEPRECATED.zAction.value = "InitPrimRegForUpdate";
+      document.wStartUpAdminUpdatePrimaryReg_DEPRECATED.submit( );
    }
 }
 

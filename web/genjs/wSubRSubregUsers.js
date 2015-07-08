@@ -241,6 +241,8 @@ function InitListSubregUsers( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wSubRSubregUsers.zAction.value = "InitListSubregUsers";
+      document.wSubRSubregUsers.submit( );
    }
 }
 

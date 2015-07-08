@@ -611,8 +611,8 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
    session.setAttribute( "ZeidonError", null );
 else
 {
-   VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockSpecialFormatDef", "wSPLD.PostbuildBlockSpecialFormatDef" );
-   nOptRC = wSPLD.PostbuildBlockSpecialFormatDef( new zVIEW( vKZXMLPGO ) );
+   VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_BlockSpecialFormatDef", "wSPLD.PrebuildBlockSpecialFormatDef" );
+   nOptRC = wSPLD.PrebuildBlockSpecialFormatDef( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -624,7 +624,7 @@ else
       strURLParameters = "?CallingPage=wSPLDSPLD_BlockSpecialFormatDef.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wSPLD" +
-                         "&OperationName=" + "PostbuildBlockSpecialFormatDef";
+                         "&OperationName=" + "PrebuildBlockSpecialFormatDef";
       strURL = response.encodeRedirectURL( "MessageDisplay.jsp" + strURLParameters );
       response.sendRedirect( strURL );
       task.log().info( "Pre/Post Redirect to: " + strURL );

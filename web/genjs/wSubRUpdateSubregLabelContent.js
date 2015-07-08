@@ -277,6 +277,8 @@ function InitSubregLabelContentForUpdate( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wSubRUpdateSubregLabelContent.zAction.value = "InitSubregLabelContentForUpdate";
+      document.wSubRUpdateSubregLabelContent.submit( );
    }
 }
 

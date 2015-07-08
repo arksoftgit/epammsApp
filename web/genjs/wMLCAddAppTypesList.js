@@ -189,7 +189,7 @@ function _AfterPageLoaded( )
    thisLi.disabled = true;
    // END of Javascript code entered by user.
 
-   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
+var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
 }
 
@@ -232,6 +232,41 @@ function ClearSelectedAppTypes( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      // Javascript code entered by user.
+
+      var theForm;
+      var type;
+      var name;
+      var str;
+      var j;
+      var k;
+
+      for ( j = 0; j < document.forms.length; j++ )
+      {
+         theForm = document.forms[ j ];
+         for ( k = 0; k < theForm.length; k++ )
+         {
+            type = theForm.elements[ k ].type;
+
+            if ( type == "checkbox" )
+            {
+               name = theForm.elements[ k ].name;
+               str = name.substr( 0, 9 );
+               if ( str.match("GS_Select") )
+               {
+                  theForm.elements[ k ].checked = false;
+               }
+            }
+         }
+      }
+
+      return;
+
+
+      // END of Javascript code entered by user.
+
+      document.wMLCAddAppTypesList.zAction.value = "ClearSelectedAppTypes";
+      document.wMLCAddAppTypesList.submit( );
    }
 }
 
@@ -273,6 +308,8 @@ function InitAppTypesStmtsForInsert( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wMLCAddAppTypesList.zAction.value = "InitAppTypesStmtsForInsert";
+      document.wMLCAddAppTypesList.submit( );
    }
 }
 
@@ -284,6 +321,41 @@ function SelectAllAppTypes( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      // Javascript code entered by user.
+
+      var theForm;
+      var type;
+      var name;
+      var str;
+      var j;
+      var k;
+
+      for ( j = 0; j < document.forms.length; j++ )
+      {
+         theForm = document.forms[ j ];
+         for ( k = 0; k < theForm.length; k++ )
+         {
+            type = theForm.elements[ k ].type;
+
+            if ( type == "checkbox" )
+            {
+               name = theForm.elements[ k ].name;
+               str = name.substr( 0, 9 );
+               if ( str.match("GS_Select") )
+               {
+                  theForm.elements[ k ].checked = true;
+               }
+            }
+         }
+      }
+
+      return;
+
+
+      // END of Javascript code entered by user.
+
+      document.wMLCAddAppTypesList.zAction.value = "SelectAllAppTypes";
+      document.wMLCAddAppTypesList.submit( );
    }
 }
 

@@ -70,8 +70,10 @@ kz*.txt
 *.map
 *.mdb
 *.ncb
+*.nosubblock
 *.obj
 *.opt
+*.orig
 *.pbk
 *.pch
 *.pdb
@@ -95,7 +97,9 @@ kz*.txt
 *.sbr
 *.ser
 *.sig
+*.sql
 *.sts
+*.subblock
 *.sum
 *.svc
 *.sym
@@ -138,3 +142,6 @@ reports\*.*
 vml\*.*
 VmlPwdOld\*.*
 bin\xod\*.*
+image\*.*
+xsl\*.*
+JavaProject\*.*

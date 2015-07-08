@@ -251,6 +251,8 @@ function InitSelectPrimaryRegistrant( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wStartUpDEPRECATED_SelectPrimaryReg.zAction.value = "InitSelectPrimaryRegistrant";
+      document.wStartUpDEPRECATED_SelectPrimaryReg.submit( );
    }
 }
 

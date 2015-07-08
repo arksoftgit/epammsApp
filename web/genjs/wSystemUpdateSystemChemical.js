@@ -328,6 +328,8 @@ function InitSystemChemicalForUpdate( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wSystemUpdateSystemChemical.zAction.value = "InitSystemChemicalForUpdate";
+      document.wSystemUpdateSystemChemical.submit( );
    }
 }
 

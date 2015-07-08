@@ -245,6 +245,8 @@ function InitListPrimRegUsers( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wStartUpAdminListPrimRegUsers.zAction.value = "InitListPrimRegUsers";
+      document.wStartUpAdminListPrimRegUsers.submit( );
    }
 }
 

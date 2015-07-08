@@ -14,7 +14,7 @@
    border-bottom: 2px solid #ffd324;
    text-decoration: blink;
    font-weight: bold;
-   }
+}
 
 /* BUTTONS */
 
@@ -35,6 +35,7 @@
    height: 12px;
    text-align: center;
 }
+
 .buttons button{
    width:auto;
    overflow:visible; /* IE6 */
@@ -42,50 +43,52 @@
    padding-right: 0px;
    padding-bottom: 3px;
    padding-left: 0px;
-
 }
+
 .buttons button[type]{
    line-height:17px; /* Safari */
    padding-top: 3px;
    padding-right: 0px;
    padding-bottom: 5px;
    padding-left: 0px;
+}
 
-}
 *:first-child+html button[type]{
-    padding:4px 10px 3px 7px; /* IE7 */
+   padding:4px 10px 3px 7px; /* IE7 */
 }
+
 .buttons button img, .buttons a img{
-    margin:0 3px -3px 0 !important;
-    padding:0;
-    border:none;
-    width:16px;
-    height:16px;
+   margin:0 3px -3px 0 !important;
+   padding:0;
+   border:none;
+   width:16px;
+   height:16px;
 }
+
 /* STANDARD */
 
 button:hover, .buttons a:hover{
-    background-color:#dff4ff;
-    border:1px solid #c2e1ef;
-    color:#336699;
+   background-color:#dff4ff;
+   border:1px solid #c2e1ef;
+   color:#336699;
 }
 
 /* Print */
 
 button.print, .buttons a.print{
-   //color:#529214;
+ //color:#529214;
    background-image: url(../images/pdf-icon.png);
    background-repeat: no-repeat;
    background-position: left center;
-   //background-color:#E6EFC2;
+ //background-color:#E6EFC2;
    border:1px solid #C6D880;
    margin-left: 17px;
-
 }
+
 .buttons a.print:hover, button.print:hover{
    background-color:#E6EFC2;
-      //border:1px solid;
-   //color:#529214;
+ //border:1px solid;
+ //color:#529214;
    background-image: url(../images/pdf-icon.png);
    background-repeat: no-repeat;
    background-position: left center;
@@ -101,11 +104,11 @@ button.next, .buttons a.next{
    background-color:#E6EFC2;
    border:1px solid #C6D880;
    margin-left: 17px;
-
 }
+
 .buttons a.next:hover, button.next:hover{
    background-color:#E6EFC2;
-      border:1px solid;
+   border:1px solid;
    color:#529214;
    background-image: url(../images/resultset_next.png);
    background-repeat: no-repeat;
@@ -122,11 +125,11 @@ button.go, .buttons a.go{
    background-color:#E6EFC2;
    border:1px solid #C6D880;
    margin-left: 0px;
-
 }
+
 .buttons a.go:hover, button.go:hover{
    background-color:#E6EFC2;
-      border:1px solid;
+   border:1px solid;
    color:#529214;
    background-image: url(../images/resultset_next.png);
    background-repeat: no-repeat;
@@ -136,23 +139,24 @@ button.go, .buttons a.go{
 /* Previous */
 
 button.previous, .buttons a.previous{
-    color:#529214;background-image: url(../images/resultset_previous.png);
+   color:#529214;background-image: url(../images/resultset_previous.png);
    background-repeat: no-repeat;
    background-color:#E6EFC2;
    border:1px solid #C6D880;
    background-position: left center;
    background-color:#E6EFC2;
    margin-left: 17px;
-
 }
+
 .buttons a.previous:hover, button.previous:hover{
-    background-color:#E6EFC2;
-      border:1px solid;
-    color:#529214;
-      background-image: url(../images/resultset_previous.png);
+   background-color:#E6EFC2;
+   border:1px solid;
+   color:#529214;
+   background-image: url(../images/resultset_previous.png);
    background-repeat: no-repeat;
    background-position: left center;
 }
+
 /* Save */
 
 button.save, .buttons a.save{
@@ -162,12 +166,12 @@ button.save, .buttons a.save{
    background-position: 5px center;
    background-color:#E6EFC2;
    border:1px solid #C6D880;
-
 }
+
 .buttons a.save:hover, button.save:hover{
-    background-color:#E6EFC2;
-      border:1px solid;
-    color:#529214;
+   background-color:#E6EFC2;
+   border:1px solid;
+   color:#529214;
    background-image: url(../images/disk.png);
    background-repeat: no-repeat;
    background-position: 5px center;
@@ -177,23 +181,24 @@ button.save, .buttons a.save{
 
 
 button.cancel, .buttons a.cancel{
-    color:#d12f19;
+   color:#d12f19;
    background-image: url(../images/cross.png);
    background-repeat: no-repeat;
    background-position: 5px center;
    background-color:#E6EFC2;
    border:1px solid #C6D880;
    margin-left: 17px;
-
 }
+
 .buttons a.cancel:hover, button.cancel:hover{
-    background-color:#fbe3e4;
-      border:1px solid;
-    color:#d12f19;
+   background-color:#fbe3e4;
+   border:1px solid;
+   color:#d12f19;
    background-image: url(../images/cross.png);
    background-repeat: no-repeat;
    background-position: 5px center;
 }
+
 /* Edit */
 
 button.edit, .buttons a.edit{
@@ -204,14 +209,16 @@ button.edit, .buttons a.edit{
    background-color:#E6EFC2;
    border:1px solid #C6D880;
 }
+
 .buttons a.edit:hover, button.edit:hover{
    background-color:#E6EFC2;
-      border:1px solid;
+   border:1px solid;
    color:#529214;
    background-image: url(../images/resultset_next.png);
    background-repeat: no-repeat;
    background-position: right center;
 }
+
 /* Submit */
 
 button.submit, .buttons a.submit{
@@ -222,6 +229,7 @@ button.submit, .buttons a.submit{
    background-color:#E6EFC2;
    border:1px solid #C6D880;
 }
+
 .buttons a.submit:hover, button.submit:hover{
    background-color:#E6EFC2;
       border:1px solid;
@@ -231,19 +239,19 @@ button.submit, .buttons a.submit{
    background-position: 10px center;
 }
 
-
 /* NEGATIVE */
 
 button.negative, .buttons a.negative{
-    color:#529214;background-image: url(../images/cross.png);
+   color:#529214;background-image: url(../images/cross.png);
    background-repeat: no-repeat;
    background-position: left center;
 }
+
 .buttons a.negative:hover, button.negative:hover{
-    background-color:#E6EFC2;
-    border:1px solid #C6D880;
-    color:#529214;
-      background-image: url(../images/cross.png);
+   background-color:#E6EFC2;
+   border:1px solid #C6D880;
+   color:#529214;
+   background-image: url(../images/cross.png);
    background-repeat: no-repeat;
    background-position: left center;
 }
@@ -257,14 +265,16 @@ button.review, .review a.edit{
    background-color:#E6EFC2;
    border:1px solid #C6D880;
 }
+
 .buttons a.review:hover, button.review:hover{
    background-color:#E6EFC2;
-      border:1px solid;
+   border:1px solid;
    color:#529214;
    background-image: url(../images/resultset_next.png);
    background-repeat: no-repeat;
    background-position: right center;
 }
+
 /* Aadit Test Ends*/
 #shadow-container {
    position: relative;
@@ -272,7 +282,7 @@ button.review, .review a.edit{
    top: 3px;
    margin-right: 3px;
    margin-bottom: 3px;
-   }
+}
 
 #shadow-container .shadow2,
 #shadow-container .shadow3,
@@ -280,49 +290,47 @@ button.review, .review a.edit{
    position: relative;
    left: -1px;
    top: -1px;
-   }
+}
 
-   #shadow-container .shadow1 {
-      background: #F1F0F1;
-   }
+#shadow-container .shadow1 {
+   background: #F1F0F1;
+}
 
-   #shadow-container .shadow2 {
-      background: #DBDADB;
-   }
+#shadow-container .shadow2 {
+   background: #DBDADB;
+}
 
-   #shadow-container .shadow3    {
-      background: #B8B6B8;
-   }
+#shadow-container .shadow3 {
+   background: #B8B6B8;
+}
 
-   #shadow-container .container {
-      background: #ffffff;
-      border: 1px solid #848284;
-      padding: 5px;
-      background-color:#E8E6CF;
-      background-image:url(../images/news_gradient.jpg);
-      background-repeat:repeat-x;
-   }
+#shadow-container .container {
+   background: #ffffff;
+   border: 1px solid #848284;
+   padding: 5px;
+   background-color:#E8E6CF;
+   background-image:url(../images/news_gradient.jpg);
+   background-repeat:repeat-x;
+}
 
 .shadow-container h3 {
-      padding:5px 10px;font:bold 1.1em tahoma;margin-left:2px;
-      }
+   padding:5px 10px;font:bold 1.1em tahoma;margin-left:2px;
+}
 
 /**** For  picture border ***/
 
 .picture {
-
-      background-color: #F9F9F9;
-      border: 1px solid #CCCCCC; padding: 5px;
-      font: 11px/1.4em Arial, sans-serif;
-      }
+   background-color: #F9F9F9;
+   border: 1px solid #CCCCCC; padding: 5px;
+   font: 11px/1.4em Arial, sans-serif;
+}
 
 .picture img {
-
-      border: 1px solid #CCCCCC;
-      vertical-align:middle;
-      margin-bottom: 13px;
-      text-align: left;
-      }
+   border: 1px solid #CCCCCC;
+   vertical-align:middle;
+   margin-bottom: 13px;
+   text-align: left;
+}
 
 /** Added to match ENC news**/
 .pastnews {
@@ -332,13 +340,13 @@ button.review, .review a.edit{
    height:55px;
    margin-left:10px;
    margin-top:10px;
-   }
+}
 
 .hdrtext {
-      color:#605E44;
-      font-size:13px;
-      font-weight:bold;
-   }
+   color:#605E44;
+   font-size:13px;
+   font-weight:bold;
+}
 
 .homepagetitle{
    border-top: 1px solid #E8E3D4;
@@ -353,17 +361,15 @@ button.review, .review a.edit{
    font-weight: bold;
    color: #FFFFFF;
    text-indent: 10px;
-   }
+}
 /*Aadit addition ends**/
 
 .rptstyle{
-
    font-weight:bold;
    font-family:Arial;
    font-size:8pt;
    text-align:center;
-   }
-
+}
 
 button{
    display: block;
@@ -378,67 +384,62 @@ button{
    padding-right: 4px;
    padding-bottom: 1px;
    padding-left: 4px;
-
-
-   }
-
+}
 
 button:hover{
    border-style: inset;
    padding: 2px 3px 0 5px; /*shift text 1px to the right and down*/
    cursor: pointer;
-   }
-
+}
 
 table button{
-    font-family:Verdana, Arial, Helvetica, sans-serif;
-    font-size: 11px;
-    font-weight:bold;
-    height:22px
-   }
-
+   font-family:Verdana, Arial, Helvetica, sans-serif;
+   font-size: 11px;
+   font-weight:bold;
+   height:22px
+}
 
 a{
-      color: #006699;
-      text-decoration: none;
-   }
+   color: #006699;
+   text-decoration: none;
+}
 
 a:link{
-    color: #006699;
-    text-decoration: none;
-   }
+   color: #006699;
+   text-decoration: none;
+}
 
 a:visited{
-    color: #006699;
-    text-decoration: none;
-   }
+   color: #006699;
+   text-decoration: none;
+}
 
 a:hover{
-    color: #006699;
-    text-decoration: underline;
-   }
+   color: #006699;
+   text-decoration: underline;
+}
 
 h1{
-    font-family:Verdana, Arial, Helvetica, sans-serif;
-    font-size: 120%;
-      color: #334d55;
-    margin: 0px;
-    padding: 0px;
-   }
+   font-family:Verdana, Arial, Helvetica, sans-serif;
+   font-size: 120%;
+   color: #334d55;
+   margin: 0px;
+   padding: 0px;
+}
 
 h2{
-    font-size: 12px;
-    font-weight: bold;
-    color: #000000;
-   }
+   font-size: 12px;
+   font-weight: bold;
+   color: #000000;
+}
 
 h3{
-    font-family:Verdana, Arial, Helvetica, sans-serif;
-    font-size: 100%;
-    color: #334d55;
-    margin: 0px;
-    padding: 0px;
-   }
+   font-family:Verdana, Arial, Helvetica, sans-serif;
+   font-size: 100%;
+   color: #334d55;
+   margin: 0px;
+   padding: 0px;
+}
 
 h4{
    font-family:Verdana, Arial, Helvetica, sans-serif;
@@ -447,7 +448,7 @@ h4{
    color: #333333;
    margin: 0px;
    padding: 0px;
-   }
+}
 
 h5{
    font-family:Verdana, Arial, Helvetica, sans-serif;
@@ -455,19 +456,19 @@ h5{
    color: #334d55;
    margin: 0px;
    padding: 0px;
-   }
+}
 
 ul{
    list-style-type: square;
-   }
+}
 
 ul ul{
    list-style-type: disc;
-   }
+}
 
 ul ul ul{
    list-style-type: none;
-   }
+}
 
 label{
    font-family:Verdana, Arial, Helvetica, sans-serif;
@@ -475,13 +476,13 @@ label{
    font-size: 12px;
    font-weight: bold;
    color: #334d55;
-   }
+}
 
 /************ Table Scrolling style *********/
 .tableScroll {
    overflow: auto;
    margin: 0 auto;
-   }
+}
 
 .tableScroll table {
    width: 99%;    /*100% of container produces horiz. scroll in Mozilla*/
@@ -490,63 +491,63 @@ label{
    background-color: #f7f7f7;
    border-collapse: separate; /* if I don't do this, on Firefox I get grid lines past the end of table */
    border-spacing: 0px;
-   }
+}
 
 /* this is too much since it works on all tables
 table tr:hover td {
    background-color: #E8E3D4;
-   } */
+} */
 
 .tableScroll tr:hover td {
    background-color: #E8E3D4;  /* this is working for a standard td */
-   }
+}
 
 .tableScroll table>tbody   {  /* child selector syntax which IE6 and older do not support*/
    overflow: auto;
    overflow-x: hidden;
-   }
+}
 
-.tableScroll thead tr   {
+.tableScroll thead tr {
    position:relative;
    top: expression(offsetParent.scrollTop); /*IE5+ only*/
-   }
+}
 
 .tableScroll thead td, thead th {
    color: steelblue;
    font-weight: bold;
    border-top: solid 1px #d8d8d8;
-   }
+}
 
-.tableScroll td   {
+.tableScroll td {
    color: #000;
    padding-top: 1px;
    padding-right: 2px;
    padding-bottom: 1px;
    font-size: 11px;
-   }
+}
 
-.tableScroll tfoot td   {
+.tableScroll tfoot td {
    text-align: center;
    font-size: 11px;
    font-weight: bold;
    background-color: papayawhip;
    color: steelblue;
    border-top: solid 2px slategray;
-   }
+}
 
 .tableScroll td:last-child {
    padding-right: 20px; /*prevent Mozilla scrollbar from hiding cell content*/
-   }
+}
 
 /************ Relative Positioning Table styles ************/
 
 .relposTable table{
-   }
+}
 
 tr.odd{
    border: 1px solid #ccc;  /* light gray */
    background-color: #fdf;
-   }
+}
 
 /************ Table Sort styles ************/
 table{
@@ -556,36 +557,35 @@ table{
    margin-bottom: 1em;
    margin-left: 0em;
    border-collapse: collapse;
-   }
+}
 
 table tr:hover{ /* can't get this to work!!! */
-  background-color: #E8E3D4;
-   }
+   background-color: #E8E3D4;
+}
 
 
 tbody tr.odd{
    border: 1px solid #ccc;  /* light gray */
    background-color: #ddf;  /* somewhere between light blue and light purple */
-   }
+}
 
 tbody tr{
    border: 1px solid #ccc;
-   }
+}
 
 tbody tr:hover{
-  background-color: #E8E3D4;
-   }
+   background-color: #E8E3D4;
+}
 
 td.numeric,
 th.numeric{
    text-align: right;
-   }
+}
 
 thead th.gridheading{
    color: #000;
    background-color: #E8E8E8;
-   }
-
+}
 
 thead th,
 tfoot th{
@@ -597,11 +597,11 @@ tfoot th{
    border: 1px solid #334d55;
    background-image:url(../images/top-gradient.gif);
    color:#000080;
-   }
+}
 
 tfoot td{
    border-top: 1px solid #ccc;
-   }
+}
 
 tbody td{
    font-family:Verdana, Arial, Helvetica, sans-serif;
@@ -609,35 +609,34 @@ tbody td{
    color: #334d55;
    border: 1px solid #ccc;
    padding: 0.25em;
-   }
+}
 
 table.sortable thead th{
    background-color:#E8E8E8;
    color:#000080;
    cursor: pointer;
-   }
+}
 
 table.sortable tr.odd{
    background-color: #ddf;
-   }
+}
 
 table.sortable tr{
-
-   }
+}
 
 table.sortable tr:hover{
-  background-color: #E8E3D4;
-   }
+   background-color: #E8E3D4;
+}
 
 table.tableStyle1 tr.odd{
    border: 1px solid #ccc;
    background-color: #ffb;
-   }
+}
 
 table.tableStyle1 tr{
    border: 1px solid #ccc;
    background-color: #ffc;
-   }
+}
 
 /* Purchase Order */
 
@@ -649,8 +648,7 @@ table.tableStyle1 tr{
    margin-left: 0em;
    border-collapse: collapse;
    text-align: right;
-
-   }
+}
 
 .postatus
 {
@@ -680,6 +678,7 @@ table.tableStyle1 tr{
    border-left-color-rtl-source: physical;
    background-color: #FFFF33;
 }
+
 /* Budget Header Table */
 
 .budget{
@@ -690,40 +689,40 @@ table.tableStyle1 tr{
    margin-left: 0em;
    border-collapse: collapse;
    text-align: right;
-   }
+}
 
 .budget tr:hover{ /* can't get this to work!!! */
-  background-color: #E8E3D4;
-   }
-
+   background-color: #E8E3D4;
+}
 
 .budget tbody tr.odd{
    border: 1px solid #ccc;
    background-color: #ddf;
-   }
+}
 
 .budget tbody tr{
    border: 1px solid #ccc;
-   }
+}
 
 .budget tbody tr:hover{
-  background-color: #E8E3D4;
-   }
+   background-color: #E8E3D4;
+}
 
 .budget td.numeric,
 .budget th.numeric{
    text-align: right;
-   }
+}
 
 .budget thead th.gridheading{
    color: #000;
-   }
+}
 
 .budgetrequesttitle{
    font-size: 14px;
    font-weight: bolder;
    font-style: normal;
 }
+
 .tabletitle{
    background-image:url(../images/bg_developerNav.gif);
    font-size: 13px;
@@ -732,6 +731,7 @@ table.tableStyle1 tr{
    padding-right: 10px;
    padding-left: 10px;
 }
+
 .budget thead th,
 .budget tfoot th{
    font-family:Verdana, Arial, Helvetica, sans-serif;
@@ -739,23 +739,24 @@ table.tableStyle1 tr{
    font-weight: bold;
    padding: 0.5em;
    text-align: left;
-   /*border: 5px solid #334d55;*/
+ //border: 5px solid #334d55;
    background-image:url(../images/top-gradient.gif);
    color:#000080;
    background-color: #FFCC00;
-   }
+}
 
 .budget tfoot td{
-   /*border-top: 1px solid #ccc;*/border: 1px solid #ccc;
-   }
+ //border-top: 1px solid #ccc;
+   border: 1px solid #ccc;
+}
 
 .budget tbody td{
    font-family:Verdana, Arial, Helvetica, sans-serif;
    font-size: 11px;
    color: #334d55;
-  /* border: 1px solid #ccc;*/
+ //border: 1px solid #ccc;
    padding: 0.25em;
-   }
+}
 
 .budgetheader{
    width: 80%;
@@ -766,46 +767,42 @@ table.tableStyle1 tr{
    border-collapse: collapse;
    text-align: center;
    background-position: center;
+}
 
-   }
-
-   .budgetblock{
+.budgetblock{
    width: 80%;
    margin-top: 0em;
    border-collapse: collapse;
    text-align: right;
    background-position: center;
-
-   }
-
+}
 
 .title{
    font-family:Verdana, Arial, Helvetica, sans-serif;
    font-size: 11px;
    color: #2B4D73;
-   /* border: 1px solid #ccc;*/
+ //border: 1px solid #ccc;
    padding: 0.25em;
    font-weight: bold;
-   }
-
+}
 
 table.sortable thead th{
    background-color:#E8E8E8;
    color:#000080;
    cursor: pointer;
-   }
+}
 
 table.sortable tr.odd{
    background-color: #ddf;
-   }
+}
 
 table.sortable tr{
 
-   }
+}
 
 table.sortable tr:hover{
-  background-color: #E8E3D4;
-   }
+   background-color: #E8E3D4;
+}
 
 /* Budget Header Table Ends */
 fieldset table{
@@ -813,16 +810,16 @@ fieldset table{
    margin-right: 0em;
    margin-bottom: 1em;
    margin-left: 0em;
-   }
+}
 
 fieldset table tr.odd{
    border: 1px solid #ccc;  /* light gray */
    background-color: blue; /* #ddf;  somewhere between light blue and light purple */
-   }
+}
 
 fieldset table td{
    background-color: #ffc;  /* light yellow ... table within fieldset normal background color */
-   }
+}
 
 select{
    font-family: Verdana, Arial, Helvetica, sans-serif;
@@ -834,49 +831,47 @@ select{
    font-size-adjust: none;
    font-stretch: normal;
    -x-system-font: none;
-   }
+}
 
 input{
    font-family:Verdana, Arial, Helvetica, sans-serif;
    font-size: 11px;
    height: 14px;
-   }
+}
 
 table input{
-    /*font-family:Verdana, Arial, Helvetica, sans-serif;
-    font-size: 11px;*/
-    height: 14px;
+ /*font-family:Verdana, Arial, Helvetica, sans-serif;
+   font-size: 11px;*/
+   height: 14px;
    padding: 1px;
    color: black;
    border-width: 1px;
    border-style: solid;
    background-color: #f8f8f8;
-   border-color:black;/* #d4d4d4 #ebebeb #ebebeb #d4d4d4;   */
+   border-color:black; /* #d4d4d4 #ebebeb #ebebeb #d4d4d4;*/
    font: 11px 'Lucida Grande', Verdana, Helvetica, sans-serif;
-   }
+}
 
 table input:hover{
-    background-color:#ffffcc;
-    background-image:none;
-    background-repeat:repeat;
-    background-attachment:scroll;
-    background-position:0% 0%;
-
-   }
+   background-color:#ffffcc;
+   background-image:none;
+   background-repeat:repeat;
+   background-attachment:scroll;
+   background-position:0% 0%;
+}
 table input:focus, textarea:focus{
-
-background: #FDBF57;
-
+   background: #FDBF57;
 }
 
 table select{
    height: 18px;
-      color: black;
+   color: black;
    border-width: 1px;
    border-style: solid;
    border-color:black;/* #d4d4d4 #ebebeb #ebebeb #d4d4d4;   */
    font: 11px 'Lucida Grande', Verdana, Helvetica, sans-serif;
-   }
+}
+
 table select:focus{
    height: 18px;
    color: black;
@@ -885,22 +880,21 @@ table select:focus{
    background-color: #EFFAE6;
    border-color:black;/* #d4d4d4 #ebebeb #ebebeb #d4d4d4;   */
    font: 11px 'Lucida Grande', Verdana, Helvetica, sans-serif;
-   }
+}
 
 li{
    font-family:Verdana, Arial, Helvetica, sans-serif;
    font-size: 11px;
-   }
+}
 
 textarea{
    font-family:Verdana, Arial, Helvetica, sans-serif;
    font-size: 11px;
-   }
+}
 
 img {
    border: none;
-   }
-
+}
 
 /*********** PAGE PARTS  **************/
 
@@ -917,7 +911,7 @@ img {
    padding-right: 5px;
    font-size:  13px;
    font-weight: bold;
-   color:      black;
+   color: black;
    text-align: left;
 }
 
@@ -931,76 +925,73 @@ img {
    text-transform: none;
    color: #231e0c;
    text-decoration: none;
-   }
+}
 
 .alignright{
    text-align: right;
-   }
+}
 
 .attendanceAbsent{
    font-size: 11px;
    font-weight: bold;
    color:red;
-   }
+}
 
 .attendanceTardy{
    font-size: 11px;
    font-weight: bold;
    color:red;
-   }
+}
 
 .attendanceExcused{
    font-size: 11px;
    font-weight: bold;
    color:red;
-   }
+}
 
 .broadcastmessages{
    font-size: 12px;
    font-weight: normal;
-   }
+}
 
 .broadcastmessages table{
    font-weight: normal;
-   }
-
+}
 
 .broadcastmessages tbody tr.odd{
    border: 0px;
    background-color: #fff;
    height: 40px;
-   }
+}
 
 .broadcastmessages tbody tr{
    border: 0px;
    background-color: #fff;
    height: 40px;
-   }
+}
 
 .broadcastmessages thead th,tfoot th {
    color:#7B2E00;
-   }
-
+}
 
 .broadcastmessages tbody td {
    border: 0px;
-   }
+}
 
 .broadcastmessages tbody tr:hover {
   background-color: #E8E3D4;
-   }
+}
 
 .budgetlegend{
    border: solid darkgray;
    border-width: 1px 1px 1px 1px;
    border-style: inset;
-   }
+}
 
 .budgettolerance{
-
    padding-right: 5px;
    padding-left: 25px;
-   }
+}
 
 .budgettop{
    width: 800px;
@@ -1017,6 +1008,7 @@ img {
    border-bottom-color: darkgray;
    padding-right: 5px;
 }
+
 .budgettitle{
 
    font-size: 14px;
@@ -1025,6 +1017,7 @@ img {
    padding-right: 10px;
    padding-left: 10px;
 }
+
 .budgetheading{
 
    font-weight: bold;
@@ -1034,16 +1027,14 @@ img {
    font-size: 11px;
    color: #334d55;
    /* border: 1px solid #ccc;*/
-
-
-   }
+}
 
 .budgetheading3yr{
    font-size:  10px;
    font-weight: bold;
    text-align: right;
    text-decoration: underline;
-   }
+}
 
 .centertext{
    text-align: center;
@@ -1051,32 +1042,32 @@ img {
 
 .controlhidden{
    visibility: hidden;
-   }
+}
 
 .colorRed{
    color: red;
-   }
+}
 
 .contentdescription{
    font-size: 12px;
    font-family: Verdana, Arial, Helvetica, sans-serif;
    color: black;
-   }
+}
 
 .dropwidth{
    width: 100px;
-   }
+}
 
 .divtable{
    valign:top;
    margin-top:0px;
    margin-bottom:0px;
    width:100%;
-   }
+}
 
 .divcontent{
    margin-left: 12px;
-   }
+}
 
 .divborder{
    border: solid darkgray;
@@ -1091,7 +1082,6 @@ img {
 }
 
 .centerborder{
-
    -moz-border-radius: 5px;
    -webkit-border-radius: 5px;
    border: 1px solid #000;
@@ -1115,8 +1105,7 @@ img {
    border-bottom-style: groove;
    border-bottom-color: #000000;
    padding-right: 5px;
-   color:      black;}
-
+   color: black;}
 
 .bordertop{
    width: 775px;
@@ -1177,20 +1166,17 @@ img {
    border: solid darkgray;
    border-width: 1px 1px 1px 1px;
    border-style: inset;
-   }
-
+}
 
 .divtopborder{
    border-top: solid black;
    border-top-width: 1px;
-   }
-
+}
 
 .divmessage{
    text-align: center;
    font-size: 11px;
-   }
-
+}
 
 .formStylebutton button{
    display: block;
@@ -1199,12 +1185,12 @@ img {
    padding: 0px 5px 0px 5px;
    width: 8em;
    background-color: #fc0;
-   }
+}
 
 .grouptable{
    margin: 0px;
    padding: 0px;
-   }
+}
 
 .grouptable table{
    margin-top: -1px;
@@ -1213,24 +1199,24 @@ img {
    margin-left: -3px;
    border-collapse: collapse;
    padding: 0px;
-   }
+}
 .grouptable tbody{
    margin-top: -1px;
    margin-bottom: -1px;
-   }
+}
 
 .grouptable table tr:hover{ /* can't get this to work!!! */
   background-color: white;
-   }
+}
 
 
 .grouptable tbody tr{
    border: 0px;
-   }
+}
 
 .grouptable tbody tr:hover{
   background-color: white;
-   }
+}
 
 .grouptable tbody td{
    font-family:Verdana, Arial, Helvetica, sans-serif;
@@ -1238,31 +1224,30 @@ img {
    color: #334d55;
    border: 0px;
    padding: 0.25em;
-   }
-
+}
 
 .securityqtnlstbox{
    overflow:scroll;
-   }
+}
 
 .hidden{
    display: none;
-   }
+}
 
 .headertop{
-   /* font-size:  22px; */
+ //font-size:  22px;
    font-size:  15px;
    font-weight: bold;
    color:      black;
    text-align: left;
-   }
+}
 
 .headertopsmall{
    font-size:  12px;
    font-weight: bold;
    color:      black;
    text-align: left;
-   }
+}
 
 .headertopcenter{
    padding-top: 14px;
@@ -1274,7 +1259,7 @@ img {
    clear: both;
    margin-top: -14px;
    margin-left: -14px;
-   }
+}
 
 .headertop{
    color:#52839E;
@@ -1286,7 +1271,8 @@ img {
    float: right;
    padding-top: 10px;
    padding-right: 25px;
-   }
+}
+
 .headertopprinterfriendly{
    color:#52839E;
    font-size:  11px;
@@ -1297,7 +1283,7 @@ img {
    float: right;
    padding-top: 10px;
    padding-right: 25px;
-   }
+}
 
 .headertopcenterinquiry{
    background: transparent url(../images/side_bg.png) repeat-x top center;
@@ -1311,7 +1297,8 @@ img {
    border-bottom-style: solid;
    border-bottom-color: #ced2d2;
    height: 20px;
-   }
+}
+
 .headertopcenternosidemenu{
    color:#52839E;
    font-size:  14px;
@@ -1320,7 +1307,7 @@ img {
    width: 100%;
    margin-bottom: 1em;
    height: 20px;
-   }
+}
 
 .headertopcenternb{
    padding-top: 14px;
@@ -1332,7 +1319,7 @@ img {
    clear: both;
    margin-top: -14px;
    margin-left: -14px;
-   }
+}
 
 .headerstartup{
    font-size:  13px;
@@ -1343,26 +1330,26 @@ img {
    clear: both;
    margin-top: -14px;
    margin-left: 0px;
-   }
+}
 
 .lastnamewidth{
    width: 200px;
-   }
+}
 
 .noborder{
    border: 0;
-   }
+}
 
 .rightjustify{
    text-align: right;
-   }
+}
 
 .securityquestionborder{
    border: solid #529214;
    border-width: 1px 1px 1px 1px;
    font-size: 11px;
    font-weight: normal;
-   }
+}
 
 .tableexport{
    border: solid darkgray;
@@ -1388,22 +1375,21 @@ img {
    font-size: 11px;
    font-family: Verdana, Arial, Helvetica, sans-serif;
    color: #FF0000;
-
-   }
+}
 
 .textalertbold{
    font-size: 11px;
    font-family: Verdana, Arial, Helvetica, sans-serif;
    color: #FF0000;
    font-weight: bold;
-   }
+}
 
 .textalertboldgreen{
    font-size: 11px;
    font-family: Verdana, Arial, Helvetica, sans-serif;
    color: #009900;
    font-weight: bold;
-   }
+}
 
 .textpagedivider{
    font-size: 11px;
@@ -1411,102 +1397,102 @@ img {
    padding-left: 3px;
    background-color: #bbf;
    border: solid #000000;
-   }
+}
 
 .textlabel{
    font-size: 11px;
    font: arial, helevetica, verdana, sans-serif;
-   }
+}
 
 .text10{
    font-size: 11px;
-   }
+}
 
 .text9light{
    text-align: right;
    font-size: 9px;
    font-weight: 100;
-   }
+}
 
 .text10Red {
    font-size: 11px;
    color: #ff0000;
-   }
+}
 
 .text10bold{
    font-size: 11px;
    font-family: Verdana, Arial, Helvetica, sans-serif;
    font-weight: bold;
    color: #000000;
-   }
+}
 
 .text12bold{
    font-size: 11px;
    font-weight: bold;
    font-family: Verdana, Arial, Helvetica, sans-serif;
-   }
+}
 
 .text12{
    font-size: 11px;
    font-family: Verdana, Arial, Helvetica, sans-serif;
-   }
+}
 
 .text14{
    font-size: 11px;
    font-family:Verdana, Arial, Helvetica, sans-serif;
-   }
+}
 
 .text14bold{
    font-size: 11px;
    font-family: Verdana, Arial, Helvetica, sans-serif;
    font-weight: bold;
    color: #000000;
-   }
+}
 
 .text12border{
    font-size: 11px;
    border: 2px;
    background-color: #FFFFCC;
-   }
+}
 
 .textborder{
    font-size: 11px;
    border: solid #8cacbb;
    border-width: 1px 1px 1px 1px;
-   }
+}
 
 .text28{
    font-size: 22px;
    border: 2px;
    color: black;
-   }
+}
 
 .text36{
    font-size: 36px;
-   }
+}
 
 tablemargin{
    width: 80%;
    margin-top: 1em;
    margin-right: 1em;
-   }
+}
 
 underlinetext a{
    text-decoration: underline;
-   }
+}
 
 .groupingtitle{
    font-size: 11px;
    font-family: Verdana, Arial, Helvetica, sans-serif;
    font-weight: bold;
    background-color:#E8E8E8;
-   }
+}
 
 .welcomemessage{
    font-size: 12px;
    font-family: Verdana, Arial, Helvetica, sans-serif;
    font-weight: bold;
-   }
+}
 
 /************* SEARCH STYLES ***************/
 
@@ -1514,18 +1500,18 @@ underlinetext a{
    padding: 5px 0px 5px 10px;
    border-bottom: 1px solid #cccccc;
    font-size: 90%;
-   }
+}
 
 #search form{
    margin: 0px;
    padding: 0px;
-   }
+}
 
 #search label{
    display: block;
    margin: 0px;
    padding: 0px;
-   }
+}
 
 /************** #PRINT styles **************/
 
@@ -1536,11 +1522,11 @@ underlinetext a{
    padding:10px;
    float:left;
    width:95%;
-   }
+}
 
 .print_section p.printbutton{
    float:left;
-   }
+}
 
 .print_section p.printbutton a{
    text-decoration:none;
@@ -1550,8 +1536,7 @@ underlinetext a{
    margin:3px;
    padding:10px;
    border:1px solid red;
-   }
-
+}
 
 /***********************************************/
 /* This css has 3 possible columns for content.  Left is the navigation, middle and right. 2 real content areas. */
@@ -1560,35 +1545,36 @@ underlinetext a{
 
 span.cw{
    z-index:1
-   }
+}
 
 div.cw{
    z-index:1
-   }
+}
 
 table.cw{
    z-index:1
-   }
+}
 
 tr.cw{
    z-index:1
-   }
+}
 
 td.cw{
    z-index:1
-   }
+}
 
 /***********************************************/
 
-.scw           {
+.scw{
    padding:1px;
    vertical-align:middle;
-   }
+}
+
 iframe.scw{
    position:absolute;z-index:1;
    top:0px;left:0px;visibility:hidden;
     width:1px;height:1px;
-   }
+}
 
 table.scw{
    visibility:hidden;
@@ -1599,16 +1585,18 @@ table.scw{
    left:0px;
    z-index:2;
    text-align:center;
-   }
+}
 
 /* IMPORTANT:  The SCW calendar script requires all the classes defined here. */
 /*Redundant - Aadit? Not sure what this is doing 3/20/2009
-table.scw  {padding:       1px;
-                vertical-align:middle;
-                border:        ridge 2px;
-                font-size:     7pt;
-                font-family: Arial,Helvetica,Sans-Serif;
-                font-weight:   bold;}*/
+table.scw {
+   padding:       1px;
+   vertical-align:middle;
+   border:        ridge 2px;
+   font-size:     7pt;
+   font-family: Arial,Helvetica,Sans-Serif;
+   font-weight:   bold;
+}*/
 td.scw,
 td.scw,
 td.scwDrag,
@@ -1616,15 +1604,15 @@ td.scwHead{
    padding:0px 0px;
    border: 0px;
    text-align: center;
-   }
+}
 
 td.scwDrag {
    font-size: 7pt;
-   }
+}
 
 select.scwHead{
    margin:3px 1px;
-   }
+}
 
 input.scwHead{
    height:22px;
@@ -1635,7 +1623,7 @@ input.scwHead{
    font-weight:bold;
    font-size:7pt;
    font-family:fixedSys;
-   }
+}
 
 td.scwWeekNumberHead,
 td.scwWeek{
@@ -1644,7 +1632,7 @@ td.scwWeek{
    text-align:center;
    font-weight:bold;
    background-color: #538ED5;
-   }
+}
 
 td.scwFoot,
 td.scwFootHover,
@@ -1654,13 +1642,13 @@ td.scwFootDisabled{
    border: 0px;
    text-align:center;
    font-weight:normal;
-   }
+}
 
 table.scwCells{
    text-align:right;
    font-size:7pt;
    width:100%;
-   }
+}
 
 td.scwCells,
 td.scwCellsHover,
@@ -1686,68 +1674,78 @@ td.scwWeeks{
    height:16px;
    font-weight:bold;
    vertical-align:middle;
-   }
+}
 /* Blend the colours into your page here...    */
 /* Calendar background */
 
 table.scw{
    background-color:  #ffffff;
-   }
+}
 
 /* Drag Handle */
 
 td.scwDrag{
    background-color:#9999CC;
    color:#CCCCFF;
-   }
+}
+
 /* Week number heading */
 td.scwWeekNumberHead{
    color:#FFFFFF;
-   }
+}
+
 /* Week day headings */
 td.scwWeek{
    color:#CCCCCC;
-   }
+}
+
 /* Week numbers */
 td.scwWeekNo{
    background-color:#776677;
    color:#CCCCCC;
-   }
+}
+
 /* Enabled Days */
 /* Week Day */
 td.scwCells{
    color:#000000;
-   }
+}
+
 /* Day matching the input date */
 td.scwInputDate{
    background-color:#CC9999;
    color:#FF0000;
-   }
+}
+
 /* Weekend Day */
 td.scwCellsWeekend{
    color:#CC0000;
-   }
+}
+
 /* Day outside the current month */
 td.scwCellsExMonth{
    color:#666666;
-   }
+}
+
 /* Today selector */
 td.scwFoot {
    background-color:#538ED5;
    color:#FFFFFF;
-   }
-/* MouseOver/Hover formatting
-       If you want to "turn off" any of the formatting
-       then just set to the same as the standard format
-       above.
+}
 
-       Note: The reason that the following are
-       implemented using both a class and a :hover
-       pseudoclass is because Opera handles the rendering
-       involved in the class swap very poorly and IE6
-       (and below) only implements pseudoclasses on the
-       anchor tag.
+/* MouseOver/Hover formatting
+   If you want to "turn off" any of the formatting
+   then just set to the same as the standard format
+   above.
+
+   Note: The reason that the following are
+   implemented using both a class and a :hover
+   pseudoclass is because Opera handles the rendering
+   involved in the class swap very poorly and IE6
+   (and below) only implements pseudoclasses on the
+   anchor tag.
 */
+
 /* Active cells */
 td.scwCells:hover,
 td.scwCellsHover{
@@ -1758,7 +1756,8 @@ td.scwCellsHover{
    background-image: url(../images/i-heart-ny-active.gif);
    background-position: center;
    background-repeat: no-repeat;
-   }
+}
+
 /* Day matching the input date */
 td.scwInputDate:hover,
 td.scwInputDateHover{
@@ -1766,62 +1765,68 @@ td.scwInputDateHover{
    cursor:pointer;
    cursor:hand;
    color:#000000;
-   }
+}
+
 /* Weekend cells */
 td.scwCellsWeekend:hover,
 td.scwCellsWeekendHover{
    background-color:#FFFF00;
    cursor:pointer;
-    cursor:hand;
+   cursor:hand;
    color:#000000;
    background-image: url(../images/i-heart-ny-active.gif);
    background-position: center;
    background-repeat: no-repeat;
-   }
+}
+
 /* Day outside the current month */
 td.scwCellsExMonth:hover,
 td.scwCellsExMonthHover{
    background-color:#FFFF00;
    cursor:pointer;
-    cursor:hand;
-    color:#000000;
+   cursor:hand;
+   color:#000000;
    background-image: url(../images/i-heart-ny-active.gif);
    background-position: center;
    background-repeat: no-repeat;
-   }
+}
+
 /* Today selector */
 td.scwFoot:hover,
 td.scwFootHover{
    color:#FFFF00;
-    cursor:pointer;
-    cursor:hand;
-    font-weight:bold;
-   }
+   cursor:pointer;
+   cursor:hand;
+   font-weight:bold;
+}
+
 /* Disabled cells */
 /* Week Day */
 /* Day matching the input date */
 td.scwInputDateDisabled{
    background-color:  #999999;
    color:#000000;
-   }
+}
 
 td.scwCellsDisabled{
    background-color:#999999;
    color:#000000;
-   }
+}
+
 /* Weekend Day */
 td.scwCellsWeekendDisabled{
    background-color:#999999;
    color:#CC6666;
-   }
+}
+
 /* Day outside the current month */
 td.scwCellsExMonthDisabled{
    background-color:#999999;
    color:#666666;
-   }
+}
 
 td.scwFootDisabled{
    background-color:#6666CC;
    color:#FFFFFF;
-   }
+}
 

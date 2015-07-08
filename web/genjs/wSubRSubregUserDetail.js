@@ -252,6 +252,8 @@ function InitSubregistrant( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wSubRSubregUserDetail.zAction.value = "InitSubregistrant";
+      document.wSubRSubregUserDetail.submit( );
    }
 }
 

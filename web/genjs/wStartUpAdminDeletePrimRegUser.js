@@ -261,6 +261,8 @@ function InitDeletePrimRegUser( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wStartUpAdminDeletePrimRegUser.zAction.value = "InitDeletePrimRegUser";
+      document.wStartUpAdminDeletePrimRegUser.submit( );
    }
 }
 

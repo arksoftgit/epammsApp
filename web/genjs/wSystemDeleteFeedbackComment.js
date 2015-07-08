@@ -206,6 +206,8 @@ function InitDeleteFeedbackComment( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wSystemDeleteFeedbackComment.zAction.value = "InitDeleteFeedbackComment";
+      document.wSystemDeleteFeedbackComment.submit( );
    }
 }
 

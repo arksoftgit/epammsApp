@@ -255,6 +255,8 @@ function InitSubregUserForUpdate( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wStartUpAdminUpdateSubregUser.zAction.value = "InitSubregUserForUpdate";
+      document.wStartUpAdminUpdateSubregUser.submit( );
    }
 }
 

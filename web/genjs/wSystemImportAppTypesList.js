@@ -178,7 +178,7 @@ function _AfterPageLoaded( )
    thisLi.style.display = "none";
    // END of Javascript code entered by user.
 
-   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
+var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
 }
 
@@ -251,6 +251,8 @@ function InitImportAppTypesList( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wSystemImportAppTypesList.zAction.value = "InitImportAppTypesList";
+      document.wSystemImportAppTypesList.submit( );
    }
 }
 
@@ -262,6 +264,20 @@ function SortAppTypesList( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      // Javascript code entered by user.
+
+   var str = document.wSystemImportAppTypesList.Import.value;
+   var splitArray = str.split( '\n' );
+// alert( "SplitArray: " + splitArray );
+   splitArray.sort( );
+// alert( "SplitArray: " + splitArray );
+   document.wSystemImportAppTypesList.Import.value = splitArray.join( '\n' );
+   return;
+
+      // END of Javascript code entered by user.
+
+      document.wSystemImportAppTypesList.zAction.value = "SortAppTypesList";
+      document.wSystemImportAppTypesList.submit( );
    }
 }
 
@@ -273,6 +289,20 @@ function SortWorkList( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      // Javascript code entered by user.
+
+   var str = document.wSystemImportAppTypesList.Work.value;
+   var splitArray = str.split( '\n' );
+// alert( "SplitArray: " + splitArray );
+   splitArray.sort( );
+// alert( "SplitArray: " + splitArray );
+   document.wSystemImportAppTypesList.Work.value = splitArray.join( '\n' );
+   return;
+
+      // END of Javascript code entered by user.
+
+      document.wSystemImportAppTypesList.zAction.value = "SortWorkList";
+      document.wSystemImportAppTypesList.submit( );
    }
 }
 

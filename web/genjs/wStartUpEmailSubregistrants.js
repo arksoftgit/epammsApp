@@ -296,6 +296,8 @@ function InitEmailProspects( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wStartUpEmailSubregistrants.zAction.value = "InitEmailProspects";
+      document.wStartUpEmailSubregistrants.submit( );
    }
 }
 

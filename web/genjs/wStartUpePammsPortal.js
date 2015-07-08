@@ -224,6 +224,8 @@ function InitPortal( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wStartUpePammsPortal.zAction.value = "InitPortal";
+      document.wStartUpePammsPortal.submit( );
    }
 }
 

@@ -241,6 +241,8 @@ function InitColorForUpdate( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wStartUpSubregColorUpdate.zAction.value = "InitColorForUpdate";
+      document.wStartUpSubregColorUpdate.submit( );
    }
 }
 

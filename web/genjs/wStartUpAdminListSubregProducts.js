@@ -236,6 +236,8 @@ function InitListSubregProducts( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wStartUpAdminListSubregProducts.zAction.value = "InitListSubregProducts";
+      document.wStartUpAdminListSubregProducts.submit( );
    }
 }
 

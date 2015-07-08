@@ -251,6 +251,8 @@ function InitSystemKeywordForInsert( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wSystemNewSystemKeyword.zAction.value = "InitSystemKeywordForInsert";
+      document.wSystemNewSystemKeyword.submit( );
    }
 }
 

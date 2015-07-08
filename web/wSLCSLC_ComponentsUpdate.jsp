@@ -580,8 +580,8 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
    session.setAttribute( "ZeidonError", null );
 else
 {
-   VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCSLC_ComponentsUpdate", "wSLC.PostbuildSLC_Update" );
-   nOptRC = wSLC.PostbuildSLC_Update( new zVIEW( vKZXMLPGO ) );
+   VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCSLC_ComponentsUpdate", "wSLC.PrebuildSLC_Update" );
+   nOptRC = wSLC.PrebuildSLC_Update( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -593,7 +593,7 @@ else
       strURLParameters = "?CallingPage=wSLCSLC_ComponentsUpdate.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wSLC" +
-                         "&OperationName=" + "PostbuildSLC_Update";
+                         "&OperationName=" + "PrebuildSLC_Update";
       strURL = response.encodeRedirectURL( "MessageDisplay.jsp" + strURLParameters );
       response.sendRedirect( strURL );
       task.log().info( "Pre/Post Redirect to: " + strURL );

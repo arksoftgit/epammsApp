@@ -1750,11 +1750,11 @@ SaveSubregistrantLabelContent( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
-//:PostbuildSLC_Update( VIEW ViewToWindow )
+//:PrebuildSLC_Update( VIEW ViewToWindow )
 
 //:   VIEW mMasLC REGISTERED AS mMasLC
 public int 
-PostbuildSLC_Update( View     ViewToWindow )
+PrebuildSLC_Update( View     ViewToWindow )
 {
    zVIEW    mMasLC = new zVIEW( );
    int      RESULT = 0;

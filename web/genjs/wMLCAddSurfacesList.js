@@ -189,7 +189,7 @@ function _AfterPageLoaded( )
    thisLi.disabled = true;
    // END of Javascript code entered by user.
 
-   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
+var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
 }
 
@@ -232,6 +232,41 @@ function ClearSelectedSurfaces( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      // Javascript code entered by user.
+
+      var theForm;
+      var type;
+      var name;
+      var str;
+      var j;
+      var k;
+
+      for ( j = 0; j < document.forms.length; j++ )
+      {
+         theForm = document.forms[ j ];
+         for ( k = 0; k < theForm.length; k++ )
+         {
+            type = theForm.elements[ k ].type;
+
+            if ( type == "checkbox" )
+            {
+               name = theForm.elements[ k ].name;
+               str = name.substr( 0, 9 );
+               if ( str.match("GS_Select") )
+               {
+                  theForm.elements[ k ].checked = false;
+               }
+            }
+         }
+      }
+
+      return;
+
+
+      // END of Javascript code entered by user.
+
+      document.wMLCAddSurfacesList.zAction.value = "ClearSelectedSurfaces";
+      document.wMLCAddSurfacesList.submit( );
    }
 }
 
@@ -273,6 +308,8 @@ function InitSurfacesStmtsForInsert( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wMLCAddSurfacesList.zAction.value = "InitSurfacesStmtsForInsert";
+      document.wMLCAddSurfacesList.submit( );
    }
 }
 
@@ -284,6 +321,41 @@ function SelectAllSurfaces( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      // Javascript code entered by user.
+
+      var theForm;
+      var type;
+      var name;
+      var str;
+      var j;
+      var k;
+
+      for ( j = 0; j < document.forms.length; j++ )
+      {
+         theForm = document.forms[ j ];
+         for ( k = 0; k < theForm.length; k++ )
+         {
+            type = theForm.elements[ k ].type;
+
+            if ( type == "checkbox" )
+            {
+               name = theForm.elements[ k ].name;
+               str = name.substr( 0, 9 );
+               if ( str.match("GS_Select") )
+               {
+                  theForm.elements[ k ].checked = true;
+               }
+            }
+         }
+      }
+
+      return;
+
+
+      // END of Javascript code entered by user.
+
+      document.wMLCAddSurfacesList.zAction.value = "SelectAllSurfaces";
+      document.wMLCAddSurfacesList.submit( );
    }
 }
 

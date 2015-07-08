@@ -178,7 +178,7 @@ function _AfterPageLoaded( )
    thisLi.style.display = "none";
    // END of Javascript code entered by user.
 
-   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
+var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
 }
 
@@ -251,6 +251,8 @@ function InitImportVirusesList( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wSystemImportVirusesList.zAction.value = "InitImportVirusesList";
+      document.wSystemImportVirusesList.submit( );
    }
 }
 
@@ -262,6 +264,20 @@ function SortImportList( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      // Javascript code entered by user.
+
+   var str = document.wSystemImportVirusesList.Import.value;
+   var splitArray = str.split( '\n' );
+// alert( "SplitArray: " + splitArray );
+   splitArray.sort( );
+// alert( "SplitArray: " + splitArray );
+   document.wSystemImportVirusesList.Import.value = splitArray.join( '\n' );
+   return;
+
+      // END of Javascript code entered by user.
+
+      document.wSystemImportVirusesList.zAction.value = "SortImportList";
+      document.wSystemImportVirusesList.submit( );
    }
 }
 
@@ -273,6 +289,20 @@ function SortWorkList( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      // Javascript code entered by user.
+
+   var str = document.wSystemImportVirusesList.Work.value;
+   var splitArray = str.split( '\n' );
+// alert( "SplitArray: " + splitArray );
+   splitArray.sort( );
+// alert( "SplitArray: " + splitArray );
+   document.wSystemImportVirusesList.Work.value = splitArray.join( '\n' );
+   return;
+
+      // END of Javascript code entered by user.
+
+      document.wSystemImportVirusesList.zAction.value = "SortWorkList";
+      document.wSystemImportVirusesList.submit( );
    }
 }
 

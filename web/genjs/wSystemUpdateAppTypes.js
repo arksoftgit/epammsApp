@@ -307,6 +307,8 @@ function InitAppTypesForUpdate( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wSystemUpdateAppTypes.zAction.value = "InitAppTypesForUpdate";
+      document.wSystemUpdateAppTypes.submit( );
    }
 }
 

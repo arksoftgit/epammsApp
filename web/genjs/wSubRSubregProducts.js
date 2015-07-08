@@ -241,6 +241,8 @@ function InitListSubregProducts( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wSubRSubregProducts.zAction.value = "InitListSubregProducts";
+      document.wSubRSubregProducts.submit( );
    }
 }
 

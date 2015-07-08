@@ -1810,11 +1810,11 @@ RemoveMLC_UsageEntries( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
-//:PostbuildSLC_Update( VIEW ViewToWindow )
+//:PrebuildSLC_Update( VIEW ViewToWindow )
 
 //:   VIEW mMasLC REGISTERED AS mMasLC
 public int 
-PostbuildSLC_Update( View     ViewToWindow )
+PrebuildSLC_Update( View     ViewToWindow )
 {
    zVIEW    mMasLC = new zVIEW( );
    int      RESULT = 0;
@@ -4526,11 +4526,11 @@ CLEAN_ClaimEntries( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
-//:PostbuildBlockDefinitionUpdate( VIEW ViewToWindow )
+//:PrebuildBlockDefinitionUpdate( VIEW ViewToWindow )
 
 //:   VIEW wWebXfer REGISTERED AS wWebXfer
 public int 
-PostbuildBlockDefinitionUpdate( View     ViewToWindow )
+PrebuildBlockDefinitionUpdate( View     ViewToWindow )
 {
    zVIEW    wWebXfer = new zVIEW( );
    int      RESULT = 0;
@@ -4726,8 +4726,8 @@ PostbuildBlockDefinitionUpdate( View     ViewToWindow )
    } 
 
    //:END
-   //:TraceLineS( "PostbuildBlock: ", szMsg )  // e.g. StorageDisposal (Section Type)
-   TraceLineS( "PostbuildBlock: ", szMsg );
+   //:TraceLineS( "PrebuildBlock: ", szMsg )  // e.g. StorageDisposal (Section Type)
+   TraceLineS( "PrebuildBlock: ", szMsg );
    //:// DisplayEntityInstance( mSPLDefBlock, "LLD_Block" )
    //:// DisplayObjectInstance( mSPLDef, "", "" )
 
@@ -5066,11 +5066,11 @@ CANCEL_BlockSpecialFormat( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
-//:PostbuildBlockSpecialFormatDef( VIEW ViewToWindow )
+//:PrebuildBlockSpecialFormatDef( VIEW ViewToWindow )
 
 //:   VIEW mSPLDefPanel REGISTERED AS mSPLDefPanel
 public int 
-PostbuildBlockSpecialFormatDef( View     ViewToWindow )
+PrebuildBlockSpecialFormatDef( View     ViewToWindow )
 {
    zVIEW    mSPLDefPanel = new zVIEW( );
    int      RESULT = 0;
@@ -5093,7 +5093,7 @@ PostbuildBlockSpecialFormatDef( View     ViewToWindow )
        GetVariableFromAttribute( sb_szName, mi_lTempInteger_0, 'S', 257, mSPLDefBlock, "LLD_SpecialSectionAttribute", "Name", "", 0 );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );
    szName = sb_szName.toString( );}
-   //:// TraceLineS( "PostbuildBlockSpecialFormatDef Position on Name: ", szName )
+   //:// TraceLineS( "PrebuildBlockSpecialFormatDef Position on Name: ", szName )
    //:// DisplayEntityInstance( mSPLDefBlock, "LLD_Block" )
    //:// Position on the correct SpecialFormattingSelectEntry.
    //:SET CURSOR FIRST mSPLDefPanel.SpecialFormattingSelectEntry 
@@ -5911,12 +5911,16 @@ DuplicateSubregProductSPLD( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
-//:PreviewSelectedBlock( VIEW ViewToWindow )
-
 public int 
 PreviewSelectedBlock( View     ViewToWindow )
 {
 
+   //:PreviewSelectedBlock( VIEW ViewToWindow )
+
+   //:ACCEPT_ReusableBlock( ViewToWindow )
+   ACCEPT_ReusableBlock( ViewToWindow );
+   //:GENERATE_SPLD_LabelDottedBorders( ViewToWindow )
+   GENERATE_SPLD_LabelDottedBorders( ViewToWindow );
    return( 0 );
 // END
 } 

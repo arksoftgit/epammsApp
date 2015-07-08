@@ -252,6 +252,8 @@ function InitChangeSubregPassword( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wSubRChangeSubregPassword.zAction.value = "InitChangeSubregPassword";
+      document.wSubRChangeSubregPassword.submit( );
    }
 }
 

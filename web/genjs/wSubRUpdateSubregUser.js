@@ -270,6 +270,8 @@ function InitSubregUserForUpdate( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wSubRUpdateSubregUser.zAction.value = "InitSubregUserForUpdate";
+      document.wSubRUpdateSubregUser.submit( );
    }
 }
 

@@ -242,6 +242,8 @@ function InitMasterLabelContentForUpdate( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wMLCVersionData.zAction.value = "InitMasterLabelContentForUpdate";
+      document.wMLCVersionData.submit( );
    }
 }
 

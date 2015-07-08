@@ -282,6 +282,8 @@ function AdminAddNewSubreg( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wStartUpAdminNewSubregistrant.zAction.value = "AdminAddNewSubreg";
+      document.wStartUpAdminNewSubregistrant.submit( );
    }
 }
 

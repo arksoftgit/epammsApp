@@ -307,6 +307,8 @@ function InitVirusesForUpdate( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wSystemUpdateViruses.zAction.value = "InitVirusesForUpdate";
+      document.wSystemUpdateViruses.submit( );
    }
 }
 

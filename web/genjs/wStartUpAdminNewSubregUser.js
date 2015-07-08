@@ -240,6 +240,8 @@ function AdminAddNewSubregUser( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wStartUpAdminNewSubregUser.zAction.value = "AdminAddNewSubregUser";
+      document.wStartUpAdminNewSubregUser.submit( );
    }
 }
 

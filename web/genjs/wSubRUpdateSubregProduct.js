@@ -268,6 +268,8 @@ function InitSubregProductForUpdate( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wSubRUpdateSubregProduct.zAction.value = "InitSubregProductForUpdate";
+      document.wSubRUpdateSubregProduct.submit( );
    }
 }
 

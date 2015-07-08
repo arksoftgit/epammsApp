@@ -251,6 +251,8 @@ function InitSystemKeywordForUpdate( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wSystemUpdateSystemKeyword.zAction.value = "InitSystemKeywordForUpdate";
+      document.wSystemUpdateSystemKeyword.submit( );
    }
 }
 

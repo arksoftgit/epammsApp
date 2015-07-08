@@ -168,9 +168,25 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
-   // Postbuild action that has javascript code.
-   PostbuildBlockDefinitionUpdate( );
-   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
+   // Prebuild action has javascript code entered by user.
+      var sectionType = sessionStorage.getItem( "epamms_section_type" );
+   // alert( "SectionType: " + sectionType );
+      if ( sectionType === "Graphic" || sectionType == "ProductName" ||
+           sectionType === "HumanHazard" || sectionType == "EPA_RegAndEstNbr" ||
+           sectionType === "NetContents" ) { // || sectionType == "FirstAid" ||
+       // sectionType === "PhysicalHazard" || sectionType == "Precautionary" ) {
+         var thisHide = document.getElementById( "HideBox" );
+         thisHide.style.visibility = "hidden";
+         thisHide = document.getElementById( "HideInnerBox" );
+         thisHide.style.visibility = "hidden";
+         thisHide = document.getElementById( "HideText" );
+         thisHide.style.visibility = "hidden";
+         var thisComponentList = document.getElementById( "GridComponentList" );
+         thisComponentList .style.visibility = "hidden";
+      }
+   // END of Javascript code entered by user.
+
+var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
 }
 
@@ -201,21 +217,6 @@ function ACCEPT_BlockSubBlockDefinition( )
       _DisableFormElements( true );
 
       document.wSPLDSPLD_BlockDefinitionUpdate.zAction.value = "ACCEPT_BlockSubBlockDefinition";
-      document.wSPLDSPLD_BlockDefinitionUpdate.submit( );
-   }
-}
-
-function SelectReusableBlock( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSPLDSPLD_BlockDefinitionUpdate.zAction.value = "SelectReusableBlock";
       document.wSPLDSPLD_BlockDefinitionUpdate.submit( );
    }
 }
@@ -362,7 +363,7 @@ function GOTO_UpdateSPLD_Statement( strTagEntityKey )
    }
 }
 
-function PostbuildBlockDefinitionUpdate( )
+function PrebuildBlockDefinitionUpdate( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -370,26 +371,23 @@ function PostbuildBlockDefinitionUpdate( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      // Javascript code entered by user.
+      document.wSPLDSPLD_BlockDefinitionUpdate.zAction.value = "PrebuildBlockDefinitionUpdate";
+      document.wSPLDSPLD_BlockDefinitionUpdate.submit( );
+   }
+}
 
-      var sectionType = sessionStorage.getItem( "epamms_section_type" );
-   // alert( "SectionType: " + sectionType );
-      if ( sectionType === "Graphic" || sectionType == "ProductName" ||
-           sectionType === "HumanHazard" || sectionType == "EPA_RegAndEstNbr" ||
-           sectionType === "NetContents" ) { // || sectionType == "FirstAid" ||
-       // sectionType === "PhysicalHazard" || sectionType == "Precautionary" ) {
-         var thisHide = document.getElementById( "HideBox" );
-         thisHide.style.visibility = "hidden";
-         thisHide = document.getElementById( "HideInnerBox" );
-         thisHide.style.visibility = "hidden";
-         thisHide = document.getElementById( "HideText" );
-         thisHide.style.visibility = "hidden";
-         var thisComponentList = document.getElementById( "GridComponentList" );
-         thisComponentList .style.visibility = "hidden";
-      }
+function SelectReusableBlock( )
+{
 
-      // END of Javascript code entered by user.
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSPLDSPLD_BlockDefinitionUpdate.zAction.value = "SelectReusableBlock";
+      document.wSPLDSPLD_BlockDefinitionUpdate.submit( );
    }
 }
 

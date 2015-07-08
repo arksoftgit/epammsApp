@@ -252,6 +252,8 @@ function InitDeleteSubregProduct( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wSubRDeleteSubregProduct.zAction.value = "InitDeleteSubregProduct";
+      document.wSubRDeleteSubregProduct.submit( );
    }
 }
 

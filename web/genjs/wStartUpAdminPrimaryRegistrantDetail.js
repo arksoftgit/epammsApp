@@ -280,6 +280,8 @@ function InitPrimaryRegistrant( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wStartUpAdminPrimaryRegistrantDetail.zAction.value = "InitPrimaryRegistrant";
+      document.wStartUpAdminPrimaryRegistrantDetail.submit( );
    }
 }
 

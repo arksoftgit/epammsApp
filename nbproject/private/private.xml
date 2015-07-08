@@ -14,10 +14,10 @@
     </editor-bookmarks>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="52">
         <file>
-            <url>file:/C:/workspace/NetBeansProjects/epammsApp/src/java/com/ajax/GraphicalLabelDesignerServlet.java</url>
-            <bookmark id="45">
+            <url>web/wSPLDGraphicalView.jsp</url>
+            <bookmark id="42">
                 <name/>
-                <line>367</line>
+                <line>1080</line>
                 <key/>
             </bookmark>
         </file>
@@ -30,10 +30,10 @@
             </bookmark>
         </file>
         <file>
-            <url>web/wSPLDGraphicalView.jsp</url>
-            <bookmark id="42">
+            <url>file:/C:/workspace/NetBeansProjects/epammsApp/src/java/com/ajax/GraphicalLabelDesignerServlet.java</url>
+            <bookmark id="45">
                 <name/>
-                <line>1080</line>
+                <line>367</line>
                 <key/>
             </bookmark>
         </file>
@@ -108,6 +108,14 @@
             </bookmark>
         </file>
         <file>
+            <url>web/js/jquery.colorPicker.js</url>
+            <bookmark id="32">
+                <name/>
+                <line>353</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
             <url>web/wStartUpAdminUpdateSubregistrant.jsp</url>
             <bookmark id="0">
                 <name/>
@@ -120,23 +128,26 @@
                 <key/>
             </bookmark>
         </file>
-        <file>
-            <url>web/js/jquery.colorPicker.js</url>
-            <bookmark id="32">
-                <name/>
-                <line>353</line>
-                <key/>
-            </bookmark>
-        </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Workspace/NetBeansProjects/epammsApp/web/wSystemUpdateHelpMessage.jsp</file>
-            <file>file:/C:/Workspace/NetBeansProjects/epammsApp/web/genjs/wSystemUpdateHelpMessage.js</file>
-            <file>file:/C:/Workspace/NetBeansProjects/epammsApp/web/wSPLDGraphicalView.jsp</file>
+            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/wSystemDisplayHelpMessage.jsp</file>
+            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/wSystemExitHelpMessage.jsp</file>
+            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/js/labeldesigner.js</file>
+            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/js/jsoeUtils.js</file>
+            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/wSPLDGraphicalView.jsp</file>
+            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/js/jsoeObjectBrowser.js</file>
+            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/genjs/wSystemDisplayHelpMessage.js</file>
+            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/wSystemUpdateHelpMessage.jsp</file>
+            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/genjs/wStartUpUserLogin.js</file>
+            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/genjs/wSPLDGraphicalView.js</file>
+            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/genjs/wStartUpePammsPortal.js</file>
+            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/genjs/wSystemUpdateHelpMessage.js</file>
+            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/wStartUpePammsPortal.jsp</file>
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/src/java/com/ajax/GraphicalLabelDesignerServlet.java</file>
-            <file>file:/C:/Workspace/NetBeansProjects/epammsApp/web/js/labeldesigner.js</file>
-            <file>file:/C:/Workspace/NetBeansProjects/epammsApp/web/js/jsoeUtils.js</file>
+            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/genjs/wSystemExitHelpMessage.js</file>
+            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/wStartUpUserLogin.jsp</file>
+            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/js/jsoe.js</file>
         </group>
     </open-files>
 </project-private>

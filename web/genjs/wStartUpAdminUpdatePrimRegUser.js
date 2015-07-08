@@ -263,6 +263,8 @@ function InitPrimRegUserForUpdate( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wStartUpAdminUpdatePrimRegUser.zAction.value = "InitPrimRegUserForUpdate";
+      document.wStartUpAdminUpdatePrimRegUser.submit( );
    }
 }
 

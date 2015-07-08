@@ -208,6 +208,8 @@ function InitSystemChemicalForInsert( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wSystemNewSystemChemical.zAction.value = "InitSystemChemicalForInsert";
+      document.wSystemNewSystemChemical.submit( );
    }
 }
 

@@ -241,6 +241,8 @@ function InitSubregDetail( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wSubRSubregDetail.zAction.value = "InitSubregDetail";
+      document.wSubRSubregDetail.submit( );
    }
 }
 

@@ -276,6 +276,8 @@ function InitLoginWindow( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wStartUpUserLogin.zAction.value = "InitLoginWindow";
+      document.wStartUpUserLogin.submit( );
    }
 }
 

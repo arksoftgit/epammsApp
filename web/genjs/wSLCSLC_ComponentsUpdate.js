@@ -233,7 +233,7 @@ function GOTO_ComponentsDisplay( )
    }
 }
 
-function PostbuildSLC_Update( )
+function PrebuildSLC_Update( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -243,7 +243,7 @@ function PostbuildSLC_Update( )
    {
       _DisableFormElements( true );
 
-      document.wSLCSLC_ComponentsUpdate.zAction.value = "PostbuildSLC_Update";
+      document.wSLCSLC_ComponentsUpdate.zAction.value = "PrebuildSLC_Update";
       document.wSLCSLC_ComponentsUpdate.submit( );
    }
 }

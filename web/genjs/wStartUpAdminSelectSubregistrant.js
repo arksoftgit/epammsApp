@@ -249,6 +249,8 @@ function InitSelectSubregistrant( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wStartUpAdminSelectSubregistrant.zAction.value = "InitSelectSubregistrant";
+      document.wStartUpAdminSelectSubregistrant.submit( );
    }
 }
 

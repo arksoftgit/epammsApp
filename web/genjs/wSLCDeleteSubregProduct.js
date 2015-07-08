@@ -274,6 +274,8 @@ function InitSPLD_ForDelete( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wSLCDeleteSubregProduct.zAction.value = "InitSPLD_ForDelete";
+      document.wSLCDeleteSubregProduct.submit( );
    }
 }
 

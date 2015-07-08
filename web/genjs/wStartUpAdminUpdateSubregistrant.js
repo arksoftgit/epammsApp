@@ -291,6 +291,8 @@ function InitSubregistrantForUpdate( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wStartUpAdminUpdateSubregistrant.zAction.value = "InitSubregistrantForUpdate";
+      document.wStartUpAdminUpdateSubregistrant.submit( );
    }
 }
 

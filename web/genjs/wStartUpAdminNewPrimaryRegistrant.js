@@ -289,6 +289,8 @@ function AdminAddNewPrimReg( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wStartUpAdminNewPrimaryRegistrant.zAction.value = "AdminAddNewPrimReg";
+      document.wStartUpAdminNewPrimaryRegistrant.submit( );
    }
 }
 

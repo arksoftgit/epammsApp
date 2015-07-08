@@ -237,6 +237,8 @@ function InitDeleteSubregUser( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wSubRDeleteSubregUser.zAction.value = "InitDeleteSubregUser";
+      document.wSubRDeleteSubregUser.submit( );
    }
 }
 

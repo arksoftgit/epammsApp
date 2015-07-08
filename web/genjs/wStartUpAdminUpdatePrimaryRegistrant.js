@@ -275,6 +275,8 @@ function InitPrimaryRegistrantForUpdate( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wStartUpAdminUpdatePrimaryRegistrant.zAction.value = "InitPrimaryRegistrantForUpdate";
+      document.wStartUpAdminUpdatePrimaryRegistrant.submit( );
    }
 }
 

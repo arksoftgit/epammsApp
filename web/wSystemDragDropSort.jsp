@@ -523,8 +523,8 @@ else
 <!-- Main Navigation *********************** -->
 <div id="mainnavigation">
    <ul id="Exit" name="Exit" >
-       <li id="lmApplySortOrder" name="lmApplySortOrder" ><a href="#" onclick="mApplySortOrder()">Apply Sort Order  </a></li>
-       <li id="lmCancelSortDiv" name="lmCancelSortDiv" ><a href="#" onclick="mCancelSortDiv()">  Cancel  </a></li>
+       <li id="lmApplySortOrder" name="lmApplySortOrder"><a href="#" onclick="mApplySortOrder()">Apply Sort Order  </a></li>
+       <li id="lmCancelSortDiv" name="lmCancelSortDiv"><a href="#" onclick="mCancelSortDiv()">  Cancel  </a></li>
        <li id="lmLogout" name="lmLogout" ><a href="#" onclick="mLogout()">Logout</a></li>
    </ul>
 </div>  <!-- end Navigation Bar -->
@@ -709,6 +709,6 @@ else
    session.setAttribute( "ZeidonWindow", "wSystemDragDropSort" );
    session.setAttribute( "ZeidonAction", null );
 
-   strActionToProcess = "";
+     strActionToProcess = "";
 
 %>

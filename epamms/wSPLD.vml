@@ -876,11 +876,11 @@ END
 
 ////////////////////////////////////////////////////////////////
 //
-// OPERATION: PostbuildSLC_Update
+// OPERATION: PrebuildSLC_Update
 //
 ////////////////////////////////////////////////////////////////
 DIALOG OPERATION
-PostbuildSLC_Update( VIEW ViewToWindow )
+PrebuildSLC_Update( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
    VIEW mSubLC REGISTERED AS mSubLC
@@ -2124,11 +2124,11 @@ END
 
 ////////////////////////////////////////////////////////////////
 //
-// OPERATION: PostbuildBlockDefinitionUpdate
+// OPERATION: PrebuildBlockDefinitionUpdate
 //
 ////////////////////////////////////////////////////////////////
 DIALOG OPERATION
-PostbuildBlockDefinitionUpdate( VIEW ViewToWindow )
+PrebuildBlockDefinitionUpdate( VIEW ViewToWindow )
 
    VIEW wWebXfer REGISTERED AS wWebXfer
    VIEW mSPLDef REGISTERED AS mSPLDef
@@ -2170,7 +2170,7 @@ PostbuildBlockDefinitionUpdate( VIEW ViewToWindow )
    IF szGraphic != ""
       szMsg = szMsg + szSpace + szGraphic
    END
-   TraceLineS( "PostbuildBlock: ", szMsg )  // e.g. StorageDisposal (Section Type)
+   TraceLineS( "PrebuildBlock: ", szMsg )  // e.g. StorageDisposal (Section Type)
 // DisplayEntityInstance( mSPLDefBlock, "LLD_Block" )
 // DisplayObjectInstance( mSPLDef, "", "" )
 
@@ -2484,18 +2484,18 @@ END
 
 ////////////////////////////////////////////////////////////////
 //
-// OPERATION: PostbuildBlockSpecialFormatDef
+// OPERATION: PrebuildBlockSpecialFormatDef
 //
 ////////////////////////////////////////////////////////////////
 DIALOG OPERATION
-PostbuildBlockSpecialFormatDef( VIEW ViewToWindow )
+PrebuildBlockSpecialFormatDef( VIEW ViewToWindow )
 
    VIEW mSPLDefPanel REGISTERED AS mSPLDefPanel
    VIEW mSPLDefBlock REGISTERED AS mSPLDefBlock
    STRING ( 256 ) szName
    
    szName = mSPLDefBlock.LLD_SpecialSectionAttribute.Name
-// TraceLineS( "PostbuildBlockSpecialFormatDef Position on Name: ", szName )
+// TraceLineS( "PrebuildBlockSpecialFormatDef Position on Name: ", szName )
 // DisplayEntityInstance( mSPLDefBlock, "LLD_Block" )
    // Position on the correct SpecialFormattingSelectEntry.
    SET CURSOR FIRST mSPLDefPanel.SpecialFormattingSelectEntry 
@@ -2910,16 +2910,6 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: PreviewSelectedBlock
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-PreviewSelectedBlock( VIEW ViewToWindow )
-
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
 // OPERATION: SaveReusableBlock
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -3038,6 +3028,18 @@ ACCEPT_ReusableBlock( VIEW ViewToWindow )
   END
   DropObjectInstance( mBlockRU )
 
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: PreviewSelectedBlock
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+PreviewSelectedBlock( VIEW ViewToWindow )
+
+   ACCEPT_ReusableBlock( ViewToWindow )
+   GENERATE_SPLD_LabelDottedBorders( ViewToWindow )
 END
 
 /////////////////////////////////////////////////////////////////////////////

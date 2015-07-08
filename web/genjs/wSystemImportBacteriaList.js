@@ -178,7 +178,7 @@ function _AfterPageLoaded( )
    thisLi.style.display = "none";
    // END of Javascript code entered by user.
 
-   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
+var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
 }
 
@@ -251,6 +251,8 @@ function InitImportBacteriaList( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wSystemImportBacteriaList.zAction.value = "InitImportBacteriaList";
+      document.wSystemImportBacteriaList.submit( );
    }
 }
 
@@ -262,6 +264,20 @@ function SortImportList( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      // Javascript code entered by user.
+
+   var str = document.wSystemImportBacteriaList.Import.value;
+   var splitArray = str.split( '\n' );
+// alert( "SplitArray: " + splitArray );
+   splitArray.sort( );
+// alert( "SplitArray: " + splitArray );
+   document.wSystemImportBacteriaList.Import.value = splitArray.join( '\n' );
+   return;
+
+      // END of Javascript code entered by user.
+
+      document.wSystemImportBacteriaList.zAction.value = "SortImportList";
+      document.wSystemImportBacteriaList.submit( );
    }
 }
 
@@ -273,6 +289,20 @@ function SortWorkList( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      // Javascript code entered by user.
+
+   var str = document.wSystemImportBacteriaList.Work.value;
+   var splitArray = str.split( '\n' );
+// alert( "SplitArray: " + splitArray );
+   splitArray.sort( );
+// alert( "SplitArray: " + splitArray );
+   document.wSystemImportBacteriaList.Work.value = splitArray.join( '\n' );
+   return;
+
+      // END of Javascript code entered by user.
+
+      document.wSystemImportBacteriaList.zAction.value = "SortWorkList";
+      document.wSystemImportBacteriaList.submit( );
    }
 }
 

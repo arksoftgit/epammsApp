@@ -307,6 +307,8 @@ function InitAreasOfUseForUpdate( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wSystemUpdateAreasOfUse.zAction.value = "InitAreasOfUseForUpdate";
+      document.wSystemUpdateAreasOfUse.submit( );
    }
 }
 

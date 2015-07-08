@@ -206,6 +206,8 @@ function InitDeleteSystemChemical( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wSystemDeleteSystemChemical.zAction.value = "InitDeleteSystemChemical";
+      document.wSystemDeleteSystemChemical.submit( );
    }
 }
 

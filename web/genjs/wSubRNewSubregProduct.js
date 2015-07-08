@@ -298,6 +298,8 @@ function InitSubregProductForInsert( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      document.wSubRNewSubregProduct.zAction.value = "InitSubregProductForInsert";
+      document.wSubRNewSubregProduct.submit( );
    }
 }
 

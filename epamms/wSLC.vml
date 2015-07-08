@@ -666,11 +666,11 @@ END
 
 /*************************************************************************************************
 **    
-**    OPERATION: PostbuildSLC_Update
+**    OPERATION: PrebuildSLC_Update
 **    
 *************************************************************************************************/
 DIALOG OPERATION
-PostbuildSLC_Update( VIEW ViewToWindow )
+PrebuildSLC_Update( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
    VIEW mSubLC REGISTERED AS mSubLC
