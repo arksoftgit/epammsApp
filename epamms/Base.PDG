@@ -1,4 +1,4 @@
-z1000-Zeidon    BASE     TZDGSRCO 06/10/15   14:05:03 1.0a2    
+z1000-Zeidon    BASE     TZDGSRCO 07/04/15   10:40:54 1.0a2    
 eDomainGroup 1
 aZKey      68567479
 aName      Base
@@ -6,11 +6,11 @@ aExtension C
 aWorkNumeric 5
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.BlobDomain
 aZKey      68567480
 aName      Blob
 aDesc      A do nothing domain for blobs
 aDomainType E
+aJavaClass com.quinsoft.zeidon.domains.BlobDomain
 aDataType  B
 aContextRestriction N
 
@@ -20,11 +20,40 @@ aName      BLOB
 aIsDefault Y
 
 eDomain    2
+aZKey      110226099
+aName      InsertTextKeywordType
+aDomainType T
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      110226100
+aName      InsertTextKeywordType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      110226101
+aExternalValue All Optional
+aInternalValue A
+
+eTableEntry 4
+aZKey      110226102
+aExternalValue Only One Allowed
+aInternalValue O
+
+eTableEntry 4
+aZKey      110226103
+aExternalValue At Least One Req'd
+aInternalValue R
+
+eDomain    2
 aZKey      110059061
 aName      ContainerVolumeEnvironmentHazard
 aDesc      Environmental split <5 or >=5
 aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
 aMaxStringLth 20
 aContextRestriction N
@@ -45,11 +74,11 @@ aExternalValue >= 5 gallon
 aInternalValue >=5
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      110059057
 aName      ContainerVolumeStorageDisposal
 aDesc      Storage/Disposal split <=1 or >1
 aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
 aMaxStringLth 3
 aContextRestriction N
@@ -80,11 +109,11 @@ aExternalValue Old Value 5
 aInternalValue 5
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      110006612
 aName      CompositeSectionType
 aDesc      Precautionary, Environmental/Physical Hazard, First Aid, Ingredients, Storage/Disposal, Directions For Use, Marketing (P,E,F,I,S,D,M)
 aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
 aMaxStringLth 1
 aContextRestriction N
@@ -179,11 +208,11 @@ aExternalValue Marketing
 aInternalValue M
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      110003579
 aName      HazardLocationSeparator
 aDesc      Separator when multiple hazard locations are specified (e.g. [], (), /, \)
 aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
 aMaxStringLth 2
 aContextRestriction N
@@ -234,21 +263,19 @@ aExternalValue Comma
 aInternalValue ,
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      130001702
 aName      DonTest
 aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
 aMaxStringLth 1
 aContextRestriction N
+aConstraintRule This is a test
 
 eContext   3
 aZKey      130001703
 aName      DonTest
 aIsDefault Y
-
-eTableEntry 4
-aZKey      130001712
 
 eTableEntry 4
 aZKey      130001704
@@ -266,11 +293,11 @@ aExternalValue More
 aInternalValue M
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      4730208
 aName      DirectionsNotForUseType
 aDesc      For mutually exclusive (not for use) directions for use:  Medical Premises, Food Contact Surfaces
 aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
 aMaxStringLth 2
 aContextRestriction N
@@ -304,11 +331,11 @@ aExternalValue Bactericidal stability of  Use-dilution
 aInternalValue BU
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      1186473
 aName      BoldItalic
 aDesc      Bold and/or Italic flag
 aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
 aMaxStringLth 1
 aContextRestriction N
@@ -343,10 +370,10 @@ aExternalValue Regular
 aInternalValue R
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      3934625
 aName      StorageDisposalSectionType
 aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
 aMaxStringLth 20
 aContextRestriction N
@@ -382,11 +409,11 @@ aExternalValue Storage and Disposal >1 gallon
 aInternalValue StorageDisposal2
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      3898401
 aName      HazardPanel
 aDesc      Panel where additional hazard statements are found
 aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  L
 aMaxStringLth 4
 aContextRestriction N
@@ -427,11 +454,11 @@ aExternalValue Location 5
 aInternalValue 5
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      3785525
 aName      HTML Units
 aDesc      standard measurement units (pt, px, cm, mm, in) + em, normal, auto
 aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
 aMaxStringLth 10
 aContextRestriction N
@@ -497,11 +524,11 @@ aExternalValue auto
 aInternalValue auto
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StringDomain
 aZKey      2294674
 aName      REVDate
 aDesc      This is the date that any change is made to the artwork. The date format is the same as the ESL date:  REV112203 (This means Revision date: November 22, 2003).  The Revision date must be updated each and every time a change is made to the artwork!
 aDomainType A
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
 aDataType  D
 aContextRestriction N
 
@@ -511,11 +538,11 @@ aName      REVDate
 aIsDefault Y
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StringDomain
 aZKey      2294672
 aName      ESLDate
 aDesc      EPA Stamped Label Date - The ESL Date used for the setup and review is to be on the label. It is for easy regulatory identification and production quality control purposes. The format for the ESL date is: ESL051203 (This means ESL dated May 12, 2003).
 aDomainType A
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
 aDataType  D
 aContextRestriction N
 
@@ -525,11 +552,11 @@ aName      ESLDate
 aIsDefault Y
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      70220060
 aName      ClaimsClassification
 aDesc      Bacteria, Viruses, Fungi, Protozoa
 aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
 aMaxStringLth 16
 aContextRestriction N
@@ -560,11 +587,11 @@ aExternalValue Fungi
 aInternalValue Fungi
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      1639285
 aName      CompanyRole
 aDesc      Primary Registrant, Subregistrant, Dual Registrant, Non-EPA
 aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
 aMaxStringLth 1
 aContextRestriction N
@@ -658,10 +685,10 @@ aExternalValue Unknown
 aInternalValue U
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      1266501
 aName      ActiveInert
 aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
 aMaxStringLth 1
 aContextRestriction N
@@ -702,11 +729,11 @@ aExternalValue No
 aInternalValue I
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      1206938
 aName      ContentSectionType
 aDesc      Content Section Type ... Precautionary, Physical Hazard, First Aid, Ingredients, Storage and Disposal, Directions for Use, Marketing, Human Hazard, Claims, Surfaces, Areas of Use
 aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
 aMaxStringLth 1
 aContextRestriction N
@@ -773,11 +800,11 @@ aExternalValue Application Type
 aInternalValue T
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      1164066
 aName      ExperienceLevel
 aDesc      Beginner, Intermediate, Expert
 aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
 aMaxStringLth 1
 aContextRestriction N
@@ -804,11 +831,11 @@ aExternalValue Expert
 aInternalValue X
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      69055597
 aName      GeneralSectionType
 aDesc      Precautionary, Environmental/Physical Hazard, First Aid (P,E,F)
 aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
 aMaxStringLth 1
 aContextRestriction N
@@ -863,10 +890,10 @@ aExternalValue C
 aInternalValue C
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      1178868
 aName      EPA_StatementType
 aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
 aMaxStringLth 32
 aContextRestriction N
@@ -892,10 +919,10 @@ aExternalValue Storage and Disposal
 aInternalValue StorageDisposal
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      1178527
 aName      ToxicityCategory
 aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  L
 aContextRestriction N
 
@@ -925,11 +952,11 @@ aExternalValue IV
 aInternalValue 4
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      1178519
 aName      ChemicalFamily
 aDesc      Pesticide, Quat Disinfectant, Iodine Disinfectant, etc.
 aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
 aMaxStringLth 2
 aContextRestriction N
@@ -955,11 +982,11 @@ aExternalValue Iodine Disinfectant
 aInternalValue DI
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      1178421
 aName      ChildHazardWarning
 aDesc      Normally: Keep Out Of Reach Of Children.  EPA may waive the requirement, or require or permit an alternative child hazard warning.
 aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
 aMaxStringLth 1
 aContextRestriction N
@@ -990,11 +1017,11 @@ aExternalValue EPA Approved Alternative Statement
 aInternalValue A
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      1178406
 aName      SignalWord
 aDesc      Based on the Toxicity Profile of the Pesticide Formulation.  Signal Words may not be used anywhere else on the label except as specified in the EPA Regulations.  There are only four Signal Words that may be used: CAUTION, WARNING, DANGER, POISON
 aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
 aMaxStringLth 32
 aContextRestriction N
@@ -1030,11 +1057,11 @@ aExternalValue Not Applicable
 aInternalValue N/A
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      68567482
 aName      Y/N
 aDesc      Yes or No
 aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
 aMaxStringLth 1
 aContextRestriction N

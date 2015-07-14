@@ -222,6 +222,25 @@ function GOTO_MarketingKeywordStmtDelete( strTagEntityKey )
    }
 }
 
+function GOTO_MarketingKeywordStmtKeyword( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCMarketingStatement.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCMarketingStatement.zAction.value = "GOTO_MarketingKeywordStmtKeyword";
+      document.wMLCMarketingStatement.submit( );
+   }
+}
+
 function GOTO_MarketingKeywordStmtAdd( )
 {
 

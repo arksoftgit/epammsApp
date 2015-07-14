@@ -2987,46 +2987,46 @@ END
 DIALOG OPERATION
 ACCEPT_ReusableBlock( VIEW ViewToWindow )
 
-  VIEW mSPLDef REGISTERED AS mSPLDef
-  VIEW mSPLDefBlock REGISTERED AS mSPLDefBlock
-  VIEW mBlockRU BASED ON LOD mBlockRU
-  STRING (64) szTag
-  DECIMAL dTop
-  DECIMAL dLeft
+   VIEW mSPLDef REGISTERED AS mSPLDef
+   VIEW mSPLDefBlock REGISTERED AS mSPLDefBlock
+   VIEW mBlockRU BASED ON LOD mBlockRU
+   STRING (64) szTag
+   DECIMAL dTop
+   DECIMAL dLeft
 
-  SET CURSOR FIRST mSPLDef.ReusableBlockDefinition WHERE mSPLDef.ReusableBlockDefinition.wkSelected = "Y"
-  IF RESULT < zCURSOR_SET
-     MessageSend( ViewToWindow, "", "Select Reusable Block",
-                  "One reusable block must be selected",
-                  zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-     RETURN 2
-  END
+   SET CURSOR FIRST mSPLDef.ReusableBlockDefinition WHERE mSPLDef.ReusableBlockDefinition.wkSelected = "Y"
+   IF RESULT < zCURSOR_SET
+      MessageSend( ViewToWindow, "", "Select Reusable Block",
+                   "One reusable block must be selected",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
  
-  SET CURSOR NEXT mSPLDef.ReusableBlockDefinition WHERE mSPLDef.ReusableBlockDefinition.wkSelected = "Y"
-  IF RESULT >= zCURSOR_SET
-     MessageSend( ViewToWindow, "", "Select Reusable Block",
-                  "Only one reusable block can be selected",
-                  zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-     RETURN 2
-  END
+   SET CURSOR NEXT mSPLDef.ReusableBlockDefinition WHERE mSPLDef.ReusableBlockDefinition.wkSelected = "Y"
+   IF RESULT >= zCURSOR_SET
+      MessageSend( ViewToWindow, "", "Select Reusable Block",
+                   "Only one reusable block can be selected",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
 
-  // Ensure position
-  SET CURSOR FIRST mSPLDef.ReusableBlockDefinition WHERE mSPLDef.ReusableBlockDefinition.wkSelected = "Y"
-  ACTIVATE mBlockRU WHERE mBlockRU.ReusableBlockDefinition.ID  = mSPLDef.ReusableBlockDefinition.ID
-  IF mBlockRU.LLD_Block EXISTS
-     NAME VIEW mBlockRU "ReusableBlock"
-     szTag = mSPLDefBlock.LLD_Block.Tag
-     dTop = mSPLDefBlock.LLD_Block.Top
-     dLeft = mSPLDefBlock.LLD_Block.Left
-  // TraceLineS( "Selecting reusable block: ", szTag )
-  // TraceLineI( "          reusable top: ", dTop )
-  // TraceLineI( "          reusable left: ", dLeft )
-     CopyBlock( mSPLDef )
-     mSPLDefBlock.LLD_Block.Tag = szTag
-     mSPLDefBlock.LLD_Block.Top = dTop
-     mSPLDefBlock.LLD_Block.Left = dLeft
-  END
-  DropObjectInstance( mBlockRU )
+   // Ensure position
+   SET CURSOR FIRST mSPLDef.ReusableBlockDefinition WHERE mSPLDef.ReusableBlockDefinition.wkSelected = "Y"
+   ACTIVATE mBlockRU WHERE mBlockRU.ReusableBlockDefinition.ID  = mSPLDef.ReusableBlockDefinition.ID
+   IF mBlockRU.LLD_Block EXISTS
+      NAME VIEW mBlockRU "ReusableBlock"
+      szTag = mSPLDefBlock.LLD_Block.Tag
+      dTop = mSPLDefBlock.LLD_Block.Top
+      dLeft = mSPLDefBlock.LLD_Block.Left
+   // TraceLineS( "Selecting reusable block: ", szTag )
+   // TraceLineI( "          reusable top: ", dTop )
+   // TraceLineI( "          reusable left: ", dLeft )
+      CopyBlock( mSPLDef )
+      mSPLDefBlock.LLD_Block.Tag = szTag
+      mSPLDefBlock.LLD_Block.Top = dTop
+      mSPLDefBlock.LLD_Block.Left = dLeft
+   END
+   DropObjectInstance( mBlockRU )
 
 END
 
@@ -3038,8 +3038,45 @@ END
 DIALOG OPERATION
 PreviewSelectedBlock( VIEW ViewToWindow )
 
-   ACCEPT_ReusableBlock( ViewToWindow )
-   GENERATE_SPLD_LabelDottedBorders( ViewToWindow )
+   VIEW mSPLDef REGISTERED AS mSPLDef
+   VIEW mSPLDefPanel REGISTERED AS mSPLDefPanel
+   VIEW mSPLDefBlock REGISTERED AS mSPLDefBlock
+   VIEW mSPLDef2 BASED ON LOD mSPLDef
+   VIEW mSPLDefPanel2 BASED ON LOD mSPLDef
+   VIEW mSPLDefBlock2 BASED ON LOD mSPLDef
+   VIEW mBlockRU BASED ON LOD mBlockRU
+   STRING (64) szTag
+   INTEGER lControl
+   INTEGER nRC
+   
+   szTag = mSPLDefBlock.LLD_Block.Tag
+   DropNameForView( mSPLDef, "mSPLDef", ViewToWindow, zLEVEL_TASK )
+   DropNameForView( mSPLDefPanel, "mSPLDefPanel", ViewToWindow, zLEVEL_TASK )
+   DropNameForView( mSPLDefBlock, "mSPLDefBlock", ViewToWindow, zLEVEL_TASK )
+
+   ActivateOI_FromOI( mSPLDef2, mSPLDef, zSINGLE )
+   ResetViewFromSubobjectTop( mSPLDef2 )
+   CreateViewFromView( mSPLDefPanel2, mSPLDef2 )
+   CreateViewFromView( mSPLDefBlock2, mSPLDef2 )
+   lControl = zQUAL_STRING + zPOS_FIRST + zRECURS
+   SetEntityCursor( mSPLDefBlock2, "LLD_Block", "Tag", lControl, szTag, "", "", 0, "SPLD_LLD", "" )   
+   NAME VIEW mSPLDef2 "mSPLDef"
+   NAME VIEW mSPLDefPanel2 "mSPLDefPanel"
+   NAME VIEW mSPLDefBlock2 "mSPLDefBlock"
+
+   nRC = ACCEPT_ReusableBlock( ViewToWindow )
+   IF nRC = 0
+      GENERATE_SPLD_LabelDottedBorders( ViewToWindow )
+   END
+   DropNameForView( mSPLDef2, "mSPLDef", ViewToWindow, zLEVEL_TASK )
+   DropNameForView( mSPLDefPanel2, "mSPLDefPanel", ViewToWindow, zLEVEL_TASK )
+   DropNameForView( mSPLDefBlock2, "mSPLDefBlock", ViewToWindow, zLEVEL_TASK )
+   DropObjectInstance( mSPLDef2 )
+
+   NAME VIEW mSPLDef "mSPLDef"
+   NAME VIEW mSPLDefPanel "mSPLDefPanel"
+   NAME VIEW mSPLDefBlock "mSPLDefBlock"
+
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -3050,12 +3087,12 @@ END
 DIALOG OPERATION
 ClearReusableBlockSelections( VIEW ViewToWindow )
 
-  VIEW mSPLDef REGISTERED AS mSPLDef
+   VIEW mSPLDef REGISTERED AS mSPLDef
 
-  SET CURSOR FIRST mSPLDef.ReusableBlockDefinition WHERE mSPLDef.ReusableBlockDefinition.wkSelected = "Y"
-  LOOP WHILE RESULT >= zCURSOR_SET
-     mSPLDef.ReusableBlockDefinition.wkSelected = ""
-     SET CURSOR NEXT mSPLDef.ReusableBlockDefinition WHERE mSPLDef.ReusableBlockDefinition.wkSelected = "Y"
-  END
+   SET CURSOR FIRST mSPLDef.ReusableBlockDefinition WHERE mSPLDef.ReusableBlockDefinition.wkSelected = "Y"
+   LOOP WHILE RESULT >= zCURSOR_SET
+      mSPLDef.ReusableBlockDefinition.wkSelected = ""
+      SET CURSOR NEXT mSPLDef.ReusableBlockDefinition WHERE mSPLDef.ReusableBlockDefinition.wkSelected = "Y"
+   END
 
 END

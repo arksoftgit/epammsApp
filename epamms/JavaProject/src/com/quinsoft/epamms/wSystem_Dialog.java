@@ -3094,11 +3094,11 @@ AddPerson( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
-//:PostBuildPersons( VIEW ViewToWindow )
+//:PrebuildPersons( VIEW ViewToWindow )
 
 //:   VIEW lPersonLST    BASED ON LOD mPerson
 public int 
-PostBuildPersons( View     ViewToWindow )
+PrebuildPersons( View     ViewToWindow )
 {
    zVIEW    lPersonLST = new zVIEW( );
    //:VIEW mCurrentUser  REGISTERED AS mCurrentUser
@@ -3202,11 +3202,11 @@ SavePerson( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
-//:PostBuildUser( VIEW ViewToWindow )
+//:PrebuildUser( VIEW ViewToWindow )
 
 //:   VIEW lUserLST BASED ON LOD mUser
 public int 
-PostBuildUser( View     ViewToWindow )
+PrebuildUser( View     ViewToWindow )
 {
    zVIEW    lUserLST = new zVIEW( );
    int      RESULT = 0;
@@ -3247,11 +3247,11 @@ LoginClose( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
-//:PostBuildPerson( VIEW ViewToWindow )
+//:PrebuildPerson( VIEW ViewToWindow )
 
 //:   VIEW lPersonLST   BASED ON LOD  mPerson
 public int 
-PostBuildPerson( View     ViewToWindow )
+PrebuildPerson( View     ViewToWindow )
 {
    zVIEW    lPersonLST = new zVIEW( );
    //:VIEW mCurrentUser REGISTERED AS mCurrentUser

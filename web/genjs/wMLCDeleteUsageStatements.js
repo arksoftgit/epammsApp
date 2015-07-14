@@ -218,7 +218,7 @@ function ConfirmDeleteUsageEntry( )
    }
 }
 
-function PostbuildDeleteUsageStatements( )
+function PrebuildDeleteUsageStatements( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -228,7 +228,7 @@ function PostbuildDeleteUsageStatements( )
    {
       _DisableFormElements( true );
 
-      document.wMLCDeleteUsageStatements.zAction.value = "PostbuildDeleteUsageStatements";
+      document.wMLCDeleteUsageStatements.zAction.value = "PrebuildDeleteUsageStatements";
       document.wMLCDeleteUsageStatements.submit( );
    }
 }

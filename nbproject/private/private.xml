@@ -131,21 +131,17 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/wSystemDisplayHelpMessage.jsp</file>
-            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/wSystemExitHelpMessage.jsp</file>
-            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/js/labeldesigner.js</file>
-            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/js/jsoeUtils.js</file>
-            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/wSPLDGraphicalView.jsp</file>
-            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/js/jsoeObjectBrowser.js</file>
-            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/genjs/wSystemDisplayHelpMessage.js</file>
-            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/wSystemUpdateHelpMessage.jsp</file>
-            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/genjs/wStartUpUserLogin.js</file>
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/genjs/wSPLDGraphicalView.js</file>
+            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/genjs/wStartUpUserLogin.js</file>
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/genjs/wStartUpePammsPortal.js</file>
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/wStartUpePammsPortal.jsp</file>
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/wSPLDSPLD_BlockDefinitionUpdate.jsp</file>
+            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/js/labeldesigner.js</file>
+            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/js/jsoeUtils.js</file>
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/src/java/com/ajax/GraphicalLabelDesignerServlet.java</file>
-            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/genjs/wSystemExitHelpMessage.js</file>
+            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/wSPLDGraphicalView.jsp</file>
+            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/js/jsoeObjectBrowser.js</file>
+            <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/wSPLDSPLD_SelectReusableBlock.jsp</file>
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/wStartUpUserLogin.jsp</file>
             <file>file:/C:/workspace/NetBeansProjects/epammsApp/web/js/jsoe.js</file>
         </group>

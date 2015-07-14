@@ -343,10 +343,10 @@ epamms header.png
 }
 
 #sidenavigation li a.sideselected{
-   border-left: 7px solid #FDBF57;
+   border-left: 7px solid #57e8fd; //? #FDBF57;
    border-right: 1px solid #000000;
    background-color: #ffffff;
-   color: #000000;
+   color: #ffd700; //? #000000;
    background-image: url(../images/blue_bg.png); // url(../images/red_bg.png);
    background-repeat:repeat-x;
 }

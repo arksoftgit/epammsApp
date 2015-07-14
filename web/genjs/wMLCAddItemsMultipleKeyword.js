@@ -159,6 +159,8 @@ function _AfterPageLoaded( )
       timerID = null;
    }
 
+   document.wMLCAddItemsMultipleKeyword.hComboBox1.value = document.wMLCAddItemsMultipleKeyword.ComboBox1.value
+
    var varTimeout = document.wMLCAddItemsMultipleKeyword.zTimeout.value;
    if ( varTimeout > 0 )
    {
@@ -230,6 +232,18 @@ function ConfirmAddItemsMultipleReturn( )
 
       document.wMLCAddItemsMultipleKeyword.zAction.value = "ConfirmAddItemsMultipleReturn";
       document.wMLCAddItemsMultipleKeyword.submit( );
+   }
+}
+
+function ComboBox1OnChange( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      document.wMLCAddItemsMultipleKeyword.hComboBox1.value = document.wMLCAddItemsMultipleKeyword.ComboBox1.value;
    }
 }
 

@@ -100,46 +100,6 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       vGridTmp.drop( );
-      // Grid: GridViruses
-      iTableRowCnt = 0;
-
-      // We are creating a temp view to the grid view so that if there are 
-      // grids on the same window with the same view we do not mess up the 
-      // entity positions. 
-      vGridTmp = mEPA.newView( );
-      csrRC = vGridTmp.cursor( "Viruses" ).setFirst( "EPA_ChemicalFamily" );
-      while ( csrRC.isSet() )
-      {
-         lEntityKey = vGridTmp.cursor( "Viruses" ).getEntityKey( );
-         strEntityKey = Long.toString( lEntityKey );
-         iTableRowCnt++;
-
-         strTag = "GS_SelectViruses" + strEntityKey;
-         strMapValue = request.getParameter( strTag );
-         // If the checkbox is not checked, then set to the unchecked value.
-         if (strMapValue == null || strMapValue.isEmpty() )
-            strMapValue = "N";
-
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "GS_SelectViruses", "", strMapValue );
-            else
-               if ( strMapValue != null )
-                  vGridTmp.cursor( "EPA_Claim" ).getAttribute( "wkSelected" ).setValue( strMapValue, "" );
-               else
-                  vGridTmp.cursor( "EPA_Claim" ).getAttribute( "wkSelected" ).setValue( "", "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
-         }
-
-         csrRC = vGridTmp.cursor( "Viruses" ).setNextContinue( );
-      }
-
-      vGridTmp.drop( );
       // Grid: GridFungi
       iTableRowCnt = 0;
 
@@ -177,6 +137,46 @@ public int DoInputMapping( HttpServletRequest request,
          }
 
          csrRC = vGridTmp.cursor( "Fungi" ).setNextContinue( );
+      }
+
+      vGridTmp.drop( );
+      // Grid: GridViruses
+      iTableRowCnt = 0;
+
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
+      vGridTmp = mEPA.newView( );
+      csrRC = vGridTmp.cursor( "Viruses" ).setFirst( "EPA_ChemicalFamily" );
+      while ( csrRC.isSet() )
+      {
+         lEntityKey = vGridTmp.cursor( "Viruses" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         iTableRowCnt++;
+
+         strTag = "GS_SelectViruses" + strEntityKey;
+         strMapValue = request.getParameter( strTag );
+         // If the checkbox is not checked, then set to the unchecked value.
+         if (strMapValue == null || strMapValue.isEmpty() )
+            strMapValue = "N";
+
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "GS_SelectViruses", "", strMapValue );
+            else
+               if ( strMapValue != null )
+                  vGridTmp.cursor( "EPA_Claim" ).getAttribute( "wkSelected" ).setValue( strMapValue, "" );
+               else
+                  vGridTmp.cursor( "EPA_Claim" ).getAttribute( "wkSelected" ).setValue( "", "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
+         }
+
+         csrRC = vGridTmp.cursor( "Viruses" ).setNextContinue( );
       }
 
       vGridTmp.drop( );

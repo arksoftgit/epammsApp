@@ -369,8 +369,8 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
    session.setAttribute( "ZeidonError", null );
 else
 {
-   VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDeleteUsageStatements", "wMLC.PostbuildDeleteUsageStatements" );
-   nOptRC = wMLC.PostbuildDeleteUsageStatements( new zVIEW( vKZXMLPGO ) );
+   VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDeleteUsageStatements", "wMLC.PrebuildDeleteUsageStatements" );
+   nOptRC = wMLC.PrebuildDeleteUsageStatements( new zVIEW( vKZXMLPGO ) );
    if ( nOptRC == 2 )
    {
       View vView;
@@ -382,7 +382,7 @@ else
       strURLParameters = "?CallingPage=wMLCDeleteUsageStatements.jsp" +
                          "&Message=" + strMessage +
                          "&DialogName=" + "wMLC" +
-                         "&OperationName=" + "PostbuildDeleteUsageStatements";
+                         "&OperationName=" + "PrebuildDeleteUsageStatements";
       strURL = response.encodeRedirectURL( "MessageDisplay.jsp" + strURLParameters );
       response.sendRedirect( strURL );
       task.log().info( "Pre/Post Redirect to: " + strURL );

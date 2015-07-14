@@ -652,24 +652,40 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:8px;width:100px;"></div>
+<div style="height:12px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
-<% /* Text2:Text */ %>
+<div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox1:GroupBox */ %>
 
-<span class="listheader"  id="Text2" name="Text2" style="width:250px;height:16px;">Ingredients Statement</span>
-
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+<div id="GroupBox1" name="GroupBox1" style="width:814px;height:268px;float:left;">  <!-- GroupBox1 --> 
 
 
  <!-- This is added as a line spacer -->
 <div style="height:8px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
+<div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GBStorDispSections2:GroupBox */ %>
+
+<div id="GBStorDispSections2" name="GBStorDispSections2" class="listgroup"   style="float:left;position:relative; width:702px; height:36px;">  <!-- GBStorDispSections2 --> 
+
+<% /* OrganismClaimsStatements3:Text */ %>
+
+<label class="groupbox"  id="OrganismClaimsStatements3" name="OrganismClaimsStatements3" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Ingredients Statement</label>
+
+
+</div>  <!--  GBStorDispSections2 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:2px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBIngredientsStatement:GroupBox */ %>
 <div id="GBIngredientsStatement" name="GBIngredientsStatement" style="float:left;width:784px;" >
 
@@ -924,6 +940,10 @@ else
 
 </div>  <!-- GBIngredientsStatement --> 
 
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  GroupBox1 --> 
 </div>  <!-- End of a new line -->
 
 

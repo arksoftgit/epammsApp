@@ -111,6 +111,35 @@ aName      BLOB
 aIsDefault Y
 
 eDomain    2
+aZKey      110226099
+aName      InsertTextKeywordType
+aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      110226100
+aName      InsertTextKeywordType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      110226101
+aExternalValue All Optional
+aInternalValue A
+
+eTableEntry 4
+aZKey      110226102
+aExternalValue Only One Allowed
+aInternalValue O
+
+eTableEntry 4
+aZKey      110226103
+aExternalValue At Least One Req'd
+aInternalValue R
+
+eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      1186473
 aName      BoldItalic

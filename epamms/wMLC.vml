@@ -1077,11 +1077,11 @@ END
 
 /*************************************************************************************************
 **    
-**    OPERATION: PostbuildDeleteUsageStatements
+**    OPERATION: PrebuildDeleteUsageStatements
 **    
 *************************************************************************************************/
 DIALOG OPERATION
-PostbuildDeleteUsageStatements( VIEW ViewToWindow )
+PrebuildDeleteUsageStatements( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
    
@@ -2049,5 +2049,17 @@ GOTO_DisplayGeneratedText( VIEW ViewToWindow )
    VIEW  mMasLC REGISTERED AS mMasLC
 
    mMasLC.MasterLabelContent.wGeneratedTextDisplay = mMasLC.M_MarketingStatement.dDisplayKeywordText  
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_MarketingKeywordStmtKeyword
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_MarketingKeywordStmtKeyword( VIEW ViewToWindow )
+
+
 
 END

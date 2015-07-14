@@ -79,6 +79,25 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
+      // ComboBox: ComboBox1
+      nRC = mMasLC.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+         strMapValue = request.getParameter( "hComboBox1" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "ComboBox1", "", strMapValue );
+            else
+               mMasLC.cursor( "MasterLabelContent" ).getAttribute( "wAddStatementsPageTitle" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "ComboBox1", e.getReason( ), strMapValue );
+         }
+      }
+
       // MLEdit: MLEdit2
       nRC = mMasLC.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
@@ -635,11 +654,11 @@ else
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBAddSurfacesList:GroupBox */ %>
 
-<div id="GBAddSurfacesList" name="GBAddSurfacesList"   style="float:left;position:relative; width:778px; height:342px;">  <!-- GBAddSurfacesList --> 
+<div id="GBAddSurfacesList" name="GBAddSurfacesList"   style="float:left;position:relative; width:778px; height:370px;">  <!-- GBAddSurfacesList --> 
 
 <% /* DirectionsUseTitle:1:Text */ %>
 
-<label  id="DirectionsUseTitle:1" name="DirectionsUseTitle:1" style="width:72px;height:16px;position:absolute;left:6px;top:12px;">Keyword:</label>
+<label  id="DirectionsUseTitle:1" name="DirectionsUseTitle:1" style="width:104px;height:16px;position:absolute;left:6px;top:12px;">Keyword:</label>
 
 <% /* DirectionsUseName1:EditBox */ %>
 <%
@@ -680,11 +699,95 @@ else
    }
 %>
 
-<input class="text12" name="DirectionsUseName1" id="DirectionsUseName1"  title="Required Name to differentiate Directions for Use Sections within a list" style="width:162px;position:absolute;left:78px;top:12px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="DirectionsUseName1" id="DirectionsUseName1"  title="Required Name to differentiate Directions for Use Sections within a list" style="width:184px;position:absolute;left:110px;top:12px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
+<% /* Text1:Text */ %>
+
+<label  id="Text1" name="Text1" style="width:104px;height:16px;position:absolute;left:6px;top:34px;">Keyword Type:</label>
+
+<% /* ComboBox1:ComboBox */ %>
+<% strErrorMapValue = "";  %>
+
+<select  name="ComboBox1" id="ComboBox1" size="1" style="width:184px;position:absolute;left:110px;top:34px;" onchange="ComboBox1OnChange( )">
+
+<%
+   boolean inListComboBox1 = false;
+
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) )
+   {
+      List<TableEntry> list = JspWebUtils.getTableDomainValues( mMasLC , "MasterLabelContent", "wAddStatementsPageTitle", "" );
+
+      nRC = mMasLC.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+         strComboCurrentValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "wAddStatementsPageTitle" ).getString( "" );
+         if ( strComboCurrentValue == null )
+            strComboCurrentValue = "";
+      }
+      else
+      {
+         strComboCurrentValue = "";
+      }
+
+      // Code for NOT required attribute, which makes sure a blank entry exists.
+      if ( strComboCurrentValue == "" )
+      {
+         inListComboBox1 = true;
+%>
+         <option selected="selected" value=""></option>
+<%
+      }
+      else
+      {
+%>
+         <option value=""></option>
+<%
+      }
+      for ( TableEntry entry : list )
+      {
+         String internalValue = entry.getInternalValue( );
+         String externalValue = entry.getExternalValue( );
+         // Perhaps getInternalValue and getExternalValue should return an empty string, 
+         // but currently it returns null.  Set to empty string. 
+         if ( externalValue == null )
+         {
+            internalValue = "";
+            externalValue = "";
+         }
+
+         if ( !StringUtils.isBlank( externalValue ) )
+         {
+            if ( StringUtils.equals( strComboCurrentValue, externalValue ) )
+            {
+               inListComboBox1 = true;
+%>
+               <option selected="selected" value="<%=externalValue%>"><%=externalValue%></option>
+<%
+            }
+            else
+            {
+%>
+               <option value="<%=externalValue%>"><%=externalValue%></option>
+<%
+            }
+         }
+      }  // for ( TableEntry entry
+      // The value from the database isn't in the domain, add it to the list as disabled.
+      if ( !inListComboBox1 )
+      { 
+%>
+         <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
+<%
+      }  
+   }  // if view != null
+%>
+</select>
+
+<input name="hComboBox1" id="hComboBox1" type="hidden" value="<%=strComboCurrentValue%>" >
 <% /* AddSurfacesList:Text */ %>
 
-<label class="groupbox"  id="AddSurfacesList" name="AddSurfacesList" style="width:374px;height:16px;position:absolute;left:6px;top:34px;">Add One or Multiple Items Separated by Line Feeds</label>
+<label class="groupbox"  id="AddSurfacesList" name="AddSurfacesList" style="width:374px;height:16px;position:absolute;left:6px;top:60px;">Add One or Multiple Items Separated by Line Feeds</label>
 
 <% /* MLEdit2:MLEdit */ %>
 <%
@@ -718,7 +821,7 @@ else
    }
 %>
 
-<textarea name="MLEdit2" id="MLEdit2" style="width:754px;height:264px;position:absolute;left:6px;top:56px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+<textarea name="MLEdit2" id="MLEdit2" style="width:754px;height:264px;position:absolute;left:6px;top:82px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 
 </div>  <!--  GBAddSurfacesList --> 

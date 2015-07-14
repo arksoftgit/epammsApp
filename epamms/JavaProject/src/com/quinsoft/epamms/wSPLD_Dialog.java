@@ -5911,16 +5911,99 @@ DuplicateSubregProductSPLD( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
+//:PreviewSelectedBlock( VIEW ViewToWindow )
+
+//:   VIEW mSPLDef REGISTERED AS mSPLDef
 public int 
 PreviewSelectedBlock( View     ViewToWindow )
 {
+   zVIEW    mSPLDef = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW mSPLDefPanel REGISTERED AS mSPLDefPanel
+   zVIEW    mSPLDefPanel = new zVIEW( );
+   //:VIEW mSPLDefBlock REGISTERED AS mSPLDefBlock
+   zVIEW    mSPLDefBlock = new zVIEW( );
+   //:VIEW mSPLDef2 BASED ON LOD mSPLDef
+   zVIEW    mSPLDef2 = new zVIEW( );
+   //:VIEW mSPLDefPanel2 BASED ON LOD mSPLDef
+   zVIEW    mSPLDefPanel2 = new zVIEW( );
+   //:VIEW mSPLDefBlock2 BASED ON LOD mSPLDef
+   zVIEW    mSPLDefBlock2 = new zVIEW( );
+   //:VIEW mBlockRU BASED ON LOD mBlockRU
+   zVIEW    mBlockRU = new zVIEW( );
+   //:STRING (64) szTag
+   String   szTag = null;
+   //:INTEGER lControl
+   int      lControl = 0;
+   //:INTEGER nRC
+   int      nRC = 0;
+   int      lTempInteger_0 = 0;
 
-   //:PreviewSelectedBlock( VIEW ViewToWindow )
+   RESULT = GetViewByName( mSPLDef, "mSPLDef", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( mSPLDefPanel, "mSPLDefPanel", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( mSPLDefBlock, "mSPLDefBlock", ViewToWindow, zLEVEL_TASK );
 
-   //:ACCEPT_ReusableBlock( ViewToWindow )
-   ACCEPT_ReusableBlock( ViewToWindow );
-   //:GENERATE_SPLD_LabelDottedBorders( ViewToWindow )
-   GENERATE_SPLD_LabelDottedBorders( ViewToWindow );
+   //:szTag = mSPLDefBlock.LLD_Block.Tag
+   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+   StringBuilder sb_szTag;
+   if ( szTag == null )
+      sb_szTag = new StringBuilder( 32 );
+   else
+      sb_szTag = new StringBuilder( szTag );
+       GetVariableFromAttribute( sb_szTag, mi_lTempInteger_0, 'S', 65, mSPLDefBlock, "LLD_Block", "Tag", "", 0 );
+   lTempInteger_0 = mi_lTempInteger_0.intValue( );
+   szTag = sb_szTag.toString( );}
+   //:DropNameForView( mSPLDef, "mSPLDef", ViewToWindow, zLEVEL_TASK )
+   DropNameForView( mSPLDef, "mSPLDef", ViewToWindow, zLEVEL_TASK );
+   //:DropNameForView( mSPLDefPanel, "mSPLDefPanel", ViewToWindow, zLEVEL_TASK )
+   DropNameForView( mSPLDefPanel, "mSPLDefPanel", ViewToWindow, zLEVEL_TASK );
+   //:DropNameForView( mSPLDefBlock, "mSPLDefBlock", ViewToWindow, zLEVEL_TASK )
+   DropNameForView( mSPLDefBlock, "mSPLDefBlock", ViewToWindow, zLEVEL_TASK );
+
+   //:ActivateOI_FromOI( mSPLDef2, mSPLDef, zSINGLE )
+   ActivateOI_FromOI( mSPLDef2, mSPLDef, zSINGLE );
+   //:ResetViewFromSubobjectTop( mSPLDef2 )
+   ResetViewFromSubobjectTop( mSPLDef2 );
+   //:CreateViewFromView( mSPLDefPanel2, mSPLDef2 )
+   CreateViewFromView( mSPLDefPanel2, mSPLDef2 );
+   //:CreateViewFromView( mSPLDefBlock2, mSPLDef2 )
+   CreateViewFromView( mSPLDefBlock2, mSPLDef2 );
+   //:lControl = zQUAL_STRING + zPOS_FIRST + zRECURS
+   lControl = zQUAL_STRING + zPOS_FIRST + zRECURS;
+   //:SetEntityCursor( mSPLDefBlock2, "LLD_Block", "Tag", lControl, szTag, "", "", 0, "SPLD_LLD", "" )   
+   SetEntityCursor( mSPLDefBlock2, "LLD_Block", "Tag", lControl, szTag, "", "", 0, "SPLD_LLD", "" );
+   //:NAME VIEW mSPLDef2 "mSPLDef"
+   SetNameForView( mSPLDef2, "mSPLDef", null, zLEVEL_TASK );
+   //:NAME VIEW mSPLDefPanel2 "mSPLDefPanel"
+   SetNameForView( mSPLDefPanel2, "mSPLDefPanel", null, zLEVEL_TASK );
+   //:NAME VIEW mSPLDefBlock2 "mSPLDefBlock"
+   SetNameForView( mSPLDefBlock2, "mSPLDefBlock", null, zLEVEL_TASK );
+
+   //:nRC = ACCEPT_ReusableBlock( ViewToWindow )
+   nRC = ACCEPT_ReusableBlock( ViewToWindow );
+   //:IF nRC = 0
+   if ( nRC == 0 )
+   { 
+      //:GENERATE_SPLD_LabelDottedBorders( ViewToWindow )
+      GENERATE_SPLD_LabelDottedBorders( ViewToWindow );
+   } 
+
+   //:END
+   //:DropNameForView( mSPLDef2, "mSPLDef", ViewToWindow, zLEVEL_TASK )
+   DropNameForView( mSPLDef2, "mSPLDef", ViewToWindow, zLEVEL_TASK );
+   //:DropNameForView( mSPLDefPanel2, "mSPLDefPanel", ViewToWindow, zLEVEL_TASK )
+   DropNameForView( mSPLDefPanel2, "mSPLDefPanel", ViewToWindow, zLEVEL_TASK );
+   //:DropNameForView( mSPLDefBlock2, "mSPLDefBlock", ViewToWindow, zLEVEL_TASK )
+   DropNameForView( mSPLDefBlock2, "mSPLDefBlock", ViewToWindow, zLEVEL_TASK );
+   //:DropObjectInstance( mSPLDef2 )
+   DropObjectInstance( mSPLDef2 );
+
+   //:NAME VIEW mSPLDef "mSPLDef"
+   SetNameForView( mSPLDef, "mSPLDef", null, zLEVEL_TASK );
+   //:NAME VIEW mSPLDefPanel "mSPLDefPanel"
+   SetNameForView( mSPLDefPanel, "mSPLDefPanel", null, zLEVEL_TASK );
+   //:NAME VIEW mSPLDefBlock "mSPLDefBlock"
+   SetNameForView( mSPLDefBlock, "mSPLDefBlock", null, zLEVEL_TASK );
    return( 0 );
 // END
 } 
@@ -6668,7 +6751,7 @@ SELECT_MLC_ForNewSLC( View     ViewToWindow )
 //:DIALOG OPERATION
 //:ACCEPT_ReusableBlock( VIEW ViewToWindow )
 
-//:  VIEW mSPLDef REGISTERED AS mSPLDef
+//:   VIEW mSPLDef REGISTERED AS mSPLDef
 public int 
 ACCEPT_ReusableBlock( View     ViewToWindow )
 {
@@ -6698,8 +6781,8 @@ ACCEPT_ReusableBlock( View     ViewToWindow )
    if ( RESULT < zCURSOR_SET )
    { 
       //:MessageSend( ViewToWindow, "", "Select Reusable Block",
-      //:            "One reusable block must be selected",
-      //:            zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      //:             "One reusable block must be selected",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
       MessageSend( ViewToWindow, "", "Select Reusable Block", "One reusable block must be selected", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
       //:RETURN 2
       if(8==8)return( 2 );
@@ -6713,8 +6796,8 @@ ACCEPT_ReusableBlock( View     ViewToWindow )
    if ( RESULT >= zCURSOR_SET )
    { 
       //:MessageSend( ViewToWindow, "", "Select Reusable Block",
-      //:            "Only one reusable block can be selected",
-      //:            zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      //:             "Only one reusable block can be selected",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
       MessageSend( ViewToWindow, "", "Select Reusable Block", "Only one reusable block can be selected", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
       //:RETURN 2
       if(8==8)return( 2 );
@@ -6780,7 +6863,7 @@ ACCEPT_ReusableBlock( View     ViewToWindow )
 //:DIALOG OPERATION
 //:ClearReusableBlockSelections( VIEW ViewToWindow )
 
-//:  VIEW mSPLDef REGISTERED AS mSPLDef
+//:   VIEW mSPLDef REGISTERED AS mSPLDef
 public int 
 ClearReusableBlockSelections( View     ViewToWindow )
 {
