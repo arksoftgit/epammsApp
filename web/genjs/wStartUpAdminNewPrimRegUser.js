@@ -149,6 +149,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var LoginName = document.wStartUpAdminNewPrimRegUser.zLoginName.value;
    var keyRole = document.wStartUpAdminNewPrimRegUser.zKeyRole.value;
    document.wStartUpAdminNewPrimRegUser.zError.value = "";
    document.wStartUpAdminNewPrimRegUser.zOpenFile.value = "";
@@ -170,39 +171,6 @@ function _AfterPageLoaded( )
    }
    else
       timerID = null; // No timeout specified
-
-   // Prebuild action has javascript code entered by user.
-   // From this subwindow, the only logical top menu option is Logout, so
-   // we leave Logout as the only option.
-   var thisLi;
-      thisLi = document.getElementById( "lmStateRegistrations" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-      thisLi = document.getElementById( "lmSubregistrants" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-      thisLi = document.getElementById( "lmTrackingNotificationCompliance" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-      thisLi = document.getElementById( "lmProductManagement" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-      thisLi = document.getElementById( "lmMarketingFulfillment" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-      thisLi = document.getElementById( "lmWebDevelopment" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-      thisLi = document.getElementById( "lmCompanyProfile" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-      thisLi = document.getElementById( "lmLogin" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-      thisLi = document.getElementById( "lmLogout" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none"
-   // END of Javascript code entered by user.
 
 var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
@@ -232,6 +200,8 @@ function AddAddNewPrimRegUser( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      _DisableFormElements( true );
+
       document.wStartUpAdminNewPrimRegUser.zAction.value = "AddAddNewPrimRegUser";
       document.wStartUpAdminNewPrimRegUser.submit( );
    }
@@ -465,7 +435,7 @@ function mCompanyProfile( )
    }
 }
 
-function mLogin( )
+function mUsers( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -473,42 +443,9 @@ function mLogin( )
 
    if ( _IsDocDisabled( ) == false )
    {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmLogin" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
       _DisableFormElements( true );
 
-      document.wStartUpAdminNewPrimRegUser.zAction.value = "mLogin";
-      document.wStartUpAdminNewPrimRegUser.submit( );
-   }
-}
-
-function mLogout( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmLogout" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wStartUpAdminNewPrimRegUser.zAction.value = "_OnUnload";
+      document.wStartUpAdminNewPrimRegUser.zAction.value = "mUsers";
       document.wStartUpAdminNewPrimRegUser.submit( );
    }
 }

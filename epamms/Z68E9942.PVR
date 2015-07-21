@@ -1,0 +1,11 @@
+z1000-Zeidon    Z68E9942 TZWDVORO 07/14/15   18:54:35 1.0a2    
+eViewObjRef 1
+aZKey      110008642
+aName      qBlockRU
+aDesc      VOR automatically built from LOD Dialog
+
+eLOD       2
+aZKey      110008633
+aName      qBlockRU
+aDesc      Check for duplicate names within Subregistrant
+

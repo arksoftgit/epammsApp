@@ -20,7 +20,7 @@ DIALOG OPERATION
 InitSubregDetail( VIEW ViewToWindow )
 
    VIEW wWebXfer REGISTERED AS wWebXfer
-   VIEW lSubreg  REGISTERED AS lSubreg
+   VIEW qOrganiz REGISTERED AS qOrganizLogin
    VIEW mSubreg  BASED ON LOD  mSubreg
    INTEGER       lID
 
@@ -34,7 +34,7 @@ InitSubregDetail( VIEW ViewToWindow )
       DropObjectInstance( mSubreg )
    END
 
-   ACTIVATE mSubreg WHERE mSubreg.Subregistrant.ID = lSubreg.Subregistrant.ID
+   ACTIVATE mSubreg WHERE mSubreg.Subregistrant.ID = qOrganiz.Subregistrant.ID
    NAME VIEW mSubreg "mSubreg"
 
    IF mSubreg.MailingAddress DOES NOT EXIST
@@ -235,7 +235,7 @@ InitSubregistrantForUpdate( VIEW ViewToWindow )
       CREATE ENTITY mSubreg.ContactPerson
    END
 
-   wWebXfer.Root.AttemptLoginName = mSubreg.SubregOrganization.LoginName
+   wWebXfer.Root.AttemptLoginRegistrant = mSubreg.SubregOrganization.LoginName
    wWebXfer.Root.AttemptPassword = ""
    wWebXfer.Root.ConfirmPassword = ""
 
@@ -260,7 +260,7 @@ AcceptNewSubregistrant( VIEW ViewToWindow )
    VIEW wWebXfer REGISTERED AS wWebXfer
    VIEW mSubreg  BASED ON LOD  mSubreg
    VIEW qOrganiz BASED ON LOD  qOrganiz
-   STRING (  50  ) szAttemptLoginName
+   STRING (  50  ) szAttemptLoginRegistrant
    STRING ( 128  ) szAttemptPassword
    STRING ( 128  ) szConfirmPassword
    INTEGER         lPasswordLth
@@ -288,8 +288,8 @@ AcceptNewSubregistrant( VIEW ViewToWindow )
       RETURN 2
    END
 
-   szAttemptLoginName = wWebXfer.Root.AttemptUserName
-   ACTIVATE qOrganiz WHERE qOrganiz.Organization.LoginName = szAttemptLoginName
+   szAttemptLoginRegistrant = wWebXfer.Root.AttemptLoginName
+   ACTIVATE qOrganiz WHERE qOrganiz.Organization.LoginName = szAttemptLoginRegistrant
    IF qOrganiz.Organization EXISTS
 
       DropObjectInstance( qOrganiz )
@@ -304,13 +304,13 @@ AcceptNewSubregistrant( VIEW ViewToWindow )
    DropObjectInstance( qOrganiz )
 
    // Set LoginName
-   mSubreg.SubregOrganization.LoginName = szAttemptLoginName
+   mSubreg.SubregOrganization.LoginName = szAttemptLoginRegistrant
 
    // Set user password to new password.
    mSubreg.User.UserPassword = szConfirmPassword
 
 // AcceptSubobject( mSubreg, "User" )
-// AcceptSubobject( mSubreg, "Person" )
+// AcceptSubobject( mSubreg, "Employee" )
 // AcceptSubobject( mSubreg, "PhysicalAddress" )
 // AcceptSubobject( mSubreg, "MailingAddress" )
    AcceptSubobject( mSubreg, "Subregistrant" )
@@ -336,16 +336,16 @@ AcceptUpdateSubregistrant( VIEW ViewToWindow )
    VIEW mSubreg  BASED ON LOD  mSubreg
    VIEW qOrganiz BASED ON LOD  qOrganiz
    STRING (  50  ) szLoginName
-   STRING (  50  ) szAttemptLoginName
+   STRING (  50  ) szAttemptLoginRegistrant
    INTEGER         lControl
 
    GET VIEW mSubreg NAMED "mSubreg"
 
    szLoginName = mSubreg.SubregOrganization.LoginName
-   szAttemptLoginName = wWebXfer.Root.AttemptUserName
-   IF szLoginName != szAttemptLoginName
+   szAttemptLoginRegistrant = wWebXfer.Root.AttemptLoginName
+   IF szLoginName != szAttemptLoginRegistrant
 
-      ACTIVATE qOrganiz WHERE qOrganiz.Organization.LoginName = szAttemptLoginName
+      ACTIVATE qOrganiz WHERE qOrganiz.Organization.LoginName = szAttemptLoginRegistrant
       IF qOrganiz.Organization EXISTS
 
          DropObjectInstance( qOrganiz )
@@ -360,13 +360,13 @@ AcceptUpdateSubregistrant( VIEW ViewToWindow )
       DropObjectInstance( qOrganiz )
 
       // Set changed LoginName
-      mSubreg.SubregOrganization.LoginName = szAttemptLoginName
+      mSubreg.SubregOrganization.LoginName = szAttemptLoginRegistrant
 
    END
 
 
 // AcceptSubobject( mSubreg, "User" )
-// AcceptSubobject( mSubreg, "Person" )
+// AcceptSubobject( mSubreg, "Employee" )
 // AcceptSubobject( mSubreg, "PhysicalAddress" )
 // AcceptSubobject( mSubreg, "MailingAddress" )
    AcceptSubobject( mSubreg, "Subregistrant" )
@@ -392,7 +392,7 @@ CancelNewSubregistrant( VIEW ViewToWindow )
 
    GET VIEW mSubreg NAMED "mSubreg"
 // CancelSubobject( mSubreg, "User" )
-// CancelSubobject( mSubreg, "Person" )
+// CancelSubobject( mSubreg, "Employee" )
 // CancelSubobject( mSubreg, "PhysicalAddress" )
 // CancelSubobject( mSubreg, "MailingAddress" )
    CancelSubobject( mSubreg, "Subregistrant" )
@@ -412,7 +412,7 @@ CancelUpdateSubregistrant( VIEW ViewToWindow )
 
    GET VIEW mSubreg NAMED "mSubreg"
 // CancelSubobject( mSubreg, "User" )
-// CancelSubobject( mSubreg, "Person" )
+// CancelSubobject( mSubreg, "Employee" )
 // CancelSubobject( mSubreg, "PhysicalAddress" )
 // CancelSubobject( mSubreg, "MailingAddress" )
    CancelSubobject( mSubreg, "Subregistrant" )
@@ -429,7 +429,7 @@ DIALOG OPERATION
 InitListSubregUsers( VIEW ViewToWindow )
 
    VIEW wWebXfer REGISTERED AS wWebXfer
-   VIEW lSubreg  REGISTERED AS lSubreg
+   VIEW qOrganiz REGISTERED AS qOrganizLogin
    VIEW mSubreg  BASED ON LOD  mSubreg
 
    GET VIEW mSubreg NAMED "mSubreg"
@@ -437,7 +437,7 @@ InitListSubregUsers( VIEW ViewToWindow )
       DropObjectInstance( mSubreg )
    END
 
-   ACTIVATE mSubreg WHERE mSubreg.Subregistrant.ID = lSubreg.Subregistrant.ID
+   ACTIVATE mSubreg WHERE mSubreg.Subregistrant.ID = qOrganiz.Subregistrant.ID
    NAME VIEW mSubreg "mSubreg"
 
    wWebXfer.Root.Banner4 = mSubreg.Subregistrant.dNameEPA_Number
@@ -468,7 +468,7 @@ InitSubregUserForInsert( VIEW ViewToWindow )
    VIEW mSubreg  REGISTERED AS mSubreg
 // VIEW qSubreg  BASED ON LOD  qSubreg
 
-   wWebXfer.Root.AttemptUserName = ""
+   wWebXfer.Root.AttemptLoginName = ""
    wWebXfer.Root.AttemptPassword = ""
    wWebXfer.Root.ConfirmPassword = ""
 
@@ -555,7 +555,7 @@ InitSubregUserForUpdate( VIEW ViewToWindow )
 // DropObjectInstance( qSubreg )
 
    DisplayObjectInstance( mSubreg, "", "" )
-   wWebXfer.Root.AttemptUserName = mSubreg.User.UserName
+   wWebXfer.Root.AttemptLoginName = mSubreg.User.UserName
    wWebXfer.Root.AttemptPassword = ""
    wWebXfer.Root.ConfirmPassword = ""
 
@@ -589,7 +589,7 @@ AcceptNewSubregUser( VIEW ViewToWindow )
    GET VIEW mSubreg NAMED "mSubreg"
 
    // Ensure user login name is not blank and is unique.
-   szUserName = wWebXfer.Root.AttemptUserName
+   szUserName = wWebXfer.Root.AttemptLoginName
    lUserNameLth = zGetStringLen( szUserName )
    TraceLineS( "User Login Name: ", szUserName )
    TraceLineI( "User Login Name Length: ", lUserNameLth )
@@ -707,7 +707,7 @@ AcceptUpdateSubregUser( VIEW ViewToWindow )
 // VIEW lSubreg  BASED ON LOD  lSubreg
    VIEW mSubreg  BASED ON LOD  mSubreg
    STRING (  50  ) szUserName
-   STRING (  50  ) szAttemptUserName
+   STRING (  50  ) szAttemptLoginName
    INTEGER         lUserNameLth
    INTEGER         lControl
    INTEGER         lID
@@ -731,8 +731,8 @@ AcceptUpdateSubregUser( VIEW ViewToWindow )
 
    ELSE
 
-      szAttemptUserName = wWebXfer.Root.AttemptUserName
-      nRC = zstrcmpi( szUserName, szAttemptUserName )
+      szAttemptLoginName = wWebXfer.Root.AttemptLoginName
+      nRC = zstrcmpi( szUserName, szAttemptLoginName )
       IF nRC != 0
 
          lControl = zQUAL_STRING + zPOS_FIRST + zQUAL_SCOPE_OI + zTEST_CSR_RESULT
@@ -745,7 +745,7 @@ AcceptUpdateSubregUser( VIEW ViewToWindow )
             RETURN 2
 
          ELSE
-            szUserName = szAttemptUserName
+            szUserName = szAttemptLoginName
          END
       END
    END
@@ -753,9 +753,9 @@ AcceptUpdateSubregUser( VIEW ViewToWindow )
    mSubreg.User.UserName = szUserName
 
    // Ensure user first and last names are not blank.
-   szAttemptUserName = mSubreg.Employee.FirstName
-   lUserNameLth = zGetStringLen( szAttemptUserName )
-   TraceLineS( "First Name: ", szAttemptUserName )
+   szAttemptLoginName = mSubreg.Employee.FirstName
+   lUserNameLth = zGetStringLen( szAttemptLoginName )
+   TraceLineS( "First Name: ", szAttemptLoginName )
    TraceLineI( "First Name Length: ", lUserNameLth )
    IF lUserNameLth < 1
       MessageSend( ViewToWindow, "", "Update Subregistrant User",
@@ -765,9 +765,9 @@ AcceptUpdateSubregUser( VIEW ViewToWindow )
       RETURN 2
    END
 
-   szAttemptUserName = mSubreg.Employee.LastName
-   lUserNameLth = zGetStringLen( szAttemptUserName )
-   TraceLineS( "Last Name: ", szAttemptUserName )
+   szAttemptLoginName = mSubreg.Employee.LastName
+   lUserNameLth = zGetStringLen( szAttemptLoginName )
+   TraceLineS( "Last Name: ", szAttemptLoginName )
    TraceLineI( "Last Name Length: ", lUserNameLth )
    IF lUserNameLth < 1
       MessageSend( ViewToWindow, "", "Update Subregistrant User",

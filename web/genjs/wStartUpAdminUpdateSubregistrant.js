@@ -149,6 +149,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var LoginName = document.wStartUpAdminUpdateSubregistrant.zLoginName.value;
    var keyRole = document.wStartUpAdminUpdateSubregistrant.zKeyRole.value;
    document.wStartUpAdminUpdateSubregistrant.zError.value = "";
    document.wStartUpAdminUpdateSubregistrant.zOpenFile.value = "";
@@ -172,15 +173,8 @@ function _AfterPageLoaded( )
       timerID = null; // No timeout specified
 
    // Prebuild action has javascript code entered by user.
-   // We knock out Login and Template as options.
    var thisLi;
 
-   thisLi = document.getElementById( "lmLogin" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-   thisLi = document.getElementById( "lmLogout" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none"
    thisLi = document.getElementById( "lmCompanyProfile" );
    thisLi.style.visibility = "hidden";
    thisLi.style.display = "none"
@@ -552,7 +546,7 @@ function mCompanyProfile( )
    }
 }
 
-function mLogin( )
+function mUsers( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -560,42 +554,9 @@ function mLogin( )
 
    if ( _IsDocDisabled( ) == false )
    {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmLogin" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
       _DisableFormElements( true );
 
-      document.wStartUpAdminUpdateSubregistrant.zAction.value = "mLogin";
-      document.wStartUpAdminUpdateSubregistrant.submit( );
-   }
-}
-
-function mLogout( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmLogout" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wStartUpAdminUpdateSubregistrant.zAction.value = "_OnUnload";
+      document.wStartUpAdminUpdateSubregistrant.zAction.value = "mUsers";
       document.wStartUpAdminUpdateSubregistrant.submit( );
    }
 }

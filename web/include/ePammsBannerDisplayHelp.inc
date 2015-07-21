@@ -1,6 +1,6 @@
 <div id="megatopregion">
    <div id="loginline"><ul>
-      <li>hd</li>
+      <li style="display:none"y>hd</li>
       <li class="home"><a href="http://www.epa.gov" target="_blank">EPA Home</a></li>
       <li class="exiticon"><a href="javascript:void(0);" onclick="ExitHelp();">Exit</a></li>
    </ul></div>

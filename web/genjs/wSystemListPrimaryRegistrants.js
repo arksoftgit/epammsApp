@@ -149,6 +149,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var LoginName = document.wSystemListPrimaryRegistrants.zLoginName.value;
    var keyRole = document.wSystemListPrimaryRegistrants.zKeyRole.value;
    document.wSystemListPrimaryRegistrants.zError.value = "";
    document.wSystemListPrimaryRegistrants.zOpenFile.value = "";
@@ -169,13 +170,11 @@ function _AfterPageLoaded( )
       timerID = null; // No timeout specified
 
    // Prebuild action has javascript code entered by user.
-/* thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
+/*
    thisLi = document.getElementById( "lmSystem" );
    thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none"; */
+   thisLi.style.display = "none"; 
+*/
    // END of Javascript code entered by user.
 
 var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
@@ -279,21 +278,6 @@ function ReturnToLogin( )
    }
 }
 
-function mTemplate( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemListPrimaryRegistrants.zAction.value = "mTemplate";
-      document.wSystemListPrimaryRegistrants.submit( );
-   }
-}
-
 function mSystem( )
 {
 
@@ -324,7 +308,7 @@ function mShowFeedback( )
    }
 }
 
-function mLogout( )
+function mLogin( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -334,7 +318,7 @@ function mLogout( )
    {
       _DisableFormElements( true );
 
-      document.wSystemListPrimaryRegistrants.zAction.value = "_OnUnload";
+      document.wSystemListPrimaryRegistrants.zAction.value = "mLogin";
       document.wSystemListPrimaryRegistrants.submit( );
    }
 }

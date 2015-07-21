@@ -1,6 +1,6 @@
 <div id="megatopregion">
    <div id="loginline"><ul>
-      <li>hu</li>
+      <li style="display:none">hu</li>
       <li class="home"><a href="http://www.epa.gov" target="_blank">EPA Home</a></li>
 <!--  <li class="emailicon"><a href=".\wSystemDisplayHelpMessage.jsp" target="_blank">Return</a></li> -->
       <li class="logoff"><a href="#" onclick="Cancel()">Return</a></li>

@@ -1,4 +1,4 @@
-z1000-Zeidon    RPRIMREG TZZOLODO 08/16/11   22:58:46 1.0a2    
+z1000-Zeidon    RPRIMREG TZZOLODO 07/16/15   11:50:51 1.0a2    
 eLOD       1
 aZKey      1157074
 aName      rPrimReg
@@ -77,10 +77,10 @@ aCardMax   m
 eER_RelTypeRec 5
 aZKey      68568357
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 38
+aER_DiagramBendPosX 44
 aER_DiagramBendPosY 19
-aER_DiagramE1PosX 38
-aER_DiagramE1PosY 36
+aER_DiagramE1PosX 44
+aER_DiagramE1PosY 37
 aER_DiagramE2PosX 67
 aER_DiagramE2PosY 19
 
@@ -108,6 +108,7 @@ aName      ID
 aZKey      1653223
 aNotNull   Y
 aDesc      Generated ID
+aCaseSens  Y
 
 eDomainRec 6
 
@@ -121,12 +122,12 @@ aNotNull   Y
 aDesc      Short nickname of the corporation for login purposes (e.g. Mason or Lonza or Stepan)
 
 eDomainRec 6
-aZKey      68568065
-aName      GeneralName_Address
+aZKey      110002352
+aName      GeneralNameCaseInsensitive
 aDomainType E
 aDataType  S
 aMaxStringLth 128
-aDesc      General Text (names, streets, cities, etc.)
+aDesc      Case Insensitive General Text (names, streets, cities, etc.)
 aContextRestriction N
 
 eLOD_AttributeRec 4
@@ -155,6 +156,7 @@ aUpdate    Y
 eER_AttributeRec 5
 aName      Description
 aZKey      1660582
+aCaseSens  Y
 
 eDomainRec 6
 
@@ -165,14 +167,14 @@ eER_AttributeRec 5
 aName      AdministratorPassword
 aZKey      1653228
 aDesc      Administrator's logon password
+aCaseSens  Y
 
 eDomainRec 6
-aZKey      68568075
-aName      PasswordUL
+aZKey      68568077
+aName      Password
 aDomainType A
 aDataType  S
 aMaxStringLth 128
-aDesc      Password in Upper and Lower case
 aContextRestriction N
 
 eLOD_AttributeRec 4
@@ -182,6 +184,7 @@ aUpdate    Y
 eER_AttributeRec 5
 aName      Role
 aZKey      1659262
+aCaseSens  Y
 
 eDomainRec 6
 aZKey      1639285
@@ -215,7 +218,7 @@ aER_DiagramBendPosX 0
 aER_DiagramBendPosY 0
 aER_DiagramE1PosX 65
 aER_DiagramE1PosY 41
-aER_DiagramE2PosX 43
+aER_DiagramE2PosX 49
 aER_DiagramE2PosY 41
 
 eLOD_EntityChild 3
@@ -389,11 +392,19 @@ aZKey      1163351
 eER_AttributeRec 5
 aName      Number
 aZKey      69031557
+aLth       5
 aNotNull   Y
-aDesc      e.g. 141 for Mason MAQUAT 256-NHQ or 129 for Lonza HWS-256 or 83 for Stepan?
+aDesc      1-5 digit number assigned to the product (e.g. 141 for Mason MAQUAT 256-NHQ or 129 for Lonza HWS-256)
 aCaseSens  Y
 
 eDomainRec 6
+aZKey      18568062
+aName      NumericId
+aDomainType F
+aDataType  S
+aMaxStringLth 32
+aDesc      Numeric Text (0-9).
+aContextRestriction N
 
 eLOD_AttributeRec 4
 aZKey      1163352
@@ -526,10 +537,10 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 5
 aZKey      69031569
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 38
+aER_DiagramBendPosX 44
 aER_DiagramBendPosY 55
-aER_DiagramE1PosX 38
-aER_DiagramE1PosY 42
+aER_DiagramE1PosX 44
+aER_DiagramE1PosY 43
 aER_DiagramE2PosX 50
 aER_DiagramE2PosY 55
 
@@ -551,7 +562,8 @@ aUpdate    Y
 eER_AttributeRec 4
 aName      EPA_CompanyNumber
 aZKey      1654858
-aDesc      e.g. 10324 for MASON, 47371 for LONZA, 1839 for STEPAN
+aLth       6
+aDesc      1-6 digit number assigned to the company by the EPA (e.g. 10324 for MASON, 47371 for LONZA, 1839 for STEPAN)
 
 eDomainRec 5
 
@@ -581,8 +593,8 @@ eER_EntityRec 3
 aName      PrimaryRegistrant
 aZKey      68568354
 aPurpose   F
-aER_DiagramPosX 34
-aER_DiagramPosY 37
+aER_DiagramPosX 40
+aER_DiagramPosY 38
 
 eLOD_Entity 2
 awkSelectedAttributeForDragSort 8
@@ -933,18 +945,6 @@ aDesc      ePamms Application
 aType      P
 
 eTE_DBMS_Source 4
-aName      ePammsA
-aZKey      1156756
-aDesc      ePamms access
-aParadigm  R
-aDBMS      MS Access via ODBC
-aGenerateExecutable kzhsqlab
-aExecutable kzhsqloa
-aGenKeyExecutable kzhgenky
-aDisplayOwner Y
-aDisplayDBMS_ID N
-
-eTE_DBMS_Source 4
 aName      ePammsM
 aZKey      4121658
 aDesc      MySQL ePamms database
@@ -956,7 +956,7 @@ aGenKeyExecutable kzhgenky
 aDisplayOwner Y
 aDisplayDBMS_ID N
 aDBH_Data  376
-TZDBHODO ********************************************************************************************************************************z1000-Zeidon    ZTF_12C4_TZDBHODO 05/07/10   14:07:31 1.0a2    
+TZDBHODO *********************** ********************************************************************************************************z1000-Zeidon    ZTF_12C4_TZDBHODO 05/07/10   14:07:31 1.0a2    
 eODBC      1
 aTimestampPrecision 3
 aTimestampAsString N
@@ -992,14 +992,13 @@ i38        18
 i47        44
 i56        5
 i59        18
-i62        15
 i65        18
 i74        71
 i77        41
 i80        41
 i86        18
 i94        5
-i97        71
+i97        62
 i100       18
 i102       88
 i104       1
@@ -1008,7 +1007,7 @@ i106       93
 i107       5
 i108       95
 i109       96
-i110       71
+i110       62
 i111       98
 i112       99
 i113       18
@@ -1053,7 +1052,7 @@ i151       58
 i152       18
 i153       60
 i154       61
-i155       15
+i155       62
 i156       63
 i157       64
 i158       18
@@ -1108,11 +1107,11 @@ i206       53
 i207       88
 i208       101
 i223       87
-i232       218
-i233       88
-i234       213
-i235       88
-i236       87
-i237       88
-i238       101
-i239       88
+i231       218
+i232       88
+i233       213
+i234       88
+i235       87
+i236       88
+i237       101
+i238       88

@@ -354,6 +354,7 @@ String strOpenPopupWindow = "";
 String strPopupWindowSZX = "";
 String strPopupWindowSZY = "";
 String strDateFormat = "";
+String strLoginName = "";
 String strKeyRole = "";
 String strDialogName = "";
 String strWindowName = "";
@@ -600,313 +601,6 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mProductManagement" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSubRUpdateSubregUser", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRUpdateSubregUser", "wStartUp.ProductManagement" );
-      nOptRC = wStartUp.ProductManagement( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSubR.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSubR.SetWebRedirection( vKZXMLPGO, wSubR.zWAB_StartTopWindow, "wSLC", "SubregProductsList" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mSubregistrants" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSubRUpdateSubregUser", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRUpdateSubregUser", "wStartUp.SubregistrantManagement" );
-      nOptRC = wStartUp.SubregistrantManagement( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSubR.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSubR.SetWebRedirection( vKZXMLPGO, wSubR.zWAB_StartTopWindow, "wStartUp", "AdminListSubregistrants" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mTrackingNotificationCompliance" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSubRUpdateSubregUser", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRUpdateSubregUser", "wStartUp.TrackingNotificationCompliance" );
-      nOptRC = wStartUp.TrackingNotificationCompliance( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSubR.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSubR.SetWebRedirection( vKZXMLPGO, wSubR.zWAB_StartTopWindow, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mStateRegistrations" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSubRUpdateSubregUser", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRUpdateSubregUser", "wStartUp.StateRegistrations" );
-      nOptRC = wStartUp.StateRegistrations( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSubR.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSubR.SetWebRedirection( vKZXMLPGO, wSubR.zWAB_StartTopWindow, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mMarketingFulfillment" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSubRUpdateSubregUser", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRUpdateSubregUser", "wStartUp.MarketingFulfillment" );
-      nOptRC = wStartUp.MarketingFulfillment( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSubR.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSubR.SetWebRedirection( vKZXMLPGO, wSubR.zWAB_StartTopWindow, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mWebDevelopment" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSubRUpdateSubregUser", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRUpdateSubregUser", "wStartUp.WebDevelopment" );
-      nOptRC = wStartUp.WebDevelopment( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSubR.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSubR.SetWebRedirection( vKZXMLPGO, wSubR.zWAB_StartTopWindow, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mCompanyProfile" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSubRUpdateSubregUser", strActionToProcess );
-
-      // Action Operation
-      nRC = 0;
-      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRUpdateSubregUser", "wStartUp.PrimaryRegistrantCompanySetup" );
-      nOptRC = wStartUp.PrimaryRegistrantCompanySetup( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSubR.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSubR.SetWebRedirection( vKZXMLPGO, wSubR.zWAB_StartTopWindow, "wStartUp", "AdminUpdatePrimaryRegistrant" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mLogin" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSubRUpdateSubregUser", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSubRUpdateSubregUser", "wStartUp.ProcessLogin" );
-      nOptRC = wStartUp.ProcessLogin( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSubR.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSubR.SetWebRedirection( vKZXMLPGO, wSubR.zWAB_ResetTopWindow, "wStartUp", "UserLogin" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
    while ( bDone == false && strActionToProcess.equals( "_OnUnload" ) )
    {
       bDone = true;
@@ -1056,22 +750,6 @@ else
 
 <jsp:include page='<%=strBannerName %>' />
 
-<!-- Main Navigation *********************** -->
-<div id="mainnavigation">
-   <ul id="TopMenu" name="TopMenu" >
-       <li id="lmProductManagement" name="lmProductManagement" ><a href="#" onclick="mProductManagement()">Products</a></li>
-       <li id="lmSubregistrants" name="lmSubregistrants" ><a href="#" onclick="mSubregistrants()">Subregistrants</a></li>
-       <li id="lmTrackingNotificationCompliance" name="lmTrackingNotificationCompliance" ><a href="#" onclick="mTrackingNotificationCompliance()">Tracking/Notification/Compliance</a></li>
-       <li id="lmStateRegistrations" name="lmStateRegistrations" ><a href="#" onclick="mStateRegistrations()">State Registrations</a></li>
-       <li id="lmMarketingFulfillment" name="lmMarketingFulfillment" ><a href="#" onclick="mMarketingFulfillment()">Marketing/Fulfillment</a></li>
-       <li id="lmWebDevelopment" name="lmWebDevelopment" ><a href="#" onclick="mWebDevelopment()">Web Development</a></li>
-       <li id="lmCompanyProfile" name="lmCompanyProfile" ><a href="#" onclick="mCompanyProfile()">Company Profile</a></li>
-       <li id="lmLogin" name="lmLogin" ><a href="#" onclick="mLogin()">Login</a></li>
-       <li id="lmLogout" name="lmLogout" ><a href="#" onclick="mLogout()">Logout</a></li>
-   </ul>
-</div>  <!-- end Navigation Bar -->
-
-<%@include file="./include/topmenuend.inc" %>
 <div id="maincontent">
 
 <div id="leftcontent">
@@ -1202,11 +880,12 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
+         strLoginName = wWebXA.cursor( "Root" ).getAttribute( "LoginName" ).getString( "LoginName" );
+         if ( strLoginName == null )
+            strLoginName = "";
          strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
-
-         task.log().info( "Root.KeyRole: " + strKeyRole );
       }
    }
 %>
@@ -1214,6 +893,7 @@ else
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
    <input name="zPopupWindowSZX" id="zPopupWindowSZX" type="hidden" value="<%=strPopupWindowSZX%>">
@@ -1244,20 +924,27 @@ else
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* UserInformation:GroupBox */ %>
 
-<div id="UserInformation" name="UserInformation" style="width:506px;height:552px;float:left;">  <!-- UserInformation --> 
+<div id="UserInformation" name="UserInformation" style="width:506px;height:50px;float:left;">  <!-- UserInformation --> 
 
-<div  id="UserInformation" name="UserInformation" >User Information</div>
 
  <!-- This is added as a line spacer -->
 <div style="height:24px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp&nbsp</span>
+<div style="height:1px;width:16px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox4:GroupBox */ %>
+<div id="GroupBox4" name="GroupBox4" style="float:left;width:474px;" >
+
+<table cols=0 style="width:474px;"  class="grouptable">
+
+<tr>
+<td valign="top" style="width:154px;">
 <% /* RegistrantName::Text */ %>
 
 <span  id="RegistrantName:" name="RegistrantName:" style="width:140px;height:16px;">Registrant Name:</span>
 
-<span style="height:16px;">&nbsp&nbsp</span>
+</td>
+<td valign="top" style="width:318px;">
 <% /* TXName:Text */ %>
 <% strTextDisplayValue = "";
    mSubreg = task.getViewByName( "mSubreg" );
@@ -1285,32 +972,49 @@ else
 
 <span  id="TXName" name="TXName" style="width:318px;height:16px;"><%=strTextDisplayValue%></span>
 
+</td>
+</tr>
+</table>
+
+</div>  <!-- GroupBox4 --> 
+
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  UserInformation --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
  <!-- This is added as a line spacer -->
-<div style="height:18px;width:100px;"></div>
+<div style="height:8px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* User:GroupBox */ %>
 
-<div id="User" name="User" style="width:482px;height:250px;float:left;">  <!-- User --> 
+<div id="User" name="User" style="width:506px;height:250px;float:left;">  <!-- User --> 
 
-<div  id="User" name="User" >User</div>
 
  <!-- This is added as a line spacer -->
 <div style="height:28px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox1:GroupBox */ %>
+<div id="GroupBox1" name="GroupBox1" style="float:left;width:454px;" >
+
+<table cols=2 style="width:454px;"  class="grouptable">
+
+<tr>
+<td valign="top" style="width:154px;">
 <% /* FirstName::Text */ %>
 
 <span  id="FirstName:" name="FirstName:" style="width:140px;height:16px;">First Name:</span>
 
-<span style="height:16px;">&nbsp&nbsp</span>
+</td>
+<td valign="top" style="width:300px;">
 <% /* EBFirstName:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "EBFirstName", strError );
@@ -1352,21 +1056,16 @@ else
 
 <input name="EBFirstName" id="EBFirstName" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:16px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
+</td>
+</tr>
+<tr>
+<td valign="top" style="width:154px;">
 <% /* LastName::Text */ %>
 
 <span  id="LastName:" name="LastName:" style="width:140px;height:16px;">Last Name:</span>
 
-<span style="height:16px;">&nbsp&nbsp</span>
+</td>
+<td valign="top" style="width:300px;">
 <% /* EBLastName:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "EBLastName", strError );
@@ -1408,21 +1107,16 @@ else
 
 <input name="EBLastName" id="EBLastName" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:16px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
+</td>
+</tr>
+<tr>
+<td valign="top" style="width:154px;">
 <% /* Title::Text */ %>
 
 <span  id="Title:" name="Title:" style="width:140px;height:16px;">Title:</span>
 
-<span style="height:16px;">&nbsp&nbsp</span>
+</td>
+<td valign="top" style="width:300px;">
 <% /* EBTitle:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "EBTitle", strError );
@@ -1464,21 +1158,16 @@ else
 
 <input name="EBTitle" id="EBTitle" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:16px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
+</td>
+</tr>
+<tr>
+<td valign="top" style="width:154px;">
 <% /* CPhone::Text */ %>
 
 <span  id="CPhone:" name="CPhone:" style="width:140px;height:16px;">Phone:</span>
 
-<span style="height:16px;">&nbsp&nbsp</span>
+</td>
+<td valign="top" style="width:300px;">
 <% /* EBCPhone:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "EBCPhone", strError );
@@ -1520,21 +1209,16 @@ else
 
 <input name="EBCPhone" id="EBCPhone" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:16px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
+</td>
+</tr>
+<tr>
+<td valign="top" style="width:154px;">
 <% /* Fax::Text */ %>
 
 <span  id="Fax:" name="Fax:" style="width:140px;height:16px;">Fax:</span>
 
-<span style="height:16px;">&nbsp&nbsp</span>
+</td>
+<td valign="top" style="width:300px;">
 <% /* EBFax:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "EBFax", strError );
@@ -1576,21 +1260,16 @@ else
 
 <input name="EBFax" id="EBFax" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:16px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
+</td>
+</tr>
+<tr>
+<td valign="top" style="width:154px;">
 <% /* Email::Text */ %>
 
 <span  id="Email:" name="Email:" style="width:140px;height:16px;">Email:</span>
 
-<span style="height:16px;">&nbsp&nbsp</span>
+</td>
+<td valign="top" style="width:300px;">
 <% /* EBEmail:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "EBEmail", strError );
@@ -1632,21 +1311,16 @@ else
 
 <input name="EBEmail" id="EBEmail" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:14px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
+</td>
+</tr>
+<tr>
+<td valign="top" style="width:154px;">
 <% /* ExperienceLevel::Text */ %>
 
 <span  id="ExperienceLevel:" name="ExperienceLevel:" style="width:140px;height:16px;">Experience Level:</span>
 
-<span style="height:84px;">&nbsp&nbsp</span>
+</td>
+<td valign="top" style="width:300px;">
 <% /* ExperienceLevel:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
@@ -1727,6 +1401,12 @@ else
 </select>
 
 <input name="hExperienceLevel" id="hExperienceLevel" type="hidden" value="<%=strComboCurrentValue%>" >
+</td>
+</tr>
+</table>
+
+</div>  <!-- GroupBox1 --> 
+
 </div>  <!-- End of a new line -->
 
 
@@ -1736,27 +1416,31 @@ else
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
- <!-- This is added as a line spacer -->
-<div style="height:8px;width:100px;"></div>
-
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* PhysicalAddress:GroupBox */ %>
 
-<div id="PhysicalAddress" name="PhysicalAddress" style="width:482px;height:152px;float:left;">  <!-- PhysicalAddress --> 
+<div id="PhysicalAddress" name="PhysicalAddress" style="width:506px;height:152px;float:left;">  <!-- PhysicalAddress --> 
 
-<div  id="PhysicalAddress" name="PhysicalAddress" >Address</div>
 
  <!-- This is added as a line spacer -->
 <div style="height:24px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox2:GroupBox */ %>
+<div id="GroupBox2" name="GroupBox2" style="float:left;width:454px;" >
+
+<table cols=2 style="width:454px;"  class="grouptable">
+
+<tr>
+<td valign="top" style="width:154px;">
 <% /* PStreet::Text */ %>
 
 <span  id="PStreet:" name="PStreet:" style="width:140px;height:16px;">Street:</span>
 
-<span style="height:16px;">&nbsp&nbsp</span>
+</td>
+<td valign="top" style="width:300px;">
 <% /* EBPStreetAddress:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "EBPStreetAddress", strError );
@@ -1798,16 +1482,15 @@ else
 
 <input name="EBPStreetAddress" id="EBPStreetAddress" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:14px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+</td>
+</tr>
+<tr>
+<td valign="top" style="width:154px;">
+<% /* GroupBox6:GroupBox */ %>
+<div id="GroupBox6" name="GroupBox6" style="width:140px;height:16px;float:left;">
+</div>  <!-- GroupBox6 --> 
+</td>
+<td valign="top" style="width:300px;">
 <% /* EBPAddress:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "EBPAddress", strError );
@@ -1849,21 +1532,16 @@ else
 
 <input name="EBPAddress" id="EBPAddress" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:14px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
+</td>
+</tr>
+<tr>
+<td valign="top" style="width:154px;">
 <% /* PCity::Text */ %>
 
 <span  id="PCity:" name="PCity:" style="width:140px;height:16px;">City:</span>
 
-<span style="height:16px;">&nbsp&nbsp</span>
+</td>
+<td valign="top" style="width:300px;">
 <% /* EBPCity:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "EBPCity", strError );
@@ -1905,21 +1583,16 @@ else
 
 <input name="EBPCity" id="EBPCity" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:16px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
+</td>
+</tr>
+<tr>
+<td valign="top" style="width:154px;">
 <% /* PState::Text */ %>
 
 <span  id="PState:" name="PState:" style="width:140px;height:16px;">State:</span>
 
-<span style="height:138px;">&nbsp&nbsp</span>
+</td>
+<td valign="top" style="width:186px;">
 <% /* CBPState:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
@@ -2000,12 +1673,14 @@ else
 </select>
 
 <input name="hCBPState" id="hCBPState" type="hidden" value="<%=strComboCurrentValue%>" >
-<span style="height:16px;">&nbsp&nbsp</span>
+</td>
+<td valign="top" style="width:38px;">
 <% /* PZipCode::Text */ %>
 
 <span  id="PZipCode:" name="PZipCode:" style="width:30px;height:16px;">Zip:</span>
 
-<span style="height:16px;">&nbsp</span>
+</td>
+<td valign="top" style="width:76px;">
 <% /* EBPZipCode:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "EBPZipCode", strError );
@@ -2047,6 +1722,12 @@ else
 
 <input name="EBPZipCode" id="EBPZipCode" style="width:76px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
+</td>
+</tr>
+</table>
+
+</div>  <!-- GroupBox2 --> 
+
 </div>  <!-- End of a new line -->
 
 
@@ -2057,26 +1738,33 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
+<div style="height:4px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* Login:GroupBox */ %>
 
-<div id="Login" name="Login" style="width:482px;height:68px;float:left;">  <!-- Login --> 
+<div id="Login" name="Login" style="width:506px;height:68px;float:left;">  <!-- Login --> 
 
-<div  id="Login" name="Login" >Login</div>
 
  <!-- This is added as a line spacer -->
 <div style="height:28px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox3:GroupBox */ %>
+<div id="GroupBox3" name="GroupBox3" style="float:left;width:454px;" >
+
+<table cols=0 style="width:454px;"  class="grouptable">
+
+<tr>
+<td valign="top" style="width:154px;">
 <% /* UserName::Text */ %>
 
 <span  id="UserName:" name="UserName:" style="width:140px;height:16px;">UserName:</span>
 
-<span style="height:16px;">&nbsp&nbsp</span>
+</td>
+<td valign="top" style="width:300px;">
 <% /* EBUserName:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "EBUserName", strError );
@@ -2118,14 +1806,16 @@ else
 
 <input name="EBUserName" id="EBUserName" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
+</td>
+</tr>
+</table>
+
+</div>  <!-- GroupBox3 --> 
+
 </div>  <!-- End of a new line -->
 
 
 </div>  <!--  Login --> 
-</div>  <!-- End of a new line -->
-
-
-</div>  <!--  UserInformation --> 
 </div>  <!-- End of a new line -->
 
 

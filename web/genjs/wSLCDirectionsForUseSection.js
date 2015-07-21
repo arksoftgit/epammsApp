@@ -150,6 +150,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var LoginName = document.wSLCDirectionsForUseSection.zLoginName.value;
    var keyRole = document.wSLCDirectionsForUseSection.zKeyRole.value;
    document.wSLCDirectionsForUseSection.zError.value = "";
    document.wSLCDirectionsForUseSection.zOpenFile.value = "";

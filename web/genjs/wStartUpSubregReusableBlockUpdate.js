@@ -149,6 +149,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var LoginName = document.wStartUpSubregReusableBlockUpdate.zLoginName.value;
    var keyRole = document.wStartUpSubregReusableBlockUpdate.zKeyRole.value;
    document.wStartUpSubregReusableBlockUpdate.zError.value = "";
    document.wStartUpSubregReusableBlockUpdate.zOpenFile.value = "";
@@ -167,36 +168,6 @@ function _AfterPageLoaded( )
    }
    else
       timerID = null; // No timeout specified
-
-   // Prebuild action has javascript code entered by user.
-   // We knock out Login and Template as options.
-   thisLi = document.getElementById( "lmLogin" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-   thisLi = document.getElementById( "lmLogout" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   if ( keyRole == "Subregistrant" )
-   {
-      thisLi = document.getElementById( "lmSubregistrants" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-      thisLi = document.getElementById( "lmTrackingNotificationCompliance" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-   }
-   else
-   {
-      thisLi = document.getElementById( "lmStateRegistrations" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-   }
-
-   thisLi = document.getElementById( "lmCompanyProfile" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-   // END of Javascript code entered by user.
 
 var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
@@ -241,6 +212,8 @@ function InitReusableBlocksForUpdate( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      _DisableFormElements( true );
+
       document.wStartUpSubregReusableBlockUpdate.zAction.value = "InitReusableBlocksForUpdate";
       document.wStartUpSubregReusableBlockUpdate.submit( );
    }

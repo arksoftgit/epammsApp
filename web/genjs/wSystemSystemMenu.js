@@ -149,6 +149,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var LoginName = document.wSystemSystemMenu.zLoginName.value;
    var keyRole = document.wSystemSystemMenu.zKeyRole.value;
    document.wSystemSystemMenu.zError.value = "";
    document.wSystemSystemMenu.zOpenFile.value = "";
@@ -188,21 +189,6 @@ function CheckAllInGrid(id, CheckBoxName)
    }
 }
 
-function Template( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemSystemMenu.zAction.value = "Template";
-      document.wSystemSystemMenu.submit( );
-   }
-}
-
 function ShowFeedback( )
 {
 
@@ -218,7 +204,7 @@ function ShowFeedback( )
    }
 }
 
-function Logout( )
+function Login( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -228,7 +214,7 @@ function Logout( )
    {
       _DisableFormElements( true );
 
-      document.wSystemSystemMenu.zAction.value = "_OnUnload";
+      document.wSystemSystemMenu.zAction.value = "Login";
       document.wSystemSystemMenu.submit( );
    }
 }

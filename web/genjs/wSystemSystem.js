@@ -149,6 +149,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var LoginName = document.wSystemSystem.zLoginName.value;
    var keyRole = document.wSystemSystem.zKeyRole.value;
    document.wSystemSystem.zError.value = "";
    document.wSystemSystem.zOpenFile.value = "";
@@ -169,11 +170,7 @@ function _AfterPageLoaded( )
       timerID = null; // No timeout specified
 
    // Prebuild action has javascript code entered by user.
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   thisLi = document.getElementById( "lmSystem" );
+   var thisLi = document.getElementById( "lmSystem" );
    thisLi.style.visibility = "hidden";
    thisLi.style.display = "none";
    // END of Javascript code entered by user.
@@ -493,21 +490,6 @@ function smCancelAndReturn( )
    }
 }
 
-function mTemplate( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemSystem.zAction.value = "mTemplate";
-      document.wSystemSystem.submit( );
-   }
-}
-
 function mSystem( )
 {
 
@@ -538,7 +520,7 @@ function mShowFeedback( )
    }
 }
 
-function mLogout( )
+function mLogin( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -548,7 +530,7 @@ function mLogout( )
    {
       _DisableFormElements( true );
 
-      document.wSystemSystem.zAction.value = "_OnUnload";
+      document.wSystemSystem.zAction.value = "mLogin";
       document.wSystemSystem.submit( );
    }
 }

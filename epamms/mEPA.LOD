@@ -1,4 +1,4 @@
-z1000-Zeidon    MEPA     TZZOLODO 11/14/11   11:49:02 1.0a2    
+z1000-Zeidon    MEPA     TZZOLODO 07/16/15   11:50:47 1.0a2    
 eLOD       1
 aZKey      1178878
 aName      mEPA
@@ -84,8 +84,8 @@ aName      Keyword
 aZKey      2344470
 aPurpose   F
 aDesc      Double Brace{{ ... }} enclosed replacable keyword:  Usage, Claim, Surface, AreaOfUse, ApplicationType
-aER_DiagramPosX 19
-aER_DiagramPosY 11
+aER_DiagramPosX 44
+aER_DiagramPosY 8
 
 eER_RelLinkRec 4
 aName      has
@@ -102,9 +102,9 @@ aFact      Added thru ER Dialog
 aER_DiagramBendPosX 0
 aER_DiagramBendPosY 0
 aER_DiagramE1PosX 11
-aER_DiagramE1PosY 13
-aER_DiagramE2PosX 18
-aER_DiagramE2PosY 13
+aER_DiagramE1PosY 9
+aER_DiagramE2PosX 43
+aER_DiagramE2PosY 9
 
 eLOD_EntityChild 3
 aName      EPA_ChemicalFamily
@@ -626,6 +626,7 @@ aName      ClaimsClassification
 aDomainType T
 aDataType  S
 aMaxStringLth 16
+aDesc      Bacteria, Viruses, Fungi, Protozoa
 aContextRestriction N
 
 eLOD_AttributeRec 5
@@ -746,9 +747,12 @@ aER_DiagramPosY 28
 
 eER_RelLinkRec 4
 aName      has
+aAutoSeq   N
+aHangingForeignKeyEntity N
 aZKey      2344468
 aCardMin   0
 aCardMax   m
+aTE_NoForeignKeyPrefix N
 
 eER_RelTypeRec 5
 aZKey      2344467
@@ -756,7 +760,7 @@ aFact      Added thru ER Dialog
 aER_DiagramBendPosX 0
 aER_DiagramBendPosY 0
 aER_DiagramE1PosX 6
-aER_DiagramE1PosY 16
+aER_DiagramE1PosY 14
 aER_DiagramE2PosX 6
 aER_DiagramE2PosY 27
 
@@ -765,9 +769,8 @@ aZKey      2348764
 
 eER_AttributeRec 4
 aName      ID
-aZKey      2346185
+aZKey      110001577
 aNotNull   Y
-aDesc      Generated ID
 
 eDomainRec 5
 
@@ -781,13 +784,20 @@ aNotNull   Y
 aCaseSens  Y
 
 eDomainRec 5
+aZKey      110002352
+aName      GeneralNameCaseInsensitive
+aDomainType E
+aDataType  S
+aMaxStringLth 128
+aDesc      Case Insensitive General Text (names, streets, cities, etc.)
+aContextRestriction N
 
 eER_EntityRec 3
 aName      ePamms
 aZKey      2344466
 aPurpose   F
 aER_DiagramPosX 2
-aER_DiagramPosY 11
+aER_DiagramPosY 9
 
 eLOD_Entity 2
 awkSelectedAttributeForDragSort 2
@@ -1087,18 +1097,6 @@ aDesc      ePamms Application
 aType      P
 
 eTE_DBMS_Source 4
-aName      ePammsA
-aZKey      1156756
-aDesc      ePamms access
-aParadigm  R
-aDBMS      MS Access via ODBC
-aGenerateExecutable kzhsqlab
-aExecutable kzhsqloa
-aGenKeyExecutable kzhgenky
-aDisplayOwner Y
-aDisplayDBMS_ID N
-
-eTE_DBMS_Source 4
 aName      ePammsM
 aZKey      4121658
 aDesc      MySQL ePamms database
@@ -1144,14 +1142,13 @@ i105       5
 i108       8
 i111       8
 i120       5
-i123       8
 i125       1
 i126       118
 i127       119
 i128       5
 i129       121
 i130       122
-i131       8
+i131       123
 i132       124
 i133       2
 i134       3

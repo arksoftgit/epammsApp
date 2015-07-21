@@ -121,10 +121,10 @@ InitLoginWindow( VIEW ViewToWindow )
    wWebXfer.Root.Banner6 = ""
 
    // Remove these lines prior to deployment!!!
-// wWebXfer.Root.AttemptLoginName = "Lonza"
-// wWebXfer.Root.AttemptLoginName = "Admin"
-   wWebXfer.Root.AttemptLoginName = "atp"
-   wWebXfer.Root.AttemptUserName = "Admin"
+// wWebXfer.Root.AttemptLoginRegistrant = "Lonza"
+// wWebXfer.Root.AttemptLoginRegistrant = "Admin"
+   wWebXfer.Root.AttemptLoginRegistrant = "atp"
+   wWebXfer.Root.AttemptLoginName = "Admin"
    wWebXfer.Root.AttemptPassword = "xxxxxxxx"
    // End of: Remove these lines prior to deployment!!!
    
@@ -150,11 +150,12 @@ ProcessUserLogin( VIEW ViewToWindow )
    VIEW sePamms  BASED ON LOD  sePamms
    VIEW qOrganiz BASED ON LOD  qOrganiz
    VIEW mOrganiz BASED ON LOD  mOrganiz
+   VIEW mUser    BASED ON LOD  mUser
    VIEW mOrganizInit BASED ON LOD mOrganiz
    VIEW lPrimReg BASED ON LOD  lPrimReg
    STRING ( 256  ) szMessage
-   STRING (  50  ) szLoginName
-   STRING (  50  ) szUserName
+   STRING (  64  ) szLoginRegistrant
+   STRING (  64  ) szLoginUserName
    STRING ( 128  ) szAttemptPassword
    STRING ( 128  ) szConfirmPassword
    STRING (   1  ) szKeyRole
@@ -168,8 +169,7 @@ ProcessUserLogin( VIEW ViewToWindow )
    END
 
    wWebXfer.Root.KeyRole = "U"  // U is for Unknown (so far)
-   IF pePamms.ePamms DOES NOT EXIST OR pePamms.ePamms.ID != "1"
-      // No administrator found!  We bootstrap here.
+   IF pePamms.ePamms DOES NOT EXIST OR pePamms.ePamms.ID != "1"  // No administrator found!  We bootstrap here.
       TraceLineS( "ProcessUserLogin: ", "No Administrator found!!!" )
       ACTIVATE mePamms EMPTY
       NAME VIEW mePamms "mePamms"
@@ -188,19 +188,21 @@ ProcessUserLogin( VIEW ViewToWindow )
    // OK ... we know that Admin exists ... if there are no Primary Registrants, the only login possible is Admin, which can
    // create Primary Registrants.  If there are no Subregistrants for a Primary Registrant, the only login possible for the
    // specified Primary Registrant is the administrator for that Primary Registrant, which can create Subregistrants.  If
-   // there are no Users for a Subregistrant, the only login possible for the specified Subregistrant is the administrator
-   // for that Subregistrant.
+   // there are no Users for a Primary/Subregistrant, the only login possible for the specified Primary/Subregistrant is the
+   // administrator for that Primary/Subregistrant.
 
-   DisplayObjectInstance( pePamms, "", "" )
-   DisplayEntityInstance( pePamms, "Organization" )
+// TraceLineS( "pePamms OI:", "" )
+// DisplayObjectInstance( pePamms, "", "" )
+// TraceLineS( "pePamms Entity Instance:", "" )
+// DisplayEntityInstance( pePamms, "Organization" )
 
-   szLoginName = wWebXfer.Root.AttemptLoginName  // e.g. Lonza (a primary registrant) or ATP (Alpha Tech Pet - a subregistrant)
-   IF pePamms.Organization.LoginName = "Admin"  // cannot use szLoginName since we need a case insensitive comparison
-   // SET CURSOR FIRST pePamms.Organization WHERE pePamms.Organization.LoginName = szLoginName
-      RESULT = SetCursorFirstEntityByString( pePamms, "Organization", "LoginName", szLoginName, "ePamms" )
+   szLoginRegistrant = wWebXfer.Root.AttemptLoginRegistrant  // e.g. Lonza (a primary registrant) or ATP (Alpha Tech Pet - a subregistrant)
+   IF pePamms.Organization.LoginName = "Admin"               // N.B. cannot use szLoginRegistrant since we need a case insensitive comparison
+   // SET CURSOR FIRST pePamms.Organization WHERE pePamms.Organization.LoginName = szLoginRegistrant
+      RESULT = SetCursorFirstEntityByString( pePamms, "Organization", "LoginName", szLoginRegistrant, "ePamms" )
 
       IF RESULT < 0
-         TraceLineS( "Login Organization not found within Admin: ", szLoginName )
+         TraceLineS( "Login Organization not found within Admin: ", szLoginRegistrant )
          MessageSend( ViewToWindow, "", "User Login",
                       "Invalid User Login.",
                       zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
@@ -209,32 +211,56 @@ ProcessUserLogin( VIEW ViewToWindow )
       END
       
       // Note that Activate always returns at least an empty view.
-      ACTIVATE qOrganiz WHERE qOrganiz.Organization.LoginName = szLoginName
+      ACTIVATE qOrganiz WHERE qOrganiz.Organization.LoginName = szLoginRegistrant
+      // SET CURSOR FIRST qOrganiz WHERE qOrganiz.User.UserName = "Admin"
+      lControl = zQUAL_STRING + zPOS_FIRST
+      IF SetEntityCursor( pePamms, "User", "UserName", lControl,
+                          "Admin", "", "", 0, "Organization", "" ) < zCURSOR_SET // we will automatically create the Admin user
+         ACTIVATE mUser EMPTY
+         CREATE ENTITY mUser.User LAST
+         mUser.User.UserName = "Admin"
+         CREATE ENTITY mUser.Employee LAST
+         IncludeSubobjectFromSubobject( mUser, "Organization", pePamms, "Organization", zPOS_BEFORE )
+         Commit mUser
+         DropObjectInstance( mUser )
+      END
    ELSE
       // Within a Primary Registrant (not Admin)
       ACTIVATE sePamms WHERE sePamms.PrimaryRegistrant.ID = pePamms.PrimaryRegistrant.ID
       NAME VIEW sePamms "sePamms"
-      DisplayObjectInstance( sePamms, "", "" )
+   // DisplayObjectInstance( sePamms, "", "" )
 
       // We cannot use SET CURSOR FIRST WHERE since we need a case insensitive comparison.
-      // SET CURSOR FIRST sePamms.Subregistrant WHERE sePamms.Organization.LoginName = szLoginName
-      TraceLineS( "Looking for Subregistrant Login: ", wWebXfer.Root.AttemptUserName )
-      RESULT = SetCursorFirstEntityByString( sePamms, "Organization", "LoginName", szLoginName, "PrimaryRegistrant" )
+      // SET CURSOR FIRST sePamms.Subregistrant WHERE sePamms.Organization.LoginName = szLoginRegistrant
+   // TraceLineS( "Looking for Subregistrant Login: ", wWebXfer.Root.AttemptLoginName )
+      RESULT = SetCursorFirstEntityByString( sePamms, "Organization", "LoginName", szLoginRegistrant, "PrimaryRegistrant" )
    /*
       SET CURSOR FIRST sePamms.Subregistrant
-      LOOP WHILE RESULT >= 0 AND wWebXfer.Root.AttemptUserName != sePamms.Organization.LoginName // case insensitive comparison
+      LOOP WHILE RESULT >= 0 AND wWebXfer.Root.AttemptLoginName != sePamms.Organization.LoginName // case insensitive comparison
          SET CURSOR NEXT sePamms.Subregistrant
       END
    */
-      DisplayEntityInstance( sePamms, "Organization" )
+   // TraceLineS( "sePamms OI looking for: ", szLoginRegistrant )
+   // DisplayEntityInstance( sePamms, "Organization" )
       IF RESULT >= 0
-          ACTIVATE qOrganiz WHERE qOrganiz.Organization.ID = sePamms.Organization.ID
+         ACTIVATE qOrganiz WHERE qOrganiz.Organization.ID = sePamms.Organization.ID
+         lControl = zQUAL_STRING + zPOS_FIRST
+         IF SetEntityCursor( sePamms, "User", "UserName", lControl,
+                             "Admin", "", "", 0, "Organization", "" ) < zCURSOR_SET // we will automatically create the Admin user
+            ACTIVATE mUser EMPTY
+            CREATE ENTITY mUser.User LAST
+            mUser.User.UserName = "Admin"
+            CREATE ENTITY mUser.Employee LAST
+            IncludeSubobjectFromSubobject( mUser, "Organization", sePamms, "Organization", zPOS_BEFORE )
+            Commit mUser
+            DropObjectInstance( mUser )
+         END
          DropObjectInstance( sePamms )
       ELSE
          // Organization not found!
          szMessage = pePamms.Organization.Name
          szMessage = szMessage + "    Login: "
-         szMessage = szMessage + szLoginName
+         szMessage = szMessage + szLoginRegistrant
          TraceLineS( "Login Organization not found within Primary Registrant: ", szMessage )
          MessageSend( ViewToWindow, "", "User Login",
                       "Invalid User Login.",
@@ -246,10 +272,11 @@ ProcessUserLogin( VIEW ViewToWindow )
    END
 
    NAME VIEW qOrganiz "qOrganizLogin"
-   DisplayObjectInstance( qOrganiz, "", "" )
+// TraceLineS( "qOrganiz OI:", "" )
+// DisplayObjectInstance( qOrganiz, "", "" )
    IF qOrganiz.Organization DOES NOT EXIST
       // Organization not found!
-      TraceLineS( "Login Organization not found: ", szLoginName )
+      TraceLineS( "Login Organization not found: ", szLoginRegistrant )
       MessageSend( ViewToWindow, "", "User Login",
                    "Invalid User Login.",
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
@@ -259,28 +286,30 @@ ProcessUserLogin( VIEW ViewToWindow )
    END
    
    wWebXfer.Root.LoginName = qOrganiz.Organization.LoginName // e.g. Lonza
-   szUserName = wWebXfer.Root.AttemptUserName  // e.g. Admin
+   szLoginUserName = wWebXfer.Root.AttemptLoginName  // e.g. Admin
    szKeyRole = wWebXfer.Root.KeyRole
 
    szAttemptPassword = wWebXfer.Root.AttemptPassword
    nRC = 0  // initialize to normal processing
 
-   // Cannot use szLoginName (in place of wWebXfer.Root.AttemptUserName) since we need a case insensitive comparison.
-   IF wWebXfer.Root.AttemptUserName = "Admin" // logging in as user Admin for specified registrant
+   // Cannot use szLoginRegistrant (in place of wWebXfer.Root.AttemptLoginName) since we need a case insensitive comparison.
+   IF wWebXfer.Root.AttemptLoginName = "Admin" // logging in as user Admin for specified registrant
 
-      wWebXfer.Root.LoginUser = "Admin"
+      wWebXfer.Root.LoginName = "Admin"
 
       // Match the password.
       nRC = CompareAttributeToString( qOrganiz, "Organization", "AdministratorPassword", szAttemptPassword )
       IF nRC != 0
 
          // Remove these lines prior to deployment!!!
+         /*
          TraceLineS( "//////* Invalid Login Password: ", szAttemptPassword )
          szConfirmPassword = qOrganiz.Organization.AdministratorPassword
          wWebXfer.Root.TracePassword = szAttemptPassword
          szAttemptPassword = wWebXfer.Root.TracePassword
          TraceLineS( "//////*+++++ CurrentUser: ", szConfirmPassword )
          TraceLineS( "//////*+++++ Attempted  : ", szAttemptPassword )
+         */
          // End of: Remove these lines prior to deployment!!!
 
          MessageSend( ViewToWindow, "", "Login",
@@ -291,7 +320,7 @@ ProcessUserLogin( VIEW ViewToWindow )
          RETURN 2
       END
 
-      // Cannot use szLoginUser (in place of wWebXfer.Root.AttemptUserName) since we need a case insensitive comparison.
+      // Cannot use szLoginUserName (in place of wWebXfer.Root.AttemptLoginName) since we need a case insensitive comparison.
       IF qOrganiz.Organization.LoginName = "Admin"
 
          wWebXfer.Root.LoginName = "Admin"
@@ -325,11 +354,11 @@ ProcessUserLogin( VIEW ViewToWindow )
 
    ELSE
 
-      lControl = zQUAL_STRING + zPOS_FIRST + zQUAL_SCOPE_OI + zTEST_CSR_RESULT
+      lControl = zQUAL_STRING + zPOS_FIRST
       IF SetEntityCursor( qOrganiz, "User", "UserName", lControl,
-                          szUserName, "", "", 0, "", "" ) < zCURSOR_SET
+                          szLoginUserName, "", "", 0, "Organization", "" ) < zCURSOR_SET
          // Organization user not found!
-         TraceLineS( "Login User not found: ", szUserName )
+         TraceLineS( "Login User not found: ", szLoginUserName )
          MessageSend( ViewToWindow, "", "User Login",
                       "Invalid User Login.",
                       zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
@@ -339,11 +368,13 @@ ProcessUserLogin( VIEW ViewToWindow )
 
       END
 
+   // DisplayEntityInstance( qOrganiz, "User" )
+
       // Match the password.
       nRC = CompareAttributeToString( qOrganiz, "User", "UserPassword", szAttemptPassword )
       IF nRC != 0
       
-         TraceLineS( "//////* Invalid Login Password: ", szAttemptPassword )
+      // TraceLineS( "//////* Invalid Login Password: ", szAttemptPassword )
          MessageSend( ViewToWindow, "", "Login",
                       "Invalid User Login",
                       zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
@@ -361,29 +392,29 @@ ProcessUserLogin( VIEW ViewToWindow )
    GET VIEW mOrganizInit NAMED "mOrganizInit"
 
    ACTIVATE mOrganiz WHERE mOrganiz.Organization.ID = qOrganiz.Organization.ID
-   DisplayObjectInstance( mOrganiz, "", "" )
+// TraceLineS( "mOrganiz OI:", "" )
+// DisplayObjectInstance( mOrganiz, "", "" )
    NAME VIEW mOrganiz "mOrganiz"
    IF mOrganizInit != 0
       FOR EACH mOrganizInit.Feedback
          CREATE ENTITY mOrganiz.Feedback LAST
-         szLoginName = wWebXfer.Root.LoginName
-         mOrganizInit.Feedback.UserId = szLoginName
-         SetMatchingAttributesByName( mOrganiz, "Feedback",
-                                      mOrganizInit, "Feedback", zSET_NOTNULL )
+         szLoginRegistrant = wWebXfer.Root.LoginName
+         mOrganizInit.Feedback.UserId = szLoginRegistrant
+         SetMatchingAttributesByName( mOrganiz, "Feedback", mOrganizInit, "Feedback", zSET_NOTNULL )
          COMMIT mOrganiz
       END
 
       DropObjectInstance( mOrganizInit )
    END
 
-   SfSetUserIdForTask( ViewToWindow, wWebXfer.Root.LoginUser )
-   wWebXfer.Root.AttemptUserName = ""
+   SfSetUserIdForTask( ViewToWindow, wWebXfer.Root.LoginName )
+   wWebXfer.Root.AttemptLoginName = ""
    wWebXfer.Root.AttemptPassword = ""
    wWebXfer.Root.ConfirmPassword = ""
    wWebXfer.Root.CurrentPassword = ""
 
    // Trace Login.
-   TraceLineS( "*** Login successful for user: ", szUserName )
+   TraceLineS( "*** Login successful for user: ", szLoginUserName )
 
    wWebXfer.Root.Banner1 = qOrganiz.Organization.dLoginUserName
    wWebXfer.Root.Banner2 = ""
@@ -561,7 +592,7 @@ ProductManagement( VIEW ViewToWindow )
    szKeyRole = wWebXfer.Root.KeyRole
    IF szKeyRole = "D" OR szKeyRole = "P"  // Dual or Primary registrant
 
-      // Cannot use szLoginName since we need a case insensitive comparison.
+      // Cannot use szLoginRegistrant since we need a case insensitive comparison.
       IF wWebXfer.Root.LoginName = "Admin"
 
          ACTIVATE lPrimReg
@@ -583,7 +614,7 @@ ProductManagement( VIEW ViewToWindow )
 
    ELSE  // IF wWebXfer.Root.KeyRole = "S"  // Subregistrant
 
-//   ACTIVATE mSubreg //WHERE mSubreg.SubregOrganization.Name = wWebXfer.Root.AttemptLoginName 
+//   ACTIVATE mSubreg //WHERE mSubreg.SubregOrganization.Name = wWebXfer.Root.AttemptLoginRegistrant 
 //   NAME VIEW mSubreg "mSubreg"
 
    //   ACTIVATE lSubreg WHERE lSubreg.Subregistrant.ID = qOrganiz.Subregistrant.ID
@@ -671,8 +702,8 @@ AutoLoginPrimaryRegistrant( VIEW ViewToWindow )
 
    VIEW wWebXfer REGISTERED AS wWebXfer
 
-   wWebXfer.Root.AttemptLoginName = "Lonza"
-   wWebXfer.Root.AttemptUserName = "Admin"
+   wWebXfer.Root.AttemptLoginRegistrant = "Lonza"
+   wWebXfer.Root.AttemptLoginName = "Admin"
    wWebXfer.Root.AttemptPassword = "xxxxxxxx"
    RefreshWindow( ViewToWindow )
    SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
@@ -690,8 +721,8 @@ AutoLoginSubregistrant( VIEW ViewToWindow )
 
    VIEW wWebXfer REGISTERED AS wWebXfer
 
-   wWebXfer.Root.AttemptLoginName = "SmallCorp"
-   wWebXfer.Root.AttemptUserName = "Admin"
+   wWebXfer.Root.AttemptLoginRegistrant = "SmallCorp"
+   wWebXfer.Root.AttemptLoginName = "Admin"
    wWebXfer.Root.AttemptPassword = "xxxxxxxx"
    RefreshWindow( ViewToWindow )
    SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
@@ -980,7 +1011,7 @@ AddNewPrimaryRegistrant( VIEW ViewToWindow )
    mPrimReg.MailingAddress.Country = "USA"
    wWebXfer.Root.SameAs = "Y"
 
-   wWebXfer.Root.AttemptLoginName = ""
+   wWebXfer.Root.AttemptLoginRegistrant = ""
    wWebXfer.Root.AttemptPassword = ""
    wWebXfer.Root.ConfirmPassword = ""
    wWebXfer.Root.CurrentPassword = ""
@@ -1080,7 +1111,7 @@ InitPrimaryRegistrantForUpdate( VIEW ViewToWindow )
       CREATE ENTITY mPrimReg.ContactPerson
    END
 
-   wWebXfer.Root.AttemptLoginName = mPrimReg.Organization.LoginName
+   wWebXfer.Root.AttemptLoginRegistrant = mPrimReg.Organization.LoginName
    wWebXfer.Root.AttemptPassword = ""
    wWebXfer.Root.ConfirmPassword = ""
    wWebXfer.Root.CurrentPassword = ""
@@ -1251,7 +1282,7 @@ ValidatePrimaryRegistrant( VIEW ViewToWindow )
       RETURN 2
    END
 
-   szRegistrantName = wWebXfer.Root.AttemptLoginName
+   szRegistrantName = wWebXfer.Root.AttemptLoginRegistrant
    IF szRegistrantName != szAttemptRegistrantName
       ACTIVATE lPrimReg WHERE lPrimReg.Organization.LoginName = szAttemptRegistrantName
       NAME VIEW lPrimReg "lPrimRegX"
@@ -1397,7 +1428,7 @@ InitPrimaryRegistrantForDelete( VIEW ViewToWindow )
 
    SetDynamicBannerName( ViewToWindow, "wStartUp", "Administration" )
 
-   wWebXfer.Root.AttemptLoginName = ""
+   wWebXfer.Root.AttemptLoginRegistrant = ""
    wWebXfer.Root.AttemptPassword = ""
    wWebXfer.Root.ConfirmPassword = ""
    wWebXfer.Root.CurrentPassword = ""
@@ -1730,7 +1761,7 @@ AddNewSubregistrant( VIEW ViewToWindow )
    mSubreg.MailingAddress.Country = "USA"
    wWebXfer.Root.SameAs = "Y"
 
-   wWebXfer.Root.AttemptLoginName = ""
+   wWebXfer.Root.AttemptLoginRegistrant = ""
    wWebXfer.Root.AttemptPassword = ""
    wWebXfer.Root.ConfirmPassword = ""
    wWebXfer.Root.CurrentPassword = ""
@@ -1803,7 +1834,7 @@ InitSubregistrantForUpdate( VIEW ViewToWindow )
       CREATE ENTITY mSubreg.ContactPerson
    END
 
-   wWebXfer.Root.AttemptLoginName = mSubreg.SubregOrganization.LoginName
+   wWebXfer.Root.AttemptLoginRegistrant = mSubreg.SubregOrganization.LoginName
    wWebXfer.Root.AttemptPassword = ""
    wWebXfer.Root.ConfirmPassword = ""
    wWebXfer.Root.CurrentPassword = ""
@@ -1836,28 +1867,28 @@ AcceptNewSubregistrant( VIEW ViewToWindow )
    VIEW wWebXfer REGISTERED AS wWebXfer
    VIEW lPrimReg REGISTERED AS lPrimReg
    VIEW mSubreg  REGISTERED AS mSubreg
-   STRING (  50  ) szAttemptLoginName
+   STRING (  50  ) szAttemptLoginRegistrant
    STRING (  50  ) szRegistrantName
    STRING ( 128  ) szAttemptPassword
    STRING ( 128  ) szConfirmPassword
-   INTEGER         lAttemptLoginNameLth
+   INTEGER         lAttemptLoginRegistrantLth
    INTEGER         lRegistrantNameLth
    INTEGER         lPasswordLth
    INTEGER         lID
 
    // Ensure registrant login name is not blank and is unique.
-   szAttemptLoginName = wWebXfer.Root.AttemptLoginName
-   lAttemptLoginNameLth = zGetStringLen( szAttemptLoginName )
-   TraceLineS( "Registrant Login Name: ", szAttemptLoginName )
-   TraceLineI( "Registrant Login Name Length: ", lAttemptLoginNameLth )
-   IF lAttemptLoginNameLth < 1
+   szAttemptLoginRegistrant = wWebXfer.Root.AttemptLoginRegistrant
+   lAttemptLoginRegistrantLth = zGetStringLen( szAttemptLoginRegistrant )
+   TraceLineS( "Registrant Login Name: ", szAttemptLoginRegistrant )
+   TraceLineI( "Registrant Login Name Length: ", lAttemptLoginRegistrantLth )
+   IF lAttemptLoginRegistrantLth < 1
       MessageSend( ViewToWindow, "", "New Subregistrant",
                    "The registrant Login Name cannot be blank.",
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
       SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
       RETURN 2
    ELSE
-      SET CURSOR FIRST lPrimReg.Subregistrant WHERE lPrimReg.SubregOrganization.LoginName = szAttemptLoginName
+      SET CURSOR FIRST lPrimReg.Subregistrant WHERE lPrimReg.SubregOrganization.LoginName = szAttemptLoginRegistrant
       IF RESULT >= 0
          MessageSend( ViewToWindow, "", "New Subregistrant",
                       "The registrant Login Name must be unique.",
@@ -1905,7 +1936,7 @@ AcceptNewSubregistrant( VIEW ViewToWindow )
    END
 
    // Set login name to new login name.
-   mSubreg.SubregOrganization.LoginName = szAttemptLoginName
+   mSubreg.SubregOrganization.LoginName = szAttemptLoginRegistrant
 
    // Set user password to new password.
 // SetAttrFromStrByContext( mSubreg, "User", "UserPassword", szConfirmPassword, "Password" )
@@ -1952,20 +1983,20 @@ ValidateSubregistrant( VIEW ViewToWindow )
    VIEW wWebXfer REGISTERED AS wWebXfer
    VIEW mSubreg  REGISTERED AS mSubreg
    VIEW qOrganiz BASED ON LOD  qOrganiz
-   STRING (  50  ) szAttemptLoginName
+   STRING (  50  ) szAttemptLoginRegistrant
    STRING (  50  ) szRegistrantName
    STRING ( 128  ) szAttemptPassword
    STRING ( 128  ) szConfirmPassword
-   INTEGER         lAttemptLoginNameLth
+   INTEGER         lAttemptLoginRegistrantLth
    INTEGER         lRegistrantNameLth
    INTEGER         lPasswordLth
 
    // Ensure registrant login name is not blank and is unique.
-   szAttemptLoginName = wWebXfer.Root.AttemptLoginName
-   lAttemptLoginNameLth = zGetStringLen( szAttemptLoginName )
-   TraceLineS( "Registrant Login Name: ", szAttemptLoginName )
-   TraceLineI( "Registrant Login Name Length: ", lAttemptLoginNameLth )
-   IF lAttemptLoginNameLth < 1
+   szAttemptLoginRegistrant = wWebXfer.Root.AttemptLoginRegistrant
+   lAttemptLoginRegistrantLth = zGetStringLen( szAttemptLoginRegistrant )
+   TraceLineS( "Registrant Login Name: ", szAttemptLoginRegistrant )
+   TraceLineI( "Registrant Login Name Length: ", lAttemptLoginRegistrantLth )
+   IF lAttemptLoginRegistrantLth < 1
       MessageSend( ViewToWindow, "", "Update Subregistrant",
                    "The registrant Login Name cannot be blank.",
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
@@ -1974,8 +2005,8 @@ ValidateSubregistrant( VIEW ViewToWindow )
    END
 
    szRegistrantName = mSubreg.SubregOrganization.LoginName
-   IF szRegistrantName != szAttemptLoginName
-      ACTIVATE qOrganiz WHERE qOrganiz.Organization.LoginName = szAttemptLoginName
+   IF szRegistrantName != szAttemptLoginRegistrant
+      ACTIVATE qOrganiz WHERE qOrganiz.Organization.LoginName = szAttemptLoginRegistrant
       IF qOrganiz.Organization EXISTS
 
          DropObjectInstance( qOrganiz )
@@ -2013,7 +2044,7 @@ ValidateSubregistrant( VIEW ViewToWindow )
 // END
 
    // Set login name just in case it's new.
-   mSubreg.SubregOrganization.LoginName = szAttemptLoginName
+   mSubreg.SubregOrganization.LoginName = szAttemptLoginRegistrant
 
 // AcceptSubobject( mSubreg, "ContactPerson" )
 // AcceptSubobject( mSubreg, "PhysicalAddress" )
@@ -2398,16 +2429,16 @@ END
 DIALOG OPERATION
 InitListPrimRegUsers( VIEW ViewToWindow )
 
+   VIEW qOrganiz REGISTERED AS qOrganizLogin
    VIEW lPrimReg BASED ON LOD lPrimReg
-   INTEGER lID
 
    GET VIEW lPrimReg NAMED "lPrimReg"
-   lID = lPrimReg.PrimaryRegistrant.ID
-   DropObjectInstance( lPrimReg )
+   IF lPrimReg != 0
+      DropObjectInstance( lPrimReg )
+   END
 
-   // Activate the "selected" primary registrant ... just in case someone added or
-   // deleted a primary registrant user.
-   ACTIVATE lPrimReg WHERE lPrimReg.PrimaryRegistrant.ID = lID
+   // Activate the "selected" primary registrant ... just in case someone added or deleted a primary registrant user.
+   ACTIVATE lPrimReg WHERE lPrimReg.PrimaryRegistrant.ID = qOrganiz.PrimaryRegistrant.ID
    NAME VIEW lPrimReg "lPrimReg"
 
    SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" )
@@ -2424,7 +2455,6 @@ AddNewPrimRegUser( VIEW ViewToWindow )
 
    VIEW wWebXfer REGISTERED AS wWebXfer
    VIEW mCurrentUser BASED ON LOD  mUser
-   VIEW mPerson  BASED ON LOD  mPerson
    VIEW qPrimReg BASED ON LOD  qPrimReg
    VIEW lPrimReg REGISTERED AS lPrimReg
 
@@ -2465,33 +2495,21 @@ AddNewPrimRegUser( VIEW ViewToWindow )
       DropObjectInstance( mCurrentUser )
    END
 
-   GET VIEW mPerson NAMED "mPerson"
-   IF mPerson != 0
-      DropObjectInstance( mPerson )
-   END
-
    // We are activating empty OI's, so create all the entities.
    ACTIVATE mCurrentUser EMPTY
    NAME VIEW mCurrentUser "mCurrentUser"
    CREATE ENTITY mCurrentUser.User
    mCurrentUser.User.Status = "B"  // beginner
+   CREATE ENTITY mCurrentUser.Employee
+   CREATE ENTITY mCurrentUser.Address
 
-   ACTIVATE mPerson EMPTY
-   NAME VIEW mPerson "mPerson"
-   CREATE ENTITY mPerson.Person
-   CREATE ENTITY mPerson.Address
-
-   wWebXfer.Root.AttemptUserName = ""
+   wWebXfer.Root.AttemptLoginName = ""
    wWebXfer.Root.AttemptPassword = ""
    wWebXfer.Root.ConfirmPassword = ""
    wWebXfer.Root.CurrentPassword = ""
 
-   mPerson.Address.Country = "USA"
-
-// CreateTemporalSubobjectVersion( mPerson, "Address" )
-   CreateTemporalSubobjectVersion( mPerson, "Person" )
+   mCurrentUser.Address.Country = "USA"
    CreateTemporalSubobjectVersion( mCurrentUser, "User" )
-
    SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" )
 
 END
@@ -2505,8 +2523,7 @@ DIALOG OPERATION
 InitPrimRegUserForUpdate( VIEW ViewToWindow )
 
    VIEW wWebXfer REGISTERED AS wWebXfer
-   VIEW mCurrentUser BASED ON LOD  mUser
-   VIEW mPerson  BASED ON LOD  mPerson
+   VIEW mCurrentUser BASED ON LOD mUser
    VIEW qPrimReg BASED ON LOD  qPrimReg
    VIEW lPrimReg REGISTERED AS lPrimReg
 
@@ -2549,18 +2566,13 @@ InitPrimRegUserForUpdate( VIEW ViewToWindow )
    // We are activating a User instance for update.
    ACTIVATE mCurrentUser WHERE mCurrentUser.User.ID = lPrimReg.User.ID
    NAME VIEW mCurrentUser "mCurrentUser"
-   ACTIVATE mPerson WHERE mPerson.Person.ID = mCurrentUser.Employee.ID
-   NAME VIEW mPerson "mPerson"
 
-   wWebXfer.Root.AttemptUserName = mCurrentUser.User.UserName
+   wWebXfer.Root.AttemptLoginName = mCurrentUser.User.UserName
    wWebXfer.Root.AttemptPassword = ""
    wWebXfer.Root.ConfirmPassword = ""
    wWebXfer.Root.CurrentPassword = ""
 
    CreateTemporalSubobjectVersion( mCurrentUser, "User" )
-// CreateTemporalSubobjectVersion( mPerson, "Person" )
-// CreateTemporalSubobjectVersion( mPerson, "Address" )
-
    SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" )
 
 END
@@ -2575,25 +2587,20 @@ AcceptNewPrimRegUser( VIEW ViewToWindow )
 
    VIEW wWebXfer REGISTERED AS wWebXfer
    VIEW mCurrentUser REGISTERED AS mCurrentUser
-   VIEW mPerson  REGISTERED AS mPerson
-   VIEW qPrimReg BASED ON LOD  qPrimReg
-   VIEW lPrimReg BASED ON LOD  lPrimReg
-// VIEW mPrimReg BASED ON LOD  mPrimReg
-   STRING (  50  ) szUserName
-   STRING ( 128 ) szAttemptPassword
-   STRING ( 128 ) szConfirmPassword
+   VIEW lPrimReg REGISTERED AS lPrimReg
+   STRING (  64  ) szLoginUserName
+   STRING ( 128 )  szAttemptPassword
+   STRING ( 128 )  szConfirmPassword
    INTEGER         lUserNameLth
    INTEGER         lPasswordLth
    INTEGER         lControl
    INTEGER         lID
    SHORT           nRC
 
-   GET VIEW lPrimReg NAMED "lPrimReg"
-
    // Ensure user login name is not blank and is unique.
-   szUserName = mCurrentUser.User.UserName
-   lUserNameLth = zGetStringLen( szUserName )
-   TraceLineS( "User Login Name: ", szUserName )
+   szLoginUserName = mCurrentUser.User.UserName
+   lUserNameLth = zGetStringLen( szLoginUserName )
+   TraceLineS( "User Login Name: ", szLoginUserName )
    TraceLineI( "User Login Name Length: ", lUserNameLth )
    IF lUserNameLth < 1
 
@@ -2602,12 +2609,10 @@ AcceptNewPrimRegUser( VIEW ViewToWindow )
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
       SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
       RETURN 2
-
    ELSE
-
       lControl = zQUAL_STRING + zPOS_FIRST + zTEST_CSR_RESULT
       IF SetEntityCursor( lPrimReg, "User", "UserName", lControl,
-                          szUserName, "", "", 0, "", "" ) >= zCURSOR_SET
+                          szLoginUserName, "", "", 0, "", "" ) >= zCURSOR_SET
          MessageSend( ViewToWindow, "", "New Primary Registrant User",
                       "The User Name must be unique.",
                       zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
@@ -2618,9 +2623,9 @@ AcceptNewPrimRegUser( VIEW ViewToWindow )
    END
 
    // Ensure user first and last names are not blank.
-   szUserName = mPerson.Person.FirstName
-   lUserNameLth = zGetStringLen( szUserName )
-   TraceLineS( "First Name: ", szUserName )
+   szLoginUserName = mCurrentUser.Employee.FirstName
+   lUserNameLth = zGetStringLen( szLoginUserName )
+   TraceLineS( "First Name: ", szLoginUserName )
    TraceLineI( "First Name Length: ", lUserNameLth )
    IF lUserNameLth < 1
       MessageSend( ViewToWindow, "", "New Primary Registrant User",
@@ -2630,9 +2635,9 @@ AcceptNewPrimRegUser( VIEW ViewToWindow )
       RETURN 2
    END
 
-   szUserName = mPerson.Person.LastName
-   lUserNameLth = zGetStringLen( szUserName )
-   TraceLineS( "Last Name: ", szUserName )
+   szLoginUserName = mCurrentUser.Employee.LastName
+   lUserNameLth = zGetStringLen( szLoginUserName )
+   TraceLineS( "Last Name: ", szLoginUserName )
    TraceLineI( "Last Name Length: ", lUserNameLth )
    IF lUserNameLth < 1
       MessageSend( ViewToWindow, "", "New Primary Registrant User",
@@ -2667,32 +2672,16 @@ AcceptNewPrimRegUser( VIEW ViewToWindow )
    END
 
    // Set user password to new password.
-// SetAttrFromStrByContext( qPrimReg, "User", "UserPassword", szConfirmPassword, "Password" )
    mCurrentUser.User.UserPassword = szConfirmPassword
-
-   ACTIVATE qPrimReg WHERE qPrimReg.PrimaryRegistrant.ID = lPrimReg.PrimaryRegistrant.ID
-   NAME VIEW qPrimReg "qPrimReg"
-
-// AcceptSubobject( mPerson, "Address" )
-   AcceptSubobject( mPerson, "Person" )
-   IncludeSubobjectFromSubobject( mPerson, "PrimaryRegistrant",
-                                  qPrimReg, "PrimaryRegistrant", zPOS_LAST )
-   Commit mPerson
-
+   IncludeSubobjectFromSubobject( mCurrentUser, "Organization", lPrimReg, "Organization", zPOS_LAST )
    AcceptSubobject( mCurrentUser, "User" )
-   IncludeSubobjectFromSubobject( mCurrentUser, "Person",
-                                  mPerson, "Person", zPOS_BEFORE )
    Commit mCurrentUser
 
    lID = lPrimReg.PrimaryRegistrant.ID
-
-   DropObjectInstance( mPerson )
    DropObjectInstance( mCurrentUser )
-   DropObjectInstance( qPrimReg )
    DropObjectInstance( lPrimReg )
 
-   // Activate the "selected" primary registrant ... just in case someone added or
-   // deleted a primary registrant user.
+   // Activate the "selected" primary registrant ... just in case someone added or deleted a primary registrant user.
    ACTIVATE lPrimReg WHERE lPrimReg.PrimaryRegistrant.ID = lID
    NAME VIEW lPrimReg "lPrimReg"
 
@@ -2708,11 +2697,10 @@ AcceptUpdatePrimRegUser( VIEW ViewToWindow )
 
    VIEW wWebXfer REGISTERED AS wWebXfer
    VIEW mCurrentUser REGISTERED AS mCurrentUser
-   VIEW mPerson  REGISTERED AS mPerson
-   VIEW lPrimReg BASED ON LOD  lPrimReg
-   VIEW qPrimReg BASED ON LOD  qPrimReg
-   STRING (  50  ) szUserName
-   STRING (  50  ) szAttemptUserName
+   VIEW lPrimReg REGISTERED AS lPrimReg
+   VIEW qOrganiz REGISTERED AS qOrganizLogin
+   STRING (  64  ) szLoginUserName
+   STRING (  64  ) szAttemptLoginName
    STRING ( 128  ) szAttemptPassword
    STRING ( 128  ) szConfirmPassword
    INTEGER         lUserNameLth
@@ -2721,19 +2709,12 @@ AcceptUpdatePrimRegUser( VIEW ViewToWindow )
    INTEGER         lID
    SHORT           nRC
 
-   GET VIEW lPrimReg NAMED "lPrimReg"
-
    // Ensure the user is the same one that logged in, or that the user knows
    // the password of this user in order to update the information.
-   GET VIEW qPrimReg NAMED "qPrimRegLogin"
-// IF qPrimReg.PrimaryRegistrant.ID != lPrimReg.PrimaryRegistrant.ID AND
-//    lPrimReg.User.UserPassword != wWebXfer.Root.AttemptPassword
-
    szAttemptPassword = wWebXfer.Root.AttemptPassword
    nRC = CompareAttributeToString( lPrimReg, "User", "UserPassword", szAttemptPassword )
    IF nRC != 0 AND
-      qPrimReg.PrimaryRegistrant.ID != lPrimReg.PrimaryRegistrant.ID
-
+      qOrganiz.PrimaryRegistrant.ID != lPrimReg.PrimaryRegistrant.ID
       MessageSend( ViewToWindow, "", "Update Primary Registrant User",
                    "Verification password is not correct.",
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
@@ -2742,9 +2723,9 @@ AcceptUpdatePrimRegUser( VIEW ViewToWindow )
    END
 
    // Ensure user login name is not blank and is unique.
-   szUserName = mCurrentUser.User.UserName
-   lUserNameLth = zGetStringLen( szUserName )
-   TraceLineS( "User Login Name: ", szUserName )
+   szLoginUserName = mCurrentUser.User.UserName
+   lUserNameLth = zGetStringLen( szLoginUserName )
+   TraceLineS( "User Login Name: ", szLoginUserName )
    TraceLineI( "User Login Name Length: ", lUserNameLth )
    IF lUserNameLth < 1
 
@@ -2753,15 +2734,13 @@ AcceptUpdatePrimRegUser( VIEW ViewToWindow )
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
       SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
       RETURN 2
-
    ELSE
-
-      szAttemptUserName = wWebXfer.Root.AttemptUserName
-      IF szUserName != szAttemptUserName
+      szAttemptLoginName = wWebXfer.Root.AttemptLoginName
+      IF szLoginUserName != szAttemptLoginName
 
          lControl = zQUAL_STRING + zPOS_FIRST + zQUAL_SCOPE_OI + zTEST_CSR_RESULT
          IF SetEntityCursor( lPrimReg, "User", "UserName", lControl,
-                             szUserName, "", "", 0, "", "" ) >= zCURSOR_SET
+                             szLoginUserName, "", "", 0, "", "" ) >= zCURSOR_SET
             MessageSend( ViewToWindow, "", "Update Primary Registrant User",
                          "The User Name must be unique.",
                          zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
@@ -2773,9 +2752,9 @@ AcceptUpdatePrimRegUser( VIEW ViewToWindow )
    END
 
    // Ensure user first and last names are not blank.
-   szUserName = mPerson.Person.FirstName
-   lUserNameLth = zGetStringLen( szUserName )
-   TraceLineS( "First Name: ", szUserName )
+   szLoginUserName = mCurrentUser.Employee.FirstName
+   lUserNameLth = zGetStringLen( szLoginUserName )
+   TraceLineS( "First Name: ", szLoginUserName )
    TraceLineI( "First Name Length: ", lUserNameLth )
    IF lUserNameLth < 1
       MessageSend( ViewToWindow, "", "Update Primary Registrant User",
@@ -2785,9 +2764,9 @@ AcceptUpdatePrimRegUser( VIEW ViewToWindow )
       RETURN 2
    END
 
-   szUserName = mPerson.Person.LastName
-   lUserNameLth = zGetStringLen( szUserName )
-   TraceLineS( "Last Name: ", szUserName )
+   szLoginUserName = mCurrentUser.Employee.LastName
+   lUserNameLth = zGetStringLen( szLoginUserName )
+   TraceLineS( "Last Name: ", szLoginUserName )
    TraceLineI( "Last Name Length: ", lUserNameLth )
    IF lUserNameLth < 1
       MessageSend( ViewToWindow, "", "Update Primary Registrant User",
@@ -2797,21 +2776,14 @@ AcceptUpdatePrimRegUser( VIEW ViewToWindow )
       RETURN 2
    END
 
-// AcceptSubobject( mPerson, "Person" )
-// AcceptSubobject( mPerson, "Address" )
    AcceptSubobject( mCurrentUser, "User" )
-
-   Commit mPerson
    Commit mCurrentUser
 
    lID = lPrimReg.PrimaryRegistrant.ID
-
-   DropObjectInstance( mPerson )
    DropObjectInstance( mCurrentUser )
    DropObjectInstance( lPrimReg )
 
-   // Activate the "selected" primary registrant ... just in case someone added or
-   // deleted a primary registrant user.
+   // Activate the "selected" primary registrant ... just in case someone added or deleted a primary registrant user.
    ACTIVATE lPrimReg WHERE lPrimReg.PrimaryRegistrant.ID = lID
    NAME VIEW lPrimReg "lPrimReg"
 
@@ -2828,8 +2800,6 @@ CancelNewPrimRegUser( VIEW ViewToWindow )
    VIEW mCurrentUser REGISTERED AS mCurrentUser
    VIEW mPerson REGISTERED AS mPerson
 
-// CancelSubobject( mPerson, "Address" )
-   CancelSubobject( mPerson, "Person" )
    CancelSubobject( mCurrentUser, "User" )
    DropObjectInstance( mCurrentUser )
 
@@ -2846,8 +2816,6 @@ CancelUpdatePrimRegUser( VIEW ViewToWindow )
    VIEW mCurrentUser REGISTERED AS mCurrentUser
    VIEW mPerson REGISTERED AS mPerson
 
-// CancelSubobject( mPerson, "Address" )
-   CancelSubobject( mPerson, "Person" )
    CancelSubobject( mCurrentUser, "User" )
    DropObjectInstance( mCurrentUser )
 
@@ -4080,7 +4048,10 @@ END
 DIALOG OPERATION
 InitReusableBlockForUpdate( VIEW ViewToWindow )
 
-   // nothing to do
+   VIEW mSubreg REGISTERED AS  mSubreg
+   VIEW wWebXfer REGISTERED AS wWebXfer
+
+   wWebXfer.Root.SearchName = mSubreg.ReusableBlockDefinition.Name
 
 END
 
@@ -4129,7 +4100,64 @@ END
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 SaveReusableBlock( VIEW ViewToWindow )
+   VIEW wWebXfer REGISTERED AS wWebXfer
+   VIEW mSubreg REGISTERED AS mSubreg
+   VIEW qBlockRU BASED ON LOD qBlockRU
+   INTEGER ID
 
-  // nothing to do
+   ID = mSubreg.ReusableBlockDefinition.ID
 
+   ACTIVATE qBlockRU WHERE qBlockRU.Subregistrant.ID = mSubreg.Subregistrant.ID
+   SET CURSOR FIRST qBlockRU.ReusableBlockDefinition WHERE qBlockRU.ReusableBlockDefinition.Name = wWebXfer.Root.SearchName
+   IF RESULT >= zCURSOR_SET
+      IF qBlockRU.ReusableBlockDefinition.ID != ID
+         MessageSend( ViewToWindow, "", "Select Reusable Block",
+                      "Reusable Block Name already exists",
+                      zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         DropObjectInstance( qBlockRU )
+         RETURN 2
+      END
+      SET CURSOR NEXT qBlockRU.ReusableBlockDefinition WHERE qBlockRU.ReusableBlockDefinition.Name = wWebXfer.Root.SearchName
+      IF RESULT >= zCURSOR_SET AND qBlockRU.ReusableBlockDefinition.ID != ID
+         MessageSend( ViewToWindow, "", "Select Reusable Block",
+                      "Reusable Block Name already exists",
+                      zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         DropObjectInstance( qBlockRU )
+         RETURN 2
+      END
+   END
+   mSubreg.ReusableBlockDefinition.Name = wWebXfer.Root.SearchName
+// COMMIT mSubreg
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: ResumeEditSPLD
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+ResumeEditSPLD( VIEW ViewToWindow )
+
+
+
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: GOTO_UserList
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+GOTO_UserList( VIEW ViewToWindow )
+
+   VIEW wWebXfer REGISTERED AS wWebXfer
+
+   IF wWebXfer.Root.KeyRole = "S"
+      SetWindowActionBehavior( ViewToWindow, zWAB_ReplaceWindowWithModalWindow,
+                               "wSubR", "SubregUsers" )
+   ELSE
+      SetWindowActionBehavior( ViewToWindow, zWAB_ReplaceWindowWithModalWindow,
+                               "wStartUp", "AdminListPrimRegUsers" )
+   END
 END

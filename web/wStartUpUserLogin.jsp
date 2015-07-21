@@ -92,7 +92,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EBRegistrantName", "", strMapValue );
             else
-               wWebXfer.cursor( "Root" ).getAttribute( "AttemptLoginName" ).setValue( strMapValue, "" );
+               wWebXfer.cursor( "Root" ).getAttribute( "AttemptLoginRegistrant" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -111,7 +111,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EBUserName", "", strMapValue );
             else
-               wWebXfer.cursor( "Root" ).getAttribute( "AttemptUserName" ).setValue( strMapValue, "" );
+               wWebXfer.cursor( "Root" ).getAttribute( "AttemptLoginName" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -186,6 +186,7 @@ String strOpenPopupWindow = "";
 String strPopupWindowSZX = "";
 String strPopupWindowSZY = "";
 String strDateFormat = "";
+String strLoginName = "";
 String strKeyRole = "";
 String strDialogName = "";
 String strWindowName = "";
@@ -632,11 +633,12 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
+         strLoginName = wWebXA.cursor( "Root" ).getAttribute( "LoginName" ).getString( "LoginName" );
+         if ( strLoginName == null )
+            strLoginName = "";
          strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
-
-         task.log().info( "Root.KeyRole: " + strKeyRole );
       }
    }
 %>
@@ -644,6 +646,7 @@ else
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
    <input name="zPopupWindowSZX" id="zPopupWindowSZX" type="hidden" value="<%=strPopupWindowSZX%>">
@@ -699,7 +702,7 @@ else
          {
             try
             {
-               strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "AttemptLoginName" ).getString( "" );
+               strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "AttemptLoginRegistrant" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -709,7 +712,7 @@ else
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "Root.AttemptLoginName: " + strErrorMapValue );
+            task.log( ).debug( "Root.AttemptLoginRegistrant: " + strErrorMapValue );
          }
          else
             task.log( ).debug( "Entity does not exist for EBRegistrantName: " + "wWebXfer.Root" );
@@ -747,7 +750,7 @@ else
          {
             try
             {
-               strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "AttemptUserName" ).getString( "" );
+               strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "AttemptLoginName" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -757,7 +760,7 @@ else
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "Root.AttemptUserName: " + strErrorMapValue );
+            task.log( ).debug( "Root.AttemptLoginName: " + strErrorMapValue );
          }
          else
             task.log( ).debug( "Entity does not exist for EBUserName: " + "wWebXfer.Root" );
@@ -912,9 +915,9 @@ else
    if ( task != null && strActionToProcess == null  )
    {
       task.log().info( "After building the page UnregisterZeidonApplication: ------>>> " + "wStartUpUserLogin" );
-   // task.dropTask();
-   // task = null;
-   // session.setAttribute( "ZeidonTaskId", task );
+      task.dropTask();
+      task = null;
+      session.setAttribute( "ZeidonTaskId", task );
    }
 
    strActionToProcess = "";

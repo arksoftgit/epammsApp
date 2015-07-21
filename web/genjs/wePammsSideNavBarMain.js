@@ -149,6 +149,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var LoginName = document.wePammsSideNavBarMain.zLoginName.value;
    var keyRole = document.wePammsSideNavBarMain.zKeyRole.value;
    document.wePammsSideNavBarMain.zError.value = "";
    document.wePammsSideNavBarMain.zOpenFile.value = "";

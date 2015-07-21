@@ -149,6 +149,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var LoginName = document.wSystemUpdateBacteria.zLoginName.value;
    var keyRole = document.wSystemUpdateBacteria.zKeyRole.value;
    document.wSystemUpdateBacteria.zError.value = "";
    document.wSystemUpdateBacteria.zOpenFile.value = "";
@@ -169,18 +170,10 @@ function _AfterPageLoaded( )
       timerID = null; // No timeout specified
 
    // Prebuild action has javascript code entered by user.
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   thisLi = document.getElementById( "lmSystem" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
    var oRows = document.getElementById( "GridBacteria" ).getElementsByTagName( 'tr' );
    if ( oRows.length > 1 ) // 1 for header
    {
-      thisLi = document.getElementById( "PBNewBacteria" );
+      var thisLi = document.getElementById( "PBNewBacteria" );
       thisLi.style.visibility = "hidden";
       thisLi.style.display = "none";
    }
@@ -567,66 +560,6 @@ function smCancelUpdateBacteria( )
       _DisableFormElements( true );
 
       document.wSystemUpdateBacteria.zAction.value = "smCancelUpdateBacteria";
-      document.wSystemUpdateBacteria.submit( );
-   }
-}
-
-function mTemplate( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemUpdateBacteria.zAction.value = "mTemplate";
-      document.wSystemUpdateBacteria.submit( );
-   }
-}
-
-function mSystem( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemUpdateBacteria.zAction.value = "mSystem";
-      document.wSystemUpdateBacteria.submit( );
-   }
-}
-
-function mShowFeedback( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemUpdateBacteria.zAction.value = "mShowFeedback";
-      document.wSystemUpdateBacteria.submit( );
-   }
-}
-
-function mLogout( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemUpdateBacteria.zAction.value = "_OnUnload";
       document.wSystemUpdateBacteria.submit( );
    }
 }

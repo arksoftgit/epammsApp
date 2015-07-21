@@ -149,6 +149,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var LoginName = document.wSystemShowFeedback.zLoginName.value;
    var keyRole = document.wSystemShowFeedback.zKeyRole.value;
    document.wSystemShowFeedback.zError.value = "";
    document.wSystemShowFeedback.zOpenFile.value = "";
@@ -167,16 +168,6 @@ function _AfterPageLoaded( )
    }
    else
       timerID = null; // No timeout specified
-
-   // Prebuild action has javascript code entered by user.
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   thisLi = document.getElementById( "lmSystem" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-   // END of Javascript code entered by user.
 
 var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
@@ -267,6 +258,8 @@ function InitShowFeedback( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      _DisableFormElements( true );
+
       document.wSystemShowFeedback.zAction.value = "InitShowFeedback";
       document.wSystemShowFeedback.submit( );
    }
@@ -313,66 +306,6 @@ function smReturn( )
       _DisableFormElements( true );
 
       document.wSystemShowFeedback.zAction.value = "smReturn";
-      document.wSystemShowFeedback.submit( );
-   }
-}
-
-function mTemplate( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemShowFeedback.zAction.value = "mTemplate";
-      document.wSystemShowFeedback.submit( );
-   }
-}
-
-function mSystem( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemShowFeedback.zAction.value = "mSystem";
-      document.wSystemShowFeedback.submit( );
-   }
-}
-
-function mShowFeedback( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemShowFeedback.zAction.value = "mShowFeedback";
-      document.wSystemShowFeedback.submit( );
-   }
-}
-
-function mLogout( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemShowFeedback.zAction.value = "_OnUnload";
       document.wSystemShowFeedback.submit( );
    }
 }

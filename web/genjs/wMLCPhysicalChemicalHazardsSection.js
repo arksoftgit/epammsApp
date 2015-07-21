@@ -149,6 +149,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var LoginName = document.wMLCPhysicalChemicalHazardsSection.zLoginName.value;
    var keyRole = document.wMLCPhysicalChemicalHazardsSection.zKeyRole.value;
    document.wMLCPhysicalChemicalHazardsSection.zError.value = "";
    document.wMLCPhysicalChemicalHazardsSection.zOpenFile.value = "";

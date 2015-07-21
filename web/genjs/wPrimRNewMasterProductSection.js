@@ -149,6 +149,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var LoginName = document.wPrimRNewMasterProductSection.zLoginName.value;
    var keyRole = document.wPrimRNewMasterProductSection.zKeyRole.value;
    document.wPrimRNewMasterProductSection.zError.value = "";
    document.wPrimRNewMasterProductSection.zOpenFile.value = "";
@@ -233,21 +234,6 @@ function InitMasterProdSectionForInsert( )
    }
 }
 
-function smTemplate( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wPrimRNewMasterProductSection.zAction.value = "smTemplate";
-      document.wPrimRNewMasterProductSection.submit( );
-   }
-}
-
 function smSystem( )
 {
 
@@ -278,7 +264,7 @@ function smShowFeedback( )
    }
 }
 
-function smLogout( )
+function smLogin( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -288,7 +274,7 @@ function smLogout( )
    {
       _DisableFormElements( true );
 
-      document.wPrimRNewMasterProductSection.zAction.value = "_OnUnload";
+      document.wPrimRNewMasterProductSection.zAction.value = "smLogin";
       document.wPrimRNewMasterProductSection.submit( );
    }
 }
@@ -461,7 +447,7 @@ function mCompanyProfile( )
    }
 }
 
-function mLogin( )
+function mUsers( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -469,42 +455,9 @@ function mLogin( )
 
    if ( _IsDocDisabled( ) == false )
    {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmLogin" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
       _DisableFormElements( true );
 
-      document.wPrimRNewMasterProductSection.zAction.value = "mLogin";
-      document.wPrimRNewMasterProductSection.submit( );
-   }
-}
-
-function mLogout( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmLogout" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wPrimRNewMasterProductSection.zAction.value = "_OnUnload";
+      document.wPrimRNewMasterProductSection.zAction.value = "mUsers";
       document.wPrimRNewMasterProductSection.submit( );
    }
 }

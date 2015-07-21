@@ -149,6 +149,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var LoginName = document.wSystemDisplayHelpMessage.zLoginName.value;
    var keyRole = document.wSystemDisplayHelpMessage.zKeyRole.value;
    document.wSystemDisplayHelpMessage.zError.value = "";
    document.wSystemDisplayHelpMessage.zOpenFile.value = "";
@@ -168,12 +169,29 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
-   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
+var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
+}
+
+function CheckAllInGrid(id, CheckBoxName)
+{
+   var wcontrols = id.form.elements;
+   var check = id.checked;
+   var wcontrol, i = 0;
+
+   while ( (wcontrol = wcontrols[ i++ ]) != null )
+   {
+      //Check to see if the checkbox belongs to this table then check it.
+      if ( wcontrol.name.indexOf( CheckBoxName ) != -1 && wcontrol.type == 'checkbox' )
+      {
+         wcontrol.checked = check;
+      }
+   }
 }
 
 function EditHelpMessage( )
 {
+
    // This is for indicating whether the user hit the window close box.
    isWindowClosing = false;
 
@@ -186,14 +204,9 @@ function EditHelpMessage( )
    }
 }
 
-function mEditHelpMessage( )
-{
-   EditHelpMessage();
-}
-
 function ExitHelp( )
 {
-// alert( "calling ExitHelp" );
+
    // This is for indicating whether the user hit the window close box.
    isWindowClosing = false;
 
@@ -204,11 +217,6 @@ function ExitHelp( )
       document.wSystemDisplayHelpMessage.zAction.value = "ExitHelp";
       document.wSystemDisplayHelpMessage.submit( );
    }
-}
-
-function mExitHelp( )
-{
-   ExitHelp();
 }
 
 function mLogout( )
@@ -225,3 +233,34 @@ function mLogout( )
       document.wSystemDisplayHelpMessage.submit( );
    }
 }
+
+function mEditHelpMessage( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSystemDisplayHelpMessage.zAction.value = "mEditHelpMessage";
+      document.wSystemDisplayHelpMessage.submit( );
+   }
+}
+
+function mExitHelp( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSystemDisplayHelpMessage.zAction.value = "mExitHelp";
+      document.wSystemDisplayHelpMessage.submit( );
+   }
+}
+

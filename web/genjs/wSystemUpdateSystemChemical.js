@@ -149,6 +149,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var LoginName = document.wSystemUpdateSystemChemical.zLoginName.value;
    var keyRole = document.wSystemUpdateSystemChemical.zKeyRole.value;
    document.wSystemUpdateSystemChemical.zError.value = "";
    document.wSystemUpdateSystemChemical.zOpenFile.value = "";
@@ -169,16 +170,6 @@ function _AfterPageLoaded( )
    }
    else
       timerID = null; // No timeout specified
-
-   // Prebuild action has javascript code entered by user.
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   thisLi = document.getElementById( "lmSystem" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-   // END of Javascript code entered by user.
 
 var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
@@ -328,6 +319,8 @@ function InitSystemChemicalForUpdate( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      _DisableFormElements( true );
+
       document.wSystemUpdateSystemChemical.zAction.value = "InitSystemChemicalForUpdate";
       document.wSystemUpdateSystemChemical.submit( );
    }
@@ -449,66 +442,6 @@ function smCancelUpdateSystemChemical( )
       _DisableFormElements( true );
 
       document.wSystemUpdateSystemChemical.zAction.value = "smCancelUpdateSystemChemical";
-      document.wSystemUpdateSystemChemical.submit( );
-   }
-}
-
-function mTemplate( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemUpdateSystemChemical.zAction.value = "mTemplate";
-      document.wSystemUpdateSystemChemical.submit( );
-   }
-}
-
-function mSystem( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemUpdateSystemChemical.zAction.value = "mSystem";
-      document.wSystemUpdateSystemChemical.submit( );
-   }
-}
-
-function mShowFeedback( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemUpdateSystemChemical.zAction.value = "mShowFeedback";
-      document.wSystemUpdateSystemChemical.submit( );
-   }
-}
-
-function mLogout( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemUpdateSystemChemical.zAction.value = "_OnUnload";
       document.wSystemUpdateSystemChemical.submit( );
    }
 }

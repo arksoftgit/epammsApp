@@ -149,6 +149,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var LoginName = document.wSystemUpdateFungi.zLoginName.value;
    var keyRole = document.wSystemUpdateFungi.zKeyRole.value;
    document.wSystemUpdateFungi.zError.value = "";
    document.wSystemUpdateFungi.zOpenFile.value = "";
@@ -169,18 +170,10 @@ function _AfterPageLoaded( )
       timerID = null; // No timeout specified
 
    // Prebuild action has javascript code entered by user.
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   thisLi = document.getElementById( "lmSystem" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
    var oRows = document.getElementById( "GridFungi" ).getElementsByTagName( 'tr' );
    if ( oRows.length > 1 ) // 1 for header
    {
-      thisLi = document.getElementById( "PBNewFungi" );
+      var thisLi = document.getElementById( "PBNewFungi" );
       thisLi.style.visibility = "hidden";
       thisLi.style.display = "none";
    }
@@ -459,66 +452,6 @@ function smCancelUpdateFungi( )
       _DisableFormElements( true );
 
       document.wSystemUpdateFungi.zAction.value = "smCancelUpdateFungi";
-      document.wSystemUpdateFungi.submit( );
-   }
-}
-
-function mTemplate( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemUpdateFungi.zAction.value = "mTemplate";
-      document.wSystemUpdateFungi.submit( );
-   }
-}
-
-function mSystem( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemUpdateFungi.zAction.value = "mSystem";
-      document.wSystemUpdateFungi.submit( );
-   }
-}
-
-function mShowFeedback( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemUpdateFungi.zAction.value = "mShowFeedback";
-      document.wSystemUpdateFungi.submit( );
-   }
-}
-
-function mLogout( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemUpdateFungi.zAction.value = "_OnUnload";
       document.wSystemUpdateFungi.submit( );
    }
 }

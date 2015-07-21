@@ -79,7 +79,7 @@ InitPrimaryRegistrantForInsert( VIEW ViewToWindow )
    CreateTemporalSubobjectVersion( mPrimReg, "PrimaryRegistrant" )
 // CreateTemporalSubobjectVersion( mPrimReg, "PhysicalAddress" )
 // CreateTemporalSubobjectVersion( mPrimReg, "MailingAddress" )
-// CreateTemporalSubobjectVersion( mPrimReg, "Person" )
+// CreateTemporalSubobjectVersion( mPrimReg, "Employee" )
 // CreateTemporalSubobjectVersion( mPrimReg, "User" )
 
    SetDynamicBannerName( ViewToWindow, "wPrimR", "PrimaryRegistrant" )
@@ -141,7 +141,7 @@ InitPrimaryRegistrantForUpdate( VIEW ViewToWindow )
       CREATE ENTITY mPrimReg.ContactPerson
    END
 
-   wWebXfer.Root.AttemptLoginName = mPrimReg.Organization.LoginName
+   wWebXfer.Root.AttemptLoginRegistrant = mPrimReg.Organization.LoginName
    wWebXfer.Root.AttemptPassword = ""
    wWebXfer.Root.ConfirmPassword = ""
 
@@ -220,7 +220,7 @@ AcceptNewPrimaryRegistrant( VIEW ViewToWindow )
    mPrimReg.User.UserPassword = szConfirmPassword
 
 // AcceptSubobject( mPrimReg, "User" )
-// AcceptSubobject( mPrimReg, "Person" )
+// AcceptSubobject( mPrimReg, "Employee" )
 // AcceptSubobject( mPrimReg, "PhysicalAddress" )
 // AcceptSubobject( mPrimReg, "MailingAddress" )
    AcceptSubobject( mPrimReg, "PrimaryRegistrant" )
@@ -259,7 +259,7 @@ AcceptUpdatePrimaryRegistrant( VIEW ViewToWindow )
    END
 
 // AcceptSubobject( mPrimReg, "User" )
-// AcceptSubobject( mPrimReg, "Person" )
+// AcceptSubobject( mPrimReg, "Employee" )
 // AcceptSubobject( mPrimReg, "PhysicalAddress" )
 // AcceptSubobject( mPrimReg, "MailingAddress" )
    AcceptSubobject( mPrimReg, "PrimaryRegistrant" )
@@ -284,7 +284,7 @@ CancelNewPrimaryRegistrant( VIEW ViewToWindow )
    VIEW wWebXfer REGISTERED AS wWebXfer
 
 // CancelSubobject( mPrimReg, "User" )
-// CancelSubobject( mPrimReg, "Person" )
+// CancelSubobject( mPrimReg, "Employee" )
 // CancelSubobject( mPrimReg, "PhysicalAddress" )
 // CancelSubobject( mPrimReg, "MailingAddress" )
    CancelSubobject( mPrimReg, "PrimaryRegistrant" )
@@ -303,7 +303,7 @@ CancelUpdatePrimaryRegistrant( VIEW ViewToWindow )
    VIEW mPrimReg REGISTERED AS mPrimReg
 
 // CancelSubobject( mPrimReg, "User" )
-// CancelSubobject( mPrimReg, "Person" )
+// CancelSubobject( mPrimReg, "Employee" )
 // CancelSubobject( mPrimReg, "PhysicalAddress" )
 // CancelSubobject( mPrimReg, "MailingAddress" )
    CancelSubobject( mPrimReg, "PrimaryRegistrant" )

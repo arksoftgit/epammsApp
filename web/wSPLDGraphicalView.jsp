@@ -83,6 +83,7 @@ String strFocusCtrl = "";
 String strBannerName = "";
 String strVMLError = "";
 String strOpenFile = "";
+String strLoginName = "";
 String strKeyRole = "";
 String strLastWindow;
 String strLastAction;
@@ -1411,6 +1412,7 @@ else
 
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
+   <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zErrorFlag" id="zErrorFlag" type="hidden" value="<%=strErrorFlag%>">
    <input name="zTimeout" id="zTimeout" type="hidden" value="360">

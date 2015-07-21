@@ -149,6 +149,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var LoginName = document.wStartUpAdminNewPrimaryRegistrant.zLoginName.value;
    var keyRole = document.wStartUpAdminNewPrimaryRegistrant.zKeyRole.value;
    document.wStartUpAdminNewPrimaryRegistrant.zError.value = "";
    document.wStartUpAdminNewPrimaryRegistrant.zOpenFile.value = "";
@@ -171,51 +172,6 @@ function _AfterPageLoaded( )
    }
    else
       timerID = null; // No timeout specified
-
-   // Prebuild action has javascript code entered by user.
-   var thisLi;
-
-   // If the Role is not set when we get here, it is because there is no admin (KeyRole = "U"), so we will only permit the user to go to set up the administrator.
-//   if ( keyRole == "U" )  // cannot do this since it prevents mapping
-//   {
-//      thisLi = document.getElementById( "EBCompanyName" );
-//      thisLi .disabled = true;
-//      thisLi = document.getElementById( "EBLoginName" );
-//      thisLi .disabled = true;
-//      thisLi = document.getElementById( "CBRole" );
-//      thisLi .disabled = true;
-//   }
-
-   // From new primary registrant, the only logical top menu option is Logout, so
-   // we only leave Logout as an option
-      thisLi = document.getElementById( "lmTemplate" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-      thisLi = document.getElementById( "lmStateRegistrations" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-      thisLi = document.getElementById( "lmSubregistrants" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-      thisLi = document.getElementById( "lmTrackingNotificationCompliance" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-      thisLi = document.getElementById( "lmProductManagement" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-      thisLi = document.getElementById( "lmMarketingFulfillment" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-      thisLi = document.getElementById( "lmCompanyProfile" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-      thisLi = document.getElementById( "lmLogin" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-      thisLi = document.getElementById( "lmLogout" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none"
-   // END of Javascript code entered by user.
 
 var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
@@ -289,6 +245,8 @@ function AdminAddNewPrimReg( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      _DisableFormElements( true );
+
       document.wStartUpAdminNewPrimaryRegistrant.zAction.value = "AdminAddNewPrimReg";
       document.wStartUpAdminNewPrimaryRegistrant.submit( );
    }
@@ -365,222 +323,6 @@ function smAdminCancelNewPrimReg( )
       _DisableFormElements( true );
 
       document.wStartUpAdminNewPrimaryRegistrant.zAction.value = "smAdminCancelNewPrimReg";
-      document.wStartUpAdminNewPrimaryRegistrant.submit( );
-   }
-}
-
-function mProductManagement( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmProductManagement" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wStartUpAdminNewPrimaryRegistrant.zAction.value = "mProductManagement";
-      document.wStartUpAdminNewPrimaryRegistrant.submit( );
-   }
-}
-
-function mSubregistrants( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmSubregistrants" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wStartUpAdminNewPrimaryRegistrant.zAction.value = "mSubregistrants";
-      document.wStartUpAdminNewPrimaryRegistrant.submit( );
-   }
-}
-
-function mTrackingNotificationCompliance( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmTrackingNotificationCompliance" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wStartUpAdminNewPrimaryRegistrant.zAction.value = "mTrackingNotificationCompliance";
-      document.wStartUpAdminNewPrimaryRegistrant.submit( );
-   }
-}
-
-function mStateRegistrations( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmStateRegistrations" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wStartUpAdminNewPrimaryRegistrant.zAction.value = "mStateRegistrations";
-      document.wStartUpAdminNewPrimaryRegistrant.submit( );
-   }
-}
-
-function mMarketingFulfillment( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmMarketingFulfillment" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wStartUpAdminNewPrimaryRegistrant.zAction.value = "mMarketingFulfillment";
-      document.wStartUpAdminNewPrimaryRegistrant.submit( );
-   }
-}
-
-function mWebDevelopment( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmWebDevelopment" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wStartUpAdminNewPrimaryRegistrant.zAction.value = "mWebDevelopment";
-      document.wStartUpAdminNewPrimaryRegistrant.submit( );
-   }
-}
-
-function mCompanyProfile( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmCompanyProfile" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wStartUpAdminNewPrimaryRegistrant.zAction.value = "mCompanyProfile";
-      document.wStartUpAdminNewPrimaryRegistrant.submit( );
-   }
-}
-
-function mLogin( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmLogin" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wStartUpAdminNewPrimaryRegistrant.zAction.value = "mLogin";
-      document.wStartUpAdminNewPrimaryRegistrant.submit( );
-   }
-}
-
-function mLogout( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmLogout" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wStartUpAdminNewPrimaryRegistrant.zAction.value = "_OnUnload";
       document.wStartUpAdminNewPrimaryRegistrant.submit( );
    }
 }

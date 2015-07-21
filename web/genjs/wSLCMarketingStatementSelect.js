@@ -149,6 +149,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var LoginName = document.wSLCMarketingStatementSelect.zLoginName.value;
    var keyRole = document.wSLCMarketingStatementSelect.zKeyRole.value;
    document.wSLCMarketingStatementSelect.zError.value = "";
    document.wSLCMarketingStatementSelect.zOpenFile.value = "";

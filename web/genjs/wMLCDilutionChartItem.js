@@ -149,6 +149,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var LoginName = document.wMLCDilutionChartItem.zLoginName.value;
    var keyRole = document.wMLCDilutionChartItem.zKeyRole.value;
    document.wMLCDilutionChartItem.zError.value = "";
    document.wMLCDilutionChartItem.zOpenFile.value = "";

@@ -149,6 +149,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var LoginName = document.wSystemImportVirusesList.zLoginName.value;
    var keyRole = document.wSystemImportVirusesList.zKeyRole.value;
    document.wSystemImportVirusesList.zError.value = "";
    document.wSystemImportVirusesList.zOpenFile.value = "";
@@ -167,16 +168,6 @@ function _AfterPageLoaded( )
    }
    else
       timerID = null; // No timeout specified
-
-   // Prebuild action has javascript code entered by user.
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   thisLi = document.getElementById( "lmSystem" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-   // END of Javascript code entered by user.
 
 var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
@@ -251,6 +242,8 @@ function InitImportVirusesList( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      _DisableFormElements( true );
+
       document.wSystemImportVirusesList.zAction.value = "InitImportVirusesList";
       document.wSystemImportVirusesList.submit( );
    }
@@ -347,66 +340,6 @@ function smCancelImportVirusesAndReturn( )
       _DisableFormElements( true );
 
       document.wSystemImportVirusesList.zAction.value = "smCancelImportVirusesAndReturn";
-      document.wSystemImportVirusesList.submit( );
-   }
-}
-
-function mTemplate( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemImportVirusesList.zAction.value = "mTemplate";
-      document.wSystemImportVirusesList.submit( );
-   }
-}
-
-function mSystem( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemImportVirusesList.zAction.value = "mSystem";
-      document.wSystemImportVirusesList.submit( );
-   }
-}
-
-function mShowFeedback( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemImportVirusesList.zAction.value = "mShowFeedback";
-      document.wSystemImportVirusesList.submit( );
-   }
-}
-
-function mLogout( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemImportVirusesList.zAction.value = "_OnUnload";
       document.wSystemImportVirusesList.submit( );
    }
 }

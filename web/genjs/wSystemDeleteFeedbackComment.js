@@ -149,6 +149,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var LoginName = document.wSystemDeleteFeedbackComment.zLoginName.value;
    var keyRole = document.wSystemDeleteFeedbackComment.zKeyRole.value;
    document.wSystemDeleteFeedbackComment.zError.value = "";
    document.wSystemDeleteFeedbackComment.zOpenFile.value = "";
@@ -167,16 +168,6 @@ function _AfterPageLoaded( )
    }
    else
       timerID = null; // No timeout specified
-
-   // Prebuild action has javascript code entered by user.
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   thisLi = document.getElementById( "lmSystem" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-   // END of Javascript code entered by user.
 
 var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
@@ -206,6 +197,8 @@ function InitDeleteFeedbackComment( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      _DisableFormElements( true );
+
       document.wSystemDeleteFeedbackComment.zAction.value = "InitDeleteFeedbackComment";
       document.wSystemDeleteFeedbackComment.submit( );
    }
@@ -267,66 +260,6 @@ function smCancelDeleteFeedbackComment( )
       _DisableFormElements( true );
 
       document.wSystemDeleteFeedbackComment.zAction.value = "smCancelDeleteFeedbackComment";
-      document.wSystemDeleteFeedbackComment.submit( );
-   }
-}
-
-function mTemplate( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemDeleteFeedbackComment.zAction.value = "mTemplate";
-      document.wSystemDeleteFeedbackComment.submit( );
-   }
-}
-
-function mSystem( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemDeleteFeedbackComment.zAction.value = "mSystem";
-      document.wSystemDeleteFeedbackComment.submit( );
-   }
-}
-
-function mShowFeedback( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemDeleteFeedbackComment.zAction.value = "mShowFeedback";
-      document.wSystemDeleteFeedbackComment.submit( );
-   }
-}
-
-function mLogout( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemDeleteFeedbackComment.zAction.value = "_OnUnload";
       document.wSystemDeleteFeedbackComment.submit( );
    }
 }

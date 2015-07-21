@@ -47,630 +47,8 @@ public class wStartUp_Dialog extends VmlDialog
    }
 
 
-//:DIALOG OPERATION
-//:ProcessUserLogin( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-ProcessUserLogin( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW pePamms  REGISTERED AS pePamms
-   zVIEW    pePamms = new zVIEW( );
-   //:VIEW mePamms  BASED ON LOD  mePamms
-   zVIEW    mePamms = new zVIEW( );
-   //:VIEW sePamms  BASED ON LOD  sePamms
-   zVIEW    sePamms = new zVIEW( );
-   //:VIEW qOrganiz BASED ON LOD  qOrganiz
-   zVIEW    qOrganiz = new zVIEW( );
-   //:VIEW mOrganiz BASED ON LOD  mOrganiz
-   zVIEW    mOrganiz = new zVIEW( );
-   //:VIEW mOrganizInit BASED ON LOD mOrganiz
-   zVIEW    mOrganizInit = new zVIEW( );
-   //:VIEW lPrimReg BASED ON LOD  lPrimReg
-   zVIEW    lPrimReg = new zVIEW( );
-   //:STRING ( 256  ) szMessage
-   String   szMessage = null;
-   //:STRING (  50  ) szLoginName
-   String   szLoginName = null;
-   //:STRING (  50  ) szUserName
-   String   szUserName = null;
-   //:STRING ( 128  ) szAttemptPassword
-   String   szAttemptPassword = null;
-   //:STRING ( 128  ) szConfirmPassword
-   String   szConfirmPassword = null;
-   //:STRING (   1  ) szKeyRole
-   String   szKeyRole = null;
-   //:INTEGER       lControl
-   int      lControl = 0;
-   //:INTEGER       lID
-   int      lID = 0;
-   //:SHORT         nRC
-   int      nRC = 0;
-   int      lTempInteger_0 = 0;
-   int      lTempInteger_1 = 0;
-   zVIEW    vTempViewVar_0 = new zVIEW( );
-   int      lTempInteger_2 = 0;
-   zVIEW    vTempViewVar_1 = new zVIEW( );
-   String   szTempString_0 = null;
-   int      lTempInteger_3 = 0;
-   zVIEW    vTempViewVar_2 = new zVIEW( );
-   int      lTempInteger_4 = 0;
-   int      lTempInteger_5 = 0;
-   int      lTempInteger_6 = 0;
-   int      lTempInteger_7 = 0;
-   int      lTempInteger_8 = 0;
-   int      lTempInteger_9 = 0;
-   int      lTempInteger_10 = 0;
-   int      lTempInteger_11 = 0;
-   int      lTempInteger_12 = 0;
-   int      lTempInteger_13 = 0;
-   int      lTempInteger_14 = 0;
-   int      lTempInteger_15 = 0;
-   zVIEW    vTempViewVar_3 = new zVIEW( );
-   int      lTempInteger_16 = 0;
-   String   szTempString_1 = null;
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( pePamms, "pePamms", ViewToWindow, zLEVEL_TASK );
-
-   //:IF wWebXfer = 0
-   if ( getView( wWebXfer ) == null )
-   { 
-      //:TraceLineS( "wStartUp.ProcessUserLogin cannot find Transfer View", "" )
-      TraceLineS( "wStartUp.ProcessUserLogin cannot find Transfer View", "" );
-      //:RETURN 2
-      if(8==8)return( 2 );
-   } 
-
-   //:END
-
-   //:wWebXfer.Root.KeyRole = "U"  // U is for Unknown (so far)
-   SetAttributeFromString( wWebXfer, "Root", "KeyRole", "U" );
-   //:IF pePamms.ePamms DOES NOT EXIST OR pePamms.ePamms.ID != "1"
-   lTempInteger_0 = CheckExistenceOfEntity( pePamms, "ePamms" );
-   if ( lTempInteger_0 != 0 || CompareAttributeToString( pePamms, "ePamms", "ID", "1" ) != 0 )
-   { 
-      //:// No administrator found!  We bootstrap here.
-      //:TraceLineS( "ProcessUserLogin: ", "No Administrator found!!!" )
-      TraceLineS( "ProcessUserLogin: ", "No Administrator found!!!" );
-      //:ACTIVATE mePamms EMPTY
-      RESULT = ActivateEmptyObjectInstance( mePamms, "mePamms", ViewToWindow, zSINGLE );
-      //:NAME VIEW mePamms "mePamms"
-      SetNameForView( mePamms, "mePamms", null, zLEVEL_TASK );
-      //:CREATE ENTITY mePamms.ePamms
-      RESULT = CreateEntity( mePamms, "ePamms", zPOS_AFTER );
-      //:CREATE ENTITY mePamms.PrimaryRegistrant 
-      RESULT = CreateEntity( mePamms, "PrimaryRegistrant", zPOS_AFTER );
-      //:CREATE ENTITY mePamms.Organization
-      RESULT = CreateEntity( mePamms, "Organization", zPOS_AFTER );
-      //:mePamms.ePamms.ID = 1
-      SetAttributeFromInteger( mePamms, "ePamms", "ID", 1 );
-      //:mePamms.Organization.Name = "ePamms Administrator"
-      SetAttributeFromString( mePamms, "Organization", "Name", "ePamms Administrator" );
-      //:mePamms.Organization.LoginName = "Admin"
-      SetAttributeFromString( mePamms, "Organization", "LoginName", "Admin" );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StartTopWindow,
-      //:                         "wStartUp", "AdminNewAdministrator" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StartTopWindow, "wStartUp", "AdminNewAdministrator" );
-      //:DropObjectInstance( pePamms )
-      DropObjectInstance( pePamms );
-      //:RETURN 1
-      if(8==8)return( 1 );
-   } 
-
-   //:END
-
-   //:// OK ... we know that Admin exists ... if there are no Primary Registrants, the only login possible is Admin, which can
-   //:// create Primary Registrants.  If there are no Subregistrants for a Primary Registrant, the only login possible for the
-   //:// specified Primary Registrant is the administrator for that Primary Registrant, which can create Subregistrants.  If
-   //:// there are no Users for a Subregistrant, the only login possible for the specified Subregistrant is the administrator
-   //:// for that Subregistrant.
-
-   //:DisplayObjectInstance( pePamms, "", "" )
-   DisplayObjectInstance( pePamms, "", "" );
-   //:DisplayEntityInstance( pePamms, "Organization" )
-   DisplayEntityInstance( pePamms, "Organization" );
-
-   //:szLoginName = wWebXfer.Root.AttemptLoginName  // e.g. Lonza (a primary registrant) or ATP (Alpha Tech Pet - a subregistrant)
-   {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
-   StringBuilder sb_szLoginName;
-   if ( szLoginName == null )
-      sb_szLoginName = new StringBuilder( 32 );
-   else
-      sb_szLoginName = new StringBuilder( szLoginName );
-       GetVariableFromAttribute( sb_szLoginName, mi_lTempInteger_1, 'S', 51, wWebXfer, "Root", "AttemptLoginName", "", 0 );
-   lTempInteger_1 = mi_lTempInteger_1.intValue( );
-   szLoginName = sb_szLoginName.toString( );}
-   //:IF pePamms.Organization.LoginName = "Admin"  // cannot use szLoginName since we need a case insensitive comparison
-   if ( CompareAttributeToString( pePamms, "Organization", "LoginName", "Admin" ) == 0 )
-   { 
-      //:// SET CURSOR FIRST pePamms.Organization WHERE pePamms.Organization.LoginName = szLoginName
-      //:RESULT = SetCursorFirstEntityByString( pePamms, "Organization", "LoginName", szLoginName, "ePamms" )
-      RESULT = SetCursorFirstEntityByString( pePamms, "Organization", "LoginName", szLoginName, "ePamms" );
-
-      //:IF RESULT < 0
-      if ( RESULT < 0 )
-      { 
-         //:TraceLineS( "Login Organization not found within Admin: ", szLoginName )
-         TraceLineS( "Login Organization not found within Admin: ", szLoginName );
-         //:MessageSend( ViewToWindow, "", "User Login",
-         //:             "Invalid User Login.",
-         //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-         MessageSend( ViewToWindow, "", "User Login", "Invalid User Login.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-         //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-         m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-         //:RETURN 2
-         if(8==8)return( 2 );
-      } 
-
-      //:END
-
-      //:// Note that Activate always returns at least an empty view.
-      //:ACTIVATE qOrganiz WHERE qOrganiz.Organization.LoginName = szLoginName
-      o_fnLocalBuildQual_1( ViewToWindow, vTempViewVar_0, szLoginName );
-      RESULT = ActivateObjectInstance( qOrganiz, "qOrganiz", ViewToWindow, vTempViewVar_0, zSINGLE );
-      DropView( vTempViewVar_0 );
-      //:ELSE
-   } 
-   else
-   { 
-      //:// Within a Primary Registrant (not Admin)
-      //:ACTIVATE sePamms WHERE sePamms.PrimaryRegistrant.ID = pePamms.PrimaryRegistrant.ID
-      {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
-             GetIntegerFromAttribute( mi_lTempInteger_2, pePamms, "PrimaryRegistrant", "ID" );
-      lTempInteger_2 = mi_lTempInteger_2.intValue( );}
-      o_fnLocalBuildQual_2( ViewToWindow, vTempViewVar_1, lTempInteger_2 );
-      RESULT = ActivateObjectInstance( sePamms, "sePamms", ViewToWindow, vTempViewVar_1, zSINGLE );
-      DropView( vTempViewVar_1 );
-      //:NAME VIEW sePamms "sePamms"
-      SetNameForView( sePamms, "sePamms", null, zLEVEL_TASK );
-      //:DisplayObjectInstance( sePamms, "", "" )
-      DisplayObjectInstance( sePamms, "", "" );
-
-      //:// We cannot use SET CURSOR FIRST WHERE since we need a case insensitive comparison.
-      //:// SET CURSOR FIRST sePamms.Subregistrant WHERE sePamms.Organization.LoginName = szLoginName
-      //:TraceLineS( "Looking for Subregistrant Login: ", wWebXfer.Root.AttemptUserName )
-      {StringBuilder sb_szTempString_0;
-      if ( szTempString_0 == null )
-         sb_szTempString_0 = new StringBuilder( 32 );
-      else
-         sb_szTempString_0 = new StringBuilder( szTempString_0 );
-             GetStringFromAttribute( sb_szTempString_0, wWebXfer, "Root", "AttemptUserName" );
-      szTempString_0 = sb_szTempString_0.toString( );}
-      TraceLineS( "Looking for Subregistrant Login: ", szTempString_0 );
-      //:RESULT = SetCursorFirstEntityByString( sePamms, "Organization", "LoginName", szLoginName, "PrimaryRegistrant" )
-      RESULT = SetCursorFirstEntityByString( sePamms, "Organization", "LoginName", szLoginName, "PrimaryRegistrant" );
-      //:/*
-      //:SET CURSOR FIRST sePamms.Subregistrant
-      //:LOOP WHILE RESULT >= 0 AND wWebXfer.Root.AttemptUserName != sePamms.Organization.LoginName // case insensitive comparison
-      //:   SET CURSOR NEXT sePamms.Subregistrant
-      //:END
-      //:*/
-      //:DisplayEntityInstance( sePamms, "Organization" )
-      DisplayEntityInstance( sePamms, "Organization" );
-      //:IF RESULT >= 0
-      if ( RESULT >= 0 )
-      { 
-         //: ACTIVATE qOrganiz WHERE qOrganiz.Organization.ID = sePamms.Organization.ID
-         {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
-                   GetIntegerFromAttribute( mi_lTempInteger_3, sePamms, "Organization", "ID" );
-         lTempInteger_3 = mi_lTempInteger_3.intValue( );}
-         o_fnLocalBuildQual_3( ViewToWindow, vTempViewVar_2, lTempInteger_3 );
-         RESULT = ActivateObjectInstance( qOrganiz, "qOrganiz", ViewToWindow, vTempViewVar_2, zSINGLE );
-         DropView( vTempViewVar_2 );
-         //:DropObjectInstance( sePamms )
-         DropObjectInstance( sePamms );
-         //:ELSE
-      } 
-      else
-      { 
-         //:// Organization not found!
-         //:szMessage = pePamms.Organization.Name
-         {MutableInt mi_lTempInteger_4 = new MutableInt( lTempInteger_4 );
-         StringBuilder sb_szMessage;
-         if ( szMessage == null )
-            sb_szMessage = new StringBuilder( 32 );
-         else
-            sb_szMessage = new StringBuilder( szMessage );
-                   GetVariableFromAttribute( sb_szMessage, mi_lTempInteger_4, 'S', 257, pePamms, "Organization", "Name", "", 0 );
-         lTempInteger_4 = mi_lTempInteger_4.intValue( );
-         szMessage = sb_szMessage.toString( );}
-         //:szMessage = szMessage + "    Login: "
-          {StringBuilder sb_szMessage;
-         if ( szMessage == null )
-            sb_szMessage = new StringBuilder( 32 );
-         else
-            sb_szMessage = new StringBuilder( szMessage );
-                  ZeidonStringConcat( sb_szMessage, 1, 0, "    Login: ", 1, 0, 257 );
-         szMessage = sb_szMessage.toString( );}
-         //:szMessage = szMessage + szLoginName
-          {StringBuilder sb_szMessage;
-         if ( szMessage == null )
-            sb_szMessage = new StringBuilder( 32 );
-         else
-            sb_szMessage = new StringBuilder( szMessage );
-                  ZeidonStringConcat( sb_szMessage, 1, 0, szLoginName, 1, 0, 257 );
-         szMessage = sb_szMessage.toString( );}
-         //:TraceLineS( "Login Organization not found within Primary Registrant: ", szMessage )
-         TraceLineS( "Login Organization not found within Primary Registrant: ", szMessage );
-         //:MessageSend( ViewToWindow, "", "User Login",
-         //:             "Invalid User Login.",
-         //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-         MessageSend( ViewToWindow, "", "User Login", "Invalid User Login.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-         //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-         m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-         //:DropObjectInstance( sePamms )
-         DropObjectInstance( sePamms );
-         //:RETURN 2
-         if(8==8)return( 2 );
-      } 
-
-      //:END
-   } 
-
-   //:END
-
-   //:NAME VIEW qOrganiz "qOrganizLogin"
-   SetNameForView( qOrganiz, "qOrganizLogin", null, zLEVEL_TASK );
-   //:DisplayObjectInstance( qOrganiz, "", "" )
-   DisplayObjectInstance( qOrganiz, "", "" );
-   //:IF qOrganiz.Organization DOES NOT EXIST
-   lTempInteger_5 = CheckExistenceOfEntity( qOrganiz, "Organization" );
-   if ( lTempInteger_5 != 0 )
-   { 
-      //:// Organization not found!
-      //:TraceLineS( "Login Organization not found: ", szLoginName )
-      TraceLineS( "Login Organization not found: ", szLoginName );
-      //:MessageSend( ViewToWindow, "", "User Login",
-      //:             "Invalid User Login.",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "User Login", "Invalid User Login.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:DropObjectInstance( qOrganiz )
-      DropObjectInstance( qOrganiz );
-      //:RETURN 2
-      if(8==8)return( 2 );
-   } 
-
-   //:END
-
-   //:wWebXfer.Root.LoginName = qOrganiz.Organization.LoginName // e.g. Lonza
-   SetAttributeFromAttribute( wWebXfer, "Root", "LoginName", qOrganiz, "Organization", "LoginName" );
-   //:szUserName = wWebXfer.Root.AttemptUserName  // e.g. Admin
-   {MutableInt mi_lTempInteger_6 = new MutableInt( lTempInteger_6 );
-   StringBuilder sb_szUserName;
-   if ( szUserName == null )
-      sb_szUserName = new StringBuilder( 32 );
-   else
-      sb_szUserName = new StringBuilder( szUserName );
-       GetVariableFromAttribute( sb_szUserName, mi_lTempInteger_6, 'S', 51, wWebXfer, "Root", "AttemptUserName", "", 0 );
-   lTempInteger_6 = mi_lTempInteger_6.intValue( );
-   szUserName = sb_szUserName.toString( );}
-   //:szKeyRole = wWebXfer.Root.KeyRole
-   {MutableInt mi_lTempInteger_7 = new MutableInt( lTempInteger_7 );
-   StringBuilder sb_szKeyRole;
-   if ( szKeyRole == null )
-      sb_szKeyRole = new StringBuilder( 32 );
-   else
-      sb_szKeyRole = new StringBuilder( szKeyRole );
-       GetVariableFromAttribute( sb_szKeyRole, mi_lTempInteger_7, 'S', 2, wWebXfer, "Root", "KeyRole", "", 0 );
-   lTempInteger_7 = mi_lTempInteger_7.intValue( );
-   szKeyRole = sb_szKeyRole.toString( );}
-
-   //:szAttemptPassword = wWebXfer.Root.AttemptPassword
-   {MutableInt mi_lTempInteger_8 = new MutableInt( lTempInteger_8 );
-   StringBuilder sb_szAttemptPassword;
-   if ( szAttemptPassword == null )
-      sb_szAttemptPassword = new StringBuilder( 32 );
-   else
-      sb_szAttemptPassword = new StringBuilder( szAttemptPassword );
-       GetVariableFromAttribute( sb_szAttemptPassword, mi_lTempInteger_8, 'S', 129, wWebXfer, "Root", "AttemptPassword", "", 0 );
-   lTempInteger_8 = mi_lTempInteger_8.intValue( );
-   szAttemptPassword = sb_szAttemptPassword.toString( );}
-   //:nRC = 0  // initialize to normal processing
-   nRC = 0;
-
-   //:// Cannot use szLoginName (in place of wWebXfer.Root.AttemptUserName) since we need a case insensitive comparison.
-   //:IF wWebXfer.Root.AttemptUserName = "Admin" // logging in as user Admin for specified registrant
-   if ( CompareAttributeToString( wWebXfer, "Root", "AttemptUserName", "Admin" ) == 0 )
-   { 
-
-      //:wWebXfer.Root.LoginUser = "Admin"
-      SetAttributeFromString( wWebXfer, "Root", "LoginUser", "Admin" );
-
-      //:// Match the password.
-      //:nRC = CompareAttributeToString( qOrganiz, "Organization", "AdministratorPassword", szAttemptPassword )
-      nRC = CompareAttributeToString( qOrganiz, "Organization", "AdministratorPassword", szAttemptPassword );
-      //:IF nRC != 0
-      if ( nRC != 0 )
-      { 
-
-         //:// Remove these lines prior to deployment!!!
-         //:TraceLineS( "//////* Invalid Login Password: ", szAttemptPassword )
-         TraceLineS( "//////* Invalid Login Password: ", szAttemptPassword );
-         //:szConfirmPassword = qOrganiz.Organization.AdministratorPassword
-         {MutableInt mi_lTempInteger_9 = new MutableInt( lTempInteger_9 );
-         StringBuilder sb_szConfirmPassword;
-         if ( szConfirmPassword == null )
-            sb_szConfirmPassword = new StringBuilder( 32 );
-         else
-            sb_szConfirmPassword = new StringBuilder( szConfirmPassword );
-                   GetVariableFromAttribute( sb_szConfirmPassword, mi_lTempInteger_9, 'S', 129, qOrganiz, "Organization", "AdministratorPassword", "", 0 );
-         lTempInteger_9 = mi_lTempInteger_9.intValue( );
-         szConfirmPassword = sb_szConfirmPassword.toString( );}
-         //:wWebXfer.Root.TracePassword = szAttemptPassword
-         SetAttributeFromString( wWebXfer, "Root", "TracePassword", szAttemptPassword );
-         //:szAttemptPassword = wWebXfer.Root.TracePassword
-         {MutableInt mi_lTempInteger_10 = new MutableInt( lTempInteger_10 );
-         StringBuilder sb_szAttemptPassword;
-         if ( szAttemptPassword == null )
-            sb_szAttemptPassword = new StringBuilder( 32 );
-         else
-            sb_szAttemptPassword = new StringBuilder( szAttemptPassword );
-                   GetVariableFromAttribute( sb_szAttemptPassword, mi_lTempInteger_10, 'S', 129, wWebXfer, "Root", "TracePassword", "", 0 );
-         lTempInteger_10 = mi_lTempInteger_10.intValue( );
-         szAttemptPassword = sb_szAttemptPassword.toString( );}
-         //:TraceLineS( "//////*+++++ CurrentUser: ", szConfirmPassword )
-         TraceLineS( "//////*+++++ CurrentUser: ", szConfirmPassword );
-         //:TraceLineS( "//////*+++++ Attempted  : ", szAttemptPassword )
-         TraceLineS( "//////*+++++ Attempted  : ", szAttemptPassword );
-         //:// End of: Remove these lines prior to deployment!!!
-
-         //:MessageSend( ViewToWindow, "", "Login",
-         //:             "Invalid Administrator Login",
-         //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-         MessageSend( ViewToWindow, "", "Login", "Invalid Administrator Login", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-         //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-         m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-         //:DropObjectInstance( qOrganiz )
-         DropObjectInstance( qOrganiz );
-         //:RETURN 2
-         if(8==8)return( 2 );
-      } 
-
-      //:END
-
-      //:// Cannot use szLoginUser (in place of wWebXfer.Root.AttemptUserName) since we need a case insensitive comparison.
-      //:IF qOrganiz.Organization.LoginName = "Admin"
-      if ( CompareAttributeToString( qOrganiz, "Organization", "LoginName", "Admin" ) == 0 )
-      { 
-
-         //:wWebXfer.Root.LoginName = "Admin"
-         SetAttributeFromString( wWebXfer, "Root", "LoginName", "Admin" );
-         //:wWebXfer.Root.KeyRole = "P" // Primary registrant
-         SetAttributeFromString( wWebXfer, "Root", "KeyRole", "P" );
-
-         //:ACTIVATE lPrimReg
-         RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, 0, zSINGLE );
-         //:NAME VIEW lPrimReg "lPrimReg"
-         SetNameForView( lPrimReg, "lPrimReg", null, zLEVEL_TASK );
-         //:SetWindowActionBehavior( ViewToWindow, zWAB_ResetTopWindow,
-         //:                         "wSystem", "ListPrimaryRegistrants" )
-         m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_ResetTopWindow, "wSystem", "ListPrimaryRegistrants" );
-         //:nRC = 1  // not going to usual window
-         nRC = 1;
-
-         //:ELSE
-      } 
-      else
-      { 
-
-         //:IF qOrganiz.PrimaryRegistrant EXISTS
-         lTempInteger_11 = CheckExistenceOfEntity( qOrganiz, "PrimaryRegistrant" );
-         if ( lTempInteger_11 == 0 )
-         { 
-            //:IF qOrganiz.Subregistrant EXISTS
-            lTempInteger_12 = CheckExistenceOfEntity( qOrganiz, "Subregistrant" );
-            if ( lTempInteger_12 == 0 )
-            { 
-               //:wWebXfer.Root.KeyRole = "D"  // Dual registrant
-               SetAttributeFromString( wWebXfer, "Root", "KeyRole", "D" );
-               //:ELSE
-            } 
-            else
-            { 
-               //:wWebXfer.Root.KeyRole = "P"  // Primary rgistrant
-               SetAttributeFromString( wWebXfer, "Root", "KeyRole", "P" );
-            } 
-
-            //:END
-            //:ELSE
-         } 
-         else
-         { 
-            //:IF qOrganiz.Subregistrant EXISTS
-            lTempInteger_13 = CheckExistenceOfEntity( qOrganiz, "Subregistrant" );
-            if ( lTempInteger_13 == 0 )
-            { 
-               //:wWebXfer.Root.KeyRole = "S"  // Subregistrant (for now)
-               SetAttributeFromString( wWebXfer, "Root", "KeyRole", "S" );
-               //:ELSE
-            } 
-            else
-            { 
-               //:wWebXfer.Root.KeyRole = qOrganiz.Organization.Role
-               SetAttributeFromAttribute( wWebXfer, "Root", "KeyRole", qOrganiz, "Organization", "Role" );
-            } 
-
-            //:END
-         } 
-
-         //:END
-      } 
-
-
-      //:END
-
-      //:wWebXfer.Root.UserStatus = "X"  // expert
-      SetAttributeFromString( wWebXfer, "Root", "UserStatus", "X" );
-
-      //:ELSE
-   } 
-   else
-   { 
-
-      //:lControl = zQUAL_STRING + zPOS_FIRST + zQUAL_SCOPE_OI + zTEST_CSR_RESULT
-      lControl = zQUAL_STRING + zPOS_FIRST + zQUAL_SCOPE_OI + zTEST_CSR_RESULT;
-      //:IF SetEntityCursor( qOrganiz, "User", "UserName", lControl,
-      //:                    szUserName, "", "", 0, "", "" ) < zCURSOR_SET
-      lTempInteger_14 = SetEntityCursor( qOrganiz, "User", "UserName", lControl, szUserName, "", "", 0, "", "" );
-      if ( lTempInteger_14 < zCURSOR_SET )
-      { 
-         //:// Organization user not found!
-         //:TraceLineS( "Login User not found: ", szUserName )
-         TraceLineS( "Login User not found: ", szUserName );
-         //:MessageSend( ViewToWindow, "", "User Login",
-         //:             "Invalid User Login.",
-         //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-         MessageSend( ViewToWindow, "", "User Login", "Invalid User Login.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-         //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-         m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-         //:DropObjectInstance( qOrganiz )
-         DropObjectInstance( qOrganiz );
-         //:RETURN 2
-         if(8==8)return( 2 );
-      } 
-
-
-      //:END
-
-      //:// Match the password.
-      //:nRC = CompareAttributeToString( qOrganiz, "User", "UserPassword", szAttemptPassword )
-      nRC = CompareAttributeToString( qOrganiz, "User", "UserPassword", szAttemptPassword );
-      //:IF nRC != 0
-      if ( nRC != 0 )
-      { 
-
-         //:TraceLineS( "//////* Invalid Login Password: ", szAttemptPassword )
-         TraceLineS( "//////* Invalid Login Password: ", szAttemptPassword );
-         //:MessageSend( ViewToWindow, "", "Login",
-         //:             "Invalid User Login",
-         //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-         MessageSend( ViewToWindow, "", "Login", "Invalid User Login", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-         //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-         m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-         //:DropObjectInstance( qOrganiz )
-         DropObjectInstance( qOrganiz );
-         //:RETURN 2
-         if(8==8)return( 2 );
-      } 
-
-      //:END
-
-      //:wWebXfer.Root.LoginName = qOrganiz.User.UserName
-      SetAttributeFromAttribute( wWebXfer, "Root", "LoginName", qOrganiz, "User", "UserName" );
-      //:wWebXfer.Root.KeyRole = qOrganiz.Organization.Role
-      SetAttributeFromAttribute( wWebXfer, "Root", "KeyRole", qOrganiz, "Organization", "Role" );
-      //:wWebXfer.Root.UserStatus = qOrganiz.User.Status
-      SetAttributeFromAttribute( wWebXfer, "Root", "UserStatus", qOrganiz, "User", "Status" );
-   } 
-
-
-   //:END
-
-   //:GET VIEW mOrganizInit NAMED "mOrganizInit"
-   RESULT = GetViewByName( mOrganizInit, "mOrganizInit", ViewToWindow, zLEVEL_TASK );
-
-   //:ACTIVATE mOrganiz WHERE mOrganiz.Organization.ID = qOrganiz.Organization.ID
-   {MutableInt mi_lTempInteger_15 = new MutableInt( lTempInteger_15 );
-       GetIntegerFromAttribute( mi_lTempInteger_15, qOrganiz, "Organization", "ID" );
-   lTempInteger_15 = mi_lTempInteger_15.intValue( );}
-   o_fnLocalBuildQual_4( ViewToWindow, vTempViewVar_3, lTempInteger_15 );
-   RESULT = ActivateObjectInstance( mOrganiz, "mOrganiz", ViewToWindow, vTempViewVar_3, zSINGLE );
-   DropView( vTempViewVar_3 );
-   //:DisplayObjectInstance( mOrganiz, "", "" )
-   DisplayObjectInstance( mOrganiz, "", "" );
-   //:NAME VIEW mOrganiz "mOrganiz"
-   SetNameForView( mOrganiz, "mOrganiz", null, zLEVEL_TASK );
-   //:IF mOrganizInit != 0
-   if ( getView( mOrganizInit ) != null )
-   { 
-      //:FOR EACH mOrganizInit.Feedback
-      RESULT = SetCursorFirstEntity( mOrganizInit, "Feedback", "" );
-      while ( RESULT > zCURSOR_UNCHANGED )
-      { 
-         //:CREATE ENTITY mOrganiz.Feedback LAST
-         RESULT = CreateEntity( mOrganiz, "Feedback", zPOS_LAST );
-         //:szLoginName = wWebXfer.Root.LoginName
-         {MutableInt mi_lTempInteger_16 = new MutableInt( lTempInteger_16 );
-         StringBuilder sb_szLoginName;
-         if ( szLoginName == null )
-            sb_szLoginName = new StringBuilder( 32 );
-         else
-            sb_szLoginName = new StringBuilder( szLoginName );
-                   GetVariableFromAttribute( sb_szLoginName, mi_lTempInteger_16, 'S', 51, wWebXfer, "Root", "LoginName", "", 0 );
-         lTempInteger_16 = mi_lTempInteger_16.intValue( );
-         szLoginName = sb_szLoginName.toString( );}
-         //:mOrganizInit.Feedback.UserId = szLoginName
-         SetAttributeFromString( mOrganizInit, "Feedback", "UserId", szLoginName );
-         //:SetMatchingAttributesByName( mOrganiz, "Feedback",
-         //:                             mOrganizInit, "Feedback", zSET_NOTNULL )
-         SetMatchingAttributesByName( mOrganiz, "Feedback", mOrganizInit, "Feedback", zSET_NOTNULL );
-         //:COMMIT mOrganiz
-         RESULT = CommitObjectInstance( mOrganiz );
-         RESULT = SetCursorNextEntity( mOrganizInit, "Feedback", "" );
-      } 
-
-      //:END
-
-      //:DropObjectInstance( mOrganizInit )
-      DropObjectInstance( mOrganizInit );
-   } 
-
-   //:END
-
-   //:SfSetUserIdForTask( ViewToWindow, wWebXfer.Root.LoginUser )
-   {StringBuilder sb_szTempString_1;
-   if ( szTempString_1 == null )
-      sb_szTempString_1 = new StringBuilder( 32 );
-   else
-      sb_szTempString_1 = new StringBuilder( szTempString_1 );
-       GetStringFromAttribute( sb_szTempString_1, wWebXfer, "Root", "LoginUser" );
-   szTempString_1 = sb_szTempString_1.toString( );}
-   SfSetUserIdForTask( ViewToWindow, szTempString_1 );
-   //:wWebXfer.Root.AttemptUserName = ""
-   SetAttributeFromString( wWebXfer, "Root", "AttemptUserName", "" );
-   //:wWebXfer.Root.AttemptPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
-   //:wWebXfer.Root.ConfirmPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "ConfirmPassword", "" );
-   //:wWebXfer.Root.CurrentPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "CurrentPassword", "" );
-
-   //:// Trace Login.
-   //:TraceLineS( "*** Login successful for user: ", szUserName )
-   TraceLineS( "*** Login successful for user: ", szUserName );
-
-   //:wWebXfer.Root.Banner1 = qOrganiz.Organization.dLoginUserName
-   SetAttributeFromAttribute( wWebXfer, "Root", "Banner1", qOrganiz, "Organization", "dLoginUserName" );
-   //:wWebXfer.Root.Banner2 = ""
-   SetAttributeFromString( wWebXfer, "Root", "Banner2", "" );
-   //:wWebXfer.Root.Banner3 = ""
-   SetAttributeFromString( wWebXfer, "Root", "Banner3", "" );
-   //:wWebXfer.Root.Banner4 = ""
-   SetAttributeFromString( wWebXfer, "Root", "Banner4", "" );
-   //:wWebXfer.Root.Banner5 = ""
-   SetAttributeFromString( wWebXfer, "Root", "Banner5", "" );
-   //:wWebXfer.Root.Banner6 = ""
-   SetAttributeFromString( wWebXfer, "Root", "Banner6", "" );
-   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "Default" )
-   {
-    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "Default" );
-    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-   }
-
-   //:RETURN nRC
-   return( nRC );
-// END
-} 
-
-
 private int 
-o_fnLocalBuildQual_34( View     vSubtask,
+o_fnLocalBuildQual_32( View     vSubtask,
                        zVIEW    vQualObject,
                        int      lTempInteger_0 )
 {
@@ -683,6 +61,44 @@ o_fnLocalBuildQual_34( View     vSubtask,
    SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterLabelContent" );
    SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
    SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_33( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lID )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lID );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_34( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lID )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lID );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
    return( 0 );
 } 
@@ -710,7 +126,7 @@ o_fnLocalBuildQual_35( View     vSubtask,
 private int 
 o_fnLocalBuildQual_36( View     vSubtask,
                        zVIEW    vQualObject,
-                       int      lID )
+                       int      lTempInteger_0 )
 {
    int      RESULT = 0;
 
@@ -720,7 +136,7 @@ o_fnLocalBuildQual_36( View     vSubtask,
    CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
    SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
    SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lID );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
    return( 0 );
 } 
@@ -735,9 +151,9 @@ o_fnLocalBuildQual_37( View     vSubtask,
 
    RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
    CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "Subregistrant" );
    CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "Subregistrant" );
    SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
    SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lID );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
@@ -748,17 +164,17 @@ o_fnLocalBuildQual_37( View     vSubtask,
 private int 
 o_fnLocalBuildQual_38( View     vSubtask,
                        zVIEW    vQualObject,
-                       int      lTempInteger_0 )
+                       int      lID )
 {
    int      RESULT = 0;
 
    RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
    CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "Subregistrant" );
    CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "Subregistrant" );
    SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lID );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
    return( 0 );
 } 
@@ -767,44 +183,6 @@ o_fnLocalBuildQual_38( View     vSubtask,
 private int 
 o_fnLocalBuildQual_39( View     vSubtask,
                        zVIEW    vQualObject,
-                       int      lID )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "Subregistrant" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "Subregistrant" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lID );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_40( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lID )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "Subregistrant" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "Subregistrant" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lID );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_20( View     vSubtask,
-                       zVIEW    vQualObject,
                        int      lTempInteger_0 )
 {
    int      RESULT = 0;
@@ -816,253 +194,6 @@ o_fnLocalBuildQual_20( View     vSubtask,
    SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "Subregistrant" );
    SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
    SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_21( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lID )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lID );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_22( View     vSubtask,
-                       zVIEW    vQualObject,
-                       String   szAttemptLoginName )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "Organization" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "Organization" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "LoginName" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Value", szAttemptLoginName.toString( ) );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_23( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lTempInteger_0 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "Subregistrant" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "Subregistrant" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_24( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lID )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lID );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_25( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lID )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lID );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_26( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lTempInteger_0 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_27( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lTempInteger_0 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_28( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lTempInteger_3 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "User" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "User" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_3 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_29( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lTempInteger_4 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "Person" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "Person" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_4 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_30( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lTempInteger_6 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_6 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_31( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lID )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lID );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_32( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lID )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lID );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_33( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lID )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lID );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
    return( 0 );
 } 
@@ -1257,47 +388,9 @@ o_fnLocalBuildQual_19( View     vSubtask,
 
 
 private int 
-o_fnLocalBuildQual_4( View     vSubtask,
-                      zVIEW    vQualObject,
-                      int      lTempInteger_15 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "Organization" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "Organization" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_15 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_5( View     vSubtask,
-                      zVIEW    vQualObject,
-                      int      lTempInteger_1 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_1 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_6( View     vSubtask,
-                      zVIEW    vQualObject,
-                      int      lTempInteger_2 )
+o_fnLocalBuildQual_20( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lTempInteger_0 )
 {
    int      RESULT = 0;
 
@@ -1307,7 +400,216 @@ o_fnLocalBuildQual_6( View     vSubtask,
    CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
    SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "Subregistrant" );
    SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_2 );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_21( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lID )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lID );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_22( View     vSubtask,
+                       zVIEW    vQualObject,
+                       String   szAttemptLoginRegistrant )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "Organization" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "Organization" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "LoginName" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Value", szAttemptLoginRegistrant.toString( ) );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_23( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lTempInteger_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "Subregistrant" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "Subregistrant" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_24( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lID )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lID );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_25( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lTempInteger_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_26( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lTempInteger_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_27( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lTempInteger_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_28( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lTempInteger_3 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "User" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "User" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_3 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_29( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lID )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lID );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_30( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lID )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lID );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_31( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lID )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lID );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
    return( 0 );
 } 
@@ -1371,6 +673,63 @@ o_fnLocalBuildQual_9( View     vSubtask,
 
 
 private int 
+o_fnLocalBuildQual_4( View     vSubtask,
+                      zVIEW    vQualObject,
+                      int      lTempInteger_15 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "Organization" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "Organization" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_15 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_5( View     vSubtask,
+                      zVIEW    vQualObject,
+                      int      lTempInteger_1 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "PrimaryRegistrant" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_1 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_6( View     vSubtask,
+                      zVIEW    vQualObject,
+                      int      lTempInteger_2 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "Subregistrant" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "Subregistrant" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_2 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
 o_fnLocalBuildQual_0( View     vSubtask,
                       zVIEW    vQualObject )
 {
@@ -1391,7 +750,7 @@ o_fnLocalBuildQual_0( View     vSubtask,
 private int 
 o_fnLocalBuildQual_1( View     vSubtask,
                       zVIEW    vQualObject,
-                      String   szLoginName )
+                      String   szLoginRegistrant )
 {
    int      RESULT = 0;
 
@@ -1401,7 +760,7 @@ o_fnLocalBuildQual_1( View     vSubtask,
    CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
    SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "Organization" );
    SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "LoginName" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Value", szLoginName.toString( ) );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Value", szLoginRegistrant.toString( ) );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
    return( 0 );
 } 
@@ -1410,7 +769,7 @@ o_fnLocalBuildQual_1( View     vSubtask,
 private int 
 o_fnLocalBuildQual_2( View     vSubtask,
                       zVIEW    vQualObject,
-                      int      lTempInteger_2 )
+                      int      lTempInteger_3 )
 {
    int      RESULT = 0;
 
@@ -1420,7 +779,7 @@ o_fnLocalBuildQual_2( View     vSubtask,
    CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
    SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
    SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_2 );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_3 );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
    return( 0 );
 } 
@@ -1429,7 +788,7 @@ o_fnLocalBuildQual_2( View     vSubtask,
 private int 
 o_fnLocalBuildQual_3( View     vSubtask,
                       zVIEW    vQualObject,
-                      int      lTempInteger_3 )
+                      int      lTempInteger_4 )
 {
    int      RESULT = 0;
 
@@ -1439,153 +798,988 @@ o_fnLocalBuildQual_3( View     vSubtask,
    CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
    SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "Organization" );
    SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_3 );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_4 );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
    return( 0 );
 } 
 
 
 //:DIALOG OPERATION
-//:DeleteReusableBlock( VIEW ViewToWindow )
-
-//:   VIEW mSubreg REGISTERED AS  mSubreg
 public int 
-DeleteReusableBlock( View     ViewToWindow )
+ContrivedError( View     ViewToWindow )
 {
-   zVIEW    mSubreg = new zVIEW( );
+
+   //:ContrivedError( VIEW ViewToWindow )
+
+   //:MessageSend( ViewToWindow, "", "Cause Error",
+   //:             "Contrived Error!!!", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+   MessageSend( ViewToWindow, "", "Cause Error", "Contrived Error!!!", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+
+   //:RETURN 2
+   return( 2 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:ProcessLogout( VIEW ViewToWindow )
+
+//:   VIEW pePamms  BASED ON LOD pePamms
+public int 
+ProcessLogout( View     ViewToWindow )
+{
+   zVIEW    pePamms = new zVIEW( );
+   //:VIEW mCurrentUser BASED ON LOD mUser
+   zVIEW    mCurrentUser = new zVIEW( );
+   //:VIEW wWebXfer BASED ON LOD  wWebXfer
+   zVIEW    wWebXfer = new zVIEW( );
+   //:VIEW qOrganiz BASED ON LOD  qOrganiz
+   zVIEW    qOrganiz = new zVIEW( );
+   //:VIEW qPrimReg BASED ON LOD  qPrimReg
+   zVIEW    qPrimReg = new zVIEW( );
+   //:VIEW qSubreg  BASED ON LOD  qSubreg
+   zVIEW    qSubreg = new zVIEW( );
+   //:VIEW lSubreg  BASED ON LOD  lSubreg
+   zVIEW    lSubreg = new zVIEW( );
+   //:VIEW lPrimReg BASED ON LOD  lPrimReg
+   zVIEW    lPrimReg = new zVIEW( );
+   //:VIEW mOrganiz BASED ON LOD  mOrganiz
+   zVIEW    mOrganiz = new zVIEW( );
+   //:VIEW KZXMLPGO
+   zVIEW    KZXMLPGO = new zVIEW( );
    int      RESULT = 0;
 
-   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
 
-   //:DELETE ENTITY mSubreg.ReusableBlockDefinition
-   RESULT = DeleteEntity( mSubreg, "ReusableBlockDefinition", zPOS_NEXT );
+   //:AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "TopMenu Logout" )
+   {
+    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
+    m_ZGlobalV_Operation.AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "TopMenu Logout" );
+    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
+   }
+
+   //:GET VIEW pePamms NAMED "pePamms"
+   RESULT = GetViewByName( pePamms, "pePamms", ViewToWindow, zLEVEL_TASK );
+   //:IF pePamms != 0
+   if ( getView( pePamms ) != null )
+   { 
+      //:DropObjectInstance( pePamms )
+      DropObjectInstance( pePamms );
+   } 
+
+   //:END
+
+   //:GET VIEW mCurrentUser NAMED "mCurrentUser"
+   RESULT = GetViewByName( mCurrentUser, "mCurrentUser", ViewToWindow, zLEVEL_TASK );
+   //:IF mCurrentUser != 0
+   if ( getView( mCurrentUser ) != null )
+   { 
+      //:DropObjectInstance( mCurrentUser )
+      DropObjectInstance( mCurrentUser );
+   } 
+
+   //:END
+
+   //:GET VIEW wWebXfer NAMED "wWebXfer"
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+   //:IF wWebXfer != 0
+   if ( getView( wWebXfer ) != null )
+   { 
+      //:DropObjectInstance( wWebXfer )
+      DropObjectInstance( wWebXfer );
+   } 
+
+   //:END
+
+   //:GET VIEW qPrimReg NAMED "qPrimRegLogin"
+   RESULT = GetViewByName( qPrimReg, "qPrimRegLogin", ViewToWindow, zLEVEL_TASK );
+   //:IF qPrimReg != 0
+   if ( getView( qPrimReg ) != null )
+   { 
+      //:DropObjectInstance( qPrimReg )
+      DropObjectInstance( qPrimReg );
+   } 
+
+   //:END
+
+   //:GET VIEW qSubreg NAMED "qSubregLogin"
+   RESULT = GetViewByName( qSubreg, "qSubregLogin", ViewToWindow, zLEVEL_TASK );
+   //:IF qSubreg != 0
+   if ( getView( qSubreg ) != null )
+   { 
+      //:DropObjectInstance( qSubreg )
+      DropObjectInstance( qSubreg );
+   } 
+
+   //:END
+
+   //:GET VIEW qOrganiz NAMED "qOrganizLogin"
+   RESULT = GetViewByName( qOrganiz, "qOrganizLogin", ViewToWindow, zLEVEL_TASK );
+   //:IF qOrganiz != 0
+   if ( getView( qOrganiz ) != null )
+   { 
+      //:DropObjectInstance( qOrganiz )
+      DropObjectInstance( qOrganiz );
+   } 
+
+   //:END
+
+   //:GET VIEW lPrimReg NAMED "lPrimReg"
+   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
+   //:IF lPrimReg != 0
+   if ( getView( lPrimReg ) != null )
+   { 
+      //:DropObjectInstance( lPrimReg )
+      DropObjectInstance( lPrimReg );
+   } 
+
+   //:END
+
+   //:GET VIEW lSubreg NAMED "lSubreg"
+   RESULT = GetViewByName( lSubreg, "lSubreg", ViewToWindow, zLEVEL_TASK );
+   //:IF lSubreg != 0
+   if ( getView( lSubreg ) != null )
+   { 
+      //:DropObjectInstance( lSubreg )
+      DropObjectInstance( lSubreg );
+   } 
+
+   //:END
+
+   //:GET VIEW KZXMLPGO NAMED "KZXMLPGO"
+   RESULT = GetViewByName( KZXMLPGO, "KZXMLPGO", ViewToWindow, zLEVEL_TASK );
+   //:IF KZXMLPGO != 0
+   if ( getView( KZXMLPGO ) != null )
+   { 
+      //:FOR EACH KZXMLPGO.NextDialogWindow
+      RESULT = SetCursorFirstEntity( KZXMLPGO, "NextDialogWindow", "" );
+      while ( RESULT > zCURSOR_UNCHANGED )
+      { 
+         //:DELETE ENTITY KZXMLPGO.NextDialogWindow
+         RESULT = DeleteEntity( KZXMLPGO, "NextDialogWindow", zPOS_NEXT );
+         RESULT = SetCursorNextEntity( KZXMLPGO, "NextDialogWindow", "" );
+      } 
+
+      //:END
+   } 
+
+   //:END
    return( 0 );
 // END
 } 
 
 
 //:DIALOG OPERATION
-//:CancelReusableBlock( VIEW ViewToWindow )
+//:InitLoginWindow( VIEW ViewToWindow )
 
+//:   VIEW wWebXfer BASED ON LOD wWebXfer
 public int 
-CancelReusableBlock( View     ViewToWindow )
+InitLoginWindow( View     ViewToWindow )
 {
-
-   return( 0 );
-//    // nothing to do
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:SaveReusableBlock( VIEW ViewToWindow )
-
-public int 
-SaveReusableBlock( View     ViewToWindow )
-{
-
-   return( 0 );
-//   // nothing to do
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:InitColorForAdd( VIEW ViewToWindow )
-
-//:   VIEW mSubreg REGISTERED AS  mSubreg
-public int 
-InitColorForAdd( View     ViewToWindow )
-{
-   zVIEW    mSubreg = new zVIEW( );
+   zVIEW    wWebXfer = new zVIEW( );
+   //:VIEW pePamms  BASED ON LOD pePamms
+   zVIEW    pePamms = new zVIEW( );
    int      RESULT = 0;
+   zVIEW    vTempViewVar_0 = new zVIEW( );
 
-   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
 
-   //:CREATE ENTITY mSubreg.Color
-   RESULT = CreateEntity( mSubreg, "Color", zPOS_AFTER );
-   //:mSubreg.Color.wkCreated = "Y"
-   SetAttributeFromString( mSubreg, "Color", "wkCreated", "Y" );
+   //:ProcessLogout( ViewToWindow )  // just to ensure clean up
+   ProcessLogout( ViewToWindow );
+
+   //:ACTIVATE wWebXfer EMPTY
+   RESULT = ActivateEmptyObjectInstance( wWebXfer, "wWebXfer", ViewToWindow, zSINGLE );
+   //:NAME VIEW wWebXfer "wWebXfer"
+   SetNameForView( wWebXfer, "wWebXfer", null, zLEVEL_TASK );
+   //:CREATE ENTITY wWebXfer.Root
+   RESULT = CreateEntity( wWebXfer, "Root", zPOS_AFTER );
+
+   //:wWebXfer.Root.Banner1 = ""
+   SetAttributeFromString( wWebXfer, "Root", "Banner1", "" );
+   //:wWebXfer.Root.Banner2 = ""
+   SetAttributeFromString( wWebXfer, "Root", "Banner2", "" );
+   //:wWebXfer.Root.Banner3 = ""
+   SetAttributeFromString( wWebXfer, "Root", "Banner3", "" );
+   //:wWebXfer.Root.Banner4 = ""
+   SetAttributeFromString( wWebXfer, "Root", "Banner4", "" );
+   //:wWebXfer.Root.Banner5 = ""
+   SetAttributeFromString( wWebXfer, "Root", "Banner5", "" );
+   //:wWebXfer.Root.Banner6 = ""
+   SetAttributeFromString( wWebXfer, "Root", "Banner6", "" );
+
+   //:// Remove these lines prior to deployment!!!
+   //:// wWebXfer.Root.AttemptLoginRegistrant = "Lonza"
+   //:// wWebXfer.Root.AttemptLoginRegistrant = "Admin"
+   //:wWebXfer.Root.AttemptLoginRegistrant = "atp"
+   SetAttributeFromString( wWebXfer, "Root", "AttemptLoginRegistrant", "atp" );
+   //:wWebXfer.Root.AttemptLoginName = "Admin"
+   SetAttributeFromString( wWebXfer, "Root", "AttemptLoginName", "Admin" );
+   //:wWebXfer.Root.AttemptPassword = "xxxxxxxx"
+   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "xxxxxxxx" );
+   //:// End of: Remove these lines prior to deployment!!!
+
+   //:// Note that Activate always returns at least an empty view.
+   //:ACTIVATE pePamms WHERE pePamms.ePamms.ID = 1
+   o_fnLocalBuildQual_0( ViewToWindow, vTempViewVar_0 );
+   RESULT = ActivateObjectInstance( pePamms, "pePamms", ViewToWindow, vTempViewVar_0, zSINGLE );
+   DropView( vTempViewVar_0 );
+   //:NAME VIEW pePamms "pePamms"
+   SetNameForView( pePamms, "pePamms", null, zLEVEL_TASK );
+
+   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "Login" )
+   {
+    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
+    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "Login" );
+    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
+   }
    return( 0 );
 // END
 } 
 
 
 //:DIALOG OPERATION
-//:DeleteColor( VIEW ViewToWindow )
+//:ProcessUserLogin( VIEW ViewToWindow )
 
-//:   VIEW mSubreg REGISTERED AS  mSubreg
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
 public int 
-DeleteColor( View     ViewToWindow )
+ProcessUserLogin( View     ViewToWindow )
 {
-   zVIEW    mSubreg = new zVIEW( );
+   zVIEW    wWebXfer = new zVIEW( );
    int      RESULT = 0;
+   //:VIEW pePamms  REGISTERED AS pePamms
+   zVIEW    pePamms = new zVIEW( );
+   //:VIEW mePamms  BASED ON LOD  mePamms
+   zVIEW    mePamms = new zVIEW( );
+   //:VIEW sePamms  BASED ON LOD  sePamms
+   zVIEW    sePamms = new zVIEW( );
+   //:VIEW qOrganiz BASED ON LOD  qOrganiz
+   zVIEW    qOrganiz = new zVIEW( );
+   //:VIEW mOrganiz BASED ON LOD  mOrganiz
+   zVIEW    mOrganiz = new zVIEW( );
+   //:VIEW mUser    BASED ON LOD  mUser
+   zVIEW    mUser = new zVIEW( );
+   //:VIEW mOrganizInit BASED ON LOD mOrganiz
+   zVIEW    mOrganizInit = new zVIEW( );
+   //:VIEW lPrimReg BASED ON LOD  lPrimReg
+   zVIEW    lPrimReg = new zVIEW( );
+   //:STRING ( 256  ) szMessage
+   String   szMessage = null;
+   //:STRING (  64  ) szLoginRegistrant
+   String   szLoginRegistrant = null;
+   //:STRING (  64  ) szLoginUserName
+   String   szLoginUserName = null;
+   //:STRING ( 128  ) szAttemptPassword
+   String   szAttemptPassword = null;
+   //:STRING ( 128  ) szConfirmPassword
+   String   szConfirmPassword = null;
+   //:STRING (   1  ) szKeyRole
+   String   szKeyRole = null;
+   //:INTEGER       lControl
+   int      lControl = 0;
+   //:INTEGER       lID
+   int      lID = 0;
+   //:SHORT         nRC
+   int      nRC = 0;
+   int      lTempInteger_0 = 0;
+   int      lTempInteger_1 = 0;
+   zVIEW    vTempViewVar_0 = new zVIEW( );
+   int      lTempInteger_2 = 0;
+   int      lTempInteger_3 = 0;
+   zVIEW    vTempViewVar_1 = new zVIEW( );
+   int      lTempInteger_4 = 0;
+   zVIEW    vTempViewVar_2 = new zVIEW( );
+   int      lTempInteger_5 = 0;
+   int      lTempInteger_6 = 0;
+   int      lTempInteger_7 = 0;
+   int      lTempInteger_8 = 0;
+   int      lTempInteger_9 = 0;
+   int      lTempInteger_10 = 0;
+   int      lTempInteger_11 = 0;
+   int      lTempInteger_12 = 0;
+   int      lTempInteger_13 = 0;
+   int      lTempInteger_14 = 0;
+   int      lTempInteger_15 = 0;
+   zVIEW    vTempViewVar_3 = new zVIEW( );
+   int      lTempInteger_16 = 0;
+   String   szTempString_0 = null;
 
-   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( pePamms, "pePamms", ViewToWindow, zLEVEL_TASK );
 
-   //:DELETE ENTITY mSubreg.Color
-   RESULT = DeleteEntity( mSubreg, "Color", zPOS_NEXT );
-   return( 0 );
+   //:IF wWebXfer = 0
+   if ( getView( wWebXfer ) == null )
+   { 
+      //:TraceLineS( "wStartUp.ProcessUserLogin cannot find Transfer View", "" )
+      TraceLineS( "wStartUp.ProcessUserLogin cannot find Transfer View", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+
+   //:wWebXfer.Root.KeyRole = "U"  // U is for Unknown (so far)
+   SetAttributeFromString( wWebXfer, "Root", "KeyRole", "U" );
+   //:IF pePamms.ePamms DOES NOT EXIST OR pePamms.ePamms.ID != "1"  // No administrator found!  We bootstrap here.
+   lTempInteger_0 = CheckExistenceOfEntity( pePamms, "ePamms" );
+   if ( lTempInteger_0 != 0 || CompareAttributeToString( pePamms, "ePamms", "ID", "1" ) != 0 )
+   { 
+      //:TraceLineS( "ProcessUserLogin: ", "No Administrator found!!!" )
+      TraceLineS( "ProcessUserLogin: ", "No Administrator found!!!" );
+      //:ACTIVATE mePamms EMPTY
+      RESULT = ActivateEmptyObjectInstance( mePamms, "mePamms", ViewToWindow, zSINGLE );
+      //:NAME VIEW mePamms "mePamms"
+      SetNameForView( mePamms, "mePamms", null, zLEVEL_TASK );
+      //:CREATE ENTITY mePamms.ePamms
+      RESULT = CreateEntity( mePamms, "ePamms", zPOS_AFTER );
+      //:CREATE ENTITY mePamms.PrimaryRegistrant 
+      RESULT = CreateEntity( mePamms, "PrimaryRegistrant", zPOS_AFTER );
+      //:CREATE ENTITY mePamms.Organization
+      RESULT = CreateEntity( mePamms, "Organization", zPOS_AFTER );
+      //:mePamms.ePamms.ID = 1
+      SetAttributeFromInteger( mePamms, "ePamms", "ID", 1 );
+      //:mePamms.Organization.Name = "ePamms Administrator"
+      SetAttributeFromString( mePamms, "Organization", "Name", "ePamms Administrator" );
+      //:mePamms.Organization.LoginName = "Admin"
+      SetAttributeFromString( mePamms, "Organization", "LoginName", "Admin" );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StartTopWindow,
+      //:                         "wStartUp", "AdminNewAdministrator" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StartTopWindow, "wStartUp", "AdminNewAdministrator" );
+      //:DropObjectInstance( pePamms )
+      DropObjectInstance( pePamms );
+      //:RETURN 1
+      if(8==8)return( 1 );
+   } 
+
+   //:END
+
+   //:// OK ... we know that Admin exists ... if there are no Primary Registrants, the only login possible is Admin, which can
+   //:// create Primary Registrants.  If there are no Subregistrants for a Primary Registrant, the only login possible for the
+   //:// specified Primary Registrant is the administrator for that Primary Registrant, which can create Subregistrants.  If
+   //:// there are no Users for a Primary/Subregistrant, the only login possible for the specified Primary/Subregistrant is the
+   //:// administrator for that Primary/Subregistrant.
+
+   //:// TraceLineS( "pePamms OI:", "" )
+   //:// DisplayObjectInstance( pePamms, "", "" )
+   //:// TraceLineS( "pePamms Entity Instance:", "" )
+   //:// DisplayEntityInstance( pePamms, "Organization" )
+
+   //:szLoginRegistrant = wWebXfer.Root.AttemptLoginRegistrant  // e.g. Lonza (a primary registrant) or ATP (Alpha Tech Pet - a subregistrant)
+   {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+   StringBuilder sb_szLoginRegistrant;
+   if ( szLoginRegistrant == null )
+      sb_szLoginRegistrant = new StringBuilder( 32 );
+   else
+      sb_szLoginRegistrant = new StringBuilder( szLoginRegistrant );
+       GetVariableFromAttribute( sb_szLoginRegistrant, mi_lTempInteger_1, 'S', 65, wWebXfer, "Root", "AttemptLoginRegistrant", "", 0 );
+   lTempInteger_1 = mi_lTempInteger_1.intValue( );
+   szLoginRegistrant = sb_szLoginRegistrant.toString( );}
+   //:IF pePamms.Organization.LoginName = "Admin"               // N.B. cannot use szLoginRegistrant since we need a case insensitive comparison
+   if ( CompareAttributeToString( pePamms, "Organization", "LoginName", "Admin" ) == 0 )
+   { 
+      //:// SET CURSOR FIRST pePamms.Organization WHERE pePamms.Organization.LoginName = szLoginRegistrant
+      //:RESULT = SetCursorFirstEntityByString( pePamms, "Organization", "LoginName", szLoginRegistrant, "ePamms" )
+      RESULT = SetCursorFirstEntityByString( pePamms, "Organization", "LoginName", szLoginRegistrant, "ePamms" );
+
+      //:IF RESULT < 0
+      if ( RESULT < 0 )
+      { 
+         //:TraceLineS( "Login Organization not found within Admin: ", szLoginRegistrant )
+         TraceLineS( "Login Organization not found within Admin: ", szLoginRegistrant );
+         //:MessageSend( ViewToWindow, "", "User Login",
+         //:             "Invalid User Login.",
+         //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         MessageSend( ViewToWindow, "", "User Login", "Invalid User Login.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+         //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+         m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+         //:RETURN 2
+         if(8==8)return( 2 );
+      } 
+
+      //:END
+
+      //:// Note that Activate always returns at least an empty view.
+      //:ACTIVATE qOrganiz WHERE qOrganiz.Organization.LoginName = szLoginRegistrant
+      o_fnLocalBuildQual_1( ViewToWindow, vTempViewVar_0, szLoginRegistrant );
+      RESULT = ActivateObjectInstance( qOrganiz, "qOrganiz", ViewToWindow, vTempViewVar_0, zSINGLE );
+      DropView( vTempViewVar_0 );
+      //:// SET CURSOR FIRST qOrganiz WHERE qOrganiz.User.UserName = "Admin"
+      //:lControl = zQUAL_STRING + zPOS_FIRST
+      lControl = zQUAL_STRING + zPOS_FIRST;
+      //:IF SetEntityCursor( pePamms, "User", "UserName", lControl,
+      //:                    "Admin", "", "", 0, "Organization", "" ) < zCURSOR_SET // we will automatically create the Admin user
+      lTempInteger_2 = SetEntityCursor( pePamms, "User", "UserName", lControl, "Admin", "", "", 0, "Organization", "" );
+      if ( lTempInteger_2 < zCURSOR_SET )
+      { 
+         //:ACTIVATE mUser EMPTY
+         RESULT = ActivateEmptyObjectInstance( mUser, "mUser", ViewToWindow, zSINGLE );
+         //:CREATE ENTITY mUser.User LAST
+         RESULT = CreateEntity( mUser, "User", zPOS_LAST );
+         //:mUser.User.UserName = "Admin"
+         SetAttributeFromString( mUser, "User", "UserName", "Admin" );
+         //:CREATE ENTITY mUser.Employee LAST
+         RESULT = CreateEntity( mUser, "Employee", zPOS_LAST );
+         //:IncludeSubobjectFromSubobject( mUser, "Organization", pePamms, "Organization", zPOS_BEFORE )
+         IncludeSubobjectFromSubobject( mUser, "Organization", pePamms, "Organization", zPOS_BEFORE );
+         //:Commit mUser
+         RESULT = CommitObjectInstance( mUser );
+         //:DropObjectInstance( mUser )
+         DropObjectInstance( mUser );
+      } 
+
+      //:END
+      //:ELSE
+   } 
+   else
+   { 
+      //:// Within a Primary Registrant (not Admin)
+      //:ACTIVATE sePamms WHERE sePamms.PrimaryRegistrant.ID = pePamms.PrimaryRegistrant.ID
+      {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
+             GetIntegerFromAttribute( mi_lTempInteger_3, pePamms, "PrimaryRegistrant", "ID" );
+      lTempInteger_3 = mi_lTempInteger_3.intValue( );}
+      o_fnLocalBuildQual_2( ViewToWindow, vTempViewVar_1, lTempInteger_3 );
+      RESULT = ActivateObjectInstance( sePamms, "sePamms", ViewToWindow, vTempViewVar_1, zSINGLE );
+      DropView( vTempViewVar_1 );
+      //:NAME VIEW sePamms "sePamms"
+      SetNameForView( sePamms, "sePamms", null, zLEVEL_TASK );
+      //:// DisplayObjectInstance( sePamms, "", "" )
+
+      //:// We cannot use SET CURSOR FIRST WHERE since we need a case insensitive comparison.
+      //:// SET CURSOR FIRST sePamms.Subregistrant WHERE sePamms.Organization.LoginName = szLoginRegistrant
+      //:// TraceLineS( "Looking for Subregistrant Login: ", wWebXfer.Root.AttemptLoginName )
+      //:RESULT = SetCursorFirstEntityByString( sePamms, "Organization", "LoginName", szLoginRegistrant, "PrimaryRegistrant" )
+      RESULT = SetCursorFirstEntityByString( sePamms, "Organization", "LoginName", szLoginRegistrant, "PrimaryRegistrant" );
+      //:/*
+      //:SET CURSOR FIRST sePamms.Subregistrant
+      //:LOOP WHILE RESULT >= 0 AND wWebXfer.Root.AttemptLoginName != sePamms.Organization.LoginName // case insensitive comparison
+      //:   SET CURSOR NEXT sePamms.Subregistrant
+      //:END
+      //:*/
+      //:// TraceLineS( "sePamms OI looking for: ", szLoginRegistrant )
+      //:// DisplayEntityInstance( sePamms, "Organization" )
+      //:IF RESULT >= 0
+      if ( RESULT >= 0 )
+      { 
+         //:ACTIVATE qOrganiz WHERE qOrganiz.Organization.ID = sePamms.Organization.ID
+         {MutableInt mi_lTempInteger_4 = new MutableInt( lTempInteger_4 );
+                   GetIntegerFromAttribute( mi_lTempInteger_4, sePamms, "Organization", "ID" );
+         lTempInteger_4 = mi_lTempInteger_4.intValue( );}
+         o_fnLocalBuildQual_3( ViewToWindow, vTempViewVar_2, lTempInteger_4 );
+         RESULT = ActivateObjectInstance( qOrganiz, "qOrganiz", ViewToWindow, vTempViewVar_2, zSINGLE );
+         DropView( vTempViewVar_2 );
+         //:lControl = zQUAL_STRING + zPOS_FIRST
+         lControl = zQUAL_STRING + zPOS_FIRST;
+         //:IF SetEntityCursor( sePamms, "User", "UserName", lControl,
+         //:                    "Admin", "", "", 0, "Organization", "" ) < zCURSOR_SET // we will automatically create the Admin user
+         lTempInteger_5 = SetEntityCursor( sePamms, "User", "UserName", lControl, "Admin", "", "", 0, "Organization", "" );
+         if ( lTempInteger_5 < zCURSOR_SET )
+         { 
+            //:ACTIVATE mUser EMPTY
+            RESULT = ActivateEmptyObjectInstance( mUser, "mUser", ViewToWindow, zSINGLE );
+            //:CREATE ENTITY mUser.User LAST
+            RESULT = CreateEntity( mUser, "User", zPOS_LAST );
+            //:mUser.User.UserName = "Admin"
+            SetAttributeFromString( mUser, "User", "UserName", "Admin" );
+            //:CREATE ENTITY mUser.Employee LAST
+            RESULT = CreateEntity( mUser, "Employee", zPOS_LAST );
+            //:IncludeSubobjectFromSubobject( mUser, "Organization", sePamms, "Organization", zPOS_BEFORE )
+            IncludeSubobjectFromSubobject( mUser, "Organization", sePamms, "Organization", zPOS_BEFORE );
+            //:Commit mUser
+            RESULT = CommitObjectInstance( mUser );
+            //:DropObjectInstance( mUser )
+            DropObjectInstance( mUser );
+         } 
+
+         //:END
+         //:DropObjectInstance( sePamms )
+         DropObjectInstance( sePamms );
+         //:ELSE
+      } 
+      else
+      { 
+         //:// Organization not found!
+         //:szMessage = pePamms.Organization.Name
+         {MutableInt mi_lTempInteger_6 = new MutableInt( lTempInteger_6 );
+         StringBuilder sb_szMessage;
+         if ( szMessage == null )
+            sb_szMessage = new StringBuilder( 32 );
+         else
+            sb_szMessage = new StringBuilder( szMessage );
+                   GetVariableFromAttribute( sb_szMessage, mi_lTempInteger_6, 'S', 257, pePamms, "Organization", "Name", "", 0 );
+         lTempInteger_6 = mi_lTempInteger_6.intValue( );
+         szMessage = sb_szMessage.toString( );}
+         //:szMessage = szMessage + "    Login: "
+          {StringBuilder sb_szMessage;
+         if ( szMessage == null )
+            sb_szMessage = new StringBuilder( 32 );
+         else
+            sb_szMessage = new StringBuilder( szMessage );
+                  ZeidonStringConcat( sb_szMessage, 1, 0, "    Login: ", 1, 0, 257 );
+         szMessage = sb_szMessage.toString( );}
+         //:szMessage = szMessage + szLoginRegistrant
+          {StringBuilder sb_szMessage;
+         if ( szMessage == null )
+            sb_szMessage = new StringBuilder( 32 );
+         else
+            sb_szMessage = new StringBuilder( szMessage );
+                  ZeidonStringConcat( sb_szMessage, 1, 0, szLoginRegistrant, 1, 0, 257 );
+         szMessage = sb_szMessage.toString( );}
+         //:TraceLineS( "Login Organization not found within Primary Registrant: ", szMessage )
+         TraceLineS( "Login Organization not found within Primary Registrant: ", szMessage );
+         //:MessageSend( ViewToWindow, "", "User Login",
+         //:             "Invalid User Login.",
+         //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         MessageSend( ViewToWindow, "", "User Login", "Invalid User Login.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+         //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+         m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+         //:DropObjectInstance( sePamms )
+         DropObjectInstance( sePamms );
+         //:RETURN 2
+         if(8==8)return( 2 );
+      } 
+
+      //:END
+   } 
+
+   //:END
+
+   //:NAME VIEW qOrganiz "qOrganizLogin"
+   SetNameForView( qOrganiz, "qOrganizLogin", null, zLEVEL_TASK );
+   //:// TraceLineS( "qOrganiz OI:", "" )
+   //:// DisplayObjectInstance( qOrganiz, "", "" )
+   //:IF qOrganiz.Organization DOES NOT EXIST
+   lTempInteger_7 = CheckExistenceOfEntity( qOrganiz, "Organization" );
+   if ( lTempInteger_7 != 0 )
+   { 
+      //:// Organization not found!
+      //:TraceLineS( "Login Organization not found: ", szLoginRegistrant )
+      TraceLineS( "Login Organization not found: ", szLoginRegistrant );
+      //:MessageSend( ViewToWindow, "", "User Login",
+      //:             "Invalid User Login.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "User Login", "Invalid User Login.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:DropObjectInstance( qOrganiz )
+      DropObjectInstance( qOrganiz );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+
+   //:wWebXfer.Root.LoginName = qOrganiz.Organization.LoginName // e.g. Lonza
+   SetAttributeFromAttribute( wWebXfer, "Root", "LoginName", qOrganiz, "Organization", "LoginName" );
+   //:szLoginUserName = wWebXfer.Root.AttemptLoginName  // e.g. Admin
+   {MutableInt mi_lTempInteger_8 = new MutableInt( lTempInteger_8 );
+   StringBuilder sb_szLoginUserName;
+   if ( szLoginUserName == null )
+      sb_szLoginUserName = new StringBuilder( 32 );
+   else
+      sb_szLoginUserName = new StringBuilder( szLoginUserName );
+       GetVariableFromAttribute( sb_szLoginUserName, mi_lTempInteger_8, 'S', 65, wWebXfer, "Root", "AttemptLoginName", "", 0 );
+   lTempInteger_8 = mi_lTempInteger_8.intValue( );
+   szLoginUserName = sb_szLoginUserName.toString( );}
+   //:szKeyRole = wWebXfer.Root.KeyRole
+   {MutableInt mi_lTempInteger_9 = new MutableInt( lTempInteger_9 );
+   StringBuilder sb_szKeyRole;
+   if ( szKeyRole == null )
+      sb_szKeyRole = new StringBuilder( 32 );
+   else
+      sb_szKeyRole = new StringBuilder( szKeyRole );
+       GetVariableFromAttribute( sb_szKeyRole, mi_lTempInteger_9, 'S', 2, wWebXfer, "Root", "KeyRole", "", 0 );
+   lTempInteger_9 = mi_lTempInteger_9.intValue( );
+   szKeyRole = sb_szKeyRole.toString( );}
+
+   //:szAttemptPassword = wWebXfer.Root.AttemptPassword
+   {MutableInt mi_lTempInteger_10 = new MutableInt( lTempInteger_10 );
+   StringBuilder sb_szAttemptPassword;
+   if ( szAttemptPassword == null )
+      sb_szAttemptPassword = new StringBuilder( 32 );
+   else
+      sb_szAttemptPassword = new StringBuilder( szAttemptPassword );
+       GetVariableFromAttribute( sb_szAttemptPassword, mi_lTempInteger_10, 'S', 129, wWebXfer, "Root", "AttemptPassword", "", 0 );
+   lTempInteger_10 = mi_lTempInteger_10.intValue( );
+   szAttemptPassword = sb_szAttemptPassword.toString( );}
+   //:nRC = 0  // initialize to normal processing
+   nRC = 0;
+
+   //:// Cannot use szLoginRegistrant (in place of wWebXfer.Root.AttemptLoginName) since we need a case insensitive comparison.
+   //:IF wWebXfer.Root.AttemptLoginName = "Admin" // logging in as user Admin for specified registrant
+   if ( CompareAttributeToString( wWebXfer, "Root", "AttemptLoginName", "Admin" ) == 0 )
+   { 
+
+      //:wWebXfer.Root.LoginName = "Admin"
+      SetAttributeFromString( wWebXfer, "Root", "LoginName", "Admin" );
+
+      //:// Match the password.
+      //:nRC = CompareAttributeToString( qOrganiz, "Organization", "AdministratorPassword", szAttemptPassword )
+      nRC = CompareAttributeToString( qOrganiz, "Organization", "AdministratorPassword", szAttemptPassword );
+      //:IF nRC != 0
+      if ( nRC != 0 )
+      { 
+
+         //:// Remove these lines prior to deployment!!!
+         //:/*
+         //:TraceLineS( "//////* Invalid Login Password: ", szAttemptPassword )
+         //:szConfirmPassword = qOrganiz.Organization.AdministratorPassword
+         //:wWebXfer.Root.TracePassword = szAttemptPassword
+         //:szAttemptPassword = wWebXfer.Root.TracePassword
+         //:TraceLineS( "//////*+++++ CurrentUser: ", szConfirmPassword )
+         //:TraceLineS( "//////*+++++ Attempted  : ", szAttemptPassword )
+         //:*/
+         //:// End of: Remove these lines prior to deployment!!!
+
+         //:MessageSend( ViewToWindow, "", "Login",
+         //:             "Invalid Administrator Login",
+         //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         MessageSend( ViewToWindow, "", "Login", "Invalid Administrator Login", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+         //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+         m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+         //:DropObjectInstance( qOrganiz )
+         DropObjectInstance( qOrganiz );
+         //:RETURN 2
+         if(8==8)return( 2 );
+      } 
+
+      //:END
+
+      //:// Cannot use szLoginUserName (in place of wWebXfer.Root.AttemptLoginName) since we need a case insensitive comparison.
+      //:IF qOrganiz.Organization.LoginName = "Admin"
+      if ( CompareAttributeToString( qOrganiz, "Organization", "LoginName", "Admin" ) == 0 )
+      { 
+
+         //:wWebXfer.Root.LoginName = "Admin"
+         SetAttributeFromString( wWebXfer, "Root", "LoginName", "Admin" );
+         //:wWebXfer.Root.KeyRole = "P" // Primary registrant
+         SetAttributeFromString( wWebXfer, "Root", "KeyRole", "P" );
+
+         //:ACTIVATE lPrimReg
+         RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, 0, zSINGLE );
+         //:NAME VIEW lPrimReg "lPrimReg"
+         SetNameForView( lPrimReg, "lPrimReg", null, zLEVEL_TASK );
+         //:SetWindowActionBehavior( ViewToWindow, zWAB_ResetTopWindow,
+         //:                         "wSystem", "ListPrimaryRegistrants" )
+         m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_ResetTopWindow, "wSystem", "ListPrimaryRegistrants" );
+         //:nRC = 1  // not going to usual window
+         nRC = 1;
+
+         //:ELSE
+      } 
+      else
+      { 
+
+         //:IF qOrganiz.PrimaryRegistrant EXISTS
+         lTempInteger_11 = CheckExistenceOfEntity( qOrganiz, "PrimaryRegistrant" );
+         if ( lTempInteger_11 == 0 )
+         { 
+            //:IF qOrganiz.Subregistrant EXISTS
+            lTempInteger_12 = CheckExistenceOfEntity( qOrganiz, "Subregistrant" );
+            if ( lTempInteger_12 == 0 )
+            { 
+               //:wWebXfer.Root.KeyRole = "D"  // Dual registrant
+               SetAttributeFromString( wWebXfer, "Root", "KeyRole", "D" );
+               //:ELSE
+            } 
+            else
+            { 
+               //:wWebXfer.Root.KeyRole = "P"  // Primary rgistrant
+               SetAttributeFromString( wWebXfer, "Root", "KeyRole", "P" );
+            } 
+
+            //:END
+            //:ELSE
+         } 
+         else
+         { 
+            //:IF qOrganiz.Subregistrant EXISTS
+            lTempInteger_13 = CheckExistenceOfEntity( qOrganiz, "Subregistrant" );
+            if ( lTempInteger_13 == 0 )
+            { 
+               //:wWebXfer.Root.KeyRole = "S"  // Subregistrant (for now)
+               SetAttributeFromString( wWebXfer, "Root", "KeyRole", "S" );
+               //:ELSE
+            } 
+            else
+            { 
+               //:wWebXfer.Root.KeyRole = qOrganiz.Organization.Role
+               SetAttributeFromAttribute( wWebXfer, "Root", "KeyRole", qOrganiz, "Organization", "Role" );
+            } 
+
+            //:END
+         } 
+
+         //:END
+      } 
+
+
+      //:END
+
+      //:wWebXfer.Root.UserStatus = "X"  // expert
+      SetAttributeFromString( wWebXfer, "Root", "UserStatus", "X" );
+
+      //:ELSE
+   } 
+   else
+   { 
+
+      //:lControl = zQUAL_STRING + zPOS_FIRST
+      lControl = zQUAL_STRING + zPOS_FIRST;
+      //:IF SetEntityCursor( qOrganiz, "User", "UserName", lControl,
+      //:                    szLoginUserName, "", "", 0, "Organization", "" ) < zCURSOR_SET
+      lTempInteger_14 = SetEntityCursor( qOrganiz, "User", "UserName", lControl, szLoginUserName, "", "", 0, "Organization", "" );
+      if ( lTempInteger_14 < zCURSOR_SET )
+      { 
+         //:// Organization user not found!
+         //:TraceLineS( "Login User not found: ", szLoginUserName )
+         TraceLineS( "Login User not found: ", szLoginUserName );
+         //:MessageSend( ViewToWindow, "", "User Login",
+         //:             "Invalid User Login.",
+         //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         MessageSend( ViewToWindow, "", "User Login", "Invalid User Login.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+         //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+         m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+         //:DropObjectInstance( qOrganiz )
+         DropObjectInstance( qOrganiz );
+         //:RETURN 2
+         if(8==8)return( 2 );
+      } 
+
+
+      //:END
+
+      //:// DisplayEntityInstance( qOrganiz, "User" )
+
+      //:// Match the password.
+      //:nRC = CompareAttributeToString( qOrganiz, "User", "UserPassword", szAttemptPassword )
+      nRC = CompareAttributeToString( qOrganiz, "User", "UserPassword", szAttemptPassword );
+      //:IF nRC != 0
+      if ( nRC != 0 )
+      { 
+
+         //:// TraceLineS( "//////* Invalid Login Password: ", szAttemptPassword )
+         //:MessageSend( ViewToWindow, "", "Login",
+         //:             "Invalid User Login",
+         //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         MessageSend( ViewToWindow, "", "Login", "Invalid User Login", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+         //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+         m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+         //:DropObjectInstance( qOrganiz )
+         DropObjectInstance( qOrganiz );
+         //:RETURN 2
+         if(8==8)return( 2 );
+      } 
+
+      //:END
+
+      //:wWebXfer.Root.LoginName = qOrganiz.User.UserName
+      SetAttributeFromAttribute( wWebXfer, "Root", "LoginName", qOrganiz, "User", "UserName" );
+      //:wWebXfer.Root.KeyRole = qOrganiz.Organization.Role
+      SetAttributeFromAttribute( wWebXfer, "Root", "KeyRole", qOrganiz, "Organization", "Role" );
+      //:wWebXfer.Root.UserStatus = qOrganiz.User.Status
+      SetAttributeFromAttribute( wWebXfer, "Root", "UserStatus", qOrganiz, "User", "Status" );
+   } 
+
+
+   //:END
+
+   //:GET VIEW mOrganizInit NAMED "mOrganizInit"
+   RESULT = GetViewByName( mOrganizInit, "mOrganizInit", ViewToWindow, zLEVEL_TASK );
+
+   //:ACTIVATE mOrganiz WHERE mOrganiz.Organization.ID = qOrganiz.Organization.ID
+   {MutableInt mi_lTempInteger_15 = new MutableInt( lTempInteger_15 );
+       GetIntegerFromAttribute( mi_lTempInteger_15, qOrganiz, "Organization", "ID" );
+   lTempInteger_15 = mi_lTempInteger_15.intValue( );}
+   o_fnLocalBuildQual_4( ViewToWindow, vTempViewVar_3, lTempInteger_15 );
+   RESULT = ActivateObjectInstance( mOrganiz, "mOrganiz", ViewToWindow, vTempViewVar_3, zSINGLE );
+   DropView( vTempViewVar_3 );
+   //:// TraceLineS( "mOrganiz OI:", "" )
+   //:// DisplayObjectInstance( mOrganiz, "", "" )
+   //:NAME VIEW mOrganiz "mOrganiz"
+   SetNameForView( mOrganiz, "mOrganiz", null, zLEVEL_TASK );
+   //:IF mOrganizInit != 0
+   if ( getView( mOrganizInit ) != null )
+   { 
+      //:FOR EACH mOrganizInit.Feedback
+      RESULT = SetCursorFirstEntity( mOrganizInit, "Feedback", "" );
+      while ( RESULT > zCURSOR_UNCHANGED )
+      { 
+         //:CREATE ENTITY mOrganiz.Feedback LAST
+         RESULT = CreateEntity( mOrganiz, "Feedback", zPOS_LAST );
+         //:szLoginRegistrant = wWebXfer.Root.LoginName
+         {MutableInt mi_lTempInteger_16 = new MutableInt( lTempInteger_16 );
+         StringBuilder sb_szLoginRegistrant;
+         if ( szLoginRegistrant == null )
+            sb_szLoginRegistrant = new StringBuilder( 32 );
+         else
+            sb_szLoginRegistrant = new StringBuilder( szLoginRegistrant );
+                   GetVariableFromAttribute( sb_szLoginRegistrant, mi_lTempInteger_16, 'S', 65, wWebXfer, "Root", "LoginName", "", 0 );
+         lTempInteger_16 = mi_lTempInteger_16.intValue( );
+         szLoginRegistrant = sb_szLoginRegistrant.toString( );}
+         //:mOrganizInit.Feedback.UserId = szLoginRegistrant
+         SetAttributeFromString( mOrganizInit, "Feedback", "UserId", szLoginRegistrant );
+         //:SetMatchingAttributesByName( mOrganiz, "Feedback", mOrganizInit, "Feedback", zSET_NOTNULL )
+         SetMatchingAttributesByName( mOrganiz, "Feedback", mOrganizInit, "Feedback", zSET_NOTNULL );
+         //:COMMIT mOrganiz
+         RESULT = CommitObjectInstance( mOrganiz );
+         RESULT = SetCursorNextEntity( mOrganizInit, "Feedback", "" );
+      } 
+
+      //:END
+
+      //:DropObjectInstance( mOrganizInit )
+      DropObjectInstance( mOrganizInit );
+   } 
+
+   //:END
+
+   //:SfSetUserIdForTask( ViewToWindow, wWebXfer.Root.LoginName )
+   {StringBuilder sb_szTempString_0;
+   if ( szTempString_0 == null )
+      sb_szTempString_0 = new StringBuilder( 32 );
+   else
+      sb_szTempString_0 = new StringBuilder( szTempString_0 );
+       GetStringFromAttribute( sb_szTempString_0, wWebXfer, "Root", "LoginName" );
+   szTempString_0 = sb_szTempString_0.toString( );}
+   SfSetUserIdForTask( ViewToWindow, szTempString_0 );
+   //:wWebXfer.Root.AttemptLoginName = ""
+   SetAttributeFromString( wWebXfer, "Root", "AttemptLoginName", "" );
+   //:wWebXfer.Root.AttemptPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
+   //:wWebXfer.Root.ConfirmPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "ConfirmPassword", "" );
+   //:wWebXfer.Root.CurrentPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "CurrentPassword", "" );
+
+   //:// Trace Login.
+   //:TraceLineS( "*** Login successful for user: ", szLoginUserName )
+   TraceLineS( "*** Login successful for user: ", szLoginUserName );
+
+   //:wWebXfer.Root.Banner1 = qOrganiz.Organization.dLoginUserName
+   SetAttributeFromAttribute( wWebXfer, "Root", "Banner1", qOrganiz, "Organization", "dLoginUserName" );
+   //:wWebXfer.Root.Banner2 = ""
+   SetAttributeFromString( wWebXfer, "Root", "Banner2", "" );
+   //:wWebXfer.Root.Banner3 = ""
+   SetAttributeFromString( wWebXfer, "Root", "Banner3", "" );
+   //:wWebXfer.Root.Banner4 = ""
+   SetAttributeFromString( wWebXfer, "Root", "Banner4", "" );
+   //:wWebXfer.Root.Banner5 = ""
+   SetAttributeFromString( wWebXfer, "Root", "Banner5", "" );
+   //:wWebXfer.Root.Banner6 = ""
+   SetAttributeFromString( wWebXfer, "Root", "Banner6", "" );
+   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "Default" )
+   {
+    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
+    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "Default" );
+    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
+   }
+
+   //:RETURN nRC
+   return( nRC );
 // END
 } 
 
 
 //:DIALOG OPERATION
-//:InitReusableBlockForUpdate( VIEW ViewToWindow )
+//:AcceptNewAdministrator( VIEW ViewToWindow )
 
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
 public int 
-InitReusableBlockForUpdate( View     ViewToWindow )
+AcceptNewAdministrator( View     ViewToWindow )
 {
-
-   return( 0 );
-//    // nothing to do
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:SaveAndAddNewColor( VIEW ViewToWindow )
-
-public int 
-SaveAndAddNewColor( View     ViewToWindow )
-{
-
-   return( 0 );
-// // VIEW mSubreg REGISTERED AS  mSubreg
-// // COMMIT mSubreg
-// // CREATE ENTITY mSubreg.Color
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:SaveColor( VIEW ViewToWindow )
-
-public int 
-SaveColor( View     ViewToWindow )
-{
-
-   return( 0 );
-// // VIEW mSubreg REGISTERED AS  mSubreg
-// // COMMIT mSubreg
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:InitColorForUpdate( VIEW ViewToWindow )
-
-//:   VIEW mSubreg REGISTERED AS  mSubreg
-public int 
-InitColorForUpdate( View     ViewToWindow )
-{
-   zVIEW    mSubreg = new zVIEW( );
+   zVIEW    wWebXfer = new zVIEW( );
    int      RESULT = 0;
+   //:VIEW mePamms  REGISTERED AS mePamms
+   zVIEW    mePamms = new zVIEW( );
+   //:STRING ( 128  ) szAttemptPassword
+   String   szAttemptPassword = null;
+   //:STRING ( 128  ) szConfirmPassword
+   String   szConfirmPassword = null;
+   //:INTEGER         lRegistrantNameLth
+   int      lRegistrantNameLth = 0;
+   //:INTEGER         lPasswordLth
+   int      lPasswordLth = 0;
+   //:SHORT           nRC
+   int      nRC = 0;
+   int      lTempInteger_0 = 0;
+   int      lTempInteger_1 = 0;
 
-   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( mePamms, "mePamms", ViewToWindow, zLEVEL_TASK );
 
-   //:mSubreg.Color.wkCreated = "N"
-   SetAttributeFromString( mSubreg, "Color", "wkCreated", "N" );
+   //:szAttemptPassword = wWebXfer.Root.AttemptPassword
+   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+   StringBuilder sb_szAttemptPassword;
+   if ( szAttemptPassword == null )
+      sb_szAttemptPassword = new StringBuilder( 32 );
+   else
+      sb_szAttemptPassword = new StringBuilder( szAttemptPassword );
+       GetVariableFromAttribute( sb_szAttemptPassword, mi_lTempInteger_0, 'S', 129, wWebXfer, "Root", "AttemptPassword", "", 0 );
+   lTempInteger_0 = mi_lTempInteger_0.intValue( );
+   szAttemptPassword = sb_szAttemptPassword.toString( );}
+   //:szConfirmPassword = wWebXfer.Root.ConfirmPassword
+   {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+   StringBuilder sb_szConfirmPassword;
+   if ( szConfirmPassword == null )
+      sb_szConfirmPassword = new StringBuilder( 32 );
+   else
+      sb_szConfirmPassword = new StringBuilder( szConfirmPassword );
+       GetVariableFromAttribute( sb_szConfirmPassword, mi_lTempInteger_1, 'S', 129, wWebXfer, "Root", "ConfirmPassword", "", 0 );
+   lTempInteger_1 = mi_lTempInteger_1.intValue( );
+   szConfirmPassword = sb_szConfirmPassword.toString( );}
+
+   //:// 1: Ensure attempted password matches confirm password.
+   //:IF szAttemptPassword != szConfirmPassword
+   if ( ZeidonStringCompare( szAttemptPassword, 1, 0, szConfirmPassword, 1, 0, 129 ) != 0 )
+   { 
+      //:// TraceLineS( szAttemptPassword, szConfirmPassword )
+      //:MessageSend( ViewToWindow, "", "Accept New Administrator",
+      //:             "The new password and the confirmation password do not match.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Accept New Administrator", "The new password and the confirmation password do not match.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+
+   //:// 2: Ensure new password is at least 8 characters long.
+   //:lPasswordLth = zGetStringLen( szConfirmPassword )
+   lPasswordLth = zGetStringLen( szConfirmPassword );
+   //:TraceLineI( "Password Length: ", lPasswordLth )
+   TraceLineI( "Password Length: ", lPasswordLth );
+   //:IF lPasswordLth < 8
+   if ( lPasswordLth < 8 )
+   { 
+      //:MessageSend( ViewToWindow, "", "Accept New Administrator",
+      //:             "The new password must be at least 8 characters long.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Accept New Administrator", "The new password must be at least 8 characters long.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+
+   //:// Set user password to new password.
+   //:// SetAttrFromStrByContext( mPrimReg, "User", "UserPassword", szVerifyPassword, "Password" )
+   //:mePamms.Organization.AdministratorPassword = szConfirmPassword
+   SetAttributeFromString( mePamms, "Organization", "AdministratorPassword", szConfirmPassword );
+   //:mePamms.Organization.LastLoginDateTime = wWebXfer.Root.dCurrentDateTime
+   SetAttributeFromAttribute( mePamms, "Organization", "LastLoginDateTime", wWebXfer, "Root", "dCurrentDateTime" );
+
+   //:wWebXfer.Root.AttemptPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
+   //:wWebXfer.Root.ConfirmPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "ConfirmPassword", "" );
+   //:wWebXfer.Root.CurrentPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "CurrentPassword", "" );
+
+   //:COMMIT mePamms
+   RESULT = CommitObjectInstance( mePamms );
+   //:DropObjectInstance( mePamms )
+   DropObjectInstance( mePamms );
    return( 0 );
 // END
 } 
@@ -1621,78 +1815,53 @@ CancelNewAdministrator( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
-//:Template( VIEW ViewToWindow )
+//:InitPortal( VIEW ViewToWindow )
 
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
 public int 
-Template( View     ViewToWindow )
+InitPortal( View     ViewToWindow )
 {
+   zVIEW    wWebXfer = new zVIEW( );
+   int      RESULT = 0;
+   //:STRING (   1  ) szKeyRole
+   String   szKeyRole = null;
+   int      lTempInteger_0 = 0;
 
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+
+   //:szKeyRole = wWebXfer.Root.KeyRole
+   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+   StringBuilder sb_szKeyRole;
+   if ( szKeyRole == null )
+      sb_szKeyRole = new StringBuilder( 32 );
+   else
+      sb_szKeyRole = new StringBuilder( szKeyRole );
+       GetVariableFromAttribute( sb_szKeyRole, mi_lTempInteger_0, 'S', 2, wWebXfer, "Root", "KeyRole", "", 0 );
+   lTempInteger_0 = mi_lTempInteger_0.intValue( );
+   szKeyRole = sb_szKeyRole.toString( );}
+   //:IF szKeyRole = "S"
+   if ( ZeidonStringCompare( szKeyRole, 1, 0, "S", 1, 0, 2 ) == 0 )
+   { 
+      //:SetDynamicBannerName( ViewToWindow, "wStartUp", "Subregistrant" )
+      {
+       ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
+       m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "Subregistrant" );
+       // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
+      }
+      //:ELSE
+   } 
+   else
+   { 
+      //:SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" )
+      {
+       ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
+       m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" );
+       // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
+      }
+   } 
+
+   //:END
    return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:NewLLD( VIEW ViewToWindow )
-
-public int 
-NewLLD( View     ViewToWindow )
-{
-
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:OpenLLD( VIEW ViewToWindow )
-
-public int 
-OpenLLD( View     ViewToWindow )
-{
-
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:SaveLLD( VIEW ViewToWindow )
-
-public int 
-SaveLLD( View     ViewToWindow )
-{
-
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:ExitLLD( VIEW ViewToWindow )
-
-public int 
-ExitLLD( View     ViewToWindow )
-{
-
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-public int 
-ContrivedError( View     ViewToWindow )
-{
-
-   //:ContrivedError( VIEW ViewToWindow )
-
-   //:MessageSend( ViewToWindow, "", "Cause Error",
-   //:             "Contrived Error!!!", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-   MessageSend( ViewToWindow, "", "Cause Error", "Contrived Error!!!", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-
-   //:RETURN 2
-   return( 2 );
 // END
 } 
 
@@ -1844,7 +2013,7 @@ ProductManagement( View     ViewToWindow )
    if ( ZeidonStringCompare( szKeyRole, 1, 0, "D", 1, 0, 2 ) == 0 || ZeidonStringCompare( szKeyRole, 1, 0, "P", 1, 0, 2 ) == 0 )
    { 
 
-      //:// Cannot use szLoginName since we need a case insensitive comparison.
+      //:// Cannot use szLoginRegistrant since we need a case insensitive comparison.
       //:IF wWebXfer.Root.LoginName = "Admin"
       if ( CompareAttributeToString( wWebXfer, "Root", "LoginName", "Admin" ) == 0 )
       { 
@@ -1894,7 +2063,7 @@ ProductManagement( View     ViewToWindow )
    else
    { 
 
-      //://   ACTIVATE mSubreg //WHERE mSubreg.SubregOrganization.Name = wWebXfer.Root.AttemptLoginName 
+      //://   ACTIVATE mSubreg //WHERE mSubreg.SubregOrganization.Name = wWebXfer.Root.AttemptLoginRegistrant 
       //://   NAME VIEW mSubreg "mSubreg"
 
       //://   ACTIVATE lSubreg WHERE lSubreg.Subregistrant.ID = qOrganiz.Subregistrant.ID
@@ -1963,23 +2132,83 @@ SelectListMasterProducts( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
+//:ReturnFromAdminPrimaryRegistrant( VIEW ViewToWindow )
+
+//:   VIEW qOrganiz BASED ON LOD  qOrganiz
 public int 
-StateRegistrations( View     ViewToWindow )
+ReturnFromAdminPrimaryRegistrant( View     ViewToWindow )
 {
+   zVIEW    qOrganiz = new zVIEW( );
+   int      RESULT = 0;
 
-   //:StateRegistrations( VIEW ViewToWindow )
 
-   //:AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "TopMenu StateRegistrations" )
-   {
-    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "TopMenu StateRegistrations" );
-    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-   }
+   //:GET VIEW qOrganiz NAMED "qOrganizLogin"
+   RESULT = GetViewByName( qOrganiz, "qOrganizLogin", ViewToWindow, zLEVEL_TASK );
+   //:IF qOrganiz != 0 AND qOrganiz.Organization.LoginName = "Admin"
+   if ( qOrganiz != null && CompareAttributeToString( qOrganiz, "Organization", "LoginName", "Admin" ) == 0 )
+   { 
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StartTopWindow,
+      //:                         "wStartUp", "AdminListPrimaryRegistrants" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StartTopWindow, "wStartUp", "AdminListPrimaryRegistrants" );
+      //:RETURN 1
+      if(8==8)return( 1 );
+   } 
 
-   //:MessageSend( ViewToWindow, "", "State Registrations",
-   //:             "State Registrations not yet implemented.",
-   //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-   MessageSend( ViewToWindow, "", "State Registrations", "State Registrations not yet implemented.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+   //:END
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:ReturnFromAdminSubregistrantList( VIEW ViewToWindow )
+
+//:   VIEW qOrganiz BASED ON LOD  qOrganiz
+public int 
+ReturnFromAdminSubregistrantList( View     ViewToWindow )
+{
+   zVIEW    qOrganiz = new zVIEW( );
+   int      RESULT = 0;
+
+
+   //:GET VIEW qOrganiz NAMED "qOrganizLogin"
+   RESULT = GetViewByName( qOrganiz, "qOrganizLogin", ViewToWindow, zLEVEL_TASK );
+   //:IF qOrganiz != 0 AND qOrganiz.Organization.LoginName = "Admin"
+   if ( qOrganiz != null && CompareAttributeToString( qOrganiz, "Organization", "LoginName", "Admin" ) == 0 )
+   { 
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StartTopWindow,
+      //:                         "wStartUp", "AdminListPrimaryRegistrants" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StartTopWindow, "wStartUp", "AdminListPrimaryRegistrants" );
+      //:RETURN 1
+      if(8==8)return( 1 );
+   } 
+
+   //:END
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:AutoLoginPrimaryRegistrant( VIEW ViewToWindow )
+
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
+public int 
+AutoLoginPrimaryRegistrant( View     ViewToWindow )
+{
+   zVIEW    wWebXfer = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+
+   //:wWebXfer.Root.AttemptLoginRegistrant = "Lonza"
+   SetAttributeFromString( wWebXfer, "Root", "AttemptLoginRegistrant", "Lonza" );
+   //:wWebXfer.Root.AttemptLoginName = "Admin"
+   SetAttributeFromString( wWebXfer, "Root", "AttemptLoginName", "Admin" );
+   //:wWebXfer.Root.AttemptPassword = "xxxxxxxx"
+   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "xxxxxxxx" );
+   //:RefreshWindow( ViewToWindow )
+   m_ZDRVROPR.RefreshWindow( ViewToWindow );
    //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
    m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
    //:RETURN 2
@@ -1989,383 +2218,29 @@ StateRegistrations( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
+//:AutoLoginSubregistrant( VIEW ViewToWindow )
+
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
 public int 
-MarketingFulfillment( View     ViewToWindow )
+AutoLoginSubregistrant( View     ViewToWindow )
 {
+   zVIEW    wWebXfer = new zVIEW( );
+   int      RESULT = 0;
 
-   //:MarketingFulfillment( VIEW ViewToWindow )
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
 
-   //:AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "TopMenu MarketingFulfillment" )
-   {
-    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "TopMenu MarketingFulfillment" );
-    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-   }
-
-   //:MessageSend( ViewToWindow, "", "Marketing & Fulfillment",
-   //:             "Marketing and Fulfillment not yet implemented.",
-   //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-   MessageSend( ViewToWindow, "", "Marketing & Fulfillment", "Marketing and Fulfillment not yet implemented.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+   //:wWebXfer.Root.AttemptLoginRegistrant = "SmallCorp"
+   SetAttributeFromString( wWebXfer, "Root", "AttemptLoginRegistrant", "SmallCorp" );
+   //:wWebXfer.Root.AttemptLoginName = "Admin"
+   SetAttributeFromString( wWebXfer, "Root", "AttemptLoginName", "Admin" );
+   //:wWebXfer.Root.AttemptPassword = "xxxxxxxx"
+   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "xxxxxxxx" );
+   //:RefreshWindow( ViewToWindow )
+   m_ZDRVROPR.RefreshWindow( ViewToWindow );
    //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
    m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
    //:RETURN 2
    return( 2 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-public int 
-SelectSubregProductForUpdate( View     ViewToWindow )
-{
-
-   //:SelectSubregProductForUpdate( VIEW ViewToWindow )
-
-   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "Subregistrant" )
-   {
-    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "Subregistrant" );
-    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-   }
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:AddNewMasterProduct( VIEW ViewToWindow )
-
-//:   VIEW lPrimReg BASED ON LOD  lPrimReg
-public int 
-AddNewMasterProduct( View     ViewToWindow )
-{
-   zVIEW    lPrimReg = new zVIEW( );
-   int      RESULT = 0;
-
-
-   //:GET VIEW lPrimReg NAMED "lPrimReg"
-   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
-   //:IF lPrimReg.Organization.LoginName = "Admin"
-   if ( CompareAttributeToString( lPrimReg, "Organization", "LoginName", "Admin" ) == 0 )
-   { 
-      //:MessageSend( ViewToWindow, "", "New Master Product",
-      //:             "Admin does not have Master Products",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "New Master Product", "Admin does not have Master Products", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:RETURN 2
-      if(8==8)return( 2 );
-   } 
-
-   //:END
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:UpdateMasterProduct( VIEW ViewToWindow )
-
-public int 
-UpdateMasterProduct( View     ViewToWindow )
-{
-
-   return( 0 );
-//    // nothing to do here ... just for positioning
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:DeleteMasterProduct( VIEW ViewToWindow )
-
-public int 
-DeleteMasterProduct( View     ViewToWindow )
-{
-
-   return( 0 );
-//    // nothing to do here ... just for positioning
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:MoveMasterProductUp( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-MoveMasterProductUp( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW mPrimReg REGISTERED AS mPrimReg
-   zVIEW    mPrimReg = new zVIEW( );
-   //:VIEW mTempReg BASED ON LOD  mPrimReg
-   zVIEW    mTempReg = new zVIEW( );
-   //:INTEGER lMove
-   int      lMove = 0;
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mPrimReg, "mPrimReg", ViewToWindow, zLEVEL_TASK );
-
-   //:CreateViewFromView( mTempReg, mPrimReg )
-   CreateViewFromView( mTempReg, mPrimReg );
-   //:lMove = 1
-   lMove = 1;
-
-   //:LOOP WHILE lMove > 0
-   while ( lMove > 0 )
-   { 
-      //:SET CURSOR PREVIOUS mTempReg.MasterProduct
-      RESULT = SetCursorPrevEntity( mTempReg, "MasterProduct", "" );
-      //:lMove = lMove - 1
-      lMove = lMove - 1;
-   } 
-
-   //:END
-
-   //:MoveSubobject( mTempReg, "MasterProduct",
-   //:               mPrimReg, "MasterProduct",
-   //:               zPOS_PREV, zREPOS_PREV )
-   MoveSubobject( mTempReg, "MasterProduct", mPrimReg, "MasterProduct", zPOS_PREV, zREPOS_PREV );
-   //:DropView( mTempReg )
-   DropView( mTempReg );
-
-   //:// We now accept the Master Label to maintain order!
-   //:COMMIT mPrimReg
-   RESULT = CommitObjectInstance( mPrimReg );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:MoveMasterProductDown( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-MoveMasterProductDown( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW mPrimReg REGISTERED AS mPrimReg
-   zVIEW    mPrimReg = new zVIEW( );
-   //:VIEW mTempReg BASED ON LOD  mPrimReg
-   zVIEW    mTempReg = new zVIEW( );
-   //:INTEGER lMove
-   int      lMove = 0;
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mPrimReg, "mPrimReg", ViewToWindow, zLEVEL_TASK );
-
-   //:CreateViewFromView( mTempReg, mPrimReg )
-   CreateViewFromView( mTempReg, mPrimReg );
-   //:lMove = 1
-   lMove = 1;
-
-   //:LOOP WHILE lMove > 0
-   while ( lMove > 0 )
-   { 
-      //:SET CURSOR NEXT mTempReg.MasterProduct
-      RESULT = SetCursorNextEntity( mTempReg, "MasterProduct", "" );
-      //:lMove = lMove - 1
-      lMove = lMove - 1;
-   } 
-
-   //:END
-
-   //:MoveSubobject( mTempReg, "MasterProduct",
-   //:               mPrimReg, "MasterProduct",
-   //:               zPOS_NEXT, zREPOS_NEXT )
-   MoveSubobject( mTempReg, "MasterProduct", mPrimReg, "MasterProduct", zPOS_NEXT, zREPOS_NEXT );
-   //:DropView( mTempReg )
-   DropView( mTempReg );
-
-   //:// We now accept the Master Label to maintain order!
-   //:COMMIT mPrimReg
-   RESULT = CommitObjectInstance( mPrimReg );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-public int 
-SelectSubregProductForDelete( View     ViewToWindow )
-{
-
-   //:SelectSubregProductForDelete( VIEW ViewToWindow )
-
-   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "Subregistrant" )
-   {
-    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "Subregistrant" );
-    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-   }
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:InitEmailProspects( VIEW ViewToWindow )
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-InitEmailProspects( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-
-   //:wWebXfer.Root.EmailSubjectLine = ""
-   SetAttributeFromString( wWebXfer, "Root", "EmailSubjectLine", "" );
-   //:wWebXfer.Root.EmailMessage = ""
-   SetAttributeFromString( wWebXfer, "Root", "EmailMessage", "" );
-
-   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "Administration" )
-   {
-    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "Administration" );
-    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-   }
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:SelectPrimaryRegistrantForDelete( VIEW ViewToWindow )
-
-public int 
-SelectPrimaryRegistrantForDelete( View     ViewToWindow )
-{
-
-   return( 0 );
-//    // Nothing to do here other than to get proper position
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:SelectPrimaryRegistrantForUpdate( VIEW ViewToWindow )
-
-public int 
-SelectPrimaryRegistrantForUpdate( View     ViewToWindow )
-{
-
-   return( 0 );
-//    // Nothing to do here other than to get proper position
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:SelectPrimRegUserForUpdate( VIEW ViewToWindow )
-
-public int 
-SelectPrimRegUserForUpdate( View     ViewToWindow )
-{
-
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:SelectPrimRegUserForDelete( VIEW ViewToWindow )
-
-public int 
-SelectPrimRegUserForDelete( View     ViewToWindow )
-{
-
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:SelectSubregistrantForUpdate( VIEW ViewToWindow )
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-SelectSubregistrantForUpdate( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW lPrimReg REGISTERED AS lPrimReg
-   zVIEW    lPrimReg = new zVIEW( );
-   //:VIEW lSubreg  BASED ON LOD  lSubreg
-   zVIEW    lSubreg = new zVIEW( );
-   //:INTEGER lID
-   int      lID = 0;
-   //:SHORT   nRC
-   int      nRC = 0;
-   zVIEW    vTempViewVar_0 = new zVIEW( );
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
-
-   //:GET VIEW lSubreg NAMED "lSubreg"
-   RESULT = GetViewByName( lSubreg, "lSubreg", ViewToWindow, zLEVEL_TASK );
-   //:IF lSubreg != 0
-   if ( getView( lSubreg ) != null )
-   { 
-      //:DropObjectInstance( lSubreg )
-      DropObjectInstance( lSubreg );
-   } 
-
-   //:END
-
-   //:// Activate the "selected" Subregistrant.
-   //:lID = lPrimReg.Subregistrant.ID
-   {MutableInt mi_lID = new MutableInt( lID );
-       GetIntegerFromAttribute( mi_lID, lPrimReg, "Subregistrant", "ID" );
-   lID = mi_lID.intValue( );}
-   //:ACTIVATE lSubreg WHERE lSubreg.Subregistrant.ID = lID
-   o_fnLocalBuildQual_40( ViewToWindow, vTempViewVar_0, lID );
-   RESULT = ActivateObjectInstance( lSubreg, "lSubreg", ViewToWindow, vTempViewVar_0, zSINGLE );
-   DropView( vTempViewVar_0 );
-   //:NAME VIEW lSubreg "lSubreg"
-   SetNameForView( lSubreg, "lSubreg", null, zLEVEL_TASK );
-   return( 0 );
-//    
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:SelectSubregUserForDelete( VIEW ViewToWindow )
-
-public int 
-SelectSubregUserForDelete( View     ViewToWindow )
-{
-
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:SelectSubregistrantForDelete( VIEW ViewToWindow )
-
-public int 
-SelectSubregistrantForDelete( View     ViewToWindow )
-{
-
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:InitSubregUserForInsert( VIEW ViewToWindow )
-
-public int 
-InitSubregUserForInsert( View     ViewToWindow )
-{
-
-   return( 0 );
 // END
 } 
 
@@ -2567,81 +2442,86 @@ PrimaryRegistrantCompanySetup( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
-//:SelectListPrimRegUser( VIEW ViewToWindow )
+//:InitPrimaryRegistrant( VIEW ViewToWindow )
 
-//:   VIEW lPrimReg BASED ON LOD  lPrimReg
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
 public int 
-SelectListPrimRegUser( View     ViewToWindow )
+InitPrimaryRegistrant( View     ViewToWindow )
 {
-   zVIEW    lPrimReg = new zVIEW( );
+   zVIEW    wWebXfer = new zVIEW( );
    int      RESULT = 0;
+   //:VIEW lPrimReg REGISTERED AS lPrimReg
+   zVIEW    lPrimReg = new zVIEW( );
+   //:VIEW mPrimReg BASED ON LOD  mPrimReg
+   zVIEW    mPrimReg = new zVIEW( );
+   int      lTempInteger_0 = 0;
+   zVIEW    vTempViewVar_0 = new zVIEW( );
+   int      lTempInteger_1 = 0;
 
-
-   //:GET VIEW lPrimReg NAMED "lPrimReg"
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
    RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
-   //:IF lPrimReg.Organization.LoginName = "Admin"
-   if ( CompareAttributeToString( lPrimReg, "Organization", "LoginName", "Admin" ) == 0 )
+
+   //:GET VIEW mPrimReg NAMED "mPrimReg"
+   RESULT = GetViewByName( mPrimReg, "mPrimReg", ViewToWindow, zLEVEL_TASK );
+   //:IF  mPrimReg != 0
+   if ( getView( mPrimReg ) != null )
    { 
-      //:MessageSend( ViewToWindow, "", "List Primary Registrant User",
-      //:             "Admin does not have Users",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "List Primary Registrant User", "Admin does not have Users", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:RETURN 2
-      if(8==8)return( 2 );
+      //:DropObjectInstance( mPrimReg )
+      DropObjectInstance( mPrimReg );
    } 
 
    //:END
+
+   //:ACTIVATE mPrimReg WHERE mPrimReg.PrimaryRegistrant.ID = lPrimReg.PrimaryRegistrant.ID
+   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+       GetIntegerFromAttribute( mi_lTempInteger_0, lPrimReg, "PrimaryRegistrant", "ID" );
+   lTempInteger_0 = mi_lTempInteger_0.intValue( );}
+   o_fnLocalBuildQual_9( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
+   RESULT = ActivateObjectInstance( mPrimReg, "mPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
+   DropView( vTempViewVar_0 );
+   //:NAME VIEW mPrimReg "mPrimReg"
+   SetNameForView( mPrimReg, "mPrimReg", null, zLEVEL_TASK );
+
+   //:IF mPrimReg.MailingAddress DOES NOT EXIST
+   lTempInteger_1 = CheckExistenceOfEntity( mPrimReg, "MailingAddress" );
+   if ( lTempInteger_1 != 0 )
+   { 
+      //:CREATE ENTITY mPrimReg.MailingAddress
+      RESULT = CreateEntity( mPrimReg, "MailingAddress", zPOS_AFTER );
+      //:wWebXfer.Root.SameAs = "Y"
+      SetAttributeFromString( wWebXfer, "Root", "SameAs", "Y" );
+      //:SetMatchingAttributesByName( mPrimReg, "MailingAddress",
+      //:                             mPrimReg, "PhysicalAddress", zSET_NOTNULL )
+      SetMatchingAttributesByName( mPrimReg, "MailingAddress", mPrimReg, "PhysicalAddress", zSET_NOTNULL );
+   } 
+
+   //:END
+
+   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" )
+   {
+    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
+    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" );
+    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
+   }
    return( 0 );
 // END
 } 
 
 
 //:DIALOG OPERATION
-//:SubregistrantManagement( VIEW ViewToWindow )
+//:InitSelectPrimaryRegistrant( VIEW ViewToWindow )
 
-//:   VIEW qOrganiz REGISTERED AS qOrganizLogin
+//:   VIEW lPrimReg BASED ON LOD lPrimReg
 public int 
-SubregistrantManagement( View     ViewToWindow )
+InitSelectPrimaryRegistrant( View     ViewToWindow )
 {
-   zVIEW    qOrganiz = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW lPrimReg BASED ON LOD  lPrimReg
    zVIEW    lPrimReg = new zVIEW( );
-   //:VIEW lSubreg  BASED ON LOD  lSubreg
-   zVIEW    lSubreg = new zVIEW( );
-   //:VIEW wWebXfer REGISTERED AS wWebXfer
-   zVIEW    wWebXfer = new zVIEW( );
-   //:INTEGER lID
-   int      lID = 0;
-   int      lTempInteger_0 = 0;
-   zVIEW    vTempViewVar_0 = new zVIEW( );
-   int      lTempInteger_1 = 0;
-   zVIEW    vTempViewVar_1 = new zVIEW( );
+   int      RESULT = 0;
 
-   RESULT = GetViewByName( qOrganiz, "qOrganizLogin", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-
-   //:IF wWebXfer.Root.KeyRole != "P" // Primary registrant
-   if ( CompareAttributeToString( wWebXfer, "Root", "KeyRole", "P" ) != 0 )
-   { 
-      //:MessageSend( ViewToWindow, "", "New Subregistrant",
-      //:             "Must be logged in as a Primary registrant to create new Subregistrants.",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "New Subregistrant", "Must be logged in as a Primary registrant to create new Subregistrants.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:RETURN 2
-      if(8==8)return( 2 );
-   } 
-
-   //:   
-   //:END
 
    //:GET VIEW lPrimReg NAMED "lPrimReg"
    RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
-   //:IF lPrimReg != 0
+   //:IF  lPrimReg != 0
    if ( getView( lPrimReg ) != null )
    { 
       //:DropObjectInstance( lPrimReg )
@@ -2650,397 +2530,67 @@ SubregistrantManagement( View     ViewToWindow )
 
    //:END
 
-   //:GET VIEW lSubreg NAMED "lSubreg"
-   RESULT = GetViewByName( lSubreg, "lSubreg", ViewToWindow, zLEVEL_TASK );
-   //:IF lSubreg != 0
-   if ( getView( lSubreg ) != null )
-   { 
-      //:DropObjectInstance( lSubreg )
-      DropObjectInstance( lSubreg );
-   } 
-
-   //:END
-
-   //:ACTIVATE lPrimReg WHERE lPrimReg.PrimaryRegistrant.ID = qOrganiz.PrimaryRegistrant.ID
-   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
-       GetIntegerFromAttribute( mi_lTempInteger_0, qOrganiz, "PrimaryRegistrant", "ID" );
-   lTempInteger_0 = mi_lTempInteger_0.intValue( );}
-   o_fnLocalBuildQual_16( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
-   RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
-   DropView( vTempViewVar_0 );
+   //:ACTIVATE lPrimReg ROOTONLYMULTIPLE
+   RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, 0, zACTIVATE_ROOTONLY_MULTIPLE );
    //:NAME VIEW lPrimReg "lPrimReg"
    SetNameForView( lPrimReg, "lPrimReg", null, zLEVEL_TASK );
 
-   //:// Need to create the mSubreg view
-   //:ACTIVATE lSubreg MULTIPLE WHERE lSubreg.PrimaryRegistrant.ID = lPrimReg.PrimaryRegistrant.ID
-   {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
-       GetIntegerFromAttribute( mi_lTempInteger_1, lPrimReg, "PrimaryRegistrant", "ID" );
-   lTempInteger_1 = mi_lTempInteger_1.intValue( );}
-   o_fnLocalBuildQual_17( ViewToWindow, vTempViewVar_1, lTempInteger_1 );
-   RESULT = ActivateObjectInstance( lSubreg, "lSubreg", ViewToWindow, vTempViewVar_1, zMULTIPLE );
-   DropView( vTempViewVar_1 );
-   //:NAME VIEW lSubreg "lSubreg"
-   SetNameForView( lSubreg, "lSubreg", null, zLEVEL_TASK );
+   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" )
+   {
+    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
+    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" );
+    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
+   }
    return( 0 );
 // END
 } 
 
 
 //:DIALOG OPERATION
-//:ListSubregistrants( VIEW ViewToWindow )
+//:InitSelectSubregistrants( VIEW ViewToWindow )
 
-//:   VIEW lPrimReg BASED ON LOD lPrimReg
+//:   VIEW qSubreg BASED ON LOD qSubreg
 public int 
-ListSubregistrants( View     ViewToWindow )
+InitSelectSubregistrants( View     ViewToWindow )
 {
-   zVIEW    lPrimReg = new zVIEW( );
-   //:VIEW lSubreg  BASED ON LOD lSubreg
-   zVIEW    lSubreg = new zVIEW( );
-   //:INTEGER lID
-   int      lID = 0;
+   zVIEW    qSubreg = new zVIEW( );
    int      RESULT = 0;
-   int      lTempInteger_0 = 0;
-   zVIEW    vTempViewVar_0 = new zVIEW( );
 
 
-   //:GET VIEW lPrimReg NAMED "lPrimReg"
-   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
-   //:GET VIEW lSubreg NAMED "lSubreg"
-   RESULT = GetViewByName( lSubreg, "lSubreg", ViewToWindow, zLEVEL_TASK );
-   //:IF lSubreg != 0
-   if ( getView( lSubreg ) != null )
+   //:GET VIEW qSubreg NAMED "qSubreg"
+   RESULT = GetViewByName( qSubreg, "qSubreg", ViewToWindow, zLEVEL_TASK );
+   //:IF  qSubreg != 0
+   if ( getView( qSubreg ) != null )
    { 
-      //:DropObjectInstance( lSubreg )
-      DropObjectInstance( lSubreg );
+      //:DropObjectInstance( qSubreg )
+      DropObjectInstance( qSubreg );
    } 
 
    //:END
 
-   //:// Need to create the mSubreg view
-   //:ACTIVATE lSubreg WHERE lSubreg.Subregistrant.ID = lPrimReg.Subregistrant.ID
-   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
-       GetIntegerFromAttribute( mi_lTempInteger_0, lPrimReg, "Subregistrant", "ID" );
-   lTempInteger_0 = mi_lTempInteger_0.intValue( );}
-   o_fnLocalBuildQual_18( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
-   RESULT = ActivateObjectInstance( lSubreg, "lSubreg", ViewToWindow, vTempViewVar_0, zSINGLE );
-   DropView( vTempViewVar_0 );
-   //:NAME VIEW lSubreg "lSubreg"
-   SetNameForView( lSubreg, "lSubreg", null, zLEVEL_TASK );
+   //:ACTIVATE qSubreg ROOTONLYMULTIPLE
+   RESULT = ActivateObjectInstance( qSubreg, "qSubreg", ViewToWindow, 0, zACTIVATE_ROOTONLY_MULTIPLE );
+   //:NAME VIEW qSubreg "qSubreg"
+   SetNameForView( qSubreg, "qSubreg", null, zLEVEL_TASK );
    return( 0 );
 // END
 } 
 
 
 //:DIALOG OPERATION
-//:ConfirmChangePrimRegPassword( VIEW ViewToWindow )
+//:CheckExistencePrimaryRegistrant( VIEW ViewToWindow )
 
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
+//:   VIEW qPrimReg BASED ON LOD qPrimReg
 public int 
-ConfirmChangePrimRegPassword( View     ViewToWindow )
+CheckExistencePrimaryRegistrant( View     ViewToWindow )
 {
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW mPrimReg REGISTERED AS mPrimReg
-   zVIEW    mPrimReg = new zVIEW( );
-   //:STRING ( 128  ) szAttemptPassword
-   String   szAttemptPassword = null;
-   //:STRING ( 128  ) szConfirmPassword
-   String   szConfirmPassword = null;
-   //:INTEGER         lPasswordLth
-   int      lPasswordLth = 0;
-   //:SHORT   nRC
-   int      nRC = 0;
-   int      lTempInteger_0 = 0;
-   int      lTempInteger_1 = 0;
-   int      lTempInteger_2 = 0;
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mPrimReg, "mPrimReg", ViewToWindow, zLEVEL_TASK );
-
-   //:// 1: Ensure old password is correct.
-   //:// IF mPrimReg.Organization.AdministratorPassword != wWebXfer.Root.CurrentPassword
-   //:szAttemptPassword = wWebXfer.Root.CurrentPassword
-   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
-   StringBuilder sb_szAttemptPassword;
-   if ( szAttemptPassword == null )
-      sb_szAttemptPassword = new StringBuilder( 32 );
-   else
-      sb_szAttemptPassword = new StringBuilder( szAttemptPassword );
-       GetVariableFromAttribute( sb_szAttemptPassword, mi_lTempInteger_0, 'S', 129, wWebXfer, "Root", "CurrentPassword", "", 0 );
-   lTempInteger_0 = mi_lTempInteger_0.intValue( );
-   szAttemptPassword = sb_szAttemptPassword.toString( );}
-   //:nRC = CompareAttributeToString( mPrimReg, "Organization", "AdministratorPassword", szAttemptPassword )
-   nRC = CompareAttributeToString( mPrimReg, "Organization", "AdministratorPassword", szAttemptPassword );
-   //:IF nRC != 0
-   if ( nRC != 0 )
-   { 
-
-      //:// TraceLineS( "//////* Invalid Current User Password: ", szAttemptPassword )
-      //:MessageSend( ViewToWindow, "", "Change Primary Registrant User Password",
-      //:             "Current password is not correct.",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Change Primary Registrant User Password", "Current password is not correct.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:RETURN 2
-      if(8==8)return( 2 );
-   } 
-
-
-   //:END
-
-   //:szAttemptPassword = wWebXfer.Root.AttemptPassword
-   {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
-   StringBuilder sb_szAttemptPassword;
-   if ( szAttemptPassword == null )
-      sb_szAttemptPassword = new StringBuilder( 32 );
-   else
-      sb_szAttemptPassword = new StringBuilder( szAttemptPassword );
-       GetVariableFromAttribute( sb_szAttemptPassword, mi_lTempInteger_1, 'S', 129, wWebXfer, "Root", "AttemptPassword", "", 0 );
-   lTempInteger_1 = mi_lTempInteger_1.intValue( );
-   szAttemptPassword = sb_szAttemptPassword.toString( );}
-   //:szConfirmPassword = wWebXfer.Root.ConfirmPassword
-   {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
-   StringBuilder sb_szConfirmPassword;
-   if ( szConfirmPassword == null )
-      sb_szConfirmPassword = new StringBuilder( 32 );
-   else
-      sb_szConfirmPassword = new StringBuilder( szConfirmPassword );
-       GetVariableFromAttribute( sb_szConfirmPassword, mi_lTempInteger_2, 'S', 129, wWebXfer, "Root", "ConfirmPassword", "", 0 );
-   lTempInteger_2 = mi_lTempInteger_2.intValue( );
-   szConfirmPassword = sb_szConfirmPassword.toString( );}
-
-   //:// 2: Ensure attempted password matches confirm password.
-   //:IF szAttemptPassword != szConfirmPassword
-   if ( ZeidonStringCompare( szAttemptPassword, 1, 0, szConfirmPassword, 1, 0, 129 ) != 0 )
-   { 
-      //:// TraceLineS( szAttemptPassword, szConfirmPassword )
-      //:MessageSend( ViewToWindow, "", "Change Password",
-      //:             "The new password and the confirmation password do not match.",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Change Password", "The new password and the confirmation password do not match.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:RETURN 2
-      if(8==8)return( 2 );
-   } 
-
-   //:END
-
-   //:// 3: Ensure new password is at least 8 characters long.
-   //:lPasswordLth = zGetStringLen( szConfirmPassword )
-   lPasswordLth = zGetStringLen( szConfirmPassword );
-   //:TraceLineI( "Password Length: ", lPasswordLth )
-   TraceLineI( "Password Length: ", lPasswordLth );
-   //:IF lPasswordLth < 8
-   if ( lPasswordLth < 8 )
-   { 
-      //:MessageSend( ViewToWindow, "", "Change Password",
-      //:             "The new password must be at least 8 characters long.",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Change Password", "The new password must be at least 8 characters long.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:RETURN 2
-      if(8==8)return( 2 );
-   } 
-
-   //:END
-
-   //:mPrimReg.Organization.AdministratorPassword = szConfirmPassword
-   SetAttributeFromString( mPrimReg, "Organization", "AdministratorPassword", szConfirmPassword );
-   //:COMMIT mPrimReg
-   RESULT = CommitObjectInstance( mPrimReg );
-   //:DropObjectInstance( mPrimReg )
-   DropObjectInstance( mPrimReg );
-
-   //:wWebXfer.Root.AttemptPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
-   //:wWebXfer.Root.ConfirmPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "ConfirmPassword", "" );
-   //:wWebXfer.Root.CurrentPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "CurrentPassword", "" );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:ConfirmChangePrimRegUserPassword( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-ConfirmChangePrimRegUserPassword( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW mPrimReg REGISTERED AS mPrimReg
-   zVIEW    mPrimReg = new zVIEW( );
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mPrimReg, "mPrimReg", ViewToWindow, zLEVEL_TASK );
-
-   //:DropObjectInstance( mPrimReg )
-   DropObjectInstance( mPrimReg );
-
-   //:wWebXfer.Root.AttemptPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
-   //:wWebXfer.Root.ConfirmPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "ConfirmPassword", "" );
-   //:wWebXfer.Root.CurrentPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "CurrentPassword", "" );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:ConfirmChangeSubregUserPassword( VIEW ViewToWindow )
-
-public int 
-ConfirmChangeSubregUserPassword( View     ViewToWindow )
-{
-
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:CancelChangeSubregPassword( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-CancelChangeSubregPassword( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW mSubreg  REGISTERED AS mSubreg
-   zVIEW    mSubreg = new zVIEW( );
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
-
-   //:DropObjectInstance( mSubreg )
-   DropObjectInstance( mSubreg );
-
-   //:wWebXfer.Root.AttemptPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
-   //:wWebXfer.Root.ConfirmPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "ConfirmPassword", "" );
-   //:wWebXfer.Root.CurrentPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "CurrentPassword", "" );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:CancelChangePrimRegPassword( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-CancelChangePrimRegPassword( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW mPrimReg REGISTERED AS mPrimReg
-   zVIEW    mPrimReg = new zVIEW( );
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mPrimReg, "mPrimReg", ViewToWindow, zLEVEL_TASK );
-
-   //:DropObjectInstance( mPrimReg )
-   DropObjectInstance( mPrimReg );
-
-   //:wWebXfer.Root.AttemptPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
-   //:wWebXfer.Root.ConfirmPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "ConfirmPassword", "" );
-   //:wWebXfer.Root.CurrentPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "CurrentPassword", "" );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:CancelChangePrimRegUserPassword( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-CancelChangePrimRegUserPassword( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW mPrimReg REGISTERED AS mPrimReg
-   zVIEW    mPrimReg = new zVIEW( );
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mPrimReg, "mPrimReg", ViewToWindow, zLEVEL_TASK );
-
-   //:DropObjectInstance( mPrimReg )
-   DropObjectInstance( mPrimReg );
-
-   //:wWebXfer.Root.AttemptPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
-   //:wWebXfer.Root.ConfirmPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "ConfirmPassword", "" );
-   //:wWebXfer.Root.CurrentPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "CurrentPassword", "" );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:AddNewPrimRegUser( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-AddNewPrimRegUser( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW mCurrentUser BASED ON LOD  mUser
-   zVIEW    mCurrentUser = new zVIEW( );
-   //:VIEW mPerson  BASED ON LOD  mPerson
-   zVIEW    mPerson = new zVIEW( );
-   //:VIEW qPrimReg BASED ON LOD  qPrimReg
    zVIEW    qPrimReg = new zVIEW( );
-   //:VIEW lPrimReg REGISTERED AS lPrimReg
-   zVIEW    lPrimReg = new zVIEW( );
-   int      lTempInteger_0 = 0;
-   zVIEW    vTempViewVar_0 = new zVIEW( );
-   int      lTempInteger_1 = 0;
-   int      lTempInteger_2 = 0;
+   int      RESULT = 0;
 
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
-
-   //:wWebXfer.Root.AttemptPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
-   //:wWebXfer.Root.ConfirmPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "ConfirmPassword", "" );
-
-   //:IF lPrimReg = 0
-   if ( getView( lPrimReg ) == null )
-   { 
-      //:MessageSend( ViewToWindow, "", "Initialize Primary Registrant User",
-      //:             "The registrant list is empty.",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Initialize Primary Registrant User", "The registrant list is empty.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:RETURN 2
-      if(8==8)return( 2 );
-   } 
-
-   //:END
 
    //:GET VIEW qPrimReg NAMED "qPrimReg"
    RESULT = GetViewByName( qPrimReg, "qPrimReg", ViewToWindow, zLEVEL_TASK );
-   //:IF qPrimReg != 0
+   //:IF  qPrimReg != 0
    if ( getView( qPrimReg ) != null )
    { 
       //:DropObjectInstance( qPrimReg )
@@ -3049,30 +2599,19 @@ AddNewPrimRegUser( View     ViewToWindow )
 
    //:END
 
-   //:ACTIVATE qPrimReg WHERE qPrimReg.PrimaryRegistrant.ID = lPrimReg.PrimaryRegistrant.ID
-   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
-       GetIntegerFromAttribute( mi_lTempInteger_0, lPrimReg, "PrimaryRegistrant", "ID" );
-   lTempInteger_0 = mi_lTempInteger_0.intValue( );}
-   o_fnLocalBuildQual_26( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
-   RESULT = ActivateObjectInstance( qPrimReg, "qPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
-   DropView( vTempViewVar_0 );
+   //:// Ensure that at least the primary registrant exists.
+   //:ACTIVATE qPrimReg ROOTONLY
+   RESULT = ActivateObjectInstance( qPrimReg, "qPrimReg", ViewToWindow, 0, zACTIVATE_ROOTONLY );
    //:NAME VIEW qPrimReg "qPrimReg"
    SetNameForView( qPrimReg, "qPrimReg", null, zLEVEL_TASK );
-
-   //:IF qPrimReg.PrimaryRegistrant DOES NOT EXIST
-   lTempInteger_1 = CheckExistenceOfEntity( qPrimReg, "PrimaryRegistrant" );
-   if ( lTempInteger_1 != 0 )
+   //:IF RESULT < 0
+   if ( RESULT < 0 )
    { 
-      //:TraceLineI( "InitializePrimRegUser cannot activate Primary Registrant: ",
-      //:            lPrimReg.PrimaryRegistrant.ID )
-      {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
-             GetIntegerFromAttribute( mi_lTempInteger_2, lPrimReg, "PrimaryRegistrant", "ID" );
-      lTempInteger_2 = mi_lTempInteger_2.intValue( );}
-      TraceLineI( "InitializePrimRegUser cannot activate Primary Registrant: ", lTempInteger_2 );
-      //:MessageSend( ViewToWindow, "", "Initialize New Primary Registrant User",
-      //:             "Cannot activate Primary Registrant.",
+
+      //:MessageSend( ViewToWindow, "", "Select Primary Registrant",
+      //:             "No Primary Registrants exist ... please go to Administration.",
       //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Initialize New Primary Registrant User", "Cannot activate Primary Registrant.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      MessageSend( ViewToWindow, "", "Select Primary Registrant", "No Primary Registrants exist ... please go to Administration.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
       //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
       m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
       //:DropObjectInstance( qPrimReg )
@@ -3081,465 +2620,103 @@ AddNewPrimRegUser( View     ViewToWindow )
       if(8==8)return( 2 );
    } 
 
+
    //:END
 
    //:DropObjectInstance( qPrimReg )
    DropObjectInstance( qPrimReg );
-
-   //:GET VIEW mCurrentUser NAMED "mCurrentUser"
-   RESULT = GetViewByName( mCurrentUser, "mCurrentUser", ViewToWindow, zLEVEL_TASK );
-   //:IF mCurrentUser != 0
-   if ( getView( mCurrentUser ) != null )
-   { 
-      //:DropObjectInstance( mCurrentUser )
-      DropObjectInstance( mCurrentUser );
-   } 
-
-   //:END
-
-   //:GET VIEW mPerson NAMED "mPerson"
-   RESULT = GetViewByName( mPerson, "mPerson", ViewToWindow, zLEVEL_TASK );
-   //:IF mPerson != 0
-   if ( getView( mPerson ) != null )
-   { 
-      //:DropObjectInstance( mPerson )
-      DropObjectInstance( mPerson );
-   } 
-
-   //:END
-
-   //:// We are activating empty OI's, so create all the entities.
-   //:ACTIVATE mCurrentUser EMPTY
-   RESULT = ActivateEmptyObjectInstance( mCurrentUser, "mUser", ViewToWindow, zSINGLE );
-   //:NAME VIEW mCurrentUser "mCurrentUser"
-   SetNameForView( mCurrentUser, "mCurrentUser", null, zLEVEL_TASK );
-   //:CREATE ENTITY mCurrentUser.User
-   RESULT = CreateEntity( mCurrentUser, "User", zPOS_AFTER );
-   //:mCurrentUser.User.Status = "B"  // beginner
-   SetAttributeFromString( mCurrentUser, "User", "Status", "B" );
-
-   //:ACTIVATE mPerson EMPTY
-   RESULT = ActivateEmptyObjectInstance( mPerson, "mPerson", ViewToWindow, zSINGLE );
-   //:NAME VIEW mPerson "mPerson"
-   SetNameForView( mPerson, "mPerson", null, zLEVEL_TASK );
-   //:CREATE ENTITY mPerson.Person
-   RESULT = CreateEntity( mPerson, "Person", zPOS_AFTER );
-   //:CREATE ENTITY mPerson.Address
-   RESULT = CreateEntity( mPerson, "Address", zPOS_AFTER );
-
-   //:wWebXfer.Root.AttemptUserName = ""
-   SetAttributeFromString( wWebXfer, "Root", "AttemptUserName", "" );
-   //:wWebXfer.Root.AttemptPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
-   //:wWebXfer.Root.ConfirmPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "ConfirmPassword", "" );
-   //:wWebXfer.Root.CurrentPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "CurrentPassword", "" );
-
-   //:mPerson.Address.Country = "USA"
-   SetAttributeFromString( mPerson, "Address", "Country", "USA" );
-
-   //:// CreateTemporalSubobjectVersion( mPerson, "Address" )
-   //:CreateTemporalSubobjectVersion( mPerson, "Person" )
-   CreateTemporalSubobjectVersion( mPerson, "Person" );
-   //:CreateTemporalSubobjectVersion( mCurrentUser, "User" )
-   CreateTemporalSubobjectVersion( mCurrentUser, "User" );
-
-   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" )
-   {
-    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" );
-    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-   }
    return( 0 );
 // END
 } 
 
 
 //:DIALOG OPERATION
-//:CancelUpdateSubregUser( VIEW ViewToWindow )
+//:CheckExistenceSubregistrant( VIEW ViewToWindow )
 
+//:   VIEW qSubreg BASED ON LOD qSubreg
 public int 
-CancelUpdateSubregUser( View     ViewToWindow )
+CheckExistenceSubregistrant( View     ViewToWindow )
 {
-
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:InitPrimRegUserForUpdate( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-InitPrimRegUserForUpdate( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
+   zVIEW    qSubreg = new zVIEW( );
    int      RESULT = 0;
-   //:VIEW mCurrentUser BASED ON LOD  mUser
-   zVIEW    mCurrentUser = new zVIEW( );
-   //:VIEW mPerson  BASED ON LOD  mPerson
-   zVIEW    mPerson = new zVIEW( );
-   //:VIEW qPrimReg BASED ON LOD  qPrimReg
-   zVIEW    qPrimReg = new zVIEW( );
-   //:VIEW lPrimReg REGISTERED AS lPrimReg
-   zVIEW    lPrimReg = new zVIEW( );
    int      lTempInteger_0 = 0;
-   zVIEW    vTempViewVar_0 = new zVIEW( );
-   int      lTempInteger_1 = 0;
-   int      lTempInteger_2 = 0;
-   int      lTempInteger_3 = 0;
-   zVIEW    vTempViewVar_1 = new zVIEW( );
-   int      lTempInteger_4 = 0;
-   zVIEW    vTempViewVar_2 = new zVIEW( );
 
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
 
-   //:wWebXfer.Root.AttemptPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
-   //:wWebXfer.Root.ConfirmPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "ConfirmPassword", "" );
-
-   //:IF lPrimReg = 0
-   if ( getView( lPrimReg ) == null )
+   //:GET VIEW qSubreg NAMED "qSubreg"
+   RESULT = GetViewByName( qSubreg, "qSubreg", ViewToWindow, zLEVEL_TASK );
+   //:IF  qSubreg != 0
+   if ( getView( qSubreg ) != null )
    { 
-      //:MessageSend( ViewToWindow, "", "Initialize Primary Registrant User",
-      //:             "The registrant list is empty.",
+      //:DropObjectInstance( qSubreg )
+      DropObjectInstance( qSubreg );
+   } 
+
+   //:END
+
+   //:ACTIVATE qSubreg ROOTONLY
+   RESULT = ActivateObjectInstance( qSubreg, "qSubreg", ViewToWindow, 0, zACTIVATE_ROOTONLY );
+   //:NAME VIEW qSubreg "qSubreg"
+   SetNameForView( qSubreg, "qSubreg", null, zLEVEL_TASK );
+
+   //:IF qSubreg.Subregistrant DOES NOT EXIST
+   lTempInteger_0 = CheckExistenceOfEntity( qSubreg, "Subregistrant" );
+   if ( lTempInteger_0 != 0 )
+   { 
+
+      //:MessageSend( ViewToWindow, "", "Select Subregistrant",
+      //:             "No Subregistrants exist ... please go to Administration.",
       //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Initialize Primary Registrant User", "The registrant list is empty.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      MessageSend( ViewToWindow, "", "Select Subregistrant", "No Subregistrants exist ... please go to Administration.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
       //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
       m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:DropObjectInstance( qSubreg )
+      DropObjectInstance( qSubreg );
       //:RETURN 2
       if(8==8)return( 2 );
    } 
 
-   //:END
-
-   //:GET VIEW qPrimReg NAMED "qPrimReg"
-   RESULT = GetViewByName( qPrimReg, "qPrimReg", ViewToWindow, zLEVEL_TASK );
-   //:IF qPrimReg != 0
-   if ( getView( qPrimReg ) != null )
-   { 
-      //:DropObjectInstance( qPrimReg )
-      DropObjectInstance( qPrimReg );
-   } 
 
    //:END
 
-   //:ACTIVATE qPrimReg WHERE qPrimReg.PrimaryRegistrant.ID = lPrimReg.PrimaryRegistrant.ID
-   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
-       GetIntegerFromAttribute( mi_lTempInteger_0, lPrimReg, "PrimaryRegistrant", "ID" );
-   lTempInteger_0 = mi_lTempInteger_0.intValue( );}
-   o_fnLocalBuildQual_27( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
-   RESULT = ActivateObjectInstance( qPrimReg, "qPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
-   DropView( vTempViewVar_0 );
-   //:NAME VIEW qPrimReg "qPrimReg"
-   SetNameForView( qPrimReg, "qPrimReg", null, zLEVEL_TASK );
-
-   //:IF qPrimReg.PrimaryRegistrant DOES NOT EXIST
-   lTempInteger_1 = CheckExistenceOfEntity( qPrimReg, "PrimaryRegistrant" );
-   if ( lTempInteger_1 != 0 )
-   { 
-      //:TraceLineI( "InitPrimRegUserForUpdate cannot activate Primary Registrant: ",
-      //:            lPrimReg.PrimaryRegistrant.ID )
-      {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
-             GetIntegerFromAttribute( mi_lTempInteger_2, lPrimReg, "PrimaryRegistrant", "ID" );
-      lTempInteger_2 = mi_lTempInteger_2.intValue( );}
-      TraceLineI( "InitPrimRegUserForUpdate cannot activate Primary Registrant: ", lTempInteger_2 );
-      //:MessageSend( ViewToWindow, "", "Initialize Primary Registrant User",
-      //:             "Cannot activate Primary Registrant.",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Initialize Primary Registrant User", "Cannot activate Primary Registrant.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:RETURN 2
-      if(8==8)return( 2 );
-   } 
-
-   //:END
-
-   //:DropObjectInstance( qPrimReg )
-   DropObjectInstance( qPrimReg );
-
-   //:GET VIEW mCurrentUser NAMED "mCurrentUser"
-   RESULT = GetViewByName( mCurrentUser, "mCurrentUser", ViewToWindow, zLEVEL_TASK );
-   //:IF mCurrentUser != 0
-   if ( getView( mCurrentUser ) != null )
-   { 
-      //:DropObjectInstance( mCurrentUser )
-      DropObjectInstance( mCurrentUser );
-   } 
-
-   //:END
-
-   //:// We are activating a User instance for update.
-   //:ACTIVATE mCurrentUser WHERE mCurrentUser.User.ID = lPrimReg.User.ID
-   {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
-       GetIntegerFromAttribute( mi_lTempInteger_3, lPrimReg, "User", "ID" );
-   lTempInteger_3 = mi_lTempInteger_3.intValue( );}
-   o_fnLocalBuildQual_28( ViewToWindow, vTempViewVar_1, lTempInteger_3 );
-   RESULT = ActivateObjectInstance( mCurrentUser, "mUser", ViewToWindow, vTempViewVar_1, zSINGLE );
-   DropView( vTempViewVar_1 );
-   //:NAME VIEW mCurrentUser "mCurrentUser"
-   SetNameForView( mCurrentUser, "mCurrentUser", null, zLEVEL_TASK );
-   //:ACTIVATE mPerson WHERE mPerson.Person.ID = mCurrentUser.Employee.ID
-   {MutableInt mi_lTempInteger_4 = new MutableInt( lTempInteger_4 );
-       GetIntegerFromAttribute( mi_lTempInteger_4, mCurrentUser, "Employee", "ID" );
-   lTempInteger_4 = mi_lTempInteger_4.intValue( );}
-   o_fnLocalBuildQual_29( ViewToWindow, vTempViewVar_2, lTempInteger_4 );
-   RESULT = ActivateObjectInstance( mPerson, "mPerson", ViewToWindow, vTempViewVar_2, zSINGLE );
-   DropView( vTempViewVar_2 );
-   //:NAME VIEW mPerson "mPerson"
-   SetNameForView( mPerson, "mPerson", null, zLEVEL_TASK );
-
-   //:wWebXfer.Root.AttemptUserName = mCurrentUser.User.UserName
-   SetAttributeFromAttribute( wWebXfer, "Root", "AttemptUserName", mCurrentUser, "User", "UserName" );
-   //:wWebXfer.Root.AttemptPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
-   //:wWebXfer.Root.ConfirmPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "ConfirmPassword", "" );
-   //:wWebXfer.Root.CurrentPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "CurrentPassword", "" );
-
-   //:CreateTemporalSubobjectVersion( mCurrentUser, "User" )
-   CreateTemporalSubobjectVersion( mCurrentUser, "User" );
-   //:// CreateTemporalSubobjectVersion( mPerson, "Person" )
-   //:// CreateTemporalSubobjectVersion( mPerson, "Address" )
-
-   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" )
-   {
-    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" );
-    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-   }
+   //:DropObjectInstance( qSubreg )
+   DropObjectInstance( qSubreg );
    return( 0 );
 // END
 } 
 
 
 //:DIALOG OPERATION
-//:InitSubregUserForUpdate( VIEW ViewToWindow )
-
-public int 
-InitSubregUserForUpdate( View     ViewToWindow )
-{
-
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:InitListSubregProducts( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-InitListSubregProducts( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW lPrimReg REGISTERED AS lPrimReg
-   zVIEW    lPrimReg = new zVIEW( );
-   //:VIEW mSubreg  BASED ON LOD  mSubreg
-   zVIEW    mSubreg = new zVIEW( );
-   //:INTEGER lID
-   int      lID = 0;
-   //:SHORT   nRC
-   int      nRC = 0;
-   zVIEW    vTempViewVar_0 = new zVIEW( );
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
-
-   //:GET VIEW mSubreg NAMED "mSubreg"
-   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
-   //:IF mSubreg != 0
-   if ( getView( mSubreg ) != null )
-   { 
-      //:DropObjectInstance( mSubreg )
-      DropObjectInstance( mSubreg );
-   } 
-
-   //:END
-
-   //:// Activate the "selected" Subregistrant.
-   //:lID = lPrimReg.Subregistrant.ID
-   {MutableInt mi_lID = new MutableInt( lID );
-       GetIntegerFromAttribute( mi_lID, lPrimReg, "Subregistrant", "ID" );
-   lID = mi_lID.intValue( );}
-   //:ACTIVATE mSubreg WHERE mSubreg.Subregistrant.ID = lID
-   o_fnLocalBuildQual_39( ViewToWindow, vTempViewVar_0, lID );
-   RESULT = ActivateObjectInstance( mSubreg, "mSubreg", ViewToWindow, vTempViewVar_0, zSINGLE );
-   DropView( vTempViewVar_0 );
-   //:NAME VIEW mSubreg "mSubreg"
-   SetNameForView( mSubreg, "mSubreg", null, zLEVEL_TASK );
-
-   //:nRC = SetCursorFirstEntity( mSubreg, "ListMasterProduct", "Subregistrant" )
-   nRC = SetCursorFirstEntity( mSubreg, "ListMasterProduct", "Subregistrant" );
-   //:LOOP WHILE nRC = 0
-   while ( nRC == 0 )
-   { 
-      //:lID = mSubreg.ListMasterProduct.ID
-      {MutableInt mi_lID = new MutableInt( lID );
-             GetIntegerFromAttribute( mi_lID, mSubreg, "ListMasterProduct", "ID" );
-      lID = mi_lID.intValue( );}
-      //:nRC = SetCursorFirstEntityByInteger( mSubreg, "ValidMasterProduct", "ID", lID, "" )
-      nRC = SetCursorFirstEntityByInteger( mSubreg, "ValidMasterProduct", "ID", lID, "" );
-      //:IF nRC = 0
-      if ( nRC == 0 )
-      { 
-         //:mSubreg.ListMasterProduct.wkSelected = "Y"
-         SetAttributeFromString( mSubreg, "ListMasterProduct", "wkSelected", "Y" );
-      } 
-
-      //:END
-
-      //:nRC = SetCursorNextEntity( mSubreg, "ListMasterProduct", "Subregistrant" )
-      nRC = SetCursorNextEntity( mSubreg, "ListMasterProduct", "Subregistrant" );
-   } 
-
-   //:END
-
-   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "Subregistrant" )
-   {
-    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "Subregistrant" );
-    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-   }
-   //:wWebXfer.Root.Banner4 = mSubreg.Subregistrant.dNameEPA_Number
-   SetAttributeFromAttribute( wWebXfer, "Root", "Banner4", mSubreg, "Subregistrant", "dNameEPA_Number" );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:CancelUpdateSubregProducts( VIEW ViewToWindow )
-
-//:   VIEW mSubreg  REGISTERED AS mSubreg
-public int 
-CancelUpdateSubregProducts( View     ViewToWindow )
-{
-   zVIEW    mSubreg = new zVIEW( );
-   int      RESULT = 0;
-
-   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
-   //:DropObjectInstance( mSubreg )
-   DropObjectInstance( mSubreg );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:AcceptUpdateSubregProduct( VIEW ViewToWindow )
-
-//:   VIEW mSubreg  REGISTERED AS mSubreg
-public int 
-AcceptUpdateSubregProduct( View     ViewToWindow )
-{
-   zVIEW    mSubreg = new zVIEW( );
-   int      RESULT = 0;
-   //:INTEGER lID
-   int      lID = 0;
-   //:SHORT   nRC
-   int      nRC = 0;
-
-   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
-
-   //:nRC = SetCursorFirstEntity( mSubreg, "ListMasterProduct", "Subregistrant" )
-   nRC = SetCursorFirstEntity( mSubreg, "ListMasterProduct", "Subregistrant" );
-   //:LOOP WHILE nRC = 0
-   while ( nRC == 0 )
-   { 
-      //:lID = mSubreg.ListMasterProduct.ID
-      {MutableInt mi_lID = new MutableInt( lID );
-             GetIntegerFromAttribute( mi_lID, mSubreg, "ListMasterProduct", "ID" );
-      lID = mi_lID.intValue( );}
-      //:nRC = SetCursorFirstEntityByInteger( mSubreg, "ValidMasterProduct", "ID", lID, "" )
-      nRC = SetCursorFirstEntityByInteger( mSubreg, "ValidMasterProduct", "ID", lID, "" );
-      //:IF mSubreg.ListMasterProduct.wkSelected = "Y"
-      if ( CompareAttributeToString( mSubreg, "ListMasterProduct", "wkSelected", "Y" ) == 0 )
-      { 
-         //:IF nRC != 0
-         if ( nRC != 0 )
-         { 
-            //:IncludeSubobjectFromSubobject( mSubreg, "ValidMasterProduct",
-            //:                               mSubreg, "ListMasterProduct", zPOS_LAST )
-            IncludeSubobjectFromSubobject( mSubreg, "ValidMasterProduct", mSubreg, "ListMasterProduct", zPOS_LAST );
-         } 
-
-         //:END
-         //:ELSE
-      } 
-      else
-      { 
-         //:IF nRC = 0
-         if ( nRC == 0 )
-         { 
-            //:ExcludeEntity( mSubreg, "ValidMasterProduct", zREPOS_NONE )
-            ExcludeEntity( mSubreg, "ValidMasterProduct", zREPOS_NONE );
-         } 
-
-         //:END
-      } 
-
-      //:END
-
-      //:nRC = SetCursorNextEntity( mSubreg, "ListMasterProduct", "Subregistrant" )
-      nRC = SetCursorNextEntity( mSubreg, "ListMasterProduct", "Subregistrant" );
-   } 
-
-   //:END
-
-   //:COMMIT mSubreg
-   RESULT = CommitObjectInstance( mSubreg );
-
-   //:DropObjectInstance( mSubreg )
-   DropObjectInstance( mSubreg );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:InitListPrimRegUsers( VIEW ViewToWindow )
+//:InitListPrimaryRegistrants( VIEW ViewToWindow )
 
 //:   VIEW lPrimReg BASED ON LOD lPrimReg
 public int 
-InitListPrimRegUsers( View     ViewToWindow )
+InitListPrimaryRegistrants( View     ViewToWindow )
 {
    zVIEW    lPrimReg = new zVIEW( );
-   //:INTEGER lID
-   int      lID = 0;
    int      RESULT = 0;
-   zVIEW    vTempViewVar_0 = new zVIEW( );
 
 
    //:GET VIEW lPrimReg NAMED "lPrimReg"
    RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
-   //:lID = lPrimReg.PrimaryRegistrant.ID
-   {MutableInt mi_lID = new MutableInt( lID );
-       GetIntegerFromAttribute( mi_lID, lPrimReg, "PrimaryRegistrant", "ID" );
-   lID = mi_lID.intValue( );}
-   //:DropObjectInstance( lPrimReg )
-   DropObjectInstance( lPrimReg );
+   //:IF  lPrimReg != 0
+   if ( getView( lPrimReg ) != null )
+   { 
+      //:DropObjectInstance( lPrimReg )
+      DropObjectInstance( lPrimReg );
+   } 
 
-   //:// Activate the "selected" primary registrant ... just in case someone added or
-   //:// deleted a primary registrant user.
-   //:ACTIVATE lPrimReg WHERE lPrimReg.PrimaryRegistrant.ID = lID
-   o_fnLocalBuildQual_25( ViewToWindow, vTempViewVar_0, lID );
-   RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
-   DropView( vTempViewVar_0 );
+   //:END
+
+   //:// Activate all primary registrants.
+   //:ACTIVATE lPrimReg MULTIPLE
+   RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, 0, zMULTIPLE );
    //:NAME VIEW lPrimReg "lPrimReg"
    SetNameForView( lPrimReg, "lPrimReg", null, zLEVEL_TASK );
 
-   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" )
+   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "Administration" )
    {
     ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" );
+    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "Administration" );
     // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
    }
    return( 0 );
@@ -3595,8 +2772,8 @@ AddNewPrimaryRegistrant( View     ViewToWindow )
    //:wWebXfer.Root.SameAs = "Y"
    SetAttributeFromString( wWebXfer, "Root", "SameAs", "Y" );
 
-   //:wWebXfer.Root.AttemptLoginName = ""
-   SetAttributeFromString( wWebXfer, "Root", "AttemptLoginName", "" );
+   //:wWebXfer.Root.AttemptLoginRegistrant = ""
+   SetAttributeFromString( wWebXfer, "Root", "AttemptLoginRegistrant", "" );
    //:wWebXfer.Root.AttemptPassword = ""
    SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
    //:wWebXfer.Root.ConfirmPassword = ""
@@ -3639,1215 +2816,96 @@ AddNewPrimaryRegistrant( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
-//:InitChangePrimRegPassword( VIEW ViewToWindow )
+//:SelectPrimaryRegistrantForUpdate( VIEW ViewToWindow )
+
+public int 
+SelectPrimaryRegistrantForUpdate( View     ViewToWindow )
+{
+
+   return( 0 );
+//    // Nothing to do here other than to get proper position
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:SelectPrimaryRegistrantForDelete( VIEW ViewToWindow )
+
+public int 
+SelectPrimaryRegistrantForDelete( View     ViewToWindow )
+{
+
+   return( 0 );
+//    // Nothing to do here other than to get proper position
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:InitPrimaryRegistrantForUpdate( VIEW ViewToWindow )
 
 //:   VIEW wWebXfer REGISTERED AS wWebXfer
 public int 
-InitChangePrimRegPassword( View     ViewToWindow )
+InitPrimaryRegistrantForUpdate( View     ViewToWindow )
 {
    zVIEW    wWebXfer = new zVIEW( );
    int      RESULT = 0;
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-
-   //:wWebXfer.Root.AttemptPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
-   //:wWebXfer.Root.ConfirmPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "ConfirmPassword", "" );
-   //:wWebXfer.Root.CurrentPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "CurrentPassword", "" );
-
-   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" )
-   {
-    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" );
-    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-   }
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:InitChangePrimRegUserPassword( VIEW ViewToWindow )
-
-public int 
-InitChangePrimRegUserPassword( View     ViewToWindow )
-{
-
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:ConfirmChangeSubregPassword( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-ConfirmChangeSubregPassword( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW mSubreg  REGISTERED AS mSubreg
-   zVIEW    mSubreg = new zVIEW( );
-   //:STRING ( 128 ) szCurrentPassword
-   String   szCurrentPassword = null;
-   //:STRING ( 128 ) szAttemptPassword
-   String   szAttemptPassword = null;
-   //:STRING ( 128 ) szConfirmPassword
-   String   szConfirmPassword = null;
-   //:INTEGER        lPasswordLth
-   int      lPasswordLth = 0;
-   //:SHORT  nRC
-   int      nRC = 0;
-   int      lTempInteger_0 = 0;
-   int      lTempInteger_1 = 0;
-   int      lTempInteger_2 = 0;
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
-
-   //:// 1: Ensure old password is correct.
-   //:// IF mSubreg.SubregOrganization.AdministratorPassword != wWebXfer.Root.CurrentPassword
-   //:szCurrentPassword = wWebXfer.Root.CurrentPassword
-   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
-   StringBuilder sb_szCurrentPassword;
-   if ( szCurrentPassword == null )
-      sb_szCurrentPassword = new StringBuilder( 32 );
-   else
-      sb_szCurrentPassword = new StringBuilder( szCurrentPassword );
-       GetVariableFromAttribute( sb_szCurrentPassword, mi_lTempInteger_0, 'S', 129, wWebXfer, "Root", "CurrentPassword", "", 0 );
-   lTempInteger_0 = mi_lTempInteger_0.intValue( );
-   szCurrentPassword = sb_szCurrentPassword.toString( );}
-   //:nRC = CompareAttributeToString( mSubreg, "SubregOrganization", "AdministratorPassword", szCurrentPassword )
-   nRC = CompareAttributeToString( mSubreg, "SubregOrganization", "AdministratorPassword", szCurrentPassword );
-   //:IF nRC != 0
-   if ( nRC != 0 )
-   { 
-
-      //:// TraceLineS( "//////* Invalid Current User Password", szCurrentPassword )
-      //:// DisplayEntityInstance( mSubreg, "SubregOrganization" )
-      //:MessageSend( ViewToWindow, "", "Change Subregistrant User Password",
-      //:             "Current password is incorrect.",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Change Subregistrant User Password", "Current password is incorrect.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:RETURN 2
-      if(8==8)return( 2 );
-   } 
-
-
-   //:END
-
-   //:szAttemptPassword = wWebXfer.Root.AttemptPassword
-   {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
-   StringBuilder sb_szAttemptPassword;
-   if ( szAttemptPassword == null )
-      sb_szAttemptPassword = new StringBuilder( 32 );
-   else
-      sb_szAttemptPassword = new StringBuilder( szAttemptPassword );
-       GetVariableFromAttribute( sb_szAttemptPassword, mi_lTempInteger_1, 'S', 129, wWebXfer, "Root", "AttemptPassword", "", 0 );
-   lTempInteger_1 = mi_lTempInteger_1.intValue( );
-   szAttemptPassword = sb_szAttemptPassword.toString( );}
-   //:szConfirmPassword = wWebXfer.Root.ConfirmPassword
-   {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
-   StringBuilder sb_szConfirmPassword;
-   if ( szConfirmPassword == null )
-      sb_szConfirmPassword = new StringBuilder( 32 );
-   else
-      sb_szConfirmPassword = new StringBuilder( szConfirmPassword );
-       GetVariableFromAttribute( sb_szConfirmPassword, mi_lTempInteger_2, 'S', 129, wWebXfer, "Root", "ConfirmPassword", "", 0 );
-   lTempInteger_2 = mi_lTempInteger_2.intValue( );
-   szConfirmPassword = sb_szConfirmPassword.toString( );}
-
-   //:// 2: Ensure attempted password matches confirm password.
-   //:IF szAttemptPassword != szConfirmPassword
-   if ( ZeidonStringCompare( szAttemptPassword, 1, 0, szConfirmPassword, 1, 0, 129 ) != 0 )
-   { 
-      //:// TraceLineS( szAttemptPassword, szConfirmPassword )
-      //:MessageSend( ViewToWindow, "", "Change Password",
-      //:             "The new password and the confirmation password do not match.",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Change Password", "The new password and the confirmation password do not match.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:RETURN 2
-      if(8==8)return( 2 );
-   } 
-
-   //:END
-
-   //:// 3: Ensure new password is at least 8 characters long.
-   //:lPasswordLth = zGetStringLen( szConfirmPassword )
-   lPasswordLth = zGetStringLen( szConfirmPassword );
-   //:TraceLineI( "Password Length: ", lPasswordLth )
-   TraceLineI( "Password Length: ", lPasswordLth );
-   //:IF lPasswordLth < 8
-   if ( lPasswordLth < 8 )
-   { 
-      //:MessageSend( ViewToWindow, "", "Change Password",
-      //:             "The new password must be at least 8 characters long.",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Change Password", "The new password must be at least 8 characters long.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:RETURN 2
-      if(8==8)return( 2 );
-   } 
-
-   //:END
-
-   //:mSubreg.SubregOrganization.AdministratorPassword = szConfirmPassword
-   SetAttributeFromString( mSubreg, "SubregOrganization", "AdministratorPassword", szConfirmPassword );
-   //:COMMIT mSubreg
-   RESULT = CommitObjectInstance( mSubreg );
-   //:DropObjectInstance( mSubreg )
-   DropObjectInstance( mSubreg );
-
-   //:wWebXfer.Root.AttemptPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
-   //:wWebXfer.Root.ConfirmPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "ConfirmPassword", "" );
-   //:wWebXfer.Root.CurrentPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "CurrentPassword", "" );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:DeletePrimRegUser( VIEW ViewToWindow )
-
-//:   VIEW mPrimReg REGISTERED AS mPrimReg
-public int 
-DeletePrimRegUser( View     ViewToWindow )
-{
-   zVIEW    mPrimReg = new zVIEW( );
-   int      RESULT = 0;
-
-   RESULT = GetViewByName( mPrimReg, "mPrimReg", ViewToWindow, zLEVEL_TASK );
-
-   //:DELETE ENTITY mPrimReg.User
-   RESULT = DeleteEntity( mPrimReg, "User", zPOS_NEXT );
-   //:COMMIT mPrimReg
-   RESULT = CommitObjectInstance( mPrimReg );
-   //:DropObjectInstance( mPrimReg )
-   DropObjectInstance( mPrimReg );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:InitSelectPrimRegistrant( VIEW ViewToWindow )
-
-public int 
-InitSelectPrimRegistrant( View     ViewToWindow )
-{
-
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:InitListMasterLabels( VIEW ViewToWindow )
-
-//:   VIEW lPrimReg BASED ON LOD lPrimReg
-public int 
-InitListMasterLabels( View     ViewToWindow )
-{
-   zVIEW    lPrimReg = new zVIEW( );
-   //:INTEGER lID
-   int      lID = 0;
-   int      RESULT = 0;
-   zVIEW    vTempViewVar_0 = new zVIEW( );
-
-
-   //:GET VIEW lPrimReg NAMED "lPrimReg"
-   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
-   //:lID = lPrimReg.PrimaryRegistrant.ID
-   {MutableInt mi_lID = new MutableInt( lID );
-       GetIntegerFromAttribute( mi_lID, lPrimReg, "PrimaryRegistrant", "ID" );
-   lID = mi_lID.intValue( );}
-   //:DropObjectInstance( lPrimReg )
-   DropObjectInstance( lPrimReg );
-
-   //:// Activate the "selected" primary registrant ... just in case someone added or
-   //:// deleted a primary registrant label.
-   //:ACTIVATE lPrimReg WHERE lPrimReg.PrimaryRegistrant.ID = lID
-   o_fnLocalBuildQual_33( ViewToWindow, vTempViewVar_0, lID );
-   RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
-   DropView( vTempViewVar_0 );
-   //:NAME VIEW lPrimReg "lPrimReg"
-   SetNameForView( lPrimReg, "lPrimReg", null, zLEVEL_TASK );
-
-   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrantLabel" )
-   {
-    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrantLabel" );
-    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-   }
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:AddNewMasterLabel( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-AddNewMasterLabel( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW mMasLC   BASED ON LOD  mMasLC
-   zVIEW    mMasLC = new zVIEW( );
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-
-   //:GET VIEW mMasLC NAMED "mMasLC"
-   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
-   //:IF mMasLC != 0
-   if ( getView( mMasLC ) != null )
-   { 
-      //:DropObjectInstance( mMasLC )
-      DropObjectInstance( mMasLC );
-   } 
-
-   //:END
-
-   //:// We are activating an empty OI, so create all the entities.
-   //:ACTIVATE mMasLC EMPTY
-   RESULT = ActivateEmptyObjectInstance( mMasLC, "mMasLC", ViewToWindow, zSINGLE );
-   //:NAME VIEW mMasLC "mMasLC"
-   SetNameForView( mMasLC, "mMasLC", null, zLEVEL_TASK );
-   //:CREATE ENTITY mMasLC.MasterLabelContent
-   RESULT = CreateEntity( mMasLC, "MasterLabelContent", zPOS_AFTER );
-   //:// CREATE ENTITY mMasLC.MasterLabelSection
-   //:// CREATE ENTITY mMasLC.MasterLabelSection
-
-   //:wWebXfer.Root.AttemptProductName = ""
-   SetAttributeFromString( wWebXfer, "Root", "AttemptProductName", "" );
-
-   //:CreateTemporalSubobjectVersion( mMasLC, "MasterLabelContent" )
-   CreateTemporalSubobjectVersion( mMasLC, "MasterLabelContent" );
-   //:// CreateTemporalSubobjectVersion( mMasLC, "MasterLabelSection" )
-   //:// CreateTemporalSubobjectVersion( mMasLC, "MasterLabelSection" )
-
-   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrantLabel" )
-   {
-    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrantLabel" );
-    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-   }
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:InitMasterLabelForUpdate( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-InitMasterLabelForUpdate( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW mMasLC   BASED ON LOD  mMasLC
-   zVIEW    mMasLC = new zVIEW( );
    //:VIEW lPrimReg REGISTERED AS lPrimReg
    zVIEW    lPrimReg = new zVIEW( );
-   int      lTempInteger_0 = 0;
-   zVIEW    vTempViewVar_0 = new zVIEW( );
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
-
-   //:GET VIEW mMasLC NAMED "mMasLC"
-   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
-   //:IF mMasLC != 0
-   if ( getView( mMasLC ) != null )
-   { 
-      //:DropObjectInstance( mMasLC )
-      DropObjectInstance( mMasLC );
-   } 
-
-   //:END
-
-   //:ACTIVATE mMasLC WHERE mMasLC.MasterLabelContent.ID = lPrimReg.MasterLabelContent.ID
-   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
-       GetIntegerFromAttribute( mi_lTempInteger_0, lPrimReg, "MasterLabelContent", "ID" );
-   lTempInteger_0 = mi_lTempInteger_0.intValue( );}
-   o_fnLocalBuildQual_34( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
-   RESULT = ActivateObjectInstance( mMasLC, "mMasLC", ViewToWindow, vTempViewVar_0, zSINGLE );
-   DropView( vTempViewVar_0 );
-   //:NAME VIEW mMasLC "mMasLC"
-   SetNameForView( mMasLC, "mMasLC", null, zLEVEL_TASK );
-
-   //:// IF mMasLC.MasterLabelSection DOES NOT EXIST
-   //://    CREATE ENTITY mMasLC.MasterLabelSection
-   //:// END
-
-   //:// IF mMasLC.MasterLabelSection DOES NOT EXIST
-   //://    CREATE ENTITY mMasLC.MasterLabelSection
-   //:// END
-
-   //:wWebXfer.Root.AttemptProductName = mMasLC.MasterProduct.Name
-   SetAttributeFromAttribute( wWebXfer, "Root", "AttemptProductName", mMasLC, "MasterProduct", "Name" );
-
-   //:CreateTemporalSubobjectVersion( mMasLC, "MasterLabelContent" )
-   CreateTemporalSubobjectVersion( mMasLC, "MasterLabelContent" );
-   //:// CreateTemporalSubobjectVersion( mMasLC, "MasterLabelSection" )
-   //:// CreateTemporalSubobjectVersion( mMasLC, "MasterLabelSection" )
-
-   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrantLabel" )
-   {
-    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrantLabel" );
-    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-   }
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:AcceptNewMasterLabel( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-AcceptNewMasterLabel( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW mMasLC   REGISTERED AS mMasLC
-   zVIEW    mMasLC = new zVIEW( );
    //:VIEW mPrimReg BASED ON LOD  mPrimReg
    zVIEW    mPrimReg = new zVIEW( );
-   //:VIEW lPrimReg BASED ON LOD  lPrimReg
-   zVIEW    lPrimReg = new zVIEW( );
-   //:STRING (  50  ) szProductName
-   String   szProductName = null;
-   //:INTEGER         lProductNameLth
-   int      lProductNameLth = 0;
-   //:INTEGER         lControl
-   int      lControl = 0;
-   //:INTEGER         lID
-   int      lID = 0;
-   //:SHORT           nRC
-   int      nRC = 0;
-   int      lTempInteger_0 = 0;
-   int      lTempInteger_1 = 0;
-   zVIEW    vTempViewVar_0 = new zVIEW( );
-   zVIEW    vTempViewVar_1 = new zVIEW( );
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
-
-   //:// Ensure user login name is not blank and is unique.
-   //:GET VIEW lPrimReg NAMED "lPrimReg"
-   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
-   //:szProductName = mMasLC.MasterProduct.Name
-   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
-   StringBuilder sb_szProductName;
-   if ( szProductName == null )
-      sb_szProductName = new StringBuilder( 32 );
-   else
-      sb_szProductName = new StringBuilder( szProductName );
-       GetVariableFromAttribute( sb_szProductName, mi_lTempInteger_0, 'S', 51, mMasLC, "MasterProduct", "Name", "", 0 );
-   lTempInteger_0 = mi_lTempInteger_0.intValue( );
-   szProductName = sb_szProductName.toString( );}
-   //:lProductNameLth = zGetStringLen( szProductName )
-   lProductNameLth = zGetStringLen( szProductName );
-   //:TraceLineS( "Label Name: ", szProductName )
-   TraceLineS( "Label Name: ", szProductName );
-   //:TraceLineI( "Label Name Length: ", lProductNameLth )
-   TraceLineI( "Label Name Length: ", lProductNameLth );
-   //:IF lProductNameLth < 1
-   if ( lProductNameLth < 1 )
-   { 
-
-      //:MessageSend( ViewToWindow, "", "New Primary Registrant Label",
-      //:             "The Label Name cannot be blank.",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "New Primary Registrant Label", "The Label Name cannot be blank.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:RETURN 2
-      if(8==8)return( 2 );
-
-      //:ELSE
-   } 
-   else
-   { 
-
-      //:lControl = zQUAL_STRING + zPOS_FIRST + zTEST_CSR_RESULT
-      lControl = zQUAL_STRING + zPOS_FIRST + zTEST_CSR_RESULT;
-      //:IF SetEntityCursor( lPrimReg, "MasterLabelContent", "ProductName", lControl,
-      //:                    szProductName, "", "", 0, "", "" ) >= zCURSOR_SET
-      lTempInteger_1 = SetEntityCursor( lPrimReg, "MasterLabelContent", "ProductName", lControl, szProductName, "", "", 0, "", "" );
-      if ( lTempInteger_1 >= zCURSOR_SET )
-      { 
-         //:MessageSend( ViewToWindow, "", "New Primary Registrant Label",
-         //:             "The Label Name must be unique.",
-         //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-         MessageSend( ViewToWindow, "", "New Primary Registrant Label", "The Label Name must be unique.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-         //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-         m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-         //:RETURN 2
-         if(8==8)return( 2 );
-      } 
-
-
-      //:END
-   } 
-
-   //:END
-
-   //:lID = lPrimReg.PrimaryRegistrant.ID
-   {MutableInt mi_lID = new MutableInt( lID );
-       GetIntegerFromAttribute( mi_lID, lPrimReg, "PrimaryRegistrant", "ID" );
-   lID = mi_lID.intValue( );}
-   //:ACTIVATE mPrimReg WHERE mPrimReg.PrimaryRegistrant.ID = lID
-   o_fnLocalBuildQual_35( ViewToWindow, vTempViewVar_0, lID );
-   RESULT = ActivateObjectInstance( mPrimReg, "mPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
-   DropView( vTempViewVar_0 );
-   //:NAME VIEW mPrimReg "mPrimReg"
-   SetNameForView( mPrimReg, "mPrimReg", null, zLEVEL_TASK );
-
-   //:IncludeSubobjectFromSubobject( mMasLC, "PrimaryRegistrant",
-   //:                               mPrimReg, "PrimaryRegistrant", zPOS_LAST )
-   IncludeSubobjectFromSubobject( mMasLC, "PrimaryRegistrant", mPrimReg, "PrimaryRegistrant", zPOS_LAST );
-
-   //:AcceptSubobject( mMasLC, "MasterLabelContent" )
-   AcceptSubobject( mMasLC, "MasterLabelContent" );
-   //:// AcceptSubobject( mMasLC, "MasterLabelSection" )
-   //:// AcceptSubobject( mMasLC, "MasterLabelSection" )
-
-   //:Commit mMasLC
-   RESULT = CommitObjectInstance( mMasLC );
-
-   //:DropObjectInstance( mMasLC )
-   DropObjectInstance( mMasLC );
-   //:DropObjectInstance( mPrimReg )
-   DropObjectInstance( mPrimReg );
-   //:DropObjectInstance( lPrimReg )
-   DropObjectInstance( lPrimReg );
-
-   //:ACTIVATE lPrimReg WHERE lPrimReg.PrimaryRegistrant.ID = lID
-   o_fnLocalBuildQual_36( ViewToWindow, vTempViewVar_1, lID );
-   RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, vTempViewVar_1, zSINGLE );
-   DropView( vTempViewVar_1 );
-   //:NAME VIEW lPrimReg "lPrimReg"
-   SetNameForView( lPrimReg, "lPrimReg", null, zLEVEL_TASK );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:AcceptUpdateMasterLabel( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-AcceptUpdateMasterLabel( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW mMasLC   REGISTERED AS mMasLC
-   zVIEW    mMasLC = new zVIEW( );
-   //:VIEW lPrimReg BASED ON LOD  lPrimReg
-   zVIEW    lPrimReg = new zVIEW( );
-   //:STRING (  50  ) szProductName
-   String   szProductName = null;
-   //:STRING (  50  ) szAttemptProductName
-   String   szAttemptProductName = null;
-   //:INTEGER         lProductNameLth
-   int      lProductNameLth = 0;
-   //:INTEGER         lPasswordLth
-   int      lPasswordLth = 0;
-   //:INTEGER         lControl
-   int      lControl = 0;
-   //:INTEGER         lID
-   int      lID = 0;
-   //:SHORT           nRC
-   int      nRC = 0;
-   int      lTempInteger_0 = 0;
-   int      lTempInteger_1 = 0;
-   int      lTempInteger_2 = 0;
-   zVIEW    vTempViewVar_0 = new zVIEW( );
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
-
-   //:// Ensure user login name is not blank and is unique.
-   //:GET VIEW lPrimReg NAMED "lPrimReg"
-   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
-   //:szProductName = mMasLC.MasterProduct.Name
-   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
-   StringBuilder sb_szProductName;
-   if ( szProductName == null )
-      sb_szProductName = new StringBuilder( 32 );
-   else
-      sb_szProductName = new StringBuilder( szProductName );
-       GetVariableFromAttribute( sb_szProductName, mi_lTempInteger_0, 'S', 51, mMasLC, "MasterProduct", "Name", "", 0 );
-   lTempInteger_0 = mi_lTempInteger_0.intValue( );
-   szProductName = sb_szProductName.toString( );}
-   //:lProductNameLth = zGetStringLen( szProductName )
-   lProductNameLth = zGetStringLen( szProductName );
-   //:TraceLineS( "User Login Name: ", szProductName )
-   TraceLineS( "User Login Name: ", szProductName );
-   //:TraceLineI( "User Login Name Length: ", lProductNameLth )
-   TraceLineI( "User Login Name Length: ", lProductNameLth );
-   //:IF lProductNameLth < 1
-   if ( lProductNameLth < 1 )
-   { 
-
-      //:MessageSend( ViewToWindow, "", "Update Primary Registrant Label",
-      //:             "The Label Name cannot be blank.",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Update Primary Registrant Label", "The Label Name cannot be blank.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:RETURN 2
-      if(8==8)return( 2 );
-
-      //:ELSE
-   } 
-   else
-   { 
-
-      //:szAttemptProductName = wWebXfer.Root.AttemptProductName
-      {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
-      StringBuilder sb_szAttemptProductName;
-      if ( szAttemptProductName == null )
-         sb_szAttemptProductName = new StringBuilder( 32 );
-      else
-         sb_szAttemptProductName = new StringBuilder( szAttemptProductName );
-             GetVariableFromAttribute( sb_szAttemptProductName, mi_lTempInteger_1, 'S', 51, wWebXfer, "Root", "AttemptProductName", "", 0 );
-      lTempInteger_1 = mi_lTempInteger_1.intValue( );
-      szAttemptProductName = sb_szAttemptProductName.toString( );}
-      //:IF szProductName != szAttemptProductName
-      if ( ZeidonStringCompare( szProductName, 1, 0, szAttemptProductName, 1, 0, 51 ) != 0 )
-      { 
-
-         //:lControl = zQUAL_STRING + zPOS_FIRST + zTEST_CSR_RESULT
-         lControl = zQUAL_STRING + zPOS_FIRST + zTEST_CSR_RESULT;
-         //:IF SetEntityCursor( lPrimReg, "MasterLabelContent", "ProductName", lControl,
-         //:                    szProductName, "", "", 0, "", "" ) >= zCURSOR_SET
-         lTempInteger_2 = SetEntityCursor( lPrimReg, "MasterLabelContent", "ProductName", lControl, szProductName, "", "", 0, "", "" );
-         if ( lTempInteger_2 >= zCURSOR_SET )
-         { 
-            //:MessageSend( ViewToWindow, "", "Update Primary Registrant Label",
-            //:             "The Label Name must be unique.",
-            //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-            MessageSend( ViewToWindow, "", "Update Primary Registrant Label", "The Label Name must be unique.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-            //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-            m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-            //:RETURN 2
-            if(8==8)return( 2 );
-         } 
-
-
-         //:END
-      } 
-
-      //:END
-   } 
-
-   //:END
-
-   //:lID = lPrimReg.PrimaryRegistrant.ID
-   {MutableInt mi_lID = new MutableInt( lID );
-       GetIntegerFromAttribute( mi_lID, lPrimReg, "PrimaryRegistrant", "ID" );
-   lID = mi_lID.intValue( );}
-
-   //:AcceptSubobject( mMasLC, "MasterLabelContent" )
-   AcceptSubobject( mMasLC, "MasterLabelContent" );
-   //:// AcceptSubobject( mMasLC, "MasterLabelSection" )
-   //:// AcceptSubobject( mMasLC, "MasterLabelSection" )
-
-   //:Commit mMasLC
-   RESULT = CommitObjectInstance( mMasLC );
-
-   //:DropObjectInstance( mMasLC )
-   DropObjectInstance( mMasLC );
-   //:DropObjectInstance( lPrimReg )
-   DropObjectInstance( lPrimReg );
-
-   //:ACTIVATE lPrimReg WHERE lPrimReg.PrimaryRegistrant.ID = lID
-   o_fnLocalBuildQual_37( ViewToWindow, vTempViewVar_0, lID );
-   RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
-   DropView( vTempViewVar_0 );
-   //:NAME VIEW lPrimReg "lPrimReg"
-   SetNameForView( lPrimReg, "lPrimReg", null, zLEVEL_TASK );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:CancelNewMasterLabel( VIEW ViewToWindow )
-
-//:   VIEW mMasLC   REGISTERED AS mMasLC
-public int 
-CancelNewMasterLabel( View     ViewToWindow )
-{
-   zVIEW    mMasLC = new zVIEW( );
-   int      RESULT = 0;
-
-   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
-
-   //:CancelSubobject( mMasLC, "MasterLabelContent" )
-   CancelSubobject( mMasLC, "MasterLabelContent" );
-   //:// CancelSubobject( mMasLC, "MasterLabelSection" )
-   //:// CancelSubobject( mMasLC, "MasterLabelSection" )
-   //:DropObjectInstance( mMasLC )
-   DropObjectInstance( mMasLC );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:CancelUpdateMasterLabel( VIEW ViewToWindow )
-
-//:   VIEW mMasLC   REGISTERED AS mMasLC
-public int 
-CancelUpdateMasterLabel( View     ViewToWindow )
-{
-   zVIEW    mMasLC = new zVIEW( );
-   int      RESULT = 0;
-
-   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
-
-   //:CancelSubobject( mMasLC, "MasterLabelContent" )
-   CancelSubobject( mMasLC, "MasterLabelContent" );
-   //:// CancelSubobject( mMasLC, "MasterLabelSection" )
-   //:// CancelSubobject( mMasLC, "MasterLabelSection" )
-   //:DropObjectInstance( mMasLC )
-   DropObjectInstance( mMasLC );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:DeleteMasterLabel( VIEW ViewToWindow )
-
-//:   VIEW mPrimReg REGISTERED AS mPrimReg
-public int 
-DeleteMasterLabel( View     ViewToWindow )
-{
-   zVIEW    mPrimReg = new zVIEW( );
-   int      RESULT = 0;
-
-   RESULT = GetViewByName( mPrimReg, "mPrimReg", ViewToWindow, zLEVEL_TASK );
-
-   //:DELETE ENTITY mPrimReg.MasterLabelContent
-   RESULT = DeleteEntity( mPrimReg, "MasterLabelContent", zPOS_NEXT );
-   //:COMMIT mPrimReg
-   RESULT = CommitObjectInstance( mPrimReg );
-   //:DropObjectInstance( mPrimReg )
-   DropObjectInstance( mPrimReg );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:ChangeUserPassword( VIEW ViewToWindow )
-
-//:   VIEW mCurrentUser REGISTERED AS mCurrentUser
-public int 
-ChangeUserPassword( View     ViewToWindow )
-{
-   zVIEW    mCurrentUser = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW wWebXfer REGISTERED AS wWebXfer
-   zVIEW    wWebXfer = new zVIEW( );
-   //:STRING ( 128  ) szAttemptPassword
-   String   szAttemptPassword = null;
-   //:STRING ( 128  ) szConfirmPassword
-   String   szConfirmPassword = null;
-   //:INTEGER         lPasswordLth
-   int      lPasswordLth = 0;
-   //:SHORT  nRC
-   int      nRC = 0;
-   int      lTempInteger_0 = 0;
-   int      lTempInteger_1 = 0;
-
-   RESULT = GetViewByName( mCurrentUser, "mCurrentUser", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-
-   //:szAttemptPassword = wWebXfer.Root.AttemptPassword
-   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
-   StringBuilder sb_szAttemptPassword;
-   if ( szAttemptPassword == null )
-      sb_szAttemptPassword = new StringBuilder( 32 );
-   else
-      sb_szAttemptPassword = new StringBuilder( szAttemptPassword );
-       GetVariableFromAttribute( sb_szAttemptPassword, mi_lTempInteger_0, 'S', 129, wWebXfer, "Root", "AttemptPassword", "", 0 );
-   lTempInteger_0 = mi_lTempInteger_0.intValue( );
-   szAttemptPassword = sb_szAttemptPassword.toString( );}
-
-   //:// 1: Ensure old password is correct.
-   //:// IF mCurrentUser.User.UserPassword != mCurrentUser.User.AttemptPassword
-   //:nRC = CompareAttributeToString( mCurrentUser, "User", "UserPassword", szAttemptPassword )
-   nRC = CompareAttributeToString( mCurrentUser, "User", "UserPassword", szAttemptPassword );
-   //:IF nRC != 0
-   if ( nRC != 0 )
-   { 
-      //:MessageSend( ViewToWindow, "", "Change Password",
-      //:             "Current password is not correct.",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Change Password", "Current password is not correct.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:RETURN 2
-      if(8==8)return( 2 );
-   } 
-
-   //:END
-
-   //:szConfirmPassword = wWebXfer.Root.ConfirmPassword
-   {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
-   StringBuilder sb_szConfirmPassword;
-   if ( szConfirmPassword == null )
-      sb_szConfirmPassword = new StringBuilder( 32 );
-   else
-      sb_szConfirmPassword = new StringBuilder( szConfirmPassword );
-       GetVariableFromAttribute( sb_szConfirmPassword, mi_lTempInteger_1, 'S', 129, wWebXfer, "Root", "ConfirmPassword", "", 0 );
-   lTempInteger_1 = mi_lTempInteger_1.intValue( );
-   szConfirmPassword = sb_szConfirmPassword.toString( );}
-
-   //:// 2: Ensure attempted password matches confirm password.
-   //:IF szAttemptPassword != szConfirmPassword
-   if ( ZeidonStringCompare( szAttemptPassword, 1, 0, szConfirmPassword, 1, 0, 129 ) != 0 )
-   { 
-      //:// TraceLineS( szAttemptPassword, szConfirmPassword )
-      //:MessageSend( ViewToWindow, "", "Change Password",
-      //:             "The new password and the confirmation password do not match.",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Change Password", "The new password and the confirmation password do not match.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:RETURN 2
-      if(8==8)return( 2 );
-   } 
-
-   //:END
-
-   //:// 3: Ensure new password is at least 8 characters long.
-   //:lPasswordLth = zGetStringLen( szConfirmPassword )
-   lPasswordLth = zGetStringLen( szConfirmPassword );
-   //:TraceLineI( "Password Length: ", lPasswordLth )
-   TraceLineI( "Password Length: ", lPasswordLth );
-   //:IF lPasswordLth < 8
-   if ( lPasswordLth < 8 )
-   { 
-      //:MessageSend( ViewToWindow, "", "Change Password",
-      //:             "The new password must be at least 8 characters long.",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Change Password", "The new password must be at least 8 characters long.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:RETURN 2
-      if(8==8)return( 2 );
-   } 
-
-   //:END
-
-   //:// Set user password to new password.
-   //:// SetAttrFromStrByContext( mCurrentUser, "User", "UserPassword", szConfirmPassword, "Password" )
-   //:mCurrentUser.User.UserPassword = szConfirmPassword
-   SetAttributeFromString( mCurrentUser, "User", "UserPassword", szConfirmPassword );
-
-   //:// TraceLineS( "Newly Set Password:", mCurrentUser.User.UserPassword )
-
-   //:// Commit change
-   //:COMMIT mCurrentUser
-   RESULT = CommitObjectInstance( mCurrentUser );
-   //:mCurrentUser.User.wkAttemptPassword = ""
-   SetAttributeFromString( mCurrentUser, "User", "wkAttemptPassword", "" );
-   //:wWebXfer.Root.AttemptPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
-   //:wWebXfer.Root.ConfirmPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "ConfirmPassword", "" );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:ValidatePrimRegistrantPassword( VIEW ViewToWindow )
-
-public int 
-ValidatePrimRegistrantPassword( View     ViewToWindow )
-{
-
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:ValidateSubregistrantPassword( VIEW ViewToWindow )
-
-public int 
-ValidateSubregistrantPassword( View     ViewToWindow )
-{
-
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:DeletePrimaryRegistrant( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-DeletePrimaryRegistrant( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW mPrimReg REGISTERED AS mPrimReg
-   zVIEW    mPrimReg = new zVIEW( );
-   //:STRING ( 128 ) szAttemptPassword
-   String   szAttemptPassword = null;
-   //:SHORT  nRC
-   int      nRC = 0;
-   int      lTempInteger_0 = 0;
-   int      lTempInteger_1 = 0;
-   int      lTempInteger_2 = 0;
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mPrimReg, "mPrimReg", ViewToWindow, zLEVEL_TASK );
-
-   //:IF mPrimReg.PrimarySub EXISTS
-   lTempInteger_0 = CheckExistenceOfEntity( mPrimReg, "PrimarySub" );
-   if ( lTempInteger_0 == 0 )
-   { 
-
-      //:MessageSend( ViewToWindow, "", "Delete Primary Registrant",
-      //:             "Subregistrants exist for primary registrant.  Delete Cancelled",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Delete Primary Registrant", "Subregistrants exist for primary registrant.  Delete Cancelled", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:RETURN 2
-      if(8==8)return( 2 );
-   } 
-
-
-   //:END
-
-   //:IF mPrimReg.MasterLabelContent EXISTS
-   lTempInteger_1 = CheckExistenceOfEntity( mPrimReg, "MasterLabelContent" );
-   if ( lTempInteger_1 == 0 )
-   { 
-
-      //:MessageSend( ViewToWindow, "", "Delete Primary Registrant",
-      //:             "Primary Label Data Definitions exist for primary registrant.  Delete Cancelled",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Delete Primary Registrant", "Primary Label Data Definitions exist for primary registrant.  Delete Cancelled", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:RETURN 2
-      if(8==8)return( 2 );
-   } 
-
-
-   //:END
-
-   //:// Match the password.
-   //:// IF mPrimReg.Organization.AdministratorPassword != wWebXfer.Root.VerifiedPassword
-   //:szAttemptPassword = wWebXfer.Root.AttemptPassword
-   {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
-   StringBuilder sb_szAttemptPassword;
-   if ( szAttemptPassword == null )
-      sb_szAttemptPassword = new StringBuilder( 32 );
-   else
-      sb_szAttemptPassword = new StringBuilder( szAttemptPassword );
-       GetVariableFromAttribute( sb_szAttemptPassword, mi_lTempInteger_2, 'S', 129, wWebXfer, "Root", "AttemptPassword", "", 0 );
-   lTempInteger_2 = mi_lTempInteger_2.intValue( );
-   szAttemptPassword = sb_szAttemptPassword.toString( );}
-   //:nRC = CompareAttributeToString( mPrimReg, "Organization", "AdministratorPassword", szAttemptPassword )
-   nRC = CompareAttributeToString( mPrimReg, "Organization", "AdministratorPassword", szAttemptPassword );
-   //:IF nRC != 0
-   if ( nRC != 0 )
-   { 
-
-      //:// TraceLineS( "//////* Invalid Administrator Password: ", szAttemptPassword )
-      //:MessageSend( ViewToWindow, "", "Delete Primary Registrant",
-      //:             "Current password is not correct.",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Delete Primary Registrant", "Current password is not correct.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:RETURN 2
-      if(8==8)return( 2 );
-   } 
-
-
-   //:END
-
-   //:DELETE ENTITY mPrimReg.PrimaryRegistrant
-   RESULT = DeleteEntity( mPrimReg, "PrimaryRegistrant", zPOS_NEXT );
-   //:COMMIT mPrimReg
-   RESULT = CommitObjectInstance( mPrimReg );
-   //:DropObjectInstance( mPrimReg )
-   DropObjectInstance( mPrimReg );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:DeleteSubregistrant( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-DeleteSubregistrant( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW lPrimReg REGISTERED AS lPrimReg
-   zVIEW    lPrimReg = new zVIEW( );
-   //:VIEW mSubreg  BASED ON LOD  mSubreg
-   zVIEW    mSubreg = new zVIEW( );
-   //:STRING ( 128 ) szAttemptPassword
-   String   szAttemptPassword = null;
-   //:INTEGER lID
-   int      lID = 0;
-   //:INTEGER lSubregID
-   int      lSubregID = 0;
-   //:INTEGER lControl
-   int      lControl = 0;
-   //:SHORT   nRC
-   int      nRC = 0;
-   int      lTempInteger_0 = 0;
-   zVIEW    vTempViewVar_0 = new zVIEW( );
-   int      lTempInteger_1 = 0;
-   int      lTempInteger_2 = 0;
-   zVIEW    vTempViewVar_1 = new zVIEW( );
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
-
-   //:ACTIVATE mSubreg WHERE mSubreg.Subregistrant.ID = lPrimReg.Subregistrant.ID
-   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
-       GetIntegerFromAttribute( mi_lTempInteger_0, lPrimReg, "Subregistrant", "ID" );
-   lTempInteger_0 = mi_lTempInteger_0.intValue( );}
-   o_fnLocalBuildQual_23( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
-   RESULT = ActivateObjectInstance( mSubreg, "mSubreg", ViewToWindow, vTempViewVar_0, zSINGLE );
-   DropView( vTempViewVar_0 );
-   //:NAME VIEW mSubreg "mSubreg"
-   SetNameForView( mSubreg, "mSubreg", null, zLEVEL_TASK );
-   //:IF mSubreg.SubregProduct EXISTS
-   lTempInteger_1 = CheckExistenceOfEntity( mSubreg, "SubregProduct" );
-   if ( lTempInteger_1 == 0 )
-   { 
-
-      //: MessageSend( ViewToWindow, "", "Delete Subregistrant",
-      //:             "Product Definitions exist for subregistrant.  Delete Cancelled",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Delete Subregistrant", "Product Definitions exist for subregistrant.  Delete Cancelled", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:DropObjectInstance( mSubreg )
-      DropObjectInstance( mSubreg );
-      //:RETURN 2
-      if(8==8)return( 2 );
-   } 
-
-
-   //:END
-
-   //:// Match the password.
-   //:// IF mSubreg.Organization.AdministratorPassword != wWebXfer.Root.AttemptPassword
-   //:szAttemptPassword = wWebXfer.Root.AttemptPassword
-   {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
-   StringBuilder sb_szAttemptPassword;
-   if ( szAttemptPassword == null )
-      sb_szAttemptPassword = new StringBuilder( 32 );
-   else
-      sb_szAttemptPassword = new StringBuilder( szAttemptPassword );
-       GetVariableFromAttribute( sb_szAttemptPassword, mi_lTempInteger_2, 'S', 129, wWebXfer, "Root", "AttemptPassword", "", 0 );
-   lTempInteger_2 = mi_lTempInteger_2.intValue( );
-   szAttemptPassword = sb_szAttemptPassword.toString( );}
-   //:nRC = CompareAttributeToString( mSubreg, "Organization", "AdministratorPassword", szAttemptPassword )
-   nRC = CompareAttributeToString( mSubreg, "Organization", "AdministratorPassword", szAttemptPassword );
-   //:IF nRC != 0
-   if ( nRC != 0 )
-   { 
-
-      //:// TraceLineS( "//////* Invalid Administrator Password: ", szAttemptPassword )
-      //:MessageSend( ViewToWindow, "", "Delete Subregistrant",
-      //:             "Current password is not correct.",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Delete Subregistrant", "Current password is not correct.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:DropObjectInstance( mSubreg )
-      DropObjectInstance( mSubreg );
-      //:RETURN 2
-      if(8==8)return( 2 );
-   } 
-
-
-   //:END
-
-   //:lID = lPrimReg.PrimaryRegistrant.ID
-   {MutableInt mi_lID = new MutableInt( lID );
-       GetIntegerFromAttribute( mi_lID, lPrimReg, "PrimaryRegistrant", "ID" );
-   lID = mi_lID.intValue( );}
-   //:lSubregID = mSubreg.Subregistrant.ID
-   {MutableInt mi_lSubregID = new MutableInt( lSubregID );
-       GetIntegerFromAttribute( mi_lSubregID, mSubreg, "Subregistrant", "ID" );
-   lSubregID = mi_lSubregID.intValue( );}
-
-   //:DELETE ENTITY mSubreg.Subregistrant
-   RESULT = DeleteEntity( mSubreg, "Subregistrant", zPOS_NEXT );
-   //:COMMIT mSubreg
-   RESULT = CommitObjectInstance( mSubreg );
-
-   //:DropObjectInstance( mSubreg )
-   DropObjectInstance( mSubreg );
-   //:DropObjectInstance( lPrimReg )
-   DropObjectInstance( lPrimReg );
-
-   //:// Activate the "selected" primary registrant ... because we just deleted
-   //:// a subregistrant.
-   //:ACTIVATE lPrimReg WHERE lPrimReg.PrimaryRegistrant.ID = lID
-   o_fnLocalBuildQual_24( ViewToWindow, vTempViewVar_1, lID );
-   RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, vTempViewVar_1, zSINGLE );
-   DropView( vTempViewVar_1 );
-   //:NAME VIEW lPrimReg "lPrimReg"
-   SetNameForView( lPrimReg, "lPrimReg", null, zLEVEL_TASK );
-
-   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "Administration" )
-   {
-    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "Administration" );
-    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-   }
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:InitChangeSubregPassword( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-InitChangeSubregPassword( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-
-   //:wWebXfer.Root.AttemptPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
-   //:wWebXfer.Root.ConfirmPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "ConfirmPassword", "" );
-   //:wWebXfer.Root.CurrentPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "CurrentPassword", "" );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:DeleteSubregUser( VIEW ViewToWindow )
-
-public int 
-DeleteSubregUser( View     ViewToWindow )
-{
-
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:InitSubregistrantForUpdate( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-InitSubregistrantForUpdate( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW lSubreg  REGISTERED AS lSubreg
-   zVIEW    lSubreg = new zVIEW( );
-   //:VIEW mSubreg  BASED ON LOD  mSubreg
-   zVIEW    mSubreg = new zVIEW( );
-   //:STRING (   1  ) szKeyRole
-   String   szKeyRole = null;
-   //:INTEGER lID
-   int      lID = 0;
    int      lTempInteger_0 = 0;
    zVIEW    vTempViewVar_0 = new zVIEW( );
    int      lTempInteger_1 = 0;
    int      lTempInteger_2 = 0;
    int      lTempInteger_3 = 0;
    int      lTempInteger_4 = 0;
-   int      lTempInteger_5 = 0;
 
    RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( lSubreg, "lSubreg", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
 
-   //:GET VIEW mSubreg NAMED "mSubreg"
-   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
-   //:IF mSubreg != 0
-   if ( getView( mSubreg ) != null )
+   //:GET VIEW mPrimReg NAMED "mPrimReg"
+   RESULT = GetViewByName( mPrimReg, "mPrimReg", ViewToWindow, zLEVEL_TASK );
+   //:IF mPrimReg != 0
+   if ( getView( mPrimReg ) != null )
    { 
-      //:DropObjectInstance( mSubreg )
-      DropObjectInstance( mSubreg );
+      //:DropObjectInstance( mPrimReg )
+      DropObjectInstance( mPrimReg );
    } 
 
    //:END
 
    //:// If this is the first time into the system, this is the administrator.
    //:// Otherwise, just create a new primary registrant.
-   //:ACTIVATE mSubreg WHERE mSubreg.Subregistrant.ID = lSubreg.Subregistrant.ID
+   //:ACTIVATE mPrimReg WHERE mPrimReg.PrimaryRegistrant.ID = lPrimReg.PrimaryRegistrant.ID
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
-       GetIntegerFromAttribute( mi_lTempInteger_0, lSubreg, "Subregistrant", "ID" );
+       GetIntegerFromAttribute( mi_lTempInteger_0, lPrimReg, "PrimaryRegistrant", "ID" );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );}
-   o_fnLocalBuildQual_20( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
-   RESULT = ActivateObjectInstance( mSubreg, "mSubreg", ViewToWindow, vTempViewVar_0, zSINGLE );
+   o_fnLocalBuildQual_10( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
+   RESULT = ActivateObjectInstance( mPrimReg, "mPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
    DropView( vTempViewVar_0 );
-   //:NAME VIEW mSubreg "mSubreg"
-   SetNameForView( mSubreg, "mSubreg", null, zLEVEL_TASK );
-   //:IF mSubreg.Subregistrant DOES NOT EXIST
-   lTempInteger_1 = CheckExistenceOfEntity( mSubreg, "Subregistrant" );
+   //:NAME VIEW mPrimReg "mPrimReg"
+   SetNameForView( mPrimReg, "mPrimReg", null, zLEVEL_TASK );
+
+   //:IF mPrimReg.PrimaryRegistrant DOES NOT EXIST
+   lTempInteger_1 = CheckExistenceOfEntity( mPrimReg, "PrimaryRegistrant" );
    if ( lTempInteger_1 != 0 )
    { 
 
-      //:// This should never happen!!!
-      //:CREATE ENTITY mSubreg.Subregistrant
-      RESULT = CreateEntity( mSubreg, "Subregistrant", zPOS_AFTER );
-      //:CREATE ENTITY mSubreg.SubregOrganization
-      RESULT = CreateEntity( mSubreg, "SubregOrganization", zPOS_AFTER );
-      //:CREATE ENTITY mSubreg.PhysicalAddress
-      RESULT = CreateEntity( mSubreg, "PhysicalAddress", zPOS_AFTER );
-      //:CREATE ENTITY mSubreg.MailingAddress
-      RESULT = CreateEntity( mSubreg, "MailingAddress", zPOS_AFTER );
-      //:CREATE ENTITY mSubreg.ContactPerson
-      RESULT = CreateEntity( mSubreg, "ContactPerson", zPOS_AFTER );
-      //:mSubreg.PhysicalAddress.Country = "USA"
-      SetAttributeFromString( mSubreg, "PhysicalAddress", "Country", "USA" );
-      //:mSubreg.MailingAddress.Country = "USA"
-      SetAttributeFromString( mSubreg, "MailingAddress", "Country", "USA" );
+      //:CREATE ENTITY mPrimReg.PrimaryRegistrant
+      RESULT = CreateEntity( mPrimReg, "PrimaryRegistrant", zPOS_AFTER );
+      //:CREATE ENTITY mPrimReg.Organization
+      RESULT = CreateEntity( mPrimReg, "Organization", zPOS_AFTER );
+      //:CREATE ENTITY mPrimReg.PhysicalAddress
+      RESULT = CreateEntity( mPrimReg, "PhysicalAddress", zPOS_AFTER );
+      //:CREATE ENTITY mPrimReg.MailingAddress
+      RESULT = CreateEntity( mPrimReg, "MailingAddress", zPOS_AFTER );
+      //:CREATE ENTITY mPrimReg.ContactPerson
+      RESULT = CreateEntity( mPrimReg, "ContactPerson", zPOS_AFTER );
+      //:mPrimReg.PhysicalAddress.Country = "USA"
+      SetAttributeFromString( mPrimReg, "PhysicalAddress", "Country", "USA" );
+      //:mPrimReg.MailingAddress.Country = "USA"
+      SetAttributeFromString( mPrimReg, "MailingAddress", "Country", "USA" );
       //:wWebXfer.Root.SameAs = "Y"
       SetAttributeFromString( wWebXfer, "Root", "SameAs", "Y" );
 
@@ -4861,54 +2919,45 @@ InitSubregistrantForUpdate( View     ViewToWindow )
 
    //:END
 
-   //:IF mSubreg.PhysicalAddress DOES NOT EXIST
-   lTempInteger_2 = CheckExistenceOfEntity( mSubreg, "PhysicalAddress" );
+   //:IF mPrimReg.PhysicalAddress DOES NOT EXIST
+   lTempInteger_2 = CheckExistenceOfEntity( mPrimReg, "PhysicalAddress" );
    if ( lTempInteger_2 != 0 )
    { 
-      //:CREATE ENTITY mSubreg.PhysicalAddress
-      RESULT = CreateEntity( mSubreg, "PhysicalAddress", zPOS_AFTER );
-      //:mSubreg.PhysicalAddress.Country = "USA"
-      SetAttributeFromString( mSubreg, "PhysicalAddress", "Country", "USA" );
+      //:CREATE ENTITY mPrimReg.PhysicalAddress
+      RESULT = CreateEntity( mPrimReg, "PhysicalAddress", zPOS_AFTER );
+      //:mPrimReg.PhysicalAddress.Country = "USA"
+      SetAttributeFromString( mPrimReg, "PhysicalAddress", "Country", "USA" );
    } 
 
    //:END
 
-   //:IF mSubreg.MailingAddress DOES NOT EXIST
-   lTempInteger_3 = CheckExistenceOfEntity( mSubreg, "MailingAddress" );
+   //:IF mPrimReg.MailingAddress DOES NOT EXIST
+   lTempInteger_3 = CheckExistenceOfEntity( mPrimReg, "MailingAddress" );
    if ( lTempInteger_3 != 0 )
    { 
-      //:CREATE ENTITY mSubreg.MailingAddress
-      RESULT = CreateEntity( mSubreg, "MailingAddress", zPOS_AFTER );
-      //:lID = mSubreg.MailingAddress.ID
-      {MutableInt mi_lID = new MutableInt( lID );
-             GetIntegerFromAttribute( mi_lID, mSubreg, "MailingAddress", "ID" );
-      lID = mi_lID.intValue( );}
+      //:CREATE ENTITY mPrimReg.MailingAddress
+      RESULT = CreateEntity( mPrimReg, "MailingAddress", zPOS_AFTER );
       //:wWebXfer.Root.SameAs = "Y"
       SetAttributeFromString( wWebXfer, "Root", "SameAs", "Y" );
-      //:SetMatchingAttributesByName( mSubreg, "MailingAddress",
-      //:                             mSubreg, "PhysicalAddress", zSET_NOTNULL )
-      SetMatchingAttributesByName( mSubreg, "MailingAddress", mSubreg, "PhysicalAddress", zSET_NOTNULL );
-      //:lID = mSubreg.MailingAddress.ID
-      {MutableInt mi_lID = new MutableInt( lID );
-             GetIntegerFromAttribute( mi_lID, mSubreg, "MailingAddress", "ID" );
-      lID = mi_lID.intValue( );}
+      //:SetMatchingAttributesByName( mPrimReg, "MailingAddress",
+      //:                             mPrimReg, "PhysicalAddress", zSET_NOTNULL )
+      SetMatchingAttributesByName( mPrimReg, "MailingAddress", mPrimReg, "PhysicalAddress", zSET_NOTNULL );
    } 
 
-   //:// mSubreg.MailingAddress.ID = lID
    //:END
 
-   //:IF mSubreg.ContactPerson DOES NOT EXIST
-   lTempInteger_4 = CheckExistenceOfEntity( mSubreg, "ContactPerson" );
+   //:IF mPrimReg.ContactPerson DOES NOT EXIST
+   lTempInteger_4 = CheckExistenceOfEntity( mPrimReg, "ContactPerson" );
    if ( lTempInteger_4 != 0 )
    { 
-      //:CREATE ENTITY mSubreg.ContactPerson
-      RESULT = CreateEntity( mSubreg, "ContactPerson", zPOS_AFTER );
+      //:CREATE ENTITY mPrimReg.ContactPerson
+      RESULT = CreateEntity( mPrimReg, "ContactPerson", zPOS_AFTER );
    } 
 
    //:END
 
-   //:wWebXfer.Root.AttemptLoginName = mSubreg.SubregOrganization.LoginName
-   SetAttributeFromAttribute( wWebXfer, "Root", "AttemptLoginName", mSubreg, "SubregOrganization", "LoginName" );
+   //:wWebXfer.Root.AttemptLoginRegistrant = mPrimReg.Organization.LoginName
+   SetAttributeFromAttribute( wWebXfer, "Root", "AttemptLoginRegistrant", mPrimReg, "Organization", "LoginName" );
    //:wWebXfer.Root.AttemptPassword = ""
    SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
    //:wWebXfer.Root.ConfirmPassword = ""
@@ -4916,777 +2965,18 @@ InitSubregistrantForUpdate( View     ViewToWindow )
    //:wWebXfer.Root.CurrentPassword = ""
    SetAttributeFromString( wWebXfer, "Root", "CurrentPassword", "" );
 
-   //:CreateTemporalSubobjectVersion( mSubreg, "Subregistrant" )
-   CreateTemporalSubobjectVersion( mSubreg, "Subregistrant" );
-   //:// CreateTemporalSubobjectVersion( mSubreg, "SubregOrganization" )
-   //:// CreateTemporalSubobjectVersion( mSubreg, "PhysicalAddress" )
-   //:// CreateTemporalSubobjectVersion( mSubreg, "MailingAddress" )
-   //:// CreateTemporalSubobjectVersion( mSubreg, "ContactPerson" )
+   //:CreateTemporalSubobjectVersion( mPrimReg, "PrimaryRegistrant" )
+   CreateTemporalSubobjectVersion( mPrimReg, "PrimaryRegistrant" );
+   //:// CreateTemporalSubobjectVersion( mPrimReg, "PhysicalAddress" )
+   //:// CreateTemporalSubobjectVersion( mPrimReg, "MailingAddress" )
+   //:// CreateTemporalSubobjectVersion( mPrimReg, "ContactPerson" )
 
-   //:szKeyRole = wWebXfer.Root.KeyRole
-   {MutableInt mi_lTempInteger_5 = new MutableInt( lTempInteger_5 );
-   StringBuilder sb_szKeyRole;
-   if ( szKeyRole == null )
-      sb_szKeyRole = new StringBuilder( 32 );
-   else
-      sb_szKeyRole = new StringBuilder( szKeyRole );
-       GetVariableFromAttribute( sb_szKeyRole, mi_lTempInteger_5, 'S', 2, wWebXfer, "Root", "KeyRole", "", 0 );
-   lTempInteger_5 = mi_lTempInteger_5.intValue( );
-   szKeyRole = sb_szKeyRole.toString( );}
-   //:IF szKeyRole = "S" // Subregistrant
-   if ( ZeidonStringCompare( szKeyRole, 1, 0, "S", 1, 0, 2 ) == 0 )
-   { 
-      //:SetDynamicBannerName( ViewToWindow, "wStartUp", "Subregistrant" )
-      {
-       ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-       m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "Subregistrant" );
-       // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-      }
-      //:ELSE
-   } 
-   else
-   { 
-      //:SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" )
-      {
-       ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-       m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" );
-       // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-      }
-   } 
-
-   //:END
-
-   //:wWebXfer.Root.Banner4 = mSubreg.Subregistrant.dNameEPA_Number
-   SetAttributeFromAttribute( wWebXfer, "Root", "Banner4", mSubreg, "Subregistrant", "dNameEPA_Number" );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:AddNewSubregistrant( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-AddNewSubregistrant( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW mSubreg  BASED ON LOD  mSubreg
-   zVIEW    mSubreg = new zVIEW( );
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-
-   //:GET VIEW mSubreg NAMED "mSubreg"
-   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
-   //:IF mSubreg != 0
-   if ( getView( mSubreg ) != null )
-   { 
-      //:DropObjectInstance( mSubreg )
-      DropObjectInstance( mSubreg );
-   } 
-
-   //:END
-
-   //:ACTIVATE mSubreg EMPTY
-   RESULT = ActivateEmptyObjectInstance( mSubreg, "mSubreg", ViewToWindow, zSINGLE );
-   //:NAME VIEW mSubreg "mSubreg"
-   SetNameForView( mSubreg, "mSubreg", null, zLEVEL_TASK );
-
-   //:CREATE ENTITY mSubreg.Subregistrant
-   RESULT = CreateEntity( mSubreg, "Subregistrant", zPOS_AFTER );
-   //:CREATE ENTITY mSubreg.SubregOrganization
-   RESULT = CreateEntity( mSubreg, "SubregOrganization", zPOS_AFTER );
-   //:CREATE ENTITY mSubreg.PhysicalAddress
-   RESULT = CreateEntity( mSubreg, "PhysicalAddress", zPOS_AFTER );
-   //:CREATE ENTITY mSubreg.MailingAddress
-   RESULT = CreateEntity( mSubreg, "MailingAddress", zPOS_AFTER );
-   //:CREATE ENTITY mSubreg.ContactPerson
-   RESULT = CreateEntity( mSubreg, "ContactPerson", zPOS_AFTER );
-
-   //:mSubreg.PhysicalAddress.Country = "USA"
-   SetAttributeFromString( mSubreg, "PhysicalAddress", "Country", "USA" );
-   //:mSubreg.MailingAddress.Country = "USA"
-   SetAttributeFromString( mSubreg, "MailingAddress", "Country", "USA" );
-   //:wWebXfer.Root.SameAs = "Y"
-   SetAttributeFromString( wWebXfer, "Root", "SameAs", "Y" );
-
-   //:wWebXfer.Root.AttemptLoginName = ""
-   SetAttributeFromString( wWebXfer, "Root", "AttemptLoginName", "" );
-   //:wWebXfer.Root.AttemptPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
-   //:wWebXfer.Root.ConfirmPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "ConfirmPassword", "" );
-   //:wWebXfer.Root.CurrentPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "CurrentPassword", "" );
-
-   //:CreateTemporalSubobjectVersion( mSubreg, "Subregistrant" )
-   CreateTemporalSubobjectVersion( mSubreg, "Subregistrant" );
-   //:// CreateTemporalSubobjectVersion( mSubreg, "SubregOrganization" )
-   //:// CreateTemporalSubobjectVersion( mSubreg, "PhysicalAddress" )
-   //:// CreateTemporalSubobjectVersion( mSubreg, "MailingAddress" )
-   //:// CreateTemporalSubobjectVersion( mSubreg, "ContactPerson" )
-
-   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" )
+   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "Administration" )
    {
     ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" );
+    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "Administration" );
     // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
    }
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:CancelUpdateSubregistrant( VIEW ViewToWindow )
-
-//:   VIEW mSubreg REGISTERED AS mSubreg
-public int 
-CancelUpdateSubregistrant( View     ViewToWindow )
-{
-   zVIEW    mSubreg = new zVIEW( );
-   int      RESULT = 0;
-
-   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
-
-   //:// CancelSubobject( mSubreg, "ContactPerson" )
-   //:// CancelSubobject( mSubreg, "PhysicalAddress" )
-   //:// CancelSubobject( mSubreg, "MailingAddress" )
-   //:CancelSubobject( mSubreg, "Subregistrant" )
-   CancelSubobject( mSubreg, "Subregistrant" );
-   //:DropObjectInstance( mSubreg )
-   DropObjectInstance( mSubreg );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:AcceptUpdateSubregistrant( VIEW ViewToWindow )
-
-//:   VIEW mSubreg  REGISTERED AS mSubreg
-public int 
-AcceptUpdateSubregistrant( View     ViewToWindow )
-{
-   zVIEW    mSubreg = new zVIEW( );
-   int      RESULT = 0;
-   //:SHORT nRC
-   int      nRC = 0;
-
-   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
-
-   //:nRC = ValidateSubregistrant( ViewToWindow )
-   nRC = ValidateSubregistrant( ViewToWindow );
-   //:IF nRC = 0
-   if ( nRC == 0 )
-   { 
-      //:DropObjectInstance( mSubreg )
-      DropObjectInstance( mSubreg );
-   } 
-
-   //:END
-
-   //:RETURN nRC
-   return( nRC );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:CancelNewSubregistrant( VIEW ViewToWindow )
-
-//:   VIEW mSubreg REGISTERED AS mSubreg
-public int 
-CancelNewSubregistrant( View     ViewToWindow )
-{
-   zVIEW    mSubreg = new zVIEW( );
-   int      RESULT = 0;
-
-   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
-
-   //:// CancelSubobject( mSubreg, "ContactPerson" )
-   //:// CancelSubobject( mSubreg, "PhysicalAddress" )
-   //:// CancelSubobject( mSubreg, "MailingAddress" )
-   //:CancelSubobject( mSubreg, "Subregistrant" )
-   CancelSubobject( mSubreg, "Subregistrant" );
-   //:DropObjectInstance( mSubreg )
-   DropObjectInstance( mSubreg );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:AcceptUpdateSubregUser( VIEW ViewToWindow )
-
-public int 
-AcceptUpdateSubregUser( View     ViewToWindow )
-{
-
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:CancelNewSubregUser( VIEW ViewToWindow )
-
-public int 
-CancelNewSubregUser( View     ViewToWindow )
-{
-
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:AcceptNewSubregistrant( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-AcceptNewSubregistrant( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW lPrimReg REGISTERED AS lPrimReg
-   zVIEW    lPrimReg = new zVIEW( );
-   //:VIEW mSubreg  REGISTERED AS mSubreg
-   zVIEW    mSubreg = new zVIEW( );
-   //:STRING (  50  ) szAttemptLoginName
-   String   szAttemptLoginName = null;
-   //:STRING (  50  ) szRegistrantName
-   String   szRegistrantName = null;
-   //:STRING ( 128  ) szAttemptPassword
-   String   szAttemptPassword = null;
-   //:STRING ( 128  ) szConfirmPassword
-   String   szConfirmPassword = null;
-   //:INTEGER         lAttemptLoginNameLth
-   int      lAttemptLoginNameLth = 0;
-   //:INTEGER         lRegistrantNameLth
-   int      lRegistrantNameLth = 0;
-   //:INTEGER         lPasswordLth
-   int      lPasswordLth = 0;
-   //:INTEGER         lID
-   int      lID = 0;
-   int      lTempInteger_0 = 0;
-   int      lTempInteger_1 = 0;
-   int      lTempInteger_2 = 0;
-   int      lTempInteger_3 = 0;
-   zVIEW    vTempViewVar_0 = new zVIEW( );
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
-
-   //:// Ensure registrant login name is not blank and is unique.
-   //:szAttemptLoginName = wWebXfer.Root.AttemptLoginName
-   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
-   StringBuilder sb_szAttemptLoginName;
-   if ( szAttemptLoginName == null )
-      sb_szAttemptLoginName = new StringBuilder( 32 );
-   else
-      sb_szAttemptLoginName = new StringBuilder( szAttemptLoginName );
-       GetVariableFromAttribute( sb_szAttemptLoginName, mi_lTempInteger_0, 'S', 51, wWebXfer, "Root", "AttemptLoginName", "", 0 );
-   lTempInteger_0 = mi_lTempInteger_0.intValue( );
-   szAttemptLoginName = sb_szAttemptLoginName.toString( );}
-   //:lAttemptLoginNameLth = zGetStringLen( szAttemptLoginName )
-   lAttemptLoginNameLth = zGetStringLen( szAttemptLoginName );
-   //:TraceLineS( "Registrant Login Name: ", szAttemptLoginName )
-   TraceLineS( "Registrant Login Name: ", szAttemptLoginName );
-   //:TraceLineI( "Registrant Login Name Length: ", lAttemptLoginNameLth )
-   TraceLineI( "Registrant Login Name Length: ", lAttemptLoginNameLth );
-   //:IF lAttemptLoginNameLth < 1
-   if ( lAttemptLoginNameLth < 1 )
-   { 
-      //:MessageSend( ViewToWindow, "", "New Subregistrant",
-      //:             "The registrant Login Name cannot be blank.",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "New Subregistrant", "The registrant Login Name cannot be blank.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:RETURN 2
-      if(8==8)return( 2 );
-      //:ELSE
-   } 
-   else
-   { 
-      //:SET CURSOR FIRST lPrimReg.Subregistrant WHERE lPrimReg.SubregOrganization.LoginName = szAttemptLoginName
-      RESULT = SetCursorFirstEntity( lPrimReg, "Subregistrant", "" );
-      if ( RESULT > zCURSOR_UNCHANGED )
-      { 
-         while ( RESULT > zCURSOR_UNCHANGED && ( CompareAttributeToString( lPrimReg, "SubregOrganization", "LoginName", szAttemptLoginName ) != 0 ) )
-         { 
-            RESULT = SetCursorNextEntity( lPrimReg, "Subregistrant", "" );
-         } 
-
-      } 
-
-      //:IF RESULT >= 0
-      if ( RESULT >= 0 )
-      { 
-         //:MessageSend( ViewToWindow, "", "New Subregistrant",
-         //:             "The registrant Login Name must be unique.",
-         //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-         MessageSend( ViewToWindow, "", "New Subregistrant", "The registrant Login Name must be unique.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-         //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-         m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-         //:RETURN 2
-         if(8==8)return( 2 );
-      } 
-
-      //:END
-   } 
-
-   //:END
-
-   //:// Ensure registrant name is not blank.
-   //:szRegistrantName = mSubreg.SubregOrganization.Name
-   {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
-   StringBuilder sb_szRegistrantName;
-   if ( szRegistrantName == null )
-      sb_szRegistrantName = new StringBuilder( 32 );
-   else
-      sb_szRegistrantName = new StringBuilder( szRegistrantName );
-       GetVariableFromAttribute( sb_szRegistrantName, mi_lTempInteger_1, 'S', 51, mSubreg, "SubregOrganization", "Name", "", 0 );
-   lTempInteger_1 = mi_lTempInteger_1.intValue( );
-   szRegistrantName = sb_szRegistrantName.toString( );}
-   //:lRegistrantNameLth = zGetStringLen( szRegistrantName )
-   lRegistrantNameLth = zGetStringLen( szRegistrantName );
-   //:TraceLineS( "Registrant Name: ", szRegistrantName )
-   TraceLineS( "Registrant Name: ", szRegistrantName );
-   //:TraceLineI( "Registrant Name Length: ", lRegistrantNameLth )
-   TraceLineI( "Registrant Name Length: ", lRegistrantNameLth );
-   //:IF lRegistrantNameLth < 1
-   if ( lRegistrantNameLth < 1 )
-   { 
-      //:MessageSend( ViewToWindow, "", "Update Subregistrant",
-      //:             "The registrant Organization Name cannot be blank.",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Update Subregistrant", "The registrant Organization Name cannot be blank.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:RETURN 2
-      if(8==8)return( 2 );
-   } 
-
-   //:END
-
-   //:szAttemptPassword = wWebXfer.Root.AttemptPassword
-   {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
-   StringBuilder sb_szAttemptPassword;
-   if ( szAttemptPassword == null )
-      sb_szAttemptPassword = new StringBuilder( 32 );
-   else
-      sb_szAttemptPassword = new StringBuilder( szAttemptPassword );
-       GetVariableFromAttribute( sb_szAttemptPassword, mi_lTempInteger_2, 'S', 129, wWebXfer, "Root", "AttemptPassword", "", 0 );
-   lTempInteger_2 = mi_lTempInteger_2.intValue( );
-   szAttemptPassword = sb_szAttemptPassword.toString( );}
-   //:szConfirmPassword = wWebXfer.Root.ConfirmPassword
-   {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
-   StringBuilder sb_szConfirmPassword;
-   if ( szConfirmPassword == null )
-      sb_szConfirmPassword = new StringBuilder( 32 );
-   else
-      sb_szConfirmPassword = new StringBuilder( szConfirmPassword );
-       GetVariableFromAttribute( sb_szConfirmPassword, mi_lTempInteger_3, 'S', 129, wWebXfer, "Root", "ConfirmPassword", "", 0 );
-   lTempInteger_3 = mi_lTempInteger_3.intValue( );
-   szConfirmPassword = sb_szConfirmPassword.toString( );}
-
-   //:// 1: Ensure attempted password matches confirm password.
-   //:IF szAttemptPassword != szConfirmPassword
-   if ( ZeidonStringCompare( szAttemptPassword, 1, 0, szConfirmPassword, 1, 0, 129 ) != 0 )
-   { 
-      //:// TraceLineS( szAttemptPassword, szConfirmPassword )
-      //:MessageSend( ViewToWindow, "", "Update Subregistrant",
-      //:             "The new password and the confirmation password do not match.",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Update Subregistrant", "The new password and the confirmation password do not match.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:RETURN 2
-      if(8==8)return( 2 );
-   } 
-
-   //:END
-
-   //:// 2: Ensure new password is at least 8 characters long.
-   //:lPasswordLth = zGetStringLen( szConfirmPassword )
-   lPasswordLth = zGetStringLen( szConfirmPassword );
-   //:TraceLineI( "Password Length: ", lPasswordLth )
-   TraceLineI( "Password Length: ", lPasswordLth );
-   //:IF lPasswordLth < 8
-   if ( lPasswordLth < 8 )
-   { 
-      //:MessageSend( ViewToWindow, "", "Update Subregistrant",
-      //:             "The new password must be at least 8 characters long.",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Update Subregistrant", "The new password must be at least 8 characters long.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:RETURN 2
-      if(8==8)return( 2 );
-   } 
-
-   //:END
-
-   //:// Set login name to new login name.
-   //:mSubreg.SubregOrganization.LoginName = szAttemptLoginName
-   SetAttributeFromString( mSubreg, "SubregOrganization", "LoginName", szAttemptLoginName );
-
-   //:// Set user password to new password.
-   //:// SetAttrFromStrByContext( mSubreg, "User", "UserPassword", szConfirmPassword, "Password" )
-   //:mSubreg.SubregOrganization.AdministratorPassword = szConfirmPassword
-   SetAttributeFromString( mSubreg, "SubregOrganization", "AdministratorPassword", szConfirmPassword );
-   //:mSubreg.SubregOrganization.Role = "S"  // Subregistrant
-   SetAttributeFromString( mSubreg, "SubregOrganization", "Role", "S" );
-
-   //:// AcceptSubobject( mSubreg, "ContactPerson" )
-   //:// AcceptSubobject( mSubreg, "PhysicalAddress" )
-   //:// AcceptSubobject( mSubreg, "MailingAddress" )
-   //:AcceptSubobject( mSubreg, "Subregistrant" )
-   AcceptSubobject( mSubreg, "Subregistrant" );
-   //:IF wWebXfer.Root.SameAs = "Y"
-   if ( CompareAttributeToString( wWebXfer, "Root", "SameAs", "Y" ) == 0 )
-   { 
-      //:DELETE ENTITY mSubreg.MailingAddress
-      RESULT = DeleteEntity( mSubreg, "MailingAddress", zPOS_NEXT );
-   } 
-
-   //:END
-
-   //:CREATE ENTITY mSubreg.PrimarySub
-   RESULT = CreateEntity( mSubreg, "PrimarySub", zPOS_AFTER );
-   //:IncludeSubobjectFromSubobject( mSubreg, "PrimaryRegistrant",
-   //:                               lPrimReg, "PrimaryRegistrant", zPOS_LAST )
-   IncludeSubobjectFromSubobject( mSubreg, "PrimaryRegistrant", lPrimReg, "PrimaryRegistrant", zPOS_LAST );
-   //:// MessageSend( ViewToWindow, ", "Accept New Subregistrant",
-   //://              "Check out mPrimReg in Object Browser.",
-   //://              zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-
-   //:Commit mSubreg
-   RESULT = CommitObjectInstance( mSubreg );
-
-   //:lID = lPrimReg.PrimaryRegistrant.ID
-   {MutableInt mi_lID = new MutableInt( lID );
-       GetIntegerFromAttribute( mi_lID, lPrimReg, "PrimaryRegistrant", "ID" );
-   lID = mi_lID.intValue( );}
-   //:DropObjectInstance( mSubreg )
-   DropObjectInstance( mSubreg );
-   //:DropObjectInstance( lPrimReg )
-   DropObjectInstance( lPrimReg );
-
-   //:ACTIVATE lPrimReg WHERE lPrimReg.PrimaryRegistrant.ID = lID
-   o_fnLocalBuildQual_21( ViewToWindow, vTempViewVar_0, lID );
-   RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
-   DropView( vTempViewVar_0 );
-   //:NAME VIEW lPrimReg "lPrimReg"
-   SetNameForView( lPrimReg, "lPrimReg", null, zLEVEL_TASK );
-   return( 0 );
-// // MessageSend( ViewToWindow, ", "Accept New Subregistrant",
-// //              "Check out lPrimReg in Object Browser.",
-// //              zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:AcceptNewSubregUser( VIEW ViewToWindow )
-
-public int 
-AcceptNewSubregUser( View     ViewToWindow )
-{
-
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:AcceptNewPrimRegUser( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-AcceptNewPrimRegUser( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW mCurrentUser REGISTERED AS mCurrentUser
-   zVIEW    mCurrentUser = new zVIEW( );
-   //:VIEW mPerson  REGISTERED AS mPerson
-   zVIEW    mPerson = new zVIEW( );
-   //:VIEW qPrimReg BASED ON LOD  qPrimReg
-   zVIEW    qPrimReg = new zVIEW( );
-   //:VIEW lPrimReg BASED ON LOD  lPrimReg
-   zVIEW    lPrimReg = new zVIEW( );
-   //:// VIEW mPrimReg BASED ON LOD  mPrimReg
-   //:STRING (  50  ) szUserName
-   String   szUserName = null;
-   //:STRING ( 128 ) szAttemptPassword
-   String   szAttemptPassword = null;
-   //:STRING ( 128 ) szConfirmPassword
-   String   szConfirmPassword = null;
-   //:INTEGER         lUserNameLth
-   int      lUserNameLth = 0;
-   //:INTEGER         lPasswordLth
-   int      lPasswordLth = 0;
-   //:INTEGER         lControl
-   int      lControl = 0;
-   //:INTEGER         lID
-   int      lID = 0;
-   //:SHORT           nRC
-   int      nRC = 0;
-   int      lTempInteger_0 = 0;
-   int      lTempInteger_1 = 0;
-   int      lTempInteger_2 = 0;
-   int      lTempInteger_3 = 0;
-   int      lTempInteger_4 = 0;
-   int      lTempInteger_5 = 0;
-   int      lTempInteger_6 = 0;
-   zVIEW    vTempViewVar_0 = new zVIEW( );
-   zVIEW    vTempViewVar_1 = new zVIEW( );
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mCurrentUser, "mCurrentUser", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mPerson, "mPerson", ViewToWindow, zLEVEL_TASK );
-
-   //:GET VIEW lPrimReg NAMED "lPrimReg"
-   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
-
-   //:// Ensure user login name is not blank and is unique.
-   //:szUserName = mCurrentUser.User.UserName
-   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
-   StringBuilder sb_szUserName;
-   if ( szUserName == null )
-      sb_szUserName = new StringBuilder( 32 );
-   else
-      sb_szUserName = new StringBuilder( szUserName );
-       GetVariableFromAttribute( sb_szUserName, mi_lTempInteger_0, 'S', 51, mCurrentUser, "User", "UserName", "", 0 );
-   lTempInteger_0 = mi_lTempInteger_0.intValue( );
-   szUserName = sb_szUserName.toString( );}
-   //:lUserNameLth = zGetStringLen( szUserName )
-   lUserNameLth = zGetStringLen( szUserName );
-   //:TraceLineS( "User Login Name: ", szUserName )
-   TraceLineS( "User Login Name: ", szUserName );
-   //:TraceLineI( "User Login Name Length: ", lUserNameLth )
-   TraceLineI( "User Login Name Length: ", lUserNameLth );
-   //:IF lUserNameLth < 1
-   if ( lUserNameLth < 1 )
-   { 
-
-      //:MessageSend( ViewToWindow, "", "New Primary Registrant User",
-      //:             "The User Name cannot be blank.",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "New Primary Registrant User", "The User Name cannot be blank.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:RETURN 2
-      if(8==8)return( 2 );
-
-      //:ELSE
-   } 
-   else
-   { 
-
-      //:lControl = zQUAL_STRING + zPOS_FIRST + zTEST_CSR_RESULT
-      lControl = zQUAL_STRING + zPOS_FIRST + zTEST_CSR_RESULT;
-      //:IF SetEntityCursor( lPrimReg, "User", "UserName", lControl,
-      //:                    szUserName, "", "", 0, "", "" ) >= zCURSOR_SET
-      lTempInteger_1 = SetEntityCursor( lPrimReg, "User", "UserName", lControl, szUserName, "", "", 0, "", "" );
-      if ( lTempInteger_1 >= zCURSOR_SET )
-      { 
-         //:MessageSend( ViewToWindow, "", "New Primary Registrant User",
-         //:             "The User Name must be unique.",
-         //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-         MessageSend( ViewToWindow, "", "New Primary Registrant User", "The User Name must be unique.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-         //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-         m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-         //:RETURN 2
-         if(8==8)return( 2 );
-      } 
-
-
-      //:END
-   } 
-
-   //:END
-
-   //:// Ensure user first and last names are not blank.
-   //:szUserName = mPerson.Person.FirstName
-   {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
-   StringBuilder sb_szUserName;
-   if ( szUserName == null )
-      sb_szUserName = new StringBuilder( 32 );
-   else
-      sb_szUserName = new StringBuilder( szUserName );
-       GetVariableFromAttribute( sb_szUserName, mi_lTempInteger_2, 'S', 51, mPerson, "Person", "FirstName", "", 0 );
-   lTempInteger_2 = mi_lTempInteger_2.intValue( );
-   szUserName = sb_szUserName.toString( );}
-   //:lUserNameLth = zGetStringLen( szUserName )
-   lUserNameLth = zGetStringLen( szUserName );
-   //:TraceLineS( "First Name: ", szUserName )
-   TraceLineS( "First Name: ", szUserName );
-   //:TraceLineI( "First Name Length: ", lUserNameLth )
-   TraceLineI( "First Name Length: ", lUserNameLth );
-   //:IF lUserNameLth < 1
-   if ( lUserNameLth < 1 )
-   { 
-      //:MessageSend( ViewToWindow, "", "New Primary Registrant User",
-      //:             "The user First Name cannot be blank.",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "New Primary Registrant User", "The user First Name cannot be blank.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:RETURN 2
-      if(8==8)return( 2 );
-   } 
-
-   //:END
-
-   //:szUserName = mPerson.Person.LastName
-   {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
-   StringBuilder sb_szUserName;
-   if ( szUserName == null )
-      sb_szUserName = new StringBuilder( 32 );
-   else
-      sb_szUserName = new StringBuilder( szUserName );
-       GetVariableFromAttribute( sb_szUserName, mi_lTempInteger_3, 'S', 51, mPerson, "Person", "LastName", "", 0 );
-   lTempInteger_3 = mi_lTempInteger_3.intValue( );
-   szUserName = sb_szUserName.toString( );}
-   //:lUserNameLth = zGetStringLen( szUserName )
-   lUserNameLth = zGetStringLen( szUserName );
-   //:TraceLineS( "Last Name: ", szUserName )
-   TraceLineS( "Last Name: ", szUserName );
-   //:TraceLineI( "Last Name Length: ", lUserNameLth )
-   TraceLineI( "Last Name Length: ", lUserNameLth );
-   //:IF lUserNameLth < 1
-   if ( lUserNameLth < 1 )
-   { 
-      //:MessageSend( ViewToWindow, "", "New Primary Registrant User",
-      //:             "The user Last Name cannot be blank.",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "New Primary Registrant User", "The user Last Name cannot be blank.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:RETURN 2
-      if(8==8)return( 2 );
-   } 
-
-   //:END
-
-   //:szAttemptPassword = wWebXfer.Root.AttemptPassword
-   {MutableInt mi_lTempInteger_4 = new MutableInt( lTempInteger_4 );
-   StringBuilder sb_szAttemptPassword;
-   if ( szAttemptPassword == null )
-      sb_szAttemptPassword = new StringBuilder( 32 );
-   else
-      sb_szAttemptPassword = new StringBuilder( szAttemptPassword );
-       GetVariableFromAttribute( sb_szAttemptPassword, mi_lTempInteger_4, 'S', 129, wWebXfer, "Root", "AttemptPassword", "", 0 );
-   lTempInteger_4 = mi_lTempInteger_4.intValue( );
-   szAttemptPassword = sb_szAttemptPassword.toString( );}
-   //:szConfirmPassword = wWebXfer.Root.ConfirmPassword
-   {MutableInt mi_lTempInteger_5 = new MutableInt( lTempInteger_5 );
-   StringBuilder sb_szConfirmPassword;
-   if ( szConfirmPassword == null )
-      sb_szConfirmPassword = new StringBuilder( 32 );
-   else
-      sb_szConfirmPassword = new StringBuilder( szConfirmPassword );
-       GetVariableFromAttribute( sb_szConfirmPassword, mi_lTempInteger_5, 'S', 129, wWebXfer, "Root", "ConfirmPassword", "", 0 );
-   lTempInteger_5 = mi_lTempInteger_5.intValue( );
-   szConfirmPassword = sb_szConfirmPassword.toString( );}
-
-   //:// 1: Ensure attempted password matches confirm password.
-   //:IF szAttemptPassword != szConfirmPassword
-   if ( ZeidonStringCompare( szAttemptPassword, 1, 0, szConfirmPassword, 1, 0, 129 ) != 0 )
-   { 
-      //:// TraceLineS( szAttemptPassword, szConfirmPassword )
-      //:MessageSend( ViewToWindow, "", "New Primary Registrant User",
-      //:             "The new password and the confirmation password do not match.",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "New Primary Registrant User", "The new password and the confirmation password do not match.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:RETURN 2
-      if(8==8)return( 2 );
-   } 
-
-   //:END
-
-   //:// 2: Ensure new password is at least 8 characters long.
-   //:lPasswordLth = zGetStringLen( szConfirmPassword )
-   lPasswordLth = zGetStringLen( szConfirmPassword );
-   //:TraceLineI( "Password Length: ", lPasswordLth )
-   TraceLineI( "Password Length: ", lPasswordLth );
-   //:IF lPasswordLth < 8
-   if ( lPasswordLth < 8 )
-   { 
-      //:MessageSend( ViewToWindow, "", "New Primary Registrant User",
-      //:             "The new password must be at least 8 characters long.",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "New Primary Registrant User", "The new password must be at least 8 characters long.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:RETURN 2
-      if(8==8)return( 2 );
-   } 
-
-   //:END
-
-   //:// Set user password to new password.
-   //:// SetAttrFromStrByContext( qPrimReg, "User", "UserPassword", szConfirmPassword, "Password" )
-   //:mCurrentUser.User.UserPassword = szConfirmPassword
-   SetAttributeFromString( mCurrentUser, "User", "UserPassword", szConfirmPassword );
-
-   //:ACTIVATE qPrimReg WHERE qPrimReg.PrimaryRegistrant.ID = lPrimReg.PrimaryRegistrant.ID
-   {MutableInt mi_lTempInteger_6 = new MutableInt( lTempInteger_6 );
-       GetIntegerFromAttribute( mi_lTempInteger_6, lPrimReg, "PrimaryRegistrant", "ID" );
-   lTempInteger_6 = mi_lTempInteger_6.intValue( );}
-   o_fnLocalBuildQual_30( ViewToWindow, vTempViewVar_0, lTempInteger_6 );
-   RESULT = ActivateObjectInstance( qPrimReg, "qPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
-   DropView( vTempViewVar_0 );
-   //:NAME VIEW qPrimReg "qPrimReg"
-   SetNameForView( qPrimReg, "qPrimReg", null, zLEVEL_TASK );
-
-   //:// AcceptSubobject( mPerson, "Address" )
-   //:AcceptSubobject( mPerson, "Person" )
-   AcceptSubobject( mPerson, "Person" );
-   //:IncludeSubobjectFromSubobject( mPerson, "PrimaryRegistrant",
-   //:                               qPrimReg, "PrimaryRegistrant", zPOS_LAST )
-   IncludeSubobjectFromSubobject( mPerson, "PrimaryRegistrant", qPrimReg, "PrimaryRegistrant", zPOS_LAST );
-   //:Commit mPerson
-   RESULT = CommitObjectInstance( mPerson );
-
-   //:AcceptSubobject( mCurrentUser, "User" )
-   AcceptSubobject( mCurrentUser, "User" );
-   //:IncludeSubobjectFromSubobject( mCurrentUser, "Person",
-   //:                               mPerson, "Person", zPOS_BEFORE )
-   IncludeSubobjectFromSubobject( mCurrentUser, "Person", mPerson, "Person", zPOS_BEFORE );
-   //:Commit mCurrentUser
-   RESULT = CommitObjectInstance( mCurrentUser );
-
-   //:lID = lPrimReg.PrimaryRegistrant.ID
-   {MutableInt mi_lID = new MutableInt( lID );
-       GetIntegerFromAttribute( mi_lID, lPrimReg, "PrimaryRegistrant", "ID" );
-   lID = mi_lID.intValue( );}
-
-   //:DropObjectInstance( mPerson )
-   DropObjectInstance( mPerson );
-   //:DropObjectInstance( mCurrentUser )
-   DropObjectInstance( mCurrentUser );
-   //:DropObjectInstance( qPrimReg )
-   DropObjectInstance( qPrimReg );
-   //:DropObjectInstance( lPrimReg )
-   DropObjectInstance( lPrimReg );
-
-   //:// Activate the "selected" primary registrant ... just in case someone added or
-   //:// deleted a primary registrant user.
-   //:ACTIVATE lPrimReg WHERE lPrimReg.PrimaryRegistrant.ID = lID
-   o_fnLocalBuildQual_31( ViewToWindow, vTempViewVar_1, lID );
-   RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, vTempViewVar_1, zSINGLE );
-   DropView( vTempViewVar_1 );
-   //:NAME VIEW lPrimReg "lPrimReg"
-   SetNameForView( lPrimReg, "lPrimReg", null, zLEVEL_TASK );
    return( 0 );
 // END
 } 
@@ -5972,340 +3262,6 @@ AcceptNewPrimaryRegistrant( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
-//:AcceptNewAdministrator( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-AcceptNewAdministrator( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW mePamms  REGISTERED AS mePamms
-   zVIEW    mePamms = new zVIEW( );
-   //:STRING ( 128  ) szAttemptPassword
-   String   szAttemptPassword = null;
-   //:STRING ( 128  ) szConfirmPassword
-   String   szConfirmPassword = null;
-   //:INTEGER         lRegistrantNameLth
-   int      lRegistrantNameLth = 0;
-   //:INTEGER         lPasswordLth
-   int      lPasswordLth = 0;
-   //:SHORT           nRC
-   int      nRC = 0;
-   int      lTempInteger_0 = 0;
-   int      lTempInteger_1 = 0;
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mePamms, "mePamms", ViewToWindow, zLEVEL_TASK );
-
-   //:szAttemptPassword = wWebXfer.Root.AttemptPassword
-   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
-   StringBuilder sb_szAttemptPassword;
-   if ( szAttemptPassword == null )
-      sb_szAttemptPassword = new StringBuilder( 32 );
-   else
-      sb_szAttemptPassword = new StringBuilder( szAttemptPassword );
-       GetVariableFromAttribute( sb_szAttemptPassword, mi_lTempInteger_0, 'S', 129, wWebXfer, "Root", "AttemptPassword", "", 0 );
-   lTempInteger_0 = mi_lTempInteger_0.intValue( );
-   szAttemptPassword = sb_szAttemptPassword.toString( );}
-   //:szConfirmPassword = wWebXfer.Root.ConfirmPassword
-   {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
-   StringBuilder sb_szConfirmPassword;
-   if ( szConfirmPassword == null )
-      sb_szConfirmPassword = new StringBuilder( 32 );
-   else
-      sb_szConfirmPassword = new StringBuilder( szConfirmPassword );
-       GetVariableFromAttribute( sb_szConfirmPassword, mi_lTempInteger_1, 'S', 129, wWebXfer, "Root", "ConfirmPassword", "", 0 );
-   lTempInteger_1 = mi_lTempInteger_1.intValue( );
-   szConfirmPassword = sb_szConfirmPassword.toString( );}
-
-   //:// 1: Ensure attempted password matches confirm password.
-   //:IF szAttemptPassword != szConfirmPassword
-   if ( ZeidonStringCompare( szAttemptPassword, 1, 0, szConfirmPassword, 1, 0, 129 ) != 0 )
-   { 
-      //:// TraceLineS( szAttemptPassword, szConfirmPassword )
-      //:MessageSend( ViewToWindow, "", "Accept New Administrator",
-      //:             "The new password and the confirmation password do not match.",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Accept New Administrator", "The new password and the confirmation password do not match.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:RETURN 2
-      if(8==8)return( 2 );
-   } 
-
-   //:END
-
-   //:// 2: Ensure new password is at least 8 characters long.
-   //:lPasswordLth = zGetStringLen( szConfirmPassword )
-   lPasswordLth = zGetStringLen( szConfirmPassword );
-   //:TraceLineI( "Password Length: ", lPasswordLth )
-   TraceLineI( "Password Length: ", lPasswordLth );
-   //:IF lPasswordLth < 8
-   if ( lPasswordLth < 8 )
-   { 
-      //:MessageSend( ViewToWindow, "", "Accept New Administrator",
-      //:             "The new password must be at least 8 characters long.",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Accept New Administrator", "The new password must be at least 8 characters long.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:RETURN 2
-      if(8==8)return( 2 );
-   } 
-
-   //:END
-
-   //:// Set user password to new password.
-   //:// SetAttrFromStrByContext( mPrimReg, "User", "UserPassword", szVerifyPassword, "Password" )
-   //:mePamms.Organization.AdministratorPassword = szConfirmPassword
-   SetAttributeFromString( mePamms, "Organization", "AdministratorPassword", szConfirmPassword );
-   //:mePamms.Organization.LastLoginDateTime = wWebXfer.Root.dCurrentDateTime
-   SetAttributeFromAttribute( mePamms, "Organization", "LastLoginDateTime", wWebXfer, "Root", "dCurrentDateTime" );
-
-   //:wWebXfer.Root.AttemptPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
-   //:wWebXfer.Root.ConfirmPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "ConfirmPassword", "" );
-   //:wWebXfer.Root.CurrentPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "CurrentPassword", "" );
-
-   //:COMMIT mePamms
-   RESULT = CommitObjectInstance( mePamms );
-   //:DropObjectInstance( mePamms )
-   DropObjectInstance( mePamms );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:InitPrimaryRegistrantForUpdate( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-InitPrimaryRegistrantForUpdate( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW lPrimReg REGISTERED AS lPrimReg
-   zVIEW    lPrimReg = new zVIEW( );
-   //:VIEW mPrimReg BASED ON LOD  mPrimReg
-   zVIEW    mPrimReg = new zVIEW( );
-   int      lTempInteger_0 = 0;
-   zVIEW    vTempViewVar_0 = new zVIEW( );
-   int      lTempInteger_1 = 0;
-   int      lTempInteger_2 = 0;
-   int      lTempInteger_3 = 0;
-   int      lTempInteger_4 = 0;
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
-
-   //:GET VIEW mPrimReg NAMED "mPrimReg"
-   RESULT = GetViewByName( mPrimReg, "mPrimReg", ViewToWindow, zLEVEL_TASK );
-   //:IF mPrimReg != 0
-   if ( getView( mPrimReg ) != null )
-   { 
-      //:DropObjectInstance( mPrimReg )
-      DropObjectInstance( mPrimReg );
-   } 
-
-   //:END
-
-   //:// If this is the first time into the system, this is the administrator.
-   //:// Otherwise, just create a new primary registrant.
-   //:ACTIVATE mPrimReg WHERE mPrimReg.PrimaryRegistrant.ID = lPrimReg.PrimaryRegistrant.ID
-   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
-       GetIntegerFromAttribute( mi_lTempInteger_0, lPrimReg, "PrimaryRegistrant", "ID" );
-   lTempInteger_0 = mi_lTempInteger_0.intValue( );}
-   o_fnLocalBuildQual_10( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
-   RESULT = ActivateObjectInstance( mPrimReg, "mPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
-   DropView( vTempViewVar_0 );
-   //:NAME VIEW mPrimReg "mPrimReg"
-   SetNameForView( mPrimReg, "mPrimReg", null, zLEVEL_TASK );
-
-   //:IF mPrimReg.PrimaryRegistrant DOES NOT EXIST
-   lTempInteger_1 = CheckExistenceOfEntity( mPrimReg, "PrimaryRegistrant" );
-   if ( lTempInteger_1 != 0 )
-   { 
-
-      //:CREATE ENTITY mPrimReg.PrimaryRegistrant
-      RESULT = CreateEntity( mPrimReg, "PrimaryRegistrant", zPOS_AFTER );
-      //:CREATE ENTITY mPrimReg.Organization
-      RESULT = CreateEntity( mPrimReg, "Organization", zPOS_AFTER );
-      //:CREATE ENTITY mPrimReg.PhysicalAddress
-      RESULT = CreateEntity( mPrimReg, "PhysicalAddress", zPOS_AFTER );
-      //:CREATE ENTITY mPrimReg.MailingAddress
-      RESULT = CreateEntity( mPrimReg, "MailingAddress", zPOS_AFTER );
-      //:CREATE ENTITY mPrimReg.ContactPerson
-      RESULT = CreateEntity( mPrimReg, "ContactPerson", zPOS_AFTER );
-      //:mPrimReg.PhysicalAddress.Country = "USA"
-      SetAttributeFromString( mPrimReg, "PhysicalAddress", "Country", "USA" );
-      //:mPrimReg.MailingAddress.Country = "USA"
-      SetAttributeFromString( mPrimReg, "MailingAddress", "Country", "USA" );
-      //:wWebXfer.Root.SameAs = "Y"
-      SetAttributeFromString( wWebXfer, "Root", "SameAs", "Y" );
-
-      //:ELSE
-   } 
-   else
-   { 
-      //:wWebXfer.Root.SameAs = ""
-      SetAttributeFromString( wWebXfer, "Root", "SameAs", "" );
-   } 
-
-   //:END
-
-   //:IF mPrimReg.PhysicalAddress DOES NOT EXIST
-   lTempInteger_2 = CheckExistenceOfEntity( mPrimReg, "PhysicalAddress" );
-   if ( lTempInteger_2 != 0 )
-   { 
-      //:CREATE ENTITY mPrimReg.PhysicalAddress
-      RESULT = CreateEntity( mPrimReg, "PhysicalAddress", zPOS_AFTER );
-      //:mPrimReg.PhysicalAddress.Country = "USA"
-      SetAttributeFromString( mPrimReg, "PhysicalAddress", "Country", "USA" );
-   } 
-
-   //:END
-
-   //:IF mPrimReg.MailingAddress DOES NOT EXIST
-   lTempInteger_3 = CheckExistenceOfEntity( mPrimReg, "MailingAddress" );
-   if ( lTempInteger_3 != 0 )
-   { 
-      //:CREATE ENTITY mPrimReg.MailingAddress
-      RESULT = CreateEntity( mPrimReg, "MailingAddress", zPOS_AFTER );
-      //:wWebXfer.Root.SameAs = "Y"
-      SetAttributeFromString( wWebXfer, "Root", "SameAs", "Y" );
-      //:SetMatchingAttributesByName( mPrimReg, "MailingAddress",
-      //:                             mPrimReg, "PhysicalAddress", zSET_NOTNULL )
-      SetMatchingAttributesByName( mPrimReg, "MailingAddress", mPrimReg, "PhysicalAddress", zSET_NOTNULL );
-   } 
-
-   //:END
-
-   //:IF mPrimReg.ContactPerson DOES NOT EXIST
-   lTempInteger_4 = CheckExistenceOfEntity( mPrimReg, "ContactPerson" );
-   if ( lTempInteger_4 != 0 )
-   { 
-      //:CREATE ENTITY mPrimReg.ContactPerson
-      RESULT = CreateEntity( mPrimReg, "ContactPerson", zPOS_AFTER );
-   } 
-
-   //:END
-
-   //:wWebXfer.Root.AttemptLoginName = mPrimReg.Organization.LoginName
-   SetAttributeFromAttribute( wWebXfer, "Root", "AttemptLoginName", mPrimReg, "Organization", "LoginName" );
-   //:wWebXfer.Root.AttemptPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
-   //:wWebXfer.Root.ConfirmPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "ConfirmPassword", "" );
-   //:wWebXfer.Root.CurrentPassword = ""
-   SetAttributeFromString( wWebXfer, "Root", "CurrentPassword", "" );
-
-   //:CreateTemporalSubobjectVersion( mPrimReg, "PrimaryRegistrant" )
-   CreateTemporalSubobjectVersion( mPrimReg, "PrimaryRegistrant" );
-   //:// CreateTemporalSubobjectVersion( mPrimReg, "PhysicalAddress" )
-   //:// CreateTemporalSubobjectVersion( mPrimReg, "MailingAddress" )
-   //:// CreateTemporalSubobjectVersion( mPrimReg, "ContactPerson" )
-
-   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "Administration" )
-   {
-    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "Administration" );
-    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-   }
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:CancelUpdatePrimaryRegistrant( VIEW ViewToWindow )
-
-//:   VIEW mPrimReg REGISTERED AS mPrimReg
-public int 
-CancelUpdatePrimaryRegistrant( View     ViewToWindow )
-{
-   zVIEW    mPrimReg = new zVIEW( );
-   int      RESULT = 0;
-
-   RESULT = GetViewByName( mPrimReg, "mPrimReg", ViewToWindow, zLEVEL_TASK );
-
-   //:// CancelSubobject( mPrimReg, "ContactPerson" )
-   //:// CancelSubobject( mPrimReg, "PhysicalAddress" )
-   //:// CancelSubobject( mPrimReg, "MailingAddress" )
-   //:// CancelSubobject( mPrimReg, "Organization" )
-   //:CancelSubobject( mPrimReg, "PrimaryRegistrant" )
-   CancelSubobject( mPrimReg, "PrimaryRegistrant" );
-   //:DropObjectInstance( mPrimReg )
-   DropObjectInstance( mPrimReg );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:CancelUpdatePrimRegUser( VIEW ViewToWindow )
-
-//:   VIEW mCurrentUser REGISTERED AS mCurrentUser
-public int 
-CancelUpdatePrimRegUser( View     ViewToWindow )
-{
-   zVIEW    mCurrentUser = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW mPerson REGISTERED AS mPerson
-   zVIEW    mPerson = new zVIEW( );
-
-   RESULT = GetViewByName( mCurrentUser, "mCurrentUser", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mPerson, "mPerson", ViewToWindow, zLEVEL_TASK );
-
-   //:// CancelSubobject( mPerson, "Address" )
-   //:CancelSubobject( mPerson, "Person" )
-   CancelSubobject( mPerson, "Person" );
-   //:CancelSubobject( mCurrentUser, "User" )
-   CancelSubobject( mCurrentUser, "User" );
-   //:DropObjectInstance( mCurrentUser )
-   DropObjectInstance( mCurrentUser );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:AcceptUpdatePrimaryRegistrant( VIEW ViewToWindow )
-
-//:   VIEW mPrimReg REGISTERED AS mPrimReg
-public int 
-AcceptUpdatePrimaryRegistrant( View     ViewToWindow )
-{
-   zVIEW    mPrimReg = new zVIEW( );
-   int      RESULT = 0;
-   //:SHORT nRC
-   int      nRC = 0;
-
-   RESULT = GetViewByName( mPrimReg, "mPrimReg", ViewToWindow, zLEVEL_TASK );
-
-   //:DisplayObjectInstance( mPrimReg, "", "" )
-   DisplayObjectInstance( mPrimReg, "", "" );
-   //:nRC = ValidatePrimaryRegistrant( ViewToWindow )
-   nRC = ValidatePrimaryRegistrant( ViewToWindow );
-   //:IF nRC = 0
-   if ( nRC == 0 )
-   { 
-      //:DropObjectInstance( mPrimReg )
-      DropObjectInstance( mPrimReg );
-   } 
-
-   //:END
-
-   //:RETURN nRC
-   return( nRC );
-// END
-} 
-
-
-//:DIALOG OPERATION
 //:ValidatePrimaryRegistrant( VIEW ViewToWindow )
 
 //:   VIEW wWebXfer REGISTERED AS wWebXfer
@@ -6366,14 +3322,14 @@ ValidatePrimaryRegistrant( View     ViewToWindow )
 
    //:END
 
-   //:szRegistrantName = wWebXfer.Root.AttemptLoginName
+   //:szRegistrantName = wWebXfer.Root.AttemptLoginRegistrant
    {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
    StringBuilder sb_szRegistrantName;
    if ( szRegistrantName == null )
       sb_szRegistrantName = new StringBuilder( 32 );
    else
       sb_szRegistrantName = new StringBuilder( szRegistrantName );
-       GetVariableFromAttribute( sb_szRegistrantName, mi_lTempInteger_1, 'S', 51, wWebXfer, "Root", "AttemptLoginName", "", 0 );
+       GetVariableFromAttribute( sb_szRegistrantName, mi_lTempInteger_1, 'S', 51, wWebXfer, "Root", "AttemptLoginRegistrant", "", 0 );
    lTempInteger_1 = mi_lTempInteger_1.intValue( );
    szRegistrantName = sb_szRegistrantName.toString( );}
    //:IF szRegistrantName != szAttemptRegistrantName
@@ -6472,180 +3428,34 @@ ValidatePrimaryRegistrant( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
-//:ValidateSubregistrant( VIEW ViewToWindow )
+//:AcceptUpdatePrimaryRegistrant( VIEW ViewToWindow )
 
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
+//:   VIEW mPrimReg REGISTERED AS mPrimReg
 public int 
-ValidateSubregistrant( View     ViewToWindow )
+AcceptUpdatePrimaryRegistrant( View     ViewToWindow )
 {
-   zVIEW    wWebXfer = new zVIEW( );
+   zVIEW    mPrimReg = new zVIEW( );
    int      RESULT = 0;
-   //:VIEW mSubreg  REGISTERED AS mSubreg
-   zVIEW    mSubreg = new zVIEW( );
-   //:VIEW qOrganiz BASED ON LOD  qOrganiz
-   zVIEW    qOrganiz = new zVIEW( );
-   //:STRING (  50  ) szAttemptLoginName
-   String   szAttemptLoginName = null;
-   //:STRING (  50  ) szRegistrantName
-   String   szRegistrantName = null;
-   //:STRING ( 128  ) szAttemptPassword
-   String   szAttemptPassword = null;
-   //:STRING ( 128  ) szConfirmPassword
-   String   szConfirmPassword = null;
-   //:INTEGER         lAttemptLoginNameLth
-   int      lAttemptLoginNameLth = 0;
-   //:INTEGER         lRegistrantNameLth
-   int      lRegistrantNameLth = 0;
-   //:INTEGER         lPasswordLth
-   int      lPasswordLth = 0;
-   int      lTempInteger_0 = 0;
-   int      lTempInteger_1 = 0;
-   zVIEW    vTempViewVar_0 = new zVIEW( );
-   int      lTempInteger_2 = 0;
-   int      lTempInteger_3 = 0;
+   //:SHORT nRC
+   int      nRC = 0;
 
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( mPrimReg, "mPrimReg", ViewToWindow, zLEVEL_TASK );
 
-   //:// Ensure registrant login name is not blank and is unique.
-   //:szAttemptLoginName = wWebXfer.Root.AttemptLoginName
-   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
-   StringBuilder sb_szAttemptLoginName;
-   if ( szAttemptLoginName == null )
-      sb_szAttemptLoginName = new StringBuilder( 32 );
-   else
-      sb_szAttemptLoginName = new StringBuilder( szAttemptLoginName );
-       GetVariableFromAttribute( sb_szAttemptLoginName, mi_lTempInteger_0, 'S', 51, wWebXfer, "Root", "AttemptLoginName", "", 0 );
-   lTempInteger_0 = mi_lTempInteger_0.intValue( );
-   szAttemptLoginName = sb_szAttemptLoginName.toString( );}
-   //:lAttemptLoginNameLth = zGetStringLen( szAttemptLoginName )
-   lAttemptLoginNameLth = zGetStringLen( szAttemptLoginName );
-   //:TraceLineS( "Registrant Login Name: ", szAttemptLoginName )
-   TraceLineS( "Registrant Login Name: ", szAttemptLoginName );
-   //:TraceLineI( "Registrant Login Name Length: ", lAttemptLoginNameLth )
-   TraceLineI( "Registrant Login Name Length: ", lAttemptLoginNameLth );
-   //:IF lAttemptLoginNameLth < 1
-   if ( lAttemptLoginNameLth < 1 )
+   //:DisplayObjectInstance( mPrimReg, "", "" )
+   DisplayObjectInstance( mPrimReg, "", "" );
+   //:nRC = ValidatePrimaryRegistrant( ViewToWindow )
+   nRC = ValidatePrimaryRegistrant( ViewToWindow );
+   //:IF nRC = 0
+   if ( nRC == 0 )
    { 
-      //:MessageSend( ViewToWindow, "", "Update Subregistrant",
-      //:             "The registrant Login Name cannot be blank.",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Update Subregistrant", "The registrant Login Name cannot be blank.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:RETURN 2
-      if(8==8)return( 2 );
+      //:DropObjectInstance( mPrimReg )
+      DropObjectInstance( mPrimReg );
    } 
 
    //:END
 
-   //:szRegistrantName = mSubreg.SubregOrganization.LoginName
-   {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
-   StringBuilder sb_szRegistrantName;
-   if ( szRegistrantName == null )
-      sb_szRegistrantName = new StringBuilder( 32 );
-   else
-      sb_szRegistrantName = new StringBuilder( szRegistrantName );
-       GetVariableFromAttribute( sb_szRegistrantName, mi_lTempInteger_1, 'S', 51, mSubreg, "SubregOrganization", "LoginName", "", 0 );
-   lTempInteger_1 = mi_lTempInteger_1.intValue( );
-   szRegistrantName = sb_szRegistrantName.toString( );}
-   //:IF szRegistrantName != szAttemptLoginName
-   if ( ZeidonStringCompare( szRegistrantName, 1, 0, szAttemptLoginName, 1, 0, 51 ) != 0 )
-   { 
-      //:ACTIVATE qOrganiz WHERE qOrganiz.Organization.LoginName = szAttemptLoginName
-      o_fnLocalBuildQual_22( ViewToWindow, vTempViewVar_0, szAttemptLoginName );
-      RESULT = ActivateObjectInstance( qOrganiz, "qOrganiz", ViewToWindow, vTempViewVar_0, zSINGLE );
-      DropView( vTempViewVar_0 );
-      //:IF qOrganiz.Organization EXISTS
-      lTempInteger_2 = CheckExistenceOfEntity( qOrganiz, "Organization" );
-      if ( lTempInteger_2 == 0 )
-      { 
-
-         //:DropObjectInstance( qOrganiz )
-         DropObjectInstance( qOrganiz );
-         //:MessageSend( ViewToWindow, "", "Update Subregistrant",
-         //:             "The registrant Login Name must be unique.",
-         //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-         MessageSend( ViewToWindow, "", "Update Subregistrant", "The registrant Login Name must be unique.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-         //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-         m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-         //:RETURN 2
-         if(8==8)return( 2 );
-      } 
-
-
-      //:END
-
-      //:DropObjectInstance( qOrganiz )
-      DropObjectInstance( qOrganiz );
-   } 
-
-   //:END
-
-   //:// Ensure registrant name is not blank.
-   //:szRegistrantName = mSubreg.SubregOrganization.Name
-   {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
-   StringBuilder sb_szRegistrantName;
-   if ( szRegistrantName == null )
-      sb_szRegistrantName = new StringBuilder( 32 );
-   else
-      sb_szRegistrantName = new StringBuilder( szRegistrantName );
-       GetVariableFromAttribute( sb_szRegistrantName, mi_lTempInteger_3, 'S', 51, mSubreg, "SubregOrganization", "Name", "", 0 );
-   lTempInteger_3 = mi_lTempInteger_3.intValue( );
-   szRegistrantName = sb_szRegistrantName.toString( );}
-   //:lRegistrantNameLth = zGetStringLen( szRegistrantName )
-   lRegistrantNameLth = zGetStringLen( szRegistrantName );
-   //:TraceLineI( "Registrant Name Length: ", lRegistrantNameLth )
-   TraceLineI( "Registrant Name Length: ", lRegistrantNameLth );
-   //:IF lRegistrantNameLth < 1
-   if ( lRegistrantNameLth < 1 )
-   { 
-      //:MessageSend( ViewToWindow, "", "Update Subregistrant",
-      //:             "The registrant Organization Name cannot be blank.",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Update Subregistrant", "The registrant Organization Name cannot be blank.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:RETURN 2
-      if(8==8)return( 2 );
-   } 
-
-   //:END
-
-   //:// Ensure password matches primary registrant password.
-   //:// IF mSubreg.Subregistrant.AdministratorPassword != wWebXfer.Root.AttemptPassword
-   //://
-   //://    MessageSend( ViewToWindow, "", "Update Subregistrant",
-   //://                 "Invalid password.",
-   //://                 zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-   //://    SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-   //://    RETURN 2
-   //:// END
-
-   //:// Set login name just in case it's new.
-   //:mSubreg.SubregOrganization.LoginName = szAttemptLoginName
-   SetAttributeFromString( mSubreg, "SubregOrganization", "LoginName", szAttemptLoginName );
-
-   //:// AcceptSubobject( mSubreg, "ContactPerson" )
-   //:// AcceptSubobject( mSubreg, "PhysicalAddress" )
-   //:// AcceptSubobject( mSubreg, "MailingAddress" )
-   //:AcceptSubobject( mSubreg, "Subregistrant" )
-   AcceptSubobject( mSubreg, "Subregistrant" );
-   //:IF wWebXfer.Root.SameAs = "Y"
-   if ( CompareAttributeToString( wWebXfer, "Root", "SameAs", "Y" ) == 0 )
-   { 
-      //:DELETE ENTITY mSubreg.MailingAddress
-      RESULT = DeleteEntity( mSubreg, "MailingAddress", zPOS_NEXT );
-   } 
-
-   //:END
-
-   //:mSubreg.SubregOrganization.Role = "S"
-   SetAttributeFromString( mSubreg, "SubregOrganization", "Role", "S" );
-   //:Commit mSubreg
-   RESULT = CommitObjectInstance( mSubreg );
-   //:RETURN 0
-   return( 0 );
+   //:RETURN nRC
+   return( nRC );
 // END
 } 
 
@@ -6676,842 +3486,26 @@ CancelNewPrimaryRegistrant( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
-//:CancelNewPrimRegUser( VIEW ViewToWindow )
+//:CancelUpdatePrimaryRegistrant( VIEW ViewToWindow )
 
-//:   VIEW mCurrentUser REGISTERED AS mCurrentUser
+//:   VIEW mPrimReg REGISTERED AS mPrimReg
 public int 
-CancelNewPrimRegUser( View     ViewToWindow )
+CancelUpdatePrimaryRegistrant( View     ViewToWindow )
 {
-   zVIEW    mCurrentUser = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW mPerson REGISTERED AS mPerson
-   zVIEW    mPerson = new zVIEW( );
-
-   RESULT = GetViewByName( mCurrentUser, "mCurrentUser", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mPerson, "mPerson", ViewToWindow, zLEVEL_TASK );
-
-   //:// CancelSubobject( mPerson, "Address" )
-   //:CancelSubobject( mPerson, "Person" )
-   CancelSubobject( mPerson, "Person" );
-   //:CancelSubobject( mCurrentUser, "User" )
-   CancelSubobject( mCurrentUser, "User" );
-   //:DropObjectInstance( mCurrentUser )
-   DropObjectInstance( mCurrentUser );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:AcceptUpdatePrimRegUser( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-AcceptUpdatePrimRegUser( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW mCurrentUser REGISTERED AS mCurrentUser
-   zVIEW    mCurrentUser = new zVIEW( );
-   //:VIEW mPerson  REGISTERED AS mPerson
-   zVIEW    mPerson = new zVIEW( );
-   //:VIEW lPrimReg BASED ON LOD  lPrimReg
-   zVIEW    lPrimReg = new zVIEW( );
-   //:VIEW qPrimReg BASED ON LOD  qPrimReg
-   zVIEW    qPrimReg = new zVIEW( );
-   //:STRING (  50  ) szUserName
-   String   szUserName = null;
-   //:STRING (  50  ) szAttemptUserName
-   String   szAttemptUserName = null;
-   //:STRING ( 128  ) szAttemptPassword
-   String   szAttemptPassword = null;
-   //:STRING ( 128  ) szConfirmPassword
-   String   szConfirmPassword = null;
-   //:INTEGER         lUserNameLth
-   int      lUserNameLth = 0;
-   //:INTEGER         lPasswordLth
-   int      lPasswordLth = 0;
-   //:INTEGER         lControl
-   int      lControl = 0;
-   //:INTEGER         lID
-   int      lID = 0;
-   //:SHORT           nRC
-   int      nRC = 0;
-   int      lTempInteger_0 = 0;
-   int      lTempInteger_1 = 0;
-   int      lTempInteger_2 = 0;
-   int      lTempInteger_3 = 0;
-   int      lTempInteger_4 = 0;
-   int      lTempInteger_5 = 0;
-   zVIEW    vTempViewVar_0 = new zVIEW( );
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mCurrentUser, "mCurrentUser", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( mPerson, "mPerson", ViewToWindow, zLEVEL_TASK );
-
-   //:GET VIEW lPrimReg NAMED "lPrimReg"
-   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
-
-   //:// Ensure the user is the same one that logged in, or that the user knows
-   //:// the password of this user in order to update the information.
-   //:GET VIEW qPrimReg NAMED "qPrimRegLogin"
-   RESULT = GetViewByName( qPrimReg, "qPrimRegLogin", ViewToWindow, zLEVEL_TASK );
-   //:// IF qPrimReg.PrimaryRegistrant.ID != lPrimReg.PrimaryRegistrant.ID AND
-   //://    lPrimReg.User.UserPassword != wWebXfer.Root.AttemptPassword
-
-   //:szAttemptPassword = wWebXfer.Root.AttemptPassword
-   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
-   StringBuilder sb_szAttemptPassword;
-   if ( szAttemptPassword == null )
-      sb_szAttemptPassword = new StringBuilder( 32 );
-   else
-      sb_szAttemptPassword = new StringBuilder( szAttemptPassword );
-       GetVariableFromAttribute( sb_szAttemptPassword, mi_lTempInteger_0, 'S', 129, wWebXfer, "Root", "AttemptPassword", "", 0 );
-   lTempInteger_0 = mi_lTempInteger_0.intValue( );
-   szAttemptPassword = sb_szAttemptPassword.toString( );}
-   //:nRC = CompareAttributeToString( lPrimReg, "User", "UserPassword", szAttemptPassword )
-   nRC = CompareAttributeToString( lPrimReg, "User", "UserPassword", szAttemptPassword );
-   //:IF nRC != 0 AND
-   //:   qPrimReg.PrimaryRegistrant.ID != lPrimReg.PrimaryRegistrant.ID
-   if ( nRC != 0 && CompareAttributeToAttribute( qPrimReg, "PrimaryRegistrant", "ID", lPrimReg, "PrimaryRegistrant", "ID" ) != 0 )
-   { 
-
-      //:MessageSend( ViewToWindow, "", "Update Primary Registrant User",
-      //:             "Verification password is not correct.",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Update Primary Registrant User", "Verification password is not correct.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:RETURN 2
-      if(8==8)return( 2 );
-   } 
-
-   //:END
-
-   //:// Ensure user login name is not blank and is unique.
-   //:szUserName = mCurrentUser.User.UserName
-   {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
-   StringBuilder sb_szUserName;
-   if ( szUserName == null )
-      sb_szUserName = new StringBuilder( 32 );
-   else
-      sb_szUserName = new StringBuilder( szUserName );
-       GetVariableFromAttribute( sb_szUserName, mi_lTempInteger_1, 'S', 51, mCurrentUser, "User", "UserName", "", 0 );
-   lTempInteger_1 = mi_lTempInteger_1.intValue( );
-   szUserName = sb_szUserName.toString( );}
-   //:lUserNameLth = zGetStringLen( szUserName )
-   lUserNameLth = zGetStringLen( szUserName );
-   //:TraceLineS( "User Login Name: ", szUserName )
-   TraceLineS( "User Login Name: ", szUserName );
-   //:TraceLineI( "User Login Name Length: ", lUserNameLth )
-   TraceLineI( "User Login Name Length: ", lUserNameLth );
-   //:IF lUserNameLth < 1
-   if ( lUserNameLth < 1 )
-   { 
-
-      //:MessageSend( ViewToWindow, "", "Update Primary Registrant User",
-      //:             "The User Name cannot be blank.",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Update Primary Registrant User", "The User Name cannot be blank.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:RETURN 2
-      if(8==8)return( 2 );
-
-      //:ELSE
-   } 
-   else
-   { 
-
-      //:szAttemptUserName = wWebXfer.Root.AttemptUserName
-      {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
-      StringBuilder sb_szAttemptUserName;
-      if ( szAttemptUserName == null )
-         sb_szAttemptUserName = new StringBuilder( 32 );
-      else
-         sb_szAttemptUserName = new StringBuilder( szAttemptUserName );
-             GetVariableFromAttribute( sb_szAttemptUserName, mi_lTempInteger_2, 'S', 51, wWebXfer, "Root", "AttemptUserName", "", 0 );
-      lTempInteger_2 = mi_lTempInteger_2.intValue( );
-      szAttemptUserName = sb_szAttemptUserName.toString( );}
-      //:IF szUserName != szAttemptUserName
-      if ( ZeidonStringCompare( szUserName, 1, 0, szAttemptUserName, 1, 0, 51 ) != 0 )
-      { 
-
-         //:lControl = zQUAL_STRING + zPOS_FIRST + zQUAL_SCOPE_OI + zTEST_CSR_RESULT
-         lControl = zQUAL_STRING + zPOS_FIRST + zQUAL_SCOPE_OI + zTEST_CSR_RESULT;
-         //:IF SetEntityCursor( lPrimReg, "User", "UserName", lControl,
-         //:                    szUserName, "", "", 0, "", "" ) >= zCURSOR_SET
-         lTempInteger_3 = SetEntityCursor( lPrimReg, "User", "UserName", lControl, szUserName, "", "", 0, "", "" );
-         if ( lTempInteger_3 >= zCURSOR_SET )
-         { 
-            //:MessageSend( ViewToWindow, "", "Update Primary Registrant User",
-            //:             "The User Name must be unique.",
-            //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-            MessageSend( ViewToWindow, "", "Update Primary Registrant User", "The User Name must be unique.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-            //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-            m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-            //:RETURN 2
-            if(8==8)return( 2 );
-         } 
-
-
-         //:END
-      } 
-
-      //:END
-   } 
-
-   //:END
-
-   //:// Ensure user first and last names are not blank.
-   //:szUserName = mPerson.Person.FirstName
-   {MutableInt mi_lTempInteger_4 = new MutableInt( lTempInteger_4 );
-   StringBuilder sb_szUserName;
-   if ( szUserName == null )
-      sb_szUserName = new StringBuilder( 32 );
-   else
-      sb_szUserName = new StringBuilder( szUserName );
-       GetVariableFromAttribute( sb_szUserName, mi_lTempInteger_4, 'S', 51, mPerson, "Person", "FirstName", "", 0 );
-   lTempInteger_4 = mi_lTempInteger_4.intValue( );
-   szUserName = sb_szUserName.toString( );}
-   //:lUserNameLth = zGetStringLen( szUserName )
-   lUserNameLth = zGetStringLen( szUserName );
-   //:TraceLineS( "First Name: ", szUserName )
-   TraceLineS( "First Name: ", szUserName );
-   //:TraceLineI( "First Name Length: ", lUserNameLth )
-   TraceLineI( "First Name Length: ", lUserNameLth );
-   //:IF lUserNameLth < 1
-   if ( lUserNameLth < 1 )
-   { 
-      //:MessageSend( ViewToWindow, "", "Update Primary Registrant User",
-      //:             "The user First Name cannot be blank.",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Update Primary Registrant User", "The user First Name cannot be blank.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:RETURN 2
-      if(8==8)return( 2 );
-   } 
-
-   //:END
-
-   //:szUserName = mPerson.Person.LastName
-   {MutableInt mi_lTempInteger_5 = new MutableInt( lTempInteger_5 );
-   StringBuilder sb_szUserName;
-   if ( szUserName == null )
-      sb_szUserName = new StringBuilder( 32 );
-   else
-      sb_szUserName = new StringBuilder( szUserName );
-       GetVariableFromAttribute( sb_szUserName, mi_lTempInteger_5, 'S', 51, mPerson, "Person", "LastName", "", 0 );
-   lTempInteger_5 = mi_lTempInteger_5.intValue( );
-   szUserName = sb_szUserName.toString( );}
-   //:lUserNameLth = zGetStringLen( szUserName )
-   lUserNameLth = zGetStringLen( szUserName );
-   //:TraceLineS( "Last Name: ", szUserName )
-   TraceLineS( "Last Name: ", szUserName );
-   //:TraceLineI( "Last Name Length: ", lUserNameLth )
-   TraceLineI( "Last Name Length: ", lUserNameLth );
-   //:IF lUserNameLth < 1
-   if ( lUserNameLth < 1 )
-   { 
-      //:MessageSend( ViewToWindow, "", "Update Primary Registrant User",
-      //:             "The user Last Name cannot be blank.",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Update Primary Registrant User", "The user Last Name cannot be blank.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:RETURN 2
-      if(8==8)return( 2 );
-   } 
-
-   //:END
-
-   //:// AcceptSubobject( mPerson, "Person" )
-   //:// AcceptSubobject( mPerson, "Address" )
-   //:AcceptSubobject( mCurrentUser, "User" )
-   AcceptSubobject( mCurrentUser, "User" );
-
-   //:Commit mPerson
-   RESULT = CommitObjectInstance( mPerson );
-   //:Commit mCurrentUser
-   RESULT = CommitObjectInstance( mCurrentUser );
-
-   //:lID = lPrimReg.PrimaryRegistrant.ID
-   {MutableInt mi_lID = new MutableInt( lID );
-       GetIntegerFromAttribute( mi_lID, lPrimReg, "PrimaryRegistrant", "ID" );
-   lID = mi_lID.intValue( );}
-
-   //:DropObjectInstance( mPerson )
-   DropObjectInstance( mPerson );
-   //:DropObjectInstance( mCurrentUser )
-   DropObjectInstance( mCurrentUser );
-   //:DropObjectInstance( lPrimReg )
-   DropObjectInstance( lPrimReg );
-
-   //:// Activate the "selected" primary registrant ... just in case someone added or
-   //:// deleted a primary registrant user.
-   //:ACTIVATE lPrimReg WHERE lPrimReg.PrimaryRegistrant.ID = lID
-   o_fnLocalBuildQual_32( ViewToWindow, vTempViewVar_0, lID );
-   RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
-   DropView( vTempViewVar_0 );
-   //:NAME VIEW lPrimReg "lPrimReg"
-   SetNameForView( lPrimReg, "lPrimReg", null, zLEVEL_TASK );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:InitListSubregistrants( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-InitListSubregistrants( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:VIEW lPrimReg BASED ON LOD lPrimReg
-   zVIEW    lPrimReg = new zVIEW( );
-   //:INTEGER lID
-   int      lID = 0;
-   zVIEW    vTempViewVar_0 = new zVIEW( );
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-
-   //:GET VIEW lPrimReg NAMED "lPrimReg"
-   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
-   //:lID = lPrimReg.PrimaryRegistrant.ID
-   {MutableInt mi_lID = new MutableInt( lID );
-       GetIntegerFromAttribute( mi_lID, lPrimReg, "PrimaryRegistrant", "ID" );
-   lID = mi_lID.intValue( );}
-   //:DropObjectInstance( lPrimReg )
-   DropObjectInstance( lPrimReg );
-
-   //:// Activate the "selected" primary registrant ... just in case someone added or
-   //:// deleted a subregistrant.
-   //:ACTIVATE lPrimReg WHERE lPrimReg.PrimaryRegistrant.ID = lID
-   o_fnLocalBuildQual_19( ViewToWindow, vTempViewVar_0, lID );
-   RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
-   DropView( vTempViewVar_0 );
-   //:NAME VIEW lPrimReg "lPrimReg"
-   SetNameForView( lPrimReg, "lPrimReg", null, zLEVEL_TASK );
-
-   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" )
-   {
-    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" );
-    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-   }
-   //:wWebXfer.Root.Banner4 = ""
-   SetAttributeFromString( wWebXfer, "Root", "Banner4", "" );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:InitListPrimaryRegistrants( VIEW ViewToWindow )
-
-//:   VIEW lPrimReg BASED ON LOD lPrimReg
-public int 
-InitListPrimaryRegistrants( View     ViewToWindow )
-{
-   zVIEW    lPrimReg = new zVIEW( );
+   zVIEW    mPrimReg = new zVIEW( );
    int      RESULT = 0;
 
+   RESULT = GetViewByName( mPrimReg, "mPrimReg", ViewToWindow, zLEVEL_TASK );
 
-   //:GET VIEW lPrimReg NAMED "lPrimReg"
-   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
-   //:IF  lPrimReg != 0
-   if ( getView( lPrimReg ) != null )
-   { 
-      //:DropObjectInstance( lPrimReg )
-      DropObjectInstance( lPrimReg );
-   } 
-
-   //:END
-
-   //:// Activate all primary registrants.
-   //:ACTIVATE lPrimReg MULTIPLE
-   RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, 0, zMULTIPLE );
-   //:NAME VIEW lPrimReg "lPrimReg"
-   SetNameForView( lPrimReg, "lPrimReg", null, zLEVEL_TASK );
-
-   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "Administration" )
-   {
-    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "Administration" );
-    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-   }
+   //:// CancelSubobject( mPrimReg, "ContactPerson" )
+   //:// CancelSubobject( mPrimReg, "PhysicalAddress" )
+   //:// CancelSubobject( mPrimReg, "MailingAddress" )
+   //:// CancelSubobject( mPrimReg, "Organization" )
+   //:CancelSubobject( mPrimReg, "PrimaryRegistrant" )
+   CancelSubobject( mPrimReg, "PrimaryRegistrant" );
+   //:DropObjectInstance( mPrimReg )
+   DropObjectInstance( mPrimReg );
    return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-public int 
-InitSelectSubregistrant( View     ViewToWindow )
-{
-
-   //:InitSelectSubregistrant( VIEW ViewToWindow )
-
-   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "Subregistrant" )
-   {
-    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "Subregistrant" );
-    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-   }
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:ProcessLogout( VIEW ViewToWindow )
-
-//:   VIEW pePamms  BASED ON LOD pePamms
-public int 
-ProcessLogout( View     ViewToWindow )
-{
-   zVIEW    pePamms = new zVIEW( );
-   //:VIEW mCurrentUser BASED ON LOD mUser
-   zVIEW    mCurrentUser = new zVIEW( );
-   //:VIEW wWebXfer BASED ON LOD  wWebXfer
-   zVIEW    wWebXfer = new zVIEW( );
-   //:VIEW qOrganiz BASED ON LOD  qOrganiz
-   zVIEW    qOrganiz = new zVIEW( );
-   //:VIEW qPrimReg BASED ON LOD  qPrimReg
-   zVIEW    qPrimReg = new zVIEW( );
-   //:VIEW qSubreg  BASED ON LOD  qSubreg
-   zVIEW    qSubreg = new zVIEW( );
-   //:VIEW lSubreg  BASED ON LOD  lSubreg
-   zVIEW    lSubreg = new zVIEW( );
-   //:VIEW lPrimReg BASED ON LOD  lPrimReg
-   zVIEW    lPrimReg = new zVIEW( );
-   //:VIEW mOrganiz BASED ON LOD  mOrganiz
-   zVIEW    mOrganiz = new zVIEW( );
-   //:VIEW KZXMLPGO
-   zVIEW    KZXMLPGO = new zVIEW( );
-   int      RESULT = 0;
-
-
-   //:AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "TopMenu Logout" )
-   {
-    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "TopMenu Logout" );
-    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-   }
-
-   //:GET VIEW pePamms NAMED "pePamms"
-   RESULT = GetViewByName( pePamms, "pePamms", ViewToWindow, zLEVEL_TASK );
-   //:IF pePamms != 0
-   if ( getView( pePamms ) != null )
-   { 
-      //:DropObjectInstance( pePamms )
-      DropObjectInstance( pePamms );
-   } 
-
-   //:END
-
-   //:GET VIEW mCurrentUser NAMED "mCurrentUser"
-   RESULT = GetViewByName( mCurrentUser, "mCurrentUser", ViewToWindow, zLEVEL_TASK );
-   //:IF mCurrentUser != 0
-   if ( getView( mCurrentUser ) != null )
-   { 
-      //:DropObjectInstance( mCurrentUser )
-      DropObjectInstance( mCurrentUser );
-   } 
-
-   //:END
-
-   //:GET VIEW wWebXfer NAMED "wWebXfer"
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   //:IF wWebXfer != 0
-   if ( getView( wWebXfer ) != null )
-   { 
-      //:DropObjectInstance( wWebXfer )
-      DropObjectInstance( wWebXfer );
-   } 
-
-   //:END
-
-   //:GET VIEW qPrimReg NAMED "qPrimRegLogin"
-   RESULT = GetViewByName( qPrimReg, "qPrimRegLogin", ViewToWindow, zLEVEL_TASK );
-   //:IF qPrimReg != 0
-   if ( getView( qPrimReg ) != null )
-   { 
-      //:DropObjectInstance( qPrimReg )
-      DropObjectInstance( qPrimReg );
-   } 
-
-   //:END
-
-   //:GET VIEW qSubreg NAMED "qSubregLogin"
-   RESULT = GetViewByName( qSubreg, "qSubregLogin", ViewToWindow, zLEVEL_TASK );
-   //:IF qSubreg != 0
-   if ( getView( qSubreg ) != null )
-   { 
-      //:DropObjectInstance( qSubreg )
-      DropObjectInstance( qSubreg );
-   } 
-
-   //:END
-
-   //:GET VIEW qOrganiz NAMED "qOrganizLogin"
-   RESULT = GetViewByName( qOrganiz, "qOrganizLogin", ViewToWindow, zLEVEL_TASK );
-   //:IF qOrganiz != 0
-   if ( getView( qOrganiz ) != null )
-   { 
-      //:DropObjectInstance( qOrganiz )
-      DropObjectInstance( qOrganiz );
-   } 
-
-   //:END
-
-   //:GET VIEW lPrimReg NAMED "lPrimReg"
-   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
-   //:IF lPrimReg != 0
-   if ( getView( lPrimReg ) != null )
-   { 
-      //:DropObjectInstance( lPrimReg )
-      DropObjectInstance( lPrimReg );
-   } 
-
-   //:END
-
-   //:GET VIEW lSubreg NAMED "lSubreg"
-   RESULT = GetViewByName( lSubreg, "lSubreg", ViewToWindow, zLEVEL_TASK );
-   //:IF lSubreg != 0
-   if ( getView( lSubreg ) != null )
-   { 
-      //:DropObjectInstance( lSubreg )
-      DropObjectInstance( lSubreg );
-   } 
-
-   //:END
-
-   //:GET VIEW KZXMLPGO NAMED "KZXMLPGO"
-   RESULT = GetViewByName( KZXMLPGO, "KZXMLPGO", ViewToWindow, zLEVEL_TASK );
-   //:IF KZXMLPGO != 0
-   if ( getView( KZXMLPGO ) != null )
-   { 
-      //:FOR EACH KZXMLPGO.NextDialogWindow
-      RESULT = SetCursorFirstEntity( KZXMLPGO, "NextDialogWindow", "" );
-      while ( RESULT > zCURSOR_UNCHANGED )
-      { 
-         //:DELETE ENTITY KZXMLPGO.NextDialogWindow
-         RESULT = DeleteEntity( KZXMLPGO, "NextDialogWindow", zPOS_NEXT );
-         RESULT = SetCursorNextEntity( KZXMLPGO, "NextDialogWindow", "" );
-      } 
-
-      //:END
-   } 
-
-   //:END
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-public int 
-ProcessLogin( View     ViewToWindow )
-{
-
-   //:ProcessLogin( VIEW ViewToWindow )
-
-   //:AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "TopMenu Login" )
-   {
-    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "TopMenu Login" );
-    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-   }
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:ListSubregProducts( VIEW ViewToWindow )
-
-public int 
-ListSubregProducts( View     ViewToWindow )
-{
-
-   return( 0 );
-//    // Nothing to do at this point.
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:InitLoginWindow( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer BASED ON LOD wWebXfer
-public int 
-InitLoginWindow( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   //:VIEW pePamms  BASED ON LOD pePamms
-   zVIEW    pePamms = new zVIEW( );
-   int      RESULT = 0;
-   zVIEW    vTempViewVar_0 = new zVIEW( );
-
-
-   //:ProcessLogout( ViewToWindow )  // just to ensure clean up
-   ProcessLogout( ViewToWindow );
-
-   //:ACTIVATE wWebXfer EMPTY
-   RESULT = ActivateEmptyObjectInstance( wWebXfer, "wWebXfer", ViewToWindow, zSINGLE );
-   //:NAME VIEW wWebXfer "wWebXfer"
-   SetNameForView( wWebXfer, "wWebXfer", null, zLEVEL_TASK );
-   //:CREATE ENTITY wWebXfer.Root
-   RESULT = CreateEntity( wWebXfer, "Root", zPOS_AFTER );
-
-   //:wWebXfer.Root.Banner1 = ""
-   SetAttributeFromString( wWebXfer, "Root", "Banner1", "" );
-   //:wWebXfer.Root.Banner2 = ""
-   SetAttributeFromString( wWebXfer, "Root", "Banner2", "" );
-   //:wWebXfer.Root.Banner3 = ""
-   SetAttributeFromString( wWebXfer, "Root", "Banner3", "" );
-   //:wWebXfer.Root.Banner4 = ""
-   SetAttributeFromString( wWebXfer, "Root", "Banner4", "" );
-   //:wWebXfer.Root.Banner5 = ""
-   SetAttributeFromString( wWebXfer, "Root", "Banner5", "" );
-   //:wWebXfer.Root.Banner6 = ""
-   SetAttributeFromString( wWebXfer, "Root", "Banner6", "" );
-
-   //:// Remove these lines prior to deployment!!!
-   //:// wWebXfer.Root.AttemptLoginName = "Lonza"
-   //:// wWebXfer.Root.AttemptLoginName = "Admin"
-   //:wWebXfer.Root.AttemptLoginName = "atp"
-   SetAttributeFromString( wWebXfer, "Root", "AttemptLoginName", "atp" );
-   //:wWebXfer.Root.AttemptUserName = "Admin"
-   SetAttributeFromString( wWebXfer, "Root", "AttemptUserName", "Admin" );
-   //:wWebXfer.Root.AttemptPassword = "xxxxxxxx"
-   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "xxxxxxxx" );
-   //:// End of: Remove these lines prior to deployment!!!
-
-   //:// Note that Activate always returns at least an empty view.
-   //:ACTIVATE pePamms WHERE pePamms.ePamms.ID = 1
-   o_fnLocalBuildQual_0( ViewToWindow, vTempViewVar_0 );
-   RESULT = ActivateObjectInstance( pePamms, "pePamms", ViewToWindow, vTempViewVar_0, zSINGLE );
-   DropView( vTempViewVar_0 );
-   //:NAME VIEW pePamms "pePamms"
-   SetNameForView( pePamms, "pePamms", null, zLEVEL_TASK );
-
-   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "Login" )
-   {
-    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "Login" );
-    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-   }
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:InitSelectPrimaryRegistrant( VIEW ViewToWindow )
-
-//:   VIEW lPrimReg BASED ON LOD lPrimReg
-public int 
-InitSelectPrimaryRegistrant( View     ViewToWindow )
-{
-   zVIEW    lPrimReg = new zVIEW( );
-   int      RESULT = 0;
-
-
-   //:GET VIEW lPrimReg NAMED "lPrimReg"
-   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
-   //:IF  lPrimReg != 0
-   if ( getView( lPrimReg ) != null )
-   { 
-      //:DropObjectInstance( lPrimReg )
-      DropObjectInstance( lPrimReg );
-   } 
-
-   //:END
-
-   //:ACTIVATE lPrimReg ROOTONLYMULTIPLE
-   RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, 0, zACTIVATE_ROOTONLY_MULTIPLE );
-   //:NAME VIEW lPrimReg "lPrimReg"
-   SetNameForView( lPrimReg, "lPrimReg", null, zLEVEL_TASK );
-
-   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" )
-   {
-    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" );
-    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-   }
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:InitSelectSubregistrants( VIEW ViewToWindow )
-
-//:   VIEW qSubreg BASED ON LOD qSubreg
-public int 
-InitSelectSubregistrants( View     ViewToWindow )
-{
-   zVIEW    qSubreg = new zVIEW( );
-   int      RESULT = 0;
-
-
-   //:GET VIEW qSubreg NAMED "qSubreg"
-   RESULT = GetViewByName( qSubreg, "qSubreg", ViewToWindow, zLEVEL_TASK );
-   //:IF  qSubreg != 0
-   if ( getView( qSubreg ) != null )
-   { 
-      //:DropObjectInstance( qSubreg )
-      DropObjectInstance( qSubreg );
-   } 
-
-   //:END
-
-   //:ACTIVATE qSubreg ROOTONLYMULTIPLE
-   RESULT = ActivateObjectInstance( qSubreg, "qSubreg", ViewToWindow, 0, zACTIVATE_ROOTONLY_MULTIPLE );
-   //:NAME VIEW qSubreg "qSubreg"
-   SetNameForView( qSubreg, "qSubreg", null, zLEVEL_TASK );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:CheckExistencePrimaryRegistrant( VIEW ViewToWindow )
-
-//:   VIEW qPrimReg BASED ON LOD qPrimReg
-public int 
-CheckExistencePrimaryRegistrant( View     ViewToWindow )
-{
-   zVIEW    qPrimReg = new zVIEW( );
-   int      RESULT = 0;
-
-
-   //:GET VIEW qPrimReg NAMED "qPrimReg"
-   RESULT = GetViewByName( qPrimReg, "qPrimReg", ViewToWindow, zLEVEL_TASK );
-   //:IF  qPrimReg != 0
-   if ( getView( qPrimReg ) != null )
-   { 
-      //:DropObjectInstance( qPrimReg )
-      DropObjectInstance( qPrimReg );
-   } 
-
-   //:END
-
-   //:// Ensure that at least the primary registrant exists.
-   //:ACTIVATE qPrimReg ROOTONLY
-   RESULT = ActivateObjectInstance( qPrimReg, "qPrimReg", ViewToWindow, 0, zACTIVATE_ROOTONLY );
-   //:NAME VIEW qPrimReg "qPrimReg"
-   SetNameForView( qPrimReg, "qPrimReg", null, zLEVEL_TASK );
-   //:IF RESULT < 0
-   if ( RESULT < 0 )
-   { 
-
-      //:MessageSend( ViewToWindow, "", "Select Primary Registrant",
-      //:             "No Primary Registrants exist ... please go to Administration.",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Select Primary Registrant", "No Primary Registrants exist ... please go to Administration.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:DropObjectInstance( qPrimReg )
-      DropObjectInstance( qPrimReg );
-      //:RETURN 2
-      if(8==8)return( 2 );
-   } 
-
-
-   //:END
-
-   //:DropObjectInstance( qPrimReg )
-   DropObjectInstance( qPrimReg );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:CheckExistenceSubregistrant( VIEW ViewToWindow )
-
-//:   VIEW qSubreg BASED ON LOD qSubreg
-public int 
-CheckExistenceSubregistrant( View     ViewToWindow )
-{
-   zVIEW    qSubreg = new zVIEW( );
-   int      RESULT = 0;
-   int      lTempInteger_0 = 0;
-
-
-   //:GET VIEW qSubreg NAMED "qSubreg"
-   RESULT = GetViewByName( qSubreg, "qSubreg", ViewToWindow, zLEVEL_TASK );
-   //:IF  qSubreg != 0
-   if ( getView( qSubreg ) != null )
-   { 
-      //:DropObjectInstance( qSubreg )
-      DropObjectInstance( qSubreg );
-   } 
-
-   //:END
-
-   //:ACTIVATE qSubreg ROOTONLY
-   RESULT = ActivateObjectInstance( qSubreg, "qSubreg", ViewToWindow, 0, zACTIVATE_ROOTONLY );
-   //:NAME VIEW qSubreg "qSubreg"
-   SetNameForView( qSubreg, "qSubreg", null, zLEVEL_TASK );
-
-   //:IF qSubreg.Subregistrant DOES NOT EXIST
-   lTempInteger_0 = CheckExistenceOfEntity( qSubreg, "Subregistrant" );
-   if ( lTempInteger_0 != 0 )
-   { 
-
-      //:MessageSend( ViewToWindow, "", "Select Subregistrant",
-      //:             "No Subregistrants exist ... please go to Administration.",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Select Subregistrant", "No Subregistrants exist ... please go to Administration.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-      //:DropObjectInstance( qSubreg )
-      DropObjectInstance( qSubreg );
-      //:RETURN 2
-      if(8==8)return( 2 );
-   } 
-
-
-   //:END
-
-   //:DropObjectInstance( qSubreg )
-   DropObjectInstance( qSubreg );
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:AutoLoginSubregistrant( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
-public int 
-AutoLoginSubregistrant( View     ViewToWindow )
-{
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-
-   //:wWebXfer.Root.AttemptLoginName = "SmallCorp"
-   SetAttributeFromString( wWebXfer, "Root", "AttemptLoginName", "SmallCorp" );
-   //:wWebXfer.Root.AttemptUserName = "Admin"
-   SetAttributeFromString( wWebXfer, "Root", "AttemptUserName", "Admin" );
-   //:wWebXfer.Root.AttemptPassword = "xxxxxxxx"
-   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "xxxxxxxx" );
-   //:RefreshWindow( ViewToWindow )
-   m_ZDRVROPR.RefreshWindow( ViewToWindow );
-   //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-   m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-   //:RETURN 2
-   return( 2 );
 // END
 } 
 
@@ -7586,14 +3580,1327 @@ InitPrimaryRegistrantForDelete( View     ViewToWindow )
     // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
    }
 
-   //:wWebXfer.Root.AttemptLoginName = ""
-   SetAttributeFromString( wWebXfer, "Root", "AttemptLoginName", "" );
+   //:wWebXfer.Root.AttemptLoginRegistrant = ""
+   SetAttributeFromString( wWebXfer, "Root", "AttemptLoginRegistrant", "" );
    //:wWebXfer.Root.AttemptPassword = ""
    SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
    //:wWebXfer.Root.ConfirmPassword = ""
    SetAttributeFromString( wWebXfer, "Root", "ConfirmPassword", "" );
    //:wWebXfer.Root.CurrentPassword = ""
    SetAttributeFromString( wWebXfer, "Root", "CurrentPassword", "" );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:DeletePrimaryRegistrant( VIEW ViewToWindow )
+
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
+public int 
+DeletePrimaryRegistrant( View     ViewToWindow )
+{
+   zVIEW    wWebXfer = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW mPrimReg REGISTERED AS mPrimReg
+   zVIEW    mPrimReg = new zVIEW( );
+   //:STRING ( 128 ) szAttemptPassword
+   String   szAttemptPassword = null;
+   //:SHORT  nRC
+   int      nRC = 0;
+   int      lTempInteger_0 = 0;
+   int      lTempInteger_1 = 0;
+   int      lTempInteger_2 = 0;
+
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( mPrimReg, "mPrimReg", ViewToWindow, zLEVEL_TASK );
+
+   //:IF mPrimReg.PrimarySub EXISTS
+   lTempInteger_0 = CheckExistenceOfEntity( mPrimReg, "PrimarySub" );
+   if ( lTempInteger_0 == 0 )
+   { 
+
+      //:MessageSend( ViewToWindow, "", "Delete Primary Registrant",
+      //:             "Subregistrants exist for primary registrant.  Delete Cancelled",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Delete Primary Registrant", "Subregistrants exist for primary registrant.  Delete Cancelled", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+
+   //:END
+
+   //:IF mPrimReg.MasterLabelContent EXISTS
+   lTempInteger_1 = CheckExistenceOfEntity( mPrimReg, "MasterLabelContent" );
+   if ( lTempInteger_1 == 0 )
+   { 
+
+      //:MessageSend( ViewToWindow, "", "Delete Primary Registrant",
+      //:             "Primary Label Data Definitions exist for primary registrant.  Delete Cancelled",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Delete Primary Registrant", "Primary Label Data Definitions exist for primary registrant.  Delete Cancelled", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+
+   //:END
+
+   //:// Match the password.
+   //:// IF mPrimReg.Organization.AdministratorPassword != wWebXfer.Root.VerifiedPassword
+   //:szAttemptPassword = wWebXfer.Root.AttemptPassword
+   {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
+   StringBuilder sb_szAttemptPassword;
+   if ( szAttemptPassword == null )
+      sb_szAttemptPassword = new StringBuilder( 32 );
+   else
+      sb_szAttemptPassword = new StringBuilder( szAttemptPassword );
+       GetVariableFromAttribute( sb_szAttemptPassword, mi_lTempInteger_2, 'S', 129, wWebXfer, "Root", "AttemptPassword", "", 0 );
+   lTempInteger_2 = mi_lTempInteger_2.intValue( );
+   szAttemptPassword = sb_szAttemptPassword.toString( );}
+   //:nRC = CompareAttributeToString( mPrimReg, "Organization", "AdministratorPassword", szAttemptPassword )
+   nRC = CompareAttributeToString( mPrimReg, "Organization", "AdministratorPassword", szAttemptPassword );
+   //:IF nRC != 0
+   if ( nRC != 0 )
+   { 
+
+      //:// TraceLineS( "//////* Invalid Administrator Password: ", szAttemptPassword )
+      //:MessageSend( ViewToWindow, "", "Delete Primary Registrant",
+      //:             "Current password is not correct.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Delete Primary Registrant", "Current password is not correct.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+
+   //:END
+
+   //:DELETE ENTITY mPrimReg.PrimaryRegistrant
+   RESULT = DeleteEntity( mPrimReg, "PrimaryRegistrant", zPOS_NEXT );
+   //:COMMIT mPrimReg
+   RESULT = CommitObjectInstance( mPrimReg );
+   //:DropObjectInstance( mPrimReg )
+   DropObjectInstance( mPrimReg );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:InitChangePrimRegPassword( VIEW ViewToWindow )
+
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
+public int 
+InitChangePrimRegPassword( View     ViewToWindow )
+{
+   zVIEW    wWebXfer = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+
+   //:wWebXfer.Root.AttemptPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
+   //:wWebXfer.Root.ConfirmPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "ConfirmPassword", "" );
+   //:wWebXfer.Root.CurrentPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "CurrentPassword", "" );
+
+   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" )
+   {
+    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
+    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" );
+    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
+   }
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:ConfirmChangePrimRegPassword( VIEW ViewToWindow )
+
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
+public int 
+ConfirmChangePrimRegPassword( View     ViewToWindow )
+{
+   zVIEW    wWebXfer = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW mPrimReg REGISTERED AS mPrimReg
+   zVIEW    mPrimReg = new zVIEW( );
+   //:STRING ( 128  ) szAttemptPassword
+   String   szAttemptPassword = null;
+   //:STRING ( 128  ) szConfirmPassword
+   String   szConfirmPassword = null;
+   //:INTEGER         lPasswordLth
+   int      lPasswordLth = 0;
+   //:SHORT   nRC
+   int      nRC = 0;
+   int      lTempInteger_0 = 0;
+   int      lTempInteger_1 = 0;
+   int      lTempInteger_2 = 0;
+
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( mPrimReg, "mPrimReg", ViewToWindow, zLEVEL_TASK );
+
+   //:// 1: Ensure old password is correct.
+   //:// IF mPrimReg.Organization.AdministratorPassword != wWebXfer.Root.CurrentPassword
+   //:szAttemptPassword = wWebXfer.Root.CurrentPassword
+   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+   StringBuilder sb_szAttemptPassword;
+   if ( szAttemptPassword == null )
+      sb_szAttemptPassword = new StringBuilder( 32 );
+   else
+      sb_szAttemptPassword = new StringBuilder( szAttemptPassword );
+       GetVariableFromAttribute( sb_szAttemptPassword, mi_lTempInteger_0, 'S', 129, wWebXfer, "Root", "CurrentPassword", "", 0 );
+   lTempInteger_0 = mi_lTempInteger_0.intValue( );
+   szAttemptPassword = sb_szAttemptPassword.toString( );}
+   //:nRC = CompareAttributeToString( mPrimReg, "Organization", "AdministratorPassword", szAttemptPassword )
+   nRC = CompareAttributeToString( mPrimReg, "Organization", "AdministratorPassword", szAttemptPassword );
+   //:IF nRC != 0
+   if ( nRC != 0 )
+   { 
+
+      //:// TraceLineS( "//////* Invalid Current User Password: ", szAttemptPassword )
+      //:MessageSend( ViewToWindow, "", "Change Primary Registrant User Password",
+      //:             "Current password is not correct.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Change Primary Registrant User Password", "Current password is not correct.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+
+   //:END
+
+   //:szAttemptPassword = wWebXfer.Root.AttemptPassword
+   {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+   StringBuilder sb_szAttemptPassword;
+   if ( szAttemptPassword == null )
+      sb_szAttemptPassword = new StringBuilder( 32 );
+   else
+      sb_szAttemptPassword = new StringBuilder( szAttemptPassword );
+       GetVariableFromAttribute( sb_szAttemptPassword, mi_lTempInteger_1, 'S', 129, wWebXfer, "Root", "AttemptPassword", "", 0 );
+   lTempInteger_1 = mi_lTempInteger_1.intValue( );
+   szAttemptPassword = sb_szAttemptPassword.toString( );}
+   //:szConfirmPassword = wWebXfer.Root.ConfirmPassword
+   {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
+   StringBuilder sb_szConfirmPassword;
+   if ( szConfirmPassword == null )
+      sb_szConfirmPassword = new StringBuilder( 32 );
+   else
+      sb_szConfirmPassword = new StringBuilder( szConfirmPassword );
+       GetVariableFromAttribute( sb_szConfirmPassword, mi_lTempInteger_2, 'S', 129, wWebXfer, "Root", "ConfirmPassword", "", 0 );
+   lTempInteger_2 = mi_lTempInteger_2.intValue( );
+   szConfirmPassword = sb_szConfirmPassword.toString( );}
+
+   //:// 2: Ensure attempted password matches confirm password.
+   //:IF szAttemptPassword != szConfirmPassword
+   if ( ZeidonStringCompare( szAttemptPassword, 1, 0, szConfirmPassword, 1, 0, 129 ) != 0 )
+   { 
+      //:// TraceLineS( szAttemptPassword, szConfirmPassword )
+      //:MessageSend( ViewToWindow, "", "Change Password",
+      //:             "The new password and the confirmation password do not match.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Change Password", "The new password and the confirmation password do not match.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+
+   //:// 3: Ensure new password is at least 8 characters long.
+   //:lPasswordLth = zGetStringLen( szConfirmPassword )
+   lPasswordLth = zGetStringLen( szConfirmPassword );
+   //:TraceLineI( "Password Length: ", lPasswordLth )
+   TraceLineI( "Password Length: ", lPasswordLth );
+   //:IF lPasswordLth < 8
+   if ( lPasswordLth < 8 )
+   { 
+      //:MessageSend( ViewToWindow, "", "Change Password",
+      //:             "The new password must be at least 8 characters long.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Change Password", "The new password must be at least 8 characters long.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+
+   //:mPrimReg.Organization.AdministratorPassword = szConfirmPassword
+   SetAttributeFromString( mPrimReg, "Organization", "AdministratorPassword", szConfirmPassword );
+   //:COMMIT mPrimReg
+   RESULT = CommitObjectInstance( mPrimReg );
+   //:DropObjectInstance( mPrimReg )
+   DropObjectInstance( mPrimReg );
+
+   //:wWebXfer.Root.AttemptPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
+   //:wWebXfer.Root.ConfirmPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "ConfirmPassword", "" );
+   //:wWebXfer.Root.CurrentPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "CurrentPassword", "" );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:CancelChangePrimRegPassword( VIEW ViewToWindow )
+
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
+public int 
+CancelChangePrimRegPassword( View     ViewToWindow )
+{
+   zVIEW    wWebXfer = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW mPrimReg REGISTERED AS mPrimReg
+   zVIEW    mPrimReg = new zVIEW( );
+
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( mPrimReg, "mPrimReg", ViewToWindow, zLEVEL_TASK );
+
+   //:DropObjectInstance( mPrimReg )
+   DropObjectInstance( mPrimReg );
+
+   //:wWebXfer.Root.AttemptPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
+   //:wWebXfer.Root.ConfirmPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "ConfirmPassword", "" );
+   //:wWebXfer.Root.CurrentPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "CurrentPassword", "" );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:InitChangePrimRegUserPassword( VIEW ViewToWindow )
+
+public int 
+InitChangePrimRegUserPassword( View     ViewToWindow )
+{
+
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:CancelChangePrimRegUserPassword( VIEW ViewToWindow )
+
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
+public int 
+CancelChangePrimRegUserPassword( View     ViewToWindow )
+{
+   zVIEW    wWebXfer = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW mPrimReg REGISTERED AS mPrimReg
+   zVIEW    mPrimReg = new zVIEW( );
+
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( mPrimReg, "mPrimReg", ViewToWindow, zLEVEL_TASK );
+
+   //:DropObjectInstance( mPrimReg )
+   DropObjectInstance( mPrimReg );
+
+   //:wWebXfer.Root.AttemptPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
+   //:wWebXfer.Root.ConfirmPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "ConfirmPassword", "" );
+   //:wWebXfer.Root.CurrentPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "CurrentPassword", "" );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:ConfirmChangePrimRegUserPassword( VIEW ViewToWindow )
+
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
+public int 
+ConfirmChangePrimRegUserPassword( View     ViewToWindow )
+{
+   zVIEW    wWebXfer = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW mPrimReg REGISTERED AS mPrimReg
+   zVIEW    mPrimReg = new zVIEW( );
+
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( mPrimReg, "mPrimReg", ViewToWindow, zLEVEL_TASK );
+
+   //:DropObjectInstance( mPrimReg )
+   DropObjectInstance( mPrimReg );
+
+   //:wWebXfer.Root.AttemptPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
+   //:wWebXfer.Root.ConfirmPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "ConfirmPassword", "" );
+   //:wWebXfer.Root.CurrentPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "CurrentPassword", "" );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:SubregistrantManagement( VIEW ViewToWindow )
+
+//:   VIEW qOrganiz REGISTERED AS qOrganizLogin
+public int 
+SubregistrantManagement( View     ViewToWindow )
+{
+   zVIEW    qOrganiz = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW lPrimReg BASED ON LOD  lPrimReg
+   zVIEW    lPrimReg = new zVIEW( );
+   //:VIEW lSubreg  BASED ON LOD  lSubreg
+   zVIEW    lSubreg = new zVIEW( );
+   //:VIEW wWebXfer REGISTERED AS wWebXfer
+   zVIEW    wWebXfer = new zVIEW( );
+   //:INTEGER lID
+   int      lID = 0;
+   int      lTempInteger_0 = 0;
+   zVIEW    vTempViewVar_0 = new zVIEW( );
+   int      lTempInteger_1 = 0;
+   zVIEW    vTempViewVar_1 = new zVIEW( );
+
+   RESULT = GetViewByName( qOrganiz, "qOrganizLogin", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+
+   //:IF wWebXfer.Root.KeyRole != "P" // Primary registrant
+   if ( CompareAttributeToString( wWebXfer, "Root", "KeyRole", "P" ) != 0 )
+   { 
+      //:MessageSend( ViewToWindow, "", "New Subregistrant",
+      //:             "Must be logged in as a Primary registrant to create new Subregistrants.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "New Subregistrant", "Must be logged in as a Primary registrant to create new Subregistrants.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:   
+   //:END
+
+   //:GET VIEW lPrimReg NAMED "lPrimReg"
+   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
+   //:IF lPrimReg != 0
+   if ( getView( lPrimReg ) != null )
+   { 
+      //:DropObjectInstance( lPrimReg )
+      DropObjectInstance( lPrimReg );
+   } 
+
+   //:END
+
+   //:GET VIEW lSubreg NAMED "lSubreg"
+   RESULT = GetViewByName( lSubreg, "lSubreg", ViewToWindow, zLEVEL_TASK );
+   //:IF lSubreg != 0
+   if ( getView( lSubreg ) != null )
+   { 
+      //:DropObjectInstance( lSubreg )
+      DropObjectInstance( lSubreg );
+   } 
+
+   //:END
+
+   //:ACTIVATE lPrimReg WHERE lPrimReg.PrimaryRegistrant.ID = qOrganiz.PrimaryRegistrant.ID
+   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+       GetIntegerFromAttribute( mi_lTempInteger_0, qOrganiz, "PrimaryRegistrant", "ID" );
+   lTempInteger_0 = mi_lTempInteger_0.intValue( );}
+   o_fnLocalBuildQual_16( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
+   RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
+   DropView( vTempViewVar_0 );
+   //:NAME VIEW lPrimReg "lPrimReg"
+   SetNameForView( lPrimReg, "lPrimReg", null, zLEVEL_TASK );
+
+   //:// Need to create the mSubreg view
+   //:ACTIVATE lSubreg MULTIPLE WHERE lSubreg.PrimaryRegistrant.ID = lPrimReg.PrimaryRegistrant.ID
+   {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+       GetIntegerFromAttribute( mi_lTempInteger_1, lPrimReg, "PrimaryRegistrant", "ID" );
+   lTempInteger_1 = mi_lTempInteger_1.intValue( );}
+   o_fnLocalBuildQual_17( ViewToWindow, vTempViewVar_1, lTempInteger_1 );
+   RESULT = ActivateObjectInstance( lSubreg, "lSubreg", ViewToWindow, vTempViewVar_1, zMULTIPLE );
+   DropView( vTempViewVar_1 );
+   //:NAME VIEW lSubreg "lSubreg"
+   SetNameForView( lSubreg, "lSubreg", null, zLEVEL_TASK );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:ListSubregistrants( VIEW ViewToWindow )
+
+//:   VIEW lPrimReg BASED ON LOD lPrimReg
+public int 
+ListSubregistrants( View     ViewToWindow )
+{
+   zVIEW    lPrimReg = new zVIEW( );
+   //:VIEW lSubreg  BASED ON LOD lSubreg
+   zVIEW    lSubreg = new zVIEW( );
+   //:INTEGER lID
+   int      lID = 0;
+   int      RESULT = 0;
+   int      lTempInteger_0 = 0;
+   zVIEW    vTempViewVar_0 = new zVIEW( );
+
+
+   //:GET VIEW lPrimReg NAMED "lPrimReg"
+   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
+   //:GET VIEW lSubreg NAMED "lSubreg"
+   RESULT = GetViewByName( lSubreg, "lSubreg", ViewToWindow, zLEVEL_TASK );
+   //:IF lSubreg != 0
+   if ( getView( lSubreg ) != null )
+   { 
+      //:DropObjectInstance( lSubreg )
+      DropObjectInstance( lSubreg );
+   } 
+
+   //:END
+
+   //:// Need to create the mSubreg view
+   //:ACTIVATE lSubreg WHERE lSubreg.Subregistrant.ID = lPrimReg.Subregistrant.ID
+   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+       GetIntegerFromAttribute( mi_lTempInteger_0, lPrimReg, "Subregistrant", "ID" );
+   lTempInteger_0 = mi_lTempInteger_0.intValue( );}
+   o_fnLocalBuildQual_18( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
+   RESULT = ActivateObjectInstance( lSubreg, "lSubreg", ViewToWindow, vTempViewVar_0, zSINGLE );
+   DropView( vTempViewVar_0 );
+   //:NAME VIEW lSubreg "lSubreg"
+   SetNameForView( lSubreg, "lSubreg", null, zLEVEL_TASK );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:InitListSubregistrants( VIEW ViewToWindow )
+
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
+public int 
+InitListSubregistrants( View     ViewToWindow )
+{
+   zVIEW    wWebXfer = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW lPrimReg BASED ON LOD lPrimReg
+   zVIEW    lPrimReg = new zVIEW( );
+   //:INTEGER lID
+   int      lID = 0;
+   zVIEW    vTempViewVar_0 = new zVIEW( );
+
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+
+   //:GET VIEW lPrimReg NAMED "lPrimReg"
+   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
+   //:lID = lPrimReg.PrimaryRegistrant.ID
+   {MutableInt mi_lID = new MutableInt( lID );
+       GetIntegerFromAttribute( mi_lID, lPrimReg, "PrimaryRegistrant", "ID" );
+   lID = mi_lID.intValue( );}
+   //:DropObjectInstance( lPrimReg )
+   DropObjectInstance( lPrimReg );
+
+   //:// Activate the "selected" primary registrant ... just in case someone added or
+   //:// deleted a subregistrant.
+   //:ACTIVATE lPrimReg WHERE lPrimReg.PrimaryRegistrant.ID = lID
+   o_fnLocalBuildQual_19( ViewToWindow, vTempViewVar_0, lID );
+   RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
+   DropView( vTempViewVar_0 );
+   //:NAME VIEW lPrimReg "lPrimReg"
+   SetNameForView( lPrimReg, "lPrimReg", null, zLEVEL_TASK );
+
+   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" )
+   {
+    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
+    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" );
+    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
+   }
+   //:wWebXfer.Root.Banner4 = ""
+   SetAttributeFromString( wWebXfer, "Root", "Banner4", "" );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:AddNewSubregistrant( VIEW ViewToWindow )
+
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
+public int 
+AddNewSubregistrant( View     ViewToWindow )
+{
+   zVIEW    wWebXfer = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW mSubreg  BASED ON LOD  mSubreg
+   zVIEW    mSubreg = new zVIEW( );
+
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+
+   //:GET VIEW mSubreg NAMED "mSubreg"
+   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
+   //:IF mSubreg != 0
+   if ( getView( mSubreg ) != null )
+   { 
+      //:DropObjectInstance( mSubreg )
+      DropObjectInstance( mSubreg );
+   } 
+
+   //:END
+
+   //:ACTIVATE mSubreg EMPTY
+   RESULT = ActivateEmptyObjectInstance( mSubreg, "mSubreg", ViewToWindow, zSINGLE );
+   //:NAME VIEW mSubreg "mSubreg"
+   SetNameForView( mSubreg, "mSubreg", null, zLEVEL_TASK );
+
+   //:CREATE ENTITY mSubreg.Subregistrant
+   RESULT = CreateEntity( mSubreg, "Subregistrant", zPOS_AFTER );
+   //:CREATE ENTITY mSubreg.SubregOrganization
+   RESULT = CreateEntity( mSubreg, "SubregOrganization", zPOS_AFTER );
+   //:CREATE ENTITY mSubreg.PhysicalAddress
+   RESULT = CreateEntity( mSubreg, "PhysicalAddress", zPOS_AFTER );
+   //:CREATE ENTITY mSubreg.MailingAddress
+   RESULT = CreateEntity( mSubreg, "MailingAddress", zPOS_AFTER );
+   //:CREATE ENTITY mSubreg.ContactPerson
+   RESULT = CreateEntity( mSubreg, "ContactPerson", zPOS_AFTER );
+
+   //:mSubreg.PhysicalAddress.Country = "USA"
+   SetAttributeFromString( mSubreg, "PhysicalAddress", "Country", "USA" );
+   //:mSubreg.MailingAddress.Country = "USA"
+   SetAttributeFromString( mSubreg, "MailingAddress", "Country", "USA" );
+   //:wWebXfer.Root.SameAs = "Y"
+   SetAttributeFromString( wWebXfer, "Root", "SameAs", "Y" );
+
+   //:wWebXfer.Root.AttemptLoginRegistrant = ""
+   SetAttributeFromString( wWebXfer, "Root", "AttemptLoginRegistrant", "" );
+   //:wWebXfer.Root.AttemptPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
+   //:wWebXfer.Root.ConfirmPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "ConfirmPassword", "" );
+   //:wWebXfer.Root.CurrentPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "CurrentPassword", "" );
+
+   //:CreateTemporalSubobjectVersion( mSubreg, "Subregistrant" )
+   CreateTemporalSubobjectVersion( mSubreg, "Subregistrant" );
+   //:// CreateTemporalSubobjectVersion( mSubreg, "SubregOrganization" )
+   //:// CreateTemporalSubobjectVersion( mSubreg, "PhysicalAddress" )
+   //:// CreateTemporalSubobjectVersion( mSubreg, "MailingAddress" )
+   //:// CreateTemporalSubobjectVersion( mSubreg, "ContactPerson" )
+
+   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" )
+   {
+    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
+    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" );
+    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
+   }
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:InitSubregistrantForUpdate( VIEW ViewToWindow )
+
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
+public int 
+InitSubregistrantForUpdate( View     ViewToWindow )
+{
+   zVIEW    wWebXfer = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW lSubreg  REGISTERED AS lSubreg
+   zVIEW    lSubreg = new zVIEW( );
+   //:VIEW mSubreg  BASED ON LOD  mSubreg
+   zVIEW    mSubreg = new zVIEW( );
+   //:STRING (   1  ) szKeyRole
+   String   szKeyRole = null;
+   //:INTEGER lID
+   int      lID = 0;
+   int      lTempInteger_0 = 0;
+   zVIEW    vTempViewVar_0 = new zVIEW( );
+   int      lTempInteger_1 = 0;
+   int      lTempInteger_2 = 0;
+   int      lTempInteger_3 = 0;
+   int      lTempInteger_4 = 0;
+   int      lTempInteger_5 = 0;
+
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( lSubreg, "lSubreg", ViewToWindow, zLEVEL_TASK );
+
+   //:GET VIEW mSubreg NAMED "mSubreg"
+   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
+   //:IF mSubreg != 0
+   if ( getView( mSubreg ) != null )
+   { 
+      //:DropObjectInstance( mSubreg )
+      DropObjectInstance( mSubreg );
+   } 
+
+   //:END
+
+   //:// If this is the first time into the system, this is the administrator.
+   //:// Otherwise, just create a new primary registrant.
+   //:ACTIVATE mSubreg WHERE mSubreg.Subregistrant.ID = lSubreg.Subregistrant.ID
+   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+       GetIntegerFromAttribute( mi_lTempInteger_0, lSubreg, "Subregistrant", "ID" );
+   lTempInteger_0 = mi_lTempInteger_0.intValue( );}
+   o_fnLocalBuildQual_20( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
+   RESULT = ActivateObjectInstance( mSubreg, "mSubreg", ViewToWindow, vTempViewVar_0, zSINGLE );
+   DropView( vTempViewVar_0 );
+   //:NAME VIEW mSubreg "mSubreg"
+   SetNameForView( mSubreg, "mSubreg", null, zLEVEL_TASK );
+   //:IF mSubreg.Subregistrant DOES NOT EXIST
+   lTempInteger_1 = CheckExistenceOfEntity( mSubreg, "Subregistrant" );
+   if ( lTempInteger_1 != 0 )
+   { 
+
+      //:// This should never happen!!!
+      //:CREATE ENTITY mSubreg.Subregistrant
+      RESULT = CreateEntity( mSubreg, "Subregistrant", zPOS_AFTER );
+      //:CREATE ENTITY mSubreg.SubregOrganization
+      RESULT = CreateEntity( mSubreg, "SubregOrganization", zPOS_AFTER );
+      //:CREATE ENTITY mSubreg.PhysicalAddress
+      RESULT = CreateEntity( mSubreg, "PhysicalAddress", zPOS_AFTER );
+      //:CREATE ENTITY mSubreg.MailingAddress
+      RESULT = CreateEntity( mSubreg, "MailingAddress", zPOS_AFTER );
+      //:CREATE ENTITY mSubreg.ContactPerson
+      RESULT = CreateEntity( mSubreg, "ContactPerson", zPOS_AFTER );
+      //:mSubreg.PhysicalAddress.Country = "USA"
+      SetAttributeFromString( mSubreg, "PhysicalAddress", "Country", "USA" );
+      //:mSubreg.MailingAddress.Country = "USA"
+      SetAttributeFromString( mSubreg, "MailingAddress", "Country", "USA" );
+      //:wWebXfer.Root.SameAs = "Y"
+      SetAttributeFromString( wWebXfer, "Root", "SameAs", "Y" );
+
+      //:ELSE
+   } 
+   else
+   { 
+      //:wWebXfer.Root.SameAs = ""
+      SetAttributeFromString( wWebXfer, "Root", "SameAs", "" );
+   } 
+
+   //:END
+
+   //:IF mSubreg.PhysicalAddress DOES NOT EXIST
+   lTempInteger_2 = CheckExistenceOfEntity( mSubreg, "PhysicalAddress" );
+   if ( lTempInteger_2 != 0 )
+   { 
+      //:CREATE ENTITY mSubreg.PhysicalAddress
+      RESULT = CreateEntity( mSubreg, "PhysicalAddress", zPOS_AFTER );
+      //:mSubreg.PhysicalAddress.Country = "USA"
+      SetAttributeFromString( mSubreg, "PhysicalAddress", "Country", "USA" );
+   } 
+
+   //:END
+
+   //:IF mSubreg.MailingAddress DOES NOT EXIST
+   lTempInteger_3 = CheckExistenceOfEntity( mSubreg, "MailingAddress" );
+   if ( lTempInteger_3 != 0 )
+   { 
+      //:CREATE ENTITY mSubreg.MailingAddress
+      RESULT = CreateEntity( mSubreg, "MailingAddress", zPOS_AFTER );
+      //:lID = mSubreg.MailingAddress.ID
+      {MutableInt mi_lID = new MutableInt( lID );
+             GetIntegerFromAttribute( mi_lID, mSubreg, "MailingAddress", "ID" );
+      lID = mi_lID.intValue( );}
+      //:wWebXfer.Root.SameAs = "Y"
+      SetAttributeFromString( wWebXfer, "Root", "SameAs", "Y" );
+      //:SetMatchingAttributesByName( mSubreg, "MailingAddress",
+      //:                             mSubreg, "PhysicalAddress", zSET_NOTNULL )
+      SetMatchingAttributesByName( mSubreg, "MailingAddress", mSubreg, "PhysicalAddress", zSET_NOTNULL );
+      //:lID = mSubreg.MailingAddress.ID
+      {MutableInt mi_lID = new MutableInt( lID );
+             GetIntegerFromAttribute( mi_lID, mSubreg, "MailingAddress", "ID" );
+      lID = mi_lID.intValue( );}
+   } 
+
+   //:// mSubreg.MailingAddress.ID = lID
+   //:END
+
+   //:IF mSubreg.ContactPerson DOES NOT EXIST
+   lTempInteger_4 = CheckExistenceOfEntity( mSubreg, "ContactPerson" );
+   if ( lTempInteger_4 != 0 )
+   { 
+      //:CREATE ENTITY mSubreg.ContactPerson
+      RESULT = CreateEntity( mSubreg, "ContactPerson", zPOS_AFTER );
+   } 
+
+   //:END
+
+   //:wWebXfer.Root.AttemptLoginRegistrant = mSubreg.SubregOrganization.LoginName
+   SetAttributeFromAttribute( wWebXfer, "Root", "AttemptLoginRegistrant", mSubreg, "SubregOrganization", "LoginName" );
+   //:wWebXfer.Root.AttemptPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
+   //:wWebXfer.Root.ConfirmPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "ConfirmPassword", "" );
+   //:wWebXfer.Root.CurrentPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "CurrentPassword", "" );
+
+   //:CreateTemporalSubobjectVersion( mSubreg, "Subregistrant" )
+   CreateTemporalSubobjectVersion( mSubreg, "Subregistrant" );
+   //:// CreateTemporalSubobjectVersion( mSubreg, "SubregOrganization" )
+   //:// CreateTemporalSubobjectVersion( mSubreg, "PhysicalAddress" )
+   //:// CreateTemporalSubobjectVersion( mSubreg, "MailingAddress" )
+   //:// CreateTemporalSubobjectVersion( mSubreg, "ContactPerson" )
+
+   //:szKeyRole = wWebXfer.Root.KeyRole
+   {MutableInt mi_lTempInteger_5 = new MutableInt( lTempInteger_5 );
+   StringBuilder sb_szKeyRole;
+   if ( szKeyRole == null )
+      sb_szKeyRole = new StringBuilder( 32 );
+   else
+      sb_szKeyRole = new StringBuilder( szKeyRole );
+       GetVariableFromAttribute( sb_szKeyRole, mi_lTempInteger_5, 'S', 2, wWebXfer, "Root", "KeyRole", "", 0 );
+   lTempInteger_5 = mi_lTempInteger_5.intValue( );
+   szKeyRole = sb_szKeyRole.toString( );}
+   //:IF szKeyRole = "S" // Subregistrant
+   if ( ZeidonStringCompare( szKeyRole, 1, 0, "S", 1, 0, 2 ) == 0 )
+   { 
+      //:SetDynamicBannerName( ViewToWindow, "wStartUp", "Subregistrant" )
+      {
+       ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
+       m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "Subregistrant" );
+       // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
+      }
+      //:ELSE
+   } 
+   else
+   { 
+      //:SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" )
+      {
+       ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
+       m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" );
+       // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
+      }
+   } 
+
+   //:END
+
+   //:wWebXfer.Root.Banner4 = mSubreg.Subregistrant.dNameEPA_Number
+   SetAttributeFromAttribute( wWebXfer, "Root", "Banner4", mSubreg, "Subregistrant", "dNameEPA_Number" );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:AcceptNewSubregistrant( VIEW ViewToWindow )
+
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
+public int 
+AcceptNewSubregistrant( View     ViewToWindow )
+{
+   zVIEW    wWebXfer = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW lPrimReg REGISTERED AS lPrimReg
+   zVIEW    lPrimReg = new zVIEW( );
+   //:VIEW mSubreg  REGISTERED AS mSubreg
+   zVIEW    mSubreg = new zVIEW( );
+   //:STRING (  50  ) szAttemptLoginRegistrant
+   String   szAttemptLoginRegistrant = null;
+   //:STRING (  50  ) szRegistrantName
+   String   szRegistrantName = null;
+   //:STRING ( 128  ) szAttemptPassword
+   String   szAttemptPassword = null;
+   //:STRING ( 128  ) szConfirmPassword
+   String   szConfirmPassword = null;
+   //:INTEGER         lAttemptLoginRegistrantLth
+   int      lAttemptLoginRegistrantLth = 0;
+   //:INTEGER         lRegistrantNameLth
+   int      lRegistrantNameLth = 0;
+   //:INTEGER         lPasswordLth
+   int      lPasswordLth = 0;
+   //:INTEGER         lID
+   int      lID = 0;
+   int      lTempInteger_0 = 0;
+   int      lTempInteger_1 = 0;
+   int      lTempInteger_2 = 0;
+   int      lTempInteger_3 = 0;
+   zVIEW    vTempViewVar_0 = new zVIEW( );
+
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
+
+   //:// Ensure registrant login name is not blank and is unique.
+   //:szAttemptLoginRegistrant = wWebXfer.Root.AttemptLoginRegistrant
+   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+   StringBuilder sb_szAttemptLoginRegistrant;
+   if ( szAttemptLoginRegistrant == null )
+      sb_szAttemptLoginRegistrant = new StringBuilder( 32 );
+   else
+      sb_szAttemptLoginRegistrant = new StringBuilder( szAttemptLoginRegistrant );
+       GetVariableFromAttribute( sb_szAttemptLoginRegistrant, mi_lTempInteger_0, 'S', 51, wWebXfer, "Root", "AttemptLoginRegistrant", "", 0 );
+   lTempInteger_0 = mi_lTempInteger_0.intValue( );
+   szAttemptLoginRegistrant = sb_szAttemptLoginRegistrant.toString( );}
+   //:lAttemptLoginRegistrantLth = zGetStringLen( szAttemptLoginRegistrant )
+   lAttemptLoginRegistrantLth = zGetStringLen( szAttemptLoginRegistrant );
+   //:TraceLineS( "Registrant Login Name: ", szAttemptLoginRegistrant )
+   TraceLineS( "Registrant Login Name: ", szAttemptLoginRegistrant );
+   //:TraceLineI( "Registrant Login Name Length: ", lAttemptLoginRegistrantLth )
+   TraceLineI( "Registrant Login Name Length: ", lAttemptLoginRegistrantLth );
+   //:IF lAttemptLoginRegistrantLth < 1
+   if ( lAttemptLoginRegistrantLth < 1 )
+   { 
+      //:MessageSend( ViewToWindow, "", "New Subregistrant",
+      //:             "The registrant Login Name cannot be blank.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "New Subregistrant", "The registrant Login Name cannot be blank.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+      //:ELSE
+   } 
+   else
+   { 
+      //:SET CURSOR FIRST lPrimReg.Subregistrant WHERE lPrimReg.SubregOrganization.LoginName = szAttemptLoginRegistrant
+      RESULT = SetCursorFirstEntity( lPrimReg, "Subregistrant", "" );
+      if ( RESULT > zCURSOR_UNCHANGED )
+      { 
+         while ( RESULT > zCURSOR_UNCHANGED && ( CompareAttributeToString( lPrimReg, "SubregOrganization", "LoginName", szAttemptLoginRegistrant ) != 0 ) )
+         { 
+            RESULT = SetCursorNextEntity( lPrimReg, "Subregistrant", "" );
+         } 
+
+      } 
+
+      //:IF RESULT >= 0
+      if ( RESULT >= 0 )
+      { 
+         //:MessageSend( ViewToWindow, "", "New Subregistrant",
+         //:             "The registrant Login Name must be unique.",
+         //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         MessageSend( ViewToWindow, "", "New Subregistrant", "The registrant Login Name must be unique.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+         //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+         m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+         //:RETURN 2
+         if(8==8)return( 2 );
+      } 
+
+      //:END
+   } 
+
+   //:END
+
+   //:// Ensure registrant name is not blank.
+   //:szRegistrantName = mSubreg.SubregOrganization.Name
+   {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+   StringBuilder sb_szRegistrantName;
+   if ( szRegistrantName == null )
+      sb_szRegistrantName = new StringBuilder( 32 );
+   else
+      sb_szRegistrantName = new StringBuilder( szRegistrantName );
+       GetVariableFromAttribute( sb_szRegistrantName, mi_lTempInteger_1, 'S', 51, mSubreg, "SubregOrganization", "Name", "", 0 );
+   lTempInteger_1 = mi_lTempInteger_1.intValue( );
+   szRegistrantName = sb_szRegistrantName.toString( );}
+   //:lRegistrantNameLth = zGetStringLen( szRegistrantName )
+   lRegistrantNameLth = zGetStringLen( szRegistrantName );
+   //:TraceLineS( "Registrant Name: ", szRegistrantName )
+   TraceLineS( "Registrant Name: ", szRegistrantName );
+   //:TraceLineI( "Registrant Name Length: ", lRegistrantNameLth )
+   TraceLineI( "Registrant Name Length: ", lRegistrantNameLth );
+   //:IF lRegistrantNameLth < 1
+   if ( lRegistrantNameLth < 1 )
+   { 
+      //:MessageSend( ViewToWindow, "", "Update Subregistrant",
+      //:             "The registrant Organization Name cannot be blank.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Update Subregistrant", "The registrant Organization Name cannot be blank.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+
+   //:szAttemptPassword = wWebXfer.Root.AttemptPassword
+   {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
+   StringBuilder sb_szAttemptPassword;
+   if ( szAttemptPassword == null )
+      sb_szAttemptPassword = new StringBuilder( 32 );
+   else
+      sb_szAttemptPassword = new StringBuilder( szAttemptPassword );
+       GetVariableFromAttribute( sb_szAttemptPassword, mi_lTempInteger_2, 'S', 129, wWebXfer, "Root", "AttemptPassword", "", 0 );
+   lTempInteger_2 = mi_lTempInteger_2.intValue( );
+   szAttemptPassword = sb_szAttemptPassword.toString( );}
+   //:szConfirmPassword = wWebXfer.Root.ConfirmPassword
+   {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
+   StringBuilder sb_szConfirmPassword;
+   if ( szConfirmPassword == null )
+      sb_szConfirmPassword = new StringBuilder( 32 );
+   else
+      sb_szConfirmPassword = new StringBuilder( szConfirmPassword );
+       GetVariableFromAttribute( sb_szConfirmPassword, mi_lTempInteger_3, 'S', 129, wWebXfer, "Root", "ConfirmPassword", "", 0 );
+   lTempInteger_3 = mi_lTempInteger_3.intValue( );
+   szConfirmPassword = sb_szConfirmPassword.toString( );}
+
+   //:// 1: Ensure attempted password matches confirm password.
+   //:IF szAttemptPassword != szConfirmPassword
+   if ( ZeidonStringCompare( szAttemptPassword, 1, 0, szConfirmPassword, 1, 0, 129 ) != 0 )
+   { 
+      //:// TraceLineS( szAttemptPassword, szConfirmPassword )
+      //:MessageSend( ViewToWindow, "", "Update Subregistrant",
+      //:             "The new password and the confirmation password do not match.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Update Subregistrant", "The new password and the confirmation password do not match.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+
+   //:// 2: Ensure new password is at least 8 characters long.
+   //:lPasswordLth = zGetStringLen( szConfirmPassword )
+   lPasswordLth = zGetStringLen( szConfirmPassword );
+   //:TraceLineI( "Password Length: ", lPasswordLth )
+   TraceLineI( "Password Length: ", lPasswordLth );
+   //:IF lPasswordLth < 8
+   if ( lPasswordLth < 8 )
+   { 
+      //:MessageSend( ViewToWindow, "", "Update Subregistrant",
+      //:             "The new password must be at least 8 characters long.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Update Subregistrant", "The new password must be at least 8 characters long.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+
+   //:// Set login name to new login name.
+   //:mSubreg.SubregOrganization.LoginName = szAttemptLoginRegistrant
+   SetAttributeFromString( mSubreg, "SubregOrganization", "LoginName", szAttemptLoginRegistrant );
+
+   //:// Set user password to new password.
+   //:// SetAttrFromStrByContext( mSubreg, "User", "UserPassword", szConfirmPassword, "Password" )
+   //:mSubreg.SubregOrganization.AdministratorPassword = szConfirmPassword
+   SetAttributeFromString( mSubreg, "SubregOrganization", "AdministratorPassword", szConfirmPassword );
+   //:mSubreg.SubregOrganization.Role = "S"  // Subregistrant
+   SetAttributeFromString( mSubreg, "SubregOrganization", "Role", "S" );
+
+   //:// AcceptSubobject( mSubreg, "ContactPerson" )
+   //:// AcceptSubobject( mSubreg, "PhysicalAddress" )
+   //:// AcceptSubobject( mSubreg, "MailingAddress" )
+   //:AcceptSubobject( mSubreg, "Subregistrant" )
+   AcceptSubobject( mSubreg, "Subregistrant" );
+   //:IF wWebXfer.Root.SameAs = "Y"
+   if ( CompareAttributeToString( wWebXfer, "Root", "SameAs", "Y" ) == 0 )
+   { 
+      //:DELETE ENTITY mSubreg.MailingAddress
+      RESULT = DeleteEntity( mSubreg, "MailingAddress", zPOS_NEXT );
+   } 
+
+   //:END
+
+   //:CREATE ENTITY mSubreg.PrimarySub
+   RESULT = CreateEntity( mSubreg, "PrimarySub", zPOS_AFTER );
+   //:IncludeSubobjectFromSubobject( mSubreg, "PrimaryRegistrant",
+   //:                               lPrimReg, "PrimaryRegistrant", zPOS_LAST )
+   IncludeSubobjectFromSubobject( mSubreg, "PrimaryRegistrant", lPrimReg, "PrimaryRegistrant", zPOS_LAST );
+   //:// MessageSend( ViewToWindow, ", "Accept New Subregistrant",
+   //://              "Check out mPrimReg in Object Browser.",
+   //://              zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+
+   //:Commit mSubreg
+   RESULT = CommitObjectInstance( mSubreg );
+
+   //:lID = lPrimReg.PrimaryRegistrant.ID
+   {MutableInt mi_lID = new MutableInt( lID );
+       GetIntegerFromAttribute( mi_lID, lPrimReg, "PrimaryRegistrant", "ID" );
+   lID = mi_lID.intValue( );}
+   //:DropObjectInstance( mSubreg )
+   DropObjectInstance( mSubreg );
+   //:DropObjectInstance( lPrimReg )
+   DropObjectInstance( lPrimReg );
+
+   //:ACTIVATE lPrimReg WHERE lPrimReg.PrimaryRegistrant.ID = lID
+   o_fnLocalBuildQual_21( ViewToWindow, vTempViewVar_0, lID );
+   RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
+   DropView( vTempViewVar_0 );
+   //:NAME VIEW lPrimReg "lPrimReg"
+   SetNameForView( lPrimReg, "lPrimReg", null, zLEVEL_TASK );
+   return( 0 );
+// // MessageSend( ViewToWindow, ", "Accept New Subregistrant",
+// //              "Check out lPrimReg in Object Browser.",
+// //              zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:ValidateSubregistrant( VIEW ViewToWindow )
+
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
+public int 
+ValidateSubregistrant( View     ViewToWindow )
+{
+   zVIEW    wWebXfer = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW mSubreg  REGISTERED AS mSubreg
+   zVIEW    mSubreg = new zVIEW( );
+   //:VIEW qOrganiz BASED ON LOD  qOrganiz
+   zVIEW    qOrganiz = new zVIEW( );
+   //:STRING (  50  ) szAttemptLoginRegistrant
+   String   szAttemptLoginRegistrant = null;
+   //:STRING (  50  ) szRegistrantName
+   String   szRegistrantName = null;
+   //:STRING ( 128  ) szAttemptPassword
+   String   szAttemptPassword = null;
+   //:STRING ( 128  ) szConfirmPassword
+   String   szConfirmPassword = null;
+   //:INTEGER         lAttemptLoginRegistrantLth
+   int      lAttemptLoginRegistrantLth = 0;
+   //:INTEGER         lRegistrantNameLth
+   int      lRegistrantNameLth = 0;
+   //:INTEGER         lPasswordLth
+   int      lPasswordLth = 0;
+   int      lTempInteger_0 = 0;
+   int      lTempInteger_1 = 0;
+   zVIEW    vTempViewVar_0 = new zVIEW( );
+   int      lTempInteger_2 = 0;
+   int      lTempInteger_3 = 0;
+
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
+
+   //:// Ensure registrant login name is not blank and is unique.
+   //:szAttemptLoginRegistrant = wWebXfer.Root.AttemptLoginRegistrant
+   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+   StringBuilder sb_szAttemptLoginRegistrant;
+   if ( szAttemptLoginRegistrant == null )
+      sb_szAttemptLoginRegistrant = new StringBuilder( 32 );
+   else
+      sb_szAttemptLoginRegistrant = new StringBuilder( szAttemptLoginRegistrant );
+       GetVariableFromAttribute( sb_szAttemptLoginRegistrant, mi_lTempInteger_0, 'S', 51, wWebXfer, "Root", "AttemptLoginRegistrant", "", 0 );
+   lTempInteger_0 = mi_lTempInteger_0.intValue( );
+   szAttemptLoginRegistrant = sb_szAttemptLoginRegistrant.toString( );}
+   //:lAttemptLoginRegistrantLth = zGetStringLen( szAttemptLoginRegistrant )
+   lAttemptLoginRegistrantLth = zGetStringLen( szAttemptLoginRegistrant );
+   //:TraceLineS( "Registrant Login Name: ", szAttemptLoginRegistrant )
+   TraceLineS( "Registrant Login Name: ", szAttemptLoginRegistrant );
+   //:TraceLineI( "Registrant Login Name Length: ", lAttemptLoginRegistrantLth )
+   TraceLineI( "Registrant Login Name Length: ", lAttemptLoginRegistrantLth );
+   //:IF lAttemptLoginRegistrantLth < 1
+   if ( lAttemptLoginRegistrantLth < 1 )
+   { 
+      //:MessageSend( ViewToWindow, "", "Update Subregistrant",
+      //:             "The registrant Login Name cannot be blank.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Update Subregistrant", "The registrant Login Name cannot be blank.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+
+   //:szRegistrantName = mSubreg.SubregOrganization.LoginName
+   {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+   StringBuilder sb_szRegistrantName;
+   if ( szRegistrantName == null )
+      sb_szRegistrantName = new StringBuilder( 32 );
+   else
+      sb_szRegistrantName = new StringBuilder( szRegistrantName );
+       GetVariableFromAttribute( sb_szRegistrantName, mi_lTempInteger_1, 'S', 51, mSubreg, "SubregOrganization", "LoginName", "", 0 );
+   lTempInteger_1 = mi_lTempInteger_1.intValue( );
+   szRegistrantName = sb_szRegistrantName.toString( );}
+   //:IF szRegistrantName != szAttemptLoginRegistrant
+   if ( ZeidonStringCompare( szRegistrantName, 1, 0, szAttemptLoginRegistrant, 1, 0, 51 ) != 0 )
+   { 
+      //:ACTIVATE qOrganiz WHERE qOrganiz.Organization.LoginName = szAttemptLoginRegistrant
+      o_fnLocalBuildQual_22( ViewToWindow, vTempViewVar_0, szAttemptLoginRegistrant );
+      RESULT = ActivateObjectInstance( qOrganiz, "qOrganiz", ViewToWindow, vTempViewVar_0, zSINGLE );
+      DropView( vTempViewVar_0 );
+      //:IF qOrganiz.Organization EXISTS
+      lTempInteger_2 = CheckExistenceOfEntity( qOrganiz, "Organization" );
+      if ( lTempInteger_2 == 0 )
+      { 
+
+         //:DropObjectInstance( qOrganiz )
+         DropObjectInstance( qOrganiz );
+         //:MessageSend( ViewToWindow, "", "Update Subregistrant",
+         //:             "The registrant Login Name must be unique.",
+         //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         MessageSend( ViewToWindow, "", "Update Subregistrant", "The registrant Login Name must be unique.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+         //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+         m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+         //:RETURN 2
+         if(8==8)return( 2 );
+      } 
+
+
+      //:END
+
+      //:DropObjectInstance( qOrganiz )
+      DropObjectInstance( qOrganiz );
+   } 
+
+   //:END
+
+   //:// Ensure registrant name is not blank.
+   //:szRegistrantName = mSubreg.SubregOrganization.Name
+   {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
+   StringBuilder sb_szRegistrantName;
+   if ( szRegistrantName == null )
+      sb_szRegistrantName = new StringBuilder( 32 );
+   else
+      sb_szRegistrantName = new StringBuilder( szRegistrantName );
+       GetVariableFromAttribute( sb_szRegistrantName, mi_lTempInteger_3, 'S', 51, mSubreg, "SubregOrganization", "Name", "", 0 );
+   lTempInteger_3 = mi_lTempInteger_3.intValue( );
+   szRegistrantName = sb_szRegistrantName.toString( );}
+   //:lRegistrantNameLth = zGetStringLen( szRegistrantName )
+   lRegistrantNameLth = zGetStringLen( szRegistrantName );
+   //:TraceLineI( "Registrant Name Length: ", lRegistrantNameLth )
+   TraceLineI( "Registrant Name Length: ", lRegistrantNameLth );
+   //:IF lRegistrantNameLth < 1
+   if ( lRegistrantNameLth < 1 )
+   { 
+      //:MessageSend( ViewToWindow, "", "Update Subregistrant",
+      //:             "The registrant Organization Name cannot be blank.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Update Subregistrant", "The registrant Organization Name cannot be blank.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+
+   //:// Ensure password matches primary registrant password.
+   //:// IF mSubreg.Subregistrant.AdministratorPassword != wWebXfer.Root.AttemptPassword
+   //://
+   //://    MessageSend( ViewToWindow, "", "Update Subregistrant",
+   //://                 "Invalid password.",
+   //://                 zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+   //://    SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+   //://    RETURN 2
+   //:// END
+
+   //:// Set login name just in case it's new.
+   //:mSubreg.SubregOrganization.LoginName = szAttemptLoginRegistrant
+   SetAttributeFromString( mSubreg, "SubregOrganization", "LoginName", szAttemptLoginRegistrant );
+
+   //:// AcceptSubobject( mSubreg, "ContactPerson" )
+   //:// AcceptSubobject( mSubreg, "PhysicalAddress" )
+   //:// AcceptSubobject( mSubreg, "MailingAddress" )
+   //:AcceptSubobject( mSubreg, "Subregistrant" )
+   AcceptSubobject( mSubreg, "Subregistrant" );
+   //:IF wWebXfer.Root.SameAs = "Y"
+   if ( CompareAttributeToString( wWebXfer, "Root", "SameAs", "Y" ) == 0 )
+   { 
+      //:DELETE ENTITY mSubreg.MailingAddress
+      RESULT = DeleteEntity( mSubreg, "MailingAddress", zPOS_NEXT );
+   } 
+
+   //:END
+
+   //:mSubreg.SubregOrganization.Role = "S"
+   SetAttributeFromString( mSubreg, "SubregOrganization", "Role", "S" );
+   //:Commit mSubreg
+   RESULT = CommitObjectInstance( mSubreg );
+   //:RETURN 0
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:AcceptUpdateSubregistrant( VIEW ViewToWindow )
+
+//:   VIEW mSubreg  REGISTERED AS mSubreg
+public int 
+AcceptUpdateSubregistrant( View     ViewToWindow )
+{
+   zVIEW    mSubreg = new zVIEW( );
+   int      RESULT = 0;
+   //:SHORT nRC
+   int      nRC = 0;
+
+   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
+
+   //:nRC = ValidateSubregistrant( ViewToWindow )
+   nRC = ValidateSubregistrant( ViewToWindow );
+   //:IF nRC = 0
+   if ( nRC == 0 )
+   { 
+      //:DropObjectInstance( mSubreg )
+      DropObjectInstance( mSubreg );
+   } 
+
+   //:END
+
+   //:RETURN nRC
+   return( nRC );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:CancelNewSubregistrant( VIEW ViewToWindow )
+
+//:   VIEW mSubreg REGISTERED AS mSubreg
+public int 
+CancelNewSubregistrant( View     ViewToWindow )
+{
+   zVIEW    mSubreg = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
+
+   //:// CancelSubobject( mSubreg, "ContactPerson" )
+   //:// CancelSubobject( mSubreg, "PhysicalAddress" )
+   //:// CancelSubobject( mSubreg, "MailingAddress" )
+   //:CancelSubobject( mSubreg, "Subregistrant" )
+   CancelSubobject( mSubreg, "Subregistrant" );
+   //:DropObjectInstance( mSubreg )
+   DropObjectInstance( mSubreg );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:CancelUpdateSubregistrant( VIEW ViewToWindow )
+
+//:   VIEW mSubreg REGISTERED AS mSubreg
+public int 
+CancelUpdateSubregistrant( View     ViewToWindow )
+{
+   zVIEW    mSubreg = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
+
+   //:// CancelSubobject( mSubreg, "ContactPerson" )
+   //:// CancelSubobject( mSubreg, "PhysicalAddress" )
+   //:// CancelSubobject( mSubreg, "MailingAddress" )
+   //:CancelSubobject( mSubreg, "Subregistrant" )
+   CancelSubobject( mSubreg, "Subregistrant" );
+   //:DropObjectInstance( mSubreg )
+   DropObjectInstance( mSubreg );
    return( 0 );
 // END
 } 
@@ -7623,81 +4930,214 @@ InitSubregistrantForDelete( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
-//:SelectListSubregistrants( VIEW ViewToWindow )
+//:DeleteSubregistrant( VIEW ViewToWindow )
 
 //:   VIEW wWebXfer REGISTERED AS wWebXfer
 public int 
-SelectListSubregistrants( View     ViewToWindow )
+DeleteSubregistrant( View     ViewToWindow )
 {
    zVIEW    wWebXfer = new zVIEW( );
    int      RESULT = 0;
-   //:VIEW qOrganiz BASED ON LOD  qOrganiz
-   zVIEW    qOrganiz = new zVIEW( );
-   //:VIEW qPrimReg BASED ON LOD  qPrimReg
-   zVIEW    qPrimReg = new zVIEW( );
-   //:VIEW lPrimReg BASED ON LOD  lPrimReg
+   //:VIEW lPrimReg REGISTERED AS lPrimReg
    zVIEW    lPrimReg = new zVIEW( );
-   //:VIEW qSubreg  BASED ON LOD  qSubreg
-   zVIEW    qSubreg = new zVIEW( );
-   //:VIEW lSubreg  BASED ON LOD  lSubreg
-   zVIEW    lSubreg = new zVIEW( );
-   //:STRING ( 1  ) szKeyRole
-   String   szKeyRole = null;
-   //:INTEGER       lID
+   //:VIEW mSubreg  BASED ON LOD  mSubreg
+   zVIEW    mSubreg = new zVIEW( );
+   //:STRING ( 128 ) szAttemptPassword
+   String   szAttemptPassword = null;
+   //:INTEGER lID
    int      lID = 0;
-   //:SHORT         nRC
+   //:INTEGER lSubregID
+   int      lSubregID = 0;
+   //:INTEGER lControl
+   int      lControl = 0;
+   //:SHORT   nRC
    int      nRC = 0;
    int      lTempInteger_0 = 0;
    zVIEW    vTempViewVar_0 = new zVIEW( );
+   int      lTempInteger_1 = 0;
+   int      lTempInteger_2 = 0;
+   zVIEW    vTempViewVar_1 = new zVIEW( );
+
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
+
+   //:ACTIVATE mSubreg WHERE mSubreg.Subregistrant.ID = lPrimReg.Subregistrant.ID
+   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+       GetIntegerFromAttribute( mi_lTempInteger_0, lPrimReg, "Subregistrant", "ID" );
+   lTempInteger_0 = mi_lTempInteger_0.intValue( );}
+   o_fnLocalBuildQual_23( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
+   RESULT = ActivateObjectInstance( mSubreg, "mSubreg", ViewToWindow, vTempViewVar_0, zSINGLE );
+   DropView( vTempViewVar_0 );
+   //:NAME VIEW mSubreg "mSubreg"
+   SetNameForView( mSubreg, "mSubreg", null, zLEVEL_TASK );
+   //:IF mSubreg.SubregProduct EXISTS
+   lTempInteger_1 = CheckExistenceOfEntity( mSubreg, "SubregProduct" );
+   if ( lTempInteger_1 == 0 )
+   { 
+
+      //: MessageSend( ViewToWindow, "", "Delete Subregistrant",
+      //:             "Product Definitions exist for subregistrant.  Delete Cancelled",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Delete Subregistrant", "Product Definitions exist for subregistrant.  Delete Cancelled", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:DropObjectInstance( mSubreg )
+      DropObjectInstance( mSubreg );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+
+   //:END
+
+   //:// Match the password.
+   //:// IF mSubreg.Organization.AdministratorPassword != wWebXfer.Root.AttemptPassword
+   //:szAttemptPassword = wWebXfer.Root.AttemptPassword
+   {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
+   StringBuilder sb_szAttemptPassword;
+   if ( szAttemptPassword == null )
+      sb_szAttemptPassword = new StringBuilder( 32 );
+   else
+      sb_szAttemptPassword = new StringBuilder( szAttemptPassword );
+       GetVariableFromAttribute( sb_szAttemptPassword, mi_lTempInteger_2, 'S', 129, wWebXfer, "Root", "AttemptPassword", "", 0 );
+   lTempInteger_2 = mi_lTempInteger_2.intValue( );
+   szAttemptPassword = sb_szAttemptPassword.toString( );}
+   //:nRC = CompareAttributeToString( mSubreg, "Organization", "AdministratorPassword", szAttemptPassword )
+   nRC = CompareAttributeToString( mSubreg, "Organization", "AdministratorPassword", szAttemptPassword );
+   //:IF nRC != 0
+   if ( nRC != 0 )
+   { 
+
+      //:// TraceLineS( "//////* Invalid Administrator Password: ", szAttemptPassword )
+      //:MessageSend( ViewToWindow, "", "Delete Subregistrant",
+      //:             "Current password is not correct.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Delete Subregistrant", "Current password is not correct.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:DropObjectInstance( mSubreg )
+      DropObjectInstance( mSubreg );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+
+   //:END
+
+   //:lID = lPrimReg.PrimaryRegistrant.ID
+   {MutableInt mi_lID = new MutableInt( lID );
+       GetIntegerFromAttribute( mi_lID, lPrimReg, "PrimaryRegistrant", "ID" );
+   lID = mi_lID.intValue( );}
+   //:lSubregID = mSubreg.Subregistrant.ID
+   {MutableInt mi_lSubregID = new MutableInt( lSubregID );
+       GetIntegerFromAttribute( mi_lSubregID, mSubreg, "Subregistrant", "ID" );
+   lSubregID = mi_lSubregID.intValue( );}
+
+   //:DELETE ENTITY mSubreg.Subregistrant
+   RESULT = DeleteEntity( mSubreg, "Subregistrant", zPOS_NEXT );
+   //:COMMIT mSubreg
+   RESULT = CommitObjectInstance( mSubreg );
+
+   //:DropObjectInstance( mSubreg )
+   DropObjectInstance( mSubreg );
+   //:DropObjectInstance( lPrimReg )
+   DropObjectInstance( lPrimReg );
+
+   //:// Activate the "selected" primary registrant ... because we just deleted
+   //:// a subregistrant.
+   //:ACTIVATE lPrimReg WHERE lPrimReg.PrimaryRegistrant.ID = lID
+   o_fnLocalBuildQual_24( ViewToWindow, vTempViewVar_1, lID );
+   RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, vTempViewVar_1, zSINGLE );
+   DropView( vTempViewVar_1 );
+   //:NAME VIEW lPrimReg "lPrimReg"
+   SetNameForView( lPrimReg, "lPrimReg", null, zLEVEL_TASK );
+
+   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "Administration" )
+   {
+    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
+    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "Administration" );
+    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
+   }
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:InitChangeSubregPassword( VIEW ViewToWindow )
+
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
+public int 
+InitChangeSubregPassword( View     ViewToWindow )
+{
+   zVIEW    wWebXfer = new zVIEW( );
+   int      RESULT = 0;
 
    RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
 
-   //:IF wWebXfer = 0
-   if ( getView( wWebXfer ) == null )
+   //:wWebXfer.Root.AttemptPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
+   //:wWebXfer.Root.ConfirmPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "ConfirmPassword", "" );
+   //:wWebXfer.Root.CurrentPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "CurrentPassword", "" );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:ConfirmChangeSubregPassword( VIEW ViewToWindow )
+
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
+public int 
+ConfirmChangeSubregPassword( View     ViewToWindow )
+{
+   zVIEW    wWebXfer = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW mSubreg  REGISTERED AS mSubreg
+   zVIEW    mSubreg = new zVIEW( );
+   //:STRING ( 128 ) szCurrentPassword
+   String   szCurrentPassword = null;
+   //:STRING ( 128 ) szAttemptPassword
+   String   szAttemptPassword = null;
+   //:STRING ( 128 ) szConfirmPassword
+   String   szConfirmPassword = null;
+   //:INTEGER        lPasswordLth
+   int      lPasswordLth = 0;
+   //:SHORT  nRC
+   int      nRC = 0;
+   int      lTempInteger_0 = 0;
+   int      lTempInteger_1 = 0;
+   int      lTempInteger_2 = 0;
+
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
+
+   //:// 1: Ensure old password is correct.
+   //:// IF mSubreg.SubregOrganization.AdministratorPassword != wWebXfer.Root.CurrentPassword
+   //:szCurrentPassword = wWebXfer.Root.CurrentPassword
+   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+   StringBuilder sb_szCurrentPassword;
+   if ( szCurrentPassword == null )
+      sb_szCurrentPassword = new StringBuilder( 32 );
+   else
+      sb_szCurrentPassword = new StringBuilder( szCurrentPassword );
+       GetVariableFromAttribute( sb_szCurrentPassword, mi_lTempInteger_0, 'S', 129, wWebXfer, "Root", "CurrentPassword", "", 0 );
+   lTempInteger_0 = mi_lTempInteger_0.intValue( );
+   szCurrentPassword = sb_szCurrentPassword.toString( );}
+   //:nRC = CompareAttributeToString( mSubreg, "SubregOrganization", "AdministratorPassword", szCurrentPassword )
+   nRC = CompareAttributeToString( mSubreg, "SubregOrganization", "AdministratorPassword", szCurrentPassword );
+   //:IF nRC != 0
+   if ( nRC != 0 )
    { 
-      //:TraceLineS( "wStartUp.SelectListSubregistrants cannot find Transfer View", "" )
-      TraceLineS( "wStartUp.SelectListSubregistrants cannot find Transfer View", "" );
-      //:MessageSend( ViewToWindow, "", "Product Management",
-      //:             "Invalid Transfer View ... being redirected to Login",
+
+      //:// TraceLineS( "//////* Invalid Current User Password", szCurrentPassword )
+      //:// DisplayEntityInstance( mSubreg, "SubregOrganization" )
+      //:MessageSend( ViewToWindow, "", "Change Subregistrant User Password",
+      //:             "Current password is incorrect.",
       //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Product Management", "Invalid Transfer View ... being redirected to Login", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_ResetTopWindow,
-      //:                         "wStartUp", "UserLogin" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_ResetTopWindow, "wStartUp", "UserLogin" );
-      //:RETURN 1
-      if(8==8)return( 1 );
-   } 
-
-   //:END
-
-   //:GET VIEW qOrganiz NAMED "qOrganizLogin"
-   RESULT = GetViewByName( qOrganiz, "qOrganizLogin", ViewToWindow, zLEVEL_TASK );
-   //:IF qOrganiz = 0
-   if ( getView( qOrganiz ) == null )
-   { 
-      //:TraceLineS( "wStartUp.SelectListSubregistrants cannot find Organization View", "" )
-      TraceLineS( "wStartUp.SelectListSubregistrants cannot find Organization View", "" );
-      //:MessageSend( ViewToWindow, "", "Product Management",
-      //:             "Invalid Organization View ... being redirected to Login",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Product Management", "Invalid Organization View ... being redirected to Login", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_ResetTopWindow,
-      //:                         "wStartUp", "UserLogin" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_ResetTopWindow, "wStartUp", "UserLogin" );
-      //:RETURN 1
-      if(8==8)return( 1 );
-   } 
-
-   //:END
-
-   //:IF wWebXfer.Root.LoginName = "Admin"
-   if ( CompareAttributeToString( wWebXfer, "Root", "LoginName", "Admin" ) == 0 )
-   { 
-
-      //:MessageSend( ViewToWindow, "", "List Subregistrants",
-      //:             "Admin does not have Subregistrants",
-      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "List Subregistrants", "Admin does not have Subregistrants", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      MessageSend( ViewToWindow, "", "Change Subregistrant User Password", "Current password is incorrect.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
       //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
       m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
       //:RETURN 2
@@ -7707,73 +5147,145 @@ SelectListSubregistrants( View     ViewToWindow )
 
    //:END
 
-   //:AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "TopMenu List Subregistrants" )
+   //:szAttemptPassword = wWebXfer.Root.AttemptPassword
+   {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+   StringBuilder sb_szAttemptPassword;
+   if ( szAttemptPassword == null )
+      sb_szAttemptPassword = new StringBuilder( 32 );
+   else
+      sb_szAttemptPassword = new StringBuilder( szAttemptPassword );
+       GetVariableFromAttribute( sb_szAttemptPassword, mi_lTempInteger_1, 'S', 129, wWebXfer, "Root", "AttemptPassword", "", 0 );
+   lTempInteger_1 = mi_lTempInteger_1.intValue( );
+   szAttemptPassword = sb_szAttemptPassword.toString( );}
+   //:szConfirmPassword = wWebXfer.Root.ConfirmPassword
+   {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
+   StringBuilder sb_szConfirmPassword;
+   if ( szConfirmPassword == null )
+      sb_szConfirmPassword = new StringBuilder( 32 );
+   else
+      sb_szConfirmPassword = new StringBuilder( szConfirmPassword );
+       GetVariableFromAttribute( sb_szConfirmPassword, mi_lTempInteger_2, 'S', 129, wWebXfer, "Root", "ConfirmPassword", "", 0 );
+   lTempInteger_2 = mi_lTempInteger_2.intValue( );
+   szConfirmPassword = sb_szConfirmPassword.toString( );}
+
+   //:// 2: Ensure attempted password matches confirm password.
+   //:IF szAttemptPassword != szConfirmPassword
+   if ( ZeidonStringCompare( szAttemptPassword, 1, 0, szConfirmPassword, 1, 0, 129 ) != 0 )
+   { 
+      //:// TraceLineS( szAttemptPassword, szConfirmPassword )
+      //:MessageSend( ViewToWindow, "", "Change Password",
+      //:             "The new password and the confirmation password do not match.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Change Password", "The new password and the confirmation password do not match.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+
+   //:// 3: Ensure new password is at least 8 characters long.
+   //:lPasswordLth = zGetStringLen( szConfirmPassword )
+   lPasswordLth = zGetStringLen( szConfirmPassword );
+   //:TraceLineI( "Password Length: ", lPasswordLth )
+   TraceLineI( "Password Length: ", lPasswordLth );
+   //:IF lPasswordLth < 8
+   if ( lPasswordLth < 8 )
+   { 
+      //:MessageSend( ViewToWindow, "", "Change Password",
+      //:             "The new password must be at least 8 characters long.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Change Password", "The new password must be at least 8 characters long.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+
+   //:mSubreg.SubregOrganization.AdministratorPassword = szConfirmPassword
+   SetAttributeFromString( mSubreg, "SubregOrganization", "AdministratorPassword", szConfirmPassword );
+   //:COMMIT mSubreg
+   RESULT = CommitObjectInstance( mSubreg );
+   //:DropObjectInstance( mSubreg )
+   DropObjectInstance( mSubreg );
+
+   //:wWebXfer.Root.AttemptPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
+   //:wWebXfer.Root.ConfirmPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "ConfirmPassword", "" );
+   //:wWebXfer.Root.CurrentPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "CurrentPassword", "" );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:CancelChangeSubregPassword( VIEW ViewToWindow )
+
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
+public int 
+CancelChangeSubregPassword( View     ViewToWindow )
+{
+   zVIEW    wWebXfer = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW mSubreg  REGISTERED AS mSubreg
+   zVIEW    mSubreg = new zVIEW( );
+
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
+
+   //:DropObjectInstance( mSubreg )
+   DropObjectInstance( mSubreg );
+
+   //:wWebXfer.Root.AttemptPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
+   //:wWebXfer.Root.ConfirmPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "ConfirmPassword", "" );
+   //:wWebXfer.Root.CurrentPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "CurrentPassword", "" );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:ConfirmChangeSubregUserPassword( VIEW ViewToWindow )
+
+public int 
+ConfirmChangeSubregUserPassword( View     ViewToWindow )
+{
+
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:InitEmailProspects( VIEW ViewToWindow )
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
+public int 
+InitEmailProspects( View     ViewToWindow )
+{
+   zVIEW    wWebXfer = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+
+   //:wWebXfer.Root.EmailSubjectLine = ""
+   SetAttributeFromString( wWebXfer, "Root", "EmailSubjectLine", "" );
+   //:wWebXfer.Root.EmailMessage = ""
+   SetAttributeFromString( wWebXfer, "Root", "EmailMessage", "" );
+
+   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "Administration" )
    {
     ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "TopMenu List Subregistrants" );
+    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "Administration" );
     // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
    }
-
-   //:GET VIEW qPrimReg NAMED "qPrimRegLogin"
-   RESULT = GetViewByName( qPrimReg, "qPrimRegLogin", ViewToWindow, zLEVEL_TASK );
-   //:IF qPrimReg != 0
-   if ( getView( qPrimReg ) != null )
-   { 
-      //:DropObjectInstance( qPrimReg )
-      DropObjectInstance( qPrimReg );
-   } 
-
-   //:END
-
-   //:GET VIEW qSubreg NAMED "qSubregLogin"
-   RESULT = GetViewByName( qSubreg, "qSubregLogin", ViewToWindow, zLEVEL_TASK );
-   //:IF qSubreg != 0
-   if ( getView( qSubreg ) != null )
-   { 
-      //:DropObjectInstance( qSubreg )
-      DropObjectInstance( qSubreg );
-   } 
-
-   //:END
-
-   //:GET VIEW qPrimReg NAMED "lPrimReg"
-   RESULT = GetViewByName( qPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
-   //:IF lPrimReg != 0
-   if ( getView( lPrimReg ) != null )
-   { 
-      //:DropObjectInstance( lPrimReg )
-      DropObjectInstance( lPrimReg );
-   } 
-
-   //:END
-
-   //:GET VIEW lSubreg NAMED "lSubreg"
-   RESULT = GetViewByName( lSubreg, "lSubreg", ViewToWindow, zLEVEL_TASK );
-   //:IF lSubreg != 0
-   if ( getView( lSubreg ) != null )
-   { 
-      //:DropObjectInstance( lSubreg )
-      DropObjectInstance( lSubreg );
-   } 
-
-   //:END
-
-   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" )
-   {
-    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" );
-    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-   }
-
-   //:ACTIVATE lPrimReg WHERE lPrimReg.PrimaryRegistrant.ID = qOrganiz.PrimaryRegistrant.ID
-   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
-       GetIntegerFromAttribute( mi_lTempInteger_0, qOrganiz, "PrimaryRegistrant", "ID" );
-   lTempInteger_0 = mi_lTempInteger_0.intValue( );}
-   o_fnLocalBuildQual_38( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
-   RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
-   DropView( vTempViewVar_0 );
-   //:NAME VIEW lPrimReg "lPrimReg"
-   SetNameForView( lPrimReg, "lPrimReg", null, zLEVEL_TASK );
    return( 0 );
 // END
 } 
@@ -7996,10 +5508,10 @@ EmailSelectedSubregistrants( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
-//:SelectListSubregistrantUsers( VIEW ViewToWindow )
+//:SelectPrimRegUserForUpdate( VIEW ViewToWindow )
 
 public int 
-SelectListSubregistrantUsers( View     ViewToWindow )
+SelectPrimRegUserForUpdate( View     ViewToWindow )
 {
 
    return( 0 );
@@ -8008,60 +5520,54 @@ SelectListSubregistrantUsers( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
-//:InitPrimaryRegistrant( VIEW ViewToWindow )
+//:SelectPrimRegUserForDelete( VIEW ViewToWindow )
 
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
 public int 
-InitPrimaryRegistrant( View     ViewToWindow )
+SelectPrimRegUserForDelete( View     ViewToWindow )
 {
-   zVIEW    wWebXfer = new zVIEW( );
+
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:InitListPrimRegUsers( VIEW ViewToWindow )
+
+//:   VIEW qOrganiz REGISTERED AS qOrganizLogin
+public int 
+InitListPrimRegUsers( View     ViewToWindow )
+{
+   zVIEW    qOrganiz = new zVIEW( );
    int      RESULT = 0;
-   //:VIEW lPrimReg REGISTERED AS lPrimReg
+   //:VIEW lPrimReg BASED ON LOD lPrimReg
    zVIEW    lPrimReg = new zVIEW( );
-   //:VIEW mPrimReg BASED ON LOD  mPrimReg
-   zVIEW    mPrimReg = new zVIEW( );
    int      lTempInteger_0 = 0;
    zVIEW    vTempViewVar_0 = new zVIEW( );
-   int      lTempInteger_1 = 0;
 
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( qOrganiz, "qOrganizLogin", ViewToWindow, zLEVEL_TASK );
+
+   //:GET VIEW lPrimReg NAMED "lPrimReg"
    RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
-
-   //:GET VIEW mPrimReg NAMED "mPrimReg"
-   RESULT = GetViewByName( mPrimReg, "mPrimReg", ViewToWindow, zLEVEL_TASK );
-   //:IF  mPrimReg != 0
-   if ( getView( mPrimReg ) != null )
+   //:IF lPrimReg != 0
+   if ( getView( lPrimReg ) != null )
    { 
-      //:DropObjectInstance( mPrimReg )
-      DropObjectInstance( mPrimReg );
+      //:DropObjectInstance( lPrimReg )
+      DropObjectInstance( lPrimReg );
    } 
 
    //:END
 
-   //:ACTIVATE mPrimReg WHERE mPrimReg.PrimaryRegistrant.ID = lPrimReg.PrimaryRegistrant.ID
+   //:// Activate the "selected" primary registrant ... just in case someone added or deleted a primary registrant user.
+   //:ACTIVATE lPrimReg WHERE lPrimReg.PrimaryRegistrant.ID = qOrganiz.PrimaryRegistrant.ID
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
-       GetIntegerFromAttribute( mi_lTempInteger_0, lPrimReg, "PrimaryRegistrant", "ID" );
+       GetIntegerFromAttribute( mi_lTempInteger_0, qOrganiz, "PrimaryRegistrant", "ID" );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );}
-   o_fnLocalBuildQual_9( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
-   RESULT = ActivateObjectInstance( mPrimReg, "mPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
+   o_fnLocalBuildQual_25( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
+   RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
    DropView( vTempViewVar_0 );
-   //:NAME VIEW mPrimReg "mPrimReg"
-   SetNameForView( mPrimReg, "mPrimReg", null, zLEVEL_TASK );
-
-   //:IF mPrimReg.MailingAddress DOES NOT EXIST
-   lTempInteger_1 = CheckExistenceOfEntity( mPrimReg, "MailingAddress" );
-   if ( lTempInteger_1 != 0 )
-   { 
-      //:CREATE ENTITY mPrimReg.MailingAddress
-      RESULT = CreateEntity( mPrimReg, "MailingAddress", zPOS_AFTER );
-      //:wWebXfer.Root.SameAs = "Y"
-      SetAttributeFromString( wWebXfer, "Root", "SameAs", "Y" );
-      //:SetMatchingAttributesByName( mPrimReg, "MailingAddress",
-      //:                             mPrimReg, "PhysicalAddress", zSET_NOTNULL )
-      SetMatchingAttributesByName( mPrimReg, "MailingAddress", mPrimReg, "PhysicalAddress", zSET_NOTNULL );
-   } 
-
-   //:END
+   //:NAME VIEW lPrimReg "lPrimReg"
+   SetNameForView( lPrimReg, "lPrimReg", null, zLEVEL_TASK );
 
    //:SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" )
    {
@@ -8075,87 +5581,1927 @@ InitPrimaryRegistrant( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
-//:ReturnFromAdminPrimaryRegistrant( VIEW ViewToWindow )
-
-//:   VIEW qOrganiz BASED ON LOD  qOrganiz
-public int 
-ReturnFromAdminPrimaryRegistrant( View     ViewToWindow )
-{
-   zVIEW    qOrganiz = new zVIEW( );
-   int      RESULT = 0;
-
-
-   //:GET VIEW qOrganiz NAMED "qOrganizLogin"
-   RESULT = GetViewByName( qOrganiz, "qOrganizLogin", ViewToWindow, zLEVEL_TASK );
-   //:IF qOrganiz != 0 AND qOrganiz.Organization.LoginName = "Admin"
-   if ( qOrganiz != null && CompareAttributeToString( qOrganiz, "Organization", "LoginName", "Admin" ) == 0 )
-   { 
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StartTopWindow,
-      //:                         "wStartUp", "AdminListPrimaryRegistrants" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StartTopWindow, "wStartUp", "AdminListPrimaryRegistrants" );
-      //:RETURN 1
-      if(8==8)return( 1 );
-   } 
-
-   //:END
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:ReturnFromAdminSubregistrantList( VIEW ViewToWindow )
-
-//:   VIEW qOrganiz BASED ON LOD  qOrganiz
-public int 
-ReturnFromAdminSubregistrantList( View     ViewToWindow )
-{
-   zVIEW    qOrganiz = new zVIEW( );
-   int      RESULT = 0;
-
-
-   //:GET VIEW qOrganiz NAMED "qOrganizLogin"
-   RESULT = GetViewByName( qOrganiz, "qOrganizLogin", ViewToWindow, zLEVEL_TASK );
-   //:IF qOrganiz != 0 AND qOrganiz.Organization.LoginName = "Admin"
-   if ( qOrganiz != null && CompareAttributeToString( qOrganiz, "Organization", "LoginName", "Admin" ) == 0 )
-   { 
-      //:SetWindowActionBehavior( ViewToWindow, zWAB_StartTopWindow,
-      //:                         "wStartUp", "AdminListPrimaryRegistrants" )
-      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StartTopWindow, "wStartUp", "AdminListPrimaryRegistrants" );
-      //:RETURN 1
-      if(8==8)return( 1 );
-   } 
-
-   //:END
-   return( 0 );
-// END
-} 
-
-
-//:DIALOG OPERATION
-//:AutoLoginPrimaryRegistrant( VIEW ViewToWindow )
+//:AddNewPrimRegUser( VIEW ViewToWindow )
 
 //:   VIEW wWebXfer REGISTERED AS wWebXfer
 public int 
-AutoLoginPrimaryRegistrant( View     ViewToWindow )
+AddNewPrimRegUser( View     ViewToWindow )
 {
    zVIEW    wWebXfer = new zVIEW( );
    int      RESULT = 0;
+   //:VIEW mCurrentUser BASED ON LOD  mUser
+   zVIEW    mCurrentUser = new zVIEW( );
+   //:VIEW qPrimReg BASED ON LOD  qPrimReg
+   zVIEW    qPrimReg = new zVIEW( );
+   //:VIEW lPrimReg REGISTERED AS lPrimReg
+   zVIEW    lPrimReg = new zVIEW( );
+   int      lTempInteger_0 = 0;
+   zVIEW    vTempViewVar_0 = new zVIEW( );
+   int      lTempInteger_1 = 0;
+   int      lTempInteger_2 = 0;
+
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
+
+   //:wWebXfer.Root.AttemptPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
+   //:wWebXfer.Root.ConfirmPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "ConfirmPassword", "" );
+
+   //:IF lPrimReg = 0
+   if ( getView( lPrimReg ) == null )
+   { 
+      //:MessageSend( ViewToWindow, "", "Initialize Primary Registrant User",
+      //:             "The registrant list is empty.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Initialize Primary Registrant User", "The registrant list is empty.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+
+   //:GET VIEW qPrimReg NAMED "qPrimReg"
+   RESULT = GetViewByName( qPrimReg, "qPrimReg", ViewToWindow, zLEVEL_TASK );
+   //:IF qPrimReg != 0
+   if ( getView( qPrimReg ) != null )
+   { 
+      //:DropObjectInstance( qPrimReg )
+      DropObjectInstance( qPrimReg );
+   } 
+
+   //:END
+
+   //:ACTIVATE qPrimReg WHERE qPrimReg.PrimaryRegistrant.ID = lPrimReg.PrimaryRegistrant.ID
+   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+       GetIntegerFromAttribute( mi_lTempInteger_0, lPrimReg, "PrimaryRegistrant", "ID" );
+   lTempInteger_0 = mi_lTempInteger_0.intValue( );}
+   o_fnLocalBuildQual_26( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
+   RESULT = ActivateObjectInstance( qPrimReg, "qPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
+   DropView( vTempViewVar_0 );
+   //:NAME VIEW qPrimReg "qPrimReg"
+   SetNameForView( qPrimReg, "qPrimReg", null, zLEVEL_TASK );
+
+   //:IF qPrimReg.PrimaryRegistrant DOES NOT EXIST
+   lTempInteger_1 = CheckExistenceOfEntity( qPrimReg, "PrimaryRegistrant" );
+   if ( lTempInteger_1 != 0 )
+   { 
+      //:TraceLineI( "InitializePrimRegUser cannot activate Primary Registrant: ",
+      //:            lPrimReg.PrimaryRegistrant.ID )
+      {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
+             GetIntegerFromAttribute( mi_lTempInteger_2, lPrimReg, "PrimaryRegistrant", "ID" );
+      lTempInteger_2 = mi_lTempInteger_2.intValue( );}
+      TraceLineI( "InitializePrimRegUser cannot activate Primary Registrant: ", lTempInteger_2 );
+      //:MessageSend( ViewToWindow, "", "Initialize New Primary Registrant User",
+      //:             "Cannot activate Primary Registrant.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Initialize New Primary Registrant User", "Cannot activate Primary Registrant.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:DropObjectInstance( qPrimReg )
+      DropObjectInstance( qPrimReg );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+
+   //:DropObjectInstance( qPrimReg )
+   DropObjectInstance( qPrimReg );
+
+   //:GET VIEW mCurrentUser NAMED "mCurrentUser"
+   RESULT = GetViewByName( mCurrentUser, "mCurrentUser", ViewToWindow, zLEVEL_TASK );
+   //:IF mCurrentUser != 0
+   if ( getView( mCurrentUser ) != null )
+   { 
+      //:DropObjectInstance( mCurrentUser )
+      DropObjectInstance( mCurrentUser );
+   } 
+
+   //:END
+
+   //:// We are activating empty OI's, so create all the entities.
+   //:ACTIVATE mCurrentUser EMPTY
+   RESULT = ActivateEmptyObjectInstance( mCurrentUser, "mUser", ViewToWindow, zSINGLE );
+   //:NAME VIEW mCurrentUser "mCurrentUser"
+   SetNameForView( mCurrentUser, "mCurrentUser", null, zLEVEL_TASK );
+   //:CREATE ENTITY mCurrentUser.User
+   RESULT = CreateEntity( mCurrentUser, "User", zPOS_AFTER );
+   //:mCurrentUser.User.Status = "B"  // beginner
+   SetAttributeFromString( mCurrentUser, "User", "Status", "B" );
+   //:CREATE ENTITY mCurrentUser.Employee
+   RESULT = CreateEntity( mCurrentUser, "Employee", zPOS_AFTER );
+   //:CREATE ENTITY mCurrentUser.Address
+   RESULT = CreateEntity( mCurrentUser, "Address", zPOS_AFTER );
+
+   //:wWebXfer.Root.AttemptLoginName = ""
+   SetAttributeFromString( wWebXfer, "Root", "AttemptLoginName", "" );
+   //:wWebXfer.Root.AttemptPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
+   //:wWebXfer.Root.ConfirmPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "ConfirmPassword", "" );
+   //:wWebXfer.Root.CurrentPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "CurrentPassword", "" );
+
+   //:mCurrentUser.Address.Country = "USA"
+   SetAttributeFromString( mCurrentUser, "Address", "Country", "USA" );
+   //:CreateTemporalSubobjectVersion( mCurrentUser, "User" )
+   CreateTemporalSubobjectVersion( mCurrentUser, "User" );
+   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" )
+   {
+    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
+    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" );
+    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
+   }
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:InitPrimRegUserForUpdate( VIEW ViewToWindow )
+
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
+public int 
+InitPrimRegUserForUpdate( View     ViewToWindow )
+{
+   zVIEW    wWebXfer = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW mCurrentUser BASED ON LOD mUser
+   zVIEW    mCurrentUser = new zVIEW( );
+   //:VIEW qPrimReg BASED ON LOD  qPrimReg
+   zVIEW    qPrimReg = new zVIEW( );
+   //:VIEW lPrimReg REGISTERED AS lPrimReg
+   zVIEW    lPrimReg = new zVIEW( );
+   int      lTempInteger_0 = 0;
+   zVIEW    vTempViewVar_0 = new zVIEW( );
+   int      lTempInteger_1 = 0;
+   int      lTempInteger_2 = 0;
+   int      lTempInteger_3 = 0;
+   zVIEW    vTempViewVar_1 = new zVIEW( );
+
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
+
+   //:wWebXfer.Root.AttemptPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
+   //:wWebXfer.Root.ConfirmPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "ConfirmPassword", "" );
+
+   //:IF lPrimReg = 0
+   if ( getView( lPrimReg ) == null )
+   { 
+      //:MessageSend( ViewToWindow, "", "Initialize Primary Registrant User",
+      //:             "The registrant list is empty.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Initialize Primary Registrant User", "The registrant list is empty.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+
+   //:GET VIEW qPrimReg NAMED "qPrimReg"
+   RESULT = GetViewByName( qPrimReg, "qPrimReg", ViewToWindow, zLEVEL_TASK );
+   //:IF qPrimReg != 0
+   if ( getView( qPrimReg ) != null )
+   { 
+      //:DropObjectInstance( qPrimReg )
+      DropObjectInstance( qPrimReg );
+   } 
+
+   //:END
+
+   //:ACTIVATE qPrimReg WHERE qPrimReg.PrimaryRegistrant.ID = lPrimReg.PrimaryRegistrant.ID
+   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+       GetIntegerFromAttribute( mi_lTempInteger_0, lPrimReg, "PrimaryRegistrant", "ID" );
+   lTempInteger_0 = mi_lTempInteger_0.intValue( );}
+   o_fnLocalBuildQual_27( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
+   RESULT = ActivateObjectInstance( qPrimReg, "qPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
+   DropView( vTempViewVar_0 );
+   //:NAME VIEW qPrimReg "qPrimReg"
+   SetNameForView( qPrimReg, "qPrimReg", null, zLEVEL_TASK );
+
+   //:IF qPrimReg.PrimaryRegistrant DOES NOT EXIST
+   lTempInteger_1 = CheckExistenceOfEntity( qPrimReg, "PrimaryRegistrant" );
+   if ( lTempInteger_1 != 0 )
+   { 
+      //:TraceLineI( "InitPrimRegUserForUpdate cannot activate Primary Registrant: ",
+      //:            lPrimReg.PrimaryRegistrant.ID )
+      {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
+             GetIntegerFromAttribute( mi_lTempInteger_2, lPrimReg, "PrimaryRegistrant", "ID" );
+      lTempInteger_2 = mi_lTempInteger_2.intValue( );}
+      TraceLineI( "InitPrimRegUserForUpdate cannot activate Primary Registrant: ", lTempInteger_2 );
+      //:MessageSend( ViewToWindow, "", "Initialize Primary Registrant User",
+      //:             "Cannot activate Primary Registrant.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Initialize Primary Registrant User", "Cannot activate Primary Registrant.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+
+   //:DropObjectInstance( qPrimReg )
+   DropObjectInstance( qPrimReg );
+
+   //:GET VIEW mCurrentUser NAMED "mCurrentUser"
+   RESULT = GetViewByName( mCurrentUser, "mCurrentUser", ViewToWindow, zLEVEL_TASK );
+   //:IF mCurrentUser != 0
+   if ( getView( mCurrentUser ) != null )
+   { 
+      //:DropObjectInstance( mCurrentUser )
+      DropObjectInstance( mCurrentUser );
+   } 
+
+   //:END
+
+   //:// We are activating a User instance for update.
+   //:ACTIVATE mCurrentUser WHERE mCurrentUser.User.ID = lPrimReg.User.ID
+   {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
+       GetIntegerFromAttribute( mi_lTempInteger_3, lPrimReg, "User", "ID" );
+   lTempInteger_3 = mi_lTempInteger_3.intValue( );}
+   o_fnLocalBuildQual_28( ViewToWindow, vTempViewVar_1, lTempInteger_3 );
+   RESULT = ActivateObjectInstance( mCurrentUser, "mUser", ViewToWindow, vTempViewVar_1, zSINGLE );
+   DropView( vTempViewVar_1 );
+   //:NAME VIEW mCurrentUser "mCurrentUser"
+   SetNameForView( mCurrentUser, "mCurrentUser", null, zLEVEL_TASK );
+
+   //:wWebXfer.Root.AttemptLoginName = mCurrentUser.User.UserName
+   SetAttributeFromAttribute( wWebXfer, "Root", "AttemptLoginName", mCurrentUser, "User", "UserName" );
+   //:wWebXfer.Root.AttemptPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
+   //:wWebXfer.Root.ConfirmPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "ConfirmPassword", "" );
+   //:wWebXfer.Root.CurrentPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "CurrentPassword", "" );
+
+   //:CreateTemporalSubobjectVersion( mCurrentUser, "User" )
+   CreateTemporalSubobjectVersion( mCurrentUser, "User" );
+   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" )
+   {
+    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
+    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" );
+    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
+   }
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:AcceptNewPrimRegUser( VIEW ViewToWindow )
+
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
+public int 
+AcceptNewPrimRegUser( View     ViewToWindow )
+{
+   zVIEW    wWebXfer = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW mCurrentUser REGISTERED AS mCurrentUser
+   zVIEW    mCurrentUser = new zVIEW( );
+   //:VIEW lPrimReg REGISTERED AS lPrimReg
+   zVIEW    lPrimReg = new zVIEW( );
+   //:STRING (  64  ) szLoginUserName
+   String   szLoginUserName = null;
+   //:STRING ( 128 )  szAttemptPassword
+   String   szAttemptPassword = null;
+   //:STRING ( 128 )  szConfirmPassword
+   String   szConfirmPassword = null;
+   //:INTEGER         lUserNameLth
+   int      lUserNameLth = 0;
+   //:INTEGER         lPasswordLth
+   int      lPasswordLth = 0;
+   //:INTEGER         lControl
+   int      lControl = 0;
+   //:INTEGER         lID
+   int      lID = 0;
+   //:SHORT           nRC
+   int      nRC = 0;
+   int      lTempInteger_0 = 0;
+   int      lTempInteger_1 = 0;
+   int      lTempInteger_2 = 0;
+   int      lTempInteger_3 = 0;
+   int      lTempInteger_4 = 0;
+   int      lTempInteger_5 = 0;
+   zVIEW    vTempViewVar_0 = new zVIEW( );
+
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( mCurrentUser, "mCurrentUser", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
+
+   //:// Ensure user login name is not blank and is unique.
+   //:szLoginUserName = mCurrentUser.User.UserName
+   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+   StringBuilder sb_szLoginUserName;
+   if ( szLoginUserName == null )
+      sb_szLoginUserName = new StringBuilder( 32 );
+   else
+      sb_szLoginUserName = new StringBuilder( szLoginUserName );
+       GetVariableFromAttribute( sb_szLoginUserName, mi_lTempInteger_0, 'S', 65, mCurrentUser, "User", "UserName", "", 0 );
+   lTempInteger_0 = mi_lTempInteger_0.intValue( );
+   szLoginUserName = sb_szLoginUserName.toString( );}
+   //:lUserNameLth = zGetStringLen( szLoginUserName )
+   lUserNameLth = zGetStringLen( szLoginUserName );
+   //:TraceLineS( "User Login Name: ", szLoginUserName )
+   TraceLineS( "User Login Name: ", szLoginUserName );
+   //:TraceLineI( "User Login Name Length: ", lUserNameLth )
+   TraceLineI( "User Login Name Length: ", lUserNameLth );
+   //:IF lUserNameLth < 1
+   if ( lUserNameLth < 1 )
+   { 
+
+      //:MessageSend( ViewToWindow, "", "New Primary Registrant User",
+      //:             "The User Name cannot be blank.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "New Primary Registrant User", "The User Name cannot be blank.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+      //:ELSE
+   } 
+   else
+   { 
+      //:lControl = zQUAL_STRING + zPOS_FIRST + zTEST_CSR_RESULT
+      lControl = zQUAL_STRING + zPOS_FIRST + zTEST_CSR_RESULT;
+      //:IF SetEntityCursor( lPrimReg, "User", "UserName", lControl,
+      //:                    szLoginUserName, "", "", 0, "", "" ) >= zCURSOR_SET
+      lTempInteger_1 = SetEntityCursor( lPrimReg, "User", "UserName", lControl, szLoginUserName, "", "", 0, "", "" );
+      if ( lTempInteger_1 >= zCURSOR_SET )
+      { 
+         //:MessageSend( ViewToWindow, "", "New Primary Registrant User",
+         //:             "The User Name must be unique.",
+         //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         MessageSend( ViewToWindow, "", "New Primary Registrant User", "The User Name must be unique.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+         //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+         m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+         //:RETURN 2
+         if(8==8)return( 2 );
+      } 
+
+
+      //:END
+   } 
+
+   //:END
+
+   //:// Ensure user first and last names are not blank.
+   //:szLoginUserName = mCurrentUser.Employee.FirstName
+   {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
+   StringBuilder sb_szLoginUserName;
+   if ( szLoginUserName == null )
+      sb_szLoginUserName = new StringBuilder( 32 );
+   else
+      sb_szLoginUserName = new StringBuilder( szLoginUserName );
+       GetVariableFromAttribute( sb_szLoginUserName, mi_lTempInteger_2, 'S', 65, mCurrentUser, "Employee", "FirstName", "", 0 );
+   lTempInteger_2 = mi_lTempInteger_2.intValue( );
+   szLoginUserName = sb_szLoginUserName.toString( );}
+   //:lUserNameLth = zGetStringLen( szLoginUserName )
+   lUserNameLth = zGetStringLen( szLoginUserName );
+   //:TraceLineS( "First Name: ", szLoginUserName )
+   TraceLineS( "First Name: ", szLoginUserName );
+   //:TraceLineI( "First Name Length: ", lUserNameLth )
+   TraceLineI( "First Name Length: ", lUserNameLth );
+   //:IF lUserNameLth < 1
+   if ( lUserNameLth < 1 )
+   { 
+      //:MessageSend( ViewToWindow, "", "New Primary Registrant User",
+      //:             "The user First Name cannot be blank.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "New Primary Registrant User", "The user First Name cannot be blank.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+
+   //:szLoginUserName = mCurrentUser.Employee.LastName
+   {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
+   StringBuilder sb_szLoginUserName;
+   if ( szLoginUserName == null )
+      sb_szLoginUserName = new StringBuilder( 32 );
+   else
+      sb_szLoginUserName = new StringBuilder( szLoginUserName );
+       GetVariableFromAttribute( sb_szLoginUserName, mi_lTempInteger_3, 'S', 65, mCurrentUser, "Employee", "LastName", "", 0 );
+   lTempInteger_3 = mi_lTempInteger_3.intValue( );
+   szLoginUserName = sb_szLoginUserName.toString( );}
+   //:lUserNameLth = zGetStringLen( szLoginUserName )
+   lUserNameLth = zGetStringLen( szLoginUserName );
+   //:TraceLineS( "Last Name: ", szLoginUserName )
+   TraceLineS( "Last Name: ", szLoginUserName );
+   //:TraceLineI( "Last Name Length: ", lUserNameLth )
+   TraceLineI( "Last Name Length: ", lUserNameLth );
+   //:IF lUserNameLth < 1
+   if ( lUserNameLth < 1 )
+   { 
+      //:MessageSend( ViewToWindow, "", "New Primary Registrant User",
+      //:             "The user Last Name cannot be blank.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "New Primary Registrant User", "The user Last Name cannot be blank.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+
+   //:szAttemptPassword = wWebXfer.Root.AttemptPassword
+   {MutableInt mi_lTempInteger_4 = new MutableInt( lTempInteger_4 );
+   StringBuilder sb_szAttemptPassword;
+   if ( szAttemptPassword == null )
+      sb_szAttemptPassword = new StringBuilder( 32 );
+   else
+      sb_szAttemptPassword = new StringBuilder( szAttemptPassword );
+       GetVariableFromAttribute( sb_szAttemptPassword, mi_lTempInteger_4, 'S', 129, wWebXfer, "Root", "AttemptPassword", "", 0 );
+   lTempInteger_4 = mi_lTempInteger_4.intValue( );
+   szAttemptPassword = sb_szAttemptPassword.toString( );}
+   //:szConfirmPassword = wWebXfer.Root.ConfirmPassword
+   {MutableInt mi_lTempInteger_5 = new MutableInt( lTempInteger_5 );
+   StringBuilder sb_szConfirmPassword;
+   if ( szConfirmPassword == null )
+      sb_szConfirmPassword = new StringBuilder( 32 );
+   else
+      sb_szConfirmPassword = new StringBuilder( szConfirmPassword );
+       GetVariableFromAttribute( sb_szConfirmPassword, mi_lTempInteger_5, 'S', 129, wWebXfer, "Root", "ConfirmPassword", "", 0 );
+   lTempInteger_5 = mi_lTempInteger_5.intValue( );
+   szConfirmPassword = sb_szConfirmPassword.toString( );}
+
+   //:// 1: Ensure attempted password matches confirm password.
+   //:IF szAttemptPassword != szConfirmPassword
+   if ( ZeidonStringCompare( szAttemptPassword, 1, 0, szConfirmPassword, 1, 0, 129 ) != 0 )
+   { 
+      //:// TraceLineS( szAttemptPassword, szConfirmPassword )
+      //:MessageSend( ViewToWindow, "", "New Primary Registrant User",
+      //:             "The new password and the confirmation password do not match.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "New Primary Registrant User", "The new password and the confirmation password do not match.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+
+   //:// 2: Ensure new password is at least 8 characters long.
+   //:lPasswordLth = zGetStringLen( szConfirmPassword )
+   lPasswordLth = zGetStringLen( szConfirmPassword );
+   //:TraceLineI( "Password Length: ", lPasswordLth )
+   TraceLineI( "Password Length: ", lPasswordLth );
+   //:IF lPasswordLth < 8
+   if ( lPasswordLth < 8 )
+   { 
+      //:MessageSend( ViewToWindow, "", "New Primary Registrant User",
+      //:             "The new password must be at least 8 characters long.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "New Primary Registrant User", "The new password must be at least 8 characters long.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+
+   //:// Set user password to new password.
+   //:mCurrentUser.User.UserPassword = szConfirmPassword
+   SetAttributeFromString( mCurrentUser, "User", "UserPassword", szConfirmPassword );
+   //:IncludeSubobjectFromSubobject( mCurrentUser, "Organization", lPrimReg, "Organization", zPOS_LAST )
+   IncludeSubobjectFromSubobject( mCurrentUser, "Organization", lPrimReg, "Organization", zPOS_LAST );
+   //:AcceptSubobject( mCurrentUser, "User" )
+   AcceptSubobject( mCurrentUser, "User" );
+   //:Commit mCurrentUser
+   RESULT = CommitObjectInstance( mCurrentUser );
+
+   //:lID = lPrimReg.PrimaryRegistrant.ID
+   {MutableInt mi_lID = new MutableInt( lID );
+       GetIntegerFromAttribute( mi_lID, lPrimReg, "PrimaryRegistrant", "ID" );
+   lID = mi_lID.intValue( );}
+   //:DropObjectInstance( mCurrentUser )
+   DropObjectInstance( mCurrentUser );
+   //:DropObjectInstance( lPrimReg )
+   DropObjectInstance( lPrimReg );
+
+   //:// Activate the "selected" primary registrant ... just in case someone added or deleted a primary registrant user.
+   //:ACTIVATE lPrimReg WHERE lPrimReg.PrimaryRegistrant.ID = lID
+   o_fnLocalBuildQual_29( ViewToWindow, vTempViewVar_0, lID );
+   RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
+   DropView( vTempViewVar_0 );
+   //:NAME VIEW lPrimReg "lPrimReg"
+   SetNameForView( lPrimReg, "lPrimReg", null, zLEVEL_TASK );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:AcceptUpdatePrimRegUser( VIEW ViewToWindow )
+
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
+public int 
+AcceptUpdatePrimRegUser( View     ViewToWindow )
+{
+   zVIEW    wWebXfer = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW mCurrentUser REGISTERED AS mCurrentUser
+   zVIEW    mCurrentUser = new zVIEW( );
+   //:VIEW lPrimReg REGISTERED AS lPrimReg
+   zVIEW    lPrimReg = new zVIEW( );
+   //:VIEW qOrganiz REGISTERED AS qOrganizLogin
+   zVIEW    qOrganiz = new zVIEW( );
+   //:STRING (  64  ) szLoginUserName
+   String   szLoginUserName = null;
+   //:STRING (  64  ) szAttemptLoginName
+   String   szAttemptLoginName = null;
+   //:STRING ( 128  ) szAttemptPassword
+   String   szAttemptPassword = null;
+   //:STRING ( 128  ) szConfirmPassword
+   String   szConfirmPassword = null;
+   //:INTEGER         lUserNameLth
+   int      lUserNameLth = 0;
+   //:INTEGER         lPasswordLth
+   int      lPasswordLth = 0;
+   //:INTEGER         lControl
+   int      lControl = 0;
+   //:INTEGER         lID
+   int      lID = 0;
+   //:SHORT           nRC
+   int      nRC = 0;
+   int      lTempInteger_0 = 0;
+   int      lTempInteger_1 = 0;
+   int      lTempInteger_2 = 0;
+   int      lTempInteger_3 = 0;
+   int      lTempInteger_4 = 0;
+   int      lTempInteger_5 = 0;
+   zVIEW    vTempViewVar_0 = new zVIEW( );
+
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( mCurrentUser, "mCurrentUser", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( qOrganiz, "qOrganizLogin", ViewToWindow, zLEVEL_TASK );
+
+   //:// Ensure the user is the same one that logged in, or that the user knows
+   //:// the password of this user in order to update the information.
+   //:szAttemptPassword = wWebXfer.Root.AttemptPassword
+   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+   StringBuilder sb_szAttemptPassword;
+   if ( szAttemptPassword == null )
+      sb_szAttemptPassword = new StringBuilder( 32 );
+   else
+      sb_szAttemptPassword = new StringBuilder( szAttemptPassword );
+       GetVariableFromAttribute( sb_szAttemptPassword, mi_lTempInteger_0, 'S', 129, wWebXfer, "Root", "AttemptPassword", "", 0 );
+   lTempInteger_0 = mi_lTempInteger_0.intValue( );
+   szAttemptPassword = sb_szAttemptPassword.toString( );}
+   //:nRC = CompareAttributeToString( lPrimReg, "User", "UserPassword", szAttemptPassword )
+   nRC = CompareAttributeToString( lPrimReg, "User", "UserPassword", szAttemptPassword );
+   //:IF nRC != 0 AND
+   //:   qOrganiz.PrimaryRegistrant.ID != lPrimReg.PrimaryRegistrant.ID
+   if ( nRC != 0 && CompareAttributeToAttribute( qOrganiz, "PrimaryRegistrant", "ID", lPrimReg, "PrimaryRegistrant", "ID" ) != 0 )
+   { 
+      //:MessageSend( ViewToWindow, "", "Update Primary Registrant User",
+      //:             "Verification password is not correct.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Update Primary Registrant User", "Verification password is not correct.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+
+   //:// Ensure user login name is not blank and is unique.
+   //:szLoginUserName = mCurrentUser.User.UserName
+   {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+   StringBuilder sb_szLoginUserName;
+   if ( szLoginUserName == null )
+      sb_szLoginUserName = new StringBuilder( 32 );
+   else
+      sb_szLoginUserName = new StringBuilder( szLoginUserName );
+       GetVariableFromAttribute( sb_szLoginUserName, mi_lTempInteger_1, 'S', 65, mCurrentUser, "User", "UserName", "", 0 );
+   lTempInteger_1 = mi_lTempInteger_1.intValue( );
+   szLoginUserName = sb_szLoginUserName.toString( );}
+   //:lUserNameLth = zGetStringLen( szLoginUserName )
+   lUserNameLth = zGetStringLen( szLoginUserName );
+   //:TraceLineS( "User Login Name: ", szLoginUserName )
+   TraceLineS( "User Login Name: ", szLoginUserName );
+   //:TraceLineI( "User Login Name Length: ", lUserNameLth )
+   TraceLineI( "User Login Name Length: ", lUserNameLth );
+   //:IF lUserNameLth < 1
+   if ( lUserNameLth < 1 )
+   { 
+
+      //:MessageSend( ViewToWindow, "", "Update Primary Registrant User",
+      //:             "The User Name cannot be blank.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Update Primary Registrant User", "The User Name cannot be blank.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+      //:ELSE
+   } 
+   else
+   { 
+      //:szAttemptLoginName = wWebXfer.Root.AttemptLoginName
+      {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
+      StringBuilder sb_szAttemptLoginName;
+      if ( szAttemptLoginName == null )
+         sb_szAttemptLoginName = new StringBuilder( 32 );
+      else
+         sb_szAttemptLoginName = new StringBuilder( szAttemptLoginName );
+             GetVariableFromAttribute( sb_szAttemptLoginName, mi_lTempInteger_2, 'S', 65, wWebXfer, "Root", "AttemptLoginName", "", 0 );
+      lTempInteger_2 = mi_lTempInteger_2.intValue( );
+      szAttemptLoginName = sb_szAttemptLoginName.toString( );}
+      //:IF szLoginUserName != szAttemptLoginName
+      if ( ZeidonStringCompare( szLoginUserName, 1, 0, szAttemptLoginName, 1, 0, 65 ) != 0 )
+      { 
+
+         //:lControl = zQUAL_STRING + zPOS_FIRST + zQUAL_SCOPE_OI + zTEST_CSR_RESULT
+         lControl = zQUAL_STRING + zPOS_FIRST + zQUAL_SCOPE_OI + zTEST_CSR_RESULT;
+         //:IF SetEntityCursor( lPrimReg, "User", "UserName", lControl,
+         //:                    szLoginUserName, "", "", 0, "", "" ) >= zCURSOR_SET
+         lTempInteger_3 = SetEntityCursor( lPrimReg, "User", "UserName", lControl, szLoginUserName, "", "", 0, "", "" );
+         if ( lTempInteger_3 >= zCURSOR_SET )
+         { 
+            //:MessageSend( ViewToWindow, "", "Update Primary Registrant User",
+            //:             "The User Name must be unique.",
+            //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+            MessageSend( ViewToWindow, "", "Update Primary Registrant User", "The User Name must be unique.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+            //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+            m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+            //:RETURN 2
+            if(8==8)return( 2 );
+         } 
+
+
+         //:END
+      } 
+
+      //:END
+   } 
+
+   //:END
+
+   //:// Ensure user first and last names are not blank.
+   //:szLoginUserName = mCurrentUser.Employee.FirstName
+   {MutableInt mi_lTempInteger_4 = new MutableInt( lTempInteger_4 );
+   StringBuilder sb_szLoginUserName;
+   if ( szLoginUserName == null )
+      sb_szLoginUserName = new StringBuilder( 32 );
+   else
+      sb_szLoginUserName = new StringBuilder( szLoginUserName );
+       GetVariableFromAttribute( sb_szLoginUserName, mi_lTempInteger_4, 'S', 65, mCurrentUser, "Employee", "FirstName", "", 0 );
+   lTempInteger_4 = mi_lTempInteger_4.intValue( );
+   szLoginUserName = sb_szLoginUserName.toString( );}
+   //:lUserNameLth = zGetStringLen( szLoginUserName )
+   lUserNameLth = zGetStringLen( szLoginUserName );
+   //:TraceLineS( "First Name: ", szLoginUserName )
+   TraceLineS( "First Name: ", szLoginUserName );
+   //:TraceLineI( "First Name Length: ", lUserNameLth )
+   TraceLineI( "First Name Length: ", lUserNameLth );
+   //:IF lUserNameLth < 1
+   if ( lUserNameLth < 1 )
+   { 
+      //:MessageSend( ViewToWindow, "", "Update Primary Registrant User",
+      //:             "The user First Name cannot be blank.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Update Primary Registrant User", "The user First Name cannot be blank.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+
+   //:szLoginUserName = mCurrentUser.Employee.LastName
+   {MutableInt mi_lTempInteger_5 = new MutableInt( lTempInteger_5 );
+   StringBuilder sb_szLoginUserName;
+   if ( szLoginUserName == null )
+      sb_szLoginUserName = new StringBuilder( 32 );
+   else
+      sb_szLoginUserName = new StringBuilder( szLoginUserName );
+       GetVariableFromAttribute( sb_szLoginUserName, mi_lTempInteger_5, 'S', 65, mCurrentUser, "Employee", "LastName", "", 0 );
+   lTempInteger_5 = mi_lTempInteger_5.intValue( );
+   szLoginUserName = sb_szLoginUserName.toString( );}
+   //:lUserNameLth = zGetStringLen( szLoginUserName )
+   lUserNameLth = zGetStringLen( szLoginUserName );
+   //:TraceLineS( "Last Name: ", szLoginUserName )
+   TraceLineS( "Last Name: ", szLoginUserName );
+   //:TraceLineI( "Last Name Length: ", lUserNameLth )
+   TraceLineI( "Last Name Length: ", lUserNameLth );
+   //:IF lUserNameLth < 1
+   if ( lUserNameLth < 1 )
+   { 
+      //:MessageSend( ViewToWindow, "", "Update Primary Registrant User",
+      //:             "The user Last Name cannot be blank.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Update Primary Registrant User", "The user Last Name cannot be blank.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+
+   //:AcceptSubobject( mCurrentUser, "User" )
+   AcceptSubobject( mCurrentUser, "User" );
+   //:Commit mCurrentUser
+   RESULT = CommitObjectInstance( mCurrentUser );
+
+   //:lID = lPrimReg.PrimaryRegistrant.ID
+   {MutableInt mi_lID = new MutableInt( lID );
+       GetIntegerFromAttribute( mi_lID, lPrimReg, "PrimaryRegistrant", "ID" );
+   lID = mi_lID.intValue( );}
+   //:DropObjectInstance( mCurrentUser )
+   DropObjectInstance( mCurrentUser );
+   //:DropObjectInstance( lPrimReg )
+   DropObjectInstance( lPrimReg );
+
+   //:// Activate the "selected" primary registrant ... just in case someone added or deleted a primary registrant user.
+   //:ACTIVATE lPrimReg WHERE lPrimReg.PrimaryRegistrant.ID = lID
+   o_fnLocalBuildQual_30( ViewToWindow, vTempViewVar_0, lID );
+   RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
+   DropView( vTempViewVar_0 );
+   //:NAME VIEW lPrimReg "lPrimReg"
+   SetNameForView( lPrimReg, "lPrimReg", null, zLEVEL_TASK );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:CancelNewPrimRegUser( VIEW ViewToWindow )
+
+//:   VIEW mCurrentUser REGISTERED AS mCurrentUser
+public int 
+CancelNewPrimRegUser( View     ViewToWindow )
+{
+   zVIEW    mCurrentUser = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW mPerson REGISTERED AS mPerson
+   zVIEW    mPerson = new zVIEW( );
+
+   RESULT = GetViewByName( mCurrentUser, "mCurrentUser", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( mPerson, "mPerson", ViewToWindow, zLEVEL_TASK );
+
+   //:CancelSubobject( mCurrentUser, "User" )
+   CancelSubobject( mCurrentUser, "User" );
+   //:DropObjectInstance( mCurrentUser )
+   DropObjectInstance( mCurrentUser );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:CancelUpdatePrimRegUser( VIEW ViewToWindow )
+
+//:   VIEW mCurrentUser REGISTERED AS mCurrentUser
+public int 
+CancelUpdatePrimRegUser( View     ViewToWindow )
+{
+   zVIEW    mCurrentUser = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW mPerson REGISTERED AS mPerson
+   zVIEW    mPerson = new zVIEW( );
+
+   RESULT = GetViewByName( mCurrentUser, "mCurrentUser", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( mPerson, "mPerson", ViewToWindow, zLEVEL_TASK );
+
+   //:CancelSubobject( mCurrentUser, "User" )
+   CancelSubobject( mCurrentUser, "User" );
+   //:DropObjectInstance( mCurrentUser )
+   DropObjectInstance( mCurrentUser );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:DeletePrimRegUser( VIEW ViewToWindow )
+
+//:   VIEW mPrimReg REGISTERED AS mPrimReg
+public int 
+DeletePrimRegUser( View     ViewToWindow )
+{
+   zVIEW    mPrimReg = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mPrimReg, "mPrimReg", ViewToWindow, zLEVEL_TASK );
+
+   //:DELETE ENTITY mPrimReg.User
+   RESULT = DeleteEntity( mPrimReg, "User", zPOS_NEXT );
+   //:COMMIT mPrimReg
+   RESULT = CommitObjectInstance( mPrimReg );
+   //:DropObjectInstance( mPrimReg )
+   DropObjectInstance( mPrimReg );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:InitSelectPrimRegistrant( VIEW ViewToWindow )
+
+public int 
+InitSelectPrimRegistrant( View     ViewToWindow )
+{
+
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:InitListMasterLabels( VIEW ViewToWindow )
+
+//:   VIEW lPrimReg BASED ON LOD lPrimReg
+public int 
+InitListMasterLabels( View     ViewToWindow )
+{
+   zVIEW    lPrimReg = new zVIEW( );
+   //:INTEGER lID
+   int      lID = 0;
+   int      RESULT = 0;
+   zVIEW    vTempViewVar_0 = new zVIEW( );
+
+
+   //:GET VIEW lPrimReg NAMED "lPrimReg"
+   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
+   //:lID = lPrimReg.PrimaryRegistrant.ID
+   {MutableInt mi_lID = new MutableInt( lID );
+       GetIntegerFromAttribute( mi_lID, lPrimReg, "PrimaryRegistrant", "ID" );
+   lID = mi_lID.intValue( );}
+   //:DropObjectInstance( lPrimReg )
+   DropObjectInstance( lPrimReg );
+
+   //:// Activate the "selected" primary registrant ... just in case someone added or
+   //:// deleted a primary registrant label.
+   //:ACTIVATE lPrimReg WHERE lPrimReg.PrimaryRegistrant.ID = lID
+   o_fnLocalBuildQual_31( ViewToWindow, vTempViewVar_0, lID );
+   RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
+   DropView( vTempViewVar_0 );
+   //:NAME VIEW lPrimReg "lPrimReg"
+   SetNameForView( lPrimReg, "lPrimReg", null, zLEVEL_TASK );
+
+   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrantLabel" )
+   {
+    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
+    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrantLabel" );
+    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
+   }
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:AddNewMasterLabel( VIEW ViewToWindow )
+
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
+public int 
+AddNewMasterLabel( View     ViewToWindow )
+{
+   zVIEW    wWebXfer = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW mMasLC   BASED ON LOD  mMasLC
+   zVIEW    mMasLC = new zVIEW( );
 
    RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
 
-   //:wWebXfer.Root.AttemptLoginName = "Lonza"
-   SetAttributeFromString( wWebXfer, "Root", "AttemptLoginName", "Lonza" );
-   //:wWebXfer.Root.AttemptUserName = "Admin"
-   SetAttributeFromString( wWebXfer, "Root", "AttemptUserName", "Admin" );
-   //:wWebXfer.Root.AttemptPassword = "xxxxxxxx"
-   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "xxxxxxxx" );
-   //:RefreshWindow( ViewToWindow )
-   m_ZDRVROPR.RefreshWindow( ViewToWindow );
-   //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-   m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-   //:RETURN 2
-   return( 2 );
+   //:GET VIEW mMasLC NAMED "mMasLC"
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+   //:IF mMasLC != 0
+   if ( getView( mMasLC ) != null )
+   { 
+      //:DropObjectInstance( mMasLC )
+      DropObjectInstance( mMasLC );
+   } 
+
+   //:END
+
+   //:// We are activating an empty OI, so create all the entities.
+   //:ACTIVATE mMasLC EMPTY
+   RESULT = ActivateEmptyObjectInstance( mMasLC, "mMasLC", ViewToWindow, zSINGLE );
+   //:NAME VIEW mMasLC "mMasLC"
+   SetNameForView( mMasLC, "mMasLC", null, zLEVEL_TASK );
+   //:CREATE ENTITY mMasLC.MasterLabelContent
+   RESULT = CreateEntity( mMasLC, "MasterLabelContent", zPOS_AFTER );
+   //:// CREATE ENTITY mMasLC.MasterLabelSection
+   //:// CREATE ENTITY mMasLC.MasterLabelSection
+
+   //:wWebXfer.Root.AttemptProductName = ""
+   SetAttributeFromString( wWebXfer, "Root", "AttemptProductName", "" );
+
+   //:CreateTemporalSubobjectVersion( mMasLC, "MasterLabelContent" )
+   CreateTemporalSubobjectVersion( mMasLC, "MasterLabelContent" );
+   //:// CreateTemporalSubobjectVersion( mMasLC, "MasterLabelSection" )
+   //:// CreateTemporalSubobjectVersion( mMasLC, "MasterLabelSection" )
+
+   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrantLabel" )
+   {
+    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
+    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrantLabel" );
+    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
+   }
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:InitMasterLabelForUpdate( VIEW ViewToWindow )
+
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
+public int 
+InitMasterLabelForUpdate( View     ViewToWindow )
+{
+   zVIEW    wWebXfer = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW mMasLC   BASED ON LOD  mMasLC
+   zVIEW    mMasLC = new zVIEW( );
+   //:VIEW lPrimReg REGISTERED AS lPrimReg
+   zVIEW    lPrimReg = new zVIEW( );
+   int      lTempInteger_0 = 0;
+   zVIEW    vTempViewVar_0 = new zVIEW( );
+
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
+
+   //:GET VIEW mMasLC NAMED "mMasLC"
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+   //:IF mMasLC != 0
+   if ( getView( mMasLC ) != null )
+   { 
+      //:DropObjectInstance( mMasLC )
+      DropObjectInstance( mMasLC );
+   } 
+
+   //:END
+
+   //:ACTIVATE mMasLC WHERE mMasLC.MasterLabelContent.ID = lPrimReg.MasterLabelContent.ID
+   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+       GetIntegerFromAttribute( mi_lTempInteger_0, lPrimReg, "MasterLabelContent", "ID" );
+   lTempInteger_0 = mi_lTempInteger_0.intValue( );}
+   o_fnLocalBuildQual_32( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
+   RESULT = ActivateObjectInstance( mMasLC, "mMasLC", ViewToWindow, vTempViewVar_0, zSINGLE );
+   DropView( vTempViewVar_0 );
+   //:NAME VIEW mMasLC "mMasLC"
+   SetNameForView( mMasLC, "mMasLC", null, zLEVEL_TASK );
+
+   //:// IF mMasLC.MasterLabelSection DOES NOT EXIST
+   //://    CREATE ENTITY mMasLC.MasterLabelSection
+   //:// END
+
+   //:// IF mMasLC.MasterLabelSection DOES NOT EXIST
+   //://    CREATE ENTITY mMasLC.MasterLabelSection
+   //:// END
+
+   //:wWebXfer.Root.AttemptProductName = mMasLC.MasterProduct.Name
+   SetAttributeFromAttribute( wWebXfer, "Root", "AttemptProductName", mMasLC, "MasterProduct", "Name" );
+
+   //:CreateTemporalSubobjectVersion( mMasLC, "MasterLabelContent" )
+   CreateTemporalSubobjectVersion( mMasLC, "MasterLabelContent" );
+   //:// CreateTemporalSubobjectVersion( mMasLC, "MasterLabelSection" )
+   //:// CreateTemporalSubobjectVersion( mMasLC, "MasterLabelSection" )
+
+   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrantLabel" )
+   {
+    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
+    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrantLabel" );
+    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
+   }
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:AcceptNewMasterLabel( VIEW ViewToWindow )
+
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
+public int 
+AcceptNewMasterLabel( View     ViewToWindow )
+{
+   zVIEW    wWebXfer = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW mMasLC   REGISTERED AS mMasLC
+   zVIEW    mMasLC = new zVIEW( );
+   //:VIEW mPrimReg BASED ON LOD  mPrimReg
+   zVIEW    mPrimReg = new zVIEW( );
+   //:VIEW lPrimReg BASED ON LOD  lPrimReg
+   zVIEW    lPrimReg = new zVIEW( );
+   //:STRING (  50  ) szProductName
+   String   szProductName = null;
+   //:INTEGER         lProductNameLth
+   int      lProductNameLth = 0;
+   //:INTEGER         lControl
+   int      lControl = 0;
+   //:INTEGER         lID
+   int      lID = 0;
+   //:SHORT           nRC
+   int      nRC = 0;
+   int      lTempInteger_0 = 0;
+   int      lTempInteger_1 = 0;
+   zVIEW    vTempViewVar_0 = new zVIEW( );
+   zVIEW    vTempViewVar_1 = new zVIEW( );
+
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:// Ensure user login name is not blank and is unique.
+   //:GET VIEW lPrimReg NAMED "lPrimReg"
+   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
+   //:szProductName = mMasLC.MasterProduct.Name
+   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+   StringBuilder sb_szProductName;
+   if ( szProductName == null )
+      sb_szProductName = new StringBuilder( 32 );
+   else
+      sb_szProductName = new StringBuilder( szProductName );
+       GetVariableFromAttribute( sb_szProductName, mi_lTempInteger_0, 'S', 51, mMasLC, "MasterProduct", "Name", "", 0 );
+   lTempInteger_0 = mi_lTempInteger_0.intValue( );
+   szProductName = sb_szProductName.toString( );}
+   //:lProductNameLth = zGetStringLen( szProductName )
+   lProductNameLth = zGetStringLen( szProductName );
+   //:TraceLineS( "Label Name: ", szProductName )
+   TraceLineS( "Label Name: ", szProductName );
+   //:TraceLineI( "Label Name Length: ", lProductNameLth )
+   TraceLineI( "Label Name Length: ", lProductNameLth );
+   //:IF lProductNameLth < 1
+   if ( lProductNameLth < 1 )
+   { 
+
+      //:MessageSend( ViewToWindow, "", "New Primary Registrant Label",
+      //:             "The Label Name cannot be blank.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "New Primary Registrant Label", "The Label Name cannot be blank.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+
+      //:ELSE
+   } 
+   else
+   { 
+
+      //:lControl = zQUAL_STRING + zPOS_FIRST + zTEST_CSR_RESULT
+      lControl = zQUAL_STRING + zPOS_FIRST + zTEST_CSR_RESULT;
+      //:IF SetEntityCursor( lPrimReg, "MasterLabelContent", "ProductName", lControl,
+      //:                    szProductName, "", "", 0, "", "" ) >= zCURSOR_SET
+      lTempInteger_1 = SetEntityCursor( lPrimReg, "MasterLabelContent", "ProductName", lControl, szProductName, "", "", 0, "", "" );
+      if ( lTempInteger_1 >= zCURSOR_SET )
+      { 
+         //:MessageSend( ViewToWindow, "", "New Primary Registrant Label",
+         //:             "The Label Name must be unique.",
+         //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         MessageSend( ViewToWindow, "", "New Primary Registrant Label", "The Label Name must be unique.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+         //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+         m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+         //:RETURN 2
+         if(8==8)return( 2 );
+      } 
+
+
+      //:END
+   } 
+
+   //:END
+
+   //:lID = lPrimReg.PrimaryRegistrant.ID
+   {MutableInt mi_lID = new MutableInt( lID );
+       GetIntegerFromAttribute( mi_lID, lPrimReg, "PrimaryRegistrant", "ID" );
+   lID = mi_lID.intValue( );}
+   //:ACTIVATE mPrimReg WHERE mPrimReg.PrimaryRegistrant.ID = lID
+   o_fnLocalBuildQual_33( ViewToWindow, vTempViewVar_0, lID );
+   RESULT = ActivateObjectInstance( mPrimReg, "mPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
+   DropView( vTempViewVar_0 );
+   //:NAME VIEW mPrimReg "mPrimReg"
+   SetNameForView( mPrimReg, "mPrimReg", null, zLEVEL_TASK );
+
+   //:IncludeSubobjectFromSubobject( mMasLC, "PrimaryRegistrant",
+   //:                               mPrimReg, "PrimaryRegistrant", zPOS_LAST )
+   IncludeSubobjectFromSubobject( mMasLC, "PrimaryRegistrant", mPrimReg, "PrimaryRegistrant", zPOS_LAST );
+
+   //:AcceptSubobject( mMasLC, "MasterLabelContent" )
+   AcceptSubobject( mMasLC, "MasterLabelContent" );
+   //:// AcceptSubobject( mMasLC, "MasterLabelSection" )
+   //:// AcceptSubobject( mMasLC, "MasterLabelSection" )
+
+   //:Commit mMasLC
+   RESULT = CommitObjectInstance( mMasLC );
+
+   //:DropObjectInstance( mMasLC )
+   DropObjectInstance( mMasLC );
+   //:DropObjectInstance( mPrimReg )
+   DropObjectInstance( mPrimReg );
+   //:DropObjectInstance( lPrimReg )
+   DropObjectInstance( lPrimReg );
+
+   //:ACTIVATE lPrimReg WHERE lPrimReg.PrimaryRegistrant.ID = lID
+   o_fnLocalBuildQual_34( ViewToWindow, vTempViewVar_1, lID );
+   RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, vTempViewVar_1, zSINGLE );
+   DropView( vTempViewVar_1 );
+   //:NAME VIEW lPrimReg "lPrimReg"
+   SetNameForView( lPrimReg, "lPrimReg", null, zLEVEL_TASK );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:AcceptUpdateMasterLabel( VIEW ViewToWindow )
+
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
+public int 
+AcceptUpdateMasterLabel( View     ViewToWindow )
+{
+   zVIEW    wWebXfer = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW mMasLC   REGISTERED AS mMasLC
+   zVIEW    mMasLC = new zVIEW( );
+   //:VIEW lPrimReg BASED ON LOD  lPrimReg
+   zVIEW    lPrimReg = new zVIEW( );
+   //:STRING (  50  ) szProductName
+   String   szProductName = null;
+   //:STRING (  50  ) szAttemptProductName
+   String   szAttemptProductName = null;
+   //:INTEGER         lProductNameLth
+   int      lProductNameLth = 0;
+   //:INTEGER         lPasswordLth
+   int      lPasswordLth = 0;
+   //:INTEGER         lControl
+   int      lControl = 0;
+   //:INTEGER         lID
+   int      lID = 0;
+   //:SHORT           nRC
+   int      nRC = 0;
+   int      lTempInteger_0 = 0;
+   int      lTempInteger_1 = 0;
+   int      lTempInteger_2 = 0;
+   zVIEW    vTempViewVar_0 = new zVIEW( );
+
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:// Ensure user login name is not blank and is unique.
+   //:GET VIEW lPrimReg NAMED "lPrimReg"
+   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
+   //:szProductName = mMasLC.MasterProduct.Name
+   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+   StringBuilder sb_szProductName;
+   if ( szProductName == null )
+      sb_szProductName = new StringBuilder( 32 );
+   else
+      sb_szProductName = new StringBuilder( szProductName );
+       GetVariableFromAttribute( sb_szProductName, mi_lTempInteger_0, 'S', 51, mMasLC, "MasterProduct", "Name", "", 0 );
+   lTempInteger_0 = mi_lTempInteger_0.intValue( );
+   szProductName = sb_szProductName.toString( );}
+   //:lProductNameLth = zGetStringLen( szProductName )
+   lProductNameLth = zGetStringLen( szProductName );
+   //:TraceLineS( "User Login Name: ", szProductName )
+   TraceLineS( "User Login Name: ", szProductName );
+   //:TraceLineI( "User Login Name Length: ", lProductNameLth )
+   TraceLineI( "User Login Name Length: ", lProductNameLth );
+   //:IF lProductNameLth < 1
+   if ( lProductNameLth < 1 )
+   { 
+
+      //:MessageSend( ViewToWindow, "", "Update Primary Registrant Label",
+      //:             "The Label Name cannot be blank.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Update Primary Registrant Label", "The Label Name cannot be blank.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+
+      //:ELSE
+   } 
+   else
+   { 
+
+      //:szAttemptProductName = wWebXfer.Root.AttemptProductName
+      {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+      StringBuilder sb_szAttemptProductName;
+      if ( szAttemptProductName == null )
+         sb_szAttemptProductName = new StringBuilder( 32 );
+      else
+         sb_szAttemptProductName = new StringBuilder( szAttemptProductName );
+             GetVariableFromAttribute( sb_szAttemptProductName, mi_lTempInteger_1, 'S', 51, wWebXfer, "Root", "AttemptProductName", "", 0 );
+      lTempInteger_1 = mi_lTempInteger_1.intValue( );
+      szAttemptProductName = sb_szAttemptProductName.toString( );}
+      //:IF szProductName != szAttemptProductName
+      if ( ZeidonStringCompare( szProductName, 1, 0, szAttemptProductName, 1, 0, 51 ) != 0 )
+      { 
+
+         //:lControl = zQUAL_STRING + zPOS_FIRST + zTEST_CSR_RESULT
+         lControl = zQUAL_STRING + zPOS_FIRST + zTEST_CSR_RESULT;
+         //:IF SetEntityCursor( lPrimReg, "MasterLabelContent", "ProductName", lControl,
+         //:                    szProductName, "", "", 0, "", "" ) >= zCURSOR_SET
+         lTempInteger_2 = SetEntityCursor( lPrimReg, "MasterLabelContent", "ProductName", lControl, szProductName, "", "", 0, "", "" );
+         if ( lTempInteger_2 >= zCURSOR_SET )
+         { 
+            //:MessageSend( ViewToWindow, "", "Update Primary Registrant Label",
+            //:             "The Label Name must be unique.",
+            //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+            MessageSend( ViewToWindow, "", "Update Primary Registrant Label", "The Label Name must be unique.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+            //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+            m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+            //:RETURN 2
+            if(8==8)return( 2 );
+         } 
+
+
+         //:END
+      } 
+
+      //:END
+   } 
+
+   //:END
+
+   //:lID = lPrimReg.PrimaryRegistrant.ID
+   {MutableInt mi_lID = new MutableInt( lID );
+       GetIntegerFromAttribute( mi_lID, lPrimReg, "PrimaryRegistrant", "ID" );
+   lID = mi_lID.intValue( );}
+
+   //:AcceptSubobject( mMasLC, "MasterLabelContent" )
+   AcceptSubobject( mMasLC, "MasterLabelContent" );
+   //:// AcceptSubobject( mMasLC, "MasterLabelSection" )
+   //:// AcceptSubobject( mMasLC, "MasterLabelSection" )
+
+   //:Commit mMasLC
+   RESULT = CommitObjectInstance( mMasLC );
+
+   //:DropObjectInstance( mMasLC )
+   DropObjectInstance( mMasLC );
+   //:DropObjectInstance( lPrimReg )
+   DropObjectInstance( lPrimReg );
+
+   //:ACTIVATE lPrimReg WHERE lPrimReg.PrimaryRegistrant.ID = lID
+   o_fnLocalBuildQual_35( ViewToWindow, vTempViewVar_0, lID );
+   RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
+   DropView( vTempViewVar_0 );
+   //:NAME VIEW lPrimReg "lPrimReg"
+   SetNameForView( lPrimReg, "lPrimReg", null, zLEVEL_TASK );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:CancelNewMasterLabel( VIEW ViewToWindow )
+
+//:   VIEW mMasLC   REGISTERED AS mMasLC
+public int 
+CancelNewMasterLabel( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:CancelSubobject( mMasLC, "MasterLabelContent" )
+   CancelSubobject( mMasLC, "MasterLabelContent" );
+   //:// CancelSubobject( mMasLC, "MasterLabelSection" )
+   //:// CancelSubobject( mMasLC, "MasterLabelSection" )
+   //:DropObjectInstance( mMasLC )
+   DropObjectInstance( mMasLC );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:CancelUpdateMasterLabel( VIEW ViewToWindow )
+
+//:   VIEW mMasLC   REGISTERED AS mMasLC
+public int 
+CancelUpdateMasterLabel( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:CancelSubobject( mMasLC, "MasterLabelContent" )
+   CancelSubobject( mMasLC, "MasterLabelContent" );
+   //:// CancelSubobject( mMasLC, "MasterLabelSection" )
+   //:// CancelSubobject( mMasLC, "MasterLabelSection" )
+   //:DropObjectInstance( mMasLC )
+   DropObjectInstance( mMasLC );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:DeleteMasterLabel( VIEW ViewToWindow )
+
+//:   VIEW mPrimReg REGISTERED AS mPrimReg
+public int 
+DeleteMasterLabel( View     ViewToWindow )
+{
+   zVIEW    mPrimReg = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mPrimReg, "mPrimReg", ViewToWindow, zLEVEL_TASK );
+
+   //:DELETE ENTITY mPrimReg.MasterLabelContent
+   RESULT = DeleteEntity( mPrimReg, "MasterLabelContent", zPOS_NEXT );
+   //:COMMIT mPrimReg
+   RESULT = CommitObjectInstance( mPrimReg );
+   //:DropObjectInstance( mPrimReg )
+   DropObjectInstance( mPrimReg );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:ChangeUserPassword( VIEW ViewToWindow )
+
+//:   VIEW mCurrentUser REGISTERED AS mCurrentUser
+public int 
+ChangeUserPassword( View     ViewToWindow )
+{
+   zVIEW    mCurrentUser = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW wWebXfer REGISTERED AS wWebXfer
+   zVIEW    wWebXfer = new zVIEW( );
+   //:STRING ( 128  ) szAttemptPassword
+   String   szAttemptPassword = null;
+   //:STRING ( 128  ) szConfirmPassword
+   String   szConfirmPassword = null;
+   //:INTEGER         lPasswordLth
+   int      lPasswordLth = 0;
+   //:SHORT  nRC
+   int      nRC = 0;
+   int      lTempInteger_0 = 0;
+   int      lTempInteger_1 = 0;
+
+   RESULT = GetViewByName( mCurrentUser, "mCurrentUser", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+
+   //:szAttemptPassword = wWebXfer.Root.AttemptPassword
+   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+   StringBuilder sb_szAttemptPassword;
+   if ( szAttemptPassword == null )
+      sb_szAttemptPassword = new StringBuilder( 32 );
+   else
+      sb_szAttemptPassword = new StringBuilder( szAttemptPassword );
+       GetVariableFromAttribute( sb_szAttemptPassword, mi_lTempInteger_0, 'S', 129, wWebXfer, "Root", "AttemptPassword", "", 0 );
+   lTempInteger_0 = mi_lTempInteger_0.intValue( );
+   szAttemptPassword = sb_szAttemptPassword.toString( );}
+
+   //:// 1: Ensure old password is correct.
+   //:// IF mCurrentUser.User.UserPassword != mCurrentUser.User.AttemptPassword
+   //:nRC = CompareAttributeToString( mCurrentUser, "User", "UserPassword", szAttemptPassword )
+   nRC = CompareAttributeToString( mCurrentUser, "User", "UserPassword", szAttemptPassword );
+   //:IF nRC != 0
+   if ( nRC != 0 )
+   { 
+      //:MessageSend( ViewToWindow, "", "Change Password",
+      //:             "Current password is not correct.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Change Password", "Current password is not correct.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+
+   //:szConfirmPassword = wWebXfer.Root.ConfirmPassword
+   {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+   StringBuilder sb_szConfirmPassword;
+   if ( szConfirmPassword == null )
+      sb_szConfirmPassword = new StringBuilder( 32 );
+   else
+      sb_szConfirmPassword = new StringBuilder( szConfirmPassword );
+       GetVariableFromAttribute( sb_szConfirmPassword, mi_lTempInteger_1, 'S', 129, wWebXfer, "Root", "ConfirmPassword", "", 0 );
+   lTempInteger_1 = mi_lTempInteger_1.intValue( );
+   szConfirmPassword = sb_szConfirmPassword.toString( );}
+
+   //:// 2: Ensure attempted password matches confirm password.
+   //:IF szAttemptPassword != szConfirmPassword
+   if ( ZeidonStringCompare( szAttemptPassword, 1, 0, szConfirmPassword, 1, 0, 129 ) != 0 )
+   { 
+      //:// TraceLineS( szAttemptPassword, szConfirmPassword )
+      //:MessageSend( ViewToWindow, "", "Change Password",
+      //:             "The new password and the confirmation password do not match.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Change Password", "The new password and the confirmation password do not match.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+
+   //:// 3: Ensure new password is at least 8 characters long.
+   //:lPasswordLth = zGetStringLen( szConfirmPassword )
+   lPasswordLth = zGetStringLen( szConfirmPassword );
+   //:TraceLineI( "Password Length: ", lPasswordLth )
+   TraceLineI( "Password Length: ", lPasswordLth );
+   //:IF lPasswordLth < 8
+   if ( lPasswordLth < 8 )
+   { 
+      //:MessageSend( ViewToWindow, "", "Change Password",
+      //:             "The new password must be at least 8 characters long.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Change Password", "The new password must be at least 8 characters long.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+
+   //:// Set user password to new password.
+   //:// SetAttrFromStrByContext( mCurrentUser, "User", "UserPassword", szConfirmPassword, "Password" )
+   //:mCurrentUser.User.UserPassword = szConfirmPassword
+   SetAttributeFromString( mCurrentUser, "User", "UserPassword", szConfirmPassword );
+
+   //:// TraceLineS( "Newly Set Password:", mCurrentUser.User.UserPassword )
+
+   //:// Commit change
+   //:COMMIT mCurrentUser
+   RESULT = CommitObjectInstance( mCurrentUser );
+   //:mCurrentUser.User.wkAttemptPassword = ""
+   SetAttributeFromString( mCurrentUser, "User", "wkAttemptPassword", "" );
+   //:wWebXfer.Root.AttemptPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
+   //:wWebXfer.Root.ConfirmPassword = ""
+   SetAttributeFromString( wWebXfer, "Root", "ConfirmPassword", "" );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:ValidatePrimRegistrantPassword( VIEW ViewToWindow )
+
+public int 
+ValidatePrimRegistrantPassword( View     ViewToWindow )
+{
+
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:ValidateSubregistrantPassword( VIEW ViewToWindow )
+
+public int 
+ValidateSubregistrantPassword( View     ViewToWindow )
+{
+
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:SelectListSubregistrants( VIEW ViewToWindow )
+
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
+public int 
+SelectListSubregistrants( View     ViewToWindow )
+{
+   zVIEW    wWebXfer = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW qOrganiz BASED ON LOD  qOrganiz
+   zVIEW    qOrganiz = new zVIEW( );
+   //:VIEW qPrimReg BASED ON LOD  qPrimReg
+   zVIEW    qPrimReg = new zVIEW( );
+   //:VIEW lPrimReg BASED ON LOD  lPrimReg
+   zVIEW    lPrimReg = new zVIEW( );
+   //:VIEW qSubreg  BASED ON LOD  qSubreg
+   zVIEW    qSubreg = new zVIEW( );
+   //:VIEW lSubreg  BASED ON LOD  lSubreg
+   zVIEW    lSubreg = new zVIEW( );
+   //:STRING ( 1  ) szKeyRole
+   String   szKeyRole = null;
+   //:INTEGER       lID
+   int      lID = 0;
+   //:SHORT         nRC
+   int      nRC = 0;
+   int      lTempInteger_0 = 0;
+   zVIEW    vTempViewVar_0 = new zVIEW( );
+
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+
+   //:IF wWebXfer = 0
+   if ( getView( wWebXfer ) == null )
+   { 
+      //:TraceLineS( "wStartUp.SelectListSubregistrants cannot find Transfer View", "" )
+      TraceLineS( "wStartUp.SelectListSubregistrants cannot find Transfer View", "" );
+      //:MessageSend( ViewToWindow, "", "Product Management",
+      //:             "Invalid Transfer View ... being redirected to Login",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Product Management", "Invalid Transfer View ... being redirected to Login", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_ResetTopWindow,
+      //:                         "wStartUp", "UserLogin" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_ResetTopWindow, "wStartUp", "UserLogin" );
+      //:RETURN 1
+      if(8==8)return( 1 );
+   } 
+
+   //:END
+
+   //:GET VIEW qOrganiz NAMED "qOrganizLogin"
+   RESULT = GetViewByName( qOrganiz, "qOrganizLogin", ViewToWindow, zLEVEL_TASK );
+   //:IF qOrganiz = 0
+   if ( getView( qOrganiz ) == null )
+   { 
+      //:TraceLineS( "wStartUp.SelectListSubregistrants cannot find Organization View", "" )
+      TraceLineS( "wStartUp.SelectListSubregistrants cannot find Organization View", "" );
+      //:MessageSend( ViewToWindow, "", "Product Management",
+      //:             "Invalid Organization View ... being redirected to Login",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Product Management", "Invalid Organization View ... being redirected to Login", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_ResetTopWindow,
+      //:                         "wStartUp", "UserLogin" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_ResetTopWindow, "wStartUp", "UserLogin" );
+      //:RETURN 1
+      if(8==8)return( 1 );
+   } 
+
+   //:END
+
+   //:IF wWebXfer.Root.LoginName = "Admin"
+   if ( CompareAttributeToString( wWebXfer, "Root", "LoginName", "Admin" ) == 0 )
+   { 
+
+      //:MessageSend( ViewToWindow, "", "List Subregistrants",
+      //:             "Admin does not have Subregistrants",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "List Subregistrants", "Admin does not have Subregistrants", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+
+   //:END
+
+   //:AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "TopMenu List Subregistrants" )
+   {
+    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
+    m_ZGlobalV_Operation.AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "TopMenu List Subregistrants" );
+    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
+   }
+
+   //:GET VIEW qPrimReg NAMED "qPrimRegLogin"
+   RESULT = GetViewByName( qPrimReg, "qPrimRegLogin", ViewToWindow, zLEVEL_TASK );
+   //:IF qPrimReg != 0
+   if ( getView( qPrimReg ) != null )
+   { 
+      //:DropObjectInstance( qPrimReg )
+      DropObjectInstance( qPrimReg );
+   } 
+
+   //:END
+
+   //:GET VIEW qSubreg NAMED "qSubregLogin"
+   RESULT = GetViewByName( qSubreg, "qSubregLogin", ViewToWindow, zLEVEL_TASK );
+   //:IF qSubreg != 0
+   if ( getView( qSubreg ) != null )
+   { 
+      //:DropObjectInstance( qSubreg )
+      DropObjectInstance( qSubreg );
+   } 
+
+   //:END
+
+   //:GET VIEW qPrimReg NAMED "lPrimReg"
+   RESULT = GetViewByName( qPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
+   //:IF lPrimReg != 0
+   if ( getView( lPrimReg ) != null )
+   { 
+      //:DropObjectInstance( lPrimReg )
+      DropObjectInstance( lPrimReg );
+   } 
+
+   //:END
+
+   //:GET VIEW lSubreg NAMED "lSubreg"
+   RESULT = GetViewByName( lSubreg, "lSubreg", ViewToWindow, zLEVEL_TASK );
+   //:IF lSubreg != 0
+   if ( getView( lSubreg ) != null )
+   { 
+      //:DropObjectInstance( lSubreg )
+      DropObjectInstance( lSubreg );
+   } 
+
+   //:END
+
+   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" )
+   {
+    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
+    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" );
+    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
+   }
+
+   //:ACTIVATE lPrimReg WHERE lPrimReg.PrimaryRegistrant.ID = qOrganiz.PrimaryRegistrant.ID
+   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+       GetIntegerFromAttribute( mi_lTempInteger_0, qOrganiz, "PrimaryRegistrant", "ID" );
+   lTempInteger_0 = mi_lTempInteger_0.intValue( );}
+   o_fnLocalBuildQual_36( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
+   RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, vTempViewVar_0, zSINGLE );
+   DropView( vTempViewVar_0 );
+   //:NAME VIEW lPrimReg "lPrimReg"
+   SetNameForView( lPrimReg, "lPrimReg", null, zLEVEL_TASK );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:SelectListPrimRegUser( VIEW ViewToWindow )
+
+//:   VIEW lPrimReg BASED ON LOD  lPrimReg
+public int 
+SelectListPrimRegUser( View     ViewToWindow )
+{
+   zVIEW    lPrimReg = new zVIEW( );
+   int      RESULT = 0;
+
+
+   //:GET VIEW lPrimReg NAMED "lPrimReg"
+   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
+   //:IF lPrimReg.Organization.LoginName = "Admin"
+   if ( CompareAttributeToString( lPrimReg, "Organization", "LoginName", "Admin" ) == 0 )
+   { 
+      //:MessageSend( ViewToWindow, "", "List Primary Registrant User",
+      //:             "Admin does not have Users",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "List Primary Registrant User", "Admin does not have Users", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:SelectListSubregistrantUsers( VIEW ViewToWindow )
+
+public int 
+SelectListSubregistrantUsers( View     ViewToWindow )
+{
+
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:SelectListSubregistrantProducts( VIEW ViewToWindow )
+
+public int 
+SelectListSubregistrantProducts( View     ViewToWindow )
+{
+
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+public int 
+InitSelectSubregistrant( View     ViewToWindow )
+{
+
+   //:InitSelectSubregistrant( VIEW ViewToWindow )
+
+   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "Subregistrant" )
+   {
+    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
+    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "Subregistrant" );
+    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
+   }
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+public int 
+SelectSubregProductForUpdate( View     ViewToWindow )
+{
+
+   //:SelectSubregProductForUpdate( VIEW ViewToWindow )
+
+   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "Subregistrant" )
+   {
+    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
+    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "Subregistrant" );
+    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
+   }
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+public int 
+SelectSubregProductForDelete( View     ViewToWindow )
+{
+
+   //:SelectSubregProductForDelete( VIEW ViewToWindow )
+
+   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "Subregistrant" )
+   {
+    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
+    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "Subregistrant" );
+    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
+   }
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:AddNewMasterProduct( VIEW ViewToWindow )
+
+//:   VIEW lPrimReg BASED ON LOD  lPrimReg
+public int 
+AddNewMasterProduct( View     ViewToWindow )
+{
+   zVIEW    lPrimReg = new zVIEW( );
+   int      RESULT = 0;
+
+
+   //:GET VIEW lPrimReg NAMED "lPrimReg"
+   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
+   //:IF lPrimReg.Organization.LoginName = "Admin"
+   if ( CompareAttributeToString( lPrimReg, "Organization", "LoginName", "Admin" ) == 0 )
+   { 
+      //:MessageSend( ViewToWindow, "", "New Master Product",
+      //:             "Admin does not have Master Products",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "New Master Product", "Admin does not have Master Products", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:UpdateMasterProduct( VIEW ViewToWindow )
+
+public int 
+UpdateMasterProduct( View     ViewToWindow )
+{
+
+   return( 0 );
+//    // nothing to do here ... just for positioning
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:DeleteMasterProduct( VIEW ViewToWindow )
+
+public int 
+DeleteMasterProduct( View     ViewToWindow )
+{
+
+   return( 0 );
+//    // nothing to do here ... just for positioning
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:MoveMasterProductUp( VIEW ViewToWindow )
+
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
+public int 
+MoveMasterProductUp( View     ViewToWindow )
+{
+   zVIEW    wWebXfer = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW mPrimReg REGISTERED AS mPrimReg
+   zVIEW    mPrimReg = new zVIEW( );
+   //:VIEW mTempReg BASED ON LOD  mPrimReg
+   zVIEW    mTempReg = new zVIEW( );
+   //:INTEGER lMove
+   int      lMove = 0;
+
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( mPrimReg, "mPrimReg", ViewToWindow, zLEVEL_TASK );
+
+   //:CreateViewFromView( mTempReg, mPrimReg )
+   CreateViewFromView( mTempReg, mPrimReg );
+   //:lMove = 1
+   lMove = 1;
+
+   //:LOOP WHILE lMove > 0
+   while ( lMove > 0 )
+   { 
+      //:SET CURSOR PREVIOUS mTempReg.MasterProduct
+      RESULT = SetCursorPrevEntity( mTempReg, "MasterProduct", "" );
+      //:lMove = lMove - 1
+      lMove = lMove - 1;
+   } 
+
+   //:END
+
+   //:MoveSubobject( mTempReg, "MasterProduct",
+   //:               mPrimReg, "MasterProduct",
+   //:               zPOS_PREV, zREPOS_PREV )
+   MoveSubobject( mTempReg, "MasterProduct", mPrimReg, "MasterProduct", zPOS_PREV, zREPOS_PREV );
+   //:DropView( mTempReg )
+   DropView( mTempReg );
+
+   //:// We now accept the Master Label to maintain order!
+   //:COMMIT mPrimReg
+   RESULT = CommitObjectInstance( mPrimReg );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:MoveMasterProductDown( VIEW ViewToWindow )
+
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
+public int 
+MoveMasterProductDown( View     ViewToWindow )
+{
+   zVIEW    wWebXfer = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW mPrimReg REGISTERED AS mPrimReg
+   zVIEW    mPrimReg = new zVIEW( );
+   //:VIEW mTempReg BASED ON LOD  mPrimReg
+   zVIEW    mTempReg = new zVIEW( );
+   //:INTEGER lMove
+   int      lMove = 0;
+
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( mPrimReg, "mPrimReg", ViewToWindow, zLEVEL_TASK );
+
+   //:CreateViewFromView( mTempReg, mPrimReg )
+   CreateViewFromView( mTempReg, mPrimReg );
+   //:lMove = 1
+   lMove = 1;
+
+   //:LOOP WHILE lMove > 0
+   while ( lMove > 0 )
+   { 
+      //:SET CURSOR NEXT mTempReg.MasterProduct
+      RESULT = SetCursorNextEntity( mTempReg, "MasterProduct", "" );
+      //:lMove = lMove - 1
+      lMove = lMove - 1;
+   } 
+
+   //:END
+
+   //:MoveSubobject( mTempReg, "MasterProduct",
+   //:               mPrimReg, "MasterProduct",
+   //:               zPOS_NEXT, zREPOS_NEXT )
+   MoveSubobject( mTempReg, "MasterProduct", mPrimReg, "MasterProduct", zPOS_NEXT, zREPOS_NEXT );
+   //:DropView( mTempReg )
+   DropView( mTempReg );
+
+   //:// We now accept the Master Label to maintain order!
+   //:COMMIT mPrimReg
+   RESULT = CommitObjectInstance( mPrimReg );
+   return( 0 );
 // END
 } 
 
@@ -8178,6 +7524,58 @@ WebDevelopment( View     ViewToWindow )
    //:             "Web Development and Maintenance not yet implemented.",
    //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
    MessageSend( ViewToWindow, "", "Web Development", "Web Development and Maintenance not yet implemented.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+   //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+   m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+   //:RETURN 2
+   return( 2 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+public int 
+MarketingFulfillment( View     ViewToWindow )
+{
+
+   //:MarketingFulfillment( VIEW ViewToWindow )
+
+   //:AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "TopMenu MarketingFulfillment" )
+   {
+    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
+    m_ZGlobalV_Operation.AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "TopMenu MarketingFulfillment" );
+    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
+   }
+
+   //:MessageSend( ViewToWindow, "", "Marketing & Fulfillment",
+   //:             "Marketing and Fulfillment not yet implemented.",
+   //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+   MessageSend( ViewToWindow, "", "Marketing & Fulfillment", "Marketing and Fulfillment not yet implemented.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+   //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+   m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+   //:RETURN 2
+   return( 2 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+public int 
+StateRegistrations( View     ViewToWindow )
+{
+
+   //:StateRegistrations( VIEW ViewToWindow )
+
+   //:AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "TopMenu StateRegistrations" )
+   {
+    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
+    m_ZGlobalV_Operation.AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "TopMenu StateRegistrations" );
+    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
+   }
+
+   //:MessageSend( ViewToWindow, "", "State Registrations",
+   //:             "State Registrations not yet implemented.",
+   //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+   MessageSend( ViewToWindow, "", "State Registrations", "State Registrations not yet implemented.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
    //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
    m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
    //:RETURN 2
@@ -8232,64 +7630,204 @@ SubregistrantMaintenance( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
-//:InitPortal( VIEW ViewToWindow )
-
-//:   VIEW wWebXfer REGISTERED AS wWebXfer
 public int 
-InitPortal( View     ViewToWindow )
+ProcessLogin( View     ViewToWindow )
 {
-   zVIEW    wWebXfer = new zVIEW( );
-   int      RESULT = 0;
-   //:STRING (   1  ) szKeyRole
-   String   szKeyRole = null;
-   int      lTempInteger_0 = 0;
 
-   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+   //:ProcessLogin( VIEW ViewToWindow )
 
-   //:szKeyRole = wWebXfer.Root.KeyRole
-   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
-   StringBuilder sb_szKeyRole;
-   if ( szKeyRole == null )
-      sb_szKeyRole = new StringBuilder( 32 );
-   else
-      sb_szKeyRole = new StringBuilder( szKeyRole );
-       GetVariableFromAttribute( sb_szKeyRole, mi_lTempInteger_0, 'S', 2, wWebXfer, "Root", "KeyRole", "", 0 );
-   lTempInteger_0 = mi_lTempInteger_0.intValue( );
-   szKeyRole = sb_szKeyRole.toString( );}
-   //:IF szKeyRole = "S"
-   if ( ZeidonStringCompare( szKeyRole, 1, 0, "S", 1, 0, 2 ) == 0 )
-   { 
-      //:SetDynamicBannerName( ViewToWindow, "wStartUp", "Subregistrant" )
-      {
-       ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-       m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "Subregistrant" );
-       // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-      }
-      //:ELSE
-   } 
-   else
-   { 
-      //:SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" )
-      {
-       ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-       m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" );
-       // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-      }
-   } 
-
-   //:END
+   //:AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "TopMenu Login" )
+   {
+    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
+    m_ZGlobalV_Operation.AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "TopMenu Login" );
+    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
+   }
    return( 0 );
 // END
 } 
 
 
 //:DIALOG OPERATION
-//:SelectListSubregistrantProducts( VIEW ViewToWindow )
+//:ListSubregProducts( VIEW ViewToWindow )
 
 public int 
-SelectListSubregistrantProducts( View     ViewToWindow )
+ListSubregProducts( View     ViewToWindow )
 {
 
+   return( 0 );
+//    // Nothing to do at this point.
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:InitListSubregProducts( VIEW ViewToWindow )
+
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
+public int 
+InitListSubregProducts( View     ViewToWindow )
+{
+   zVIEW    wWebXfer = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW lPrimReg REGISTERED AS lPrimReg
+   zVIEW    lPrimReg = new zVIEW( );
+   //:VIEW mSubreg  BASED ON LOD  mSubreg
+   zVIEW    mSubreg = new zVIEW( );
+   //:INTEGER lID
+   int      lID = 0;
+   //:SHORT   nRC
+   int      nRC = 0;
+   zVIEW    vTempViewVar_0 = new zVIEW( );
+
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
+
+   //:GET VIEW mSubreg NAMED "mSubreg"
+   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
+   //:IF mSubreg != 0
+   if ( getView( mSubreg ) != null )
+   { 
+      //:DropObjectInstance( mSubreg )
+      DropObjectInstance( mSubreg );
+   } 
+
+   //:END
+
+   //:// Activate the "selected" Subregistrant.
+   //:lID = lPrimReg.Subregistrant.ID
+   {MutableInt mi_lID = new MutableInt( lID );
+       GetIntegerFromAttribute( mi_lID, lPrimReg, "Subregistrant", "ID" );
+   lID = mi_lID.intValue( );}
+   //:ACTIVATE mSubreg WHERE mSubreg.Subregistrant.ID = lID
+   o_fnLocalBuildQual_37( ViewToWindow, vTempViewVar_0, lID );
+   RESULT = ActivateObjectInstance( mSubreg, "mSubreg", ViewToWindow, vTempViewVar_0, zSINGLE );
+   DropView( vTempViewVar_0 );
+   //:NAME VIEW mSubreg "mSubreg"
+   SetNameForView( mSubreg, "mSubreg", null, zLEVEL_TASK );
+
+   //:nRC = SetCursorFirstEntity( mSubreg, "ListMasterProduct", "Subregistrant" )
+   nRC = SetCursorFirstEntity( mSubreg, "ListMasterProduct", "Subregistrant" );
+   //:LOOP WHILE nRC = 0
+   while ( nRC == 0 )
+   { 
+      //:lID = mSubreg.ListMasterProduct.ID
+      {MutableInt mi_lID = new MutableInt( lID );
+             GetIntegerFromAttribute( mi_lID, mSubreg, "ListMasterProduct", "ID" );
+      lID = mi_lID.intValue( );}
+      //:nRC = SetCursorFirstEntityByInteger( mSubreg, "ValidMasterProduct", "ID", lID, "" )
+      nRC = SetCursorFirstEntityByInteger( mSubreg, "ValidMasterProduct", "ID", lID, "" );
+      //:IF nRC = 0
+      if ( nRC == 0 )
+      { 
+         //:mSubreg.ListMasterProduct.wkSelected = "Y"
+         SetAttributeFromString( mSubreg, "ListMasterProduct", "wkSelected", "Y" );
+      } 
+
+      //:END
+
+      //:nRC = SetCursorNextEntity( mSubreg, "ListMasterProduct", "Subregistrant" )
+      nRC = SetCursorNextEntity( mSubreg, "ListMasterProduct", "Subregistrant" );
+   } 
+
+   //:END
+
+   //:SetDynamicBannerName( ViewToWindow, "wStartUp", "Subregistrant" )
+   {
+    ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
+    m_ZGlobalV_Operation.SetDynamicBannerName( ViewToWindow, "wStartUp", "Subregistrant" );
+    // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
+   }
+   //:wWebXfer.Root.Banner4 = mSubreg.Subregistrant.dNameEPA_Number
+   SetAttributeFromAttribute( wWebXfer, "Root", "Banner4", mSubreg, "Subregistrant", "dNameEPA_Number" );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:CancelUpdateSubregProducts( VIEW ViewToWindow )
+
+//:   VIEW mSubreg  REGISTERED AS mSubreg
+public int 
+CancelUpdateSubregProducts( View     ViewToWindow )
+{
+   zVIEW    mSubreg = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
+   //:DropObjectInstance( mSubreg )
+   DropObjectInstance( mSubreg );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:AcceptUpdateSubregProduct( VIEW ViewToWindow )
+
+//:   VIEW mSubreg  REGISTERED AS mSubreg
+public int 
+AcceptUpdateSubregProduct( View     ViewToWindow )
+{
+   zVIEW    mSubreg = new zVIEW( );
+   int      RESULT = 0;
+   //:INTEGER lID
+   int      lID = 0;
+   //:SHORT   nRC
+   int      nRC = 0;
+
+   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
+
+   //:nRC = SetCursorFirstEntity( mSubreg, "ListMasterProduct", "Subregistrant" )
+   nRC = SetCursorFirstEntity( mSubreg, "ListMasterProduct", "Subregistrant" );
+   //:LOOP WHILE nRC = 0
+   while ( nRC == 0 )
+   { 
+      //:lID = mSubreg.ListMasterProduct.ID
+      {MutableInt mi_lID = new MutableInt( lID );
+             GetIntegerFromAttribute( mi_lID, mSubreg, "ListMasterProduct", "ID" );
+      lID = mi_lID.intValue( );}
+      //:nRC = SetCursorFirstEntityByInteger( mSubreg, "ValidMasterProduct", "ID", lID, "" )
+      nRC = SetCursorFirstEntityByInteger( mSubreg, "ValidMasterProduct", "ID", lID, "" );
+      //:IF mSubreg.ListMasterProduct.wkSelected = "Y"
+      if ( CompareAttributeToString( mSubreg, "ListMasterProduct", "wkSelected", "Y" ) == 0 )
+      { 
+         //:IF nRC != 0
+         if ( nRC != 0 )
+         { 
+            //:IncludeSubobjectFromSubobject( mSubreg, "ValidMasterProduct",
+            //:                               mSubreg, "ListMasterProduct", zPOS_LAST )
+            IncludeSubobjectFromSubobject( mSubreg, "ValidMasterProduct", mSubreg, "ListMasterProduct", zPOS_LAST );
+         } 
+
+         //:END
+         //:ELSE
+      } 
+      else
+      { 
+         //:IF nRC = 0
+         if ( nRC == 0 )
+         { 
+            //:ExcludeEntity( mSubreg, "ValidMasterProduct", zREPOS_NONE )
+            ExcludeEntity( mSubreg, "ValidMasterProduct", zREPOS_NONE );
+         } 
+
+         //:END
+      } 
+
+      //:END
+
+      //:nRC = SetCursorNextEntity( mSubreg, "ListMasterProduct", "Subregistrant" )
+      nRC = SetCursorNextEntity( mSubreg, "ListMasterProduct", "Subregistrant" );
+   } 
+
+   //:END
+
+   //:COMMIT mSubreg
+   RESULT = CommitObjectInstance( mSubreg );
+
+   //:DropObjectInstance( mSubreg )
+   DropObjectInstance( mSubreg );
    return( 0 );
 // END
 } 
@@ -8386,6 +7924,237 @@ SelectSubregUserForUpdate( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
+//:SelectSubregUserForDelete( VIEW ViewToWindow )
+
+public int 
+SelectSubregUserForDelete( View     ViewToWindow )
+{
+
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:SelectSubregistrantForDelete( VIEW ViewToWindow )
+
+public int 
+SelectSubregistrantForDelete( View     ViewToWindow )
+{
+
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:InitSubregUserForInsert( VIEW ViewToWindow )
+
+public int 
+InitSubregUserForInsert( View     ViewToWindow )
+{
+
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:InitSubregUserForUpdate( VIEW ViewToWindow )
+
+public int 
+InitSubregUserForUpdate( View     ViewToWindow )
+{
+
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:CancelNewSubregUser( VIEW ViewToWindow )
+
+public int 
+CancelNewSubregUser( View     ViewToWindow )
+{
+
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:CancelUpdateSubregUser( VIEW ViewToWindow )
+
+public int 
+CancelUpdateSubregUser( View     ViewToWindow )
+{
+
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:AcceptNewSubregUser( VIEW ViewToWindow )
+
+public int 
+AcceptNewSubregUser( View     ViewToWindow )
+{
+
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:AcceptUpdateSubregUser( VIEW ViewToWindow )
+
+public int 
+AcceptUpdateSubregUser( View     ViewToWindow )
+{
+
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:SelectSubregistrantForUpdate( VIEW ViewToWindow )
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
+public int 
+SelectSubregistrantForUpdate( View     ViewToWindow )
+{
+   zVIEW    wWebXfer = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW lPrimReg REGISTERED AS lPrimReg
+   zVIEW    lPrimReg = new zVIEW( );
+   //:VIEW lSubreg  BASED ON LOD  lSubreg
+   zVIEW    lSubreg = new zVIEW( );
+   //:INTEGER lID
+   int      lID = 0;
+   //:SHORT   nRC
+   int      nRC = 0;
+   zVIEW    vTempViewVar_0 = new zVIEW( );
+
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( lPrimReg, "lPrimReg", ViewToWindow, zLEVEL_TASK );
+
+   //:GET VIEW lSubreg NAMED "lSubreg"
+   RESULT = GetViewByName( lSubreg, "lSubreg", ViewToWindow, zLEVEL_TASK );
+   //:IF lSubreg != 0
+   if ( getView( lSubreg ) != null )
+   { 
+      //:DropObjectInstance( lSubreg )
+      DropObjectInstance( lSubreg );
+   } 
+
+   //:END
+
+   //:// Activate the "selected" Subregistrant.
+   //:lID = lPrimReg.Subregistrant.ID
+   {MutableInt mi_lID = new MutableInt( lID );
+       GetIntegerFromAttribute( mi_lID, lPrimReg, "Subregistrant", "ID" );
+   lID = mi_lID.intValue( );}
+   //:ACTIVATE lSubreg WHERE lSubreg.Subregistrant.ID = lID
+   o_fnLocalBuildQual_38( ViewToWindow, vTempViewVar_0, lID );
+   RESULT = ActivateObjectInstance( lSubreg, "lSubreg", ViewToWindow, vTempViewVar_0, zSINGLE );
+   DropView( vTempViewVar_0 );
+   //:NAME VIEW lSubreg "lSubreg"
+   SetNameForView( lSubreg, "lSubreg", null, zLEVEL_TASK );
+   return( 0 );
+//    
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:DeleteSubregUser( VIEW ViewToWindow )
+
+public int 
+DeleteSubregUser( View     ViewToWindow )
+{
+
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:Template( VIEW ViewToWindow )
+
+public int 
+Template( View     ViewToWindow )
+{
+
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:NewLLD( VIEW ViewToWindow )
+
+public int 
+NewLLD( View     ViewToWindow )
+{
+
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:OpenLLD( VIEW ViewToWindow )
+
+public int 
+OpenLLD( View     ViewToWindow )
+{
+
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:SaveLLD( VIEW ViewToWindow )
+
+public int 
+SaveLLD( View     ViewToWindow )
+{
+
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:ExitLLD( VIEW ViewToWindow )
+
+public int 
+ExitLLD( View     ViewToWindow )
+{
+
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:SaveColor( VIEW ViewToWindow )
+
+public int 
+SaveColor( View     ViewToWindow )
+{
+
+   return( 0 );
+// // VIEW mSubreg REGISTERED AS  mSubreg
+// // COMMIT mSubreg
+// END
+} 
+
+
+//:DIALOG OPERATION
 //:UpdateColor( VIEW ViewToWindow )
 
 public int 
@@ -8394,6 +8163,61 @@ UpdateColor( View     ViewToWindow )
 
    return( 0 );
 //    // Just for positioning.
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:InitColorForAdd( VIEW ViewToWindow )
+
+//:   VIEW mSubreg REGISTERED AS  mSubreg
+public int 
+InitColorForAdd( View     ViewToWindow )
+{
+   zVIEW    mSubreg = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
+
+   //:CREATE ENTITY mSubreg.Color
+   RESULT = CreateEntity( mSubreg, "Color", zPOS_AFTER );
+   //:mSubreg.Color.wkCreated = "Y"
+   SetAttributeFromString( mSubreg, "Color", "wkCreated", "Y" );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:InitColorForUpdate( VIEW ViewToWindow )
+
+//:   VIEW mSubreg REGISTERED AS  mSubreg
+public int 
+InitColorForUpdate( View     ViewToWindow )
+{
+   zVIEW    mSubreg = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
+
+   //:mSubreg.Color.wkCreated = "N"
+   SetAttributeFromString( mSubreg, "Color", "wkCreated", "N" );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:SaveAndAddNewColor( VIEW ViewToWindow )
+
+public int 
+SaveAndAddNewColor( View     ViewToWindow )
+{
+
+   return( 0 );
+// // VIEW mSubreg REGISTERED AS  mSubreg
+// // COMMIT mSubreg
+// // CREATE ENTITY mSubreg.Color
 // END
 } 
 
@@ -8424,6 +8248,47 @@ CancelColor( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
+//:DeleteColor( VIEW ViewToWindow )
+
+//:   VIEW mSubreg REGISTERED AS  mSubreg
+public int 
+DeleteColor( View     ViewToWindow )
+{
+   zVIEW    mSubreg = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
+
+   //:DELETE ENTITY mSubreg.Color
+   RESULT = DeleteEntity( mSubreg, "Color", zPOS_NEXT );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:InitReusableBlockForUpdate( VIEW ViewToWindow )
+
+//:   VIEW mSubreg REGISTERED AS  mSubreg
+public int 
+InitReusableBlockForUpdate( View     ViewToWindow )
+{
+   zVIEW    mSubreg = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW wWebXfer REGISTERED AS wWebXfer
+   zVIEW    wWebXfer = new zVIEW( );
+
+   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+
+   //:wWebXfer.Root.SearchName = mSubreg.ReusableBlockDefinition.Name
+   SetAttributeFromAttribute( wWebXfer, "Root", "SearchName", mSubreg, "ReusableBlockDefinition", "Name" );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
 //:UpdateReusableBlock( VIEW ViewToWindow )
 
 public int 
@@ -8432,6 +8297,176 @@ UpdateReusableBlock( View     ViewToWindow )
 
    return( 0 );
 //    // Just for positioning.
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:CancelReusableBlock( VIEW ViewToWindow )
+
+public int 
+CancelReusableBlock( View     ViewToWindow )
+{
+
+   return( 0 );
+//    // nothing to do
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:DeleteReusableBlock( VIEW ViewToWindow )
+
+//:   VIEW mSubreg REGISTERED AS  mSubreg
+public int 
+DeleteReusableBlock( View     ViewToWindow )
+{
+   zVIEW    mSubreg = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
+
+   //:DELETE ENTITY mSubreg.ReusableBlockDefinition
+   RESULT = DeleteEntity( mSubreg, "ReusableBlockDefinition", zPOS_NEXT );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:SaveReusableBlock( VIEW ViewToWindow )
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
+public int 
+SaveReusableBlock( View     ViewToWindow )
+{
+   zVIEW    wWebXfer = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW mSubreg REGISTERED AS mSubreg
+   zVIEW    mSubreg = new zVIEW( );
+   //:VIEW qBlockRU BASED ON LOD qBlockRU
+   zVIEW    qBlockRU = new zVIEW( );
+   //:INTEGER ID
+   int      ID = 0;
+   int      lTempInteger_0 = 0;
+   zVIEW    vTempViewVar_0 = new zVIEW( );
+   String   szTempString_0 = null;
+
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
+
+   //:ID = mSubreg.ReusableBlockDefinition.ID
+   {MutableInt mi_ID = new MutableInt( ID );
+       GetIntegerFromAttribute( mi_ID, mSubreg, "ReusableBlockDefinition", "ID" );
+   ID = mi_ID.intValue( );}
+
+   //:ACTIVATE qBlockRU WHERE qBlockRU.Subregistrant.ID = mSubreg.Subregistrant.ID
+   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+       GetIntegerFromAttribute( mi_lTempInteger_0, mSubreg, "Subregistrant", "ID" );
+   lTempInteger_0 = mi_lTempInteger_0.intValue( );}
+   o_fnLocalBuildQual_39( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
+   RESULT = ActivateObjectInstance( qBlockRU, "qBlockRU", ViewToWindow, vTempViewVar_0, zSINGLE );
+   DropView( vTempViewVar_0 );
+   //:SET CURSOR FIRST qBlockRU.ReusableBlockDefinition WHERE qBlockRU.ReusableBlockDefinition.Name = wWebXfer.Root.SearchName
+   {StringBuilder sb_szTempString_0;
+   if ( szTempString_0 == null )
+      sb_szTempString_0 = new StringBuilder( 32 );
+   else
+      sb_szTempString_0 = new StringBuilder( szTempString_0 );
+       GetStringFromAttribute( sb_szTempString_0, wWebXfer, "Root", "SearchName" );
+   szTempString_0 = sb_szTempString_0.toString( );}
+   RESULT = SetCursorFirstEntityByString( qBlockRU, "ReusableBlockDefinition", "Name", szTempString_0, "" );
+   //:IF RESULT >= zCURSOR_SET
+   if ( RESULT >= zCURSOR_SET )
+   { 
+      //:IF qBlockRU.ReusableBlockDefinition.ID != ID
+      if ( CompareAttributeToInteger( qBlockRU, "ReusableBlockDefinition", "ID", ID ) != 0 )
+      { 
+         //:MessageSend( ViewToWindow, "", "Select Reusable Block",
+         //:             "Reusable Block Name already exists",
+         //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         MessageSend( ViewToWindow, "", "Select Reusable Block", "Reusable Block Name already exists", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+         //:DropObjectInstance( qBlockRU )
+         DropObjectInstance( qBlockRU );
+         //:RETURN 2
+         if(8==8)return( 2 );
+      } 
+
+      //:END
+      //:SET CURSOR NEXT qBlockRU.ReusableBlockDefinition WHERE qBlockRU.ReusableBlockDefinition.Name = wWebXfer.Root.SearchName
+      {StringBuilder sb_szTempString_0;
+      if ( szTempString_0 == null )
+         sb_szTempString_0 = new StringBuilder( 32 );
+      else
+         sb_szTempString_0 = new StringBuilder( szTempString_0 );
+             GetStringFromAttribute( sb_szTempString_0, wWebXfer, "Root", "SearchName" );
+      szTempString_0 = sb_szTempString_0.toString( );}
+      RESULT = SetCursorNextEntityByString( qBlockRU, "ReusableBlockDefinition", "Name", szTempString_0, "" );
+      //:IF RESULT >= zCURSOR_SET AND qBlockRU.ReusableBlockDefinition.ID != ID
+      if ( RESULT >= zCURSOR_SET && CompareAttributeToInteger( qBlockRU, "ReusableBlockDefinition", "ID", ID ) != 0 )
+      { 
+         //:MessageSend( ViewToWindow, "", "Select Reusable Block",
+         //:             "Reusable Block Name already exists",
+         //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         MessageSend( ViewToWindow, "", "Select Reusable Block", "Reusable Block Name already exists", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+         //:DropObjectInstance( qBlockRU )
+         DropObjectInstance( qBlockRU );
+         //:RETURN 2
+         if(8==8)return( 2 );
+      } 
+
+      //:END
+   } 
+
+   //:END
+   //:mSubreg.ReusableBlockDefinition.Name = wWebXfer.Root.SearchName
+   SetAttributeFromAttribute( mSubreg, "ReusableBlockDefinition", "Name", wWebXfer, "Root", "SearchName" );
+   return( 0 );
+// // COMMIT mSubreg
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:ResumeEditSPLD( VIEW ViewToWindow )
+
+public int 
+ResumeEditSPLD( View     ViewToWindow )
+{
+
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:GOTO_UserList( VIEW ViewToWindow )
+
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
+public int 
+GOTO_UserList( View     ViewToWindow )
+{
+   zVIEW    wWebXfer = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+
+   //:IF wWebXfer.Root.KeyRole = "S"
+   if ( CompareAttributeToString( wWebXfer, "Root", "KeyRole", "S" ) == 0 )
+   { 
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_ReplaceWindowWithModalWindow,
+      //:                         "wSubR", "SubregUsers" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_ReplaceWindowWithModalWindow, "wSubR", "SubregUsers" );
+      //:ELSE
+   } 
+   else
+   { 
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_ReplaceWindowWithModalWindow,
+      //:                         "wStartUp", "AdminListPrimRegUsers" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_ReplaceWindowWithModalWindow, "wStartUp", "AdminListPrimRegUsers" );
+   } 
+
+   //:END
+   return( 0 );
 // END
 } 
 

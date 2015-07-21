@@ -149,6 +149,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var LoginName = document.wStartUpePammsPortal.zLoginName.value;
    var keyRole = document.wStartUpePammsPortal.zKeyRole.value;
    document.wStartUpePammsPortal.zError.value = "";
    document.wStartUpePammsPortal.zOpenFile.value = "";
@@ -169,15 +170,7 @@ function _AfterPageLoaded( )
       timerID = null; // No timeout specified
 
    // Prebuild action has javascript code entered by user.
-   // We knock out Login and Template as options.
    var thisLi;
-
-   thisLi = document.getElementById( "lmLogin" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-   thisLi = document.getElementById( "lmLogout" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
    if ( keyRole === "Subregistrant" ) // if we are a Subregistrant
    {
       thisLi = document.getElementById( "lmSubregistrants" );
@@ -229,6 +222,36 @@ function InitPortal( )
    }
 }
 
+function ReturnToLogin( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wStartUpePammsPortal.zAction.value = "ReturnToLogin";
+      document.wStartUpePammsPortal.submit( );
+   }
+}
+
+function ResumeSPLD( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wStartUpePammsPortal.zAction.value = "ResumeSPLD";
+      document.wStartUpePammsPortal.submit( );
+   }
+}
+
 function LoadCommitForTestPurposes( )
 {
 
@@ -240,6 +263,36 @@ function LoadCommitForTestPurposes( )
       _DisableFormElements( true );
 
       document.wStartUpePammsPortal.zAction.value = "LoadCommitForTestPurposes";
+      document.wStartUpePammsPortal.submit( );
+   }
+}
+
+function smReturnToLogin( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wStartUpePammsPortal.zAction.value = "smReturnToLogin";
+      document.wStartUpePammsPortal.submit( );
+   }
+}
+
+function smResumeSPLD( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wStartUpePammsPortal.zAction.value = "smResumeSPLD";
       document.wStartUpePammsPortal.submit( );
    }
 }
@@ -412,7 +465,7 @@ function mCompanyProfile( )
    }
 }
 
-function mLogin( )
+function mUsers( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -420,42 +473,9 @@ function mLogin( )
 
    if ( _IsDocDisabled( ) == false )
    {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmLogin" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
       _DisableFormElements( true );
 
-      document.wStartUpePammsPortal.zAction.value = "mLogin";
-      document.wStartUpePammsPortal.submit( );
-   }
-}
-
-function mLogout( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmLogout" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wStartUpePammsPortal.zAction.value = "_OnUnload";
+      document.wStartUpePammsPortal.zAction.value = "mUsers";
       document.wStartUpePammsPortal.submit( );
    }
 }

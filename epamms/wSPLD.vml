@@ -58,7 +58,7 @@ ProcessUserLogin( VIEW ViewToWindow )
    END
 
    // *** NOTE THAT WE ARE CURRENTLY ACTIVATING THE ONLY SUBREG.
-   ACTIVATE mSubreg WHERE mSubreg.SubregOrganization.Name = wWebXfer.Root.AttemptLoginName 
+   ACTIVATE mSubreg WHERE mSubreg.SubregOrganization.Name = wWebXfer.Root.AttemptLoginRegistrant 
    NAME VIEW mSubreg "mSubreg"
    
    ACTIVATE mLLD_LST RootOnlyMultiple
@@ -1301,11 +1301,12 @@ END
 
 LOCAL OPERATION
 fnGenerateSPLD_Label( VIEW ViewToWindow, SHORT bBorders )
+   VIEW wWebXfer REGISTERED AS wWebXfer
    VIEW mSPLDefPanel  BASED ON LOD  mSPLDef
    VIEW mSubLC   REGISTERED AS mSubLC
    STRING ( 32 ) szLPLR_Name
    STRING ( 64 ) szSystemIniApplName
-   STRING ( 64 ) szLabelName
+   STRING ( 256 ) szLabelName
    STRING ( 256 ) szDirectory
    STRING ( 256 ) szApplication
    STRING ( 256 ) szXmlName
@@ -1348,7 +1349,7 @@ fnGenerateSPLD_Label( VIEW ViewToWindow, SHORT bBorders )
    szDirectory = szDirectory + "/webapps/ROOT"
    szApplication = "/" + mSPLDefPanel.SubregOrganization.LoginName + "/"
 
-   szLabelName = mSPLDefPanel.SubregProduct.Name + "." + mSPLDefPanel.SubregLabelContent.Version + "." + mSPLDefPanel.SubregPhysicalLabelDef.Name
+   szLabelName = mSPLDefPanel.SubregProduct.Name + "." + mSPLDefPanel.SubregLabelContent.Version + "." + mSPLDefPanel.SubregPhysicalLabelDef.Name + "." + wWebXfer.Root.LoginName
    RemoveInvalidCharsFromFilename( szLabelName )
    szXmlName = szDirectory + szApplication + "xml/"
    szXslName = szDirectory + szApplication + "xsl/"
@@ -2915,6 +2916,43 @@ END
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 SaveReusableBlock( VIEW ViewToWindow )
+   VIEW wWebXfer REGISTERED AS wWebXfer
+   VIEW mSPLDefPanel REGISTERED AS mSPLDefPanel
+   VIEW mBlockRU BASED ON LOD mBlockRU
+   VIEW qBlockRU BASED ON LOD qBlockRU
+   INTEGER ID
+
+   ID = mSPLDefPanel.ReusableBlockDefinition.ID
+
+   ACTIVATE qBlockRU WHERE qBlockRU.Subregistrant.ID = mSPLDefPanel.Subregistrant.ID
+   SET CURSOR FIRST qBlockRU.ReusableBlockDefinition WHERE qBlockRU.ReusableBlockDefinition.Name = wWebXfer.Root.SearchName
+   IF RESULT >= zCURSOR_SET
+      IF qBlockRU.ReusableBlockDefinition.ID != ID
+         MessageSend( ViewToWindow, "", "Select Reusable Block",
+                      "Reusable Block Name already exists",
+                      zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         DropObjectInstance( qBlockRU )
+         RETURN 2
+      END
+      SET CURSOR NEXT qBlockRU.ReusableBlockDefinition WHERE qBlockRU.ReusableBlockDefinition.Name = wWebXfer.Root.SearchName
+      IF RESULT >= zCURSOR_SET AND qBlockRU.ReusableBlockDefinition.ID != ID
+         MessageSend( ViewToWindow, "", "Select Reusable Block",
+                      "Reusable Block Name already exists",
+                      zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         DropObjectInstance( qBlockRU )
+         RETURN 2
+      END
+   END
+
+   ACTIVATE mBlockRU WHERE mBlockRU.ReusableBlockDefinition.ID = mSPLDefPanel.ReusableBlockDefinition.ID
+   IF mBlockRU.LLD_Block EXISTS
+      mSPLDefPanel.ReusableBlockDefinition.Name = wWebXfer.Root.SearchName
+      mBlockRU.ReusableBlockDefinition.Name = mSPLDefPanel.ReusableBlockDefinition.Name
+      mBlockRU.ReusableBlockDefinition.Description = mSPLDefPanel.ReusableBlockDefinition.Description
+      DisplayObjectInstance( mBlockRU, "", "" )
+      COMMIT mBlockRU
+   END
+   DropObjectInstance( mBlockRU )
 
 END
 
@@ -2925,58 +2963,61 @@ END
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 InitReusableBlockForUpdate( VIEW ViewToWindow )
+   VIEW mSPLDefPanel REGISTERED AS mSPLDefPanel
+   VIEW wWebXfer REGISTERED AS wWebXfer
 
+   wWebXfer.Root.SearchName = mSPLDefPanel.ReusableBlockDefinition.Name
 END
 
 LOCAL OPERATION
 CopyBlock( VIEW mSPLDef )
 
-  VIEW mSPLDefBlock REGISTERED AS mSPLDefBlock
-  VIEW mBlockRU BASED ON LOD mBlockRU
+   VIEW mSPLDefBlock REGISTERED AS mSPLDefBlock
+   VIEW mBlockRU BASED ON LOD mBlockRU
 
-  GET VIEW mBlockRU NAMED "ReusableBlock"
-  SetMatchingAttributesByName( mSPLDefBlock, "LLD_Block", mBlockRU, "LLD_Block", zSET_NOTNULL )
+   GET VIEW mBlockRU NAMED "ReusableBlock"
+   SetMatchingAttributesByName( mSPLDefBlock, "LLD_Block", mBlockRU, "LLD_Block", zSET_NOTNULL )
 
-  FOR EACH mSPLDefBlock.LLD_SubBlock
-     DELETE ENTITY mSPLDefBlock.LLD_SubBlock NONE 
-  END
+   FOR EACH mSPLDefBlock.LLD_SubBlock
+      DELETE ENTITY mSPLDefBlock.LLD_SubBlock NONE 
+   END
 
-  IF mSPLDefBlock.BlockBackgroundColor EXISTS 
-     EXCLUDE mSPLDefBlock.BlockBackgroundColor NONE 
-  END
+   IF mSPLDefBlock.BlockBackgroundColor EXISTS 
+      EXCLUDE mSPLDefBlock.BlockBackgroundColor NONE 
+   END
 
-  IF mSPLDefBlock.BlockBorderColor EXISTS
-     EXCLUDE mSPLDefBlock.BlockBorderColor NONE 
-  END
+   IF mSPLDefBlock.BlockBorderColor EXISTS
+      EXCLUDE mSPLDefBlock.BlockBorderColor NONE 
+   END
 
-  FOR EACH mBlockRU.LLD_SpecialSectionAttribute 
-     CREATE ENTITY mSPLDefBlock.LLD_SpecialSectionAttribute
-     SetMatchingAttributesByName( mSPLDefBlock, "LLD_SpecialSectionAttribute", mBlockRU, "LLD_SpecialSectionAttribute", zSET_NOTNULL )
-     FOR EACH mBlockRU.LLD_SpecialSectionAttrBlock
-        CREATE ENTITY mSPLDefBlock.LLD_SpecialSectionAttrBlock
-        SetMatchingAttributesByName( mSPLDefBlock, "LLD_SpecialSectionAttrBlock", mBlockRU, "LLD_SpecialSectionAttrBlock", zSET_NOTNULL )
-        IF mBlockRU.SpecialAttributeTextColor EXISTS
-           INCLUDE mSPLDefBlock.SpecialAttributeTextColor FROM mBlockRU.SpecialAttributeTextColor 
-        END
-     END
-  END
+   FOR EACH mBlockRU.LLD_SpecialSectionAttribute 
+      CREATE ENTITY mSPLDefBlock.LLD_SpecialSectionAttribute
+      SetMatchingAttributesByName( mSPLDefBlock, "LLD_SpecialSectionAttribute", mBlockRU, "LLD_SpecialSectionAttribute", zSET_NOTNULL )
+      FOR EACH mBlockRU.LLD_SpecialSectionAttrBlock
+         CREATE ENTITY mSPLDefBlock.LLD_SpecialSectionAttrBlock
+         SetMatchingAttributesByName( mSPLDefBlock, "LLD_SpecialSectionAttrBlock", mBlockRU, "LLD_SpecialSectionAttrBlock", zSET_NOTNULL )
+         IF mBlockRU.SpecialAttributeTextColor EXISTS
+            INCLUDE mSPLDefBlock.SpecialAttributeTextColor FROM mBlockRU.SpecialAttributeTextColor 
+         END
+      END
+   END
 
-  IF mBlockRU.BlockBackgroundColor EXISTS
-     INCLUDE mSPLDefBlock.BlockBackgroundColor FROM mBlockRU.BlockBackgroundColor 
-  END
+   IF mBlockRU.BlockBackgroundColor EXISTS
+      INCLUDE mSPLDefBlock.BlockBackgroundColor FROM mBlockRU.BlockBackgroundColor 
+   END
 
-  IF mBlockRU.BlockBorderColor EXISTS
-     INCLUDE mSPLDefBlock.BlockBorderColor FROM mBlockRU.BlockBorderColor 
-  END
+   IF mBlockRU.BlockBorderColor EXISTS
+      INCLUDE mSPLDefBlock.BlockBorderColor FROM mBlockRU.BlockBorderColor 
+   END
 
-  FOR EACH mBlockRU.LLD_SubBlock
-     SetViewToSubobject( mBlockRU, "LLD_SubBlock" )
-     SetViewToSubobject( mSPLDefBlock, "LLD_SubBlock" )
-     SetMatchingAttributesByName( mSPLDefBlock, "LLD_Block", mBlockRU, "LLD_Block", zSET_NOTNULL )
-     CopyBlock( mSPLDef )
-     ResetViewFromSubobject( mSPLDefBlock )
-     ResetViewFromSubobject( mBlockRU )
-  END
+   FOR EACH mBlockRU.LLD_SubBlock
+      SetViewToSubobject( mBlockRU, "LLD_SubBlock" )
+      SetViewToSubobject( mSPLDefBlock, "LLD_SubBlock" )
+      SetMatchingAttributesByName( mSPLDefBlock, "LLD_Block", mBlockRU, "LLD_Block", zSET_NOTNULL )
+      CopyBlock( mSPLDef )
+      ResetViewFromSubobject( mSPLDefBlock )
+      ResetViewFromSubobject( mBlockRU )
+   END
 END
 
 /////////////////////////////////////////////////////////////////////////////

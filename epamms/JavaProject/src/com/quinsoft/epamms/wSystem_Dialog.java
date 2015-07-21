@@ -2777,8 +2777,8 @@ InitPrimaryRegistrantForInsert( View     ViewToWindow )
    //:wWebXfer.Root.SameAs = "Y"
    SetAttributeFromString( wWebXfer, "Root", "SameAs", "Y" );
 
-   //:wWebXfer.Root.AttemptLoginName = ""
-   SetAttributeFromString( wWebXfer, "Root", "AttemptLoginName", "" );
+   //:wWebXfer.Root.AttemptLoginRegistrant = ""
+   SetAttributeFromString( wWebXfer, "Root", "AttemptLoginRegistrant", "" );
    //:wWebXfer.Root.AttemptPassword = ""
    SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
    //:wWebXfer.Root.ConfirmPassword = ""

@@ -1466,7 +1466,7 @@ InitPrimaryRegistrantForInsert( VIEW ViewToWindow )
    mPrimReg.MailingAddress.Country = "USA"
    wWebXfer.Root.SameAs = "Y"
 
-   wWebXfer.Root.AttemptLoginName = ""
+   wWebXfer.Root.AttemptLoginRegistrant = ""
    wWebXfer.Root.AttemptPassword = ""
    wWebXfer.Root.ConfirmPassword = ""
 

@@ -35,9 +35,8 @@ public int DoInputMapping( HttpServletRequest request,
    String taskId = (String) session.getAttribute( "ZeidonTaskId" );
    Task task = objectEngine.getTaskById( taskId );
 
+   View lPrimReg = null;
    View mCurrentUser = null;
-   View mPerson = null;
-   View mPrimReg = null;
    View wWebXfer = null;
    View vGridTmp = null; // temp view to grid view
    View vRepeatingGrp = null; // temp view to repeating group view
@@ -60,9 +59,242 @@ public int DoInputMapping( HttpServletRequest request,
    if ( webMapping == false )
       session.setAttribute( "ZeidonError", null );
 
+   lPrimReg = task.getViewByName( "lPrimReg" );
+   if ( VmlOperation.isValid( lPrimReg ) )
+   {
+   }
+
    mCurrentUser = task.getViewByName( "mCurrentUser" );
    if ( VmlOperation.isValid( mCurrentUser ) )
    {
+      // EditBox: EBFirstName
+      nRC = mCurrentUser.cursor( "Employee" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "EBFirstName" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "EBFirstName", "", strMapValue );
+            else
+               mCurrentUser.cursor( "Employee" ).getAttribute( "FirstName" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "EBFirstName", e.getReason( ), strMapValue );
+         }
+      }
+
+      // EditBox: EBLastName
+      nRC = mCurrentUser.cursor( "Employee" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "EBLastName" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "EBLastName", "", strMapValue );
+            else
+               mCurrentUser.cursor( "Employee" ).getAttribute( "LastName" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "EBLastName", e.getReason( ), strMapValue );
+         }
+      }
+
+      // EditBox: EBTitle
+      nRC = mCurrentUser.cursor( "Employee" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "EBTitle" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "EBTitle", "", strMapValue );
+            else
+               mCurrentUser.cursor( "Employee" ).getAttribute( "Title" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "EBTitle", e.getReason( ), strMapValue );
+         }
+      }
+
+      // EditBox: EBCPhone
+      nRC = mCurrentUser.cursor( "Employee" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "EBCPhone" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "EBCPhone", "", strMapValue );
+            else
+               mCurrentUser.cursor( "Employee" ).getAttribute( "WorkPhone" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "EBCPhone", e.getReason( ), strMapValue );
+         }
+      }
+
+      // EditBox: EBFax
+      nRC = mCurrentUser.cursor( "Employee" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "EBFax" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "EBFax", "", strMapValue );
+            else
+               mCurrentUser.cursor( "Employee" ).getAttribute( "Fax" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "EBFax", e.getReason( ), strMapValue );
+         }
+      }
+
+      // EditBox: EBEmail
+      nRC = mCurrentUser.cursor( "Employee" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "EBEmail" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "EBEmail", "", strMapValue );
+            else
+               mCurrentUser.cursor( "Employee" ).getAttribute( "EmailAddress" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "EBEmail", e.getReason( ), strMapValue );
+         }
+      }
+
+      // ComboBox: ExperienceLevel
+      nRC = mCurrentUser.cursor( "User" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+         strMapValue = request.getParameter( "hExperienceLevel" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "ExperienceLevel", "", strMapValue );
+            else
+               mCurrentUser.cursor( "User" ).getAttribute( "Status" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "ExperienceLevel", e.getReason( ), strMapValue );
+         }
+      }
+
+      // EditBox: EBPStreetAddress
+      nRC = mCurrentUser.cursor( "Address" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "EBPStreetAddress" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "EBPStreetAddress", "", strMapValue );
+            else
+               mCurrentUser.cursor( "Address" ).getAttribute( "Address" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "EBPStreetAddress", e.getReason( ), strMapValue );
+         }
+      }
+
+      // EditBox: EBPAddress
+      nRC = mCurrentUser.cursor( "Address" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "EBPAddress" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "EBPAddress", "", strMapValue );
+            else
+               mCurrentUser.cursor( "Address" ).getAttribute( "AddressLine2" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "EBPAddress", e.getReason( ), strMapValue );
+         }
+      }
+
+      // EditBox: EBPCity
+      nRC = mCurrentUser.cursor( "Address" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "EBPCity" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "EBPCity", "", strMapValue );
+            else
+               mCurrentUser.cursor( "Address" ).getAttribute( "City" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "EBPCity", e.getReason( ), strMapValue );
+         }
+      }
+
+      // ComboBox: CBPState
+      nRC = mCurrentUser.cursor( "Address" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+         strMapValue = request.getParameter( "hCBPState" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "CBPState", "", strMapValue );
+            else
+               mCurrentUser.cursor( "Address" ).getAttribute( "State" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "CBPState", e.getReason( ), strMapValue );
+         }
+      }
+
+      // EditBox: EBPZipCode
+      nRC = mCurrentUser.cursor( "Address" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "EBPZipCode" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "EBPZipCode", "", strMapValue );
+            else
+               mCurrentUser.cursor( "Address" ).getAttribute( "ZipCode" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "EBPZipCode", e.getReason( ), strMapValue );
+         }
+      }
+
       // EditBox: EBUserName
       nRC = mCurrentUser.cursor( "User" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
@@ -79,244 +311,6 @@ public int DoInputMapping( HttpServletRequest request,
          {
             nMapError = -16;
             VmlOperation.CreateMessage( task, "EBUserName", e.getReason( ), strMapValue );
-         }
-      }
-
-   }
-
-   mPerson = task.getViewByName( "mPerson" );
-   if ( VmlOperation.isValid( mPerson ) )
-   {
-      // EditBox: EBFirstName
-      nRC = mPerson.cursor( "Person" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
-      {
-         strMapValue = request.getParameter( "EBFirstName" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "EBFirstName", "", strMapValue );
-            else
-               mPerson.cursor( "Person" ).getAttribute( "FirstName" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "EBFirstName", e.getReason( ), strMapValue );
-         }
-      }
-
-      // EditBox: EBLastName
-      nRC = mPerson.cursor( "Person" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
-      {
-         strMapValue = request.getParameter( "EBLastName" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "EBLastName", "", strMapValue );
-            else
-               mPerson.cursor( "Person" ).getAttribute( "LastName" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "EBLastName", e.getReason( ), strMapValue );
-         }
-      }
-
-      // EditBox: EBTitle
-      nRC = mPerson.cursor( "Person" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
-      {
-         strMapValue = request.getParameter( "EBTitle" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "EBTitle", "", strMapValue );
-            else
-               mPerson.cursor( "Person" ).getAttribute( "Title" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "EBTitle", e.getReason( ), strMapValue );
-         }
-      }
-
-      // EditBox: EBCPhone
-      nRC = mPerson.cursor( "Person" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
-      {
-         strMapValue = request.getParameter( "EBCPhone" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "EBCPhone", "", strMapValue );
-            else
-               mPerson.cursor( "Person" ).getAttribute( "WorkPhone" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "EBCPhone", e.getReason( ), strMapValue );
-         }
-      }
-
-      // EditBox: EBFax
-      nRC = mPerson.cursor( "Person" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
-      {
-         strMapValue = request.getParameter( "EBFax" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "EBFax", "", strMapValue );
-            else
-               mPerson.cursor( "Person" ).getAttribute( "Fax" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "EBFax", e.getReason( ), strMapValue );
-         }
-      }
-
-      // EditBox: EBEmail
-      nRC = mPerson.cursor( "Person" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
-      {
-         strMapValue = request.getParameter( "EBEmail" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "EBEmail", "", strMapValue );
-            else
-               mPerson.cursor( "Person" ).getAttribute( "EmailAddress" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "EBEmail", e.getReason( ), strMapValue );
-         }
-      }
-
-      // EditBox: EBPStreetAddress
-      nRC = mPerson.cursor( "Address" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
-      {
-         strMapValue = request.getParameter( "EBPStreetAddress" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "EBPStreetAddress", "", strMapValue );
-            else
-               mPerson.cursor( "Address" ).getAttribute( "Address" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "EBPStreetAddress", e.getReason( ), strMapValue );
-         }
-      }
-
-      // EditBox: EBPAddress
-      nRC = mPerson.cursor( "Address" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
-      {
-         strMapValue = request.getParameter( "EBPAddress" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "EBPAddress", "", strMapValue );
-            else
-               mPerson.cursor( "Address" ).getAttribute( "AddressLine2" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "EBPAddress", e.getReason( ), strMapValue );
-         }
-      }
-
-      // EditBox: EBPCity
-      nRC = mPerson.cursor( "Address" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
-      {
-         strMapValue = request.getParameter( "EBPCity" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "EBPCity", "", strMapValue );
-            else
-               mPerson.cursor( "Address" ).getAttribute( "City" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "EBPCity", e.getReason( ), strMapValue );
-         }
-      }
-
-      // ComboBox: CBPState
-      nRC = mPerson.cursor( "Address" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strMapValue = request.getParameter( "hCBPState" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "CBPState", "", strMapValue );
-            else
-               mPerson.cursor( "Address" ).getAttribute( "State" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "CBPState", e.getReason( ), strMapValue );
-         }
-      }
-
-      // EditBox: EBPZipCode
-      nRC = mPerson.cursor( "Address" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
-      {
-         strMapValue = request.getParameter( "EBPZipCode" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "EBPZipCode", "", strMapValue );
-            else
-               mPerson.cursor( "Address" ).getAttribute( "ZipCode" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "EBPZipCode", e.getReason( ), strMapValue );
-         }
-      }
-
-   }
-
-   mPrimReg = task.getViewByName( "mPrimReg" );
-   if ( VmlOperation.isValid( mPrimReg ) )
-   {
-      // ComboBox: ExperienceLevel
-      nRC = mPrimReg.cursor( "User" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strMapValue = request.getParameter( "hExperienceLevel" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "ExperienceLevel", "", strMapValue );
-            else
-               mPrimReg.cursor( "User" ).getAttribute( "Status" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "ExperienceLevel", e.getReason( ), strMapValue );
          }
       }
 
@@ -410,6 +404,7 @@ String strOpenPopupWindow = "";
 String strPopupWindowSZX = "";
 String strPopupWindowSZY = "";
 String strDateFormat = "";
+String strLoginName = "";
 String strKeyRole = "";
 String strDialogName = "";
 String strWindowName = "";
@@ -900,7 +895,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mLogin" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "mUsers" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wStartUpAdminNewPrimRegUser", strActionToProcess );
@@ -912,8 +907,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminNewPrimRegUser", "wStartUp.ProcessLogin" );
-      nOptRC = wStartUp.ProcessLogin( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminNewPrimRegUser", "wStartUp.GOTO_UserList" );
+      nOptRC = wStartUp.GOTO_UserList( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -930,7 +925,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_ResetTopWindow, "wStartUp", "UserLogin" );
+         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StayOnWindowWithRefresh, "", "" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -1097,8 +1092,7 @@ else
        <li id="lmMarketingFulfillment" name="lmMarketingFulfillment" ><a href="#" onclick="mMarketingFulfillment()">Marketing/Fulfillment</a></li>
        <li id="lmWebDevelopment" name="lmWebDevelopment" ><a href="#" onclick="mWebDevelopment()">Web Development</a></li>
        <li id="lmCompanyProfile" name="lmCompanyProfile" ><a href="#" onclick="mCompanyProfile()">Company Profile</a></li>
-       <li id="lmLogin" name="lmLogin" ><a href="#" onclick="mLogin()">Login</a></li>
-       <li id="lmLogout" name="lmLogout" ><a href="#" onclick="mLogout()">Logout</a></li>
+       <li id="lmUsers" name="lmUsers" ><a href="#" onclick="mUsers()">Users</a></li>
    </ul>
 </div>  <!-- end Navigation Bar -->
 
@@ -1240,11 +1234,12 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
+         strLoginName = wWebXA.cursor( "Root" ).getAttribute( "LoginName" ).getString( "LoginName" );
+         if ( strLoginName == null )
+            strLoginName = "";
          strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
-
-         task.log().info( "Root.KeyRole: " + strKeyRole );
       }
    }
 %>
@@ -1252,6 +1247,7 @@ else
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
    <input name="zPopupWindowSZX" id="zPopupWindowSZX" type="hidden" value="<%=strPopupWindowSZX%>">
@@ -1295,17 +1291,17 @@ else
 <td valign="top" style="width:318px;">
 <% /* EBName:Text */ %>
 <% strTextDisplayValue = "";
-   mPerson = task.getViewByName( "mPerson" );
-   if ( VmlOperation.isValid( mPerson ) == false )
+   lPrimReg = task.getViewByName( "lPrimReg" );
+   if ( VmlOperation.isValid( lPrimReg ) == false )
       task.log( ).debug( "Invalid View: " + "EBName" );
    else
    {
-      nRC = mPerson.cursor( "Organization" ).checkExistenceOfEntity( ).toInt();
+      nRC = lPrimReg.cursor( "Organization" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
       try
       {
-         strTextDisplayValue = mPerson.cursor( "Organization" ).getAttribute( "Name" ).getString( "" );
+         strTextDisplayValue = lPrimReg.cursor( "Organization" ).getAttribute( "Name" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -1332,7 +1328,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:24px;width:100px;"></div>
+<div style="height:16px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
@@ -1345,7 +1341,7 @@ else
 <td valign="top" style="width:154px;">
 <% /* FirstName::Text */ %>
 
-<span  id="FirstName:" name="FirstName:" style="width:150px;height:16px;">First Name:</span>
+<span  id="FirstName:" name="FirstName:" style="width:140px;height:16px;">First Name:</span>
 
 </td>
 <td valign="top" style="width:318px;">
@@ -1360,17 +1356,17 @@ else
    else
    {
       strErrorColor = "";
-      mPerson = task.getViewByName( "mPerson" );
-      if ( VmlOperation.isValid( mPerson ) == false )
+      mCurrentUser = task.getViewByName( "mCurrentUser" );
+      if ( VmlOperation.isValid( mCurrentUser ) == false )
          task.log( ).debug( "Invalid View: " + "EBFirstName" );
       else
       {
-         nRC = mPerson.cursor( "Person" ).checkExistenceOfEntity( ).toInt();
+         nRC = mCurrentUser.cursor( "Employee" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
             try
             {
-               strErrorMapValue = mPerson.cursor( "Person" ).getAttribute( "FirstName" ).getString( "" );
+               strErrorMapValue = mCurrentUser.cursor( "Employee" ).getAttribute( "FirstName" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1380,10 +1376,10 @@ else
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "Person.FirstName: " + strErrorMapValue );
+            task.log( ).debug( "Employee.FirstName: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for EBFirstName: " + "mPerson.Person" );
+            task.log( ).debug( "Entity does not exist for EBFirstName: " + "mCurrentUser.Employee" );
       }
    }
 %>
@@ -1396,7 +1392,7 @@ else
 <td valign="top" style="width:154px;">
 <% /* LastName::Text */ %>
 
-<span  id="LastName:" name="LastName:" style="width:150px;height:16px;">Last Name:</span>
+<span  id="LastName:" name="LastName:" style="width:140px;height:16px;">Last Name:</span>
 
 </td>
 <td valign="top" style="width:318px;">
@@ -1411,17 +1407,17 @@ else
    else
    {
       strErrorColor = "";
-      mPerson = task.getViewByName( "mPerson" );
-      if ( VmlOperation.isValid( mPerson ) == false )
+      mCurrentUser = task.getViewByName( "mCurrentUser" );
+      if ( VmlOperation.isValid( mCurrentUser ) == false )
          task.log( ).debug( "Invalid View: " + "EBLastName" );
       else
       {
-         nRC = mPerson.cursor( "Person" ).checkExistenceOfEntity( ).toInt();
+         nRC = mCurrentUser.cursor( "Employee" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
             try
             {
-               strErrorMapValue = mPerson.cursor( "Person" ).getAttribute( "LastName" ).getString( "" );
+               strErrorMapValue = mCurrentUser.cursor( "Employee" ).getAttribute( "LastName" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1431,10 +1427,10 @@ else
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "Person.LastName: " + strErrorMapValue );
+            task.log( ).debug( "Employee.LastName: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for EBLastName: " + "mPerson.Person" );
+            task.log( ).debug( "Entity does not exist for EBLastName: " + "mCurrentUser.Employee" );
       }
    }
 %>
@@ -1447,7 +1443,7 @@ else
 <td valign="top" style="width:154px;">
 <% /* Title::Text */ %>
 
-<span  id="Title:" name="Title:" style="width:150px;height:16px;">Title:</span>
+<span  id="Title:" name="Title:" style="width:140px;height:16px;">Title:</span>
 
 </td>
 <td valign="top" style="width:318px;">
@@ -1462,17 +1458,17 @@ else
    else
    {
       strErrorColor = "";
-      mPerson = task.getViewByName( "mPerson" );
-      if ( VmlOperation.isValid( mPerson ) == false )
+      mCurrentUser = task.getViewByName( "mCurrentUser" );
+      if ( VmlOperation.isValid( mCurrentUser ) == false )
          task.log( ).debug( "Invalid View: " + "EBTitle" );
       else
       {
-         nRC = mPerson.cursor( "Person" ).checkExistenceOfEntity( ).toInt();
+         nRC = mCurrentUser.cursor( "Employee" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
             try
             {
-               strErrorMapValue = mPerson.cursor( "Person" ).getAttribute( "Title" ).getString( "" );
+               strErrorMapValue = mCurrentUser.cursor( "Employee" ).getAttribute( "Title" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1482,10 +1478,10 @@ else
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "Person.Title: " + strErrorMapValue );
+            task.log( ).debug( "Employee.Title: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for EBTitle: " + "mPerson.Person" );
+            task.log( ).debug( "Entity does not exist for EBTitle: " + "mCurrentUser.Employee" );
       }
    }
 %>
@@ -1498,7 +1494,7 @@ else
 <td valign="top" style="width:154px;">
 <% /* CPhone::Text */ %>
 
-<span  id="CPhone:" name="CPhone:" style="width:150px;height:16px;">Phone:</span>
+<span  id="CPhone:" name="CPhone:" style="width:140px;height:16px;">Phone:</span>
 
 </td>
 <td valign="top" style="width:318px;">
@@ -1513,17 +1509,17 @@ else
    else
    {
       strErrorColor = "";
-      mPerson = task.getViewByName( "mPerson" );
-      if ( VmlOperation.isValid( mPerson ) == false )
+      mCurrentUser = task.getViewByName( "mCurrentUser" );
+      if ( VmlOperation.isValid( mCurrentUser ) == false )
          task.log( ).debug( "Invalid View: " + "EBCPhone" );
       else
       {
-         nRC = mPerson.cursor( "Person" ).checkExistenceOfEntity( ).toInt();
+         nRC = mCurrentUser.cursor( "Employee" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
             try
             {
-               strErrorMapValue = mPerson.cursor( "Person" ).getAttribute( "WorkPhone" ).getString( "" );
+               strErrorMapValue = mCurrentUser.cursor( "Employee" ).getAttribute( "WorkPhone" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1533,10 +1529,10 @@ else
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "Person.WorkPhone: " + strErrorMapValue );
+            task.log( ).debug( "Employee.WorkPhone: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for EBCPhone: " + "mPerson.Person" );
+            task.log( ).debug( "Entity does not exist for EBCPhone: " + "mCurrentUser.Employee" );
       }
    }
 %>
@@ -1549,7 +1545,7 @@ else
 <td valign="top" style="width:154px;">
 <% /* Fax::Text */ %>
 
-<span  id="Fax:" name="Fax:" style="width:150px;height:16px;">Fax:</span>
+<span  id="Fax:" name="Fax:" style="width:140px;height:16px;">Fax:</span>
 
 </td>
 <td valign="top" style="width:318px;">
@@ -1564,17 +1560,17 @@ else
    else
    {
       strErrorColor = "";
-      mPerson = task.getViewByName( "mPerson" );
-      if ( VmlOperation.isValid( mPerson ) == false )
+      mCurrentUser = task.getViewByName( "mCurrentUser" );
+      if ( VmlOperation.isValid( mCurrentUser ) == false )
          task.log( ).debug( "Invalid View: " + "EBFax" );
       else
       {
-         nRC = mPerson.cursor( "Person" ).checkExistenceOfEntity( ).toInt();
+         nRC = mCurrentUser.cursor( "Employee" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
             try
             {
-               strErrorMapValue = mPerson.cursor( "Person" ).getAttribute( "Fax" ).getString( "" );
+               strErrorMapValue = mCurrentUser.cursor( "Employee" ).getAttribute( "Fax" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1584,10 +1580,10 @@ else
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "Person.Fax: " + strErrorMapValue );
+            task.log( ).debug( "Employee.Fax: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for EBFax: " + "mPerson.Person" );
+            task.log( ).debug( "Entity does not exist for EBFax: " + "mCurrentUser.Employee" );
       }
    }
 %>
@@ -1600,7 +1596,7 @@ else
 <td valign="top" style="width:154px;">
 <% /* Email::Text */ %>
 
-<span  id="Email:" name="Email:" style="width:150px;height:16px;">Email:</span>
+<span  id="Email:" name="Email:" style="width:140px;height:16px;">Email:</span>
 
 </td>
 <td valign="top" style="width:318px;">
@@ -1615,17 +1611,17 @@ else
    else
    {
       strErrorColor = "";
-      mPerson = task.getViewByName( "mPerson" );
-      if ( VmlOperation.isValid( mPerson ) == false )
+      mCurrentUser = task.getViewByName( "mCurrentUser" );
+      if ( VmlOperation.isValid( mCurrentUser ) == false )
          task.log( ).debug( "Invalid View: " + "EBEmail" );
       else
       {
-         nRC = mPerson.cursor( "Person" ).checkExistenceOfEntity( ).toInt();
+         nRC = mCurrentUser.cursor( "Employee" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
             try
             {
-               strErrorMapValue = mPerson.cursor( "Person" ).getAttribute( "EmailAddress" ).getString( "" );
+               strErrorMapValue = mCurrentUser.cursor( "Employee" ).getAttribute( "EmailAddress" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1635,10 +1631,10 @@ else
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "Person.EmailAddress: " + strErrorMapValue );
+            task.log( ).debug( "Employee.EmailAddress: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for EBEmail: " + "mPerson.Person" );
+            task.log( ).debug( "Entity does not exist for EBEmail: " + "mCurrentUser.Employee" );
       }
    }
 %>
@@ -1651,7 +1647,7 @@ else
 <td valign="top" style="width:154px;">
 <% /* ExperienceLevel::Text */ %>
 
-<span  id="ExperienceLevel:" name="ExperienceLevel:" style="width:150px;height:16px;">Experience Level:</span>
+<span  id="ExperienceLevel:" name="ExperienceLevel:" style="width:140px;height:16px;">Experience Level:</span>
 
 </td>
 <td valign="top" style="width:318px;">
@@ -1663,15 +1659,15 @@ else
 <%
    boolean inListExperienceLevel = false;
 
-   mPrimReg = task.getViewByName( "mPrimReg" );
-   if ( VmlOperation.isValid( mPrimReg ) )
+   mCurrentUser = task.getViewByName( "mCurrentUser" );
+   if ( VmlOperation.isValid( mCurrentUser ) )
    {
-      List<TableEntry> list = JspWebUtils.getTableDomainValues( mPrimReg , "User", "Status", "" );
+      List<TableEntry> list = JspWebUtils.getTableDomainValues( mCurrentUser , "User", "Status", "" );
 
-      nRC = mPrimReg.cursor( "User" ).checkExistenceOfEntity( ).toInt();
+      nRC = mCurrentUser.cursor( "User" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mPrimReg.cursor( "User" ).getAttribute( "Status" ).getString( "" );
+         strComboCurrentValue = mCurrentUser.cursor( "User" ).getAttribute( "Status" ).getString( "" );
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }
@@ -1747,14 +1743,21 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:20px;width:100px;"></div>
+<div style="height:16px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* PhysicalAddress:GroupBox */ %>
 <div id="PhysicalAddress" name="PhysicalAddress" style="float:left;width:506px;" >
 
-<table cols=2 style="width:506px;"  class="grouptable">
+<table cols=0 style="width:506px;"  class="grouptable">
+
+<tr>
+<td valign="top" style="width:474px;">
+<% /* GroupBox2:GroupBox */ %>
+<div id="GroupBox2" name="GroupBox2" style="float:left;width:474px;" >
+
+<table cols=2 style="width:474px;"  class="grouptable">
 
 <tr>
 <td valign="top" style="width:154px;">
@@ -1775,17 +1778,17 @@ else
    else
    {
       strErrorColor = "";
-      mPerson = task.getViewByName( "mPerson" );
-      if ( VmlOperation.isValid( mPerson ) == false )
+      mCurrentUser = task.getViewByName( "mCurrentUser" );
+      if ( VmlOperation.isValid( mCurrentUser ) == false )
          task.log( ).debug( "Invalid View: " + "EBPStreetAddress" );
       else
       {
-         nRC = mPerson.cursor( "Address" ).checkExistenceOfEntity( ).toInt();
+         nRC = mCurrentUser.cursor( "Address" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
             try
             {
-               strErrorMapValue = mPerson.cursor( "Address" ).getAttribute( "Address" ).getString( "" );
+               strErrorMapValue = mCurrentUser.cursor( "Address" ).getAttribute( "Address" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1798,7 +1801,7 @@ else
             task.log( ).debug( "Address.Address: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for EBPStreetAddress: " + "mPerson.Address" );
+            task.log( ).debug( "Entity does not exist for EBPStreetAddress: " + "mCurrentUser.Address" );
       }
    }
 %>
@@ -1808,6 +1811,12 @@ else
 </td>
 </tr>
 <tr>
+<td valign="top" style="width:154px;">
+<% /* GroupBox3:GroupBox */ %>
+<div id="GroupBox3" name="GroupBox3" style="width:150px;height:16px;float:left;">
+
+</div>  <!-- GroupBox3 --> 
+</td>
 <td valign="top" style="width:318px;">
 <% /* EBPAddress:EditBox */ %>
 <%
@@ -1820,17 +1829,17 @@ else
    else
    {
       strErrorColor = "";
-      mPerson = task.getViewByName( "mPerson" );
-      if ( VmlOperation.isValid( mPerson ) == false )
+      mCurrentUser = task.getViewByName( "mCurrentUser" );
+      if ( VmlOperation.isValid( mCurrentUser ) == false )
          task.log( ).debug( "Invalid View: " + "EBPAddress" );
       else
       {
-         nRC = mPerson.cursor( "Address" ).checkExistenceOfEntity( ).toInt();
+         nRC = mCurrentUser.cursor( "Address" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
             try
             {
-               strErrorMapValue = mPerson.cursor( "Address" ).getAttribute( "AddressLine2" ).getString( "" );
+               strErrorMapValue = mCurrentUser.cursor( "Address" ).getAttribute( "AddressLine2" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1843,7 +1852,7 @@ else
             task.log( ).debug( "Address.AddressLine2: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for EBPAddress: " + "mPerson.Address" );
+            task.log( ).debug( "Entity does not exist for EBPAddress: " + "mCurrentUser.Address" );
       }
    }
 %>
@@ -1851,7 +1860,6 @@ else
 <input name="EBPAddress" id="EBPAddress" style="width:318px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
-<td>&nbsp</td>
 </tr>
 <tr>
 <td valign="top" style="width:154px;">
@@ -1872,17 +1880,17 @@ else
    else
    {
       strErrorColor = "";
-      mPerson = task.getViewByName( "mPerson" );
-      if ( VmlOperation.isValid( mPerson ) == false )
+      mCurrentUser = task.getViewByName( "mCurrentUser" );
+      if ( VmlOperation.isValid( mCurrentUser ) == false )
          task.log( ).debug( "Invalid View: " + "EBPCity" );
       else
       {
-         nRC = mPerson.cursor( "Address" ).checkExistenceOfEntity( ).toInt();
+         nRC = mCurrentUser.cursor( "Address" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
             try
             {
-               strErrorMapValue = mPerson.cursor( "Address" ).getAttribute( "City" ).getString( "" );
+               strErrorMapValue = mCurrentUser.cursor( "Address" ).getAttribute( "City" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1895,7 +1903,7 @@ else
             task.log( ).debug( "Address.City: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for EBPCity: " + "mPerson.Address" );
+            task.log( ).debug( "Entity does not exist for EBPCity: " + "mCurrentUser.Address" );
       }
    }
 %>
@@ -1911,24 +1919,24 @@ else
 <span  id="PState:" name="PState:" style="width:150px;height:16px;">State:</span>
 
 </td>
-<td valign="top" style="width:192px;">
+<td valign="top" style="width:180px;">
 <% /* CBPState:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="CBPState" id="CBPState" size="1" style="width:158px;" onchange="CBPStateOnChange( )">
+<select  name="CBPState" id="CBPState" size="1" style="width:170px;" onchange="CBPStateOnChange( )">
 
 <%
    boolean inListCBPState = false;
 
-   mPerson = task.getViewByName( "mPerson" );
-   if ( VmlOperation.isValid( mPerson ) )
+   mCurrentUser = task.getViewByName( "mCurrentUser" );
+   if ( VmlOperation.isValid( mCurrentUser ) )
    {
-      List<TableEntry> list = JspWebUtils.getTableDomainValues( mPerson , "Address", "State", "States - Full Name" );
+      List<TableEntry> list = JspWebUtils.getTableDomainValues( mCurrentUser , "Address", "State", "States - Full Name" );
 
-      nRC = mPerson.cursor( "Address" ).checkExistenceOfEntity( ).toInt();
+      nRC = mCurrentUser.cursor( "Address" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mPerson.cursor( "Address" ).getAttribute( "State" ).getString( "" );
+         strComboCurrentValue = mCurrentUser.cursor( "Address" ).getAttribute( "State" ).getString( "" );
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }
@@ -1993,7 +2001,7 @@ else
 
 <input name="hCBPState" id="hCBPState" type="hidden" value="<%=strComboCurrentValue%>" >
 </td>
-<td valign="top" style="width:36px;">
+<td valign="top" style="width:38px;">
 <% /* PZipCode::Text */ %>
 
 <span  id="PZipCode:" name="PZipCode:" style="width:30px;height:16px;">Zip:</span>
@@ -2011,17 +2019,17 @@ else
    else
    {
       strErrorColor = "";
-      mPerson = task.getViewByName( "mPerson" );
-      if ( VmlOperation.isValid( mPerson ) == false )
+      mCurrentUser = task.getViewByName( "mCurrentUser" );
+      if ( VmlOperation.isValid( mCurrentUser ) == false )
          task.log( ).debug( "Invalid View: " + "EBPZipCode" );
       else
       {
-         nRC = mPerson.cursor( "Address" ).checkExistenceOfEntity( ).toInt();
+         nRC = mCurrentUser.cursor( "Address" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
             try
             {
-               strErrorMapValue = mPerson.cursor( "Address" ).getAttribute( "ZipCode" ).getString( "" );
+               strErrorMapValue = mCurrentUser.cursor( "Address" ).getAttribute( "ZipCode" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -2034,12 +2042,18 @@ else
             task.log( ).debug( "Address.ZipCode: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for EBPZipCode: " + "mPerson.Address" );
+            task.log( ).debug( "Entity does not exist for EBPZipCode: " + "mCurrentUser.Address" );
       }
    }
 %>
 
 <input name="EBPZipCode" id="EBPZipCode" style="width:76px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
+</td>
+</tr>
+</table>
+
+</div>  <!-- GroupBox2 --> 
 
 </td>
 </tr>
@@ -2053,7 +2067,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:28px;width:100px;"></div>
+<div style="height:14px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
@@ -2224,11 +2238,8 @@ else
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
- <!-- This is added as a line spacer -->
-<div style="height:8px;width:100px;"></div>
-
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:28px;float:left;"></div>   <!-- Width Spacer -->
+<div style="height:1px;width:26px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox1:GroupBox */ %>
 
 <div id="GroupBox1" name="GroupBox1" style="width:16px;height:36px;float:left;">  <!-- GroupBox1 --> 

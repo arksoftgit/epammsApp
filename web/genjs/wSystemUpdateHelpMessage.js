@@ -149,6 +149,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var LoginName = document.wSystemUpdateHelpMessage.zLoginName.value;
    var keyRole = document.wSystemUpdateHelpMessage.zKeyRole.value;
    document.wSystemUpdateHelpMessage.zError.value = "";
    document.wSystemUpdateHelpMessage.zOpenFile.value = "";
@@ -168,8 +169,24 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
-   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
+var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
+}
+
+function CheckAllInGrid(id, CheckBoxName)
+{
+   var wcontrols = id.form.elements;
+   var check = id.checked;
+   var wcontrol, i = 0;
+
+   while ( (wcontrol = wcontrols[ i++ ]) != null )
+   {
+      //Check to see if the checkbox belongs to this table then check it.
+      if ( wcontrol.name.indexOf( CheckBoxName ) != -1 && wcontrol.type == 'checkbox' )
+      {
+         wcontrol.checked = check;
+      }
+   }
 }
 
 function Cancel( )
@@ -187,11 +204,6 @@ function Cancel( )
    }
 }
 
-function mCancel( )
-{
-   Cancel();
-}
-
 function SaveHelp( )
 {
 
@@ -207,11 +219,6 @@ function SaveHelp( )
    }
 }
 
-function mSaveHelp( )
-{
-   SaveHelp();
-}
-
 function mLogout( )
 {
 
@@ -223,6 +230,36 @@ function mLogout( )
       _DisableFormElements( true );
 
       document.wSystemUpdateHelpMessage.zAction.value = "_OnUnload";
+      document.wSystemUpdateHelpMessage.submit( );
+   }
+}
+
+function mSaveHelp( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSystemUpdateHelpMessage.zAction.value = "mSaveHelp";
+      document.wSystemUpdateHelpMessage.submit( );
+   }
+}
+
+function mCancel( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSystemUpdateHelpMessage.zAction.value = "mCancel";
       document.wSystemUpdateHelpMessage.submit( );
    }
 }

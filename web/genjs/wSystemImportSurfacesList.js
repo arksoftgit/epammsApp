@@ -149,6 +149,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var LoginName = document.wSystemImportSurfacesList.zLoginName.value;
    var keyRole = document.wSystemImportSurfacesList.zKeyRole.value;
    document.wSystemImportSurfacesList.zError.value = "";
    document.wSystemImportSurfacesList.zOpenFile.value = "";
@@ -167,16 +168,6 @@ function _AfterPageLoaded( )
    }
    else
       timerID = null; // No timeout specified
-
-   // Prebuild action has javascript code entered by user.
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   thisLi = document.getElementById( "lmSystem" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-   // END of Javascript code entered by user.
 
 var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
@@ -276,6 +267,8 @@ function InitImportSurfacesList( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      _DisableFormElements( true );
+
       document.wSystemImportSurfacesList.zAction.value = "InitImportSurfacesList";
       document.wSystemImportSurfacesList.submit( );
    }
@@ -347,66 +340,6 @@ function smCancelImportSurfacesAndReturn( )
       _DisableFormElements( true );
 
       document.wSystemImportSurfacesList.zAction.value = "smCancelImportSurfacesAndReturn";
-      document.wSystemImportSurfacesList.submit( );
-   }
-}
-
-function mTemplate( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemImportSurfacesList.zAction.value = "mTemplate";
-      document.wSystemImportSurfacesList.submit( );
-   }
-}
-
-function mSystem( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemImportSurfacesList.zAction.value = "mSystem";
-      document.wSystemImportSurfacesList.submit( );
-   }
-}
-
-function mShowFeedback( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemImportSurfacesList.zAction.value = "mShowFeedback";
-      document.wSystemImportSurfacesList.submit( );
-   }
-}
-
-function mLogout( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemImportSurfacesList.zAction.value = "_OnUnload";
       document.wSystemImportSurfacesList.submit( );
    }
 }

@@ -1,4 +1,4 @@
-z1000-Zeidon    MLLD     TZZOLODO 05/15/15   13:32:59 1.0a2    
+z1000-Zeidon    MLLD     TZZOLODO 07/16/15   11:50:47 1.0a2    
 eLOD       1
 aZKey      3
 aName      mLLD
@@ -363,16 +363,9 @@ aUpdate    Y
 eER_AttributeRec 8
 aName      TextLineHeight
 aZKey      120192327
-aDesc      The line-height of a text block expresses as a decimal number, such that 1.18 is approximately the same as entering no value.
+aDesc      The line-height of a text block expresses as a decimal number, such that 1.18 is approximately the same as entering no value (basically an equivalent to leading).
 
 eDomainRec 9
-aZKey      68568211
-aName      Percent
-aDomainType E
-aDataType  M
-aDecimalFormat 3
-aDesc      Percent as a decimal, such that 1.00 is 100%.
-aContextRestriction N
 
 eLOD_AttributeRec 7
 aZKey      110004156
@@ -1885,7 +1878,7 @@ aUpdate    Y
 eER_AttributeRec 6
 aName      TextLineHeight
 aZKey      110000401
-aDesc      The line-height of a text block expresses as a decimal number, such that 1.18 is approximately the same as entering no value.
+aDesc      The line-height of a text block expresses as a decimal number, such that 1.18 is approximately the same as entering no value (basically an equivalent to leading).
 
 eDomainRec 7
 
@@ -3882,6 +3875,7 @@ i62        29
 i65        29
 i68        17
 i71        17
+i74        29
 i77        8
 i83        11
 i89        17
@@ -3942,7 +3936,7 @@ i211       17
 i213       70
 i214       17
 i216       73
-i217       74
+i217       29
 i219       76
 i220       8
 i222       79
@@ -4037,7 +4031,7 @@ i361       17
 i363       70
 i364       17
 i366       73
-i367       74
+i367       29
 i369       76
 i370       8
 i372       79
@@ -4124,7 +4118,7 @@ i547       17
 i550       140
 i553       17
 i556       143
-i559       74
+i559       29
 i562       11
 i565       8
 i568       29
@@ -4354,7 +4348,7 @@ i860       555
 i861       143
 i862       557
 i863       558
-i864       74
+i864       29
 i865       560
 i866       561
 i867       11
@@ -4448,7 +4442,7 @@ i954       70
 i955       17
 i956       365
 i957       73
-i958       74
+i958       29
 i959       368
 i960       76
 i961       8
@@ -4590,7 +4584,7 @@ i1096      70
 i1097      17
 i1098      72
 i1099      73
-i1100      74
+i1100      29
 i1101      75
 i1102      76
 i1103      8
@@ -4742,7 +4736,7 @@ i1248      70
 i1249      17
 i1250      215
 i1251      73
-i1252      74
+i1252      29
 i1253      218
 i1254      76
 i1255      8

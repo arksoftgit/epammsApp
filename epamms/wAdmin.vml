@@ -52,7 +52,7 @@ AcceptUpdatePrimaryRegistrant( VIEW ViewToWindow )
    mPrimReg.User.UserPassword = szConfirmPassword
 
    AcceptSubobject( mPrimReg, "User" )
-   AcceptSubobject( mPrimReg, "Person" )
+   AcceptSubobject( mPrimReg, "Employee" )
    AcceptSubobject( mPrimReg, "Address" )
    AcceptSubobject( mPrimReg, "PrimaryRegistrant" )
    Commit mPrimReg
@@ -71,7 +71,7 @@ CancelUpdatePrimaryRegistrant( VIEW ViewToWindow )
    VIEW mPrimReg BASED ON LOD mPrimReg
 
    CancelSubobject( mPrimReg, "User" )
-   CancelSubobject( mPrimReg, "Person" )
+   CancelSubobject( mPrimReg, "Employee" )
    CancelSubobject( mPrimReg, "Address" )
    CancelSubobject( mPrimReg, "PrimaryRegistrant" )
    DropObjectInstance( mPrimReg )
@@ -119,7 +119,7 @@ AcceptUpdatePrimaryUser( VIEW ViewToWindow )
    mPrimReg.User.UserPassword = szConfirmPassword
 
    AcceptSubobject( mPrimReg, "User" )
-   AcceptSubobject( mPrimReg, "Person" )
+   AcceptSubobject( mPrimReg, "Employee" )
    AcceptSubobject( mPrimReg, "Address" )
    Commit mPrimReg
    DropObjectInstance( mPrimReg )
@@ -165,7 +165,7 @@ InitPrimaryRegistrantForUpdate( VIEW ViewToWindow )
 
    CreateTemporalSubobjectVersion( mPrimReg, "PrimaryRegistrant" )
    CreateTemporalSubobjectVersion( mPrimReg, "Address" )
-   CreateTemporalSubobjectVersion( mPrimReg, "Person" )
+   CreateTemporalSubobjectVersion( mPrimReg, "Employee" )
    CreateTemporalSubobjectVersion( mPrimReg, "User" )
 
    SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" )
@@ -183,7 +183,7 @@ CancelUpdatePrimaryUser( VIEW ViewToWindow )
    VIEW mPrimReg BASED ON LOD mPrimReg
 
    CancelSubobject( mPrimReg, "User" )
-   CancelSubobject( mPrimReg, "Person" )
+   CancelSubobject( mPrimReg, "Employee" )
    CancelSubobject( mPrimReg, "Address" )
    DropObjectInstance( mPrimReg )
 
@@ -240,7 +240,7 @@ InitPrimaryUserForUpdate( VIEW ViewToWindow )
    mPrimReg.Address.Country = "USA"
 
    CreateTemporalSubobjectVersion( mPrimReg, "Address" )
-   CreateTemporalSubobjectVersion( mPrimReg, "Person" )
+   CreateTemporalSubobjectVersion( mPrimReg, "Employee" )
    CreateTemporalSubobjectVersion( mPrimReg, "User" )
 
    SetDynamicBannerName( ViewToWindow, "wStartUp", "PrimaryRegistrant" )

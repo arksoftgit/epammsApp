@@ -149,6 +149,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var LoginName = document.wStartUpDEPRECATED_SelectPrimaryReg.zLoginName.value;
    var keyRole = document.wStartUpDEPRECATED_SelectPrimaryReg.zKeyRole.value;
    document.wStartUpDEPRECATED_SelectPrimaryReg.zError.value = "";
    document.wStartUpDEPRECATED_SelectPrimaryReg.zOpenFile.value = "";
@@ -256,21 +257,6 @@ function InitSelectPrimaryRegistrant( )
    }
 }
 
-function smTemplate( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wStartUpDEPRECATED_SelectPrimaryReg.zAction.value = "smTemplate";
-      document.wStartUpDEPRECATED_SelectPrimaryReg.submit( );
-   }
-}
-
 function smSystem( )
 {
 
@@ -301,7 +287,7 @@ function smShowFeedback( )
    }
 }
 
-function smLogout( )
+function smLogin( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -311,7 +297,7 @@ function smLogout( )
    {
       _DisableFormElements( true );
 
-      document.wStartUpDEPRECATED_SelectPrimaryReg.zAction.value = "_OnUnload";
+      document.wStartUpDEPRECATED_SelectPrimaryReg.zAction.value = "smLogin";
       document.wStartUpDEPRECATED_SelectPrimaryReg.submit( );
    }
 }
@@ -484,7 +470,7 @@ function mCompanyProfile( )
    }
 }
 
-function mLogin( )
+function mUsers( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -492,42 +478,9 @@ function mLogin( )
 
    if ( _IsDocDisabled( ) == false )
    {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmLogin" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
       _DisableFormElements( true );
 
-      document.wStartUpDEPRECATED_SelectPrimaryReg.zAction.value = "mLogin";
-      document.wStartUpDEPRECATED_SelectPrimaryReg.submit( );
-   }
-}
-
-function mLogout( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmLogout" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wStartUpDEPRECATED_SelectPrimaryReg.zAction.value = "_OnUnload";
+      document.wStartUpDEPRECATED_SelectPrimaryReg.zAction.value = "mUsers";
       document.wStartUpDEPRECATED_SelectPrimaryReg.submit( );
    }
 }

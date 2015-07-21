@@ -149,6 +149,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var LoginName = document.wSystemImportAreasOfUseList.zLoginName.value;
    var keyRole = document.wSystemImportAreasOfUseList.zKeyRole.value;
    document.wSystemImportAreasOfUseList.zError.value = "";
    document.wSystemImportAreasOfUseList.zOpenFile.value = "";
@@ -167,16 +168,6 @@ function _AfterPageLoaded( )
    }
    else
       timerID = null; // No timeout specified
-
-   // Prebuild action has javascript code entered by user.
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   thisLi = document.getElementById( "lmSystem" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-   // END of Javascript code entered by user.
 
 var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
@@ -276,6 +267,8 @@ function InitImportAreasOfUseList( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      _DisableFormElements( true );
+
       document.wSystemImportAreasOfUseList.zAction.value = "InitImportAreasOfUseList";
       document.wSystemImportAreasOfUseList.submit( );
    }
@@ -347,66 +340,6 @@ function smCancelImportAreasOfUseAndReturn( )
       _DisableFormElements( true );
 
       document.wSystemImportAreasOfUseList.zAction.value = "smCancelImportAreasOfUseAndReturn";
-      document.wSystemImportAreasOfUseList.submit( );
-   }
-}
-
-function mTemplate( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemImportAreasOfUseList.zAction.value = "mTemplate";
-      document.wSystemImportAreasOfUseList.submit( );
-   }
-}
-
-function mSystem( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemImportAreasOfUseList.zAction.value = "mSystem";
-      document.wSystemImportAreasOfUseList.submit( );
-   }
-}
-
-function mShowFeedback( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemImportAreasOfUseList.zAction.value = "mShowFeedback";
-      document.wSystemImportAreasOfUseList.submit( );
-   }
-}
-
-function mLogout( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemImportAreasOfUseList.zAction.value = "_OnUnload";
       document.wSystemImportAreasOfUseList.submit( );
    }
 }

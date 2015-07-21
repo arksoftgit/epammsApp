@@ -149,6 +149,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var LoginName = document.wSystemImportBacteriaList.zLoginName.value;
    var keyRole = document.wSystemImportBacteriaList.zKeyRole.value;
    document.wSystemImportBacteriaList.zError.value = "";
    document.wSystemImportBacteriaList.zOpenFile.value = "";
@@ -167,16 +168,6 @@ function _AfterPageLoaded( )
    }
    else
       timerID = null; // No timeout specified
-
-   // Prebuild action has javascript code entered by user.
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   thisLi = document.getElementById( "lmSystem" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-   // END of Javascript code entered by user.
 
 var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
@@ -251,6 +242,8 @@ function InitImportBacteriaList( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      _DisableFormElements( true );
+
       document.wSystemImportBacteriaList.zAction.value = "InitImportBacteriaList";
       document.wSystemImportBacteriaList.submit( );
    }
@@ -347,66 +340,6 @@ function smCancelImportBacteriaAndReturn( )
       _DisableFormElements( true );
 
       document.wSystemImportBacteriaList.zAction.value = "smCancelImportBacteriaAndReturn";
-      document.wSystemImportBacteriaList.submit( );
-   }
-}
-
-function mTemplate( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemImportBacteriaList.zAction.value = "mTemplate";
-      document.wSystemImportBacteriaList.submit( );
-   }
-}
-
-function mSystem( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemImportBacteriaList.zAction.value = "mSystem";
-      document.wSystemImportBacteriaList.submit( );
-   }
-}
-
-function mShowFeedback( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemImportBacteriaList.zAction.value = "mShowFeedback";
-      document.wSystemImportBacteriaList.submit( );
-   }
-}
-
-function mLogout( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemImportBacteriaList.zAction.value = "_OnUnload";
       document.wSystemImportBacteriaList.submit( );
    }
 }

@@ -149,6 +149,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var LoginName = document.wStartUpAdminDeletePrimRegUser.zLoginName.value;
    var keyRole = document.wStartUpAdminDeletePrimRegUser.zKeyRole.value;
    document.wStartUpAdminDeletePrimRegUser.zError.value = "";
    document.wStartUpAdminDeletePrimRegUser.zOpenFile.value = "";
@@ -464,7 +465,7 @@ function mCompanyProfile( )
    }
 }
 
-function mLogin( )
+function mUsers( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -472,42 +473,9 @@ function mLogin( )
 
    if ( _IsDocDisabled( ) == false )
    {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmLogin" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
       _DisableFormElements( true );
 
-      document.wStartUpAdminDeletePrimRegUser.zAction.value = "mLogin";
-      document.wStartUpAdminDeletePrimRegUser.submit( );
-   }
-}
-
-function mLogout( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmLogout" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wStartUpAdminDeletePrimRegUser.zAction.value = "_OnUnload";
+      document.wStartUpAdminDeletePrimRegUser.zAction.value = "mUsers";
       document.wStartUpAdminDeletePrimRegUser.submit( );
    }
 }

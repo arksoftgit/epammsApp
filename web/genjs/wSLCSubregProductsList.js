@@ -149,6 +149,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var LoginName = document.wSLCSubregProductsList.zLoginName.value;
    var keyRole = document.wSLCSubregProductsList.zKeyRole.value;
    document.wSLCSubregProductsList.zError.value = "";
    document.wSLCSubregProductsList.zOpenFile.value = "";
@@ -169,17 +170,8 @@ function _AfterPageLoaded( )
       timerID = null; // No timeout specified
 
    // Prebuild action has javascript code entered by user.
-   /*// We knock out Login and Template as options.
    var thisLi;
-
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-   thisLi = document.getElementById( "lmLogin" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   if ( keyRole == "S" ) // if we are a Subregistrant
+   if ( keyRole == "Subregistrant" )  // if we are a Subregistrant
    {
       thisLi = document.getElementById( "lmSubregistrants" );
       thisLi.style.visibility = "hidden";
@@ -188,18 +180,17 @@ function _AfterPageLoaded( )
       thisLi.style.visibility = "hidden";
       thisLi.style.display = "none";
     }
-   else
-   if ( keyRole == "P" ) // if we are a Primary Registrant
-   {
-      thisLi = document.getElementById( "lmStateRegistrations" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-   }
+    else
+// if ( keyRole == "P" ) // if we are a Primary Registrant
+    {
+       thisLi = document.getElementById( "lmStateRegistrations" );
+       thisLi.style.visibility = "hidden";
+       thisLi.style.display = "none";
+    }
 
    // Cannot go to product management if already there.
    thisLi = document.getElementById( "lmProductManagement" );
    thisLi.disabled = true;
-*/
    // END of Javascript code entered by user.
 
 var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }

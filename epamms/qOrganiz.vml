@@ -20,18 +20,19 @@ dLoginUserName( VIEW qOrganiz BASED ON LOD qOrganiz,
          szString = szString + ": " + qOrganiz.Organization.Name
          IF qOrganiz.PrimaryRegistrant EXISTS
             IF qOrganiz.PrimaryRegistrant.EPA_CompanyNumber != ""
-               szString = szString + " (" +
-                       qOrganiz.PrimaryRegistrant.EPA_CompanyNumber + ")"
+               szString = szString + " (" + qOrganiz.PrimaryRegistrant.EPA_CompanyNumber + ")"
             END
          END
 
          IF qOrganiz.Subregistrant EXISTS
             IF qOrganiz.Subregistrant.EPA_CompanyNumber != ""
-               szString = szString + " (" +
-                       qOrganiz.Subregistrant.EPA_CompanyNumber + ")"
+               szString = szString + " (" + qOrganiz.Subregistrant.EPA_CompanyNumber + ")"
             END
          END
 
+         IF qOrganiz.User EXISTS
+            szString = szString + " - User: " + qOrganiz.User.UserName
+         END
       ELSE
          szString = ""
       END
@@ -125,9 +126,10 @@ dLoginUserNameRole( VIEW qOrganiz BASED ON LOD qOrganiz,
             IF qOrganiz.RelatedPrimaryRegistrant EXISTS
                szString = szString + "   -- for Primary Registrant: " + qOrganiz.PrimaryOrganization.Name
             END
-            
          END
-
+         IF qOrganiz.User EXISTS
+            szString = szString + " - User: " + qOrganiz.User.UserName
+         END
       ELSE
          szString = ""
       END

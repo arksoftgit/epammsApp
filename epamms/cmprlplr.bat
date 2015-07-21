@@ -7,5 +7,5 @@ qrw ad.rpt /rDoug20150527.sql~Dump20150527.sql~epamms-dump.sql~epammsDump1.sql~M
 qrw ad.rpt /rMorning20150520.sql~mSPLDef.json~mSPLDef.LOD.nosubblock~mSPLDef.LOD.subblock~mSPLDef.por~mSPLDef1.json~mSPLDefA.por            
 qrw ad.rpt /rmSPLDefAA.json~mSPLDefBlock.json~mSPLDefCommit.json~mSPLDefFull.json~mSPLDefMason.json~mSPLDefMatch.json~mSPLDefMatch2.json~mSPLDefScratch.json     
 qrw ad.rpt /rNight20150411.sql~Night20150503.sql~Noon20150401.sql~Noon20150402.sql~Noon20150411.sql~README.md~SpecialBlockError.json  
-qrw ad.rpt /rStructure.sql~SyncWithTE20150317.sql.orig~Transfer.txt            
+qrw ad.rpt /rStructure.sql~SyncWithTE20150317.sql.orig~Transfer.txt~.hld~x.bat~.sql
 type ad.rpt

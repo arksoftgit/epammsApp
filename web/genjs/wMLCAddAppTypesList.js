@@ -149,6 +149,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var LoginName = document.wMLCAddAppTypesList.zLoginName.value;
    var keyRole = document.wMLCAddAppTypesList.zKeyRole.value;
    document.wMLCAddAppTypesList.zError.value = "";
    document.wMLCAddAppTypesList.zOpenFile.value = "";
@@ -171,15 +172,7 @@ function _AfterPageLoaded( )
    // Prebuild action has javascript code entered by user.
    var thisLi;
 
-// if ( keyRole == "P" || keyRole == "N" ) // If we are here, we have to be a Primary.
-   // We knock out Login and Template as options.
-   thisLi = document.getElementById( "lmLogin" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
+// if ( keyRole !== "Subregistrant" ) // If we are here, we have to be a Primary.
    thisLi = document.getElementById( "lmStateRegistrations" );
    thisLi.style.visibility = "hidden";
    thisLi.style.display = "none";

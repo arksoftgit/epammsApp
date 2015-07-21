@@ -149,6 +149,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var LoginName = document.wStartUpChangeSubregUserPassword.zLoginName.value;
    var keyRole = document.wStartUpChangeSubregUserPassword.zKeyRole.value;
    document.wStartUpChangeSubregUserPassword.zError.value = "";
    document.wStartUpChangeSubregUserPassword.zOpenFile.value = "";
@@ -167,32 +168,6 @@ function _AfterPageLoaded( )
    }
    else
       timerID = null; // No timeout specified
-
-   // Prebuild action has javascript code entered by user.
-   // We knock out Login and Template as options.
-   thisLi = document.getElementById( "lmLogin" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-   thisLi = document.getElementById( "lmLogout" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none"
-
-   if ( keyRole == "Subregistrant" )
-   {
-      thisLi = document.getElementById( "lmSubregistrants" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-      thisLi = document.getElementById( "lmTrackingNotificationCompliance" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-   }
-   else
-   {
-      thisLi = document.getElementById( "lmStateRegistrations" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-   }
-   // END of Javascript code entered by user.
 
 var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
@@ -292,6 +267,8 @@ function InitChangeSubregUserPass( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      _DisableFormElements( true );
+
       document.wStartUpChangeSubregUserPassword.zAction.value = "InitChangeSubregUserPass";
       document.wStartUpChangeSubregUserPassword.submit( );
    }
@@ -364,222 +341,6 @@ function smCancelChangeSubregUserPass( )
       _DisableFormElements( true );
 
       document.wStartUpChangeSubregUserPassword.zAction.value = "smCancelChangeSubregUserPass";
-      document.wStartUpChangeSubregUserPassword.submit( );
-   }
-}
-
-function mProductManagement( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmProductManagement" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wStartUpChangeSubregUserPassword.zAction.value = "mProductManagement";
-      document.wStartUpChangeSubregUserPassword.submit( );
-   }
-}
-
-function mSubregistrants( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmSubregistrants" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wStartUpChangeSubregUserPassword.zAction.value = "mSubregistrants";
-      document.wStartUpChangeSubregUserPassword.submit( );
-   }
-}
-
-function mTrackingNotificationCompliance( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmTrackingNotificationCompliance" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wStartUpChangeSubregUserPassword.zAction.value = "mTrackingNotificationCompliance";
-      document.wStartUpChangeSubregUserPassword.submit( );
-   }
-}
-
-function mStateRegistrations( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmStateRegistrations" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wStartUpChangeSubregUserPassword.zAction.value = "mStateRegistrations";
-      document.wStartUpChangeSubregUserPassword.submit( );
-   }
-}
-
-function mMarketingFulfillment( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmMarketingFulfillment" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wStartUpChangeSubregUserPassword.zAction.value = "mMarketingFulfillment";
-      document.wStartUpChangeSubregUserPassword.submit( );
-   }
-}
-
-function mWebDevelopment( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmWebDevelopment" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wStartUpChangeSubregUserPassword.zAction.value = "mWebDevelopment";
-      document.wStartUpChangeSubregUserPassword.submit( );
-   }
-}
-
-function mCompanyProfile( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmCompanyProfile" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wStartUpChangeSubregUserPassword.zAction.value = "mCompanyProfile";
-      document.wStartUpChangeSubregUserPassword.submit( );
-   }
-}
-
-function mLogin( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmLogin" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wStartUpChangeSubregUserPassword.zAction.value = "mLogin";
-      document.wStartUpChangeSubregUserPassword.submit( );
-   }
-}
-
-function mLogout( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmLogout" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wStartUpChangeSubregUserPassword.zAction.value = "_OnUnload";
       document.wStartUpChangeSubregUserPassword.submit( );
    }
 }

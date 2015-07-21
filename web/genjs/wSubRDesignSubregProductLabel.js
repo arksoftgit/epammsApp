@@ -149,6 +149,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var LoginName = document.wSubRDesignSubregProductLabel.zLoginName.value;
    var keyRole = document.wSubRDesignSubregProductLabel.zKeyRole.value;
    document.wSubRDesignSubregProductLabel.zError.value = "";
    document.wSubRDesignSubregProductLabel.zOpenFile.value = "";
@@ -167,32 +168,6 @@ function _AfterPageLoaded( )
    }
    else
       timerID = null; // No timeout specified
-
-   // Prebuild action has javascript code entered by user.
-   // We knock out Login and Template as options.
-   thisLi = document.getElementById( "lmLogin" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   if ( keyRole == "S" )
-   {
-      thisLi = document.getElementById( "lmSubregistrants" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-      thisLi = document.getElementById( "lmTrackingNotificationCompliance" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-   }
-   else
-   {
-      thisLi = document.getElementById( "lmStateRegistrations" );
-      thisLi.style.visibility = "hidden";
-      thisLi.style.display = "none";
-   }
-   // END of Javascript code entered by user.
 
 var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
@@ -252,22 +227,9 @@ function InitDesignSubregProductLabel( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      document.wSubRDesignSubregProductLabel.zAction.value = "InitDesignSubregProductLabel";
-      document.wSubRDesignSubregProductLabel.submit( );
-   }
-}
-
-function smTemplate( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
       _DisableFormElements( true );
 
-      document.wSubRDesignSubregProductLabel.zAction.value = "smTemplate";
+      document.wSubRDesignSubregProductLabel.zAction.value = "InitDesignSubregProductLabel";
       document.wSubRDesignSubregProductLabel.submit( );
    }
 }
@@ -302,7 +264,7 @@ function smShowFeedback( )
    }
 }
 
-function smLogout( )
+function smLogin( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -312,223 +274,7 @@ function smLogout( )
    {
       _DisableFormElements( true );
 
-      document.wSubRDesignSubregProductLabel.zAction.value = "_OnUnload";
-      document.wSubRDesignSubregProductLabel.submit( );
-   }
-}
-
-function mProductManagement( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmProductManagement" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wSubRDesignSubregProductLabel.zAction.value = "mProductManagement";
-      document.wSubRDesignSubregProductLabel.submit( );
-   }
-}
-
-function mSubregistrants( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmSubregistrants" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wSubRDesignSubregProductLabel.zAction.value = "mSubregistrants";
-      document.wSubRDesignSubregProductLabel.submit( );
-   }
-}
-
-function mTrackingNotificationCompliance( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmTrackingNotificationCompliance" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wSubRDesignSubregProductLabel.zAction.value = "mTrackingNotificationCompliance";
-      document.wSubRDesignSubregProductLabel.submit( );
-   }
-}
-
-function mStateRegistrations( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmStateRegistrations" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wSubRDesignSubregProductLabel.zAction.value = "mStateRegistrations";
-      document.wSubRDesignSubregProductLabel.submit( );
-   }
-}
-
-function mMarketingFulfillment( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmMarketingFulfillment" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wSubRDesignSubregProductLabel.zAction.value = "mMarketingFulfillment";
-      document.wSubRDesignSubregProductLabel.submit( );
-   }
-}
-
-function mWebDevelopment( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmWebDevelopment" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wSubRDesignSubregProductLabel.zAction.value = "mWebDevelopment";
-      document.wSubRDesignSubregProductLabel.submit( );
-   }
-}
-
-function mCompanyProfile( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmCompanyProfile" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wSubRDesignSubregProductLabel.zAction.value = "mCompanyProfile";
-      document.wSubRDesignSubregProductLabel.submit( );
-   }
-}
-
-function mLogin( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmLogin" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wSubRDesignSubregProductLabel.zAction.value = "mLogin";
-      document.wSubRDesignSubregProductLabel.submit( );
-   }
-}
-
-function mLogout( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmLogout" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wSubRDesignSubregProductLabel.zAction.value = "_OnUnload";
+      document.wSubRDesignSubregProductLabel.zAction.value = "smLogin";
       document.wSubRDesignSubregProductLabel.submit( );
    }
 }

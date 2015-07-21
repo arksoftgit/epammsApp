@@ -149,6 +149,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var LoginName = document.wStartUpListMasterProducts.zLoginName.value;
    var keyRole = document.wStartUpListMasterProducts.zKeyRole.value;
    document.wStartUpListMasterProducts.zError.value = "";
    document.wStartUpListMasterProducts.zOpenFile.value = "";
@@ -537,7 +538,7 @@ function mCompanyProfile( )
    }
 }
 
-function mLogin( )
+function mUsers( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -545,42 +546,9 @@ function mLogin( )
 
    if ( _IsDocDisabled( ) == false )
    {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmLogin" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
       _DisableFormElements( true );
 
-      document.wStartUpListMasterProducts.zAction.value = "mLogin";
-      document.wStartUpListMasterProducts.submit( );
-   }
-}
-
-function mLogout( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmLogout" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wStartUpListMasterProducts.zAction.value = "_OnUnload";
+      document.wStartUpListMasterProducts.zAction.value = "mUsers";
       document.wStartUpListMasterProducts.submit( );
    }
 }

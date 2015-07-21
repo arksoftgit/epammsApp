@@ -6,6 +6,7 @@
 TRANSFORMATION OPERATION
 GeneratePDF_Label( VIEW mSPLDef BASED ON LOD mSPLDef )
 
+   VIEW wWebXfer REGISTERED AS wWebXfer
    VIEW mSPLDefPDF BASED ON LOD mSPLDef
    STRING ( 32000 ) szWriteBuffer
    INTEGER lFile
@@ -59,7 +60,7 @@ GeneratePDF_Label( VIEW mSPLDef BASED ON LOD mSPLDef )
    SysConvertEnvironmentString( szXslDirectory, szXslName )
    szXslDirectory = szXslDirectory + "/webapps/ROOT/" + mSPLDef.SubregOrganization.LoginName + "/"
 
-   szLabelName = mSPLDef.SubregProduct.Name + "." + mSPLDef.SubregLabelContent.Version + "." + mSPLDef.SubregPhysicalLabelDef.Name
+   szLabelName = mSPLDef.SubregProduct.Name + "." + mSPLDef.SubregLabelContent.Version + "." + mSPLDef.SubregPhysicalLabelDef.Name + "." + wWebXfer.Root.LoginName
    RemoveInvalidCharsFromFilename( szLabelName )
 
    szXmlName = szXslDirectory + "xml/"
@@ -623,7 +624,7 @@ FormatContinueBlock( VIEW mSPLDefPDF BASED ON LOD mSPLDef,
    szLeadingBlanks = szPassedBlanks
 
    // Create Block Container. Top is overridden to top of Panel.
-TraceLineS( "$$$$ Begin of FormatContinueBlock", "" )
+// TraceLineS( "$$$$ Begin of FormatContinueBlock", "" )
 
    FormatBlockContainer( mSPLDefPDF, mSPLDef, lFile, szLeadingBlanks, szWriteBuffer, "" )
 
@@ -1143,11 +1144,11 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
             IF szSectionType = "Marketing" AND mSPLDefPDF.LLD_Block.LLD_ColumnListType != ""
                IF mSPLDefPDF.LLD_Block.LLD_ColumnListType = "C3"
                   // Request is 3 Column Claim List.
-                  TraceLineS( "Marketing 3-Column List ", "" )
+               // TraceLineS( "Marketing 3-Column List ", "" )
                   GeneratePDF_ClmList( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer, 3 )
                ELSE
                   // Default is 2 Column Claim List.
-                  TraceLineS( "Marketing 2-Column List ", "" )
+               // TraceLineS( "Marketing 2-Column List ", "" )
                   GeneratePDF_ClmList( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer, 2 )
                END
             END
@@ -1195,13 +1196,13 @@ FormatBlockContainer( VIEW mSPLDefPDF BASED ON LOD mSPLDef,
 
    STRING ( 512 ) szDebugMsg
    
-   szDebugMsg = mSPLDefPDF.LLD_Block.ID
-   szDebugMsg = szDebugMsg + "   Tag: " + mSPLDefPDF.LLD_Block.Tag
-   szDebugMsg = szDebugMsg + "   Name: " + mSPLDefPDF.LLD_Block.Name
-   szDebugMsg = szDebugMsg + "   Title: " + mSPLDefPDF.LLD_Block.BlockTitle
-   szDebugMsg = szDebugMsg + "   Section Type: " + mSPLDefPDF.LLD_Block.LLD_SectionType
-   TraceLineS( "FormatBlockContainer ID: ",  szDebugMsg )
-   DisplayBlockAttributes( mSPLDefPDF, 1 )
+// szDebugMsg = mSPLDefPDF.LLD_Block.ID
+// szDebugMsg = szDebugMsg + "   Tag: " + mSPLDefPDF.LLD_Block.Tag
+// szDebugMsg = szDebugMsg + "   Name: " + mSPLDefPDF.LLD_Block.Name
+// szDebugMsg = szDebugMsg + "   Title: " + mSPLDefPDF.LLD_Block.BlockTitle
+// szDebugMsg = szDebugMsg + "   Section Type: " + mSPLDefPDF.LLD_Block.LLD_SectionType
+// TraceLineS( "FormatBlockContainer ID: ",  szDebugMsg )
+// DisplayBlockAttributes( mSPLDefPDF, 1 )
 
    // Default font size will be set to 8pt for now.
    szDefaultFontSize = "8"
@@ -1268,13 +1269,13 @@ FormatBlockContainer( VIEW mSPLDefPDF BASED ON LOD mSPLDef,
    SET CURSOR FIRST mSPLDefPDF.LLD_SpecialSectionAttribute WHERE mSPLDefPDF.LLD_SpecialSectionAttribute.Name = "Block"
    IF RESULT >= zCURSOR_SET
       szFontFamily = mSPLDefPDF.LLD_SpecialSectionAttrBlock.FontFamily
-      TraceLineS( "1Font Family set to: ", szFontFamily )
+   // TraceLineS( "1Font Family set to: ", szFontFamily )
       IF szFontFamily != ""
          szWriteBuffer = szWriteBuffer + " font-family=^" + szFontFamily + "^"
       END
       szFontSize = mSPLDefPDF.LLD_SpecialSectionAttrBlock.FontSize
       IF szFontSize != ""
-      TraceLineS( "1Font Size set to: ", szFontSize )
+   // TraceLineS( "1Font Size set to: ", szFontSize )
          szWriteBuffer = szWriteBuffer + " font-size=^" + szFontSize + "pt^"
       END
       szFontWeight = mSPLDefPDF.LLD_SpecialSectionAttrBlock.FontWeight
@@ -1449,7 +1450,7 @@ FormatBlock( VIEW mSPLDef BASED ON LOD mSPLDef,
 
    szFontFamily = mSPLDef.LLD_Block.FontFamily
    IF szFontFamily != ""
-      TraceLineS( "2Font Family skipped: ", szFontFamily )
+   // TraceLineS( "2Font Family skipped: ", szFontFamily )
    // szWriteBuffer = szWriteBuffer + " font-family=^" + szFontFamily + "^"
    END
 /*
@@ -1526,7 +1527,7 @@ AddFormatToSpecialText( VIEW mSPLDef BASED ON LOD mSPLDef,
    // Skip if the Special Text Attribute hasn't been defined.
 
    NAME VIEW mSPLDef "mSPLDefHazards"
-   TraceLineS( "$$$$ Special Text for: ", SpecialTextTitle )
+// TraceLineS( "$$$$ Special Text for: ", SpecialTextTitle )
    SET CURSOR FIRST mSPLDef.LLD_SpecialSectionAttribute WHERE mSPLDef.LLD_SpecialSectionAttribute.Name = SpecialTextTitle
    IF RESULT >= zCURSOR_SET
 
@@ -1538,14 +1539,14 @@ AddFormatToSpecialText( VIEW mSPLDef BASED ON LOD mSPLDef,
       END
 
       szFontFamily = mSPLDef.LLD_SpecialSectionAttrBlock.FontFamily
-      TraceLineS( "3Font Family set to: ", szFontFamily )
+   // TraceLineS( "3Font Family set to: ", szFontFamily )
       IF szFontFamily != ""
          szWriteBuffer = szWriteBuffer + " font-family=^" + szFontFamily + "^"
       END
 
       szFontSize = mSPLDef.LLD_SpecialSectionAttrBlock.FontSize
       IF szFontSize != ""
-         TraceLineS( "3Font Size set to: ", szFontSize )
+      // TraceLineS( "3Font Size set to: ", szFontSize )
          szWriteBuffer = szWriteBuffer + " font-size=^" + szFontSize + "pt^"
       END
 
@@ -1715,9 +1716,9 @@ GeneratePDF_DFU( VIEW mSPLDef    BASED ON LOD mSPLDef,
    IF szSectionType = "Marketing"
       szSectionName = mSPLDefPDF.LLD_Block.Name
       SetCursorFirstEntityByString( mSPLDef, szSPLD_SectionName, "Name", szSectionName, "" )
-      TraceLineS( "Processing Marketing section name: ", szSectionName )
+   // TraceLineS( "Processing Marketing section name: ", szSectionName )
    ELSE
-      TraceLineS( "Processing section type: ", szSectionType )
+   // TraceLineS( "Processing section type: ", szSectionType )
    END
 
    // Increment Display Section Suffix and Initialize DisplaySection entry.
@@ -2382,7 +2383,7 @@ GeneratePDF_ClmList( VIEW mSPLDef    BASED ON LOD mSPLDef,
             SET CURSOR LAST mSPLDef.SPLDI_ClaimsUsage
             INCLUDE mSPLDef.SPLDI_ClaimsUsage FROM mSPLDef.SPLD_MarketingUsage
             IF RESULT < 0
-               TraceLineS( "GeneratePDF_ClmList Include SPLDI_ClaimsUsage FROM SPLD_MarketingUsage", " ===========CAN'T HAPPEN EITHER ========================" )
+               TraceLineS( "GeneratePDF_ClmList Include SPLDI_ClaimsUsage FROM SPLD_MarketingUsage", " =========== CAN'T HAPPEN EITHER ========================" )
                DisplayEntityInstance( mSPLDef, "SPLDI_ClaimsUsage" )
                DisplayEntityInstance( mSPLDef, "SPLD_MarketingUsage" )
                IssueError( mSPLDef, 0, 0, "Include Error" )
@@ -3148,9 +3149,9 @@ BuildCompositeEntries( VIEW mSPLDef BASED ON LOD mSPLDef )
                                               AND mSPLDef.SPLD_Usage.Name                 = mSPLDef.SPLD_DirectionsUsage.Name
             IF RESULT >= zCURSOR_SET
                mSPLDef.CompositeComponentList.OriginalTypeID     = mSPLDef.SPLD_Usage.ID
-               //TraceLineI( "#### Valid Usage ID ", mSPLDef.SPLD_Usage.ID )
+            // TraceLineI( "#### Valid Usage ID ", mSPLDef.SPLD_Usage.ID )
             ELSE
-               //TraceLineS( "#### Invalid Usage ID ", mSPLDef.SPLD_DirectionsUsage.Name )
+            // TraceLineS( "#### Invalid Usage ID ", mSPLDef.SPLD_DirectionsUsage.Name )
             END
          END
       END

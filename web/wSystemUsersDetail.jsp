@@ -98,22 +98,6 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
-      // ComboBox: ComboBox4
-      mUser = task.getViewByName( "mUser" );
-      if ( VmlOperation.isValid( mUser ) )
-      {
-         nRC = mUser.cursor( "UserGroup" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strMapValue = request.getParameter( "hComboBox4" );
-            if ( strMapValue != null )
-            {
-               nRelPos = java.lang.Integer.parseInt( strMapValue );
-               mUser.cursor( "UserGroup" ).setPosition( nRelPos, "" );
-            }
-         }
-
-         }  // checkExistenceofEntity
       // ComboBox: ComboBox1
       nRC = mUser.cursor( "User" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
@@ -180,6 +164,7 @@ String strOpenPopupWindow = "";
 String strPopupWindowSZX = "";
 String strPopupWindowSZY = "";
 String strDateFormat = "";
+String strLoginName = "";
 String strKeyRole = "";
 String strDialogName = "";
 String strWindowName = "";
@@ -608,11 +593,12 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
+         strLoginName = wWebXA.cursor( "Root" ).getAttribute( "LoginName" ).getString( "LoginName" );
+         if ( strLoginName == null )
+            strLoginName = "";
          strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
-
-         task.log().info( "Root.KeyRole: " + strKeyRole );
       }
    }
 %>
@@ -620,6 +606,7 @@ else
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
    <input name="zPopupWindowSZX" id="zPopupWindowSZX" type="hidden" value="<%=strPopupWindowSZX%>">
@@ -823,48 +810,6 @@ else
 <select class="text10" name="ComboBox4" id="ComboBox4" size="1"style="width:194px;" onblur="ComboBox4OnBlur( )">
 
 <%
-   mUser = task.getViewByName( "mUser" );
-   if ( VmlOperation.isValid( mUser ) )
-   {
-         strComboCurrentValue = "";
-      View vComboBox4;
-      mUser = task.getViewByName( "mUser" );
-      if ( VmlOperation.isValid( mUser ) )
-      {
-         nRC = mUser.cursor( "User" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strComboCurrentValue = mUser.cursor( "User" ).getAttribute( "UserName" ).getString( "" );
-            if ( strComboCurrentValue == null )
-               strComboCurrentValue = "";
-         }
-      }
-      vComboBox4 = mUser.newView( );
-      ComboCount = 0;
-      strComboSelectedValue = "0";
-      csrRC = vComboBox4.cursor( "UserGroup" ).setFirstWithinOi( );
-      while ( csrRC.isSet() )
-      {
-         strErrorMapValue = vComboBox4.cursor( "UserGroup" ).getAttribute( "GroupName" ).getString( "" );
-         if ( strErrorMapValue == null )
-            strErrorMapValue = "";
-
-         if ( StringUtils.equals( strComboCurrentValue, strErrorMapValue ) )
-         {
-%>
-            <option selected="selected"><%=strErrorMapValue%></option>
-<%
-            strComboSelectedValue = Integer.toString( ComboCount );
-         }
-         else
-         {
-%>
-            <option><%=strErrorMapValue%></option>
-<%
-         }
-
-         ComboCount++;
-         csrRC =  vComboBox4.cursor( "UserGroup" ).setNextContinue( );
       }
 
       vComboBox4.drop( );

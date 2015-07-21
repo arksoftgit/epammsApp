@@ -1,4 +1,4 @@
-z1000-Zeidon    MBLOCKRU TZZOLODO 06/02/15   11:12:48 1.0a2    
+z1000-Zeidon    MBLOCKRU TZZOLODO 07/16/15   11:50:47 1.0a2    
 eLOD       1
 aZKey      110030723
 aName      mBlockRU
@@ -59,7 +59,7 @@ eER_EntityRec 4
 aName      Subregistrant
 aZKey      68568355
 aPurpose   F
-aER_DiagramPosX 97
+aER_DiagramPosX 94
 aER_DiagramPosY 37
 
 eER_RelLinkRec 4
@@ -71,12 +71,12 @@ aCardMax   1
 eER_RelTypeRec 5
 aZKey      110030383
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 101
-aER_DiagramBendPosY 46
-aER_DiagramE1PosX 101
+aER_DiagramBendPosX 99
+aER_DiagramBendPosY 47
+aER_DiagramE1PosX 99
 aER_DiagramE1PosY 42
 aER_DiagramE2PosX 159
-aER_DiagramE2PosY 46
+aER_DiagramE2PosY 47
 
 eLOD_EntityChild 3
 aName      LLD_Block
@@ -603,16 +603,9 @@ aZKey      110030821
 eER_AttributeRec 6
 aName      TextLineHeight
 aZKey      120192327
-aDesc      The line-height of a text block expresses as a decimal number, such that 1.18 is approximately the same as entering no value.
+aDesc      The line-height of a text block expresses as a decimal number, such that 1.18 is approximately the same as entering no value (basically an equivalent to leading).
 
 eDomainRec 7
-aZKey      68568211
-aName      Percent
-aDomainType E
-aDataType  M
-aDecimalFormat 3
-aDesc      Percent as a decimal, such that 1.00 is 100%.
-aContextRestriction N
 
 eLOD_AttributeRec 5
 aZKey      110030822
@@ -3077,6 +3070,29 @@ aDesc      ePamms Application
 aType      P
 
 eTE_DBMS_Source 4
+aName      ePammsM
+aZKey      4121658
+aDesc      MySQL ePamms database
+aParadigm  R
+aDBMS      MySQL 5.1 via ODBC
+aGenerateExecutable kzhsqlmb
+aExecutable kzhsqloa
+aGenKeyExecutable kzhgenky
+aDisplayOwner Y
+aDisplayDBMS_ID N
+aDBH_Data  376
+TZDBHODO *********************** ********************************************************************************************************z1000-Zeidon    ZTF_12C4_TZDBHODO 05/07/10   14:07:31 1.0a2    
+eODBC      1
+aTimestampPrecision 3
+aTimestampAsString N
+aBlobsLast N
+aDropTables Y
+aAddTableNameToFK_Override Y
+aGenCreateIdxs Y
+aGenDropIdxs N
+aGenCreateTables Y
+
+
 
 i13        5
 i22        16
@@ -3110,6 +3126,7 @@ i127       37
 i130       37
 i133       31
 i139       31
+i145       37
 i148       5
 i157       5
 i160       16
@@ -3208,7 +3225,7 @@ i312       31
 i314       141
 i315       142
 i317       144
-i318       145
+i318       37
 i320       147
 i321       5
 i322       149
@@ -3340,7 +3357,7 @@ i524       31
 i526       141
 i527       142
 i529       144
-i530       145
+i530       37
 i532       147
 i533       5
 i534       149
@@ -3504,7 +3521,7 @@ i704       141
 i705       142
 i706       528
 i707       144
-i708       145
+i708       37
 i709       531
 i710       147
 i711       5
@@ -3646,7 +3663,7 @@ i846       141
 i847       142
 i848       143
 i849       144
-i850       145
+i850       37
 i851       146
 i852       147
 i853       5
@@ -3798,7 +3815,7 @@ i998       141
 i999       142
 i1000      316
 i1001      144
-i1002      145
+i1002      37
 i1003      319
 i1004      147
 i1005      5
@@ -3889,4 +3906,3 @@ i1089      16
 i1090      179
 i1091      392
 i1092      393
-i1095      183

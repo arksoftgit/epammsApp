@@ -150,6 +150,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var LoginName = document.wMLCAddOrganismClaimsList.zLoginName.value;
    var keyRole = document.wMLCAddOrganismClaimsList.zKeyRole.value;
    document.wMLCAddOrganismClaimsList.zError.value = "";
    document.wMLCAddOrganismClaimsList.zOpenFile.value = "";
@@ -172,15 +173,7 @@ function _AfterPageLoaded( )
    // Prebuild action has javascript code entered by user.
    var thisLi;
 
-// if ( keyRole == "P" || keyRole == "N" ) // If we are here, we have to be a Primary.
-   // We knock out Login and Template as options.
-   thisLi = document.getElementById( "lmLogin" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
+// if ( keyRole !== "Subregistrant" ) // If we are here, we have to be a Primary.
    thisLi = document.getElementById( "lmStateRegistrations" );
    thisLi.style.visibility = "hidden";
    thisLi.style.display = "none";

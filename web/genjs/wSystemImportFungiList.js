@@ -149,6 +149,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var LoginName = document.wSystemImportFungiList.zLoginName.value;
    var keyRole = document.wSystemImportFungiList.zKeyRole.value;
    document.wSystemImportFungiList.zError.value = "";
    document.wSystemImportFungiList.zOpenFile.value = "";
@@ -167,16 +168,6 @@ function _AfterPageLoaded( )
    }
    else
       timerID = null; // No timeout specified
-
-   // Prebuild action has javascript code entered by user.
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   thisLi = document.getElementById( "lmSystem" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-   // END of Javascript code entered by user.
 
 var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
@@ -251,6 +242,8 @@ function InitImportFungiList( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      _DisableFormElements( true );
+
       document.wSystemImportFungiList.zAction.value = "InitImportFungiList";
       document.wSystemImportFungiList.submit( );
    }
@@ -347,66 +340,6 @@ function smCancelImportFungiAndReturn( )
       _DisableFormElements( true );
 
       document.wSystemImportFungiList.zAction.value = "smCancelImportFungiAndReturn";
-      document.wSystemImportFungiList.submit( );
-   }
-}
-
-function mTemplate( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemImportFungiList.zAction.value = "mTemplate";
-      document.wSystemImportFungiList.submit( );
-   }
-}
-
-function mSystem( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemImportFungiList.zAction.value = "mSystem";
-      document.wSystemImportFungiList.submit( );
-   }
-}
-
-function mShowFeedback( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemImportFungiList.zAction.value = "mShowFeedback";
-      document.wSystemImportFungiList.submit( );
-   }
-}
-
-function mLogout( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemImportFungiList.zAction.value = "_OnUnload";
       document.wSystemImportFungiList.submit( );
    }
 }

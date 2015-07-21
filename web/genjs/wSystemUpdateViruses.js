@@ -149,6 +149,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var LoginName = document.wSystemUpdateViruses.zLoginName.value;
    var keyRole = document.wSystemUpdateViruses.zKeyRole.value;
    document.wSystemUpdateViruses.zError.value = "";
    document.wSystemUpdateViruses.zOpenFile.value = "";
@@ -169,18 +170,10 @@ function _AfterPageLoaded( )
       timerID = null; // No timeout specified
 
    // Prebuild action has javascript code entered by user.
-   thisLi = document.getElementById( "lmTemplate" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   thisLi = document.getElementById( "lmSystem" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   var oRows = document.getElementById( "GridViruses" ).getElementsByTagName( 'tr' );
+  var oRows = document.getElementById( "GridViruses" ).getElementsByTagName( 'tr' );
    if ( oRows.length > 1 ) // 1 for header
    {
-      thisLi = document.getElementById( "PBNewVirus" );
+      var thisLi = document.getElementById( "PBNewVirus" );
       thisLi.style.visibility = "hidden";
       thisLi.style.display = "none";
    }
@@ -459,66 +452,6 @@ function smCancelUpdateViruses( )
       _DisableFormElements( true );
 
       document.wSystemUpdateViruses.zAction.value = "smCancelUpdateViruses";
-      document.wSystemUpdateViruses.submit( );
-   }
-}
-
-function mTemplate( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemUpdateViruses.zAction.value = "mTemplate";
-      document.wSystemUpdateViruses.submit( );
-   }
-}
-
-function mSystem( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemUpdateViruses.zAction.value = "mSystem";
-      document.wSystemUpdateViruses.submit( );
-   }
-}
-
-function mShowFeedback( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemUpdateViruses.zAction.value = "mShowFeedback";
-      document.wSystemUpdateViruses.submit( );
-   }
-}
-
-function mLogout( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemUpdateViruses.zAction.value = "_OnUnload";
       document.wSystemUpdateViruses.submit( );
    }
 }

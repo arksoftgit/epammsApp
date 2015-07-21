@@ -65,123 +65,6 @@ public int DoInputMapping( HttpServletRequest request,
    return nMapError;
 }
 
-// beginning of:  added by hand
-/* hard-wired debugging code
-private String displayArray( int [] arr, int lth ) {
-   String msg = "";
-   for ( int k = 0; k < lth; k++ ) {
-      msg += "  " + arr[k];
-   }
-   return msg;
-}
-private void displayEntity( View vOrig, String entityName, String entityName1, String attrName1, String entityName2, String attrName2, String msg ) {
-   View v = vOrig.newView();
-   v.copyCursors( vOrig );
-   EntityCursor ec = v.getCursor( entityName );
-   CursorResult cr = ec.setFirst();
-   EntityCursor ec1;
-   EntityCursor ec2;
-   v.log().info( msg );
-   while ( cr == CursorResult.SET ) {
-      ec1 = v.getCursor( entityName1 );
-      ec2 = v.getCursor( entityName2 );
-      String attr1 = ((Integer.parseInt( (ec.getStringFromAttribute( "ID" ).toString()).substring(3) )) - 3) + "  " + ec1.getStringFromAttribute( attrName1 ).toString();
-      String attr2 = (ec2.isNull()) ? "null" : ec2.getStringFromAttribute( attrName2 ).toString();
-      v.log().info( entityName1 + "." + attrName1 +": " + attr1 + "   " + entityName2 + "." + attrName2 +": " + attr2 );
-      cr = ec.setNext();
-   }
-}
-*/
-private boolean orderByNewIndex( String arr, View vOrig, String entityName ) {
-// vOrig.log().info( "Order Array Entity: " + entityName );
-// vOrig.logObjectInstance();
-// vOrig.log().info( "Order Array subscript: " + arr );
-   int lth = arr.length(); // more than enough items for the order array
-   int [] arrOrder = new int[lth];
-   int maxIdx = 0;
-   int pos = 0;
-   int commaIdx = arr.indexOf( ",", pos );
-   while ( commaIdx >= 0 ) {
-   // vOrig.log().info( "Position: " + pos + "  Comma index: " + commaIdx );
-      arrOrder[maxIdx++] = (Integer.parseInt( arr.substring( pos, commaIdx ).toString() )) - 1; // change from subsript to zero-based index
-      pos = commaIdx + 1;
-      commaIdx = arr.indexOf( ",", pos );
-   }
-   if ( pos < lth ) {
-      arrOrder[maxIdx++] = (Integer.parseInt( arr.substring(pos).toString())) - 1; // change from subsript to zero-based index
-   }
-   lth = maxIdx; // setting the correct length
-// vOrig.log().info( "Order array index length: " + lth + "  " + displayArray( arrOrder, lth ) );
-   View v = vOrig.newView( );
-   v.copyCursors( vOrig );
-// displayEntity( v, entityName, "S_MarketingUsage", "UsageType",
-//                   "S_MarketingUsage", "dDisplayUsageName", "Before orderByNewIndex" );
-   EntityCursor ecOrig = vOrig.getCursor( entityName );
-   if ( ecOrig.isNull() == false ) {
-      
-   //int swaps = 0;
-      int[] arrShift = new int[lth];
-      int k, orderIdx;
-
-      for ( k = 0; k < lth; k++ ) {
-         arrShift[k] = k; // initialize shift array with original order
-      }
-   // vOrig.log().info( "Initialized shift array: " + displayArray( arrShift, lth ) );
-      ecOrig.setFirst();
-      View vWork = vOrig.newView();
-      vWork.copyCursors( vOrig );
-      EntityCursor ecWork = vWork.getCursor( entityName );
-      for ( orderIdx = 0; orderIdx < lth; orderIdx++ ) {
-         if ( arrOrder[orderIdx] != arrShift[orderIdx] ) {
-            maxIdx = orderIdx + 1;
-            pos = 1;
-            while ( maxIdx < lth && arrOrder[orderIdx] != arrShift[maxIdx] ) {
-               pos++;
-               maxIdx++;
-            }
-            if ( maxIdx < lth ) {
-               while ( maxIdx > orderIdx ) {
-                  arrShift[maxIdx] = arrShift[maxIdx - 1];
-                  maxIdx--;
-               }
-               arrShift[orderIdx] = arrOrder[orderIdx];
-            // vOrig.log().info( "Modified shift array orderIdx: " + orderIdx + "   " + displayArray( arrShift, lth ) );
-
-               ecWork.setCursor( ecOrig.getEntityInstance() );
-               for ( k = 0; k < pos; k++ ) {
-                  ecWork.setNext();
-               }
-               ecOrig.moveSubobject( CursorPosition.PREV, ecWork, CursorPosition.NEXT );
-            // swaps++;
-            // displayEntity( v, entityName, "S_MarketingUsage", "UsageType",
-            //                "S_MarketingUsage", "dDisplayUsageName", "After swap (" + swaps + ")" );
-            } else {
-               vOrig.log().info( "Unable to locate shift array index: " + arrOrder[orderIdx] + "  after index: " + orderIdx );
-               return false;
-            }
-         } else {
-            while ( orderIdx < lth && arrOrder[orderIdx] == arrShift[orderIdx] ) {
-            // displayEntity( v, entityName, "S_MarketingUsage", "UsageType",
-            //                "S_MarketingUsage", "dDisplayUsageName", "No swap (" + swaps + ")" );
-               ecOrig.setNext();
-               if ( orderIdx < lth - 1 && arrOrder[orderIdx + 1] == arrShift[orderIdx + 1] ) {
-                  orderIdx++;
-               } else {
-                  break; // inner while
-               }
-            }
-         }
-      }
-   // displayEntity( v, entityName, "S_MarketingUsage", "UsageType",
-   //                "S_MarketingUsage", "dDisplayUsageName", "After orderByNewIndex Swaps: " + swaps );
-   // vOrig.logObjectInstance();
-      return true;
-   } else {
-      return false;
-   }
-}
-// end of:  added by hand
-
 %>
 
 <%
@@ -218,6 +101,7 @@ String strOpenPopupWindow = "";
 String strPopupWindowSZX = "";
 String strPopupWindowSZY = "";
 String strDateFormat = "";
+String strLoginName = "";
 String strKeyRole = "";
 String strDialogName = "";
 String strWindowName = "";
@@ -348,16 +232,6 @@ if ( strActionToProcess != null )
       nRC = DoInputMapping( request, session, application, false );
       if ( nRC < 0 )
          break;
-
-      // This is hand coded!!!
-      wWebXA = task.getViewByName( "wWebXfer" );
-      String strView = (String) request.getParameter( "zView" );
-      String strEntity = (String) request.getParameter( "zEntity" );
-      View vOrig = task.getViewByName( strView );
-      String arr = (String) request.getParameter( "zOrderArray" );
-      orderByNewIndex( arr, vOrig, strEntity );
-      vOrig.commit();
-      // This is hand coded!!!
 
       // Next Window
       strNextJSP_Name = wSystem.SetWebRedirection( vKZXMLPGO, wSystem.zWAB_ReturnToParent, "", "" );
@@ -502,14 +376,6 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSystemDragDropSort.js"></script>
 
-
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
-<link rel="stylesheet" type="text/css" href="./css/style.css" />
-
-<script language="JavaScript" type="text/javascript" src="./js/jsoe.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/jsoeUtils.js"></script>
 </head>
 
 <body onLoad="_AfterPageLoaded( )" onSubmit="_DisableFormElements( true )" onBeforeUnload="_BeforePageUnload( )">
@@ -523,8 +389,8 @@ else
 <!-- Main Navigation *********************** -->
 <div id="mainnavigation">
    <ul id="Exit" name="Exit" >
-       <li id="lmApplySortOrder" name="lmApplySortOrder"><a href="#" onclick="mApplySortOrder()">Apply Sort Order  </a></li>
-       <li id="lmCancelSortDiv" name="lmCancelSortDiv"><a href="#" onclick="mCancelSortDiv()">  Cancel  </a></li>
+       <li id="lmApplySortOrder" name="lmApplySortOrder" ><a href="#" onclick="mApplySortOrder()">Apply Sort Order  </a></li>
+       <li id="lmCancelSortDiv" name="lmCancelSortDiv" ><a href="#" onclick="mCancelSortDiv()">  Cancel  </a></li>
        <li id="lmLogout" name="lmLogout" ><a href="#" onclick="mLogout()">Logout</a></li>
    </ul>
 </div>  <!-- end Navigation Bar -->
@@ -627,22 +493,17 @@ else
    strDateFormat = "YYYY.MM.DD";
 
    wWebXA = task.getViewByName( "wWebXfer" );
-   
-   // this is hand coded!!!
-   strTextDisplayValue = wWebXA.cursor( "Root" ).getAttribute( "HTML" ).getString();
-   wWebXA.cursor( "Root" ).setAttribute( "HTML", "" ); // done with it
-   // this is hand coded!!!
-
    if ( VmlOperation.isValid( wWebXA ) )
    {
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
+         strLoginName = wWebXA.cursor( "Root" ).getAttribute( "LoginName" ).getString( "LoginName" );
+         if ( strLoginName == null )
+            strLoginName = "";
          strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
-
-         task.log().info( "Root.KeyRole: " + strKeyRole );
       }
    }
 %>
@@ -650,6 +511,7 @@ else
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
    <input name="zPopupWindowSZX" id="zPopupWindowSZX" type="hidden" value="<%=strPopupWindowSZX%>">
@@ -670,10 +532,10 @@ else
 <div style="height:1px;width:18px;float:left;"></div>   <!-- Width Spacer -->
 <% /* SortDragDrop:GroupBox */ %>
 
-<div id="SortDragDrop" name="SortDragDrop" class="divborder"   style="float:left;position:relative; width:958px;">  <!-- SortDragDrop --> 
+<div id="SortDragDrop" name="SortDragDrop" class="divborder"   style="float:left;position:relative; width:958px; height:558px;">  <!-- SortDragDrop --> 
 
-   <h1 id="SortDragDrop" name="SortDragDrop" >Drag &AMP; Drop Sort</h1>&nbsp;&nbsp;
-   <%=strTextDisplayValue%>
+<div  id="SortDragDrop" name="SortDragDrop" >Drag & Drop Sort</div>
+
 </div>  <!--  SortDragDrop --> 
 </div>  <!-- End of a new line -->
 
@@ -709,6 +571,6 @@ else
    session.setAttribute( "ZeidonWindow", "wSystemDragDropSort" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

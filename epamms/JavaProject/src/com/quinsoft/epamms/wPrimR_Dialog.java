@@ -559,7 +559,7 @@ InitPrimaryRegistrantForInsert( View     ViewToWindow )
    CreateTemporalSubobjectVersion( mPrimReg, "PrimaryRegistrant" );
    //:// CreateTemporalSubobjectVersion( mPrimReg, "PhysicalAddress" )
    //:// CreateTemporalSubobjectVersion( mPrimReg, "MailingAddress" )
-   //:// CreateTemporalSubobjectVersion( mPrimReg, "Person" )
+   //:// CreateTemporalSubobjectVersion( mPrimReg, "Employee" )
    //:// CreateTemporalSubobjectVersion( mPrimReg, "User" )
 
    //:SetDynamicBannerName( ViewToWindow, "wPrimR", "PrimaryRegistrant" )
@@ -696,8 +696,8 @@ InitPrimaryRegistrantForUpdate( View     ViewToWindow )
 
    //:END
 
-   //:wWebXfer.Root.AttemptLoginName = mPrimReg.Organization.LoginName
-   SetAttributeFromAttribute( wWebXfer, "Root", "AttemptLoginName", mPrimReg, "Organization", "LoginName" );
+   //:wWebXfer.Root.AttemptLoginRegistrant = mPrimReg.Organization.LoginName
+   SetAttributeFromAttribute( wWebXfer, "Root", "AttemptLoginRegistrant", mPrimReg, "Organization", "LoginName" );
    //:wWebXfer.Root.AttemptPassword = ""
    SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
    //:wWebXfer.Root.ConfirmPassword = ""
@@ -865,7 +865,7 @@ AcceptNewPrimaryRegistrant( View     ViewToWindow )
    SetAttributeFromString( mPrimReg, "User", "UserPassword", szConfirmPassword );
 
    //:// AcceptSubobject( mPrimReg, "User" )
-   //:// AcceptSubobject( mPrimReg, "Person" )
+   //:// AcceptSubobject( mPrimReg, "Employee" )
    //:// AcceptSubobject( mPrimReg, "PhysicalAddress" )
    //:// AcceptSubobject( mPrimReg, "MailingAddress" )
    //:AcceptSubobject( mPrimReg, "PrimaryRegistrant" )
@@ -938,7 +938,7 @@ AcceptUpdatePrimaryRegistrant( View     ViewToWindow )
    //:END
 
    //:// AcceptSubobject( mPrimReg, "User" )
-   //:// AcceptSubobject( mPrimReg, "Person" )
+   //:// AcceptSubobject( mPrimReg, "Employee" )
    //:// AcceptSubobject( mPrimReg, "PhysicalAddress" )
    //:// AcceptSubobject( mPrimReg, "MailingAddress" )
    //:AcceptSubobject( mPrimReg, "PrimaryRegistrant" )
@@ -977,7 +977,7 @@ CancelNewPrimaryRegistrant( View     ViewToWindow )
    RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
 
    //:// CancelSubobject( mPrimReg, "User" )
-   //:// CancelSubobject( mPrimReg, "Person" )
+   //:// CancelSubobject( mPrimReg, "Employee" )
    //:// CancelSubobject( mPrimReg, "PhysicalAddress" )
    //:// CancelSubobject( mPrimReg, "MailingAddress" )
    //:CancelSubobject( mPrimReg, "PrimaryRegistrant" )
@@ -1002,7 +1002,7 @@ CancelUpdatePrimaryRegistrant( View     ViewToWindow )
    RESULT = GetViewByName( mPrimReg, "mPrimReg", ViewToWindow, zLEVEL_TASK );
 
    //:// CancelSubobject( mPrimReg, "User" )
-   //:// CancelSubobject( mPrimReg, "Person" )
+   //:// CancelSubobject( mPrimReg, "Employee" )
    //:// CancelSubobject( mPrimReg, "PhysicalAddress" )
    //:// CancelSubobject( mPrimReg, "MailingAddress" )
    //:CancelSubobject( mPrimReg, "PrimaryRegistrant" )

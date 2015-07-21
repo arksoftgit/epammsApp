@@ -171,6 +171,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var LoginName = document.wStartChangePassword.zLoginName.value;
    var keyRole = document.wStartChangePassword.zKeyRole.value;
    document.wStartChangePassword.zError.value = "";
    document.wStartChangePassword.zOpenFile.value = "";

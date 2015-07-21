@@ -63,8 +63,8 @@ AcceptUpdateSubregistrant( View     ViewToWindow )
    zVIEW    qOrganiz = new zVIEW( );
    //:STRING (  50  ) szLoginName
    String   szLoginName = null;
-   //:STRING (  50  ) szAttemptLoginName
-   String   szAttemptLoginName = null;
+   //:STRING (  50  ) szAttemptLoginRegistrant
+   String   szAttemptLoginRegistrant = null;
    //:INTEGER         lControl
    int      lControl = 0;
    int      lTempInteger_0 = 0;
@@ -87,22 +87,22 @@ AcceptUpdateSubregistrant( View     ViewToWindow )
        GetVariableFromAttribute( sb_szLoginName, mi_lTempInteger_0, 'S', 51, mSubreg, "SubregOrganization", "LoginName", "", 0 );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );
    szLoginName = sb_szLoginName.toString( );}
-   //:szAttemptLoginName = wWebXfer.Root.AttemptUserName
+   //:szAttemptLoginRegistrant = wWebXfer.Root.AttemptLoginName
    {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
-   StringBuilder sb_szAttemptLoginName;
-   if ( szAttemptLoginName == null )
-      sb_szAttemptLoginName = new StringBuilder( 32 );
+   StringBuilder sb_szAttemptLoginRegistrant;
+   if ( szAttemptLoginRegistrant == null )
+      sb_szAttemptLoginRegistrant = new StringBuilder( 32 );
    else
-      sb_szAttemptLoginName = new StringBuilder( szAttemptLoginName );
-       GetVariableFromAttribute( sb_szAttemptLoginName, mi_lTempInteger_1, 'S', 51, wWebXfer, "Root", "AttemptUserName", "", 0 );
+      sb_szAttemptLoginRegistrant = new StringBuilder( szAttemptLoginRegistrant );
+       GetVariableFromAttribute( sb_szAttemptLoginRegistrant, mi_lTempInteger_1, 'S', 51, wWebXfer, "Root", "AttemptLoginName", "", 0 );
    lTempInteger_1 = mi_lTempInteger_1.intValue( );
-   szAttemptLoginName = sb_szAttemptLoginName.toString( );}
-   //:IF szLoginName != szAttemptLoginName
-   if ( ZeidonStringCompare( szLoginName, 1, 0, szAttemptLoginName, 1, 0, 51 ) != 0 )
+   szAttemptLoginRegistrant = sb_szAttemptLoginRegistrant.toString( );}
+   //:IF szLoginName != szAttemptLoginRegistrant
+   if ( ZeidonStringCompare( szLoginName, 1, 0, szAttemptLoginRegistrant, 1, 0, 51 ) != 0 )
    { 
 
-      //:ACTIVATE qOrganiz WHERE qOrganiz.Organization.LoginName = szAttemptLoginName
-      o_fnLocalBuildQual_4( ViewToWindow, vTempViewVar_0, szAttemptLoginName );
+      //:ACTIVATE qOrganiz WHERE qOrganiz.Organization.LoginName = szAttemptLoginRegistrant
+      o_fnLocalBuildQual_4( ViewToWindow, vTempViewVar_0, szAttemptLoginRegistrant );
       RESULT = ActivateObjectInstance( qOrganiz, "qOrganiz", ViewToWindow, vTempViewVar_0, zSINGLE );
       DropView( vTempViewVar_0 );
       //:IF qOrganiz.Organization EXISTS
@@ -129,8 +129,8 @@ AcceptUpdateSubregistrant( View     ViewToWindow )
       DropObjectInstance( qOrganiz );
 
       //:// Set changed LoginName
-      //:mSubreg.SubregOrganization.LoginName = szAttemptLoginName
-      SetAttributeFromString( mSubreg, "SubregOrganization", "LoginName", szAttemptLoginName );
+      //:mSubreg.SubregOrganization.LoginName = szAttemptLoginRegistrant
+      SetAttributeFromString( mSubreg, "SubregOrganization", "LoginName", szAttemptLoginRegistrant );
    } 
 
 
@@ -138,7 +138,7 @@ AcceptUpdateSubregistrant( View     ViewToWindow )
 
 
    //:// AcceptSubobject( mSubreg, "User" )
-   //:// AcceptSubobject( mSubreg, "Person" )
+   //:// AcceptSubobject( mSubreg, "Employee" )
    //:// AcceptSubobject( mSubreg, "PhysicalAddress" )
    //:// AcceptSubobject( mSubreg, "MailingAddress" )
    //:AcceptSubobject( mSubreg, "Subregistrant" )
@@ -185,7 +185,7 @@ o_fnLocalBuildQual_2( View     vSubtask,
 private int 
 o_fnLocalBuildQual_3( View     vSubtask,
                       zVIEW    vQualObject,
-                      String   szAttemptLoginName )
+                      String   szAttemptLoginRegistrant )
 {
    int      RESULT = 0;
 
@@ -195,7 +195,7 @@ o_fnLocalBuildQual_3( View     vSubtask,
    CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
    SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "Organization" );
    SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "LoginName" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Value", szAttemptLoginName.toString( ) );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Value", szAttemptLoginRegistrant.toString( ) );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
    return( 0 );
 } 
@@ -204,7 +204,7 @@ o_fnLocalBuildQual_3( View     vSubtask,
 private int 
 o_fnLocalBuildQual_4( View     vSubtask,
                       zVIEW    vQualObject,
-                      String   szAttemptLoginName )
+                      String   szAttemptLoginRegistrant )
 {
    int      RESULT = 0;
 
@@ -214,7 +214,7 @@ o_fnLocalBuildQual_4( View     vSubtask,
    CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
    SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "Organization" );
    SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "LoginName" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Value", szAttemptLoginName.toString( ) );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Value", szAttemptLoginRegistrant.toString( ) );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
    return( 0 );
 } 
@@ -937,14 +937,14 @@ AcceptNewSubregUser( View     ViewToWindow )
    RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
 
    //:// Ensure user login name is not blank and is unique.
-   //:szUserName = wWebXfer.Root.AttemptUserName
+   //:szUserName = wWebXfer.Root.AttemptLoginName
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
    StringBuilder sb_szUserName;
    if ( szUserName == null )
       sb_szUserName = new StringBuilder( 32 );
    else
       sb_szUserName = new StringBuilder( szUserName );
-       GetVariableFromAttribute( sb_szUserName, mi_lTempInteger_0, 'S', 51, wWebXfer, "Root", "AttemptUserName", "", 0 );
+       GetVariableFromAttribute( sb_szUserName, mi_lTempInteger_0, 'S', 51, wWebXfer, "Root", "AttemptLoginName", "", 0 );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );
    szUserName = sb_szUserName.toString( );}
    //:lUserNameLth = zGetStringLen( szUserName )
@@ -1353,7 +1353,7 @@ CancelNewSubregistrant( View     ViewToWindow )
    //:GET VIEW mSubreg NAMED "mSubreg"
    RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
    //:// CancelSubobject( mSubreg, "User" )
-   //:// CancelSubobject( mSubreg, "Person" )
+   //:// CancelSubobject( mSubreg, "Employee" )
    //:// CancelSubobject( mSubreg, "PhysicalAddress" )
    //:// CancelSubobject( mSubreg, "MailingAddress" )
    //:CancelSubobject( mSubreg, "Subregistrant" )
@@ -1781,8 +1781,8 @@ AcceptNewSubregistrant( View     ViewToWindow )
    zVIEW    mSubreg = new zVIEW( );
    //:VIEW qOrganiz BASED ON LOD  qOrganiz
    zVIEW    qOrganiz = new zVIEW( );
-   //:STRING (  50  ) szAttemptLoginName
-   String   szAttemptLoginName = null;
+   //:STRING (  50  ) szAttemptLoginRegistrant
+   String   szAttemptLoginRegistrant = null;
    //:STRING ( 128  ) szAttemptPassword
    String   szAttemptPassword = null;
    //:STRING ( 128  ) szConfirmPassword
@@ -1853,18 +1853,18 @@ AcceptNewSubregistrant( View     ViewToWindow )
 
    //:END
 
-   //:szAttemptLoginName = wWebXfer.Root.AttemptUserName
+   //:szAttemptLoginRegistrant = wWebXfer.Root.AttemptLoginName
    {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
-   StringBuilder sb_szAttemptLoginName;
-   if ( szAttemptLoginName == null )
-      sb_szAttemptLoginName = new StringBuilder( 32 );
+   StringBuilder sb_szAttemptLoginRegistrant;
+   if ( szAttemptLoginRegistrant == null )
+      sb_szAttemptLoginRegistrant = new StringBuilder( 32 );
    else
-      sb_szAttemptLoginName = new StringBuilder( szAttemptLoginName );
-       GetVariableFromAttribute( sb_szAttemptLoginName, mi_lTempInteger_2, 'S', 51, wWebXfer, "Root", "AttemptUserName", "", 0 );
+      sb_szAttemptLoginRegistrant = new StringBuilder( szAttemptLoginRegistrant );
+       GetVariableFromAttribute( sb_szAttemptLoginRegistrant, mi_lTempInteger_2, 'S', 51, wWebXfer, "Root", "AttemptLoginName", "", 0 );
    lTempInteger_2 = mi_lTempInteger_2.intValue( );
-   szAttemptLoginName = sb_szAttemptLoginName.toString( );}
-   //:ACTIVATE qOrganiz WHERE qOrganiz.Organization.LoginName = szAttemptLoginName
-   o_fnLocalBuildQual_3( ViewToWindow, vTempViewVar_0, szAttemptLoginName );
+   szAttemptLoginRegistrant = sb_szAttemptLoginRegistrant.toString( );}
+   //:ACTIVATE qOrganiz WHERE qOrganiz.Organization.LoginName = szAttemptLoginRegistrant
+   o_fnLocalBuildQual_3( ViewToWindow, vTempViewVar_0, szAttemptLoginRegistrant );
    RESULT = ActivateObjectInstance( qOrganiz, "qOrganiz", ViewToWindow, vTempViewVar_0, zSINGLE );
    DropView( vTempViewVar_0 );
    //:IF qOrganiz.Organization EXISTS
@@ -1891,15 +1891,15 @@ AcceptNewSubregistrant( View     ViewToWindow )
    DropObjectInstance( qOrganiz );
 
    //:// Set LoginName
-   //:mSubreg.SubregOrganization.LoginName = szAttemptLoginName
-   SetAttributeFromString( mSubreg, "SubregOrganization", "LoginName", szAttemptLoginName );
+   //:mSubreg.SubregOrganization.LoginName = szAttemptLoginRegistrant
+   SetAttributeFromString( mSubreg, "SubregOrganization", "LoginName", szAttemptLoginRegistrant );
 
    //:// Set user password to new password.
    //:mSubreg.User.UserPassword = szConfirmPassword
    SetAttributeFromString( mSubreg, "User", "UserPassword", szConfirmPassword );
 
    //:// AcceptSubobject( mSubreg, "User" )
-   //:// AcceptSubobject( mSubreg, "Person" )
+   //:// AcceptSubobject( mSubreg, "Employee" )
    //:// AcceptSubobject( mSubreg, "PhysicalAddress" )
    //:// AcceptSubobject( mSubreg, "MailingAddress" )
    //:AcceptSubobject( mSubreg, "Subregistrant" )
@@ -2140,8 +2140,8 @@ InitSubregUserForUpdate( View     ViewToWindow )
 
    //:DisplayObjectInstance( mSubreg, "", "" )
    DisplayObjectInstance( mSubreg, "", "" );
-   //:wWebXfer.Root.AttemptUserName = mSubreg.User.UserName
-   SetAttributeFromAttribute( wWebXfer, "Root", "AttemptUserName", mSubreg, "User", "UserName" );
+   //:wWebXfer.Root.AttemptLoginName = mSubreg.User.UserName
+   SetAttributeFromAttribute( wWebXfer, "Root", "AttemptLoginName", mSubreg, "User", "UserName" );
    //:wWebXfer.Root.AttemptPassword = ""
    SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
    //:wWebXfer.Root.ConfirmPassword = ""
@@ -2170,8 +2170,8 @@ AcceptUpdateSubregUser( View     ViewToWindow )
    zVIEW    mSubreg = new zVIEW( );
    //:STRING (  50  ) szUserName
    String   szUserName = null;
-   //:STRING (  50  ) szAttemptUserName
-   String   szAttemptUserName = null;
+   //:STRING (  50  ) szAttemptLoginName
+   String   szAttemptLoginName = null;
    //:INTEGER         lUserNameLth
    int      lUserNameLth = 0;
    //:INTEGER         lControl
@@ -2228,18 +2228,18 @@ AcceptUpdateSubregUser( View     ViewToWindow )
    else
    { 
 
-      //:szAttemptUserName = wWebXfer.Root.AttemptUserName
+      //:szAttemptLoginName = wWebXfer.Root.AttemptLoginName
       {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
-      StringBuilder sb_szAttemptUserName;
-      if ( szAttemptUserName == null )
-         sb_szAttemptUserName = new StringBuilder( 32 );
+      StringBuilder sb_szAttemptLoginName;
+      if ( szAttemptLoginName == null )
+         sb_szAttemptLoginName = new StringBuilder( 32 );
       else
-         sb_szAttemptUserName = new StringBuilder( szAttemptUserName );
-             GetVariableFromAttribute( sb_szAttemptUserName, mi_lTempInteger_1, 'S', 51, wWebXfer, "Root", "AttemptUserName", "", 0 );
+         sb_szAttemptLoginName = new StringBuilder( szAttemptLoginName );
+             GetVariableFromAttribute( sb_szAttemptLoginName, mi_lTempInteger_1, 'S', 51, wWebXfer, "Root", "AttemptLoginName", "", 0 );
       lTempInteger_1 = mi_lTempInteger_1.intValue( );
-      szAttemptUserName = sb_szAttemptUserName.toString( );}
-      //:nRC = zstrcmpi( szUserName, szAttemptUserName )
-      nRC = zstrcmpi( szUserName, szAttemptUserName );
+      szAttemptLoginName = sb_szAttemptLoginName.toString( );}
+      //:nRC = zstrcmpi( szUserName, szAttemptLoginName )
+      nRC = zstrcmpi( szUserName, szAttemptLoginName );
       //:IF nRC != 0
       if ( nRC != 0 )
       { 
@@ -2264,13 +2264,13 @@ AcceptUpdateSubregUser( View     ViewToWindow )
          } 
          else
          { 
-            //:szUserName = szAttemptUserName
+            //:szUserName = szAttemptLoginName
              {StringBuilder sb_szUserName;
             if ( szUserName == null )
                sb_szUserName = new StringBuilder( 32 );
             else
                sb_szUserName = new StringBuilder( szUserName );
-                        ZeidonStringCopy( sb_szUserName, 1, 0, szAttemptUserName, 1, 0, 51 );
+                        ZeidonStringCopy( sb_szUserName, 1, 0, szAttemptLoginName, 1, 0, 51 );
             szUserName = sb_szUserName.toString( );}
          } 
 
@@ -2286,20 +2286,20 @@ AcceptUpdateSubregUser( View     ViewToWindow )
    SetAttributeFromString( mSubreg, "User", "UserName", szUserName );
 
    //:// Ensure user first and last names are not blank.
-   //:szAttemptUserName = mSubreg.Employee.FirstName
+   //:szAttemptLoginName = mSubreg.Employee.FirstName
    {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
-   StringBuilder sb_szAttemptUserName;
-   if ( szAttemptUserName == null )
-      sb_szAttemptUserName = new StringBuilder( 32 );
+   StringBuilder sb_szAttemptLoginName;
+   if ( szAttemptLoginName == null )
+      sb_szAttemptLoginName = new StringBuilder( 32 );
    else
-      sb_szAttemptUserName = new StringBuilder( szAttemptUserName );
-       GetVariableFromAttribute( sb_szAttemptUserName, mi_lTempInteger_3, 'S', 51, mSubreg, "Employee", "FirstName", "", 0 );
+      sb_szAttemptLoginName = new StringBuilder( szAttemptLoginName );
+       GetVariableFromAttribute( sb_szAttemptLoginName, mi_lTempInteger_3, 'S', 51, mSubreg, "Employee", "FirstName", "", 0 );
    lTempInteger_3 = mi_lTempInteger_3.intValue( );
-   szAttemptUserName = sb_szAttemptUserName.toString( );}
-   //:lUserNameLth = zGetStringLen( szAttemptUserName )
-   lUserNameLth = zGetStringLen( szAttemptUserName );
-   //:TraceLineS( "First Name: ", szAttemptUserName )
-   TraceLineS( "First Name: ", szAttemptUserName );
+   szAttemptLoginName = sb_szAttemptLoginName.toString( );}
+   //:lUserNameLth = zGetStringLen( szAttemptLoginName )
+   lUserNameLth = zGetStringLen( szAttemptLoginName );
+   //:TraceLineS( "First Name: ", szAttemptLoginName )
+   TraceLineS( "First Name: ", szAttemptLoginName );
    //:TraceLineI( "First Name Length: ", lUserNameLth )
    TraceLineI( "First Name Length: ", lUserNameLth );
    //:IF lUserNameLth < 1
@@ -2317,20 +2317,20 @@ AcceptUpdateSubregUser( View     ViewToWindow )
 
    //:END
 
-   //:szAttemptUserName = mSubreg.Employee.LastName
+   //:szAttemptLoginName = mSubreg.Employee.LastName
    {MutableInt mi_lTempInteger_4 = new MutableInt( lTempInteger_4 );
-   StringBuilder sb_szAttemptUserName;
-   if ( szAttemptUserName == null )
-      sb_szAttemptUserName = new StringBuilder( 32 );
+   StringBuilder sb_szAttemptLoginName;
+   if ( szAttemptLoginName == null )
+      sb_szAttemptLoginName = new StringBuilder( 32 );
    else
-      sb_szAttemptUserName = new StringBuilder( szAttemptUserName );
-       GetVariableFromAttribute( sb_szAttemptUserName, mi_lTempInteger_4, 'S', 51, mSubreg, "Employee", "LastName", "", 0 );
+      sb_szAttemptLoginName = new StringBuilder( szAttemptLoginName );
+       GetVariableFromAttribute( sb_szAttemptLoginName, mi_lTempInteger_4, 'S', 51, mSubreg, "Employee", "LastName", "", 0 );
    lTempInteger_4 = mi_lTempInteger_4.intValue( );
-   szAttemptUserName = sb_szAttemptUserName.toString( );}
-   //:lUserNameLth = zGetStringLen( szAttemptUserName )
-   lUserNameLth = zGetStringLen( szAttemptUserName );
-   //:TraceLineS( "Last Name: ", szAttemptUserName )
-   TraceLineS( "Last Name: ", szAttemptUserName );
+   szAttemptLoginName = sb_szAttemptLoginName.toString( );}
+   //:lUserNameLth = zGetStringLen( szAttemptLoginName )
+   lUserNameLth = zGetStringLen( szAttemptLoginName );
+   //:TraceLineS( "Last Name: ", szAttemptLoginName )
+   TraceLineS( "Last Name: ", szAttemptLoginName );
    //:TraceLineI( "Last Name Length: ", lUserNameLth )
    TraceLineI( "Last Name Length: ", lUserNameLth );
    //:IF lUserNameLth < 1
@@ -2508,8 +2508,8 @@ InitSubregistrantForUpdate( View     ViewToWindow )
 
    //:END
 
-   //:wWebXfer.Root.AttemptLoginName = mSubreg.SubregOrganization.LoginName
-   SetAttributeFromAttribute( wWebXfer, "Root", "AttemptLoginName", mSubreg, "SubregOrganization", "LoginName" );
+   //:wWebXfer.Root.AttemptLoginRegistrant = mSubreg.SubregOrganization.LoginName
+   SetAttributeFromAttribute( wWebXfer, "Root", "AttemptLoginRegistrant", mSubreg, "SubregOrganization", "LoginName" );
    //:wWebXfer.Root.AttemptPassword = ""
    SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
    //:wWebXfer.Root.ConfirmPassword = ""
@@ -2547,7 +2547,7 @@ CancelUpdateSubregistrant( View     ViewToWindow )
    //:GET VIEW mSubreg NAMED "mSubreg"
    RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
    //:// CancelSubobject( mSubreg, "User" )
-   //:// CancelSubobject( mSubreg, "Person" )
+   //:// CancelSubobject( mSubreg, "Employee" )
    //:// CancelSubobject( mSubreg, "PhysicalAddress" )
    //:// CancelSubobject( mSubreg, "MailingAddress" )
    //:CancelSubobject( mSubreg, "Subregistrant" )
@@ -2615,8 +2615,8 @@ InitSubregUserForInsert( View     ViewToWindow )
    RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
    //:// VIEW qSubreg  BASED ON LOD  qSubreg
 
-   //:wWebXfer.Root.AttemptUserName = ""
-   SetAttributeFromString( wWebXfer, "Root", "AttemptUserName", "" );
+   //:wWebXfer.Root.AttemptLoginName = ""
+   SetAttributeFromString( wWebXfer, "Root", "AttemptLoginName", "" );
    //:wWebXfer.Root.AttemptPassword = ""
    SetAttributeFromString( wWebXfer, "Root", "AttemptPassword", "" );
    //:wWebXfer.Root.ConfirmPassword = ""
@@ -2952,15 +2952,15 @@ InitListSubregUsers( View     ViewToWindow )
 {
    zVIEW    wWebXfer = new zVIEW( );
    int      RESULT = 0;
-   //:VIEW lSubreg  REGISTERED AS lSubreg
-   zVIEW    lSubreg = new zVIEW( );
+   //:VIEW qOrganiz REGISTERED AS qOrganizLogin
+   zVIEW    qOrganiz = new zVIEW( );
    //:VIEW mSubreg  BASED ON LOD  mSubreg
    zVIEW    mSubreg = new zVIEW( );
    int      lTempInteger_0 = 0;
    zVIEW    vTempViewVar_0 = new zVIEW( );
 
    RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( lSubreg, "lSubreg", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( qOrganiz, "qOrganizLogin", ViewToWindow, zLEVEL_TASK );
 
    //:GET VIEW mSubreg NAMED "mSubreg"
    RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
@@ -2973,9 +2973,9 @@ InitListSubregUsers( View     ViewToWindow )
 
    //:END
 
-   //:ACTIVATE mSubreg WHERE mSubreg.Subregistrant.ID = lSubreg.Subregistrant.ID
+   //:ACTIVATE mSubreg WHERE mSubreg.Subregistrant.ID = qOrganiz.Subregistrant.ID
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
-       GetIntegerFromAttribute( mi_lTempInteger_0, lSubreg, "Subregistrant", "ID" );
+       GetIntegerFromAttribute( mi_lTempInteger_0, qOrganiz, "Subregistrant", "ID" );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );}
    o_fnLocalBuildQual_5( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
    RESULT = ActivateObjectInstance( mSubreg, "mSubreg", ViewToWindow, vTempViewVar_0, zSINGLE );
@@ -3042,8 +3042,8 @@ InitSubregDetail( View     ViewToWindow )
 {
    zVIEW    wWebXfer = new zVIEW( );
    int      RESULT = 0;
-   //:VIEW lSubreg  REGISTERED AS lSubreg
-   zVIEW    lSubreg = new zVIEW( );
+   //:VIEW qOrganiz REGISTERED AS qOrganizLogin
+   zVIEW    qOrganiz = new zVIEW( );
    //:VIEW mSubreg  BASED ON LOD  mSubreg
    zVIEW    mSubreg = new zVIEW( );
    //:INTEGER       lID
@@ -3053,7 +3053,7 @@ InitSubregDetail( View     ViewToWindow )
    int      lTempInteger_1 = 0;
 
    RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
-   RESULT = GetViewByName( lSubreg, "lSubreg", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( qOrganiz, "qOrganizLogin", ViewToWindow, zLEVEL_TASK );
 
    //:IF wWebXfer = 0
    if ( getView( wWebXfer ) == null )
@@ -3077,9 +3077,9 @@ InitSubregDetail( View     ViewToWindow )
 
    //:END
 
-   //:ACTIVATE mSubreg WHERE mSubreg.Subregistrant.ID = lSubreg.Subregistrant.ID
+   //:ACTIVATE mSubreg WHERE mSubreg.Subregistrant.ID = qOrganiz.Subregistrant.ID
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
-       GetIntegerFromAttribute( mi_lTempInteger_0, lSubreg, "Subregistrant", "ID" );
+       GetIntegerFromAttribute( mi_lTempInteger_0, qOrganiz, "Subregistrant", "ID" );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );}
    o_fnLocalBuildQual_0( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
    RESULT = ActivateObjectInstance( mSubreg, "mSubreg", ViewToWindow, vTempViewVar_0, zSINGLE );

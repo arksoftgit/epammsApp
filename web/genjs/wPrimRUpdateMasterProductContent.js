@@ -149,6 +149,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var LoginName = document.wPrimRUpdateMasterProductContent.zLoginName.value;
    var keyRole = document.wPrimRUpdateMasterProductContent.zKeyRole.value;
    document.wPrimRUpdateMasterProductContent.zError.value = "";
    document.wPrimRUpdateMasterProductContent.zOpenFile.value = "";
@@ -357,21 +358,6 @@ function UpdateMasterProductSection( strTagEntityKey )
    }
 }
 
-function smTemplate( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wPrimRUpdateMasterProductContent.zAction.value = "smTemplate";
-      document.wPrimRUpdateMasterProductContent.submit( );
-   }
-}
-
 function smSystem( )
 {
 
@@ -402,7 +388,7 @@ function smShowFeedback( )
    }
 }
 
-function smLogout( )
+function smLogin( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -412,7 +398,7 @@ function smLogout( )
    {
       _DisableFormElements( true );
 
-      document.wPrimRUpdateMasterProductContent.zAction.value = "_OnUnload";
+      document.wPrimRUpdateMasterProductContent.zAction.value = "smLogin";
       document.wPrimRUpdateMasterProductContent.submit( );
    }
 }
@@ -585,7 +571,7 @@ function mCompanyProfile( )
    }
 }
 
-function mLogin( )
+function mUsers( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -593,42 +579,9 @@ function mLogin( )
 
    if ( _IsDocDisabled( ) == false )
    {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmLogin" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
       _DisableFormElements( true );
 
-      document.wPrimRUpdateMasterProductContent.zAction.value = "mLogin";
-      document.wPrimRUpdateMasterProductContent.submit( );
-   }
-}
-
-function mLogout( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-
-      // Javascript code entered by user.
-
-   var thisLi = document.getElementById( "lmLogout" );
-   if ( thisLi.disabled == true )
-      return;
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wPrimRUpdateMasterProductContent.zAction.value = "_OnUnload";
+      document.wPrimRUpdateMasterProductContent.zAction.value = "mUsers";
       document.wPrimRUpdateMasterProductContent.submit( );
    }
 }

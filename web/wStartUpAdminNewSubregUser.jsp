@@ -410,6 +410,7 @@ String strOpenPopupWindow = "";
 String strPopupWindowSZX = "";
 String strPopupWindowSZY = "";
 String strDateFormat = "";
+String strLoginName = "";
 String strKeyRole = "";
 String strDialogName = "";
 String strWindowName = "";
@@ -639,305 +640,6 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mProductManagement" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wStartUpAdminNewSubregUser", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminNewSubregUser", "wStartUp.ProductManagement" );
-      nOptRC = wStartUp.ProductManagement( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wStartUp.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StartTopWindow, "wSLC", "SubregProductsList" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mSubregistrants" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wStartUpAdminNewSubregUser", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminNewSubregUser", "wStartUp.SubregistrantManagement" );
-      nOptRC = wStartUp.SubregistrantManagement( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wStartUp.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StartTopWindow, "wStartUp", "AdminListSubregistrants" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mTrackingNotificationCompliance" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wStartUpAdminNewSubregUser", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminNewSubregUser", "wStartUp.TrackingNotificationCompliance" );
-      nOptRC = wStartUp.TrackingNotificationCompliance( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wStartUp.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StartTopWindow, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mStateRegistrations" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wStartUpAdminNewSubregUser", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminNewSubregUser", "wStartUp.StateRegistrations" );
-      nOptRC = wStartUp.StateRegistrations( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wStartUp.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StartTopWindow, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mMarketingFulfillment" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wStartUpAdminNewSubregUser", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminNewSubregUser", "wStartUp.MarketingFulfillment" );
-      nOptRC = wStartUp.MarketingFulfillment( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wStartUp.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StartTopWindow, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mWebDevelopment" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wStartUpAdminNewSubregUser", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminNewSubregUser", "wStartUp.WebDevelopment" );
-      nOptRC = wStartUp.WebDevelopment( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wStartUp.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StartTopWindow, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mCompanyProfile" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wStartUpAdminNewSubregUser", strActionToProcess );
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminNewSubregUser", "wStartUp.PrimaryRegistrantCompanySetup" );
-      nOptRC = wStartUp.PrimaryRegistrantCompanySetup( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wStartUp.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StartTopWindow, "wStartUp", "AdminUpdatePrimaryRegistrant" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mLogin" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wStartUpAdminNewSubregUser", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpAdminNewSubregUser", "wStartUp.ProcessLogin" );
-      nOptRC = wStartUp.ProcessLogin( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wStartUp.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_ResetTopWindow, "wStartUp", "UserLogin" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
    while ( bDone == false && strActionToProcess.equals( "_OnUnload" ) )
    {
       bDone = true;
@@ -1087,22 +789,6 @@ else
 
 <jsp:include page='<%=strBannerName %>' />
 
-<!-- Main Navigation *********************** -->
-<div id="mainnavigation">
-   <ul id="TopMenu" name="TopMenu" >
-       <li id="lmProductManagement" name="lmProductManagement" ><a href="#" onclick="mProductManagement()">Products</a></li>
-       <li id="lmSubregistrants" name="lmSubregistrants" ><a href="#" onclick="mSubregistrants()">Subregistrants</a></li>
-       <li id="lmTrackingNotificationCompliance" name="lmTrackingNotificationCompliance" ><a href="#" onclick="mTrackingNotificationCompliance()">Tracking/Notification/Compliance</a></li>
-       <li id="lmStateRegistrations" name="lmStateRegistrations" ><a href="#" onclick="mStateRegistrations()">State Registrations</a></li>
-       <li id="lmMarketingFulfillment" name="lmMarketingFulfillment" ><a href="#" onclick="mMarketingFulfillment()">Marketing/Fulfillment</a></li>
-       <li id="lmWebDevelopment" name="lmWebDevelopment" ><a href="#" onclick="mWebDevelopment()">Web Development</a></li>
-       <li id="lmCompanyProfile" name="lmCompanyProfile" ><a href="#" onclick="mCompanyProfile()">Company Profile</a></li>
-       <li id="lmLogin" name="lmLogin" ><a href="#" onclick="mLogin()">Login</a></li>
-       <li id="lmLogout" name="lmLogout" ><a href="#" onclick="mLogout()">Logout</a></li>
-   </ul>
-</div>  <!-- end Navigation Bar -->
-
-<%@include file="./include/topmenuend.inc" %>
 <div id="maincontent">
 
 <div id="leftcontent">
@@ -1240,11 +926,12 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
+         strLoginName = wWebXA.cursor( "Root" ).getAttribute( "LoginName" ).getString( "LoginName" );
+         if ( strLoginName == null )
+            strLoginName = "";
          strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
-
-         task.log().info( "Root.KeyRole: " + strKeyRole );
       }
    }
 %>
@@ -1252,6 +939,7 @@ else
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
    <input name="zPopupWindowSZX" id="zPopupWindowSZX" type="hidden" value="<%=strPopupWindowSZX%>">
@@ -1346,33 +1034,25 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:22px;width:100px;"></div>
+<div style="height:10px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* User:GroupBox */ %>
 
-<div id="User" name="User" style="width:506px;height:250px;float:left;">  <!-- User --> 
+<div id="User" name="User" style="width:506px;height:228px;float:left;">  <!-- User --> 
 
 
  <!-- This is added as a line spacer -->
-<div style="height:28px;width:100px;"></div>
+<div style="height:24px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:16px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox4:GroupBox */ %>
-<div id="GroupBox4" name="GroupBox4" style="float:left;width:474px;" >
-
-<table cols=2 style="width:474px;"  class="grouptable">
-
-<tr>
-<td valign="top" style="width:154px;">
+<span style="height:16px;">&nbsp&nbsp&nbsp</span>
 <% /* FirstName::Text */ %>
 
-<span  id="FirstName:" name="FirstName:" style="width:150px;height:16px;">First Name:</span>
+<span  id="FirstName:" name="FirstName:" style="width:140px;height:16px;">First Name:</span>
 
-</td>
-<td valign="top" style="width:318px;">
+<span style="height:16px;">&nbsp&nbsp</span>
 <% /* EBFirstName:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "EBFirstName", strError );
@@ -1414,16 +1094,21 @@ else
 
 <input name="EBFirstName" id="EBFirstName" style="width:318px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-</td>
-</tr>
-<tr>
-<td valign="top" style="width:154px;">
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:12px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp&nbsp</span>
 <% /* LastName::Text */ %>
 
-<span  id="LastName:" name="LastName:" style="width:150px;height:16px;">Last Name:</span>
+<span  id="LastName:" name="LastName:" style="width:140px;height:16px;">Last Name:</span>
 
-</td>
-<td valign="top" style="width:318px;">
+<span style="height:16px;">&nbsp&nbsp</span>
 <% /* EBLastName:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "EBLastName", strError );
@@ -1465,16 +1150,21 @@ else
 
 <input name="EBLastName" id="EBLastName" style="width:318px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-</td>
-</tr>
-<tr>
-<td valign="top" style="width:154px;">
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:12px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp&nbsp</span>
 <% /* Title::Text */ %>
 
-<span  id="Title:" name="Title:" style="width:150px;height:16px;">Title:</span>
+<span  id="Title:" name="Title:" style="width:140px;height:16px;">Title:</span>
 
-</td>
-<td valign="top" style="width:318px;">
+<span style="height:16px;">&nbsp&nbsp</span>
 <% /* EBTitle:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "EBTitle", strError );
@@ -1516,16 +1206,21 @@ else
 
 <input name="EBTitle" id="EBTitle" style="width:318px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-</td>
-</tr>
-<tr>
-<td valign="top" style="width:154px;">
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:12px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp&nbsp</span>
 <% /* CPhone::Text */ %>
 
-<span  id="CPhone:" name="CPhone:" style="width:150px;height:16px;">Phone:</span>
+<span  id="CPhone:" name="CPhone:" style="width:140px;height:16px;">Phone:</span>
 
-</td>
-<td valign="top" style="width:318px;">
+<span style="height:16px;">&nbsp&nbsp</span>
 <% /* EBCPhone:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "EBCPhone", strError );
@@ -1567,16 +1262,21 @@ else
 
 <input name="EBCPhone" id="EBCPhone" style="width:318px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-</td>
-</tr>
-<tr>
-<td valign="top" style="width:154px;">
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:12px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp&nbsp</span>
 <% /* Fax::Text */ %>
 
-<span  id="Fax:" name="Fax:" style="width:150px;height:16px;">Fax:</span>
+<span  id="Fax:" name="Fax:" style="width:140px;height:16px;">Fax:</span>
 
-</td>
-<td valign="top" style="width:318px;">
+<span style="height:16px;">&nbsp&nbsp</span>
 <% /* EBFax:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "EBFax", strError );
@@ -1618,16 +1318,21 @@ else
 
 <input name="EBFax" id="EBFax" style="width:318px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-</td>
-</tr>
-<tr>
-<td valign="top" style="width:154px;">
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:12px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp&nbsp</span>
 <% /* Email::Text */ %>
 
-<span  id="Email:" name="Email:" style="width:150px;height:16px;">Email:</span>
+<span  id="Email:" name="Email:" style="width:140px;height:16px;">Email:</span>
 
-</td>
-<td valign="top" style="width:318px;">
+<span style="height:16px;">&nbsp&nbsp</span>
 <% /* EBEmail:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "EBEmail", strError );
@@ -1669,16 +1374,21 @@ else
 
 <input name="EBEmail" id="EBEmail" style="width:318px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-</td>
-</tr>
-<tr>
-<td valign="top" style="width:154px;">
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:10px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp&nbsp</span>
 <% /* ExperienceLevel::Text */ %>
 
-<span  id="ExperienceLevel:" name="ExperienceLevel:" style="width:150px;height:16px;">Experience Level:</span>
+<span  id="ExperienceLevel:" name="ExperienceLevel:" style="width:140px;height:16px;">Experience Level:</span>
 
-</td>
-<td valign="top" style="width:318px;">
+<span style="height:84px;">&nbsp&nbsp</span>
 <% /* ExperienceLevel:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
@@ -1759,12 +1469,6 @@ else
 </select>
 
 <input name="hExperienceLevel" id="hExperienceLevel" type="hidden" value="<%=strComboCurrentValue%>" >
-</td>
-</tr>
-</table>
-
-</div>  <!-- GroupBox4 --> 
-
 </div>  <!-- End of a new line -->
 
 
@@ -1775,13 +1479,13 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:32px;width:100px;"></div>
+<div style="height:18px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* PhysicalAddress:GroupBox */ %>
 
-<div id="PhysicalAddress" name="PhysicalAddress" style="width:506px;height:152px;float:left;">  <!-- PhysicalAddress --> 
+<div id="PhysicalAddress" name="PhysicalAddress" style="width:506px;height:146px;float:left;">  <!-- PhysicalAddress --> 
 
 
  <!-- This is added as a line spacer -->
@@ -2099,13 +1803,13 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:36px;width:100px;"></div>
+<div style="height:14px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* Login:GroupBox */ %>
 
-<div id="Login" name="Login" style="width:506px;height:122px;float:left;">  <!-- Login --> 
+<div id="Login" name="Login" style="width:506px;height:114px;float:left;">  <!-- Login --> 
 
 
  <!-- This is added as a line spacer -->
@@ -2284,14 +1988,11 @@ else
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
- <!-- This is added as a line spacer -->
-<div style="height:14px;width:100px;"></div>
-
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:24px;float:left;"></div>   <!-- Width Spacer -->
+<div style="height:1px;width:26px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox1:GroupBox */ %>
 
-<div id="GroupBox1" name="GroupBox1" style="width:22px;height:36px;float:left;">  <!-- GroupBox1 --> 
+<div id="GroupBox1" name="GroupBox1" style="width:16px;height:36px;float:left;">  <!-- GroupBox1 --> 
 
 
 </div>  <!--  GroupBox1 --> 

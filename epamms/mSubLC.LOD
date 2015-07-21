@@ -1,4 +1,4 @@
-z1000-Zeidon    MSUBLC   TZZOLODO 06/23/15   14:57:01 1.0a2    
+z1000-Zeidon    MSUBLC   TZZOLODO 07/16/15   11:50:50 1.0a2    
 eLOD       1
 aZKey      69035258
 aName      mSubLC
@@ -189,7 +189,7 @@ aER_DiagramBendPosX 0
 aER_DiagramBendPosY 0
 aER_DiagramE1PosX 75
 aER_DiagramE1PosY 39
-aER_DiagramE2PosX 96
+aER_DiagramE2PosX 93
 aER_DiagramE2PosY 39
 
 eLOD_AttributeRec 5
@@ -251,7 +251,7 @@ eER_EntityRec 5
 aName      Subregistrant
 aZKey      68568355
 aPurpose   F
-aER_DiagramPosX 97
+aER_DiagramPosX 94
 aER_DiagramPosY 37
 
 eER_RelLinkRec 5
@@ -266,12 +266,12 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 6
 aZKey      69031588
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 127
-aER_DiagramBendPosY 41
-aER_DiagramE1PosX 106
-aER_DiagramE1PosY 41
-aER_DiagramE2PosX 127
-aER_DiagramE2PosY 52
+aER_DiagramBendPosX 98
+aER_DiagramBendPosY 53
+aER_DiagramE1PosX 98
+aER_DiagramE1PosY 42
+aER_DiagramE2PosX 122
+aER_DiagramE2PosY 53
 
 eLOD_EntityChild 4
 aName      MasterProduct

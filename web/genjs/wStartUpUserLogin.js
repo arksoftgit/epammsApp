@@ -174,6 +174,7 @@ function _AfterPageLoaded( )
       }
    }
 
+   var LoginName = document.wStartUpUserLogin.zLoginName.value;
    var keyRole = document.wStartUpUserLogin.zKeyRole.value;
    document.wStartUpUserLogin.zError.value = "";
    document.wStartUpUserLogin.zOpenFile.value = "";
@@ -218,7 +219,7 @@ function _AfterPageLoaded( )
 */
    // END of Javascript code entered by user.
 
-   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
+var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
 }
 

@@ -119,6 +119,44 @@ o_fnLocalBuildQual_29( View     vSubtask,
 
    RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
    CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "Subregistrant" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "Subregistrant" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_30( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lTempInteger_1 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "ReusableBlockDefinition" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "ReusableBlockDefinition" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_1 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_31( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lTempInteger_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
    SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "ReusableBlockDefinition" );
    CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
    SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "ReusableBlockDefinition" );
@@ -623,11 +661,121 @@ o_fnLocalBuildQual_0( View     vSubtask,
 
 //:DIALOG OPERATION
 //:SaveReusableBlock( VIEW ViewToWindow )
-
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
 public int 
 SaveReusableBlock( View     ViewToWindow )
 {
+   zVIEW    wWebXfer = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW mSPLDefPanel REGISTERED AS mSPLDefPanel
+   zVIEW    mSPLDefPanel = new zVIEW( );
+   //:VIEW mBlockRU BASED ON LOD mBlockRU
+   zVIEW    mBlockRU = new zVIEW( );
+   //:VIEW qBlockRU BASED ON LOD qBlockRU
+   zVIEW    qBlockRU = new zVIEW( );
+   //:INTEGER ID
+   int      ID = 0;
+   int      lTempInteger_0 = 0;
+   zVIEW    vTempViewVar_0 = new zVIEW( );
+   String   szTempString_0 = null;
+   int      lTempInteger_1 = 0;
+   zVIEW    vTempViewVar_1 = new zVIEW( );
+   int      lTempInteger_2 = 0;
 
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( mSPLDefPanel, "mSPLDefPanel", ViewToWindow, zLEVEL_TASK );
+
+   //:ID = mSPLDefPanel.ReusableBlockDefinition.ID
+   {MutableInt mi_ID = new MutableInt( ID );
+       GetIntegerFromAttribute( mi_ID, mSPLDefPanel, "ReusableBlockDefinition", "ID" );
+   ID = mi_ID.intValue( );}
+
+   //:ACTIVATE qBlockRU WHERE qBlockRU.Subregistrant.ID = mSPLDefPanel.Subregistrant.ID
+   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+       GetIntegerFromAttribute( mi_lTempInteger_0, mSPLDefPanel, "Subregistrant", "ID" );
+   lTempInteger_0 = mi_lTempInteger_0.intValue( );}
+   o_fnLocalBuildQual_29( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
+   RESULT = ActivateObjectInstance( qBlockRU, "qBlockRU", ViewToWindow, vTempViewVar_0, zSINGLE );
+   DropView( vTempViewVar_0 );
+   //:SET CURSOR FIRST qBlockRU.ReusableBlockDefinition WHERE qBlockRU.ReusableBlockDefinition.Name = wWebXfer.Root.SearchName
+   {StringBuilder sb_szTempString_0;
+   if ( szTempString_0 == null )
+      sb_szTempString_0 = new StringBuilder( 32 );
+   else
+      sb_szTempString_0 = new StringBuilder( szTempString_0 );
+       GetStringFromAttribute( sb_szTempString_0, wWebXfer, "Root", "SearchName" );
+   szTempString_0 = sb_szTempString_0.toString( );}
+   RESULT = SetCursorFirstEntityByString( qBlockRU, "ReusableBlockDefinition", "Name", szTempString_0, "" );
+   //:IF RESULT >= zCURSOR_SET
+   if ( RESULT >= zCURSOR_SET )
+   { 
+      //:IF qBlockRU.ReusableBlockDefinition.ID != ID
+      if ( CompareAttributeToInteger( qBlockRU, "ReusableBlockDefinition", "ID", ID ) != 0 )
+      { 
+         //:MessageSend( ViewToWindow, "", "Select Reusable Block",
+         //:             "Reusable Block Name already exists",
+         //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         MessageSend( ViewToWindow, "", "Select Reusable Block", "Reusable Block Name already exists", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+         //:DropObjectInstance( qBlockRU )
+         DropObjectInstance( qBlockRU );
+         //:RETURN 2
+         if(8==8)return( 2 );
+      } 
+
+      //:END
+      //:SET CURSOR NEXT qBlockRU.ReusableBlockDefinition WHERE qBlockRU.ReusableBlockDefinition.Name = wWebXfer.Root.SearchName
+      {StringBuilder sb_szTempString_0;
+      if ( szTempString_0 == null )
+         sb_szTempString_0 = new StringBuilder( 32 );
+      else
+         sb_szTempString_0 = new StringBuilder( szTempString_0 );
+             GetStringFromAttribute( sb_szTempString_0, wWebXfer, "Root", "SearchName" );
+      szTempString_0 = sb_szTempString_0.toString( );}
+      RESULT = SetCursorNextEntityByString( qBlockRU, "ReusableBlockDefinition", "Name", szTempString_0, "" );
+      //:IF RESULT >= zCURSOR_SET AND qBlockRU.ReusableBlockDefinition.ID != ID
+      if ( RESULT >= zCURSOR_SET && CompareAttributeToInteger( qBlockRU, "ReusableBlockDefinition", "ID", ID ) != 0 )
+      { 
+         //:MessageSend( ViewToWindow, "", "Select Reusable Block",
+         //:             "Reusable Block Name already exists",
+         //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         MessageSend( ViewToWindow, "", "Select Reusable Block", "Reusable Block Name already exists", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+         //:DropObjectInstance( qBlockRU )
+         DropObjectInstance( qBlockRU );
+         //:RETURN 2
+         if(8==8)return( 2 );
+      } 
+
+      //:END
+   } 
+
+   //:END
+
+   //:ACTIVATE mBlockRU WHERE mBlockRU.ReusableBlockDefinition.ID = mSPLDefPanel.ReusableBlockDefinition.ID
+   {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+       GetIntegerFromAttribute( mi_lTempInteger_1, mSPLDefPanel, "ReusableBlockDefinition", "ID" );
+   lTempInteger_1 = mi_lTempInteger_1.intValue( );}
+   o_fnLocalBuildQual_30( ViewToWindow, vTempViewVar_1, lTempInteger_1 );
+   RESULT = ActivateObjectInstance( mBlockRU, "mBlockRU", ViewToWindow, vTempViewVar_1, zSINGLE );
+   DropView( vTempViewVar_1 );
+   //:IF mBlockRU.LLD_Block EXISTS
+   lTempInteger_2 = CheckExistenceOfEntity( mBlockRU, "LLD_Block" );
+   if ( lTempInteger_2 == 0 )
+   { 
+      //:mSPLDefPanel.ReusableBlockDefinition.Name = wWebXfer.Root.SearchName
+      SetAttributeFromAttribute( mSPLDefPanel, "ReusableBlockDefinition", "Name", wWebXfer, "Root", "SearchName" );
+      //:mBlockRU.ReusableBlockDefinition.Name = mSPLDefPanel.ReusableBlockDefinition.Name
+      SetAttributeFromAttribute( mBlockRU, "ReusableBlockDefinition", "Name", mSPLDefPanel, "ReusableBlockDefinition", "Name" );
+      //:mBlockRU.ReusableBlockDefinition.Description = mSPLDefPanel.ReusableBlockDefinition.Description
+      SetAttributeFromAttribute( mBlockRU, "ReusableBlockDefinition", "Description", mSPLDefPanel, "ReusableBlockDefinition", "Description" );
+      //:DisplayObjectInstance( mBlockRU, "", "" )
+      DisplayObjectInstance( mBlockRU, "", "" );
+      //:COMMIT mBlockRU
+      RESULT = CommitObjectInstance( mBlockRU );
+   } 
+
+   //:END
+   //:DropObjectInstance( mBlockRU )
+   DropObjectInstance( mBlockRU );
    return( 0 );
 // END
 } 
@@ -635,11 +783,20 @@ SaveReusableBlock( View     ViewToWindow )
 
 //:DIALOG OPERATION
 //:InitReusableBlockForUpdate( VIEW ViewToWindow )
-
+//:   VIEW mSPLDefPanel REGISTERED AS mSPLDefPanel
 public int 
 InitReusableBlockForUpdate( View     ViewToWindow )
 {
+   zVIEW    mSPLDefPanel = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW wWebXfer REGISTERED AS wWebXfer
+   zVIEW    wWebXfer = new zVIEW( );
 
+   RESULT = GetViewByName( mSPLDefPanel, "mSPLDefPanel", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+
+   //:wWebXfer.Root.SearchName = mSPLDefPanel.ReusableBlockDefinition.Name
+   SetAttributeFromAttribute( wWebXfer, "Root", "SearchName", mSPLDefPanel, "ReusableBlockDefinition", "Name" );
    return( 0 );
 // END
 } 
@@ -648,7 +805,7 @@ InitReusableBlockForUpdate( View     ViewToWindow )
 //:LOCAL OPERATION
 //:CopyBlock( VIEW mSPLDef )
 
-//:  VIEW mSPLDefBlock REGISTERED AS mSPLDefBlock
+//:   VIEW mSPLDefBlock REGISTERED AS mSPLDefBlock
 private int 
 o_CopyBlock( View     mSPLDef )
 {
@@ -3064,20 +3221,22 @@ SELECT_MarketingSectionForBlock( View     ViewToWindow )
 
 //:LOCAL OPERATION
 //:fnGenerateSPLD_Label( VIEW ViewToWindow, SHORT bBorders )
-//:   VIEW mSPLDefPanel  BASED ON LOD  mSPLDef
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
 private int 
 o_fnGenerateSPLD_Label( View     ViewToWindow,
                         int      bBorders )
 {
+   zVIEW    wWebXfer = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW mSPLDefPanel  BASED ON LOD  mSPLDef
    zVIEW    mSPLDefPanel = new zVIEW( );
    //:VIEW mSubLC   REGISTERED AS mSubLC
    zVIEW    mSubLC = new zVIEW( );
-   int      RESULT = 0;
    //:STRING ( 32 ) szLPLR_Name
    String   szLPLR_Name = null;
    //:STRING ( 64 ) szSystemIniApplName
    String   szSystemIniApplName = null;
-   //:STRING ( 64 ) szLabelName
+   //:STRING ( 256 ) szLabelName
    String   szLabelName = null;
    //:STRING ( 256 ) szDirectory
    String   szDirectory = null;
@@ -3099,8 +3258,11 @@ o_fnGenerateSPLD_Label( View     ViewToWindow,
    int      lTempInteger_1 = 0;
    String   szTempString_2 = null;
    int      lTempInteger_2 = 0;
+   String   szTempString_3 = null;
    int      lTempInteger_3 = 0;
+   int      lTempInteger_4 = 0;
 
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
    RESULT = GetViewByName( mSubLC, "mSubLC", ViewToWindow, zLEVEL_TASK );
 
    //:// We will use mSPLDefPanel, if it exists, as it will always be pointing to the top of the LLD_Block
@@ -3216,7 +3378,7 @@ o_fnGenerateSPLD_Label( View     ViewToWindow,
       ZeidonStringConcat( sb_szApplication, 1, 0, "/", 1, 0, 257 );
    szApplication = sb_szApplication.toString( );}
 
-   //:szLabelName = mSPLDefPanel.SubregProduct.Name + "." + mSPLDefPanel.SubregLabelContent.Version + "." + mSPLDefPanel.SubregPhysicalLabelDef.Name
+   //:szLabelName = mSPLDefPanel.SubregProduct.Name + "." + mSPLDefPanel.SubregLabelContent.Version + "." + mSPLDefPanel.SubregPhysicalLabelDef.Name + "." + wWebXfer.Root.LoginName
    {StringBuilder sb_szLabelName;
    if ( szLabelName == null )
       sb_szLabelName = new StringBuilder( 32 );
@@ -3229,7 +3391,7 @@ o_fnGenerateSPLD_Label( View     ViewToWindow,
       sb_szLabelName = new StringBuilder( 32 );
    else
       sb_szLabelName = new StringBuilder( szLabelName );
-      ZeidonStringConcat( sb_szLabelName, 1, 0, ".", 1, 0, 65 );
+      ZeidonStringConcat( sb_szLabelName, 1, 0, ".", 1, 0, 257 );
    szLabelName = sb_szLabelName.toString( );}
    {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
    StringBuilder sb_szTempString_1;
@@ -3245,14 +3407,14 @@ o_fnGenerateSPLD_Label( View     ViewToWindow,
       sb_szLabelName = new StringBuilder( 32 );
    else
       sb_szLabelName = new StringBuilder( szLabelName );
-      ZeidonStringConcat( sb_szLabelName, 1, 0, szTempString_1, 1, 0, 65 );
+      ZeidonStringConcat( sb_szLabelName, 1, 0, szTempString_1, 1, 0, 257 );
    szLabelName = sb_szLabelName.toString( );}
     {StringBuilder sb_szLabelName;
    if ( szLabelName == null )
       sb_szLabelName = new StringBuilder( 32 );
    else
       sb_szLabelName = new StringBuilder( szLabelName );
-      ZeidonStringConcat( sb_szLabelName, 1, 0, ".", 1, 0, 65 );
+      ZeidonStringConcat( sb_szLabelName, 1, 0, ".", 1, 0, 257 );
    szLabelName = sb_szLabelName.toString( );}
    {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
    StringBuilder sb_szTempString_2;
@@ -3268,7 +3430,30 @@ o_fnGenerateSPLD_Label( View     ViewToWindow,
       sb_szLabelName = new StringBuilder( 32 );
    else
       sb_szLabelName = new StringBuilder( szLabelName );
-      ZeidonStringConcat( sb_szLabelName, 1, 0, szTempString_2, 1, 0, 65 );
+      ZeidonStringConcat( sb_szLabelName, 1, 0, szTempString_2, 1, 0, 257 );
+   szLabelName = sb_szLabelName.toString( );}
+    {StringBuilder sb_szLabelName;
+   if ( szLabelName == null )
+      sb_szLabelName = new StringBuilder( 32 );
+   else
+      sb_szLabelName = new StringBuilder( szLabelName );
+      ZeidonStringConcat( sb_szLabelName, 1, 0, ".", 1, 0, 257 );
+   szLabelName = sb_szLabelName.toString( );}
+   {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
+   StringBuilder sb_szTempString_3;
+   if ( szTempString_3 == null )
+      sb_szTempString_3 = new StringBuilder( 32 );
+   else
+      sb_szTempString_3 = new StringBuilder( szTempString_3 );
+       GetVariableFromAttribute( sb_szTempString_3, mi_lTempInteger_3, 'S', 129, wWebXfer, "Root", "LoginName", "", 0 );
+   lTempInteger_3 = mi_lTempInteger_3.intValue( );
+   szTempString_3 = sb_szTempString_3.toString( );}
+    {StringBuilder sb_szLabelName;
+   if ( szLabelName == null )
+      sb_szLabelName = new StringBuilder( 32 );
+   else
+      sb_szLabelName = new StringBuilder( szLabelName );
+      ZeidonStringConcat( sb_szLabelName, 1, 0, szTempString_3, 1, 0, 257 );
    szLabelName = sb_szLabelName.toString( );}
    //:RemoveInvalidCharsFromFilename( szLabelName )
    try
@@ -3373,14 +3558,14 @@ o_fnGenerateSPLD_Label( View     ViewToWindow,
 
 
    //:szUseFopConfig = mSPLDefPanel.SPLD_LLD.UseFopConfig
-   {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
+   {MutableInt mi_lTempInteger_4 = new MutableInt( lTempInteger_4 );
    StringBuilder sb_szUseFopConfig;
    if ( szUseFopConfig == null )
       sb_szUseFopConfig = new StringBuilder( 32 );
    else
       sb_szUseFopConfig = new StringBuilder( szUseFopConfig );
-       GetVariableFromAttribute( sb_szUseFopConfig, mi_lTempInteger_3, 'S', 2, mSPLDefPanel, "SPLD_LLD", "UseFopConfig", "", 0 );
-   lTempInteger_3 = mi_lTempInteger_3.intValue( );
+       GetVariableFromAttribute( sb_szUseFopConfig, mi_lTempInteger_4, 'S', 2, mSPLDefPanel, "SPLD_LLD", "UseFopConfig", "", 0 );
+   lTempInteger_4 = mi_lTempInteger_4.intValue( );
    szUseFopConfig = sb_szUseFopConfig.toString( );}
    //:IF szUseFopConfig = "Y"
    if ( ZeidonStringCompare( szUseFopConfig, 1, 0, "Y", 1, 0, 2 ) == 0 )
@@ -6092,13 +6277,13 @@ ProcessUserLogin( View     ViewToWindow )
    //:END
 
    //:// *** NOTE THAT WE ARE CURRENTLY ACTIVATING THE ONLY SUBREG.
-   //:ACTIVATE mSubreg WHERE mSubreg.SubregOrganization.Name = wWebXfer.Root.AttemptLoginName 
+   //:ACTIVATE mSubreg WHERE mSubreg.SubregOrganization.Name = wWebXfer.Root.AttemptLoginRegistrant 
    {StringBuilder sb_szTempString_0;
    if ( szTempString_0 == null )
       sb_szTempString_0 = new StringBuilder( 32 );
    else
       sb_szTempString_0 = new StringBuilder( szTempString_0 );
-       GetStringFromAttribute( sb_szTempString_0, wWebXfer, "Root", "AttemptLoginName" );
+       GetStringFromAttribute( sb_szTempString_0, wWebXfer, "Root", "AttemptLoginRegistrant" );
    szTempString_0 = sb_szTempString_0.toString( );}
    o_fnLocalBuildQual_0( ViewToWindow, vTempViewVar_0, szTempString_0 );
    RESULT = ActivateObjectInstance( mSubreg, "mSubreg", ViewToWindow, vTempViewVar_0, zSINGLE );
@@ -6812,7 +6997,7 @@ ACCEPT_ReusableBlock( View     ViewToWindow )
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
        GetIntegerFromAttribute( mi_lTempInteger_0, mSPLDef, "ReusableBlockDefinition", "ID" );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );}
-   o_fnLocalBuildQual_29( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
+   o_fnLocalBuildQual_31( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
    RESULT = ActivateObjectInstance( mBlockRU, "mBlockRU", ViewToWindow, vTempViewVar_0, zSINGLE );
    DropView( vTempViewVar_0 );
    //:IF mBlockRU.LLD_Block EXISTS

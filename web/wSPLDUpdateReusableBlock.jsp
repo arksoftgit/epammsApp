@@ -36,6 +36,7 @@ public int DoInputMapping( HttpServletRequest request,
    Task task = objectEngine.getTaskById( taskId );
 
    View mSPLDefPanel = null;
+   View wWebXfer = null;
    View vGridTmp = null; // temp view to grid view
    View vRepeatingGrp = null; // temp view to repeating group view
    String strDateFormat = "";
@@ -60,25 +61,6 @@ public int DoInputMapping( HttpServletRequest request,
    mSPLDefPanel = task.getViewByName( "mSPLDefPanel" );
    if ( VmlOperation.isValid( mSPLDefPanel ) )
    {
-      // EditBox: ReusableBlockName
-      nRC = mSPLDefPanel.cursor( "ReusableBlockDefinition" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
-      {
-         strMapValue = request.getParameter( "ReusableBlockName" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "ReusableBlockName", "", strMapValue );
-            else
-               mSPLDefPanel.cursor( "ReusableBlockDefinition" ).getAttribute( "Name" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "ReusableBlockName", e.getReason( ), strMapValue );
-         }
-      }
-
       // MLEdit: Description
       nRC = mSPLDefPanel.cursor( "ReusableBlockDefinition" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
@@ -95,6 +77,30 @@ public int DoInputMapping( HttpServletRequest request,
          {
             nMapError = -16;
             VmlOperation.CreateMessage( task, "Description", e.getReason( ), strMapValue );
+         }
+      }
+
+   }
+
+   wWebXfer = task.getViewByName( "wWebXfer" );
+   if ( VmlOperation.isValid( wWebXfer ) )
+   {
+      // EditBox: ReusableBlockName
+      nRC = wWebXfer.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "ReusableBlockName" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "ReusableBlockName", "", strMapValue );
+            else
+               wWebXfer.cursor( "Root" ).getAttribute( "SearchName" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "ReusableBlockName", e.getReason( ), strMapValue );
          }
       }
 
@@ -145,6 +151,7 @@ String strOpenPopupWindow = "";
 String strPopupWindowSZX = "";
 String strPopupWindowSZY = "";
 String strDateFormat = "";
+String strLoginName = "";
 String strKeyRole = "";
 String strDialogName = "";
 String strWindowName = "";
@@ -446,7 +453,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="SaveReturn" name="SaveReturn"><a href="#"  onclick="SaveReturn()">Return</a></li>
+       <li id="SaveReturn" name="SaveReturn"><a href="#"  onclick="SaveReturn()">Save and Return</a></li>
 <%
    }
 %>
@@ -568,11 +575,12 @@ else
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
+         strLoginName = wWebXA.cursor( "Root" ).getAttribute( "LoginName" ).getString( "LoginName" );
+         if ( strLoginName == null )
+            strLoginName = "";
          strKeyRole = wWebXA.cursor( "Root" ).getAttribute( "KeyRole" ).getString( "KeyRole" );
          if ( strKeyRole == null )
             strKeyRole = "";
-
-         task.log().info( "Root.KeyRole: " + strKeyRole );
       }
    }
 %>
@@ -580,6 +588,7 @@ else
    <input name="zFocusCtrl" id="zFocusCtrl" type="hidden" value="<%=strFocusCtrl%>">
    <input name="zOpenFile" id="zOpenFile" type="hidden" value="<%=strOpenFile%>">
    <input name="zDateFormat" id="zDateFormat" type="hidden" value="<%=strDateFormat%>">
+   <input name="zLoginName" id="zLoginName" type="hidden" value="<%=strLoginName%>">
    <input name="zKeyRole" id="zKeyRole" type="hidden" value="<%=strKeyRole%>">
    <input name="zOpenPopupWindow" id="zOpenPopupWindow" type="hidden" value="<%=strOpenPopupWindow%>">
    <input name="zPopupWindowSZX" id="zPopupWindowSZX" type="hidden" value="<%=strPopupWindowSZX%>">
@@ -663,17 +672,17 @@ else
    else
    {
       strErrorColor = "";
-      mSPLDefPanel = task.getViewByName( "mSPLDefPanel" );
-      if ( VmlOperation.isValid( mSPLDefPanel ) == false )
+      wWebXfer = task.getViewByName( "wWebXfer" );
+      if ( VmlOperation.isValid( wWebXfer ) == false )
          task.log( ).debug( "Invalid View: " + "ReusableBlockName" );
       else
       {
-         nRC = mSPLDefPanel.cursor( "ReusableBlockDefinition" ).checkExistenceOfEntity( ).toInt();
+         nRC = wWebXfer.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
             try
             {
-               strErrorMapValue = mSPLDefPanel.cursor( "ReusableBlockDefinition" ).getAttribute( "Name" ).getString( "" );
+               strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "SearchName" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -683,10 +692,10 @@ else
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "ReusableBlockDefinition.Name: " + strErrorMapValue );
+            task.log( ).debug( "Root.SearchName: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for ReusableBlockName: " + "mSPLDefPanel.ReusableBlockDefinition" );
+            task.log( ).debug( "Entity does not exist for ReusableBlockName: " + "wWebXfer.Root" );
       }
    }
 %>
