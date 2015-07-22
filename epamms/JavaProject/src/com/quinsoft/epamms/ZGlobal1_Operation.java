@@ -6164,5 +6164,62 @@ ioe.printStackTrace();
    }
 
 */
+/*
+   GLOBAL OPERATION
+   BuildSimpleStringQualification( VIEW    vSubtask,
+                                   VIEW    vQualObject,
+                                   STRING (64) strEntityName,
+                                   STRING (64) strKeyAttributeName,
+                                   STRING (256) strKeyAttributeValue )
+      INTEGER nRC
+
+      nRC = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE )
+      CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER )
+      SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", strEntityName )
+      CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER )
+      SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", strEntityName )
+      SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", strKeyAttributeName )
+      SetAttributeFromString( vQualObject, "QualAttrib", "Value", strKeyAttributeValue )
+      SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" )
+      RETURN nRC
+   END
+*/
+   public int
+   BuildSimpleStringQualification( View   vSubtask,
+                                   zVIEW  vQualificationObject,
+                                   String strEntityName,
+                                   String strKeyAttributeName,
+                                   String strKeyAttributeValue )
+   {
+      View view = vSubtask.activateEmptyObjectInstance( "KZDBHQUA", task.getSystemTask().getApplication() );
+      view.cursor( "EntitySpec" ).createEntity( CursorPosition.NEXT );
+      view.cursor( "EntitySpec" ).getAttribute( "EntityName" ).setValue( strEntityName );
+      view.cursor( "QualAttrib" ).createEntity( CursorPosition.NEXT );
+      view.cursor( "QualAttrib" ).getAttribute( "EntityName" ).setValue( strEntityName );
+      view.cursor( "QualAttrib" ).getAttribute( "AttributeName" ).setValue( strKeyAttributeName );
+      view.cursor( "QualAttrib" ).getAttribute( "Value" ).setValue( strKeyAttributeValue );
+      view.cursor( "QualAttrib" ).getAttribute( "Oper" ).setValue( "=" );
+      vQualificationObject.setView( view );
+      return( 0 );
+   }
+
+   public int
+   BuildSimpleIntegerQualification( View   vSubtask,
+                                    zVIEW  vQualificationObject,
+                                    String strEntityName,
+                                    String strKeyAttributeName,
+                                    int    lKeyAttributeValue )
+   {
+      View view = vSubtask.activateEmptyObjectInstance( "KZDBHQUA", task.getSystemTask().getApplication() );
+      view.cursor( "EntitySpec" ).createEntity( CursorPosition.NEXT );
+      view.cursor( "EntitySpec" ).getAttribute( "EntityName" ).setValue( strEntityName );
+      view.cursor( "QualAttrib" ).createEntity( CursorPosition.NEXT );
+      view.cursor( "QualAttrib" ).getAttribute( "EntityName" ).setValue( strEntityName );
+      view.cursor( "QualAttrib" ).getAttribute( "AttributeName" ).setValue( strKeyAttributeName );
+      view.cursor( "QualAttrib" ).getAttribute( "Value" ).setValue( lKeyAttributeValue );
+      view.cursor( "QualAttrib" ).getAttribute( "Oper" ).setValue( "=" );
+      vQualificationObject.setView( view );
+      return( 0 );
+   }
 
 }

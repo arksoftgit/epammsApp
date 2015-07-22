@@ -4132,16 +4132,56 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: ResumeEditSPLD
+// OPERATION: ResumeEditingSPLD
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
-ResumeEditSPLD( VIEW ViewToWindow )
+ResumeEditingSPLD( VIEW ViewToWindow )
 
+   VIEW qOrganiz REGISTERED AS qOrganizLogin
+/*
+   VIEW mSPLDef  BASED ON LOD mSPLDef
+   VIEW mSubLC   BASED ON LOD mSubLC
+   VIEW mSubProd BASED ON LOD mSubProd
+   VIEW mSubreg  BASED ON LOD mSubreg
+*/
+   VIEW vTemp
+   VIEW vQual
+   VIEW mUser    BASED ON LOD mUser
+   STRING ( 64 ) szLOD
+   STRING ( 64 ) szEntityName
+   STRING ( 64 ) szKeyAttributeName
+   INTEGER lKeyAttributeValue
+   STRING ( 64 ) szViewName
 
+   ACTIVATE mUser WHERE mUser.User.ID = qOrganiz.User.ID
+   SET CURSOR FIRST mUser.ResumePath WHERE mUser.ResumePath.DialogWindow = "wSPLDGraphicalView"
+   IF RESULT >= zCURSOR_SET
+      SET CURSOR FIRST mUser.ResumeObject
+      LOOP WHILE RESULT >= zCURSOR_SET
+         szLOD = mUser.ResumeObject.LOD
+         szEntityName = mUser.ResumeObject.EntityName
+         szKeyAttributeName = mUser.ResumeObject.KeyAttributeName
+         lKeyAttributeValue = mUser.ResumeObject.KeyAttributeValue
+         szViewName = mUser.ResumeObject.ViewName
+         GET VIEW vTemp NAMED szViewName
+         IF vTemp != 0
+            DropView( vTemp )
+         END
+         BuildSimpleIntegerQualification( ViewToWindow, vQual, szEntityName, szKeyAttributeName, lKeyAttributeValue )
+         ActivateObjectInstance( vTemp, szLOD, qOrganiz, vQual, zSINGLE )
+         DropView( vQual )
+         NAME VIEW vTemp szViewName
+         SET CURSOR NEXT mUser.ResumeObject
+      END
+   ELSE
+      MessageSend( ViewToWindow, "", "Resume",
+                   "Resume to SPLD not available",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
 
 END
-
 
 /////////////////////////////////////////////////////////////////////////////
 //

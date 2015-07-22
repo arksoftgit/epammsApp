@@ -1,4 +1,4 @@
-z1000-Zeidon    ZGLOBAL1 TZOGSRCO 06/03/15   11:38:53 1.0a2    
+z1000-Zeidon    ZGLOBAL1 TZOGSRCO 07/22/15   10:13:38 1.0a2    
 eGlobalOperationGroup 1
 aZKey      89816452
 aName      ZGlobal1
@@ -51,7 +51,89 @@ aUFlag     N
 aZKey      89816458
 
 eOperation 2
-aName      RemoveInvalidCharactersFromFilename
+aName      BuildSimpleIntegerQualification
+aZKey      110009888
+aType      G
+aReturnDataType N
+
+eParameter 3
+aShortDesc vSubtask
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      110009889
+
+eParameter 3
+aShortDesc vQualificationObject
+aDataType  V
+aPFlag     Y
+aUFlag     N
+aZKey      110009890
+
+eParameter 3
+aShortDesc EntityName
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      110009891
+
+eParameter 3
+aShortDesc KeyAttributeName
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      110009892
+
+eParameter 3
+aShortDesc KeyAttributeValue
+aDataType  L
+aPFlag     N
+aUFlag     N
+aZKey      110009893
+
+eOperation 2
+aName      BuildSimpleStringQualification
+aZKey      110009882
+aType      G
+aReturnDataType N
+
+eParameter 3
+aShortDesc vSubtask
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      110009883
+
+eParameter 3
+aShortDesc vQualificationObject
+aDataType  V
+aPFlag     Y
+aUFlag     N
+aZKey      110009884
+
+eParameter 3
+aShortDesc EntityName
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      110009885
+
+eParameter 3
+aShortDesc KeyAttributeName
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      110009886
+
+eParameter 3
+aShortDesc KeyAttributeValue
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      110009887
+
+eOperation 2
+aName      RemoveInvalidCharactersFromFilen
 aZKey      100040677
 aDesc      Removes invalid filename characters from a string.
 aType      G

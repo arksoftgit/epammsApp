@@ -2374,7 +2374,7 @@ GOTO_AddBlockComponent( VIEW ViewToWindow )
 
    VIEW mSPLDef      REGISTERED AS mSPLDef
    VIEW mSPLDefPanel BASED ON LOD  mSPLDef
-   
+
    // Simply create a temporal LLD_Block of type "Block".
    //CreateTemporalEntity( mSPLDef, "LLD_Block", zPOS_AFTER )
    //CreateTemporalEntity( mSPLDef, "LLD_Block", zPOS_AFTER )
@@ -3135,5 +3135,58 @@ ClearReusableBlockSelections( VIEW ViewToWindow )
       mSPLDef.ReusableBlockDefinition.wkSelected = ""
       SET CURSOR NEXT mSPLDef.ReusableBlockDefinition WHERE mSPLDef.ReusableBlockDefinition.wkSelected = "Y"
    END
+END
 
+LOCAL OPERATION
+SetResumeObject( VIEW   mUser,
+                 STRING (64) strLOD,
+                 STRING (64) strViewName,
+                 STRING (64) strEntityName,
+                 STRING (64) strAttributeName,
+                 INTEGER lAttributeValue )
+
+   CreateEntity( mUser, "ResumeObject", zPOS_AFTER )
+   SetAttributeFromString( mUser, "ResumeObject", "LOD", strLOD )
+   SetAttributeFromString( mUser, "ResumeObject", "ViewName", strViewName )
+   SetAttributeFromString( mUser, "ResumeObject", "EntityName", strEntityName )
+   SetAttributeFromString( mUser, "ResumeObject", "KeyAttributeName", strAttributeName )
+   SetAttributeFromInteger( mUser, "ResumeObject", "KeyAttributeValue", lAttributeValue )
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: SetSPLD_Resume
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+SetSPLD_Resume( VIEW ViewToWindow )
+
+   VIEW qOrganiz REGISTERED AS qOrganizLogin
+   VIEW mSPLDef  REGISTERED AS mSPLDef
+   VIEW mSubLC   REGISTERED AS mSubLC
+   VIEW mSubProd REGISTERED AS mSubProd
+   VIEW mSubreg  REGISTERED AS mSubreg
+   VIEW mUser    BASED ON LOD mUser
+
+   GET VIEW mUser NAMED "mUser"
+   IF mUser != 0
+      DropView( mUser )
+   END
+   ACTIVATE mUser WHERE mUser.User.ID = qOrganiz.User.ID
+   SET CURSOR FIRST mUser.ResumePath WHERE mUser.ResumePath.DialogWindow = "wSPLDGraphicalView"
+   IF RESULT >= zCURSOR_SET
+      SET CURSOR FIRST mUser.ResumeObject
+      LOOP WHILE RESULT >= zCURSOR_SET
+         DELETE ENTITY mUser.ResumeObject NONE
+      END
+   ELSE
+      CREATE ENTITY mUser.ResumePath LAST
+      mUser.ResumePath.DialogWindow = "wSPLDGraphicalView"
+   END
+   SetResumeObject( mUser, "mSPLDef", "mSPLDef", "SubregPhysicalLabelDef", "ID", mSPLDef.SubregPhysicalLabelDef.ID )
+   SetResumeObject( mUser, "mSubLC", "mSubLC", "SubregLabelContent", "ID", mSubLC.SubregLabelContent.ID )
+   SetResumeObject( mUser, "mSubProd", "mSubProd", "SubregProduct", "ID", mSubProd.SubregProduct.ID )
+   SetResumeObject( mUser, "mSubreg", "mSubreg", "Subregistrant", "ID", mSubreg.Subregistrant.ID )
+   COMMIT mUser
+   DropObjectInstance( mUser )
 END

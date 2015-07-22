@@ -205,8 +205,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpePammsPortal", "wStartUp.ResumeEditSPLD" );
-      nOptRC = wStartUp.ResumeEditSPLD( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpePammsPortal", "wStartUp.ResumeEditingSPLD" );
+      nOptRC = wStartUp.ResumeEditingSPLD( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -223,7 +223,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StayOnWindowWithRefresh, "wSPLD", "GraphicalView" );
+         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StartModalSubwindow, "wSPLD", "GraphicalView" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -307,8 +307,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpePammsPortal", "wStartUp.ResumeEditSPLD" );
-      nOptRC = wStartUp.ResumeEditSPLD( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpePammsPortal", "wStartUp.ResumeEditingSPLD" );
+      nOptRC = wStartUp.ResumeEditingSPLD( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -325,7 +325,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StayOnWindowWithRefresh, "wSPLD", "GraphicalView" );
+         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StartModalSubwindow, "wSPLD", "GraphicalView" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );

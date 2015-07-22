@@ -176,7 +176,11 @@ $(function() {
       Return();
    }
 
-   $("#Return").click( function() {
+   $("#CancelReturn").click( function() {
+      Return();
+   });
+
+   $("#SaveReturn").click( function() {
       if ( g_updatedLLD ) {
          saveLabel( "", returnCallback );
          g_updatedLLD = false;
@@ -3695,6 +3699,21 @@ public class FileServer {
    var spinner = $("#zZoomSpinner").spinner();
    spinner.spinner( "value", g_scale );
 
+   $("#SaveReturn").button({
+   // icons: { primary: "ui-icon-pencil", secondary: "ui-icon-arrowreturnthick-1-w" }
+   });
+   $("#CancelReturn").button({
+   // icons: { primary: "ui-icon-trash", secondary: "ui-icon-arrowreturnthick-1-w" }
+   });
+   $("#Save").button({
+   // icons: { primary: "ui-icon-pencil" }
+   });
+   $("#GenerateSPLD_Label").button({
+   });
+   $("#UpdateBlock").button({
+   });
+   $("#ReuseBlock").button({
+   });
 /**
 var canvas = $('#canvasback')[0];
 var ctx = canvas.getContext('2d');
