@@ -1314,7 +1314,7 @@ GOTO_UpdateSubregProductSPLD( VIEW ViewToWindow )
    END
    
    // Build the work components
-   BuildCompositeEntries( mSPLDef )
+   BuildCompositeEntriesForSPLD( mSPLDef )
 // TraceLineS( "$$$$$$ end of oper", "GOTO_UpdateSubregProductSPLD" )
 // DisplayObjectInstance( mSPLDef, "", "" )
    

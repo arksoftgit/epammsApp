@@ -46,34 +46,6 @@ public class ZGlobalV_Operation extends VmlDialog
 
 
 //:GLOBAL OPERATION
-public int 
-InitializeSLC_FromMLC( View     mMasLC,
-                       View     mSubLC )
-{
-
-   //:InitializeSLC_FromMLC( VIEW mMasLC,
-   //:                    VIEW mSubLC )
-
-   //:CopyMLC_EntityToSLC( mMasLC, mSubLC, "General", 2 )
-   CopyMLC_EntityToSLC( mMasLC, mSubLC, "General", 2 );
-   //:CopyMLC_EntityToSLC( mMasLC, mSubLC, "Ingredients", 2 )
-   CopyMLC_EntityToSLC( mMasLC, mSubLC, "Ingredients", 2 );
-   //:CopyMLC_EntityToSLC( mMasLC, mSubLC, "StorageDisposal", 2 )
-   CopyMLC_EntityToSLC( mMasLC, mSubLC, "StorageDisposal", 2 );
-   //:CopyMLC_EntityToSLC( mMasLC, mSubLC, "DirectionsForUse", 2 )
-   CopyMLC_EntityToSLC( mMasLC, mSubLC, "DirectionsForUse", 2 );
-   //:CopyMLC_EntityToSLC( mMasLC, mSubLC, "Marketing", 2 )
-   CopyMLC_EntityToSLC( mMasLC, mSubLC, "Marketing", 2 );
-   //:CopyMLC_EntityToSLC( mMasLC, mSubLC, "HumanHazard", 1 )
-   CopyMLC_EntityToSLC( mMasLC, mSubLC, "HumanHazard", 1 );
-   //:CopyMLC_EntityToSLC( mMasLC, mSubLC, "Usage", 0 )
-   CopyMLC_EntityToSLC( mMasLC, mSubLC, "Usage", 0 );
-   return( 0 );
-// END
-} 
-
-
-//:GLOBAL OPERATION
 //:GenerateKeywordTextIntoString( VIEW mMasLC BASED ON LOD mMasLC,
 //:                               STRING ( 10000 ) szSourceString,
 //:                               STRING ( 32 ) szKeywordEntityName,
@@ -3873,6 +3845,34 @@ CopyMLC_EntityToSLC( View     mMasLC,
 
 
    //:END
+   return( 0 );
+// END
+} 
+
+
+//:GLOBAL OPERATION
+public int 
+InitializeSLC_FromMLC( View     mMasLC,
+                       View     mSubLC )
+{
+
+   //:InitializeSLC_FromMLC( VIEW mMasLC,
+   //:                    VIEW mSubLC )
+
+   //:CopyMLC_EntityToSLC( mMasLC, mSubLC, "General", 2 )
+   CopyMLC_EntityToSLC( mMasLC, mSubLC, "General", 2 );
+   //:CopyMLC_EntityToSLC( mMasLC, mSubLC, "Ingredients", 2 )
+   CopyMLC_EntityToSLC( mMasLC, mSubLC, "Ingredients", 2 );
+   //:CopyMLC_EntityToSLC( mMasLC, mSubLC, "StorageDisposal", 2 )
+   CopyMLC_EntityToSLC( mMasLC, mSubLC, "StorageDisposal", 2 );
+   //:CopyMLC_EntityToSLC( mMasLC, mSubLC, "DirectionsForUse", 2 )
+   CopyMLC_EntityToSLC( mMasLC, mSubLC, "DirectionsForUse", 2 );
+   //:CopyMLC_EntityToSLC( mMasLC, mSubLC, "Marketing", 2 )
+   CopyMLC_EntityToSLC( mMasLC, mSubLC, "Marketing", 2 );
+   //:CopyMLC_EntityToSLC( mMasLC, mSubLC, "HumanHazard", 1 )
+   CopyMLC_EntityToSLC( mMasLC, mSubLC, "HumanHazard", 1 );
+   //:CopyMLC_EntityToSLC( mMasLC, mSubLC, "Usage", 0 )
+   CopyMLC_EntityToSLC( mMasLC, mSubLC, "Usage", 0 );
    return( 0 );
 // END
 } 

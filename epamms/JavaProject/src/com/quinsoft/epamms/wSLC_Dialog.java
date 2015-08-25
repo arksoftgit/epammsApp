@@ -33,6 +33,7 @@ import com.quinsoft.epamms.mSubLC_Object;
 import com.quinsoft.epamms.mMasLC_Object;
 import com.quinsoft.epamms.ZGlobalV_Operation;
 import com.quinsoft.epamms.mSPLDef_Object;
+import com.quinsoft.epamms.ZGlobalS_Operation;
 
 import com.quinsoft.zeidon.zeidonoperations.ZDRVROPR;
 
@@ -742,11 +743,11 @@ GOTO_UpdateSubregProductSPLD( View     ViewToWindow )
    //:END
 
    //:// Build the work components
-   //:BuildCompositeEntries( mSPLDef )
+   //:BuildCompositeEntriesForSPLD( mSPLDef )
    {
-    mSPLDef_Object m_mSPLDef_Object = new mSPLDef_Object( mSPLDef );
-    m_mSPLDef_Object.omSPLDef_BuildCompositeEntries( mSPLDef );
-    // m_mSPLDef_Object = null;  // permit gc  (unnecessary)
+    ZGlobalS_Operation m_ZGlobalS_Operation = new ZGlobalS_Operation( mSPLDef );
+    m_ZGlobalS_Operation.BuildCompositeEntriesForSPLD( mSPLDef );
+    // m_ZGlobalS_Operation = null;  // permit gc  (unnecessary)
    }
    return( 0 );
 // // TraceLineS( "$$$$$$ end of oper", "GOTO_UpdateSubregProductSPLD" )

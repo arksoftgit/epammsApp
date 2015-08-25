@@ -279,7 +279,7 @@ zOPER_EXPORT zSHORT OPERATION
 olMLCATgt_DeleteEmptyTitles( zVIEW vViewToInstance0 );
 
 //end
-//start ZGlobal1 2015.07.22 10:13:38
+//start ZGlobal1 2015.08.24 15:34:51
 zOPER_EXPORT zSHORT OPERATION
 ConvertLineToEntity( zVIEW vEntityView0,
                      zVIEW vXOD_View1,
@@ -301,8 +301,8 @@ BuildSimpleStringQualification( zVIEW vvSubtask0,
                                 zPCHAR pchKeyAttributeName3,
                                 zPCHAR pchKeyAttributeValue4 );
 
-zOPER_EXPORT zPCHAR OPERATION
-RemoveInvalidCharactersFromFilen( zPCHAR pchInputFileName0 );
+zOPER_EXPORT zVOID OPERATION
+RemoveInvalidCharsFromFilename( zPCHAR pchInputFileName0 );
 
 zOPER_EXPORT zSHORT OPERATION
 SplitParagraphOnLinefeed( zPCHAR pchMultiLineText0,
@@ -636,10 +636,13 @@ SetAttributeFromCurrentDateTime( zVIEW vView0,
                                  zPCHAR aAttributeName2 );
 
 //end
-//start ZGlobalV 2014.03.26 19:06:58
+//start ZGlobalV 2015.08.20 08:02:16
 zOPER_EXPORT zSHORT OPERATION
 InitializeSLC_FromMLC( zVIEW vMasLC0,
                        zVIEW vSubLC1 );
+
+zOPER_EXPORT zVOID OPERATION
+BuildCompositeEntriesForSPLD( zVIEW vmSPLDef0 );
 
 zOPER_EXPORT zSHORT OPERATION
 GenerateKeywordTextIntoString( zVIEW vKeywordEntityView0,
@@ -696,5 +699,10 @@ CopyMLC_EntityToSLC( zVIEW vMasLC0,
                      zVIEW vSubLC1,
                      zPCHAR eEntity2,
                      zSHORT nFlag3 );
+
+//end
+//start ZGlobalS 2015.08.20 11:10:46
+zOPER_EXPORT zSHORT OPERATION
+xx( zVIEW vmSPLDef0 );
 
 //end

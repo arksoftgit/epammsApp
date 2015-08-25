@@ -1096,7 +1096,7 @@ GOTO_UpdateSubregProductSPLD( VIEW ViewToWindow )
    END
    
    // Build the work components
-   BuildCompositeEntries( mSPLDef )
+   BuildCompositeEntriesForSPLD( mSPLDef )
 // TraceLineS( "$$$$$$ end of oper", "GOTO_UpdateSubregProductSPLD" )
 // DisplayObjectInstance( mSPLDef, "", "" )
    
@@ -1302,7 +1302,7 @@ END
 LOCAL OPERATION
 fnGenerateSPLD_Label( VIEW ViewToWindow, SHORT bBorders )
    VIEW wWebXfer REGISTERED AS wWebXfer
-   VIEW mSPLDefPanel  BASED ON LOD  mSPLDef
+   VIEW mSPLDef  BASED ON LOD  mSPLDef
    VIEW mSubLC   REGISTERED AS mSubLC
    STRING ( 32 ) szLPLR_Name
    STRING ( 64 ) szSystemIniApplName
@@ -1317,21 +1317,21 @@ fnGenerateSPLD_Label( VIEW ViewToWindow, SHORT bBorders )
    
    // We will use mSPLDefPanel, if it exists, as it will always be pointing to the top of the LLD_Block
    // subobject, while mSPLDef sometimes is pointing to a recursive subobject.
-   GET VIEW mSPLDefPanel NAMED "mSPLDefPanel"
+   GET VIEW mSPLDef NAMED "mSPLDefPanel"
    IF RESULT < 0
-      GET VIEW mSPLDefPanel NAMED "mSPLDef"
-      CreateViewFromView( mSPLDefPanel, mSPLDefPanel )
-      ResetViewFromSubobjectTop( mSPLDefPanel )
-      NAME VIEW mSPLDefPanel "mSPLDefPanel"
+      GET VIEW mSPLDef NAMED "mSPLDef"
+      CreateViewFromView( mSPLDef, mSPLDef )
+      ResetViewFromSubobjectTop( mSPLDef )
+      NAME VIEW mSPLDef "mSPLDefPanel"
    END
 
    // Generate the label using LLD and SLC data defined in mSPLDef.
    IF bBorders = 1
-      mSPLDefPanel.SubregPhysicalLabelDef.wFormatWithDottedBorders = "Y"
+      mSPLDef.SubregPhysicalLabelDef.wFormatWithDottedBorders = "Y"
    ELSE
-      mSPLDefPanel.SubregPhysicalLabelDef.wFormatWithDottedBorders = ""
+      mSPLDef.SubregPhysicalLabelDef.wFormatWithDottedBorders = ""
    END
-   nRC = GeneratePDF_Label( mSPLDefPanel )
+   nRC = GeneratePDF_Label( mSPLDef )
    IF nRC = 2
       RETURN 2
    END
@@ -1346,27 +1346,28 @@ fnGenerateSPLD_Label( VIEW ViewToWindow, SHORT bBorders )
    SysGetEnvVar( szDirectory, "CATALINA_HOME", 256 )
 // SysAppendcDirSep( szDirectory )
    SysConvertEnvironmentString( szDirectory, szDirectory )
-   szDirectory = szDirectory + "/webapps/ROOT"
-   szApplication = "/" + mSPLDefPanel.SubregOrganization.LoginName + "/"
+   szDirectory = szDirectory + "/webapps/ROOT/"
+   szApplication = mSPLDef.SubregOrganization.LoginName
+   RemoveInvalidCharsFromFilename( szApplication )
 
-   szLabelName = mSPLDefPanel.SubregProduct.Name + "." + mSPLDefPanel.SubregLabelContent.Version + "." + mSPLDefPanel.SubregPhysicalLabelDef.Name + "." + wWebXfer.Root.LoginName
+   szLabelName = mSPLDef.SubregProduct.Name + "." + mSPLDef.SubregLabelContent.Version + "." + mSPLDef.SubregPhysicalLabelDef.Name + "." + wWebXfer.Root.LoginName
    RemoveInvalidCharsFromFilename( szLabelName )
-   szXmlName = szDirectory + szApplication + "xml/"
-   szXslName = szDirectory + szApplication + "xsl/"
+
+   szXmlName = szDirectory + szApplication + "/xml/"
+   szXslName = szDirectory + szApplication + "/xsl/"
    SysValidDirOrFile( szXmlName, 1, 1, 256 )
    SysValidDirOrFile( szXslName, 1, 1, 256 )
    szXmlName = szXmlName + szLabelName + ".xml"
    szXslName = szXslName + szLabelName + ".xsl"
-   TraceLineS( "Output Xml Filename: ", szXmlName )
-   TraceLineS( "Output Xsl Filename: ", szXslName )
+   TraceLineS( "wSPLD Output Xml Filename: ", szXmlName )
+   TraceLineS( "wSPLD Output Xsl Filename: ", szXslName )
 
 // ConvertXMLToPDF( "c:\lplr\epamms\xsl\TestLabel.xml", "c:\lplr\epamms\xsl\TestLabel.xsl", "TestLabel" )
 // ConvertXMLToPDF( szXmlName, szXslName, szLabelName )
 
-
-   szUseFopConfig = mSPLDefPanel.SPLD_LLD.UseFopConfig
+   szUseFopConfig = mSPLDef.SPLD_LLD.UseFopConfig
    IF szUseFopConfig = "Y"
-      SfGetApplicationForSubtask( szLPLR_Name, mSPLDefPanel )
+      SfGetApplicationForSubtask( szLPLR_Name, mSPLDef )
       szSystemIniApplName = "[App." + szLPLR_Name + "]"
       SysReadZeidonIni( -1, szSystemIniApplName, "FopConfigFile", szFopConfigFile )
       SysConvertEnvironmentString( szFopConfigFile, szFopConfigFile )
@@ -1901,7 +1902,7 @@ REFRESH_SPLD_FromSLC( VIEW ViewToWindow )
    ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID =mSPLDef.SubregLabelContent.ID 
    NAME VIEW mSubLC "mSubLC"
    BuildSPLD_FromSLC( mSPLDef, mSubLC )
-   BuildCompositeEntries( mSPLDef )
+   BuildCompositeEntriesForSPLD( mSPLDef )
 
 END
 

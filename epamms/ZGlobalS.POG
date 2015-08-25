@@ -1,0 +1,21 @@
+z1000-Zeidon    ZGLOBALS TZOGSRCO 08/20/15   11:17:05 1.0a2    
+eGlobalOperationGroup 1
+aZKey      110010003
+aName      ZGlobalS
+aDesc      VML operations
+aExtension VML
+aLanguageType V
+aDomainAndGlobalOpGroupName ZGlobal1
+
+eOperation 2
+aName      BuildCompositeEntriesForSPLD
+aZKey      110010001
+aType      G
+
+eParameter 3
+aShortDesc mSPLDef
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      110010002
+

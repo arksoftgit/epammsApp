@@ -1,4 +1,17 @@
 /////////////////////////////////////////////////////////////////////////////
+// Project ePamms
+//
+// This is a part of the ePamms applications package.
+// Copyright © 2007 - 2015 Arksoft, Inc.
+// All Rights Reserved.
+//
+// SUBSYSTEM:    mSPLDef       - Primary Registrant Label Content operations
+// FILE:         mSPLDef.vml
+// AUTHOR:       Doug Sorensen
+//
+/////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////
 //
 // OPERATION: GeneratePDF_Label
 //
@@ -33,7 +46,8 @@ GeneratePDF_Label( VIEW mSPLDef BASED ON LOD mSPLDef )
    STRING ( 32 ) szLPLR_Name
    STRING ( 64 ) szSystemIniApplName
    STRING ( 64 ) szLabelName
-   STRING ( 256 ) szXslDirectory
+   STRING ( 256 ) szDirectory
+   STRING ( 256 ) szApplication
    STRING ( 256 ) szXmlName
    STRING ( 256 ) szXslName
    STRING ( 30 ) szDateTime
@@ -51,26 +65,28 @@ GeneratePDF_Label( VIEW mSPLDef BASED ON LOD mSPLDef )
    // Open the File
 // SfGetApplicationForSubtask( szLPLR_Name, mSPLDef )
 // szSystemIniApplName = "[App." + szLPLR_Name + "]"
-// SysReadZeidonIni( -1, szSystemIniApplName, "WebDirectory", szXslDirectory )
-// SysConvertEnvironmentString( szXslDirectory, szXslDirectory )
-// szXslDirectory = "C:/Program Files/Apache Group/tomcat 7.0/webapps/ROOT/epamms/"
+// SysReadZeidonIni( -1, szSystemIniApplName, "WebDirectory", szDirectory )
+// SysConvertEnvironmentString( szDirectory, szDirectory )
+// szDirectory = "C:/Program Files/Apache Group/tomcat 7.0/webapps/ROOT/epamms/"
 
-   SysGetEnvVar( szXslName, "CATALINA_HOME", 256 ) // borrow szXslName for a couple of lines
-// SysAppendcDirSep( szXslName )
-   SysConvertEnvironmentString( szXslDirectory, szXslName )
-   szXslDirectory = szXslDirectory + "/webapps/ROOT/" + mSPLDef.SubregOrganization.LoginName + "/"
+   SysGetEnvVar( szDirectory, "CATALINA_HOME", 256 )
+// SysAppendcDirSep( szDirectory )
+   SysConvertEnvironmentString( szDirectory, szDirectory )
+   szDirectory = szDirectory + "/webapps/ROOT/"
+   szApplication = mSPLDef.SubregOrganization.LoginName
+   RemoveInvalidCharsFromFilename( szApplication )
 
    szLabelName = mSPLDef.SubregProduct.Name + "." + mSPLDef.SubregLabelContent.Version + "." + mSPLDef.SubregPhysicalLabelDef.Name + "." + wWebXfer.Root.LoginName
    RemoveInvalidCharsFromFilename( szLabelName )
 
-   szXmlName = szXslDirectory + "xml/"
-   szXslName = szXslDirectory + "xsl/"
+   szXmlName = szDirectory + szApplication + "/xml/"
+   szXslName = szDirectory + szApplication + "/xsl/"
    SysValidDirOrFile( szXmlName, 1, 1, 256 )
    SysValidDirOrFile( szXslName, 1, 1, 256 )
    szXmlName = szXmlName + szLabelName + ".xml"
    szXslName = szXslName + szLabelName + ".xsl"
-   TraceLineS( "Output Xml Filename: ", szXmlName )
-   TraceLineS( "Output Xsl Filename: ", szXslName )
+   TraceLineS( "mSPLDef Output Xml Filename: ", szXmlName )
+   TraceLineS( "mSPLDef Output Xsl Filename: ", szXslName )
    lFile = SysOpenFile( mSPLDef, szXslName, COREFILE_WRITE )
    IF lFile < 0
       MessageSend( mSPLDef, "", "Generate Label",
@@ -2947,342 +2963,6 @@ BuildUsageEntriesFrSLC( VIEW mSPLDef   BASED ON LOD mSPLDef,
          END
       END
    END
-
-END
-
-/*************************************************************************************************
-**
-**    OPERATION: BuildCompositeEntries
-**
-*************************************************************************************************/
-TRANSFORMATION OPERATION
-BuildCompositeEntries( VIEW mSPLDef BASED ON LOD mSPLDef )
-
-   STRING ( 100 )   szCompositeLocation
-   STRING ( 4000 )  szDisplayValue
-   STRING ( 4000 )  szOriginalDisplayValue
-   STRING ( 32 )    szUsageType
-   INTEGER          MaxDisplayLength
-   INTEGER          OriginalStringLength
-   INTEGER          Count
-
-   // Build the flat display of all components subobject.
-   MaxDisplayLength = 100
-
-   // First clear any current entries.
-   FOR EACH mSPLDef.CompositeComponentList
-      DELETE ENTITY mSPLDef.CompositeComponentList NONE
-   END
-
-   // General Section and Statements.
-   FOR EACH mSPLDef.SPLD_GeneralSection
-      CREATE ENTITY mSPLDef.CompositeComponentList
-      mSPLDef.CompositeComponentList.Type              = "SPLD_GeneralSection"
-      mSPLDef.CompositeComponentList.SelectLevel       = 1
-      mSPLDef.CompositeComponentList.DisplayType       = "General"
-      mSPLDef.CompositeComponentList.DisplayTypeIndent = "General"
-      mSPLDef.CompositeComponentList.SectionType       = mSPLDef.SPLD_GeneralSection.SectionType
-      mSPLDef.CompositeComponentList.OriginalTypeID    = mSPLDef.SPLD_GeneralSection.ID
-      mSPLDef.CompositeComponentList.DisplayValue      = mSPLDef.SPLD_GeneralSection.Title
-      mSPLDef.CompositeComponentList.Value             = mSPLDef.CompositeComponentList.DisplayValue
-
-      FOR EACH mSPLDef.SPLD_GeneralStatement
-         CREATE ENTITY mSPLDef.CompositeComponentList
-         mSPLDef.CompositeComponentList.Type              = "SPLD_GeneralStatement"
-         mSPLDef.CompositeComponentList.SelectLevel       = 2
-         mSPLDef.CompositeComponentList.DisplayType       = "Statement"
-         mSPLDef.CompositeComponentList.DisplayTypeIndent = "...Statement"
-         mSPLDef.CompositeComponentList.OriginalTypeID    = mSPLDef.SPLD_GeneralStatement.ID
-         mSPLDef.CompositeComponentList.Value             = mSPLDef.SPLD_GeneralStatement.Text
-         SetMatchingAttributesByName( mSPLDef, "CompositeComponentList",
-                                      mSPLDef, "SPLD_GeneralStatement", zSET_NULL )
-
-         szOriginalDisplayValue = mSPLDef.SPLD_GeneralStatement.Text
-         GetAttributeLength( OriginalStringLength, mSPLDef, "SPLD_GeneralStatement", "Text" )
-         IF MaxDisplayLength < OriginalStringLength
-            szDisplayValue = szOriginalDisplayValue[1:100] + "....."
-         ELSE
-            szDisplayValue = szOriginalDisplayValue
-         END
-         mSPLDef.CompositeComponentList.DisplayValue   = szDisplayValue
-      END
-   END
-
-   // Ingredients Section and Statements.
-   FOR EACH mSPLDef.SPLD_IngredientsSection
-      CREATE ENTITY mSPLDef.CompositeComponentList
-      mSPLDef.CompositeComponentList.Type              = "SPLD_IngredientsSection"
-      mSPLDef.CompositeComponentList.SelectLevel       = 1
-      mSPLDef.CompositeComponentList.DisplayType       = "Ingredients"
-      mSPLDef.CompositeComponentList.DisplayTypeIndent = "Ingredients"
-      mSPLDef.CompositeComponentList.SectionType       = "I"
-      mSPLDef.CompositeComponentList.OriginalTypeID    = mSPLDef.SPLD_IngredientsSection.ID
-      mSPLDef.CompositeComponentList.DisplayValue      = mSPLDef.SPLD_IngredientsSection.ActiveTitle
-      mSPLDef.CompositeComponentList.Value             = mSPLDef.CompositeComponentList.DisplayValue
-
-      FOR EACH mSPLDef.SPLD_IngredientsStatement
-         CREATE ENTITY mSPLDef.CompositeComponentList
-         mSPLDef.CompositeComponentList.Type              = "SPLD_IngredientsStatement"
-         mSPLDef.CompositeComponentList.SelectLevel       = 2
-         mSPLDef.CompositeComponentList.DisplayType       = "Statement"
-         mSPLDef.CompositeComponentList.DisplayTypeIndent = "...Statement"
-         mSPLDef.CompositeComponentList.OriginalTypeID    = mSPLDef.SPLD_IngredientsStatement.ID
-         mSPLDef.CompositeComponentList.DisplayValue      = mSPLDef.SPLD_IngredientsStatement.ChemicalName
-         mSPLDef.CompositeComponentList.Value             = mSPLDef.SPLD_IngredientsStatement.ChemicalName
-      END
-   END
-
-   // StorageDisposal Section and Statements.
-   FOR EACH mSPLDef.SPLD_StorageDisposalSection
-      CREATE ENTITY mSPLDef.CompositeComponentList
-      mSPLDef.CompositeComponentList.Type              = "SPLD_StorageDisposalSection"
-      mSPLDef.CompositeComponentList.SelectLevel       = 1
-      mSPLDef.CompositeComponentList.DisplayType       = "Storage and Disposal"
-      mSPLDef.CompositeComponentList.DisplayTypeIndent = "Storage and Disposal"
-      mSPLDef.CompositeComponentList.SectionType       = "S"
-      mSPLDef.CompositeComponentList.OriginalTypeID    = mSPLDef.SPLD_StorageDisposalSection.ID
-      mSPLDef.CompositeComponentList.DisplayValue      = mSPLDef.SPLD_StorageDisposalSection.Title
-      mSPLDef.CompositeComponentList.Value             = mSPLDef.CompositeComponentList.DisplayValue
-
-      FOR EACH mSPLDef.SPLD_StorageDisposalStatement
-         IF mSPLDef.SPLD_StorageDisposalStatement.Title != ""
-            CREATE ENTITY mSPLDef.CompositeComponentList
-            mSPLDef.CompositeComponentList.Type              = "SPLD_StorageDisposalTitle"
-            mSPLDef.CompositeComponentList.SelectLevel       = 2
-            mSPLDef.CompositeComponentList.DisplayType       = "Title"
-            mSPLDef.CompositeComponentList.DisplayTypeIndent = "...Stmt Title"
-            mSPLDef.CompositeComponentList.OriginalTypeID    = mSPLDef.SPLD_StorageDisposalStatement.ID
-            mSPLDef.CompositeComponentList.Value             = mSPLDef.SPLD_StorageDisposalStatement.Title
-         END
-
-         CREATE ENTITY mSPLDef.CompositeComponentList
-         mSPLDef.CompositeComponentList.Type              = "SPLD_StorageDisposalStatement"
-         mSPLDef.CompositeComponentList.SelectLevel       = 2
-         mSPLDef.CompositeComponentList.DisplayType       = "Statement"
-         mSPLDef.CompositeComponentList.DisplayTypeIndent = "...Statement"
-         mSPLDef.CompositeComponentList.OriginalTypeID    = mSPLDef.SPLD_StorageDisposalStatement.ID
-         mSPLDef.CompositeComponentList.Value             = mSPLDef.SPLD_StorageDisposalStatement.Text
-
-         szOriginalDisplayValue = mSPLDef.SPLD_StorageDisposalStatement.Text
-         GetAttributeLength( OriginalStringLength, mSPLDef, "SPLD_StorageDisposalStatement", "Text" )
-         IF MaxDisplayLength < OriginalStringLength
-            szDisplayValue = szOriginalDisplayValue[1:100] + "....."
-         ELSE
-            szDisplayValue = szOriginalDisplayValue
-         END
-         mSPLDef.CompositeComponentList.DisplayValue   = szDisplayValue
-         SetMatchingAttributesByName( mSPLDef, "CompositeComponentList",
-                                      mSPLDef, "SPLD_StorageDisposalStatement", zSET_NULL )
-      END
-   END
-
-   // DirectionsForUse Section and Statements.
-   FOR EACH mSPLDef.SPLD_DirectionsForUseSection
-      CREATE ENTITY mSPLDef.CompositeComponentList
-      mSPLDef.CompositeComponentList.Type              = "SPLD_DirectionsForUseSection"
-      mSPLDef.CompositeComponentList.SelectLevel       = 1
-      mSPLDef.CompositeComponentList.DisplayType       = "Directions For Use"
-      mSPLDef.CompositeComponentList.DisplayTypeIndent = "Directions For Use"
-      mSPLDef.CompositeComponentList.SectionType       = "D"
-      mSPLDef.CompositeComponentList.OriginalTypeID    = mSPLDef.SPLD_DirectionsForUseSection.ID
-      IF mSPLDef.SPLD_DirectionsForUseSection.Title != ""
-         IF mSPLDef.SPLD_DirectionsForUseSection.Name = ""
-            mSPLDef.CompositeComponentList.DisplayValue = mSPLDef.SPLD_DirectionsForUseSection.Title
-         ELSE
-            mSPLDef.CompositeComponentList.DisplayValue = mSPLDef.SPLD_DirectionsForUseSection.Name + " - " +
-                                                         mSPLDef.SPLD_DirectionsForUseSection.Title
-         END
-      ELSE
-         mSPLDef.CompositeComponentList.DisplayValue = mSPLDef.SPLD_DirectionsForUseSection.Name
-      END
-      mSPLDef.CompositeComponentList.Value              = mSPLDef.CompositeComponentList.DisplayValue
-
-      FOR EACH mSPLDef.SPLD_DirectionsForUseStatement
-         IF mSPLDef.SPLD_DirectionsForUseStatement.Title != ""
-            CREATE ENTITY mSPLDef.CompositeComponentList
-            mSPLDef.CompositeComponentList.Type              = "SPLD_DirectionsForUseTitle"
-            mSPLDef.CompositeComponentList.SelectLevel       = 2
-            mSPLDef.CompositeComponentList.DisplayType       = "Title"
-            mSPLDef.CompositeComponentList.DisplayTypeIndent = "...Stmt Title"
-            mSPLDef.CompositeComponentList.OriginalTypeID    = mSPLDef.SPLD_DirectionsForUseStatement.ID
-            mSPLDef.CompositeComponentList.Value             = mSPLDef.SPLD_DirectionsForUseStatement.Title
-         END
-
-         CREATE ENTITY mSPLDef.CompositeComponentList
-         mSPLDef.CompositeComponentList.Type              = "SPLD_DirectionsForUseStatement"
-         mSPLDef.CompositeComponentList.SelectLevel       = 2
-         mSPLDef.CompositeComponentList.DisplayType       = "Statement"
-         mSPLDef.CompositeComponentList.DisplayTypeIndent = "...Statement"
-         mSPLDef.CompositeComponentList.OriginalTypeID    = mSPLDef.SPLD_DirectionsForUseStatement.ID
-         mSPLDef.CompositeComponentList.Value             = mSPLDef.SPLD_DirectionsForUseStatement.Text
-
-         szOriginalDisplayValue = mSPLDef.SPLD_DirectionsForUseStatement.Text
-         GetAttributeLength( OriginalStringLength, mSPLDef, "SPLD_DirectionsForUseStatement", "Text" )
-         IF MaxDisplayLength < OriginalStringLength
-            szDisplayValue = szOriginalDisplayValue[1:100] + "....."
-         ELSE
-            szDisplayValue = szOriginalDisplayValue
-         END
-         mSPLDef.CompositeComponentList.DisplayValue   = szDisplayValue
-         SetMatchingAttributesByName( mSPLDef, "CompositeComponentList",
-                                      mSPLDef, "SPLD_DirectionsForUseStatement", zSET_NULL )
-
-         // Add any Usage entries.
-         // First sort by Usage Type, but keeping the entries in their original order otherwise.
-         Count = 0
-         FOR EACH mSPLDef.SPLD_DirectionsUsageOrdering
-            Count = Count + 1
-            mSPLDef.SPLD_DirectionsUsageOrdering.wSortOrder = Count
-         END
-         OrderEntityForView( mSPLDef, "SPLD_DirectionsUsageOrdering", "SPLD_DirectionsUsage.UsageType A wSortOrder A" )
-         FOR EACH mSPLDef.SPLD_DirectionsUsageOrdering
-            CREATE ENTITY mSPLDef.CompositeComponentList
-            GetStringFromAttributeByContext( szUsageType, mSPLDef, "SPLD_DirectionsUsage", "UsageType", "FullUsageType", 20 )
-            mSPLDef.CompositeComponentList.Type              = "SPLD_DirectionsUsageOrdering"
-            mSPLDef.CompositeComponentList.SelectLevel       = 3
-            mSPLDef.CompositeComponentList.DisplayType       = "DirUseUsage"
-            mSPLDef.CompositeComponentList.DisplayTypeIndent = "...DU " + szUsageType
-            mSPLDef.CompositeComponentList.Value             = mSPLDef.SPLD_DirectionsUsage.Name
-            mSPLDef.CompositeComponentList.DisplayValue      = mSPLDef.SPLD_DirectionsUsage.Name
-            SET CURSOR FIRST mSPLDef.SPLD_Usage WHERE mSPLDef.SPLD_Usage.UsageType        = mSPLDef.SPLD_DirectionsUsage.UsageType
-                                              AND mSPLDef.SPLD_Usage.ClaimsClassification = mSPLDef.SPLD_DirectionsUsage.ClaimsClassification
-                                              AND mSPLDef.SPLD_Usage.Name                 = mSPLDef.SPLD_DirectionsUsage.Name
-            IF RESULT >= zCURSOR_SET
-               mSPLDef.CompositeComponentList.OriginalTypeID     = mSPLDef.SPLD_Usage.ID
-            // TraceLineI( "#### Valid Usage ID ", mSPLDef.SPLD_Usage.ID )
-            ELSE
-            // TraceLineS( "#### Invalid Usage ID ", mSPLDef.SPLD_DirectionsUsage.Name )
-            END
-         END
-      END
-   END
-
-   // Marketing Section and Statements.
-   FOR EACH mSPLDef.SPLD_MarketingSection
-      CREATE ENTITY mSPLDef.CompositeComponentList
-      mSPLDef.CompositeComponentList.Type              = "SPLD_MarketingSection"
-      mSPLDef.CompositeComponentList.SelectLevel       = 1
-      mSPLDef.CompositeComponentList.DisplayType       = "Marketing"
-      mSPLDef.CompositeComponentList.DisplayTypeIndent = "Marketing"
-      mSPLDef.CompositeComponentList.SectionType       = "M"
-      mSPLDef.CompositeComponentList.OriginalTypeID    = mSPLDef.SPLD_MarketingSection.ID
-      mSPLDef.CompositeComponentList.Name              = mSPLDef.SPLD_MarketingSection.Name
-   // TraceLineS( "SPLD BuildCompositeEntries Name: ", mSPLDef.SPLD_MarketingSection.Name )
-      IF mSPLDef.SPLD_MarketingSection.Title != ""
-         IF mSPLDef.SPLD_MarketingSection.Name = ""
-            mSPLDef.CompositeComponentList.DisplayValue = mSPLDef.SPLD_MarketingSection.Title
-         ELSE
-            mSPLDef.CompositeComponentList.DisplayValue = mSPLDef.SPLD_MarketingSection.Name + " - " +
-                                                         mSPLDef.SPLD_MarketingSection.Title
-         END
-      ELSE
-         mSPLDef.CompositeComponentList.DisplayValue = mSPLDef.SPLD_MarketingSection.Name
-      END
-      mSPLDef.CompositeComponentList.Value              = mSPLDef.CompositeComponentList.DisplayValue
-
-      FOR EACH mSPLDef.SPLD_MarketingStatement
-         IF mSPLDef.SPLD_MarketingStatement.Title != ""
-            CREATE ENTITY mSPLDef.CompositeComponentList
-            mSPLDef.CompositeComponentList.Type              = "SPLD_MarketingTitle"
-            mSPLDef.CompositeComponentList.SelectLevel       = 2
-            mSPLDef.CompositeComponentList.DisplayType       = "Title"
-            mSPLDef.CompositeComponentList.DisplayTypeIndent = "...Stmt Title"
-            mSPLDef.CompositeComponentList.OriginalTypeID    = mSPLDef.SPLD_MarketingStatement.ID
-            mSPLDef.CompositeComponentList.Value             = mSPLDef.SPLD_MarketingStatement.Title
-         END
-
-         CREATE ENTITY mSPLDef.CompositeComponentList
-         mSPLDef.CompositeComponentList.Type              = "SPLD_MarketingStatement"
-         mSPLDef.CompositeComponentList.SelectLevel       = 2
-         mSPLDef.CompositeComponentList.DisplayType       = "Statement"
-         mSPLDef.CompositeComponentList.DisplayTypeIndent = "...Statement"
-         mSPLDef.CompositeComponentList.OriginalTypeID    = mSPLDef.SPLD_MarketingStatement.ID
-         mSPLDef.CompositeComponentList.Value             = mSPLDef.SPLD_MarketingStatement.Text
-
-         szOriginalDisplayValue = mSPLDef.SPLD_MarketingStatement.Text
-         GetAttributeLength( OriginalStringLength, mSPLDef, "SPLD_MarketingStatement", "Text" )
-         IF MaxDisplayLength < OriginalStringLength
-            szDisplayValue = szOriginalDisplayValue[1:100] + "....."
-         ELSE
-            szDisplayValue = szOriginalDisplayValue
-         END
-         mSPLDef.CompositeComponentList.DisplayValue = szDisplayValue
-         SetMatchingAttributesByName( mSPLDef, "CompositeComponentList",
-                                      mSPLDef, "SPLD_MarketingStatement", zSET_NULL )
-      END
-
-      // Add any Usage entries.
-      // First sort by Usage Type, but keeping the entries in their original order otherwise.
-      Count = 0
-      FOR EACH mSPLDef.SPLD_MarketingUsageOrdering
-         Count = Count + 1
-         mSPLDef.SPLD_MarketingUsageOrdering.wSortOrder = Count
-      END
-      OrderEntityForView( mSPLDef, "SPLD_MarketingUsageOrdering", "SPLD_MarketingUsage.UsageType A wSortOrder A" )
-      FOR EACH mSPLDef.SPLD_MarketingUsageOrdering
-         CREATE ENTITY mSPLDef.CompositeComponentList
-         GetStringFromAttributeByContext( szUsageType, mSPLDef, "SPLD_MarketingUsage", "UsageType", "FullUsageType", 20 )
-         mSPLDef.CompositeComponentList.Type              = "SPLD_MarketingUsageOrdering"
-         mSPLDef.CompositeComponentList.SelectLevel       = 3
-         mSPLDef.CompositeComponentList.DisplayType       = "MarketingUsage"
-         mSPLDef.CompositeComponentList.DisplayTypeIndent = "...Mktg " + szUsageType
-         mSPLDef.CompositeComponentList.Value             = mSPLDef.SPLD_MarketingUsage.Name
-         mSPLDef.CompositeComponentList.DisplayValue      = mSPLDef.SPLD_MarketingUsage.Name
-         SET CURSOR FIRST mSPLDef.SPLD_Usage WHERE mSPLDef.SPLD_Usage.UsageType            = mSPLDef.SPLD_MarketingUsage.UsageType
-                                           AND mSPLDef.SPLD_Usage.ClaimsClassification = mSPLDef.SPLD_MarketingUsage.ClaimsClassification
-                                           AND mSPLDef.SPLD_Usage.Name                 = mSPLDef.SPLD_MarketingUsage.Name
-         IF RESULT >= zCURSOR_SET
-            mSPLDef.CompositeComponentList.OriginalTypeID     = mSPLDef.SPLD_Usage.ID
-         ELSE
-            TraceLineS( "#### Invalid Usage ID ", mSPLDef.SPLD_MarketingUsage.Name )
-         END
-      END
-   END
-
-   // Hazards Section
-   CREATE ENTITY mSPLDef.CompositeComponentList
-   mSPLDef.CompositeComponentList.Type               = "SPLD_HumanHazardSection"
-   mSPLDef.CompositeComponentList.SelectLevel        = 1
-   mSPLDef.CompositeComponentList.DisplayType        = "Hazards"
-   mSPLDef.CompositeComponentList.DisplayTypeIndent  = "Hazards"
-   mSPLDef.CompositeComponentList.OriginalTypeID     = mSPLDef.SPLD_HumanHazardSection.ID
-   mSPLDef.CompositeComponentList.DisplayValue       = ""
-
-   CREATE ENTITY mSPLDef.CompositeComponentList
-   mSPLDef.CompositeComponentList.SelectLevel       = 2
-   mSPLDef.CompositeComponentList.DisplayType       = "Signal Word"
-   mSPLDef.CompositeComponentList.DisplayTypeIndent = "...Signal Word"
-   mSPLDef.CompositeComponentList.DisplayValue      = mSPLDef.SPLD_HumanHazardSection.EPA_SignalWord
-
-   CREATE ENTITY mSPLDef.CompositeComponentList
-   mSPLDef.CompositeComponentList.SelectLevel       = 2
-   mSPLDef.CompositeComponentList.DisplayType       = "Child Warning"
-   mSPLDef.CompositeComponentList.DisplayTypeIndent = "...Child Warning"
-   mSPLDef.CompositeComponentList.DisplayValue      = mSPLDef.SPLD_HumanHazardSection.EPA_ChildHazardWarning
-
-   CREATE ENTITY mSPLDef.CompositeComponentList
-   mSPLDef.CompositeComponentList.SelectLevel       = 2
-   mSPLDef.CompositeComponentList.DisplayType       = "Precautionary Stmt"
-   mSPLDef.CompositeComponentList.DisplayTypeIndent = "...Precautionary Stmt"
-   mSPLDef.CompositeComponentList.DisplayValue      = mSPLDef.SPLD_HumanHazardSection.PrecautionaryStatement
-
-   CREATE ENTITY mSPLDef.CompositeComponentList
-   mSPLDef.CompositeComponentList.DisplayType       = "Location"
-   mSPLDef.CompositeComponentList.DisplayTypeIndent = "Location"
-   szCompositeLocation = "..." + mSPLDef.SPLD_HumanHazardSection.PanelLoc1
-   IF mSPLDef.SPLD_HumanHazardSection.PanelLoc2 != ""
-      szCompositeLocation = szCompositeLocation + " / " + mSPLDef.SPLD_HumanHazardSection.PanelLoc2
-   END
-   IF mSPLDef.SPLD_HumanHazardSection.PanelLoc3 != ""
-      szCompositeLocation = szCompositeLocation + " / " + mSPLDef.SPLD_HumanHazardSection.PanelLoc3
-   END
-   IF mSPLDef.SPLD_HumanHazardSection.PanelLoc4 != ""
-      szCompositeLocation = szCompositeLocation + " / " + mSPLDef.SPLD_HumanHazardSection.PanelLoc4
-   END
-   IF mSPLDef.SPLD_HumanHazardSection.PanelLoc5 != ""
-      szCompositeLocation = szCompositeLocation + " / " + mSPLDef.SPLD_HumanHazardSection.PanelLoc5
-   END
-   mSPLDef.CompositeComponentList.DisplayValue   = szCompositeLocation
 
 END
 

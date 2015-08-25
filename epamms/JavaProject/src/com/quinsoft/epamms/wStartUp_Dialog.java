@@ -31,6 +31,7 @@ import org.apache.commons.lang3.mutable.MutableInt;
 
 import com.quinsoft.epamms.ZGlobalV_Operation;
 import com.quinsoft.epamms.ZGlobal1_Operation;
+import com.quinsoft.epamms.ZGlobalS_Operation;
 
 import com.quinsoft.zeidon.zeidonoperations.ZDRVROPR;
 
@@ -1831,6 +1832,7 @@ ProductManagement( View     ViewToWindow )
    //:INTEGER       lID
    int      lID = 0;
    int      lTempInteger_0 = 0;
+   String   szTempString_0 = null;
    int      lTempInteger_1 = 0;
    zVIEW    vTempViewVar_0 = new zVIEW( );
    int      lTempInteger_2 = 0;
@@ -1950,13 +1952,23 @@ ProductManagement( View     ViewToWindow )
        GetVariableFromAttribute( sb_szKeyRole, mi_lTempInteger_0, 'S', 2, wWebXfer, "Root", "KeyRole", "", 0 );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );
    szKeyRole = sb_szKeyRole.toString( );}
+   //:TraceLineS( "Product Management key role: ", szKeyRole )
+   TraceLineS( "Product Management key role: ", szKeyRole );
+   //:TraceLineS( "                   login name: ", qOrganiz.Organization.LoginName )
+   {StringBuilder sb_szTempString_0;
+   if ( szTempString_0 == null )
+      sb_szTempString_0 = new StringBuilder( 32 );
+   else
+      sb_szTempString_0 = new StringBuilder( szTempString_0 );
+       GetStringFromAttribute( sb_szTempString_0, qOrganiz, "Organization", "LoginName" );
+   szTempString_0 = sb_szTempString_0.toString( );}
+   TraceLineS( "                   login name: ", szTempString_0 );
    //:IF szKeyRole = "D" OR szKeyRole = "P"  // Dual or Primary registrant
    if ( ZeidonStringCompare( szKeyRole, 1, 0, "D", 1, 0, 2 ) == 0 || ZeidonStringCompare( szKeyRole, 1, 0, "P", 1, 0, 2 ) == 0 )
    { 
 
-      //:// Cannot use szLoginRegistrant since we need a case insensitive comparison.
-      //:IF wWebXfer.Root.LoginName = "Admin"
-      if ( CompareAttributeToString( wWebXfer, "Root", "LoginName", "Admin" ) == 0 )
+      //:IF qOrganiz.Organization.LoginName = "Admin" // using case insensitive comparison.
+      if ( CompareAttributeToString( qOrganiz, "Organization", "LoginName", "Admin" ) == 0 )
       { 
 
          //:ACTIVATE lPrimReg
@@ -2589,8 +2601,8 @@ PrimaryRegistrantCompanySetup( View     ViewToWindow )
    if ( lTempInteger_1 == 0 && ZeidonStringCompare( szKeyRole, 1, 0, "S", 1, 0, 2 ) != 0 )
    { 
 
-      //:IF wWebXfer.Root.LoginName = "Admin"
-      if ( CompareAttributeToString( wWebXfer, "Root", "LoginName", "Admin" ) == 0 )
+      //:IF qOrganiz.Organization.LoginName = "Admin"
+      if ( CompareAttributeToString( qOrganiz, "Organization", "LoginName", "Admin" ) == 0 )
       { 
          //:ACTIVATE lPrimReg
          RESULT = ActivateObjectInstance( lPrimReg, "lPrimReg", ViewToWindow, 0, zSINGLE );
@@ -7700,8 +7712,8 @@ SelectListSubregistrants( View     ViewToWindow )
 
    //:END
 
-   //:IF wWebXfer.Root.LoginName = "Admin"
-   if ( CompareAttributeToString( wWebXfer, "Root", "LoginName", "Admin" ) == 0 )
+   //:IF qOrganiz.Organization.LoginName = "Admin"
+   if ( CompareAttributeToString( qOrganiz, "Organization", "LoginName", "Admin" ) == 0 )
    { 
 
       //:MessageSend( ViewToWindow, "", "List Subregistrants",
@@ -8569,6 +8581,19 @@ ResumeEditingSPLD( View     ViewToWindow )
          DropView( vQual );
          //:NAME VIEW vTemp szViewName
          SetNameForView( vTemp, szViewName, null, zLEVEL_TASK );
+         //:IF szViewName = "mSPLDef"
+         if ( ZeidonStringCompare( szViewName, 1, 0, "mSPLDef", 1, 0, 65 ) == 0 )
+         { 
+            //:// Build the work components
+            //:BuildCompositeEntriesForSPLD( vTemp )
+            {
+             ZGlobalS_Operation m_ZGlobalS_Operation = new ZGlobalS_Operation( vTemp );
+             m_ZGlobalS_Operation.BuildCompositeEntriesForSPLD( vTemp );
+             // m_ZGlobalS_Operation = null;  // permit gc  (unnecessary)
+            }
+         } 
+
+         //:END
          //:SET CURSOR NEXT mUser.ResumeObject
          RESULT = SetCursorNextEntity( mUser, "ResumeObject", "" );
       } 

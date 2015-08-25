@@ -590,10 +590,11 @@ ProductManagement( VIEW ViewToWindow )
    END
 
    szKeyRole = wWebXfer.Root.KeyRole
+   TraceLineS( "Product Management key role: ", szKeyRole )
+   TraceLineS( "                   login name: ", qOrganiz.Organization.LoginName )
    IF szKeyRole = "D" OR szKeyRole = "P"  // Dual or Primary registrant
 
-      // Cannot use szLoginRegistrant since we need a case insensitive comparison.
-      IF wWebXfer.Root.LoginName = "Admin"
+      IF qOrganiz.Organization.LoginName = "Admin" // using case insensitive comparison.
 
          ACTIVATE lPrimReg
          NAME VIEW lPrimReg "lPrimReg"
@@ -781,7 +782,7 @@ PrimaryRegistrantCompanySetup( VIEW ViewToWindow )
 
    IF qOrganiz.PrimaryRegistrant EXISTS AND szKeyRole != "S"  // not a subregistrant
 
-      IF wWebXfer.Root.LoginName = "Admin"
+      IF qOrganiz.Organization.LoginName = "Admin"
          ACTIVATE lPrimReg
          NAME VIEW lPrimReg "lPrimReg"
          SetWindowActionBehavior( ViewToWindow, zWAB_ReplaceWindowWithModalWindow,
@@ -3260,7 +3261,7 @@ SelectListSubregistrants( VIEW ViewToWindow )
       RETURN 1
    END
 
-   IF wWebXfer.Root.LoginName = "Admin"
+   IF qOrganiz.Organization.LoginName = "Admin"
 
       MessageSend( ViewToWindow, "", "List Subregistrants",
                    "Admin does not have Subregistrants",
@@ -4172,6 +4173,10 @@ ResumeEditingSPLD( VIEW ViewToWindow )
          ActivateObjectInstance( vTemp, szLOD, qOrganiz, vQual, zSINGLE )
          DropView( vQual )
          NAME VIEW vTemp szViewName
+         IF szViewName = "mSPLDef"
+            // Build the work components
+            BuildCompositeEntriesForSPLD( vTemp )
+         END
          SET CURSOR NEXT mUser.ResumeObject
       END
    ELSE

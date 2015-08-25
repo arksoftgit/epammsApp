@@ -1,4 +1,4 @@
-z1000-Zeidon    ZGLOBALV TZOGSRCO 06/12/15   11:24:26 1.0a2    
+z1000-Zeidon    ZGLOBALV TZOGSRCO 08/20/15   11:17:05 1.0a2    
 eGlobalOperationGroup 1
 aZKey      1399843
 aName      ZGlobalV
@@ -6,26 +6,6 @@ aDesc      VML operations
 aExtension VML
 aLanguageType V
 aDomainAndGlobalOpGroupName ZGlobal1
-
-eOperation 2
-aName      InitializeSLC_FromMLC
-aZKey      1399844
-aType      G
-aReturnDataType N
-
-eParameter 3
-aShortDesc MasLC
-aDataType  V
-aPFlag     N
-aUFlag     N
-aZKey      1399845
-
-eParameter 3
-aShortDesc SubLC
-aDataType  V
-aPFlag     N
-aUFlag     N
-aZKey      1399846
 
 eOperation 2
 aName      GenerateKeywordTextIntoString
@@ -340,3 +320,22 @@ aPFlag     N
 aUFlag     N
 aZKey      1399851
 
+eOperation 2
+aName      InitializeSLC_FromMLC
+aZKey      1399844
+aType      G
+aReturnDataType N
+
+eParameter 3
+aShortDesc MasLC
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      110010006
+
+eParameter 3
+aShortDesc SubLC
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      110010007

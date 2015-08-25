@@ -1,4 +1,4 @@
-z1000-Zeidon    EPAMMS   TZZOXOGO 07/22/15   10:13:38 1.0a2    
+z1000-Zeidon    EPAMMS   TZZOXOGO 08/24/15   15:34:52 1.0a2    
 eTZZOXOGO  1
 aNAME      epamms
 
@@ -79,7 +79,7 @@ aNAME      KeyAttributeValue
 aDATATYPE  S
 
 eOPERATION 3
-aNAME      RemoveInvalidCharactersFromFilen
+aNAME      RemoveInvalidCharsFromFilename
 aTYPE      G
 
 ePARAMETER 4
@@ -1175,20 +1175,20 @@ aNAME      Attribute Name
 aDATATYPE  A
 
 eGLOBALOPERATIONSOURCEFILE 2
-aNAME      ZGlobalV
+aNAME      ZGlobalS
 aLANGUAGETYPE V
 
 eOPERATION 3
-aNAME      InitializeSLC_FromMLC
+aNAME      BuildCompositeEntriesForSPLD
 aTYPE      G
 
 ePARAMETER 4
-aNAME      MasLC
+aNAME      mSPLDef
 aDATATYPE  V
 
-ePARAMETER 4
-aNAME      SubLC
-aDATATYPE  V
+eGLOBALOPERATIONSOURCEFILE 2
+aNAME      ZGlobalV
+aLANGUAGETYPE V
 
 eOPERATION 3
 aNAME      GenerateKeywordTextIntoString
@@ -1373,4 +1373,16 @@ aDATATYPE  E
 ePARAMETER 4
 aNAME      Flag
 aDATATYPE  N
+
+eOPERATION 3
+aNAME      InitializeSLC_FromMLC
+aTYPE      G
+
+ePARAMETER 4
+aNAME      MasLC
+aDATATYPE  V
+
+ePARAMETER 4
+aNAME      SubLC
+aDATATYPE  V
 
