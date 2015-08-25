@@ -1049,7 +1049,7 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:26px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridPrimaryRegistrant:Grid */ %>
-<table class="sortable listheader"  cols=5 style=""  name="GridPrimaryRegistrant" id="GridPrimaryRegistrant">
+<table class="sortable listheader"  cols=5 style="width:650px;"  name="GridPrimaryRegistrant" id="GridPrimaryRegistrant">
 
 <thead bgcolor=green><tr>
 

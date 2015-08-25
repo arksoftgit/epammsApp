@@ -729,7 +729,8 @@ else
    <div id="zviewport" style="background-color:#ccc; height:0.4in;">
       <span>
          <div id="zheader" style="display: block; font-size: 1em; font-weight: bold;">
-            ePamms Label Designer&nbsp;&nbsp;&nbsp;&nbsp;
+            <span id="zheader_title">ePamms Label Designer</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;
             <div id="ztoolbar" class="ui-widget-header ui-corner-all">
                <button id="at" class="zalign-btn">Align Top</button>
                <button id="al" class="zalign-btn">Align Left</button> 
