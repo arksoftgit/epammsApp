@@ -389,9 +389,16 @@ ProcessUserLogin( VIEW ViewToWindow )
 
    END
 
+   lID = qOrganiz.Organization.ID
+   DropObjectInstance( qOrganiz )
+   ACTIVATE qOrganiz WHERE qOrganiz.Organization.ID = lID // reactivate here to ensure we get the User entity
+   NAME VIEW qOrganiz "qOrganizLogin"
+   TraceLineS( "qOrganizLogin OI:", "" )
+   DisplayObjectInstance( qOrganiz, "", "" )
+
    GET VIEW mOrganizInit NAMED "mOrganizInit"
 
-   ACTIVATE mOrganiz WHERE mOrganiz.Organization.ID = qOrganiz.Organization.ID
+   ACTIVATE mOrganiz WHERE mOrganiz.Organization.ID = lID
 // TraceLineS( "mOrganiz OI:", "" )
 // DisplayObjectInstance( mOrganiz, "", "" )
    NAME VIEW mOrganiz "mOrganiz"

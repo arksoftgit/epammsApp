@@ -461,6 +461,10 @@ ObjectConstraints( VIEW mMasLC BASED ON LOD mMasLC,
 
       // Go to build the flat display of all components subobject.
       //BuildCompositeEntries( mMasLC )
+      
+      // Build Usage Group Usages.
+      BuildUsageGroupEntries( mMasLC )
+      
    TraceLineS( "*** Object Constraints", "" )
 
         /* end zOCE_ACTIVATE */
@@ -947,29 +951,146 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: dDisplayKeywordText
+// OPERATION: dDisplayUsageKeyText
 //
 /////////////////////////////////////////////////////////////////////////////
 DERIVED ATTRIBUTE OPERATION
-dDisplayKeywordText( VIEW mMasLC BASED ON LOD mMasLC,
-                     STRING ( 32 ) InternalEntityStructure,
-                     STRING ( 32 ) InternalAttribStructure,
-                     SHORT GetOrSetFlag )
+dDisplayUsageKeyText( VIEW mMasLC BASED ON LOD mMasLC,
+                      STRING ( 32 ) InternalEntityStructure,
+                      STRING ( 32 ) InternalAttribStructure,
+                      SHORT GetOrSetFlag )
 
    STRING ( 10000 ) szGeneratedString
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
 
-      // Expand the current Text attribute by replacing imbedded Keywords with the Keyword
-      // values in the M_InsertTextMarketing subentities.
-      szGeneratedString = mMasLC.M_MarketingStatement.Text 
-      GenerateKeywordTextIntoString( mMasLC,
-                                     szGeneratedString,
-                                     "M_InsertTextKeywordMarketing",
-                                     "M_InsertTextMarketing",
-                                     ", " )
+      // Expand the current Text attribute by replacing inbedded Keywords with the Keyword
+      // values in the M_InsertText subentities.
+      szGeneratedString = mMasLC.DisplayKeywordText.Text 
+      IF szGeneratedString != ""
+         GenerateKeywordTextIntoString( mMasLC,
+                                        szGeneratedString,
+                                        "M_InsertTextKeyword",
+                                        "M_InsertText",
+                                        ", " )
+      END
+      
+      // Store the resulting value in the object.
+      StoreStringInRecord( mMasLC,
+                           InternalEntityStructure,
+                           InternalAttribStructure, szGeneratedString )
+      RETURN 0
 
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: dDisplayUsageKeyTitle
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dDisplayUsageKeyTitle( VIEW mMasLC BASED ON LOD mMasLC,
+                       STRING ( 32 ) InternalEntityStructure,
+                       STRING ( 32 ) InternalAttribStructure,
+                       SHORT GetOrSetFlag )
+
+   STRING ( 10000 ) szGeneratedString
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Expand the current Title attribute by replacing inbedded Keywords with the Keyword
+      // values in the M_InsertText subentities.
+      szGeneratedString = mMasLC.DisplayKeywordText.Title 
+      IF szGeneratedString != ""
+         GenerateKeywordTextIntoString( mMasLC,
+                                        szGeneratedString,
+                                        "M_InsertTextKeyword",
+                                        "M_InsertText",
+                                        ", " )
+      END
+
+      // Store the resulting value in the object.
+      StoreStringInRecord( mMasLC,
+                           InternalEntityStructure,
+                           InternalAttribStructure, szGeneratedString )
+      RETURN 0
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: dMarketingKeywordText
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dMarketingKeywordText( VIEW mMasLC BASED ON LOD mMasLC,
+                       STRING ( 32 ) InternalEntityStructure,
+                       STRING ( 32 ) InternalAttribStructure,
+                       SHORT GetOrSetFlag )
+
+   STRING ( 1000 ) szGeneratedString
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Concatenate all the Keyword values for a Marketing Keyword entry.
+      szGeneratedString = ""
+      FOR EACH mMasLC.M_InsertTextMarketing 
+         IF szGeneratedString = ""
+            szGeneratedString = mMasLC.M_InsertTextMarketing.Text
+         ELSE
+            szGeneratedString = szGeneratedString + ", " + mMasLC.M_InsertTextMarketing.Text 
+         END
+      END
+
+      // Store the resulting value in the object.
+      StoreStringInRecord( mMasLC,
+                           InternalEntityStructure,
+                           InternalAttribStructure, szGeneratedString )
+      RETURN 0
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: dMarketingTitleText
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dMarketingTitleText( VIEW mMasLC BASED ON LOD mMasLC,
+                     STRING ( 32 ) InternalEntityStructure,
+                     STRING ( 32 ) InternalAttribStructure,
+                     SHORT GetOrSetFlag )
+
+   STRING ( 1000 ) szGeneratedString
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Concatenate a string combining Title and Text, with Title made bold.
+      szGeneratedString = "<b>" + mMasLC.M_MarketingStatement.Title + "</b>" +
+                          mMasLC.M_MarketingStatement.Text 
+      
       // Store the resulting value in the object.
       StoreStringInRecord( mMasLC,
                            InternalEntityStructure,
@@ -1725,3 +1846,185 @@ SetMLC_SelectedFlags( VIEW mMasLC BASED ON LOD mMasLC,
 
 END
 
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: dMarketingKeywordText
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dUsageKeywordText( VIEW mMasLC BASED ON LOD mMasLC,
+                   STRING ( 32 ) InternalEntityStructure,
+                   STRING ( 32 ) InternalAttribStructure,
+                   SHORT GetOrSetFlag )
+
+   STRING ( 1000 ) szGeneratedString
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Concatenate all the Keyword values for a Marketing Keyword entry.
+      szGeneratedString = ""
+      FOR EACH mMasLC.M_InsertTextUsage 
+         IF szGeneratedString = ""
+            szGeneratedString = mMasLC.M_InsertTextUsage.Text
+         ELSE
+            szGeneratedString = szGeneratedString + ", " + mMasLC.M_InsertTextUsage.Text 
+         END
+      END
+
+      // Store the resulting value in the object.
+      StoreStringInRecord( mMasLC,
+                           InternalEntityStructure,
+                           InternalAttribStructure, szGeneratedString )
+      RETURN 0
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: dSubUsageCombinedText
+**    
+*************************************************************************************************/
+DERIVED ATTRIBUTE OPERATION
+dSubUsageCombinedText( VIEW mMasLC BASED ON LOD mMasLC,
+                       STRING ( 32 ) InternalEntityStructure,
+                       STRING ( 32 ) InternalAttribStructure,
+                       SHORT GetOrSetFlag )
+
+   STRING ( 10000 ) szCombinedText
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Expand the current Text attribute by replacing imbedded Keywords with the Keyword
+      // values in the M_InsertTextMarketing subentities.
+      szCombinedText = ""
+      FOR EACH mMasLC.M_UsageGroupUsage 
+         IF szCombinedText = ""
+            szCombinedText = mMasLC.M_UsageGroupUsage.Name 
+         ELSE
+            szCombinedText = szCombinedText + ", " + mMasLC.M_UsageGroupUsage.Name 
+         END
+      END
+
+      // Store the resulting value in the object.
+      StoreStringInRecord( mMasLC,
+                           InternalEntityStructure,
+                           InternalAttribStructure, szCombinedText )
+      RETURN 0
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: BuildUsageGroupEntries
+**    
+*************************************************************************************************/
+TRANSFORMATION OPERATION
+BuildUsageGroupEntries( VIEW mMasLC BASED ON LOD mMasLC )
+
+   // Build Usage Group Usages.
+   FOR EACH mMasLC.M_UsageType 
+      FOR EACH mMasLC.M_UsageGroup 
+         FOR EACH mMasLC.M_UsageGroupUsage 
+            EXCLUDE mMasLC.M_UsageGroupUsage NONE
+         END
+      END
+      FOR EACH mMasLC.M_Usage 
+         IF mMasLC.M_UsageUsageGroup EXISTS
+            SET CURSOR FIRST mMasLC.M_UsageGroup 
+                       WHERE mMasLC.M_UsageGroup.ID = mMasLC.M_UsageUsageGroup.ID  
+            IF RESULT >= zCURSOR_SET
+               INCLUDE mMasLC.M_UsageGroupUsage FROM mMasLC.M_Usage 
+            END
+         END
+      END
+   END
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: BuildUsageKeyEntries
+**    
+*************************************************************************************************/
+TRANSFORMATION OPERATION
+BuildUsageKeyEntries( VIEW mMasLC BASED ON LOD mMasLC,
+                      STRING ( 32 ) SourceKeywordEntityName,
+                      STRING ( 32 ) SourceTextEntityName,
+                      STRING ( 2000 ) TextValue,
+                      STRING ( 2000 ) TitleValue )
+
+   SHORT nRC1
+   SHORT nRC2
+
+   // Build the M_InsertTextKeywordBase subobject based on the entity names passed in.
+   // If the keyword Type allows only a single keyword value, set the selected flag for the first one.
+   // Otherwise, set the selected flag for all text entries.
+   
+   // Then build the actual M_InsertTextKeyword subobject from the selected entries from M_InsertTextKeywordBase.
+   
+   // Delete any current entries.
+   IF mMasLC.DisplayKeywordText EXISTS 
+      DELETE ENTITY mMasLC.DisplayKeywordText  
+   END
+   
+   // Create Display entity containing Text and optionally Title.
+   CREATE ENTITY mMasLC.DisplayKeywordText 
+   mMasLC.DisplayKeywordText.Text  = TextValue
+   mMasLC.DisplayKeywordText.Title = TitleValue
+   
+   // Copy over the basic entities.
+   nRC1 = SetCursorFirstEntity( mMasLC, SourceKeywordEntityName, "" )
+   LOOP WHILE nRC1 >= zCURSOR_SET
+      CREATE ENTITY mMasLC.M_InsertTextKeywordBase 
+      SetMatchingAttributesByName( mMasLC, "M_InsertTextKeywordBase", mMasLC, SourceKeywordEntityName, zSET_ALL )
+      
+      nRC2 = SetCursorFirstEntity( mMasLC, SourceTextEntityName, "" )
+      LOOP WHILE nRC2 >= zCURSOR_SET
+         CREATE ENTITY mMasLC.M_InsertTextBase 
+         SetMatchingAttributesByName( mMasLC, "M_InsertTextBase", mMasLC, SourceTextEntityName, zSET_ALL )
+         
+         nRC2 = SetCursorNextEntity( mMasLC, SourceTextEntityName, "" )
+      END
+      nRC1 = SetCursorNextEntity( mMasLC, SourceKeywordEntityName, "" )
+   END
+   
+   // Initialize the selected flags as indicated above.
+   FOR EACH mMasLC.M_InsertTextKeywordBase 
+      IF mMasLC.M_InsertTextKeywordBase.Type = "O"
+         // Set the flag for the first entry.
+         mMasLC.M_InsertTextBase.wSelected = "Y"
+      ELSE
+         // Set the flag for all entries.
+         FOR EACH mMasLC.M_InsertTextBase 
+            mMasLC.M_InsertTextBase.wSelected = "Y"
+         END
+      END
+   END
+   
+   // Build the M_InsertTextKeyword subobject as described above.
+   FOR EACH mMasLC.M_InsertTextKeywordBase 
+      CREATE ENTITY mMasLC.M_InsertTextKeyword 
+      SetMatchingAttributesByName( mMasLC, "M_InsertTextKeyword", mMasLC, "M_InsertTextKeywordBase", zSET_ALL )
+      FOR EACH mMasLC.M_InsertTextBase 
+         IF mMasLC.M_InsertTextBase.wSelected = "Y"
+            CREATE ENTITY mMasLC.M_InsertText 
+            SetMatchingAttributesByName( mMasLC, "M_InsertText", mMasLC, "M_InsertTextBase", zSET_ALL )
+         END
+      END
+   END
+
+END

@@ -1,4 +1,4 @@
-z1000-Zeidon    TEXTSA   TZDGSRCO 03/25/15   09:54:24 1.0a2    
+z1000-Zeidon    TEXTSA   TZDGSRCO 08/18/15   14:02:11 1.0a2    
 eDomainGroup 1
 aZKey      68568034
 aName      TextsA
@@ -8,11 +8,11 @@ aLanguageType C
 aDomainAndGlobalOpGroupName TZAPDMAA
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StringDomain
 aZKey      68568041
 aName      MiddleName
 aDesc      Person's middle name or initial
 aDomainType E
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
 aDataType  S
 aMaxStringLth 64
 aContextRestriction N
@@ -23,11 +23,11 @@ aName      MiddleName
 aIsDefault Y
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.CaseAwareStringDomain
 aZKey      110002352
 aName      GeneralNameCaseInsensitive
 aDesc      Case Insensitive General Text (names, streets, cities, etc.)
 aDomainType E
+aJavaClass com.quinsoft.zeidon.domains.CaseAwareStringDomain
 aDataType  S
 aMaxStringLth 128
 aContextRestriction N
@@ -38,11 +38,11 @@ aName      GeneralNameCaseInsensitive
 aIsDefault Y
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StringDomain
 aZKey      68568043
 aName      FirstName
 aDesc      Person's First Name
 aDomainType E
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
 aDataType  S
 aMaxStringLth 64
 aContextRestriction N
@@ -53,11 +53,11 @@ aName      FirstName
 aIsDefault Y
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StringDomain
 aZKey      68568045
 aName      LastName
 aDesc      Person's Last Name
 aDomainType E
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
 aDataType  S
 aMaxStringLth 64
 aContextRestriction N
@@ -68,11 +68,11 @@ aName      LastName
 aIsDefault Y
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StringDomain
 aZKey      68568047
 aName      SIC_Code
 aDesc      SIC Code - 8 numeric digits
 aDomainType E
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
 aDataType  S
 aMaxStringLth 8
 aContextRestriction N
@@ -83,10 +83,10 @@ aName      SIC_Code
 aIsDefault Y
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StringDomain
 aZKey      68568049
 aName      ShortDescription
 aDomainType E
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
 aDataType  S
 aMaxStringLth 128
 aContextRestriction N
@@ -97,10 +97,10 @@ aName      ShortDescription
 aIsDefault Y
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StringDomain
 aZKey      68568053
 aName      EMailAddress
 aDomainType E
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
 aDataType  S
 aMaxStringLth 128
 aContextRestriction N
@@ -111,11 +111,11 @@ aName      EMailAddress
 aIsDefault Y
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StringDomain
 aZKey      68568055
 aName      ZipCode
 aDesc      US Zip Code
 aDomainType E
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
 aDataType  S
 aMaxStringLth 10
 aContextRestriction N
@@ -132,11 +132,11 @@ aName      ZipCode10
 aEditString 99999-9999
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      68568058
 aName      Gender
 aDesc      (Male/Female)
 aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
 aMaxStringLth 1
 aContextRestriction N
@@ -158,11 +158,11 @@ aExternalValue Male
 aInternalValue M
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.PhoneDomain
 aZKey      68568062
 aName      PhoneNumber
 aDesc      Any phone number.  Requires flexible format for foreign numbers.
 aDomainType F
+aJavaClass com.quinsoft.zeidon.domains.PhoneDomain
 aDataType  S
 aMaxStringLth 11
 aContextRestriction N
@@ -186,11 +186,11 @@ aEditString 999.999.9999
 aDIL_Text  phone number in format 999.999.9999
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.RegularExpressionDomain
 aZKey      18568062
 aName      NumericId
 aDesc      Numeric Text (0-9).
 aDomainType F
+aJavaClass com.quinsoft.zeidon.domains.RegularExpressionDomain
 aDataType  S
 aMaxStringLth 32
 aContextRestriction N
@@ -203,11 +203,11 @@ aJavaEditString ^[0-9]*$
 aIsDefault Y
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StringDomain
 aZKey      68568065
 aName      GeneralName_Address
 aDesc      General Text (names, streets, cities, etc.)
 aDomainType E
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
 aDataType  S
 aMaxStringLth 128
 aContextRestriction N
