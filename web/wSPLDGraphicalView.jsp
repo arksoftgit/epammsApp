@@ -609,6 +609,20 @@ else
          }
       });
 
+      $( "#db" ).button({
+         text: false,
+         icons: {
+           primary: "deleteblock"
+         }
+      });
+
+      $( "#ud" ).button({
+         text: false,
+         icons: {
+           primary: "undodelete"
+         }
+      });
+
       $( "#st" ).button({
          text: false,
          icons: {
@@ -640,6 +654,8 @@ else
    #ztoolbar .ui-button, .equalspacevertical { background-position: -143px 0px; }
    #ztoolbar .ui-button, .abuthorizontal { background-position: -159px 0px; }
    #ztoolbar .ui-button, .abutvertical { background-position: -175px 0px; }
+   #ztoolbar .ui-button, .deleteblock { background-position: -191px 0px; }
+   #ztoolbar .ui-button, .undodelete { background-position: -207px 0px; }
 
    .ui-widget-header {
       border: 1px solid #aaaaaa;
@@ -743,6 +759,8 @@ else
                <button id="esv" class="zalign-btn">Equal Space Vertical</button> 
                <button id="ah" class="zalign-btn">Abut Horizontal</button>
                <button id="av" class="zalign-btn">Abut Vertical</button> 
+               <button id="db" class="zalign-btn">Delete Block</button> 
+               <button id="ud" class="zalign-btn">Undo Delete</button> 
 
                <button id="CancelReturn">Cancel/Return</button>
                <button id="SaveReturn">Save/Return</button>
@@ -1022,6 +1040,17 @@ else
                      <div id="zImageNameToggle" style="overflow:hidden; white-space:nowrap; padding-top:12px; padding-bottom:12px;">
                         <label for="zImageName">Graphic Image Name:</label>
                         <input type="text" id="zImageName" class="zeidon" data-zmap="block.z_^image^name" style="float:right" />
+                     </div>
+                     <p style="clear:both;position:relative"></p>
+                     <div id="zHumanHazardToggle" style="overflow:hidden; white-space:nowrap;display:hidden; padding-top:12px; padding-bottom:12px;">
+                        <label for="zHumanHazardPanel">Panel Location: </label>
+                        <select id="zHumanHazardPanel" style="float:right" multiple="multiple">
+                           <option value="">Select Panel Location...</option>
+                        </select>
+                        <label for="zHumanHazardLabel">Label Location: </label>
+                        <select id="zHumanHazardLabel" style="float:right" multiple="multiple">
+                           <option value="">Select Label Location...</option>
+                        </select>
                      </div>
                      <!-- Add a <div> element where the dynatree should appear: -->
                      <hr>

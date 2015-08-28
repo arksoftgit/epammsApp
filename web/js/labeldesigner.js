@@ -585,6 +585,7 @@ $(function() {
             $canvasElement.text( uniqueTag );
             addZeidonAttributeToElement( $canvasElement, "wID", uniqueTag );
             $canvasElement.removeClass( "ui-draggable-dragging" ).addClass( "canvas-element block-element" );
+            $canvasElement.addClass( "block" );
             if ( $canvas[0].id === "page" ) {
                $canvasElement.addClass( "panel" );  // an element with class "panel" cannot become a "block" and vice-versa
                addZeidonAttributeToElement( $canvasElement, "wE", "panel" );
@@ -1044,6 +1045,7 @@ $(function() {
             // $('#id').prop('disabled', 'disabled');
             if ( sectionType === "Graphic" ) {
                $("#zImageNameToggle").show();
+               $("#zHumanHazardToggle").hide();
                $("#zCheckContinuationBlockToggle").hide();
             // console.log( "   Hiding capitalize" );
                $("#zCapitalizeTitleTextFlagToggle").hide();
@@ -1055,6 +1057,7 @@ $(function() {
             // console.log( "   Showing capitalize" );
                $("#zCapitalizeTitleTextFlagToggle").show();
                $("#zImageNameToggle").hide();
+               $("#zHumanHazardToggle").hide();
                $("#zClaimListTypeToggle").show();
                $("#zMarketingSectionToggle").show();
                $('#zMarketingSection option[value="' + blockName + '"]').prop( 'selected', true );
@@ -1066,6 +1069,7 @@ $(function() {
             // console.log( "   Showing capitalize" );
                $("#zCapitalizeTitleTextFlagToggle").show();
                $("#zImageNameToggle").hide();
+               $("#zHumanHazardToggle").hide();
                $("#zClaimListTypeToggle").hide();
                $("#zMarketingSectionToggle").hide();
                options = optionsDflt;
@@ -1074,9 +1078,11 @@ $(function() {
             // console.log( "   Hiding capitalize" );
                $("#zCapitalizeTitleTextFlagToggle").hide();
                $("#zImageNameToggle").hide();
+               $("#zHumanHazardToggle").hide();
                $("#zClaimListTypeToggle").hide();
                $("#zMarketingSectionToggle").hide();
                if ( sectionType === "HumanHazard" ) {
+                  $("#zHumanHazardToggle").show();
                   // Human Hazard:  Hazards Warning / Hazards Signal Word / Hazards Precautionary
                   options = "<option value=\"^hazards ^warning\">Hazards Warning</option><option value=\"^hazards ^signal ^word\">Hazards Signal Word</option><option value=\"^hazards ^precautionary\">Hazards Precautionary</option>";
                } else if ( sectionType === "Ingredients" ) {
@@ -1636,6 +1642,17 @@ var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
       });
 
    $("#zMarketingSection")
+      .change( function() {
+         var val = $(this).val();
+         $("#zBlockName").val( val );
+
+      // alert( "Selected value: " + val );
+      // g_$current_block.text( $('#zSectionType').val() );  this wipes out all child nodes of the div ... but the complicated next line works where
+      // nodeType === 3 restricts this to TEXT_NODE.
+         g_$current_block.contents().filter( function() { return this.nodeType === 3; }).replaceWith( "Marketing: " + val );
+      });
+
+   $("#zHumanHazard")
       .change( function() {
          var val = $(this).val();
          $("#zBlockName").val( val );
@@ -2835,7 +2852,9 @@ public class FileServer {
                var jsonColors = jsonObj["Colors"];
                var jsonReuse = jsonObj["ReusableBlocks"];
                var jsonMarketing = jsonObj["Marketing"];
-               var jsonBlockTags = jsonObj["BlockTags"]
+               var jsonBlockTags = jsonObj["BlockTags"];
+               var jsonHazardSelected = jsonObj["HazardSelectedLocations"];
+               var jsonHazard = jsonObj["HazardLocations"];
                jsonObj = jsonObj["OIs"];
 
                // Display the JSON coming back (to the client) from Zeidon (server).
@@ -2851,6 +2870,7 @@ public class FileServer {
                setReusableBlocks( jsonReuse );
                setMarketing( jsonMarketing );
                setBlockTags( jsonBlockTags );
+               setHazardLocations( jsonHazardSelected, jsonHazard );
             } catch(e) {
                $id("zFormattedJsonLabel").innerHTML = jsonZeidon;
                alert( "JSON is not well formatted:\n" + e.message );
@@ -3108,20 +3128,39 @@ public class FileServer {
       $item.css( "border", "2px solid #000" ).data( "z__^delete", "Y" ).removeClass( "canvas-element" ).hide();
    }
 
+   function undoDelete() {
+      var undo = g_undo_list.pop();  // The shift() method removes the first item of an array, and returns that item.
+                                     // To remove the last item of an array, use the pop() method.
+      while ( undo.length > 0 ) {
+         var item = undo[0];
+      // console.log( item.id );
+         undo.splice( 0, 1 );
+         recurseUndo($(item) );
+         g_updatedLLD = true;
+      }
+   }
+
+   function deleteBlock() {
+      var new_array = g_selected_list.slice();  // shallow copy of array to be used in undo
+      if ( new_array.length > 0 ) {
+         g_undo_list.push( new_array ); // The push() method adds new items to the end of an array, and returns the new length.
+                                        // To add items at the beginning of an array, use the unshift() method.
+      }
+      while ( g_selected_list.length > 0 ) {
+         var item = g_selected_list[0];
+         g_selected_list.splice( 0, 1 );
+         recurseDelete($(item) );
+         g_updatedLLD = true;
+      }
+      g_selected_first = null;
+   }
+
    $(document).keydown( function( e ) {
    // alert( event.keyCode );
       if ( e.ctrlKey ) {
          if ( e.keyCode === 90 ) { // Ctrl+Z keydown combo - Undo (only implemented for delete)
             if ( g_undo_list.length > 0 ) {
-               var undo = g_undo_list.pop();  // The shift() method removes the first item of an array, and returns that item.
-                                              // To remove the last item of an array, use the pop() method.
-               while ( undo.length > 0 ) {
-                  var item = undo[0];
-               // console.log( item.id );
-                  undo.splice( 0, 1 );
-                  recurseUndo($(item) );
-                  g_updatedLLD = true;
-               }
+               undoDelete();
             }
          } else if ( e.keyCode === 123 ) { // Ctrl + F12 keydown combo
             var jsonObj = g_ViewNameMap.getViewByName( "LLD_CurrentView" );
@@ -3185,18 +3224,7 @@ public class FileServer {
          }
       } else if ( e.keyCode === 46 ) { // Delete keydown
       // alert( "Document Delete Key Pressed" );
-         var new_array = g_selected_list.slice();  // shallow copy of array to be used in undo
-         if ( new_array.length > 0 ) {
-            g_undo_list.push( new_array ); // The push() method adds new items to the end of an array, and returns the new length.
-                                           // To add items at the beginning of an array, use the unshift() method.
-         }
-         while ( g_selected_list.length > 0 ) {
-            var item = g_selected_list[0];
-            g_selected_list.splice( 0, 1 );
-            recurseDelete($(item) );
-            g_updatedLLD = true;
-         }
-         g_selected_first = null;
+         deleteBlock();
       } else if ( e.shiftKey ) {
          if ( g_selected_list.length > 0 ) {
             var scale = g_pixelsPerInch * g_scale;
@@ -3407,107 +3435,115 @@ public class FileServer {
 
    function runAlign( button ) {
    // console.log( "zalign id: " + button.id );
-      if ( g_selected_list.length > 1 && g_selected_first !== null ) {
-         var scale = g_pixelsPerInch * g_scale;
-         switch ( button.id ) {
-            case "esh": // Equal Space Horizontal
-            case "esv": // Equal Space Vertical
-            case "ah": // Abut Horizontal
-            case "av": // Abut Vertical
-               var new_array = g_selected_list.slice();  // shallow copy of array to be used in sort (which modifies the array)
-               new_array.sort( function( a, b ) {
-                  var $a = $(a);
-                  var $b = $(b);
-                  var diff;
-                  if ( button.id === "av" || button.id === "esv" ) {
-                     diff = $a.cssInt( 'top' ) - $b.cssInt( 'top' );
-                     if ( diff ) {
-                        return diff;
-                     } else {
-                        return $a.cssInt( 'height' ) - $b.cssInt( 'height' );
+      if ( button.id === "ud" ) { // Undo Delete
+         undoDelete();
+         return;
+      } else if ( g_selected_first !== null ) {
+         if ( button.id === "db" ) { // Delete Block
+            deleteBlock();
+            return;
+         } else if ( g_selected_list.length > 1 ) {
+            var scale = g_pixelsPerInch * g_scale;
+            switch ( button.id ) {
+               case "esh": // Equal Space Horizontal
+               case "esv": // Equal Space Vertical
+               case "ah": // Abut Horizontal
+               case "av": // Abut Vertical
+                  var new_array = g_selected_list.slice();  // shallow copy of array to be used in sort (which modifies the array)
+                  new_array.sort( function( a, b ) {
+                     var $a = $(a);
+                     var $b = $(b);
+                     var diff;
+                     if ( button.id === "av" || button.id === "esv" ) {
+                        diff = $a.cssInt( 'top' ) - $b.cssInt( 'top' );
+                        if ( diff ) {
+                           return diff;
+                        } else {
+                           return $a.cssInt( 'height' ) - $b.cssInt( 'height' );
+                        }
+                     } else {  // button.id === "ah" || button.id === "esh"
+                        diff = $a.cssInt( 'left' ) - $b.cssInt( 'left' );
+                        if ( diff ) {
+                           return diff;
+                        } else {
+                           diff = $a.cssInt( 'width' ) - $b.cssInt( 'width' );
+                           return diff;
+                        }
                      }
-                  } else {  // button.id === "ah" || button.id === "esh"
-                     diff = $a.cssInt( 'left' ) - $b.cssInt( 'left' );
-                     if ( diff ) {
-                        return diff;
-                     } else {
-                        diff = $a.cssInt( 'width' ) - $b.cssInt( 'width' );
-                        return diff;
-                     }
+                  });
+                  equalSpaceOrAbut( button.id, new_array, scale );
+                  break;
+
+               default:
+                  var $el = $(g_selected_first);
+                  var coord;
+                  var $item;
+                  g_selected_list.forEach( function( item ) {
+                  // console.log( item.id );
+                     if ( g_selected_first.id !== item.id ) {
+                        $item = $(item);
+                     // console.log( "zalign item id: " + item.id );
+                     // displayElementData( "runAlign Before: ", $item );
+                        switch ( button.id ) {
+                           case "at": // Align Top
+                              coord = $el.cssInt( 'top' );
+                              $item.css({ top: coord });
+                              $item.data( "z_^top", (coord / scale).toFixed( 3 ) );
+                              break;
+
+                           case "al": // Align Left
+                              coord = $el.cssInt( 'left' );
+                              $item.css({ left: coord });
+                              $item.data( "z_^left", (coord / scale).toFixed( 3 ) );
+                              break;
+
+                           case "ab": // Align Bottom
+                              coord = $el.cssInt( 'top' ) + $el.cssInt( 'height' ) - $item.cssInt( 'height' );
+                              if ( coord < 0 ) {
+                                 coord = 0;
+                              }
+                              $item.css({ top: coord });
+                              $item.data( "z_^top", (coord / scale).toFixed( 3 ) );
+                              break;
+
+                           case "ar": // Align Right
+                              coord = $el.cssInt( 'left' ) + $el.cssInt( 'width' ) - $item.cssInt( 'width' );
+                              if ( coord < 0 ) {
+                                 coord = 0;
+                              }
+                              $item.css({ left: coord });
+                              $item.data( "z_^left", (coord / scale).toFixed( 3 ) );
+                              break;
+
+                           case "ew": // Equal Width
+                              coord = $el.cssInt( 'width' );
+                              $item.css({ width: coord });
+                              $item.data( "z_^width", (coord / scale).toFixed( 3 ) );
+                              break;
+
+                           case "eh": // Equal Height
+                              coord = $el.cssInt( 'height' );
+                              $item.css({ height: coord });
+                              $item.data( "z_^height", (coord / scale).toFixed( 3 ) );
+                              break;
+
+                           case "ewh": // Equal Width & Height
+                              coord = $el.cssInt( 'width' );
+                              $item.css({ width: coord });
+                              $item.data( "z_^width", (coord / scale).toFixed( 3 ) );
+                              coord = $el.cssInt( 'height' );
+                              $item.css({ height: coord });
+                              $item.data( "z_^height", (coord / scale).toFixed( 3 ) );
+                              break;
+
+                     } // end of: inner switch
+                  // displayElementData( "runAlign After: ", $item );
                   }
                });
-               equalSpaceOrAbut( button.id, new_array, scale );
-               break;
-
-            default:
-               var $el = $(g_selected_first);
-               var coord;
-               var $item;
-               g_selected_list.forEach( function( item ) {
-               // console.log( item.id );
-                  if ( g_selected_first.id !== item.id ) {
-                     $item = $(item);
-                  // console.log( "zalign item id: " + item.id );
-                  // displayElementData( "runAlign Before: ", $item );
-                     switch ( button.id ) {
-                        case "at": // Align Top
-                           coord = $el.cssInt( 'top' );
-                           $item.css({ top: coord });
-                           $item.data( "z_^top", (coord / scale).toFixed( 3 ) );
-                           break;
-
-                        case "al": // Align Left
-                           coord = $el.cssInt( 'left' );
-                           $item.css({ left: coord });
-                           $item.data( "z_^left", (coord / scale).toFixed( 3 ) );
-                           break;
-
-                        case "ab": // Align Bottom
-                           coord = $el.cssInt( 'top' ) + $el.cssInt( 'height' ) - $item.cssInt( 'height' );
-                           if ( coord < 0 ) {
-                              coord = 0;
-                           }
-                           $item.css({ top: coord });
-                           $item.data( "z_^top", (coord / scale).toFixed( 3 ) );
-                           break;
-
-                        case "ar": // Align Right
-                           coord = $el.cssInt( 'left' ) + $el.cssInt( 'width' ) - $item.cssInt( 'width' );
-                           if ( coord < 0 ) {
-                              coord = 0;
-                           }
-                           $item.css({ left: coord });
-                           $item.data( "z_^left", (coord / scale).toFixed( 3 ) );
-                           break;
-
-                        case "ew": // Equal Width
-                           coord = $el.cssInt( 'width' );
-                           $item.css({ width: coord });
-                           $item.data( "z_^width", (coord / scale).toFixed( 3 ) );
-                           break;
-
-                        case "eh": // Equal Height
-                           coord = $el.cssInt( 'height' );
-                           $item.css({ height: coord });
-                           $item.data( "z_^height", (coord / scale).toFixed( 3 ) );
-                           break;
-
-                        case "ewh": // Equal Width & Height
-                           coord = $el.cssInt( 'width' );
-                           $item.css({ width: coord });
-                           $item.data( "z_^width", (coord / scale).toFixed( 3 ) );
-                           coord = $el.cssInt( 'height' );
-                           $item.css({ height: coord });
-                           $item.data( "z_^height", (coord / scale).toFixed( 3 ) );
-                           break;
-
-                  } // end of: inner switch
-               // displayElementData( "runAlign After: ", $item );
-               }
-            });
-            g_updatedLLD = true;
+               g_updatedLLD = true;
+            }
+            mapElementDataToUiData( g_$current_block );
          }
-         mapElementDataToUiData( g_$current_block );
       }
    }
 
@@ -3673,6 +3709,30 @@ public class FileServer {
          $.each(jsonMarketing, function(index, item) {
             list.append( new Option( item.Name, item.Name ) );
          });
+      }
+   }
+
+   function setHazardLocations( jsonHazardSelected, jsonHazard )
+   {
+      if ( $.isArray( jsonHazard ) ) {
+         var $listPanel = $("#zHumanHazardPanel");
+         var $listLabel = $("#zHumanHazardLabel");
+         $listPanel.find('option:not(:first)').remove(); // wipe out all but the first option
+         $listLabel.find('option:not(:first)').remove(); // wipe out all but the first option
+         var selectedPanel = jsonHazardSelected.Panel;
+         var selectedLabel = jsonHazardSelected.Label;
+         $.each(jsonHazard, function(index, item) {
+            if ( item.Panel ) {
+               $listPanel.append( new Option( item.Panel, item.Panel ) );
+            }
+            if ( item.Label ) {
+               $listLabel.append( new Option( item.Label, item.Label ) );
+            }
+         });
+         $listPanel.multiSelect( "refresh" );
+         $listLabel.multiSelect( "refresh" );
+         $listPanel.multiSelect( "select", selectedPanel );
+         $listLabel.multiSelect( "select", selectedLabel );
       }
    }
 

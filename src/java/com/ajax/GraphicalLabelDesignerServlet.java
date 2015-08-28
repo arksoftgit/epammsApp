@@ -367,8 +367,32 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
 
    private String convertLLD_ToJSON( View vLLD ) {
       String jsonLabel = null;
+      int k;
+      String s;
+      String attr;
+      EntityCursor ec = vLLD.cursor( "SPLD_HumanHazardSection" );
+      String jsonSelectedHazard = "{ \"Panel\" : \"" + ec.getAttribute( "PanelLoc" ).getString() +
+                                                      "\", \"Label\" : \"" + ec.getAttribute( "LabelLoc" ).getString() + "\" }";
+      String jsonHazard = " [";
+      for ( k = 1; k <= 5; k++ ) {
+         attr = "PanelLoc" + k;
+         s = ec.getAttribute( attr ).getString();
+         if ( s != null && s.isEmpty() == false ) {
+            jsonHazard += " { \"Panel\" : \"" + s + "\" }, ";
+         }
+         attr = "LabelLoc" + k;
+         s = ec.getAttribute( attr ).getString();
+         if ( s != null && s.isEmpty() == false ) {
+            jsonHazard += " { \"Label\" : \"" + s + "\" }, ";
+         }
+      }
+      if ( jsonHazard.endsWith( ", ") ) {
+         jsonHazard = jsonHazard.substring( 0, jsonHazard.length() - 2 );
+      }
+      jsonHazard += " ]";
+
       String jsonReuse = "[";
-      EntityCursor ec = vLLD.cursor( "ReusableBlockDefinition" );
+      ec = vLLD.cursor( "ReusableBlockDefinition" );
       ec.orderEntities( "LLD_SectionType A Name A" );
       CursorResult cr = ec.setFirst();
       while ( cr.isSet() ) {
@@ -427,7 +451,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
       }
       String jsonTagList = "[ ";
       int lth = tagList.size();
-      for ( int k = 0; k < lth; k++ ) {
+      for ( k = 0; k < lth; k++ ) {
          jsonTagList += "\"" + tagList.get(k) + "\"";
          if ( k < lth - 1 ) {
             jsonTagList += ", ";
@@ -496,7 +520,13 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
 
          // Remove everything after SPLD_LLD and its children, and then add back termination for
          // OIs, SubregPhysicalLabelDef, and the opening brace.
-         jsonLabel = sb.substring( 0, pos ) + " } ] } ], \"BlockTags\" : " + jsonTagList + ", \"ReusableBlocks\" : " + jsonReuse + ", \"Colors\" : " + jsonColors + ", \"Marketing\" : " + jsonMarketing + " }";
+         jsonLabel = sb.substring( 0, pos ) + " } ] } ], \"BlockTags\" : " + jsonTagList +
+                                                      ", \"ReusableBlocks\" : " + jsonReuse +
+                                                      ", \"Colors\" : " + jsonColors +
+                                                      ", \"Marketing\" : " + jsonMarketing +
+                                                      ", \"HazardSelectedLocations\" : " + jsonSelectedHazard +
+                                                      ", \"HazardLocations\" : " + jsonHazard +
+                                              " }";
       // logger.debug( "Reduced Json Label from OI: " + jsonLabel );
       } catch( ZeidonException ze ) {
          logger.error( "Error loading Json Label: " + ze.getMessage() );
@@ -1447,7 +1477,7 @@ end debug code */
                // logger.debug( "After RefreshLabel" );
                // vLLD.logObjectInstance();
                   jsonLabel = convertLLD_ToJSON( vLLD );
-               // logger.debug( "Completed processing Json Label: " + jsonLabel );
+                  logger.debug( "Completed refresh Json Label: " + jsonLabel );
                } else {
                   jsonLabel = "{}";
                }
@@ -1476,7 +1506,7 @@ end debug code */
          // displaySPLD( vLLD, null, "" );
          // vLLD.logObjectInstance();
             jsonLabel = convertLLD_ToJSON( vLLD );
-         //logger.debug( "LoadLabel JSON: " + jsonLabel );
+            logger.debug( "LoadLabel JSON: " + jsonLabel );
          // jsonLabel = jsonLabel.replaceFirst( "\"TZLLD\",", "\"TZLLD\",\n      \"fileName\" : \"" + fileName + "\"," );
          } catch( ZeidonException ze ) {
             logger.error( "Error loading Json Label: " + ze.getMessage() );
