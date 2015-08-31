@@ -3773,7 +3773,6 @@ dSelectedHazardStmt( VIEW mSPLDef BASED ON LOD mSPLDef,
    STRING ( 256 ) szString
    STRING ( 256 ) szReplaceString
    STRING ( 256 ) szLocation
-   INTEGER lLocation
    SHORT nPosStart
    SHORT nPosEnd
 
@@ -3787,57 +3786,19 @@ dSelectedHazardStmt( VIEW mSPLDef BASED ON LOD mSPLDef,
       // "See side panel for Precautionary Statements and First Aid."
       IF mSPLDef.SPLD_HumanHazardSection  EXISTS
          szString = mSPLDef.SPLD_HumanHazardSection.PrecautionaryStatement
-         lLocation = 1
          nPosStart  = zSearchSubString( szString, "{{Precautionary Panel Location}}", "f", 0 )
          IF nPosStart >= 0
             nPosEnd = nPosStart + 32 // length of "{{Precautionary Panel Location}}"
-            szLocation = ""
-            IF lLocation = 1
-               szLocation = mSPLDef.SPLD_HumanHazardSection.PanelLoc1
-            ELSE
-            IF lLocation = 2
-               szLocation = mSPLDef.SPLD_HumanHazardSection.PanelLoc2
-            ELSE
-            IF lLocation = 3
-               szLocation = mSPLDef.SPLD_HumanHazardSection.PanelLoc3
-            ELSE
-            IF lLocation = 4
-               szLocation = mSPLDef.SPLD_HumanHazardSection.PanelLoc4
-            ELSE
-            IF lLocation = 5
-               szLocation = mSPLDef.SPLD_HumanHazardSection.PanelLoc5
-            END
-            END
-            END
-            END
-            END
+            szLocation = mSPLDef.SPLD_HumanHazardSection.PanelLoc
+            zSearchAndReplace( szLocation, 256, ",", " ")
             zReplaceSubString( szString, nPosStart, nPosEnd, szLocation )
          END
 
-         lLocation = 1
          nPosStart  = zSearchSubString( szString, "{{Precautionary Label Location}}", "f", 0 )
          IF nPosStart >= 0
             nPosEnd = nPosStart + 32 // length of "{{Precautionary Label Location}}"
-            szLocation = ""
-            IF lLocation = 1
-               szLocation = mSPLDef.SPLD_HumanHazardSection.LabelLoc1
-            ELSE
-            IF lLocation = 2
-               szLocation = mSPLDef.SPLD_HumanHazardSection.LabelLoc2
-            ELSE
-            IF lLocation = 3
-               szLocation = mSPLDef.SPLD_HumanHazardSection.LabelLoc3
-            ELSE
-            IF lLocation = 4
-               szLocation = mSPLDef.SPLD_HumanHazardSection.LabelLoc4
-            ELSE
-            IF lLocation = 5
-               szLocation = mSPLDef.SPLD_HumanHazardSection.LabelLoc5
-            END
-            END
-            END
-            END
-            END
+            szLocation = mSPLDef.SPLD_HumanHazardSection.LabelLoc
+            zSearchAndReplace( szLocation, 256, ",", " ")
             zReplaceSubString( szString, nPosStart, nPosEnd, szLocation )
          END
       END

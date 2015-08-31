@@ -1,4 +1,4 @@
-//start mSPLDef 2015.07.22 09:43:00
+//start mSPLDef 2015.08.30 19:59:07
 zOPER_EXPORT zSHORT OPERATION
 omSPLDef_GeneratePDF_Label( zVIEW vViewToInstance0 );
 
@@ -93,9 +93,6 @@ omSPLDef_RebuildSPLD_FromSLC( zVIEW vNewSPLD0,
                               zVIEW vSourceSLC1 );
 
 zOPER_EXPORT zSHORT OPERATION
-omSPLDef_BuildCompositeEntries( zVIEW vViewToInstance0 );
-
-zOPER_EXPORT zSHORT OPERATION
 omSPLDef_BuildSPLD_FromSPLD( zVIEW vViewToInstance0,
                              zVIEW vSourceSPLD1,
                              zVIEW vParentSLC2 );
@@ -162,7 +159,7 @@ zOPER_EXPORT zSHORT OPERATION
 omTempl_BuildDisplayStructure( zVIEW vViewToInstance0 );
 
 //end
-//start mMasLC 2015.07.22 09:42:59
+//start mMasLC 2015.08.28 07:42:53
 zOPER_EXPORT zSHORT OPERATION
 omMasLC_MergeUsageSelectEnts( zVIEW vViewToInstance0 );
 
@@ -199,8 +196,18 @@ zOPER_EXPORT zSHORT OPERATION
 omMasLC_SetMLC_SelectedFlags( zVIEW vViewToInstance0,
                               zVIEW vmSubLC1 );
 
+zOPER_EXPORT zSHORT OPERATION
+omMasLC_BuildUsageGroupEntries( zVIEW vViewToInstance0 );
+
+zOPER_EXPORT zSHORT OPERATION
+omMasLC_BuildUsageKeyEntries( zVIEW vViewToInstance0,
+                              zPCHAR pchSourceKeywordEntityN1,
+                              zPCHAR pchSourceTextEntityName2,
+                              zPCHAR pchTextValue3,
+                              zPCHAR pchTitleValue4 );
+
 //end
-//start mSubLC 2015.07.22 09:43:00
+//start mSubLC 2015.08.30 19:41:03
 zOPER_EXPORT zSHORT OPERATION
 omSubLC_BuildNewSLC_Version( zVIEW vViewToInstance0,
                              zVIEW vOriginalSLC1,
@@ -239,7 +246,7 @@ omSubLC_CopyDirsForUseSection( zVIEW vViewToInstance0,
                                zVIEW vmMLC1 );
 
 //end
-//start DOMAINT 2015.07.22 09:42:57
+//start DOMAINT 2015.08.28 07:42:47
 zOPER_EXPORT zSHORT OPERATION
 oDOMAINT_ActivateDomainList( zPVIEW vViewToInstance0,
                              zVIEW vViewToWindow1 );
@@ -260,7 +267,7 @@ oDOMAINT_PreloadSystemDomains( zVIEW vViewToInstance0,
                                zPCHAR pchInstallApp2 );
 
 //end
-//start lMLCATgt 2015.07.22 09:42:58
+//start lMLCATgt 2015.08.28 07:42:49
 zOPER_EXPORT zSHORT OPERATION
 olMLCATgt_BuildDifferencesMLC( zVIEW vViewToInstance0,
                                zVIEW vSourceCompareObject1 );
@@ -279,7 +286,7 @@ zOPER_EXPORT zSHORT OPERATION
 olMLCATgt_DeleteEmptyTitles( zVIEW vViewToInstance0 );
 
 //end
-//start ZGlobal1 2015.08.24 15:34:51
+//start ZGlobal1 2015.08.17 10:42:27
 zOPER_EXPORT zSHORT OPERATION
 ConvertLineToEntity( zVIEW vEntityView0,
                      zVIEW vXOD_View1,
@@ -636,7 +643,7 @@ SetAttributeFromCurrentDateTime( zVIEW vView0,
                                  zPCHAR aAttributeName2 );
 
 //end
-//start ZGlobalV 2015.08.20 08:02:16
+//start ZGlobalV 2014.03.26 19:06:58
 zOPER_EXPORT zSHORT OPERATION
 InitializeSLC_FromMLC( zVIEW vMasLC0,
                        zVIEW vSubLC1 );
@@ -699,10 +706,5 @@ CopyMLC_EntityToSLC( zVIEW vMasLC0,
                      zVIEW vSubLC1,
                      zPCHAR eEntity2,
                      zSHORT nFlag3 );
-
-//end
-//start ZGlobalS 2015.08.20 11:10:46
-zOPER_EXPORT zSHORT OPERATION
-xx( zVIEW vmSPLDef0 );
 
 //end

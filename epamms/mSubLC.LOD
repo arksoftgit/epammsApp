@@ -1,4 +1,4 @@
-z1000-Zeidon    MSUBLC   TZZOLODO 07/16/15   11:50:50 1.0a2    
+z1000-Zeidon    MSUBLC   TZZOLODO 08/30/15   19:41:02 1.0a2    
 eLOD       1
 aZKey      69035258
 aName      mSubLC
@@ -485,7 +485,6 @@ aUpdate    Y
 eER_AttributeRec 6
 aName      ChemicalFamily
 aZKey      1942093
-aNotNull   Y
 aDesc      Chemical Family (e.g. Pesticide, Quat Disinfectant, Iodine Disinfectant)
 
 eDomainRec 7
@@ -504,7 +503,6 @@ eER_AttributeRec 6
 aName      Number
 aZKey      69031557
 aLth       5
-aNotNull   Y
 aDesc      1-5 digit number assigned to the product (e.g. 141 for Mason MAQUAT 256-NHQ or 129 for Lonza HWS-256)
 aCaseSens  Y
 
@@ -566,8 +564,7 @@ eER_AttributeRec 6
 aName      ESL_Date
 aZKey      69031564
 aDesc      321
-EPA Stamped Label Date - The ESL Date used for the setup and review is to be on the label. It is for easy regulatory identification and production quality control purposes. The format for the ESL date is: ESL051203 (This means ESL dated May 12, 2003) . Use zero’s for place keepers if no ESL has been received: ESL000000
-
+EPA Stamped Label Date - The ESL Date used for the setup and review is to be on the label. It is for easy regulatory identification and production quality control purposes. The format for the ESL date is: ESL051203 (This means ESL dated May 12, 2003) . Use zero’s for place keepers if no ESL has been received: ESL000000 
 
 eDomainRec 7
 
@@ -724,8 +721,7 @@ eER_AttributeRec 5
 aName      ESL_Date
 aZKey      69031586
 aDesc      321
-EPA Stamped Label Date - The ESL Date used for the setup and review is to be on the label. It is for easy regulatory identification and production quality control purposes. The format for the ESL date is: ESL051203 (This means ESL dated May 12, 2003) . Use zero’s for place keepers if no ESL has been received: ESL000000
-
+EPA Stamped Label Date - The ESL Date used for the setup and review is to be on the label. It is for easy regulatory identification and production quality control purposes. The format for the ESL date is: ESL051203 (This means ESL dated May 12, 2003) . Use zero’s for place keepers if no ESL has been received: ESL000000 
 
 eDomainRec 6
 
@@ -1082,8 +1078,7 @@ eER_AttributeRec 5
 aName      ESL_Date
 aZKey      1165292
 aDesc      321
-EPA Stamped Label Date - The ESL Date used for the setup and review is to be on the label. It is for easy regulatory identification and production quality control purposes. The format for the ESL date is: ESL051203 (This means ESL dated May 12, 2003) . Use zero’s for place keepers if no ESL has been received: ESL000000
-
+EPA Stamped Label Date - The ESL Date used for the setup and review is to be on the label. It is for easy regulatory identification and production quality control purposes. The format for the ESL date is: ESL051203 (This means ESL dated May 12, 2003) . Use zero’s for place keepers if no ESL has been received: ESL000000 
 
 eDomainRec 6
 
@@ -1153,7 +1148,7 @@ aZKey      1178506
 aDesc      54
 Gallons, Ounces, ...
 
-need domain for various units·
+need domain for various units 
 
 eDomainRec 6
 
@@ -8096,7 +8091,7 @@ eER_RelLink 3
 eER_RelType 4
 
 eLOD_Entity 2
-awkSelectedAttributeForDragSort 18
+awkSelectedAttributeForDragSort 20
 
 eLOD_Attribute 3
 awkSequence 1
@@ -9450,7 +9445,7 @@ aGenKeyExecutable kzhgenky
 aDisplayOwner Y
 aDisplayDBMS_ID N
 aDBH_Data  376
-TZDBHODO·***********************·********************************************************************************************************z1000-Zeidon    ZTF_12C4_TZDBHODO 05/07/10   14:07:31 1.0a2    
+TZDBHODO *********************** ********************************************************************************************************z1000-Zeidon    ZTF_12C4_TZDBHODO 05/07/10   14:07:31 1.0a2    
 eODBC      1
 aTimestampPrecision 3
 aTimestampAsString N

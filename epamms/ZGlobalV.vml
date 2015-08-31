@@ -1452,6 +1452,7 @@ GenerateKeywordTextIntoString( VIEW mMasLC BASED ON LOD mMasLC,
    STRING ( 100 )   KeywordValue
    STRING ( 100 )   szInsertValue
    STRING ( 1 )     szSelectUsageType
+   STRING ( 1 )     szLastKeywordCharacter
    INTEGER Count
    INTEGER SourceIndex
    INTEGER Length
@@ -1475,8 +1476,11 @@ TraceLineS( "### Insert szKeywordTextEntityName: ", szKeywordTextEntityName )
    szToString = ""
    Length = zGetStringLen( szSourceString )
    Length = Length - 4    // We need to back off the end of the string so that the two character compare doesn't go beyond the string.
+   szLastKeywordCharacter = ""
    LOOP WHILE SourceIndex <= Length
       IF szSourceString[SourceIndex:2] = "{{"
+      
+         szLastKeywordCharacter = "{"
       
          // First copy over the characters we've just skipped over and reset length (unless {{ are first two characters).
          // ZeidonStringCopy( Target, TargetOffset, TargetMaxToReceive, Source, SourceOffset, NoCharsToCopy, TargetMaxLength )
@@ -1484,9 +1488,11 @@ TraceLineS( "### Insert szKeywordTextEntityName: ", szKeywordTextEntityName )
             TargetOffset = zstrlen( szToString )
             TargetOffset = TargetOffset + 1
             MoveStringLength = MoveStringLength - 1
+     
             ZeidonStringCopy( szToString, TargetOffset, 5000, szSourceString, SourceOffset, MoveStringLength, 10000 )
-            SourceOffset = SourceOffset + MoveStringLength   // Skip past characters just moved.
-            MoveStringLength = 0
+            //SourceOffset = SourceOffset + MoveStringLength   // Skip past characters just moved.
+            SourceOffset = SourceIndex    // Skip to new position.
+            MoveStringLength = 1
          END
          
          // Parse the Usage Type out of the string of the form {{xxxxx}}.
@@ -1497,11 +1503,17 @@ TraceLineS( "### Insert szKeywordTextEntityName: ", szKeywordTextEntityName )
             SourceIndex = SourceIndex + 1
             TypeLength  = TypeLength + 1
          END
+         
+         // Process Keyword, if closing braces found.
+         IF szSourceString[SourceIndex:2] = "}}"
+            szLastKeywordCharacter = "}"
+         
          SourceOffset = SourceOffset + 2  // Skip past closing double parens and length of keyword.
          ZeidonStringCopy( szKeywordName, 1, 50, szSourceString, SourceOffset, TypeLength, 100 )
          SourceIndex = SourceIndex + 2
          SourceOffset = SourceOffset + TypeLength + 2  // Skip past closing double parens and length of keyword.
   TraceLineS( "### szKeywordName: ", szKeywordName )
+     TraceLineS( "### szKeywordEntityName: ", szKeywordEntityName )
          
          // Copy any Keyword Text entries for the specified Keyword.
          // Look for a Keyword entry that matches the one parsed out in text.
@@ -1530,6 +1542,16 @@ TraceLineS( "### Insert szKeywordTextEntityName: ", szKeywordTextEntityName )
                szToString = szToString + KeywordValue
                nRC = SetCursorNextEntity( mMasLC2, szKeywordTextEntityName, "" )
             END
+            ELSE
+               TraceLineS( "### Keyword NOT Found: ", szKeywordName )
+               nRC = SetCursorFirstEntity( mMasLC2, szKeywordEntityName, "" )
+               LOOP WHILE nRC >= zCURSOR_SET
+                  GetStringFromAttribute( szKeywordName, mMasLC2, szKeywordEntityName, "Name" )
+                  TraceLineS( "### Current Keyword : ", szKeywordName )
+                  nRC = SetCursorNextEntity( mMasLC2, szKeywordEntityName, "" )
+         END
+            END
+            DropView( mMasLC2 )
          END
       END
       
@@ -1537,12 +1559,15 @@ TraceLineS( "### Insert szKeywordTextEntityName: ", szKeywordTextEntityName )
       MoveStringLength = MoveStringLength + 1
    END
    
-   // Move in remaining characters.
+   // Move in remaining characters, if keyword analysis was successful. Otherwise, return error.
+   IF szLastKeywordCharacter = "}"
    MoveStringLength = MoveStringLength + 10    // Add extra characters to length as above was not calculating them correctly.
    TargetOffset = zstrlen( szToString )
    TargetOffset = TargetOffset + 1
    ZeidonStringCopy( szToString, TargetOffset, 5000, szSourceString, SourceOffset, MoveStringLength, 10000 )
    szSourceString = szToString
-   DropView( mMasLC2 )
+   ELSE
+      szSourceString = "*** Keyword Parse Error ***"
+   END
 
 END

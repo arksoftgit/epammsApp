@@ -12,7 +12,15 @@
             <line>1024</line>
         </file>
     </editor-bookmarks>
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="53">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="54">
+        <file>
+            <url>web/wSPLDGraphicalView.jsp</url>
+            <bookmark id="42">
+                <name/>
+                <line>1074</line>
+                <key/>
+            </bookmark>
+        </file>
         <file>
             <url>web/wSPLDSPLD_UpdateLLD.jsp</url>
             <bookmark id="3">
@@ -26,14 +34,6 @@
             <bookmark id="45">
                 <name/>
                 <line>367</line>
-                <key/>
-            </bookmark>
-        </file>
-        <file>
-            <url>web/wSPLDGraphicalView.jsp</url>
-            <bookmark id="42">
-                <name/>
-                <line>1085</line>
                 <key/>
             </bookmark>
         </file>
@@ -54,12 +54,12 @@
             <url>src/java/com/ajax/GraphicalLabelDesignerServlet.java</url>
             <bookmark id="25">
                 <name/>
-                <line>551</line>
+                <line>554</line>
                 <key/>
             </bookmark>
             <bookmark id="13">
                 <name/>
-                <line>654</line>
+                <line>657</line>
                 <key/>
             </bookmark>
         </file>
@@ -90,12 +90,17 @@
             </bookmark>
             <bookmark id="52">
                 <name/>
-                <line>656</line>
+                <line>657</line>
+                <key/>
+            </bookmark>
+            <bookmark id="54">
+                <name/>
+                <line>1352</line>
                 <key/>
             </bookmark>
             <bookmark id="53">
                 <name/>
-                <line>2696</line>
+                <line>2743</line>
                 <key/>
             </bookmark>
         </file>

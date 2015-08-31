@@ -1132,6 +1132,9 @@ dFullHazardStatement( VIEW mSubLC BASED ON LOD mSubLC,
       IF mSubLC.S_HumanHazardSection  EXISTS
 
          szSeparator = mSubLC.S_HumanHazardSection.LocationSeparator
+         IF szSeparator = ""
+            szSeparator = "[]"
+         END
          szOpenSeparator = ""
          szCloseSeparator = ""
          nPosStart  = zstrlen( szSeparator )

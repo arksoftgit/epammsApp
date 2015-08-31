@@ -1045,7 +1045,6 @@ $(function() {
             // $('#id').prop('disabled', 'disabled');
             if ( sectionType === "Graphic" ) {
                $("#zImageNameToggle").show();
-               $("#zHumanHazardToggle").hide();
                $("#zCheckContinuationBlockToggle").hide();
             // console.log( "   Hiding capitalize" );
                $("#zCapitalizeTitleTextFlagToggle").hide();
@@ -1057,7 +1056,6 @@ $(function() {
             // console.log( "   Showing capitalize" );
                $("#zCapitalizeTitleTextFlagToggle").show();
                $("#zImageNameToggle").hide();
-               $("#zHumanHazardToggle").hide();
                $("#zClaimListTypeToggle").show();
                $("#zMarketingSectionToggle").show();
                $('#zMarketingSection option[value="' + blockName + '"]').prop( 'selected', true );
@@ -1069,7 +1067,6 @@ $(function() {
             // console.log( "   Showing capitalize" );
                $("#zCapitalizeTitleTextFlagToggle").show();
                $("#zImageNameToggle").hide();
-               $("#zHumanHazardToggle").hide();
                $("#zClaimListTypeToggle").hide();
                $("#zMarketingSectionToggle").hide();
                options = optionsDflt;
@@ -1078,11 +1075,9 @@ $(function() {
             // console.log( "   Hiding capitalize" );
                $("#zCapitalizeTitleTextFlagToggle").hide();
                $("#zImageNameToggle").hide();
-               $("#zHumanHazardToggle").hide();
                $("#zClaimListTypeToggle").hide();
                $("#zMarketingSectionToggle").hide();
                if ( sectionType === "HumanHazard" ) {
-                  $("#zHumanHazardToggle").show();
                   // Human Hazard:  Hazards Warning / Hazards Signal Word / Hazards Precautionary
                   options = "<option value=\"^hazards ^warning\">Hazards Warning</option><option value=\"^hazards ^signal ^word\">Hazards Signal Word</option><option value=\"^hazards ^precautionary\">Hazards Precautionary</option>";
                } else if ( sectionType === "Ingredients" ) {
@@ -1315,6 +1310,68 @@ $(function() {
 
       return (json) ? JSON.stringify( treeObject ) : treeObject;
    }
+
+   function SetHumanHazardLocation( action, viewName, location ) {
+      try {
+         // Assign handlers immediately after making the request and remember the jqxhr object for this request
+         // Retrieve the JSON version of the label from Zeidon (on the server) in a saved LLD.
+         var url = "labeldesigner?action=" + action + "&viewName=" + escape( viewName ) + "&location=" + escape( location );
+         $.ajax({ url: url,
+                  type: "post", // string defining the HTTP method to use for the request: GET (default) or POST
+                  contentType: "application/json; charset=utf-8",
+                  dataType: "json", // defines the type of data expected back from the server (xml, html, json, or script)
+                  processData: true, // boolean (default:true) indicating whether to convert the submitted data from an object form into a query-string form
+                  data: "{}",
+               // beforeSend - callback function that is executed before the request is sent
+                  success: function( data, textStatus, jqXHR ) {
+                           // console.log( "SetHumanHazardLocation: success status: " + textStatus );
+                           },
+                  error:   function( jqXHR, textStatus, errorThrown ) {
+                              console.log( "SetHumanHazardLocation: error xhr response: " + jqXHR.responseText + "  status: " + textStatus + "  error: " + errorThrown );
+                           },
+                  complete: function( jqXHR, textStatus ) { // callback function that executes whenever the request finishes
+                           // console.log( "SetHumanHazardLocation: complete status: " + textStatus + "  response: " + jqXHR.responseText );
+                           }
+         });
+      } catch(e) {
+         alert( "Could not load OI: " + viewName + "\n" + e.message );
+      } finally {
+      }
+   }
+
+   $("#zHumanHazardPanel")
+      .change( function() {
+         var location = $(this).val();
+         if ( !location ) {
+            location = "";
+         }
+
+      // alert( "Selected value: " + location );
+         SetHumanHazardLocation( "sethazardpanel", "mSPLDef", location );
+      });
+
+   $("#zHumanHazardLabel")
+      .change( function() {
+         var location = $(this).val();
+         if ( !location ) {
+            location = "";
+         }
+
+      //alert( "Selected value: " + location );
+         SetHumanHazardLocation( "sethazardlabel", "mSPLDef", location );
+      });
+   /*
+      // clear all zeidon mapping
+      $("select.humanhazard").each( function() {
+      // console.log( "Clearing element: " + $(this).attr( "id" ) );
+      // if ( $(this).attr( "id" ) === "CSS_File" ) {
+      //    console.log( "Clearing CSS_File element: " + $(this).attr( "id" ) );
+      // }
+            $(this).val( "" );
+      // }
+      });
+   */   
+
 
 /* not using colorwell at present
    var selected;
@@ -1642,17 +1699,6 @@ var g_BlockAttrList = [ "z_^text^color", "z_^text^color^override",
       });
 
    $("#zMarketingSection")
-      .change( function() {
-         var val = $(this).val();
-         $("#zBlockName").val( val );
-
-      // alert( "Selected value: " + val );
-      // g_$current_block.text( $('#zSectionType').val() );  this wipes out all child nodes of the div ... but the complicated next line works where
-      // nodeType === 3 restricts this to TEXT_NODE.
-         g_$current_block.contents().filter( function() { return this.nodeType === 3; }).replaceWith( "Marketing: " + val );
-      });
-
-   $("#zHumanHazard")
       .change( function() {
          var val = $(this).val();
          $("#zBlockName").val( val );
@@ -3717,8 +3763,10 @@ public class FileServer {
       if ( $.isArray( jsonHazard ) ) {
          var $listPanel = $("#zHumanHazardPanel");
          var $listLabel = $("#zHumanHazardLabel");
-         $listPanel.find('option:not(:first)').remove(); // wipe out all but the first option
-         $listLabel.find('option:not(:first)').remove(); // wipe out all but the first option
+      // $listPanel.find('option:not(:first)').remove(); // wipe out all but the first option
+         $listPanel.empty();
+      // $listLabel.find('option:not(:first)').remove(); // wipe out all but the first option
+         $listLabel.empty();
          var selectedPanel = jsonHazardSelected.Panel;
          var selectedLabel = jsonHazardSelected.Label;
          $.each(jsonHazard, function(index, item) {
@@ -3729,17 +3777,23 @@ public class FileServer {
                $listLabel.append( new Option( item.Label, item.Label ) );
             }
          });
-         $listPanel.multiSelect( "refresh" );
-         $listLabel.multiSelect( "refresh" );
-         $listPanel.multiSelect( "select", selectedPanel );
-         $listLabel.multiSelect( "select", selectedLabel );
+      // $listPanel.multiSelect( "refresh" );
+      // $listLabel.multiSelect( "refresh" );
+         console.log( "Selecting Panel: " + selectedPanel );
+         console.log( "Selecting Label: " + selectedLabel );
+         $listPanel.val( selectedPanel.split( ',' ) );
+         $listLabel.val( selectedLabel.split( ',' ) );
+         $listPanel.width( 190 );
+         $listPanel.height( 80 );
+         $listLabel.width( 190 );
+         $listLabel.height( 80 );
       }
    }
 
    function setBlockTags( jsonBlockTags ) // g_jsonBlocks
    {
       if ( $.isArray( jsonBlockTags ) ) {
-         $.each(jsonBlockTags, function(index, item) {
+         $.each(jsonBlockTags, function( index, item ) {
             g_jsonBlockTags.push( item );
          });
       }

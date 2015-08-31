@@ -1529,6 +1529,20 @@ end debug code */
          response.setContentType( "text/json" );
          // response.getWriter().write( jsonLabel );
          response.getWriter().write( new Gson().toJson( oea.toString() ) );
+      } else if ( action.equals( "sethazardpanel" ) ) {
+         String location = request.getParameter( "location" );
+         EntityCursor ec = vLLD.cursor( "SPLD_HumanHazardSection" );
+         logger.debug( "Set Hazard Panel Location: " + location );
+         ec.getAttribute( "PanelLoc" ).setValue( location );
+         response.setContentType( "text/json" );
+         response.getWriter().write( new Gson().toJson( "{}" ) );
+      } else if ( action.equals( "sethazardlabel" ) ) {
+         String location = request.getParameter( "location" );
+         EntityCursor ec = vLLD.cursor( "SPLD_HumanHazardSection" );
+         logger.debug( "Set Hazard Label Location: " + location );
+         ec.getAttribute( "LabelLoc" ).setValue( location );
+         response.setContentType( "text/json" );
+         response.getWriter().write( new Gson().toJson( "{}" ) );
       } else {
          //nothing to show
          response.setStatus( HttpServletResponse.SC_NO_CONTENT );

@@ -6170,7 +6170,8 @@ ioe.printStackTrace();
                                    VIEW    vQualObject,
                                    STRING (64) strEntityName,
                                    STRING (64) strKeyAttributeName,
-                                   STRING (256) strKeyAttributeValue )
+                                   STRING (256) strKeyAttributeValue,
+                                   STRING (256) strComparator )
       INTEGER nRC
 
       nRC = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE )
@@ -6189,7 +6190,8 @@ ioe.printStackTrace();
                                    zVIEW  vQualificationObject,
                                    String strEntityName,
                                    String strKeyAttributeName,
-                                   String strKeyAttributeValue )
+                                   String strKeyAttributeValue,
+                                   STRING strComparator )
    {
       View view = vSubtask.activateEmptyObjectInstance( "KZDBHQUA", task.getSystemTask().getApplication() );
       view.cursor( "EntitySpec" ).createEntity( CursorPosition.NEXT );
@@ -6198,7 +6200,7 @@ ioe.printStackTrace();
       view.cursor( "QualAttrib" ).getAttribute( "EntityName" ).setValue( strEntityName );
       view.cursor( "QualAttrib" ).getAttribute( "AttributeName" ).setValue( strKeyAttributeName );
       view.cursor( "QualAttrib" ).getAttribute( "Value" ).setValue( strKeyAttributeValue );
-      view.cursor( "QualAttrib" ).getAttribute( "Oper" ).setValue( "=" );
+      view.cursor( "QualAttrib" ).getAttribute( "Oper" ).setValue( strComparator );
       vQualificationObject.setView( view );
       return( 0 );
    }
@@ -6208,7 +6210,8 @@ ioe.printStackTrace();
                                     zVIEW  vQualificationObject,
                                     String strEntityName,
                                     String strKeyAttributeName,
-                                    int    lKeyAttributeValue )
+                                    int    lKeyAttributeValue,
+                                    STRING strComparator )
    {
       View view = vSubtask.activateEmptyObjectInstance( "KZDBHQUA", task.getSystemTask().getApplication() );
       view.cursor( "EntitySpec" ).createEntity( CursorPosition.NEXT );
@@ -6217,7 +6220,7 @@ ioe.printStackTrace();
       view.cursor( "QualAttrib" ).getAttribute( "EntityName" ).setValue( strEntityName );
       view.cursor( "QualAttrib" ).getAttribute( "AttributeName" ).setValue( strKeyAttributeName );
       view.cursor( "QualAttrib" ).getAttribute( "Value" ).setValue( lKeyAttributeValue );
-      view.cursor( "QualAttrib" ).getAttribute( "Oper" ).setValue( "=" );
+      view.cursor( "QualAttrib" ).getAttribute( "Oper" ).setValue( strComparator );
       vQualificationObject.setView( view );
       return( 0 );
    }

@@ -1,4 +1,4 @@
-z1000-Zeidon    ZGLOBAL1 TZOGSRCO 08/24/15   15:34:51 1.0a2    
+z1000-Zeidon    ZGLOBAL1 TZOGSRCO 07/22/15   10:13:38 1.0a2    
 eGlobalOperationGroup 1
 aZKey      89816452
 aName      ZGlobal1
@@ -137,6 +137,7 @@ aName      RemoveInvalidCharsFromFilename
 aZKey      100040677
 aDesc      Removes invalid filename characters from a string.
 aType      G
+aReturnDataType S
 
 eParameter 3
 aShortDesc InputFileName

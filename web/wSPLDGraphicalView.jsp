@@ -1041,17 +1041,6 @@ else
                         <label for="zImageName">Graphic Image Name:</label>
                         <input type="text" id="zImageName" class="zeidon" data-zmap="block.z_^image^name" style="float:right" />
                      </div>
-                     <p style="clear:both;position:relative"></p>
-                     <div id="zHumanHazardToggle" style="overflow:hidden; white-space:nowrap;display:hidden; padding-top:12px; padding-bottom:12px;">
-                        <label for="zHumanHazardPanel">Panel Location: </label>
-                        <select id="zHumanHazardPanel" style="float:right" multiple="multiple">
-                           <option value="">Select Panel Location...</option>
-                        </select>
-                        <label for="zHumanHazardLabel">Label Location: </label>
-                        <select id="zHumanHazardLabel" style="float:right" multiple="multiple">
-                           <option value="">Select Label Location...</option>
-                        </select>
-                     </div>
                      <!-- Add a <div> element where the dynatree should appear: -->
                      <hr>
                      &nbsp;
@@ -1356,6 +1345,20 @@ else
                        <div id="zLabelPicker"></div>
                   -->
 
+                     &nbsp;
+                     </div>
+                     <!-- <option value="">Select Panel Location...</option> -->
+                     <!-- <option value="">Select Label Location...</option> -->
+                     <p style="clear:both;position:relative"></p>
+                     <div id="zHumanHazardPanelToggle" style="overflow:hidden; white-space:nowrap;display:hidden; padding-top:12px; padding-bottom:12px;">
+                        <label for="zHumanHazardPanel">Panel Location: </label>
+                        <select id="zHumanHazardPanel" style="float:right" multiple="multiple" class="humanhazard">
+                        </select>
+                     </div>
+                     <div id="zHumanHazardLabelToggle" style="overflow:hidden; white-space:nowrap;display:hidden; padding-top:12px; padding-bottom:12px;">
+                        <label for="zHumanHazardLabel">Label Location: </label>
+                        <select id="zHumanHazardLabel" style="float:right" multiple="multiple" class="humanhazard">
+                        </select>
                      </div>
                      &nbsp;
                      <p style="clear:both;position:relative"></p>
@@ -1367,7 +1370,6 @@ else
                      </div>
 
                   </div> <!-- End of: LLD Properties -->
-
                </div> <!-- zaccordion -->
             </div> <!-- zmenu -->
          </div> <!-- pagemenu -->

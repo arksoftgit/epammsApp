@@ -2109,6 +2109,20 @@ omSubLC_dFullHazardStatement( View     mSubLC,
                          GetVariableFromAttribute( sb_szSeparator, mi_lTempInteger_1, 'S', 3, mSubLC, "S_HumanHazardSection", "LocationSeparator", "", 0 );
             lTempInteger_1 = mi_lTempInteger_1.intValue( );
             szSeparator = sb_szSeparator.toString( );}
+            //:IF szSeparator = ""
+            if ( ZeidonStringCompare( szSeparator, 1, 0, "", 1, 0, 3 ) == 0 )
+            { 
+               //:szSeparator = "[]"
+                {StringBuilder sb_szSeparator;
+               if ( szSeparator == null )
+                  sb_szSeparator = new StringBuilder( 32 );
+               else
+                  sb_szSeparator = new StringBuilder( szSeparator );
+                              ZeidonStringCopy( sb_szSeparator, 1, 0, "[]", 1, 0, 3 );
+               szSeparator = sb_szSeparator.toString( );}
+            } 
+
+            //:END
             //:szOpenSeparator = ""
              {StringBuilder sb_szOpenSeparator;
             if ( szOpenSeparator == null )

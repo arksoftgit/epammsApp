@@ -1075,6 +1075,11 @@ omMasLC_ObjectConstraints( View     mMasLC,
 
          //:// Go to build the flat display of all components subobject.
          //://BuildCompositeEntries( mMasLC )
+
+         //:// Build Usage Group Usages.
+         //:BuildUsageGroupEntries( mMasLC )
+         omMasLC_BuildUsageGroupEntries( mMasLC );
+
          //:TraceLineS( "*** Object Constraints", "" )
          TraceLineS( "*** Object Constraints", "" );
          break ;
@@ -3652,12 +3657,279 @@ omMasLC_SetMLC_SelectedFlags( View     mMasLC,
 
 
 //:DERIVED ATTRIBUTE OPERATION
-//:dDisplayUsageName( VIEW mMasLC BASED ON LOD mMasLC,
+//:dUsageKeywordText( VIEW mMasLC BASED ON LOD mMasLC,
 //:                   STRING ( 32 ) InternalEntityStructure,
 //:                   STRING ( 32 ) InternalAttribStructure,
 //:                   SHORT GetOrSetFlag )
 
-//:   VIEW mMasLC2 BASED ON LOD mMasLC
+//:   STRING ( 1000 ) szGeneratedString
+public int 
+omMasLC_dUsageKeywordText( View     mMasLC,
+                           String InternalEntityStructure,
+                           String InternalAttribStructure,
+                           Integer   GetOrSetFlag )
+{
+   String   szGeneratedString = null;
+   int      RESULT = 0;
+   int      lTempInteger_0 = 0;
+   String   szTempString_0 = null;
+   int      lTempInteger_1 = 0;
+
+
+   //:CASE GetOrSetFlag
+   switch( GetOrSetFlag )
+   { 
+      //:OF   zDERIVED_GET:
+      case zDERIVED_GET :
+
+         //:// Concatenate all the Keyword values for a Marketing Keyword entry.
+         //:szGeneratedString = ""
+          {StringBuilder sb_szGeneratedString;
+         if ( szGeneratedString == null )
+            sb_szGeneratedString = new StringBuilder( 32 );
+         else
+            sb_szGeneratedString = new StringBuilder( szGeneratedString );
+                  ZeidonStringCopy( sb_szGeneratedString, 1, 0, "", 1, 0, 1001 );
+         szGeneratedString = sb_szGeneratedString.toString( );}
+         //:FOR EACH mMasLC.M_InsertTextUsage 
+         RESULT = SetCursorFirstEntity( mMasLC, "M_InsertTextUsage", "" );
+         while ( RESULT > zCURSOR_UNCHANGED )
+         { 
+            //:IF szGeneratedString = ""
+            if ( ZeidonStringCompare( szGeneratedString, 1, 0, "", 1, 0, 1001 ) == 0 )
+            { 
+               //:szGeneratedString = mMasLC.M_InsertTextUsage.Text
+               {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+               StringBuilder sb_szGeneratedString;
+               if ( szGeneratedString == null )
+                  sb_szGeneratedString = new StringBuilder( 32 );
+               else
+                  sb_szGeneratedString = new StringBuilder( szGeneratedString );
+                               GetVariableFromAttribute( sb_szGeneratedString, mi_lTempInteger_0, 'S', 1001, mMasLC, "M_InsertTextUsage", "Text", "", 0 );
+               lTempInteger_0 = mi_lTempInteger_0.intValue( );
+               szGeneratedString = sb_szGeneratedString.toString( );}
+               //:ELSE
+            } 
+            else
+            { 
+               //:szGeneratedString = szGeneratedString + ", " + mMasLC.M_InsertTextUsage.Text 
+                {StringBuilder sb_szGeneratedString;
+               if ( szGeneratedString == null )
+                  sb_szGeneratedString = new StringBuilder( 32 );
+               else
+                  sb_szGeneratedString = new StringBuilder( szGeneratedString );
+                              ZeidonStringConcat( sb_szGeneratedString, 1, 0, ", ", 1, 0, 1001 );
+               szGeneratedString = sb_szGeneratedString.toString( );}
+               {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+               StringBuilder sb_szTempString_0;
+               if ( szTempString_0 == null )
+                  sb_szTempString_0 = new StringBuilder( 32 );
+               else
+                  sb_szTempString_0 = new StringBuilder( szTempString_0 );
+                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_1, 'S', 255, mMasLC, "M_InsertTextUsage", "Text", "", 0 );
+               lTempInteger_1 = mi_lTempInteger_1.intValue( );
+               szTempString_0 = sb_szTempString_0.toString( );}
+                {StringBuilder sb_szGeneratedString;
+               if ( szGeneratedString == null )
+                  sb_szGeneratedString = new StringBuilder( 32 );
+               else
+                  sb_szGeneratedString = new StringBuilder( szGeneratedString );
+                              ZeidonStringConcat( sb_szGeneratedString, 1, 0, szTempString_0, 1, 0, 1001 );
+               szGeneratedString = sb_szGeneratedString.toString( );}
+            } 
+
+            RESULT = SetCursorNextEntity( mMasLC, "M_InsertTextUsage", "" );
+            //:END
+         } 
+
+         //:END
+
+         //:// Store the resulting value in the object.
+         //:StoreStringInRecord( mMasLC,
+         //:                  InternalEntityStructure,
+         //:                  InternalAttribStructure, szGeneratedString )
+         StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szGeneratedString );
+         //:RETURN 0
+         if(8==8)return( 0 );
+
+         //:/* end zDERIVED_GET */
+         //:OF   zDERIVED_SET:
+         case zDERIVED_SET :
+            break ;
+      } 
+
+
+      //:  /* end zDERIVED_SET */
+      //:END  /* case */
+      return( 0 );
+   } 
+
+
+   //:DERIVED ATTRIBUTE OPERATION
+   //:dDisplayUsageKeyText( VIEW mMasLC BASED ON LOD mMasLC,
+   //:                   STRING ( 32 ) InternalEntityStructure,
+   //:                   STRING ( 32 ) InternalAttribStructure,
+   //:                   SHORT GetOrSetFlag )
+
+   //:STRING ( 10000 ) szGeneratedString
+public int 
+omMasLC_dDisplayUsageKeyText( View     mMasLC,
+                              String InternalEntityStructure,
+                              String InternalAttribStructure,
+                              Integer   GetOrSetFlag )
+{
+   String   szGeneratedString = null;
+   int      lTempInteger_0 = 0;
+
+
+   //:CASE GetOrSetFlag
+   switch( GetOrSetFlag )
+   { 
+      //:OF   zDERIVED_GET:
+      case zDERIVED_GET :
+
+         //:// Expand the current Text attribute by replacing inbedded Keywords with the Keyword
+         //:// values in the M_InsertText subentities.
+         //:szGeneratedString = mMasLC.DisplayKeywordText.Text 
+         {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+         StringBuilder sb_szGeneratedString;
+         if ( szGeneratedString == null )
+            sb_szGeneratedString = new StringBuilder( 32 );
+         else
+            sb_szGeneratedString = new StringBuilder( szGeneratedString );
+                   GetVariableFromAttribute( sb_szGeneratedString, mi_lTempInteger_0, 'S', 10001, mMasLC, "DisplayKeywordText", "Text", "", 0 );
+         lTempInteger_0 = mi_lTempInteger_0.intValue( );
+         szGeneratedString = sb_szGeneratedString.toString( );}
+         //:IF szGeneratedString != ""
+         if ( ZeidonStringCompare( szGeneratedString, 1, 0, "", 1, 0, 10001 ) != 0 )
+         { 
+            //:GenerateKeywordTextIntoString( mMasLC,
+            //:                            szGeneratedString,
+            //:                            "M_InsertTextKeyword",
+            //:                            "M_InsertText",
+            //:                            ", " )
+            {
+             ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( mMasLC );
+             {StringBuilder sb_szGeneratedString;
+            if ( szGeneratedString == null )
+               sb_szGeneratedString = new StringBuilder( 32 );
+            else
+               sb_szGeneratedString = new StringBuilder( szGeneratedString );
+                         m_ZGlobalV_Operation.GenerateKeywordTextIntoString( mMasLC, sb_szGeneratedString, "M_InsertTextKeyword", "M_InsertText", ", " );
+            szGeneratedString = sb_szGeneratedString.toString( );}
+             // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
+            }
+         } 
+
+         //:END
+
+         //:// Store the resulting value in the object.
+         //:StoreStringInRecord( mMasLC,
+         //:                  InternalEntityStructure,
+         //:                  InternalAttribStructure, szGeneratedString )
+         StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szGeneratedString );
+         //:RETURN 0
+         if(8==8)return( 0 );
+
+         //:/* end zDERIVED_GET */
+         //:OF   zDERIVED_SET:
+         case zDERIVED_SET :
+            break ;
+      } 
+
+
+      //:  /* end zDERIVED_SET */
+      //:END  /* case */
+      return( 0 );
+   } 
+
+
+   //:DERIVED ATTRIBUTE OPERATION
+   //:dDisplayUsageKeyTitle( VIEW mMasLC BASED ON LOD mMasLC,
+   //:                    STRING ( 32 ) InternalEntityStructure,
+   //:                    STRING ( 32 ) InternalAttribStructure,
+   //:                    SHORT GetOrSetFlag )
+
+   //:STRING ( 10000 ) szGeneratedString
+public int 
+omMasLC_dDisplayUsageKeyTitle( View     mMasLC,
+                               String InternalEntityStructure,
+                               String InternalAttribStructure,
+                               Integer   GetOrSetFlag )
+{
+   String   szGeneratedString = null;
+   int      lTempInteger_0 = 0;
+
+
+   //:CASE GetOrSetFlag
+   switch( GetOrSetFlag )
+   { 
+      //:OF   zDERIVED_GET:
+      case zDERIVED_GET :
+
+         //:// Expand the current Title attribute by replacing inbedded Keywords with the Keyword
+         //:// values in the M_InsertText subentities.
+         //:szGeneratedString = mMasLC.DisplayKeywordText.Title 
+         {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+         StringBuilder sb_szGeneratedString;
+         if ( szGeneratedString == null )
+            sb_szGeneratedString = new StringBuilder( 32 );
+         else
+            sb_szGeneratedString = new StringBuilder( szGeneratedString );
+                   GetVariableFromAttribute( sb_szGeneratedString, mi_lTempInteger_0, 'S', 10001, mMasLC, "DisplayKeywordText", "Title", "", 0 );
+         lTempInteger_0 = mi_lTempInteger_0.intValue( );
+         szGeneratedString = sb_szGeneratedString.toString( );}
+         //:IF szGeneratedString != ""
+         if ( ZeidonStringCompare( szGeneratedString, 1, 0, "", 1, 0, 10001 ) != 0 )
+         { 
+            //:GenerateKeywordTextIntoString( mMasLC,
+            //:                            szGeneratedString,
+            //:                            "M_InsertTextKeyword",
+            //:                            "M_InsertText",
+            //:                            ", " )
+            {
+             ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( mMasLC );
+             {StringBuilder sb_szGeneratedString;
+            if ( szGeneratedString == null )
+               sb_szGeneratedString = new StringBuilder( 32 );
+            else
+               sb_szGeneratedString = new StringBuilder( szGeneratedString );
+                         m_ZGlobalV_Operation.GenerateKeywordTextIntoString( mMasLC, sb_szGeneratedString, "M_InsertTextKeyword", "M_InsertText", ", " );
+            szGeneratedString = sb_szGeneratedString.toString( );}
+             // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
+            }
+         } 
+
+         //:END
+
+         //:// Store the resulting value in the object.
+         //:StoreStringInRecord( mMasLC,
+         //:                  InternalEntityStructure,
+         //:                  InternalAttribStructure, szGeneratedString )
+         StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szGeneratedString );
+         //:RETURN 0
+         if(8==8)return( 0 );
+
+         //:/* end zDERIVED_GET */
+         //:OF   zDERIVED_SET:
+         case zDERIVED_SET :
+            break ;
+      } 
+
+
+      //:  /* end zDERIVED_SET */
+      //:END  /* case */
+      return( 0 );
+   } 
+
+
+   //:DERIVED ATTRIBUTE OPERATION
+   //:dDisplayUsageName( VIEW mMasLC BASED ON LOD mMasLC,
+   //:                STRING ( 32 ) InternalEntityStructure,
+   //:                STRING ( 32 ) InternalAttribStructure,
+   //:                SHORT GetOrSetFlag )
+
+   //:VIEW mMasLC2 BASED ON LOD mMasLC
 public int 
 omMasLC_dDisplayUsageName( View     mMasLC,
                            String InternalEntityStructure,
@@ -4146,20 +4418,23 @@ omMasLC_dDisplayGenStmtText( View     mMasLC,
 
 
 //:DERIVED ATTRIBUTE OPERATION
-//:dDisplayKeywordText( VIEW mMasLC BASED ON LOD mMasLC,
-//:                     STRING ( 32 ) InternalEntityStructure,
-//:                     STRING ( 32 ) InternalAttribStructure,
-//:                     SHORT GetOrSetFlag )
+//:dMarketingKeywordText( VIEW mMasLC BASED ON LOD mMasLC,
+//:                       STRING ( 32 ) InternalEntityStructure,
+//:                       STRING ( 32 ) InternalAttribStructure,
+//:                       SHORT GetOrSetFlag )
 
-//:   STRING ( 10000 ) szGeneratedString
+//:   STRING ( 1000 ) szGeneratedString
 public int 
-omMasLC_dDisplayKeywordText( View     mMasLC,
-                             String InternalEntityStructure,
-                             String InternalAttribStructure,
-                             Integer   GetOrSetFlag )
+omMasLC_dMarketingKeywordText( View     mMasLC,
+                               String InternalEntityStructure,
+                               String InternalAttribStructure,
+                               Integer   GetOrSetFlag )
 {
    String   szGeneratedString = null;
+   int      RESULT = 0;
    int      lTempInteger_0 = 0;
+   String   szTempString_0 = null;
+   int      lTempInteger_1 = 0;
 
 
    //:CASE GetOrSetFlag
@@ -4168,34 +4443,67 @@ omMasLC_dDisplayKeywordText( View     mMasLC,
       //:OF   zDERIVED_GET:
       case zDERIVED_GET :
 
-         //:// Expand the current Text attribute by replacing imbedded Keywords with the Keyword
-         //:// values in the M_InsertTextMarketing subentities.
-         //:szGeneratedString = mMasLC.M_MarketingStatement.Text 
-         {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
-         StringBuilder sb_szGeneratedString;
-         if ( szGeneratedString == null )
-            sb_szGeneratedString = new StringBuilder( 32 );
-         else
-            sb_szGeneratedString = new StringBuilder( szGeneratedString );
-                   GetVariableFromAttribute( sb_szGeneratedString, mi_lTempInteger_0, 'S', 10001, mMasLC, "M_MarketingStatement", "Text", "", 0 );
-         lTempInteger_0 = mi_lTempInteger_0.intValue( );
-         szGeneratedString = sb_szGeneratedString.toString( );}
-         //:GenerateKeywordTextIntoString( mMasLC,
-         //:                            szGeneratedString,
-         //:                            "M_InsertTextKeywordMarketing",
-         //:                            "M_InsertTextMarketing",
-         //:                            ", " )
-         {
-          ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( mMasLC );
+         //:// Concatenate all the Keyword values for a Marketing Keyword entry.
+         //:szGeneratedString = ""
           {StringBuilder sb_szGeneratedString;
          if ( szGeneratedString == null )
             sb_szGeneratedString = new StringBuilder( 32 );
          else
             sb_szGeneratedString = new StringBuilder( szGeneratedString );
-                   m_ZGlobalV_Operation.GenerateKeywordTextIntoString( mMasLC, sb_szGeneratedString, "M_InsertTextKeywordMarketing", "M_InsertTextMarketing", ", " );
+                  ZeidonStringCopy( sb_szGeneratedString, 1, 0, "", 1, 0, 1001 );
          szGeneratedString = sb_szGeneratedString.toString( );}
-          // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
-         }
+         //:FOR EACH mMasLC.M_InsertTextMarketing 
+         RESULT = SetCursorFirstEntity( mMasLC, "M_InsertTextMarketing", "" );
+         while ( RESULT > zCURSOR_UNCHANGED )
+         { 
+            //:IF szGeneratedString = ""
+            if ( ZeidonStringCompare( szGeneratedString, 1, 0, "", 1, 0, 1001 ) == 0 )
+            { 
+               //:szGeneratedString = mMasLC.M_InsertTextMarketing.Text
+               {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+               StringBuilder sb_szGeneratedString;
+               if ( szGeneratedString == null )
+                  sb_szGeneratedString = new StringBuilder( 32 );
+               else
+                  sb_szGeneratedString = new StringBuilder( szGeneratedString );
+                               GetVariableFromAttribute( sb_szGeneratedString, mi_lTempInteger_0, 'S', 1001, mMasLC, "M_InsertTextMarketing", "Text", "", 0 );
+               lTempInteger_0 = mi_lTempInteger_0.intValue( );
+               szGeneratedString = sb_szGeneratedString.toString( );}
+               //:ELSE
+            } 
+            else
+            { 
+               //:szGeneratedString = szGeneratedString + ", " + mMasLC.M_InsertTextMarketing.Text 
+                {StringBuilder sb_szGeneratedString;
+               if ( szGeneratedString == null )
+                  sb_szGeneratedString = new StringBuilder( 32 );
+               else
+                  sb_szGeneratedString = new StringBuilder( szGeneratedString );
+                              ZeidonStringConcat( sb_szGeneratedString, 1, 0, ", ", 1, 0, 1001 );
+               szGeneratedString = sb_szGeneratedString.toString( );}
+               {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+               StringBuilder sb_szTempString_0;
+               if ( szTempString_0 == null )
+                  sb_szTempString_0 = new StringBuilder( 32 );
+               else
+                  sb_szTempString_0 = new StringBuilder( szTempString_0 );
+                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_1, 'S', 255, mMasLC, "M_InsertTextMarketing", "Text", "", 0 );
+               lTempInteger_1 = mi_lTempInteger_1.intValue( );
+               szTempString_0 = sb_szTempString_0.toString( );}
+                {StringBuilder sb_szGeneratedString;
+               if ( szGeneratedString == null )
+                  sb_szGeneratedString = new StringBuilder( 32 );
+               else
+                  sb_szGeneratedString = new StringBuilder( szGeneratedString );
+                              ZeidonStringConcat( sb_szGeneratedString, 1, 0, szTempString_0, 1, 0, 1001 );
+               szGeneratedString = sb_szGeneratedString.toString( );}
+            } 
+
+            RESULT = SetCursorNextEntity( mMasLC, "M_InsertTextMarketing", "" );
+            //:END
+         } 
+
+         //:END
 
          //:// Store the resulting value in the object.
          //:StoreStringInRecord( mMasLC,
@@ -4216,6 +4524,433 @@ omMasLC_dDisplayKeywordText( View     mMasLC,
       //:END  /* case */
       return( 0 );
    } 
+
+
+   //:DERIVED ATTRIBUTE OPERATION
+   //:dMarketingTitleText( VIEW mMasLC BASED ON LOD mMasLC,
+   //:                  STRING ( 32 ) InternalEntityStructure,
+   //:                  STRING ( 32 ) InternalAttribStructure,
+   //:                  SHORT GetOrSetFlag )
+
+   //:STRING ( 1000 ) szGeneratedString
+public int 
+omMasLC_dMarketingTitleText( View     mMasLC,
+                             String InternalEntityStructure,
+                             String InternalAttribStructure,
+                             Integer   GetOrSetFlag )
+{
+   String   szGeneratedString = null;
+   String   szTempString_0 = null;
+   int      lTempInteger_0 = 0;
+   String   szTempString_1 = null;
+   int      lTempInteger_1 = 0;
+
+
+   //:CASE GetOrSetFlag
+   switch( GetOrSetFlag )
+   { 
+      //:OF   zDERIVED_GET:
+      case zDERIVED_GET :
+
+         //:// Concatenate a string combining Title and Text, with Title made bold.
+         //:szGeneratedString = "<b>" + mMasLC.M_MarketingStatement.Title + "</b>" +
+         //:                 mMasLC.M_MarketingStatement.Text 
+         {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+         StringBuilder sb_szTempString_0;
+         if ( szTempString_0 == null )
+            sb_szTempString_0 = new StringBuilder( 32 );
+         else
+            sb_szTempString_0 = new StringBuilder( szTempString_0 );
+                   GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_0, 'S', 255, mMasLC, "M_MarketingStatement", "Title", "", 0 );
+         lTempInteger_0 = mi_lTempInteger_0.intValue( );
+         szTempString_0 = sb_szTempString_0.toString( );}
+          {StringBuilder sb_szGeneratedString;
+         if ( szGeneratedString == null )
+            sb_szGeneratedString = new StringBuilder( 32 );
+         else
+            sb_szGeneratedString = new StringBuilder( szGeneratedString );
+                  ZeidonStringCopy( sb_szGeneratedString, 1, 0, "<b>", 1, 0, 1001 );
+         szGeneratedString = sb_szGeneratedString.toString( );}
+          {StringBuilder sb_szGeneratedString;
+         if ( szGeneratedString == null )
+            sb_szGeneratedString = new StringBuilder( 32 );
+         else
+            sb_szGeneratedString = new StringBuilder( szGeneratedString );
+                  ZeidonStringConcat( sb_szGeneratedString, 1, 0, szTempString_0, 1, 0, 1001 );
+         szGeneratedString = sb_szGeneratedString.toString( );}
+          {StringBuilder sb_szGeneratedString;
+         if ( szGeneratedString == null )
+            sb_szGeneratedString = new StringBuilder( 32 );
+         else
+            sb_szGeneratedString = new StringBuilder( szGeneratedString );
+                  ZeidonStringConcat( sb_szGeneratedString, 1, 0, "</b>", 1, 0, 1001 );
+         szGeneratedString = sb_szGeneratedString.toString( );}
+         {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+         StringBuilder sb_szTempString_1;
+         if ( szTempString_1 == null )
+            sb_szTempString_1 = new StringBuilder( 32 );
+         else
+            sb_szTempString_1 = new StringBuilder( szTempString_1 );
+                   GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_1, 'S', 32001, mMasLC, "M_MarketingStatement", "Text", "", 0 );
+         lTempInteger_1 = mi_lTempInteger_1.intValue( );
+         szTempString_1 = sb_szTempString_1.toString( );}
+          {StringBuilder sb_szGeneratedString;
+         if ( szGeneratedString == null )
+            sb_szGeneratedString = new StringBuilder( 32 );
+         else
+            sb_szGeneratedString = new StringBuilder( szGeneratedString );
+                  ZeidonStringConcat( sb_szGeneratedString, 1, 0, szTempString_1, 1, 0, 1001 );
+         szGeneratedString = sb_szGeneratedString.toString( );}
+
+         //:// Store the resulting value in the object.
+         //:StoreStringInRecord( mMasLC,
+         //:                  InternalEntityStructure,
+         //:                  InternalAttribStructure, szGeneratedString )
+         StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szGeneratedString );
+         //:RETURN 0
+         if(8==8)return( 0 );
+
+         //:/* end zDERIVED_GET */
+         //:OF   zDERIVED_SET:
+         case zDERIVED_SET :
+            break ;
+      } 
+
+
+      //:  /* end zDERIVED_SET */
+      //:END  /* case */
+      return( 0 );
+   } 
+
+
+   //:DERIVED ATTRIBUTE OPERATION
+   //:dSubUsageCombinedText( VIEW mMasLC BASED ON LOD mMasLC,
+   //:                    STRING ( 32 ) InternalEntityStructure,
+   //:                    STRING ( 32 ) InternalAttribStructure,
+   //:                    SHORT GetOrSetFlag )
+
+   //:STRING ( 10000 ) szCombinedText
+public int 
+omMasLC_dSubUsageCombinedText( View     mMasLC,
+                               String InternalEntityStructure,
+                               String InternalAttribStructure,
+                               Integer   GetOrSetFlag )
+{
+   String   szCombinedText = null;
+   int      RESULT = 0;
+   int      lTempInteger_0 = 0;
+   String   szTempString_0 = null;
+   int      lTempInteger_1 = 0;
+
+
+   //:CASE GetOrSetFlag
+   switch( GetOrSetFlag )
+   { 
+      //:OF   zDERIVED_GET:
+      case zDERIVED_GET :
+
+         //:// Expand the current Text attribute by replacing imbedded Keywords with the Keyword
+         //:// values in the M_InsertTextMarketing subentities.
+         //:szCombinedText = ""
+          {StringBuilder sb_szCombinedText;
+         if ( szCombinedText == null )
+            sb_szCombinedText = new StringBuilder( 32 );
+         else
+            sb_szCombinedText = new StringBuilder( szCombinedText );
+                  ZeidonStringCopy( sb_szCombinedText, 1, 0, "", 1, 0, 10001 );
+         szCombinedText = sb_szCombinedText.toString( );}
+         //:FOR EACH mMasLC.M_UsageGroupUsage 
+         RESULT = SetCursorFirstEntity( mMasLC, "M_UsageGroupUsage", "" );
+         while ( RESULT > zCURSOR_UNCHANGED )
+         { 
+            //:IF szCombinedText = ""
+            if ( ZeidonStringCompare( szCombinedText, 1, 0, "", 1, 0, 10001 ) == 0 )
+            { 
+               //:szCombinedText = mMasLC.M_UsageGroupUsage.Name 
+               {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+               StringBuilder sb_szCombinedText;
+               if ( szCombinedText == null )
+                  sb_szCombinedText = new StringBuilder( 32 );
+               else
+                  sb_szCombinedText = new StringBuilder( szCombinedText );
+                               GetVariableFromAttribute( sb_szCombinedText, mi_lTempInteger_0, 'S', 10001, mMasLC, "M_UsageGroupUsage", "Name", "", 0 );
+               lTempInteger_0 = mi_lTempInteger_0.intValue( );
+               szCombinedText = sb_szCombinedText.toString( );}
+               //:ELSE
+            } 
+            else
+            { 
+               //:szCombinedText = szCombinedText + ", " + mMasLC.M_UsageGroupUsage.Name 
+                {StringBuilder sb_szCombinedText;
+               if ( szCombinedText == null )
+                  sb_szCombinedText = new StringBuilder( 32 );
+               else
+                  sb_szCombinedText = new StringBuilder( szCombinedText );
+                              ZeidonStringConcat( sb_szCombinedText, 1, 0, ", ", 1, 0, 10001 );
+               szCombinedText = sb_szCombinedText.toString( );}
+               {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+               StringBuilder sb_szTempString_0;
+               if ( szTempString_0 == null )
+                  sb_szTempString_0 = new StringBuilder( 32 );
+               else
+                  sb_szTempString_0 = new StringBuilder( szTempString_0 );
+                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_1, 'S', 255, mMasLC, "M_UsageGroupUsage", "Name", "", 0 );
+               lTempInteger_1 = mi_lTempInteger_1.intValue( );
+               szTempString_0 = sb_szTempString_0.toString( );}
+                {StringBuilder sb_szCombinedText;
+               if ( szCombinedText == null )
+                  sb_szCombinedText = new StringBuilder( 32 );
+               else
+                  sb_szCombinedText = new StringBuilder( szCombinedText );
+                              ZeidonStringConcat( sb_szCombinedText, 1, 0, szTempString_0, 1, 0, 10001 );
+               szCombinedText = sb_szCombinedText.toString( );}
+            } 
+
+            RESULT = SetCursorNextEntity( mMasLC, "M_UsageGroupUsage", "" );
+            //:END
+         } 
+
+         //:END
+
+         //:// Store the resulting value in the object.
+         //:StoreStringInRecord( mMasLC,
+         //:                  InternalEntityStructure,
+         //:                  InternalAttribStructure, szCombinedText )
+         StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szCombinedText );
+         //:RETURN 0
+         if(8==8)return( 0 );
+
+         //:/* end zDERIVED_GET */
+         //:OF   zDERIVED_SET:
+         case zDERIVED_SET :
+            break ;
+      } 
+
+
+      //:  /* end zDERIVED_SET */
+      //:END  /* case */
+      return( 0 );
+   } 
+
+
+   //:TRANSFORMATION OPERATION
+public int 
+omMasLC_BuildUsageGroupEntries( View     mMasLC )
+{
+   int      RESULT = 0;
+   int      lTempInteger_0 = 0;
+   int      lTempInteger_1 = 0;
+
+   //:BuildUsageGroupEntries( VIEW mMasLC BASED ON LOD mMasLC )
+
+   //:// Build Usage Group Usages.
+   //:FOR EACH mMasLC.M_UsageType 
+   RESULT = SetCursorFirstEntity( mMasLC, "M_UsageType", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:FOR EACH mMasLC.M_UsageGroup 
+      RESULT = SetCursorFirstEntity( mMasLC, "M_UsageGroup", "" );
+      while ( RESULT > zCURSOR_UNCHANGED )
+      { 
+         //:FOR EACH mMasLC.M_UsageGroupUsage 
+         RESULT = SetCursorFirstEntity( mMasLC, "M_UsageGroupUsage", "" );
+         while ( RESULT > zCURSOR_UNCHANGED )
+         { 
+            //:EXCLUDE mMasLC.M_UsageGroupUsage NONE
+            RESULT = ExcludeEntity( mMasLC, "M_UsageGroupUsage", zREPOS_NONE );
+            RESULT = SetCursorNextEntity( mMasLC, "M_UsageGroupUsage", "" );
+         } 
+
+         RESULT = SetCursorNextEntity( mMasLC, "M_UsageGroup", "" );
+         //:END
+      } 
+
+      //:END
+      //:FOR EACH mMasLC.M_Usage 
+      RESULT = SetCursorFirstEntity( mMasLC, "M_Usage", "" );
+      while ( RESULT > zCURSOR_UNCHANGED )
+      { 
+         //:IF mMasLC.M_UsageUsageGroup EXISTS
+         lTempInteger_0 = CheckExistenceOfEntity( mMasLC, "M_UsageUsageGroup" );
+         if ( lTempInteger_0 == 0 )
+         { 
+            //:SET CURSOR FIRST mMasLC.M_UsageGroup 
+            //:           WHERE mMasLC.M_UsageGroup.ID = mMasLC.M_UsageUsageGroup.ID  
+            {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+                         GetIntegerFromAttribute( mi_lTempInteger_1, mMasLC, "M_UsageUsageGroup", "ID" );
+            lTempInteger_1 = mi_lTempInteger_1.intValue( );}
+            RESULT = SetCursorFirstEntityByInteger( mMasLC, "M_UsageGroup", "ID", lTempInteger_1, "" );
+            //:IF RESULT >= zCURSOR_SET
+            if ( RESULT >= zCURSOR_SET )
+            { 
+               //:INCLUDE mMasLC.M_UsageGroupUsage FROM mMasLC.M_Usage 
+               RESULT = IncludeSubobjectFromSubobject( mMasLC, "M_UsageGroupUsage", mMasLC, "M_Usage", zPOS_AFTER );
+            } 
+
+            //:END
+         } 
+
+         RESULT = SetCursorNextEntity( mMasLC, "M_Usage", "" );
+         //:END
+      } 
+
+      RESULT = SetCursorNextEntity( mMasLC, "M_UsageType", "" );
+      //:END
+   } 
+
+   //:END
+   return( 0 );
+// END
+} 
+
+
+//:TRANSFORMATION OPERATION
+//:BuildUsageKeyEntries( VIEW mMasLC BASED ON LOD mMasLC,
+//:                      STRING ( 32 ) SourceKeywordEntityName,
+//:                      STRING ( 32 ) SourceTextEntityName,
+//:                      STRING ( 2000 ) TextValue,
+//:                      STRING ( 2000 ) TitleValue )
+
+//:   SHORT nRC1
+public int 
+omMasLC_BuildUsageKeyEntries( View     mMasLC,
+                              String   SourceKeywordEntityName,
+                              String   SourceTextEntityName,
+                              String   TextValue,
+                              String   TitleValue )
+{
+   int      nRC1 = 0;
+   //:SHORT nRC2
+   int      nRC2 = 0;
+   int      lTempInteger_0 = 0;
+   int      RESULT = 0;
+
+
+   //:// Build the M_InsertTextKeywordBase subobject based on the entity names passed in.
+   //:// If the keyword Type allows only a single keyword value, set the selected flag for the first one.
+   //:// Otherwise, set the selected flag for all text entries.
+
+   //:// Then build the actual M_InsertTextKeyword subobject from the selected entries from M_InsertTextKeywordBase.
+
+   //:// Delete any current entries.
+   //:IF mMasLC.DisplayKeywordText EXISTS 
+   lTempInteger_0 = CheckExistenceOfEntity( mMasLC, "DisplayKeywordText" );
+   if ( lTempInteger_0 == 0 )
+   { 
+      //:DELETE ENTITY mMasLC.DisplayKeywordText  
+      RESULT = DeleteEntity( mMasLC, "DisplayKeywordText", zPOS_NEXT );
+   } 
+
+   //:END
+
+   //:// Create Display entity containing Text and optionally Title.
+   //:CREATE ENTITY mMasLC.DisplayKeywordText 
+   RESULT = CreateEntity( mMasLC, "DisplayKeywordText", zPOS_AFTER );
+   //:mMasLC.DisplayKeywordText.Text  = TextValue
+   SetAttributeFromString( mMasLC, "DisplayKeywordText", "Text", TextValue );
+   //:mMasLC.DisplayKeywordText.Title = TitleValue
+   SetAttributeFromString( mMasLC, "DisplayKeywordText", "Title", TitleValue );
+
+   //:// Copy over the basic entities.
+   //:nRC1 = SetCursorFirstEntity( mMasLC, SourceKeywordEntityName, "" )
+   nRC1 = SetCursorFirstEntity( mMasLC, SourceKeywordEntityName, "" );
+   //:LOOP WHILE nRC1 >= zCURSOR_SET
+   while ( nRC1 >= zCURSOR_SET )
+   { 
+      //:CREATE ENTITY mMasLC.M_InsertTextKeywordBase 
+      RESULT = CreateEntity( mMasLC, "M_InsertTextKeywordBase", zPOS_AFTER );
+      //:SetMatchingAttributesByName( mMasLC, "M_InsertTextKeywordBase", mMasLC, SourceKeywordEntityName, zSET_ALL )
+      SetMatchingAttributesByName( mMasLC, "M_InsertTextKeywordBase", mMasLC, SourceKeywordEntityName, zSET_ALL );
+
+      //:nRC2 = SetCursorFirstEntity( mMasLC, SourceTextEntityName, "" )
+      nRC2 = SetCursorFirstEntity( mMasLC, SourceTextEntityName, "" );
+      //:LOOP WHILE nRC2 >= zCURSOR_SET
+      while ( nRC2 >= zCURSOR_SET )
+      { 
+         //:CREATE ENTITY mMasLC.M_InsertTextBase 
+         RESULT = CreateEntity( mMasLC, "M_InsertTextBase", zPOS_AFTER );
+         //:SetMatchingAttributesByName( mMasLC, "M_InsertTextBase", mMasLC, SourceTextEntityName, zSET_ALL )
+         SetMatchingAttributesByName( mMasLC, "M_InsertTextBase", mMasLC, SourceTextEntityName, zSET_ALL );
+
+         //:nRC2 = SetCursorNextEntity( mMasLC, SourceTextEntityName, "" )
+         nRC2 = SetCursorNextEntity( mMasLC, SourceTextEntityName, "" );
+      } 
+
+      //:END
+      //:nRC1 = SetCursorNextEntity( mMasLC, SourceKeywordEntityName, "" )
+      nRC1 = SetCursorNextEntity( mMasLC, SourceKeywordEntityName, "" );
+   } 
+
+   //:END
+
+   //:// Initialize the selected flags as indicated above.
+   //:FOR EACH mMasLC.M_InsertTextKeywordBase 
+   RESULT = SetCursorFirstEntity( mMasLC, "M_InsertTextKeywordBase", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:IF mMasLC.M_InsertTextKeywordBase.Type = "O"
+      if ( CompareAttributeToString( mMasLC, "M_InsertTextKeywordBase", "Type", "O" ) == 0 )
+      { 
+         //:// Set the flag for the first entry.
+         //:mMasLC.M_InsertTextBase.wSelected = "Y"
+         SetAttributeFromString( mMasLC, "M_InsertTextBase", "wSelected", "Y" );
+         //:ELSE
+      } 
+      else
+      { 
+         //:// Set the flag for all entries.
+         //:FOR EACH mMasLC.M_InsertTextBase 
+         RESULT = SetCursorFirstEntity( mMasLC, "M_InsertTextBase", "" );
+         while ( RESULT > zCURSOR_UNCHANGED )
+         { 
+            //:mMasLC.M_InsertTextBase.wSelected = "Y"
+            SetAttributeFromString( mMasLC, "M_InsertTextBase", "wSelected", "Y" );
+            RESULT = SetCursorNextEntity( mMasLC, "M_InsertTextBase", "" );
+         } 
+
+         //:END
+      } 
+
+      RESULT = SetCursorNextEntity( mMasLC, "M_InsertTextKeywordBase", "" );
+      //:END
+   } 
+
+   //:END
+
+   //:// Build the M_InsertTextKeyword subobject as described above.
+   //:FOR EACH mMasLC.M_InsertTextKeywordBase 
+   RESULT = SetCursorFirstEntity( mMasLC, "M_InsertTextKeywordBase", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:CREATE ENTITY mMasLC.M_InsertTextKeyword 
+      RESULT = CreateEntity( mMasLC, "M_InsertTextKeyword", zPOS_AFTER );
+      //:SetMatchingAttributesByName( mMasLC, "M_InsertTextKeyword", mMasLC, "M_InsertTextKeywordBase", zSET_ALL )
+      SetMatchingAttributesByName( mMasLC, "M_InsertTextKeyword", mMasLC, "M_InsertTextKeywordBase", zSET_ALL );
+      //:FOR EACH mMasLC.M_InsertTextBase 
+      RESULT = SetCursorFirstEntity( mMasLC, "M_InsertTextBase", "" );
+      while ( RESULT > zCURSOR_UNCHANGED )
+      { 
+         //:IF mMasLC.M_InsertTextBase.wSelected = "Y"
+         if ( CompareAttributeToString( mMasLC, "M_InsertTextBase", "wSelected", "Y" ) == 0 )
+         { 
+            //:CREATE ENTITY mMasLC.M_InsertText 
+            RESULT = CreateEntity( mMasLC, "M_InsertText", zPOS_AFTER );
+            //:SetMatchingAttributesByName( mMasLC, "M_InsertText", mMasLC, "M_InsertTextBase", zSET_ALL )
+            SetMatchingAttributesByName( mMasLC, "M_InsertText", mMasLC, "M_InsertTextBase", zSET_ALL );
+         } 
+
+         RESULT = SetCursorNextEntity( mMasLC, "M_InsertTextBase", "" );
+         //:END
+      } 
+
+      RESULT = SetCursorNextEntity( mMasLC, "M_InsertTextKeywordBase", "" );
+      //:END
+   } 
+
+   //:END
+   return( 0 );
+// END
+} 
 
 
 

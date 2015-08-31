@@ -210,12 +210,12 @@ omSPLDef_GeneratePDF_Label( View     mSPLDef )
    //:RemoveInvalidCharsFromFilename( szApplication )
    {
     ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mSPLDef );
-     {StringBuilder sb_szApplication;
+    {StringBuilder sb_szApplication;
    if ( szApplication == null )
       sb_szApplication = new StringBuilder( 32 );
    else
       sb_szApplication = new StringBuilder( szApplication );
-      m_ZGlobal1_Operation.RemoveInvalidCharsFromFilename( sb_szApplication );
+       m_ZGlobal1_Operation.RemoveInvalidCharsFromFilename( sb_szApplication );
    szApplication = sb_szApplication.toString( );}
     // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
    }
@@ -300,12 +300,12 @@ omSPLDef_GeneratePDF_Label( View     mSPLDef )
    //:RemoveInvalidCharsFromFilename( szLabelName )
    {
     ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mSPLDef );
-     {StringBuilder sb_szLabelName;
+    {StringBuilder sb_szLabelName;
    if ( szLabelName == null )
       sb_szLabelName = new StringBuilder( 32 );
    else
       sb_szLabelName = new StringBuilder( szLabelName );
-      m_ZGlobal1_Operation.RemoveInvalidCharsFromFilename( sb_szLabelName );
+       m_ZGlobal1_Operation.RemoveInvalidCharsFromFilename( sb_szLabelName );
    szLabelName = sb_szLabelName.toString( );}
     // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
    }
@@ -13592,8 +13592,6 @@ omSPLDef_dSelectedHazardStmt( View     mSPLDef,
    String   szReplaceString = null;
    //:STRING ( 256 ) szLocation
    String   szLocation = null;
-   //:INTEGER lLocation
-   int      lLocation = 0;
    //:SHORT nPosStart
    int      nPosStart = 0;
    //:SHORT nPosEnd
@@ -13602,14 +13600,6 @@ omSPLDef_dSelectedHazardStmt( View     mSPLDef,
    int      lTempInteger_1 = 0;
    int      lTempInteger_2 = 0;
    int      lTempInteger_3 = 0;
-   int      lTempInteger_4 = 0;
-   int      lTempInteger_5 = 0;
-   int      lTempInteger_6 = 0;
-   int      lTempInteger_7 = 0;
-   int      lTempInteger_8 = 0;
-   int      lTempInteger_9 = 0;
-   int      lTempInteger_10 = 0;
-   int      lTempInteger_11 = 0;
 
 
    //:CASE GetOrSetFlag
@@ -13644,8 +13634,6 @@ omSPLDef_dSelectedHazardStmt( View     mSPLDef,
                          GetVariableFromAttribute( sb_szString, mi_lTempInteger_1, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "PrecautionaryStatement", "", 0 );
             lTempInteger_1 = mi_lTempInteger_1.intValue( );
             szString = sb_szString.toString( );}
-            //:lLocation = 1
-            lLocation = 1;
             //:nPosStart  = zSearchSubString( szString, "{{Precautionary Panel Location}}", "f", 0 )
             nPosStart = zSearchSubString( szString, "{{Precautionary Panel Location}}", "f", 0 );
             //:IF nPosStart >= 0
@@ -13653,110 +13641,24 @@ omSPLDef_dSelectedHazardStmt( View     mSPLDef,
             { 
                //:nPosEnd = nPosStart + 32 // length of "{{Precautionary Panel Location}}"
                nPosEnd = nPosStart + 32;
-               //:szLocation = ""
-                {StringBuilder sb_szLocation;
+               //:szLocation = mSPLDef.SPLD_HumanHazardSection.PanelLoc
+               {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
+               StringBuilder sb_szLocation;
                if ( szLocation == null )
                   sb_szLocation = new StringBuilder( 32 );
                else
                   sb_szLocation = new StringBuilder( szLocation );
-                              ZeidonStringCopy( sb_szLocation, 1, 0, "", 1, 0, 257 );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_2, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "PanelLoc", "", 0 );
+               lTempInteger_2 = mi_lTempInteger_2.intValue( );
                szLocation = sb_szLocation.toString( );}
-               //:IF lLocation = 1
-               if ( lLocation == 1 )
-               { 
-                  //:szLocation = mSPLDef.SPLD_HumanHazardSection.PanelLoc1
-                  {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
-                  StringBuilder sb_szLocation;
-                  if ( szLocation == null )
-                     sb_szLocation = new StringBuilder( 32 );
-                  else
-                     sb_szLocation = new StringBuilder( szLocation );
-                                     GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_2, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "PanelLoc1", "", 0 );
-                  lTempInteger_2 = mi_lTempInteger_2.intValue( );
-                  szLocation = sb_szLocation.toString( );}
-                  //:ELSE
-               } 
+               //:zSearchAndReplace( szLocation, 256, ",", " ")
+               {StringBuilder sb_szLocation;
+               if ( szLocation == null )
+                  sb_szLocation = new StringBuilder( 32 );
                else
-               { 
-                  //:IF lLocation = 2
-                  if ( lLocation == 2 )
-                  { 
-                     //:szLocation = mSPLDef.SPLD_HumanHazardSection.PanelLoc2
-                     {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
-                     StringBuilder sb_szLocation;
-                     if ( szLocation == null )
-                        sb_szLocation = new StringBuilder( 32 );
-                     else
-                        sb_szLocation = new StringBuilder( szLocation );
-                                           GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_3, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "PanelLoc2", "", 0 );
-                     lTempInteger_3 = mi_lTempInteger_3.intValue( );
-                     szLocation = sb_szLocation.toString( );}
-                     //:ELSE
-                  } 
-                  else
-                  { 
-                     //:IF lLocation = 3
-                     if ( lLocation == 3 )
-                     { 
-                        //:szLocation = mSPLDef.SPLD_HumanHazardSection.PanelLoc3
-                        {MutableInt mi_lTempInteger_4 = new MutableInt( lTempInteger_4 );
-                        StringBuilder sb_szLocation;
-                        if ( szLocation == null )
-                           sb_szLocation = new StringBuilder( 32 );
-                        else
-                           sb_szLocation = new StringBuilder( szLocation );
-                                                 GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_4, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "PanelLoc3", "", 0 );
-                        lTempInteger_4 = mi_lTempInteger_4.intValue( );
-                        szLocation = sb_szLocation.toString( );}
-                        //:ELSE
-                     } 
-                     else
-                     { 
-                        //:IF lLocation = 4
-                        if ( lLocation == 4 )
-                        { 
-                           //:szLocation = mSPLDef.SPLD_HumanHazardSection.PanelLoc4
-                           {MutableInt mi_lTempInteger_5 = new MutableInt( lTempInteger_5 );
-                           StringBuilder sb_szLocation;
-                           if ( szLocation == null )
-                              sb_szLocation = new StringBuilder( 32 );
-                           else
-                              sb_szLocation = new StringBuilder( szLocation );
-                                                       GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_5, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "PanelLoc4", "", 0 );
-                           lTempInteger_5 = mi_lTempInteger_5.intValue( );
-                           szLocation = sb_szLocation.toString( );}
-                           //:ELSE
-                        } 
-                        else
-                        { 
-                           //:IF lLocation = 5
-                           if ( lLocation == 5 )
-                           { 
-                              //:szLocation = mSPLDef.SPLD_HumanHazardSection.PanelLoc5
-                              {MutableInt mi_lTempInteger_6 = new MutableInt( lTempInteger_6 );
-                              StringBuilder sb_szLocation;
-                              if ( szLocation == null )
-                                 sb_szLocation = new StringBuilder( 32 );
-                              else
-                                 sb_szLocation = new StringBuilder( szLocation );
-                                                             GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_6, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "PanelLoc5", "", 0 );
-                              lTempInteger_6 = mi_lTempInteger_6.intValue( );
-                              szLocation = sb_szLocation.toString( );}
-                           } 
-
-                           //:END
-                        } 
-
-                        //:END
-                     } 
-
-                     //:END
-                  } 
-
-                  //:END
-               } 
-
-               //:END
+                  sb_szLocation = new StringBuilder( szLocation );
+                               zSearchAndReplace( sb_szLocation, 256, ",", " " );
+               szLocation = sb_szLocation.toString( );}
                //:zReplaceSubString( szString, nPosStart, nPosEnd, szLocation )
                {StringBuilder sb_szString;
                if ( szString == null )
@@ -13769,8 +13671,6 @@ omSPLDef_dSelectedHazardStmt( View     mSPLDef,
 
             //:END
 
-            //:lLocation = 1
-            lLocation = 1;
             //:nPosStart  = zSearchSubString( szString, "{{Precautionary Label Location}}", "f", 0 )
             nPosStart = zSearchSubString( szString, "{{Precautionary Label Location}}", "f", 0 );
             //:IF nPosStart >= 0
@@ -13778,110 +13678,24 @@ omSPLDef_dSelectedHazardStmt( View     mSPLDef,
             { 
                //:nPosEnd = nPosStart + 32 // length of "{{Precautionary Label Location}}"
                nPosEnd = nPosStart + 32;
-               //:szLocation = ""
-                {StringBuilder sb_szLocation;
+               //:szLocation = mSPLDef.SPLD_HumanHazardSection.LabelLoc
+               {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
+               StringBuilder sb_szLocation;
                if ( szLocation == null )
                   sb_szLocation = new StringBuilder( 32 );
                else
                   sb_szLocation = new StringBuilder( szLocation );
-                              ZeidonStringCopy( sb_szLocation, 1, 0, "", 1, 0, 257 );
+                               GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_3, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "LabelLoc", "", 0 );
+               lTempInteger_3 = mi_lTempInteger_3.intValue( );
                szLocation = sb_szLocation.toString( );}
-               //:IF lLocation = 1
-               if ( lLocation == 1 )
-               { 
-                  //:szLocation = mSPLDef.SPLD_HumanHazardSection.LabelLoc1
-                  {MutableInt mi_lTempInteger_7 = new MutableInt( lTempInteger_7 );
-                  StringBuilder sb_szLocation;
-                  if ( szLocation == null )
-                     sb_szLocation = new StringBuilder( 32 );
-                  else
-                     sb_szLocation = new StringBuilder( szLocation );
-                                     GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_7, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "LabelLoc1", "", 0 );
-                  lTempInteger_7 = mi_lTempInteger_7.intValue( );
-                  szLocation = sb_szLocation.toString( );}
-                  //:ELSE
-               } 
+               //:zSearchAndReplace( szLocation, 256, ",", " ")
+               {StringBuilder sb_szLocation;
+               if ( szLocation == null )
+                  sb_szLocation = new StringBuilder( 32 );
                else
-               { 
-                  //:IF lLocation = 2
-                  if ( lLocation == 2 )
-                  { 
-                     //:szLocation = mSPLDef.SPLD_HumanHazardSection.LabelLoc2
-                     {MutableInt mi_lTempInteger_8 = new MutableInt( lTempInteger_8 );
-                     StringBuilder sb_szLocation;
-                     if ( szLocation == null )
-                        sb_szLocation = new StringBuilder( 32 );
-                     else
-                        sb_szLocation = new StringBuilder( szLocation );
-                                           GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_8, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "LabelLoc2", "", 0 );
-                     lTempInteger_8 = mi_lTempInteger_8.intValue( );
-                     szLocation = sb_szLocation.toString( );}
-                     //:ELSE
-                  } 
-                  else
-                  { 
-                     //:IF lLocation = 3
-                     if ( lLocation == 3 )
-                     { 
-                        //:szLocation = mSPLDef.SPLD_HumanHazardSection.LabelLoc3
-                        {MutableInt mi_lTempInteger_9 = new MutableInt( lTempInteger_9 );
-                        StringBuilder sb_szLocation;
-                        if ( szLocation == null )
-                           sb_szLocation = new StringBuilder( 32 );
-                        else
-                           sb_szLocation = new StringBuilder( szLocation );
-                                                 GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_9, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "LabelLoc3", "", 0 );
-                        lTempInteger_9 = mi_lTempInteger_9.intValue( );
-                        szLocation = sb_szLocation.toString( );}
-                        //:ELSE
-                     } 
-                     else
-                     { 
-                        //:IF lLocation = 4
-                        if ( lLocation == 4 )
-                        { 
-                           //:szLocation = mSPLDef.SPLD_HumanHazardSection.LabelLoc4
-                           {MutableInt mi_lTempInteger_10 = new MutableInt( lTempInteger_10 );
-                           StringBuilder sb_szLocation;
-                           if ( szLocation == null )
-                              sb_szLocation = new StringBuilder( 32 );
-                           else
-                              sb_szLocation = new StringBuilder( szLocation );
-                                                       GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_10, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "LabelLoc4", "", 0 );
-                           lTempInteger_10 = mi_lTempInteger_10.intValue( );
-                           szLocation = sb_szLocation.toString( );}
-                           //:ELSE
-                        } 
-                        else
-                        { 
-                           //:IF lLocation = 5
-                           if ( lLocation == 5 )
-                           { 
-                              //:szLocation = mSPLDef.SPLD_HumanHazardSection.LabelLoc5
-                              {MutableInt mi_lTempInteger_11 = new MutableInt( lTempInteger_11 );
-                              StringBuilder sb_szLocation;
-                              if ( szLocation == null )
-                                 sb_szLocation = new StringBuilder( 32 );
-                              else
-                                 sb_szLocation = new StringBuilder( szLocation );
-                                                             GetVariableFromAttribute( sb_szLocation, mi_lTempInteger_11, 'S', 257, mSPLDef, "SPLD_HumanHazardSection", "LabelLoc5", "", 0 );
-                              lTempInteger_11 = mi_lTempInteger_11.intValue( );
-                              szLocation = sb_szLocation.toString( );}
-                           } 
-
-                           //:END
-                        } 
-
-                        //:END
-                     } 
-
-                     //:END
-                  } 
-
-                  //:END
-               } 
-
-               //:END
+                  sb_szLocation = new StringBuilder( szLocation );
+                               zSearchAndReplace( sb_szLocation, 256, ",", " " );
+               szLocation = sb_szLocation.toString( );}
                //:zReplaceSubString( szString, nPosStart, nPosEnd, szLocation )
                {StringBuilder sb_szString;
                if ( szString == null )
