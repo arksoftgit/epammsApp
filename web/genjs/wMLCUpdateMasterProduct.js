@@ -207,51 +207,6 @@ function CANCEL_MasterProduct( )
    }
 }
 
-function CompareToPreviousMLC( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCUpdateMasterProduct.zAction.value = "CompareToPreviousMLC";
-      document.wMLCUpdateMasterProduct.submit( );
-   }
-}
-
-function DeleteMasterLabelContent( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCUpdateMasterProduct.zAction.value = "DeleteMasterLabelContent";
-      document.wMLCUpdateMasterProduct.submit( );
-   }
-}
-
-function GenerateNewMLC_Version( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCUpdateMasterProduct.zAction.value = "GenerateNewMLC_Version";
-      document.wMLCUpdateMasterProduct.submit( );
-   }
-}
-
 function GOTO_UpdateMLC( strTagEntityKey )
 {
 

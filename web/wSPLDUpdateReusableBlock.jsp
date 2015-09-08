@@ -441,6 +441,8 @@ else
 
 <div id="wrapper">
 
+<jsp:include page='<%=strBannerName %>' />
+
 <div id="maincontent">
 
 <div id="leftcontent">

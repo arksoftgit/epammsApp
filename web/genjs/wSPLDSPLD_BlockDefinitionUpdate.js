@@ -222,6 +222,21 @@ function ACCEPT_BlockSubBlockDefinition( )
    }
 }
 
+function SaveAsReusableBlock( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSPLDSPLD_BlockDefinitionUpdate.zAction.value = "SaveAsReusableBlock";
+      document.wSPLDSPLD_BlockDefinitionUpdate.submit( );
+   }
+}
+
 function CANCEL_BlockSubBlockDefinition( )
 {
 

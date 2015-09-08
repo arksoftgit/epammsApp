@@ -117,10 +117,10 @@ function _DisableFormElements( bDisabled )
    var $el = $("#zDisable");
    if ( $el.length > 0 ) {
       $el[0].disabled = true;
-      bRC = true;
-   }
+            bRC = true;
+         }
 
-   $.blockUI({ message: '<h1><img src="./images/busy.gif" /></h1>', overlayCSS: { backgroundColor: '#eee' } });
+// $.blockUI({ message: '<h1><img src="./images/busy.gif" /></h1>', overlayCSS: { backgroundColor: '#eee' } });
    return bRC;
 }
 
@@ -169,7 +169,39 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
-var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
+   $(function() {
+      $( "#DraggableSortTable" ).sortable();
+      $( "#DraggableSortTable" ).disableSelection();
+
+      var fixCloneColumnWidths = function(e, tr) {
+         var $originals = tr.children();
+         var $helper = tr.clone();
+         $helper.children().each(function(index) { // when dragging the row, maintains widths of columns within clone
+            $(this).width($originals.eq(index).width());
+         });
+         return $helper;
+      },
+      updateOddEven = function(e, ui) { // reset the odd/even row class
+         $('td.index', ui.item.parent()).each(function (k) {
+            // $(this).html(k + 1); // uncomment to have row index change to new order
+            if ( k % 2 ) {
+               // console.log( "adding class odd at: " + k );
+               $(this).closest("tr").addClass( "odd" );
+            } else {
+               // console.log( "removing class odd at: " + k );
+               $(this).closest("tr").removeClass( "odd" );
+            }
+         });
+      };
+
+      $("#DraggableSortTable tbody").sortable({
+         helper: fixCloneColumnWidths,
+         stop: updateOddEven
+      }).disableSelection();    
+
+   });
+
+   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
 }
 
@@ -202,7 +234,7 @@ function ApplySortOrder( )
       // Need some javascript here to apply the sort order
       var arrRowOrderIdx = getSortOrderArray( "DraggableSortTable" );
       document.wSystemDragDropSort.zOrderArray.value = arrRowOrderIdx.toString();
-      // console.log( "New SortOrderArray: " + document.wSystemDragDropSort.zOrderArray.value );
+   // console.log( "New SortOrderArray: " + document.wSystemDragDropSort.zOrderArray.value );
 
       // END of Javascript code entered by user.
 
@@ -263,7 +295,7 @@ function mApplySortOrder( )
       // Need some javascript here to apply the sort order
       var arrRowOrderIdx = getSortOrderArray( "DraggableSortTable" );
       document.wSystemDragDropSort.zOrderArray.value = arrRowOrderIdx.toString();
-      // console.log( "New SortOrderArray: " + document.wSystemDragDropSort.zOrderArray.value );
+   // console.log( "New SortOrderArray: " + document.wSystemDragDropSort.zOrderArray.value );
 
       // END of Javascript code entered by user.
 
@@ -299,8 +331,8 @@ function mCancelSortDiv( )
 function mLogout( )
 {
 
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
+      // This is for indicating whether the user hit the window close box.
+      isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {
@@ -310,4 +342,35 @@ function mLogout( )
       document.wSystemDragDropSort.submit( );
    }
 }
-
+/*
+INFO  21:48:45,567  [8AEFCFBCDA702B9CBFA4376A5334504D] Order Array Entity: S_MarketingUsageOrdering
+INFO  21:48:45,567  [8AEFCFBCDA702B9CBFA4376A5334504D] Order Array subscript: 3,4,1,2
+INFO  21:48:45,567  [8AEFCFBCDA702B9CBFA4376A5334504D] Order array index length: 4
+INFO  21:48:45,567  [8AEFCFBCDA702B9CBFA4376A5334504D] Order array index[0] = 2
+INFO  21:48:45,567  [8AEFCFBCDA702B9CBFA4376A5334504D] Order array index[1] = 3
+INFO  21:48:45,567  [8AEFCFBCDA702B9CBFA4376A5334504D] Order array index[2] = 0
+INFO  21:48:45,567  [8AEFCFBCDA702B9CBFA4376A5334504D] Order array index[3] = 1
+INFO  21:48:45,567  [8AEFCFBCDA702B9CBFA4376A5334504D] Before orderByNewIndex
+INFO  21:48:45,567  [8AEFCFBCDA702B9CBFA4376A5334504D] S_MarketingUsage.UsageType: 3473  C   S_MarketingUsage.dDisplayUsageName: Bacteria - (1)  ATCC and antibiotic-resistant strain
+INFO  21:48:45,567  [8AEFCFBCDA702B9CBFA4376A5334504D] S_MarketingUsage.UsageType: 3474  C   S_MarketingUsage.dDisplayUsageName: Bacteria - (2)  antibiotic-resistant strain only
+INFO  21:48:45,568  [8AEFCFBCDA702B9CBFA4376A5334504D] S_MarketingUsage.UsageType: 3475  C   S_MarketingUsage.dDisplayUsageName: Bacteria - Acinetobacter calcoaceticus
+INFO  21:48:45,568  [8AEFCFBCDA702B9CBFA4376A5334504D] S_MarketingUsage.UsageType: 3476  C   S_MarketingUsage.dDisplayUsageName: Bacteria - Bordetella bronchiseptica
+INFO  21:48:45,568  [8AEFCFBCDA702B9CBFA4376A5334504D] k = 0  shifts: 0
+INFO  21:48:45,568  [8AEFCFBCDA702B9CBFA4376A5334504D] After swap (1)
+INFO  21:48:45,568  [8AEFCFBCDA702B9CBFA4376A5334504D] S_MarketingUsage.UsageType: 3475  C   S_MarketingUsage.dDisplayUsageName: Bacteria - Acinetobacter calcoaceticus
+INFO  21:48:45,568  [8AEFCFBCDA702B9CBFA4376A5334504D] S_MarketingUsage.UsageType: 3473  C   S_MarketingUsage.dDisplayUsageName: Bacteria - (1)  ATCC and antibiotic-resistant strain
+INFO  21:48:45,568  [8AEFCFBCDA702B9CBFA4376A5334504D] S_MarketingUsage.UsageType: 3474  C   S_MarketingUsage.dDisplayUsageName: Bacteria - (2)  antibiotic-resistant strain only
+INFO  21:48:45,568  [8AEFCFBCDA702B9CBFA4376A5334504D] S_MarketingUsage.UsageType: 3476  C   S_MarketingUsage.dDisplayUsageName: Bacteria - Bordetella bronchiseptica
+INFO  21:48:45,568  [8AEFCFBCDA702B9CBFA4376A5334504D] j = 0  Array Shift[0] : 2
+INFO  21:48:45,568  [8AEFCFBCDA702B9CBFA4376A5334504D] k = 1  shifts: 1
+INFO  21:48:45,569  [8AEFCFBCDA702B9CBFA4376A5334504D] arrIdx bounds error ???  arrIdx[1] 1 (4)
+INFO  21:48:45,569  [8AEFCFBCDA702B9CBFA4376A5334504D] S_MarketingUsage.UsageType: 3475  C   S_MarketingUsage.dDisplayUsageName: Bacteria - Acinetobacter calcoaceticus
+INFO  21:48:45,569  [8AEFCFBCDA702B9CBFA4376A5334504D] S_MarketingUsage.UsageType: 3473  C   S_MarketingUsage.dDisplayUsageName: Bacteria - (1)  ATCC and antibiotic-resistant strain
+INFO  21:48:45,569  [8AEFCFBCDA702B9CBFA4376A5334504D] S_MarketingUsage.UsageType: 3474  C   S_MarketingUsage.dDisplayUsageName: Bacteria - (2)  antibiotic-resistant strain only
+INFO  21:48:45,569  [8AEFCFBCDA702B9CBFA4376A5334504D] S_MarketingUsage.UsageType: 3476  C   S_MarketingUsage.dDisplayUsageName: Bacteria - Bordetella bronchiseptica
+INFO  21:48:45,569  [8AEFCFBCDA702B9CBFA4376A5334504D] After orderByNewIndex Swaps: 1
+INFO  21:48:45,569  [8AEFCFBCDA702B9CBFA4376A5334504D] S_MarketingUsage.UsageType: 3475  C   S_MarketingUsage.dDisplayUsageName: Bacteria - Acinetobacter calcoaceticus
+INFO  21:48:45,569  [8AEFCFBCDA702B9CBFA4376A5334504D] S_MarketingUsage.UsageType: 3473  C   S_MarketingUsage.dDisplayUsageName: Bacteria - (1)  ATCC and antibiotic-resistant strain
+INFO  21:48:45,569  [8AEFCFBCDA702B9CBFA4376A5334504D] S_MarketingUsage.UsageType: 3474  C   S_MarketingUsage.dDisplayUsageName: Bacteria - (2)  antibiotic-resistant strain only
+INFO  21:48:45,625  [8AEFCFBCDA702B9CBFA4376A5334504D] S_MarketingUsage.UsageType: 3476  C   S_MarketingUsage.dDisplayUsageName: Bacteria - Bordetella bronchiseptica
+*/

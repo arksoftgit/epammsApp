@@ -230,7 +230,7 @@ function SaveReturn( )
       // Javascript code entered by user.
 
 var strName = document.getElementById( "ReusableBlockName" ).value;
-if ( strName === "" ) {
+if ( strName === "" || strName === "Set Name of Reusable Block" ) {
    alert( "Reusable Block Name is required" );
    return;
 }

@@ -36,7 +36,6 @@ public int DoInputMapping( HttpServletRequest request,
    Task task = objectEngine.getTaskById( taskId );
 
    View mMasProd = null;
-   View wWebXfer = null;
    View vGridTmp = null; // temp view to grid view
    View vRepeatingGrp = null; // temp view to repeating group view
    String strDateFormat = "";
@@ -61,6 +60,44 @@ public int DoInputMapping( HttpServletRequest request,
    mMasProd = task.getViewByName( "mMasProd" );
    if ( VmlOperation.isValid( mMasProd ) )
    {
+      // EditBox: MasterProductName
+      nRC = mMasProd.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "MasterProductName" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "MasterProductName", "", strMapValue );
+            else
+               mMasProd.cursor( "MasterProduct" ).getAttribute( "Name" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "MasterProductName", e.getReason( ), strMapValue );
+         }
+      }
+
+      // EditBox: MasterProductNumber
+      nRC = mMasProd.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "MasterProductNumber" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "MasterProductNumber", "", strMapValue );
+            else
+               mMasProd.cursor( "MasterProduct" ).getAttribute( "Number" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "MasterProductNumber", e.getReason( ), strMapValue );
+         }
+      }
+
       // ComboBox: ChemicalFamily
       nRC = mMasProd.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
@@ -155,49 +192,6 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       vGridTmp.drop( );
-   }
-
-   wWebXfer = task.getViewByName( "wWebXfer" );
-   if ( VmlOperation.isValid( wWebXfer ) )
-   {
-      // EditBox: MasterProductName
-      nRC = wWebXfer.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
-      {
-         strMapValue = request.getParameter( "MasterProductName" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "MasterProductName", "", strMapValue );
-            else
-               wWebXfer.cursor( "Root" ).getAttribute( "AttemptProductName" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "MasterProductName", e.getReason( ), strMapValue );
-         }
-      }
-
-      // EditBox: MasterProductNumber
-      nRC = wWebXfer.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
-      {
-         strMapValue = request.getParameter( "MasterProductNumber" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "MasterProductNumber", "", strMapValue );
-            else
-               wWebXfer.cursor( "Root" ).getAttribute( "AttemptProductNumber" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "MasterProductNumber", e.getReason( ), strMapValue );
-         }
-      }
-
    }
 
    if ( webMapping == true )
@@ -706,7 +700,7 @@ else
 <html>
 <head>
 
-<title>Update Master Product</title>
+<title>UpdateMasterProduct</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
@@ -762,6 +756,7 @@ else
 </div>  <!-- leftcontent -->
 
 <div id="content">
+
 <!--System Maintenance-->
 
 <%@ include file="./include/systemmaintenance.inc" %>
@@ -884,18 +879,34 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:30px;width:100px;"></div>
+<div style="height:2px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GBStorDispSections:GroupBox */ %>
+
+<div id="GBStorDispSections" name="GBStorDispSections" class="listgroup"   style="float:left;position:relative; width:780px; height:36px;">  <!-- GBStorDispSections --> 
+
+<% /* IngredientsText:Text */ %>
+
+<label class="groupbox"  id="IngredientsText" name="IngredientsText" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Master Product</label>
+
+
+</div>  <!--  GBStorDispSections --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBMasterProduct:GroupBox */ %>
 
-<div id="GBMasterProduct" name="GBMasterProduct"   style="float:left;position:relative; width:798px; height:242px;">  <!-- GBMasterProduct --> 
+<div id="GBMasterProduct" name="GBMasterProduct"   style="float:left;position:relative; width:798px; height:218px;">  <!-- GBMasterProduct --> 
 
-<div  id="GBMasterProduct" name="GBMasterProduct" >Master Product</div>
-<% /* MLC_Name::Text */ %>
+<% /* ProductName::Text */ %>
 
-<label  id="MLC_Name:" name="MLC_Name:" style="width:178px;height:16px;position:absolute;left:12px;top:24px;">Name:</label>
+<label  id="ProductName:" name="ProductName:" style="width:178px;height:16px;position:absolute;left:12px;top:4px;">Name:</label>
 
 <% /* MasterProductName:EditBox */ %>
 <%
@@ -908,17 +919,17 @@ else
    else
    {
       strErrorColor = "";
-      wWebXfer = task.getViewByName( "wWebXfer" );
-      if ( VmlOperation.isValid( wWebXfer ) == false )
+      mMasProd = task.getViewByName( "mMasProd" );
+      if ( VmlOperation.isValid( mMasProd ) == false )
          task.log( ).debug( "Invalid View: " + "MasterProductName" );
       else
       {
-         nRC = wWebXfer.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
+         nRC = mMasProd.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
             try
             {
-               strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "AttemptProductName" ).getString( "" );
+               strErrorMapValue = mMasProd.cursor( "MasterProduct" ).getAttribute( "Name" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -928,19 +939,19 @@ else
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "Root.AttemptProductName: " + strErrorMapValue );
+            task.log( ).debug( "MasterProduct.Name: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for MasterProductName: " + "wWebXfer.Root" );
+            task.log( ).debug( "Entity does not exist for MasterProductName: " + "mMasProd.MasterProduct" );
       }
    }
 %>
 
-<input class="text12" name="MasterProductName" id="MasterProductName" style="width:578px;position:absolute;left:198px;top:24px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="MasterProductName" id="MasterProductName" style="width:578px;position:absolute;left:198px;top:4px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* ProductNumber::Text */ %>
 
-<label  id="ProductNumber:" name="ProductNumber:" style="width:178px;height:16px;position:absolute;left:12px;top:50px;">Number:</label>
+<label  id="ProductNumber:" name="ProductNumber:" style="width:178px;height:16px;position:absolute;left:12px;top:30px;">Number:</label>
 
 <% /* MasterProductNumber:EditBox */ %>
 <%
@@ -953,17 +964,17 @@ else
    else
    {
       strErrorColor = "";
-      wWebXfer = task.getViewByName( "wWebXfer" );
-      if ( VmlOperation.isValid( wWebXfer ) == false )
+      mMasProd = task.getViewByName( "mMasProd" );
+      if ( VmlOperation.isValid( mMasProd ) == false )
          task.log( ).debug( "Invalid View: " + "MasterProductNumber" );
       else
       {
-         nRC = wWebXfer.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
+         nRC = mMasProd.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
             try
             {
-               strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "AttemptProductNumber" ).getString( "" );
+               strErrorMapValue = mMasProd.cursor( "MasterProduct" ).getAttribute( "Number" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -973,24 +984,24 @@ else
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "Root.AttemptProductNumber: " + strErrorMapValue );
+            task.log( ).debug( "MasterProduct.Number: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for MasterProductNumber: " + "wWebXfer.Root" );
+            task.log( ).debug( "Entity does not exist for MasterProductNumber: " + "mMasProd.MasterProduct" );
       }
    }
 %>
 
-<input class="text12" name="MasterProductNumber" id="MasterProductNumber"  title="Product Number within this Registrant" style="width:142px;position:absolute;left:198px;top:50px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="MasterProductNumber" id="MasterProductNumber"  title="Product Number within this Registrant" style="width:142px;position:absolute;left:198px;top:30px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* ChemicalFamily::Text */ %>
 
-<label  id="ChemicalFamily:" name="ChemicalFamily:" style="width:178px;height:16px;position:absolute;left:12px;top:74px;">Chemical Family:</label>
+<label  id="ChemicalFamily:" name="ChemicalFamily:" style="width:178px;height:16px;position:absolute;left:12px;top:54px;">Chemical Family:</label>
 
 <% /* ChemicalFamily:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="ChemicalFamily" id="ChemicalFamily" size="1" style="width:210px;position:absolute;left:198px;top:74px;" onchange="ChemicalFamilyOnChange( )">
+<select  name="ChemicalFamily" id="ChemicalFamily" size="1" style="width:210px;position:absolute;left:198px;top:54px;" onchange="ChemicalFamilyOnChange( )">
 
 <%
    boolean inListChemicalFamily = false;
@@ -1012,6 +1023,20 @@ else
          strComboCurrentValue = "";
       }
 
+      // Code for NOT required attribute, which makes sure a blank entry exists.
+      if ( strComboCurrentValue == "" )
+      {
+         inListChemicalFamily = true;
+%>
+         <option selected="selected" value=""></option>
+<%
+      }
+      else
+      {
+%>
+         <option value=""></option>
+<%
+      }
       for ( TableEntry entry : list )
       {
          String internalValue = entry.getInternalValue( );
@@ -1055,7 +1080,7 @@ else
 <input name="hChemicalFamily" id="hChemicalFamily" type="hidden" value="<%=strComboCurrentValue%>" >
 <% /* EstablishmentNumber::Text */ %>
 
-<label  id="EstablishmentNumber:" name="EstablishmentNumber:" style="width:178px;height:16px;position:absolute;left:12px;top:98px;">Establishment Number:</label>
+<label  id="EstablishmentNumber:" name="EstablishmentNumber:" style="width:178px;height:16px;position:absolute;left:12px;top:82px;">EPA Registration Number:</label>
 
 <% /* EstablishmentNumber:EditBox */ %>
 <%
@@ -1096,16 +1121,16 @@ else
    }
 %>
 
-<input class="text12" name="EstablishmentNumber" id="EstablishmentNumber"  title="EPA Establishment Number" style="width:142px;position:absolute;left:198px;top:98px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="EstablishmentNumber" id="EstablishmentNumber"  title="EPA Establishment Number" style="width:142px;position:absolute;left:198px;top:82px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* ToxicityCategory::Text */ %>
 
-<label  id="ToxicityCategory:" name="ToxicityCategory:" style="width:178px;height:16px;position:absolute;left:12px;top:124px;">Toxicity Category:</label>
+<label  id="ToxicityCategory:" name="ToxicityCategory:" style="width:178px;height:16px;position:absolute;left:12px;top:104px;">Toxicity Category:</label>
 
 <% /* ToxicityCategory:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="ToxicityCategory" id="ToxicityCategory" size="1" style="width:142px;position:absolute;left:198px;top:124px;" onchange="ToxicityCategoryOnChange( )">
+<select  name="ToxicityCategory" id="ToxicityCategory" size="1" style="width:142px;position:absolute;left:198px;top:104px;" onchange="ToxicityCategoryOnChange( )">
 
 <%
    boolean inListToxicityCategory = false;
@@ -1184,7 +1209,7 @@ else
 <input name="hToxicityCategory" id="hToxicityCategory" type="hidden" value="<%=strComboCurrentValue%>" >
 <% /* Description::Text */ %>
 
-<label  id="Description:" name="Description:" style="width:178px;height:16px;position:absolute;left:12px;top:148px;">Description:</label>
+<label  id="Description:" name="Description:" style="width:178px;height:16px;position:absolute;left:12px;top:128px;">Description:</label>
 
 <% /* MasterProductDescription:MLEdit */ %>
 <%
@@ -1218,7 +1243,7 @@ else
    }
 %>
 
-<textarea name="MasterProductDescription" id="MasterProductDescription" style="width:578px;height:84px;position:absolute;left:198px;top:148px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+<textarea name="MasterProductDescription" id="MasterProductDescription" style="width:578px;height:84px;position:absolute;left:198px;top:128px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 
 </div>  <!--  GBMasterProduct --> 
@@ -1226,9 +1251,6 @@ else
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
-
- <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
@@ -1254,7 +1276,7 @@ else
 <div style="height:6px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:26px;float:left;"></div>   <!-- Width Spacer -->
+<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridMasterLabelContent:Grid */ %>
 <table  cols=4 style=""  name="GridMasterLabelContent" id="GridMasterLabelContent">
 
@@ -1284,7 +1306,7 @@ try
       String strGridEditVersion;
       String strGridEditRevisionDate;
       String strGridEditFinalized;
-      String strBMBUpdateDirectionsUseStatement1;
+      String strBMBUpdateDirectionsUseStatement;
       
       View vGridMasterLabelContent;
       vGridMasterLabelContent = mMasProd.newView( );
@@ -1344,7 +1366,7 @@ try
    <td nowrap><a href="#" onclick="GOTO_UpdateMLC( this.id )" id="GridEditVersion::<%=strEntityKey%>"><%=strGridEditVersion%></a></td>
    <td nowrap><a href="#" onclick="GOTO_UpdateMLC( this.id )" id="GridEditRevisionDate::<%=strEntityKey%>"><%=strGridEditRevisionDate%></a></td>
    <td nowrap><%=strGridEditFinalized%></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateDirectionsUseStatement1" onclick="GOTO_UpdateMLC( this.id )" id="BMBUpdateDirectionsUseStatement1::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateDirectionsUseStatement" onclick="GOTO_UpdateMLC( this.id )" id="BMBUpdateDirectionsUseStatement::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
 
 </tr>
 

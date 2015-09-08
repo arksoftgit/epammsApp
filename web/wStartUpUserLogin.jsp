@@ -915,9 +915,9 @@ else
    if ( task != null && strActionToProcess == null  )
    {
       task.log().info( "After building the page UnregisterZeidonApplication: ------>>> " + "wStartUpUserLogin" );
-      task.dropTask();
-      task = null;
-      session.setAttribute( "ZeidonTaskId", task );
+   // task.dropTask();
+   // task = null;
+   // session.setAttribute( "ZeidonTaskId", task );
    }
 
    strActionToProcess = "";

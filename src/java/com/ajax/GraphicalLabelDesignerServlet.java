@@ -1231,8 +1231,10 @@ end debug code */
       }
    }
 
-   private boolean addReusableBlock( View vLLD, View vBlock, String blockTag, String blockName ) {
-      EntityCursor ec = vBlock.getCursor( "LLD_Block" );
+   private String addReusableBlock( View vLLD, View vBlock, String blockTag, String blockName ) {
+      View vBlockCopy = vBlock.newView();
+      vBlockCopy.copyCursors( vBlock );
+      EntityCursor ec = vBlockCopy.getCursor( "LLD_Block" );
       CursorResult cr = ec.setFirstWithinOi( "Tag", blockTag );
       if ( cr.isSet() ) {
          View mBlockRU;
@@ -1256,13 +1258,30 @@ end debug code */
 
          ecb = mBlockRU.getCursor( "Subregistrant" );
          ecb.includeSubobject( vLLD.getCursor( "Subregistrant" ) );
-         copyBlockToReuse( vLLD, vBlock, mBlockRU );
-      // logger.debug( "Reusable Block OI: " );
-      // mBlockRU.logObjectInstance();
+         copyBlockToReuse( vLLD, vBlockCopy, mBlockRU );
+         logger.debug( "Reusable Block OI: " );
+         mBlockRU.logObjectInstance();
          mBlockRU.commit();
-         return true;
+         mBlockRU.drop();
+         vBlockCopy.drop();
+         String jsonReuse = "{ \"ReusableBlocks\" : [ ";
+         ec = vLLD.cursor( "ReusableBlockDefinition" );
+         ec.orderEntities( "LLD_SectionType A Name A" );
+         cr = ec.setFirst();
+         while ( cr.isSet() ) {
+            jsonReuse += " { \"LLD_SectionType\" : \"" + ec.getAttribute( "LLD_SectionType" ).getString() +
+                         "\", \"Name\" : \"" + ec.getAttribute( "Name" ).getString() +
+                         "\", \"Description\" : \"" + ec.getAttribute( "Description" ).getString() + "\" }";
+            cr = ec.setNext();
+            if ( cr.isSet() ) {
+               jsonReuse += ", ";
+            }
+         }
+         jsonReuse += " ] }";
+         return jsonReuse;
       } else {
-         return false;
+         vBlockCopy.drop();
+         return "{}";
       }
    }
 
@@ -1422,8 +1441,29 @@ end debug code */
             response.setContentType( "text/json" );
             response.getWriter().write( new Gson().toJson( "{}" ) );
          }
+      } else if ( action.equals( "saveReusableBlock" ) ) {
+         View vBlock = null;
+         String blockTag = request.getParameter( "blockTag" );
+         String blockName = request.getParameter( "blockName" );
+            try {
+               vLLD.resetSubobjectTop();
+               vBlock = vLLD.newView();
+               vBlock.resetSubobjectTop();
+               jsonLabel = addReusableBlock( vLLD, vBlock, blockTag, blockName );
+            } catch( ZeidonException ze ) {
+               logger.error( "Error processing Json Label: " + ze.getMessage() );
+               jsonLabel = "{}";
+            } finally {
+               if ( vBlock != null ) {
+                  vBlock.drop();
+               }
+               response.setContentType( "text/json" );
+            // response.getWriter().write( jsonLabel );
+               response.getWriter().write( new Gson().toJson( jsonLabel ) );
+            }
+
       } else if ( action.equals( "saveLabel" ) || action.equals( "saveLabelCommit" ) ||
-                  action.equals( "saveLabelRefresh" ) || action.equals( "saveReusableBlock" ) || action.equals( "applyReusableBlock" ) ) {
+                  action.equals( "saveLabelRefresh" ) || action.equals( "applyReusableBlock" ) ) {
          if ( vLLD != null ) {
             View vBlock = null;
             JSONObject jsonPost = getPostData( request );
@@ -1456,12 +1496,8 @@ end debug code */
                   if ( action.equals( "saveReusableBlock" ) || action.equals( "applyReusableBlock" ) ) {
                      String blockTag = request.getParameter( "blockTag" );
                      String blockName = request.getParameter( "blockName" );
-                     if ( action.equals( "saveReusableBlock" ) ) {
-                        addReusableBlock( vLLD, vBlock, blockTag, blockName );
-                     } else {
-                        String parms = request.getParameter( "parms" );
-                        applyReusableBlock( vLLD, vBlock, blockTag, blockName, parms );
-                     }
+                     String parms = request.getParameter( "parms" );
+                     applyReusableBlock( vLLD, vBlock, blockTag, blockName, parms );
                   // logger.debug( "After saveReusableBlock" + blockName );
                   // vLLD.logObjectInstance();
                   }
@@ -1481,7 +1517,6 @@ end debug code */
                } else {
                   jsonLabel = "{}";
                }
-
             } catch( ZeidonException ze ) {
                logger.error( "Error processing Json Label: " + ze.getMessage() );
                jsonLabel = "{}";

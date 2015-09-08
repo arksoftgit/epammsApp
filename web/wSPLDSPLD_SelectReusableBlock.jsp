@@ -331,6 +331,33 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mSPLDef;
+      mSPLDef = task.getViewByName( "mSPLDef" );
+      if ( VmlOperation.isValid( mSPLDef ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mSPLDef.cursor( "ReusableBlockDefinition" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mSPLDef.cursor( "ReusableBlockDefinition" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mSPLDef.cursor( "ReusableBlockDefinition" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mSPLDef.cursor( "ReusableBlockDefinition" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
       // Action Operation
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDSPLD_SelectReusableBlock", "wSPLD.PreviewSelectedBlock" );
@@ -530,6 +557,16 @@ else
 <div id="sidenavigation">
    <ul id="Return" name="Return">
 <%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "SelectAndReturn" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="SelectAndReturn" name="SelectAndReturn"><a href="#"  onclick="ACCEPT_ReusableBlock()">Select and Return</a></li>
+<%
+   }
+%>
+
+<%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "CancelAndReturn" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
@@ -696,43 +733,7 @@ else
 
 
 </div>  <!--  GroupBox4 --> 
-<div style="height:1px;width:4px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox3:GroupBox */ %>
-
-<div id="GroupBox3" name="GroupBox3" style="width:184px;height:34px;float:left;">  <!-- GroupBox3 --> 
-
-
- <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:20px;">&nbsp&nbsp</span>
-<% /* Select:PushBtn */ %>
-<button type="button" name="Select" id="Select" value="" onclick="ACCEPT_ReusableBlock( )" style="width:148px;height:20px;">Select and Return</button>
-
-</div>  <!-- End of a new line -->
-
-
-</div>  <!--  GroupBox3 --> 
-<div style="height:1px;width:4px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox2:GroupBox */ %>
-
-<div id="GroupBox2" name="GroupBox2" style="width:198px;height:34px;float:left;">  <!-- GroupBox2 --> 
-
-
- <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:20px;">&nbsp&nbsp</span>
-<% /* Preview:PushBtn */ %>
-<button type="button" name="Preview" id="Preview" value="" onclick="PreviewSelectedBlock( )" style="width:174px;height:20px;">Preview Selected Block</button>
-
-</div>  <!-- End of a new line -->
-
-
-</div>  <!--  GroupBox2 --> 
-<span style="height:20px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+<span style="height:20px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
 <% /* Tag:Text */ %>
 <% strTextDisplayValue = "";
    mSPLDefBlock = task.getViewByName( "mSPLDefBlock" );
@@ -771,7 +772,7 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* ReusableBlockList:Grid */ %>
-<table  cols=4 style=""  name="ReusableBlockList" id="ReusableBlockList">
+<table  cols=5 style=""  name="ReusableBlockList" id="ReusableBlockList">
 
 <thead><tr>
 
@@ -779,6 +780,7 @@ else
    <th>Section Type</th>
    <th>Name</th>
    <th>Description</th>
+   <th>Preview</th>
 
 </tr></thead>
 
@@ -801,6 +803,7 @@ try
       String strSectionType;
       String strReusableBlockName;
       String strReuableBlockDescription;
+      String strPreview;
       
       View vReusableBlockList;
       vReusableBlockList = mSPLDef.newView( );
@@ -882,6 +885,7 @@ try
    <td><a href="#" onclick="GOTO_UpdateReusableBlock( this.id )" id="SectionType::<%=strEntityKey%>"><%=strSectionType%></a></td>
    <td><a href="#" onclick="GOTO_UpdateReusableBlock( this.id )" id="ReusableBlockName::<%=strEntityKey%>"><%=strReusableBlockName%></a></td>
    <td><a href="#" onclick="GOTO_UpdateReusableBlock( this.id )" id="ReuableBlockDescription::<%=strEntityKey%>"><%=strReuableBlockDescription%></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="Preview" onclick="PreviewSelectedBlock( this.id )" id="Preview::<%=strEntityKey%>"><img src="./images/search.png" alt="Preview"></a></td>
 
 </tr>
 

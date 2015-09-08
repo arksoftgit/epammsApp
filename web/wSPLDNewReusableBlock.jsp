@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSystemDragDropSort --%>
+<%-- wSPLDNewReusableBlock --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -35,6 +35,8 @@ public int DoInputMapping( HttpServletRequest request,
    String taskId = (String) session.getAttribute( "ZeidonTaskId" );
    Task task = objectEngine.getTaskById( taskId );
 
+   View mSPLDefPanel = null;
+   View wWebXfer = null;
    View vGridTmp = null; // temp view to grid view
    View vRepeatingGrp = null; // temp view to repeating group view
    String strDateFormat = "";
@@ -56,6 +58,54 @@ public int DoInputMapping( HttpServletRequest request,
    if ( webMapping == false )
       session.setAttribute( "ZeidonError", null );
 
+   mSPLDefPanel = task.getViewByName( "mSPLDefPanel" );
+   if ( VmlOperation.isValid( mSPLDefPanel ) )
+   {
+      // MLEdit: Description
+      nRC = mSPLDefPanel.cursor( "ReusableBlockDefinition" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "Description" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "Description", "", strMapValue );
+            else
+               mSPLDefPanel.cursor( "ReusableBlockDefinition" ).getAttribute( "Description" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "Description", e.getReason( ), strMapValue );
+         }
+      }
+
+   }
+
+   wWebXfer = task.getViewByName( "wWebXfer" );
+   if ( VmlOperation.isValid( wWebXfer ) )
+   {
+      // EditBox: ReusableBlockName
+      nRC = wWebXfer.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "ReusableBlockName" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "ReusableBlockName", "", strMapValue );
+            else
+               wWebXfer.cursor( "Root" ).getAttribute( "SearchName" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "ReusableBlockName", e.getReason( ), strMapValue );
+         }
+      }
+
+   }
+
    if ( webMapping == true )
       return 2;
 
@@ -64,123 +114,6 @@ public int DoInputMapping( HttpServletRequest request,
 
    return nMapError;
 }
-
-// beginning of:  added by hand
-/* hard-wired debugging code
-private String displayArray( int [] arr, int lth ) {
-   String msg = "";
-   for ( int k = 0; k < lth; k++ ) {
-      msg += "  " + arr[k];
-   }
-   return msg;
-}
-private void displayEntity( View vOrig, String entityName, String entityName1, String attrName1, String entityName2, String attrName2, String msg ) {
-   View v = vOrig.newView();
-   v.copyCursors( vOrig );
-   EntityCursor ec = v.getCursor( entityName );
-   CursorResult cr = ec.setFirst();
-   EntityCursor ec1;
-   EntityCursor ec2;
-   v.log().info( msg );
-   while ( cr == CursorResult.SET ) {
-      ec1 = v.getCursor( entityName1 );
-      ec2 = v.getCursor( entityName2 );
-      String attr1 = ((Integer.parseInt( (ec.getStringFromAttribute( "ID" ).toString()).substring(3) )) - 3) + "  " + ec1.getStringFromAttribute( attrName1 ).toString();
-      String attr2 = (ec2.isNull()) ? "null" : ec2.getStringFromAttribute( attrName2 ).toString();
-      v.log().info( entityName1 + "." + attrName1 +": " + attr1 + "   " + entityName2 + "." + attrName2 +": " + attr2 );
-      cr = ec.setNext();
-   }
-}
-*/
-private boolean orderByNewIndex( String arr, View vOrig, String entityName ) {
-// vOrig.log().info( "Order Array Entity: " + entityName );
-// vOrig.logObjectInstance();
-// vOrig.log().info( "Order Array subscript: " + arr );
-   int lth = arr.length(); // more than enough items for the order array
-   int [] arrOrder = new int[lth];
-   int maxIdx = 0;
-   int pos = 0;
-   int commaIdx = arr.indexOf( ",", pos );
-   while ( commaIdx >= 0 ) {
-   // vOrig.log().info( "Position: " + pos + "  Comma index: " + commaIdx );
-      arrOrder[maxIdx++] = (Integer.parseInt( arr.substring( pos, commaIdx ).toString() )) - 1; // change from subsript to zero-based index
-      pos = commaIdx + 1;
-      commaIdx = arr.indexOf( ",", pos );
-   }
-   if ( pos < lth ) {
-      arrOrder[maxIdx++] = (Integer.parseInt( arr.substring(pos).toString())) - 1; // change from subsript to zero-based index
-   }
-   lth = maxIdx; // setting the correct length
-// vOrig.log().info( "Order array index length: " + lth + "  " + displayArray( arrOrder, lth ) );
-   View v = vOrig.newView( );
-   v.copyCursors( vOrig );
-// displayEntity( v, entityName, "S_MarketingUsage", "UsageType",
-//                   "S_MarketingUsage", "dDisplayUsageName", "Before orderByNewIndex" );
-   EntityCursor ecOrig = vOrig.getCursor( entityName );
-   if ( ecOrig.isNull() == false ) {
-      
-   //int swaps = 0;
-      int[] arrShift = new int[lth];
-      int k, orderIdx;
-
-      for ( k = 0; k < lth; k++ ) {
-         arrShift[k] = k; // initialize shift array with original order
-      }
-   // vOrig.log().info( "Initialized shift array: " + displayArray( arrShift, lth ) );
-      ecOrig.setFirst();
-      View vWork = vOrig.newView();
-      vWork.copyCursors( vOrig );
-      EntityCursor ecWork = vWork.getCursor( entityName );
-      for ( orderIdx = 0; orderIdx < lth; orderIdx++ ) {
-         if ( arrOrder[orderIdx] != arrShift[orderIdx] ) {
-            maxIdx = orderIdx + 1;
-            pos = 1;
-            while ( maxIdx < lth && arrOrder[orderIdx] != arrShift[maxIdx] ) {
-               pos++;
-               maxIdx++;
-            }
-            if ( maxIdx < lth ) {
-               while ( maxIdx > orderIdx ) {
-                  arrShift[maxIdx] = arrShift[maxIdx - 1];
-                  maxIdx--;
-               }
-               arrShift[orderIdx] = arrOrder[orderIdx];
-            // vOrig.log().info( "Modified shift array orderIdx: " + orderIdx + "   " + displayArray( arrShift, lth ) );
-
-               ecWork.setCursor( ecOrig.getEntityInstance() );
-               for ( k = 0; k < pos; k++ ) {
-                  ecWork.setNext();
-               }
-               ecOrig.moveSubobject( CursorPosition.PREV, ecWork, CursorPosition.NEXT );
-            // swaps++;
-            // displayEntity( v, entityName, "S_MarketingUsage", "UsageType",
-            //                "S_MarketingUsage", "dDisplayUsageName", "After swap (" + swaps + ")" );
-            } else {
-               vOrig.log().info( "Unable to locate shift array index: " + arrOrder[orderIdx] + "  after index: " + orderIdx );
-               return false;
-            }
-         } else {
-            while ( orderIdx < lth && arrOrder[orderIdx] == arrShift[orderIdx] ) {
-            // displayEntity( v, entityName, "S_MarketingUsage", "UsageType",
-            //                "S_MarketingUsage", "dDisplayUsageName", "No swap (" + swaps + ")" );
-               ecOrig.setNext();
-               if ( orderIdx < lth - 1 && arrOrder[orderIdx + 1] == arrShift[orderIdx + 1] ) {
-                  orderIdx++;
-               } else {
-                  break; // inner while
-               }
-            }
-         }
-      }
-   // displayEntity( v, entityName, "S_MarketingUsage", "UsageType",
-   //                "S_MarketingUsage", "dDisplayUsageName", "After orderByNewIndex Swaps: " + swaps );
-   // vOrig.logObjectInstance();
-      return true;
-   } else {
-      return false;
-   }
-}
-// end of:  added by hand
 
 %>
 
@@ -236,7 +169,7 @@ if ( StringUtils.isBlank( strLastWindow ) )
 
 strLastAction = (String) session.getAttribute( "ZeidonAction" );
 
-if ( strLastWindow.equals("wSystemDragDropSort") && StringUtils.isBlank( strActionToProcess ) && StringUtils.isBlank( strLastAction ) )
+if ( strLastWindow.equals("wSPLDNewReusableBlock") && StringUtils.isBlank( strActionToProcess ) && StringUtils.isBlank( strLastAction ) )
 {
    strURL = response.encodeRedirectURL( "logout.jsp" );
    response.sendRedirect( strURL );
@@ -268,15 +201,15 @@ if ( task == null )
 vKZXMLPGO = JspWebUtils.createWebSession( null, task, "" );
 mMsgQ = new KZMSGQOO_Object( vKZXMLPGO );
 mMsgQ.setView( VmlOperation.getMessageObject( task ) );
-wSystem_Dialog wSystem = new wSystem_Dialog( vKZXMLPGO );
+wSPLD_Dialog wSPLD = new wSPLD_Dialog( vKZXMLPGO );
 
 strURL = "";
 bDone = false;
 nRC = 0;
 
-task.log().info("*** wSystemDragDropSort strActionToProcess *** " + strActionToProcess );
-task.log().info("*** wSystemDragDropSort LastWindow *** " + strLastWindow );
-task.log().info("*** wSystemDragDropSort LastAction *** " + strLastAction );
+task.log().info("*** wSPLDNewReusableBlock strActionToProcess *** " + strActionToProcess );
+task.log().info("*** wSPLDNewReusableBlock LastWindow *** " + strLastWindow );
+task.log().info("*** wSPLDNewReusableBlock LastAction *** " + strLastAction );
 
 if ( strActionToProcess != null )
 {
@@ -292,35 +225,77 @@ if ( strActionToProcess != null )
 
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "ApplySortOrder" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "Cancel" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemDragDropSort", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDNewReusableBlock", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
       if ( nRC < 0 )
          break;
 
-      // Next Window
-      strNextJSP_Name = wSystem.SetWebRedirection( vKZXMLPGO, wSystem.zWAB_ReturnToParent, "", "" );
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDNewReusableBlock", "wSPLD.CancelReusableBlock" );
+      nOptRC = wSPLD.CancelReusableBlock( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wSPLD.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_ReturnToParent, "", "" );
+      }
+
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelSortDiv" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "SaveReturn" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemDragDropSort", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDNewReusableBlock", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
       if ( nRC < 0 )
          break;
 
-      // Next Window
-      strNextJSP_Name = wSystem.SetWebRedirection( vKZXMLPGO, wSystem.zWAB_ReturnToParent, "", "" );
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDNewReusableBlock", "wSPLD.SaveReusableBlock" );
+      nOptRC = wSPLD.SaveReusableBlock( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wSPLD.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_ReturnToParent, "", "" );
+      }
+
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -340,56 +315,12 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mApplySortOrder" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemDragDropSort", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // This is hand coded!!!
-      wWebXA = task.getViewByName( "wWebXfer" );
-      String strView = (String) request.getParameter( "zView" );
-      String strEntity = (String) request.getParameter( "zEntity" );
-      View vOrig = task.getViewByName( strView );
-      String arr = (String) request.getParameter( "zOrderArray" );
-      orderByNewIndex( arr, vOrig, strEntity );
-      vOrig.commit();
-      // This is hand coded!!!
-
-      // Next Window
-      strNextJSP_Name = wSystem.SetWebRedirection( vKZXMLPGO, wSystem.zWAB_ReturnToParent, "", "" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mCancelSortDiv" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemDragDropSort", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Next Window
-      strNextJSP_Name = wSystem.SetWebRedirection( vKZXMLPGO, wSystem.zWAB_ReturnToParent, "", "" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
    while ( bDone == false && strActionToProcess.equals( "_OnUnload" ) )
    {
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wSystemDragDropSort" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wSPLDNewReusableBlock" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -406,7 +337,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ------->>> " + "wSystemDragDropSort" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ------->>> " + "wSPLDNewReusableBlock" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -421,14 +352,14 @@ if ( strActionToProcess != null )
    while ( bDone == false && strActionToProcess.equals( "_OnResubmitPage" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemDragDropSort", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDNewReusableBlock", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
       if ( nRC < 0 )
          break;
 
-      strURL = response.encodeRedirectURL( "wSystemDragDropSort.jsp" );
+      strURL = response.encodeRedirectURL( "wSPLDNewReusableBlock.jsp" );
       nRC = 1;  //do the redirection
       break;
    }
@@ -439,11 +370,11 @@ if ( strActionToProcess != null )
       {
          if ( nRC > 1 )
          {
-            strURL = response.encodeRedirectURL( "wSystemDragDropSort.jsp" );
+            strURL = response.encodeRedirectURL( "wSPLDNewReusableBlock.jsp" );
             task.log().info( "Action Error Redirect to: " + strURL );
          }
 
-         if ( ! strURL.equals("wSystemDragDropSort.jsp") ) 
+         if ( ! strURL.equals("wSPLDNewReusableBlock.jsp") ) 
          {
             response.sendRedirect( strURL );
             // If we are redirecting to a new page, then we need this return so that the rest of this page doesn't get built.
@@ -454,7 +385,7 @@ if ( strActionToProcess != null )
       {
          if ( nRC > -128 )
          {
-            strURL = response.encodeRedirectURL( "wSystemDragDropSort.jsp" );
+            strURL = response.encodeRedirectURL( "wSPLDNewReusableBlock.jsp" );
             task.log().info( "Mapping Error Redirect to: " + strURL );
          }
          else
@@ -470,8 +401,28 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
    session.setAttribute( "ZeidonError", null );
 else
 {
+   VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDNewReusableBlock", "wSPLD.InitializeNewReusableBlock" );
+   nOptRC = wSPLD.InitializeNewReusableBlock( new zVIEW( vKZXMLPGO ) );
+   if ( nOptRC == 2 )
+   {
+      View vView;
+      String strMessage;
+      String strURLParameters;
+
+      vView = task.getViewByName( "wXferO" );
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString( "" );
+      strURLParameters = "?CallingPage=wSPLDNewReusableBlock.jsp" +
+                         "&Message=" + strMessage +
+                         "&DialogName=" + "wSPLD" +
+                         "&OperationName=" + "InitializeNewReusableBlock";
+      strURL = response.encodeRedirectURL( "MessageDisplay.jsp" + strURLParameters );
+      response.sendRedirect( strURL );
+      task.log().info( "Pre/Post Redirect to: " + strURL );
+      return;
+   }
 }
-   csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSystem", "" );
+
+   csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSPLD", "" );
    if ( csrRC.isSet( ) )
       strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
 
@@ -481,8 +432,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSystem", "" );
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "DragDropSort", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSPLD", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "NewReusableBlock", "" );
    }
 
 %>
@@ -490,7 +441,7 @@ else
 <html>
 <head>
 
-<title>Sort Using Drag & Drop</title>
+<title>New Subregistrant Reusable Block</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
@@ -501,16 +452,8 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-<script language="JavaScript" type="text/javascript" src="./genjs/wSystemDragDropSort.js"></script>
+<script language="JavaScript" type="text/javascript" src="./genjs/wSPLDNewReusableBlock.js"></script>
 
-
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
-<link rel="stylesheet" type="text/css" href="./css/style.css" />
-
-<script language="JavaScript" type="text/javascript" src="./js/jsoe.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/jsoeUtils.js"></script>
 </head>
 
 <body onLoad="_AfterPageLoaded( )" onSubmit="_DisableFormElements( true )" onBeforeUnload="_BeforePageUnload( )">
@@ -521,18 +464,40 @@ else
 
 <jsp:include page='<%=strBannerName %>' />
 
-<!-- Main Navigation *********************** -->
-<div id="mainnavigation">
-   <ul id="Exit" name="Exit" >
-       <li id="lmApplySortOrder" name="lmApplySortOrder"><a href="#" onclick="mApplySortOrder()">Apply Sort Order  </a></li>
-       <li id="lmCancelSortDiv" name="lmCancelSortDiv"><a href="#" onclick="mCancelSortDiv()">  Cancel  </a></li>
-       <li id="lmLogout" name="lmLogout" ><a href="#" onclick="mLogout()">Logout</a></li>
-   </ul>
-</div>  <!-- end Navigation Bar -->
-
-<%@include file="./include/topmenuend.inc" %>
 <div id="maincontent">
-<div id="contentnosidemenu">
+
+<div id="leftcontent">
+
+<!-- Side Navigation *********************** -->
+<div id="sidenavigation">
+   <ul id="Return" name="Return">
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "SaveReturn" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="SaveReturn" name="SaveReturn"><a href="#"  onclick="SaveReturn()">Save and Return</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Cancel" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="Cancel" name="Cancel"><a href="#"  onclick="Cancel()">Cancel and Return</a></li>
+<%
+   }
+%>
+
+   </ul>
+</div> <!-- sidenavigation -->
+
+</div>  <!-- leftcontent -->
+
+<div id="content">
+
 <!--System Maintenance-->
 
 <%@ include file="./include/systemmaintenance.inc" %>
@@ -540,23 +505,23 @@ else
 <!-- END System Maintenance-->
 
 
-<form name="wSystemDragDropSort" id="wSystemDragDropSort" method="post">
+<form name="wSPLDNewReusableBlock" id="wSPLDNewReusableBlock" method="post">
    <input name="zAction" id="zAction" type="hidden" value="NOVALUE">
    <input name="zTableRowSelect" id="zTableRowSelect" type="hidden" value="NOVALUE">
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
-   View DOMAINT = null;
-   View DOMAINTLST = null;
-   View lMLCATgt = null;
-   View lPersonLST = null;
-   View lPrimReg = null;
-   View lUserLST = null;
-   View mCurrentUser = null;
-   View mEPA = null;
-   View mOrganiz = null;
-   View mUser = null;
-   View sHelp = null;
+   View lMLC = null;
+   View lSPLDLST = null;
+   View mLLD_LST = null;
+   View mMasLC = null;
+   View mPrimReg = null;
+   View mSPLDef = null;
+   View mSPLDefBlock = null;
+   View mSPLDefPanel = null;
+   View mSubLC = null;
+   View mSubProd = null;
+   View mSubreg = null;
    View wWebXfer = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
@@ -623,17 +588,11 @@ else
 
    strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
 
-   strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSystem", "DragDropSort" );
+   strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSPLD", "NewReusableBlock" );
    strOpenFile = VmlOperation.FindOpenFile( task );
    strDateFormat = "YYYY.MM.DD";
 
    wWebXA = task.getViewByName( "wWebXfer" );
-   
-   // this is hand coded!!!
-   strTextDisplayValue = wWebXA.cursor( "Root" ).getAttribute( "HTML" ).getString();
-   wWebXA.cursor( "Root" ).setAttribute( "HTML", "" ); // done with it
-   // this is hand coded!!!
-
    if ( VmlOperation.isValid( wWebXA ) )
    {
       nRC = wWebXA.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
@@ -658,7 +617,7 @@ else
    <input name="zPopupWindowSZX" id="zPopupWindowSZX" type="hidden" value="<%=strPopupWindowSZX%>">
    <input name="zPopupWindowSZY" id="zPopupWindowSZY" type="hidden" value="<%=strPopupWindowSZY%>">
    <input name="zErrorFlag" id="zErrorFlag" type="hidden" value="<%=strErrorFlag%>">
-   <input name="zTimeout" id="zTimeout" type="hidden" value="300">
+   <input name="zTimeout" id="zTimeout" type="hidden" value="<%=nTimeout%>">
    <input name="zSolicitSave" id="zSolicitSave" type="hidden" value="<%=strSolicitSave%>">
 
    <div name="ShowVMLError" id="ShowVMLError" class="ShowVMLError">
@@ -667,17 +626,145 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:20px;width:100px;"></div>
+<div style="height:12px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:18px;float:left;"></div>   <!-- Width Spacer -->
-<% /* SortDragDrop:GroupBox */ %>
+<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
+<% /* ReusableBlock:GroupBox */ %>
 
-<div id="SortDragDrop" name="SortDragDrop" class="divborder"   style="float:left;position:relative; width:958px;">  <!-- SortDragDrop --> 
+<div id="ReusableBlock" name="ReusableBlock"   style="float:left;position:relative; width:616px; height:404px;">  <!-- ReusableBlock --> 
 
-   <h1 id="SortDragDrop" name="SortDragDrop" >Drag &AMP; Drop Sort</h1>&nbsp;&nbsp;
-   <%=strTextDisplayValue%>
-</div>  <!--  SortDragDrop --> 
+<div  id="ReusableBlock" name="ReusableBlock" >Reusable Block</div>
+<% /* SectionType::Text */ %>
+
+<label  id="SectionType:" name="SectionType:" style="width:94px;height:20px;position:absolute;left:12px;top:24px;">Section Type:</label>
+
+<% /* SectionType:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "SectionType", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mSPLDefPanel = task.getViewByName( "mSPLDefPanel" );
+      if ( VmlOperation.isValid( mSPLDefPanel ) == false )
+         task.log( ).debug( "Invalid View: " + "SectionType" );
+      else
+      {
+         nRC = mSPLDefPanel.cursor( "ReusableBlockDefinition" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = mSPLDefPanel.cursor( "ReusableBlockDefinition" ).getAttribute( "LLD_SectionType" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on SectionType: " + e.getMessage());
+               task.log().error( "*** Error on ctrl SectionType", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "ReusableBlockDefinition.LLD_SectionType: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for SectionType: " + "mSPLDefPanel.ReusableBlockDefinition" );
+      }
+   }
+%>
+
+<input name="SectionType" id="SectionType"  disabled style="width:346px;position:absolute;left:114px;top:24px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
+<% /* Name::Text */ %>
+
+<label  id="Name:" name="Name:" style="width:94px;height:20px;position:absolute;left:12px;top:52px;">Name:</label>
+
+<% /* ReusableBlockName:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "ReusableBlockName", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      wWebXfer = task.getViewByName( "wWebXfer" );
+      if ( VmlOperation.isValid( wWebXfer ) == false )
+         task.log( ).debug( "Invalid View: " + "ReusableBlockName" );
+      else
+      {
+         nRC = wWebXfer.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "SearchName" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on ReusableBlockName: " + e.getMessage());
+               task.log().error( "*** Error on ctrl ReusableBlockName", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "Root.SearchName: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for ReusableBlockName: " + "wWebXfer.Root" );
+      }
+   }
+%>
+
+<input name="ReusableBlockName" id="ReusableBlockName" style="width:346px;position:absolute;left:114px;top:52px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
+<% /* Description::Text */ %>
+
+<label  id="Description:" name="Description:" style="width:94px;height:20px;position:absolute;left:12px;top:84px;">Description:</label>
+
+<% /* Description:MLEdit */ %>
+<%
+   // : Description
+   strErrorMapValue = VmlOperation.CheckError( "Description", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mSPLDefPanel = task.getViewByName( "mSPLDefPanel" );
+      if ( VmlOperation.isValid( mSPLDefPanel ) == false )
+         task.log( ).info( "Invalid View: " + "Description" );
+      else
+      {
+         nRC = mSPLDefPanel.cursor( "ReusableBlockDefinition" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strErrorMapValue = mSPLDefPanel.cursor( "ReusableBlockDefinition" ).getAttribute( "Description" ).getString( "" );
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).info( "ReusableBlockDefinition.Description: " + strErrorMapValue );
+         }
+         else
+            task.log( ).info( "Entity does not exist for Description: " + "mSPLDefPanel.ReusableBlockDefinition" );
+      }
+   }
+%>
+
+<textarea name="Description" id="Description" style="width:488px;height:308px;position:absolute;left:114px;top:84px;border:solid;border-width:2px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+
+
+</div>  <!--  ReusableBlock --> 
 </div>  <!-- End of a new line -->
 
 
@@ -698,7 +785,7 @@ else
    <input name="zError" id="zError" type="hidden" value="<%=strErrorMsg%>">
 
 </form>
-</div>   <!-- This is the end tag for the div 'contentnosidemenu' -->
+</div>   <!-- This is the end tag for the div 'content' -->
 
 </div>   <!-- This is the end tag for the div 'maincontent' -->
 
@@ -709,9 +796,9 @@ else
 </body>
 </html>
 <%
-   session.setAttribute( "ZeidonWindow", "wSystemDragDropSort" );
+   session.setAttribute( "ZeidonWindow", "wSPLDNewReusableBlock" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

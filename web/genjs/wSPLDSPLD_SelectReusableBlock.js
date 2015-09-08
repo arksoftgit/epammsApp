@@ -204,21 +204,6 @@ function ACCEPT_ReusableBlock( )
    }
 }
 
-function SelectReusableBlock( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSPLDSPLD_SelectReusableBlock.zAction.value = "SelectReusableBlock";
-      document.wSPLDSPLD_SelectReusableBlock.submit( );
-   }
-}
-
 function CANCEL_ReusableBlock( )
 {
 
@@ -253,7 +238,7 @@ function GOTO_UpdateReusableBlock( strTagEntityKey )
    }
 }
 
-function PreviewSelectedBlock( )
+function PreviewSelectedBlock( strTagEntityKey )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -261,14 +246,28 @@ function PreviewSelectedBlock( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      // Javascript code entered by user.
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
 
-//alert( "Not yet implemented" );
-//return;
-
-      // END of Javascript code entered by user.
+      document.wSPLDSPLD_SelectReusableBlock.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
 
       document.wSPLDSPLD_SelectReusableBlock.zAction.value = "PreviewSelectedBlock";
+      document.wSPLDSPLD_SelectReusableBlock.submit( );
+   }
+}
+
+function SelectReusableBlock( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSPLDSPLD_SelectReusableBlock.zAction.value = "SelectReusableBlock";
       document.wSPLDSPLD_SelectReusableBlock.submit( );
    }
 }

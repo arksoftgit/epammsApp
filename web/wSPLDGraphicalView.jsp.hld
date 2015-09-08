@@ -609,6 +609,20 @@ else
          }
       });
 
+      $( "#db" ).button({
+         text: false,
+         icons: {
+           primary: "deleteblock"
+         }
+      });
+
+      $( "#ud" ).button({
+         text: false,
+         icons: {
+           primary: "undodelete"
+         }
+      });
+
       $( "#st" ).button({
          text: false,
          icons: {
@@ -618,7 +632,6 @@ else
    });
 
 </script>
-
 <style> 
       #ztoolbar {
         padding: 4px;
@@ -641,6 +654,8 @@ else
       #ztoolbar .ui-button, .equalspacevertical { background-position: -143px 0px; }
       #ztoolbar .ui-button, .abuthorizontal { background-position: -159px 0px; }
       #ztoolbar .ui-button, .abutvertical { background-position: -175px 0px; }
+      #ztoolbar .ui-button, .deleteblock { background-position: -191px 0px; }
+      #ztoolbar .ui-button, .undodelete { background-position: -207px 0px; }
 
       .ui-widget-header {
          border: 1px solid #aaaaaa;
@@ -703,7 +718,6 @@ else
       }
 */
 
- 
       body {
           padding: 0 0 30px;
       }
@@ -731,7 +745,8 @@ else
    <div id="zviewport" style="background-color:#ccc; height:0.4in;">
       <span>
          <div id="zheader" style="display: block; font-size: 1em; font-weight: bold;">
-            ePamms Label Designer&nbsp;&nbsp;&nbsp;&nbsp;
+            <span id="zheader_title">ePamms Label Designer</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;
             <div id="ztoolbar" class="ui-widget-header ui-corner-all">
                <button id="at" class="zalign-btn">Align Top</button>
                <button id="al" class="zalign-btn">Align Left</button> 
@@ -744,8 +759,11 @@ else
                <button id="esv" class="zalign-btn">Equal Space Vertical</button> 
                <button id="ah" class="zalign-btn">Abut Horizontal</button>
                <button id="av" class="zalign-btn">Abut Vertical</button> 
+               <button id="db" class="zalign-btn">Delete Block</button> 
+               <button id="ud" class="zalign-btn">Undo Delete</button> 
 
-               <button id="Return">Return</button>
+               <button id="CancelReturn">Cancel/Return</button>
+               <button id="SaveReturn">Save/Return</button>
                <button id="Save">Save</button>
                <button id="GenerateSPLD_Label">Generate Label</button>
                <input type="checkbox" id="labelBorders" name="labelBorders" style="margin:2px;">
@@ -1327,6 +1345,20 @@ else
                        <div id="zLabelPicker"></div>
                   -->
 
+                     &nbsp;
+                     </div>
+                     <!-- <option value="">Select Panel Location...</option> -->
+                     <!-- <option value="">Select Label Location...</option> -->
+                     <p style="clear:both;position:relative"></p>
+                     <div id="zHumanHazardPanelToggle" style="overflow:hidden; white-space:nowrap;display:hidden; padding-top:12px; padding-bottom:12px;">
+                        <label for="zHumanHazardPanel">Panel Location: </label>
+                        <select id="zHumanHazardPanel" style="float:right" multiple="multiple" class="humanhazard">
+                        </select>
+                     </div>
+                     <div id="zHumanHazardLabelToggle" style="overflow:hidden; white-space:nowrap;display:hidden; padding-top:12px; padding-bottom:12px;">
+                        <label for="zHumanHazardLabel">Label Location: </label>
+                        <select id="zHumanHazardLabel" style="float:right" multiple="multiple" class="humanhazard">
+                        </select>
                      </div>
                      &nbsp;
                      <p style="clear:both;position:relative"></p>
@@ -1338,7 +1370,6 @@ else
                      </div>
 
                   </div> <!-- End of: LLD Properties -->
-
                </div> <!-- zaccordion -->
             </div> <!-- zmenu -->
          </div> <!-- pagemenu -->

@@ -43,8 +43,8 @@ function _OnAlmostTimeout()
       // If the time is less than one minute, resubmit the page.  Otherwise, go to the timeout window.
       if (tDiff < 60000)
       {
-         document.wSystemDisplayHelpMessage.zAction.value = "_OnResubmitPage";
-         document.wSystemDisplayHelpMessage.submit( );
+         document.wSPLDNewReusableBlock.zAction.value = "_OnResubmitPage";
+         document.wSPLDNewReusableBlock.submit( );
       }
       else
       {
@@ -59,8 +59,8 @@ function _OnTimeout( )
    {
       _DisableFormElements( true );
 
-      document.wSystemDisplayHelpMessage.zAction.value = "_OnTimeout";
-      document.wSystemDisplayHelpMessage.submit( );
+      document.wSPLDNewReusableBlock.zAction.value = "_OnTimeout";
+      document.wSPLDNewReusableBlock.submit( );
    }
 }
 
@@ -74,8 +74,8 @@ function _BeforePageUnload( )
       // If the user clicked the window close box, unregister zeidon.
       if (isWindowClosing)
       {
-         document.wSystemDisplayHelpMessage.zAction.value = "_OnUnload";
-         document.wSystemDisplayHelpMessage.submit( );
+         document.wSPLDNewReusableBlock.zAction.value = "_OnUnload";
+         document.wSPLDNewReusableBlock.submit( );
       }
    }
 }
@@ -128,16 +128,16 @@ function _AfterPageLoaded( )
 {
 // _DisableFormElements( false );
 
-   var szFocusCtrl = document.wSystemDisplayHelpMessage.zFocusCtrl.value;
+   var szFocusCtrl = document.wSPLDNewReusableBlock.zFocusCtrl.value;
    if ( szFocusCtrl != "" && szFocusCtrl != "null" )
-      eval( 'document.wSystemDisplayHelpMessage.' + szFocusCtrl + '.focus( )' );
+      eval( 'document.wSPLDNewReusableBlock.' + szFocusCtrl + '.focus( )' );
 
    // This is where we put out a message from the previous iteration on this window
-   var szMsg = document.wSystemDisplayHelpMessage.zError.value;
+   var szMsg = document.wSPLDNewReusableBlock.zError.value;
    if ( szMsg != "" )
       alert( szMsg ); // "Houston ... We have a problem"
 
-   szMsg = document.wSystemDisplayHelpMessage.zOpenFile.value;
+   szMsg = document.wSPLDNewReusableBlock.zOpenFile.value;
    if ( szMsg != "" )
    {
       var NewWin = window.open( szMsg );
@@ -149,10 +149,10 @@ function _AfterPageLoaded( )
       }
    }
 
-   var LoginName = document.wSystemDisplayHelpMessage.zLoginName.value;
-   var keyRole = document.wSystemDisplayHelpMessage.zKeyRole.value;
-   document.wSystemDisplayHelpMessage.zError.value = "";
-   document.wSystemDisplayHelpMessage.zOpenFile.value = "";
+   var LoginName = document.wSPLDNewReusableBlock.zLoginName.value;
+   var keyRole = document.wSPLDNewReusableBlock.zKeyRole.value;
+   document.wSPLDNewReusableBlock.zError.value = "";
+   document.wSPLDNewReusableBlock.zOpenFile.value = "";
 
    if ( timerID != null )
    {
@@ -160,7 +160,7 @@ function _AfterPageLoaded( )
       timerID = null;
    }
 
-   var varTimeout = document.wSystemDisplayHelpMessage.zTimeout.value;
+   var varTimeout = document.wSPLDNewReusableBlock.zTimeout.value;
    if ( varTimeout > 0 )
    {
       var varDelay = 60000 * varTimeout;  // Timeout value in timeout.inc
@@ -169,50 +169,27 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
-   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
+var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
 }
 
-function EditHelpMessage( )
+function CheckAllInGrid(id, CheckBoxName)
 {
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
+   var wcontrols = id.form.elements;
+   var check = id.checked;
+   var wcontrol, i = 0;
 
-   if ( _IsDocDisabled( ) == false )
+   while ( (wcontrol = wcontrols[ i++ ]) != null )
    {
-      _DisableFormElements( true );
-
-      document.wSystemDisplayHelpMessage.zAction.value = "EditHelpMessage";
-      document.wSystemDisplayHelpMessage.submit( );
+      //Check to see if the checkbox belongs to this table then check it.
+      if ( wcontrol.name.indexOf( CheckBoxName ) != -1 && wcontrol.type == 'checkbox' )
+      {
+         wcontrol.checked = check;
+      }
    }
 }
 
-function mEditHelpMessage( )
-{
-   EditHelpMessage();
-}
-
-function ExitHelp( )
-{
-// alert( "calling ExitHelp" );
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSystemDisplayHelpMessage.zAction.value = "ExitHelp";
-      document.wSystemDisplayHelpMessage.submit( );
-   }
-}
-
-function mExitHelp( )
-{
-   ExitHelp();
-}
-
-function mLogout( )
+function Cancel( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -222,7 +199,48 @@ function mLogout( )
    {
       _DisableFormElements( true );
 
-      document.wSystemDisplayHelpMessage.zAction.value = "_OnUnload";
-      document.wSystemDisplayHelpMessage.submit( );
+      document.wSPLDNewReusableBlock.zAction.value = "Cancel";
+      document.wSPLDNewReusableBlock.submit( );
    }
 }
+
+function InitializeNewReusableBlock( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSPLDNewReusableBlock.zAction.value = "InitializeNewReusableBlock";
+      document.wSPLDNewReusableBlock.submit( );
+   }
+}
+
+function SaveReturn( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+var strName = document.getElementById( "ReusableBlockName" ).value;
+if ( strName === "" ) {
+   alert( "Reusable Block Name is required" );
+   return;
+}
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wSPLDNewReusableBlock.zAction.value = "SaveReturn";
+      document.wSPLDNewReusableBlock.submit( );
+   }
+}
+

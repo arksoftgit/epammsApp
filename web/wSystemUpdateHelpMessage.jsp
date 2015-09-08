@@ -17,16 +17,6 @@
 
 ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
-public String ReplaceXSSValues( String szFieldValue )
-{
-   String szOutput;
-   szOutput = szFieldValue.replace( "<","&lt;" );
-   szOutput = szOutput.replace( ">", "&gt;" );
-   szOutput = szOutput.replace( "\"", "&quot;" );
-   szOutput = szOutput.replace( "\'", "&apos;" );
-   return( szOutput );
-}
-
 public int DoInputMapping( HttpServletRequest request,
                            HttpSession session,
                            ServletContext application,
@@ -35,23 +25,9 @@ public int DoInputMapping( HttpServletRequest request,
    String taskId = (String) session.getAttribute( "ZeidonTaskId" );
    Task task = objectEngine.getTaskById( taskId );
 
-   View sHelp = null;
-   View vGridTmp = null; // temp view to grid view
-   View vRepeatingGrp = null; // temp view to repeating group view
-   String strDateFormat = "";
+   View   sHelp = null;
    String strMapValue = "";
-   int    iView = 0;
-   long   lEntityKey = 0;
-   String strEntityKey = "";
-   long   lEntityKeyRG = 0;
-   String strEntityKeyRG = "";
-   String strTag = "";
-   String strTemp = "";
-   int    iTableRowCnt = 0;
-   String strSuffix = "";
-   int    nRelPos = 0;
    int    nRC = 0;
-   CursorResult csrRC = null;
    int    nMapError = 1;
 
    if ( webMapping == false )
@@ -78,7 +54,6 @@ public int DoInputMapping( HttpServletRequest request,
             VmlOperation.CreateMessage( task, "HelpMsg", e.getReason( ), strMapValue );
          }
       }
-
    }
 
    if ( webMapping == true )
@@ -99,17 +74,9 @@ Task task = null;
 View wWebXA = null;
 KZMSGQOO_Object mMsgQ = null; // view to Message Queue
 View vKZXMLPGO = null;
-String strLastPage = "";
-short  nRepos = 0;
 boolean bDone = false;
 int nOptRC = 0;
 int nRC = 0;
-CursorResult csrRC = null;
-CursorResult csrRCk = null;
-
-int nRCk = 0;  // temp fix for SetCursorEntityKey
-
-long lEKey = 0; // temp fix for SetCursorEntityKey
 
 String strKey = "";
 String strActionToProcess = "";
@@ -128,13 +95,8 @@ String strPopupWindowSZY = "";
 String strDateFormat = "";
 String strLoginName = "";
 String strKeyRole = "";
-String strDialogName = "";
-String strWindowName = "";
 String strLastWindow;
 String strLastAction;
-String strFunctionCall = "";
-String strNextJSP_Name = "";
-String strInputFileName = "";
 
 strActionToProcess = (String) request.getParameter( "zAction" );
 
@@ -197,17 +159,16 @@ if ( strActionToProcess != null )
          mMsgQ.setView( null );
          vMsgQ.drop( );
       }
-
    }
 
    while ( bDone == false && StringUtils.equals( strActionToProcess, "Cancel" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemUpdateHelpMessage", strActionToProcess );
+   // VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemUpdateHelpMessage", strActionToProcess );
+      session.setAttribute( "ZeidonAction", strActionToProcess );
 
       // Next Window
-      strNextJSP_Name = wSystem.SetWebRedirection( vKZXMLPGO, wSystem.zWAB_ReturnToParent, "", "" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      strURL = response.encodeRedirectURL( "wSystemDisplayHelpMessage.jsp" );
       nRC = 1;  // do the redirection
       break;
    }
@@ -215,7 +176,8 @@ if ( strActionToProcess != null )
    while ( bDone == false && StringUtils.equals( strActionToProcess, "SaveHelp" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemUpdateHelpMessage", strActionToProcess );
+   // VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemUpdateHelpMessage", strActionToProcess );
+      session.setAttribute( "ZeidonAction", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -224,7 +186,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateHelpMessage", "wSystem.SaveHelpMessage" );
+   // VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateHelpMessage", "wSystem.SaveHelpMessage" );
       nOptRC = wSystem.SaveHelpMessage( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -232,84 +194,9 @@ if ( strActionToProcess != null )
          session.setAttribute( "ZeidonError", "Y" );
          break;
       }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSystem.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSystem.SetWebRedirection( vKZXMLPGO, wSystem.zWAB_ReturnToParent, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && strActionToProcess.equals( "ZEIDON_ComboBoxSubmit" ) )
-   {
-      bDone = true;
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // No redirection, we are staying on this page.
-      nRC = 0;
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mSaveHelp" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemUpdateHelpMessage", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateHelpMessage", "wSystem.SaveHelpMessage" );
-      nOptRC = wSystem.SaveHelpMessage( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSystem.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSystem.SetWebRedirection( vKZXMLPGO, wSystem.zWAB_ReturnToParent, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "mCancel" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemUpdateHelpMessage", strActionToProcess );
 
       // Next Window
-      strNextJSP_Name = wSystem.SetWebRedirection( vKZXMLPGO, wSystem.zWAB_ReturnToParent, "", "" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      strURL = response.encodeRedirectURL( "wSystemDisplayHelpMessage.jsp" );
       nRC = 1;  // do the redirection
       break;
    }
@@ -351,7 +238,8 @@ if ( strActionToProcess != null )
    while ( bDone == false && strActionToProcess.equals( "_OnResubmitPage" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemUpdateHelpMessage", strActionToProcess );
+   // VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemUpdateHelpMessage", strActionToProcess );
+      session.setAttribute( "ZeidonAction", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -401,13 +289,9 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
 else
 {
 }
-   csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSystem", "" );
-   if ( csrRC.isSet( ) )
-      strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
-
-   if ( StringUtils.isBlank( strBannerName ) )
-      strBannerName = "./include/banner.inc";
-
+// hand coded
+   strBannerName = "./include/ePammsBannerUpdateHelp.inc";
+// end of: hand coded
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
@@ -432,6 +316,28 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSystemUpdateHelpMessage.js"></script>
+
+<script type="text/javascript" src="./js/tinymce/js/tinymce/tinymce.min.js"></script>
+<script type="text/javascript">
+tinymce.init({
+    selector: "textarea",
+    theme: "modern",
+    plugins: [
+        "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+        "searchreplace wordcount visualblocks visualchars code fullscreen",
+        "insertdatetime media nonbreaking save table contextmenu directionality",
+        "emoticons template paste textcolor colorpicker textpattern"
+    ],
+    toolbar1: "fullpage | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect",
+    toolbar2: "cut copy paste | searchreplace | bullist numlist | outdent indent blockquote | undo redo | link unlink anchor image media code | insertdatetime preview | forecolor backcolor",
+    toolbar3: "table | hr removeformat | subscript superscript | charmap emoticons | fullscreen | ltr rtl | spellchecker | visualchars visualblocks nonbreaking pagebreak restoredraft",
+    image_advtab: true,
+    templates: [
+        {title: 'Test template 1', content: 'Test 1'},
+        {title: 'Test template 2', content: 'Test 2'}
+    ]
+});
+</script>
 
 </head>
 
@@ -598,10 +504,15 @@ else
    {
       strErrorColor = "";
       sHelp = task.getViewByName( "sHelp" );
+   // task.log().info("*** wSystemUpdateHelpMessage OI 222 " );
+   // sHelp.logObjectInstance();
       if ( VmlOperation.isValid( sHelp ) == false )
+      {
          task.log( ).debug( "Invalid View: " + "HelpMsg" );
+      }
       else
       {
+      // sHelp.logObjectInstance();
          nRC = sHelp.cursor( "Help" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
@@ -625,7 +536,7 @@ else
    }
 %>
 
-<input class="mceSimple" name="HelpMsg" id="HelpMsg" style="width:988px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+   <textarea name="HelpMsg" id="HelpMsg" style="width:100%"><%=strErrorMapValue%></textarea>
 
 </div>  <!-- End of a new line -->
 
@@ -659,6 +570,7 @@ else
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSystemUpdateHelpMessage" );
+   task.log().info( "After building the page setting ZeidonWindow: ------>>> " + "wSystemUpdateHelpMessage" );
    session.setAttribute( "ZeidonAction", null );
 
    strActionToProcess = "";

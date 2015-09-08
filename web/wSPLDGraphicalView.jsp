@@ -633,104 +633,104 @@ else
 
 </script>
 <style> 
-   #ztoolbar {
-      padding: 4px;
-      display: inline-block;
-   }
-   /* support: IE7 */
-   *+html #ztoolbar {
-      display: inline;
-   }
-   #ztoolbar .ui-icon { background-image: url(images/labelpainter.png); }
-   #ztoolbar .ui-button, .tools { background-position: 0px 0px; }
-   #ztoolbar .ui-button, .alignleft { background-position: -15px 0px; }
-   #ztoolbar .ui-button, .aligntop { background-position: -31px 0px; }
-   #ztoolbar .ui-button, .alignright { background-position: -47px 0px; }
-   #ztoolbar .ui-button, .alignbottom { background-position: -63px 0px; }
-   #ztoolbar .ui-button, .equalwidth { background-position: -79px 0px; }
-   #ztoolbar .ui-button, .equalheight { background-position: -95px 0px; }
-   #ztoolbar .ui-button, .equalwidthheight { background-position: -111px 0px; }
-   #ztoolbar .ui-button, .equalspacehorizontal { background-position: -127px 0px; }
-   #ztoolbar .ui-button, .equalspacevertical { background-position: -143px 0px; }
-   #ztoolbar .ui-button, .abuthorizontal { background-position: -159px 0px; }
-   #ztoolbar .ui-button, .abutvertical { background-position: -175px 0px; }
-   #ztoolbar .ui-button, .deleteblock { background-position: -191px 0px; }
-   #ztoolbar .ui-button, .undodelete { background-position: -207px 0px; }
+      #ztoolbar {
+        padding: 4px;
+        display: inline-block;
+      }
+      /* support: IE7 */
+      *+html #ztoolbar {
+        display: inline;
+      }
+      #ztoolbar .ui-icon { background-image: url(images/labelpainter.png); }
+      #ztoolbar .ui-button, .tools { background-position: 0px 0px; }
+      #ztoolbar .ui-button, .alignleft { background-position: -15px 0px; }
+      #ztoolbar .ui-button, .aligntop { background-position: -31px 0px; }
+      #ztoolbar .ui-button, .alignright { background-position: -47px 0px; }
+      #ztoolbar .ui-button, .alignbottom { background-position: -63px 0px; }
+      #ztoolbar .ui-button, .equalwidth { background-position: -79px 0px; }
+      #ztoolbar .ui-button, .equalheight { background-position: -95px 0px; }
+      #ztoolbar .ui-button, .equalwidthheight { background-position: -111px 0px; }
+      #ztoolbar .ui-button, .equalspacehorizontal { background-position: -127px 0px; }
+      #ztoolbar .ui-button, .equalspacevertical { background-position: -143px 0px; }
+      #ztoolbar .ui-button, .abuthorizontal { background-position: -159px 0px; }
+      #ztoolbar .ui-button, .abutvertical { background-position: -175px 0px; }
+      #ztoolbar .ui-button, .deleteblock { background-position: -191px 0px; }
+      #ztoolbar .ui-button, .undodelete { background-position: -207px 0px; }
 
-   .ui-widget-header {
-      border: 1px solid #aaaaaa;
-      background: #cccccc url(images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
-      color: #222222;
-      font-weight: bold;
-   }
+      .ui-widget-header {
+         border: 1px solid #aaaaaa;
+         background: #cccccc url(images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
+         color: #222222;
+         font-weight: bold;
+      }
+      
+      .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+         border: 1px solid #d3d3d3;
+         background: #e6e6e6 url(images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
+         font-weight: normal;
+         color: #555555;
+      }
 
-   .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
-      border: 1px solid #d3d3d3;
-      background: #e6e6e6 url(images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
-      font-weight: normal;
-      color: #555555;
-   }
+      div.label {
+         overflow: scroll;
+      }
 
-   div.label {
-      overflow: scroll;
-   }
+      div.zaccordion {
+         overflow: hidden;
+      }
 
-   div.zaccordion {
-      overflow: hidden;
-   }
-
-   div.page {
-      background-color:#f5f5fa;
-      top:0px;
-      left:0px;
-      width: 36in;
-      height: 36in;
-      float:left;
-      position:absolute;
-      text-align:left;
-   // overflow: scroll;
-      background-image: url(images/inch.png);
-   }
+      div.page {
+         background-color:#f5f5fa;
+         top:0px;
+         left:0px;
+         width: 36in;
+         height: 36in;
+         float:left;
+         position:absolute;
+         text-align:left;
+      // overflow: scroll;
+         background-image: url(images/inch.png);
+      }
 
 /*
-   #zcontainer {
-      height: 100vh;
-      width: 100vw;
-   }
+      #zcontainer {
+         height: 100vh;
+         width: 100vw;
+      }
 
-   #zclient {
-      height: 98vh;
-      width: 98vw;
-   }
+#zclient {
+         height: 98vh;
+         width: 98vw;
+      }
 
-   #zviewport {
-      width: 98vw;
-   }
+      #zviewport {
+         width: 98vw;
+      }
 
-   #label {
-      width: 98vw;
-      height:90vh;
-   }
-
-   #zfooter {
-      top:95vh;
-      width:98vw;
-   }
+      #label {
+         width: 98vw;
+         height:90vh;
+      }
+      
+      #zfooter {
+         top:95vh;
+         width:98vw;
+      }
 */
 
-   body {
-       padding: 0 0 30px;
-   }
+      body {
+          padding: 0 0 30px;
+      }
 
 
-  #zfooter {
-      height:30px;
-      background: #ccc;
-   // position: fixed;
-      bottom:0;
-      padding-top:10px;
-      width: 100%
-   }
+     #zfooter {
+          height:30px;
+          background: #ccc;
+       // position: fixed;
+          bottom:0;
+          padding-top:10px;
+          width: 100%
+      }
 
 
 </style>
