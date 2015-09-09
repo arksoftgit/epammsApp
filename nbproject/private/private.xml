@@ -14,10 +14,10 @@
     </editor-bookmarks>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="56">
         <file>
-            <url>web/wSPLDGraphicalView.jsp</url>
-            <bookmark id="42">
+            <url>file:/C:/workspace/NetBeansProjects/epammsApp/src/java/com/ajax/GraphicalLabelDesignerServlet.java</url>
+            <bookmark id="45">
                 <name/>
-                <line>1074</line>
+                <line>367</line>
                 <key/>
             </bookmark>
         </file>
@@ -30,10 +30,10 @@
             </bookmark>
         </file>
         <file>
-            <url>file:/C:/workspace/NetBeansProjects/epammsApp/src/java/com/ajax/GraphicalLabelDesignerServlet.java</url>
-            <bookmark id="45">
+            <url>web/wSPLDGraphicalView.jsp</url>
+            <bookmark id="42">
                 <name/>
-                <line>367</line>
+                <line>1074</line>
                 <key/>
             </bookmark>
         </file>
@@ -108,14 +108,6 @@
             </bookmark>
         </file>
         <file>
-            <url>web/js/jquery.colorPicker.js</url>
-            <bookmark id="32">
-                <name/>
-                <line>353</line>
-                <key/>
-            </bookmark>
-        </file>
-        <file>
             <url>web/wStartUpAdminUpdateSubregistrant.jsp</url>
             <bookmark id="0">
                 <name/>
@@ -125,6 +117,14 @@
             <bookmark id="0">
                 <name/>
                 <line>1258</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>web/js/jquery.colorPicker.js</url>
+            <bookmark id="32">
+                <name/>
+                <line>353</line>
                 <key/>
             </bookmark>
         </file>

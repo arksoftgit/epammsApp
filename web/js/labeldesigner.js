@@ -3615,22 +3615,22 @@ public class FileServer {
                            case "ew": // Equal Width
                               coord = $el.cssInt( 'width' );
                               $item.css({ width: coord });
-                              $item.data( "z_^width", (coord / scale).toFixed( 3 ) );
+                              $item.data( "z_^width", ((coord - g_border) / scale).toFixed( 3 ) );
                               break;
 
                            case "eh": // Equal Height
                               coord = $el.cssInt( 'height' );
                               $item.css({ height: coord });
-                              $item.data( "z_^height", (coord / scale).toFixed( 3 ) );
+                              $item.data( "z_^height", ((coord - g_border) / scale).toFixed( 3 ) );
                               break;
 
                            case "ewh": // Equal Width & Height
                               coord = $el.cssInt( 'width' );
                               $item.css({ width: coord });
-                              $item.data( "z_^width", (coord / scale).toFixed( 3 ) );
+                              $item.data( "z_^width", ((coord - g_border) / scale).toFixed( 3 ) );
                               coord = $el.cssInt( 'height' );
                               $item.css({ height: coord });
-                              $item.data( "z_^height", (coord / scale).toFixed( 3 ) );
+                              $item.data( "z_^height", ((coord - g_border) / scale).toFixed( 3 ) );
                               break;
 
                      } // end of: inner switch
