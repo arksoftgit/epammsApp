@@ -481,6 +481,7 @@ else
    View lSPLDLST = null;
    View mLLD_LST = null;
    View mMasLC = null;
+   View mSPLDef = null;
    View mSubLC = null;
    View mSubProd = null;
    View mSubreg = null;
@@ -755,8 +756,6 @@ try
 
          lEntityKey = vGridDirectionsUse.cursor( "S_DirectionsForUseStatement" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGridEditDirectionsUse = "";
          nRC = vGridDirectionsUse.cursor( "S_DirectionsForUseStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -877,8 +876,6 @@ try
 
          lEntityKey = vGrid1.cursor( "S_ClaimsDrivingUsage" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGridEditCtl1 = "";
          nRC = vGrid1.cursor( "S_ClaimsDrivingUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -1013,8 +1010,6 @@ try
 
          lEntityKey = vGrid2.cursor( "M_DrivingUsage" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGridEditCtl3 = "";
          nRC = vGrid2.cursor( "M_DrivingUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )

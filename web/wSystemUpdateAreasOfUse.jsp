@@ -1243,8 +1243,6 @@ try
 
          lEntityKey = vGridAreasOfUse.cursor( "EPA_AreaOfUse" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGEAreasOfUse = "";
          nRC = vGridAreasOfUse.cursor( "EPA_AreaOfUse" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -1263,9 +1261,9 @@ try
 <tr<%=strOdd%>>
 
    <td nowrap><a href="#" onclick="SelectAreasOfUse( this.id )" id="GEAreasOfUse::<%=strEntityKey%>"><%=strGEAreasOfUse%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateAreasOfUse" onclick="UpdateAreasOfUse( this.id )" id="BMBUpdateAreasOfUse::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBNewAreasOfUse" onclick="AddNewAreasOfUse( this.id )" id="BMBNewAreasOfUse::<%=strEntityKey%>"><img src="./images/ePammsNew.jpg" alt="New"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteAreasOfUse" onclick="DeleteAreasOfUse( this.id )" id="BMBDeleteAreasOfUse::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateAreasOfUse" onclick="UpdateAreasOfUse( this.id )" id="BMBUpdateAreasOfUse::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBNewAreasOfUse" onclick="AddNewAreasOfUse( this.id )" id="BMBNewAreasOfUse::<%=strEntityKey%>"><img src="./images/ePammsNew.png" alt="New"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteAreasOfUse" onclick="DeleteAreasOfUse( this.id )" id="BMBDeleteAreasOfUse::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 

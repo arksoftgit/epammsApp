@@ -647,8 +647,6 @@ try
 
          lEntityKey = vGrid4.cursor( "SPLD_MarketingSection" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGridCheckCtl3 = "";
          nRC = vGrid4.cursor( "SPLD_MarketingSection" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )

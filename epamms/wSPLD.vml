@@ -2971,7 +2971,7 @@ InitReusableBlockForUpdate( VIEW ViewToWindow )
 END
 
 LOCAL OPERATION
-CopyBlock( VIEW mSPLDef )
+CopyFromReusableBlock( VIEW mSPLDef )
 
    VIEW mSPLDefBlock REGISTERED AS mSPLDefBlock
    VIEW mBlockRU BASED ON LOD mBlockRU
@@ -3015,7 +3015,7 @@ CopyBlock( VIEW mSPLDef )
       SetViewToSubobject( mBlockRU, "LLD_SubBlock" )
       SetViewToSubobject( mSPLDefBlock, "LLD_SubBlock" )
       SetMatchingAttributesByName( mSPLDefBlock, "LLD_Block", mBlockRU, "LLD_Block", zSET_NOTNULL )
-      CopyBlock( mSPLDef )
+      CopyFromReusableBlock( mSPLDef )
       ResetViewFromSubobject( mSPLDefBlock )
       ResetViewFromSubobject( mBlockRU )
    END
@@ -3063,7 +3063,7 @@ ACCEPT_ReusableBlock( VIEW ViewToWindow )
    // TraceLineS( "Selecting reusable block: ", szTag )
    // TraceLineI( "          reusable top: ", dTop )
    // TraceLineI( "          reusable left: ", dLeft )
-      CopyBlock( mSPLDef )
+      CopyFromReusableBlock( mSPLDef )
       mSPLDefBlock.LLD_Block.Tag = szTag
       mSPLDefBlock.LLD_Block.Top = dTop
       mSPLDefBlock.LLD_Block.Left = dLeft
@@ -3105,7 +3105,9 @@ PreviewSelectedBlock( VIEW ViewToWindow )
    NAME VIEW mSPLDef2 "mSPLDef"
    NAME VIEW mSPLDefPanel2 "mSPLDefPanel"
    NAME VIEW mSPLDefBlock2 "mSPLDefBlock"
-
+   ClearReusableBlockSelections( ViewToWindow )
+   SetViewFromView( mSPLDef2, mSPLDef )
+   mSPLDef2.ReusableBlockDefinition.wkSelected = "Y"
    nRC = ACCEPT_ReusableBlock( ViewToWindow )
    IF nRC = 0
       GENERATE_SPLD_LabelDottedBorders( ViewToWindow )
@@ -3190,4 +3192,86 @@ SetSPLD_Resume( VIEW ViewToWindow )
    SetResumeObject( mUser, "mSubreg", "mSubreg", "Subregistrant", "ID", mSubreg.Subregistrant.ID )
    COMMIT mUser
    DropObjectInstance( mUser )
+END
+
+LOCAL OPERATION
+CopyToReusableBlock( VIEW mSPLDefBlock )
+
+   VIEW mSPLDef REGISTERED AS mSPLDef
+   VIEW mBlockRU BASED ON LOD mBlockRU
+
+   GET VIEW mBlockRU NAMED "ReusableBlock"
+   CREATE ENTITY mBlockRU.LLD_Block
+   SetMatchingAttributesByName( mBlockRU, "LLD_Block", mSPLDefBlock, "LLD_Block", zSET_NOTNULL )
+
+   FOR EACH mSPLDefBlock.LLD_SpecialSectionAttribute 
+      CREATE ENTITY mBlockRU.LLD_SpecialSectionAttribute
+      SetMatchingAttributesByName( mBlockRU, "LLD_SpecialSectionAttribute", mSPLDefBlock, "LLD_SpecialSectionAttribute", zSET_NOTNULL )
+      FOR EACH mSPLDefBlock.LLD_SpecialSectionAttrBlock
+         CREATE ENTITY mBlockRU.LLD_SpecialSectionAttrBlock
+         SetMatchingAttributesByName( mBlockRU, "LLD_SpecialSectionAttrBlock", mSPLDefBlock, "LLD_SpecialSectionAttrBlock", zSET_NOTNULL )
+         IF mSPLDefBlock.SpecialAttributeTextColor EXISTS
+            INCLUDE mBlockRU.SpecialAttributeTextColor FROM mSPLDefBlock.SpecialAttributeTextColor 
+         END
+      END
+   END
+
+   IF mSPLDefBlock.BlockBackgroundColor EXISTS
+      INCLUDE mBlockRU.BlockBackgroundColor FROM mSPLDefBlock.BlockBackgroundColor 
+   END
+
+   IF mSPLDefBlock.BlockBorderColor EXISTS
+      INCLUDE mBlockRU.BlockBorderColor FROM mSPLDefBlock.BlockBorderColor 
+   END
+
+   FOR EACH mSPLDefBlock.LLD_SubBlock
+      SetViewToSubobject( mSPLDefBlock, "LLD_SubBlock" )
+      SetViewToSubobject( mBlockRU, "LLD_SubBlock" )
+      CopyToReusableBlock( mBlockRU )
+      ResetViewFromSubobject( mSPLDefBlock )
+      ResetViewFromSubobject( mBlockRU )
+   END
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: InitializeNewReusableBlock
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+InitializeNewReusableBlock( VIEW ViewToWindow )
+
+   VIEW mSPLDefBlock REGISTERED AS mSPLDefBlock
+   VIEW mSPLDef REGISTERED AS mSPLDef
+   VIEW mBlockRU BASED ON LOD mBlockRU
+
+   ACTIVATE mBlockRU EMPTY
+   NAME VIEW mBlockRU "ReusableBlock"
+   CREATE ENTITY mBlockRU.ReusableBlockDefinition
+   mBlockRU.ReusableBlockDefinition.Name = "Set Name of Reusable Block"
+   mBlockRU.ReusableBlockDefinition.Description = "Set Description of Reusable Block"
+   mBlockRU.ReusableBlockDefinition.LLD_SectionType = mSPLDef.LLD_Block.LLD_SectionType
+
+   INCLUDE mBlockRU.Subregistrant FROM mSPLDef.Subregistrant
+   IF mSPLDefBlock.LLD_Block EXISTS
+      CopyToReusableBlock( mSPLDefBlock )
+   END
+// COMMIT mBlockRU
+// DropObjectInstance( mBlockRU )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: CancelReusableBlock
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+CancelReusableBlock( VIEW ViewToWindow )
+
+   VIEW mSPLDef REGISTERED AS mSPLDef
+   VIEW mBlockRU BASED ON LOD mBlockRU
+   GET VIEW mBlockRU NAMED "ReusableBlock"
+   DropObjectInstance( mBlockRU )
+
 END

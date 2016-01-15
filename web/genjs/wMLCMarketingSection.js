@@ -2,6 +2,7 @@ var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;
 window.history.forward( 1 );
+var Tab1;
 
 function handleErr( msg, url, l )
 {
@@ -219,22 +220,7 @@ function CancelMarketingSect( )
    }
 }
 
-function GOTO_MarketingStatementAdd( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCMarketingSection.zAction.value = "GOTO_MarketingStatementAdd";
-      document.wMLCMarketingSection.submit( );
-   }
-}
-
-function GOTO_MarketingStatementDelete( strTagEntityKey )
+function DELETE_MarketingStatement( strTagEntityKey )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -246,9 +232,63 @@ function GOTO_MarketingStatementDelete( strTagEntityKey )
       var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
 
       document.wMLCMarketingSection.zTableRowSelect.value = strEntityKey;
+      // Javascript code entered by user.
+
+// Confirmation of  Delete.
+if (!confirm("OK to delete selected Marketing Statement?"))
+{
+   return;
+}
+
+      // END of Javascript code entered by user.
+
       _DisableFormElements( true );
 
-      document.wMLCMarketingSection.zAction.value = "GOTO_MarketingStatementDelete";
+      document.wMLCMarketingSection.zAction.value = "DELETE_MarketingStatement";
+      document.wMLCMarketingSection.submit( );
+   }
+}
+
+function DELETE_ReviewerNote( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCMarketingSection.zTableRowSelect.value = strEntityKey;
+      // Javascript code entered by user.
+
+// Confirmation of  Delete.
+if (!confirm("OK to delete selected Reviewer Note?"))
+{
+   return;
+}
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wMLCMarketingSection.zAction.value = "DELETE_ReviewerNote";
+      document.wMLCMarketingSection.submit( );
+   }
+}
+
+function GOTO_MarketingStatementAdd( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCMarketingSection.zAction.value = "GOTO_MarketingStatementAdd";
       document.wMLCMarketingSection.submit( );
    }
 }
@@ -268,6 +308,40 @@ function GOTO_MarketingStatementUpdate( strTagEntityKey )
       _DisableFormElements( true );
 
       document.wMLCMarketingSection.zAction.value = "GOTO_MarketingStatementUpdate";
+      document.wMLCMarketingSection.submit( );
+   }
+}
+
+function GOTO_ReviewerNoteAdd( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCMarketingSection.zAction.value = "GOTO_ReviewerNoteAdd";
+      document.wMLCMarketingSection.submit( );
+   }
+}
+
+function GOTO_ReviewerNoteUpdate( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCMarketingSection.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCMarketingSection.zAction.value = "GOTO_ReviewerNoteUpdate";
       document.wMLCMarketingSection.submit( );
    }
 }

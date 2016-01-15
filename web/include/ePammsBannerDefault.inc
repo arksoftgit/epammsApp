@@ -1,16 +1,17 @@
 <div id="megatopregion">
    <div id="loginline"><ul>
-      <li style="display:none">d</li>
+
       <li class="home"><a href="http://www.epa.gov" target="_blank">EPA Home</a></li>
       <li class="emailicon"><a href=".\wStartUpUserLogin.jsp" target="_blank">Login</a></li>
       <li class="logoff"><a href="#" onclick="gLogout()">Logout</a></li>
       <li class="helpicon"><a href=".\wSystemDisplayHelpMessage.jsp" target="_blank">Help</a></li>
    </ul></div>
 </div>
+
 <div id="header">
    <!-- Logo-->
    <div id="logo">
-      <!--Page Title <h1>&nbsp;</h1> --> 
+      <!--Page Title <h1>&nbsp;</h1> -->
       <!--Page Title <h1 style="opacity: 0.4; margin-top:0;padding-top:0;float:right;"><%=strBannerTitle%></h1> -->
       <!-- Before Logo-->
    </div><br /><br />

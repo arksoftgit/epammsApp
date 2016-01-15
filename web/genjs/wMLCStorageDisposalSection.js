@@ -161,6 +161,7 @@ function _AfterPageLoaded( )
    }
 
    document.wMLCStorageDisposalSection.hComboBox1.value = document.wMLCStorageDisposalSection.ComboBox1.value
+   document.wMLCStorageDisposalSection.hComboBox2.value = document.wMLCStorageDisposalSection.ComboBox2.value
 
    var varTimeout = document.wMLCStorageDisposalSection.zTimeout.value;
    if ( varTimeout > 0 )
@@ -313,6 +314,18 @@ function ComboBox1OnChange( )
    if ( _IsDocDisabled( ) == false )
    {
       document.wMLCStorageDisposalSection.hComboBox1.value = document.wMLCStorageDisposalSection.ComboBox1.value;
+   }
+}
+
+function ComboBox2OnChange( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      document.wMLCStorageDisposalSection.hComboBox2.value = document.wMLCStorageDisposalSection.ComboBox2.value;
    }
 }
 

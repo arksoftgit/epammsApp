@@ -268,10 +268,19 @@ if ( strActionToProcess != null )
 
       // Action Auto Object Function
       nRC = 0;
+      try
+      {
       View mMasLC = task.getViewByName( "mMasLC" );
       EntityCursor cursor = mMasLC.cursor( "M_IngredientsStatement" );
       cursor.createTemporalEntity( );
 
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "GOTO_IngredientsStatementAdd", e.getMessage( ), "" );
+         break;
+      }
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "IngredientsStatement" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -383,9 +392,18 @@ if ( strActionToProcess != null )
 
       // Action Auto Object Function
       nRC = 0;
+      try
+      {
       EntityCursor cursor = mMasLC.cursor( "M_IngredientsStatement" );
       cursor.createTemporalSubobjectVersion( );
 
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "GOTO_IngredientsStatementUpdate", e.getMessage( ), "" );
+         break;
+      }
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "IngredientsStatement" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -665,7 +683,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditEnvironmentalHazardSection" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEnvironmentalHazards" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCIngredients", strActionToProcess );
@@ -695,7 +713,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "EnvironmentalHazardsSection" );
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "EnvironmentalHazards" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -1212,7 +1230,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smEnvironmentalHazards" name="smEnvironmentalHazards"><a href="#"  onclick="smEditEnvironmentalHazardSection()">Environmental Hazards</a></li>
+       <li id="smEnvironmentalHazards" name="smEnvironmentalHazards"><a href="#"  onclick="smEnvironmentalHazards()">Environmental Hazards</a></li>
 <%
    }
 %>
@@ -1701,8 +1719,6 @@ try
 
          lEntityKey = vGridIngredients.cursor( "M_IngredientsStatement" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGridEditIngredients = "";
          nRC = vGridIngredients.cursor( "M_IngredientsStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -1749,8 +1765,8 @@ try
    <td><a href="#" onclick="GOTO_IngredientsStatementUpdate( this.id )" id="GridEditIngredients::<%=strEntityKey%>"><%=strGridEditIngredients%></a></td>
    <td><a href="#" onclick="GOTO_IngredientsStatementUpdate( this.id )" id="GridEditActiveInert::<%=strEntityKey%>"><%=strGridEditActiveInert%></a></td>
    <td><a href="#" onclick="GOTO_IngredientsStatementUpdate( this.id )" id="GridEditPercent::<%=strEntityKey%>"><%=strGridEditPercent%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateIngredientsStatement" onclick="GOTO_IngredientsStatementUpdate( this.id )" id="BMBUpdateIngredientsStatement::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteIngredientsStatement" onclick="GOTO_IngredientsStatementDelete( this.id )" id="BMBDeleteIngredientsStatement::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateIngredientsStatement" onclick="GOTO_IngredientsStatementUpdate( this.id )" id="BMBUpdateIngredientsStatement::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteIngredientsStatement" onclick="GOTO_IngredientsStatementDelete( this.id )" id="BMBDeleteIngredientsStatement::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 

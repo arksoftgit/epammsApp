@@ -13,7 +13,7 @@
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
 <%@ page import="com.quinsoft.epamms.*" %>
 
-<%! 
+<%!
 
 ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
@@ -93,7 +93,7 @@ String strInputFileName = "";
 strActionToProcess = (String) request.getParameter( "zAction" );
 
 strLastWindow = (String) session.getAttribute( "ZeidonWindow" );
-if ( StringUtils.isBlank( strLastWindow ) ) 
+if ( StringUtils.isBlank( strLastWindow ) )
    strLastWindow = "NoLastWindow";
 
 strLastAction = (String) session.getAttribute( "ZeidonAction" );
@@ -330,7 +330,7 @@ if ( strActionToProcess != null )
             task.log().info( "Action Error Redirect to: " + strURL );
          }
 
-         if ( ! strURL.equals("wSPLDGraphicalView.jsp") ) 
+         if ( ! strURL.equals("wSPLDGraphicalView.jsp") )
          {
             response.sendRedirect( strURL );
             // If we are redirecting to a new page, then we need this return so that the rest of this page doesn't get built.
@@ -393,7 +393,7 @@ else
 <!-- <link rel="stylesheet" href="css/docsupport/style.css"> -->
    <link rel="stylesheet" href="css/chosen.css">
 
-<!--  
+<!--
    <link href="../src/skin-win8/ui.fancytree.css" class="skinswitcher" rel="stylesheet" type="text/css">
    <script src="../src/jquery.fancytree.js" type="text/javascript"></script>
    <script src="../src/jquery.fancytree.dnd.js" type="text/javascript"></script>
@@ -632,7 +632,7 @@ else
    });
 
 </script>
-<style> 
+<style>
       #ztoolbar {
         padding: 4px;
         display: inline-block;
@@ -663,7 +663,7 @@ else
          color: #222222;
          font-weight: bold;
       }
-      
+
       .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
          border: 1px solid #d3d3d3;
          background: #e6e6e6 url(images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
@@ -711,7 +711,7 @@ else
          width: 98vw;
          height:90vh;
       }
-      
+
       #zfooter {
          top:95vh;
          width:98vw;
@@ -749,18 +749,18 @@ else
             &nbsp;&nbsp;&nbsp;&nbsp;
             <div id="ztoolbar" class="ui-widget-header ui-corner-all">
                <button id="at" class="zalign-btn">Align Top</button>
-               <button id="al" class="zalign-btn">Align Left</button> 
-               <button id="ab" class="zalign-btn">Align Bottom</button> 
-               <button id="ar" class="zalign-btn">Align Right</button> 
+               <button id="al" class="zalign-btn">Align Left</button>
+               <button id="ab" class="zalign-btn">Align Bottom</button>
+               <button id="ar" class="zalign-btn">Align Right</button>
                <button id="ew" class="zalign-btn">Equal Width</button>
-               <button id="eh" class="zalign-btn">Equal Height</button> 
-               <button id="ewh" class="zalign-btn">Equal Width & Height</button> 
+               <button id="eh" class="zalign-btn">Equal Height</button>
+               <button id="ewh" class="zalign-btn">Equal Width & Height</button>
                <button id="esh" class="zalign-btn">Equal Space Horizontal</button>
-               <button id="esv" class="zalign-btn">Equal Space Vertical</button> 
+               <button id="esv" class="zalign-btn">Equal Space Vertical</button>
                <button id="ah" class="zalign-btn">Abut Horizontal</button>
-               <button id="av" class="zalign-btn">Abut Vertical</button> 
-               <button id="db" class="zalign-btn">Delete Block</button> 
-               <button id="ud" class="zalign-btn">Undo Delete</button> 
+               <button id="av" class="zalign-btn">Abut Vertical</button>
+               <button id="db" class="zalign-btn">Delete Block</button>
+               <button id="ud" class="zalign-btn">Undo Delete</button>
 
                <button id="CancelReturn">Cancel/Return</button>
                <button id="SaveReturn">Save/Return</button>
@@ -865,7 +865,7 @@ else
                   // Directions for Use:   Header / Title / Text
                   // First Aid:   Header / Title / Text
                   // Human Hazard:  Hazards Warning / Hazards Signal Word / Hazards Precautionary
-                  // Ingredients:   Title / Ingredients Items / Ingredients Inert / Ingredients Total 
+                  // Ingredients:   Title / Ingredients Items / Ingredients Inert / Ingredients Total
                   // Marketing:   Title / Text / Column List
                   // Default:   Title / Text
 
@@ -902,7 +902,7 @@ else
                        <input type="text" id="zBlockTag" class="zeidon" data-zmap="block.z_^tag" style="float:right" />
                      </div>
                      </span>
-                     <!-- 
+                     <!--
                      <div id="jQueryRequired" style="color: red; font-size: 1.4em">jQuery.js is not present. You must install jQuery in this folder for the demo to work.</div>
                      <div class="form-item">
                         <label for="zColor">Color:</label>
@@ -1048,7 +1048,7 @@ else
                      // Directions for Use:   Title / Text / Header
                      // First Aid:   Title / Text / Header
                      // Human Hazard:  Hazards Warning / Hazards Signal Word / Hazards Precautionary
-                     // Ingredients:   Title / Ingredients Items / Ingredients Inert / Ingredients Total 
+                     // Ingredients:   Title / Ingredients Items / Ingredients Inert / Ingredients Total
                      // Marketing:   Title / Text / Column List
                      // Default:   Title / Text
                      -->

@@ -890,16 +890,14 @@ try
 
          lEntityKey = vSS2.cursor( "EmailListEntry" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
 %>
 
 <tr<%=strOdd%>>
 
    <td nowrap><%=strGridEditCtl1%></td>
    <td nowrap><%=strGridEditCtl2%></td>
-   <td nowrap><button type="button" class="formStylebutton" name=<%=strButtonName%> onclick="UpdateSysDflt( this.id )" id="GridEditCtl2::<%=strEntityKey%>"  style="width:84px;" >Update</button></td>
-   <td nowrap><button type="button" class="formStylebutton" name=<%=strButtonName%> onclick="DeleteSysDflt( this.id )" id="GridEditCtl2::<%=strEntityKey%>"  style="width:84px;" >Delete</button></td>
+   <td nowrap><button type="button" class="formStylebutton" name="PushBtn2::<%=strEntityKey%>"  onclick="UpdateSysDflt( this.id )" id="PushBtn2::<%=strEntityKey%>"  style="width:84px;" >Update</button></td>
+   <td nowrap><button type="button" class="formStylebutton" name="PushBtn3::<%=strEntityKey%>"  onclick="DeleteSysDflt( this.id )" id="PushBtn3::<%=strEntityKey%>"  style="width:84px;" >Delete</button></td>
 
 </tr>
 

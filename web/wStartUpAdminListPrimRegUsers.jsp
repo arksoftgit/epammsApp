@@ -1134,8 +1134,6 @@ try
 
          lEntityKey = vGridSubregistrant.cursor( "User" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGEPrimaryRegistrantName = "";
          nRC = vGridSubregistrant.cursor( "User" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -1182,8 +1180,8 @@ try
    <td nowrap><a href="#" onclick="SelectPrimRegUserForUpdate( this.id )" id="GEPrimaryRegistrantName::<%=strEntityKey%>"><%=strGEPrimaryRegistrantName%></a></td>
    <td nowrap><a href="#" onclick="SelectPrimRegUserForUpdate( this.id )" id="GEPrimaryRegistrantFirstName::<%=strEntityKey%>"><%=strGEPrimaryRegistrantFirstName%></a></td>
    <td nowrap><a href="#" onclick="SelectPrimRegUserForUpdate( this.id )" id="GEPrimaryRegistrantLastName::<%=strEntityKey%>"><%=strGEPrimaryRegistrantLastName%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBAdminUpdatePrimRegUser" onclick="SelectPrimRegUserForUpdate( this.id )" id="BMBAdminUpdatePrimRegUser::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBAdminDeletePrimRegUser" onclick="SelectPrimRegUserForDelete( this.id )" id="BMBAdminDeletePrimRegUser::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBAdminUpdatePrimRegUser" onclick="SelectPrimRegUserForUpdate( this.id )" id="BMBAdminUpdatePrimRegUser::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBAdminDeletePrimRegUser" onclick="SelectPrimRegUserForDelete( this.id )" id="BMBAdminDeletePrimRegUser::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 

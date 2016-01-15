@@ -743,27 +743,18 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBMasterProducts:GroupBox */ %>
-<div id="GBMasterProducts" name="GBMasterProducts" style="float:left;width:486px;"  class="listgroup">
 
-<table cols=0 style="width:486px;"  class="grouptable">
+<div id="GBMasterProducts" name="GBMasterProducts" class="listgroup"   style="float:left;position:relative; width:486px; height:40px;">  <!-- GBMasterProducts --> 
 
-<tr>
-<td valign="top"  class="listheader" style="width:332px;">
 <% /* MasterProducts:Text */ %>
 
-<span class="listheader"  id="MasterProducts" name="MasterProducts" style="width:154px;height:16px;">Master Products</span>
+<label class="groupbox"  id="MasterProducts" name="MasterProducts" style="width:154px;height:16px;position:absolute;left:10px;top:12px;">Master Products</label>
 
-</td>
-<td valign="top"  class="newbutton" style="width:78px;">
 <% /* PBNewMasterLabel:PushBtn */ %>
-<button type="button" class="newbutton"  id="PBNewMasterLabel" name="PBNewMasterLabel" value="New" onclick="NEW_MasterProduct( )"  style="width:78px;height:26px;">New</button>
+<button type="button" class="newbutton" name="PBNewMasterLabel" id="PBNewMasterLabel" value="" onclick="NEW_MasterProduct( )" style="width:78px;height:26px;position:absolute;left:342px;top:12px;">New</button>
 
-</td>
-</tr>
-</table>
 
-</div>  <!-- GBMasterProducts --> 
-
+</div>  <!--  GBMasterProducts --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -817,8 +808,6 @@ try
 
          lEntityKey = vGridPrimaryRegistrant.cursor( "MasterProduct" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGEProductName = "";
          nRC = vGridPrimaryRegistrant.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -851,9 +840,9 @@ try
 
    <td><a href="#" onclick="GOTO_UpdateMasterProduct( this.id )" id="GEProductName::<%=strEntityKey%>"><%=strGEProductName%></a></td>
    <td><a href="#" onclick="GOTO_UpdateMasterProduct( this.id )" id="GEDescription::<%=strEntityKey%>"><%=strGEDescription%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateMasterProduct" onclick="GOTO_UpdateMasterProduct( this.id )" id="BMBUpdateMasterProduct::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteMasterProduct" onclick="GOTO_DeleteMasterProduct( this.id )" id="BMBDeleteMasterProduct::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBCopyMasterProduct" onclick="CopyToNewProductMLC( this.id )" id="BMBCopyMasterProduct::<%=strEntityKey%>"><img src="./images/ePammsNew.jpg" alt="Copy Master Product"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateMasterProduct" onclick="GOTO_UpdateMasterProduct( this.id )" id="BMBUpdateMasterProduct::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteMasterProduct" onclick="GOTO_DeleteMasterProduct( this.id )" id="BMBDeleteMasterProduct::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBCopyMasterProduct" onclick="CopyToNewProductMLC( this.id )" id="BMBCopyMasterProduct::<%=strEntityKey%>"><img src="./images/ePammsNew.png" alt="Copy Master Product"></a></td>
 
 </tr>
 

@@ -408,8 +408,14 @@ GenerateKeywordTextIntoString( View     mMasLC,
    } 
    else
    { 
-      //:szSourceString = "*** Keyword Parse Error ***"
-      ZeidonStringCopy( szSourceString, 1, 0, "*** Keyword Parse Error ***", 1, 0, 10001 );
+      //:IF szLastKeywordCharacter = "{"
+      if ( ZeidonStringCompare( szLastKeywordCharacter, 1, 0, "{", 1, 0, 2 ) == 0 )
+      { 
+         //:szSourceString = "*** Keyword Parse Error ***"
+         ZeidonStringCopy( szSourceString, 1, 0, "*** Keyword Parse Error ***", 1, 0, 10001 );
+      } 
+
+      //:END
    } 
 
    //:END

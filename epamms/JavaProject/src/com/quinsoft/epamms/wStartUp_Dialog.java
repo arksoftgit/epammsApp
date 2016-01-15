@@ -7339,8 +7339,9 @@ InitLoginWindow( View     ViewToWindow )
    //:// Remove these lines prior to deployment!!!
    //:// wWebXfer.Root.AttemptLoginRegistrant = "Lonza"
    //:// wWebXfer.Root.AttemptLoginRegistrant = "Admin"
-   //:wWebXfer.Root.AttemptLoginRegistrant = "atp"
-   SetAttributeFromString( wWebXfer, "Root", "AttemptLoginRegistrant", "atp" );
+   //:// wWebXfer.Root.AttemptLoginRegistrant = "atp"
+   //:wWebXfer.Root.AttemptLoginRegistrant = "Mason"
+   SetAttributeFromString( wWebXfer, "Root", "AttemptLoginRegistrant", "Mason" );
    //:wWebXfer.Root.AttemptLoginName = "Admin"
    SetAttributeFromString( wWebXfer, "Root", "AttemptLoginName", "Admin" );
    //:wWebXfer.Root.AttemptPassword = "xxxxxxxx"
@@ -7354,6 +7355,8 @@ InitLoginWindow( View     ViewToWindow )
    DropView( vTempViewVar_0 );
    //:NAME VIEW pePamms "pePamms"
    SetNameForView( pePamms, "pePamms", null, zLEVEL_TASK );
+   //:SetCursorFirstEntityByString( pePamms, "Organization", "LoginName", "Admin", "ePamms" )
+   SetCursorFirstEntityByString( pePamms, "Organization", "LoginName", "Admin", "ePamms" );
 
    //:SetDynamicBannerName( ViewToWindow, "wStartUp", "Login" )
    {
@@ -8602,10 +8605,10 @@ ResumeEditingSPLD( View     ViewToWindow )
          } 
 
          //:END
-         //:BuildSimpleIntegerQualification( ViewToWindow, vQual, szEntityName, szKeyAttributeName, lKeyAttributeValue )
+         //:BuildSimpleIntegerQualification( ViewToWindow, vQual, szEntityName, szKeyAttributeName, lKeyAttributeValue, "=" )
          {
           ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( ViewToWindow );
-          m_ZGlobal1_Operation.BuildSimpleIntegerQualification( ViewToWindow, vQual, szEntityName, szKeyAttributeName, lKeyAttributeValue );
+          m_ZGlobal1_Operation.BuildSimpleIntegerQualification( ViewToWindow, vQual, szEntityName, szKeyAttributeName, lKeyAttributeValue, "=" );
           // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
          }
          //:ActivateObjectInstance( vTemp, szLOD, qOrganiz, vQual, zSINGLE )

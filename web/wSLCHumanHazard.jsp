@@ -1013,6 +1013,7 @@ else
    View lSPLDLST = null;
    View mLLD_LST = null;
    View mMasLC = null;
+   View mSPLDef = null;
    View mSubLC = null;
    View mSubProd = null;
    View mSubreg = null;

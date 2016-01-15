@@ -604,8 +604,6 @@ try
 
          lEntityKey = vGridAnalysisResults.cursor( "ComparisonDifference" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGridTitle = "";
          nRC = vGridAnalysisResults.cursor( "ComparisonDifference" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )

@@ -4603,10 +4603,15 @@ public class ZGlobal1_Operation extends VmlOperation
       String value;
       int count = 0;
       EntityCursor ec = view.cursor( entityName );
+      int lth = view.getLodDef().getEntityDef( entityName ).getAttribute( attributeName ).getLength();
       String[] tokens = paragraph.split( delimiters );
       int rawCount = tokens.length;
       for ( int k = 0; k < rawCount; k++ ) {
          value = tokens[k].trim();
+         if ( value.length() >= lth ) {
+            TraceLineS( "Truncating value in split: ", value );
+            value = value.substring( 0, lth );
+         }
          if ( value.equals( "" ) == false ) {
          // TraceLineS( value, "|" );
             count++;
@@ -6164,32 +6169,14 @@ ioe.printStackTrace();
    }
 
 */
-/*
-   GLOBAL OPERATION
-   BuildSimpleStringQualification( VIEW    vSubtask,
-                                   VIEW    vQualObject,
-                                   STRING (64) strEntityName,
-                                   STRING (64) strKeyAttributeName,
-                                   STRING (256) strKeyAttributeValue )
-      INTEGER nRC
 
-      nRC = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE )
-      CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER )
-      SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", strEntityName )
-      CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER )
-      SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", strEntityName )
-      SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", strKeyAttributeName )
-      SetAttributeFromString( vQualObject, "QualAttrib", "Value", strKeyAttributeValue )
-      SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" )
-      RETURN nRC
-   END
-*/
    public int
    BuildSimpleStringQualification( View   vSubtask,
                                    zVIEW  vQualificationObject,
                                    String strEntityName,
                                    String strKeyAttributeName,
-                                   String strKeyAttributeValue )
+                                   String strKeyAttributeValue,
+                                   String strComparator )
    {
       View view = vSubtask.activateEmptyObjectInstance( "KZDBHQUA", task.getSystemTask().getApplication() );
       view.cursor( "EntitySpec" ).createEntity( CursorPosition.NEXT );
@@ -6198,7 +6185,7 @@ ioe.printStackTrace();
       view.cursor( "QualAttrib" ).getAttribute( "EntityName" ).setValue( strEntityName );
       view.cursor( "QualAttrib" ).getAttribute( "AttributeName" ).setValue( strKeyAttributeName );
       view.cursor( "QualAttrib" ).getAttribute( "Value" ).setValue( strKeyAttributeValue );
-      view.cursor( "QualAttrib" ).getAttribute( "Oper" ).setValue( "=" );
+      view.cursor( "QualAttrib" ).getAttribute( "Oper" ).setValue( strComparator );
       vQualificationObject.setView( view );
       return( 0 );
    }
@@ -6208,7 +6195,8 @@ ioe.printStackTrace();
                                     zVIEW  vQualificationObject,
                                     String strEntityName,
                                     String strKeyAttributeName,
-                                    int    lKeyAttributeValue )
+                                    int    lKeyAttributeValue,
+                                    String strComparator )
    {
       View view = vSubtask.activateEmptyObjectInstance( "KZDBHQUA", task.getSystemTask().getApplication() );
       view.cursor( "EntitySpec" ).createEntity( CursorPosition.NEXT );
@@ -6217,7 +6205,7 @@ ioe.printStackTrace();
       view.cursor( "QualAttrib" ).getAttribute( "EntityName" ).setValue( strEntityName );
       view.cursor( "QualAttrib" ).getAttribute( "AttributeName" ).setValue( strKeyAttributeName );
       view.cursor( "QualAttrib" ).getAttribute( "Value" ).setValue( lKeyAttributeValue );
-      view.cursor( "QualAttrib" ).getAttribute( "Oper" ).setValue( "=" );
+      view.cursor( "QualAttrib" ).getAttribute( "Oper" ).setValue( strComparator );
       vQualificationObject.setView( view );
       return( 0 );
    }

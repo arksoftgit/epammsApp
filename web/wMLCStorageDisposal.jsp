@@ -13,7 +13,7 @@
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
 <%@ page import="com.quinsoft.epamms.*" %>
 
-<%! 
+<%!
 
 ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
@@ -63,9 +63,9 @@ public int DoInputMapping( HttpServletRequest request,
       // Grid: GridStorDisp
       iTableRowCnt = 0;
 
-      // We are creating a temp view to the grid view so that if there are 
-      // grids on the same window with the same view we do not mess up the 
-      // entity positions. 
+      // We are creating a temp view to the grid view so that if there are
+      // grids on the same window with the same view we do not mess up the
+      // entity positions.
       vGridTmp = mMasLC.newView( );
       csrRC = vGridTmp.cursor( "M_StorageDisposalSection" ).setFirst(  );
       while ( csrRC.isSet() )
@@ -138,7 +138,7 @@ String strInputFileName = "";
 strActionToProcess = (String) request.getParameter( "zAction" );
 
 strLastWindow = (String) session.getAttribute( "ZeidonWindow" );
-if ( StringUtils.isBlank( strLastWindow ) ) 
+if ( StringUtils.isBlank( strLastWindow ) )
    strLastWindow = "NoLastWindow";
 
 strLastAction = (String) session.getAttribute( "ZeidonAction" );
@@ -199,6 +199,64 @@ if ( strActionToProcess != null )
 
    }
 
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_StorageDispSectionAddAfter" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCStorageDisposal", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mMasLC;
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mMasLC.cursor( "M_StorageDisposalSection" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mMasLC.cursor( "M_StorageDisposalSection" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mMasLC.cursor( "M_StorageDisposalSection" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mMasLC.cursor( "M_StorageDisposalSection" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Action Auto Object Function
+      nRC = 0;
+      try
+      {
+      EntityCursor cursor = mMasLC.cursor( "M_StorageDisposalSection" );
+      cursor.createTemporalEntity( );
+
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "GOTO_StorageDispSectionAddAfter", e.getMessage( ), "" );
+         break;
+      }
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "StorageDisposalSection" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
    while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_StorageDispSectionAdd" ) )
    {
       bDone = true;
@@ -211,12 +269,86 @@ if ( strActionToProcess != null )
 
       // Action Auto Object Function
       nRC = 0;
+      try
+      {
       View mMasLC = task.getViewByName( "mMasLC" );
       EntityCursor cursor = mMasLC.cursor( "M_StorageDisposalSection" );
       cursor.createTemporalEntity( );
 
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "GOTO_StorageDispSectionAdd", e.getMessage( ), "" );
+         break;
+      }
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "StorageDisposalSection" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_StorageDispSectionAddBefore" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCStorageDisposal", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mMasLC;
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mMasLC.cursor( "M_StorageDisposalSection" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mMasLC.cursor( "M_StorageDisposalSection" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mMasLC.cursor( "M_StorageDisposalSection" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mMasLC.cursor( "M_StorageDisposalSection" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCStorageDisposal", "wMLC.GOTO_StorageDispSectionAddBefore" );
+      nOptRC = wMLC.GOTO_StorageDispSectionAddBefore( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "StorageDisposalSection" );
+      }
+
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -624,7 +756,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditEnvironmentalHazardSection" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEnvironmentalHazards" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCStorageDisposal", strActionToProcess );
@@ -654,7 +786,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "EnvironmentalHazardsSection" );
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "EnvironmentalHazards" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -979,7 +1111,7 @@ if ( strActionToProcess != null )
             task.log().info( "Action Error Redirect to: " + strURL );
          }
 
-         if ( ! strURL.equals("wMLCStorageDisposal.jsp") ) 
+         if ( ! strURL.equals("wMLCStorageDisposal.jsp") )
          {
             response.sendRedirect( strURL );
             // If we are redirecting to a new page, then we need this return so that the rest of this page doesn't get built.
@@ -1151,7 +1283,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smEnvironmentalHazards" name="smEnvironmentalHazards"><a href="#"  onclick="smEditEnvironmentalHazardSection()">Environmental Hazards</a></li>
+       <li id="smEnvironmentalHazards" name="smEnvironmentalHazards"><a href="#"  onclick="smEnvironmentalHazards()">Environmental Hazards</a></li>
 <%
    }
 %>
@@ -1380,17 +1512,17 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBStorDispSections:GroupBox */ %>
 
-<div id="GBStorDispSections" name="GBStorDispSections" class="listgroup"   style="float:left;position:relative; width:782px; height:36px;">  <!-- GBStorDispSections --> 
+<div id="GBStorDispSections" name="GBStorDispSections" class="listgroup"   style="float:left;position:relative; width:782px; height:36px;">  <!-- GBStorDispSections -->
 
 <% /* OrganismClaimsStatements:Text */ %>
 
 <label class="groupbox"  id="OrganismClaimsStatements" name="OrganismClaimsStatements" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Storage and Disposal Sections</label>
 
 <% /* New:PushBtn */ %>
-<button type="button" class="newbutton" name="New" id="New" value="" onclick="GOTO_StorageDispSectionAdd( )" style="width:78px;height:24px;position:absolute;left:522px;top:12px;">New</button>
+<button type="button" class="newbutton" name="New" id="New" value="" onclick="GOTO_StorageDispSectionAdd( )" style="width:78px;height:24px;position:absolute;left:650px;top:12px;">New</button>
 
 
-</div>  <!--  GBStorDispSections --> 
+</div>  <!--  GBStorDispSections -->
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -1402,12 +1534,14 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:22px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridStorDisp:Grid */ %>
-<table  cols=4 style="width:792px;"  name="GridStorDisp" id="GridStorDisp">
+<table  cols=6 style="width:770px;"  name="GridStorDisp" id="GridStorDisp">
 
 <thead><tr>
 
-   <th>Container Size</th>
+   <th>Name</th>
    <th>Section Title</th>
+   <th>New Before</th>
+   <th>New After</th>
    <th>Update</th>
    <th>Delete</th>
 
@@ -1429,9 +1563,11 @@ try
       String strTag;
       String strGridEditStorDisp;
       String strGridEditVolume;
+      String strBitmapBtn1;
+      String strBMBAddStorDispSect;
       String strBMBUpdateStorDispSect;
       String strBMBDeleteStorDispSect;
-      
+
       View vGridStorDisp;
       vGridStorDisp = mMasLC.newView( );
       csrRC2 = vGridStorDisp.cursor( "M_StorageDisposalSection" ).setFirst(  );
@@ -1442,13 +1578,11 @@ try
 
          lEntityKey = vGridStorDisp.cursor( "M_StorageDisposalSection" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGridEditStorDisp = "";
          nRC = vGridStorDisp.cursor( "M_StorageDisposalSection" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditStorDisp = vGridStorDisp.cursor( "M_StorageDisposalSection" ).getAttribute( "ContainerVolume" ).getString( "" );
+            strGridEditStorDisp = vGridStorDisp.cursor( "M_StorageDisposalSection" ).getAttribute( "Name" ).getString( "" );
 
             if ( strGridEditStorDisp == null )
                strGridEditStorDisp = "";
@@ -1476,8 +1610,10 @@ try
 
    <td><a href="#" onclick="GOTO_StorageDispSectionUpdate( this.id )" id="GridEditStorDisp::<%=strEntityKey%>"><%=strGridEditStorDisp%></a></td>
    <td><a href="#" onclick="GOTO_StorageDispSectionUpdate( this.id )" id="GridEditVolume::<%=strEntityKey%>"><%=strGridEditVolume%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateStorDispSect" onclick="GOTO_StorageDispSectionUpdate( this.id )" id="BMBUpdateStorDispSect::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteStorDispSect" onclick="GOTO_StorageDispSectionDelete( this.id )" id="BMBDeleteStorDispSect::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn1" onclick="GOTO_StorageDispSectionAddBefore( this.id )" id="BitmapBtn1::<%=strEntityKey%>"><img src="./images/ePammsNew.png" alt="New Before"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBAddStorDispSect" onclick="GOTO_StorageDispSectionAddAfter( this.id )" id="BMBAddStorDispSect::<%=strEntityKey%>"><img src="./images/ePammsNew.png" alt="New After"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateStorDispSect" onclick="GOTO_StorageDispSectionUpdate( this.id )" id="BMBUpdateStorDispSect::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteStorDispSect" onclick="GOTO_StorageDispSectionDelete( this.id )" id="BMBDeleteStorDispSect::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 

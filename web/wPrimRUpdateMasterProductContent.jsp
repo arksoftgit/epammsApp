@@ -1565,15 +1565,13 @@ try
 
          lEntityKey = vGridSectionStatements.cursor( "SectionStatement" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
 %>
 
 <tr<%=strOdd%>>
 
    <td nowrap><a href="#" onclick="UpdateMasterProductSection( this.id )" id="GridSection::<%=strEntityKey%>"><%=strGridSection%></a></td>
    <td nowrap><a href="#" onclick="UpdateMasterProductSection( this.id )" id="GridStatement::<%=strEntityKey%>"><%=strGridStatement%></a></td>
-   <td nowrap><button type="button" class="formStylebutton" name=<%=strButtonName%> onclick="UpdateMasterProductSection( this.id )" id="GridStatement::<%=strEntityKey%>"  style="width:80px;" >Update</button></td>
+   <td nowrap><button type="button" class="formStylebutton" name="PBUpdateMasterSection::<%=strEntityKey%>"  onclick="UpdateMasterProductSection( this.id )" id="PBUpdateMasterSection::<%=strEntityKey%>"  style="width:80px;" >Update</button></td>
 
 </tr>
 

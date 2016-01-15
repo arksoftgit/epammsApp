@@ -276,9 +276,18 @@ if ( strActionToProcess != null )
 
       // Action Auto Object Function
       nRC = 0;
+      try
+      {
       EntityCursor cursor = mMasLC.cursor( "M_DilutionGroupItem" );
       cursor.createTemporalSubobjectVersion( );
 
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "GOTO_DilutionGroupItem", e.getMessage( ), "" );
+         break;
+      }
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "DilutionGroupItem" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -298,6 +307,8 @@ if ( strActionToProcess != null )
 
       // Action Auto Object Function
       nRC = 0;
+      try
+      {
       View mMasLC = task.getViewByName( "mMasLC" );
       EntityCursor cursor = mMasLC.cursor( "M_DilutionGroup" );
       if ( cursor.isNull() )
@@ -306,11 +317,18 @@ if ( strActionToProcess != null )
       {
          if ( cursor.isVersioned( ) )
          {
-           cursor.acceptSubobject( );
-           nRC = 0;
+            cursor.acceptSubobject( );
          }
+         nRC = 0;
       }
 
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "AcceptChartEntryItem", e.getMessage( ), "" );
+         break;
+      }
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -325,6 +343,8 @@ if ( strActionToProcess != null )
 
       // Action Auto Object Function
       nRC = 0;
+      try
+      {
       View mMasLC = task.getViewByName( "mMasLC" );
       EntityCursor cursor = mMasLC.cursor( "M_DilutionGroup" );
       if ( cursor.isNull() )
@@ -333,11 +353,18 @@ if ( strActionToProcess != null )
       {
          if ( cursor.isVersioned( ) )
          {
-           cursor.cancelSubobject( );
-           nRC = 0;
+            cursor.cancelSubobject( );
          }
+         nRC = 0;
       }
 
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "CancelChartEntryItem", e.getMessage( ), "" );
+         break;
+      }
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -357,10 +384,19 @@ if ( strActionToProcess != null )
 
       // Action Auto Object Function
       nRC = 0;
+      try
+      {
       View mMasLC = task.getViewByName( "mMasLC" );
       EntityCursor cursor = mMasLC.cursor( "M_DilutionGroupItem" );
       cursor.createTemporalEntity( );
 
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "GOTO_DilutionGroupItemAdd", e.getMessage( ), "" );
+         break;
+      }
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "DilutionGroupItem" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -960,8 +996,6 @@ try
 
          lEntityKey = vGridDirectionsUse2.cursor( "M_DilutionGroupItem" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGridEditDirectionsUse2 = "";
          nRC = vGridDirectionsUse2.cursor( "M_DilutionGroupItem" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -980,8 +1014,8 @@ try
 <tr<%=strOdd%>>
 
    <td><a href="#" onclick="GOTO_DilutionGroupItem( this.id )" id="GridEditDirectionsUse2::<%=strEntityKey%>"><%=strGridEditDirectionsUse2%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateDirectionsUseStatement2" onclick="GOTO_DilutionGroupItem( this.id )" id="BMBUpdateDirectionsUseStatement2::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteDirectionsUseStatement2" onclick="GOTO_DilutionGroupItemDelete( this.id )" id="BMBDeleteDirectionsUseStatement2::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateDirectionsUseStatement2" onclick="GOTO_DilutionGroupItem( this.id )" id="BMBUpdateDirectionsUseStatement2::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteDirectionsUseStatement2" onclick="GOTO_DilutionGroupItemDelete( this.id )" id="BMBDeleteDirectionsUseStatement2::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 

@@ -1303,8 +1303,6 @@ try
 
          lEntityKey = vGridChemicals.cursor( "EPA_ChemicalFamily" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGridChemicalName = "";
          nRC = vGridChemicals.cursor( "EPA_ChemicalFamily" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -1351,9 +1349,9 @@ try
    <td nowrap><a href="#" onclick="UpdateSystemChemical( this.id )" id="GridChemicalName::<%=strEntityKey%>"><%=strGridChemicalName%></a></td>
    <td nowrap><a href="#" onclick="UpdateSystemChemical( this.id )" id="GridChemicalDescription::<%=strEntityKey%>"><%=strGridChemicalDescription%></a></td>
    <td nowrap><a href="#" onclick="UpdateSystemChemical( this.id )" id="GridChemicalFamily::<%=strEntityKey%>"><%=strGridChemicalFamily%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateChemical" onclick="UpdateSystemChemical( this.id )" id="BMBUpdateChemical::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteChemical" onclick="DeleteSystemChemical( this.id )" id="BMBDeleteChemical::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBCopyChemical" onclick="CopyToNewSystemChemical( this.id )" id="BMBCopyChemical::<%=strEntityKey%>"><img src="./images/ePammsCopy.jpg" alt="Copy"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateChemical" onclick="UpdateSystemChemical( this.id )" id="BMBUpdateChemical::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteChemical" onclick="DeleteSystemChemical( this.id )" id="BMBDeleteChemical::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBCopyChemical" onclick="CopyToNewSystemChemical( this.id )" id="BMBCopyChemical::<%=strEntityKey%>"><img src="./images/ePammsCopy.png" alt="Copy"></a></td>
 
 </tr>
 
@@ -1453,8 +1451,6 @@ try
 
          lEntityKey = vGridKeywords.cursor( "Keyword" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGridKeyword = "";
          nRC = vGridKeywords.cursor( "Keyword" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -1473,8 +1469,8 @@ try
 <tr<%=strOdd%>>
 
    <td nowrap><a href="#" onclick="UpdateSystemKeyword( this.id )" id="GridKeyword::<%=strEntityKey%>"><%=strGridKeyword%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateKeyword" onclick="UpdateSystemKeyword( this.id )" id="BMBUpdateKeyword::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteKeyword" onclick="DeleteSystemKeyword( this.id )" id="BMBDeleteKeyword::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateKeyword" onclick="UpdateSystemKeyword( this.id )" id="BMBUpdateKeyword::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteKeyword" onclick="DeleteSystemKeyword( this.id )" id="BMBDeleteKeyword::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 

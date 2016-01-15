@@ -1245,8 +1245,6 @@ try
 
          lEntityKey = vGridAppTypes.cursor( "EPA_ApplicationType" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGEAppType = "";
          nRC = vGridAppTypes.cursor( "EPA_ApplicationType" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -1265,9 +1263,9 @@ try
 <tr<%=strOdd%>>
 
    <td nowrap><a href="#" onclick="SelectAppType( this.id )" id="GEAppType::<%=strEntityKey%>"><%=strGEAppType%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateAppType" onclick="UpdateAppType( this.id )" id="BMBUpdateAppType::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBNewAppType" onclick="AddNewAppType( this.id )" id="BMBNewAppType::<%=strEntityKey%>"><img src="./images/ePammsNew.jpg" alt="New"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteAppType" onclick="DeleteAppType( this.id )" id="BMBDeleteAppType::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateAppType" onclick="UpdateAppType( this.id )" id="BMBUpdateAppType::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBNewAppType" onclick="AddNewAppType( this.id )" id="BMBNewAppType::<%=strEntityKey%>"><img src="./images/ePammsNew.png" alt="New"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteAppType" onclick="DeleteAppType( this.id )" id="BMBDeleteAppType::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 

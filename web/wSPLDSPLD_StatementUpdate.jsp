@@ -345,6 +345,8 @@ if ( strActionToProcess != null )
 
       // Action Auto Object Function
       nRC = 0;
+      try
+      {
       View mSPLDef = task.getViewByName( "mSPLDef" );
       EntityCursor cursor = mSPLDef.cursor( "CompositeComponentList" );
       if ( cursor.isNull() )
@@ -353,11 +355,18 @@ if ( strActionToProcess != null )
       {
          if ( cursor.isVersioned( ) )
          {
-           cursor.cancelSubobject( );
-           nRC = 0;
+            cursor.cancelSubobject( );
          }
+         nRC = 0;
       }
 
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "Cancel", e.getMessage( ), "" );
+         break;
+      }
       // Next Window
       strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_ReturnToParent, "", "" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );

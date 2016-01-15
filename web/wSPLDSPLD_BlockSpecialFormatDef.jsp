@@ -1731,7 +1731,7 @@ else
    {
       nRC = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
-         strRadioGroupValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "CapitalizeTitleTextFlag" ).getString( "" );
+         strRadioGroupValue = mSPLDefBlock.cursor( "LLD_SpecialSectionAttrBlock" ).getAttribute( "CapitalizeTitleTextFlag" ).getString( );
    }
 
    if ( StringUtils.equals( strRadioGroupValue, "Y" ) )

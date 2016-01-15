@@ -1,4 +1,4 @@
-z1000-Zeidon    ZGLOBAL1 TZOGSRCO 07/22/15   10:13:38 1.0a2    
+z1000-Zeidon    ZGLOBAL1 TZOGSRCO 09/04/15   13:55:18 1.0a2    
 eGlobalOperationGroup 1
 aZKey      89816452
 aName      ZGlobal1
@@ -91,6 +91,13 @@ aPFlag     N
 aUFlag     N
 aZKey      110009893
 
+eParameter 3
+aShortDesc Comparator
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      110009894
+
 eOperation 2
 aName      BuildSimpleStringQualification
 aZKey      110009882
@@ -132,19 +139,12 @@ aPFlag     N
 aUFlag     N
 aZKey      110009887
 
-eOperation 2
-aName      RemoveInvalidCharsFromFilename
-aZKey      100040677
-aDesc      Removes invalid filename characters from a string.
-aType      G
-aReturnDataType S
-
 eParameter 3
-aShortDesc InputFileName
+aShortDesc Comparator
 aDataType  S
-aPFlag     Y
+aPFlag     N
 aUFlag     N
-aZKey      100040678
+aZKey      110008888
 
 eOperation 2
 aName      SplitParagraphOnLinefeed

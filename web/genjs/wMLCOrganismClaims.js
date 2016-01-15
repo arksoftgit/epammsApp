@@ -373,7 +373,7 @@ function smEditFirstAidSect( )
    }
 }
 
-function smEditEnvironmentalHazardSection( )
+function smEnvironmentalHazards( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -383,7 +383,7 @@ function smEditEnvironmentalHazardSection( )
    {
       _DisableFormElements( true );
 
-      document.wMLCOrganismClaims.zAction.value = "smEditEnvironmentalHazardSection";
+      document.wMLCOrganismClaims.zAction.value = "smEnvironmentalHazards";
       document.wMLCOrganismClaims.submit( );
    }
 }

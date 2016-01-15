@@ -1033,6 +1033,7 @@ else
    View lSPLDLST = null;
    View mLLD_LST = null;
    View mMasLC = null;
+   View mSPLDef = null;
    View mSubLC = null;
    View mSubProd = null;
    View mSubreg = null;
@@ -1322,8 +1323,6 @@ try
 
          lEntityKey = vGridPrecautionary.cursor( "S_GeneralStatement" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGridEditPrecautionary = "";
          nRC = vGridPrecautionary.cursor( "S_GeneralStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )

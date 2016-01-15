@@ -1084,78 +1084,6 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-//  OPERATION: DuplicateSubregProductSLC
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-DuplicateSubregProductSLC( VIEW ViewToWindow )
-
-   VIEW mSubProd   REGISTERED AS mSubProd
-   VIEW mSubLCOrig BASED ON LOD  mSubLC 
-   VIEW mSubLCNew  BASED ON LOD  mSubLC 
-   INTEGER SubProdID
-   
-   // Activate selected Subreg SLC and duplicate it.
-   ACTIVATE mSubLCOrig WHERE mSubLCOrig.SubregLabelContent.ID = mSubProd.SubregLabelContent.ID 
-   NAME VIEW mSubLCOrig "mSubLCOrig"
-   
-   // Create empty target object.
-   ACTIVATE mSubLCNew EMPTY 
-   NAME VIEW mSubLCNew "mSubLCNew"
-   
-   // Execute duplication operation and commit it.
-   DuplicateSLC( mSubLCNew, mSubLCOrig )
-   COMMIT mSubLCNew
-   
-   DropObjectInstance( mSubLCOrig )
-   DropObjectInstance( mSubLCNew )
-   
-   // Reactivate mSubProd to pick up new SubLC.
-   SubProdID = mSubProd.SubregProduct.ID 
-   DropObjectInstance( mSubProd )
-   ACTIVATE mSubProd WHERE mSubProd.SubregProduct.ID = SubProdID
-   NAME VIEW mSubProd "mSubProd"
-
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
-//  OPERATION: DuplicateSubregProductSPLD
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-DuplicateSubregProductSPLD( VIEW ViewToWindow )
-
-   VIEW mSubProd    REGISTERED AS mSubProd
-   VIEW lSPLDLST    REGISTERED AS lSPLDLST
-   VIEW mSPLDefOrig BASED ON LOD  mSPLDef 
-   VIEW mSPLDefNew  BASED ON LOD  mSPLDef 
-   
-   // Activate selected Subreg SLC and duplicate it.
-   //ACTIVATE mSPLDefOrig WHERE mSPLDefOrig.SubregPhysicalLabelDef.ID = mSubProd.SubregPhysicalLabelDef.ID 
-   ACTIVATE mSPLDefOrig WHERE mSPLDefOrig.SubregPhysicalLabelDef.ID = lSPLDLST.SubregPhysicalLabelDef.ID 
-   NAME VIEW mSPLDefOrig "mSPLDefOrig"
-
-   // Create empty target object.
-   ACTIVATE mSPLDefNew EMPTY 
-   NAME VIEW mSPLDefNew "mSPLDefNew"
-   
-   // Execute duplication operation and commit it.
-   DuplicateSPLD( mSPLDefNew, mSPLDefOrig )
-   COMMIT mSPLDefNew
-   
-   DropObjectInstance( mSPLDefOrig )
-   DropObjectInstance( mSPLDefNew )
-   
-   // Reactivate mSubProd to pick up new SubLC.
-   DropObjectInstance( lSPLDLST )
-   ACTIVATE lSPLDLST Multiple WHERE lSPLDLST.SubregProduct.ID = mSubProd.SubregProduct.ID 
-   NAME VIEW lSPLDLST "lSPLDLST"
-
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
 //  OPERATION: GOTO_NewSubregProductSLC
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -1314,7 +1242,7 @@ GOTO_UpdateSubregProductSPLD( VIEW ViewToWindow )
    END
    
    // Build the work components
-   BuildCompositeEntriesForSPLD( mSPLDef )
+   //BuildCompositeEntriesForSPLD( mSPLDef )
 // TraceLineS( "$$$$$$ end of oper", "GOTO_UpdateSubregProductSPLD" )
 // DisplayObjectInstance( mSPLDef, "", "" )
    
@@ -1450,5 +1378,275 @@ GOTO_MarketingKeywordSelect( VIEW ViewToWindow )
               WHERE mMasLC.M_MarketingSection.ID = mSubLC.S_MarketingSection.PrimaryMLC_ID 
    SET CURSOR FIRST mMasLC.M_MarketingStatement 
               WHERE mMasLC.M_MarketingStatement.ID = mSubLC.S_MarketingStatement.PrimaryMLC_ID  
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: CANCEL_MLC_Version
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+CANCEL_MLC_Version( VIEW ViewToWindow )
+
+   VIEW mMasLCNew REGISTERED AS mMasLC
+   
+   // Drop the temporary object.
+   DropObjectInstance( mMasLCNew )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_CopySPLD_Version
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_CopySPLD_Version( VIEW ViewToWindow )
+
+   VIEW wWebXfer   REGISTERED AS wWebXfer
+   VIEW mSPLDefNew BASED ON LOD  mSPLDef
+
+   // Initialize a new SPLD for Copy.
+   ACTIVATE mSPLDefNew EMPTY
+   NAME VIEW mSPLDefNew "mSPLDef"
+   CREATE ENTITY mSPLDefNew.SubregPhysicalLabelDef 
+   mSPLDefNew.SubregPhysicalLabelDef.CreatedDateTime  = wWebXfer.Root.dCurrentDateTime 
+   mSPLDefNew.SubregPhysicalLabelDef.ModifiedDateTime = wWebXfer.Root.dCurrentDateTime
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: COPY_SPLD_VersionCurrent
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+COPY_SPLD_VersionCurrent( VIEW ViewToWindow )
+
+   VIEW lSPLDLST    REGISTERED AS lSPLDLST
+   VIEW mSubProd    REGISTERED AS mSubProd
+   VIEW mSPLDefNew  REGISTERED AS mSPLDef
+   VIEW mSPLDefOrig BASED ON LOD  mSPLDef 
+   
+   // Activate selected Subreg SPLD and duplicate it as the new SPLD.
+   ACTIVATE mSPLDefOrig WHERE mSPLDefOrig.SubregPhysicalLabelDef.ID = lSPLDLST.SubregPhysicalLabelDef.ID 
+   NAME VIEW mSPLDefOrig "mSPLDefOrig"
+   
+   // Execute duplication operation and commit it.
+   DuplicateSPLD( mSPLDefNew, mSPLDefOrig )
+   COMMIT mSPLDefNew
+   
+   DropObjectInstance( mSPLDefOrig )
+   DropObjectInstance( mSPLDefNew )
+   
+   // Reactivate mSubProd to pick up new SubLC.
+   DropObjectInstance( lSPLDLST )
+   ACTIVATE lSPLDLST Multiple WHERE lSPLDLST.SubregProduct.ID = mSubProd.SubregProduct.ID 
+   NAME VIEW lSPLDLST "lSPLDLST"
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: COPY_SPLD_VersionNext
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+COPY_SPLD_VersionNext( VIEW ViewToWindow )
+
+   VIEW lSPLDLST   REGISTERED AS lSPLDLST
+   VIEW mSubProd   REGISTERED AS mSubProd
+   VIEW mSPLDefNew REGISTERED AS mSPLDef
+   VIEW mSPLDefOld BASED ON LOD  mSPLDef
+   VIEW mSubLCNew  BASED ON LOD  mSubLC
+   VIEW mSubLCOld  BASED ON LOD  mSubLC
+   
+   // Copy the selected SPLD to create mSPLDefNew, using the next SLC from the SLC tied to the selected SPLD.
+   
+   // Activate the previous SPLD, which is the SPLD selected..
+   ACTIVATE mSPLDefOld WHERE mSPLDefOld.SubregPhysicalLabelDef.ID = lSPLDLST.SubregPhysicalLabelDef.ID 
+   NAME VIEW mSPLDefOld "mSPLDefOld"
+   
+   // Activate the previous SLC which was the source of the previous SPLD selected.
+   ACTIVATE mSubLCOld WHERE mSubLCOld.SubregLabelContent.ID = mSPLDefOld.SubregLabelContent.ID 
+   NAME VIEW mSubLCOld "mSubLCOld"
+   
+   // Activate the new SLC that follows the previous SLC.
+   ACTIVATE mSubLCNew WHERE mSubLCNew.SP_SubregLabelContent.ID = mSubLCOld.SubregLabelContent.ID 
+   IF RESULT < 0
+      MessageSend( ViewToWindow, "", "Copy SPLD to New Version",
+                   "The SLC for the selected SPLD does not have a new version.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+   NAME VIEW mSubLCNew "mSubLCNew"
+   DropObjectInstance( mSubLCOld )
+   
+   // Include main subobjects.
+   INCLUDE mSPLDefNew.SubregLabelContent FROM mSubLCNew.SubregLabelContent 
+   
+   // Build the SPLD and commit it.
+   BuildSPLD_FromSPLD( mSPLDefNew, mSPLDefOld, mSubLCNew )
+   COMMIT mSPLDefNew
+   
+   // Reactivate mSubProd to pick up new SubLC.
+   DropObjectInstance( lSPLDLST )
+   ACTIVATE lSPLDLST Multiple WHERE lSPLDLST.SubregProduct.ID = mSubProd.SubregProduct.ID 
+   NAME VIEW lSPLDLST "lSPLDLST"
+   
+   DropObjectInstance( mSPLDefNew )
+   DropObjectInstance( mSPLDefOld )
+   DropObjectInstance( mSubLCNew )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: CANCEL_SPLD_Version
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+CANCEL_SPLD_Version( VIEW ViewToWindow )
+
+   VIEW mSPLDefNew REGISTERED AS mSPLDef
+   
+   DropObjectInstance( mSPLDefNew )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_CopySLC_Version
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_CopySLC_Version( VIEW ViewToWindow )
+
+   VIEW mSubProd  REGISTERED AS mSubProd
+   VIEW wWebXfer  REGISTERED AS wWebXfer
+   VIEW mSubLCNew BASED ON LOD  mSubLC
+
+   // Initialize a new SLC for Copy.
+   ACTIVATE mSubLCNew EMPTY
+   NAME VIEW mSubLCNew "mSubLC"
+   CREATE ENTITY mSubLCNew.SubregLabelContent 
+   mSubLCNew.SubregLabelContent.RevisionDate     = wWebXfer.Root.dCurrentDateTime 
+   mSubLCNew.SubregLabelContent.CreatedDateTime  = wWebXfer.Root.dCurrentDateTime 
+   mSubLCNew.SubregLabelContent.ModifiedDateTime = wWebXfer.Root.dCurrentDateTime
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: COPY_SLC_VersionCurrent
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+COPY_SLC_VersionCurrent( VIEW ViewToWindow )
+
+   VIEW mSubProd   REGISTERED AS mSubProd
+   VIEW mSubLCOrig BASED ON LOD  mSubLC 
+   VIEW mSubLCNew  BASED ON LOD  mSubLC 
+   INTEGER SubProdID
+   
+   // Activate selected Subreg SLC and duplicate it.
+   ACTIVATE mSubLCOrig WHERE mSubLCOrig.SubregLabelContent.ID = mSubProd.SubregLabelContent.ID 
+   NAME VIEW mSubLCOrig "mSubLCOrig"
+   
+   // Create empty target object.
+   ACTIVATE mSubLCNew EMPTY 
+   NAME VIEW mSubLCNew "mSubLCNew"
+   
+   // Execute duplication operation and commit it.
+   DuplicateSLC( mSubLCNew, mSubLCOrig )
+   COMMIT mSubLCNew
+   
+   DropObjectInstance( mSubLCOrig )
+   DropObjectInstance( mSubLCNew )
+   
+   // Reactivate mSubProd to pick up new SubLC.
+   SubProdID = mSubProd.SubregProduct.ID 
+   DropObjectInstance( mSubProd )
+   ACTIVATE mSubProd WHERE mSubProd.SubregProduct.ID = SubProdID
+   NAME VIEW mSubProd "mSubProd"
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: COPY_SLC_VersionNext
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+COPY_SLC_VersionNext( VIEW ViewToWindow )
+
+   VIEW mSubProd  REGISTERED AS mSubProd
+   VIEW wWebXfer  REGISTERED AS wWebXfer
+   VIEW mSubLCNew REGISTERED AS mSubLC
+   VIEW mSubLCOld BASED ON LOD  mSubLC
+   VIEW mMasLCNew BASED ON LOD  mMasLC
+   VIEW mMasLCOld BASED ON LOD  mMasLC
+   
+   // Copy the selected SLC in mSubProd, creating the content of mSubLCNew.
+   
+   // Activate the  previous SLC to the current SLC, which will be the one in the Sub Product SLC Version List.
+   ACTIVATE mSubLCOld WHERE mSubLCOld.SubregLabelContent.ID = mSubProd.SubregLabelContent.ID 
+   NAME VIEW mSubLCOld "mSubLCOld"
+   
+   // Activate the MLC which was the source of the previous SLC selected.
+   ACTIVATE mMasLCOld WHERE mMasLCOld.MasterLabelContent.ID = mSubLCOld.MasterLabelContent.ID 
+   NAME VIEW mMasLCOld "mMasLCOld"
+   
+   // Activate the new MLC that follows the previous SLC.
+   ACTIVATE mMasLCNew WHERE mMasLCNew.MP_MasterLabelContent.ID = mMasLCOld.MasterLabelContent.ID 
+   IF RESULT < 0
+      MessageSend( ViewToWindow, "", "Copy SLC to New Version",
+                   "The Master Product for the selected SLC does not have a new version.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+   NAME VIEW mMasLCNew "mMasLCNew"
+   
+   // Include main subobjects.
+   INCLUDE mSubLCNew.SubregProduct         FROM mSubProd.SubregProduct 
+   INCLUDE mSubLCNew.MasterLabelContent    FROM mMasLCNew.MasterLabelContent 
+   INCLUDE mSubLCNew.SP_SubregLabelContent FROM mSubLCOld.SubregLabelContent 
+   
+   BuildNewSLC_Version( mSubLCNew, mSubLCOld, mMasLCNew, mMasLCOld )
+   
+   
+   COMMIT mSubLCNew
+   DropObjectInstance( mSubLCOld )
+   DropObjectInstance( mMasLCNew )
+   DropObjectInstance( mMasLCOld )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: CANCEL_SLC_Version
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+CANCEL_SLC_Version( VIEW ViewToWindow )
+
+   VIEW mSubLCNew REGISTERED AS mSubLC
+   
+   DropObjectInstance( mSubLCNew )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: CLOSE_ChangeMessages
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+CLOSE_ChangeMessages( VIEW ViewToWindow )
+
+   VIEW mSubLCNew REGISTERED AS mSubLC
+   
+   //DropObjectInstance( mSubLCNew )
 
 END

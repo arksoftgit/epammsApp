@@ -228,14 +228,29 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
-      // Action Auto Object Function
+      // Action Operation
       nRC = 0;
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_GeneralStatement" );
-      cursor.createTemporalEntity( );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCFirstAidSection", "wMLC.GOTO_AddFirstAidStatements" );
+      nOptRC = wMLC.GOTO_AddFirstAidStatements( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
 
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "FirstAidStatement" );
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "AddItemsMultiple" );
+      }
+
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -345,9 +360,18 @@ if ( strActionToProcess != null )
 
       // Action Auto Object Function
       nRC = 0;
+      try
+      {
       EntityCursor cursor = mMasLC.cursor( "M_GeneralStatement" );
       cursor.createTemporalSubobjectVersion( );
 
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "GOTO_UpdateFirstAidStmt", e.getMessage( ), "" );
+         break;
+      }
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "FirstAidStatement" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -627,7 +651,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditEnvironmentalHazardSection" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEnvironmentalHazards" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCFirstAidSection", strActionToProcess );
@@ -657,7 +681,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "EnvironmentalHazardsSection" );
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "EnvironmentalHazards" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -1154,7 +1178,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smEnvironmentalHazards" name="smEnvironmentalHazards"><a href="#"  onclick="smEditEnvironmentalHazardSection()">Environmental Hazards</a></li>
+       <li id="smEnvironmentalHazards" name="smEnvironmentalHazards"><a href="#"  onclick="smEnvironmentalHazards()">Environmental Hazards</a></li>
 <%
    }
 %>
@@ -1553,8 +1577,6 @@ try
 
          lEntityKey = vGridPrecautionary.cursor( "M_GeneralStatement" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGridEditPrecautionary = "";
          nRC = vGridPrecautionary.cursor( "M_GeneralStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -1573,8 +1595,8 @@ try
 <tr<%=strOdd%>>
 
    <td><a href="#" onclick="GOTO_UpdateFirstAidStmt( this.id )" id="GridEditPrecautionary::<%=strEntityKey%>"><%=strGridEditPrecautionary%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdatePrecautionaryStatement" onclick="GOTO_UpdateFirstAidStmt( this.id )" id="BMBUpdatePrecautionaryStatement::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeletePrecautionaryStatement" onclick="GOTO_FirstAidStmtDelete( this.id )" id="BMBDeletePrecautionaryStatement::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdatePrecautionaryStatement" onclick="GOTO_UpdateFirstAidStmt( this.id )" id="BMBUpdatePrecautionaryStatement::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeletePrecautionaryStatement" onclick="GOTO_FirstAidStmtDelete( this.id )" id="BMBDeletePrecautionaryStatement::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 

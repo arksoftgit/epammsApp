@@ -1040,8 +1040,6 @@ try
 
          lEntityKey = vGrid1.cursor( "CompositeComponentList" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGridEditCtl2 = "";
          nRC = vGrid1.cursor( "CompositeComponentList" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )

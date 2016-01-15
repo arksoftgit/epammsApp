@@ -1,6 +1,7 @@
-z1000-Zeidon    BASE     TZDGSRCO 07/04/15   10:40:54 1.0a2    
+z1000-Zeidon    BASE     TZDGSRCO 01/14/16   20:34:38 1.0a2   
 eDomainGroup 1
 aZKey      68567479
+aNextZKeyToAssign 130001716
 aName      Base
 aExtension C
 aWorkNumeric 5
@@ -18,6 +19,66 @@ eContext   3
 aZKey      68567481
 aName      BLOB
 aIsDefault Y
+
+eDomain    2
+aZKey      130001711
+aName      Status
+aDesc      Historical, Production, Mutable
+aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      130001712
+aName      Status
+aIsDefault Y
+
+eTableEntry 4
+aZKey      130001713
+aExternalValue Historical
+aInternalValue H
+
+eTableEntry 4
+aZKey      130001714
+aExternalValue Production
+aInternalValue P
+
+eTableEntry 4
+aZKey      130001715
+aExternalValue Mutable
+aInternalValue M
+
+eDomain    2
+aZKey      110370112
+aName      ContainerTypeStorageDisposal
+aDesc      Type of Container that drives Storage and Disposal Section selection
+aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aDataType  S
+aMaxStringLth 30
+aContextRestriction N
+
+eContext   3
+aZKey      110370113
+aName      ContainerTypeStorageDisposal
+aIsDefault Y
+
+eTableEntry 4
+aZKey      110370114
+aExternalValue Refillable
+aInternalValue Refillable
+
+eTableEntry 4
+aZKey      110370115
+aExternalValue Non-refillable
+aInternalValue Non-refillable
+
+eTableEntry 4
+aZKey      110388980
+aExternalValue Bag-In-Box, Non-refillable Packets, Sealed Containers
+aInternalValue Sealed Containers
 
 eDomain    2
 aZKey      110226099
@@ -97,6 +158,21 @@ eTableEntry 4
 aZKey      110059060
 aExternalValue > 1 gallon
 aInternalValue >1
+
+eTableEntry 4
+aZKey      110363536
+aExternalValue 1 to 5 gallons
+aInternalValue 1-5
+
+eTableEntry 4
+aZKey      110363537
+aExternalValue <= 5 gallons
+aInternalValue <=5
+
+eTableEntry 4
+aZKey      110388981
+aExternalValue > 5 gallons
+aInternalValue >5
 
 eTableEntry 4
 aZKey      110183167

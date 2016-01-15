@@ -2456,7 +2456,7 @@ public class FileServer {
                      // }
 
                         // Guarantee the Tag is set properly in the element data.
-                     // jsonLabel += ", \"Tag\" : \"" + trimLeadingAndTrailingWhiteSpace( obj[prop] ) + "\"";
+                     // jsonLabel += ", \"Tag\" : \"" + trimLeadingAndTrailingWhiteSpace( String( obj[prop] ) )  + "\"";
                         $("#" + obj['id']).data( "z_^tag", obj['id'] );
 
                         // So let's get the all of the custom properties for this element
@@ -2464,7 +2464,7 @@ public class FileServer {
                         jsonLabel += elementDataToJSON( obj['id'] );
                      } /* else if ( prop === "style" ) {   these are done using the "data" versions
                         // do position and size
-                        var stylelist = obj[prop];
+                        var stylelist = String( obj[prop] );
                         jsonLabel += formatStyle( stylelist, "top" );
                         jsonLabel += formatStyle( stylelist, "left" );
                         jsonLabel += formatStyle( stylelist, "height" );
@@ -2603,22 +2603,22 @@ public class FileServer {
       var attr = "";
       var style = "style=\"position:absolute;";
       for ( var prop in obj ) {
-         if ( typeof obj[prop] === "string" ) {
+         if ( typeof obj[prop] === "string" || typeof obj[prop] === "number" ) {
          // console.log ( "Property for entity: " + entity + " prop: " + prop + ": " + obj[prop] );
             if ( prop === "Tag" ) {
                continue;
             } else if ( prop === "Top" || prop === "Left" ) {
-               style += prop.toLowerCase() + ":" + scaledInch2Pixel( obj[prop], 0 ) + ";";
+               style += prop.toLowerCase() + ":" + scaledInch2Pixel( String( obj[prop] ), 0 ) + ";";
             } else if ( prop === "Height" || prop === "Width" ) {
-               style += prop.toLowerCase() + ":" + scaledInch2Pixel( obj[prop], g_border ) + ";"; // 2*g_pixelsBorder
+               style += prop.toLowerCase() + ":" + scaledInch2Pixel( String( obj[prop] ), g_border ) + ";"; // 2*g_pixelsBorder
             } else {
                if ( prop === "Depth" ) {
-                  var objDepth = parseInt( obj[prop] );
+                  var objDepth = parseInt( String( obj[prop] ) );
                   if ( objDepth !== depth ) {
                      console.log( "AddHtmlLabelElementAttributes depth: " + depth + "  is not equal to object depth: " + objDepth +
                                   "  for Tag: " + obj["Tag"] + "  within parent: " + parentId );
                   }
-               // depth = parseInt( obj[prop] );
+               // depth = parseInt( String( obj[prop] ) );
                }
             }
          }
@@ -2671,11 +2671,11 @@ public class FileServer {
          $element.children( ".ui-resizable-handle" ).css( "z-index", "" );  // prevent these from "showing through"
          $parentElement.append( $element );
          for ( var prop in obj ) {
-            if ( typeof obj[prop] === "string" ) {
+            if ( typeof obj[prop] === "string" || typeof obj[prop] === "number" ) {
             // if ( prop === "Tag" || prop === "Top" || prop === "Left" || prop === "Height" || prop === "Width" ) {
             //    continue;
             // } else {
-                  addZeidonAttributeToElement( $element, prop, obj[prop] );
+                  addZeidonAttributeToElement( $element, prop, String( obj[prop] ) );
             // }
             }
          }
@@ -2704,11 +2704,11 @@ public class FileServer {
       // style += "\"";
       // $element.innerHTML = identity + style;
          for ( var prop in obj ) {
-            if ( typeof obj[prop] === "string" ) {
+            if ( typeof obj[prop] === "string" || typeof obj[prop] === "number" ) {
             // if ( prop === "Tag" || prop === "Top" || prop === "Left" || prop === "Height" || prop === "Width" )  {
             //   continue;
             // } else {
-                  addZeidonAttributeToElement( $element, prop, obj[prop] );
+                  addZeidonAttributeToElement( $element, prop, String( obj[prop] ) );
             // }
             }
          }

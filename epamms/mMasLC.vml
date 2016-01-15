@@ -329,15 +329,23 @@ CopyMLCToNewProduct( VIEW TargetMLC BASED ON LOD mMasLC,
 
    // For root, only set attributes.
    SetMatchingAttributesByName( TargetMLC, "MasterLabelContent", SourceMLC, "MasterLabelContent", zSET_NULL )
+   
+   // Tie to previous version.
+   INCLUDE TargetMLC.MP_MasterLabelContent FROM SourceMLC.MasterLabelContent 
 
    // M_Usage Subobject
    // Check to make sure we are not copying duplicates.
-   FOR EACH SourceMLC.M_Usage
-      SET CURSOR FIRST TargetMLC.M_Usage WHERE TargetMLC.M_Usage.UsageType = SourceMLC.M_Usage.UsageType
-                                           AND TargetMLC.M_Usage.Name = SourceMLC.M_Usage.Name
-      IF RESULT < zCURSOR_SET
-         CREATE ENTITY TargetMLC.M_Usage
-         SetMatchingAttributesByName( TargetMLC, "M_Usage", SourceMLC, "M_Usage", zSET_NULL )
+   FOR EACH SourceMLC.M_UsageType
+      CREATE ENTITY TargetMLC.M_UsageType 
+      SetMatchingAttributesByName( TargetMLC, "M_UsageType", SourceMLC, "M_UsageType", zSET_NULL )
+      FOR EACH SourceMLC.M_Usage
+         SET CURSOR FIRST TargetMLC.M_Usage WHERE TargetMLC.M_Usage.UsageType = SourceMLC.M_Usage.UsageType
+                                              AND TargetMLC.M_Usage.Name = SourceMLC.M_Usage.Name
+         IF RESULT < zCURSOR_SET
+            CREATE ENTITY TargetMLC.M_Usage
+            SetMatchingAttributesByName( TargetMLC, "M_Usage", SourceMLC, "M_Usage", zSET_NULL )
+            INCLUDE TargetMLC.MP_Usage FROM SourceMLC.M_Usage 
+         END
       END
    END
 
@@ -345,9 +353,17 @@ CopyMLCToNewProduct( VIEW TargetMLC BASED ON LOD mMasLC,
    FOR EACH SourceMLC.M_GeneralSection
       CREATE ENTITY TargetMLC.M_GeneralSection
       SetMatchingAttributesByName( TargetMLC, "M_GeneralSection", SourceMLC, "M_GeneralSection", zSET_NULL )
+      INCLUDE TargetMLC.MP_GeneralSection FROM SourceMLC.M_GeneralSection
       FOR EACH SourceMLC.M_GeneralStatement
          CREATE ENTITY TargetMLC.M_GeneralStatement
          SetMatchingAttributesByName( TargetMLC, "M_GeneralStatement", SourceMLC, "M_GeneralStatement", zSET_NULL )
+         INCLUDE TargetMLC.MP_GeneralStatement FROM SourceMLC.M_GeneralStatement
+      END
+      
+      // ReviewerNote
+      FOR EACH SourceMLC.M_GeneralReviewerNote 
+         CREATE ENTITY TargetMLC.M_GeneralReviewerNote 
+         SetMatchingAttributesByName( TargetMLC, "M_GeneralReviewerNote", SourceMLC, "M_GeneralReviewerNote", zSET_NULL )
       END
    END
 
@@ -355,9 +371,17 @@ CopyMLCToNewProduct( VIEW TargetMLC BASED ON LOD mMasLC,
    FOR EACH SourceMLC.M_IngredientsSection
       CREATE ENTITY TargetMLC.M_IngredientsSection
       SetMatchingAttributesByName( TargetMLC, "M_IngredientsSection", SourceMLC, "M_IngredientsSection", zSET_NULL )
+      INCLUDE TargetMLC.MP_IngredientsSection FROM SourceMLC.M_IngredientsSection
       FOR EACH SourceMLC.M_IngredientsStatement
          CREATE ENTITY TargetMLC.M_IngredientsStatement
          SetMatchingAttributesByName( TargetMLC, "M_IngredientsStatement", SourceMLC, "M_IngredientsStatement", zSET_NULL )
+         INCLUDE TargetMLC.MP_IngredientsStatement FROM SourceMLC.M_IngredientsStatement
+      END
+      
+      // ReviewerNote
+      FOR EACH SourceMLC.M_IngredientsReviewerNote 
+         CREATE ENTITY TargetMLC.M_IngredientsReviewerNote 
+         SetMatchingAttributesByName( TargetMLC, "M_IngredientsReviewerNote", SourceMLC, "M_IngredientsReviewerNote", zSET_NULL )
       END
    END
 
@@ -365,9 +389,11 @@ CopyMLCToNewProduct( VIEW TargetMLC BASED ON LOD mMasLC,
    FOR EACH SourceMLC.M_StorageDisposalSection
       CREATE ENTITY TargetMLC.M_StorageDisposalSection
       SetMatchingAttributesByName( TargetMLC, "M_StorageDisposalSection", SourceMLC, "M_StorageDisposalSection", zSET_NULL )
+      INCLUDE TargetMLC.MP_StorageDisposalSection FROM SourceMLC.M_StorageDisposalSection
       FOR EACH SourceMLC.M_StorageDisposalStatement
          CREATE ENTITY TargetMLC.M_StorageDisposalStatement
          SetMatchingAttributesByName( TargetMLC, "M_StorageDisposalStatement", SourceMLC, "M_StorageDisposalStatement", zSET_NULL )
+         INCLUDE TargetMLC.MP_StorageDisposalStatement FROM SourceMLC.M_StorageDisposalStatement
       END
    END
 
@@ -375,9 +401,53 @@ CopyMLCToNewProduct( VIEW TargetMLC BASED ON LOD mMasLC,
    FOR EACH SourceMLC.M_DirectionsForUseSection
       CREATE ENTITY TargetMLC.M_DirectionsForUseSection
       SetMatchingAttributesByName( TargetMLC, "M_DirectionsForUseSection", SourceMLC, "M_DirectionsForUseSection", zSET_NULL )
+      INCLUDE TargetMLC.MP_DirectionsForUseSection FROM SourceMLC.M_DirectionsForUseSection 
       FOR EACH SourceMLC.M_DirectionsForUseStatement
          CREATE ENTITY TargetMLC.M_DirectionsForUseStatement
          SetMatchingAttributesByName( TargetMLC, "M_DirectionsForUseStatement", SourceMLC, "M_DirectionsForUseStatement", zSET_NULL )
+         INCLUDE TargetMLC.MP_DirectionsForUseStatement FROM SourceMLC.M_DirectionsForUseStatement 
+         
+         // Statement Directions Usage
+         FOR EACH SourceMLC.M_DirectionsUsageOrdering 
+            CREATE ENTITY TargetMLC.M_DirectionsUsageOrdering 
+            SetMatchingAttributesByName( TargetMLC, "M_DirectionsUsageOrdering", SourceMLC, "M_DirectionsUsageOrdering", zSET_NULL )
+            SET CURSOR FIRST TargetMLC.MP_Usage WITHIN TargetMLC.MasterLabelContent 
+                       WHERE TargetMLC.MP_Usage.ID = SourceMLC.M_Usage.ID 
+            IF RESULT >= zCURSOR_SET
+               INCLUDE TargetMLC.M_DirectionsUsage FROM TargetMLC.M_Usage 
+            ELSE
+               TraceLineS( "Programming Error 1", "" )
+               IssueError( TargetMLC,0,0, "Programming Error 1" )
+            END
+         END
+      END
+      
+      // Driving Usage
+      FOR EACH SourceMLC.M_DrivingUsage 
+         SET CURSOR FIRST TargetMLC.MP_Usage WITHIN TargetMLC.MasterLabelContent 
+                    WHERE TargetMLC.MP_Usage.ID = SourceMLC.M_DrivingUsage.ID 
+         IF RESULT >= zCURSOR_SET
+            INCLUDE TargetMLC.M_DrivingUsage FROM TargetMLC.M_Usage 
+         ELSE
+            TraceLineS( "Programming Error 2", "" )
+            IssueError( TargetMLC,0,0, "Programming Error 2" )
+         END
+      END
+      
+      // Text Keyword
+      /*FOR EACH SourceMLC.M_InsertTextKeywordTitleDU 
+         CREATE ENTITY TargetMLC.M_InsertTextKeywordTitleDU 
+         SetMatchingAttributesByName( TargetMLC, "M_InsertTextKeywordTitleDU", SourceMLC, "M_InsertTextKeywordTitleDU", zSET_NULL )
+         FOR EACH SourceMLC.M_InsertTextTitleDU 
+            CREATE ENTITY TargetMLC.M_InsertTextTitleDU 
+            SetMatchingAttributesByName( TargetMLC, "M_InsertTextTitleDU", SourceMLC, "M_InsertTextTitleDU", zSET_NULL )
+         END
+      END*/
+      
+      // Reviewer Note
+      FOR EACH SourceMLC.M_DirectionsForUseReviewerNote 
+         CREATE ENTITY TargetMLC.M_DirectionsForUseReviewerNote 
+         SetMatchingAttributesByName( TargetMLC, "M_DirectionsForUseReviewerNote", SourceMLC, "M_DirectionsForUseReviewerNote", zSET_NULL )
       END
    END
 
@@ -385,9 +455,30 @@ CopyMLCToNewProduct( VIEW TargetMLC BASED ON LOD mMasLC,
    FOR EACH SourceMLC.M_MarketingSection
       CREATE ENTITY TargetMLC.M_MarketingSection
       SetMatchingAttributesByName( TargetMLC, "M_MarketingSection", SourceMLC, "M_MarketingSection", zSET_NULL )
+      INCLUDE TargetMLC.MP_MarketingSection FROM SourceMLC.M_MarketingSection 
       FOR EACH SourceMLC.M_MarketingStatement
          CREATE ENTITY TargetMLC.M_MarketingStatement
          SetMatchingAttributesByName( TargetMLC, "M_MarketingStatement", SourceMLC, "M_MarketingStatement", zSET_NULL )
+         INCLUDE TargetMLC.MP_MarketingStatement FROM SourceMLC.M_MarketingStatement 
+         // Statement Marketing Usage
+         FOR EACH SourceMLC.M_MarketingUsageOrdering 
+            CREATE ENTITY TargetMLC.M_MarketingUsageOrdering 
+            SetMatchingAttributesByName( TargetMLC, "M_MarketingUsageOrdering", SourceMLC, "M_MarketingUsageOrdering", zSET_NULL )
+            SET CURSOR FIRST TargetMLC.MP_Usage WITHIN TargetMLC.MasterLabelContent 
+                       WHERE TargetMLC.MP_Usage.ID = SourceMLC.M_MarketingUsage.ID 
+            IF RESULT >= zCURSOR_SET
+               INCLUDE TargetMLC.M_MarketingUsage FROM TargetMLC.M_Usage 
+            ELSE
+               TraceLineS( "Programming Error 3", "" )
+               IssueError( TargetMLC,0,0, "Programming Error 3" )
+            END
+         END
+      END
+      
+      // Reviewer Note
+      FOR EACH SourceMLC.M_MarketingReviewerNote 
+         CREATE ENTITY TargetMLC.M_MarketingReviewerNote 
+         SetMatchingAttributesByName( TargetMLC, "M_MarketingReviewerNote", SourceMLC, "M_MarketingReviewerNote", zSET_NULL )
       END
    END
 
@@ -395,51 +486,7 @@ CopyMLCToNewProduct( VIEW TargetMLC BASED ON LOD mMasLC,
    FOR EACH SourceMLC.M_HumanHazardSection
       CREATE ENTITY TargetMLC.M_HumanHazardSection
       SetMatchingAttributesByName( TargetMLC, "M_HumanHazardSection", SourceMLC, "M_HumanHazardSection", zSET_NULL )
-   END
-
-   // DirectionsForUse Usage
-   FOR EACH SourceMLC.M_DirectionsForUseSection
-      SET CURSOR FIRST TargetMLC.M_DirectionsForUseSection
-                 WHERE TargetMLC.M_DirectionsForUseSection.Title = SourceMLC.M_DirectionsForUseSection.Title
-      FOR EACH SourceMLC.M_DirectionsUsage WITHIN SourceMLC.M_DirectionsForUseSection
-         CreateViewFromView( TargetMLC2, TargetMLC )
-         SET CURSOR FIRST TargetMLC2.M_DirectionsUsage
-                    WHERE TargetMLC2.M_DirectionsUsage.UsageType = SourceMLC.M_DirectionsUsage.UsageType
-                      AND TargetMLC2.M_DirectionsUsage.Name = SourceMLC.M_DirectionsUsage.Name
-         IF RESULT < zCURSOR_SET
-            SET CURSOR FIRST TargetMLC.M_Usage WHERE TargetMLC.M_Usage.Name = SourceMLC.M_DirectionsUsage.Name
-                                                 AND TargetMLC.M_Usage.UsageType = SourceMLC.M_DirectionsUsage.UsageType
-            IF RESULT < zCURSOR_SET
-               IssueError( TargetMLC, 0, 0, "Programming Error 1" )
-            END
-
-            CREATE ENTITY TargetMLC.M_DirectionsUsageOrdering
-            INCLUDE TargetMLC.M_DirectionsUsage FROM TargetMLC.M_Usage
-         END
-         DropView( TargetMLC2 )
-      END
-   END
-
-   // Marketing Usage
-   FOR EACH SourceMLC.M_MarketingSection
-      SET CURSOR FIRST TargetMLC.M_MarketingSection
-                 WHERE TargetMLC.M_MarketingSection.Title = SourceMLC.M_MarketingSection.Title
-      FOR EACH SourceMLC.M_MarketingUsage WITHIN SourceMLC.M_MarketingSection
-         CreateViewFromView( TargetMLC2, TargetMLC )
-         SET CURSOR FIRST TargetMLC2.M_MarketingUsage
-                    WHERE TargetMLC2.M_MarketingUsage.UsageType = SourceMLC.M_MarketingUsage.UsageType
-                      AND TargetMLC2.M_MarketingUsage.Name = SourceMLC.M_MarketingUsage.Name
-         IF RESULT < zCURSOR_SET
-            SET CURSOR FIRST TargetMLC.M_Usage WHERE TargetMLC.M_Usage.Name = SourceMLC.M_MarketingUsage.Name
-                                                 AND TargetMLC.M_Usage.UsageType = SourceMLC.M_MarketingUsage.UsageType
-            IF RESULT < zCURSOR_SET
-               IssueError( TargetMLC,0,0, "Programming Error 1" )
-            END
-            CREATE ENTITY TargetMLC.M_MarketingUsageOrdering
-            INCLUDE TargetMLC.M_MarketingUsage FROM TargetMLC.M_Usage
-         END
-         DropView( TargetMLC2 )
-      END
+      INCLUDE TargetMLC.MP_HumanHazardSection FROM SourceMLC.M_HumanHazardSection 
    END
 
 END
@@ -465,7 +512,7 @@ ObjectConstraints( VIEW mMasLC BASED ON LOD mMasLC,
       // Build Usage Group Usages.
       BuildUsageGroupEntries( mMasLC )
       
-   TraceLineS( "*** Object Constraints", "" )
+      
 
         /* end zOCE_ACTIVATE */
    OF   zOCE_ACTIVATE_EMPTY:
@@ -1054,6 +1101,126 @@ dMarketingKeywordText( VIEW mMasLC BASED ON LOD mMasLC,
             szGeneratedString = mMasLC.M_InsertTextMarketing.Text
          ELSE
             szGeneratedString = szGeneratedString + ", " + mMasLC.M_InsertTextMarketing.Text 
+         END
+      END
+
+      // Store the resulting value in the object.
+      StoreStringInRecord( mMasLC,
+                           InternalEntityStructure,
+                           InternalAttribStructure, szGeneratedString )
+      RETURN 0
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: dDU_KeywordText
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dDU_KeywordText( VIEW mMasLC BASED ON LOD mMasLC,
+                 STRING ( 32 ) InternalEntityStructure,
+                 STRING ( 32 ) InternalAttribStructure,
+                 SHORT GetOrSetFlag )
+
+   STRING ( 1000 ) szGeneratedString
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Concatenate all the Keyword values for a Marketing Keyword entry.
+      szGeneratedString = ""
+      FOR EACH mMasLC.M_InsertTextDU
+         IF szGeneratedString = ""
+            szGeneratedString = mMasLC.M_InsertTextDU.Text
+         ELSE
+            szGeneratedString = szGeneratedString + ", " + mMasLC.M_InsertTextDU.Text 
+         END
+      END
+
+      // Store the resulting value in the object.
+      StoreStringInRecord( mMasLC,
+                           InternalEntityStructure,
+                           InternalAttribStructure, szGeneratedString )
+      RETURN 0
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: dSD_KeywordText
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dSD_KeywordText( VIEW mMasLC BASED ON LOD mMasLC,
+                 STRING ( 32 ) InternalEntityStructure,
+                 STRING ( 32 ) InternalAttribStructure,
+                 SHORT GetOrSetFlag )
+
+   STRING ( 1000 ) szGeneratedString
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Concatenate all the Keyword values for a Marketing Keyword entry.
+      szGeneratedString = ""
+      FOR EACH mMasLC.M_InsertTextSD
+         IF szGeneratedString = ""
+            szGeneratedString = mMasLC.M_InsertTextSD.Text
+         ELSE
+            szGeneratedString = szGeneratedString + ", " + mMasLC.M_InsertTextSD.Text 
+         END
+      END
+
+      // Store the resulting value in the object.
+      StoreStringInRecord( mMasLC,
+                           InternalEntityStructure,
+                           InternalAttribStructure, szGeneratedString )
+      RETURN 0
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: dGeneral_KeywordText
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dGeneralKeywordText( VIEW mMasLC BASED ON LOD mMasLC,
+                     STRING ( 32 ) InternalEntityStructure,
+                     STRING ( 32 ) InternalAttribStructure,
+                     SHORT GetOrSetFlag )
+
+   STRING ( 1000 ) szGeneratedString
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Concatenate all the Keyword values for a Marketing Keyword entry.
+      szGeneratedString = ""
+      FOR EACH mMasLC.M_InsertTextGeneral
+         IF szGeneratedString = ""
+            szGeneratedString = mMasLC.M_InsertTextGeneral.Text
+         ELSE
+            szGeneratedString = szGeneratedString + ", " + mMasLC.M_InsertTextGeneral.Text 
          END
       END
 
@@ -1936,6 +2103,8 @@ TRANSFORMATION OPERATION
 BuildUsageGroupEntries( VIEW mMasLC BASED ON LOD mMasLC )
 
    // Build Usage Group Usages.
+   // We treat M_UsageGroupUsage as a derived relationship, because we had JOE problems when we
+   // updated the same entity down two separate paths.
    FOR EACH mMasLC.M_UsageType 
       FOR EACH mMasLC.M_UsageGroup 
          FOR EACH mMasLC.M_UsageGroupUsage 
@@ -1951,6 +2120,14 @@ BuildUsageGroupEntries( VIEW mMasLC BASED ON LOD mMasLC )
             END
          END
       END
+   END
+   
+   // Sort everything by Name.
+   FOR EACH mMasLC.M_UsageType 
+      FOR EACH mMasLC.M_UsageGroup 
+         OrderEntityForView( mMasLC, "M_UsageGroupUsage", "Name A" )
+      END
+      OrderEntityForView( mMasLC, "M_Usage", "Name A" )
    END
 
 END
@@ -2026,5 +2203,42 @@ BuildUsageKeyEntries( VIEW mMasLC BASED ON LOD mMasLC,
          END
       END
    END
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: BuildNonGroupEntries
+**    
+*************************************************************************************************/
+TRANSFORMATION OPERATION
+BuildNonGroupEntries( VIEW mMasLC BASED ON LOD mMasLC )
+
+   VIEW mMasLC2 BASED ON LOD mMasLC
+   INTEGER UsageGroupID
+
+   // Build the M_UsageNonGroupUsage derived entries from any M_Usage entries that aren't tied to a M_UsageGroup.
+   
+   // Because of a JOE error on reincluding excluded entities from a different view, we're saving position by saving
+   // the ID of the M_UsageGroup entity and using it to reposition.
+   UsageGroupID = mMasLC.M_UsageGroup.ID 
+   
+   // First remove existing entries.
+   FOR EACH mMasLC.M_UsageNonGroupUsage 
+      EXCLUDE mMasLC.M_UsageNonGroupUsage NONE
+   END
+   
+   // Add any Usage entry that's not tied to a Group.
+   CreateViewFromView( mMasLC2, mMasLC )
+   FOR EACH mMasLC2.M_Usage 
+      SET CURSOR FIRST mMasLC.M_UsageGroupUsage WITHIN mMasLC2.M_UsageType 
+                 WHERE mMasLC.M_UsageGroupUsage.ID = mMasLC2.M_Usage.ID 
+      IF RESULT < zCURSOR_SET
+         INCLUDE mMasLC.M_UsageNonGroupUsage FROM mMasLC2.M_Usage 
+      END
+   END
+   OrderEntityForView( mMasLC2, "M_UsageNonGroupUsage", "Name A" )
+   SET CURSOR FIRST mMasLC.M_UsageGroup WHERE mMasLC.M_UsageGroup.ID = UsageGroupID
+   DropView( mMasLC2 )
 
 END

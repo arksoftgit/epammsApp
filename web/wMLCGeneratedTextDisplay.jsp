@@ -60,25 +60,61 @@ public int DoInputMapping( HttpServletRequest request,
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
    {
-      // MLEdit: MLEdit3
-      nRC = mMasLC.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
+      // MLEdit: MLEdit1
+      nRC = mMasLC.cursor( "DisplayKeywordText" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "MLEdit3" );
+         strMapValue = request.getParameter( "MLEdit1" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "MLEdit3", "", strMapValue );
+               VmlOperation.CreateMessage( task, "MLEdit1", "", strMapValue );
             else
-               mMasLC.cursor( "MasterLabelContent" ).getAttribute( "wGeneratedTextDisplay" ).setValue( strMapValue, "" );
+               mMasLC.cursor( "DisplayKeywordText" ).getAttribute( "dDisplayKeywordStatementText" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "MLEdit3", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "MLEdit1", e.getReason( ), strMapValue );
          }
       }
 
+      // Grid: GridM_InsertTextBase6
+      iTableRowCnt = 0;
+
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
+      vGridTmp = mMasLC.newView( );
+      csrRC = vGridTmp.cursor( "M_InsertTextBase" ).setFirst( "MasterLabelContent" );
+      while ( csrRC.isSet() )
+      {
+         lEntityKey = vGridTmp.cursor( "M_InsertTextBase" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         iTableRowCnt++;
+
+         strTag = "GridCtrlwSelected52" + strEntityKey;
+         strMapValue = request.getParameter( strTag );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "GridCtrlwSelected52", "", strMapValue );
+            else
+               if ( strMapValue != null )
+                  vGridTmp.cursor( "M_InsertTextBase" ).getAttribute( "wSelected" ).setValue( strMapValue, "" );
+               else
+                  vGridTmp.cursor( "M_InsertTextBase" ).getAttribute( "wSelected" ).setValue( "", "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
+         }
+
+         csrRC = vGridTmp.cursor( "M_InsertTextBase" ).setNextContinue( );
+      }
+
+      vGridTmp.drop( );
    }
 
    if ( webMapping == true )
@@ -212,6 +248,44 @@ if ( strActionToProcess != null )
 
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "REGENERATE_TitleText" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCGeneratedTextDisplay", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCGeneratedTextDisplay", "wMLC.REGENERATE_TitleText" );
+      nOptRC = wMLC.REGENERATE_TitleText( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -516,21 +590,18 @@ else
    </div>
 
 
- <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
-
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GBStorDispSections2:GroupBox */ %>
+<% /* GroupBox3:GroupBox */ %>
 
-<div id="GBStorDispSections2" name="GBStorDispSections2" class="listgroup"   style="float:left;position:relative; width:780px; height:36px;">  <!-- GBStorDispSections2 --> 
+<div id="GroupBox3" name="GroupBox3" class="listgroup"   style="float:left;position:relative; width:780px; height:36px;">  <!-- GroupBox3 --> 
 
-<% /* OrganismClaimsStatements3:Text */ %>
+<% /* Text1:Text */ %>
 
-<label class="groupbox"  id="OrganismClaimsStatements3" name="OrganismClaimsStatements3" style="width:324px;height:16px;position:absolute;left:6px;top:12px;">Full Generated Text</label>
+<label class="groupbox"  id="Text1" name="Text1" style="width:324px;height:16px;position:absolute;left:6px;top:12px;">Full Generated Statement Text</label>
 
 
-</div>  <!--  GBStorDispSections2 --> 
+</div>  <!--  GroupBox3 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -538,17 +609,17 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox2:GroupBox */ %>
-<div id="GroupBox2" name="GroupBox2" style="float:left;width:780px;" >
+<% /* GroupBox4:GroupBox */ %>
+<div id="GroupBox4" name="GroupBox4" style="float:left;width:780px;" >
 
 <table cols=0 style="width:780px;"  class="grouptable">
 
 <tr>
 <td valign="top" style="width:754px;">
-<% /* MLEdit3:MLEdit */ %>
+<% /* MLEdit1:MLEdit */ %>
 <%
-   // MLEdit: MLEdit3
-   strErrorMapValue = VmlOperation.CheckError( "MLEdit3", strError );
+   // MLEdit: MLEdit1
+   strErrorMapValue = VmlOperation.CheckError( "MLEdit1", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -559,31 +630,31 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "MLEdit3" );
+         task.log( ).debug( "Invalid View: " + "MLEdit1" );
       else
       {
-         nRC = mMasLC.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
+         nRC = mMasLC.cursor( "DisplayKeywordText" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strErrorMapValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "wGeneratedTextDisplay" ).getString( "" );
+            strErrorMapValue = mMasLC.cursor( "DisplayKeywordText" ).getAttribute( "dDisplayKeywordStatementText" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "MasterLabelContent.wGeneratedTextDisplay: " + strErrorMapValue );
+            task.log( ).debug( "DisplayKeywordText.dDisplayKeywordStatementText: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for MLEdit3: " + "mMasLC.MasterLabelContent" );
+            task.log( ).debug( "Entity does not exist for MLEdit1: " + "mMasLC.DisplayKeywordText" );
       }
    }
 %>
 
-<textarea id="MLEdit3" name="MLEdit3" class="" style="width:754px;height:116px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+<textarea id="MLEdit1" name="MLEdit1" class="" style="width:754px;height:116px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 </td>
 </tr>
 </table>
 
-</div>  <!-- GroupBox2 --> 
+</div>  <!-- GroupBox4 --> 
 
 </div>  <!-- End of a new line -->
 
@@ -591,7 +662,150 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:824px;width:100px;"></div>
+<div style="height:6px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox6:GroupBox */ %>
+
+<div id="GroupBox6" name="GroupBox6" style="width:780px;height:178px;float:left;">  <!-- GroupBox6 --> 
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:8px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
+<% /* TitleGroupM_InsertTextBase6:GroupBox */ %>
+
+<div id="TitleGroupM_InsertTextBase6" name="TitleGroupM_InsertTextBase6"   style="float:left;position:relative; width:754px; height:30px;">  <!-- TitleGroupM_InsertTextBase6 --> 
+
+<% /* NewBtn6:PushBtn */ %>
+<button type="button" name="NewBtn6" id="NewBtn6" value="" onclick="REGENERATE_TitleText( )" style="width:142px;height:26px;position:absolute;left:502px;top:4px;">Regenerate</button>
+
+<% /* Title6:Text */ %>
+
+<label class="listheader"  id="Title6" name="Title6" style="width:434px;height:16px;position:absolute;left:12px;top:8px;">Regenerate Text with Selected Values</label>
+
+
+</div>  <!--  TitleGroupM_InsertTextBase6 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:8px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GridM_InsertTextBase6:Grid */ %>
+<table  cols=2 style=""  name="GridM_InsertTextBase6" id="GridM_InsertTextBase6">
+
+<thead><tr>
+
+   <th>Selected</th>
+   <th>Text</th>
+
+</tr></thead>
+
+<tbody>
+
+<%
+try
+{
+   iTableRowCnt = 0;
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) )
+   {
+      long   lEntityKey;
+      String strEntityKey;
+      String strButtonName;
+      String strOdd;
+      String strTag;
+      String strGridCtrlwSelected52;
+      String strGridCtrlwSelected52Value;
+      String strGridCtrlText53;
+      
+      View vGridM_InsertTextBase6;
+      vGridM_InsertTextBase6 = mMasLC.newView( );
+      csrRC2 = vGridM_InsertTextBase6.cursor( "M_InsertTextBase" ).setFirst( "MasterLabelContent" );
+      while ( csrRC2.isSet() )
+      {
+         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
+         iTableRowCnt++;
+
+         lEntityKey = vGridM_InsertTextBase6.cursor( "M_InsertTextBase" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         strGridCtrlwSelected52 = "";
+         nRC = vGridM_InsertTextBase6.cursor( "M_InsertTextBase" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strGridCtrlwSelected52 = vGridM_InsertTextBase6.cursor( "M_InsertTextBase" ).getAttribute( "wSelected" ).getString( "" );
+
+            if ( strGridCtrlwSelected52 == null )
+               strGridCtrlwSelected52 = "";
+         }
+
+         if ( StringUtils.equals( strGridCtrlwSelected52, "Y" ) )
+         {
+            strGridCtrlwSelected52Value = "GridCtrlwSelected52" + strEntityKey;
+            strGridCtrlwSelected52 = "<input name='" + strGridCtrlwSelected52Value + "' id='" + strGridCtrlwSelected52Value + "' value='Y' type='checkbox'  CHECKED > ";
+         }
+         else
+         {
+            strGridCtrlwSelected52Value = "GridCtrlwSelected52" + strEntityKey;
+            strGridCtrlwSelected52 = "<input name='" + strGridCtrlwSelected52Value + "' id='" + strGridCtrlwSelected52Value + "' value='Y' type='checkbox' > ";
+         }
+
+         strGridCtrlText53 = "";
+         nRC = vGridM_InsertTextBase6.cursor( "M_InsertTextBase" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strGridCtrlText53 = vGridM_InsertTextBase6.cursor( "M_InsertTextBase" ).getAttribute( "Text" ).getString( "" );
+
+            if ( strGridCtrlText53 == null )
+               strGridCtrlText53 = "";
+         }
+
+         if ( StringUtils.isBlank( strGridCtrlText53 ) )
+            strGridCtrlText53 = "&nbsp";
+
+%>
+
+<tr<%=strOdd%>>
+
+   <td><%=strGridCtrlwSelected52%></td>
+   <td><%=strGridCtrlText53%></td>
+
+</tr>
+
+<%
+         csrRC2 = vGridM_InsertTextBase6.cursor( "M_InsertTextBase" ).setNextContinue( );
+      }
+      vGridM_InsertTextBase6.drop( );
+   }
+}
+catch (Exception e)
+{
+out.println("There is an error in grid: " + e.getMessage());
+task.log().info( "*** Error in grid" + e.getMessage() );
+}
+%>
+</tbody>
+</table>
+
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  GroupBox6 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:644px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:32px;float:left;"></div>   <!-- Width Spacer -->

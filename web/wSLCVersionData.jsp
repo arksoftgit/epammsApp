@@ -100,6 +100,24 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
+      // Grid: Grid3
+      iTableRowCnt = 0;
+
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
+      vGridTmp = mSubLC.newView( );
+      csrRC = vGridTmp.cursor( "S_VersionChangeMessage" ).setFirst(  );
+      while ( csrRC.isSet() )
+      {
+         lEntityKey = vGridTmp.cursor( "S_VersionChangeMessage" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         iTableRowCnt++;
+
+         csrRC = vGridTmp.cursor( "S_VersionChangeMessage" ).setNextContinue( );
+      }
+
+      vGridTmp.drop( );
    }
 
    mSubProd = task.getViewByName( "mSubProd" );
@@ -1047,6 +1065,7 @@ else
    View lSPLDLST = null;
    View mLLD_LST = null;
    View mMasLC = null;
+   View mSPLDef = null;
    View mSubLC = null;
    View mSubProd = null;
    View mSubreg = null;
@@ -1424,6 +1443,118 @@ else
 
 
 </div>  <!--  GroupBox8 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox2:GroupBox */ %>
+
+<div id="GroupBox2" name="GroupBox2" class="listgroup"   style="float:left;position:relative; width:534px; height:26px;">  <!-- GroupBox2 --> 
+
+<% /* Text2:Text */ %>
+
+<label class="groupbox"  id="Text2" name="Text2" style="width:238px;height:16px;position:absolute;left:2px;top:10px;">Subreg Label Content</label>
+
+
+</div>  <!--  GroupBox2 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:6px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox3:GroupBox */ %>
+
+<div id="GroupBox3" name="GroupBox3" style="width:766px;float:left;">  <!-- GroupBox3 --> 
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:4px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:18px;float:left;"></div>   <!-- Width Spacer -->
+<% /* Grid3:Grid */ %>
+<table  cols=1 style="width:738px;"  name="Grid3" id="Grid3">
+
+<thead><tr>
+
+   <th>Change Message</th>
+
+</tr></thead>
+
+<tbody>
+
+<%
+try
+{
+   iTableRowCnt = 0;
+   mSubLC = task.getViewByName( "mSubLC" );
+   if ( VmlOperation.isValid( mSubLC ) )
+   {
+      long   lEntityKey;
+      String strEntityKey;
+      String strButtonName;
+      String strOdd;
+      String strTag;
+      String strGridEditCtl6;
+      
+      View vGrid3;
+      vGrid3 = mSubLC.newView( );
+      csrRC2 = vGrid3.cursor( "S_VersionChangeMessage" ).setFirst(  );
+      while ( csrRC2.isSet() )
+      {
+         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
+         iTableRowCnt++;
+
+         lEntityKey = vGrid3.cursor( "S_VersionChangeMessage" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         strGridEditCtl6 = "";
+         nRC = vGrid3.cursor( "S_VersionChangeMessage" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strGridEditCtl6 = vGrid3.cursor( "S_VersionChangeMessage" ).getAttribute( "ChangeText" ).getString( "" );
+
+            if ( strGridEditCtl6 == null )
+               strGridEditCtl6 = "";
+         }
+
+         if ( StringUtils.isBlank( strGridEditCtl6 ) )
+            strGridEditCtl6 = "&nbsp";
+
+%>
+
+<tr<%=strOdd%>>
+
+   <td><%=strGridEditCtl6%></td>
+
+</tr>
+
+<%
+         csrRC2 = vGrid3.cursor( "S_VersionChangeMessage" ).setNextContinue( );
+      }
+      vGrid3.drop( );
+   }
+}
+catch (Exception e)
+{
+out.println("There is an error in grid: " + e.getMessage());
+task.log().info( "*** Error in grid" + e.getMessage() );
+}
+%>
+</tbody>
+</table>
+
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  GroupBox3 --> 
 </div>  <!-- End of a new line -->
 
 

@@ -13,7 +13,7 @@
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
 <%@ page import="com.quinsoft.epamms.*" %>
 
-<%! 
+<%!
 
 ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
@@ -63,9 +63,9 @@ public int DoInputMapping( HttpServletRequest request,
       // Grid: GridClaims
       iTableRowCnt = 0;
 
-      // We are creating a temp view to the grid view so that if there are 
-      // grids on the same window with the same view we do not mess up the 
-      // entity positions. 
+      // We are creating a temp view to the grid view so that if there are
+      // grids on the same window with the same view we do not mess up the
+      // entity positions.
       vGridTmp = mMasLC.newView( );
       csrRC = vGridTmp.cursor( "M_Usage" ).setFirst(  );
       while ( csrRC.isSet() )
@@ -160,7 +160,7 @@ String strInputFileName = "";
 strActionToProcess = (String) request.getParameter( "zAction" );
 
 strLastWindow = (String) session.getAttribute( "ZeidonWindow" );
-if ( StringUtils.isBlank( strLastWindow ) ) 
+if ( StringUtils.isBlank( strLastWindow ) )
    strLastWindow = "NoLastWindow";
 
 strLastAction = (String) session.getAttribute( "ZeidonAction" );
@@ -315,9 +315,18 @@ if ( strActionToProcess != null )
 
       // Action Auto Object Function
       nRC = 0;
+      try
+      {
       EntityCursor cursor = mMasLC.cursor( "M_Usage" );
       cursor.createTemporalSubobjectVersion( );
 
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "GOTO_UpdateClaimsStatement", e.getMessage( ), "" );
+         break;
+      }
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "OrganismClaimsStatement" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -597,7 +606,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditEnvironmentalHazardSection" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEnvironmentalHazards" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCOrganismClaims", strActionToProcess );
@@ -627,7 +636,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "EnvironmentalHazardsSection" );
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "EnvironmentalHazards" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -952,7 +961,7 @@ if ( strActionToProcess != null )
             task.log().info( "Action Error Redirect to: " + strURL );
          }
 
-         if ( ! strURL.equals("wMLCOrganismClaims.jsp") ) 
+         if ( ! strURL.equals("wMLCOrganismClaims.jsp") )
          {
             response.sendRedirect( strURL );
             // If we are redirecting to a new page, then we need this return so that the rest of this page doesn't get built.
@@ -1007,6 +1016,8 @@ else
 <%@ include file="./include/timeout.inc" %>
 <link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/css.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/sts.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
@@ -1014,7 +1025,12 @@ else
 
 </head>
 
-<body onLoad="_AfterPageLoaded( )" onSubmit="_DisableFormElements( true )" onBeforeUnload="_BeforePageUnload( )">
+<!--
+// If we have table sorting on this page, the table sorting does not work in Firefox
+// (seems to work in IE and Opera).  The solution is to not call _AfterPageLoaded in OnLoad event.
+// In the Standardista code (sts.js) there is an addEvent that will call _AfterPageLoaded.
+-->
+<body onSubmit="_DisableFormElements( true )" onBeforeUnload="_BeforePageUnload( )">
 
 <%@ include file="./include/pagebackground.inc" %>  <!-- just temporary until we get the painter dialog updates from Kelly ... 2011.10.08 dks -->
 
@@ -1124,7 +1140,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smEnvironmentalHazards" name="smEnvironmentalHazards"><a href="#"  onclick="smEditEnvironmentalHazardSection()">Environmental Hazards</a></li>
+       <li id="smEnvironmentalHazards" name="smEnvironmentalHazards"><a href="#"  onclick="smEnvironmentalHazards()">Environmental Hazards</a></li>
 <%
    }
 %>
@@ -1353,7 +1369,7 @@ else
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBStorDispSections3:GroupBox */ %>
 
-<div id="GBStorDispSections3" name="GBStorDispSections3" class="listgroup"   style="float:left;position:relative; width:780px; height:40px;">  <!-- GBStorDispSections3 --> 
+<div id="GBStorDispSections3" name="GBStorDispSections3" class="listgroup"   style="float:left;position:relative; width:780px; height:40px;">  <!-- GBStorDispSections3 -->
 
 <% /* EnvironmentalHazardsSection1:Text */ %>
 
@@ -1366,7 +1382,7 @@ else
 <button type="button" name="PBNew" id="PBNew" value="" onclick="GOTO_AddUsageStatements( )" style="width:78px;height:26px;position:absolute;left:518px;top:12px;">New</button>
 
 
-</div>  <!--  GBStorDispSections3 --> 
+</div>  <!--  GBStorDispSections3 -->
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -1379,7 +1395,7 @@ else
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox1:GroupBox */ %>
 
-<div id="GroupBox1" name="GroupBox1" style="width:780px;float:left;">  <!-- GroupBox1 --> 
+<div id="GroupBox1" name="GroupBox1" style="width:780px;float:left;">  <!-- GroupBox1 -->
 
 
  <!-- This is added as a line spacer -->
@@ -1388,9 +1404,9 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridClaims:Grid */ %>
-<table  cols=4 style="width:616px;"  name="GridClaims" id="GridClaims">
+<table class="sortable"  cols=4 style="width:616px;"  name="GridClaims" id="GridClaims">
 
-<thead><tr>
+<thead bgcolor=green><tr>
 
    <th>Select</th>
    <th>Classification</th>
@@ -1418,7 +1434,7 @@ try
       String strGEClassification;
       String strGEPathogen;
       String strBMBUpdateClaimsStatement;
-      
+
       View vGridClaims;
       vGridClaims = mMasLC.newView( );
       csrRC2 = vGridClaims.cursor( "M_Usage" ).setFirst(  );
@@ -1429,8 +1445,6 @@ try
 
          lEntityKey = vGridClaims.cursor( "M_Usage" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGS_Select = "";
          nRC = vGridClaims.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -1485,7 +1499,7 @@ try
    <td nowrap><%=strGS_Select%></td>
    <td><a href="#" onclick="GOTO_UpdateClaimsStatement( this.id )" id="GEClassification::<%=strEntityKey%>"><%=strGEClassification%></a></td>
    <td><a href="#" onclick="GOTO_UpdateClaimsStatement( this.id )" id="GEPathogen::<%=strEntityKey%>"><%=strGEPathogen%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateClaimsStatement" onclick="GOTO_UpdateClaimsStatement( this.id )" id="BMBUpdateClaimsStatement::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateClaimsStatement" onclick="GOTO_UpdateClaimsStatement( this.id )" id="BMBUpdateClaimsStatement::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
 
 </tr>
 
@@ -1507,7 +1521,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </div>  <!-- End of a new line -->
 
 
-</div>  <!--  GroupBox1 --> 
+</div>  <!--  GroupBox1 -->
 </div>  <!-- End of a new line -->
 
 

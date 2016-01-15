@@ -365,7 +365,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "DuplicateSubregProductSLC" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_CopySLC_Version" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCSubregProductUpdate", strActionToProcess );
@@ -404,8 +404,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCSubregProductUpdate", "wSLC.DuplicateSubregProductSLC" );
-      nOptRC = wSLC.DuplicateSubregProductSLC( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCSubregProductUpdate", "wSLC.GOTO_CopySLC_Version" );
+      nOptRC = wSLC.GOTO_CopySLC_Version( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -422,7 +422,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StayOnWindowWithRefresh, "", "" );
+         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartModalSubwindow, "wSLC", "SLC_VersionCopy" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -430,7 +430,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "DuplicateSubregProductSPLD" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_CopySPLD_Version" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCSubregProductUpdate", strActionToProcess );
@@ -469,8 +469,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCSubregProductUpdate", "wSLC.DuplicateSubregProductSPLD" );
-      nOptRC = wSLC.DuplicateSubregProductSPLD( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCSubregProductUpdate", "wSLC.GOTO_CopySPLD_Version" );
+      nOptRC = wSLC.GOTO_CopySPLD_Version( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -487,7 +487,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StayOnWindowWithRefresh, "", "" );
+         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartModalSubwindow, "wSLC", "SPLD_VersionCopy" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -651,7 +651,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartModalSubwindow, "wSLC", "Ingredients" );
+         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartModalSubwindow, "wSLC", "VersionData" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -966,6 +966,7 @@ else
    View lSPLDLST = null;
    View mLLD_LST = null;
    View mMasLC = null;
+   View mSPLDef = null;
    View mSubLC = null;
    View mSubProd = null;
    View mSubreg = null;
@@ -1290,7 +1291,7 @@ else
 
 <span style="width:122px;height:32px;" >
    <input name="Calendar1" id="Calendar1"  style="width:80px" type="text" value="<%=strErrorMapValue%>"  />
-   <img src="images/scw.gif" title="Select Date" alt="Select Date"
+   <img src="images/scw.gif"  name="Calendar1Img" id="Calendar1Img" title="Select Date" alt="Select Date"
         onclick="scwShow( document.getElementById( 'Calendar1' ), this );"  />
 </span>
 
@@ -1365,10 +1366,10 @@ else
 
    <th>Description</th>
    <th>SLC Version</th>
-   <th>Last Modified Date</th>
+   <th>MLC Version</th>
    <th>Update</th>
    <th>Delete</th>
-   <th>Duplicate</th>
+   <th>Copy</th>
 
 </tr></thead>
 
@@ -1403,8 +1404,6 @@ try
 
          lEntityKey = vGridSubregProducts2.cursor( "SubregLabelContent" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGESubregProductName2 = "";
          nRC = vGridSubregProducts2.cursor( "SubregLabelContent" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -1432,10 +1431,10 @@ try
             strGEPrimRegProductName2 = "&nbsp";
 
          strGridESL_Date2 = "";
-         nRC = vGridSubregProducts2.cursor( "SubregLabelContent" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGridSubregProducts2.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridESL_Date2 = vGridSubregProducts2.cursor( "SubregLabelContent" ).getAttribute( "NetContents" ).getString( "" );
+            strGridESL_Date2 = vGridSubregProducts2.cursor( "MasterLabelContent" ).getAttribute( "Version" ).getString( "" );
 
             if ( strGridESL_Date2 == null )
                strGridESL_Date2 = "";
@@ -1451,9 +1450,9 @@ try
    <td><a href="#" onclick="GOTO_UpdateSubregProductSLC( this.id )" id="GESubregProductName2::<%=strEntityKey%>"><%=strGESubregProductName2%></a></td>
    <td><%=strGEPrimRegProductName2%></td>
    <td><%=strGridESL_Date2%></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateSubregProduct2" onclick="GOTO_UpdateSubregProductSLC( this.id )" id="BMBUpdateSubregProduct2::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteSubregProduct2" onclick="DeleteSubregProductSLC( this.id )" id="BMBDeleteSubregProduct2::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn4" onclick="DuplicateSubregProductSLC( this.id )" id="BitmapBtn4::<%=strEntityKey%>"><img src="./images/ePammsNew.jpg" alt="Duplicate"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateSubregProduct2" onclick="GOTO_UpdateSubregProductSLC( this.id )" id="BMBUpdateSubregProduct2::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteSubregProduct2" onclick="DeleteSubregProductSLC( this.id )" id="BMBDeleteSubregProduct2::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn4" onclick="GOTO_CopySLC_Version( this.id )" id="BitmapBtn4::<%=strEntityKey%>"><img src="./images/ePammsNew.png" alt="Copy"></a></td>
 
 </tr>
 
@@ -1540,7 +1539,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
    <th>SLC Version</th>
    <th>Update</th>
    <th>Delete</th>
-   <th>Duplicate</th>
+   <th>Copy</th>
 
 </tr></thead>
 
@@ -1575,8 +1574,6 @@ try
 
          lEntityKey = vGrid2.cursor( "SubregPhysicalLabelDef" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGridEditCtl2 = "";
          nRC = vGrid2.cursor( "SubregPhysicalLabelDef" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -1623,9 +1620,9 @@ try
    <td><a href="#" onclick="GOTO_UpdateSubregProductSPLD( this.id )" id="GridEditCtl2::<%=strEntityKey%>"><%=strGridEditCtl2%></a></td>
    <td><a href="#" onclick="GOTO_UpdateSubregProductSPLD( this.id )" id="GridEditCtl3::<%=strEntityKey%>"><%=strGridEditCtl3%></a></td>
    <td><a href="#" onclick="GOTO_UpdateSubregProductSPLD( this.id )" id="GridEditCtl4::<%=strEntityKey%>"><%=strGridEditCtl4%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn2" onclick="GOTO_UpdateSubregProductSPLD( this.id )" id="BitmapBtn2::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn3" onclick="GOTO_DeleteSPLD( this.id )" id="BitmapBtn3::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn5" onclick="DuplicateSubregProductSPLD( this.id )" id="BitmapBtn5::<%=strEntityKey%>"><img src="./images/ePammsNew.jpg" alt="Duplicate"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn2" onclick="GOTO_UpdateSubregProductSPLD( this.id )" id="BitmapBtn2::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn3" onclick="GOTO_DeleteSPLD( this.id )" id="BitmapBtn3::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn5" onclick="GOTO_CopySPLD_Version( this.id )" id="BitmapBtn5::<%=strEntityKey%>"><img src="./images/ePammsNew.png" alt="Copy"></a></td>
 
 </tr>
 

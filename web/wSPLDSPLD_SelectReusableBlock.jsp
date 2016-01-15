@@ -815,8 +815,6 @@ try
 
          lEntityKey = vReusableBlockList.cursor( "ReusableBlockDefinition" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGridCheckCtl = "";
          nRC = vReusableBlockList.cursor( "ReusableBlockDefinition" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )

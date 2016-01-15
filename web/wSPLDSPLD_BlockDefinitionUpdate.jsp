@@ -1185,8 +1185,6 @@ try
 
          lEntityKey = vSpecialSectionAttributes.cursor( "LLD_SpecialSectionAttribute" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strFormattingKeyword = "";
          nRC = vSpecialSectionAttributes.cursor( "LLD_SpecialSectionAttribute" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -1366,8 +1364,6 @@ try
 
          lEntityKey = vGridComponentList.cursor( "Display" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strComponentName = "";
          nRC = vGridComponentList.cursor( "CompositeComponentList" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )

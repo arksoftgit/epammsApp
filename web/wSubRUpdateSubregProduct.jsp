@@ -1238,7 +1238,7 @@ else
 
 <span style="width:300px;height:32px;" >
    <input name="ESL_Date" id="ESL_Date"  style="width:80px" type="text" value="<%=strErrorMapValue%>"  />
-   <img src="images/scw.gif" title="Select Date" alt="Select Date"
+   <img src="images/scw.gif"  name="ESL_DateImg" id="ESL_DateImg" title="Select Date" alt="Select Date"
         onclick="scwShow( document.getElementById( 'ESL_Date' ), this );"  />
 </span>
 
@@ -1321,8 +1321,6 @@ try
 
          lEntityKey = vGridLabels.cursor( "SubregLabelContent" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGridLabelName = "";
          nRC = vGridLabels.cursor( "SubregLabelContent" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -1355,7 +1353,7 @@ try
 
    <td nowrap><a href="#" onclick="UpdateProdLabelContent( this.id )" id="GridLabelName::<%=strEntityKey%>"><%=strGridLabelName%></a></td>
    <td><a href="#" onclick="UpdateProdLabelContent( this.id )" id="GridContentDescription::<%=strEntityKey%>"><%=strGridContentDescription%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateProductSection" onclick="UpdateProdLabelContent( this.id )" id="BMBUpdateProductSection::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateProductSection" onclick="UpdateProdLabelContent( this.id )" id="BMBUpdateProductSection::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
 
 </tr>
 

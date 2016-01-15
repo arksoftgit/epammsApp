@@ -1014,6 +1014,7 @@ else
    View lSPLDLST = null;
    View mLLD_LST = null;
    View mMasLC = null;
+   View mSPLDef = null;
    View mSubLC = null;
    View mSubProd = null;
    View mSubreg = null;
@@ -1212,8 +1213,6 @@ try
 
          lEntityKey = vGridStorDisp.cursor( "S_StorageDisposalStatement" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGridEditStorDisp = "";
          nRC = vGridStorDisp.cursor( "S_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )

@@ -61,7 +61,7 @@ public int DoInputMapping( HttpServletRequest request,
    if ( VmlOperation.isValid( mMasLC ) )
    {
       // MLEdit: StatementText
-      nRC = mMasLC.cursor( "M_GeneralStatement" ).checkExistenceOfEntity( ).toInt();
+      nRC = mMasLC.cursor( "M_GeneralSubStatement" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
          strMapValue = request.getParameter( "StatementText" );
@@ -70,7 +70,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "StatementText", "", strMapValue );
             else
-               mMasLC.cursor( "M_GeneralStatement" ).getAttribute( "Text" ).setValue( strMapValue, "" );
+               mMasLC.cursor( "M_GeneralSubStatement" ).getAttribute( "Text" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -212,19 +212,28 @@ if ( strActionToProcess != null )
 
       // Action Auto Object Function
       nRC = 0;
+      try
+      {
       View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_GeneralStatement" );
+      EntityCursor cursor = mMasLC.cursor( "M_GeneralSubStatement" );
       if ( cursor.isNull() )
          nRC = 0;
       else
       {
          if ( cursor.isVersioned( ) )
          {
-           cursor.acceptSubobject( );
-           nRC = 0;
+            cursor.acceptSubobject( );
          }
+         nRC = 0;
       }
 
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "AcceptHazardsStmt", e.getMessage( ), "" );
+         break;
+      }
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -239,33 +248,30 @@ if ( strActionToProcess != null )
 
       // Action Auto Object Function
       nRC = 0;
+      try
+      {
       View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_GeneralStatement" );
+      EntityCursor cursor = mMasLC.cursor( "M_GeneralSubStatement" );
       if ( cursor.isNull() )
          nRC = 0;
       else
       {
          if ( cursor.isVersioned( ) )
          {
-           cursor.cancelSubobject( );
-           nRC = 0;
+            cursor.cancelSubobject( );
          }
+         nRC = 0;
       }
 
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "CancelHazardsStmt", e.getMessage( ), "" );
+         break;
+      }
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "CleanHazardsStmtHTML" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCHazardsStatement", strActionToProcess );
-
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -610,17 +616,17 @@ else
          task.log( ).info( "Invalid View: " + "StatementText" );
       else
       {
-         nRC = mMasLC.cursor( "M_GeneralStatement" ).checkExistenceOfEntity( ).toInt();
+         nRC = mMasLC.cursor( "M_GeneralSubStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strErrorMapValue = mMasLC.cursor( "M_GeneralStatement" ).getAttribute( "Text" ).getString( "" );
+            strErrorMapValue = mMasLC.cursor( "M_GeneralSubStatement" ).getAttribute( "Text" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).info( "M_GeneralStatement.Text: " + strErrorMapValue );
+            task.log( ).info( "M_GeneralSubStatement.Text: " + strErrorMapValue );
          }
          else
-            task.log( ).info( "Entity does not exist for StatementText: " + "mMasLC.M_GeneralStatement" );
+            task.log( ).info( "Entity does not exist for StatementText: " + "mMasLC.M_GeneralSubStatement" );
       }
    }
 %>

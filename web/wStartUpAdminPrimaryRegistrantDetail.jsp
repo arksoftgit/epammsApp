@@ -1621,8 +1621,6 @@ try
 
          lEntityKey = vGridPrimaryRegistrant.cursor( "MasterProduct" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGEProductName = "";
          nRC = vGridPrimaryRegistrant.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -1655,10 +1653,10 @@ try
 
    <td><a href="#" onclick="SelectMasterProductForUpdate( this.id )" id="GEProductName::<%=strEntityKey%>"><%=strGEProductName%></a></td>
    <td><a href="#" onclick="SelectMasterProductForUpdate( this.id )" id="GridDescription::<%=strEntityKey%>"><%=strGridDescription%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateMasterProduct" onclick="SelectMasterProductForUpdate( this.id )" id="BMBUpdateMasterProduct::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteMasterProduct" onclick="SelectMasterProductForDelete( this.id )" id="BMBDeleteMasterProduct::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBMoveMasterProductUp" onclick="MoveMasterProductUp( this.id )" id="BMBMoveMasterProductUp::<%=strEntityKey%>"><img src="./images/ePammsUp.jpg" alt="Move Up"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBMoveMasterProductDown" onclick="MoveMasterProductDown( this.id )" id="BMBMoveMasterProductDown::<%=strEntityKey%>"><img src="./images/ePammsDown.jpg" alt="Move Down"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateMasterProduct" onclick="SelectMasterProductForUpdate( this.id )" id="BMBUpdateMasterProduct::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteMasterProduct" onclick="SelectMasterProductForDelete( this.id )" id="BMBDeleteMasterProduct::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBMoveMasterProductUp" onclick="MoveMasterProductUp( this.id )" id="BMBMoveMasterProductUp::<%=strEntityKey%>"><img src="./images/ePammsUp.png" alt="Move Up"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBMoveMasterProductDown" onclick="MoveMasterProductDown( this.id )" id="BMBMoveMasterProductDown::<%=strEntityKey%>"><img src="./images/ePammsDown.png" alt="Move Down"></a></td>
 
 </tr>
 

@@ -981,8 +981,6 @@ try
 
          lEntityKey = vGridPrimaryRegistrant.cursor( "PrimarySub" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strACS = "";
          nRC = vGridPrimaryRegistrant.cursor( "Subregistrant" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -1051,8 +1049,8 @@ try
    <td nowrap><a href="#" onclick="SelectSubregistrantForUpdate( this.id )" id="GESubregistrantName::<%=strEntityKey%>"><%=strGESubregistrantName%></a></td>
    <td nowrap><a href="#" onclick="SelectSubregistrantForUpdate( this.id )" id="GESubregistrantDescription::<%=strEntityKey%>"><%=strGESubregistrantDescription%></a></td>
    <td nowrap><a href="#" onclick="SelectSubregistrantForUpdate( this.id )" id="GESubregistrantLogin::<%=strEntityKey%>"><%=strGESubregistrantLogin%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBAdminUpdateSubregistrant" onclick="SelectSubregistrantForUpdate( this.id )" id="BMBAdminUpdateSubregistrant::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBAdminDeleteSubregistrant" onclick="SelectSubregistrantForDelete( this.id )" id="BMBAdminDeleteSubregistrant::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBAdminUpdateSubregistrant" onclick="SelectSubregistrantForUpdate( this.id )" id="BMBAdminUpdateSubregistrant::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBAdminDeleteSubregistrant" onclick="SelectSubregistrantForDelete( this.id )" id="BMBAdminDeleteSubregistrant::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 

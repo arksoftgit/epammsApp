@@ -184,7 +184,7 @@ font-weight:bold;
 /* Start DIV Styles */
 
 #sky{
-   background-image:url(../images/sky_gradient.jpg);
+   background-image:url(../images/top_background.png);
    background-repeat:repeat-x;
    position:absolute;
    z-index:-1;
@@ -195,7 +195,7 @@ font-weight:bold;
 }
 
 #skyline{
-   background-image:url(../images/skyline.jpg);
+   background-image:url(../images/middle_background.png);
    position:absolute;
    z-index:-1;
    height:150px;
@@ -205,7 +205,7 @@ font-weight:bold;
 }
 
 #water{
-   background-image:url(../images/water_bar.gif);
+   background-image:url(../images/bottom.png);
    background-repeat:repeat-x;
    position:absolute;
    z-index:-1;
@@ -449,7 +449,7 @@ float:right;
 }
 
 #wrap_footer{
-background-color:#155986;
+background-color:#595959;
 background-image:url(../images/cityscape.gif);
 background-position:bottom;
 background-repeat:no-repeat;
@@ -489,7 +489,7 @@ line-height:1.2;
 }
 
 .footer_links a{
-color:#FFFFFF;
+color:#999999;
 margin-bottom:4px;
 padding:2px 0 2px 0;
 display:block;
@@ -500,7 +500,7 @@ text-decoration:none;
 border-bottom:1px solid #65a9e6;
 margin-bottom:4px;
 padding:2px 0 1px 0;
-background-color:#2579a6;
+background-color:#999999;
 }
 
 #footer_shadow{
@@ -511,9 +511,9 @@ height:18px;
 
 #footer_address {
    line-height: 1.2;
-   text-align:center;
+   text-align:left;
    font-weight:bold;
-   color:#EFC795;
+   color:#999999;
    font-size:100%;
     font-family:Verdana, Arial, Helvetica, sans-serif;
 }

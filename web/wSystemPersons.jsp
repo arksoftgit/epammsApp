@@ -853,16 +853,14 @@ try
 
          lEntityKey = vGridPerson.cursor( "Person" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
 %>
 
 <tr<%=strOdd%>>
 
    <td nowrap class="text10"><%=strSS_EditCtl8%></td>
    <td nowrap class="text10"><%=strGridEditCtl1%></td>
-   <td nowrap><button type="button" class="formStylebutton" name=<%=strButtonName%> onclick="UpdatePerson( this.id )" id="GridEditCtl1::<%=strEntityKey%>"  style="width:84px;" >Update</button></td>
-   <td nowrap><button type="button" class="formStylebutton" name=<%=strButtonName%> onclick="DeletePerson( this.id )" id="GridEditCtl1::<%=strEntityKey%>"  style="width:84px;" >Delete</button></td>
+   <td nowrap><button type="button" class="formStylebutton" name="PushBtn8::<%=strEntityKey%>"  onclick="UpdatePerson( this.id )" id="PushBtn8::<%=strEntityKey%>"  style="width:84px;" >Update</button></td>
+   <td nowrap><button type="button" class="formStylebutton" name="PushBtn9::<%=strEntityKey%>"  onclick="DeletePerson( this.id )" id="PushBtn9::<%=strEntityKey%>"  style="width:84px;" >Delete</button></td>
 
 </tr>
 

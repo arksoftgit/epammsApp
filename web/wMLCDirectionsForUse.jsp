@@ -199,29 +199,6 @@ if ( strActionToProcess != null )
 
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DirectionsForUseSectionAdd" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUse", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Auto Object Function
-      nRC = 0;
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_DirectionsForUseSection" );
-      cursor.createTemporalEntity( );
-
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "DirectionsForUseSection" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
    while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DirsForUseSectionDelete" ) )
    {
       bDone = true;
@@ -326,11 +303,175 @@ if ( strActionToProcess != null )
 
       // Action Auto Object Function
       nRC = 0;
+      try
+      {
       EntityCursor cursor = mMasLC.cursor( "M_DirectionsForUseSection" );
       cursor.createTemporalSubobjectVersion( );
 
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "GOTO_DirsForUseSectionUpdate", e.getMessage( ), "" );
+         break;
+      }
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "DirectionsForUseSection" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DU_SectionAddAfter" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUse", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mMasLC;
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mMasLC.cursor( "M_DirectionsForUseSection" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mMasLC.cursor( "M_DirectionsForUseSection" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mMasLC.cursor( "M_DirectionsForUseSection" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mMasLC.cursor( "M_DirectionsForUseSection" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Action Auto Object Function
+      nRC = 0;
+      try
+      {
+      EntityCursor cursor = mMasLC.cursor( "M_DirectionsForUseSection" );
+      cursor.createTemporalEntity( );
+
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "GOTO_DU_SectionAddAfter", e.getMessage( ), "" );
+         break;
+      }
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "DirectionsForUseSection" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DU_SectionAdd" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUse", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Auto Object Function
+      nRC = 0;
+      try
+      {
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_DirectionsForUseSection" );
+      cursor.createTemporalEntity( );
+
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "GOTO_DU_SectionAdd", e.getMessage( ), "" );
+         break;
+      }
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "DirectionsForUseSection" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DU_SectionAddBefore" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUse", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mMasLC;
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mMasLC.cursor( "M_DirectionsForUseSection" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mMasLC.cursor( "M_DirectionsForUseSection" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mMasLC.cursor( "M_DirectionsForUseSection" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mMasLC.cursor( "M_DirectionsForUseSection" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUse", "wMLC.GOTO_DU_SectionAddBefore" );
+      nOptRC = wMLC.GOTO_DU_SectionAddBefore( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "DirectionsForUseSection" );
+      }
+
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -608,7 +749,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditEnvironmentalHazardSection" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEnvironmentalHazards" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUse", strActionToProcess );
@@ -638,7 +779,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "EnvironmentalHazardsSection" );
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "EnvironmentalHazards" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -1010,7 +1151,7 @@ else
 <html>
 <head>
 
-<title>Direction for Use</title>
+<title>Directions for Use</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
@@ -1135,7 +1276,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smEnvironmentalHazards" name="smEnvironmentalHazards"><a href="#"  onclick="smEditEnvironmentalHazardSection()">Environmental Hazards</a></li>
+       <li id="smEnvironmentalHazards" name="smEnvironmentalHazards"><a href="#"  onclick="smEnvironmentalHazards()">Environmental Hazards</a></li>
 <%
    }
 %>
@@ -1364,14 +1505,14 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBStorDispSections:GroupBox */ %>
 
-<div id="GBStorDispSections" name="GBStorDispSections" class="listgroup"   style="float:left;position:relative; width:830px; height:36px;">  <!-- GBStorDispSections --> 
+<div id="GBStorDispSections" name="GBStorDispSections" class="listgroup"   style="float:left;position:relative; width:802px; height:36px;">  <!-- GBStorDispSections --> 
 
 <% /* OrganismClaimsStatements1:Text */ %>
 
 <label class="groupbox"  id="OrganismClaimsStatements1" name="OrganismClaimsStatements1" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Directions for Use</label>
 
 <% /* New:PushBtn */ %>
-<button type="button" class="newbutton" name="New" id="New" value="" onclick="GOTO_DirectionsForUseSectionAdd( )" style="width:78px;height:24px;position:absolute;left:586px;top:12px;">New</button>
+<button type="button" class="newbutton" name="New" id="New" value="" onclick="GOTO_DU_SectionAdd( )" style="width:78px;height:24px;position:absolute;left:586px;top:12px;">New</button>
 
 
 </div>  <!--  GBStorDispSections --> 
@@ -1386,12 +1527,14 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:22px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridStorDisp:Grid */ %>
-<table  cols=4 style="width:792px;"  name="GridStorDisp" id="GridStorDisp">
+<table  cols=6 style="width:792px;"  name="GridStorDisp" id="GridStorDisp">
 
 <thead><tr>
 
    <th>Name</th>
    <th>Title</th>
+   <th>Add Before</th>
+   <th>Add After</th>
    <th>Update</th>
    <th>Delete</th>
 
@@ -1413,6 +1556,8 @@ try
       String strTag;
       String strName;
       String strTitle;
+      String strBitmapBtn2;
+      String strBitmapBtn1;
       String strBMBUpdateStorDispSect;
       String strBMBDeleteStorDispSect;
       
@@ -1426,8 +1571,6 @@ try
 
          lEntityKey = vGridStorDisp.cursor( "M_DirectionsForUseSection" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strName = "";
          nRC = vGridStorDisp.cursor( "M_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -1460,8 +1603,10 @@ try
 
    <td><a href="#" onclick="GOTO_DirsForUseSectionUpdate( this.id )" id="Name::<%=strEntityKey%>"><%=strName%></a></td>
    <td><a href="#" onclick="GOTO_DirsForUseSectionUpdate( this.id )" id="Title::<%=strEntityKey%>"><%=strTitle%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateStorDispSect" onclick="GOTO_DirsForUseSectionUpdate( this.id )" id="BMBUpdateStorDispSect::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteStorDispSect" onclick="GOTO_DirsForUseSectionDelete( this.id )" id="BMBDeleteStorDispSect::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn2" onclick="GOTO_DU_SectionAddBefore( this.id )" id="BitmapBtn2::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Add Before"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn1" onclick="GOTO_DU_SectionAddAfter( this.id )" id="BitmapBtn1::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Add After"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateStorDispSect" onclick="GOTO_DirsForUseSectionUpdate( this.id )" id="BMBUpdateStorDispSect::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteStorDispSect" onclick="GOTO_DirsForUseSectionDelete( this.id )" id="BMBDeleteStorDispSect::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 

@@ -544,6 +544,7 @@ else
    View lSPLDLST = null;
    View mLLD_LST = null;
    View mMasLC = null;
+   View mSPLDef = null;
    View mSubLC = null;
    View mSubProd = null;
    View mSubreg = null;
@@ -723,8 +724,6 @@ try
 
          lEntityKey = vGrid2.cursor( "CompositeComponentList" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGridCheckCtl3 = "";
          nRC = vGrid2.cursor( "CompositeComponentList" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -901,8 +900,6 @@ try
 
          lEntityKey = vGrid3.cursor( "CompositeComponentList" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGridCheckCtl2 = "";
          nRC = vGrid3.cursor( "CompositeComponentList" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )

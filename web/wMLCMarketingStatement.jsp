@@ -13,7 +13,7 @@
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
 <%@ page import="com.quinsoft.epamms.*" %>
 
-<%! 
+<%!
 
 ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
@@ -101,27 +101,27 @@ public int DoInputMapping( HttpServletRequest request,
       // Grid: Grid3
       iTableRowCnt = 0;
 
-      // We are creating a temp view to the grid view so that if there are 
-      // grids on the same window with the same view we do not mess up the 
-      // entity positions. 
+      // We are creating a temp view to the grid view so that if there are
+      // grids on the same window with the same view we do not mess up the
+      // entity positions.
       vGridTmp = mMasLC.newView( );
-      csrRC = vGridTmp.cursor( "M_InsertTextMarketing" ).setFirst( "M_MarketingStatement" );
+      csrRC = vGridTmp.cursor( "M_InsertTextKeywordMarketing" ).setFirst(  );
       while ( csrRC.isSet() )
       {
-         lEntityKey = vGridTmp.cursor( "M_InsertTextMarketing" ).getEntityKey( );
+         lEntityKey = vGridTmp.cursor( "M_InsertTextKeywordMarketing" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
 
-         csrRC = vGridTmp.cursor( "M_InsertTextMarketing" ).setNextContinue( );
+         csrRC = vGridTmp.cursor( "M_InsertTextKeywordMarketing" ).setNextContinue( );
       }
 
       vGridTmp.drop( );
       // Grid: Grid1
       iTableRowCnt = 0;
 
-      // We are creating a temp view to the grid view so that if there are 
-      // grids on the same window with the same view we do not mess up the 
-      // entity positions. 
+      // We are creating a temp view to the grid view so that if there are
+      // grids on the same window with the same view we do not mess up the
+      // entity positions.
       vGridTmp = mMasLC.newView( );
       csrRC = vGridTmp.cursor( "M_MarketingUsageOrdering" ).setFirst(  );
       while ( csrRC.isSet() )
@@ -194,7 +194,7 @@ String strInputFileName = "";
 strActionToProcess = (String) request.getParameter( "zAction" );
 
 strLastWindow = (String) session.getAttribute( "ZeidonWindow" );
-if ( StringUtils.isBlank( strLastWindow ) ) 
+if ( StringUtils.isBlank( strLastWindow ) )
    strLastWindow = "NoLastWindow";
 
 strLastAction = (String) session.getAttribute( "ZeidonAction" );
@@ -267,6 +267,8 @@ if ( strActionToProcess != null )
 
       // Action Auto Object Function
       nRC = 0;
+      try
+      {
       View mMasLC = task.getViewByName( "mMasLC" );
       EntityCursor cursor = mMasLC.cursor( "M_MarketingStatement" );
       if ( cursor.isNull() )
@@ -275,11 +277,18 @@ if ( strActionToProcess != null )
       {
          if ( cursor.isVersioned( ) )
          {
-           cursor.acceptSubobject( );
-           nRC = 0;
+            cursor.acceptSubobject( );
          }
+         nRC = 0;
       }
 
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "AcceptMarketingStatement", e.getMessage( ), "" );
+         break;
+      }
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -287,7 +296,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_MarketingKeywordStmtDelete" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "PASTE_InsertKeyword" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCMarketingStatement", strActionToProcess );
@@ -297,102 +306,10 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
-      // Position on the entity that was selected in the grid.
-      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
-      View mMasLC;
-      mMasLC = task.getViewByName( "mMasLC" );
-      if ( VmlOperation.isValid( mMasLC ) )
-      {
-         lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mMasLC.cursor( "M_InsertTextMarketing" ).setByEntityKey( lEKey );
-         if ( !csrRC.isSet() )
-         {
-            boolean bFound = false;
-            csrRCk = mMasLC.cursor( "M_InsertTextMarketing" ).setFirst("M_MarketingStatement" );
-            while ( csrRCk.isSet() && !bFound )
-            {
-               lEKey = mMasLC.cursor( "M_InsertTextMarketing" ).getEntityKey( );
-               strKey = Long.toString( lEKey );
-               if ( StringUtils.equals( strKey, strEntityKey ) )
-               {
-                  // Stop while loop because we have positioned on the correct entity.
-                  bFound = true;
-               }
-               else
-                  csrRCk = mMasLC.cursor( "M_InsertTextMarketing" ).setNextContinue( );
-            } // Grid
-         }
-      }
-
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingStatement", "wMLC.GOTO_MarketingKeywordStmtDelete" );
-      nOptRC = wMLC.GOTO_MarketingKeywordStmtDelete( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "DeleteComponent" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_MarketingKeywordStmtKeyword" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCMarketingStatement", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Position on the entity that was selected in the grid.
-      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
-      View mMasLC;
-      mMasLC = task.getViewByName( "mMasLC" );
-      if ( VmlOperation.isValid( mMasLC ) )
-      {
-         lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mMasLC.cursor( "M_InsertTextMarketing" ).setByEntityKey( lEKey );
-         if ( !csrRC.isSet() )
-         {
-            boolean bFound = false;
-            csrRCk = mMasLC.cursor( "M_InsertTextMarketing" ).setFirst("M_MarketingStatement" );
-            while ( csrRCk.isSet() && !bFound )
-            {
-               lEKey = mMasLC.cursor( "M_InsertTextMarketing" ).getEntityKey( );
-               strKey = Long.toString( lEKey );
-               if ( StringUtils.equals( strKey, strEntityKey ) )
-               {
-                  // Stop while loop because we have positioned on the correct entity.
-                  bFound = true;
-               }
-               else
-                  csrRCk = mMasLC.cursor( "M_InsertTextMarketing" ).setNextContinue( );
-            } // Grid
-         }
-      }
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingStatement", "wMLC.GOTO_MarketingKeywordStmtKeyword" );
-      nOptRC = wMLC.GOTO_MarketingKeywordStmtKeyword( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingStatement", "wMLC.PASTE_InsertKeywordMarketing" );
+      nOptRC = wMLC.PASTE_InsertKeywordMarketing( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -417,7 +334,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_MarketingKeywordStmtAdd" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "COPY_InsertKeyword" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCMarketingStatement", strActionToProcess );
@@ -427,10 +344,37 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mMasLC;
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mMasLC.cursor( "M_InsertTextKeywordMarketing" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mMasLC.cursor( "M_InsertTextKeywordMarketing" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mMasLC.cursor( "M_InsertTextKeywordMarketing" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mMasLC.cursor( "M_InsertTextKeywordMarketing" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingStatement", "wMLC.GOTO_MarketingKeywordStmtAdd" );
-      nOptRC = wMLC.GOTO_MarketingKeywordStmtAdd( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingStatement", "wMLC.COPY_InsertKeywordMarketing" );
+      nOptRC = wMLC.COPY_InsertKeywordMarketing( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -447,7 +391,177 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "AddItemsMultipleKeyword" );
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "ADD_MarketingStatementKeyword" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCMarketingStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Auto Object Function
+      nRC = 0;
+      try
+      {
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordMarketing" );
+      cursor.createTemporalEntity( );
+
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "ADD_MarketingStatementKeyword", e.getMessage( ), "" );
+         break;
+      }
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "AddUpdateKeywordMarketing" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelMarketingStatement" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCMarketingStatement", strActionToProcess );
+
+      // Action Auto Object Function
+      nRC = 0;
+      try
+      {
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_MarketingStatement" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
+      {
+         if ( cursor.isVersioned( ) )
+         {
+            cursor.cancelSubobject( );
+         }
+         nRC = 0;
+      }
+
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "CancelMarketingStatement", e.getMessage( ), "" );
+         break;
+      }
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "DELETE_MarketingStatementKeyword" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCMarketingStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mMasLC;
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mMasLC.cursor( "M_InsertTextKeywordMarketing" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mMasLC.cursor( "M_InsertTextKeywordMarketing" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mMasLC.cursor( "M_InsertTextKeywordMarketing" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mMasLC.cursor( "M_InsertTextKeywordMarketing" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Action Auto Object Function
+      nRC = 0;
+      try
+      {
+      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordMarketing" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
+      {
+         cursor.deleteEntity( CursorPosition.NEXT );
+         nRC = 0;
+      }
+
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "DELETE_MarketingStatementKeyword", e.getMessage( ), "" );
+         break;
+      }
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DisplayGeneratedTextMktg" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCMarketingStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingStatement", "wMLC.GOTO_DisplayGeneratedTextMktg" );
+      nOptRC = wMLC.GOTO_DisplayGeneratedTextMktg( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "GeneratedTitleTextDisplay" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -472,14 +586,14 @@ if ( strActionToProcess != null )
       if ( VmlOperation.isValid( mMasLC ) )
       {
          lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mMasLC.cursor( "M_InsertTextMarketing" ).setByEntityKey( lEKey );
+         csrRC = mMasLC.cursor( "M_InsertTextKeywordMarketing" ).setByEntityKey( lEKey );
          if ( !csrRC.isSet() )
          {
             boolean bFound = false;
-            csrRCk = mMasLC.cursor( "M_InsertTextMarketing" ).setFirst("M_MarketingStatement" );
+            csrRCk = mMasLC.cursor( "M_InsertTextKeywordMarketing" ).setFirst( );
             while ( csrRCk.isSet() && !bFound )
             {
-               lEKey = mMasLC.cursor( "M_InsertTextMarketing" ).getEntityKey( );
+               lEKey = mMasLC.cursor( "M_InsertTextKeywordMarketing" ).getEntityKey( );
                strKey = Long.toString( lEKey );
                if ( StringUtils.equals( strKey, strEntityKey ) )
                {
@@ -487,40 +601,27 @@ if ( strActionToProcess != null )
                   bFound = true;
                }
                else
-                  csrRCk = mMasLC.cursor( "M_InsertTextMarketing" ).setNextContinue( );
+                  csrRCk = mMasLC.cursor( "M_InsertTextKeywordMarketing" ).setNextContinue( );
             } // Grid
          }
       }
 
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "MarketingKeywordTextUpdate" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelMarketingStatement" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCMarketingStatement", strActionToProcess );
-
       // Action Auto Object Function
       nRC = 0;
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_MarketingStatement" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
+      try
       {
-         if ( cursor.isVersioned( ) )
-         {
-           cursor.cancelSubobject( );
-           nRC = 0;
-         }
-      }
+      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordMarketing" );
+      cursor.createTemporalSubobjectVersion( );
 
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "GOTO_MarketingKeywordUpdate", e.getMessage( ), "" );
+         break;
+      }
       // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "AddUpdateKeywordMarketing" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -557,44 +658,6 @@ if ( strActionToProcess != null )
       {
          // Next Window
          strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "MarketingSelectByType" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DisplayGeneratedText" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCMarketingStatement", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMarketingStatement", "wMLC.GOTO_DisplayGeneratedText" );
-      nOptRC = wMLC.GOTO_DisplayGeneratedText( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "GeneratedTextDisplay" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -675,7 +738,7 @@ if ( strActionToProcess != null )
             task.log().info( "Action Error Redirect to: " + strURL );
          }
 
-         if ( ! strURL.equals("wMLCMarketingStatement.jsp") ) 
+         if ( ! strURL.equals("wMLCMarketingStatement.jsp") )
          {
             response.sendRedirect( strURL );
             // If we are redirecting to a new page, then we need this return so that the rest of this page doesn't get built.
@@ -730,6 +793,8 @@ else
 <%@ include file="./include/timeout.inc" %>
 <link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/css.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/sts.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
@@ -737,7 +802,12 @@ else
 
 </head>
 
-<body onLoad="_AfterPageLoaded( )" onSubmit="_DisableFormElements( true )" onBeforeUnload="_BeforePageUnload( )">
+<!--
+// If we have table sorting on this page, the table sorting does not work in Firefox
+// (seems to work in IE and Opera).  The solution is to not call _AfterPageLoaded in OnLoad event.
+// In the Standardista code (sts.js) there is an addEvent that will call _AfterPageLoaded.
+-->
+<body onSubmit="_DisableFormElements( true )" onBeforeUnload="_BeforePageUnload( )">
 
 <%@ include file="./include/pagebackground.inc" %>  <!-- just temporary until we get the painter dialog updates from Kelly ... 2011.10.08 dks -->
 
@@ -907,14 +977,14 @@ else
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBStorDispSections2:GroupBox */ %>
 
-<div id="GBStorDispSections2" name="GBStorDispSections2" class="listgroup"   style="float:left;position:relative; width:780px; height:36px;">  <!-- GBStorDispSections2 --> 
+<div id="GBStorDispSections2" name="GBStorDispSections2" class="listgroup"   style="float:left;position:relative; width:780px; height:36px;">  <!-- GBStorDispSections2 -->
 
 <% /* OrganismClaimsStatements3:Text */ %>
 
 <label class="groupbox"  id="OrganismClaimsStatements3" name="OrganismClaimsStatements3" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Marketing Statement</label>
 
 
-</div>  <!--  GBStorDispSections2 --> 
+</div>  <!--  GBStorDispSections2 -->
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -1017,7 +1087,7 @@ else
 </tr>
 </table>
 
-</div>  <!-- GroupBox3 --> 
+</div>  <!-- GroupBox3 -->
 
 </div>  <!-- End of a new line -->
 
@@ -1031,30 +1101,32 @@ else
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox7:GroupBox */ %>
 
-<div id="GroupBox7" name="GroupBox7" style="width:832px;float:left;">  <!-- GroupBox7 --> 
+<div id="GroupBox7" name="GroupBox7" style="width:832px;float:left;">  <!-- GroupBox7 -->
 
 
  <!-- This is added as a line spacer -->
 <div style="height:8px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox2:GroupBox */ %>
 
-<div id="GroupBox2" name="GroupBox2"   style="float:left;position:relative; width:756px; height:30px;">  <!-- GroupBox2 --> 
+<div id="GroupBox2" name="GroupBox2"   style="float:left;position:relative; width:756px; height:30px;">  <!-- GroupBox2 -->
 
 <% /* PushBtn3:PushBtn */ %>
-<button type="button" class="newbutton" name="PushBtn3" id="PushBtn3" value="" onclick="GOTO_DisplayGeneratedText( )" style="width:158px;height:26px;position:absolute;left:490px;top:4px;">Show Generated Text</button>
+<button type="button" class="newbutton" name="PushBtn3" id="PushBtn3" value="" onclick="GOTO_DisplayGeneratedTextMktg( )" style="width:158px;height:26px;position:absolute;left:354px;top:4px;">Show Generated Text</button>
+
+<% /* PushBtn4:PushBtn */ %>
+<button type="button" class="newbutton" name="PushBtn4" id="PushBtn4" value="" onclick="PASTE_InsertKeyword( )" style="width:74px;height:26px;position:absolute;left:530px;top:4px;">Paste</button>
 
 <% /* PushBtn2:PushBtn */ %>
-<button type="button" class="newbutton" name="PushBtn2" id="PushBtn2" value="" onclick="GOTO_MarketingKeywordStmtAdd( )" style="width:66px;height:26px;position:absolute;left:672px;top:4px;">New</button>
+<button type="button" class="newbutton" name="PushBtn2" id="PushBtn2" value="" onclick="ADD_MarketingStatementKeyword( )" style="width:66px;height:26px;position:absolute;left:618px;top:4px;">New</button>
 
 <% /* Text4:Text */ %>
 
-<label class="listheader"  id="Text4" name="Text4" style="width:434px;height:16px;position:absolute;left:12px;top:8px;">Keyword text for Embedding in Statement Text</label>
+<label class="listheader"  id="Text4" name="Text4" style="width:324px;height:16px;position:absolute;left:10px;top:8px;">Keyword text for Embedding in Statement Text</label>
 
 
-</div>  <!--  GroupBox2 --> 
+</div>  <!--  GroupBox2 -->
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -1066,15 +1138,15 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* Grid3:Grid */ %>
-<table  cols=5 style=""  name="Grid3" id="Grid3">
+<table class="sortable"  cols=5 style=""  name="Grid3" id="Grid3">
 
-<thead><tr>
+<thead bgcolor=green><tr>
 
    <th>Keyword</th>
    <th>Keyword Text</th>
    <th>Update</th>
+   <th>Copy</th>
    <th>Delete</th>
-   <th>Update Keyword</th>
 
 </tr></thead>
 
@@ -1094,22 +1166,20 @@ try
       String strTag;
       String strGridEditCtl3;
       String strGridEditCtl4;
-      String strBMBUpdateDirectionsUseStatement1;
+      String strBitmapBtn2;
       String strBMBDeleteDirectionsUseStatement1;
       String strBitmapBtn1;
-      
+
       View vGrid3;
       vGrid3 = mMasLC.newView( );
-      csrRC2 = vGrid3.cursor( "M_InsertTextMarketing" ).setFirst( "M_MarketingStatement" );
+      csrRC2 = vGrid3.cursor( "M_InsertTextKeywordMarketing" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGrid3.cursor( "M_InsertTextMarketing" ).getEntityKey( );
+         lEntityKey = vGrid3.cursor( "M_InsertTextKeywordMarketing" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGridEditCtl3 = "";
          nRC = vGrid3.cursor( "M_InsertTextKeywordMarketing" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -1124,10 +1194,10 @@ try
             strGridEditCtl3 = "&nbsp";
 
          strGridEditCtl4 = "";
-         nRC = vGrid3.cursor( "M_InsertTextMarketing" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGrid3.cursor( "M_InsertTextKeywordMarketing" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl4 = vGrid3.cursor( "M_InsertTextMarketing" ).getAttribute( "Text" ).getString( "" );
+            strGridEditCtl4 = vGrid3.cursor( "M_InsertTextKeywordMarketing" ).getAttribute( "dMarketingKeywordText" ).getString( "" );
 
             if ( strGridEditCtl4 == null )
                strGridEditCtl4 = "";
@@ -1140,16 +1210,16 @@ try
 
 <tr<%=strOdd%>>
 
-   <td><%=strGridEditCtl3%></td>
+   <td><a href="#" onclick="GOTO_MarketingKeywordUpdate( this.id )" id="GridEditCtl3::<%=strEntityKey%>"><%=strGridEditCtl3%></a></td>
    <td><%=strGridEditCtl4%></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateDirectionsUseStatement1" onclick="GOTO_MarketingKeywordUpdate( this.id )" id="BMBUpdateDirectionsUseStatement1::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteDirectionsUseStatement1" onclick="GOTO_MarketingKeywordStmtDelete( this.id )" id="BMBDeleteDirectionsUseStatement1::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn1" onclick="GOTO_MarketingKeywordStmtKeyword( this.id )" id="BitmapBtn1::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Update Keyword"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn2" onclick="GOTO_MarketingKeywordUpdate( this.id )" id="BitmapBtn2::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteDirectionsUseStatement1" onclick="COPY_InsertKeyword( this.id )" id="BMBDeleteDirectionsUseStatement1::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Copy"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn1" onclick="DELETE_MarketingStatementKeyword( this.id )" id="BitmapBtn1::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 
 <%
-         csrRC2 = vGrid3.cursor( "M_InsertTextMarketing" ).setNextContinue( );
+         csrRC2 = vGrid3.cursor( "M_InsertTextKeywordMarketing" ).setNextContinue( );
       }
       vGrid3.drop( );
    }
@@ -1166,7 +1236,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </div>  <!-- End of a new line -->
 
 
-</div>  <!--  GroupBox7 --> 
+</div>  <!--  GroupBox7 -->
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -1179,27 +1249,26 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox1:GroupBox */ %>
 
-<div id="GroupBox1" name="GroupBox1" style="width:832px;float:left;">  <!-- GroupBox1 --> 
+<div id="GroupBox1" name="GroupBox1" style="width:832px;float:left;">  <!-- GroupBox1 -->
 
 
  <!-- This is added as a line spacer -->
 <div style="height:8px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox4:GroupBox */ %>
 
-<div id="GroupBox4" name="GroupBox4"   style="float:left;position:relative; width:686px; height:30px;">  <!-- GroupBox4 --> 
+<div id="GroupBox4" name="GroupBox4"   style="float:left;position:relative; width:686px; height:30px;">  <!-- GroupBox4 -->
 
 <% /* Text2:Text */ %>
 
-<label class="listheader"  id="Text2" name="Text2" style="width:434px;height:16px;position:absolute;left:12px;top:4px;">Usage Entries for Embedding in Statement Text</label>
+<label class="listheader"  id="Text2" name="Text2" style="width:434px;height:16px;position:absolute;left:10px;top:4px;">Usage Entries for Embedding in Statement Text</label>
 
 <% /* PushBtn1:PushBtn */ %>
 <button type="button" class="newbutton" name="PushBtn1" id="PushBtn1" value="" onclick="GOTO_SelectRemoveMktgEntries( )" style="width:118px;height:26px;position:absolute;left:560px;top:4px;">Select/Remove</button>
 
 
-</div>  <!--  GroupBox4 --> 
+</div>  <!--  GroupBox4 -->
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -1211,9 +1280,9 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* Grid1:Grid */ %>
-<table  cols=2 style=""  name="Grid1" id="Grid1">
+<table class="sortable"  cols=2 style=""  name="Grid1" id="Grid1">
 
-<thead><tr>
+<thead bgcolor=green><tr>
 
    <th>Usage Type</th>
    <th>Usage Name</th>
@@ -1236,7 +1305,7 @@ try
       String strTag;
       String strGridEditCtl1;
       String strGridEditCtl2;
-      
+
       View vGrid1;
       vGrid1 = mMasLC.newView( );
       csrRC2 = vGrid1.cursor( "M_MarketingUsageOrdering" ).setFirst(  );
@@ -1247,8 +1316,6 @@ try
 
          lEntityKey = vGrid1.cursor( "M_MarketingUsageOrdering" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGridEditCtl1 = "";
          nRC = vGrid1.cursor( "M_MarketingUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -1302,7 +1369,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </div>  <!-- End of a new line -->
 
 
-</div>  <!--  GroupBox1 --> 
+</div>  <!--  GroupBox1 -->
 </div>  <!-- End of a new line -->
 
 

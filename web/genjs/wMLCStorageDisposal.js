@@ -189,6 +189,25 @@ function CheckAllInGrid(id, CheckBoxName)
    }
 }
 
+function GOTO_StorageDispSectionAddAfter( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCStorageDisposal.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCStorageDisposal.zAction.value = "GOTO_StorageDispSectionAddAfter";
+      document.wMLCStorageDisposal.submit( );
+   }
+}
+
 function GOTO_StorageDispSectionAdd( )
 {
 
@@ -200,6 +219,25 @@ function GOTO_StorageDispSectionAdd( )
       _DisableFormElements( true );
 
       document.wMLCStorageDisposal.zAction.value = "GOTO_StorageDispSectionAdd";
+      document.wMLCStorageDisposal.submit( );
+   }
+}
+
+function GOTO_StorageDispSectionAddBefore( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCStorageDisposal.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCStorageDisposal.zAction.value = "GOTO_StorageDispSectionAddBefore";
       document.wMLCStorageDisposal.submit( );
    }
 }
@@ -377,7 +415,7 @@ function smEditFirstAidSect( )
    }
 }
 
-function smEditEnvironmentalHazardSection( )
+function smEnvironmentalHazards( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -387,7 +425,7 @@ function smEditEnvironmentalHazardSection( )
    {
       _DisableFormElements( true );
 
-      document.wMLCStorageDisposal.zAction.value = "smEditEnvironmentalHazardSection";
+      document.wMLCStorageDisposal.zAction.value = "smEnvironmentalHazards";
       document.wMLCStorageDisposal.submit( );
    }
 }

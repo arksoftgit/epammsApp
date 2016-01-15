@@ -189,8 +189,8 @@ eDomain    2
 aZKey      18568062
 aName      NumericId
 aDesc      Numeric Text (0-9).
-aDomainType F
-aJavaClass com.quinsoft.zeidon.domains.RegularExpressionDomain
+aDomainType A
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
 aDataType  S
 aMaxStringLth 32
 aContextRestriction N
@@ -198,8 +198,6 @@ aContextRestriction N
 eContext   3
 aZKey      18568063
 aName      NumericId
-aEditString 99999999999999999999999999999999
-aJavaEditString ^[0-9]*$
 aIsDefault Y
 
 eDomain    2

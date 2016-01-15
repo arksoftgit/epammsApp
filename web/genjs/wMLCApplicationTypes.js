@@ -2,6 +2,7 @@ var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;
 window.history.forward( 1 );
+var Tab1;
 
 function handleErr( msg, url, l )
 {
@@ -189,7 +190,7 @@ function CheckAllInGrid(id, CheckBoxName)
    }
 }
 
-function ADD_ApplicationTypesStatement( )
+function ADD_AreasUsageItems( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -199,12 +200,37 @@ function ADD_ApplicationTypesStatement( )
    {
       _DisableFormElements( true );
 
-      document.wMLCApplicationTypes.zAction.value = "ADD_ApplicationTypesStatement";
+      document.wMLCApplicationTypes.zAction.value = "ADD_AreasUsageItems";
       document.wMLCApplicationTypes.submit( );
    }
 }
 
-function GOTO_DeleteSelectedEntries( )
+function DELETE_SelectedUsageEntries( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+// Confirmation of  Delete.
+if (!confirm("OK to delete selected Surfaces?"))
+{
+   return;
+}
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wMLCApplicationTypes.zAction.value = "DELETE_SelectedUsageEntries";
+      document.wMLCApplicationTypes.submit( );
+   }
+}
+
+function DELETE_UsageGroupEntries( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -214,12 +240,42 @@ function GOTO_DeleteSelectedEntries( )
    {
       _DisableFormElements( true );
 
-      document.wMLCApplicationTypes.zAction.value = "GOTO_DeleteSelectedEntries";
+      document.wMLCApplicationTypes.zAction.value = "DELETE_UsageGroupEntries";
       document.wMLCApplicationTypes.submit( );
    }
 }
 
-function GOTO_UpdateApplicationTStatement( strTagEntityKey )
+function DELETE_UsageGroupEntriesOnly( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCApplicationTypes.zAction.value = "DELETE_UsageGroupEntriesOnly";
+      document.wMLCApplicationTypes.submit( );
+   }
+}
+
+function GOTO_AddUsageGroup( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCApplicationTypes.zAction.value = "GOTO_AddUsageGroup";
+      document.wMLCApplicationTypes.submit( );
+   }
+}
+
+function GOTO_UpdateApplTypesStatement( strTagEntityKey )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -233,7 +289,26 @@ function GOTO_UpdateApplicationTStatement( strTagEntityKey )
       document.wMLCApplicationTypes.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
-      document.wMLCApplicationTypes.zAction.value = "GOTO_UpdateApplicationTStatement";
+      document.wMLCApplicationTypes.zAction.value = "GOTO_UpdateApplTypesStatement";
+      document.wMLCApplicationTypes.submit( );
+   }
+}
+
+function GOTO_UpdateUsageGroup( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCApplicationTypes.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCApplicationTypes.zAction.value = "GOTO_UpdateUsageGroup";
       document.wMLCApplicationTypes.submit( );
    }
 }
@@ -373,7 +448,7 @@ function smEditFirstAidSect( )
    }
 }
 
-function smEditEnvironmentalHazardSection( )
+function smEnvironmentalHazards( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -383,7 +458,7 @@ function smEditEnvironmentalHazardSection( )
    {
       _DisableFormElements( true );
 
-      document.wMLCApplicationTypes.zAction.value = "smEditEnvironmentalHazardSection";
+      document.wMLCApplicationTypes.zAction.value = "smEnvironmentalHazards";
       document.wMLCApplicationTypes.submit( );
    }
 }

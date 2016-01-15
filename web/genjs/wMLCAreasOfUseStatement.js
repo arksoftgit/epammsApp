@@ -204,6 +204,84 @@ function AcceptAndReturnAreasStatement( )
    }
 }
 
+function ADD_UsageKeyword( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCAreasOfUseStatement.zAction.value = "ADD_UsageKeyword";
+      document.wMLCAreasOfUseStatement.submit( );
+   }
+}
+
+function DELETE_UsageKeyword( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCAreasOfUseStatement.zTableRowSelect.value = strEntityKey;
+      // Javascript code entered by user.
+
+// Confirmation of  Delete.
+if (!confirm("OK to delete selected entry?"))
+{
+   return;
+}
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wMLCAreasOfUseStatement.zAction.value = "DELETE_UsageKeyword";
+      document.wMLCAreasOfUseStatement.submit( );
+   }
+}
+
+function GOTO_DisplayGeneratedTextUsage( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCAreasOfUseStatement.zAction.value = "GOTO_DisplayGeneratedTextUsage";
+      document.wMLCAreasOfUseStatement.submit( );
+   }
+}
+
+function GOTO_UsageUpdate( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCAreasOfUseStatement.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCAreasOfUseStatement.zAction.value = "GOTO_UsageUpdate";
+      document.wMLCAreasOfUseStatement.submit( );
+   }
+}
+
 function InitAreasOfUseStmtsForInsert( )
 {
 

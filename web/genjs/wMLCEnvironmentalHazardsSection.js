@@ -191,7 +191,37 @@ function CheckAllInGrid(id, CheckBoxName)
    }
 }
 
-function GOTO_EnvironmentalHazardsDelete( strTagEntityKey )
+function AcceptEnvironmentalSection( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCEnvironmentalHazardsSection.zAction.value = "AcceptEnvironmentalSection";
+      document.wMLCEnvironmentalHazardsSection.submit( );
+   }
+}
+
+function CancelEnvironmentalSection( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCEnvironmentalHazardsSection.zAction.value = "CancelEnvironmentalSection";
+      document.wMLCEnvironmentalHazardsSection.submit( );
+   }
+}
+
+function DELETE_EnvironmentalHazardsStmt( strTagEntityKey )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -203,9 +233,19 @@ function GOTO_EnvironmentalHazardsDelete( strTagEntityKey )
       var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
 
       document.wMLCEnvironmentalHazardsSection.zTableRowSelect.value = strEntityKey;
+      // Javascript code entered by user.
+
+// Confirmation of  Delete.
+if (!confirm("OK to delete selected Environmental Statement?"))
+{
+   return;
+}
+
+      // END of Javascript code entered by user.
+
       _DisableFormElements( true );
 
-      document.wMLCEnvironmentalHazardsSection.zAction.value = "GOTO_EnvironmentalHazardsDelete";
+      document.wMLCEnvironmentalHazardsSection.zAction.value = "DELETE_EnvironmentalHazardsStmt";
       document.wMLCEnvironmentalHazardsSection.submit( );
    }
 }
@@ -240,291 +280,6 @@ function GOTO_EnvironmentHazardsAdd( )
       _DisableFormElements( true );
 
       document.wMLCEnvironmentalHazardsSection.zAction.value = "GOTO_EnvironmentHazardsAdd";
-      document.wMLCEnvironmentalHazardsSection.submit( );
-   }
-}
-
-function smSaveAndReturnMLC( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCEnvironmentalHazardsSection.zAction.value = "smSaveAndReturnMLC";
-      document.wMLCEnvironmentalHazardsSection.submit( );
-   }
-}
-
-function smSaveMLC( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCEnvironmentalHazardsSection.zAction.value = "smSaveMLC";
-      document.wMLCEnvironmentalHazardsSection.submit( );
-   }
-}
-
-function smCancelAndReturnMLC( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCEnvironmentalHazardsSection.zAction.value = "smCancelAndReturnMLC";
-      document.wMLCEnvironmentalHazardsSection.submit( );
-   }
-}
-
-function smEditMasterLabelVersionData( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCEnvironmentalHazardsSection.zAction.value = "smEditMasterLabelVersionData";
-      document.wMLCEnvironmentalHazardsSection.submit( );
-   }
-}
-
-function smEditIngredientsSect( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCEnvironmentalHazardsSection.zAction.value = "smEditIngredientsSect";
-      document.wMLCEnvironmentalHazardsSection.submit( );
-   }
-}
-
-function smEditStorDispSect( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCEnvironmentalHazardsSection.zAction.value = "smEditStorDispSect";
-      document.wMLCEnvironmentalHazardsSection.submit( );
-   }
-}
-
-function smEditHumanHazardSect( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCEnvironmentalHazardsSection.zAction.value = "smEditHumanHazardSect";
-      document.wMLCEnvironmentalHazardsSection.submit( );
-   }
-}
-
-function smEditPrecautionarySection( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCEnvironmentalHazardsSection.zAction.value = "smEditPrecautionarySection";
-      document.wMLCEnvironmentalHazardsSection.submit( );
-   }
-}
-
-function smEditFirstAidSect( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCEnvironmentalHazardsSection.zAction.value = "smEditFirstAidSect";
-      document.wMLCEnvironmentalHazardsSection.submit( );
-   }
-}
-
-function smEditEnvironmentalHazardSection( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCEnvironmentalHazardsSection.zAction.value = "smEditEnvironmentalHazardSection";
-      document.wMLCEnvironmentalHazardsSection.submit( );
-   }
-}
-
-function smEditChemicalHazardsSection( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCEnvironmentalHazardsSection.zAction.value = "smEditChemicalHazardsSection";
-      document.wMLCEnvironmentalHazardsSection.submit( );
-   }
-}
-
-function smGOTO_DilutionEntries( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCEnvironmentalHazardsSection.zAction.value = "smGOTO_DilutionEntries";
-      document.wMLCEnvironmentalHazardsSection.submit( );
-   }
-}
-
-function smEditClaimsSection( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCEnvironmentalHazardsSection.zAction.value = "smEditClaimsSection";
-      document.wMLCEnvironmentalHazardsSection.submit( );
-   }
-}
-
-function smEditSurfacesSection( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCEnvironmentalHazardsSection.zAction.value = "smEditSurfacesSection";
-      document.wMLCEnvironmentalHazardsSection.submit( );
-   }
-}
-
-function smEditAreasOfUseSection( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCEnvironmentalHazardsSection.zAction.value = "smEditAreasOfUseSection";
-      document.wMLCEnvironmentalHazardsSection.submit( );
-   }
-}
-
-function smEditApplicationTypesSection( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCEnvironmentalHazardsSection.zAction.value = "smEditApplicationTypesSection";
-      document.wMLCEnvironmentalHazardsSection.submit( );
-   }
-}
-
-function smGOTO_ClaimsFootnote( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCEnvironmentalHazardsSection.zAction.value = "smGOTO_ClaimsFootnote";
-      document.wMLCEnvironmentalHazardsSection.submit( );
-   }
-}
-
-function smEditDirectionsUseSect( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCEnvironmentalHazardsSection.zAction.value = "smEditDirectionsUseSect";
-      document.wMLCEnvironmentalHazardsSection.submit( );
-   }
-}
-
-function smEditMarketingSect( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCEnvironmentalHazardsSection.zAction.value = "smEditMarketingSect";
       document.wMLCEnvironmentalHazardsSection.submit( );
    }
 }

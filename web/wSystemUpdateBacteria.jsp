@@ -1333,8 +1333,6 @@ try
 
          lEntityKey = vGridBacteria.cursor( "Bacteria" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGS_Select = "";
          nRC = vGridBacteria.cursor( "EPA_Claim" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -1375,9 +1373,9 @@ try
 
    <td nowrap><%=strGS_Select%></td>
    <td nowrap><a href="#" onclick="SelectBacteria( this.id )" id="GEBacteria::<%=strEntityKey%>"><%=strGEBacteria%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateBacteria" onclick="UpdateBacteria( this.id )" id="BMBUpdateBacteria::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBNewBacteria" onclick="AddNewBacteria( this.id )" id="BMBNewBacteria::<%=strEntityKey%>"><img src="./images/ePammsNew.jpg" alt="New"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteBacteria" onclick="DeleteBacteria( this.id )" id="BMBDeleteBacteria::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateBacteria" onclick="UpdateBacteria( this.id )" id="BMBUpdateBacteria::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBNewBacteria" onclick="AddNewBacteria( this.id )" id="BMBNewBacteria::<%=strEntityKey%>"><img src="./images/ePammsNew.png" alt="New"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteBacteria" onclick="DeleteBacteria( this.id )" id="BMBDeleteBacteria::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 

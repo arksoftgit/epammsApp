@@ -210,8 +210,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartChangePassword", "wStart.CHANGE_Password" );
-      nOptRC = wStart.CHANGE_Password( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartChangePassword", "wStartUp.CHANGE_Password" );
+      nOptRC = wStartUp.CHANGE_Password( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection

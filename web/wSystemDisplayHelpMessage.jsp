@@ -13,7 +13,7 @@
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
 <%@ page import="com.quinsoft.epamms.*" %>
 
-<%! 
+<%!
 
 ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
@@ -69,7 +69,7 @@ if ( StringUtils.isBlank( taskId ) )
    return;
 }
 
-task = objectEngine.getTaskById( taskId );
+   task = objectEngine.getTaskById( taskId );
 if ( task == null )
 {
    session.removeAttribute( "ZeidonTaskId" );
@@ -258,7 +258,7 @@ if ( strActionToProcess != null )
             task.log().info( "Action Error Redirect to: " + strURL );
          }
 
-         if ( ! strURL.equals("wSystemDisplayHelpMessage.jsp") ) 
+         if ( ! strURL.equals("wSystemDisplayHelpMessage.jsp") )
          {
             response.sendRedirect( strURL );
             // If we are redirecting to a new page, then we need this return so that the rest of this page doesn't get built.
@@ -288,14 +288,14 @@ else
 // hand coded
    strBannerName = "./include/ePammsBannerDisplayHelp.inc";
    if ( task != null ) {
-      wWebXA = task.getViewByName( "wWebXfer" );
-      if ( VmlOperation.isValid( wWebXA ) )
-      {
-         wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSystem", "" );
-         wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "DisplayHelpMessage", "" );
-      }
+   wWebXA = task.getViewByName( "wWebXfer" );
+   if ( VmlOperation.isValid( wWebXA ) )
+   {
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSystem", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "DisplayHelpMessage", "" );
    }
-// end of: hand coded   
+   }
+// end of: hand coded
 
 %>
 

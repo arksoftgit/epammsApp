@@ -942,8 +942,6 @@ try
 
          lEntityKey = vColors.cursor( "Color" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strColorName = "";
          nRC = vColors.cursor( "Color" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -990,8 +988,8 @@ try
    <td nowrap><a href="#" onclick="UpdateColor( this.id )" id="ColorName::<%=strEntityKey%>"><%=strColorName%></a></td>
    <td nowrap><a href="#" onclick="UpdateColor( this.id )" id="RGBHex::<%=strEntityKey%>"><%=strRGBHex%></a></td>
    <td nowrap><a href="#" onclick="UpdateColor( this.id )" id="PantoneName::<%=strEntityKey%>"><%=strPantoneName%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateColor" onclick="UpdateColor( this.id )" id="BMBUpdateColor::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteColor" onclick="DeleteColor( this.id )" id="BMBDeleteColor::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateColor" onclick="UpdateColor( this.id )" id="BMBUpdateColor::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteColor" onclick="DeleteColor( this.id )" id="BMBDeleteColor::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 
@@ -1094,8 +1092,6 @@ try
 
          lEntityKey = vReusableBlocks.cursor( "ReusableBlockDefinition" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strReusableBlockName = "";
          nRC = vReusableBlocks.cursor( "ReusableBlockDefinition" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -1142,8 +1138,8 @@ try
    <td nowrap><a href="#" onclick="UpdateReusableBlock( this.id )" id="ReusableBlockName::<%=strEntityKey%>"><%=strReusableBlockName%></a></td>
    <td nowrap><a href="#" onclick="UpdateReusableBlock( this.id )" id="Description::<%=strEntityKey%>"><%=strDescription%></a></td>
    <td nowrap><a href="#" onclick="UpdateReusableBlock( this.id )" id="SectionType::<%=strEntityKey%>"><%=strSectionType%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateReusableBlock" onclick="UpdateReusableBlock( this.id )" id="BMBUpdateReusableBlock::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteReusableBlock" onclick="DeleteReusableBlock( this.id )" id="BMBDeleteReusableBlock::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateReusableBlock" onclick="UpdateReusableBlock( this.id )" id="BMBUpdateReusableBlock::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteReusableBlock" onclick="DeleteReusableBlock( this.id )" id="BMBDeleteReusableBlock::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 

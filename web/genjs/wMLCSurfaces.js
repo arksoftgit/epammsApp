@@ -2,6 +2,7 @@ var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;
 window.history.forward( 1 );
+var Tab1;
 
 function handleErr( msg, url, l )
 {
@@ -204,7 +205,32 @@ function ADD_SurfacesUsageItems( )
    }
 }
 
-function GOTO_DeleteSelectedEntries( )
+function DELETE_SelectedUsageEntries( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+// Confirmation of  Delete.
+if (!confirm("OK to delete selected Surfaces?"))
+{
+   return;
+}
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wMLCSurfaces.zAction.value = "DELETE_SelectedUsageEntries";
+      document.wMLCSurfaces.submit( );
+   }
+}
+
+function DELETE_UsageGroupEntriesOnly( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -214,7 +240,37 @@ function GOTO_DeleteSelectedEntries( )
    {
       _DisableFormElements( true );
 
-      document.wMLCSurfaces.zAction.value = "GOTO_DeleteSelectedEntries";
+      document.wMLCSurfaces.zAction.value = "DELETE_UsageGroupEntriesOnly";
+      document.wMLCSurfaces.submit( );
+   }
+}
+
+function DELETE_UsageGroupEntriesSurfaces( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCSurfaces.zAction.value = "DELETE_UsageGroupEntriesSurfaces";
+      document.wMLCSurfaces.submit( );
+   }
+}
+
+function GOTO_AddUsageGroup( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCSurfaces.zAction.value = "GOTO_AddUsageGroup";
       document.wMLCSurfaces.submit( );
    }
 }
@@ -234,6 +290,25 @@ function GOTO_UpdateSurfacesStatement( strTagEntityKey )
       _DisableFormElements( true );
 
       document.wMLCSurfaces.zAction.value = "GOTO_UpdateSurfacesStatement";
+      document.wMLCSurfaces.submit( );
+   }
+}
+
+function GOTO_UpdateUsageGroup( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCSurfaces.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCSurfaces.zAction.value = "GOTO_UpdateUsageGroup";
       document.wMLCSurfaces.submit( );
    }
 }
@@ -373,7 +448,7 @@ function smEditFirstAidSect( )
    }
 }
 
-function smEditEnvironmentalHazardSection( )
+function smEnvironmentalHazards( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -383,7 +458,7 @@ function smEditEnvironmentalHazardSection( )
    {
       _DisableFormElements( true );
 
-      document.wMLCSurfaces.zAction.value = "smEditEnvironmentalHazardSection";
+      document.wMLCSurfaces.zAction.value = "smEnvironmentalHazards";
       document.wMLCSurfaces.submit( );
    }
 }

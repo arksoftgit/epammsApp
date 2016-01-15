@@ -639,8 +639,6 @@ try
 
          lEntityKey = vGrid1.cursor( "MI_UsageList" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGridEditCtl1 = "";
          nRC = vGrid1.cursor( "MI_UsageList" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )

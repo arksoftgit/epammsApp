@@ -189,21 +189,6 @@ function CheckAllInGrid(id, CheckBoxName)
    }
 }
 
-function GOTO_DirectionsForUseSectionAdd( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCDirectionsForUse.zAction.value = "GOTO_DirectionsForUseSectionAdd";
-      document.wMLCDirectionsForUse.submit( );
-   }
-}
-
 function GOTO_DirsForUseSectionDelete( strTagEntityKey )
 {
 
@@ -238,6 +223,59 @@ function GOTO_DirsForUseSectionUpdate( strTagEntityKey )
       _DisableFormElements( true );
 
       document.wMLCDirectionsForUse.zAction.value = "GOTO_DirsForUseSectionUpdate";
+      document.wMLCDirectionsForUse.submit( );
+   }
+}
+
+function GOTO_DU_SectionAddAfter( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCDirectionsForUse.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUse.zAction.value = "GOTO_DU_SectionAddAfter";
+      document.wMLCDirectionsForUse.submit( );
+   }
+}
+
+function GOTO_DU_SectionAdd( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUse.zAction.value = "GOTO_DU_SectionAdd";
+      document.wMLCDirectionsForUse.submit( );
+   }
+}
+
+function GOTO_DU_SectionAddBefore( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCDirectionsForUse.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUse.zAction.value = "GOTO_DU_SectionAddBefore";
       document.wMLCDirectionsForUse.submit( );
    }
 }
@@ -377,7 +415,7 @@ function smEditFirstAidSect( )
    }
 }
 
-function smEditEnvironmentalHazardSection( )
+function smEnvironmentalHazards( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -387,7 +425,7 @@ function smEditEnvironmentalHazardSection( )
    {
       _DisableFormElements( true );
 
-      document.wMLCDirectionsForUse.zAction.value = "smEditEnvironmentalHazardSection";
+      document.wMLCDirectionsForUse.zAction.value = "smEnvironmentalHazards";
       document.wMLCDirectionsForUse.submit( );
    }
 }

@@ -204,6 +204,21 @@ function AcceptMarketingKeywordText( )
    }
 }
 
+function REGENERATE_TitleText( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCGeneratedTextDisplay.zAction.value = "REGENERATE_TitleText";
+      document.wMLCGeneratedTextDisplay.submit( );
+   }
+}
+
 function Close( )
 {
 

@@ -61,7 +61,7 @@ public int DoInputMapping( HttpServletRequest request,
    if ( VmlOperation.isValid( mMasLC ) )
    {
       // EditBox: DirectionsUseTitle2
-      nRC = mMasLC.cursor( "M_GeneralSection" ).checkExistenceOfEntity( ).toInt();
+      nRC = mMasLC.cursor( "M_GeneralSubsection" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
          strMapValue = request.getParameter( "DirectionsUseTitle2" );
@@ -70,7 +70,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "DirectionsUseTitle2", "", strMapValue );
             else
-               mMasLC.cursor( "M_GeneralSection" ).getAttribute( "Title" ).setValue( strMapValue, "" );
+               mMasLC.cursor( "M_GeneralSubsection" ).getAttribute( "Name" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -80,7 +80,7 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       // EditBox: EditBox3
-      nRC = mMasLC.cursor( "M_GeneralSection" ).checkExistenceOfEntity( ).toInt();
+      nRC = mMasLC.cursor( "M_GeneralSubsection" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
          strMapValue = request.getParameter( "EditBox3" );
@@ -89,7 +89,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox3", "", strMapValue );
             else
-               mMasLC.cursor( "M_GeneralSection" ).getAttribute( "Subtitle" ).setValue( strMapValue, "" );
+               mMasLC.cursor( "M_GeneralSubsection" ).getAttribute( "Title" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -99,7 +99,7 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       // ComboBox: ComboBox1
-      nRC = mMasLC.cursor( "M_GeneralSection" ).checkExistenceOfEntity( ).toInt();
+      nRC = mMasLC.cursor( "M_GeneralSubsection" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
          strMapValue = request.getParameter( "hComboBox1" );
@@ -108,7 +108,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "ComboBox1", "", strMapValue );
             else
-               mMasLC.cursor( "M_GeneralSection" ).getAttribute( "ContainerVolumeEnvironmentHazard" ).setValue( strMapValue, "" );
+               mMasLC.cursor( "M_GeneralSubsection" ).getAttribute( "ContainerVolumeEnvironmentHazard" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -124,14 +124,14 @@ public int DoInputMapping( HttpServletRequest request,
       // grids on the same window with the same view we do not mess up the 
       // entity positions. 
       vGridTmp = mMasLC.newView( );
-      csrRC = vGridTmp.cursor( "M_GeneralStatement" ).setFirst(  );
+      csrRC = vGridTmp.cursor( "M_GeneralSubStatement" ).setFirst(  );
       while ( csrRC.isSet() )
       {
-         lEntityKey = vGridTmp.cursor( "M_GeneralStatement" ).getEntityKey( );
+         lEntityKey = vGridTmp.cursor( "M_GeneralSubStatement" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
 
-         csrRC = vGridTmp.cursor( "M_GeneralStatement" ).setNextContinue( );
+         csrRC = vGridTmp.cursor( "M_GeneralSubStatement" ).setNextContinue( );
       }
 
       vGridTmp.drop( );
@@ -256,7 +256,84 @@ if ( strActionToProcess != null )
 
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_EnvironmentalHazardsDelete" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "AcceptEnvironmentalSection" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCEnvironmentalHazardsSection", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Auto Object Function
+      nRC = 0;
+      try
+      {
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_GeneralSubsection" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
+      {
+         if ( cursor.isVersioned( ) )
+         {
+            cursor.acceptSubobject( );
+         }
+         nRC = 0;
+      }
+
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "AcceptEnvironmentalSection", e.getMessage( ), "" );
+         break;
+      }
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelEnvironmentalSection" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCEnvironmentalHazardsSection", strActionToProcess );
+
+      // Action Auto Object Function
+      nRC = 0;
+      try
+      {
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_GeneralSubsection" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
+      {
+         if ( cursor.isVersioned( ) )
+         {
+            cursor.cancelSubobject( );
+         }
+         nRC = 0;
+      }
+
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "CancelEnvironmentalSection", e.getMessage( ), "" );
+         break;
+      }
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "DELETE_EnvironmentalHazardsStmt" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCEnvironmentalHazardsSection", strActionToProcess );
@@ -273,14 +350,14 @@ if ( strActionToProcess != null )
       if ( VmlOperation.isValid( mMasLC ) )
       {
          lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mMasLC.cursor( "M_GeneralStatement" ).setByEntityKey( lEKey );
+         csrRC = mMasLC.cursor( "M_GeneralSubStatement" ).setByEntityKey( lEKey );
          if ( !csrRC.isSet() )
          {
             boolean bFound = false;
-            csrRCk = mMasLC.cursor( "M_GeneralStatement" ).setFirst( );
+            csrRCk = mMasLC.cursor( "M_GeneralSubStatement" ).setFirst( );
             while ( csrRCk.isSet() && !bFound )
             {
-               lEKey = mMasLC.cursor( "M_GeneralStatement" ).getEntityKey( );
+               lEKey = mMasLC.cursor( "M_GeneralSubStatement" ).getEntityKey( );
                strKey = Long.toString( lEKey );
                if ( StringUtils.equals( strKey, strEntityKey ) )
                {
@@ -288,34 +365,33 @@ if ( strActionToProcess != null )
                   bFound = true;
                }
                else
-                  csrRCk = mMasLC.cursor( "M_GeneralStatement" ).setNextContinue( );
+                  csrRCk = mMasLC.cursor( "M_GeneralSubStatement" ).setNextContinue( );
             } // Grid
          }
       }
 
-      // Action Operation
+      // Action Auto Object Function
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCEnvironmentalHazardsSection", "wMLC.GOTO_HazardsStmtDelete" );
-      nOptRC = wMLC.GOTO_HazardsStmtDelete( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
+      try
       {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
+      EntityCursor cursor = mMasLC.cursor( "M_GeneralSubStatement" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
+      {
+         cursor.deleteEntity( CursorPosition.NEXT );
+         nRC = 0;
+      }
+
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "DELETE_EnvironmentalHazardsStmt", e.getMessage( ), "" );
          break;
       }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "DeleteComponent" );
-      }
-
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -338,14 +414,14 @@ if ( strActionToProcess != null )
       if ( VmlOperation.isValid( mMasLC ) )
       {
          lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mMasLC.cursor( "M_GeneralStatement" ).setByEntityKey( lEKey );
+         csrRC = mMasLC.cursor( "M_GeneralSubStatement" ).setByEntityKey( lEKey );
          if ( !csrRC.isSet() )
          {
             boolean bFound = false;
-            csrRCk = mMasLC.cursor( "M_GeneralStatement" ).setFirst( );
+            csrRCk = mMasLC.cursor( "M_GeneralSubStatement" ).setFirst( );
             while ( csrRCk.isSet() && !bFound )
             {
-               lEKey = mMasLC.cursor( "M_GeneralStatement" ).getEntityKey( );
+               lEKey = mMasLC.cursor( "M_GeneralSubStatement" ).getEntityKey( );
                strKey = Long.toString( lEKey );
                if ( StringUtils.equals( strKey, strEntityKey ) )
                {
@@ -353,16 +429,25 @@ if ( strActionToProcess != null )
                   bFound = true;
                }
                else
-                  csrRCk = mMasLC.cursor( "M_GeneralStatement" ).setNextContinue( );
+                  csrRCk = mMasLC.cursor( "M_GeneralSubStatement" ).setNextContinue( );
             } // Grid
          }
       }
 
       // Action Auto Object Function
       nRC = 0;
-      EntityCursor cursor = mMasLC.cursor( "M_GeneralStatement" );
+      try
+      {
+      EntityCursor cursor = mMasLC.cursor( "M_GeneralSubStatement" );
       cursor.createTemporalSubobjectVersion( );
 
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "GOTO_EnvironmentalHazardsUpdate", e.getMessage( ), "" );
+         break;
+      }
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "HazardsStatement" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -382,10 +467,19 @@ if ( strActionToProcess != null )
 
       // Action Auto Object Function
       nRC = 0;
+      try
+      {
       View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_GeneralStatement" );
+      EntityCursor cursor = mMasLC.cursor( "M_GeneralSubStatement" );
       cursor.createTemporalEntity( );
 
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "GOTO_EnvironmentHazardsAdd", e.getMessage( ), "" );
+         break;
+      }
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "HazardsStatement" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -404,560 +498,6 @@ if ( strActionToProcess != null )
 
       // No redirection, we are staying on this page.
       nRC = 0;
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smSaveAndReturnMLC" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCEnvironmentalHazardsSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCEnvironmentalHazardsSection", "wMLC.SaveAndReturnMLC" );
-      nOptRC = wMLC.SaveAndReturnMLC( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smSaveMLC" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCEnvironmentalHazardsSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCEnvironmentalHazardsSection", "wMLC.SaveMLC" );
-      nOptRC = wMLC.SaveMLC( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smCancelAndReturnMLC" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCEnvironmentalHazardsSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCEnvironmentalHazardsSection", "wMLC.CancelAndReturnMLC" );
-      nOptRC = wMLC.CancelAndReturnMLC( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditMasterLabelVersionData" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCEnvironmentalHazardsSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "VersionData" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditIngredientsSect" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCEnvironmentalHazardsSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "Ingredients" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditStorDispSect" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCEnvironmentalHazardsSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "StorageDisposal" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditHumanHazardSect" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCEnvironmentalHazardsSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "HumanHazard" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditPrecautionarySection" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCEnvironmentalHazardsSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCEnvironmentalHazardsSection", "wMLC.EditPrecautionarySection" );
-      nOptRC = wMLC.EditPrecautionarySection( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "PrecautionarySection" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditFirstAidSect" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCEnvironmentalHazardsSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCEnvironmentalHazardsSection", "wMLC.EditFirstAidSection" );
-      nOptRC = wMLC.EditFirstAidSection( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "FirstAidSection" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditEnvironmentalHazardSection" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCEnvironmentalHazardsSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCEnvironmentalHazardsSection", "wMLC.EditEnvironmentalHazardsSection" );
-      nOptRC = wMLC.EditEnvironmentalHazardsSection( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "EnvironmentalHazardsSection" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditChemicalHazardsSection" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCEnvironmentalHazardsSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCEnvironmentalHazardsSection", "wMLC.EditChemicalHazardsSection" );
-      nOptRC = wMLC.EditChemicalHazardsSection( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "PhysicalChemicalHazardsSection" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smGOTO_DilutionEntries" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCEnvironmentalHazardsSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "Dilution" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditClaimsSection" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCEnvironmentalHazardsSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCEnvironmentalHazardsSection", "wMLC.EditClaimsSection" );
-      nOptRC = wMLC.EditClaimsSection( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "OrganismClaims" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditSurfacesSection" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCEnvironmentalHazardsSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCEnvironmentalHazardsSection", "wMLC.EditSurfacesSection" );
-      nOptRC = wMLC.EditSurfacesSection( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "Surfaces" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditAreasOfUseSection" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCEnvironmentalHazardsSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCEnvironmentalHazardsSection", "wMLC.EditAreasOfUseSection" );
-      nOptRC = wMLC.EditAreasOfUseSection( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "AreasOfUse" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditApplicationTypesSection" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCEnvironmentalHazardsSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCEnvironmentalHazardsSection", "wMLC.EditApplicationTypesSection" );
-      nOptRC = wMLC.EditApplicationTypesSection( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "ApplicationTypes" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smGOTO_ClaimsFootnote" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCEnvironmentalHazardsSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "ClaimsFootnoteSection" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditDirectionsUseSect" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCEnvironmentalHazardsSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "DirectionsForUse" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditMarketingSect" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCEnvironmentalHazardsSection", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "Marketing" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
       break;
    }
 
@@ -1096,193 +636,23 @@ else
 
 <!-- Side Navigation *********************** -->
 <div id="sidenavigation">
-   <ul id="MLC_SideBar" name="MLC_SideBar">
+   <ul id="Return" name="Return">
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New4" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "AcceptAndReturn" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smNew4" name="smNew4"><a href="#"  onclick="smSaveAndReturnMLC()">Save & Return</a></li>
+       <li id="AcceptAndReturn" name="AcceptAndReturn"><a href="#"  onclick="AcceptEnvironmentalSection()">Accept & Return</a></li>
 <%
    }
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New6" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "CancelAndReturn" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smNew6" name="smNew6"><a href="#"  onclick="smSaveMLC()">Save</a></li>
-<%
-   }
-%>
-
-<%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New5" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smNew5" name="smNew5"><a href="#"  onclick="smCancelAndReturnMLC()">Cancel & Return</a></li>
-<%
-   }
-%>
-
-<%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "VersionData" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smVersionData" name="smVersionData"><a href="#"  onclick="smEditMasterLabelVersionData()">Version Data</a></li>
-<%
-   }
-%>
-
-<%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Ingredients" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smIngredients" name="smIngredients"><a href="#"  onclick="smEditIngredientsSect()">Ingredients</a></li>
-<%
-   }
-%>
-
-<%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "StorDisp" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smStorDisp" name="smStorDisp"><a href="#"  onclick="smEditStorDispSect()">Storage and Disposal</a></li>
-<%
-   }
-%>
-
-<%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "HumanHazard" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smHumanHazard" name="smHumanHazard"><a href="#"  onclick="smEditHumanHazardSect()">Human Hazard</a></li>
-<%
-   }
-%>
-
-<%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Precautionary" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smPrecautionary" name="smPrecautionary"><a href="#"  onclick="smEditPrecautionarySection()">Precautionary</a></li>
-<%
-   }
-%>
-
-<%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "FirstAid" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smFirstAid" name="smFirstAid"><a href="#"  onclick="smEditFirstAidSect()">First Aid</a></li>
-<%
-   }
-%>
-
-<%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "EnvironmentalHazards" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smEnvironmentalHazards" name="smEnvironmentalHazards"><a href="#"  class="sideselected"  onclick="smEditEnvironmentalHazardSection()">Environmental Hazards</a></li>
-<%
-   }
-%>
-
-<%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New3" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smNew3" name="smNew3"><a href="#"  onclick="smEditChemicalHazardsSection()">Phys/Chem Hazards</a></li>
-<%
-   }
-%>
-
-<%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New2" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smNew2" name="smNew2"><a href="#"  onclick="smGOTO_DilutionEntries()">Dilution Entries</a></li>
-<%
-   }
-%>
-
-<%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "OrganismClaims" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smOrganismClaims" name="smOrganismClaims"><a href="#"  onclick="smEditClaimsSection()">Organism Claims</a></li>
-<%
-   }
-%>
-
-<%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "TypesOfSurfaces" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smTypesOfSurfaces" name="smTypesOfSurfaces"><a href="#"  onclick="smEditSurfacesSection()">Types of Surfaces</a></li>
-<%
-   }
-%>
-
-<%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "AreasOfUse" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smAreasOfUse" name="smAreasOfUse"><a href="#"  onclick="smEditAreasOfUseSection()">Areas of Use</a></li>
-<%
-   }
-%>
-
-<%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "AppTypes" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smAppTypes" name="smAppTypes"><a href="#"  onclick="smEditApplicationTypesSection()">Application Types</a></li>
-<%
-   }
-%>
-
-<%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New1" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smNew1" name="smNew1"><a href="#"  onclick="smGOTO_ClaimsFootnote()">Claims Footnotes</a></li>
-<%
-   }
-%>
-
-<%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "DirectionsForUse" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smDirectionsForUse" name="smDirectionsForUse"><a href="#"  onclick="smEditDirectionsUseSect()">Directions for Use</a></li>
-<%
-   }
-%>
-
-<%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Marketing" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smMarketing" name="smMarketing"><a href="#"  onclick="smEditMarketingSect()">Marketing</a></li>
+       <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CancelEnvironmentalSection()">Cancel & Return</a></li>
 <%
    }
 %>
@@ -1455,7 +825,7 @@ else
 <td valign="top" style="width:62px;">
 <% /* DirectionsUseTitle:2:Text */ %>
 
-<span  id="DirectionsUseTitle:2" name="DirectionsUseTitle:2" style="width:56px;height:16px;">Title:</span>
+<span  id="DirectionsUseTitle:2" name="DirectionsUseTitle:2" style="width:56px;height:16px;">Name:</span>
 
 </td>
 <td valign="top"  class="text12" style="width:592px;">
@@ -1475,12 +845,12 @@ else
          task.log( ).debug( "Invalid View: " + "DirectionsUseTitle2" );
       else
       {
-         nRC = mMasLC.cursor( "M_GeneralSection" ).checkExistenceOfEntity( ).toInt();
+         nRC = mMasLC.cursor( "M_GeneralSubsection" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
             try
             {
-               strErrorMapValue = mMasLC.cursor( "M_GeneralSection" ).getAttribute( "Title" ).getString( "" );
+               strErrorMapValue = mMasLC.cursor( "M_GeneralSubsection" ).getAttribute( "Name" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1490,10 +860,10 @@ else
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "M_GeneralSection.Title: " + strErrorMapValue );
+            task.log( ).debug( "M_GeneralSubsection.Name: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for DirectionsUseTitle2: " + "mMasLC.M_GeneralSection" );
+            task.log( ).debug( "Entity does not exist for DirectionsUseTitle2: " + "mMasLC.M_GeneralSubsection" );
       }
    }
 %>
@@ -1506,7 +876,7 @@ else
 <td valign="top" style="width:62px;">
 <% /* Text4:Text */ %>
 
-<span  id="Text4" name="Text4" style="width:56px;height:16px;">Subtitle:</span>
+<span  id="Text4" name="Text4" style="width:56px;height:16px;">Title:</span>
 
 </td>
 <td valign="top"  class="text12" style="width:592px;">
@@ -1526,12 +896,12 @@ else
          task.log( ).debug( "Invalid View: " + "EditBox3" );
       else
       {
-         nRC = mMasLC.cursor( "M_GeneralSection" ).checkExistenceOfEntity( ).toInt();
+         nRC = mMasLC.cursor( "M_GeneralSubsection" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
             try
             {
-               strErrorMapValue = mMasLC.cursor( "M_GeneralSection" ).getAttribute( "Subtitle" ).getString( "" );
+               strErrorMapValue = mMasLC.cursor( "M_GeneralSubsection" ).getAttribute( "Title" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -1541,10 +911,10 @@ else
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "M_GeneralSection.Subtitle: " + strErrorMapValue );
+            task.log( ).debug( "M_GeneralSubsection.Title: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for EditBox3: " + "mMasLC.M_GeneralSection" );
+            task.log( ).debug( "Entity does not exist for EditBox3: " + "mMasLC.M_GeneralSubsection" );
       }
    }
 %>
@@ -1603,12 +973,12 @@ else
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
    {
-      List<TableEntry> list = JspWebUtils.getTableDomainValues( mMasLC , "M_GeneralSection", "ContainerVolumeEnvironmentHazard", "" );
+      List<TableEntry> list = JspWebUtils.getTableDomainValues( mMasLC , "M_GeneralSubsection", "ContainerVolumeEnvironmentHazard", "" );
 
-      nRC = mMasLC.cursor( "M_GeneralSection" ).checkExistenceOfEntity( ).toInt();
+      nRC = mMasLC.cursor( "M_GeneralSubsection" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strComboCurrentValue = mMasLC.cursor( "M_GeneralSection" ).getAttribute( "ContainerVolumeEnvironmentHazard" ).getString( "" );
+         strComboCurrentValue = mMasLC.cursor( "M_GeneralSubsection" ).getAttribute( "ContainerVolumeEnvironmentHazard" ).getString( "" );
          if ( strComboCurrentValue == null )
             strComboCurrentValue = "";
       }
@@ -1743,25 +1113,23 @@ try
       String strTag;
       String strGridEditDirectionsUse1;
       String strBMBUpdateDirectionsUseStatement1;
-      String strBMBDeleteDirectionsUseStatement1;
+      String strBMBDeleteEnvironmentalSt;
       
       View vGridDirectionsUse1;
       vGridDirectionsUse1 = mMasLC.newView( );
-      csrRC2 = vGridDirectionsUse1.cursor( "M_GeneralStatement" ).setFirst(  );
+      csrRC2 = vGridDirectionsUse1.cursor( "M_GeneralSubStatement" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGridDirectionsUse1.cursor( "M_GeneralStatement" ).getEntityKey( );
+         lEntityKey = vGridDirectionsUse1.cursor( "M_GeneralSubStatement" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGridEditDirectionsUse1 = "";
-         nRC = vGridDirectionsUse1.cursor( "M_GeneralStatement" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGridDirectionsUse1.cursor( "M_GeneralSubStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditDirectionsUse1 = vGridDirectionsUse1.cursor( "M_GeneralStatement" ).getAttribute( "Text" ).getString( "" );
+            strGridEditDirectionsUse1 = vGridDirectionsUse1.cursor( "M_GeneralSubStatement" ).getAttribute( "Text" ).getString( "" );
 
             if ( strGridEditDirectionsUse1 == null )
                strGridEditDirectionsUse1 = "";
@@ -1775,13 +1143,13 @@ try
 <tr<%=strOdd%>>
 
    <td><a href="#" onclick="GOTO_EnvironmentalHazardsUpdate( this.id )" id="GridEditDirectionsUse1::<%=strEntityKey%>"><%=strGridEditDirectionsUse1%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateDirectionsUseStatement1" onclick="GOTO_EnvironmentalHazardsUpdate( this.id )" id="BMBUpdateDirectionsUseStatement1::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteDirectionsUseStatement1" onclick="GOTO_EnvironmentalHazardsDelete( this.id )" id="BMBDeleteDirectionsUseStatement1::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateDirectionsUseStatement1" onclick="GOTO_EnvironmentalHazardsUpdate( this.id )" id="BMBUpdateDirectionsUseStatement1::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteEnvironmentalSt" onclick="DELETE_EnvironmentalHazardsStmt( this.id )" id="BMBDeleteEnvironmentalSt::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 
 <%
-         csrRC2 = vGridDirectionsUse1.cursor( "M_GeneralStatement" ).setNextContinue( );
+         csrRC2 = vGridDirectionsUse1.cursor( "M_GeneralSubStatement" ).setNextContinue( );
       }
       vGridDirectionsUse1.drop( );
    }

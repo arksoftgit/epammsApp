@@ -13,7 +13,7 @@
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
 <%@ page import="com.quinsoft.epamms.*" %>
 
-<%! 
+<%!
 
 ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
@@ -118,7 +118,7 @@ private boolean orderByNewIndex( String arr, View vOrig, String entityName ) {
 //                   "S_MarketingUsage", "dDisplayUsageName", "Before orderByNewIndex" );
    EntityCursor ecOrig = vOrig.getCursor( entityName );
    if ( ecOrig.isNull() == false ) {
-      
+
    //int swaps = 0;
       int[] arrShift = new int[lth];
       int k, orderIdx;
@@ -231,7 +231,7 @@ String strInputFileName = "";
 strActionToProcess = (String) request.getParameter( "zAction" );
 
 strLastWindow = (String) session.getAttribute( "ZeidonWindow" );
-if ( StringUtils.isBlank( strLastWindow ) ) 
+if ( StringUtils.isBlank( strLastWindow ) )
    strLastWindow = "NoLastWindow";
 
 strLastAction = (String) session.getAttribute( "ZeidonAction" );
@@ -443,7 +443,7 @@ if ( strActionToProcess != null )
             task.log().info( "Action Error Redirect to: " + strURL );
          }
 
-         if ( ! strURL.equals("wSystemDragDropSort.jsp") ) 
+         if ( ! strURL.equals("wSystemDragDropSort.jsp") )
          {
             response.sendRedirect( strURL );
             // If we are redirecting to a new page, then we need this return so that the rest of this page doesn't get built.
@@ -524,8 +524,8 @@ else
 <!-- Main Navigation *********************** -->
 <div id="mainnavigation">
    <ul id="Exit" name="Exit" >
-       <li id="lmApplySortOrder" name="lmApplySortOrder"><a href="#" onclick="mApplySortOrder()">Apply Sort Order  </a></li>
-       <li id="lmCancelSortDiv" name="lmCancelSortDiv"><a href="#" onclick="mCancelSortDiv()">  Cancel  </a></li>
+       <li id="lmApplySortOrder" name="lmApplySortOrder" ><a href="#" onclick="mApplySortOrder()">Apply Sort Order  </a></li>
+       <li id="lmCancelSortDiv" name="lmCancelSortDiv" ><a href="#" onclick="mCancelSortDiv()">  Cancel  </a></li>
        <li id="lmLogout" name="lmLogout" ><a href="#" onclick="mLogout()">Logout</a></li>
    </ul>
 </div>  <!-- end Navigation Bar -->
@@ -628,7 +628,7 @@ else
    strDateFormat = "YYYY.MM.DD";
 
    wWebXA = task.getViewByName( "wWebXfer" );
-   
+
    // this is hand coded!!!
    strTextDisplayValue = wWebXA.cursor( "Root" ).getAttribute( "HTML" ).getString();
    wWebXA.cursor( "Root" ).setAttribute( "HTML", "" ); // done with it
@@ -673,11 +673,11 @@ else
 <div style="height:1px;width:18px;float:left;"></div>   <!-- Width Spacer -->
 <% /* SortDragDrop:GroupBox */ %>
 
-<div id="SortDragDrop" name="SortDragDrop" class="divborder"   style="float:left;position:relative; width:958px;">  <!-- SortDragDrop --> 
+<div id="SortDragDrop" name="SortDragDrop" class="divborder"   style="float:left;position:relative; width:958px;">  <!-- SortDragDrop -->
 
    <h1 id="SortDragDrop" name="SortDragDrop" >Drag &AMP; Drop Sort</h1>&nbsp;&nbsp;
    <%=strTextDisplayValue%>
-</div>  <!--  SortDragDrop --> 
+</div>  <!--  SortDragDrop -->
 </div>  <!-- End of a new line -->
 
 
@@ -712,6 +712,6 @@ else
    session.setAttribute( "ZeidonWindow", "wSystemDragDropSort" );
    session.setAttribute( "ZeidonAction", null );
 
-     strActionToProcess = "";
+   strActionToProcess = "";
 
 %>

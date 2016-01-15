@@ -776,8 +776,6 @@ try
 
          lEntityKey = vGridFeedback.cursor( "Feedback" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGridOrganization = "";
          nRC = vGridFeedback.cursor( "Organization" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -851,7 +849,7 @@ try
    <td nowrap><%=strGridUserId%></td>
    <td nowrap><%=strGridDialog%></td>
    <td nowrap><%=strGridWindow%></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteFeedbackComment" onclick="DeleteFeedbackComment( this.id )" id="BMBDeleteFeedbackComment::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteFeedbackComment" onclick="DeleteFeedbackComment( this.id )" id="BMBDeleteFeedbackComment::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
    <td nowrap style="width:526px;"><%=strGridFeedbackComment%></td>
 
 </tr>

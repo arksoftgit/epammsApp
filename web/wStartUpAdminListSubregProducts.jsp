@@ -1117,8 +1117,6 @@ try
 
          lEntityKey = vGridSubregProducts.cursor( "SubregProduct" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGEProducttName = "";
          nRC = vGridSubregProducts.cursor( "SubregProduct" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -1165,8 +1163,8 @@ try
    <td nowrap><a href="#" onclick="SelectSubregProductForUpdate( this.id )" id="GEProducttName::<%=strEntityKey%>"><%=strGEProducttName%></a></td>
    <td nowrap><a href="#" onclick="SelectSubregProductForUpdate( this.id )" id="GEProductNumber::<%=strEntityKey%>"><%=strGEProductNumber%></a></td>
    <td nowrap><a href="#" onclick="SelectSubregProductForUpdate( this.id )" id="GEProductDescription::<%=strEntityKey%>"><%=strGEProductDescription%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateSubregProduct" onclick="SelectSubregProductForUpdate( this.id )" id="BMBUpdateSubregProduct::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteSubregProduct" onclick="SelectSubregProductForDelete( this.id )" id="BMBDeleteSubregProduct::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Delete"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateSubregProduct" onclick="SelectSubregProductForUpdate( this.id )" id="BMBUpdateSubregProduct::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteSubregProduct" onclick="SelectSubregProductForDelete( this.id )" id="BMBDeleteSubregProduct::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Delete"></a></td>
 
 </tr>
 

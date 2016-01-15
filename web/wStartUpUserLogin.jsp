@@ -13,7 +13,7 @@
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
 <%@ page import="com.quinsoft.epamms.*" %>
 
-<%! 
+<%!
 
 ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
@@ -199,7 +199,7 @@ String strInputFileName = "";
 strActionToProcess = (String) request.getParameter( "zAction" );
 
 strLastWindow = (String) session.getAttribute( "ZeidonWindow" );
-if ( StringUtils.isBlank( strLastWindow ) ) 
+if ( StringUtils.isBlank( strLastWindow ) )
    strLastWindow = "NoLastWindow";
 
 strLastAction = (String) session.getAttribute( "ZeidonAction" );
@@ -427,7 +427,7 @@ if ( strActionToProcess != null )
             task.log().info( "Action Error Redirect to: " + strURL );
          }
 
-         if ( ! strURL.equals("wStartUpUserLogin.jsp") ) 
+         if ( ! strURL.equals("wStartUpUserLogin.jsp") )
          {
             response.sendRedirect( strURL );
             // If we are redirecting to a new page, then we need this return so that the rest of this page doesn't get built.
@@ -667,14 +667,14 @@ else
 <div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox1:GroupBox */ %>
 
-<div id="GroupBox1" name="GroupBox1" style="width:46px;height:166px;float:left;">  <!-- GroupBox1 --> 
+<div id="GroupBox1" name="GroupBox1" style="width:46px;height:166px;float:left;">  <!-- GroupBox1 -->
 
 
-</div>  <!--  GroupBox1 --> 
+</div>  <!--  GroupBox1 -->
 <div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
 <% /* WelcomeContainer:GroupBox */ %>
 
-<div id="WelcomeContainer" name="WelcomeContainer" class="divborder"   style="float:left;position:relative; width:770px; height:220px;">  <!-- WelcomeContainer --> 
+<div id="WelcomeContainer" name="WelcomeContainer" class="divborder"   style="float:left;position:relative; width:470px; height:220px;">  <!-- WelcomeContainer -->
 
 <div  id="WelcomeContainer" name="WelcomeContainer" >Welcome To ePamms</div>
 <% /* RegistrantName::Text */ %>
@@ -723,7 +723,8 @@ else
 <input class="text14" name="EBRegistrantName" id="EBRegistrantName" style="width:256px;position:absolute;left:146px;top:54px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
 <% /* PBLogin:PushBtn */ %>
-<button type="button" class="formStylebutton" name="PBLogin" id="PBLogin" value="" onclick="ProcessUserLogin( )" style="width:140px;height:32px;position:absolute;left:430px;top:54px;">Login</button>
+<span style="text-align: center"></span>
+<button type="button" class="formStylebutton" name="PBLogin" id="PBLogin" value="" onclick="ProcessUserLogin( )" style="width: 140px; height: 32px; position: absolute; left: 146px; top: 172px;">Login</button>
 
 <% /* UserName::Text */ %>
 
@@ -772,7 +773,7 @@ else
 
 <% /* Forgot:Text */ %>
 
-<a href="#" id="Forgot" name="Forgot"  onclick="FORGOT_Password( );" class="text10" style="width:208px;height:22px;position:absolute;left:430px;top:94px;">Forgot Username/Password?</a>
+<a href="#" id="Forgot" name="Forgot"  onclick="FORGOT_Password( );" class="text10" style="width: 208px; height: 22px; position: absolute; left: 146px; top: 211px;">Forgot Username/Password?</a>
 
 <% /* Password::Text */ %>
 
@@ -877,8 +878,10 @@ else
 <input name="hPrimaryRegistrants" id="hPrimaryRegistrants" type="hidden" value="<%=strComboSelectedValue%>" >
 
 
-</div>  <!--  WelcomeContainer --> 
-</div>  <!-- End of a new line -->
+</div>  <!--  WelcomeContainer -->
+</div>
+<p>
+  <!-- End of a new line -->
 
 
 <%
@@ -897,14 +900,46 @@ else
 
    <input name="zError" id="zError" type="hidden" value="<%=strErrorMsg%>">
 
-</form>
-</div>   <!-- This is the end tag for the div 'contentnosidemenu' -->
-
-</div>   <!-- This is the end tag for the div 'maincontent' -->
-
+</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>
 <%@ include file="./include/footer.inc" %>
+  </div>
+</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</form>
+</div>
+<!-- This is the end tag for the div 'contentnosidemenu' -->
 
-</div>  <!-- This is the end tag for wrapper -->
+</div>   <!-- This is the end tag for the div 'maincontent' -->  <!-- This is the end tag for wrapper -->
 
 </body>
 </html>

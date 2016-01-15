@@ -1790,8 +1790,6 @@ try
 
          lEntityKey = vGridProductContent.cursor( "MasterLabelContent" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGridProductContentVersion = "";
          nRC = vGridProductContent.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -1824,8 +1822,39 @@ try
 
    <td nowrap><a href="#" onclick="UpdateMasterProductContent( this.id )" id="GridProductContentVersion::<%=strEntityKey%>"><%=strGridProductContentVersion%></a></td>
    <td nowrap><a href="#" onclick="UpdateMasterProductContent( this.id )" id="GridProductContentRevisionDate::<%=strEntityKey%>"><%=strGridProductContentRevisionDate%></a></td>
-   <td nowrap><button type="button" class="formStylebutton" name=<%=strButtonName%> onclick="UpdateMasterProductContent( this.id )" id="GridProductContentRevisionDate::<%=strEntityKey%>"  style="width:80px;" >Update</button></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteMasterProductContent" onclick="DeleteMasterProductContent( this.id )" id="BMBDeleteMasterProductContent::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
+<%
+      mPrimReg = task.getViewByName( "mPrimReg" );
+      if ( VmlOperation.isValid( mPrimReg ) == false )
+         task.log( ).debug( "Invalid View: " + "PBUpdateProductContentVersion" );
+      else
+      {
+         nRC = mPrimReg.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = mPrimReg.cursor( "MasterLabelContent" ).getAttribute( "ID" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on PBUpdateProductContentVersion: " + e.getMessage());
+               task.log().error( "*** Error on ctrl PBUpdateProductContentVersion", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "MasterLabelContent.ID: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for PBUpdateProductContentVersion: " + "mPrimReg.MasterLabelContent" );
+      }
+
+      if ( strErrorMapValue == "" )
+         strErrorMapValue = "Update";
+%>
+
+   <td nowrap><button type="button" class="formStylebutton" name="PBUpdateProductContentVersion::<%=strEntityKey%>"  onclick="UpdateMasterProductContent( this.id )" id="PBUpdateProductContentVersion::<%=strEntityKey%>"  style="width:80px;" ><%=strErrorMapValue%></button></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteMasterProductContent" onclick="DeleteMasterProductContent( this.id )" id="BMBDeleteMasterProductContent::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 

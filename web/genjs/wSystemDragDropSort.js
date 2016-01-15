@@ -117,8 +117,8 @@ function _DisableFormElements( bDisabled )
    var $el = $("#zDisable");
    if ( $el.length > 0 ) {
       $el[0].disabled = true;
-            bRC = true;
-         }
+      bRC = true;
+   }
 
 // $.blockUI({ message: '<h1><img src="./images/busy.gif" /></h1>', overlayCSS: { backgroundColor: '#eee' } });
    return bRC;
@@ -197,11 +197,11 @@ function _AfterPageLoaded( )
       $("#DraggableSortTable tbody").sortable({
          helper: fixCloneColumnWidths,
          stop: updateOddEven
-      }).disableSelection();    
+      }).disableSelection();
 
    });
 
-   var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
+var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
 }
 
@@ -234,7 +234,7 @@ function ApplySortOrder( )
       // Need some javascript here to apply the sort order
       var arrRowOrderIdx = getSortOrderArray( "DraggableSortTable" );
       document.wSystemDragDropSort.zOrderArray.value = arrRowOrderIdx.toString();
-   // console.log( "New SortOrderArray: " + document.wSystemDragDropSort.zOrderArray.value );
+      // console.log( "New SortOrderArray: " + document.wSystemDragDropSort.zOrderArray.value );
 
       // END of Javascript code entered by user.
 
@@ -295,7 +295,7 @@ function mApplySortOrder( )
       // Need some javascript here to apply the sort order
       var arrRowOrderIdx = getSortOrderArray( "DraggableSortTable" );
       document.wSystemDragDropSort.zOrderArray.value = arrRowOrderIdx.toString();
-   // console.log( "New SortOrderArray: " + document.wSystemDragDropSort.zOrderArray.value );
+      // console.log( "New SortOrderArray: " + document.wSystemDragDropSort.zOrderArray.value );
 
       // END of Javascript code entered by user.
 
@@ -331,8 +331,8 @@ function mCancelSortDiv( )
 function mLogout( )
 {
 
-      // This is for indicating whether the user hit the window close box.
-      isWindowClosing = false;
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
    if ( _IsDocDisabled( ) == false )
    {

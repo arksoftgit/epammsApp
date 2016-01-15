@@ -238,7 +238,7 @@ function DeleteSubregProductSLC( strTagEntityKey )
    }
 }
 
-function DuplicateSubregProductSLC( strTagEntityKey )
+function GOTO_CopySLC_Version( strTagEntityKey )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -252,12 +252,12 @@ function DuplicateSubregProductSLC( strTagEntityKey )
       document.wSLCSubregProductUpdate.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
-      document.wSLCSubregProductUpdate.zAction.value = "DuplicateSubregProductSLC";
+      document.wSLCSubregProductUpdate.zAction.value = "GOTO_CopySLC_Version";
       document.wSLCSubregProductUpdate.submit( );
    }
 }
 
-function DuplicateSubregProductSPLD( strTagEntityKey )
+function GOTO_CopySPLD_Version( strTagEntityKey )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -271,7 +271,7 @@ function DuplicateSubregProductSPLD( strTagEntityKey )
       document.wSLCSubregProductUpdate.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
-      document.wSLCSubregProductUpdate.zAction.value = "DuplicateSubregProductSPLD";
+      document.wSLCSubregProductUpdate.zAction.value = "GOTO_CopySPLD_Version";
       document.wSLCSubregProductUpdate.submit( );
    }
 }

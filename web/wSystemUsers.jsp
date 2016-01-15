@@ -760,8 +760,6 @@ try
 
          lEntityKey = vGridUsers.cursor( "Person" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
 %>
 
 <tr<%=strOdd%>>
@@ -769,8 +767,8 @@ try
    <td nowrap class="text10"><%=strSS_EditFullName%></td>
    <td nowrap class="text10"><%=strSS_EditUserName%></td>
    <td nowrap class="text10"><%=strSS_EditDivision%></td>
-   <td nowrap><button type="button" class="formStylebutton" name=<%=strButtonName%> onclick="UpdateUser( this.id )" id="SS_EditDivision::<%=strEntityKey%>"  style="width:84px;" >Update</button></td>
-   <td nowrap><button type="button" class="formStylebutton" name=<%=strButtonName%> onclick="DeleteUser( this.id )" id="SS_EditDivision::<%=strEntityKey%>"  style="width:84px;" >Delete</button></td>
+   <td nowrap><button type="button" class="formStylebutton" name="PBUpdate::<%=strEntityKey%>"  onclick="UpdateUser( this.id )" id="PBUpdate::<%=strEntityKey%>"  style="width:84px;" >Update</button></td>
+   <td nowrap><button type="button" class="formStylebutton" name="PBDelete::<%=strEntityKey%>"  onclick="DeleteUser( this.id )" id="PBDelete::<%=strEntityKey%>"  style="width:84px;" >Delete</button></td>
 
 </tr>
 

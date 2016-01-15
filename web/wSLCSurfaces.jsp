@@ -1052,6 +1052,7 @@ else
    View lSPLDLST = null;
    View mLLD_LST = null;
    View mMasLC = null;
+   View mSPLDef = null;
    View mSubLC = null;
    View mSubProd = null;
    View mSubreg = null;
@@ -1220,8 +1221,6 @@ try
 
          lEntityKey = vGridClaims.cursor( "S_Usage" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strSurfaces = "";
          nRC = vGridClaims.cursor( "S_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )

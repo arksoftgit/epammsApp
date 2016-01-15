@@ -204,7 +204,22 @@ function AcceptMarketingStatement( )
    }
 }
 
-function GOTO_MarketingKeywordStmtDelete( strTagEntityKey )
+function PASTE_InsertKeyword( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCMarketingStatement.zAction.value = "PASTE_InsertKeyword";
+      document.wMLCMarketingStatement.submit( );
+   }
+}
+
+function COPY_InsertKeyword( strTagEntityKey )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -218,12 +233,42 @@ function GOTO_MarketingKeywordStmtDelete( strTagEntityKey )
       document.wMLCMarketingStatement.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
-      document.wMLCMarketingStatement.zAction.value = "GOTO_MarketingKeywordStmtDelete";
+      document.wMLCMarketingStatement.zAction.value = "COPY_InsertKeyword";
       document.wMLCMarketingStatement.submit( );
    }
 }
 
-function GOTO_MarketingKeywordStmtKeyword( strTagEntityKey )
+function ADD_MarketingStatementKeyword( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCMarketingStatement.zAction.value = "ADD_MarketingStatementKeyword";
+      document.wMLCMarketingStatement.submit( );
+   }
+}
+
+function CancelMarketingStatement( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCMarketingStatement.zAction.value = "CancelMarketingStatement";
+      document.wMLCMarketingStatement.submit( );
+   }
+}
+
+function DELETE_MarketingStatementKeyword( strTagEntityKey )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -235,14 +280,24 @@ function GOTO_MarketingKeywordStmtKeyword( strTagEntityKey )
       var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
 
       document.wMLCMarketingStatement.zTableRowSelect.value = strEntityKey;
+      // Javascript code entered by user.
+
+// Confirmation of  Delete.
+if (!confirm("OK to delete selected entry?"))
+{
+   return;
+}
+
+      // END of Javascript code entered by user.
+
       _DisableFormElements( true );
 
-      document.wMLCMarketingStatement.zAction.value = "GOTO_MarketingKeywordStmtKeyword";
+      document.wMLCMarketingStatement.zAction.value = "DELETE_MarketingStatementKeyword";
       document.wMLCMarketingStatement.submit( );
    }
 }
 
-function GOTO_MarketingKeywordStmtAdd( )
+function GOTO_DisplayGeneratedTextMktg( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -252,7 +307,7 @@ function GOTO_MarketingKeywordStmtAdd( )
    {
       _DisableFormElements( true );
 
-      document.wMLCMarketingStatement.zAction.value = "GOTO_MarketingKeywordStmtAdd";
+      document.wMLCMarketingStatement.zAction.value = "GOTO_DisplayGeneratedTextMktg";
       document.wMLCMarketingStatement.submit( );
    }
 }
@@ -276,21 +331,6 @@ function GOTO_MarketingKeywordUpdate( strTagEntityKey )
    }
 }
 
-function CancelMarketingStatement( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCMarketingStatement.zAction.value = "CancelMarketingStatement";
-      document.wMLCMarketingStatement.submit( );
-   }
-}
-
 function GOTO_SelectRemoveMktgEntries( )
 {
 
@@ -309,21 +349,6 @@ function GOTO_SelectRemoveMktgEntries( )
       _DisableFormElements( true );
 
       document.wMLCMarketingStatement.zAction.value = "GOTO_SelectRemoveMktgEntries";
-      document.wMLCMarketingStatement.submit( );
-   }
-}
-
-function GOTO_DisplayGeneratedText( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCMarketingStatement.zAction.value = "GOTO_DisplayGeneratedText";
       document.wMLCMarketingStatement.submit( );
    }
 }

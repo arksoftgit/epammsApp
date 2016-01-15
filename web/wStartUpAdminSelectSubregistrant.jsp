@@ -1018,15 +1018,44 @@ try
 
          lEntityKey = vGridPrimaryRegistrantList.cursor( "Subregistrant" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
 %>
 
 <tr<%=strOdd%>>
 
    <td nowrap><%=strGridSubregistrantName%></td>
    <td nowrap><%=strGridSubregistrantDescription%></td>
-   <td nowrap><button type="button" class="formStylebutton" name=<%=strButtonName%> onclick="AdminSelectSubregistrant( this.id )" id="GridSubregistrantDescription::<%=strEntityKey%>"  style="width:44px;" >Select</button></td>
+<%
+      qSubreg = task.getViewByName( "qSubreg" );
+      if ( VmlOperation.isValid( qSubreg ) == false )
+         task.log( ).debug( "Invalid View: " + "PBAdminSelectSubregistrant" );
+      else
+      {
+         nRC = qSubreg.cursor( "Subregistrant" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = qSubreg.cursor( "Subregistrant" ).getAttribute( "ID" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on PBAdminSelectSubregistrant: " + e.getMessage());
+               task.log().error( "*** Error on ctrl PBAdminSelectSubregistrant", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "Subregistrant.ID: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for PBAdminSelectSubregistrant: " + "qSubreg.Subregistrant" );
+      }
+
+      if ( strErrorMapValue == "" )
+         strErrorMapValue = "Select";
+%>
+
+   <td nowrap><button type="button" class="formStylebutton" name="PBAdminSelectSubregistrant::<%=strEntityKey%>"  onclick="AdminSelectSubregistrant( this.id )" id="PBAdminSelectSubregistrant::<%=strEntityKey%>"  style="width:44px;" ><%=strErrorMapValue%></button></td>
 
 </tr>
 

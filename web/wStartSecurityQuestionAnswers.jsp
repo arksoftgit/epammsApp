@@ -187,8 +187,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartSecurityQuestionAnswers", "wStart.VERIFY_SecurityQuestions" );
-      nOptRC = wStart.VERIFY_SecurityQuestions( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartSecurityQuestionAnswers", "wStartUp.VERIFY_SecurityQuestions" );
+      nOptRC = wStartUp.VERIFY_SecurityQuestions( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection

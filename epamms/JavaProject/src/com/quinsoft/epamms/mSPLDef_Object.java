@@ -208,16 +208,19 @@ omSPLDef_GeneratePDF_Label( View     mSPLDef )
    lTempInteger_0 = mi_lTempInteger_0.intValue( );
    szApplication = sb_szApplication.toString( );}
    //:RemoveInvalidCharsFromFilename( szApplication )
+   try
    {
-    ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mSPLDef );
-    {StringBuilder sb_szApplication;
+       {StringBuilder sb_szApplication;
    if ( szApplication == null )
       sb_szApplication = new StringBuilder( 32 );
    else
       sb_szApplication = new StringBuilder( szApplication );
-       m_ZGlobal1_Operation.RemoveInvalidCharsFromFilename( sb_szApplication );
+       RemoveInvalidCharsFromFilename( sb_szApplication );
    szApplication = sb_szApplication.toString( );}
-    // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+   }
+   catch ( Exception e )
+   {
+      throw ZeidonException.wrapException( e );
    }
 
    //:szLabelName = mSPLDef.SubregProduct.Name + "." + mSPLDef.SubregLabelContent.Version + "." + mSPLDef.SubregPhysicalLabelDef.Name + "." + wWebXfer.Root.LoginName
@@ -298,16 +301,19 @@ omSPLDef_GeneratePDF_Label( View     mSPLDef )
       ZeidonStringConcat( sb_szLabelName, 1, 0, szTempString_2, 1, 0, 65 );
    szLabelName = sb_szLabelName.toString( );}
    //:RemoveInvalidCharsFromFilename( szLabelName )
+   try
    {
-    ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mSPLDef );
-    {StringBuilder sb_szLabelName;
+       {StringBuilder sb_szLabelName;
    if ( szLabelName == null )
       sb_szLabelName = new StringBuilder( 32 );
    else
       sb_szLabelName = new StringBuilder( szLabelName );
-       m_ZGlobal1_Operation.RemoveInvalidCharsFromFilename( sb_szLabelName );
+       RemoveInvalidCharsFromFilename( sb_szLabelName );
    szLabelName = sb_szLabelName.toString( );}
-    // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+   }
+   catch ( Exception e )
+   {
+      throw ZeidonException.wrapException( e );
    }
 
    //:szXmlName = szDirectory + szApplication + "/xml/"
@@ -6220,7 +6226,6 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
    int      lTempInteger_23 = 0;
 
 
-
    //:// Generate PDF for a "Directions of Use" or "Marketing" Section.
 
    //:szLeadingBlanks = szPassedBlanks + "   "
@@ -11455,13 +11460,6 @@ omSPLDef_BuildSPLD_FromSLC( View     NewSPLD,
 
    //:END
 
-   //:// Delete any Marketing Sections in SPLD not in SLC.
-   //:/*FOR EACH NewSPLD.SPLD_MarketingSection
-   //:   IF NewSPLD.S_MarketingSection DOES NOT EXIST
-   //:      DELETE ENTITY NewSPLD.SPLD_MarketingSection NONE
-   //:   END
-   //:END*/
-
    //:// HumanHazard Section
    //:FOR EACH SourceSLC.S_HumanHazardSection
    RESULT = SetCursorFirstEntity( SourceSLC, "S_HumanHazardSection", "" );
@@ -11499,7 +11497,17 @@ omSPLDef_BuildSPLD_FromSLC( View     NewSPLD,
          SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseStatement", SourceSLC, "S_DirectionsForUseStatement", zSET_NULL );
          //:INCLUDE NewSPLD.S_DirectionsForUseStatement FROM SourceSLC.S_DirectionsForUseStatement
          RESULT = IncludeSubobjectFromSubobject( NewSPLD, "S_DirectionsForUseStatement", SourceSLC, "S_DirectionsForUseStatement", zPOS_AFTER );
+
+         //:// Temporary code created by DonC on 1/13/2016 because NotForUseType was set to NotNull in the ER.
+         //:IF NewSPLD.SPLD_DirectionsForUseStatement.NotForUseType = ""
+         if ( CompareAttributeToString( NewSPLD, "SPLD_DirectionsForUseStatement", "NotForUseType", "" ) == 0 )
+         { 
+            //:NewSPLD.SPLD_DirectionsForUseStatement.NotForUseType = "NA"
+            SetAttributeFromString( NewSPLD, "SPLD_DirectionsForUseStatement", "NotForUseType", "NA" );
+         } 
+
          RESULT = SetCursorNextEntity( SourceSLC, "S_DirectionsForUseStatement", "" );
+         //:END
       } 
 
       RESULT = SetCursorNextEntity( SourceSLC, "S_DirectionsForUseSection", "" );
@@ -11538,7 +11546,7 @@ omSPLDef_BuildSPLD_FromSLC( View     NewSPLD,
 
    //:END
 
-   //:// Go to build Directions for Use and Marketing entries.
+   //:// Go to build Directions for Use and Marketing Usage entries.
    //:BuildUsageEntriesFrSLC( NewSPLD, SourceSLC )
    omSPLDef_BuildUsageEntriesFrSLC( NewSPLD, SourceSLC );
    return( 0 );
@@ -11549,99 +11557,43 @@ omSPLDef_BuildSPLD_FromSLC( View     NewSPLD,
 //:TRANSFORMATION OPERATION
 //:RebuildSPLD_FromSLC( VIEW NewSPLD   BASED ON LOD mSPLDef,
 //:                     VIEW SourceSLC BASED ON LOD mSubLC )
-
-//:   VIEW mSPLDef2 BASED ON LOD mSPLDef
 public int 
 omSPLDef_RebuildSPLD_FromSLC( View     NewSPLD,
                               View     SourceSLC )
 {
-   zVIEW    mSPLDef2 = new zVIEW( );
-   int      RESULT = 0;
 
-
-   //:// Correct Directions and Marketing entries by rebuilding them.
-
-   //:FOR EACH NewSPLD.SPLD_DirectionsForUseSection
-   RESULT = SetCursorFirstEntity( NewSPLD, "SPLD_DirectionsForUseSection", "" );
-   while ( RESULT > zCURSOR_UNCHANGED )
-   { 
-      //:DELETE ENTITY NewSPLD.SPLD_DirectionsForUseSection NONE
-      RESULT = DeleteEntity( NewSPLD, "SPLD_DirectionsForUseSection", zREPOS_NONE );
-      RESULT = SetCursorNextEntity( NewSPLD, "SPLD_DirectionsForUseSection", "" );
-   } 
-
-   //:END
-   //:FOR EACH NewSPLD.SPLD_MarketingSection
-   RESULT = SetCursorFirstEntity( NewSPLD, "SPLD_MarketingSection", "" );
-   while ( RESULT > zCURSOR_UNCHANGED )
-   { 
-      //:DELETE ENTITY NewSPLD.SPLD_MarketingSection NONE
-      RESULT = DeleteEntity( NewSPLD, "SPLD_MarketingSection", zREPOS_NONE );
-      RESULT = SetCursorNextEntity( NewSPLD, "SPLD_MarketingSection", "" );
-   } 
-
-   //:END
-
-   //:// Build Directions for Use Entries (without Usage entries).
-   //:FOR EACH SourceSLC.S_DirectionsForUseSection
-   RESULT = SetCursorFirstEntity( SourceSLC, "S_DirectionsForUseSection", "" );
-   while ( RESULT > zCURSOR_UNCHANGED )
-   { 
-      //:CREATE ENTITY NewSPLD.SPLD_DirectionsForUseSection
-      RESULT = CreateEntity( NewSPLD, "SPLD_DirectionsForUseSection", zPOS_AFTER );
-      //:SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseSection", SourceSLC, "S_DirectionsForUseSection", zSET_NULL )
-      SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseSection", SourceSLC, "S_DirectionsForUseSection", zSET_NULL );
-      //:INCLUDE NewSPLD.S_DirectionsForUseSection FROM SourceSLC.S_DirectionsForUseSection
-      RESULT = IncludeSubobjectFromSubobject( NewSPLD, "S_DirectionsForUseSection", SourceSLC, "S_DirectionsForUseSection", zPOS_AFTER );
-      //:FOR EACH SourceSLC.S_DirectionsForUseStatement
-      RESULT = SetCursorFirstEntity( SourceSLC, "S_DirectionsForUseStatement", "" );
-      while ( RESULT > zCURSOR_UNCHANGED )
-      { 
-         //:CREATE ENTITY NewSPLD.SPLD_DirectionsForUseStatement
-         RESULT = CreateEntity( NewSPLD, "SPLD_DirectionsForUseStatement", zPOS_AFTER );
-         //:SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseStatement", SourceSLC, "S_DirectionsForUseStatement", zSET_NULL )
-         SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseStatement", SourceSLC, "S_DirectionsForUseStatement", zSET_NULL );
-         RESULT = SetCursorNextEntity( SourceSLC, "S_DirectionsForUseStatement", "" );
-      } 
-
-      RESULT = SetCursorNextEntity( SourceSLC, "S_DirectionsForUseSection", "" );
-      //:END
-   } 
-
-   //:END
-
-   //:// Build Marketing Entries (without Usage entries).
-   //:FOR EACH SourceSLC.S_MarketingSection
-   RESULT = SetCursorFirstEntity( SourceSLC, "S_MarketingSection", "" );
-   while ( RESULT > zCURSOR_UNCHANGED )
-   { 
-      //:CREATE ENTITY NewSPLD.SPLD_MarketingSection
-      RESULT = CreateEntity( NewSPLD, "SPLD_MarketingSection", zPOS_AFTER );
-      //:SetMatchingAttributesByName( NewSPLD, "SPLD_MarketingSection", SourceSLC, "S_MarketingSection", zSET_NULL )
-      SetMatchingAttributesByName( NewSPLD, "SPLD_MarketingSection", SourceSLC, "S_MarketingSection", zSET_NULL );
-      //:INCLUDE NewSPLD.S_MarketingSection FROM SourceSLC.S_MarketingSection
-      RESULT = IncludeSubobjectFromSubobject( NewSPLD, "S_MarketingSection", SourceSLC, "S_MarketingSection", zPOS_AFTER );
-      //:FOR EACH SourceSLC.S_MarketingStatement
-      RESULT = SetCursorFirstEntity( SourceSLC, "S_MarketingStatement", "" );
-      while ( RESULT > zCURSOR_UNCHANGED )
-      { 
-         //:CREATE ENTITY NewSPLD.SPLD_MarketingStatement
-         RESULT = CreateEntity( NewSPLD, "SPLD_MarketingStatement", zPOS_AFTER );
-         //:SetMatchingAttributesByName( NewSPLD, "SPLD_MarketingStatement", SourceSLC, "S_MarketingStatement", zSET_NULL )
-         SetMatchingAttributesByName( NewSPLD, "SPLD_MarketingStatement", SourceSLC, "S_MarketingStatement", zSET_NULL );
-         RESULT = SetCursorNextEntity( SourceSLC, "S_MarketingStatement", "" );
-      } 
-
-      RESULT = SetCursorNextEntity( SourceSLC, "S_MarketingSection", "" );
-      //:END
-   } 
-
-   //:END
-
-   //:// Go to build Directions for Use and Marketing entries.
-   //:BuildUsageEntriesFrSLC( NewSPLD, SourceSLC )
-   omSPLDef_BuildUsageEntriesFrSLC( NewSPLD, SourceSLC );
    return( 0 );
+//    // DonC 1/11/206 - I don't think we are using this code.
+//    /*VIEW mSPLDef2 BASED ON LOD mSPLDef
+//    // Correct Directions and Marketing entries by rebuilding them.
+//    FOR EACH NewSPLD.SPLD_DirectionsForUseSection
+//       DELETE ENTITY NewSPLD.SPLD_DirectionsForUseSection NONE
+//    END
+//    FOR EACH NewSPLD.SPLD_MarketingSection
+//       DELETE ENTITY NewSPLD.SPLD_MarketingSection NONE
+//    END
+//    // Build Directions for Use Entries (without Usage entries).
+//    FOR EACH SourceSLC.S_DirectionsForUseSection
+//       CREATE ENTITY NewSPLD.SPLD_DirectionsForUseSection
+//       SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseSection", SourceSLC, "S_DirectionsForUseSection", zSET_NULL )
+//       INCLUDE NewSPLD.S_DirectionsForUseSection FROM SourceSLC.S_DirectionsForUseSection
+//       FOR EACH SourceSLC.S_DirectionsForUseStatement
+//          CREATE ENTITY NewSPLD.SPLD_DirectionsForUseStatement
+//          SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseStatement", SourceSLC, "S_DirectionsForUseStatement", zSET_NULL )
+//       END
+//    END
+//    // Build Marketing Entries (without Usage entries).
+//    FOR EACH SourceSLC.S_MarketingSection
+//       CREATE ENTITY NewSPLD.SPLD_MarketingSection
+//       SetMatchingAttributesByName( NewSPLD, "SPLD_MarketingSection", SourceSLC, "S_MarketingSection", zSET_NULL )
+//       INCLUDE NewSPLD.S_MarketingSection FROM SourceSLC.S_MarketingSection
+//       FOR EACH SourceSLC.S_MarketingStatement
+//          CREATE ENTITY NewSPLD.SPLD_MarketingStatement
+//          SetMatchingAttributesByName( NewSPLD, "SPLD_MarketingStatement", SourceSLC, "S_MarketingStatement", zSET_NULL )
+//       END
+//    END
+//    // Go to build Directions for Use and Marketing entries.
+//    BuildUsageEntriesFrSLC( NewSPLD, SourceSLC )*/
 // END
 } 
 
@@ -12138,338 +12090,6 @@ omSPLDef_dDisplayPathogenName( View     mSPLDef,
 
    //:     /* end zDERIVED_SET */
    //:END  /* case */
-   return( 0 );
-// END
-} 
-
-
-//:TRANSFORMATION OPERATION
-public int 
-omSPLDef_BuildSPLD_FromSPLD( View     NewSPLD,
-                             View     SourceSPLD,
-                             View     ParentSLC )
-{
-   int      RESULT = 0;
-   String   szTempString_0 = null;
-   int      lTempInteger_0 = 0;
-   int      lTempInteger_1 = 0;
-
-   //:BuildSPLD_FromSPLD( VIEW NewSPLD    BASED ON LOD mSPLDef,
-   //:                 VIEW SourceSPLD BASED ON LOD mSPLDef,
-   //:                 VIEW ParentSLC  BASED ON LOD mSubLC )
-
-   //:// Build an new SPLD from a previous SPLD.
-   //:// Most of the component construction is the same as that in BuildSPLD_FromSLC, or nearly
-   //:// the same. Only the Marketing Section is completely driven from the source SPLD. These are
-   //:// explained for each section below.
-
-   //:// Set root attributes and tie back to Parent SLC.
-   //:SetMatchingAttributesByName( NewSPLD, "SubregPhysicalLabelDef", SourceSPLD, "SubregPhysicalLabelDef", zSET_NULL )
-   SetMatchingAttributesByName( NewSPLD, "SubregPhysicalLabelDef", SourceSPLD, "SubregPhysicalLabelDef", zSET_NULL );
-   //:INCLUDE NewSPLD.SubregLabelContent FROM ParentSLC.SubregLabelContent
-   RESULT = IncludeSubobjectFromSubobject( NewSPLD, "SubregLabelContent", ParentSLC, "SubregLabelContent", zPOS_AFTER );
-   //:// Usage Entries.
-   //:// Usage Entries come from original SPLD. Only those in ParentSLC, however, are used to create Usages in the new SPLD.
-   //:FOR EACH SourceSPLD.SPLD_Usage
-   RESULT = SetCursorFirstEntity( SourceSPLD, "SPLD_Usage", "" );
-   while ( RESULT > zCURSOR_UNCHANGED )
-   { 
-      //:SET CURSOR FIRST ParentSLC.S_Usage WHERE ParentSLC.S_Usage.UsageType = SourceSPLD.SPLD_Usage.UsageType
-      //:                                     AND ParentSLC.S_Usage.Name = SourceSPLD.SPLD_Usage.Name
-      RESULT = SetCursorFirstEntity( ParentSLC, "S_Usage", "" );
-      if ( RESULT > zCURSOR_UNCHANGED )
-      { 
-         while ( RESULT > zCURSOR_UNCHANGED && ( CompareAttributeToAttribute( ParentSLC, "S_Usage", "UsageType", SourceSPLD, "SPLD_Usage", "UsageType" ) != 0 ||
-                 CompareAttributeToAttribute( ParentSLC, "S_Usage", "Name", SourceSPLD, "SPLD_Usage", "Name" ) != 0 ) )
-         { 
-            RESULT = SetCursorNextEntity( ParentSLC, "S_Usage", "" );
-         } 
-
-      } 
-
-      //:IF RESULT >= zCURSOR_SET
-      if ( RESULT >= zCURSOR_SET )
-      { 
-         //:CREATE ENTITY NewSPLD.SPLD_Usage
-         RESULT = CreateEntity( NewSPLD, "SPLD_Usage", zPOS_AFTER );
-         //:SetMatchingAttributesByName( NewSPLD, "SPLD_Usage", ParentSLC, "S_Usage", zSET_NULL )
-         SetMatchingAttributesByName( NewSPLD, "SPLD_Usage", ParentSLC, "S_Usage", zSET_NULL );
-      } 
-
-      RESULT = SetCursorNextEntity( SourceSPLD, "SPLD_Usage", "" );
-      //:END
-   } 
-
-   //:END
-   //:// General Section
-   //:// Build from SLC, same as in BuildSPLD_FromSLC.
-   //:FOR EACH ParentSLC.S_GeneralSection
-   RESULT = SetCursorFirstEntity( ParentSLC, "S_GeneralSection", "" );
-   while ( RESULT > zCURSOR_UNCHANGED )
-   { 
-      //:CREATE ENTITY NewSPLD.SPLD_GeneralSection
-      RESULT = CreateEntity( NewSPLD, "SPLD_GeneralSection", zPOS_AFTER );
-      //:SetMatchingAttributesByName( NewSPLD, "SPLD_GeneralSection", ParentSLC, "S_GeneralSection", zSET_NULL )
-      SetMatchingAttributesByName( NewSPLD, "SPLD_GeneralSection", ParentSLC, "S_GeneralSection", zSET_NULL );
-      //:INCLUDE NewSPLD.S_GeneralSection FROM ParentSLC.S_GeneralSection
-      RESULT = IncludeSubobjectFromSubobject( NewSPLD, "S_GeneralSection", ParentSLC, "S_GeneralSection", zPOS_AFTER );
-      //:FOR EACH ParentSLC.S_GeneralStatement
-      RESULT = SetCursorFirstEntity( ParentSLC, "S_GeneralStatement", "" );
-      while ( RESULT > zCURSOR_UNCHANGED )
-      { 
-         //:CREATE ENTITY NewSPLD.SPLD_GeneralStatement
-         RESULT = CreateEntity( NewSPLD, "SPLD_GeneralStatement", zPOS_AFTER );
-         //:SetMatchingAttributesByName( NewSPLD, "SPLD_GeneralStatement", ParentSLC, "S_GeneralStatement", zSET_NULL )
-         SetMatchingAttributesByName( NewSPLD, "SPLD_GeneralStatement", ParentSLC, "S_GeneralStatement", zSET_NULL );
-         //:INCLUDE NewSPLD.S_GeneralStatement FROM ParentSLC.S_GeneralStatement
-         RESULT = IncludeSubobjectFromSubobject( NewSPLD, "S_GeneralStatement", ParentSLC, "S_GeneralStatement", zPOS_AFTER );
-         RESULT = SetCursorNextEntity( ParentSLC, "S_GeneralStatement", "" );
-      } 
-
-      RESULT = SetCursorNextEntity( ParentSLC, "S_GeneralSection", "" );
-      //:END
-   } 
-
-   //:END
-   //:// Ingredients Section
-   //:// Build from SLC, same as in BuildSPLD_FromSLC.
-   //:FOR EACH ParentSLC.S_IngredientsSection
-   RESULT = SetCursorFirstEntity( ParentSLC, "S_IngredientsSection", "" );
-   while ( RESULT > zCURSOR_UNCHANGED )
-   { 
-      //:CREATE ENTITY NewSPLD.SPLD_IngredientsSection
-      RESULT = CreateEntity( NewSPLD, "SPLD_IngredientsSection", zPOS_AFTER );
-      //:SetMatchingAttributesByName( NewSPLD, "SPLD_IngredientsSection", ParentSLC, "S_IngredientsSection", zSET_NULL )
-      SetMatchingAttributesByName( NewSPLD, "SPLD_IngredientsSection", ParentSLC, "S_IngredientsSection", zSET_NULL );
-      //:INCLUDE NewSPLD.S_IngredientsSection FROM ParentSLC.S_IngredientsSection
-      RESULT = IncludeSubobjectFromSubobject( NewSPLD, "S_IngredientsSection", ParentSLC, "S_IngredientsSection", zPOS_AFTER );
-      //:FOR EACH ParentSLC.S_IngredientsStatement
-      RESULT = SetCursorFirstEntity( ParentSLC, "S_IngredientsStatement", "" );
-      while ( RESULT > zCURSOR_UNCHANGED )
-      { 
-         //:CREATE ENTITY NewSPLD.SPLD_IngredientsStatement
-         RESULT = CreateEntity( NewSPLD, "SPLD_IngredientsStatement", zPOS_AFTER );
-         //:SetMatchingAttributesByName( NewSPLD, "SPLD_IngredientsStatement", ParentSLC, "S_IngredientsStatement", zSET_NULL )
-         SetMatchingAttributesByName( NewSPLD, "SPLD_IngredientsStatement", ParentSLC, "S_IngredientsStatement", zSET_NULL );
-         //:INCLUDE NewSPLD.S_IngredientsStatement FROM ParentSLC.S_IngredientsStatement
-         RESULT = IncludeSubobjectFromSubobject( NewSPLD, "S_IngredientsStatement", ParentSLC, "S_IngredientsStatement", zPOS_AFTER );
-         RESULT = SetCursorNextEntity( ParentSLC, "S_IngredientsStatement", "" );
-      } 
-
-      RESULT = SetCursorNextEntity( ParentSLC, "S_IngredientsSection", "" );
-      //:END
-   } 
-
-   //:END
-   //:// StorageDisposal Section
-   //:// Build from SLC, same as in BuildSPLD_FromSLC, except that the container size is driven from the source SPLD.
-   //:SET CURSOR FIRST ParentSLC.S_StorageDisposalSection WHERE ParentSLC.S_StorageDisposalSection.ContainerVolume = SourceSPLD.SPLD_StorageDisposalSection.ContainerVolume
-   {StringBuilder sb_szTempString_0;
-   if ( szTempString_0 == null )
-      sb_szTempString_0 = new StringBuilder( 32 );
-   else
-      sb_szTempString_0 = new StringBuilder( szTempString_0 );
-       GetStringFromAttribute( sb_szTempString_0, SourceSPLD, "SPLD_StorageDisposalSection", "ContainerVolume" );
-   szTempString_0 = sb_szTempString_0.toString( );}
-   RESULT = SetCursorFirstEntityByString( ParentSLC, "S_StorageDisposalSection", "ContainerVolume", szTempString_0, "" );
-   //:CREATE ENTITY NewSPLD.SPLD_StorageDisposalSection
-   RESULT = CreateEntity( NewSPLD, "SPLD_StorageDisposalSection", zPOS_AFTER );
-   //:SetMatchingAttributesByName( NewSPLD, "SPLD_StorageDisposalSection", ParentSLC, "S_StorageDisposalSection", zSET_NULL )
-   SetMatchingAttributesByName( NewSPLD, "SPLD_StorageDisposalSection", ParentSLC, "S_StorageDisposalSection", zSET_NULL );
-   //:INCLUDE NewSPLD.S_StorageDisposalSection FROM ParentSLC.S_StorageDisposalSection
-   RESULT = IncludeSubobjectFromSubobject( NewSPLD, "S_StorageDisposalSection", ParentSLC, "S_StorageDisposalSection", zPOS_AFTER );
-   //:FOR EACH ParentSLC.S_StorageDisposalStatement
-   RESULT = SetCursorFirstEntity( ParentSLC, "S_StorageDisposalStatement", "" );
-   while ( RESULT > zCURSOR_UNCHANGED )
-   { 
-      //:CREATE ENTITY NewSPLD.SPLD_StorageDisposalStatement
-      RESULT = CreateEntity( NewSPLD, "SPLD_StorageDisposalStatement", zPOS_AFTER );
-      //:SetMatchingAttributesByName( NewSPLD, "SPLD_StorageDisposalStatement", ParentSLC, "S_StorageDisposalStatement", zSET_NULL )
-      SetMatchingAttributesByName( NewSPLD, "SPLD_StorageDisposalStatement", ParentSLC, "S_StorageDisposalStatement", zSET_NULL );
-      //:INCLUDE NewSPLD.S_StorageDisposalStatement FROM ParentSLC.S_StorageDisposalStatement
-      RESULT = IncludeSubobjectFromSubobject( NewSPLD, "S_StorageDisposalStatement", ParentSLC, "S_StorageDisposalStatement", zPOS_AFTER );
-      RESULT = SetCursorNextEntity( ParentSLC, "S_StorageDisposalStatement", "" );
-   } 
-
-   //:END
-   //:// DirectionsForUse Section
-   //:// Build from SLC, same as in BuildSPLD_FromSLC, except that the Directions sections selected are driven by the Usages from
-   //:// the source SPLD, which have already be copied to new SPLD..
-   //:FOR EACH ParentSLC.S_DirectionsForUseSection
-   RESULT = SetCursorFirstEntity( ParentSLC, "S_DirectionsForUseSection", "" );
-   while ( RESULT > zCURSOR_UNCHANGED )
-   { 
-      //:CREATE ENTITY NewSPLD.SPLD_DirectionsForUseSection
-      RESULT = CreateEntity( NewSPLD, "SPLD_DirectionsForUseSection", zPOS_AFTER );
-      //:SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseSection", ParentSLC, "S_DirectionsForUseSection", zSET_NULL )
-      SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseSection", ParentSLC, "S_DirectionsForUseSection", zSET_NULL );
-      //:INCLUDE NewSPLD.S_DirectionsForUseSection FROM ParentSLC.S_DirectionsForUseSection
-      RESULT = IncludeSubobjectFromSubobject( NewSPLD, "S_DirectionsForUseSection", ParentSLC, "S_DirectionsForUseSection", zPOS_AFTER );
-      //:FOR EACH ParentSLC.S_DirectionsForUseStatement
-      RESULT = SetCursorFirstEntity( ParentSLC, "S_DirectionsForUseStatement", "" );
-      while ( RESULT > zCURSOR_UNCHANGED )
-      { 
-         //:CREATE ENTITY NewSPLD.SPLD_DirectionsForUseStatement
-         RESULT = CreateEntity( NewSPLD, "SPLD_DirectionsForUseStatement", zPOS_AFTER );
-         //:SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseStatement", ParentSLC, "S_DirectionsForUseStatement", zSET_NULL )
-         SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseStatement", ParentSLC, "S_DirectionsForUseStatement", zSET_NULL );
-         //:INCLUDE NewSPLD.S_DirectionsForUseStatement FROM ParentSLC.S_DirectionsForUseStatement
-         RESULT = IncludeSubobjectFromSubobject( NewSPLD, "S_DirectionsForUseStatement", ParentSLC, "S_DirectionsForUseStatement", zPOS_AFTER );
-         RESULT = SetCursorNextEntity( ParentSLC, "S_DirectionsForUseStatement", "" );
-      } 
-
-      //:END
-      //:// Add each Usage from the SLC that is one of the Usages in new the SPLD.
-      //:FOR EACH ParentSLC.S_DirectionsUsage WITHIN ParentSLC.S_DirectionsForUseSection
-      RESULT = SetCursorFirstEntity( ParentSLC, "S_DirectionsUsage", "S_DirectionsForUseSection" );
-      while ( RESULT > zCURSOR_UNCHANGED )
-      { 
-         //:SET CURSOR FIRST NewSPLD.SPLD_Usage WHERE NewSPLD.SPLD_Usage.UsageType = ParentSLC.S_DirectionsUsage.UsageType
-         //:                                      AND NewSPLD.SPLD_Usage.Name = ParentSLC.S_DirectionsUsage.Name
-         RESULT = SetCursorFirstEntity( NewSPLD, "SPLD_Usage", "" );
-         if ( RESULT > zCURSOR_UNCHANGED )
-         { 
-            while ( RESULT > zCURSOR_UNCHANGED && ( CompareAttributeToAttribute( NewSPLD, "SPLD_Usage", "UsageType", ParentSLC, "S_DirectionsUsage", "UsageType" ) != 0 ||
-                    CompareAttributeToAttribute( NewSPLD, "SPLD_Usage", "Name", ParentSLC, "S_DirectionsUsage", "Name" ) != 0 ) )
-            { 
-               RESULT = SetCursorNextEntity( NewSPLD, "SPLD_Usage", "" );
-            } 
-
-         } 
-
-         //:IF RESULT >= zCURSOR_SET
-         if ( RESULT >= zCURSOR_SET )
-         { 
-            //:CREATE ENTITY NewSPLD.SPLD_DirectionsUsageOrdering
-            RESULT = CreateEntity( NewSPLD, "SPLD_DirectionsUsageOrdering", zPOS_AFTER );
-            //:INCLUDE NewSPLD.SPLD_DirectionsUsage FROM NewSPLD.SPLD_Usage
-            RESULT = IncludeSubobjectFromSubobject( NewSPLD, "SPLD_DirectionsUsage", NewSPLD, "SPLD_Usage", zPOS_AFTER );
-         } 
-
-         RESULT = SetCursorNextEntity( ParentSLC, "S_DirectionsUsage", "S_DirectionsForUseSection" );
-         //:END
-      } 
-
-      RESULT = SetCursorNextEntity( ParentSLC, "S_DirectionsForUseSection", "" );
-      //:END
-   } 
-
-   //:END
-   //:// Now delete any "NON General" Directions for Use that have no Usages remaining.
-   //:FOR EACH NewSPLD.SPLD_DirectionsForUseSection WHERE NewSPLD.SPLD_DirectionsForUseSection.GeneralUse != "Y"
-   RESULT = SetCursorFirstEntity( NewSPLD, "SPLD_DirectionsForUseSection", "" );
-   while ( RESULT > zCURSOR_UNCHANGED )
-   { 
-      if ( CompareAttributeToString( NewSPLD, "SPLD_DirectionsForUseSection", "GeneralUse", "Y" ) != 0 )
-      { 
-         //:IF NewSPLD.SPLD_DirectionsUsage DOES NOT EXIST
-         lTempInteger_0 = CheckExistenceOfEntity( NewSPLD, "SPLD_DirectionsUsage" );
-         if ( lTempInteger_0 != 0 )
-         { 
-            //:DELETE ENTITY NewSPLD.SPLD_DirectionsForUseSection NONE
-            RESULT = DeleteEntity( NewSPLD, "SPLD_DirectionsForUseSection", zREPOS_NONE );
-         } 
-
-      } 
-
-      RESULT = SetCursorNextEntity( NewSPLD, "SPLD_DirectionsForUseSection", "" );
-      //:END
-   } 
-
-   //:END
-   //:// Marketing Section
-   //:// These are driven  from the original SPLD. We progress from the original SPLD to its SLC, then to the S_MarketingSection of the
-   //:// new SLC and generate the new SPLD Marketing Section from the S_MarketingSection of the new SLC.
-   //:// Note that we won't recreate a Marketing Section that is not in the new SLC.
-   //:FOR EACH SourceSPLD.SPLD_MarketingSection
-   RESULT = SetCursorFirstEntity( SourceSPLD, "SPLD_MarketingSection", "" );
-   while ( RESULT > zCURSOR_UNCHANGED )
-   { 
-      //:SET CURSOR FIRST ParentSLC.SP_MarketingSection WITHIN ParentSLC.SubregLabelContent
-      //:           WHERE ParentSLC.SP_MarketingSection.ID = SourceSPLD.S_MarketingSection.ID
-      {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
-             GetIntegerFromAttribute( mi_lTempInteger_1, SourceSPLD, "S_MarketingSection", "ID" );
-      lTempInteger_1 = mi_lTempInteger_1.intValue( );}
-      RESULT = SetCursorFirstEntityByInteger( ParentSLC, "SP_MarketingSection", "ID", lTempInteger_1, "SubregLabelContent" );
-      //:IF RESULT >= zCURSOR_SET
-      if ( RESULT >= zCURSOR_SET )
-      { 
-         //:CREATE ENTITY NewSPLD.SPLD_MarketingSection
-         RESULT = CreateEntity( NewSPLD, "SPLD_MarketingSection", zPOS_AFTER );
-         //:SetMatchingAttributesByName( NewSPLD, "SPLD_MarketingSection", ParentSLC, "S_MarketingSection", zSET_NULL )
-         SetMatchingAttributesByName( NewSPLD, "SPLD_MarketingSection", ParentSLC, "S_MarketingSection", zSET_NULL );
-         //:INCLUDE NewSPLD.S_MarketingSection FROM ParentSLC.S_MarketingSection
-         RESULT = IncludeSubobjectFromSubobject( NewSPLD, "S_MarketingSection", ParentSLC, "S_MarketingSection", zPOS_AFTER );
-         //:FOR EACH ParentSLC.S_MarketingStatement
-         RESULT = SetCursorFirstEntity( ParentSLC, "S_MarketingStatement", "" );
-         while ( RESULT > zCURSOR_UNCHANGED )
-         { 
-            //:CREATE ENTITY NewSPLD.SPLD_MarketingStatement
-            RESULT = CreateEntity( NewSPLD, "SPLD_MarketingStatement", zPOS_AFTER );
-            //:SetMatchingAttributesByName( NewSPLD, "SPLD_MarketingStatement", ParentSLC, "S_MarketingStatement", zSET_NULL )
-            SetMatchingAttributesByName( NewSPLD, "SPLD_MarketingStatement", ParentSLC, "S_MarketingStatement", zSET_NULL );
-            //:INCLUDE NewSPLD.S_MarketingStatement FROM ParentSLC.S_MarketingStatement
-            RESULT = IncludeSubobjectFromSubobject( NewSPLD, "S_MarketingStatement", ParentSLC, "S_MarketingStatement", zPOS_AFTER );
-            RESULT = SetCursorNextEntity( ParentSLC, "S_MarketingStatement", "" );
-         } 
-
-         //:END
-         //:// Add each Usage from the SLC that is one of the Usages in new the SPLD.
-         //:// They are handled the same as for Marketing For Use above.
-         //:FOR EACH ParentSLC.S_MarketingUsage WITHIN ParentSLC.S_MarketingSection
-         RESULT = SetCursorFirstEntity( ParentSLC, "S_MarketingUsage", "S_MarketingSection" );
-         while ( RESULT > zCURSOR_UNCHANGED )
-         { 
-            //:SET CURSOR FIRST NewSPLD.SPLD_Usage WHERE NewSPLD.SPLD_Usage.UsageType = ParentSLC.S_MarketingUsage.UsageType
-            //:                                      AND NewSPLD.SPLD_Usage.Name = ParentSLC.S_MarketingUsage.Name
-            RESULT = SetCursorFirstEntity( NewSPLD, "SPLD_Usage", "" );
-            if ( RESULT > zCURSOR_UNCHANGED )
-            { 
-               while ( RESULT > zCURSOR_UNCHANGED && ( CompareAttributeToAttribute( NewSPLD, "SPLD_Usage", "UsageType", ParentSLC, "S_MarketingUsage", "UsageType" ) != 0 ||
-                       CompareAttributeToAttribute( NewSPLD, "SPLD_Usage", "Name", ParentSLC, "S_MarketingUsage", "Name" ) != 0 ) )
-               { 
-                  RESULT = SetCursorNextEntity( NewSPLD, "SPLD_Usage", "" );
-               } 
-
-            } 
-
-            //:IF RESULT >= zCURSOR_SET
-            if ( RESULT >= zCURSOR_SET )
-            { 
-               //:CREATE ENTITY NewSPLD.SPLD_MarketingUsageOrdering
-               RESULT = CreateEntity( NewSPLD, "SPLD_MarketingUsageOrdering", zPOS_AFTER );
-               //:INCLUDE NewSPLD.SPLD_MarketingUsage FROM NewSPLD.SPLD_Usage
-               RESULT = IncludeSubobjectFromSubobject( NewSPLD, "SPLD_MarketingUsage", NewSPLD, "SPLD_Usage", zPOS_AFTER );
-            } 
-
-            RESULT = SetCursorNextEntity( ParentSLC, "S_MarketingUsage", "S_MarketingSection" );
-            //:END
-         } 
-
-         //:END
-      } 
-
-      RESULT = SetCursorNextEntity( SourceSPLD, "SPLD_MarketingSection", "" );
-      //:END
-   } 
-
-   //:END
-   //:// HumanHazard Section
-   //:// Build from SLC, same as in BuildSPLD_FromSLC.
-   //:FOR EACH ParentSLC.S_HumanHazardSection
-   RESULT = SetCursorFirstEntity( ParentSLC, "S_HumanHazardSection", "" );
-   while ( RESULT > zCURSOR_UNCHANGED )
-   { 
-      //:CREATE ENTITY NewSPLD.SPLD_HumanHazardSection
-      RESULT = CreateEntity( NewSPLD, "SPLD_HumanHazardSection", zPOS_AFTER );
-      //:SetMatchingAttributesByName( NewSPLD, "SPLD_HumanHazardSection", ParentSLC, "S_HumanHazardSection", zSET_NULL )
-      SetMatchingAttributesByName( NewSPLD, "SPLD_HumanHazardSection", ParentSLC, "S_HumanHazardSection", zSET_NULL );
-      //:INCLUDE NewSPLD.S_HumanHazardSection FROM ParentSLC.S_HumanHazardSection
-      RESULT = IncludeSubobjectFromSubobject( NewSPLD, "S_HumanHazardSection", ParentSLC, "S_HumanHazardSection", zPOS_AFTER );
-      RESULT = SetCursorNextEntity( ParentSLC, "S_HumanHazardSection", "" );
-   } 
-
-   //:END
    return( 0 );
 // END
 } 
@@ -18100,6 +17720,100 @@ omSPLDef_dColorName( View     mSPLDef,
       //:END  /* case */
       return( 0 );
    } 
+
+
+   //:TRANSFORMATION OPERATION
+public int 
+omSPLDef_BuildSPLD_FromSPLD( View     NewSPLD,
+                             View     SourceSPLD,
+                             View     ParentSLC )
+{
+   int      RESULT = 0;
+   int      lTempInteger_0 = 0;
+   int      lTempInteger_1 = 0;
+   int      lTempInteger_2 = 0;
+
+   //:BuildSPLD_FromSPLD( VIEW NewSPLD    BASED ON LOD mSPLDef,
+   //:                 VIEW SourceSPLD BASED ON LOD mSPLDef,
+   //:                 VIEW ParentSLC  BASED ON LOD mSubLC )
+
+   //:// Build an new SPLD from a previous SPLD.
+   //:// Most of the component construction is the same as that in BuildSPLD_FromSLC. Only the LLD subobject is different.
+   //:// So, reuse the BuildSPLD_FromSLC operation, then reuse the code for building an LLD section.
+
+   //:BuildSPLD_FromSLC( NewSPLD, ParentSLC )
+   omSPLDef_BuildSPLD_FromSLC( NewSPLD, ParentSLC );
+
+   //:// Copy the SPLD_LLD subobject.
+   //:CREATE ENTITY NewSPLD.SPLD_LLD
+   RESULT = CreateEntity( NewSPLD, "SPLD_LLD", zPOS_AFTER );
+   //:SetMatchingAttributesByName( NewSPLD, "S_HumanHazardSection", SourceSPLD, "S_HumanHazardSection", zSET_NULL )
+   SetMatchingAttributesByName( NewSPLD, "S_HumanHazardSection", SourceSPLD, "S_HumanHazardSection", zSET_NULL );
+   //:FOR EACH SourceSPLD.LLD_Page
+   RESULT = SetCursorFirstEntity( SourceSPLD, "LLD_Page", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:CREATE ENTITY NewSPLD.LLD_Page
+      RESULT = CreateEntity( NewSPLD, "LLD_Page", zPOS_AFTER );
+      //:SetMatchingAttributesByName( NewSPLD, "LLD_Page", SourceSPLD, "LLD_Page", zSET_NULL )
+      SetMatchingAttributesByName( NewSPLD, "LLD_Page", SourceSPLD, "LLD_Page", zSET_NULL );
+      //:IF SourceSPLD.PageBackgroundColor EXISTS
+      lTempInteger_0 = CheckExistenceOfEntity( SourceSPLD, "PageBackgroundColor" );
+      if ( lTempInteger_0 == 0 )
+      { 
+         //:INCLUDE NewSPLD.PageBackgroundColor FROM SourceSPLD.PageBackgroundColor
+         RESULT = IncludeSubobjectFromSubobject( NewSPLD, "PageBackgroundColor", SourceSPLD, "PageBackgroundColor", zPOS_AFTER );
+      } 
+
+      //:END
+      //:FOR EACH SourceSPLD.LLD_Panel
+      RESULT = SetCursorFirstEntity( SourceSPLD, "LLD_Panel", "" );
+      while ( RESULT > zCURSOR_UNCHANGED )
+      { 
+         //:CREATE ENTITY NewSPLD.LLD_Panel
+         RESULT = CreateEntity( NewSPLD, "LLD_Panel", zPOS_AFTER );
+         //:SetMatchingAttributesByName( NewSPLD, "LLD_Panel", SourceSPLD, "LLD_Panel", zSET_NULL )
+         SetMatchingAttributesByName( NewSPLD, "LLD_Panel", SourceSPLD, "LLD_Panel", zSET_NULL );
+         //:IF SourceSPLD.PanelBackgroundColor EXISTS
+         lTempInteger_1 = CheckExistenceOfEntity( SourceSPLD, "PanelBackgroundColor" );
+         if ( lTempInteger_1 == 0 )
+         { 
+            //:INCLUDE NewSPLD.PanelBackgroundColor FROM SourceSPLD.PanelBackgroundColor
+            RESULT = IncludeSubobjectFromSubobject( NewSPLD, "PanelBackgroundColor", SourceSPLD, "PanelBackgroundColor", zPOS_AFTER );
+         } 
+
+         //:END
+         //:IF SourceSPLD.PanelBorderColor EXISTS
+         lTempInteger_2 = CheckExistenceOfEntity( SourceSPLD, "PanelBorderColor" );
+         if ( lTempInteger_2 == 0 )
+         { 
+            //:INCLUDE NewSPLD.PanelBorderColor FROM SourceSPLD.PanelBorderColor
+            RESULT = IncludeSubobjectFromSubobject( NewSPLD, "PanelBorderColor", SourceSPLD, "PanelBorderColor", zPOS_AFTER );
+         } 
+
+         //:END
+         //:FOR EACH SourceSPLD.LLD_Block
+         RESULT = SetCursorFirstEntity( SourceSPLD, "LLD_Block", "" );
+         while ( RESULT > zCURSOR_UNCHANGED )
+         { 
+            //:// Use recursive routine to duplicate Block.
+            //:DuplicateSPLD_Block( NewSPLD, SourceSPLD )
+            omSPLDef_DuplicateSPLD_Block( NewSPLD, SourceSPLD );
+            RESULT = SetCursorNextEntity( SourceSPLD, "LLD_Block", "" );
+         } 
+
+         RESULT = SetCursorNextEntity( SourceSPLD, "LLD_Panel", "" );
+         //:END
+      } 
+
+      RESULT = SetCursorNextEntity( SourceSPLD, "LLD_Page", "" );
+      //:END
+   } 
+
+   //:END
+   return( 0 );
+// END
+} 
 
 
 

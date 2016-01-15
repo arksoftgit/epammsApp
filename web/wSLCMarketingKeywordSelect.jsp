@@ -544,6 +544,7 @@ else
    View lSPLDLST = null;
    View mLLD_LST = null;
    View mMasLC = null;
+   View mSPLDef = null;
    View mSubLC = null;
    View mSubProd = null;
    View mSubreg = null;
@@ -726,8 +727,6 @@ try
 
          lEntityKey = vGrid1.cursor( "S_InsertTextMarketing" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGridCheckCtl2 = "";
          nRC = vGrid1.cursor( "S_InsertTextMarketing" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -907,8 +906,6 @@ try
 
          lEntityKey = vGrid2.cursor( "M_InsertTextMarketing" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGridCheckCtl1 = "";
          nRC = vGrid2.cursor( "M_InsertTextMarketing" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )

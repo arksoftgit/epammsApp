@@ -274,6 +274,8 @@ if ( strActionToProcess != null )
 
       // Action Auto Object Function
       nRC = 0;
+      try
+      {
       View mSubLC = task.getViewByName( "mSubLC" );
       EntityCursor cursor = mSubLC.cursor( "S_UsageType" );
       if ( cursor.isNull() )
@@ -282,11 +284,18 @@ if ( strActionToProcess != null )
       {
          if ( cursor.isVersioned( ) )
          {
-           cursor.cancelSubobject( );
-           nRC = 0;
+            cursor.cancelSubobject( );
          }
+         nRC = 0;
       }
 
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "CancelAndReturn", e.getMessage( ), "" );
+         break;
+      }
       // Next Window
       strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReturnToParent, "", "" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -602,6 +611,7 @@ else
    View lSPLDLST = null;
    View mLLD_LST = null;
    View mMasLC = null;
+   View mSPLDef = null;
    View mSubLC = null;
    View mSubProd = null;
    View mSubreg = null;
@@ -833,8 +843,6 @@ try
 
          lEntityKey = vGrid1.cursor( "S_Usage" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGridCheckCtl2 = "";
          nRC = vGrid1.cursor( "S_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -978,8 +986,6 @@ try
 
          lEntityKey = vGrid2.cursor( "M_Usage" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGridCheckCtl1 = "";
          nRC = vGrid2.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )

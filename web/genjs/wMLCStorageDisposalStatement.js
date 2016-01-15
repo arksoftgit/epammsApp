@@ -219,6 +219,21 @@ function AcceptStorDispStmt( )
    }
 }
 
+function ADD_SD_StatementKeyword( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCStorageDisposalStatement.zAction.value = "ADD_SD_StatementKeyword";
+      document.wMLCStorageDisposalStatement.submit( );
+   }
+}
+
 function CancelStorDispStmt( )
 {
 
@@ -234,7 +249,55 @@ function CancelStorDispStmt( )
    }
 }
 
-function CleanStorDispStmtHTML( )
+function COPY_InsertKeyword( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCStorageDisposalStatement.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCStorageDisposalStatement.zAction.value = "COPY_InsertKeyword";
+      document.wMLCStorageDisposalStatement.submit( );
+   }
+}
+
+function DELETE_DS_StatementKeyword( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCStorageDisposalStatement.zTableRowSelect.value = strEntityKey;
+      // Javascript code entered by user.
+
+// Confirmation of  Delete.
+if (!confirm("OK to delete selected entry?"))
+{
+   return;
+}
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wMLCStorageDisposalStatement.zAction.value = "DELETE_DS_StatementKeyword";
+      document.wMLCStorageDisposalStatement.submit( );
+   }
+}
+
+function GOTO_DisplayGeneratedTextSD( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -244,7 +307,41 @@ function CleanStorDispStmtHTML( )
    {
       _DisableFormElements( true );
 
-      document.wMLCStorageDisposalStatement.zAction.value = "CleanStorDispStmtHTML";
+      document.wMLCStorageDisposalStatement.zAction.value = "GOTO_DisplayGeneratedTextSD";
+      document.wMLCStorageDisposalStatement.submit( );
+   }
+}
+
+function GOTO_DU_KeywordUpdate( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCStorageDisposalStatement.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCStorageDisposalStatement.zAction.value = "GOTO_DU_KeywordUpdate";
+      document.wMLCStorageDisposalStatement.submit( );
+   }
+}
+
+function PASTE_InsertKeyword( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCStorageDisposalStatement.zAction.value = "PASTE_InsertKeyword";
       document.wMLCStorageDisposalStatement.submit( );
    }
 }

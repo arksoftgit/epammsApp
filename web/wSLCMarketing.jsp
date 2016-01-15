@@ -1117,6 +1117,7 @@ else
    View lSPLDLST = null;
    View mLLD_LST = null;
    View mMasLC = null;
+   View mSPLDef = null;
    View mSubLC = null;
    View mSubProd = null;
    View mSubreg = null;
@@ -1295,8 +1296,6 @@ try
 
          lEntityKey = vGrid2.cursor( "CompositeComponentList" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGridEditCtl3 = "";
          nRC = vGrid2.cursor( "CompositeComponentList" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -1329,7 +1328,7 @@ try
 
    <td nowrap style="width:126px;"><a href="#" onclick="GOTO_MarketingStatementDetail( this.id )" id="GridEditCtl3::<%=strEntityKey%>"><%=strGridEditCtl3%></a></td>
    <td><a href="#" onclick="GOTO_MarketingStatementDetail( this.id )" id="GridEditCtl5::<%=strEntityKey%>"><%=strGridEditCtl5%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateStorDispSect1" onclick="GOTO_MarketingStatementDetail( this.id )" id="BMBUpdateStorDispSect1::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Display"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateStorDispSect1" onclick="GOTO_MarketingStatementDetail( this.id )" id="BMBUpdateStorDispSect1::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Display"></a></td>
 
 </tr>
 

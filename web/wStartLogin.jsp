@@ -186,8 +186,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartLogin", "wStart.ProcessLogin" );
-      nOptRC = wStart.ProcessLogin( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartLogin", "wStartUp.ProcessLogin" );
+      nOptRC = wStartUp.ProcessLogin( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection

@@ -1091,8 +1091,6 @@ try
 
          lEntityKey = vGridPrimaryRegistrant.cursor( "PrimaryRegistrant" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGEPrimaryRegistrantName = "";
          nRC = vGridPrimaryRegistrant.cursor( "PrimaryRegistrant" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -1139,8 +1137,8 @@ try
    <td nowrap><a href="#" onclick="SelectPrimaryRegistrantForUpdate( this.id )" id="GEPrimaryRegistrantName::<%=strEntityKey%>"><%=strGEPrimaryRegistrantName%></a></td>
    <td nowrap><a href="#" onclick="SelectPrimaryRegistrantForUpdate( this.id )" id="GEPrimaryRegistrantLoginName::<%=strEntityKey%>"><%=strGEPrimaryRegistrantLoginName%></a></td>
    <td nowrap><a href="#" onclick="SelectPrimaryRegistrantForUpdate( this.id )" id="GEPrimaryRegistrantDescription::<%=strEntityKey%>"><%=strGEPrimaryRegistrantDescription%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdatePrimaryRegistrantDetail" onclick="SelectPrimaryRegistrantForUpdate( this.id )" id="BMBUpdatePrimaryRegistrantDetail::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Detail"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBAdminDeletePrimaryRegistrant" onclick="SelectPrimaryRegistrantForDelete( this.id )" id="BMBAdminDeletePrimaryRegistrant::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdatePrimaryRegistrantDetail" onclick="SelectPrimaryRegistrantForUpdate( this.id )" id="BMBUpdatePrimaryRegistrantDetail::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Detail"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBAdminDeletePrimaryRegistrant" onclick="SelectPrimaryRegistrantForDelete( this.id )" id="BMBAdminDeletePrimaryRegistrant::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 

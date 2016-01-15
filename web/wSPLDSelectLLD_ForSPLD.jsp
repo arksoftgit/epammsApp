@@ -628,8 +628,6 @@ try
 
          lEntityKey = vGrid1.cursor( "LLD" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strCheckBox1 = "";
          nRC = vGrid1.cursor( "LLD" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )

@@ -1,3 +1,3 @@
 <%
-int nTimeout = 60;
+int nTimeout = 600;
 %>

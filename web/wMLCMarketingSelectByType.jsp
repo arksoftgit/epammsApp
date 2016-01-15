@@ -951,8 +951,6 @@ try
 
          lEntityKey = vGrid1.cursor( "M_MarketingUsageOrdering" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGridCheckCtl2 = "";
          nRC = vGrid1.cursor( "M_MarketingUsageOrdering" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -1205,8 +1203,6 @@ try
 
          lEntityKey = vGrid2.cursor( "M_Usage" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGridCheckCtl1 = "";
          nRC = vGrid2.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )

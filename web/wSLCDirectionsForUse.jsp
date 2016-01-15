@@ -1058,6 +1058,7 @@ else
    View lSPLDLST = null;
    View mLLD_LST = null;
    View mMasLC = null;
+   View mSPLDef = null;
    View mSubLC = null;
    View mSubProd = null;
    View mSubreg = null;
@@ -1227,8 +1228,6 @@ try
 
          lEntityKey = vGridStorDisp.cursor( "S_DirectionsForUseSection" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strName = "";
          nRC = vGridStorDisp.cursor( "S_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -1261,7 +1260,7 @@ try
 
    <td><a href="#" onclick="GOTO_DirsForUseSectionDetail( this.id )" id="Name::<%=strEntityKey%>"><%=strName%></a></td>
    <td><a href="#" onclick="GOTO_DirsForUseSectionDetail( this.id )" id="Title::<%=strEntityKey%>"><%=strTitle%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateStorDispSect" onclick="GOTO_DirsForUseSectionDetail( this.id )" id="BMBUpdateStorDispSect::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Display"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateStorDispSect" onclick="GOTO_DirsForUseSectionDetail( this.id )" id="BMBUpdateStorDispSect::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Display"></a></td>
 
 </tr>
 

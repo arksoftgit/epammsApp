@@ -781,8 +781,6 @@ try
 
          lEntityKey = vGrid.cursor( "EPA_AreaOfUse" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGS_Select = "";
          nRC = vGrid.cursor( "EPA_AreaOfUse" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )

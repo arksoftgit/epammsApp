@@ -755,8 +755,6 @@ try
 
          lEntityKey = vGridMasterLabelContent.cursor( "MasterLabelContent" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGridEditVersion = "";
          nRC = vGridMasterLabelContent.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )

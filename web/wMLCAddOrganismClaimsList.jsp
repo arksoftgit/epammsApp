@@ -869,8 +869,6 @@ try
 
          lEntityKey = vGridBacteria.cursor( "Bacteria" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGS_SelectBacteria = "";
          nRC = vGridBacteria.cursor( "EPA_Claim" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -1014,8 +1012,6 @@ try
 
          lEntityKey = vGridFungi.cursor( "Fungi" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGS_SelectFungi = "";
          nRC = vGridFungi.cursor( "EPA_Claim" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -1159,8 +1155,6 @@ try
 
          lEntityKey = vGridViruses.cursor( "Viruses" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGS_SelectViruses = "";
          nRC = vGridViruses.cursor( "EPA_Claim" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )

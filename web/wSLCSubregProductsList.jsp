@@ -326,7 +326,7 @@ if ( strActionToProcess != null )
       }
 
       // Next Window
-      strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartModalSubwindow, "wSPLD", "DeleteLLD" );
+      strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartModalSubwindow, "wSLC", "DeleteLLD" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -660,6 +660,7 @@ else
    View lSPLDLST = null;
    View mLLD_LST = null;
    View mMasLC = null;
+   View mSPLDef = null;
    View mSubLC = null;
    View mSubProd = null;
    View mSubreg = null;
@@ -936,13 +937,12 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridSubregProducts:Grid */ %>
-<table  cols=5 style=""  name="GridSubregProducts" id="GridSubregProducts">
+<table  cols=4 style=""  name="GridSubregProducts" id="GridSubregProducts">
 
 <thead><tr>
 
    <th>Subregistrant Product</th>
    <th>Primary Registrant Product</th>
-   <th>ESL Date</th>
    <th>Update</th>
    <th>Delete</th>
 
@@ -964,7 +964,6 @@ try
       String strTag;
       String strGESubregProductName;
       String strGEPrimRegProductName;
-      String strGridESL_Date;
       String strBMBUpdateSubregProduct;
       String strBMBDeleteSubregProduct;
       
@@ -978,8 +977,6 @@ try
 
          lEntityKey = vGridSubregProducts.cursor( "SubregProduct" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGESubregProductName = "";
          nRC = vGridSubregProducts.cursor( "SubregProduct" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -1006,28 +1003,14 @@ try
          if ( StringUtils.isBlank( strGEPrimRegProductName ) )
             strGEPrimRegProductName = "&nbsp";
 
-         strGridESL_Date = "";
-         nRC = vGridSubregProducts.cursor( "SubregProduct" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strGridESL_Date = vGridSubregProducts.cursor( "SubregProduct" ).getAttribute( "ESL_Date" ).getString( "" );
-
-            if ( strGridESL_Date == null )
-               strGridESL_Date = "";
-         }
-
-         if ( StringUtils.isBlank( strGridESL_Date ) )
-            strGridESL_Date = "&nbsp";
-
 %>
 
 <tr<%=strOdd%>>
 
    <td><a href="#" onclick="GOTO_UpdateSubregProduct( this.id )" id="GESubregProductName::<%=strEntityKey%>"><%=strGESubregProductName%></a></td>
    <td><a href="#" onclick="GOTO_UpdateSubregProduct( this.id )" id="GEPrimRegProductName::<%=strEntityKey%>"><%=strGEPrimRegProductName%></a></td>
-   <td><a href="#" onclick="GOTO_UpdateSubregProduct( this.id )" id="GridESL_Date::<%=strEntityKey%>"><%=strGridESL_Date%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateSubregProduct" onclick="GOTO_UpdateSubregProduct( this.id )" id="BMBUpdateSubregProduct::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteSubregProduct" onclick="DeleteSubregProduct( this.id )" id="BMBDeleteSubregProduct::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateSubregProduct" onclick="GOTO_UpdateSubregProduct( this.id )" id="BMBUpdateSubregProduct::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteSubregProduct" onclick="DeleteSubregProduct( this.id )" id="BMBDeleteSubregProduct::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 
@@ -1155,8 +1138,6 @@ try
 
          lEntityKey = vGridLLD.cursor( "LLD" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGridEditCtl1 = "";
          nRC = vGridLLD.cursor( "LLD" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -1175,8 +1156,8 @@ try
 <tr<%=strOdd%>>
 
    <td><%=strGridEditCtl1%></td>
-   <td nowrap><a href="#"  name="BitmapBtn1" id="BitmapBtn1::<%=strEntityKey%>" ><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn2" onclick="GOTO_DeleteLLD( this.id )" id="BitmapBtn2::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
+   <td nowrap><a href="#"  name="BitmapBtn1" id="BitmapBtn1::<%=strEntityKey%>" ><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn2" onclick="GOTO_DeleteLLD( this.id )" id="BitmapBtn2::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 

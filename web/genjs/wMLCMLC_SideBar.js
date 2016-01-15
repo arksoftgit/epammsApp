@@ -279,7 +279,7 @@ function EditDirectionsUseSect( )
    }
 }
 
-function EditEnvironmentalHazardSection( )
+function EnvironmentalHazards( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -289,7 +289,7 @@ function EditEnvironmentalHazardSection( )
    {
       _DisableFormElements( true );
 
-      document.wMLCMLC_Sidebar.zAction.value = "EditEnvironmentalHazardSection";
+      document.wMLCMLC_Sidebar.zAction.value = "EnvironmentalHazards";
       document.wMLCMLC_Sidebar.submit( );
    }
 }

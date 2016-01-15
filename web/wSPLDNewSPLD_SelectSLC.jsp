@@ -644,8 +644,6 @@ try
 
          lEntityKey = vGrid2.cursor( "SubregLabelContent" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGridCheckCtl3 = "";
          nRC = vGrid2.cursor( "SubregLabelContent" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )

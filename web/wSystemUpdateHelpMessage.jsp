@@ -13,7 +13,7 @@
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
 <%@ page import="com.quinsoft.epamms.*" %>
 
-<%! 
+<%!
 
 ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
@@ -25,7 +25,7 @@ public int DoInputMapping( HttpServletRequest request,
    String taskId = (String) session.getAttribute( "ZeidonTaskId" );
    Task task = objectEngine.getTaskById( taskId );
 
-   View   sHelp = null;
+   View sHelp = null;
    String strMapValue = "";
    int    nRC = 0;
    int    nMapError = 1;
@@ -101,7 +101,7 @@ String strLastAction;
 strActionToProcess = (String) request.getParameter( "zAction" );
 
 strLastWindow = (String) session.getAttribute( "ZeidonWindow" );
-if ( StringUtils.isBlank( strLastWindow ) ) 
+if ( StringUtils.isBlank( strLastWindow ) )
    strLastWindow = "NoLastWindow";
 
 strLastAction = (String) session.getAttribute( "ZeidonAction" );
@@ -195,7 +195,7 @@ if ( strActionToProcess != null )
          break;
       }
 
-      // Next Window
+         // Next Window
       strURL = response.encodeRedirectURL( "wSystemDisplayHelpMessage.jsp" );
       nRC = 1;  // do the redirection
       break;
@@ -261,7 +261,7 @@ if ( strActionToProcess != null )
             task.log().info( "Action Error Redirect to: " + strURL );
          }
 
-         if ( ! strURL.equals("wSystemUpdateHelpMessage.jsp") ) 
+         if ( ! strURL.equals("wSystemUpdateHelpMessage.jsp") )
          {
             response.sendRedirect( strURL );
             // If we are redirecting to a new page, then we need this return so that the rest of this page doesn't get built.

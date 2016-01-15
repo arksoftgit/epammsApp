@@ -781,8 +781,6 @@ try
 
          lEntityKey = vGridSurfaces.cursor( "EPA_Surface" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGS_Select = "";
          nRC = vGridSurfaces.cursor( "EPA_Surface" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )

@@ -1198,8 +1198,6 @@ try
 
          lEntityKey = vGridPrimaryRegistrant.cursor( "MasterLabelContent" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGEProductName = "";
          nRC = vGridPrimaryRegistrant.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -1246,8 +1244,8 @@ try
    <td><a href="#" onclick="SelectMasterProductForUpdate( this.id )" id="GEProductName::<%=strEntityKey%>"><%=strGEProductName%></a></td>
    <td><a href="#" onclick="SelectMasterProductForUpdate( this.id )" id="GridDescription::<%=strEntityKey%>"><%=strGridDescription%></a></td>
    <td nowrap><%=strGridVersion%></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateMasterProduct" onclick="SelectMasterProductForUpdate( this.id )" id="BMBUpdateMasterProduct::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteMasterProduct" onclick="SelectMasterProductForDelete( this.id )" id="BMBDeleteMasterProduct::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateMasterProduct" onclick="SelectMasterProductForUpdate( this.id )" id="BMBUpdateMasterProduct::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteMasterProduct" onclick="SelectMasterProductForDelete( this.id )" id="BMBDeleteMasterProduct::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 

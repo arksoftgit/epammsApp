@@ -1567,7 +1567,9 @@ TraceLineS( "### Insert szKeywordTextEntityName: ", szKeywordTextEntityName )
    ZeidonStringCopy( szToString, TargetOffset, 5000, szSourceString, SourceOffset, MoveStringLength, 10000 )
    szSourceString = szToString
    ELSE
+      IF szLastKeywordCharacter = "{"
       szSourceString = "*** Keyword Parse Error ***"
+      END
    END
 
 END

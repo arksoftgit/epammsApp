@@ -13,7 +13,7 @@
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
 <%@ page import="com.quinsoft.epamms.*" %>
 
-<%! 
+<%!
 
 ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
@@ -142,7 +142,7 @@ String strInputFileName = "";
 strActionToProcess = (String) request.getParameter( "zAction" );
 
 strLastWindow = (String) session.getAttribute( "ZeidonWindow" );
-if ( StringUtils.isBlank( strLastWindow ) ) 
+if ( StringUtils.isBlank( strLastWindow ) )
    strLastWindow = "NoLastWindow";
 
 strLastAction = (String) session.getAttribute( "ZeidonAction" );
@@ -215,6 +215,8 @@ if ( strActionToProcess != null )
 
       // Action Auto Object Function
       nRC = 0;
+      try
+      {
       View mMasLC = task.getViewByName( "mMasLC" );
       EntityCursor cursor = mMasLC.cursor( "M_UsageFootnote" );
       if ( cursor.isNull() )
@@ -224,10 +226,17 @@ if ( strActionToProcess != null )
          if ( cursor.isVersioned( ) )
          {
            cursor.acceptSubobject( );
+         }
            nRC = 0;
          }
-      }
 
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "AcceptFootnoteStatement", e.getMessage( ), "" );
+         break;
+      }
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -242,6 +251,8 @@ if ( strActionToProcess != null )
 
       // Action Auto Object Function
       nRC = 0;
+      try
+      {
       View mMasLC = task.getViewByName( "mMasLC" );
       EntityCursor cursor = mMasLC.cursor( "M_UsageFootnote" );
       if ( cursor.isNull() )
@@ -251,10 +262,17 @@ if ( strActionToProcess != null )
          if ( cursor.isVersioned( ) )
          {
            cursor.cancelSubobject( );
+         }
            nRC = 0;
          }
-      }
 
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "CancelFootnoteStatement", e.getMessage( ), "" );
+         break;
+      }
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -335,7 +353,7 @@ if ( strActionToProcess != null )
             task.log().info( "Action Error Redirect to: " + strURL );
          }
 
-         if ( ! strURL.equals("wMLCClaimsFootnoteStatement.jsp") ) 
+         if ( ! strURL.equals("wMLCClaimsFootnoteStatement.jsp") )
          {
             response.sendRedirect( strURL );
             // If we are redirecting to a new page, then we need this return so that the rest of this page doesn't get built.
@@ -566,14 +584,14 @@ else
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox4:GroupBox */ %>
 
-<div id="GroupBox4" name="GroupBox4"   style="float:left;position:relative; width:730px; height:28px;">  <!-- GroupBox4 --> 
+<div id="GroupBox4" name="GroupBox4"   style="float:left;position:relative; width:730px; height:28px;">  <!-- GroupBox4 -->
 
 <% /* PrecautionarySection1:Text */ %>
 
 <label class="groupbox"  id="PrecautionarySection1" name="PrecautionarySection1" style="width:338px;height:16px;position:absolute;left:6px;top:6px;">Claims Footnote Statement</label>
 
 
-</div>  <!--  GroupBox4 --> 
+</div>  <!--  GroupBox4 -->
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -586,7 +604,7 @@ else
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBIngredientsStatement:GroupBox */ %>
 
-<div id="GBIngredientsStatement" name="GBIngredientsStatement"   style="float:left;position:relative; width:670px; height:40px;">  <!-- GBIngredientsStatement --> 
+<div id="GBIngredientsStatement" name="GBIngredientsStatement"   style="float:left;position:relative; width:670px; height:40px;">  <!-- GBIngredientsStatement -->
 
 <% /* ActiveTitle::Text */ %>
 
@@ -637,7 +655,7 @@ else
 <input name="Footnote" id="Footnote" style="width:594px;position:absolute;left:62px;top:6px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 
-</div>  <!--  GBIngredientsStatement --> 
+</div>  <!--  GBIngredientsStatement -->
 </div>  <!-- End of a new line -->
 
 

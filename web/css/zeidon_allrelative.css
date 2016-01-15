@@ -229,7 +229,7 @@ epamms header.png
    border-bottom: 1px solid #000000;
    padding: 0px 0px 0px 0px;
    margin: 0;
-   background-color:#0033cc; //? #cc0000;
+   background-color: #595959; // #0033cc; //? #cc0000;
    width: 1000px;
    line-height: 15px;
 }
@@ -282,7 +282,7 @@ epamms header.png
 #mainnavigation ul li a{
    font-size: 11px;
    color: #FFFFFF;
-   background-color: #0033cc; //? #cc0000;
+   background-color: #595959; // #0033cc; //? #cc0000;
    text-decoration: none;
 }
 

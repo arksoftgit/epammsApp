@@ -1244,8 +1244,6 @@ try
 
          lEntityKey = vGridFungi.cursor( "Fungi" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGEFungi = "";
          nRC = vGridFungi.cursor( "EPA_Claim" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -1264,9 +1262,9 @@ try
 <tr<%=strOdd%>>
 
    <td nowrap><a href="#" onclick="SelectFungi( this.id )" id="GEFungi::<%=strEntityKey%>"><%=strGEFungi%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateFungi" onclick="UpdateFungi( this.id )" id="BMBUpdateFungi::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBNewFungi" onclick="AddNewFungi( this.id )" id="BMBNewFungi::<%=strEntityKey%>"><img src="./images/ePammsNew.jpg" alt="New"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteFungi" onclick="DeleteFungi( this.id )" id="BMBDeleteFungi::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateFungi" onclick="UpdateFungi( this.id )" id="BMBUpdateFungi::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBNewFungi" onclick="AddNewFungi( this.id )" id="BMBNewFungi::<%=strEntityKey%>"><img src="./images/ePammsNew.png" alt="New"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteFungi" onclick="DeleteFungi( this.id )" id="BMBDeleteFungi::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 

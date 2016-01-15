@@ -1,4 +1,4 @@
-z1000-Zeidon    ZEIDON   TZDMXGPO 08/18/15   14:02:11 1.0a2    
+z1000-Zeidon    ZEIDON   TZDMXGPO 01/14/16   20:34:38 1.0a2   
 eDomainGroup 1
 aName      ePamms
 
@@ -521,6 +521,36 @@ aInternalValue M
 
 eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      110370112
+aName      ContainerTypeStorageDisposal
+aDesc      Type of Container that drives Storage and Disposal Section selection
+aDomainType T
+aDataType  S
+aMaxStringLth 30
+aContextRestriction N
+
+eContext   3
+aZKey      110370113
+aName      ContainerTypeStorageDisposal
+aIsDefault Y
+
+eTableEntry 4
+aZKey      110370114
+aExternalValue Refillable
+aInternalValue Refillable
+
+eTableEntry 4
+aZKey      110370115
+aExternalValue Non-refillable
+aInternalValue Non-refillable
+
+eTableEntry 4
+aZKey      110388980
+aExternalValue Bag-In-Box, Non-refillable Packets, Sealed Containers
+aInternalValue Sealed Containers
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      110059061
 aName      ContainerVolumeEnvironmentHazard
 aDesc      Environmental split <5 or >=5
@@ -568,6 +598,31 @@ eTableEntry 4
 aZKey      110059060
 aExternalValue > 1 gallon
 aInternalValue >1
+
+eTableEntry 4
+aZKey      110363536
+aExternalValue 1 to 5 gallons
+aInternalValue 1-5
+
+eTableEntry 4
+aZKey      110363537
+aExternalValue <= 5 gallons
+aInternalValue <=5
+
+eTableEntry 4
+aZKey      110388981
+aExternalValue > 5 gallons
+aInternalValue >5
+
+eTableEntry 4
+aZKey      110183167
+aExternalValue Old Value 1
+aInternalValue 1
+
+eTableEntry 4
+aZKey      110183168
+aExternalValue Old Value 5
+aInternalValue 5
 
 eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
@@ -3902,6 +3957,36 @@ eTableEntry 4
 aZKey      85698130
 aExternalValue Wyoming
 aInternalValue WY
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      130001711
+aName      Status
+aDesc      Historical, Production, Mutable
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      130001712
+aName      Status
+aIsDefault Y
+
+eTableEntry 4
+aZKey      130001713
+aExternalValue Historical
+aInternalValue H
+
+eTableEntry 4
+aZKey      130001714
+aExternalValue Production
+aInternalValue P
+
+eTableEntry 4
+aZKey      130001715
+aExternalValue Mutable
+aInternalValue M
 
 eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain

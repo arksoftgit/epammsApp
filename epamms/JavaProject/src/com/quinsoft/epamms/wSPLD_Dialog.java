@@ -34,7 +34,6 @@ import com.quinsoft.epamms.mSubLC_Object;
 import com.quinsoft.epamms.mMasLC_Object;
 import com.quinsoft.epamms.mSPLDef_Object;
 import com.quinsoft.epamms.ZGlobalS_Operation;
-import com.quinsoft.epamms.ZGlobal1_Operation;
 
 import com.quinsoft.zeidon.zeidonoperations.KZOEP1AA;
 import com.quinsoft.zeidon.zeidonoperations.ZDRVROPR;
@@ -824,11 +823,11 @@ InitReusableBlockForUpdate( View     ViewToWindow )
 
 
 //:LOCAL OPERATION
-//:CopyBlock( VIEW mSPLDef )
+//:CopyFromReusableBlock( VIEW mSPLDef )
 
 //:   VIEW mSPLDefBlock REGISTERED AS mSPLDefBlock
 private int 
-o_CopyBlock( View     mSPLDef )
+o_CopyFromReusableBlock( View     mSPLDef )
 {
    zVIEW    mSPLDefBlock = new zVIEW( );
    int      RESULT = 0;
@@ -942,8 +941,8 @@ o_CopyBlock( View     mSPLDef )
       SetViewToSubobject( mSPLDefBlock, "LLD_SubBlock" );
       //:SetMatchingAttributesByName( mSPLDefBlock, "LLD_Block", mBlockRU, "LLD_Block", zSET_NOTNULL )
       SetMatchingAttributesByName( mSPLDefBlock, "LLD_Block", mBlockRU, "LLD_Block", zSET_NOTNULL );
-      //:CopyBlock( mSPLDef )
-      o_CopyBlock( mSPLDef );
+      //:CopyFromReusableBlock( mSPLDef )
+      o_CopyFromReusableBlock( mSPLDef );
       //:ResetViewFromSubobject( mSPLDefBlock )
       ResetViewFromSubobject( mSPLDefBlock );
       //:ResetViewFromSubobject( mBlockRU )
@@ -952,6 +951,28 @@ o_CopyBlock( View     mSPLDef )
    } 
 
    //:END
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:CancelReusableBlock( VIEW ViewToWindow )
+
+//:   VIEW mSPLDef REGISTERED AS mSPLDef
+public int 
+CancelReusableBlock( View     ViewToWindow )
+{
+   zVIEW    mSPLDef = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW mBlockRU BASED ON LOD mBlockRU
+   zVIEW    mBlockRU = new zVIEW( );
+
+   RESULT = GetViewByName( mSPLDef, "mSPLDef", ViewToWindow, zLEVEL_TASK );
+   //:GET VIEW mBlockRU NAMED "ReusableBlock"
+   RESULT = GetViewByName( mBlockRU, "ReusableBlock", ViewToWindow, zLEVEL_TASK );
+   //:DropObjectInstance( mBlockRU )
+   DropObjectInstance( mBlockRU );
    return( 0 );
 // END
 } 
@@ -3377,16 +3398,19 @@ o_fnGenerateSPLD_Label( View     ViewToWindow,
    lTempInteger_0 = mi_lTempInteger_0.intValue( );
    szApplication = sb_szApplication.toString( );}
    //:RemoveInvalidCharsFromFilename( szApplication )
+   try
    {
-    ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( ViewToWindow );
-     {StringBuilder sb_szApplication;
+       {StringBuilder sb_szApplication;
    if ( szApplication == null )
       sb_szApplication = new StringBuilder( 32 );
    else
       sb_szApplication = new StringBuilder( szApplication );
-      m_ZGlobal1_Operation.RemoveInvalidCharsFromFilename( sb_szApplication );
+       RemoveInvalidCharsFromFilename( sb_szApplication );
    szApplication = sb_szApplication.toString( );}
-    // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+   }
+   catch ( Exception e )
+   {
+      throw ZeidonException.wrapException( e );
    }
 
    //:szLabelName = mSPLDef.SubregProduct.Name + "." + mSPLDef.SubregLabelContent.Version + "." + mSPLDef.SubregPhysicalLabelDef.Name + "." + wWebXfer.Root.LoginName
@@ -3467,16 +3491,19 @@ o_fnGenerateSPLD_Label( View     ViewToWindow,
       ZeidonStringConcat( sb_szLabelName, 1, 0, szTempString_2, 1, 0, 257 );
    szLabelName = sb_szLabelName.toString( );}
    //:RemoveInvalidCharsFromFilename( szLabelName )
+   try
    {
-    ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( ViewToWindow );
-     {StringBuilder sb_szLabelName;
+       {StringBuilder sb_szLabelName;
    if ( szLabelName == null )
       sb_szLabelName = new StringBuilder( 32 );
    else
       sb_szLabelName = new StringBuilder( szLabelName );
-      m_ZGlobal1_Operation.RemoveInvalidCharsFromFilename( sb_szLabelName );
+       RemoveInvalidCharsFromFilename( sb_szLabelName );
    szLabelName = sb_szLabelName.toString( );}
-    // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+   }
+   catch ( Exception e )
+   {
+      throw ZeidonException.wrapException( e );
    }
 
    //:szXmlName = szDirectory + szApplication + "/xml/"
@@ -6171,7 +6198,12 @@ PreviewSelectedBlock( View     ViewToWindow )
    SetNameForView( mSPLDefPanel2, "mSPLDefPanel", null, zLEVEL_TASK );
    //:NAME VIEW mSPLDefBlock2 "mSPLDefBlock"
    SetNameForView( mSPLDefBlock2, "mSPLDefBlock", null, zLEVEL_TASK );
-
+   //:ClearReusableBlockSelections( ViewToWindow )
+   ClearReusableBlockSelections( ViewToWindow );
+   //:SetViewFromView( mSPLDef2, mSPLDef )
+   SetViewFromView( mSPLDef2, mSPLDef );
+   //:mSPLDef2.ReusableBlockDefinition.wkSelected = "Y"
+   SetAttributeFromString( mSPLDef2, "ReusableBlockDefinition", "wkSelected", "Y" );
    //:nRC = ACCEPT_ReusableBlock( ViewToWindow )
    nRC = ACCEPT_ReusableBlock( ViewToWindow );
    //:IF nRC = 0
@@ -7035,8 +7067,8 @@ ACCEPT_ReusableBlock( View     ViewToWindow )
       //:// TraceLineS( "Selecting reusable block: ", szTag )
       //:// TraceLineI( "          reusable top: ", dTop )
       //:// TraceLineI( "          reusable left: ", dLeft )
-      //:CopyBlock( mSPLDef )
-      o_CopyBlock( mSPLDef );
+      //:CopyFromReusableBlock( mSPLDef )
+      o_CopyFromReusableBlock( mSPLDef );
       //:mSPLDefBlock.LLD_Block.Tag = szTag
       SetAttributeFromString( mSPLDefBlock, "LLD_Block", "Tag", szTag );
       //:mSPLDefBlock.LLD_Block.Top = dTop
@@ -7187,6 +7219,107 @@ SetSPLD_Resume( View     ViewToWindow )
 
 
 //:LOCAL OPERATION
+//:CopyToReusableBlock( VIEW mSPLDefBlock )
+
+//:   VIEW mSPLDef REGISTERED AS mSPLDef
+private int 
+o_CopyToReusableBlock( View     mSPLDefBlock )
+{
+   zVIEW    mSPLDef = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW mBlockRU BASED ON LOD mBlockRU
+   zVIEW    mBlockRU = new zVIEW( );
+   int      lTempInteger_0 = 0;
+   int      lTempInteger_1 = 0;
+   int      lTempInteger_2 = 0;
+
+   RESULT = GetViewByName( mSPLDef, "mSPLDef", mSPLDefBlock, zLEVEL_TASK );
+
+   //:GET VIEW mBlockRU NAMED "ReusableBlock"
+   RESULT = GetViewByName( mBlockRU, "ReusableBlock", mSPLDefBlock, zLEVEL_TASK );
+   //:CREATE ENTITY mBlockRU.LLD_Block
+   RESULT = CreateEntity( mBlockRU, "LLD_Block", zPOS_AFTER );
+   //:SetMatchingAttributesByName( mBlockRU, "LLD_Block", mSPLDefBlock, "LLD_Block", zSET_NOTNULL )
+   SetMatchingAttributesByName( mBlockRU, "LLD_Block", mSPLDefBlock, "LLD_Block", zSET_NOTNULL );
+
+   //:FOR EACH mSPLDefBlock.LLD_SpecialSectionAttribute 
+   RESULT = SetCursorFirstEntity( mSPLDefBlock, "LLD_SpecialSectionAttribute", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:CREATE ENTITY mBlockRU.LLD_SpecialSectionAttribute
+      RESULT = CreateEntity( mBlockRU, "LLD_SpecialSectionAttribute", zPOS_AFTER );
+      //:SetMatchingAttributesByName( mBlockRU, "LLD_SpecialSectionAttribute", mSPLDefBlock, "LLD_SpecialSectionAttribute", zSET_NOTNULL )
+      SetMatchingAttributesByName( mBlockRU, "LLD_SpecialSectionAttribute", mSPLDefBlock, "LLD_SpecialSectionAttribute", zSET_NOTNULL );
+      //:FOR EACH mSPLDefBlock.LLD_SpecialSectionAttrBlock
+      RESULT = SetCursorFirstEntity( mSPLDefBlock, "LLD_SpecialSectionAttrBlock", "" );
+      while ( RESULT > zCURSOR_UNCHANGED )
+      { 
+         //:CREATE ENTITY mBlockRU.LLD_SpecialSectionAttrBlock
+         RESULT = CreateEntity( mBlockRU, "LLD_SpecialSectionAttrBlock", zPOS_AFTER );
+         //:SetMatchingAttributesByName( mBlockRU, "LLD_SpecialSectionAttrBlock", mSPLDefBlock, "LLD_SpecialSectionAttrBlock", zSET_NOTNULL )
+         SetMatchingAttributesByName( mBlockRU, "LLD_SpecialSectionAttrBlock", mSPLDefBlock, "LLD_SpecialSectionAttrBlock", zSET_NOTNULL );
+         //:IF mSPLDefBlock.SpecialAttributeTextColor EXISTS
+         lTempInteger_0 = CheckExistenceOfEntity( mSPLDefBlock, "SpecialAttributeTextColor" );
+         if ( lTempInteger_0 == 0 )
+         { 
+            //:INCLUDE mBlockRU.SpecialAttributeTextColor FROM mSPLDefBlock.SpecialAttributeTextColor 
+            RESULT = IncludeSubobjectFromSubobject( mBlockRU, "SpecialAttributeTextColor", mSPLDefBlock, "SpecialAttributeTextColor", zPOS_AFTER );
+         } 
+
+         RESULT = SetCursorNextEntity( mSPLDefBlock, "LLD_SpecialSectionAttrBlock", "" );
+         //:END
+      } 
+
+      RESULT = SetCursorNextEntity( mSPLDefBlock, "LLD_SpecialSectionAttribute", "" );
+      //:END
+   } 
+
+   //:END
+
+   //:IF mSPLDefBlock.BlockBackgroundColor EXISTS
+   lTempInteger_1 = CheckExistenceOfEntity( mSPLDefBlock, "BlockBackgroundColor" );
+   if ( lTempInteger_1 == 0 )
+   { 
+      //:INCLUDE mBlockRU.BlockBackgroundColor FROM mSPLDefBlock.BlockBackgroundColor 
+      RESULT = IncludeSubobjectFromSubobject( mBlockRU, "BlockBackgroundColor", mSPLDefBlock, "BlockBackgroundColor", zPOS_AFTER );
+   } 
+
+   //:END
+
+   //:IF mSPLDefBlock.BlockBorderColor EXISTS
+   lTempInteger_2 = CheckExistenceOfEntity( mSPLDefBlock, "BlockBorderColor" );
+   if ( lTempInteger_2 == 0 )
+   { 
+      //:INCLUDE mBlockRU.BlockBorderColor FROM mSPLDefBlock.BlockBorderColor 
+      RESULT = IncludeSubobjectFromSubobject( mBlockRU, "BlockBorderColor", mSPLDefBlock, "BlockBorderColor", zPOS_AFTER );
+   } 
+
+   //:END
+
+   //:FOR EACH mSPLDefBlock.LLD_SubBlock
+   RESULT = SetCursorFirstEntity( mSPLDefBlock, "LLD_SubBlock", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:SetViewToSubobject( mSPLDefBlock, "LLD_SubBlock" )
+      SetViewToSubobject( mSPLDefBlock, "LLD_SubBlock" );
+      //:SetViewToSubobject( mBlockRU, "LLD_SubBlock" )
+      SetViewToSubobject( mBlockRU, "LLD_SubBlock" );
+      //:CopyToReusableBlock( mBlockRU )
+      o_CopyToReusableBlock( mBlockRU );
+      //:ResetViewFromSubobject( mSPLDefBlock )
+      ResetViewFromSubobject( mSPLDefBlock );
+      //:ResetViewFromSubobject( mBlockRU )
+      ResetViewFromSubobject( mBlockRU );
+      RESULT = SetCursorNextEntity( mSPLDefBlock, "LLD_SubBlock", "" );
+   } 
+
+   //:END
+   return( 0 );
+// END
+} 
+
+
+//:LOCAL OPERATION
 private int 
 o_SetResumeObject( View     mUser,
                    String   strLOD,
@@ -7216,6 +7349,55 @@ o_SetResumeObject( View     mUser,
    //:SetAttributeFromInteger( mUser, "ResumeObject", "KeyAttributeValue", lAttributeValue )
    SetAttributeFromInteger( mUser, "ResumeObject", "KeyAttributeValue", lAttributeValue );
    return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:InitializeNewReusableBlock( VIEW ViewToWindow )
+
+//:   VIEW mSPLDefBlock REGISTERED AS mSPLDefBlock
+public int 
+InitializeNewReusableBlock( View     ViewToWindow )
+{
+   zVIEW    mSPLDefBlock = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW mSPLDef REGISTERED AS mSPLDef
+   zVIEW    mSPLDef = new zVIEW( );
+   //:VIEW mBlockRU BASED ON LOD mBlockRU
+   zVIEW    mBlockRU = new zVIEW( );
+   int      lTempInteger_0 = 0;
+
+   RESULT = GetViewByName( mSPLDefBlock, "mSPLDefBlock", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( mSPLDef, "mSPLDef", ViewToWindow, zLEVEL_TASK );
+
+   //:ACTIVATE mBlockRU EMPTY
+   RESULT = ActivateEmptyObjectInstance( mBlockRU, "mBlockRU", ViewToWindow, zSINGLE );
+   //:NAME VIEW mBlockRU "ReusableBlock"
+   SetNameForView( mBlockRU, "ReusableBlock", null, zLEVEL_TASK );
+   //:CREATE ENTITY mBlockRU.ReusableBlockDefinition
+   RESULT = CreateEntity( mBlockRU, "ReusableBlockDefinition", zPOS_AFTER );
+   //:mBlockRU.ReusableBlockDefinition.Name = "Set Name of Reusable Block"
+   SetAttributeFromString( mBlockRU, "ReusableBlockDefinition", "Name", "Set Name of Reusable Block" );
+   //:mBlockRU.ReusableBlockDefinition.Description = "Set Description of Reusable Block"
+   SetAttributeFromString( mBlockRU, "ReusableBlockDefinition", "Description", "Set Description of Reusable Block" );
+   //:mBlockRU.ReusableBlockDefinition.LLD_SectionType = mSPLDef.LLD_Block.LLD_SectionType
+   SetAttributeFromAttribute( mBlockRU, "ReusableBlockDefinition", "LLD_SectionType", mSPLDef, "LLD_Block", "LLD_SectionType" );
+
+   //:INCLUDE mBlockRU.Subregistrant FROM mSPLDef.Subregistrant
+   RESULT = IncludeSubobjectFromSubobject( mBlockRU, "Subregistrant", mSPLDef, "Subregistrant", zPOS_AFTER );
+   //:IF mSPLDefBlock.LLD_Block EXISTS
+   lTempInteger_0 = CheckExistenceOfEntity( mSPLDefBlock, "LLD_Block" );
+   if ( lTempInteger_0 == 0 )
+   { 
+      //:CopyToReusableBlock( mSPLDefBlock )
+      o_CopyToReusableBlock( mSPLDefBlock );
+   } 
+
+   //:END
+   return( 0 );
+// // COMMIT mBlockRU
+// // DropObjectInstance( mBlockRU )
 // END
 } 
 

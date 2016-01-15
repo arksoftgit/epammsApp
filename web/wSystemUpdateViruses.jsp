@@ -1243,8 +1243,6 @@ try
 
          lEntityKey = vGridViruses.cursor( "Viruses" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGEVirus = "";
          nRC = vGridViruses.cursor( "EPA_Claim" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -1263,9 +1261,9 @@ try
 <tr<%=strOdd%>>
 
    <td nowrap><a href="#" onclick="SelectVirus( this.id )" id="GEVirus::<%=strEntityKey%>"><%=strGEVirus%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateVirus" onclick="UpdateVirus( this.id )" id="BMBUpdateVirus::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBNewVirus" onclick="AddNewVirus( this.id )" id="BMBNewVirus::<%=strEntityKey%>"><img src="./images/ePammsNew.jpg" alt="New"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteVirus" onclick="DeleteVirus( this.id )" id="BMBDeleteVirus::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateVirus" onclick="UpdateVirus( this.id )" id="BMBUpdateVirus::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBNewVirus" onclick="AddNewVirus( this.id )" id="BMBNewVirus::<%=strEntityKey%>"><img src="./images/ePammsNew.png" alt="New"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteVirus" onclick="DeleteVirus( this.id )" id="BMBDeleteVirus::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 

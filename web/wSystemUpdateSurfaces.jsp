@@ -1244,8 +1244,6 @@ try
 
          lEntityKey = vGridSurfaces.cursor( "EPA_Surface" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGESurface = "";
          nRC = vGridSurfaces.cursor( "EPA_Surface" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -1264,9 +1262,9 @@ try
 <tr<%=strOdd%>>
 
    <td nowrap><a href="#" onclick="SelectSurface( this.id )" id="GESurface::<%=strEntityKey%>"><%=strGESurface%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateSurface" onclick="UpdateSurface( this.id )" id="BMBUpdateSurface::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBNewSurface" onclick="AddNewSurface( this.id )" id="BMBNewSurface::<%=strEntityKey%>"><img src="./images/ePammsNew.jpg" alt="New"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteSurface" onclick="DeleteSurface( this.id )" id="BMBDeleteSurface::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateSurface" onclick="UpdateSurface( this.id )" id="BMBUpdateSurface::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBNewSurface" onclick="AddNewSurface( this.id )" id="BMBNewSurface::<%=strEntityKey%>"><img src="./images/ePammsNew.png" alt="New"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteSurface" onclick="DeleteSurface( this.id )" id="BMBDeleteSurface::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 

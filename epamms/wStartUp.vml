@@ -123,7 +123,8 @@ InitLoginWindow( VIEW ViewToWindow )
    // Remove these lines prior to deployment!!!
 // wWebXfer.Root.AttemptLoginRegistrant = "Lonza"
 // wWebXfer.Root.AttemptLoginRegistrant = "Admin"
-   wWebXfer.Root.AttemptLoginRegistrant = "atp"
+// wWebXfer.Root.AttemptLoginRegistrant = "atp"
+   wWebXfer.Root.AttemptLoginRegistrant = "Mason"
    wWebXfer.Root.AttemptLoginName = "Admin"
    wWebXfer.Root.AttemptPassword = "xxxxxxxx"
    // End of: Remove these lines prior to deployment!!!
@@ -131,6 +132,7 @@ InitLoginWindow( VIEW ViewToWindow )
    // Note that Activate always returns at least an empty view.
    ACTIVATE pePamms WHERE pePamms.ePamms.ID = 1
    NAME VIEW pePamms "pePamms"
+   SetCursorFirstEntityByString( pePamms, "Organization", "LoginName", "Admin", "ePamms" )
 
    SetDynamicBannerName( ViewToWindow, "wStartUp", "Login" )
 
@@ -4176,7 +4178,7 @@ ResumeEditingSPLD( VIEW ViewToWindow )
          IF vTemp != 0
             DropView( vTemp )
          END
-         BuildSimpleIntegerQualification( ViewToWindow, vQual, szEntityName, szKeyAttributeName, lKeyAttributeValue )
+         BuildSimpleIntegerQualification( ViewToWindow, vQual, szEntityName, szKeyAttributeName, lKeyAttributeValue, "=" )
          ActivateObjectInstance( vTemp, szLOD, qOrganiz, vQual, zSINGLE )
          DropView( vQual )
          NAME VIEW vTemp szViewName

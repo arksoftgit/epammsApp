@@ -857,8 +857,6 @@ try
 
          lEntityKey = vGridSubregistrant.cursor( "User" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGEPrimaryRegistrantName = "";
          nRC = vGridSubregistrant.cursor( "User" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -877,8 +875,8 @@ try
 <tr<%=strOdd%>>
 
    <td nowrap><a href="#" onclick="UpdateSubregUser( this.id )" id="GEPrimaryRegistrantName::<%=strEntityKey%>"><%=strGEPrimaryRegistrantName%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateSubregUser" onclick="UpdateSubregUser( this.id )" id="BMBUpdateSubregUser::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteSubregUser" onclick="DeleteSubregUser( this.id )" id="BMBDeleteSubregUser::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateSubregUser" onclick="UpdateSubregUser( this.id )" id="BMBUpdateSubregUser::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteSubregUser" onclick="DeleteSubregUser( this.id )" id="BMBDeleteSubregUser::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 

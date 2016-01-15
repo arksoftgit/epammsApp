@@ -2066,7 +2066,7 @@ else
    {
       nRC = wWebXfer.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
-         strRadioGroupValue = wWebXfer.cursor( "Root" ).getAttribute( "SameAs" ).getString( "" );
+         strRadioGroupValue = wWebXfer.cursor( "Root" ).getAttribute( "SameAs" ).getString( );
    }
 
    if ( StringUtils.equals( strRadioGroupValue, "Y" ) )

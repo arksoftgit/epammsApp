@@ -1014,6 +1014,7 @@ else
    View lSPLDLST = null;
    View mLLD_LST = null;
    View mMasLC = null;
+   View mSPLDef = null;
    View mSubLC = null;
    View mSubProd = null;
    View mSubreg = null;
@@ -1336,8 +1337,6 @@ try
 
          lEntityKey = vGridIngredients.cursor( "S_IngredientsStatement" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGridEditIngredients = "";
          nRC = vGridIngredients.cursor( "S_IngredientsStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )

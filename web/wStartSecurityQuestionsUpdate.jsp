@@ -187,8 +187,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartSecurityQuestionsUpdate", "wStart.SET_Question1" );
-      nOptRC = wStart.SET_Question1( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartSecurityQuestionsUpdate", "wStartUp.SET_Question1" );
+      nOptRC = wStartUp.SET_Question1( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -225,8 +225,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartSecurityQuestionsUpdate", "wStart.SET_Question2" );
-      nOptRC = wStart.SET_Question2( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartSecurityQuestionsUpdate", "wStartUp.SET_Question2" );
+      nOptRC = wStartUp.SET_Question2( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -263,8 +263,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartSecurityQuestionsUpdate", "wStart.SET_Question3" );
-      nOptRC = wStart.SET_Question3( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartSecurityQuestionsUpdate", "wStartUp.SET_Question3" );
+      nOptRC = wStartUp.SET_Question3( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -301,8 +301,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartSecurityQuestionsUpdate", "wStart.UPDATE_SecurityQuestions" );
-      nOptRC = wStart.UPDATE_SecurityQuestions( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartSecurityQuestionsUpdate", "wStartUp.UPDATE_SecurityQuestions" );
+      nOptRC = wStartUp.UPDATE_SecurityQuestions( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection

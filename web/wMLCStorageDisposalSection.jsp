@@ -70,12 +70,31 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "DirectionsUseTitle2", "", strMapValue );
             else
-               mMasLC.cursor( "M_StorageDisposalSection" ).getAttribute( "Title" ).setValue( strMapValue, "" );
+               mMasLC.cursor( "M_StorageDisposalSection" ).getAttribute( "Name" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
             VmlOperation.CreateMessage( task, "DirectionsUseTitle2", e.getReason( ), strMapValue );
+         }
+      }
+
+      // EditBox: EditBox1
+      nRC = mMasLC.cursor( "M_StorageDisposalSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "EditBox1" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "EditBox1", "", strMapValue );
+            else
+               mMasLC.cursor( "M_StorageDisposalSection" ).getAttribute( "Title" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "EditBox1", e.getReason( ), strMapValue );
          }
       }
 
@@ -114,6 +133,25 @@ public int DoInputMapping( HttpServletRequest request,
          {
             nMapError = -16;
             VmlOperation.CreateMessage( task, "ComboBox1", e.getReason( ), strMapValue );
+         }
+      }
+
+      // ComboBox: ComboBox2
+      nRC = mMasLC.cursor( "M_StorageDisposalSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+         strMapValue = request.getParameter( "hComboBox2" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "ComboBox2", "", strMapValue );
+            else
+               mMasLC.cursor( "M_StorageDisposalSection" ).getAttribute( "ContainerType" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "ComboBox2", e.getReason( ), strMapValue );
          }
       }
 
@@ -306,6 +344,8 @@ if ( strActionToProcess != null )
 
       // Action Auto Object Function
       nRC = 0;
+      try
+      {
       View mMasLC = task.getViewByName( "mMasLC" );
       EntityCursor cursor = mMasLC.cursor( "M_StorageDisposalSection" );
       if ( cursor.isNull() )
@@ -314,11 +354,18 @@ if ( strActionToProcess != null )
       {
          if ( cursor.isVersioned( ) )
          {
-           cursor.acceptSubobject( );
-           nRC = 0;
+            cursor.acceptSubobject( );
          }
+         nRC = 0;
       }
 
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "AcceptStorDispSect", e.getMessage( ), "" );
+         break;
+      }
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -333,6 +380,8 @@ if ( strActionToProcess != null )
 
       // Action Auto Object Function
       nRC = 0;
+      try
+      {
       View mMasLC = task.getViewByName( "mMasLC" );
       EntityCursor cursor = mMasLC.cursor( "M_StorageDisposalSection" );
       if ( cursor.isNull() )
@@ -341,11 +390,18 @@ if ( strActionToProcess != null )
       {
          if ( cursor.isVersioned( ) )
          {
-           cursor.cancelSubobject( );
-           nRC = 0;
+            cursor.cancelSubobject( );
          }
+         nRC = 0;
       }
 
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "CancelStorDispSect", e.getMessage( ), "" );
+         break;
+      }
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -533,9 +589,18 @@ if ( strActionToProcess != null )
 
       // Action Auto Object Function
       nRC = 0;
+      try
+      {
       EntityCursor cursor = mMasLC.cursor( "M_StorageDisposalStatement" );
       cursor.createTemporalSubobjectVersion( );
 
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "GOTO_StorageDispStatementUpdate", e.getMessage( ), "" );
+         break;
+      }
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "StorageDisposalStatement" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -864,7 +929,7 @@ else
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* MarketingSection2:GroupBox */ %>
 
-<div id="MarketingSection2" name="MarketingSection2" class="withborder" style="width:780px;height:82px;float:left;">  <!-- MarketingSection2 --> 
+<div id="MarketingSection2" name="MarketingSection2" class="withborder" style="width:780px;height:76px;float:left;">  <!-- MarketingSection2 --> 
 
 
  <!-- This is added as a line spacer -->
@@ -881,7 +946,7 @@ else
 <td valign="top" style="width:62px;">
 <% /* DirectionsUseTitle:2:Text */ %>
 
-<span  id="DirectionsUseTitle:2" name="DirectionsUseTitle:2" style="width:56px;height:16px;">Title:</span>
+<span  id="DirectionsUseTitle:2" name="DirectionsUseTitle:2" style="width:56px;height:16px;">Name:</span>
 
 </td>
 <td valign="top"  class="text12" style="width:592px;">
@@ -906,7 +971,7 @@ else
          {
             try
             {
-               strErrorMapValue = mMasLC.cursor( "M_StorageDisposalSection" ).getAttribute( "Title" ).getString( "" );
+               strErrorMapValue = mMasLC.cursor( "M_StorageDisposalSection" ).getAttribute( "Name" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -916,7 +981,7 @@ else
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "M_StorageDisposalSection.Title: " + strErrorMapValue );
+            task.log( ).debug( "M_StorageDisposalSection.Name: " + strErrorMapValue );
          }
          else
             task.log( ).debug( "Entity does not exist for DirectionsUseTitle2: " + "mMasLC.M_StorageDisposalSection" );
@@ -925,6 +990,57 @@ else
 %>
 
 <input class="text12" name="DirectionsUseTitle2" id="DirectionsUseTitle2" style="width:592px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
+</td>
+</tr>
+<tr>
+<td valign="top" style="width:62px;">
+<% /* Text2:Text */ %>
+
+<span  id="Text2" name="Text2" style="width:56px;height:16px;">Title:</span>
+
+</td>
+<td valign="top"  class="text12" style="width:592px;">
+<% /* EditBox1:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "EditBox1", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "EditBox1" );
+      else
+      {
+         nRC = mMasLC.cursor( "M_StorageDisposalSection" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = mMasLC.cursor( "M_StorageDisposalSection" ).getAttribute( "Title" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on EditBox1: " + e.getMessage());
+               task.log().error( "*** Error on ctrl EditBox1", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "M_StorageDisposalSection.Title: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for EditBox1: " + "mMasLC.M_StorageDisposalSection" );
+      }
+   }
+%>
+
+<input class="text12" name="EditBox1" id="EditBox1" style="width:592px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -994,16 +1110,16 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox2:GroupBox */ %>
+<% /* GroupBox1:GroupBox */ %>
 
-<div id="GroupBox2" name="GroupBox2"   style="float:left;position:relative; width:780px; height:30px;">  <!-- GroupBox2 --> 
+<div id="GroupBox1" name="GroupBox1" class="listgroup"   style="float:left;position:relative; width:780px; height:36px;">  <!-- GroupBox1 --> 
 
-<% /* Text2:Text */ %>
+<% /* Text7:Text */ %>
 
-<label class="listheader"  id="Text2" name="Text2" style="width:336px;height:16px;position:absolute;left:12px;top:4px;">Container Sizes that Utilize This Section</label>
+<label class="groupbox"  id="Text7" name="Text7" style="width:364px;height:16px;position:absolute;left:6px;top:12px;">Container Volume and Size Driving this Section</label>
 
 
-</div>  <!--  GroupBox2 --> 
+</div>  <!--  GroupBox1 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -1011,17 +1127,33 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox1:GroupBox */ %>
+<% /* GroupBox3:GroupBox */ %>
 
-<div id="GroupBox1" name="GroupBox1" class="listgroup" style="width:780px;height:28px;float:left;">  <!-- GroupBox1 --> 
+<div id="GroupBox3" name="GroupBox3" class="withborder" style="width:780px;height:80px;float:left;">  <!-- GroupBox3 --> 
 
+
+ <!-- This is added as a line spacer -->
+<div style="height:6px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<span style="height:22px;">&nbsp&nbsp</span>
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox4:GroupBox */ %>
+<div id="GroupBox4" name="GroupBox4" style="float:left;width:754px;" >
+
+<table cols=2 style="width:754px;"  class="grouptable">
+
+<tr>
+<td valign="top" style="width:64px;">
+<% /* Text1:Text */ %>
+
+<span  id="Text1" name="Text1" style="width:56px;height:16px;">Size:</span>
+
+</td>
+<td valign="top" style="width:592px;">
 <% /* ComboBox1:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="ComboBox1" id="ComboBox1" size="1" style="width:216px;" onchange="ComboBox1OnChange( )">
+<select  name="ComboBox1" id="ComboBox1" size="1" style="width:592px;" onchange="ComboBox1OnChange( )">
 
 <%
    boolean inListComboBox1 = false;
@@ -1098,17 +1230,113 @@ else
 </select>
 
 <input name="hComboBox1" id="hComboBox1" type="hidden" value="<%=strComboCurrentValue%>" >
+</td>
+</tr>
+<tr>
+<td valign="top" style="width:64px;">
+<% /* Text3:Text */ %>
+
+<span  id="Text3" name="Text3" style="width:56px;height:16px;">Type:</span>
+
+</td>
+<td valign="top" style="width:592px;">
+<% /* ComboBox2:ComboBox */ %>
+<% strErrorMapValue = "";  %>
+
+<select  name="ComboBox2" id="ComboBox2" size="1" style="width:592px;" onchange="ComboBox2OnChange( )">
+
+<%
+   boolean inListComboBox2 = false;
+
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) )
+   {
+      List<TableEntry> list = JspWebUtils.getTableDomainValues( mMasLC , "M_StorageDisposalSection", "ContainerType", "" );
+
+      nRC = mMasLC.cursor( "M_StorageDisposalSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+         strComboCurrentValue = mMasLC.cursor( "M_StorageDisposalSection" ).getAttribute( "ContainerType" ).getString( "" );
+         if ( strComboCurrentValue == null )
+            strComboCurrentValue = "";
+      }
+      else
+      {
+         strComboCurrentValue = "";
+      }
+
+      // Code for NOT required attribute, which makes sure a blank entry exists.
+      if ( strComboCurrentValue == "" )
+      {
+         inListComboBox2 = true;
+%>
+         <option selected="selected" value=""></option>
+<%
+      }
+      else
+      {
+%>
+         <option value=""></option>
+<%
+      }
+      for ( TableEntry entry : list )
+      {
+         String internalValue = entry.getInternalValue( );
+         String externalValue = entry.getExternalValue( );
+         // Perhaps getInternalValue and getExternalValue should return an empty string, 
+         // but currently it returns null.  Set to empty string. 
+         if ( externalValue == null )
+         {
+            internalValue = "";
+            externalValue = "";
+         }
+
+         if ( !StringUtils.isBlank( externalValue ) )
+         {
+            if ( StringUtils.equals( strComboCurrentValue, externalValue ) )
+            {
+               inListComboBox2 = true;
+%>
+               <option selected="selected" value="<%=externalValue%>"><%=externalValue%></option>
+<%
+            }
+            else
+            {
+%>
+               <option value="<%=externalValue%>"><%=externalValue%></option>
+<%
+            }
+         }
+      }  // for ( TableEntry entry
+      // The value from the database isn't in the domain, add it to the list as disabled.
+      if ( !inListComboBox2 )
+      { 
+%>
+         <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
+<%
+      }  
+   }  // if view != null
+%>
+</select>
+
+<input name="hComboBox2" id="hComboBox2" type="hidden" value="<%=strComboCurrentValue%>" >
+</td>
+</tr>
+</table>
+
+</div>  <!-- GroupBox4 --> 
+
 </div>  <!-- End of a new line -->
 
 
-</div>  <!--  GroupBox1 --> 
+</div>  <!--  GroupBox3 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
  <!-- This is added as a line spacer -->
-<div style="height:4px;width:100px;"></div>
+<div style="height:6px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
@@ -1181,8 +1409,6 @@ try
 
          lEntityKey = vGridDirectionsUse1.cursor( "M_StorageDisposalStatement" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGridEditDirectionsUse1 = "";
          nRC = vGridDirectionsUse1.cursor( "M_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -1201,8 +1427,8 @@ try
 <tr<%=strOdd%>>
 
    <td><a href="#" onclick="GOTO_StorageDispStatementUpdate( this.id )" id="GridEditDirectionsUse1::<%=strEntityKey%>"><%=strGridEditDirectionsUse1%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateDirectionsUseStatement1" onclick="GOTO_StorageDispStatementUpdate( this.id )" id="BMBUpdateDirectionsUseStatement1::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteDirectionsUseStatement1" onclick="GOTO_StorageDispStatementDelete( this.id )" id="BMBDeleteDirectionsUseStatement1::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateDirectionsUseStatement1" onclick="GOTO_StorageDispStatementUpdate( this.id )" id="BMBUpdateDirectionsUseStatement1::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteDirectionsUseStatement1" onclick="GOTO_StorageDispStatementDelete( this.id )" id="BMBDeleteDirectionsUseStatement1::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 

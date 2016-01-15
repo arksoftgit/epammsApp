@@ -413,6 +413,8 @@ if ( strActionToProcess != null )
 
       // Action Auto Object Function
       nRC = 0;
+      try
+      {
       View mSPLDef = task.getViewByName( "mSPLDef" );
       EntityCursor cursor = mSPLDef.cursor( "LLD_Panel" );
       if ( cursor.isNull() )
@@ -421,11 +423,18 @@ if ( strActionToProcess != null )
       {
          if ( cursor.isVersioned( ) )
          {
-           cursor.cancelSubobject( );
-           nRC = 0;
+            cursor.cancelSubobject( );
          }
+         nRC = 0;
       }
 
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "CancelPanel", e.getMessage( ), "" );
+         break;
+      }
       // Next Window
       strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_ReturnToParent, "", "" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -1332,8 +1341,6 @@ try
 
          lEntityKey = vGridPrimaryRegistrant2.cursor( "LLD_Block" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strGEProductName2 = "";
          nRC = vGridPrimaryRegistrant2.cursor( "LLD_Block" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
@@ -1422,10 +1429,10 @@ try
    <td><%=strGridEditCtl7%></td>
    <td><%=strGridEditCtl8%></td>
    <td><%=strGridEditCtl2%></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="AddBlock" onclick="GOTO_AddBlockComponent( this.id )" id="AddBlock::<%=strEntityKey%>"><img src="./images/ePammsNew.jpg" alt="Add Block"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="UpdateBlock" onclick="GOTO_UpdateBlockComponent( this.id )" id="UpdateBlock::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="DeleteBlock" onclick="DELETE_BlockComponentEntry( this.id )" id="DeleteBlock::<%=strEntityKey%>"><img src="./images/ePammsDelete.jpg" alt="Delete"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBMoveMasterProductDown2" onclick="GOTO_AddSubBlockComponent( this.id )" id="BMBMoveMasterProductDown2::<%=strEntityKey%>"><img src="./images/ePammsUpdate.jpg" alt="Add Sub"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="AddBlock" onclick="GOTO_AddBlockComponent( this.id )" id="AddBlock::<%=strEntityKey%>"><img src="./images/ePammsNew.png" alt="Add Block"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="UpdateBlock" onclick="GOTO_UpdateBlockComponent( this.id )" id="UpdateBlock::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="DeleteBlock" onclick="DELETE_BlockComponentEntry( this.id )" id="DeleteBlock::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBMoveMasterProductDown2" onclick="GOTO_AddSubBlockComponent( this.id )" id="BMBMoveMasterProductDown2::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Add Sub"></a></td>
 
 </tr>
 

@@ -1209,7 +1209,7 @@ else
 
 <span style="width:300px;height:32px;" >
    <input name="ESL_Date" id="ESL_Date"  style="width:80px" type="text" value="<%=strErrorMapValue%>"  />
-   <img src="images/scw.gif" title="Select Date" alt="Select Date"
+   <img src="images/scw.gif"  name="ESL_DateImg" id="ESL_DateImg" title="Select Date" alt="Select Date"
         onclick="scwShow( document.getElementById( 'ESL_Date' ), this );"  />
 </span>
 
@@ -1296,8 +1296,6 @@ try
 
          lEntityKey = vGridMasterProducts.cursor( "ListMasterProduct" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strSelect = "";
          nRC = vGridMasterProducts.cursor( "ListMasterProduct" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )

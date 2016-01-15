@@ -13,7 +13,7 @@
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
 <%@ page import="com.quinsoft.epamms.*" %>
 
-<%! 
+<%!
 
 ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
@@ -139,7 +139,7 @@ String strInputFileName = "";
 strActionToProcess = (String) request.getParameter( "zAction" );
 
 strLastWindow = (String) session.getAttribute( "ZeidonWindow" );
-if ( StringUtils.isBlank( strLastWindow ) ) 
+if ( StringUtils.isBlank( strLastWindow ) )
    strLastWindow = "NoLastWindow";
 
 strLastAction = (String) session.getAttribute( "ZeidonAction" );
@@ -510,7 +510,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditEnvironmentalHazardSection" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEnvironmentalHazards" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCVersionData", strActionToProcess );
@@ -540,7 +540,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "EnvironmentalHazardsSection" );
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "EnvironmentalHazards" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -865,7 +865,7 @@ if ( strActionToProcess != null )
             task.log().info( "Action Error Redirect to: " + strURL );
          }
 
-         if ( ! strURL.equals("wMLCVersionData.jsp") ) 
+         if ( ! strURL.equals("wMLCVersionData.jsp") )
          {
             response.sendRedirect( strURL );
             // If we are redirecting to a new page, then we need this return so that the rest of this page doesn't get built.
@@ -1057,7 +1057,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smEnvironmentalHazards" name="smEnvironmentalHazards"><a href="#"  onclick="smEditEnvironmentalHazardSection()">Environmental Hazards</a></li>
+       <li id="smEnvironmentalHazards" name="smEnvironmentalHazards"><a href="#"  onclick="smEnvironmentalHazards()">Environmental Hazards</a></li>
 <%
    }
 %>
@@ -1296,7 +1296,7 @@ else
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* MasterLabelContent:GroupBox */ %>
 
-<div id="MasterLabelContent" name="MasterLabelContent" class="withborder"   style="float:left;position:relative; width:732px; height:152px;">  <!-- MasterLabelContent --> 
+<div id="MasterLabelContent" name="MasterLabelContent" class="withborder"   style="float:left;position:relative; width:732px; height:264px;">  <!-- MasterLabelContent -->
 
 <% /* EPA_RegistrationNbr:Text */ %>
 
@@ -1405,9 +1405,9 @@ else
 
 <label  id="RevisionDate" name="RevisionDate" style="width:182px;height:24px;position:absolute;left:170px;top:84px;"><%=strTextDisplayValue%></label>
 
-<% /* Finalized::Text */ %>
+<% /* Status::Text */ %>
 
-<label  id="Finalized:" name="Finalized:" style="width:154px;height:16px;position:absolute;left:12px;top:114px;">Finalized:</label>
+<label  id="Status:" name="Status:" style="width:154px;height:16px;position:absolute;left:12px;top:114px;">Status:</label>
 
 <% /* Finalized:Text */ %>
 <% strTextDisplayValue = "";
@@ -1436,8 +1436,11 @@ else
 
 <label class="text12"  id="Finalized" name="Finalized" style="width:54px;height:16px;position:absolute;left:170px;top:114px;"><%=strTextDisplayValue%></label>
 
+<% /* SetFinal:PushBtn */ %>
+<button type="button" name="SetFinal" id="SetFinal" value="" onclick="FinalizeMasterLabelContent( )" style="width:112px;height:16px;position:absolute;left:262px;top:114px;">Set Production</button>
 
-</div>  <!--  MasterLabelContent --> 
+
+</div>  <!--  MasterLabelContent -->
 </div>  <!-- End of a new line -->
 
 

@@ -808,8 +808,6 @@ try
 
          lEntityKey = vEmailList.cursor( "EmailListEntry" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strButtonName = "SelectButton" + strEntityKey;
-
          strLastName = "";
          nRC = vEmailList.cursor( "EmailListEntry" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )

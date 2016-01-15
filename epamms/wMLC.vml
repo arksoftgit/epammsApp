@@ -26,9 +26,9 @@ CancelAndReturnMLC( VIEW ViewToWindow )
 
    // Drop current MLC.
    DropObjectInstance( mMasLC )
-   
+
    // Reactivate mMasProd to get updated list of MasterLabelContent entries, in case MLC was saved earlier.
-   MasProdID = mMasProd.MasterProduct.ID 
+   MasProdID = mMasProd.MasterProduct.ID
    DropObjectInstance( mMasProd )
    ACTIVATE mMasProd WHERE mMasProd.MasterProduct.ID = MasProdID
    NAME VIEW mMasProd "mMasProd"
@@ -47,13 +47,17 @@ SaveAndReturnMLC( VIEW ViewToWindow )
    VIEW mMasLC   REGISTERED AS mMasLC
    STRING ( 1 ) szFound
    INTEGER      MasProdID
+   INTEGER      lRC
 
    // Reuse Save operation and drop current MLC.
-   SaveMLC( ViewToWindow )
+   lRC = SaveMLC( ViewToWindow )
+   IF lRC != 0
+      RETURN lRC
+   END
    DropObjectInstance( mMasLC )
-   
+
    // Reactivate mMasProd to get updated list of MasterLabelContent entries.
-   MasProdID = mMasProd.MasterProduct.ID 
+   MasProdID = mMasProd.MasterProduct.ID
    DropObjectInstance( mMasProd )
    ACTIVATE mMasProd WHERE mMasProd.MasterProduct.ID = MasProdID
    NAME VIEW mMasProd "mMasProd"
@@ -79,16 +83,15 @@ SaveMLC( VIEW ViewToWindow )
       MessageSend( ViewToWindow, "", "Update Master Product Content",
                    "The Master Product Content Version cannot be blank.",
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
       RETURN 2
 
    ELSE
       // See if there is a Version in the mMasProd object with the current Version value that is not the current mMasLC.
       szFound = ""
-      FOR EACH mMasProd.MasterLabelContent 
-         IF mMasProd.MasterLabelContent.Version = mMasLC.MasterLabelContent.Version AND 
-            mMasProd.MasterLabelContent.ID     != mMasLC.MasterLabelContent.ID  
-         
+      FOR EACH mMasProd.MasterLabelContent
+         IF mMasProd.MasterLabelContent.Version = mMasLC.MasterLabelContent.Version AND
+            mMasProd.MasterLabelContent.ID     != mMasLC.MasterLabelContent.ID
+
             szFound = "Y"
          END
       END
@@ -98,11 +101,11 @@ SaveMLC( VIEW ViewToWindow )
                       zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
          SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
          RETURN 2
-      END 
+      END
    END
 
    IF mMasLC.MasterLabelContent.Finalized = ""
-      mMasLC.MasterLabelContent.Finalized = "N"
+      mMasLC.MasterLabelContent.Finalized = "M"
       mMasLC.MasterLabelContent.CreatedDateTime = wWebXfer.Root.dCurrentDateTime
       mMasLC.MasterLabelContent.RevisionDate = wWebXfer.Root.dCurrentDateTime
    END
@@ -158,10 +161,8 @@ FinalizeMasterLabelContent( VIEW ViewToWindow )
 //    RETURN 2      // Return 2 to indicate Web client must prompt operator
 // END
 
-   IF mMasLC.MasterLabelContent.Finalized = "Y"
-      mMasLC.MasterLabelContent.Finalized = "N"
-   ELSE
-      mMasLC.MasterLabelContent.Finalized = "Y"
+   IF mMasLC.MasterLabelContent.Finalized = "" OR mMasLC.MasterLabelContent.Finalized = "M"
+      mMasLC.MasterLabelContent.Finalized = "P"
    END
 
 END
@@ -175,9 +176,9 @@ DIALOG OPERATION
 GOTO_IngredientsStatementDelete( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-   
+
    mMasLC.MasterLabelContent.wDeleteType       = "Ingredients Statement"
-   mMasLC.MasterLabelContent.wDeleteText       = mMasLC.M_IngredientsStatement.ChemicalName 
+   mMasLC.MasterLabelContent.wDeleteText       = mMasLC.M_IngredientsStatement.ChemicalName
    mMasLC.MasterLabelContent.wDeleteEntityName = "M_IngredientsStatement"
 
 END
@@ -193,7 +194,7 @@ AcceptAddNewIngredient( VIEW ViewToWindow )
    VIEW  mMasLC   REGISTERED AS mMasLC
    STRING ( 256 ) szPrompt
    SHORT nRC
-   
+
    // Accept Ingredients Statement and add new temporal one.
    nRC = AcceptSubobject( mMasLC, "M_IngredientsStatement" )
    IF nRC < 0
@@ -202,7 +203,7 @@ AcceptAddNewIngredient( VIEW ViewToWindow )
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
       RETURN 2
    END
-   
+
    CreateTemporalEntity( mMasLC, "M_IngredientsStatement", zPOS_AFTER )
 
 END
@@ -218,7 +219,7 @@ GOTO_StorageDispSectionDelete( VIEW ViewToWindow )
    VIEW mMasLC   REGISTERED AS mMasLC
 
    mMasLC.MasterLabelContent.wDeleteType       = "Storage and Disposal Section"
-   mMasLC.MasterLabelContent.wDeleteText       = mMasLC.M_StorageDisposalSection.Title 
+   mMasLC.MasterLabelContent.wDeleteText       = mMasLC.M_StorageDisposalSection.Title
    mMasLC.MasterLabelContent.wDeleteEntityName = "M_StorageDisposalSection"
 
 END
@@ -269,9 +270,9 @@ DIALOG OPERATION
 GOTO_StorageDispStatementDelete( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-   
+
    mMasLC.MasterLabelContent.wDeleteType       = "Storage and Disposal Statement"
-   mMasLC.MasterLabelContent.wDeleteText       = mMasLC.M_StorageDisposalStatement.Text 
+   mMasLC.MasterLabelContent.wDeleteText       = mMasLC.M_StorageDisposalStatement.Text
    mMasLC.MasterLabelContent.wDeleteEntityName = "M_StorageDisposalStatement"
 
 END
@@ -301,19 +302,19 @@ AcceptAddNewStorDispStmt( VIEW ViewToWindow )
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: GOTO_StorageDispStatementAdd
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 GOTO_StorageDispStatementAdd( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
    SHORT nRC
-   
+
    // We are creating the new temporal entity in this operation, rather than as auto action, so that
    // the NotForUseType attribute can be set, since it's currently required in the database.
-   SET CURSOR LAST mMasLC.M_StorageDisposalStatement  
+   SET CURSOR LAST mMasLC.M_StorageDisposalStatement
    CreateTemporalEntity( mMasLC, "M_StorageDisposalStatement", zPOS_AFTER )
    mMasLC.M_StorageDisposalStatement.NotForUseType = "NA"
 
@@ -345,10 +346,10 @@ DIALOG OPERATION
 CancelDeleteComponent( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-   
+
    mMasLC.MasterLabelContent.wDeleteType = ""
    mMasLC.MasterLabelContent.wDeleteText = ""
-   
+
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -389,10 +390,10 @@ NEW_MasterProduct( VIEW ViewToWindow )
    // Initialize empty Product object.
    ACTIVATE mMasProd EMPTY
    NAME VIEW mMasProd "mMasProd"
-   CREATE ENTITY mMasProd.MasterProduct  
+   CREATE ENTITY mMasProd.MasterProduct
 
    SetDynamicBannerName( ViewToWindow, "wMLC", "PrimaryRegistrantProduct" )
-   
+
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -405,7 +406,7 @@ InitListMasterProducts( VIEW ViewToWindow )
 
    VIEW lPrimReg    REGISTERED AS lPrimReg
    VIEW mMasProdLST BASED ON LOD mMasProd
-   
+
    GET VIEW mMasProdLST NAMED "mMasProdLST"
    IF RESULT >= 0
       DropObjectInstance( mMasProdLST )
@@ -413,7 +414,7 @@ InitListMasterProducts( VIEW ViewToWindow )
    ACTIVATE mMasProdLST RootOnlyMultiple WHERE mMasProdLST.PrimaryRegistrant.ID = lPrimReg.PrimaryRegistrant.ID
    NAME VIEW mMasProdLST "mMasProdLST"
    OrderEntityForView( mMasProdLST, "MasterProduct", "Name A" )
-   SET CURSOR FIRST mMasProdLST.MasterProduct  
+   SET CURSOR FIRST mMasProdLST.MasterProduct
 
 END
 
@@ -428,9 +429,9 @@ SAVE_MasterProduct( VIEW ViewToWindow )
    VIEW wWebXfer  REGISTERED AS wWebXfer
    VIEW lPrimReg  REGISTERED AS lPrimReg
    VIEW mMasProd  REGISTERED AS mMasProd
-   STRING (  50  ) szProductName
-   STRING (  50  ) szProductNumber
-   STRING (  50  ) szVersion
+   STRING ( 50 ) szProductName
+   STRING ( 50 ) szProductNumber
+   STRING ( 50 ) szVersion
    INTEGER lProductNameLth
    INTEGER lProductNumberLth
    INTEGER lVersionLth
@@ -439,18 +440,23 @@ SAVE_MasterProduct( VIEW ViewToWindow )
    SHORT   nRC
 
    IF mMasProd = 0
-      RETURN
+      MessageSend( ViewToWindow, "", "Update Master Product",
+                   "The Master Product view is empty.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
    END
 
+   szProductName = mMasProd.MasterProduct.Name
+
    // Ensure product name is not blank and is unique.
-   IF mMasProd.MasterProduct.Name = ""
-      MessageSend( ViewToWindow, "", "New Master Product",
+   IF szProductName = ""
+      MessageSend( ViewToWindow, "", "Update Master Product",
                    "The Master Product Name cannot be blank.",
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
       RETURN 2
    ELSE
-      SET CURSOR FIRST lPrimReg.MasterProduct WHERE lPrimReg.MasterProduct.Name = mMasProd.MasterProduct.Name
-                                                AND lPrimReg.MasterProduct.ID  != mMasProd.MasterProduct.ID  
+      SET CURSOR FIRST lPrimReg.MasterProduct WHERE lPrimReg.MasterProduct.Name = szProductName
+                                                AND lPrimReg.MasterProduct.ID  != mMasProd.MasterProduct.ID
       IF RESULT >= zCURSOR_SET
          MessageSend( ViewToWindow, "", "New Master Product",
                       "The Master Product Name must be unique.",
@@ -465,7 +471,7 @@ SAVE_MasterProduct( VIEW ViewToWindow )
    END
 
    COMMIT mMasProd
-   
+
    // Make sure product list is updated.
    InitListMasterProducts( ViewToWindow )
 
@@ -483,7 +489,7 @@ CANCEL_MasterProduct( VIEW ViewToWindow )
 
 TraceLineS( "$$$$$ Before Drop", "" )
    DropObjectInstance( mMasProd )
-TraceLineS( "$$$$$ After Drop", "" ) 
+TraceLineS( "$$$$$ After Drop", "" )
 
 END
 
@@ -506,64 +512,64 @@ GOTO_UpdateMLC( VIEW ViewToWindow )
    ACTIVATE mMasLC WHERE mMasLC.MasterLabelContent.ID = mMasProd.MasterLabelContent.ID
    NAME VIEW mMasLC "mMasLC"
    OrderEntityForView( mMasLC, "M_Usage", "UsageType A ClaimsClassification A Name A" )
-   SET CURSOR FIRST mMasLC.M_Usage 
-   
+   SET CURSOR FIRST mMasLC.M_Usage
+
    // Create/Include Hazard, Precautionary and First Aid derived sections.
-   
+
    // First Aid
    SET CURSOR FIRST mMasLC.M_GeneralSection WHERE mMasLC.M_GeneralSection.SectionType = "F"
    IF RESULT < zCURSOR_SET
-      CREATE ENTITY mMasLC.M_GeneralSection 
+      CREATE ENTITY mMasLC.M_GeneralSection
       mMasLC.M_GeneralSection.SectionType = "F" // First Aid
       mMasLC.M_GeneralSection.Title = "FIRST AID"
-   END 
-   INCLUDE mMasLC.MI_FirstAidSection FROM mMasLC.M_GeneralSection 
-   
+   END
+   INCLUDE mMasLC.MI_FirstAidSection FROM mMasLC.M_GeneralSection
+
    // Precautionary
    SET CURSOR FIRST mMasLC.M_GeneralSection WHERE mMasLC.M_GeneralSection.SectionType = "P"
    IF RESULT < zCURSOR_SET
-      CREATE ENTITY mMasLC.M_GeneralSection 
+      CREATE ENTITY mMasLC.M_GeneralSection
       mMasLC.M_GeneralSection.SectionType = "P" // Precautionary
-   END 
-   INCLUDE mMasLC.MI_PrecautionarySection FROM mMasLC.M_GeneralSection 
-   
+   END
+   INCLUDE mMasLC.MI_PrecautionarySection FROM mMasLC.M_GeneralSection
+
    // Hazard
    SET CURSOR FIRST mMasLC.M_GeneralSection WHERE mMasLC.M_GeneralSection.SectionType = "E"
    IF RESULT < zCURSOR_SET
-      CREATE ENTITY mMasLC.M_GeneralSection 
+      CREATE ENTITY mMasLC.M_GeneralSection
       mMasLC.M_GeneralSection.SectionType = "E" // Environmental/Physical Hazard
-   END 
-   INCLUDE mMasLC.MI_HazardSection FROM mMasLC.M_GeneralSection 
-   
-   // Convert any original Usage entries to the new UsageType subobject.
-   FOR EACH mMasLC.OrigM_Usage 
-      SET CURSOR FIRST mMasLC.M_UsageType WHERE mMasLC.M_UsageType.UsageType = mMasLC.OrigM_Usage.UsageType 
-      IF RESULT < zCURSOR_SET
-         CREATE ENTITY mMasLC.M_UsageType 
-         mMasLC.M_UsageType.UsageType = mMasLC.OrigM_Usage.UsageType  
-      END 
-      CREATE ENTITY mMasLC.M_Usage 
-      SetMatchingAttributesByName( mMasLC, "M_Usage", mMasLC, "OrigM_Usage", zSET_NULL )
-      DELETE ENTITY mMasLC.OrigM_Usage NONE  
    END
-   
+   INCLUDE mMasLC.MI_HazardSection FROM mMasLC.M_GeneralSection
+
+   // Convert any original Usage entries to the new UsageType subobject.
+   FOR EACH mMasLC.OrigM_Usage
+      SET CURSOR FIRST mMasLC.M_UsageType WHERE mMasLC.M_UsageType.UsageType = mMasLC.OrigM_Usage.UsageType
+      IF RESULT < zCURSOR_SET
+         CREATE ENTITY mMasLC.M_UsageType
+         mMasLC.M_UsageType.UsageType = mMasLC.OrigM_Usage.UsageType
+      END
+      CREATE ENTITY mMasLC.M_Usage
+      SetMatchingAttributesByName( mMasLC, "M_Usage", mMasLC, "OrigM_Usage", zSET_NULL )
+      DELETE ENTITY mMasLC.OrigM_Usage NONE
+   END
+
    // Delete any M_DirectionsUsageOrdering entities without children.
-   FOR EACH mMasLC.M_DirectionsForUseSection 
-      FOR EACH mMasLC.M_DirectionsForUseStatement 
-         FOR EACH mMasLC.M_DirectionsUsageOrdering 
+   FOR EACH mMasLC.M_DirectionsForUseSection
+      FOR EACH mMasLC.M_DirectionsForUseStatement
+         FOR EACH mMasLC.M_DirectionsUsageOrdering
             IF mMasLC.M_DirectionsUsage DOES NOT EXIST
-               DELETE ENTITY mMasLC.M_DirectionsUsageOrdering NONE 
+               DELETE ENTITY mMasLC.M_DirectionsUsageOrdering NONE
             END
          END
       END
    END
-   
+
    // Make sure Usage Entries are sorted.
-   FOR EACH mMasLC.M_UsageType 
+   FOR EACH mMasLC.M_UsageType
       OrderEntityForView( mMasLC, "M_Usage", "ClaimsClassification A Name A" )
    END
-   SET CURSOR FIRST mMasLC.M_UsageType  
-   
+   SET CURSOR FIRST mMasLC.M_UsageType
+
    // Build Usage Group Usage entries.
    BuildUsageGroupEntries( mMasLC )
 
@@ -579,11 +585,11 @@ NEW_MLC( VIEW ViewToWindow )
 
    VIEW mMasProd REGISTERED AS mMasProd
    VIEW mMasLC   BASED ON LOD  mMasLC
-   
-   ACTIVATE mMasLC EMPTY 
-   NAME VIEW mMasLC "mMasLC" 
-   CREATE ENTITY mMasLC.MasterLabelContent 
-   INCLUDE mMasLC.MasterProduct FROM mMasProd.MasterProduct 
+
+   ACTIVATE mMasLC EMPTY
+   NAME VIEW mMasLC "mMasLC"
+   CREATE ENTITY mMasLC.MasterLabelContent
+   INCLUDE mMasLC.MasterProduct FROM mMasProd.MasterProduct
 
 END
 
@@ -612,7 +618,7 @@ GenerateNewMLC_Version( VIEW ViewToWindow )
    NAME VIEW NewMLC "mMasLC"
 
    BuildNewMLC_Version( NewMLC, OriginalMLC )    // Create NewMLC from OriginalMLC
-   NewMLC.MasterLabelContent.Finalized = "N"
+   NewMLC.MasterLabelContent.Finalized = "M"
 
 END
 
@@ -699,15 +705,15 @@ ConfirmDeleteMasterProduct( VIEW ViewToWindow )
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: GOTO_StorageDispSectionUpdate
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 GOTO_StorageDispSectionUpdate( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-   
+
    // Create Temporal subobject version.
    CreateTemporalSubobjectVersion( mMasLC, "M_StorageDisposalSection" )
 
@@ -726,9 +732,10 @@ ConfirmDeleteMasterLabelContent( VIEW ViewToWindow )
 
    ACTIVATE mMasLC WHERE mMasLC.MasterLabelContent.ID = mMasProd.MasterLabelContent.ID
    NAME VIEW mMasLC "mMasLCDelete"
-   DELETE ENTITY mMasLC.MasterLabelContent 
+   DELETE ENTITY mMasLC.MasterLabelContent
    COMMIT  mMasLC
    DropObjectInstance( mMasLC )
+   EXCLUDE mMasProd.MasterLabelContent NONE
 
 END
 
@@ -769,7 +776,7 @@ InitHumanHazardSect( VIEW ViewToWindow )
    AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "InitHumanHazardSect: " )
 
    IF mMasLC.M_HumanHazardSection DOES NOT EXIST
-      CREATE ENTITY mMasLC.M_HumanHazardSection  
+      CREATE ENTITY mMasLC.M_HumanHazardSection
       mMasLC.M_HumanHazardSection.PrecautionaryStatement = "See {{Precautionary Panel Location}} Panel {{Precautionary Label Location}} for Precautionary Statements"
       mMasLC.M_HumanHazardSection.PanelLoc1 = "[Back]"
       mMasLC.M_HumanHazardSection.PanelLoc2 = "[Side]"
@@ -793,29 +800,29 @@ DIALOG OPERATION
 GOTO_PrecautionaryStmtDelete( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-   
+
    mMasLC.MasterLabelContent.wDeleteType       = "Precautionary Statement"
-   mMasLC.MasterLabelContent.wDeleteText       = mMasLC.M_GeneralStatement.Text 
+   mMasLC.MasterLabelContent.wDeleteText       = mMasLC.M_GeneralStatement.Text
    mMasLC.MasterLabelContent.wDeleteEntityName = "M_GeneralStatement"
 
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: EditPrecautionarySection
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 EditPrecautionarySection( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-   
+
    // Position on "Precautionary" General Statement.
    SET CURSOR FIRST mMasLC.M_GeneralSection WHERE mMasLC.M_GeneralSection.SectionType = "P"
    IF RESULT < zCURSOR_SET
-      CREATE ENTITY mMasLC.M_GeneralSection 
-      mMasLC.M_GeneralSection.SectionType = "P" 
-   END 
+      CREATE ENTITY mMasLC.M_GeneralSection
+      mMasLC.M_GeneralSection.SectionType = "P"
+   END
 
 END
 
@@ -828,29 +835,29 @@ DIALOG OPERATION
 GOTO_FirstAidStmtDelete( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-   
+
    mMasLC.MasterLabelContent.wDeleteType       = "First Aid Statement"
-   mMasLC.MasterLabelContent.wDeleteText       = mMasLC.M_GeneralStatement.Text 
+   mMasLC.MasterLabelContent.wDeleteText       = mMasLC.M_GeneralStatement.Text
    mMasLC.MasterLabelContent.wDeleteEntityName = "M_GeneralStatement"
 
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: EditFirstAidSection
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 EditFirstAidSection( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-   
+
    // Position on "First Aid" General Statement.
    SET CURSOR FIRST mMasLC.M_GeneralSection WHERE mMasLC.M_GeneralSection.SectionType = "F"
    IF RESULT < zCURSOR_SET
-      CREATE ENTITY mMasLC.M_GeneralSection 
-      mMasLC.M_GeneralSection.SectionType = "F" 
-   END 
+      CREATE ENTITY mMasLC.M_GeneralSection
+      mMasLC.M_GeneralSection.SectionType = "F"
+   END
 
 END
 
@@ -863,48 +870,48 @@ DIALOG OPERATION
 GOTO_HazardsStmtDelete( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-   
+
    mMasLC.MasterLabelContent.wDeleteType       = "Hazards Statement"
-   mMasLC.MasterLabelContent.wDeleteText       = mMasLC.M_GeneralStatement.Text 
+   mMasLC.MasterLabelContent.wDeleteText       = mMasLC.M_GeneralStatement.Text
    mMasLC.MasterLabelContent.wDeleteEntityName = "M_GeneralStatement"
 
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: EditEnvironmentalHazardsSection
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 EditEnvironmentalHazardsSection( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-   
+
    // Position on "Environmental Hazards" General Statement.
    SET CURSOR FIRST mMasLC.M_GeneralSection WHERE mMasLC.M_GeneralSection.SectionType = "E"
    IF RESULT < zCURSOR_SET
-      CREATE ENTITY mMasLC.M_GeneralSection 
-      mMasLC.M_GeneralSection.SectionType = "E" 
-   END 
+      CREATE ENTITY mMasLC.M_GeneralSection
+      mMasLC.M_GeneralSection.SectionType = "E"
+   END
 
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: EditChemicalHazardsSection
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 EditChemicalHazardsSection( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-   
+
    // Position on "Physical and Chemical Hazards" General Statement.
    SET CURSOR FIRST mMasLC.M_GeneralSection WHERE mMasLC.M_GeneralSection.SectionType = "C"
    IF RESULT < zCURSOR_SET
-      CREATE ENTITY mMasLC.M_GeneralSection 
-      mMasLC.M_GeneralSection.SectionType = "C" 
-   END 
+      CREATE ENTITY mMasLC.M_GeneralSection
+      mMasLC.M_GeneralSection.SectionType = "C"
+   END
 
 END
 
@@ -918,57 +925,25 @@ DELETE_SelectedUsageEntries( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
    SHORT nRC
-   
-   FOR EACH mMasLC.M_Usage 
+
+   FOR EACH mMasLC.M_Usage
       IF mMasLC.M_Usage.wSelected = "Y"
-         DELETE ENTITY  mMasLC.M_Usage NONE
-      END
-   END
-
-END
-
-/*************************************************************************************************
-**    
-**    OPERATION: DELETE_SelectedUsageGroupEntries
-**    
-*************************************************************************************************/
-DIALOG OPERATION
-DELETE_SelectedUsageGroupEntries( VIEW ViewToWindow )
-
-   VIEW mMasLC REGISTERED AS mMasLC
-   SHORT nRC
-   
-   FOR EACH mMasLC.M_UsageGroup 
-      IF mMasLC.M_UsageGroup.wSelected = "Y"
-         DELETE ENTITY  mMasLC.M_UsageGroup NONE
-      END
-   END
-
-END
-
-/*************************************************************************************************
-**    
-**    OPERATION: DELETE_SelectedGroupUsageEntries
-**    
-*************************************************************************************************/
-DIALOG OPERATION
-DELETE_SelectedGroupUsageEntries( VIEW ViewToWindow )
-
-   VIEW mMasLC REGISTERED AS mMasLC
-   SHORT nRC
-   
-   FOR EACH mMasLC.M_UsageGroupUsage 
-      IF mMasLC.M_UsageGroupUsage.wSelected = "Y"
-         // Position on corresponding M_Usage entry.
-         IF mMasLC.M_UsageGroupUsage.ID = ""
-            SET CURSOR FIRST mMasLC.M_Usage WHERE mMasLC.M_Usage.Name = mMasLC.M_UsageGroupUsage.Name 
+         SET CURSOR FIRST mMasLC.M_UsageNonGroupUsage WHERE mMasLC.M_UsageNonGroupUsage.Name = mMasLC.M_Usage.Name
+         IF RESULT >= zCURSOR_SET
+            EXCLUDE mMasLC.M_UsageNonGroupUsage NONE
          ELSE
-            SET CURSOR FIRST mMasLC.M_Usage WHERE mMasLC.M_Usage.ID = mMasLC.M_UsageGroupUsage.ID  
+            SET CURSOR FIRST mMasLC.M_UsageGroupUsage WITHIN mMasLC.M_UsageType
+                       WHERE mMasLC.M_UsageGroupUsage.Name = mMasLC.M_Usage.Name
+            IF RESULT >= zCURSOR_SET
+               EXCLUDE mMasLC.M_UsageGroupUsage NONE
+            END
          END
-         EXCLUDE mMasLC.M_UsageGroupUsage NONE
          DELETE ENTITY  mMasLC.M_Usage NONE
       END
    END
+
+   // Go to build the NonGroup Usage entries.
+   BuildNonGroupEntries( mMasLC )
 
 END
 
@@ -990,15 +965,15 @@ SaveAddNewUsage( VIEW ViewToWindow )
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
       RETURN 2
    END
-   
+
    CreateTemporalEntity( mMasLC, "M_Usage", zPOS_AFTER )
 
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: AcceptAndNextUsage
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 AcceptAndNextUsage( VIEW ViewToWindow )
@@ -1040,7 +1015,7 @@ ConfirmDeleteUsageEntry( VIEW ViewToWindow )
          LOOP WHILE RESULT >= zCURSOR_SET AND nContinue > 0
             SET CURSOR FIRST mMasLC2.M_MarketingStatement
             LOOP WHILE RESULT >= zCURSOR_SET AND nContinue > 0
-               SET CURSOR FIRST mMasLC2.M_MarketingUsage  WHERE mMasLC2.M_MarketingUsage.ID = mMasLC.M_Usage.ID 
+               SET CURSOR FIRST mMasLC2.M_MarketingUsage  WHERE mMasLC2.M_MarketingUsage.ID = mMasLC.M_Usage.ID
                IF RESULT >= zCURSOR_SET
                   DELETE ENTITY mMasLC2.M_MarketingUsageOrdering NONE
                   nContinue = -1
@@ -1060,37 +1035,37 @@ ConfirmDeleteUsageEntry( VIEW ViewToWindow )
 */
 
    VIEW mMasLC REGISTERED AS mMasLC
-   
+
    // Delete all selected Usage entries.
-   FOR EACH mMasLC.M_Usage 
+   FOR EACH mMasLC.M_Usage
       IF mMasLC.M_Usage.wSelected = "Y"
          // Delete any Usage entries that have been tied to a Marketing Statement.
-         FOR EACH mMasLC.M_MarketingStatement WITHIN mMasLC.MasterLabelContent 
-            SET CURSOR FIRST mMasLC.M_MarketingUsage WITHIN mMasLC.M_MarketingStatement 
-                       WHERE mMasLC.M_MarketingUsage.ID = mMasLC.M_Usage.ID 
+         FOR EACH mMasLC.M_MarketingStatement WITHIN mMasLC.MasterLabelContent
+            SET CURSOR FIRST mMasLC.M_MarketingUsage WITHIN mMasLC.M_MarketingStatement
+                       WHERE mMasLC.M_MarketingUsage.ID = mMasLC.M_Usage.ID
             IF RESULT >= zCURSOR_SET
-               DELETE ENTITY mMasLC.M_MarketingUsageOrdering  
-            END 
+               DELETE ENTITY mMasLC.M_MarketingUsageOrdering
+            END
          END
-         
-         // Delete any Usage entries that have been tied to a Directions for Use Statement or that 
+
+         // Delete any Usage entries that have been tied to a Directions for Use Statement or that
          // drive a Directions for Use Section.
          FOR EACH mMasLC.M_DirectionsForUseSection
             FOR EACH mMasLC.M_DirectionsForUseStatement
-               SET CURSOR FIRST mMasLC.M_DirectionsUsage WITHIN mMasLC.M_DirectionsForUseStatement 
-                          WHERE mMasLC.M_DirectionsUsage.ID = mMasLC.M_Usage.ID 
+               SET CURSOR FIRST mMasLC.M_DirectionsUsage WITHIN mMasLC.M_DirectionsForUseStatement
+                          WHERE mMasLC.M_DirectionsUsage.ID = mMasLC.M_Usage.ID
                IF RESULT >= zCURSOR_SET
-                  DELETE ENTITY mMasLC.M_DirectionsUsageOrdering   
-               END 
+                  DELETE ENTITY mMasLC.M_DirectionsUsageOrdering
+               END
             END
-            SET CURSOR FIRST mMasLC.M_DrivingUsage WHERE mMasLC.M_DrivingUsage.ID = mMasLC.M_Usage.ID 
+            SET CURSOR FIRST mMasLC.M_DrivingUsage WHERE mMasLC.M_DrivingUsage.ID = mMasLC.M_Usage.ID
             IF RESULT >= zCURSOR_SET
-               EXCLUDE mMasLC.M_DrivingUsage 
+               EXCLUDE mMasLC.M_DrivingUsage
             END
          END
-         
+
          // Delete the actual Usage entry.
-         DELETE ENTITY mMasLC.M_Usage NONE 
+         DELETE ENTITY mMasLC.M_Usage NONE
       END
    END
 
@@ -1105,50 +1080,50 @@ DIALOG OPERATION
 CancelDeleteUsageEntry( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-   
+
    // Cancel delete and clear selected entries.
-   FOR EACH mMasLC.M_Usage 
+   FOR EACH mMasLC.M_Usage
       IF mMasLC.M_Usage.wSelected = "Y"
-         mMasLC.M_Usage.wSelected = "" 
+         mMasLC.M_Usage.wSelected = ""
       END
    END
-   
+
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: PrebuildDeleteUsageStatements
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 PrebuildDeleteUsageStatements( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-   
+
    // Create list of Usage Entries selected for delete.
-   FOR EACH mMasLC.MI_UsageList 
+   FOR EACH mMasLC.MI_UsageList
       EXCLUDE mMasLC.MI_UsageList NONE
    END
-   FOR EACH mMasLC.M_Usage 
+   FOR EACH mMasLC.M_Usage
       IF mMasLC.M_Usage.wSelected = "Y"
-         INCLUDE mMasLC.MI_UsageList FROM mMasLC.M_Usage 
+         INCLUDE mMasLC.MI_UsageList FROM mMasLC.M_Usage
       END
    END
 
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: EditClaimsSection
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 EditClaimsSection( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-   
+
    // Position on Claims Usage Type.
-   SET CURSOR FIRST mMasLC.M_UsageType WHERE mMasLC.M_UsageType.UsageType = "C" 
+   SET CURSOR FIRST mMasLC.M_UsageType WHERE mMasLC.M_UsageType.UsageType = "C"
    IF RESULT < zCURSOR_SET
       CREATE ENTITY mMasLC.M_UsageType
       mMasLC.M_UsageType.UsageType = "C"
@@ -1157,17 +1132,17 @@ EditClaimsSection( VIEW ViewToWindow )
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: EditAreasOfUseSection
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 EditAreasOfUseSection( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-   
+
    // Position on Claims Usage Type.
-   SET CURSOR FIRST mMasLC.M_UsageType WHERE mMasLC.M_UsageType.UsageType = "U" 
+   SET CURSOR FIRST mMasLC.M_UsageType WHERE mMasLC.M_UsageType.UsageType = "U"
    IF RESULT < zCURSOR_SET
       CREATE ENTITY mMasLC.M_UsageType
       mMasLC.M_UsageType.UsageType = "U"
@@ -1176,36 +1151,39 @@ EditAreasOfUseSection( VIEW ViewToWindow )
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: EditSurfacesSection
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 EditSurfacesSection( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-   
+
    // Position on Claims Usage Type.
-   SET CURSOR FIRST mMasLC.M_UsageType WHERE mMasLC.M_UsageType.UsageType = "S" 
+   SET CURSOR FIRST mMasLC.M_UsageType WHERE mMasLC.M_UsageType.UsageType = "S"
    IF RESULT < zCURSOR_SET
       CREATE ENTITY mMasLC.M_UsageType
       mMasLC.M_UsageType.UsageType = "S"
    END
 
+   // Go to build the NonGroup Usage entries.
+   BuildNonGroupEntries( mMasLC )
+
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: EditApplicationTypesSection
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 EditApplicationTypesSection( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-   
+
    // Position on Claims Usage Type.
-   SET CURSOR FIRST mMasLC.M_UsageType WHERE mMasLC.M_UsageType.UsageType = "T" 
+   SET CURSOR FIRST mMasLC.M_UsageType WHERE mMasLC.M_UsageType.UsageType = "T"
    IF RESULT < zCURSOR_SET
       CREATE ENTITY mMasLC.M_UsageType
       mMasLC.M_UsageType.UsageType = "T"
@@ -1214,9 +1192,9 @@ EditApplicationTypesSection( VIEW ViewToWindow )
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: GOTO_DirsForUseSectionDelete
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 GOTO_DirsForUseSectionDelete( VIEW ViewToWindow )
@@ -1224,61 +1202,61 @@ GOTO_DirsForUseSectionDelete( VIEW ViewToWindow )
    VIEW mMasLC   REGISTERED AS mMasLC
 
    mMasLC.MasterLabelContent.wDeleteType       = "Directions for Use Section"
-   mMasLC.MasterLabelContent.wDeleteText       = mMasLC.M_DirectionsForUseSection.Name 
+   mMasLC.MasterLabelContent.wDeleteText       = mMasLC.M_DirectionsForUseSection.Name
    mMasLC.MasterLabelContent.wDeleteEntityName = "M_DirectionsForUseSection"
 
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: GOTO_SelectRemoveDrivingDU
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 GOTO_SelectRemoveDrivingDU( VIEW ViewToWindow )
 
    VIEW mMasLC  REGISTERED AS mMasLC
-   
+
    // Initialize the mMasLC  for selecting Driving Claims.
    mMasLC.MasterLabelContent.wSelectedUsageType = "DC"
 
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: GOTO_SelectRemoveDUEntries
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 GOTO_SelectRemoveDUEntries( VIEW ViewToWindow )
 
    VIEW mMasLC  REGISTERED AS mMasLC
-   
+
    // Initialize the mMasLC for selecting Statement Usage entries.
    mMasLC.MasterLabelContent.wSelectedUsageType = "D"
 
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: GOTO_DirsForUseStatementAdd
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 GOTO_DirsForUseStatementAdd( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-   
+
    // Add new temporal entity as last statement under section.
-   SET CURSOR LAST mMasLC.M_DirectionsForUseStatement 
+   SET CURSOR LAST mMasLC.M_DirectionsForUseStatement
    CreateTemporalEntity( mMasLC, "M_DirectionsForUseStatement", zPOS_AFTER )
 
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: AcceptAddNewDU_Stmt
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 AcceptAddNewDU_Stmt( VIEW ViewToWindow )
@@ -1286,7 +1264,7 @@ AcceptAddNewDU_Stmt( VIEW ViewToWindow )
    VIEW  mMasLC   REGISTERED AS mMasLC
    STRING ( 256 ) szPrompt
    SHORT nRC
-   
+
    // Accept Direction for Use Statement and add new temporal one.
    nRC = AcceptSubobject( mMasLC, "M_DirectionsForUseStatement" )
    IF nRC < 0
@@ -1295,47 +1273,47 @@ AcceptAddNewDU_Stmt( VIEW ViewToWindow )
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
       RETURN 2
    END
-   
+
    CreateTemporalEntity( mMasLC, "M_DirectionsForUseStatement", zPOS_AFTER )
 
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: SelectMLC_UsageEntries
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 SelectMLC_UsageEntries( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-   
+
    // Include each selected Usage Source entry in the Target subobject.
-   FOR EACH mMasLC.M_Usage 
+   FOR EACH mMasLC.M_Usage
       IF mMasLC.M_Usage.wSelected = "Y"
          // The target entity depends on the type of select set earlier.
          IF mMasLC.MasterLabelContent.wSelectedUsageType = "DC"   // Dir for Use Driving Claim
-            SET CURSOR FIRST mMasLC.M_DrivingUsage WHERE mMasLC.M_DrivingUsage.ID = mMasLC.M_Usage.ID 
+            SET CURSOR FIRST mMasLC.M_DrivingUsage WHERE mMasLC.M_DrivingUsage.ID = mMasLC.M_Usage.ID
             IF RESULT < zCURSOR_SET
-               INCLUDE mMasLC.M_DrivingUsage FROM mMasLC.M_Usage 
-            END 
+               INCLUDE mMasLC.M_DrivingUsage FROM mMasLC.M_Usage
+            END
          END
          IF mMasLC.MasterLabelContent.wSelectedUsageType = "D"   // Dir for Use Statement
-            SET CURSOR FIRST mMasLC.M_DirectionsUsage WITHIN mMasLC.M_DirectionsForUseStatement 
-                       WHERE mMasLC.M_DirectionsUsage.ID = mMasLC.M_Usage.ID 
+            SET CURSOR FIRST mMasLC.M_DirectionsUsage WITHIN mMasLC.M_DirectionsForUseStatement
+                       WHERE mMasLC.M_DirectionsUsage.ID = mMasLC.M_Usage.ID
             IF RESULT < zCURSOR_SET
-               SET CURSOR LAST mMasLC.M_DirectionsUsageOrdering 
+               SET CURSOR LAST mMasLC.M_DirectionsUsageOrdering
                CREATE ENTITY  mMasLC.M_DirectionsUsageOrdering
-               INCLUDE mMasLC.M_DirectionsUsage FROM mMasLC.M_Usage 
+               INCLUDE mMasLC.M_DirectionsUsage FROM mMasLC.M_Usage
             END
          END
          IF mMasLC.MasterLabelContent.wSelectedUsageType = "M"   // Marketing Statement
-            SET CURSOR FIRST mMasLC.M_MarketingUsage WITHIN mMasLC.M_MarketingStatement 
-                       WHERE mMasLC.M_MarketingUsage.ID = mMasLC.M_Usage.ID 
+            SET CURSOR FIRST mMasLC.M_MarketingUsage WITHIN mMasLC.M_MarketingStatement
+                       WHERE mMasLC.M_MarketingUsage.ID = mMasLC.M_Usage.ID
             IF RESULT < zCURSOR_SET
-               SET CURSOR LAST mMasLC.M_MarketingUsageOrdering 
+               SET CURSOR LAST mMasLC.M_MarketingUsageOrdering
                CREATE ENTITY  mMasLC.M_MarketingUsageOrdering
-               INCLUDE mMasLC.M_MarketingUsage FROM mMasLC.M_Usage 
+               INCLUDE mMasLC.M_MarketingUsage FROM mMasLC.M_Usage
             END
          END
 
@@ -1346,32 +1324,32 @@ SelectMLC_UsageEntries( VIEW ViewToWindow )
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: RemoveMLC_UsageEntries
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 RemoveMLC_UsageEntries( VIEW ViewToWindow )
 
    VIEW mMasLC  REGISTERED AS mMasLC
-   
+
    // Remove depends on the target entity.
    IF mMasLC.MasterLabelContent.wSelectedUsageType = "DC"   // Dir for Use Driving Claim
-      FOR EACH mMasLC.M_DrivingUsage 
+      FOR EACH mMasLC.M_DrivingUsage
          IF mMasLC.M_DrivingUsage.wSelected = "Y"
             EXCLUDE  mMasLC.M_DrivingUsage NONE
          END
       END
    END
    IF mMasLC.MasterLabelContent.wSelectedUsageType = "D"   // Dir for Use Statement
-      FOR EACH mMasLC.M_DirectionsUsageOrdering 
+      FOR EACH mMasLC.M_DirectionsUsageOrdering
          IF mMasLC.M_DirectionsUsageOrdering.wSelected = "Y"
             DELETE ENTITY mMasLC.M_DirectionsUsageOrdering NONE
          END
       END
    END
    IF mMasLC.MasterLabelContent.wSelectedUsageType = "M"   // Marketing Statement
-      FOR EACH mMasLC.M_MarketingUsageOrdering 
+      FOR EACH mMasLC.M_MarketingUsageOrdering
          IF mMasLC.M_MarketingUsageOrdering.wSelected = "Y"
             DELETE ENTITY mMasLC.M_MarketingUsageOrdering NONE
          END
@@ -1381,28 +1359,28 @@ RemoveMLC_UsageEntries( VIEW ViewToWindow )
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: CLEAR_MLC_UsageTarget
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 CLEAR_MLC_UsageTarget( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-   
+
    // Clear depends on the target entity.
    IF mMasLC.MasterLabelContent.wSelectedUsageType = "DC"   // Dir for Use Driving Claim
-      FOR EACH mMasLC.M_DrivingUsage 
+      FOR EACH mMasLC.M_DrivingUsage
          mMasLC.M_DrivingUsage.wSelected = ""
       END
    END
    IF mMasLC.MasterLabelContent.wSelectedUsageType = "D"   // Dir for Use Statement
-      FOR EACH mMasLC.M_DirectionsUsageOrdering 
+      FOR EACH mMasLC.M_DirectionsUsageOrdering
          mMasLC.M_DirectionsUsageOrdering.wSelected = ""
       END
    END
    IF mMasLC.MasterLabelContent.wSelectedUsageType = "M"   // Marketing Statement
-      FOR EACH mMasLC.M_MarketingUsageOrdering 
+      FOR EACH mMasLC.M_MarketingUsageOrdering
          mMasLC.M_MarketingUsageOrdering.wSelected = ""
       END
    END
@@ -1410,28 +1388,28 @@ CLEAR_MLC_UsageTarget( VIEW ViewToWindow )
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: SETALL_MLC_UsageTarget
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 SETALL_MLC_UsageTarget( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-   
+
    // Set All depends on the target entity.
    IF mMasLC.MasterLabelContent.wSelectedUsageType = "DC"   // Dir for Use Driving Claim
-      FOR EACH mMasLC.M_DrivingUsage 
+      FOR EACH mMasLC.M_DrivingUsage
          mMasLC.M_DrivingUsage.wSelected = "Y"
       END
    END
    IF mMasLC.MasterLabelContent.wSelectedUsageType = "D"   // Dir for Use Statement
-      FOR EACH mMasLC.M_DirectionsUsageOrdering 
+      FOR EACH mMasLC.M_DirectionsUsageOrdering
          mMasLC.M_DirectionsUsageOrdering.wSelected = "Y"
       END
    END
    IF mMasLC.MasterLabelContent.wSelectedUsageType = "M"   // Marketing Statement
-      FOR EACH mMasLC.M_MarketingUsageOrdering 
+      FOR EACH mMasLC.M_MarketingUsageOrdering
          mMasLC.M_MarketingUsageOrdering.wSelected = "Y"
       END
    END
@@ -1439,32 +1417,32 @@ SETALL_MLC_UsageTarget( VIEW ViewToWindow )
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: CLEAR_MLC_UsageSource
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 CLEAR_MLC_UsageSource( VIEW ViewToWindow )
 
    VIEW mMasLC  REGISTERED AS mMasLC
-   
-   FOR EACH mMasLC.M_Usage 
+
+   FOR EACH mMasLC.M_Usage
       mMasLC.M_Usage.wSelected = ""
    END
 
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: SETALL_MLC_UsageSource
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 SETALL_MLC_UsageSource( VIEW ViewToWindow )
 
    VIEW mMasLC  REGISTERED AS mMasLC
-   
-   FOR EACH mMasLC.M_Usage 
+
+   FOR EACH mMasLC.M_Usage
       mMasLC.M_Usage.wSelected = "Y"
    END
 
@@ -1481,15 +1459,15 @@ GOTO_DirsForUseStatementDelete( VIEW ViewToWindow )
    VIEW mMasLC   REGISTERED AS mMasLC
 
    mMasLC.MasterLabelContent.wDeleteType       = "Directions for Use Statement"
-   mMasLC.MasterLabelContent.wDeleteText       = mMasLC.M_DirectionsForUseStatement.Text 
+   mMasLC.MasterLabelContent.wDeleteText       = mMasLC.M_DirectionsForUseStatement.Text
    mMasLC.MasterLabelContent.wDeleteEntityName = "M_DirectionsForUseStatement"
 
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: GOTO_MarketingSectionDelete
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 GOTO_MarketingSectionDelete( VIEW ViewToWindow )
@@ -1497,62 +1475,46 @@ GOTO_MarketingSectionDelete( VIEW ViewToWindow )
    VIEW mMasLC   REGISTERED AS mMasLC
 
    mMasLC.MasterLabelContent.wDeleteType       = "Marketing Section"
-   mMasLC.MasterLabelContent.wDeleteText       = mMasLC.M_MarketingSection.Name 
+   mMasLC.MasterLabelContent.wDeleteText       = mMasLC.M_MarketingSection.Name
    mMasLC.MasterLabelContent.wDeleteEntityName = "M_MarketingSection"
 
 END
 
 /*************************************************************************************************
-**    
-**    OPERATION: GOTO_MarketingStatementDelete
-**    
-*************************************************************************************************/
-DIALOG OPERATION
-GOTO_MarketingStatementDelete( VIEW ViewToWindow )
-
-   VIEW mMasLC   REGISTERED AS mMasLC
-
-   mMasLC.MasterLabelContent.wDeleteType       = "Marketing Statement"
-   mMasLC.MasterLabelContent.wDeleteText       = mMasLC.M_MarketingStatement.Text 
-   mMasLC.MasterLabelContent.wDeleteEntityName = "M_MarketingStatement"
-
-END
-
-/*************************************************************************************************
-**    
+**
 **    OPERATION: GOTO_SelectRemoveMktgEntries
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 GOTO_SelectRemoveMktgEntries( VIEW ViewToWindow )
 
    VIEW mMasLC  REGISTERED AS mMasLC
-   
+
    // Initialize the mMasLC for selecting Statement Usage entries.
    mMasLC.MasterLabelContent.wSelectedUsageType = "M"
 
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: GOTO_FootnoteStmtDelete
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 GOTO_FootnoteStmtDelete( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-   
+
    mMasLC.MasterLabelContent.wDeleteType       = "Footnote Statement"
-   mMasLC.MasterLabelContent.wDeleteText       = mMasLC.M_UsageFootnote.Text 
+   mMasLC.MasterLabelContent.wDeleteText       = mMasLC.M_UsageFootnote.Text
    mMasLC.MasterLabelContent.wDeleteEntityName = "M_UsageFootnote"
 
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: GOTO_DilutionChartItemDelete
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 GOTO_DilutionChartItemDelete( VIEW ViewToWindow )
@@ -1560,15 +1522,15 @@ GOTO_DilutionChartItemDelete( VIEW ViewToWindow )
    VIEW mMasLC   REGISTERED AS mMasLC
 
    mMasLC.MasterLabelContent.wDeleteType       = "Dilution Chart Item"
-   mMasLC.MasterLabelContent.wDeleteText       = mMasLC.M_DilutionChartEntry.ProductAmountText 
+   mMasLC.MasterLabelContent.wDeleteText       = mMasLC.M_DilutionChartEntry.ProductAmountText
    mMasLC.MasterLabelContent.wDeleteEntityName = "M_DilutionChartEntry"
 
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: GOTO_DilutionGroupDelete
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 GOTO_DilutionGroupDelete( VIEW ViewToWindow )
@@ -1576,15 +1538,15 @@ GOTO_DilutionGroupDelete( VIEW ViewToWindow )
    VIEW mMasLC   REGISTERED AS mMasLC
 
    mMasLC.MasterLabelContent.wDeleteType       = "Dilution Group"
-   mMasLC.MasterLabelContent.wDeleteText       = mMasLC.M_DilutionGroup.DilutionRatioText 
+   mMasLC.MasterLabelContent.wDeleteText       = mMasLC.M_DilutionGroup.DilutionRatioText
    mMasLC.MasterLabelContent.wDeleteEntityName = "M_DilutionGroup"
 
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: GOTO_DilutionGroupItemDelete
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 GOTO_DilutionGroupItemDelete( VIEW ViewToWindow )
@@ -1592,7 +1554,7 @@ GOTO_DilutionGroupItemDelete( VIEW ViewToWindow )
    VIEW mMasLC   REGISTERED AS mMasLC
 
    mMasLC.MasterLabelContent.wDeleteType       = "Dilution Group Item"
-   mMasLC.MasterLabelContent.wDeleteText       = mMasLC.M_DilutionGroupItem.Text 
+   mMasLC.MasterLabelContent.wDeleteText       = mMasLC.M_DilutionGroupItem.Text
    mMasLC.MasterLabelContent.wDeleteEntityName = "M_DilutionGroupItem"
 
 END
@@ -1894,60 +1856,65 @@ InitAppTypesStmtsForInsert( VIEW ViewToWindow )
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: ConfirmAddItemsMultiple
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 ConfirmAddItemsMultiple( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
    SHORT nRC
-   
-   // Call operation to split text up into one or more entities, depending on the view, EntityName and 
+
+   // Call operation to split text up into one or more entities, depending on the view, EntityName and
    // AttributeName passed in mMasLC root work entities.
-   SplitParagraphOnLinefeed( mMasLC.MasterLabelContent.wAddStatementsWorkText, 
+   SplitParagraphOnLinefeed( mMasLC.MasterLabelContent.wAddStatementsWorkText,
                              mMasLC,
                              mMasLC.MasterLabelContent.wAddStatementsEntityName,
                              mMasLC.MasterLabelContent.wAddStatementsAttributeName )
 
    // Usage Type Processing
    // Set Usage Type and Claims Classification for any entry for which the values haven't been set.
-   IF mMasLC.MasterLabelContent.wAddStatementsEntityName = "M_Usage" 
+   IF mMasLC.MasterLabelContent.wAddStatementsEntityName = "M_Usage"
       // Set Usage Type for any entry for which the value hasn't been set.
-      FOR EACH mMasLC.M_Usage 
+      FOR EACH mMasLC.M_Usage
          IF mMasLC.M_Usage.UsageType = ""
-            mMasLC.M_Usage.UsageType = mMasLC.M_UsageType.UsageType 
+            mMasLC.M_Usage.UsageType = mMasLC.M_UsageType.UsageType
          END
       END
    END
-   
-   // UsageGroup Temporary Entries
+
+   // Convert UsageGroup temporary entries into persistent entries
    IF mMasLC.MasterLabelContent.wAddStatementsEntityName = "M_UsageGroupUsageTemp"
       // Transfer temp entries to real entries.
-      FOR EACH mMasLC.M_UsageGroupUsageTemp 
-         CREATE ENTITY mMasLC.M_Usage 
-         mMasLC.M_Usage.Name = mMasLC.M_UsageGroupUsageTemp.Name 
+      FOR EACH mMasLC.M_UsageGroupUsageTemp
+         CREATE ENTITY mMasLC.M_Usage
+         mMasLC.M_Usage.Name = mMasLC.M_UsageGroupUsageTemp.Name
          mMasLC.M_Usage.UsageType = mMasLC.M_UsageType.UsageType
-         INCLUDE mMasLC.M_UsageUsageGroup FROM mMasLC.M_UsageGroup 
-         INCLUDE mMasLC.M_UsageGroupUsage FROM mMasLC.M_Usage 
+         //INCLUDE mMasLC.M_UsageUsageGroup FROM mMasLC.M_UsageGroup
+         INCLUDE mMasLC.M_UsageGroupUsage FROM mMasLC.M_Usage
+         INCLUDE mMasLC.M_UsageUsageGroup FROM mMasLC.M_UsageGroup
          DELETE ENTITY mMasLC.M_UsageGroupUsageTemp NONE
       END
+
+      // Sort the Usage entries just added.
+      OrderEntityForView( mMasLC, "M_Usage", "Name A" )
+      OrderEntityForView( mMasLC, "M_UsageGroupUsage", "Name A" )
    END
 
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: ConfirmAddItemsMultipleClaims
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 ConfirmAddItemsMultipleClaims( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
    SHORT nRC
-   
+
    // Make sure that a Claims Classification has been selected.
    IF mMasLC.MasterLabelContent.wSelectedClaimsClassification = ""
       MessageSend( ViewToWindow, "", "Add Claims Entries",
@@ -1956,34 +1923,34 @@ ConfirmAddItemsMultipleClaims( VIEW ViewToWindow )
       SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
       RETURN 2
    END
-   
-   // Call operation to split text up into one or more entities, depending on the view, EntityName and 
+
+   // Call operation to split text up into one or more entities, depending on the view, EntityName and
    // AttributeName passed in mMasLC root work entities.
-   SplitParagraphOnLinefeed( mMasLC.MasterLabelContent.wAddStatementsWorkText, 
+   SplitParagraphOnLinefeed( mMasLC.MasterLabelContent.wAddStatementsWorkText,
                              mMasLC,
                              mMasLC.MasterLabelContent.wAddStatementsEntityName,
                              mMasLC.MasterLabelContent.wAddStatementsAttributeName )
-   
+
    // Set Usage Type and Claims Classification for any entry for which the values haven't been set.
-   FOR EACH mMasLC.M_Usage 
+   FOR EACH mMasLC.M_Usage
       IF mMasLC.M_Usage.UsageType = ""
          mMasLC.M_Usage.UsageType            = "C"
          mMasLC.M_Usage.ClaimsClassification = mMasLC.MasterLabelContent.wSelectedClaimsClassification
       END
    END
-   
+
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: GOTO_MarketingStatementAdd
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 GOTO_MarketingStatementAdd( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-   
+
    // Set up the work areas that define to the Add Items page that the items being added are Marketing
    // Statements.
    mMasLC.MasterLabelContent.wAddStatementsEntityName    = "M_MarketingStatement"
@@ -1994,15 +1961,15 @@ GOTO_MarketingStatementAdd( VIEW ViewToWindow )
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: GOTO_AddUsageStatements
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 GOTO_AddUsageStatements( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-   
+
    // Set up the work areas that define to the Add Items page that the items being added are Claims
    // Usage entries.
    mMasLC.MasterLabelContent.wAddStatementsEntityName    = "M_Usage"
@@ -2027,15 +1994,15 @@ GOTO_AddUsageStatements( VIEW ViewToWindow )
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: GOTO_AddGroupUsageStatements
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 GOTO_AddGroupUsageStatements( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-   
+
    // Set up the work areas that define to the Add Items page that the items being added are Claims
    // Usage entries.
    mMasLC.MasterLabelContent.wAddStatementsEntityName    = "M_UsageGroupUsageTemp"
@@ -2060,96 +2027,123 @@ GOTO_AddGroupUsageStatements( VIEW ViewToWindow )
 END
 
 /*************************************************************************************************
-**    
-**    OPERATION: GOTO_UpdateGroupSurfaceStatement
-**    
+**
+**    OPERATION: GOTO_UpdateGroupUsageStatement
+**
 *************************************************************************************************/
 DIALOG OPERATION
-GOTO_UpdateGroupSurfaceStatement( VIEW ViewToWindow )
+GOTO_UpdateGroupUsageStatement( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-   
-   // Position on the correspond M_Usage entity and create temporal subobject version.
+
+   // Position on the corresponding M_Usage entity and create temporal subobject version.
    IF mMasLC.M_UsageGroupUsage.ID = ""
-      SET CURSOR FIRST mMasLC.M_Usage WHERE mMasLC.M_Usage.Name = mMasLC.M_UsageGroupUsage.Name 
+      SET CURSOR FIRST mMasLC.M_Usage WHERE mMasLC.M_Usage.Name = mMasLC.M_UsageGroupUsage.Name
    ELSE
-      SET CURSOR FIRST mMasLC.M_Usage WHERE mMasLC.M_Usage.ID = mMasLC.M_UsageGroupUsage.ID  
+      SET CURSOR FIRST mMasLC.M_Usage WHERE mMasLC.M_Usage.ID = mMasLC.M_UsageGroupUsage.ID
    END
    CreateTemporalSubobjectVersion( mMasLC, "M_Usage" )
 
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: GOTO_DisplayGeneratedTextMktg
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 GOTO_DisplayGeneratedTextMktg( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-   
+
    // Build the display Keyword entries from the Marketing keyword entries.
-   BuildUsageKeyEntries( mMasLC, 
-                         "M_InsertTextKeywordMarketing", 
-                         "M_InsertTextMarketing", 
+   BuildUsageKeyEntries( mMasLC,
+                         "M_InsertTextKeywordMarketing",
+                         "M_InsertTextMarketing",
                          mMasLC.M_MarketingStatement.Text,
                          mMasLC.M_MarketingStatement.Title )
 
 END
 
 /*************************************************************************************************
-**    
+**
+**    OPERATION: GOTO_DisplayGeneratedTextDU
+**
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_DisplayGeneratedTextDU( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   // Build the display Keyword entries from the Directions for Use keyword entries.
+   BuildUsageKeyEntries( mMasLC,
+                         "M_InsertTextKeywordDU",
+                         "M_InsertTextDU",
+                         mMasLC.M_DirectionsForUseStatement.Text,
+                         mMasLC.M_DirectionsForUseStatement.Title )
+
+END
+
+/*************************************************************************************************
+**
+**    OPERATION: GOTO_DisplayGeneratedTextSD
+**
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_DisplayGeneratedTextSD( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   // Build the display Keyword entries from the Directions for Use keyword entries.
+   BuildUsageKeyEntries( mMasLC,
+                         "M_InsertTextKeywordSD",
+                         "M_InsertTextSD",
+                         mMasLC.M_StorageDisposalStatement.Text,
+                         mMasLC.M_StorageDisposalStatement.Title )
+
+END
+
+/*************************************************************************************************
+**
+**    OPERATION: GOTO_DisplayGeneratedTextGeneral
+**
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_DisplayGeneratedTextGeneral( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   // Build the display Keyword entries from the Directions for Use keyword entries.
+   BuildUsageKeyEntries( mMasLC,
+                         "M_InsertTextKeywordGeneral",
+                         "M_InsertTextGeneral",
+                         mMasLC.M_GeneralStatement.Text ,
+                         mMasLC.M_GeneralStatement.Title )
+
+END
+
+/*************************************************************************************************
+**
 **    OPERATION: GOTO_DisplayGeneratedTextUsage
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 GOTO_DisplayGeneratedTextUsage( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
 
-   BuildUsageKeyEntries( mMasLC, 
-                         "M_InsertTextKeywordUsage", 
-                         "M_InsertTextUsage", 
+   BuildUsageKeyEntries( mMasLC,
+                         "M_InsertTextKeywordUsage",
+                         "M_InsertTextUsage",
                          mMasLC.M_Usage.Name,
                          "" )
 
 END
 
 /*************************************************************************************************
-**    
-**    OPERATION: ADD_MarketingKeywordTextItem
-**    
-*************************************************************************************************/
-DIALOG OPERATION
-ADD_MarketingKeywordTextItem( VIEW ViewToWindow )
-
-   VIEW mMasLC REGISTERED AS mMasLC
-   
-   // Simply create an empty Text entry.
-   CREATE ENTITY mMasLC.M_InsertTextMarketing  
-
-END
-
-/*************************************************************************************************
-**    
-**    OPERATION: ADD_UsageKeywordTextItem
-**    
-*************************************************************************************************/
-DIALOG OPERATION
-ADD_UsageKeywordTextItem( VIEW ViewToWindow )
-
-   VIEW mMasLC REGISTERED AS mMasLC
-   
-   // Simply create an empty Text entry.
-   CREATE ENTITY mMasLC.M_InsertTextUsage  
-
-END
-
-/*************************************************************************************************
-**    
+**
 **    OPERATION: GOTO_AddFirstAidStatements
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 GOTO_AddFirstAidStatements( VIEW ViewToWindow )
@@ -2166,9 +2160,9 @@ GOTO_AddFirstAidStatements( VIEW ViewToWindow )
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: GOTO_AddUsageGroup
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 GOTO_AddUsageGroup( VIEW ViewToWindow )
@@ -2176,39 +2170,39 @@ GOTO_AddUsageGroup( VIEW ViewToWindow )
    VIEW mMasLC REGISTERED AS mMasLC
    INTEGER       SeqNo
    STRING ( 3 )  szSeqNo
-   
+
    // Create a new Usage Group temporal entity and set Seq. No to last entry.
    SeqNo = 0
-   FOR EACH mMasLC.M_UsageGroup 
+   FOR EACH mMasLC.M_UsageGroup
       SeqNo = SeqNo + 1
    END
    SeqNo = SeqNo + 1
    szSeqNo = SeqNo
-   CreateTemporalEntity( mMasLC, "M_UsageGroup", zPOS_AFTER )
+   CREATE ENTITY mMasLC.M_UsageGroup
    mMasLC.M_UsageGroup.Name = szSeqNo
 
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: REGENERATE_TitleText
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 REGENERATE_TitleText( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-   
+
    // Rebuild the M_InsertTextKeyword subobject from the selected entries in M_InsertTextKeywordBase.
-   FOR EACH mMasLC.M_InsertTextKeyword 
-      DELETE ENTITY mMasLC.M_InsertTextKeyword NONE 
+   FOR EACH mMasLC.M_InsertTextKeyword
+      DELETE ENTITY mMasLC.M_InsertTextKeyword NONE
    END
-   FOR EACH mMasLC.M_InsertTextKeywordBase 
-      CREATE ENTITY mMasLC.M_InsertTextKeyword 
+   FOR EACH mMasLC.M_InsertTextKeywordBase
+      CREATE ENTITY mMasLC.M_InsertTextKeyword
       SetMatchingAttributesByName( mMasLC, "M_InsertTextKeyword", mMasLC, "M_InsertTextKeywordBase", zSET_ALL )
-      FOR EACH mMasLC.M_InsertTextBase 
+      FOR EACH mMasLC.M_InsertTextBase
          IF mMasLC.M_InsertTextBase.wSelected = "Y"
-            CREATE ENTITY mMasLC.M_InsertText 
+            CREATE ENTITY mMasLC.M_InsertText
             SetMatchingAttributesByName( mMasLC, "M_InsertText", mMasLC, "M_InsertTextBase", zSET_ALL )
          END
       END
@@ -2217,42 +2211,117 @@ REGENERATE_TitleText( VIEW ViewToWindow )
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: COPY_InsertKeywordMarketing
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 COPY_InsertKeywordMarketing( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-   
+
    // Copy the M_InsertTextKeywordMarketing subobject to the base derived subobject.
-   
+
    IF mMasLC.DisplayKeywordText EXISTS
-      DELETE ENTITY mMasLC.DisplayKeywordText  
+      DELETE ENTITY mMasLC.DisplayKeywordText
    END
-   CREATE ENTITY mMasLC.DisplayKeywordText 
-   CREATE ENTITY mMasLC.M_InsertTextKeywordBase 
+   CREATE ENTITY mMasLC.DisplayKeywordText
+   CREATE ENTITY mMasLC.M_InsertTextKeywordBase
    SetMatchingAttributesByName( mMasLC, "M_InsertTextKeywordBase", mMasLC, "M_InsertTextKeywordMarketing", zSET_ALL )
-   FOR EACH mMasLC.M_InsertTextMarketing 
-      CREATE ENTITY mMasLC.M_InsertTextBase 
+   FOR EACH mMasLC.M_InsertTextMarketing
+      CREATE ENTITY mMasLC.M_InsertTextBase
       SetMatchingAttributesByName( mMasLC, "M_InsertTextBase", mMasLC, "M_InsertTextMarketing", zSET_ALL )
-   END 
+   END
 
 END
 
 /*************************************************************************************************
-**    
+**
+**    OPERATION: COPY_InsertKeywordDU
+**
+*************************************************************************************************/
+DIALOG OPERATION
+COPY_InsertKeywordDU( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   // Copy the M_InsertTextKeywordDU subobject to the base derived subobject.
+
+   IF mMasLC.DisplayKeywordText EXISTS
+      DELETE ENTITY mMasLC.DisplayKeywordText
+   END
+   CREATE ENTITY mMasLC.DisplayKeywordText
+   CREATE ENTITY mMasLC.M_InsertTextKeywordBase
+   SetMatchingAttributesByName( mMasLC, "M_InsertTextKeywordBase", mMasLC, "M_InsertTextKeywordDU", zSET_ALL )
+   FOR EACH mMasLC.M_InsertTextDU
+      CREATE ENTITY mMasLC.M_InsertTextBase
+      SetMatchingAttributesByName( mMasLC, "M_InsertTextBase", mMasLC, "M_InsertTextDU", zSET_ALL )
+   END
+
+END
+
+/*************************************************************************************************
+**
+**    OPERATION: COPY_InsertKeywordSD
+**
+*************************************************************************************************/
+DIALOG OPERATION
+COPY_InsertKeywordSD( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   // Copy the M_InsertTextKeywordSD subobject to the base derived subobject.
+
+   IF mMasLC.DisplayKeywordText EXISTS
+      DELETE ENTITY mMasLC.DisplayKeywordText
+   END
+   CREATE ENTITY mMasLC.DisplayKeywordText
+   CREATE ENTITY mMasLC.M_InsertTextKeywordBase
+   SetMatchingAttributesByName( mMasLC, "M_InsertTextKeywordBase", mMasLC, "M_InsertTextKeywordSD", zSET_ALL )
+   FOR EACH mMasLC.M_InsertTextSD
+      CREATE ENTITY mMasLC.M_InsertTextBase
+      SetMatchingAttributesByName( mMasLC, "M_InsertTextBase", mMasLC, "M_InsertTextSD", zSET_ALL )
+   END
+
+END
+
+/*************************************************************************************************
+**
+**    OPERATION: COPY_InsertKeywordGeneral
+**
+*************************************************************************************************/
+DIALOG OPERATION
+COPY_InsertKeywordGeneral( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   // Copy the M_InsertTextKeywordGeneral subobject to the base derived subobject.
+
+   IF mMasLC.DisplayKeywordText EXISTS
+      DELETE ENTITY mMasLC.DisplayKeywordText
+   END
+   CREATE ENTITY mMasLC.DisplayKeywordText
+   CREATE ENTITY mMasLC.M_InsertTextKeywordBase
+   SetMatchingAttributesByName( mMasLC, "M_InsertTextKeywordBase", mMasLC, "M_InsertTextKeywordGeneral", zSET_ALL )
+   FOR EACH mMasLC.M_InsertTextGeneral
+      CREATE ENTITY mMasLC.M_InsertTextBase
+      SetMatchingAttributesByName( mMasLC, "M_InsertTextBase", mMasLC, "M_InsertTextGeneral", zSET_ALL )
+   END
+
+END
+
+/*************************************************************************************************
+**
 **    OPERATION: PASTE_InsertKeywordMarketing
-**    
+**
 *************************************************************************************************/
 DIALOG OPERATION
 PASTE_InsertKeywordMarketing( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-   
+
    // Paste the M_InsertTextKeywordBase subobject under the current M_MarketingStatement.
-   
+
    IF mMasLC.M_InsertTextKeywordBase DOES NOT EXIST
       MessageSend( ViewToWindow, "", "Paste Keyword",
                    "No Insert Keyword entry have been copied.",
@@ -2260,14 +2329,441 @@ PASTE_InsertKeywordMarketing( VIEW ViewToWindow )
       SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
       RETURN 2
    END
-   
-   FOR EACH mMasLC.M_InsertTextKeywordBase 
-      CREATE ENTITY mMasLC.M_InsertTextKeywordMarketing 
+
+   FOR EACH mMasLC.M_InsertTextKeywordBase
+      CREATE ENTITY mMasLC.M_InsertTextKeywordMarketing
       SetMatchingAttributesByName( mMasLC, "M_InsertTextKeywordMarketing", mMasLC, "M_InsertTextKeywordBase", zSET_NULL )
-      FOR EACH mMasLC.M_InsertTextBase 
-         CREATE ENTITY mMasLC.M_InsertTextMarketing 
-         SetMatchingAttributesByName( mMasLC, "M_InsertTextMarketing", mMasLC, "M_InsertTextBase", zSET_NULL ) 
-      END 
+      FOR EACH mMasLC.M_InsertTextBase
+         CREATE ENTITY mMasLC.M_InsertTextMarketing
+         SetMatchingAttributesByName( mMasLC, "M_InsertTextMarketing", mMasLC, "M_InsertTextBase", zSET_NULL )
+      END
    END
+
+END
+
+/*************************************************************************************************
+**
+**    OPERATION: PASTE_InsertKeywordDU
+**
+*************************************************************************************************/
+DIALOG OPERATION
+PASTE_InsertKeywordDU( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   // Paste the M_InsertTextKeywordBase subobject under the current M_DirectionsForUseStatement.
+
+   IF mMasLC.M_InsertTextKeywordBase DOES NOT EXIST
+      MessageSend( ViewToWindow, "", "Paste Keyword",
+                   "No Insert Keyword entry have been copied.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      RETURN 2
+   END
+
+   FOR EACH mMasLC.M_InsertTextKeywordBase
+      CREATE ENTITY mMasLC.M_InsertTextKeywordDU
+      SetMatchingAttributesByName( mMasLC, "M_InsertTextKeywordDU", mMasLC, "M_InsertTextKeywordBase", zSET_NULL )
+      FOR EACH mMasLC.M_InsertTextBase
+         CREATE ENTITY mMasLC.M_InsertTextDU
+         SetMatchingAttributesByName( mMasLC, "M_InsertTextDU", mMasLC, "M_InsertTextBase", zSET_NULL )
+      END
+   END
+
+END
+
+/*************************************************************************************************
+**
+**    OPERATION: PASTE_InsertKeywordSD
+**
+*************************************************************************************************/
+DIALOG OPERATION
+PASTE_InsertKeywordSD( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   // Paste the M_InsertTextKeywordBase subobject under the current M_DirectionsForUseStatement.
+
+   IF mMasLC.M_InsertTextKeywordBase DOES NOT EXIST
+      MessageSend( ViewToWindow, "", "Paste Keyword",
+                   "No Insert Keyword entry have been copied.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      RETURN 2
+   END
+
+   FOR EACH mMasLC.M_InsertTextKeywordBase
+      CREATE ENTITY mMasLC.M_InsertTextKeywordSD
+      SetMatchingAttributesByName( mMasLC, "M_InsertTextKeywordSD", mMasLC, "M_InsertTextKeywordBase", zSET_NULL )
+      FOR EACH mMasLC.M_InsertTextBase
+         CREATE ENTITY mMasLC.M_InsertTextSD
+         SetMatchingAttributesByName( mMasLC, "M_InsertTextSD", mMasLC, "M_InsertTextBase", zSET_NULL )
+      END
+   END
+
+END
+
+/*************************************************************************************************
+**
+**    OPERATION: PASTE_InsertKeywordGeneral
+**
+*************************************************************************************************/
+DIALOG OPERATION
+PASTE_InsertKeywordGeneral( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   // Paste the M_InsertTextKeywordBase subobject under the current M_DirectionsForUseStatement.
+
+   IF mMasLC.M_InsertTextKeywordBase DOES NOT EXIST
+      MessageSend( ViewToWindow, "", "Paste Keyword",
+                   "No Insert Keyword entry have been copied.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      RETURN 2
+   END
+
+   FOR EACH mMasLC.M_InsertTextKeywordBase
+      CREATE ENTITY mMasLC.M_InsertTextKeywordGeneral
+      SetMatchingAttributesByName( mMasLC, "M_InsertTextKeywordGeneral", mMasLC, "M_InsertTextKeywordBase", zSET_NULL )
+      FOR EACH mMasLC.M_InsertTextBase
+         CREATE ENTITY mMasLC.M_InsertTextGeneral
+         SetMatchingAttributesByName( mMasLC, "M_InsertTextGeneral", mMasLC, "M_InsertTextBase", zSET_NULL )
+      END
+   END
+
+END
+
+/*************************************************************************************************
+**
+**    OPERATION: GOTO_EnvironmentalSectionBefore
+**
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_EnvironmentalSectionBefore( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   CreateTemporalEntity( mMasLC, "M_GeneralSubsection", zPOS_BEFORE )
+
+END
+
+/*************************************************************************************************
+**
+**    OPERATION: GOTO_StorageDispSectionAddBefore
+**
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_StorageDispSectionAddBefore( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   CreateTemporalEntity( mMasLC, "M_StorageDisposalSection", zPOS_BEFORE )
+
+END
+
+/*************************************************************************************************
+**
+**    OPERATION: GOTO_DU_SectionAddBefore
+**
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_DU_SectionAddBefore( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   CreateTemporalEntity( mMasLC, "M_DirectionsForUseSection", zPOS_BEFORE )
+
+END
+
+/*************************************************************************************************
+**
+**    OPERATION: GOTO_MarketingSectionAddBefore
+**
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_MarketingSectionAddBefore( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   CreateTemporalEntity( mMasLC, "M_MarketingSection", zPOS_BEFORE )
+
+END
+
+/*************************************************************************************************
+**
+**    OPERATION: ADD_BlankClaimsKeywordAndText
+**
+*************************************************************************************************/
+DIALOG OPERATION
+ADD_BlankClaimsKeywordAndText( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   // Create Usage Keyword and one subordinate text entity.
+   CREATE ENTITY mMasLC.M_InsertTextKeywordUsage
+   CREATE ENTITY mMasLC.M_InsertTextUsage
+
+END
+
+/*************************************************************************************************
+**
+**    OPERATION: AcceptAndReturnUsageStatement
+**
+*************************************************************************************************/
+DIALOG OPERATION
+AcceptAndReturnUsageStatement( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   // Accept temporal Usage statement and go to build nongroup entries.
+   AcceptSubobject( mMasLC, "M_Usage" )
+   BuildNonGroupEntries( mMasLC )
+
+END
+
+/*************************************************************************************************
+**
+**    OPERATION: DELETE_UsageGroupEntriesOnly
+**
+*************************************************************************************************/
+DIALOG OPERATION
+DELETE_UsageGroupEntriesOnly( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   SHORT nRC
+
+   // Delete each selected Group and the corresponding M_Usage entity.
+   FOR EACH mMasLC.M_UsageGroup
+      IF mMasLC.M_UsageGroup.wSelected = "Y"
+         FOR EACH mMasLC.M_Usage
+            IF mMasLC.M_UsageUsageGroup EXISTS
+               IF mMasLC.M_UsageUsageGroup.Name = mMasLC.M_UsageGroup.Name
+                  EXCLUDE mMasLC.M_UsageUsageGroup
+                  SET CURSOR FIRST mMasLC.M_UsageGroupUsage WHERE mMasLC.M_UsageGroupUsage.Name = mMasLC.M_Usage.Name
+                  EXCLUDE mMasLC.M_UsageGroupUsage NONE
+               END
+            END
+         END
+         DELETE ENTITY  mMasLC.M_UsageGroup NONE
+      END
+   END
+
+END
+
+/*************************************************************************************************
+**
+**    OPERATION: DELETE_UsageGroupEntries
+**
+*************************************************************************************************/
+DIALOG OPERATION
+DELETE_UsageGroupEntries( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   SHORT nRC
+
+   // Delete each selected Group and exclude the Group from the corresponding M_Usage entity.
+   FOR EACH mMasLC.M_UsageGroup
+      IF mMasLC.M_UsageGroup.wSelected = "Y"
+         FOR EACH mMasLC.M_Usage
+            IF mMasLC.M_UsageUsageGroup EXISTS
+               IF mMasLC.M_UsageUsageGroup.Name = mMasLC.M_UsageGroup.Name
+                  EXCLUDE mMasLC.M_UsageUsageGroup
+                  SET CURSOR FIRST mMasLC.M_UsageGroupUsage WHERE mMasLC.M_UsageGroupUsage.Name = mMasLC.M_Usage.Name
+                  EXCLUDE mMasLC.M_UsageGroupUsage NONE
+                  DELETE ENTITY mMasLC.M_Usage NONE
+               END
+            END
+         END
+         DELETE ENTITY  mMasLC.M_UsageGroup NONE
+      END
+   END
+
+END
+
+/*************************************************************************************************
+**
+**    OPERATION: DELETE_SelectedGroupUsageEntries
+**
+*************************************************************************************************/
+DIALOG OPERATION
+DELETE_SelectedGroupUsageEntries( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   SHORT nRC
+
+   FOR EACH mMasLC.M_UsageGroupUsage
+      IF mMasLC.M_UsageGroupUsage.wSelected = "Y"
+         // Position on corresponding M_Usage entry.
+         IF mMasLC.M_UsageGroupUsage.ID = ""
+            SET CURSOR FIRST mMasLC.M_Usage WHERE mMasLC.M_Usage.Name = mMasLC.M_UsageGroupUsage.Name
+         ELSE
+            SET CURSOR FIRST mMasLC.M_Usage WHERE mMasLC.M_Usage.ID = mMasLC.M_UsageGroupUsage.ID
+         END
+         EXCLUDE mMasLC.M_UsageGroupUsage NONE
+         DELETE ENTITY  mMasLC.M_Usage NONE
+      END
+   END
+
+END
+
+/*************************************************************************************************
+**
+**    OPERATION: SelectMLC_UsageEntriesForGroup
+**
+*************************************************************************************************/
+DIALOG OPERATION
+SelectMLC_UsageEntriesForGroup( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   // Include each selected M_Usage entry under the current Group.
+   FOR EACH mMasLC.M_UsageNonGroupUsage
+      IF mMasLC.M_UsageNonGroupUsage.wSelected = "Y"
+         SET CURSOR FIRST mMasLC.M_Usage WHERE mMasLC.M_Usage.Name = mMasLC.M_UsageNonGroupUsage.Name
+         INCLUDE mMasLC.M_UsageUsageGroup FROM mMasLC.M_UsageGroup
+         INCLUDE mMasLC.M_UsageGroupUsage FROM mMasLC.M_Usage
+         EXCLUDE mMasLC.M_UsageNonGroupUsage NONE
+      END
+   END
+   OrderEntityForView( mMasLC, "M_UsageGroupUsage", "Name A" )
+
+END
+
+/*************************************************************************************************
+**
+**    OPERATION: RemoveMLC_UsageEntriesFromGroup
+**
+*************************************************************************************************/
+DIALOG OPERATION
+RemoveMLC_UsageEntriesFromGroup( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   // Exclude each selected M_Usage from under the group.
+   FOR EACH mMasLC.M_UsageGroupUsage
+      IF mMasLC.M_UsageGroupUsage.wSelected = "Y"
+         SET CURSOR FIRST mMasLC.M_Usage WHERE mMasLC.M_Usage.Name = mMasLC.M_UsageGroupUsage.Name
+         INCLUDE mMasLC.M_UsageNonGroupUsage FROM mMasLC.M_Usage
+         EXCLUDE mMasLC.M_UsageUsageGroup NONE
+         EXCLUDE mMasLC.M_UsageGroupUsage NONE
+      END
+   END
+
+END
+
+/*************************************************************************************************
+**
+**    OPERATION: COPY_UsageKeywordAndText
+**
+*************************************************************************************************/
+DIALOG OPERATION
+COPY_UsageKeywordAndText( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   // Copy the current Usage Keyword subobject to the Keyword work subobject.
+
+   // First delete any current copy entry.
+   FOR EACH mMasLC.CopyM_InsertTextKeyword
+      DELETE ENTITY mMasLC.CopyM_InsertTextKeyword NONE
+   END
+
+   // Copy in the current subobject.
+   CREATE ENTITY mMasLC.CopyM_InsertTextKeyword
+   SetMatchingAttributesByName( mMasLC, "CopyM_InsertTextKeyword", mMasLC, "M_InsertTextKeywordUsage", zSET_NULL )
+   FOR EACH mMasLC.M_InsertTextUsage
+      CREATE ENTITY mMasLC.CopyM_InsertText
+      SetMatchingAttributesByName( mMasLC, "CopyM_InsertText", mMasLC, "M_InsertTextUsage", zSET_NULL )
+   END
+
+END
+
+/*************************************************************************************************
+**
+**    OPERATION: PASTE_UsageKeywordAndText
+**
+*************************************************************************************************/
+DIALOG OPERATION
+PASTE_UsageKeywordAndText( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   // Copy the Keyword work subobject to create a new CopyM_InsertTextKeyword subobject.
+
+   IF mMasLC.CopyM_InsertTextKeyword DOES NOT EXIST
+      MessageSend( ViewToWindow, "", "Paste Usage Keyword",
+                   "No current Keyword Copy exists.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+
+   // Copy in the current copy subobject.
+   CREATE ENTITY mMasLC.M_InsertTextKeywordUsage
+   SetMatchingAttributesByName( mMasLC, "M_InsertTextKeywordUsage", mMasLC, "CopyM_InsertTextKeyword", zSET_NULL )
+   FOR EACH mMasLC.CopyM_InsertText
+      CREATE ENTITY mMasLC.M_InsertTextUsage
+      SetMatchingAttributesByName( mMasLC, "M_InsertTextUsage", mMasLC, "CopyM_InsertText", zSET_NULL )
+   END
+
+END
+
+/*************************************************************************************************
+**
+**    OPERATION: GOTO_CopyMLC_Version
+**
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_CopyMLC_Version( VIEW ViewToWindow )
+
+   VIEW mMasProd  REGISTERED AS mMasProd
+   VIEW wWebXfer  REGISTERED AS wWebXfer
+   VIEW mMasLCNew BASED ON LOD  mMasLC
+
+   // Initialize a new MLC for Copy.
+   ACTIVATE mMasLCNew EMPTY
+   NAME VIEW mMasLCNew "mMasLC"
+   CREATE ENTITY mMasLCNew.MasterLabelContent
+   INCLUDE mMasLCNew.MasterProduct FROM mMasProd.MasterProduct
+   mMasLCNew.MasterLabelContent.RevisionDate     = wWebXfer.Root.dCurrentDateTime
+   mMasLCNew.MasterLabelContent.CreatedDateTime  = wWebXfer.Root.dCurrentDateTime
+   mMasLCNew.MasterLabelContent.ModifiedDateTime = wWebXfer.Root.dCurrentDateTime
+
+END
+
+/*************************************************************************************************
+**
+**    OPERATION: CANCEL_MLC_Version
+**
+*************************************************************************************************/
+DIALOG OPERATION
+CANCEL_MLC_Version( VIEW ViewToWindow )
+
+   VIEW mMasLCNew REGISTERED AS mMasLC
+
+   // Drop the temporary object.
+   DropObjectInstance( mMasLCNew )
+
+END
+
+/*************************************************************************************************
+**
+**    OPERATION: COPY_MLC_Version
+**
+*************************************************************************************************/
+DIALOG OPERATION
+COPY_MLC_Version( VIEW ViewToWindow )
+
+   VIEW mMasProd  REGISTERED AS mMasProd
+   VIEW wWebXfer  REGISTERED AS wWebXfer
+   VIEW mMasLCNew REGISTERED AS mMasLC
+   VIEW mMasLCOld BASED ON LOD  mMasLC
+
+   // Copy the selected MLC in mMasProd, creating the content of mMasLCNew.
+   ACTIVATE mMasLCOld WHERE mMasLCOld.MasterLabelContent.ID = mMasProd.MasterLabelContent.ID
+   NAME VIEW mMasLCOld "mMasLCOld"
+   CopyMLCToNewProduct( mMasLCNew,mMasLCOld )
+   COMMIT mMasLCNew
+   DropObjectInstance( mMasLCNew )
 
 END

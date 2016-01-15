@@ -788,7 +788,7 @@ omSubLC_dDisplayUsageName( View     mSubLC,
 //:BuildNewSLC_Version( VIEW NewSLC      BASED ON LOD mSubLC,
 //:                     VIEW PreviousSLC BASED ON LOD mSubLC,
 //:                     VIEW SourceMLC   BASED ON LOD mMasLC,
-//:                     VIEW PreviousMLC BASED ON LOD lMLCASrc )
+//:                     VIEW PreviousMLC BASED ON LOD mMasLC )
 
 //:// STRING ( 10 ) szVersion
 //:   STRING ( 1 )  szEntityFoundFlag
@@ -799,24 +799,38 @@ omSubLC_BuildNewSLC_Version( View     NewSLC,
                              View     PreviousMLC )
 {
    String   szEntityFoundFlag = null;
+   //:STRING ( 50 )  szMessageComponent
+   String   szMessageComponent = null;
+   //:STRING ( 50 )  szMessageSubComponent
+   String   szMessageSubComponent = null;
    int      RESULT = 0;
+   String   szTempString_0 = null;
    int      lTempInteger_0 = 0;
    int      lTempInteger_1 = 0;
    int      lTempInteger_2 = 0;
+   String   szTempString_1 = null;
    int      lTempInteger_3 = 0;
    int      lTempInteger_4 = 0;
+   String   szTempString_2 = null;
    int      lTempInteger_5 = 0;
    int      lTempInteger_6 = 0;
+   String   szTempString_3 = null;
    int      lTempInteger_7 = 0;
    int      lTempInteger_8 = 0;
    int      lTempInteger_9 = 0;
+   String   szTempString_4 = null;
+   int      lTempInteger_10 = 0;
+   int      lTempInteger_11 = 0;
+   String   szTempString_5 = null;
+   String   szTempString_6 = null;
+   int      lTempInteger_12 = 0;
+   String   szTempString_7 = null;
 
 
    //:// Create a new SLC from a previous SLC, tying the new back to the original.
+   //:// Note that the data content must come from the next MLC for the MLC tied to the original SLC.
 
    //:// Root and single includes
-   //:CREATE ENTITY NewSLC.SubregLabelContent
-   RESULT = CreateEntity( NewSLC, "SubregLabelContent", zPOS_AFTER );
    //:SetMatchingAttributesByName( NewSLC, "SubregLabelContent", PreviousSLC, "SubregLabelContent", zSET_NULL )
    SetMatchingAttributesByName( NewSLC, "SubregLabelContent", PreviousSLC, "SubregLabelContent", zSET_NULL );
    //:SetAttributeFromCurrentDateTime( NewSLC, "SubregLabelContent", "RevisionDate" )
@@ -825,28 +839,144 @@ omSubLC_BuildNewSLC_Version( View     NewSLC,
     m_ZGlobal1_Operation.SetAttributeFromCurrentDateTime( NewSLC, "SubregLabelContent", "RevisionDate" );
     // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
    }
-   //:// szVersion = NewSLC.SubregLabelContent.RevisionDate
-   //:// NewSLC.SubregLabelContent.Version = szVersion  already done in calling routine
-   //:INCLUDE NewSLC.SubregProduct FROM PreviousSLC.SubregProduct
-   RESULT = IncludeSubobjectFromSubobject( NewSLC, "SubregProduct", PreviousSLC, "SubregProduct", zPOS_AFTER );
-   //:INCLUDE NewSLC.SP_SubregLabelContent FROM PreviousSLC.SubregLabelContent
-   RESULT = IncludeSubobjectFromSubobject( NewSLC, "SP_SubregLabelContent", PreviousSLC, "SubregLabelContent", zPOS_AFTER );
-   //:INCLUDE NewSLC.MasterLabelContent FROM SourceMLC.MasterLabelContent
-   RESULT = IncludeSubobjectFromSubobject( NewSLC, "MasterLabelContent", SourceMLC, "MasterLabelContent", zPOS_AFTER );
+   //:NewSLC.SubregLabelContent.CreatedDateTime  = NewSLC.SubregLabelContent.RevisionDate 
+   SetAttributeFromAttribute( NewSLC, "SubregLabelContent", "CreatedDateTime", NewSLC, "SubregLabelContent", "RevisionDate" );
+   //:NewSLC.SubregLabelContent.ModifiedDateTime = NewSLC.SubregLabelContent.RevisionDate 
+   SetAttributeFromAttribute( NewSLC, "SubregLabelContent", "ModifiedDateTime", NewSLC, "SubregLabelContent", "RevisionDate" );
 
    //:// S_Usage
    //:// Usages come from the MLC.
-   //:FOR EACH SourceMLC.M_Usage
-   RESULT = SetCursorFirstEntity( SourceMLC, "M_Usage", "" );
+   //:FOR EACH PreviousSLC.S_UsageType  
+   RESULT = SetCursorFirstEntity( PreviousSLC, "S_UsageType", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
-      //:CREATE ENTITY NewSLC.S_Usage
-      RESULT = CreateEntity( NewSLC, "S_Usage", zPOS_AFTER );
-      //:SetMatchingAttributesByName( NewSLC, "S_Usage", SourceMLC, "M_Usage", zSET_NULL )
-      SetMatchingAttributesByName( NewSLC, "S_Usage", SourceMLC, "M_Usage", zSET_NULL );
-      //:INCLUDE NewSLC.M_Usage FROM SourceMLC.M_Usage
-      RESULT = IncludeSubobjectFromSubobject( NewSLC, "M_Usage", SourceMLC, "M_Usage", zPOS_AFTER );
-      RESULT = SetCursorNextEntity( SourceMLC, "M_Usage", "" );
+      //:CREATE ENTITY NewSLC.S_UsageType  
+      RESULT = CreateEntity( NewSLC, "S_UsageType", zPOS_AFTER );
+      //:SetMatchingAttributesByName( NewSLC, "S_UsageType", PreviousSLC, "S_UsageType", zSET_NULL )
+      SetMatchingAttributesByName( NewSLC, "S_UsageType", PreviousSLC, "S_UsageType", zSET_NULL );
+      //:SET CURSOR FIRST PreviousMLC.M_UsageType WHERE PreviousMLC.M_UsageType.UsageType = PreviousSLC.S_UsageType.UsageType 
+      {StringBuilder sb_szTempString_0;
+      if ( szTempString_0 == null )
+         sb_szTempString_0 = new StringBuilder( 32 );
+      else
+         sb_szTempString_0 = new StringBuilder( szTempString_0 );
+             GetStringFromAttribute( sb_szTempString_0, PreviousSLC, "S_UsageType", "UsageType" );
+      szTempString_0 = sb_szTempString_0.toString( );}
+      RESULT = SetCursorFirstEntityByString( PreviousMLC, "M_UsageType", "UsageType", szTempString_0, "" );
+      //:SET CURSOR FIRST SourceMLC.M_UsageType WHERE SourceMLC.M_UsageType.UsageType = PreviousSLC.S_UsageType.UsageType
+      {StringBuilder sb_szTempString_0;
+      if ( szTempString_0 == null )
+         sb_szTempString_0 = new StringBuilder( 32 );
+      else
+         sb_szTempString_0 = new StringBuilder( szTempString_0 );
+             GetStringFromAttribute( sb_szTempString_0, PreviousSLC, "S_UsageType", "UsageType" );
+      szTempString_0 = sb_szTempString_0.toString( );}
+      RESULT = SetCursorFirstEntityByString( SourceMLC, "M_UsageType", "UsageType", szTempString_0, "" );
+      //:FOR EACH PreviousSLC.S_Usage
+      RESULT = SetCursorFirstEntity( PreviousSLC, "S_Usage", "" );
+      while ( RESULT > zCURSOR_UNCHANGED )
+      { 
+         //:// Check if the original S_Usage entry is tied to a new MLC M_Usage entry. (In other words, was the M_Usage entry
+         //:// kept when the original usage entry was copied from MLC to MLC.) Use the data from the newer MLC if it exists.
+         //:IF PreviousSLC.M_Usage EXISTS
+         lTempInteger_0 = CheckExistenceOfEntity( PreviousSLC, "M_Usage" );
+         if ( lTempInteger_0 == 0 )
+         { 
+            //:SET CURSOR FIRST PreviousMLC.M_Usage WHERE PreviousMLC.M_Usage.ID = PreviousSLC.M_Usage.ID 
+            {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+                         GetIntegerFromAttribute( mi_lTempInteger_1, PreviousSLC, "M_Usage", "ID" );
+            lTempInteger_1 = mi_lTempInteger_1.intValue( );}
+            RESULT = SetCursorFirstEntityByInteger( PreviousMLC, "M_Usage", "ID", lTempInteger_1, "" );
+            //:IF RESULT < zCURSOR_SET
+            if ( RESULT < zCURSOR_SET )
+            { 
+               //:TraceLineS( "Programming Error 1", "" )
+               TraceLineS( "Programming Error 1", "" );
+               //:IssueError( NewSLC,0,0, "Programming Error 1" )
+               IssueError( NewSLC, 0, 0, "Programming Error 1" );
+            } 
+
+            //:END
+            //:SET CURSOR FIRST SourceMLC.MP_Usage WITHIN SourceMLC.M_UsageType 
+            //:           WHERE SourceMLC.MP_Usage.ID = PreviousMLC.M_Usage.ID 
+            {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
+                         GetIntegerFromAttribute( mi_lTempInteger_2, PreviousMLC, "M_Usage", "ID" );
+            lTempInteger_2 = mi_lTempInteger_2.intValue( );}
+            RESULT = SetCursorFirstEntityByInteger( SourceMLC, "MP_Usage", "ID", lTempInteger_2, "M_UsageType" );
+            //:IF RESULT >= zCURSOR_SET
+            if ( RESULT >= zCURSOR_SET )
+            { 
+               //:// The Usage entry does exist in the new 
+               //:CREATE ENTITY NewSLC.S_Usage
+               RESULT = CreateEntity( NewSLC, "S_Usage", zPOS_AFTER );
+               //:SetMatchingAttributesByName( NewSLC, "S_Usage", SourceMLC, "M_Usage", zSET_NULL )
+               SetMatchingAttributesByName( NewSLC, "S_Usage", SourceMLC, "M_Usage", zSET_NULL );
+               //:INCLUDE NewSLC.M_Usage FROM SourceMLC.M_Usage
+               RESULT = IncludeSubobjectFromSubobject( NewSLC, "M_Usage", SourceMLC, "M_Usage", zPOS_AFTER );
+               //:ELSE
+            } 
+            else
+            { 
+               //:// The Usage entry doesn't exist, so create a change message notifying the operator.
+               //:CREATE ENTITY NewSLC.S_VersionChangeMessage  
+               RESULT = CreateEntity( NewSLC, "S_VersionChangeMessage", zPOS_AFTER );
+               //:GetStringFromAttributeByContext( szMessageSubComponent, PreviousSLC, "S_UsageType", "UsageType", "FullUsageType", 50 )
+               {StringBuilder sb_szMessageSubComponent;
+               if ( szMessageSubComponent == null )
+                  sb_szMessageSubComponent = new StringBuilder( 32 );
+               else
+                  sb_szMessageSubComponent = new StringBuilder( szMessageSubComponent );
+                               GetStringFromAttributeByContext( sb_szMessageSubComponent, PreviousSLC, "S_UsageType", "UsageType", "FullUsageType", 50 );
+               szMessageSubComponent = sb_szMessageSubComponent.toString( );}
+               //:GetStringFromAttributeByContext( szMessageComponent, PreviousSLC, "S_Usage", "Name", "", 50 )
+               {StringBuilder sb_szMessageComponent;
+               if ( szMessageComponent == null )
+                  sb_szMessageComponent = new StringBuilder( 32 );
+               else
+                  sb_szMessageComponent = new StringBuilder( szMessageComponent );
+                               GetStringFromAttributeByContext( sb_szMessageComponent, PreviousSLC, "S_Usage", "Name", "", 50 );
+               szMessageComponent = sb_szMessageComponent.toString( );}
+               //:NewSLC.S_VersionChangeMessage.ChangeText = "Deleted " + szMessageSubComponent + " Usage: " + szMessageComponent
+                {StringBuilder sb_szTempString_1;
+               if ( szTempString_1 == null )
+                  sb_szTempString_1 = new StringBuilder( 32 );
+               else
+                  sb_szTempString_1 = new StringBuilder( szTempString_1 );
+                              ZeidonStringCopy( sb_szTempString_1, 1, 0, "Deleted ", 1, 0, 32001 );
+               szTempString_1 = sb_szTempString_1.toString( );}
+                {StringBuilder sb_szTempString_1;
+               if ( szTempString_1 == null )
+                  sb_szTempString_1 = new StringBuilder( 32 );
+               else
+                  sb_szTempString_1 = new StringBuilder( szTempString_1 );
+                              ZeidonStringConcat( sb_szTempString_1, 1, 0, szMessageSubComponent, 1, 0, 32001 );
+               szTempString_1 = sb_szTempString_1.toString( );}
+                {StringBuilder sb_szTempString_1;
+               if ( szTempString_1 == null )
+                  sb_szTempString_1 = new StringBuilder( 32 );
+               else
+                  sb_szTempString_1 = new StringBuilder( szTempString_1 );
+                              ZeidonStringConcat( sb_szTempString_1, 1, 0, " Usage: ", 1, 0, 32001 );
+               szTempString_1 = sb_szTempString_1.toString( );}
+                {StringBuilder sb_szTempString_1;
+               if ( szTempString_1 == null )
+                  sb_szTempString_1 = new StringBuilder( 32 );
+               else
+                  sb_szTempString_1 = new StringBuilder( szTempString_1 );
+                              ZeidonStringConcat( sb_szTempString_1, 1, 0, szMessageComponent, 1, 0, 32001 );
+               szTempString_1 = sb_szTempString_1.toString( );}
+               SetAttributeFromString( NewSLC, "S_VersionChangeMessage", "ChangeText", szTempString_1 );
+            } 
+
+            //:END
+         } 
+
+         RESULT = SetCursorNextEntity( PreviousSLC, "S_Usage", "" );
+         //:END
+      } 
+
+      RESULT = SetCursorNextEntity( PreviousSLC, "S_UsageType", "" );
+      //:END
    } 
 
    //:END
@@ -920,19 +1050,19 @@ omSubLC_BuildNewSLC_Version( View     NewSLC,
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
       //:SET CURSOR FIRST PreviousMLC.M_StorageDisposalSection WHERE PreviousMLC.M_StorageDisposalSection.ID = PreviousSLC.M_StorageDisposalSection.ID
-      {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
-             GetIntegerFromAttribute( mi_lTempInteger_0, PreviousSLC, "M_StorageDisposalSection", "ID" );
-      lTempInteger_0 = mi_lTempInteger_0.intValue( );}
-      RESULT = SetCursorFirstEntityByInteger( PreviousMLC, "M_StorageDisposalSection", "ID", lTempInteger_0, "" );
-      //:IF PreviousMLC.MN_StorageDisposalSection EXISTS
-      lTempInteger_1 = CheckExistenceOfEntity( PreviousMLC, "MN_StorageDisposalSection" );
-      if ( lTempInteger_1 == 0 )
+      {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
+             GetIntegerFromAttribute( mi_lTempInteger_3, PreviousSLC, "M_StorageDisposalSection", "ID" );
+      lTempInteger_3 = mi_lTempInteger_3.intValue( );}
+      RESULT = SetCursorFirstEntityByInteger( PreviousMLC, "M_StorageDisposalSection", "ID", lTempInteger_3, "" );
+      //:SET CURSOR FIRST SourceMLC.MP_StorageDisposalSection WITHIN SourceMLC.MasterLabelContent 
+      //:           WHERE SourceMLC.MP_StorageDisposalSection.ID = PreviousMLC.M_StorageDisposalSection.ID  
+      {MutableInt mi_lTempInteger_4 = new MutableInt( lTempInteger_4 );
+             GetIntegerFromAttribute( mi_lTempInteger_4, PreviousMLC, "M_StorageDisposalSection", "ID" );
+      lTempInteger_4 = mi_lTempInteger_4.intValue( );}
+      RESULT = SetCursorFirstEntityByInteger( SourceMLC, "MP_StorageDisposalSection", "ID", lTempInteger_4, "MasterLabelContent" );
+      //:IF RESULT >= zCURSOR_SET
+      if ( RESULT >= zCURSOR_SET )
       { 
-         //:SET CURSOR FIRST SourceMLC.M_StorageDisposalSection WHERE SourceMLC.M_StorageDisposalSection.ID = PreviousMLC.MN_StorageDisposalSection.ID
-         {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
-                   GetIntegerFromAttribute( mi_lTempInteger_2, PreviousMLC, "MN_StorageDisposalSection", "ID" );
-         lTempInteger_2 = mi_lTempInteger_2.intValue( );}
-         RESULT = SetCursorFirstEntityByInteger( SourceMLC, "M_StorageDisposalSection", "ID", lTempInteger_2, "" );
          //:// Now just copy the entries from the MLC StorageDisposal Section.
          //:CREATE ENTITY NewSLC.S_StorageDisposalSection
          RESULT = CreateEntity( NewSLC, "S_StorageDisposalSection", zPOS_AFTER );
@@ -954,6 +1084,37 @@ omSubLC_BuildNewSLC_Version( View     NewSLC,
          } 
 
          //:END
+         //:ELSE
+      } 
+      else
+      { 
+         //:// Create error message that Storage and Disposal Section does not exist in new MLC.
+         //:CREATE ENTITY NewSLC.S_VersionChangeMessage 
+         RESULT = CreateEntity( NewSLC, "S_VersionChangeMessage", zPOS_AFTER );
+         //:GetStringFromAttributeByContext( szMessageComponent, PreviousSLC, "S_StorageDisposalSection", "ContainerVolume", "", 50 )
+         {StringBuilder sb_szMessageComponent;
+         if ( szMessageComponent == null )
+            sb_szMessageComponent = new StringBuilder( 32 );
+         else
+            sb_szMessageComponent = new StringBuilder( szMessageComponent );
+                   GetStringFromAttributeByContext( sb_szMessageComponent, PreviousSLC, "S_StorageDisposalSection", "ContainerVolume", "", 50 );
+         szMessageComponent = sb_szMessageComponent.toString( );}
+         //:NewSLC.S_VersionChangeMessage.ChangeText = "Deleted Storage and Disposal Section, " + szMessageComponent 
+          {StringBuilder sb_szTempString_2;
+         if ( szTempString_2 == null )
+            sb_szTempString_2 = new StringBuilder( 32 );
+         else
+            sb_szTempString_2 = new StringBuilder( szTempString_2 );
+                  ZeidonStringCopy( sb_szTempString_2, 1, 0, "Deleted Storage and Disposal Section, ", 1, 0, 32001 );
+         szTempString_2 = sb_szTempString_2.toString( );}
+          {StringBuilder sb_szTempString_2;
+         if ( szTempString_2 == null )
+            sb_szTempString_2 = new StringBuilder( 32 );
+         else
+            sb_szTempString_2 = new StringBuilder( szTempString_2 );
+                  ZeidonStringConcat( sb_szTempString_2, 1, 0, szMessageComponent, 1, 0, 32001 );
+         szTempString_2 = sb_szTempString_2.toString( );}
+         SetAttributeFromString( NewSLC, "S_VersionChangeMessage", "ChangeText", szTempString_2 );
       } 
 
       RESULT = SetCursorNextEntity( PreviousSLC, "S_StorageDisposalSection", "" );
@@ -963,163 +1124,120 @@ omSubLC_BuildNewSLC_Version( View     NewSLC,
    //:END
 
    //:// S_DirectionsForUseSection
-   //:// DirectionsForUse Sections must come from the source MLC, except for the Usages, which come from the previous SLC.
-   //:FOR EACH SourceMLC.M_DirectionsForUseSection
-   RESULT = SetCursorFirstEntity( SourceMLC, "M_DirectionsForUseSection", "" );
+   //:// Until we understand better the rules that drive Directions for Use Sections, we will just use the same sections as those
+   //:// in use by the source SLC.
+   //:FOR EACH PreviousSLC.S_DirectionsForUseSection 
+   RESULT = SetCursorFirstEntity( PreviousSLC, "S_DirectionsForUseSection", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
-      //:CREATE ENTITY NewSLC.S_DirectionsForUseSection
-      RESULT = CreateEntity( NewSLC, "S_DirectionsForUseSection", zPOS_AFTER );
-      //:SetMatchingAttributesByName( NewSLC, "S_DirectionsForUseSection", SourceMLC, "M_DirectionsForUseSection", zSET_NULL )
-      SetMatchingAttributesByName( NewSLC, "S_DirectionsForUseSection", SourceMLC, "M_DirectionsForUseSection", zSET_NULL );
-      //:INCLUDE NewSLC.M_DirectionsForUseSection FROM SourceMLC.M_DirectionsForUseSection
-      RESULT = IncludeSubobjectFromSubobject( NewSLC, "M_DirectionsForUseSection", SourceMLC, "M_DirectionsForUseSection", zPOS_AFTER );
-      //:FOR EACH SourceMLC.M_DirectionsForUseStatement
-      RESULT = SetCursorFirstEntity( SourceMLC, "M_DirectionsForUseStatement", "" );
-      while ( RESULT > zCURSOR_UNCHANGED )
+      //:SET CURSOR FIRST PreviousMLC.M_DirectionsForUseSection 
+      //:           WHERE PreviousMLC.M_DirectionsForUseSection.ID = PreviousSLC.M_DirectionsForUseSection.ID 
+      {MutableInt mi_lTempInteger_5 = new MutableInt( lTempInteger_5 );
+             GetIntegerFromAttribute( mi_lTempInteger_5, PreviousSLC, "M_DirectionsForUseSection", "ID" );
+      lTempInteger_5 = mi_lTempInteger_5.intValue( );}
+      RESULT = SetCursorFirstEntityByInteger( PreviousMLC, "M_DirectionsForUseSection", "ID", lTempInteger_5, "" );
+      //:SET CURSOR FIRST SourceMLC.MP_DirectionsForUseSection WITHIN PreviousMLC.MasterLabelContent 
+      //:           WHERE SourceMLC.MP_DirectionsForUseSection.ID = PreviousMLC.M_DirectionsForUseSection.ID 
+      {MutableInt mi_lTempInteger_6 = new MutableInt( lTempInteger_6 );
+             GetIntegerFromAttribute( mi_lTempInteger_6, PreviousMLC, "M_DirectionsForUseSection", "ID" );
+      lTempInteger_6 = mi_lTempInteger_6.intValue( );}
+      RESULT = SetCursorFirstEntityByInteger( SourceMLC, "MP_DirectionsForUseSection", "ID", lTempInteger_6, "MasterLabelContent" );
+      //:IF RESULT < zCURSOR_SET
+      if ( RESULT < zCURSOR_SET )
       { 
-         //:CREATE ENTITY NewSLC.S_DirectionsForUseStatement
-         RESULT = CreateEntity( NewSLC, "S_DirectionsForUseStatement", zPOS_AFTER );
-         //:SetMatchingAttributesByName( NewSLC, "S_DirectionsForUseStatement", SourceMLC, "M_DirectionsForUseStatement", zSET_NULL )
-         SetMatchingAttributesByName( NewSLC, "S_DirectionsForUseStatement", SourceMLC, "M_DirectionsForUseStatement", zSET_NULL );
-         //:INCLUDE NewSLC.M_DirectionsForUseStatement FROM SourceMLC.M_DirectionsForUseStatement
-         RESULT = IncludeSubobjectFromSubobject( NewSLC, "M_DirectionsForUseStatement", SourceMLC, "M_DirectionsForUseStatement", zPOS_AFTER );
-         RESULT = SetCursorNextEntity( SourceMLC, "M_DirectionsForUseStatement", "" );
-      } 
-
-      //:END
-
-      //:// Proceed back to PreviousMLC and then to previous SLC to get DirectionsUsages.
-      //:// If a DirectionsForUse section is not in either the previous MLC or the SLC, we'll use the intersection of Usages from the
-      //:// source MLC DirectionsForUse and the SLC.
-      //:szEntityFoundFlag = ""
-       {StringBuilder sb_szEntityFoundFlag;
-      if ( szEntityFoundFlag == null )
-         sb_szEntityFoundFlag = new StringBuilder( 32 );
-      else
-         sb_szEntityFoundFlag = new StringBuilder( szEntityFoundFlag );
-            ZeidonStringCopy( sb_szEntityFoundFlag, 1, 0, "", 1, 0, 2 );
-      szEntityFoundFlag = sb_szEntityFoundFlag.toString( );}
-      //:IF SourceMLC.MP_DirectionsForUseSection EXISTS
-      lTempInteger_3 = CheckExistenceOfEntity( SourceMLC, "MP_DirectionsForUseSection" );
-      if ( lTempInteger_3 == 0 )
-      { 
-         //:SET CURSOR FIRST PreviousSLC.M_DirectionsForUseStatement WITHIN PreviousSLC.SubregLabelContent
-         //:           WHERE PreviousSLC.M_DirectionsForUseSection.ID = SourceMLC.MP_DirectionsForUseSection.ID
-         RESULT = SetCursorFirstEntity( PreviousSLC, "M_DirectionsForUseStatement", "SubregLabelContent" );
-         if ( RESULT > zCURSOR_UNCHANGED )
-         { 
-            while ( RESULT > zCURSOR_UNCHANGED && ( CompareAttributeToAttribute( PreviousSLC, "M_DirectionsForUseSection", "ID", SourceMLC, "MP_DirectionsForUseSection", "ID" ) != 0 ) )
-            { 
-               RESULT = SetCursorNextEntity( PreviousSLC, "M_DirectionsForUseStatement", "SubregLabelContent" );
-            } 
-
-         } 
-
-         //:IF RESULT >= zCURSOR_SET
-         if ( RESULT >= zCURSOR_SET )
-         { 
-            //:szEntityFoundFlag = "Y"
-             {StringBuilder sb_szEntityFoundFlag;
-            if ( szEntityFoundFlag == null )
-               sb_szEntityFoundFlag = new StringBuilder( 32 );
-            else
-               sb_szEntityFoundFlag = new StringBuilder( szEntityFoundFlag );
-                        ZeidonStringCopy( sb_szEntityFoundFlag, 1, 0, "Y", 1, 0, 2 );
-            szEntityFoundFlag = sb_szEntityFoundFlag.toString( );}
-         } 
-
-         //:END
-      } 
-
-      //:END
-      //:IF szEntityFoundFlag = "Y"
-      if ( ZeidonStringCompare( szEntityFoundFlag, 1, 0, "Y", 1, 0, 2 ) == 0 )
-      { 
-         //:// The previous DirectionsForUse section exists, so get the Usages from the corresponding SLC DirectionsForUse entry that are
-         //:// also in the NewSLC and thereby also in the Source MLC. .
-         //:// The OriginalDirectionsUsage entries, however, will just come directly from the MLC.
-         //:FOR EACH PreviousSLC.S_DirectionsUsage WITHIN PreviousSLC.S_DirectionsForUseSection
-         RESULT = SetCursorFirstEntity( PreviousSLC, "S_DirectionsUsage", "S_DirectionsForUseSection" );
-         while ( RESULT > zCURSOR_UNCHANGED )
-         { 
-            //:SET CURSOR FIRST NewSLC.S_Usage WHERE NewSLC.S_Usage.UsageType = PreviousSLC.S_DirectionsUsage.UsageType
-            //:                                  AND NewSLC.S_Usage.Name = PreviousSLC.S_DirectionsUsage.Name
-            RESULT = SetCursorFirstEntity( NewSLC, "S_Usage", "" );
-            if ( RESULT > zCURSOR_UNCHANGED )
-            { 
-               while ( RESULT > zCURSOR_UNCHANGED && ( CompareAttributeToAttribute( NewSLC, "S_Usage", "UsageType", PreviousSLC, "S_DirectionsUsage", "UsageType" ) != 0 ||
-                       CompareAttributeToAttribute( NewSLC, "S_Usage", "Name", PreviousSLC, "S_DirectionsUsage", "Name" ) != 0 ) )
-               { 
-                  RESULT = SetCursorNextEntity( NewSLC, "S_Usage", "" );
-               } 
-
-            } 
-
-            //:IF RESULT >= zCURSOR_SET
-            if ( RESULT >= zCURSOR_SET )
-            { 
-               //:CREATE ENTITY NewSLC.S_DirectionsUsageOrdering
-               RESULT = CreateEntity( NewSLC, "S_DirectionsUsageOrdering", zPOS_AFTER );
-               //:INCLUDE NewSLC.S_DirectionsUsage FROM NewSLC.S_Usage
-               RESULT = IncludeSubobjectFromSubobject( NewSLC, "S_DirectionsUsage", NewSLC, "S_Usage", zPOS_AFTER );
-            } 
-
-            RESULT = SetCursorNextEntity( PreviousSLC, "S_DirectionsUsage", "S_DirectionsForUseSection" );
-            //:END
-         } 
-
-         //:END
-         //:/*FOR EACH SourceMLC.M_DirectionsUsage WITHIN SourceMLC.M_DirectionsForUseSection
-         //:   SET CURSOR FIRST NewSLC.S_Usage WHERE NewSLC.S_Usage.UsageType = SourceMLC.M_DirectionsUsage.UsageType
-         //:                                     AND NewSLC.S_Usage.Name = SourceMLC.M_DirectionsUsage.Name
-         //:   IF RESULT >= zCURSOR_SET
-         //:      CREATE ENTITY NewSLC.S_OriginalDirectionUsageOrdering
-         //:      INCLUDE NewSLC.S_OriginalDirectionsUsage FROM NewSLC.S_Usage
-         //:   END
-         //:END*/
+         //:// Create message that the Directions for Use Section has been deleted.
+         //:CREATE ENTITY NewSLC.S_VersionChangeMessage 
+         RESULT = CreateEntity( NewSLC, "S_VersionChangeMessage", zPOS_AFTER );
+         //:GetStringFromAttributeByContext( szMessageComponent, PreviousSLC, "S_DirectionsForUseSection", "Name", "", 50 )
+         {StringBuilder sb_szMessageComponent;
+         if ( szMessageComponent == null )
+            sb_szMessageComponent = new StringBuilder( 32 );
+         else
+            sb_szMessageComponent = new StringBuilder( szMessageComponent );
+                   GetStringFromAttributeByContext( sb_szMessageComponent, PreviousSLC, "S_DirectionsForUseSection", "Name", "", 50 );
+         szMessageComponent = sb_szMessageComponent.toString( );}
+         //:NewSLC.S_VersionChangeMessage.ChangeText = "Deleted Directions for Use Section, " + szMessageComponent
+          {StringBuilder sb_szTempString_3;
+         if ( szTempString_3 == null )
+            sb_szTempString_3 = new StringBuilder( 32 );
+         else
+            sb_szTempString_3 = new StringBuilder( szTempString_3 );
+                  ZeidonStringCopy( sb_szTempString_3, 1, 0, "Deleted Directions for Use Section, ", 1, 0, 32001 );
+         szTempString_3 = sb_szTempString_3.toString( );}
+          {StringBuilder sb_szTempString_3;
+         if ( szTempString_3 == null )
+            sb_szTempString_3 = new StringBuilder( 32 );
+         else
+            sb_szTempString_3 = new StringBuilder( szTempString_3 );
+                  ZeidonStringConcat( sb_szTempString_3, 1, 0, szMessageComponent, 1, 0, 32001 );
+         szTempString_3 = sb_szTempString_3.toString( );}
+         SetAttributeFromString( NewSLC, "S_VersionChangeMessage", "ChangeText", szTempString_3 );
          //:ELSE
       } 
       else
       { 
-         //:// The previous DirectionsForUse section does not exist, so use the DirectionsUsages that are defined to the MLC for both the new
-         //:// DirectionsForUse entries and the OriginalDirectionsUsage entries.
-         //:FOR EACH SourceMLC.M_DirectionsUsage WITHIN SourceMLC.M_DirectionsForUseSection
-         RESULT = SetCursorFirstEntity( SourceMLC, "M_DirectionsUsage", "M_DirectionsForUseSection" );
+         //:// Copy the MLC Section to the SLC.
+         //:CREATE ENTITY NewSLC.S_DirectionsForUseSection
+         RESULT = CreateEntity( NewSLC, "S_DirectionsForUseSection", zPOS_AFTER );
+         //:SetMatchingAttributesByName( NewSLC, "S_DirectionsForUseSection", SourceMLC, "M_DirectionsForUseSection", zSET_NULL )
+         SetMatchingAttributesByName( NewSLC, "S_DirectionsForUseSection", SourceMLC, "M_DirectionsForUseSection", zSET_NULL );
+         //:INCLUDE NewSLC.M_DirectionsForUseSection FROM SourceMLC.M_DirectionsForUseSection
+         RESULT = IncludeSubobjectFromSubobject( NewSLC, "M_DirectionsForUseSection", SourceMLC, "M_DirectionsForUseSection", zPOS_AFTER );
+
+         //:// Copy each MLC Directions for Use Statement to SLC.
+         //:FOR EACH SourceMLC.M_DirectionsForUseStatement
+         RESULT = SetCursorFirstEntity( SourceMLC, "M_DirectionsForUseStatement", "" );
          while ( RESULT > zCURSOR_UNCHANGED )
          { 
-            //:SET CURSOR FIRST NewSLC.S_Usage WHERE NewSLC.S_Usage.UsageType = SourceMLC.M_DirectionsUsage.UsageType
-            //:                                  AND NewSLC.S_Usage.Name = SourceMLC.M_DirectionsUsage.Name
-            RESULT = SetCursorFirstEntity( NewSLC, "S_Usage", "" );
-            if ( RESULT > zCURSOR_UNCHANGED )
+            //:CREATE ENTITY NewSLC.S_DirectionsForUseStatement
+            RESULT = CreateEntity( NewSLC, "S_DirectionsForUseStatement", zPOS_AFTER );
+            //:SetMatchingAttributesByName( NewSLC, "S_DirectionsForUseStatement", SourceMLC, "M_DirectionsForUseStatement", zSET_NULL )
+            SetMatchingAttributesByName( NewSLC, "S_DirectionsForUseStatement", SourceMLC, "M_DirectionsForUseStatement", zSET_NULL );
+            //:IF NewSLC.S_DirectionsForUseStatement.NotForUseType = ""
+            if ( CompareAttributeToString( NewSLC, "S_DirectionsForUseStatement", "NotForUseType", "" ) == 0 )
             { 
-               while ( RESULT > zCURSOR_UNCHANGED && ( CompareAttributeToAttribute( NewSLC, "S_Usage", "UsageType", SourceMLC, "M_DirectionsUsage", "UsageType" ) != 0 ||
-                       CompareAttributeToAttribute( NewSLC, "S_Usage", "Name", SourceMLC, "M_DirectionsUsage", "Name" ) != 0 ) )
+               //:NewSLC.S_DirectionsForUseStatement.NotForUseType = "NA"
+               SetAttributeFromString( NewSLC, "S_DirectionsForUseStatement", "NotForUseType", "NA" );
+            } 
+
+            //:END
+            //:INCLUDE NewSLC.M_DirectionsForUseStatement FROM SourceMLC.M_DirectionsForUseStatement
+            RESULT = IncludeSubobjectFromSubobject( NewSLC, "M_DirectionsForUseStatement", SourceMLC, "M_DirectionsForUseStatement", zPOS_AFTER );
+
+            //:// Copy each MLC Statement Usage entry that has been copied to the SLC.
+            //:FOR EACH SourceMLC.M_DirectionsUsageOrdering 
+            RESULT = SetCursorFirstEntity( SourceMLC, "M_DirectionsUsageOrdering", "" );
+            while ( RESULT > zCURSOR_UNCHANGED )
+            { 
+               //:SET CURSOR FIRST NewSLC.M_Usage WITHIN NewSLC.SubregLabelContent 
+               //:           WHERE NewSLC.M_Usage.ID = SourceMLC.M_DirectionsUsage.ID 
+               {MutableInt mi_lTempInteger_7 = new MutableInt( lTempInteger_7 );
+                               GetIntegerFromAttribute( mi_lTempInteger_7, SourceMLC, "M_DirectionsUsage", "ID" );
+               lTempInteger_7 = mi_lTempInteger_7.intValue( );}
+               RESULT = SetCursorFirstEntityByInteger( NewSLC, "M_Usage", "ID", lTempInteger_7, "SubregLabelContent" );
+               //:IF RESULT < zCURSOR_SET
+               if ( RESULT < zCURSOR_SET )
                { 
-                  RESULT = SetCursorNextEntity( NewSLC, "S_Usage", "" );
+                  //:CREATE ENTITY NewSLC.S_DirectionsUsageOrdering 
+                  RESULT = CreateEntity( NewSLC, "S_DirectionsUsageOrdering", zPOS_AFTER );
+                  //:NewSLC.S_DirectionsUsageOrdering.PrimaryMLC_ID = SourceMLC.M_DirectionsUsage.ID 
+                  SetAttributeFromAttribute( NewSLC, "S_DirectionsUsageOrdering", "PrimaryMLC_ID", SourceMLC, "M_DirectionsUsage", "ID" );
+                  //:INCLUDE NewSLC.S_DirectionsUsage FROM SourceMLC.M_DirectionsUsage 
+                  RESULT = IncludeSubobjectFromSubobject( NewSLC, "S_DirectionsUsage", SourceMLC, "M_DirectionsUsage", zPOS_AFTER );
                } 
 
+               RESULT = SetCursorNextEntity( SourceMLC, "M_DirectionsUsageOrdering", "" );
+               //:END
             } 
 
-            //:IF RESULT >= zCURSOR_SET
-            if ( RESULT >= zCURSOR_SET )
-            { 
-               //:CREATE ENTITY NewSLC.S_DirectionsUsageOrdering
-               RESULT = CreateEntity( NewSLC, "S_DirectionsUsageOrdering", zPOS_AFTER );
-               //:INCLUDE NewSLC.S_DirectionsUsage         FROM NewSLC.S_Usage
-               RESULT = IncludeSubobjectFromSubobject( NewSLC, "S_DirectionsUsage", NewSLC, "S_Usage", zPOS_AFTER );
-            } 
-
-            RESULT = SetCursorNextEntity( SourceMLC, "M_DirectionsUsage", "M_DirectionsForUseSection" );
-            //:   //CREATE ENTITY NewSLC.S_OriginalDirectionUsageOrdering
-            //:   //INCLUDE NewSLC.S_OriginalDirectionsUsage FROM NewSLC.S_Usage
+            RESULT = SetCursorNextEntity( SourceMLC, "M_DirectionsForUseStatement", "" );
             //:END
          } 
 
          //:END
       } 
 
-      RESULT = SetCursorNextEntity( SourceMLC, "M_DirectionsForUseSection", "" );
+      RESULT = SetCursorNextEntity( PreviousSLC, "S_DirectionsForUseSection", "" );
       //:END
    } 
 
@@ -1133,19 +1251,59 @@ omSubLC_BuildNewSLC_Version( View     NewSLC,
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
       //:SET CURSOR FIRST PreviousMLC.M_MarketingSection WHERE PreviousMLC.M_MarketingSection.ID = PreviousSLC.M_MarketingSection.ID
-      {MutableInt mi_lTempInteger_4 = new MutableInt( lTempInteger_4 );
-             GetIntegerFromAttribute( mi_lTempInteger_4, PreviousSLC, "M_MarketingSection", "ID" );
-      lTempInteger_4 = mi_lTempInteger_4.intValue( );}
-      RESULT = SetCursorFirstEntityByInteger( PreviousMLC, "M_MarketingSection", "ID", lTempInteger_4, "" );
-      //:IF PreviousMLC.MN_MarketingSection EXISTS
-      lTempInteger_5 = CheckExistenceOfEntity( PreviousMLC, "MN_MarketingSection" );
-      if ( lTempInteger_5 == 0 )
+      {MutableInt mi_lTempInteger_8 = new MutableInt( lTempInteger_8 );
+             GetIntegerFromAttribute( mi_lTempInteger_8, PreviousSLC, "M_MarketingSection", "ID" );
+      lTempInteger_8 = mi_lTempInteger_8.intValue( );}
+      RESULT = SetCursorFirstEntityByInteger( PreviousMLC, "M_MarketingSection", "ID", lTempInteger_8, "" );
+      //:IF RESULT < zCURSOR_SET
+      if ( RESULT < zCURSOR_SET )
       { 
-         //:SET CURSOR FIRST SourceMLC.M_MarketingSection WHERE SourceMLC.M_MarketingSection.ID = PreviousMLC.MN_MarketingSection.ID
-         {MutableInt mi_lTempInteger_6 = new MutableInt( lTempInteger_6 );
-                   GetIntegerFromAttribute( mi_lTempInteger_6, PreviousMLC, "MN_MarketingSection", "ID" );
-         lTempInteger_6 = mi_lTempInteger_6.intValue( );}
-         RESULT = SetCursorFirstEntityByInteger( SourceMLC, "M_MarketingSection", "ID", lTempInteger_6, "" );
+         //:IssueError( NewSLC,0,0, "Programming Error 2" )
+         IssueError( NewSLC, 0, 0, "Programming Error 2" );
+      } 
+
+      //:END
+      //:SET CURSOR FIRST SourceMLC.MP_MarketingSection WITHIN SourceMLC.MasterLabelContent 
+      //:           WHERE SourceMLC.MP_MarketingSection.ID = PreviousMLC.M_MarketingSection.ID 
+      {MutableInt mi_lTempInteger_9 = new MutableInt( lTempInteger_9 );
+             GetIntegerFromAttribute( mi_lTempInteger_9, PreviousMLC, "M_MarketingSection", "ID" );
+      lTempInteger_9 = mi_lTempInteger_9.intValue( );}
+      RESULT = SetCursorFirstEntityByInteger( SourceMLC, "MP_MarketingSection", "ID", lTempInteger_9, "MasterLabelContent" );
+      //:IF RESULT < zCURSOR_SET
+      if ( RESULT < zCURSOR_SET )
+      { 
+         //:// The Marketing Section from the original MLC was not included in the new MLC, so create change message.
+         //:CREATE ENTITY NewSLC.S_VersionChangeMessage 
+         RESULT = CreateEntity( NewSLC, "S_VersionChangeMessage", zPOS_AFTER );
+         //:GetStringFromAttributeByContext( szMessageComponent, PreviousSLC, "S_MarketingSection", "Name", "", 50 )
+         {StringBuilder sb_szMessageComponent;
+         if ( szMessageComponent == null )
+            sb_szMessageComponent = new StringBuilder( 32 );
+         else
+            sb_szMessageComponent = new StringBuilder( szMessageComponent );
+                   GetStringFromAttributeByContext( sb_szMessageComponent, PreviousSLC, "S_MarketingSection", "Name", "", 50 );
+         szMessageComponent = sb_szMessageComponent.toString( );}
+         //:NewSLC.S_VersionChangeMessage.ChangeText = "Deleted Marketing Section, " + szMessageComponent
+          {StringBuilder sb_szTempString_4;
+         if ( szTempString_4 == null )
+            sb_szTempString_4 = new StringBuilder( 32 );
+         else
+            sb_szTempString_4 = new StringBuilder( szTempString_4 );
+                  ZeidonStringCopy( sb_szTempString_4, 1, 0, "Deleted Marketing Section, ", 1, 0, 32001 );
+         szTempString_4 = sb_szTempString_4.toString( );}
+          {StringBuilder sb_szTempString_4;
+         if ( szTempString_4 == null )
+            sb_szTempString_4 = new StringBuilder( 32 );
+         else
+            sb_szTempString_4 = new StringBuilder( szTempString_4 );
+                  ZeidonStringConcat( sb_szTempString_4, 1, 0, szMessageComponent, 1, 0, 32001 );
+         szTempString_4 = sb_szTempString_4.toString( );}
+         SetAttributeFromString( NewSLC, "S_VersionChangeMessage", "ChangeText", szTempString_4 );
+         //:ELSE
+      } 
+      else
+      { 
+         //:// The MLC Marketing Section has been copied, so bring it over.
          //:CREATE ENTITY NewSLC.S_MarketingSection
          RESULT = CreateEntity( NewSLC, "S_MarketingSection", zPOS_AFTER );
          //:SetMatchingAttributesByName( NewSLC, "S_MarketingSection", SourceMLC, "M_MarketingSection", zSET_NULL )
@@ -1161,19 +1319,72 @@ omSubLC_BuildNewSLC_Version( View     NewSLC,
          while ( RESULT > zCURSOR_UNCHANGED )
          { 
             //:SET CURSOR FIRST PreviousMLC.M_MarketingStatement WHERE PreviousMLC.M_MarketingStatement.ID = PreviousSLC.M_MarketingStatement.ID
-            {MutableInt mi_lTempInteger_7 = new MutableInt( lTempInteger_7 );
-                         GetIntegerFromAttribute( mi_lTempInteger_7, PreviousSLC, "M_MarketingStatement", "ID" );
-            lTempInteger_7 = mi_lTempInteger_7.intValue( );}
-            RESULT = SetCursorFirstEntityByInteger( PreviousMLC, "M_MarketingStatement", "ID", lTempInteger_7, "" );
-            //:IF PreviousMLC.MN_MarketingStatement EXISTS
-            lTempInteger_8 = CheckExistenceOfEntity( PreviousMLC, "MN_MarketingStatement" );
-            if ( lTempInteger_8 == 0 )
+            {MutableInt mi_lTempInteger_10 = new MutableInt( lTempInteger_10 );
+                         GetIntegerFromAttribute( mi_lTempInteger_10, PreviousSLC, "M_MarketingStatement", "ID" );
+            lTempInteger_10 = mi_lTempInteger_10.intValue( );}
+            RESULT = SetCursorFirstEntityByInteger( PreviousMLC, "M_MarketingStatement", "ID", lTempInteger_10, "" );
+            //:IF RESULT < zCURSOR_SET
+            if ( RESULT < zCURSOR_SET )
             { 
-               //:SET CURSOR FIRST SourceMLC.M_MarketingStatement WHERE SourceMLC.M_MarketingStatement.ID = PreviousMLC.MN_MarketingStatement.ID
-               {MutableInt mi_lTempInteger_9 = new MutableInt( lTempInteger_9 );
-                               GetIntegerFromAttribute( mi_lTempInteger_9, PreviousMLC, "MN_MarketingStatement", "ID" );
-               lTempInteger_9 = mi_lTempInteger_9.intValue( );}
-               RESULT = SetCursorFirstEntityByInteger( SourceMLC, "M_MarketingStatement", "ID", lTempInteger_9, "" );
+               //:IssueError( NewSLC,0,0, "Programming Error 3" )
+               IssueError( NewSLC, 0, 0, "Programming Error 3" );
+            } 
+
+            //:END
+            //:SET CURSOR FIRST SourceMLC.MP_MarketingStatement WITHIN SourceMLC.M_MarketingSection 
+            //:           WHERE SourceMLC.MP_MarketingStatement.ID = PreviousMLC.M_MarketingStatement.ID 
+            {MutableInt mi_lTempInteger_11 = new MutableInt( lTempInteger_11 );
+                         GetIntegerFromAttribute( mi_lTempInteger_11, PreviousMLC, "M_MarketingStatement", "ID" );
+            lTempInteger_11 = mi_lTempInteger_11.intValue( );}
+            RESULT = SetCursorFirstEntityByInteger( SourceMLC, "MP_MarketingStatement", "ID", lTempInteger_11, "M_MarketingSection" );
+            //:IF RESULT < zCURSOR_SET
+            if ( RESULT < zCURSOR_SET )
+            { 
+               //:// The Marketing Statement from the original MLC was not included in the new MLC, so create change message.
+               //:CREATE ENTITY NewSLC.S_VersionChangeMessage 
+               RESULT = CreateEntity( NewSLC, "S_VersionChangeMessage", zPOS_AFTER );
+               //:GetStringFromAttributeByContext( szMessageComponent, PreviousSLC, "S_MarketingStatement", "Text", "", 50 )
+               {StringBuilder sb_szMessageComponent;
+               if ( szMessageComponent == null )
+                  sb_szMessageComponent = new StringBuilder( 32 );
+               else
+                  sb_szMessageComponent = new StringBuilder( szMessageComponent );
+                               GetStringFromAttributeByContext( sb_szMessageComponent, PreviousSLC, "S_MarketingStatement", "Text", "", 50 );
+               szMessageComponent = sb_szMessageComponent.toString( );}
+               //:NewSLC.S_VersionChangeMessage.ChangeText = "Deleted Marketing Statement, " + NEW_LINE + NEW_LINE + szMessageComponent
+                {StringBuilder sb_szTempString_5;
+               if ( szTempString_5 == null )
+                  sb_szTempString_5 = new StringBuilder( 32 );
+               else
+                  sb_szTempString_5 = new StringBuilder( szTempString_5 );
+                              ZeidonStringCopy( sb_szTempString_5, 1, 0, "Deleted Marketing Statement, ", 1, 0, 32001 );
+               szTempString_5 = sb_szTempString_5.toString( );}
+                {StringBuilder sb_szTempString_5;
+               if ( szTempString_5 == null )
+                  sb_szTempString_5 = new StringBuilder( 32 );
+               else
+                  sb_szTempString_5 = new StringBuilder( szTempString_5 );
+                              ZeidonStringConcat( sb_szTempString_5, 1, 0, NEW_LINE, 1, 0, 32001 );
+               szTempString_5 = sb_szTempString_5.toString( );}
+                {StringBuilder sb_szTempString_5;
+               if ( szTempString_5 == null )
+                  sb_szTempString_5 = new StringBuilder( 32 );
+               else
+                  sb_szTempString_5 = new StringBuilder( szTempString_5 );
+                              ZeidonStringConcat( sb_szTempString_5, 1, 0, NEW_LINE, 1, 0, 32001 );
+               szTempString_5 = sb_szTempString_5.toString( );}
+                {StringBuilder sb_szTempString_5;
+               if ( szTempString_5 == null )
+                  sb_szTempString_5 = new StringBuilder( 32 );
+               else
+                  sb_szTempString_5 = new StringBuilder( szTempString_5 );
+                              ZeidonStringConcat( sb_szTempString_5, 1, 0, szMessageComponent, 1, 0, 32001 );
+               szTempString_5 = sb_szTempString_5.toString( );}
+               SetAttributeFromString( NewSLC, "S_VersionChangeMessage", "ChangeText", szTempString_5 );
+               //:ELSE
+            } 
+            else
+            { 
                //:CREATE ENTITY NewSLC.S_MarketingStatement
                RESULT = CreateEntity( NewSLC, "S_MarketingStatement", zPOS_AFTER );
                //:SetMatchingAttributesByName( NewSLC, "S_MarketingStatement", SourceMLC, "M_MarketingStatement", zSET_NULL )
@@ -1182,6 +1393,63 @@ omSubLC_BuildNewSLC_Version( View     NewSLC,
                RESULT = IncludeSubobjectFromSubobject( NewSLC, "M_MarketingStatement", SourceMLC, "M_MarketingStatement", zPOS_AFTER );
                //:INCLUDE NewSLC.SP_MarketingStatement FROM PreviousSLC.S_MarketingStatement
                RESULT = IncludeSubobjectFromSubobject( NewSLC, "SP_MarketingStatement", PreviousSLC, "S_MarketingStatement", zPOS_AFTER );
+
+               //:// If the Marketing Title or Text have changed, create a change message.
+               //:IF PreviousSLC.S_MarketingStatement.Title != NewSLC.S_MarketingStatement.Title 
+               if ( CompareAttributeToAttribute( PreviousSLC, "S_MarketingStatement", "Title", NewSLC, "S_MarketingStatement", "Title" ) != 0 )
+               { 
+                  //:CREATE ENTITY NewSLC.S_VersionChangeMessage 
+                  RESULT = CreateEntity( NewSLC, "S_VersionChangeMessage", zPOS_AFTER );
+                  //:GetStringFromAttributeByContext( szMessageComponent, NewSLC, "S_MarketingStatement", "Title", "", 50 )
+                  {StringBuilder sb_szMessageComponent;
+                  if ( szMessageComponent == null )
+                     sb_szMessageComponent = new StringBuilder( 32 );
+                  else
+                     sb_szMessageComponent = new StringBuilder( szMessageComponent );
+                                     GetStringFromAttributeByContext( sb_szMessageComponent, NewSLC, "S_MarketingStatement", "Title", "", 50 );
+                  szMessageComponent = sb_szMessageComponent.toString( );}
+                  //:NewSLC.S_VersionChangeMessage.ChangeText = "Marketing Statement Title has changed to: " + szMessageComponent
+                   {StringBuilder sb_szTempString_6;
+                  if ( szTempString_6 == null )
+                     sb_szTempString_6 = new StringBuilder( 32 );
+                  else
+                     sb_szTempString_6 = new StringBuilder( szTempString_6 );
+                                    ZeidonStringCopy( sb_szTempString_6, 1, 0, "Marketing Statement Title has changed to: ", 1, 0, 32001 );
+                  szTempString_6 = sb_szTempString_6.toString( );}
+                   {StringBuilder sb_szTempString_6;
+                  if ( szTempString_6 == null )
+                     sb_szTempString_6 = new StringBuilder( 32 );
+                  else
+                     sb_szTempString_6 = new StringBuilder( szTempString_6 );
+                                    ZeidonStringConcat( sb_szTempString_6, 1, 0, szMessageComponent, 1, 0, 32001 );
+                  szTempString_6 = sb_szTempString_6.toString( );}
+                  SetAttributeFromString( NewSLC, "S_VersionChangeMessage", "ChangeText", szTempString_6 );
+               } 
+
+               //:END
+               //:IF PreviousSLC.S_MarketingStatement.Text != NewSLC.S_MarketingStatement.Text 
+               if ( CompareAttributeToAttribute( PreviousSLC, "S_MarketingStatement", "Text", NewSLC, "S_MarketingStatement", "Text" ) != 0 )
+               { 
+                  //:CREATE ENTITY NewSLC.S_VersionChangeMessage 
+                  RESULT = CreateEntity( NewSLC, "S_VersionChangeMessage", zPOS_AFTER );
+                  //:NewSLC.S_VersionChangeMessage.ChangeText = "Marketing Statement Text has changed to the following text: "
+                  SetAttributeFromString( NewSLC, "S_VersionChangeMessage", "ChangeText", "Marketing Statement Text has changed to the following text: " );
+                  //:GetStringFromAttributeByContext( szMessageComponent, NewSLC, "S_MarketingStatement", "Text", "", 50 )
+                  {StringBuilder sb_szMessageComponent;
+                  if ( szMessageComponent == null )
+                     sb_szMessageComponent = new StringBuilder( 32 );
+                  else
+                     sb_szMessageComponent = new StringBuilder( szMessageComponent );
+                                     GetStringFromAttributeByContext( sb_szMessageComponent, NewSLC, "S_MarketingStatement", "Text", "", 50 );
+                  szMessageComponent = sb_szMessageComponent.toString( );}
+                  //:CREATE ENTITY NewSLC.S_VersionChangeMessage 
+                  RESULT = CreateEntity( NewSLC, "S_VersionChangeMessage", zPOS_AFTER );
+                  //:NewSLC.S_VersionChangeMessage.ChangeText = szMessageComponent
+                  SetAttributeFromString( NewSLC, "S_VersionChangeMessage", "ChangeText", szMessageComponent );
+               } 
+
+               //:   
+               //:END
             } 
 
             RESULT = SetCursorNextEntity( PreviousSLC, "S_MarketingStatement", "" );
@@ -1191,35 +1459,46 @@ omSubLC_BuildNewSLC_Version( View     NewSLC,
          //:END
 
          //:// Usages
-         //:// Recreate only MarketingUsages that are in the NewSLC and thereby also in the Source MLC.
-         //:// The OriginalMarketingUsage entries, however, will just come directly from the MLC.
-         //:FOR EACH PreviousSLC.S_MarketingUsage WITHIN PreviousSLC.S_MarketingSection
-         RESULT = SetCursorFirstEntity( PreviousSLC, "S_MarketingUsage", "S_MarketingSection" );
+         //:// Create only MarketingUsages from the MLC under the statement that are among the Usage entries included in the NewSLC.
+         //:FOR EACH SourceMLC.M_MarketingUsageOrdering
+         RESULT = SetCursorFirstEntity( SourceMLC, "M_MarketingUsageOrdering", "" );
          while ( RESULT > zCURSOR_UNCHANGED )
          { 
-            //:SET CURSOR FIRST NewSLC.S_Usage WHERE NewSLC.S_Usage.UsageType = PreviousSLC.S_MarketingUsage.UsageType
-            //:                                  AND NewSLC.S_Usage.Name = PreviousSLC.S_MarketingUsage.Name
-            RESULT = SetCursorFirstEntity( NewSLC, "S_Usage", "" );
-            if ( RESULT > zCURSOR_UNCHANGED )
+            //:IF SourceMLC.M_MarketingUsage EXISTS
+            lTempInteger_12 = CheckExistenceOfEntity( SourceMLC, "M_MarketingUsage" );
+            if ( lTempInteger_12 == 0 )
             { 
-               while ( RESULT > zCURSOR_UNCHANGED && ( CompareAttributeToAttribute( NewSLC, "S_Usage", "UsageType", PreviousSLC, "S_MarketingUsage", "UsageType" ) != 0 ||
-                       CompareAttributeToAttribute( NewSLC, "S_Usage", "Name", PreviousSLC, "S_MarketingUsage", "Name" ) != 0 ) )
+               //:SET CURSOR FIRST NewSLC.S_UsageType WHERE NewSLC.S_UsageType.UsageType = SourceMLC.M_MarketingUsage.UsageType
+               {StringBuilder sb_szTempString_0;
+               if ( szTempString_0 == null )
+                  sb_szTempString_0 = new StringBuilder( 32 );
+               else
+                  sb_szTempString_0 = new StringBuilder( szTempString_0 );
+                               GetStringFromAttribute( sb_szTempString_0, SourceMLC, "M_MarketingUsage", "UsageType" );
+               szTempString_0 = sb_szTempString_0.toString( );}
+               RESULT = SetCursorFirstEntityByString( NewSLC, "S_UsageType", "UsageType", szTempString_0, "" );
+               //:SET CURSOR FIRST NewSLC.S_Usage WHERE NewSLC.S_Usage.Name = SourceMLC.M_MarketingUsage.Name
+               {StringBuilder sb_szTempString_7;
+               if ( szTempString_7 == null )
+                  sb_szTempString_7 = new StringBuilder( 32 );
+               else
+                  sb_szTempString_7 = new StringBuilder( szTempString_7 );
+                               GetStringFromAttribute( sb_szTempString_7, SourceMLC, "M_MarketingUsage", "Name" );
+               szTempString_7 = sb_szTempString_7.toString( );}
+               RESULT = SetCursorFirstEntityByString( NewSLC, "S_Usage", "Name", szTempString_7, "" );
+               //:IF RESULT >= zCURSOR_SET
+               if ( RESULT >= zCURSOR_SET )
                { 
-                  RESULT = SetCursorNextEntity( NewSLC, "S_Usage", "" );
+                  //:CREATE ENTITY NewSLC.S_MarketingUsageOrdering 
+                  RESULT = CreateEntity( NewSLC, "S_MarketingUsageOrdering", zPOS_AFTER );
+                  //:INCLUDE NewSLC.S_MarketingUsage FROM NewSLC.S_Usage
+                  RESULT = IncludeSubobjectFromSubobject( NewSLC, "S_MarketingUsage", NewSLC, "S_Usage", zPOS_AFTER );
                } 
 
+               //:END
             } 
 
-            //:IF RESULT >= zCURSOR_SET
-            if ( RESULT >= zCURSOR_SET )
-            { 
-               //:CREATE ENTITY NewSLC.S_MarketingUsageOrdering
-               RESULT = CreateEntity( NewSLC, "S_MarketingUsageOrdering", zPOS_AFTER );
-               //:INCLUDE NewSLC.S_MarketingUsage FROM NewSLC.S_Usage
-               RESULT = IncludeSubobjectFromSubobject( NewSLC, "S_MarketingUsage", NewSLC, "S_Usage", zPOS_AFTER );
-            } 
-
-            RESULT = SetCursorNextEntity( PreviousSLC, "S_MarketingUsage", "S_MarketingSection" );
+            RESULT = SetCursorNextEntity( SourceMLC, "M_MarketingUsageOrdering", "" );
             //:END
          } 
 
@@ -1227,14 +1506,6 @@ omSubLC_BuildNewSLC_Version( View     NewSLC,
       } 
 
       RESULT = SetCursorNextEntity( PreviousSLC, "S_MarketingSection", "" );
-      //:   /*FOR EACH SourceMLC.M_MarketingUsage WITHIN SourceMLC.M_MarketingSection
-      //:      SET CURSOR FIRST NewSLC.S_Usage WHERE NewSLC.S_Usage.UsageType = SourceMLC.M_MarketingUsage.UsageType
-      //:                                        AND NewSLC.S_Usage.Name = SourceMLC.M_MarketingUsage.Name
-      //:      IF RESULT >= zCURSOR_SET
-      //:         CREATE ENTITY NewSLC.S_OriginalMarketingUsageOrdering
-      //:         INCLUDE NewSLC.S_OriginalMarketingUsage FROM NewSLC.S_Usage
-      //:      END
-      //:   END*/
       //:END
    } 
 
@@ -1279,7 +1550,8 @@ omSubLC_DuplicateSLC( View     NewSLC,
    int      lTempInteger_2 = 0;
    int      lTempInteger_3 = 0;
    int      lTempInteger_4 = 0;
-   int      lTempInteger_5 = 0;
+   String   szTempString_1 = null;
+   String   szTempString_2 = null;
 
 
    //:// Create a new SLC from a previous SLC, tying the new back to the original.
@@ -1455,6 +1727,14 @@ omSubLC_DuplicateSLC( View     NewSLC,
          RESULT = CreateEntity( NewSLC, "S_DirectionsForUseStatement", zPOS_AFTER );
          //:SetMatchingAttributesByName( NewSLC, "S_DirectionsForUseStatement", PreviousSLC, "S_DirectionsForUseStatement", zSET_NULL )
          SetMatchingAttributesByName( NewSLC, "S_DirectionsForUseStatement", PreviousSLC, "S_DirectionsForUseStatement", zSET_NULL );
+         //:IF NewSLC.S_DirectionsForUseStatement.NotForUseType = ""
+         if ( CompareAttributeToString( NewSLC, "S_DirectionsForUseStatement", "NotForUseType", "" ) == 0 )
+         { 
+            //:NewSLC.S_DirectionsForUseStatement.NotForUseType = "NA"
+            SetAttributeFromString( NewSLC, "S_DirectionsForUseStatement", "NotForUseType", "NA" );
+         } 
+
+         //:END
          //:INCLUDE NewSLC.M_DirectionsForUseStatement FROM PreviousSLC.M_DirectionsForUseStatement
          RESULT = IncludeSubobjectFromSubobject( NewSLC, "M_DirectionsForUseStatement", PreviousSLC, "M_DirectionsForUseStatement", zPOS_AFTER );
 
@@ -1571,39 +1851,54 @@ omSubLC_DuplicateSLC( View     NewSLC,
          RESULT = SetCursorFirstEntity( PreviousSLC, "S_MarketingUsageOrdering", "" );
          while ( RESULT > zCURSOR_UNCHANGED )
          { 
-            //:CREATE ENTITY NewSLC.S_MarketingUsageOrdering 
-            RESULT = CreateEntity( NewSLC, "S_MarketingUsageOrdering", zPOS_AFTER );
-            //:SetMatchingAttributesByName( NewSLC, "S_MarketingUsageOrdering", PreviousSLC, "S_MarketingUsageOrdering", zSET_NULL )
-            SetMatchingAttributesByName( NewSLC, "S_MarketingUsageOrdering", PreviousSLC, "S_MarketingUsageOrdering", zSET_NULL );
-
-            //:// We need to include the new S_Usage entry created in the NewSLC.
-            //:SET CURSOR FIRST PreviousSLC.S_Usage WITHIN PreviousSLC.SubregLabelContent 
-            //:           WHERE PreviousSLC.S_Usage.ID = PreviousSLC.S_MarketingUsage.ID 
-            {MutableInt mi_lTempInteger_4 = new MutableInt( lTempInteger_4 );
-                         GetIntegerFromAttribute( mi_lTempInteger_4, PreviousSLC, "S_MarketingUsage", "ID" );
-            lTempInteger_4 = mi_lTempInteger_4.intValue( );}
-            RESULT = SetCursorFirstEntityByInteger( PreviousSLC, "S_Usage", "ID", lTempInteger_4, "SubregLabelContent" );
-            //:IF RESULT >= zCURSOR_SET
-            if ( RESULT >= zCURSOR_SET )
+            //:IF PreviousSLC.S_MarketingUsage EXISTS
+            lTempInteger_4 = CheckExistenceOfEntity( PreviousSLC, "S_MarketingUsage" );
+            if ( lTempInteger_4 == 0 )
             { 
-               //:SET CURSOR FIRST NewSLC.M_Usage WITHIN NewSLC.SubregLabelContent 
-               //:           WHERE NewSLC.M_Usage.ID = PreviousSLC.M_Usage.ID 
-               {MutableInt mi_lTempInteger_5 = new MutableInt( lTempInteger_5 );
-                               GetIntegerFromAttribute( mi_lTempInteger_5, PreviousSLC, "M_Usage", "ID" );
-               lTempInteger_5 = mi_lTempInteger_5.intValue( );}
-               RESULT = SetCursorFirstEntityByInteger( NewSLC, "M_Usage", "ID", lTempInteger_5, "SubregLabelContent" );
-               //:IF RESULT >= zCURSOR_SET
-               if ( RESULT >= zCURSOR_SET )
+               //:// Position on equivalent S_Usage entry in new SLC. If it's not there, don't create the S_MarketingUsageOrdering entry.
+               //:SET CURSOR FIRST NewSLC.S_UsageType WHERE NewSLC.S_UsageType.UsageType = PreviousSLC.S_MarketingUsage.UsageType  
+               {StringBuilder sb_szTempString_1;
+               if ( szTempString_1 == null )
+                  sb_szTempString_1 = new StringBuilder( 32 );
+               else
+                  sb_szTempString_1 = new StringBuilder( szTempString_1 );
+                               GetStringFromAttribute( sb_szTempString_1, PreviousSLC, "S_MarketingUsage", "UsageType" );
+               szTempString_1 = sb_szTempString_1.toString( );}
+               RESULT = SetCursorFirstEntityByString( NewSLC, "S_UsageType", "UsageType", szTempString_1, "" );
+               //:IF RESULT < zCURSOR_SET
+               if ( RESULT < zCURSOR_SET )
                { 
-                  //:INCLUDE NewSLC.S_MarketingUsage FROM NewSLC.S_Usage 
-                  RESULT = IncludeSubobjectFromSubobject( NewSLC, "S_MarketingUsage", NewSLC, "S_Usage", zPOS_AFTER );
+                  //:IssueError( PreviousSLC,0,0, "Programming Error UsageType" )
+                  IssueError( PreviousSLC, 0, 0, "Programming Error UsageType" );
                } 
 
                //:END
+               //:SET CURSOR FIRST NewSLC.S_Usage WHERE NewSLC.S_Usage.Name = PreviousSLC.S_Usage.Name 
+               {StringBuilder sb_szTempString_2;
+               if ( szTempString_2 == null )
+                  sb_szTempString_2 = new StringBuilder( 32 );
+               else
+                  sb_szTempString_2 = new StringBuilder( szTempString_2 );
+                               GetStringFromAttribute( sb_szTempString_2, PreviousSLC, "S_Usage", "Name" );
+               szTempString_2 = sb_szTempString_2.toString( );}
+               RESULT = SetCursorFirstEntityByString( NewSLC, "S_Usage", "Name", szTempString_2, "" );
+               //:IF RESULT >= zCURSOR_SET
+               if ( RESULT >= zCURSOR_SET )
+               { 
+                  //:// It exists, so create entity and include S_Usage.
+                  //:CREATE ENTITY NewSLC.S_MarketingUsageOrdering 
+                  RESULT = CreateEntity( NewSLC, "S_MarketingUsageOrdering", zPOS_AFTER );
+                  //:SetMatchingAttributesByName( NewSLC, "S_MarketingUsageOrdering", PreviousSLC, "S_MarketingUsageOrdering", zSET_NULL )
+                  SetMatchingAttributesByName( NewSLC, "S_MarketingUsageOrdering", PreviousSLC, "S_MarketingUsageOrdering", zSET_NULL );
+                  //:INCLUDE NewSLC.S_MarketingUsage FROM NewSLC.S_Usage
+                  RESULT = IncludeSubobjectFromSubobject( NewSLC, "S_MarketingUsage", NewSLC, "S_Usage", zPOS_AFTER );
+               } 
+
+               //:END 
             } 
 
             RESULT = SetCursorNextEntity( PreviousSLC, "S_MarketingUsageOrdering", "" );
-            //:END 
+            //:END
          } 
 
          RESULT = SetCursorNextEntity( PreviousSLC, "S_MarketingStatement", "" );
@@ -3782,6 +4077,267 @@ omSubLC_CopyDirsForUseSection( View     NewSLC,
    } 
 
    //:END
+   return( 0 );
+// END
+} 
+
+
+//:OBJECT CONSTRAINT OPERATION
+public int 
+omSubLC_ObjectConstraints( View     mSubLC,
+                           Integer   Event,
+                           Integer   State )
+{
+   int      RESULT = 0;
+
+   //:ObjectConstraints( VIEW mSubLC BASED ON LOD mSubLC,
+   //:                SHORT Event,
+   //:                SHORT State )
+
+   //:CASE Event
+   switch( Event )
+   { 
+      //:OF   zOCE_ACTIVATE:
+      case zOCE_ACTIVATE :
+
+         //:// Build the PrimaryMLC_ID  values from MLC subentities, if the ID values are null.
+         //:FOR EACH mSubLC.S_GeneralSection 
+         RESULT = SetCursorFirstEntity( mSubLC, "S_GeneralSection", "" );
+         while ( RESULT > zCURSOR_UNCHANGED )
+         { 
+            //:IF mSubLC.S_GeneralSection.PrimaryMLC_ID = ""
+            if ( CompareAttributeToString( mSubLC, "S_GeneralSection", "PrimaryMLC_ID", "" ) == 0 )
+            { 
+               //:mSubLC.S_GeneralSection.PrimaryMLC_ID = mSubLC.M_GeneralSection.ID 
+               SetAttributeFromAttribute( mSubLC, "S_GeneralSection", "PrimaryMLC_ID", mSubLC, "M_GeneralSection", "ID" );
+            } 
+
+            //:END 
+            //:FOR EACH mSubLC.S_GeneralStatement 
+            RESULT = SetCursorFirstEntity( mSubLC, "S_GeneralStatement", "" );
+            while ( RESULT > zCURSOR_UNCHANGED )
+            { 
+               //:IF mSubLC.S_GeneralStatement.PrimaryMLC_ID = ""
+               if ( CompareAttributeToString( mSubLC, "S_GeneralStatement", "PrimaryMLC_ID", "" ) == 0 )
+               { 
+                  //:mSubLC.S_GeneralStatement.PrimaryMLC_ID = mSubLC.M_GeneralStatement.ID 
+                  SetAttributeFromAttribute( mSubLC, "S_GeneralStatement", "PrimaryMLC_ID", mSubLC, "M_GeneralStatement", "ID" );
+               } 
+
+               RESULT = SetCursorNextEntity( mSubLC, "S_GeneralStatement", "" );
+               //:END
+            } 
+
+            RESULT = SetCursorNextEntity( mSubLC, "S_GeneralSection", "" );
+            //:END
+         } 
+
+         //:END
+         //:FOR EACH mSubLC.S_IngredientsSection 
+         RESULT = SetCursorFirstEntity( mSubLC, "S_IngredientsSection", "" );
+         while ( RESULT > zCURSOR_UNCHANGED )
+         { 
+            //:IF mSubLC.S_IngredientsSection.PrimaryMLC_ID = ""
+            if ( CompareAttributeToString( mSubLC, "S_IngredientsSection", "PrimaryMLC_ID", "" ) == 0 )
+            { 
+               //:mSubLC.S_IngredientsSection.PrimaryMLC_ID = mSubLC.M_IngredientsSection.ID 
+               SetAttributeFromAttribute( mSubLC, "S_IngredientsSection", "PrimaryMLC_ID", mSubLC, "M_IngredientsSection", "ID" );
+            } 
+
+            //:END
+            //:FOR EACH mSubLC.S_IngredientsStatement 
+            RESULT = SetCursorFirstEntity( mSubLC, "S_IngredientsStatement", "" );
+            while ( RESULT > zCURSOR_UNCHANGED )
+            { 
+               //:IF mSubLC.S_IngredientsStatement.PrimaryMLC_ID = ""
+               if ( CompareAttributeToString( mSubLC, "S_IngredientsStatement", "PrimaryMLC_ID", "" ) == 0 )
+               { 
+                  //:mSubLC.S_IngredientsStatement.PrimaryMLC_ID = mSubLC.M_IngredientsStatement.ID 
+                  SetAttributeFromAttribute( mSubLC, "S_IngredientsStatement", "PrimaryMLC_ID", mSubLC, "M_IngredientsStatement", "ID" );
+               } 
+
+               RESULT = SetCursorNextEntity( mSubLC, "S_IngredientsStatement", "" );
+               //:END
+            } 
+
+            RESULT = SetCursorNextEntity( mSubLC, "S_IngredientsSection", "" );
+            //:END
+         } 
+
+         //:END
+         //:FOR EACH mSubLC.S_StorageDisposalSection 
+         RESULT = SetCursorFirstEntity( mSubLC, "S_StorageDisposalSection", "" );
+         while ( RESULT > zCURSOR_UNCHANGED )
+         { 
+            //:IF mSubLC.S_StorageDisposalSection.PrimaryMLC_ID = ""
+            if ( CompareAttributeToString( mSubLC, "S_StorageDisposalSection", "PrimaryMLC_ID", "" ) == 0 )
+            { 
+               //:mSubLC.S_StorageDisposalSection.PrimaryMLC_ID = mSubLC.M_StorageDisposalSection.ID 
+               SetAttributeFromAttribute( mSubLC, "S_StorageDisposalSection", "PrimaryMLC_ID", mSubLC, "M_StorageDisposalSection", "ID" );
+            } 
+
+            //:END
+            //:FOR EACH mSubLC.S_StorageDisposalStatement 
+            RESULT = SetCursorFirstEntity( mSubLC, "S_StorageDisposalStatement", "" );
+            while ( RESULT > zCURSOR_UNCHANGED )
+            { 
+               //:IF mSubLC.S_StorageDisposalStatement.PrimaryMLC_ID = ""
+               if ( CompareAttributeToString( mSubLC, "S_StorageDisposalStatement", "PrimaryMLC_ID", "" ) == 0 )
+               { 
+                  //:mSubLC.S_StorageDisposalStatement.PrimaryMLC_ID = mSubLC.M_StorageDisposalStatement.ID 
+                  SetAttributeFromAttribute( mSubLC, "S_StorageDisposalStatement", "PrimaryMLC_ID", mSubLC, "M_StorageDisposalStatement", "ID" );
+               } 
+
+               RESULT = SetCursorNextEntity( mSubLC, "S_StorageDisposalStatement", "" );
+               //:END
+            } 
+
+            RESULT = SetCursorNextEntity( mSubLC, "S_StorageDisposalSection", "" );
+            //:END
+         } 
+
+         //:END
+         //:FOR EACH mSubLC.S_DirectionsForUseSection 
+         RESULT = SetCursorFirstEntity( mSubLC, "S_DirectionsForUseSection", "" );
+         while ( RESULT > zCURSOR_UNCHANGED )
+         { 
+            //:IF mSubLC.S_DirectionsForUseSection.PrimaryMLC_ID = ""
+            if ( CompareAttributeToString( mSubLC, "S_DirectionsForUseSection", "PrimaryMLC_ID", "" ) == 0 )
+            { 
+               //:mSubLC.S_DirectionsForUseSection.PrimaryMLC_ID = mSubLC.M_DirectionsForUseSection.ID 
+               SetAttributeFromAttribute( mSubLC, "S_DirectionsForUseSection", "PrimaryMLC_ID", mSubLC, "M_DirectionsForUseSection", "ID" );
+            } 
+
+            //:END
+            //:FOR EACH mSubLC.S_DirectionsForUseStatement 
+            RESULT = SetCursorFirstEntity( mSubLC, "S_DirectionsForUseStatement", "" );
+            while ( RESULT > zCURSOR_UNCHANGED )
+            { 
+               //:IF mSubLC.S_DirectionsForUseStatement.PrimaryMLC_ID = ""
+               if ( CompareAttributeToString( mSubLC, "S_DirectionsForUseStatement", "PrimaryMLC_ID", "" ) == 0 )
+               { 
+                  //:mSubLC.S_DirectionsForUseStatement.PrimaryMLC_ID = mSubLC.M_DirectionsForUseStatement.ID 
+                  SetAttributeFromAttribute( mSubLC, "S_DirectionsForUseStatement", "PrimaryMLC_ID", mSubLC, "M_DirectionsForUseStatement", "ID" );
+               } 
+
+               RESULT = SetCursorNextEntity( mSubLC, "S_DirectionsForUseStatement", "" );
+               //:END
+            } 
+
+            RESULT = SetCursorNextEntity( mSubLC, "S_DirectionsForUseSection", "" );
+            //:END
+         } 
+
+         //:END
+         //:FOR EACH mSubLC.S_MarketingSection 
+         RESULT = SetCursorFirstEntity( mSubLC, "S_MarketingSection", "" );
+         while ( RESULT > zCURSOR_UNCHANGED )
+         { 
+            //:IF mSubLC.S_MarketingSection.PrimaryMLC_ID = ""
+            if ( CompareAttributeToString( mSubLC, "S_MarketingSection", "PrimaryMLC_ID", "" ) == 0 )
+            { 
+               //:mSubLC.S_MarketingSection.PrimaryMLC_ID = mSubLC.M_MarketingSection.ID 
+               SetAttributeFromAttribute( mSubLC, "S_MarketingSection", "PrimaryMLC_ID", mSubLC, "M_MarketingSection", "ID" );
+            } 
+
+            //:END
+            //:FOR EACH mSubLC.S_MarketingStatement 
+            RESULT = SetCursorFirstEntity( mSubLC, "S_MarketingStatement", "" );
+            while ( RESULT > zCURSOR_UNCHANGED )
+            { 
+               //:IF mSubLC.S_MarketingStatement.PrimaryMLC_ID = ""
+               if ( CompareAttributeToString( mSubLC, "S_MarketingStatement", "PrimaryMLC_ID", "" ) == 0 )
+               { 
+                  //:mSubLC.S_MarketingStatement.PrimaryMLC_ID = mSubLC.M_MarketingStatement.ID 
+                  SetAttributeFromAttribute( mSubLC, "S_MarketingStatement", "PrimaryMLC_ID", mSubLC, "M_MarketingStatement", "ID" );
+               } 
+
+               RESULT = SetCursorNextEntity( mSubLC, "S_MarketingStatement", "" );
+               //:END
+            } 
+
+            RESULT = SetCursorNextEntity( mSubLC, "S_MarketingSection", "" );
+            //:END
+         } 
+
+         //:END
+         //:FOR EACH mSubLC.S_HumanHazardSection 
+         RESULT = SetCursorFirstEntity( mSubLC, "S_HumanHazardSection", "" );
+         while ( RESULT > zCURSOR_UNCHANGED )
+         { 
+            //:IF mSubLC.S_HumanHazardSection.PrimaryMLC_ID = ""
+            if ( CompareAttributeToString( mSubLC, "S_HumanHazardSection", "PrimaryMLC_ID", "" ) == 0 )
+            { 
+               //:mSubLC.S_HumanHazardSection.PrimaryMLC_ID = mSubLC.M_HumanHazardSection.ID 
+               SetAttributeFromAttribute( mSubLC, "S_HumanHazardSection", "PrimaryMLC_ID", mSubLC, "M_HumanHazardSection", "ID" );
+            } 
+
+            RESULT = SetCursorNextEntity( mSubLC, "S_HumanHazardSection", "" );
+            //:END
+         } 
+
+         //:END
+         //:FOR EACH mSubLC.S_DilutionGroup 
+         RESULT = SetCursorFirstEntity( mSubLC, "S_DilutionGroup", "" );
+         while ( RESULT > zCURSOR_UNCHANGED )
+         { 
+            //:IF mSubLC.S_DilutionGroup.PrimaryMLC_ID = ""
+            if ( CompareAttributeToString( mSubLC, "S_DilutionGroup", "PrimaryMLC_ID", "" ) == 0 )
+            { 
+               //:mSubLC.S_DilutionGroup.PrimaryMLC_ID = mSubLC.M_DilutionGroup.ID 
+               SetAttributeFromAttribute( mSubLC, "S_DilutionGroup", "PrimaryMLC_ID", mSubLC, "M_DilutionGroup", "ID" );
+            } 
+
+            RESULT = SetCursorNextEntity( mSubLC, "S_DilutionGroup", "" );
+            //:END
+         } 
+
+         //:END
+         //:FOR EACH mSubLC.S_UsageType 
+         RESULT = SetCursorFirstEntity( mSubLC, "S_UsageType", "" );
+         while ( RESULT > zCURSOR_UNCHANGED )
+         { 
+            //:FOR EACH mSubLC.S_Usage 
+            RESULT = SetCursorFirstEntity( mSubLC, "S_Usage", "" );
+            while ( RESULT > zCURSOR_UNCHANGED )
+            { 
+               //:IF mSubLC.S_Usage.PrimaryMLC_ID = ""
+               if ( CompareAttributeToString( mSubLC, "S_Usage", "PrimaryMLC_ID", "" ) == 0 )
+               { 
+                  //:mSubLC.S_Usage.PrimaryMLC_ID = mSubLC.M_Usage.ID
+                  SetAttributeFromAttribute( mSubLC, "S_Usage", "PrimaryMLC_ID", mSubLC, "M_Usage", "ID" );
+               } 
+
+               RESULT = SetCursorNextEntity( mSubLC, "S_Usage", "" );
+               //:END
+            } 
+
+            RESULT = SetCursorNextEntity( mSubLC, "S_UsageType", "" );
+            //:END
+         } 
+
+         //:END
+         break ;
+
+      //:  /* end zOCE_ACTIVATE */
+      //:OF   zOCE_ACTIVATE_EMPTY:
+      case zOCE_ACTIVATE_EMPTY :
+         break ;
+
+      //:  /* end zOCE_ACTIVATE_EMPTY */
+      //:OF   zOCE_COMMIT:
+      case zOCE_COMMIT :
+         break ;
+
+      //:  /* end zOCE_COMMIT */
+      //:OF   zOCE_DROPOI:
+      case zOCE_DROPOI :
+         break ;
+   } 
+
+
+   //:     /* end zOCE_DROPOI */
+   //:END  /* case */
    return( 0 );
 // END
 } 

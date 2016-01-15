@@ -98,6 +98,25 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
+      // EditBox: EditBox4
+      nRC = mUser.cursor( "User" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "EditBox4" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "EditBox4", "", strMapValue );
+            else
+               mUser.cursor( "User" ).getAttribute( "ID" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "EditBox4", e.getReason( ), strMapValue );
+         }
+      }
+
       // ComboBox: ComboBox1
       nRC = mUser.cursor( "User" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
@@ -792,6 +811,44 @@ else
 <span class="text10"  id="Text5" name="Text5" style="width:78px;height:16px;">Initials:</span>
 
 <% /* EditBox4:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "EditBox4", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mUser = task.getViewByName( "mUser" );
+      if ( VmlOperation.isValid( mUser ) == false )
+         task.log( ).debug( "Invalid View: " + "EditBox4" );
+      else
+      {
+         nRC = mUser.cursor( "User" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = mUser.cursor( "User" ).getAttribute( "ID" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on EditBox4: " + e.getMessage());
+               task.log().error( "*** Error on ctrl EditBox4", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "User.ID: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for EditBox4: " + "mUser.User" );
+      }
+   }
+%>
+
 <input class="text10" name="EditBox4" id="EditBox4" style="width:194px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->

@@ -1714,7 +1714,6 @@ GeneratePDF_DFU( VIEW mSPLDef    BASED ON LOD mSPLDef,
 
    STRING ( 512 ) szDebugMsg
    
-
    // Generate PDF for a "Directions of Use" or "Marketing" Section.
 
    szLeadingBlanks = szPassedBlanks + "   "
@@ -2797,13 +2796,6 @@ BuildSPLD_FromSLC( VIEW NewSPLD   BASED ON LOD mSPLDef,
       END
    END
 
-   // Delete any Marketing Sections in SPLD not in SLC.
-   /*FOR EACH NewSPLD.SPLD_MarketingSection
-      IF NewSPLD.S_MarketingSection DOES NOT EXIST
-         DELETE ENTITY NewSPLD.SPLD_MarketingSection NONE
-      END
-   END*/
-
    // HumanHazard Section
    FOR EACH SourceSLC.S_HumanHazardSection
       CREATE ENTITY NewSPLD.SPLD_HumanHazardSection
@@ -2820,6 +2812,11 @@ BuildSPLD_FromSLC( VIEW NewSPLD   BASED ON LOD mSPLDef,
          CREATE ENTITY NewSPLD.SPLD_DirectionsForUseStatement
          SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseStatement", SourceSLC, "S_DirectionsForUseStatement", zSET_NULL )
          INCLUDE NewSPLD.S_DirectionsForUseStatement FROM SourceSLC.S_DirectionsForUseStatement
+         
+         // Temporary code created by DonC on 1/13/2016 because NotForUseType was set to NotNull in the ER.
+         IF NewSPLD.SPLD_DirectionsForUseStatement.NotForUseType = ""
+            NewSPLD.SPLD_DirectionsForUseStatement.NotForUseType = "NA"
+         END
       END
    END
 
@@ -2835,7 +2832,7 @@ BuildSPLD_FromSLC( VIEW NewSPLD   BASED ON LOD mSPLDef,
       END
    END
 
-   // Go to build Directions for Use and Marketing entries.
+   // Go to build Directions for Use and Marketing Usage entries.
    BuildUsageEntriesFrSLC( NewSPLD, SourceSLC )
 
 END
@@ -2849,17 +2846,16 @@ TRANSFORMATION OPERATION
 RebuildSPLD_FromSLC( VIEW NewSPLD   BASED ON LOD mSPLDef,
                      VIEW SourceSLC BASED ON LOD mSubLC )
 
-   VIEW mSPLDef2 BASED ON LOD mSPLDef
+   // DonC 1/11/206 - I don't think we are using this code.
 
+   /*VIEW mSPLDef2 BASED ON LOD mSPLDef
    // Correct Directions and Marketing entries by rebuilding them.
-
    FOR EACH NewSPLD.SPLD_DirectionsForUseSection
       DELETE ENTITY NewSPLD.SPLD_DirectionsForUseSection NONE
    END
    FOR EACH NewSPLD.SPLD_MarketingSection
       DELETE ENTITY NewSPLD.SPLD_MarketingSection NONE
    END
-
    // Build Directions for Use Entries (without Usage entries).
    FOR EACH SourceSLC.S_DirectionsForUseSection
       CREATE ENTITY NewSPLD.SPLD_DirectionsForUseSection
@@ -2870,7 +2866,6 @@ RebuildSPLD_FromSLC( VIEW NewSPLD   BASED ON LOD mSPLDef,
          SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseStatement", SourceSLC, "S_DirectionsForUseStatement", zSET_NULL )
       END
    END
-
    // Build Marketing Entries (without Usage entries).
    FOR EACH SourceSLC.S_MarketingSection
       CREATE ENTITY NewSPLD.SPLD_MarketingSection
@@ -2881,9 +2876,8 @@ RebuildSPLD_FromSLC( VIEW NewSPLD   BASED ON LOD mSPLDef,
          SetMatchingAttributesByName( NewSPLD, "SPLD_MarketingStatement", SourceSLC, "S_MarketingStatement", zSET_NULL )
       END
    END
-
    // Go to build Directions for Use and Marketing entries.
-   BuildUsageEntriesFrSLC( NewSPLD, SourceSLC )
+   BuildUsageEntriesFrSLC( NewSPLD, SourceSLC )*/
 
 END
 
@@ -2977,120 +2971,34 @@ BuildSPLD_FromSPLD( VIEW NewSPLD    BASED ON LOD mSPLDef,
                     VIEW ParentSLC  BASED ON LOD mSubLC )
 
    // Build an new SPLD from a previous SPLD.
-   // Most of the component construction is the same as that in BuildSPLD_FromSLC, or nearly
-   // the same. Only the Marketing Section is completely driven from the source SPLD. These are
-   // explained for each section below.
+   // Most of the component construction is the same as that in BuildSPLD_FromSLC. Only the LLD subobject is different.
+   // So, reuse the BuildSPLD_FromSLC operation, then reuse the code for building an LLD section.
 
-   // Set root attributes and tie back to Parent SLC.
-   SetMatchingAttributesByName( NewSPLD, "SubregPhysicalLabelDef", SourceSPLD, "SubregPhysicalLabelDef", zSET_NULL )
-   INCLUDE NewSPLD.SubregLabelContent FROM ParentSLC.SubregLabelContent
-   // Usage Entries.
-   // Usage Entries come from original SPLD. Only those in ParentSLC, however, are used to create Usages in the new SPLD.
-   FOR EACH SourceSPLD.SPLD_Usage
-      SET CURSOR FIRST ParentSLC.S_Usage WHERE ParentSLC.S_Usage.UsageType = SourceSPLD.SPLD_Usage.UsageType
-                                           AND ParentSLC.S_Usage.Name = SourceSPLD.SPLD_Usage.Name
-      IF RESULT >= zCURSOR_SET
-         CREATE ENTITY NewSPLD.SPLD_Usage
-         SetMatchingAttributesByName( NewSPLD, "SPLD_Usage", ParentSLC, "S_Usage", zSET_NULL )
+   BuildSPLD_FromSLC( NewSPLD, ParentSLC )
+   
+   // Copy the SPLD_LLD subobject.
+   CREATE ENTITY NewSPLD.SPLD_LLD
+   SetMatchingAttributesByName( NewSPLD, "S_HumanHazardSection", SourceSPLD, "S_HumanHazardSection", zSET_NULL )
+   FOR EACH SourceSPLD.LLD_Page
+      CREATE ENTITY NewSPLD.LLD_Page
+      SetMatchingAttributesByName( NewSPLD, "LLD_Page", SourceSPLD, "LLD_Page", zSET_NULL )
+      IF SourceSPLD.PageBackgroundColor EXISTS
+         INCLUDE NewSPLD.PageBackgroundColor FROM SourceSPLD.PageBackgroundColor
       END
-   END
-   // General Section
-   // Build from SLC, same as in BuildSPLD_FromSLC.
-   FOR EACH ParentSLC.S_GeneralSection
-      CREATE ENTITY NewSPLD.SPLD_GeneralSection
-      SetMatchingAttributesByName( NewSPLD, "SPLD_GeneralSection", ParentSLC, "S_GeneralSection", zSET_NULL )
-      INCLUDE NewSPLD.S_GeneralSection FROM ParentSLC.S_GeneralSection
-      FOR EACH ParentSLC.S_GeneralStatement
-         CREATE ENTITY NewSPLD.SPLD_GeneralStatement
-         SetMatchingAttributesByName( NewSPLD, "SPLD_GeneralStatement", ParentSLC, "S_GeneralStatement", zSET_NULL )
-         INCLUDE NewSPLD.S_GeneralStatement FROM ParentSLC.S_GeneralStatement
-      END
-   END
-   // Ingredients Section
-   // Build from SLC, same as in BuildSPLD_FromSLC.
-   FOR EACH ParentSLC.S_IngredientsSection
-      CREATE ENTITY NewSPLD.SPLD_IngredientsSection
-      SetMatchingAttributesByName( NewSPLD, "SPLD_IngredientsSection", ParentSLC, "S_IngredientsSection", zSET_NULL )
-      INCLUDE NewSPLD.S_IngredientsSection FROM ParentSLC.S_IngredientsSection
-      FOR EACH ParentSLC.S_IngredientsStatement
-         CREATE ENTITY NewSPLD.SPLD_IngredientsStatement
-         SetMatchingAttributesByName( NewSPLD, "SPLD_IngredientsStatement", ParentSLC, "S_IngredientsStatement", zSET_NULL )
-         INCLUDE NewSPLD.S_IngredientsStatement FROM ParentSLC.S_IngredientsStatement
-      END
-   END
-   // StorageDisposal Section
-   // Build from SLC, same as in BuildSPLD_FromSLC, except that the container size is driven from the source SPLD.
-   SET CURSOR FIRST ParentSLC.S_StorageDisposalSection WHERE ParentSLC.S_StorageDisposalSection.ContainerVolume = SourceSPLD.SPLD_StorageDisposalSection.ContainerVolume
-   CREATE ENTITY NewSPLD.SPLD_StorageDisposalSection
-   SetMatchingAttributesByName( NewSPLD, "SPLD_StorageDisposalSection", ParentSLC, "S_StorageDisposalSection", zSET_NULL )
-   INCLUDE NewSPLD.S_StorageDisposalSection FROM ParentSLC.S_StorageDisposalSection
-   FOR EACH ParentSLC.S_StorageDisposalStatement
-      CREATE ENTITY NewSPLD.SPLD_StorageDisposalStatement
-      SetMatchingAttributesByName( NewSPLD, "SPLD_StorageDisposalStatement", ParentSLC, "S_StorageDisposalStatement", zSET_NULL )
-      INCLUDE NewSPLD.S_StorageDisposalStatement FROM ParentSLC.S_StorageDisposalStatement
-   END
-   // DirectionsForUse Section
-   // Build from SLC, same as in BuildSPLD_FromSLC, except that the Directions sections selected are driven by the Usages from
-   // the source SPLD, which have already be copied to new SPLD..
-   FOR EACH ParentSLC.S_DirectionsForUseSection
-      CREATE ENTITY NewSPLD.SPLD_DirectionsForUseSection
-      SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseSection", ParentSLC, "S_DirectionsForUseSection", zSET_NULL )
-      INCLUDE NewSPLD.S_DirectionsForUseSection FROM ParentSLC.S_DirectionsForUseSection
-      FOR EACH ParentSLC.S_DirectionsForUseStatement
-         CREATE ENTITY NewSPLD.SPLD_DirectionsForUseStatement
-         SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseStatement", ParentSLC, "S_DirectionsForUseStatement", zSET_NULL )
-         INCLUDE NewSPLD.S_DirectionsForUseStatement FROM ParentSLC.S_DirectionsForUseStatement
-      END
-      // Add each Usage from the SLC that is one of the Usages in new the SPLD.
-      FOR EACH ParentSLC.S_DirectionsUsage WITHIN ParentSLC.S_DirectionsForUseSection
-         SET CURSOR FIRST NewSPLD.SPLD_Usage WHERE NewSPLD.SPLD_Usage.UsageType = ParentSLC.S_DirectionsUsage.UsageType
-                                               AND NewSPLD.SPLD_Usage.Name = ParentSLC.S_DirectionsUsage.Name
-         IF RESULT >= zCURSOR_SET
-            CREATE ENTITY NewSPLD.SPLD_DirectionsUsageOrdering
-            INCLUDE NewSPLD.SPLD_DirectionsUsage FROM NewSPLD.SPLD_Usage
+      FOR EACH SourceSPLD.LLD_Panel
+         CREATE ENTITY NewSPLD.LLD_Panel
+         SetMatchingAttributesByName( NewSPLD, "LLD_Panel", SourceSPLD, "LLD_Panel", zSET_NULL )
+         IF SourceSPLD.PanelBackgroundColor EXISTS
+            INCLUDE NewSPLD.PanelBackgroundColor FROM SourceSPLD.PanelBackgroundColor
+         END
+         IF SourceSPLD.PanelBorderColor EXISTS
+            INCLUDE NewSPLD.PanelBorderColor FROM SourceSPLD.PanelBorderColor
+         END
+         FOR EACH SourceSPLD.LLD_Block
+            // Use recursive routine to duplicate Block.
+            DuplicateSPLD_Block( NewSPLD, SourceSPLD )
          END
       END
-   END
-   // Now delete any "NON General" Directions for Use that have no Usages remaining.
-   FOR EACH NewSPLD.SPLD_DirectionsForUseSection WHERE NewSPLD.SPLD_DirectionsForUseSection.GeneralUse != "Y"
-      IF NewSPLD.SPLD_DirectionsUsage DOES NOT EXIST
-         DELETE ENTITY NewSPLD.SPLD_DirectionsForUseSection NONE
-      END
-   END
-   // Marketing Section
-   // These are driven  from the original SPLD. We progress from the original SPLD to its SLC, then to the S_MarketingSection of the
-   // new SLC and generate the new SPLD Marketing Section from the S_MarketingSection of the new SLC.
-   // Note that we won't recreate a Marketing Section that is not in the new SLC.
-   FOR EACH SourceSPLD.SPLD_MarketingSection
-      SET CURSOR FIRST ParentSLC.SP_MarketingSection WITHIN ParentSLC.SubregLabelContent
-                 WHERE ParentSLC.SP_MarketingSection.ID = SourceSPLD.S_MarketingSection.ID
-      IF RESULT >= zCURSOR_SET
-         CREATE ENTITY NewSPLD.SPLD_MarketingSection
-         SetMatchingAttributesByName( NewSPLD, "SPLD_MarketingSection", ParentSLC, "S_MarketingSection", zSET_NULL )
-         INCLUDE NewSPLD.S_MarketingSection FROM ParentSLC.S_MarketingSection
-         FOR EACH ParentSLC.S_MarketingStatement
-            CREATE ENTITY NewSPLD.SPLD_MarketingStatement
-            SetMatchingAttributesByName( NewSPLD, "SPLD_MarketingStatement", ParentSLC, "S_MarketingStatement", zSET_NULL )
-            INCLUDE NewSPLD.S_MarketingStatement FROM ParentSLC.S_MarketingStatement
-         END
-         // Add each Usage from the SLC that is one of the Usages in new the SPLD.
-         // They are handled the same as for Marketing For Use above.
-         FOR EACH ParentSLC.S_MarketingUsage WITHIN ParentSLC.S_MarketingSection
-            SET CURSOR FIRST NewSPLD.SPLD_Usage WHERE NewSPLD.SPLD_Usage.UsageType = ParentSLC.S_MarketingUsage.UsageType
-                                                  AND NewSPLD.SPLD_Usage.Name = ParentSLC.S_MarketingUsage.Name
-            IF RESULT >= zCURSOR_SET
-               CREATE ENTITY NewSPLD.SPLD_MarketingUsageOrdering
-               INCLUDE NewSPLD.SPLD_MarketingUsage FROM NewSPLD.SPLD_Usage
-            END
-         END
-      END
-   END
-   // HumanHazard Section
-   // Build from SLC, same as in BuildSPLD_FromSLC.
-   FOR EACH ParentSLC.S_HumanHazardSection
-      CREATE ENTITY NewSPLD.SPLD_HumanHazardSection
-      SetMatchingAttributesByName( NewSPLD, "SPLD_HumanHazardSection", ParentSLC, "S_HumanHazardSection", zSET_NULL )
-      INCLUDE NewSPLD.S_HumanHazardSection FROM ParentSLC.S_HumanHazardSection
    END
 
 END

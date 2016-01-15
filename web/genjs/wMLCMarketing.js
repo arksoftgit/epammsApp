@@ -189,6 +189,25 @@ function CheckAllInGrid(id, CheckBoxName)
    }
 }
 
+function GOTO_MarketingSectionAddAfter( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCMarketing.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCMarketing.zAction.value = "GOTO_MarketingSectionAddAfter";
+      document.wMLCMarketing.submit( );
+   }
+}
+
 function GOTO_MarketingSectionAdd( )
 {
 
@@ -200,6 +219,25 @@ function GOTO_MarketingSectionAdd( )
       _DisableFormElements( true );
 
       document.wMLCMarketing.zAction.value = "GOTO_MarketingSectionAdd";
+      document.wMLCMarketing.submit( );
+   }
+}
+
+function GOTO_MarketingSectionAddBefore( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCMarketing.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCMarketing.zAction.value = "GOTO_MarketingSectionAddBefore";
       document.wMLCMarketing.submit( );
    }
 }
@@ -377,7 +415,7 @@ function smEditFirstAidSect( )
    }
 }
 
-function smEditEnvironmentalHazardSection( )
+function smEnvironmentalHazards( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -387,7 +425,7 @@ function smEditEnvironmentalHazardSection( )
    {
       _DisableFormElements( true );
 
-      document.wMLCMarketing.zAction.value = "smEditEnvironmentalHazardSection";
+      document.wMLCMarketing.zAction.value = "smEnvironmentalHazards";
       document.wMLCMarketing.submit( );
    }
 }

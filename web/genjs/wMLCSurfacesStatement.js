@@ -189,7 +189,7 @@ function CheckAllInGrid(id, CheckBoxName)
    }
 }
 
-function AcceptAndReturnAreasStatement( )
+function AcceptAndReturnUsageStatement( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -199,12 +199,12 @@ function AcceptAndReturnAreasStatement( )
    {
       _DisableFormElements( true );
 
-      document.wMLCSurfacesStatement.zAction.value = "AcceptAndReturnAreasStatement";
+      document.wMLCSurfacesStatement.zAction.value = "AcceptAndReturnUsageStatement";
       document.wMLCSurfacesStatement.submit( );
    }
 }
 
-function InitSurfacesStmtsForInsert( )
+function ADD_UsageKeyword( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -214,7 +214,7 @@ function InitSurfacesStmtsForInsert( )
    {
       _DisableFormElements( true );
 
-      document.wMLCSurfacesStatement.zAction.value = "InitSurfacesStmtsForInsert";
+      document.wMLCSurfacesStatement.zAction.value = "ADD_UsageKeyword";
       document.wMLCSurfacesStatement.submit( );
    }
 }
@@ -230,6 +230,69 @@ function CancelAreasOfUseStatement( )
       _DisableFormElements( true );
 
       document.wMLCSurfacesStatement.zAction.value = "CancelAreasOfUseStatement";
+      document.wMLCSurfacesStatement.submit( );
+   }
+}
+
+function DELETE_UsageKeyword( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCSurfacesStatement.zTableRowSelect.value = strEntityKey;
+      // Javascript code entered by user.
+
+// Confirmation of  Delete.
+if (!confirm("OK to delete selected entry?"))
+{
+   return;
+}
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wMLCSurfacesStatement.zAction.value = "DELETE_UsageKeyword";
+      document.wMLCSurfacesStatement.submit( );
+   }
+}
+
+function GOTO_DisplayGeneratedTextUsage( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCSurfacesStatement.zAction.value = "GOTO_DisplayGeneratedTextUsage";
+      document.wMLCSurfacesStatement.submit( );
+   }
+}
+
+function GOTO_UsageUpdate( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCSurfacesStatement.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCSurfacesStatement.zAction.value = "GOTO_UsageUpdate";
       document.wMLCSurfacesStatement.submit( );
    }
 }
