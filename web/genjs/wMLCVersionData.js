@@ -212,7 +212,7 @@ function FinalizeMasterLabelContent( )
    {
       // Javascript code entered by user.
 
-var rc = confirm(  "Once the Master Label Content has been Finalized, it cannot be updated." + '\n' + "Are you sure you want to Finalize the Master Label Content?" );
+var rc = confirm(  "Once the Master Label Content has been finalized to Production, it cannot be updated." + '\n' + "Are you sure you want to continue?" );
 if ( rc != true )
 {
    return;

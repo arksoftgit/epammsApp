@@ -36,6 +36,7 @@ public int DoInputMapping( HttpServletRequest request,
    Task task = objectEngine.getTaskById( taskId );
 
    View mMasLC = null;
+   View wWebXfer = null;
    View vGridTmp = null; // temp view to grid view
    View vRepeatingGrp = null; // temp view to repeating group view
    String strDateFormat = "";
@@ -95,6 +96,30 @@ public int DoInputMapping( HttpServletRequest request,
          {
             nMapError = -16;
             VmlOperation.CreateMessage( task, "MLEdit2", e.getReason( ), strMapValue );
+         }
+      }
+
+   }
+
+   wWebXfer = task.getViewByName( "wWebXfer" );
+   if ( VmlOperation.isValid( wWebXfer ) )
+   {
+      // EditBox: Delimiters
+      nRC = wWebXfer.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "Delimiters" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "Delimiters", "", strMapValue );
+            else
+               wWebXfer.cursor( "Root" ).getAttribute( "String" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "Delimiters", e.getReason( ), strMapValue );
          }
       }
 
@@ -407,7 +432,27 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
    session.setAttribute( "ZeidonError", null );
 else
 {
+   VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddItemsMultipleClaims", "wMLC.InitAddItems" );
+   nOptRC = wMLC.InitAddItems( new zVIEW( vKZXMLPGO ) );
+   if ( nOptRC == 2 )
+   {
+      View vView;
+      String strMessage;
+      String strURLParameters;
+
+      vView = task.getViewByName( "wXferO" );
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString( "" );
+      strURLParameters = "?CallingPage=wMLCAddItemsMultipleClaims.jsp" +
+                         "&Message=" + strMessage +
+                         "&DialogName=" + "wMLC" +
+                         "&OperationName=" + "InitAddItems";
+      strURL = response.encodeRedirectURL( "MessageDisplay.jsp" + strURLParameters );
+      response.sendRedirect( strURL );
+      task.log().info( "Pre/Post Redirect to: " + strURL );
+      return;
+   }
 }
+
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wMLC", "" );
    if ( csrRC.isSet( ) )
       strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
@@ -621,7 +666,7 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox2:GroupBox */ %>
 
-<div id="GroupBox2" name="GroupBox2"   style="float:left;position:relative; width:778px; height:36px;">  <!-- GroupBox2 --> 
+<div id="GroupBox2" name="GroupBox2"   style="float:left;position:relative; width:790px; height:36px;">  <!-- GroupBox2 --> 
 
 <% /* Text2:Text */ %>
 
@@ -718,11 +763,60 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBAddSurfacesList:GroupBox */ %>
 
-<div id="GBAddSurfacesList" name="GBAddSurfacesList"   style="float:left;position:relative; width:778px; height:490px;">  <!-- GBAddSurfacesList --> 
+<div id="GBAddSurfacesList" name="GBAddSurfacesList"   style="float:left;position:relative; width:790px; height:490px;">  <!-- GBAddSurfacesList --> 
 
 <% /* AddSurfacesList:Text */ %>
 
-<label class="groupbox"  id="AddSurfacesList" name="AddSurfacesList" style="width:374px;height:16px;position:absolute;left:6px;top:12px;">Add One or Multiple Items Separated by Line Feeds</label>
+<label class="groupbox"  id="AddSurfacesList" name="AddSurfacesList" style="width:348px;height:16px;position:absolute;left:6px;top:12px;">Add One or Multiple Items Separated by Line Feeds</label>
+
+<% /* Delimiters::Text */ %>
+
+<label  id="Delimiters:" name="Delimiters:" style="width:74px;height:16px;position:absolute;left:392px;top:12px;">Delimiters:</label>
+
+<% /* Delimiters:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "Delimiters", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      wWebXfer = task.getViewByName( "wWebXfer" );
+      if ( VmlOperation.isValid( wWebXfer ) == false )
+         task.log( ).debug( "Invalid View: " + "Delimiters" );
+      else
+      {
+         nRC = wWebXfer.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "String" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on Delimiters: " + e.getMessage());
+               task.log().error( "*** Error on ctrl Delimiters", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "Root.String: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for Delimiters: " + "wWebXfer.Root" );
+      }
+   }
+%>
+
+<input name="Delimiters" id="Delimiters" style="width:90px;position:absolute;left:472px;top:12px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
+<% /* Doc:Text */ %>
+
+<label  id="Doc" name="Doc" style="width:168px;height:16px;position:absolute;left:578px;top:12px;">\t - tab; \r\n - CRLF</label>
 
 <% /* MLEdit2:MLEdit */ %>
 <%
@@ -756,7 +850,7 @@ else
    }
 %>
 
-<textarea name="MLEdit2" id="MLEdit2" style="width:754px;height:440px;position:absolute;left:6px;top:36px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+<textarea name="MLEdit2" id="MLEdit2" style="width:770px;height:440px;position:absolute;left:6px;top:36px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 
 </div>  <!--  GBAddSurfacesList --> 

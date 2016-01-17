@@ -74,82 +74,6 @@ GOTO_PrecautionaryStmtDelete( View     ViewToWindow )
 
 
 private int 
-o_fnLocalBuildQual_13( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lTempInteger_0 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterLabelContent" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterLabelContent" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_3( View     vSubtask,
-                      zVIEW    vQualObject,
-                      int      lTempInteger_0 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterProduct" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_4( View     vSubtask,
-                      zVIEW    vQualObject,
-                      int      lTempInteger_0 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterLabelContent" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterLabelContent" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_5( View     vSubtask,
-                      zVIEW    vQualObject,
-                      int      lTempInteger_0 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterLabelContent" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterLabelContent" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
 o_fnLocalBuildQual_6( View     vSubtask,
                       zVIEW    vQualObject,
                       int      lID )
@@ -283,55 +207,17 @@ o_fnLocalBuildQual_12( View     vSubtask,
 
 
 private int 
-o_fnLocalBuildQual_0( View     vSubtask,
-                      zVIEW    vQualObject,
-                      int      MasProdID )
+o_fnLocalBuildQual_13( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lTempInteger_0 )
 {
    int      RESULT = 0;
 
    RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
    CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterProduct" );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterLabelContent" );
    CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterProduct" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", MasProdID );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_1( View     vSubtask,
-                      zVIEW    vQualObject,
-                      int      MasProdID )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterProduct" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterProduct" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", MasProdID );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_2( View     vSubtask,
-                      zVIEW    vQualObject,
-                      int      lTempInteger_0 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterProduct" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterProduct" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterLabelContent" );
    SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
    SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
@@ -2829,8 +2715,8 @@ GenerateNewMLC_Version( View     ViewToWindow )
     m_mMasLC_Object.omMasLC_BuildNewMLC_Version( NewMLC, OriginalMLC );
     // m_mMasLC_Object = null;  // permit gc  (unnecessary)
    }
-   //:NewMLC.MasterLabelContent.Finalized = "M"
-   SetAttributeFromString( NewMLC, "MasterLabelContent", "Finalized", "M" );
+   //:NewMLC.MasterLabelContent.Finalized = "W"
+   SetAttributeFromString( NewMLC, "MasterLabelContent", "Finalized", "W" );
    return( 0 );
 // END
 } 
@@ -3509,8 +3395,8 @@ FinalizeMasterLabelContent( View     ViewToWindow )
    //://    RETURN 2      // Return 2 to indicate Web client must prompt operator
    //:// END
 
-   //:IF mMasLC.MasterLabelContent.Finalized = "" OR mMasLC.MasterLabelContent.Finalized = "M"
-   if ( CompareAttributeToString( mMasLC, "MasterLabelContent", "Finalized", "" ) == 0 || CompareAttributeToString( mMasLC, "MasterLabelContent", "Finalized", "M" ) == 0 )
+   //:IF mMasLC.MasterLabelContent.Finalized = "" OR mMasLC.MasterLabelContent.Finalized = "W"
+   if ( CompareAttributeToString( mMasLC, "MasterLabelContent", "Finalized", "" ) == 0 || CompareAttributeToString( mMasLC, "MasterLabelContent", "Finalized", "W" ) == 0 )
    { 
       //:mMasLC.MasterLabelContent.Finalized = "P"
       SetAttributeFromString( mMasLC, "MasterLabelContent", "Finalized", "P" );
@@ -3710,8 +3596,8 @@ SaveMLC( View     ViewToWindow )
    //:IF mMasLC.MasterLabelContent.Finalized = ""
    if ( CompareAttributeToString( mMasLC, "MasterLabelContent", "Finalized", "" ) == 0 )
    { 
-      //:mMasLC.MasterLabelContent.Finalized = "M"
-      SetAttributeFromString( mMasLC, "MasterLabelContent", "Finalized", "M" );
+      //:mMasLC.MasterLabelContent.Finalized = "W"
+      SetAttributeFromString( mMasLC, "MasterLabelContent", "Finalized", "W" );
       //:mMasLC.MasterLabelContent.CreatedDateTime = wWebXfer.Root.dCurrentDateTime
       SetAttributeFromAttribute( mMasLC, "MasterLabelContent", "CreatedDateTime", wWebXfer, "Root", "dCurrentDateTime" );
       //:mMasLC.MasterLabelContent.RevisionDate = wWebXfer.Root.dCurrentDateTime
@@ -4206,20 +4092,25 @@ ConfirmAddItemsMultiple( View     ViewToWindow )
 {
    zVIEW    mMasLC = new zVIEW( );
    int      RESULT = 0;
+   //:VIEW wWebXfer REGISTERED AS wWebXfer
+   zVIEW    wWebXfer = new zVIEW( );
    //:SHORT nRC
    int      nRC = 0;
    String   szTempString_0 = null;
    String   szTempString_1 = null;
    String   szTempString_2 = null;
+   String   szTempString_3 = null;
 
    RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
 
    //:// Call operation to split text up into one or more entities, depending on the view, EntityName and
    //:// AttributeName passed in mMasLC root work entities.
    //:SplitParagraphOnLinefeed( mMasLC.MasterLabelContent.wAddStatementsWorkText,
    //:                          mMasLC,
    //:                          mMasLC.MasterLabelContent.wAddStatementsEntityName,
-   //:                          mMasLC.MasterLabelContent.wAddStatementsAttributeName )
+   //:                          mMasLC.MasterLabelContent.wAddStatementsAttributeName,
+   //:                          wWebXfer.Root.String )
    {StringBuilder sb_szTempString_0;
    if ( szTempString_0 == null )
       sb_szTempString_0 = new StringBuilder( 32 );
@@ -4241,9 +4132,16 @@ ConfirmAddItemsMultiple( View     ViewToWindow )
       sb_szTempString_2 = new StringBuilder( szTempString_2 );
        GetStringFromAttribute( sb_szTempString_2, mMasLC, "MasterLabelContent", "wAddStatementsAttributeName" );
    szTempString_2 = sb_szTempString_2.toString( );}
+   {StringBuilder sb_szTempString_3;
+   if ( szTempString_3 == null )
+      sb_szTempString_3 = new StringBuilder( 32 );
+   else
+      sb_szTempString_3 = new StringBuilder( szTempString_3 );
+       GetStringFromAttribute( sb_szTempString_3, wWebXfer, "Root", "String" );
+   szTempString_3 = sb_szTempString_3.toString( );}
    {
     ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mMasLC );
-    m_ZGlobal1_Operation.SplitParagraphOnLinefeed( szTempString_0, mMasLC, szTempString_1, szTempString_2 );
+    m_ZGlobal1_Operation.SplitParagraphOnLinefeed( szTempString_0, mMasLC, szTempString_1, szTempString_2, szTempString_3 );
     // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
    }
 
@@ -4322,13 +4220,17 @@ ConfirmAddItemsMultipleClaims( View     ViewToWindow )
 {
    zVIEW    mMasLC = new zVIEW( );
    int      RESULT = 0;
+   //:VIEW wWebXfer REGISTERED AS wWebXfer
+   zVIEW    wWebXfer = new zVIEW( );
    //:SHORT nRC
    int      nRC = 0;
    String   szTempString_0 = null;
    String   szTempString_1 = null;
    String   szTempString_2 = null;
+   String   szTempString_3 = null;
 
    RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
 
    //:// Make sure that a Claims Classification has been selected.
    //:IF mMasLC.MasterLabelContent.wSelectedClaimsClassification = ""
@@ -4351,7 +4253,8 @@ ConfirmAddItemsMultipleClaims( View     ViewToWindow )
    //:SplitParagraphOnLinefeed( mMasLC.MasterLabelContent.wAddStatementsWorkText,
    //:                          mMasLC,
    //:                          mMasLC.MasterLabelContent.wAddStatementsEntityName,
-   //:                          mMasLC.MasterLabelContent.wAddStatementsAttributeName )
+   //:                          mMasLC.MasterLabelContent.wAddStatementsAttributeName,
+   //:                          wWebXfer.Root.String )
    {StringBuilder sb_szTempString_0;
    if ( szTempString_0 == null )
       sb_szTempString_0 = new StringBuilder( 32 );
@@ -4373,9 +4276,16 @@ ConfirmAddItemsMultipleClaims( View     ViewToWindow )
       sb_szTempString_2 = new StringBuilder( szTempString_2 );
        GetStringFromAttribute( sb_szTempString_2, mMasLC, "MasterLabelContent", "wAddStatementsAttributeName" );
    szTempString_2 = sb_szTempString_2.toString( );}
+   {StringBuilder sb_szTempString_3;
+   if ( szTempString_3 == null )
+      sb_szTempString_3 = new StringBuilder( 32 );
+   else
+      sb_szTempString_3 = new StringBuilder( szTempString_3 );
+       GetStringFromAttribute( sb_szTempString_3, wWebXfer, "Root", "String" );
+   szTempString_3 = sb_szTempString_3.toString( );}
    {
     ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mMasLC );
-    m_ZGlobal1_Operation.SplitParagraphOnLinefeed( szTempString_0, mMasLC, szTempString_1, szTempString_2 );
+    m_ZGlobal1_Operation.SplitParagraphOnLinefeed( szTempString_0, mMasLC, szTempString_1, szTempString_2, szTempString_3 );
     // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
    }
 
@@ -5589,6 +5499,8 @@ GOTO_CopyMLC_Version( View     ViewToWindow )
    RESULT = CreateEntity( mMasLCNew, "MasterLabelContent", zPOS_AFTER );
    //:INCLUDE mMasLCNew.MasterProduct FROM mMasProd.MasterProduct
    RESULT = IncludeSubobjectFromSubobject( mMasLCNew, "MasterProduct", mMasProd, "MasterProduct", zPOS_AFTER );
+   //:mMasLCNew.MasterLabelContent.Finalized        = "W"
+   SetAttributeFromString( mMasLCNew, "MasterLabelContent", "Finalized", "W" );
    //:mMasLCNew.MasterLabelContent.RevisionDate     = wWebXfer.Root.dCurrentDateTime
    SetAttributeFromAttribute( mMasLCNew, "MasterLabelContent", "RevisionDate", wWebXfer, "Root", "dCurrentDateTime" );
    //:mMasLCNew.MasterLabelContent.CreatedDateTime  = wWebXfer.Root.dCurrentDateTime
@@ -5597,6 +5509,139 @@ GOTO_CopyMLC_Version( View     ViewToWindow )
    SetAttributeFromAttribute( mMasLCNew, "MasterLabelContent", "ModifiedDateTime", wWebXfer, "Root", "dCurrentDateTime" );
    return( 0 );
 // END
+} 
+
+
+//:DIALOG OPERATION
+//:InitAddItems( VIEW ViewToWindow )
+
+//:   VIEW wWebXfer REGISTERED AS wWebXfer
+public int 
+InitAddItems( View     ViewToWindow )
+{
+   zVIEW    wWebXfer = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
+
+   //:wWebXfer.Root.String = "\r\n"
+   SetAttributeFromString( wWebXfer, "Root", "String", "\\r\\n" );
+   return( 0 );
+// END
+} 
+
+
+private int 
+o_fnLocalBuildQual_0( View     vSubtask,
+                      zVIEW    vQualObject,
+                      int      MasProdID )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterProduct" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterProduct" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", MasProdID );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_1( View     vSubtask,
+                      zVIEW    vQualObject,
+                      int      MasProdID )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterProduct" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterProduct" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", MasProdID );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_2( View     vSubtask,
+                      zVIEW    vQualObject,
+                      int      lTempInteger_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterProduct" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterProduct" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_3( View     vSubtask,
+                      zVIEW    vQualObject,
+                      int      lTempInteger_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterProduct" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_4( View     vSubtask,
+                      zVIEW    vQualObject,
+                      int      lTempInteger_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterLabelContent" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterLabelContent" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_5( View     vSubtask,
+                      zVIEW    vQualObject,
+                      int      lTempInteger_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterLabelContent" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterLabelContent" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
 } 
 
 

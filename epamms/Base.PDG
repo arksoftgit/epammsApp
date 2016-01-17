@@ -1,7 +1,7 @@
-z1000-Zeidon    BASE     TZDGSRCO 01/14/16   20:34:38 1.0a2   
+z1000-Zeidon    BASE     TZDGSRCO 01/16/16   17:06:40 1.0a2   
 eDomainGroup 1
 aZKey      68567479
-aNextZKeyToAssign 130001716
+aNextZKeyToAssign 130001717
 aName      Base
 aExtension C
 aWorkNumeric 5
@@ -23,7 +23,7 @@ aIsDefault Y
 eDomain    2
 aZKey      130001711
 aName      Status
-aDesc      Historical, Production, Mutable
+aDesc      Historical, Production, Work in Progress
 aDomainType T
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
@@ -47,8 +47,12 @@ aInternalValue P
 
 eTableEntry 4
 aZKey      130001715
-aExternalValue Mutable
-aInternalValue M
+aExternalValue Work In Progress
+aInternalValue W
+
+eTableEntry 4
+aZKey      130001717
+aExternalValue WIP
 
 eDomain    2
 aZKey      110370112

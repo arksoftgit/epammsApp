@@ -13,7 +13,7 @@
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
 <%@ page import="com.quinsoft.epamms.*" %>
 
-<%!
+<%! 
 
 ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
@@ -139,7 +139,7 @@ String strInputFileName = "";
 strActionToProcess = (String) request.getParameter( "zAction" );
 
 strLastWindow = (String) session.getAttribute( "ZeidonWindow" );
-if ( StringUtils.isBlank( strLastWindow ) )
+if ( StringUtils.isBlank( strLastWindow ) ) 
    strLastWindow = "NoLastWindow";
 
 strLastAction = (String) session.getAttribute( "ZeidonAction" );
@@ -865,7 +865,7 @@ if ( strActionToProcess != null )
             task.log().info( "Action Error Redirect to: " + strURL );
          }
 
-         if ( ! strURL.equals("wMLCVersionData.jsp") )
+         if ( ! strURL.equals("wMLCVersionData.jsp") ) 
          {
             response.sendRedirect( strURL );
             // If we are redirecting to a new page, then we need this return so that the rest of this page doesn't get built.
@@ -1296,7 +1296,7 @@ else
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* MasterLabelContent:GroupBox */ %>
 
-<div id="MasterLabelContent" name="MasterLabelContent" class="withborder"   style="float:left;position:relative; width:732px; height:264px;">  <!-- MasterLabelContent -->
+<div id="MasterLabelContent" name="MasterLabelContent" class="withborder"   style="float:left;position:relative; width:732px; height:264px;">  <!-- MasterLabelContent --> 
 
 <% /* EPA_RegistrationNbr:Text */ %>
 
@@ -1390,7 +1390,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "RevisionDate" ).getString( "REVMMDDYY" );
+         strTextDisplayValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "RevisionDate" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -1436,11 +1436,8 @@ else
 
 <label class="text12"  id="Finalized" name="Finalized" style="width:54px;height:16px;position:absolute;left:170px;top:114px;"><%=strTextDisplayValue%></label>
 
-<% /* SetFinal:PushBtn */ %>
-<button type="button" name="SetFinal" id="SetFinal" value="" onclick="FinalizeMasterLabelContent( )" style="width:112px;height:16px;position:absolute;left:262px;top:114px;">Set Production</button>
 
-
-</div>  <!--  MasterLabelContent -->
+</div>  <!--  MasterLabelContent --> 
 </div>  <!-- End of a new line -->
 
 

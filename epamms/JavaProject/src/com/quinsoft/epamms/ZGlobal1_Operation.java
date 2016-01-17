@@ -4597,28 +4597,73 @@ public class ZGlobal1_Operation extends VmlOperation
    SplitParagraphOnLinefeed( String paragraph,
                              View   view,
                              String entityName,
-                             String attributeName )
+                             String attributeName,
+                             String delimiters )
    {
-      String delimiters = "\r\n";
+   // TraceLineS( "SplitParagraphOnLinefeed delimiters: ", delimiters );
       String value;
       int count = 0;
       EntityCursor ec = view.cursor( entityName );
-      int lth = view.getLodDef().getEntityDef( entityName ).getAttribute( attributeName ).getLength();
-      String[] tokens = paragraph.split( delimiters );
-      int rawCount = tokens.length;
-      for ( int k = 0; k < rawCount; k++ ) {
-         value = tokens[k].trim();
-         if ( value.length() >= lth ) {
-            TraceLineS( "Truncating value in split: ", value );
-            value = value.substring( 0, lth );
-         }
-         if ( value.equals( "" ) == false ) {
-         // TraceLineS( value, "|" );
-            count++;
-            ec.createEntity( CursorPosition.LAST );
-            ec.getAttribute( attributeName ).setValue( value );
+      int pos = 0;
+      int delimEnd = delimiters.length();
+      if ( delimiters.isEmpty() ) {
+         delimiters = "\r\n";
+      } else {
+         while ( (pos = delimiters.indexOf( "\\" )) >= 0 ) {
+            String replace = "\\";
+            int adjust = 1;
+            if ( pos < delimEnd - 2 ) {
+               adjust = 2;
+               char ch = delimiters.charAt( pos + 1 );
+               if ( ch == 't' ) {
+                  replace = "\t";
+               } else if ( ch == 'r' ) {
+                  replace = "\r";
+               } else if ( ch == 'n' ) {
+                  replace = "\n";
+               } else {
+                  adjust = 1;
+               }
+            }
+            if ( pos > 0 ) {
+               value = delimiters.substring( 0, pos ) + delimiters.substring( pos + adjust, delimEnd );
+            } else {
+               value = delimiters.substring( pos + adjust, delimEnd );
+            }
+            delimiters = replace + value;
+            delimEnd = delimiters.length();
+            pos++;
          }
       }
+
+      int lth = view.getLodDef().getEntityDef( entityName ).getAttribute( attributeName ).getLength();
+      int posPrev = 0;
+      int end = paragraph.length();
+      int k;
+      String token;
+      pos = 0;
+      while ( pos < end ) {
+         for ( k = 0; k < delimEnd; k++ ) {
+            if ( paragraph.charAt( pos ) == delimiters.charAt( k ) ) {
+               token = paragraph.substring( posPrev, pos );
+               posPrev = pos + 1;
+               value = token.trim();
+               if ( value.length() >= lth ) {
+                  TraceLineS( "Truncating value in split: ", value );
+                  value = value.substring( 0, lth );
+               }
+               if ( value.isEmpty() == false ) {
+               // TraceLineS( value, "|" );
+                  count++;
+                  ec.createEntity( CursorPosition.LAST );
+                  ec.getAttribute( attributeName ).setValue( value );
+               }
+               break;
+            }
+         }
+         pos++;
+      }
+      
       return count;
    }
 

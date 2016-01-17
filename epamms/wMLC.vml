@@ -105,7 +105,7 @@ SaveMLC( VIEW ViewToWindow )
    END
 
    IF mMasLC.MasterLabelContent.Finalized = ""
-      mMasLC.MasterLabelContent.Finalized = "M"
+      mMasLC.MasterLabelContent.Finalized = "W"
       mMasLC.MasterLabelContent.CreatedDateTime = wWebXfer.Root.dCurrentDateTime
       mMasLC.MasterLabelContent.RevisionDate = wWebXfer.Root.dCurrentDateTime
    END
@@ -161,7 +161,7 @@ FinalizeMasterLabelContent( VIEW ViewToWindow )
 //    RETURN 2      // Return 2 to indicate Web client must prompt operator
 // END
 
-   IF mMasLC.MasterLabelContent.Finalized = "" OR mMasLC.MasterLabelContent.Finalized = "M"
+   IF mMasLC.MasterLabelContent.Finalized = "" OR mMasLC.MasterLabelContent.Finalized = "W"
       mMasLC.MasterLabelContent.Finalized = "P"
    END
 
@@ -618,7 +618,7 @@ GenerateNewMLC_Version( VIEW ViewToWindow )
    NAME VIEW NewMLC "mMasLC"
 
    BuildNewMLC_Version( NewMLC, OriginalMLC )    // Create NewMLC from OriginalMLC
-   NewMLC.MasterLabelContent.Finalized = "M"
+   NewMLC.MasterLabelContent.Finalized = "W"
 
 END
 
@@ -1855,6 +1855,20 @@ InitAppTypesStmtsForInsert( VIEW ViewToWindow )
 
 END
 
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: InitAddItems
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+InitAddItems( VIEW ViewToWindow )
+
+   VIEW wWebXfer REGISTERED AS wWebXfer
+
+   wWebXfer.Root.String = "\r\n"
+
+END
+
 /*************************************************************************************************
 **
 **    OPERATION: ConfirmAddItemsMultiple
@@ -1864,6 +1878,7 @@ DIALOG OPERATION
 ConfirmAddItemsMultiple( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
+   VIEW wWebXfer REGISTERED AS wWebXfer
    SHORT nRC
 
    // Call operation to split text up into one or more entities, depending on the view, EntityName and
@@ -1871,7 +1886,8 @@ ConfirmAddItemsMultiple( VIEW ViewToWindow )
    SplitParagraphOnLinefeed( mMasLC.MasterLabelContent.wAddStatementsWorkText,
                              mMasLC,
                              mMasLC.MasterLabelContent.wAddStatementsEntityName,
-                             mMasLC.MasterLabelContent.wAddStatementsAttributeName )
+                             mMasLC.MasterLabelContent.wAddStatementsAttributeName,
+                             wWebXfer.Root.String )
 
    // Usage Type Processing
    // Set Usage Type and Claims Classification for any entry for which the values haven't been set.
@@ -1913,6 +1929,7 @@ DIALOG OPERATION
 ConfirmAddItemsMultipleClaims( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
+   VIEW wWebXfer REGISTERED AS wWebXfer
    SHORT nRC
 
    // Make sure that a Claims Classification has been selected.
@@ -1929,7 +1946,8 @@ ConfirmAddItemsMultipleClaims( VIEW ViewToWindow )
    SplitParagraphOnLinefeed( mMasLC.MasterLabelContent.wAddStatementsWorkText,
                              mMasLC,
                              mMasLC.MasterLabelContent.wAddStatementsEntityName,
-                             mMasLC.MasterLabelContent.wAddStatementsAttributeName )
+                             mMasLC.MasterLabelContent.wAddStatementsAttributeName,
+                             wWebXfer.Root.String )
 
    // Set Usage Type and Claims Classification for any entry for which the values haven't been set.
    FOR EACH mMasLC.M_Usage
@@ -2725,6 +2743,7 @@ GOTO_CopyMLC_Version( VIEW ViewToWindow )
    NAME VIEW mMasLCNew "mMasLC"
    CREATE ENTITY mMasLCNew.MasterLabelContent
    INCLUDE mMasLCNew.MasterProduct FROM mMasProd.MasterProduct
+   mMasLCNew.MasterLabelContent.Finalized        = "W"
    mMasLCNew.MasterLabelContent.RevisionDate     = wWebXfer.Root.dCurrentDateTime
    mMasLCNew.MasterLabelContent.CreatedDateTime  = wWebXfer.Root.dCurrentDateTime
    mMasLCNew.MasterLabelContent.ModifiedDateTime = wWebXfer.Root.dCurrentDateTime

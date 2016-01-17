@@ -1,4 +1,4 @@
-z1000-Zeidon    ZEIDON   TZDMXGPO 01/14/16   20:34:38 1.0a2   
+z1000-Zeidon    ZEIDON   TZDMXGPO 01/16/16   17:06:40 1.0a2   
 eDomainGroup 1
 aName      ePamms
 
@@ -3962,7 +3962,7 @@ eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      130001711
 aName      Status
-aDesc      Historical, Production, Mutable
+aDesc      Historical, Production, Work in Progress
 aDomainType T
 aDataType  S
 aMaxStringLth 1
@@ -3985,8 +3985,12 @@ aInternalValue P
 
 eTableEntry 4
 aZKey      130001715
-aExternalValue Mutable
-aInternalValue M
+aExternalValue Work In Progress
+aInternalValue W
+
+eTableEntry 4
+aZKey      130001717
+aExternalValue WIP
 
 eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain

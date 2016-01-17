@@ -1,7 +1,7 @@
-z1000-Zeidon    MSPLDEF  TZZOLODO 01/15/16   14:23:15 1.0a2   
+z1000-Zeidon    MSPLDEF  TZZOLODO 01/16/16   16:45:46 1.0a2   
 eLOD       1
 aZKey      69082112
-aNextZKeyToAssign 130001766
+aNextZKeyToAssign 130001767
 aName      mSPLDef
 aDesc      Subregistrant Physical Label Maintenance
 aActivateConstraint Y
@@ -1219,7 +1219,7 @@ aName      Status
 aDomainType T
 aDataType  S
 aMaxStringLth 1
-aDesc      Historical, Production, Mutable
+aDesc      Historical, Production, Work in Progress
 aContextRestriction N
 
 eER_EntityRec 5
@@ -3348,10 +3348,7 @@ aInclSrc   Y
 aExclude   N
 aRecursive N
 aDerived   N
-aWork      N
 aParentDeleteBehave D
-aDupEntityInstance N
-aDupRelationshipInstance N
 aRelLinkIndicator L
 
 eLOD_EntityChild 5
@@ -3566,8 +3563,6 @@ aER_DiagramE2PosY 95
 
 eLOD_AttributeRec 5
 aZKey      69087034
-aUpdate    Y
-aSeqOrder  A
 
 eER_AttributeRec 6
 aName      ID
@@ -3588,6 +3583,16 @@ aZKey      69055633
 eDomainRec 7
 
 eLOD_AttributeRec 5
+aZKey      130001767
+aUpdate    Y
+
+eER_AttributeRec 6
+aName      Title
+aZKey      120159131
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
 aZKey      4335238
 aWork      Y
 aUpdate    Y
@@ -3600,21 +3605,8 @@ aZKey      4335239
 eDomainRec 7
 
 eLOD_AttributeRec 5
-aZKey      4335124
-aWork      Y
-aUpdate    Y
-aSeqOrder  Y
-
-eER_AttributeRec 6
-aName      Title
-aZKey      4335125
-
-eDomainRec 7
-
-eLOD_AttributeRec 5
 aZKey      1408125
 aUpdate    Y
-aSeqOrder  A
 
 eER_AttributeRec 6
 aName      BoldItalic
@@ -3625,7 +3617,6 @@ eDomainRec 7
 eLOD_AttributeRec 5
 aZKey      1408126
 aUpdate    Y
-aSeqOrder  A
 
 eER_AttributeRec 6
 aName      Selected
@@ -11943,7 +11934,7 @@ eER_RelLink 3
 eER_RelType 4
 
 eLOD_Entity 2
-awkSelectedAttributeForDragSort 4
+awkSelectedAttributeForDragSort 3
 
 eLOD_Attribute 3
 awkSequence 1
@@ -17723,8 +17714,8 @@ i714       8
 i715       577
 i720       8
 i723       68
-i726       68
-i729       14
+i726       14
+i729       68
 i732       294
 i735       74
 i738       486
@@ -19284,10 +19275,10 @@ i3240      722
 i3241      68
 i3242      724
 i3243      725
-i3244      68
+i3244      14
 i3245      727
 i3246      728
-i3247      14
+i3247      68
 i3248      730
 i3249      731
 i3250      294

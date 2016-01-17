@@ -1,4 +1,4 @@
-//start mSPLDef 2016.01.15 14:23:16
+//start mSPLDef 2016.01.16 16:47:57
 zOPER_EXPORT zSHORT OPERATION
 omSPLDef_GeneratePDF_Label( zVIEW vViewToInstance0 );
 
@@ -159,7 +159,7 @@ zOPER_EXPORT zSHORT OPERATION
 omTempl_BuildDisplayStructure( zVIEW vViewToInstance0 );
 
 //end
-//start mMasLC 2016.01.14 20:37:47
+//start mMasLC 2016.01.16 17:02:20
 zOPER_EXPORT zSHORT OPERATION
 omMasLC_MergeUsageSelectEnts( zVIEW vViewToInstance0 );
 
@@ -210,7 +210,7 @@ zOPER_EXPORT zSHORT OPERATION
 omMasLC_BuildNonGroupEntries( zVIEW vViewToInstance0 );
 
 //end
-//start mSubLC 2016.01.14 20:37:49
+//start mSubLC 2016.01.16 16:47:59
 zOPER_EXPORT zSHORT OPERATION
 omSubLC_BuildNewSLC_Version( zVIEW vViewToInstance0,
                              zVIEW vOriginalSLC1,
@@ -254,7 +254,7 @@ omSubLC_ObjectConstraints( zVIEW vViewtoInstance0,
                            zSHORT nState2 );
 
 //end
-//start DOMAINT 2016.01.14 20:37:44
+//start DOMAINT 2016.01.16 16:47:39
 zOPER_EXPORT zSHORT OPERATION
 oDOMAINT_ActivateDomainList( zPVIEW vViewToInstance0,
                              zVIEW vViewToWindow1 );
@@ -275,7 +275,7 @@ oDOMAINT_PreloadSystemDomains( zVIEW vViewToInstance0,
                                zPCHAR pchInstallApp2 );
 
 //end
-//start lMLCATgt 2016.01.14 20:37:44
+//start lMLCATgt 2016.01.16 16:47:43
 zOPER_EXPORT zSHORT OPERATION
 olMLCATgt_BuildDifferencesMLC( zVIEW vViewToInstance0,
                                zVIEW vSourceCompareObject1 );
@@ -294,7 +294,7 @@ zOPER_EXPORT zSHORT OPERATION
 olMLCATgt_DeleteEmptyTitles( zVIEW vViewToInstance0 );
 
 //end
-//start ZGlobal1 2015.09.04 13:55:18
+//start ZGlobal1 2016.01.15 20:02:15
 zOPER_EXPORT zSHORT OPERATION
 ConvertLineToEntity( zVIEW vEntityView0,
                      zVIEW vXOD_View1,
@@ -307,20 +307,23 @@ BuildSimpleIntegerQualification( zVIEW vvSubtask0,
                                  zPVIEW vvQualificationObject1,
                                  zPCHAR pchEntityName2,
                                  zPCHAR pchKeyAttributeName3,
-                                 zLONG lKeyAttributeValue4 );
+                                 zLONG lKeyAttributeValue4,
+                                 zPCHAR pchComparator5 );
 
 zOPER_EXPORT zSHORT OPERATION
 BuildSimpleStringQualification( zVIEW vvSubtask0,
                                 zPVIEW vvQualificationObject1,
                                 zPCHAR pchEntityName2,
                                 zPCHAR pchKeyAttributeName3,
-                                zPCHAR pchKeyAttributeValue4 );
+                                zPCHAR pchKeyAttributeValue4,
+                                zPCHAR pchComparator5 );
 
 zOPER_EXPORT zSHORT OPERATION
 SplitParagraphOnLinefeed( zPCHAR pchMultiLineText0,
                           zVIEW vTargetView1,
                           zPCHAR pchTargetEntityName2,
-                          zPCHAR pchTargetAttributeName3 );
+                          zPCHAR pchTargetAttributeName3,
+                          zPCHAR pchdelimiters4 );
 
 zOPER_EXPORT zSHORT OPERATION
 DetermineNextVersion( zPCHAR pchReturnVersion0,

@@ -1,4 +1,4 @@
-z1000-Zeidon    EPAMMS   TZZOXOGO 08/24/15   15:34:52 1.0a2    
+z1000-Zeidon    EPAMMS   TZZOXOGO 01/15/16   20:02:15 1.0a2   
 eTZZOXOGO  1
 aNAME      epamms
 
@@ -87,14 +87,6 @@ aNAME      Comparator
 aDATATYPE  S
 
 eOPERATION 3
-aNAME      RemoveInvalidCharsFromFilename
-aTYPE      G
-
-ePARAMETER 4
-aNAME      InputFileName
-aDATATYPE  S
-
-eOPERATION 3
 aNAME      SplitParagraphOnLinefeed
 aTYPE      G
 
@@ -112,6 +104,10 @@ aDATATYPE  S
 
 ePARAMETER 4
 aNAME      TargetAttributeName
+aDATATYPE  S
+
+ePARAMETER 4
+aNAME      delimiters
 aDATATYPE  S
 
 eOPERATION 3
@@ -1199,6 +1195,18 @@ aNAME      ZGlobalV
 aLANGUAGETYPE V
 
 eOPERATION 3
+aNAME      InitializeSLC_FromMLC
+aTYPE      G
+
+ePARAMETER 4
+aNAME      MasLC
+aDATATYPE  V
+
+ePARAMETER 4
+aNAME      SubLC
+aDATATYPE  V
+
+eOPERATION 3
 aNAME      GenerateKeywordTextIntoString
 aTYPE      G
 
@@ -1381,16 +1389,4 @@ aDATATYPE  E
 ePARAMETER 4
 aNAME      Flag
 aDATATYPE  N
-
-eOPERATION 3
-aNAME      InitializeSLC_FromMLC
-aTYPE      G
-
-ePARAMETER 4
-aNAME      MasLC
-aDATATYPE  V
-
-ePARAMETER 4
-aNAME      SubLC
-aDATATYPE  V
 
