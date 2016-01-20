@@ -2825,19 +2825,20 @@ public class FileServer {
             if ( objSPLD === null ) {
                throw new Error( "The JSON object does not contain an SubregPhysicalLabelDef property: " + obj );
             } else {
-               document.title = "SPLD: " + objSPLD["Name"];
+               document.title = "ePamms Label Designer";
+               // if ( value ) will evaluate to true if value is not: null/undefined/NaN/empty string ("")/0/false
+               if ( objSPLD["Name"] ) {
+                  $("#zheader_title").text( "Label: " + objSPLD["Name"] );
+               } else if ( objSPLD["ProductName"] ) {
+                  $("#zheader_title").text( "Label: " + objSPLD["ProductName"] );
+               } else {
+                  $("#zheader_title").text( "ePamms Label Designer" );
+               }
             }
 
             var objLLD = objSPLD["SPLD_LLD"][0];
             if ( objLLD === null ) {
                throw new Error( "The JSON object does not contain an SPLD_LLD property: " + objSPLD );
-            } else {
-               // if ( value ) will evaluate to true if value is not: null/undefined/NaN/empty string ("")/0/false
-               if ( objLLD["Name"] ) {
-                  $("#zheader_title").text( "Label: " + objLLD["Name"] );
-               } else {
-                  $("#zheader_title").text( "ePamms Label Designer" );
-               }
             }
 
             for ( var prop in objLLD ) {

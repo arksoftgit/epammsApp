@@ -1428,6 +1428,9 @@ COPY_SPLD_VersionCurrent( VIEW ViewToWindow )
    VIEW mSubProd    REGISTERED AS mSubProd
    VIEW mSPLDefNew  REGISTERED AS mSPLDef
    VIEW mSPLDefOrig BASED ON LOD  mSPLDef 
+   STRING ( 256 )  szSPLD_Name
+   
+   szSPLD_Name = mSPLDefNew.SubregPhysicalLabelDef.Name
    
    // Activate selected Subreg SPLD and duplicate it as the new SPLD.
    ACTIVATE mSPLDefOrig WHERE mSPLDefOrig.SubregPhysicalLabelDef.ID = lSPLDLST.SubregPhysicalLabelDef.ID 
@@ -1435,6 +1438,9 @@ COPY_SPLD_VersionCurrent( VIEW ViewToWindow )
    
    // Execute duplication operation and commit it.
    DuplicateSPLD( mSPLDefNew, mSPLDefOrig )
+   IF szSPLD_Name != ""
+      mSPLDefNew.SubregPhysicalLabelDef.Name = szSPLD_Name
+   END
    COMMIT mSPLDefNew
    
    DropObjectInstance( mSPLDefOrig )
@@ -1461,7 +1467,10 @@ COPY_SPLD_VersionNext( VIEW ViewToWindow )
    VIEW mSPLDefOld BASED ON LOD  mSPLDef
    VIEW mSubLCNew  BASED ON LOD  mSubLC
    VIEW mSubLCOld  BASED ON LOD  mSubLC
+   STRING ( 256 )  szSPLD_Name
    
+   szSPLD_Name = mSPLDefOld.SubregPhysicalLabelDef.Name
+
    // Copy the selected SPLD to create mSPLDefNew, using the next SLC from the SLC tied to the selected SPLD.
    
    // Activate the previous SPLD, which is the SPLD selected..
@@ -1488,6 +1497,9 @@ COPY_SPLD_VersionNext( VIEW ViewToWindow )
    
    // Build the SPLD and commit it.
    BuildSPLD_FromSPLD( mSPLDefNew, mSPLDefOld, mSubLCNew )
+   IF szSPLD_Name != ""
+      mSPLDefNew.SubregPhysicalLabelDef.Name = szSPLD_Name
+   END
    COMMIT mSPLDefNew
    
    // Reactivate mSubProd to pick up new SubLC.

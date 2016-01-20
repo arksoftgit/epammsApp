@@ -85,6 +85,25 @@ public int DoInputMapping( HttpServletRequest request,
    mSubProd = task.getViewByName( "mSubProd" );
    if ( VmlOperation.isValid( mSubProd ) )
    {
+      // EditBox: Name
+      nRC = mSubProd.cursor( "SubregProduct" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "Name" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "Name", "", strMapValue );
+            else
+               mSubProd.cursor( "SubregProduct" ).getAttribute( "Name" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "Name", e.getReason( ), strMapValue );
+         }
+      }
+
       // Calendar: Calendar1
       nRC = mSubProd.cursor( "SubregProduct" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
@@ -1215,38 +1234,52 @@ else
 </tr>
 <tr>
 <td valign="top" style="width:132px;">
-<% /* Text1:Text */ %>
+<% /* Name::Text */ %>
 
-<span  id="Text1" name="Text1" style="width:130px;height:18px;">Subreg Product:</span>
+<span  id="Name:" name="Name:" style="width:130px;height:18px;">Subreg Product:</span>
 
 </td>
 <td valign="top" style="width:366px;">
-<% /* Text4:Text */ %>
-<% strTextDisplayValue = "";
-   mSubProd = task.getViewByName( "mSubProd" );
-   if ( VmlOperation.isValid( mSubProd ) == false )
-      task.log( ).debug( "Invalid View: " + "Text4" );
+<% /* Name:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "Name", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
    else
    {
-      nRC = mSubProd.cursor( "SubregProduct" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
+      strErrorColor = "";
+      mSubProd = task.getViewByName( "mSubProd" );
+      if ( VmlOperation.isValid( mSubProd ) == false )
+         task.log( ).debug( "Invalid View: " + "Name" );
+      else
       {
-      try
-      {
-         strTextDisplayValue = mSubProd.cursor( "SubregProduct" ).getAttribute( "Name" ).getString( "" );
-      }
-      catch (Exception e)
-      {
-         out.println("There is an error on Text4: " + e.getMessage());
-         task.log().info( "*** Error on ctrl Text4" + e.getMessage() );
-      }
-         if ( strTextDisplayValue == null )
-            strTextDisplayValue = "";
+         nRC = mSubProd.cursor( "SubregProduct" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = mSubProd.cursor( "SubregProduct" ).getAttribute( "Name" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on Name: " + e.getMessage());
+               task.log().error( "*** Error on ctrl Name", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "SubregProduct.Name: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for Name: " + "mSubProd.SubregProduct" );
       }
    }
 %>
 
-<span  id="Text4" name="Text4" style="width:366px;height:18px;"><%=strTextDisplayValue%></span>
+<input name="Name" id="Name" style="width:366px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

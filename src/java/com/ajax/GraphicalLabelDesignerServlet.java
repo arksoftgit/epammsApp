@@ -132,7 +132,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
             int pos = insertTag( tagList, tag );
             if ( tag.equals( tagList.get( pos ) ) == false ) {
                mSPLDef.cursor( "LLD_Block" ).getAttribute( "Tag" ).setValue( tagList.get( pos ) );
-            } 
+            }
             if ( mSPLDef.cursor( "LLD_SubBlock" ).hasAny() ) {
                mSPLDef.cursor( "LLD_SubBlock" ).setToSubobject();
                int rc = getBlockTagList( mSPLDef, tagList );
@@ -306,7 +306,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                      oea.append( '"' );
                   k++;
                } else {
-               /*                       
+               /*
                if ( s1.equals( "ZKey" ) ||
                     s1.equals( "KEY" ) ||
                     s1.equals( "OPER_LIBNM" ) ||
@@ -337,7 +337,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                     s1.equals( "DECIMAL" ) ||
                     s1.equals( "DUPENTIN" ) ||
                     s1.equals( "HANG_FK" ) ) {
-               */                  
+               */
                   // skip these
                   k++;
                   while ( xod.charAt( k ) != ',' && xod.charAt( k ) != '}' )
@@ -419,7 +419,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
          }
       }
       jsonColors += " ]";
-      
+
       String jsonMarketing = "[";
       ec = vLLD.cursor( "SPLD_MarketingSection" );
       cr = ec.setFirst();
@@ -442,7 +442,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
       // logger.debug( "Return from insertTag: " + newTag );
          if ( tag.equals( newTag ) == false ) {
             vLLD.cursor( "LLD_Panel" ).getAttribute( "Tag" ).setValue( newTag );
-         } 
+         }
          int rc = getBlockTagList( vLLD, tagList );
          if ( rc < 0 ) {
             break;
@@ -495,7 +495,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
          sb.delete( posLBracket, posLLD );
          posLLD = sb.indexOf( "SPLD_LLD" );
          posLBracket = sb.indexOf( "[", posLLD );
-         
+
          int bracketCnt = 1;
          int pos = posLBracket + 1;
          char ch;
@@ -823,13 +823,13 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                         ec.createEntity( CursorPosition.NEXT );
                         ec.getAttribute( "Tag" ).setValue( "BustedUnchanged" + ID );
                         displaySPLD( vBlock, entity, ID );
-                        throw new ZeidonException( "Entity NOT Found: " + ID + "  Look for Busted" ); 
+                        throw new ZeidonException( "Entity NOT Found: " + ID + "  Look for Busted" );
                      } else {
                         logger.error( "Entity NOT FOUND: " + entity + "  ID: " + ID + "  Depth: " + depth );
                         ec.createEntity( CursorPosition.NEXT );
                         ec.getAttribute( "Tag" ).setValue( "Busted" + ID );
                         displaySPLD( vBlock, entity, ID );
-                        throw new ZeidonException( "Entity NOT Found: " + ID + "  Look for Busted" ); 
+                        throw new ZeidonException( "Entity NOT Found: " + ID + "  Look for Busted" );
                      }
                   }
                   if ( deleteEntity == false ) {
@@ -861,7 +861,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                }
             // } not checking ec.isNull()
             } else {
-            // logger.debug( StringUtils.repeat( " ", (depth + 2) * 3 ) + "Entity: " + entity + "  Depth: " + depth ); 
+            // logger.debug( StringUtils.repeat( " ", (depth + 2) * 3 ) + "Entity: " + entity + "  Depth: " + depth );
                applyJsonLabelToView( vLLD, vBlock, (JSONObject)obj, entity, depth + 1, null );
             }
          } else {
@@ -907,7 +907,8 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
                if ( obj instanceof String ) {
                   String valueNew = (String) obj;
                // logger.debug( StringUtils.repeat( " ", (depth + 2) * 3 ) + "E.Attr: " + entity + "." + key + " : " + valueNew );
-                  if ( key.equals( "ID" ) == false && key.charAt( 0 ) != '_' ) {  // attribute is not ID (which is immutable) or a label designer work (starts with '_')
+                  if ( key.equals( "ID" ) == false && key.charAt( 0 ) != '_' &&  // attribute is not ID (which is immutable) or a label designer work (starts with '_')
+                       key.startsWith( "FK_ID_" ) == false && key.startsWith( "AUTOSEQ" ) == false ) {
                      // This is where we need to handle special entity/attributes such as: z_^marketing.^text.^font^weight - which
                      // should be mapped to the "Marketing" LLD_SpecialSectionAttribute entity and the "Text" LLD_SpecialSectionAttrBlock
                      // entity FontWeight attribute ... e.g. DirectionsForUse.Title.z_MarginTop
@@ -997,8 +998,8 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
             }
          } else {
             String msg = "ei (" + ei.getEntityDef().getName() + ") does not match entity: " + entity;
-            logger.error( msg ); 
-            throw new ZeidonException( msg ); 
+            logger.error( msg );
+            throw new ZeidonException( msg );
          }
       // logger.debug( "Apply Json End" );
       // ei.logEntity( false );
@@ -1124,7 +1125,7 @@ end debug code */
                }
             } else {
                logger.debug( "Could not set cursor for Entity.Tag: " + entity + "." + tag );
-               throw new ZeidonException( "Could not set cursor for Entity.Tag: " + entity + "." + tag ); 
+               throw new ZeidonException( "Could not set cursor for Entity.Tag: " + entity + "." + tag );
             }
          }
       }
@@ -1170,7 +1171,7 @@ end debug code */
                   // ec.logEntity( false );
                   } else {
                      logger.error( "Could not set cursor for Entity.Tag: " + entity + "." + tag );
-                     throw new ZeidonException( "Could not set cursor for Entity.Tag: " + entity + "." + tag ); 
+                     throw new ZeidonException( "Could not set cursor for Entity.Tag: " + entity + "." + tag );
                   }
                }
             }
@@ -1400,7 +1401,7 @@ end debug code */
    // }
 
       String jsonLabel = null;
-      
+
       if ( action.equals( "setCursorPosition" ) ) {
          if ( vLLD != null ) {
             try {

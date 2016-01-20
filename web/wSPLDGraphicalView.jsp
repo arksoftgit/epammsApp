@@ -747,6 +747,19 @@ else
          <div id="zheader" style="display: block; font-size: 1em; font-weight: bold;">
             <span id="zheader_title">ePamms Label Designer</span>
             &nbsp;&nbsp;&nbsp;&nbsp;
+      <!--  <img src="./images/epamms.jpg" width="64" height="25" alt="ePamms" style="margin:5px;float:right;border-style:double;"> -->
+            <img src="./images/epamms_logo_buttons.png" width="64" height="25" alt="ePamms" style="margin:5px;float:right;">
+            &nbsp;&nbsp;
+            <label for="showtools" style="margin-right:2px;margin-top:12px;float:right;">Show Tools</label>
+            <input type="checkbox" id="showtools" name="showtools" style="margin-left:2px;margin-top:12px;float:right;">
+            &nbsp;&nbsp;
+            <div style="margin-top:12px;margin:5px;float:right;padding-top:4px"><span>
+               <label for="zZoomSpinner" style="margin-top:4px;">Zoom:</label>
+               <input type="text" id="zZoomSpinner" value="1.0" style="width:20px;"/>
+            </span></div>
+         </div> <!-- zheader -->
+      </span>
+      <span>
             <div id="ztoolbar" class="ui-widget-header ui-corner-all">
                <button id="at" class="zalign-btn">Align Top</button>
                <button id="al" class="zalign-btn">Align Left</button>
@@ -771,16 +784,6 @@ else
                <button id="UpdateBlock">Update Block</button>
                <button id="ReuseBlock">Reuse Block</button>
             </div> <!-- ztoolbar -->
-            <img src="./images/epamms.jpg" width="64" height="25" alt="ePamms" style="margin:5px;float:right;border-style:double;">
-            &nbsp;&nbsp;
-            <label for="showtools" style="margin-right:2px;margin-top:12px;float:right;">Show Tools</label>
-            <input type="checkbox" id="showtools" name="showtools" style="margin-left:2px;margin-top:12px;float:right;">
-            &nbsp;&nbsp;
-            <div style="margin-top:12px;margin:5px;float:right;padding-top:4px"><span>
-               <label for="zZoomSpinner" style="margin-top:4px;">Zoom:</label>
-               <input type="text" id="zZoomSpinner" value="1.0" style="width:20px;"/>
-            </span></div>
-         </div> <!-- zheader -->
       </span>
       <div id="zclient" style="margin:0"> <!-- client area -->
          <div id="pagemenu" class="ui-widget-content" style="position:relative;margin:0">

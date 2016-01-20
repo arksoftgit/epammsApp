@@ -1826,6 +1826,26 @@ END
 
 ////////////////////////////////////////////////////////////////
 //
+// OPERATION: UPDATE_LLD
+//
+////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+UPDATE_LLD( VIEW ViewToWindow )
+
+   VIEW mLLD_LST REGISTERED AS mLLD_LST
+   VIEW mLLD  BASED ON LOD  mLLD 
+   
+   // Delete selected mLLD.
+   ACTIVATE mLLD WHERE mLLD.LLD.ID = mLLD_LST.LLD.ID 
+   SetAttributeFromAttribute( mLLD, "LLD", "Name", mLLD_LST, "LLD", "Name" )
+   SetAttributeFromAttribute( mLLD, "LLD", "CSS_FileName", mLLD_LST, "LLD", "CSS_FileName" )
+   SetMatchingAttributesByName( mLLD, "LLD", mLLD_LST, "LLD", zSET_NULL )
+   COMMIT mLLD
+   DropObjectInstance( mLLD )
+END
+
+////////////////////////////////////////////////////////////////
+//
 // OPERATION: SELECT_LLD_ForSPLD
 //
 ////////////////////////////////////////////////////////////////

@@ -326,7 +326,51 @@ if ( strActionToProcess != null )
       }
 
       // Next Window
-      strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartModalSubwindow, "wSLC", "DeleteLLD" );
+      strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartModalSubwindow, "wSPLD", "DeleteLLD" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_UpdateLLD" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCSubregProductsList", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mLLD_LST;
+      mLLD_LST = task.getViewByName( "mLLD_LST" );
+      if ( VmlOperation.isValid( mLLD_LST ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mLLD_LST.cursor( "LLD" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mLLD_LST.cursor( "LLD" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mLLD_LST.cursor( "LLD" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mLLD_LST.cursor( "LLD" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Next Window
+      strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartModalSubwindow, "wSPLD", "UpdateLLD" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -1125,8 +1169,8 @@ try
       String strOdd;
       String strTag;
       String strGridEditCtl1;
-      String strBitmapBtn1;
-      String strBitmapBtn2;
+      String strUpdateLLD;
+      String strDeleteLLD;
       
       View vGridLLD;
       vGridLLD = mLLD_LST.newView( );
@@ -1155,9 +1199,9 @@ try
 
 <tr<%=strOdd%>>
 
-   <td><%=strGridEditCtl1%></td>
-   <td nowrap><a href="#"  name="BitmapBtn1" id="BitmapBtn1::<%=strEntityKey%>" ><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn2" onclick="GOTO_DeleteLLD( this.id )" id="BitmapBtn2::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
+   <td><a href="#" onclick="GOTO_UpdateLLD( this.id )" id="GridEditCtl1::<%=strEntityKey%>"><%=strGridEditCtl1%></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="UpdateLLD" onclick="GOTO_UpdateLLD( this.id )" id="UpdateLLD::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="DeleteLLD" onclick="GOTO_DeleteLLD( this.id )" id="DeleteLLD::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 

@@ -1,4 +1,4 @@
-z1000-Zeidon    BASE     TZDGSRCO 01/16/16   17:06:40 1.0a2   
+z1000-Zeidon    BASE     TZDGSRCO 01/19/16   08:44:01 1.0a2   
 eDomainGroup 1
 aZKey      68567479
 aNextZKeyToAssign 130001717
@@ -130,12 +130,12 @@ aIsDefault Y
 
 eTableEntry 4
 aZKey      110059063
-aExternalValue < 5 gallon
+aExternalValue < 5 gallons
 aInternalValue <5
 
 eTableEntry 4
 aZKey      110059064
-aExternalValue >= 5 gallon
+aExternalValue >= 5 gallons
 aInternalValue >=5
 
 eDomain    2
@@ -162,31 +162,6 @@ eTableEntry 4
 aZKey      110059060
 aExternalValue > 1 gallon
 aInternalValue >1
-
-eTableEntry 4
-aZKey      110363536
-aExternalValue 1 to 5 gallons
-aInternalValue 1-5
-
-eTableEntry 4
-aZKey      110363537
-aExternalValue <= 5 gallons
-aInternalValue <=5
-
-eTableEntry 4
-aZKey      110388981
-aExternalValue > 5 gallons
-aInternalValue >5
-
-eTableEntry 4
-aZKey      110183167
-aExternalValue Old Value 1
-aInternalValue 1
-
-eTableEntry 4
-aZKey      110183168
-aExternalValue Old Value 5
-aInternalValue 5
 
 eDomain    2
 aZKey      110006612
@@ -386,9 +361,6 @@ eContext   3
 aZKey      4730209
 aName      DirectionsNotForUseType
 aIsDefault Y
-
-eTableEntry 4
-aZKey      4768852
 
 eTableEntry 4
 aZKey      4730212

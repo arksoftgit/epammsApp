@@ -329,7 +329,7 @@ CopyMLCToNewProduct( VIEW TargetMLC BASED ON LOD mMasLC,
 
    // For root, only set attributes.
    SetMatchingAttributesByName( TargetMLC, "MasterLabelContent", SourceMLC, "MasterLabelContent", zSET_NULL )
-   TargetMLC.MasterLabelContent.Status = "W"
+   TargetMLC.MasterLabelContent.Finalized = "W"
    
    // Tie to previous version.
    INCLUDE TargetMLC.MP_MasterLabelContent FROM SourceMLC.MasterLabelContent 

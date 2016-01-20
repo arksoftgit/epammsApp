@@ -266,6 +266,25 @@ function GOTO_DeleteLLD( strTagEntityKey )
    }
 }
 
+function GOTO_UpdateLLD( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wSLCSubregProductsList.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wSLCSubregProductsList.zAction.value = "GOTO_UpdateLLD";
+      document.wSLCSubregProductsList.submit( );
+   }
+}
+
 function GOTO_UpdateSubregProduct( strTagEntityKey )
 {
 

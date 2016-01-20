@@ -123,6 +123,25 @@ public int DoInputMapping( HttpServletRequest request,
    mSubProd = task.getViewByName( "mSubProd" );
    if ( VmlOperation.isValid( mSubProd ) )
    {
+      // EditBox: SubregProductName
+      nRC = mSubProd.cursor( "SubregProduct" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "SubregProductName" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "SubregProductName", "", strMapValue );
+            else
+               mSubProd.cursor( "SubregProduct" ).getAttribute( "Name" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "SubregProductName", e.getReason( ), strMapValue );
+         }
+      }
+
    }
 
    mSubreg = task.getViewByName( "mSubreg" );
@@ -1197,15 +1216,15 @@ else
 
 <div id="GroupBox7" name="GroupBox7"   style="float:left;position:relative; width:534px; height:76px;">  <!-- GroupBox7 --> 
 
-<% /* PrimaryRegistrantName:3:Text */ %>
+<% /* PrimaryRegistrant::Text */ %>
 
-<label  id="PrimaryRegistrantName:3" name="PrimaryRegistrantName:3" style="width:158px;height:18px;position:absolute;left:16px;top:0px;">Primary Registrant:</label>
+<label  id="PrimaryRegistrant:" name="PrimaryRegistrant:" style="width:158px;height:18px;position:absolute;left:16px;top:0px;">Primary Registrant:</label>
 
-<% /* TXName3:Text */ %>
+<% /* PrimregNameEPA_Number:Text */ %>
 <% strTextDisplayValue = "";
    mSubreg = task.getViewByName( "mSubreg" );
    if ( VmlOperation.isValid( mSubreg ) == false )
-      task.log( ).debug( "Invalid View: " + "TXName3" );
+      task.log( ).debug( "Invalid View: " + "PrimregNameEPA_Number" );
    else
    {
       nRC = mSubreg.cursor( "PrimaryRegistrant" ).checkExistenceOfEntity( ).toInt();
@@ -1217,8 +1236,8 @@ else
       }
       catch (Exception e)
       {
-         out.println("There is an error on TXName3: " + e.getMessage());
-         task.log().info( "*** Error on ctrl TXName3" + e.getMessage() );
+         out.println("There is an error on PrimregNameEPA_Number: " + e.getMessage());
+         task.log().info( "*** Error on ctrl PrimregNameEPA_Number" + e.getMessage() );
       }
          if ( strTextDisplayValue == null )
             strTextDisplayValue = "";
@@ -1226,17 +1245,17 @@ else
    }
 %>
 
-<label class="text14bold"  id="TXName3" name="TXName3" style="width:356px;height:16px;position:absolute;left:166px;top:0px;"><%=strTextDisplayValue%></label>
+<label class="text14bold"  id="PrimregNameEPA_Number" name="PrimregNameEPA_Number" style="width:356px;height:16px;position:absolute;left:166px;top:0px;"><%=strTextDisplayValue%></label>
 
-<% /* Subregistrant:3:Text */ %>
+<% /* Subregistrant::Text */ %>
 
-<label  id="Subregistrant:3" name="Subregistrant:3" style="width:158px;height:18px;position:absolute;left:16px;top:16px;">Subregistrant:</label>
+<label  id="Subregistrant:" name="Subregistrant:" style="width:158px;height:18px;position:absolute;left:16px;top:16px;">Subregistrant:</label>
 
-<% /* Text4:Text */ %>
+<% /* SubregNameEPA_Number:Text */ %>
 <% strTextDisplayValue = "";
    mSubreg = task.getViewByName( "mSubreg" );
    if ( VmlOperation.isValid( mSubreg ) == false )
-      task.log( ).debug( "Invalid View: " + "Text4" );
+      task.log( ).debug( "Invalid View: " + "SubregNameEPA_Number" );
    else
    {
       nRC = mSubreg.cursor( "Subregistrant" ).checkExistenceOfEntity( ).toInt();
@@ -1248,8 +1267,8 @@ else
       }
       catch (Exception e)
       {
-         out.println("There is an error on Text4: " + e.getMessage());
-         task.log().info( "*** Error on ctrl Text4" + e.getMessage() );
+         out.println("There is an error on SubregNameEPA_Number: " + e.getMessage());
+         task.log().info( "*** Error on ctrl SubregNameEPA_Number" + e.getMessage() );
       }
          if ( strTextDisplayValue == null )
             strTextDisplayValue = "";
@@ -1257,17 +1276,17 @@ else
    }
 %>
 
-<label  id="Text4" name="Text4" style="width:356px;height:16px;position:absolute;left:166px;top:16px;"><%=strTextDisplayValue%></label>
+<label  id="SubregNameEPA_Number" name="SubregNameEPA_Number" style="width:356px;height:16px;position:absolute;left:166px;top:16px;"><%=strTextDisplayValue%></label>
 
-<% /* Text5:Text */ %>
+<% /* PrimregProductName::Text */ %>
 
-<label  id="Text5" name="Text5" style="width:158px;height:20px;position:absolute;left:16px;top:32px;">Registrant Product:</label>
+<label  id="PrimregProductName:" name="PrimregProductName:" style="width:158px;height:20px;position:absolute;left:16px;top:32px;">Registrant Product:</label>
 
-<% /* Subregistrant3:Text */ %>
+<% /* PrimregProductName:Text */ %>
 <% strTextDisplayValue = "";
    mSubProd = task.getViewByName( "mSubProd" );
    if ( VmlOperation.isValid( mSubProd ) == false )
-      task.log( ).debug( "Invalid View: " + "Subregistrant3" );
+      task.log( ).debug( "Invalid View: " + "PrimregProductName" );
    else
    {
       nRC = mSubProd.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
@@ -1279,8 +1298,8 @@ else
       }
       catch (Exception e)
       {
-         out.println("There is an error on Subregistrant3: " + e.getMessage());
-         task.log().info( "*** Error on ctrl Subregistrant3" + e.getMessage() );
+         out.println("There is an error on PrimregProductName: " + e.getMessage());
+         task.log().info( "*** Error on ctrl PrimregProductName" + e.getMessage() );
       }
          if ( strTextDisplayValue == null )
             strTextDisplayValue = "";
@@ -1288,38 +1307,52 @@ else
    }
 %>
 
-<label  id="Subregistrant3" name="Subregistrant3" style="width:356px;height:16px;position:absolute;left:166px;top:32px;"><%=strTextDisplayValue%></label>
+<label  id="PrimregProductName" name="PrimregProductName" style="width:356px;height:16px;position:absolute;left:166px;top:32px;"><%=strTextDisplayValue%></label>
 
-<% /* Text6:Text */ %>
+<% /* SubregProductName::Text */ %>
 
-<label  id="Text6" name="Text6" style="width:158px;height:20px;position:absolute;left:16px;top:50px;">Subreg Product:</label>
+<label  id="SubregProductName:" name="SubregProductName:" style="width:158px;height:20px;position:absolute;left:16px;top:50px;">Subreg Product:</label>
 
-<% /* Text7:Text */ %>
-<% strTextDisplayValue = "";
-   mSubProd = task.getViewByName( "mSubProd" );
-   if ( VmlOperation.isValid( mSubProd ) == false )
-      task.log( ).debug( "Invalid View: " + "Text7" );
+<% /* SubregProductName:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "SubregProductName", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
    else
    {
-      nRC = mSubProd.cursor( "SubregProduct" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
+      strErrorColor = "";
+      mSubProd = task.getViewByName( "mSubProd" );
+      if ( VmlOperation.isValid( mSubProd ) == false )
+         task.log( ).debug( "Invalid View: " + "SubregProductName" );
+      else
       {
-      try
-      {
-         strTextDisplayValue = mSubProd.cursor( "SubregProduct" ).getAttribute( "Name" ).getString( "" );
-      }
-      catch (Exception e)
-      {
-         out.println("There is an error on Text7: " + e.getMessage());
-         task.log().info( "*** Error on ctrl Text7" + e.getMessage() );
-      }
-         if ( strTextDisplayValue == null )
-            strTextDisplayValue = "";
+         nRC = mSubProd.cursor( "SubregProduct" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = mSubProd.cursor( "SubregProduct" ).getAttribute( "Name" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on SubregProductName: " + e.getMessage());
+               task.log().error( "*** Error on ctrl SubregProductName", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "SubregProduct.Name: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for SubregProductName: " + "mSubProd.SubregProduct" );
       }
    }
 %>
 
-<label  id="Text7" name="Text7" style="width:356px;height:18px;position:absolute;left:166px;top:50px;"><%=strTextDisplayValue%></label>
+<input name="SubregProductName" id="SubregProductName" style="width:356px;position:absolute;left:166px;top:50px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 
 </div>  <!--  GroupBox7 --> 

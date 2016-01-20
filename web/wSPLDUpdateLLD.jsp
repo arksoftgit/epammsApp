@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCSPLD_VersionCopy --%>
+<%-- wSPLDUpdateLLD --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -35,7 +35,7 @@ public int DoInputMapping( HttpServletRequest request,
    String taskId = (String) session.getAttribute( "ZeidonTaskId" );
    Task task = objectEngine.getTaskById( taskId );
 
-   View mSPLDef = null;
+   View mLLD_LST = null;
    View vGridTmp = null; // temp view to grid view
    View vRepeatingGrp = null; // temp view to repeating group view
    String strDateFormat = "";
@@ -57,25 +57,44 @@ public int DoInputMapping( HttpServletRequest request,
    if ( webMapping == false )
       session.setAttribute( "ZeidonError", null );
 
-   mSPLDef = task.getViewByName( "mSPLDef" );
-   if ( VmlOperation.isValid( mSPLDef ) )
+   mLLD_LST = task.getViewByName( "mLLD_LST" );
+   if ( VmlOperation.isValid( mLLD_LST ) )
    {
-      // EditBox: MasterLabelContentVersion
-      nRC = mSPLDef.cursor( "SubregPhysicalLabelDef" ).checkExistenceOfEntity( ).toInt();
+      // EditBox: TXName
+      nRC = mLLD_LST.cursor( "LLD" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "MasterLabelContentVersion" );
+         strMapValue = request.getParameter( "TXName" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "MasterLabelContentVersion", "", strMapValue );
+               VmlOperation.CreateMessage( task, "TXName", "", strMapValue );
             else
-               mSPLDef.cursor( "SubregPhysicalLabelDef" ).getAttribute( "Name" ).setValue( strMapValue, "" );
+               mLLD_LST.cursor( "LLD" ).getAttribute( "Name" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "MasterLabelContentVersion", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "TXName", e.getReason( ), strMapValue );
+         }
+      }
+
+      // EditBox: EditBox1
+      nRC = mLLD_LST.cursor( "LLD" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "EditBox1" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "EditBox1", "", strMapValue );
+            else
+               mLLD_LST.cursor( "LLD" ).getAttribute( "CSS_FileName" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "EditBox1", e.getReason( ), strMapValue );
          }
       }
 
@@ -144,7 +163,7 @@ if ( StringUtils.isBlank( strLastWindow ) )
 
 strLastAction = (String) session.getAttribute( "ZeidonAction" );
 
-if ( strLastWindow.equals("wSLCSPLD_VersionCopy") && StringUtils.isBlank( strActionToProcess ) && StringUtils.isBlank( strLastAction ) )
+if ( strLastWindow.equals("wSPLDUpdateLLD") && StringUtils.isBlank( strActionToProcess ) && StringUtils.isBlank( strLastAction ) )
 {
    strURL = response.encodeRedirectURL( "logout.jsp" );
    response.sendRedirect( strURL );
@@ -176,15 +195,15 @@ if ( task == null )
 vKZXMLPGO = JspWebUtils.createWebSession( null, task, "" );
 mMsgQ = new KZMSGQOO_Object( vKZXMLPGO );
 mMsgQ.setView( VmlOperation.getMessageObject( task ) );
-wSLC_Dialog wSLC = new wSLC_Dialog( vKZXMLPGO );
+wSPLD_Dialog wSPLD = new wSPLD_Dialog( vKZXMLPGO );
 
 strURL = "";
 bDone = false;
 nRC = 0;
 
-task.log().info("*** wSLCSPLD_VersionCopy strActionToProcess *** " + strActionToProcess );
-task.log().info("*** wSLCSPLD_VersionCopy LastWindow *** " + strLastWindow );
-task.log().info("*** wSLCSPLD_VersionCopy LastAction *** " + strLastAction );
+task.log().info("*** wSPLDUpdateLLD strActionToProcess *** " + strActionToProcess );
+task.log().info("*** wSPLDUpdateLLD LastWindow *** " + strLastWindow );
+task.log().info("*** wSPLDUpdateLLD LastAction *** " + strLastAction );
 
 if ( strActionToProcess != null )
 {
@@ -200,48 +219,22 @@ if ( strActionToProcess != null )
 
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "CANCEL_SPLD_Version" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "CANCEL_UpdateSPLD" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCSPLD_VersionCopy", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDUpdateLLD", strActionToProcess );
 
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCSPLD_VersionCopy", "wSLC.CANCEL_SPLD_Version" );
-      nOptRC = wSLC.CANCEL_SPLD_Version( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReturnToParent, "", "" );
-      }
-
+      // Next Window
+      strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_ReturnToParent, "", "" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "COPY_SPLD_VersionCurrent" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "UPDATE_LLD" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCSPLD_VersionCopy", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDUpdateLLD", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -250,8 +243,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCSPLD_VersionCopy", "wSLC.COPY_SPLD_VersionCurrent" );
-      nOptRC = wSLC.COPY_SPLD_VersionCurrent( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDUpdateLLD", "wSPLD.UPDATE_LLD" );
+      nOptRC = wSPLD.UPDATE_LLD( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -262,51 +255,13 @@ if ( strActionToProcess != null )
       if ( nOptRC == 1 )
       {
          // Dynamic Next Window
-         strNextJSP_Name = wSLC.GetWebRedirection( vKZXMLPGO );
+         strNextJSP_Name = wSPLD.GetWebRedirection( vKZXMLPGO );
       }
 
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReturnToParent, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "COPY_SPLD_VersionNext" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCSPLD_VersionCopy", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCSPLD_VersionCopy", "wSLC.COPY_SPLD_VersionNext" );
-      nOptRC = wSLC.COPY_SPLD_VersionNext( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wSLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReturnToParent, "", "" );
+         strNextJSP_Name = wSPLD.SetWebRedirection( vKZXMLPGO, wSPLD.zWAB_ReturnToParent, "", "" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -333,7 +288,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wSLCSPLD_VersionCopy" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wSPLDUpdateLLD" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -350,7 +305,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ------->>> " + "wSLCSPLD_VersionCopy" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ------->>> " + "wSPLDUpdateLLD" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -365,14 +320,14 @@ if ( strActionToProcess != null )
    while ( bDone == false && strActionToProcess.equals( "_OnResubmitPage" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCSPLD_VersionCopy", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSPLDUpdateLLD", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
       if ( nRC < 0 )
          break;
 
-      strURL = response.encodeRedirectURL( "wSLCSPLD_VersionCopy.jsp" );
+      strURL = response.encodeRedirectURL( "wSPLDUpdateLLD.jsp" );
       nRC = 1;  //do the redirection
       break;
    }
@@ -383,11 +338,11 @@ if ( strActionToProcess != null )
       {
          if ( nRC > 1 )
          {
-            strURL = response.encodeRedirectURL( "wSLCSPLD_VersionCopy.jsp" );
+            strURL = response.encodeRedirectURL( "wSPLDUpdateLLD.jsp" );
             task.log().info( "Action Error Redirect to: " + strURL );
          }
 
-         if ( ! strURL.equals("wSLCSPLD_VersionCopy.jsp") ) 
+         if ( ! strURL.equals("wSPLDUpdateLLD.jsp") ) 
          {
             response.sendRedirect( strURL );
             // If we are redirecting to a new page, then we need this return so that the rest of this page doesn't get built.
@@ -398,7 +353,7 @@ if ( strActionToProcess != null )
       {
          if ( nRC > -128 )
          {
-            strURL = response.encodeRedirectURL( "wSLCSPLD_VersionCopy.jsp" );
+            strURL = response.encodeRedirectURL( "wSPLDUpdateLLD.jsp" );
             task.log().info( "Mapping Error Redirect to: " + strURL );
          }
          else
@@ -415,7 +370,7 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
 else
 {
 }
-   csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSLC", "" );
+   csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wSPLD", "" );
    if ( csrRC.isSet( ) )
       strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
 
@@ -425,8 +380,8 @@ else
    wWebXA = task.getViewByName( "wWebXfer" );
    if ( VmlOperation.isValid( wWebXA ) )
    {
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSLC", "" );
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "SPLD_VersionCopy", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wSPLD", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "UpdateLLD", "" );
    }
 
 %>
@@ -434,7 +389,7 @@ else
 <html>
 <head>
 
-<title>Version Data</title>
+<title>Update LLD</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
@@ -445,7 +400,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-<script language="JavaScript" type="text/javascript" src="./genjs/wSLCSPLD_VersionCopy.js"></script>
+<script language="JavaScript" type="text/javascript" src="./genjs/wSPLDUpdateLLD.js"></script>
 
 </head>
 
@@ -465,31 +420,21 @@ else
 <div id="sidenavigation">
    <ul id="Return" name="Return">
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "COPY_SPLD_VersionCurrent" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "AcceptAndReturn" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="COPY_SPLD_VersionCurrent" name="COPY_SPLD_VersionCurrent"><a href="#"  onclick="COPY_SPLD_VersionCurrent()">Create from Current SLC</a></li>
+       <li id="AcceptAndReturn" name="AcceptAndReturn"><a href="#"  onclick="UPDATE_LLD()">Update LLD Entry</a></li>
 <%
    }
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "COPY_SPLD_Next" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "CancelAndReturn" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="COPY_SPLD_Next" name="COPY_SPLD_Next"><a href="#"  onclick="COPY_SPLD_VersionNext()">Create from Next SLC</a></li>
-<%
-   }
-%>
-
-<%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Cancel" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="Cancel" name="Cancel"><a href="#"  onclick="CANCEL_SPLD_Version()">Cancel</a></li>
+       <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CANCEL_UpdateSPLD()">Cancel</a></li>
 <%
    }
 %>
@@ -500,6 +445,7 @@ else
 </div>  <!-- leftcontent -->
 
 <div id="content">
+
 <!--System Maintenance-->
 
 <%@ include file="./include/systemmaintenance.inc" %>
@@ -507,7 +453,7 @@ else
 <!-- END System Maintenance-->
 
 
-<form name="wSLCSPLD_VersionCopy" id="wSLCSPLD_VersionCopy" method="post">
+<form name="wSPLDUpdateLLD" id="wSPLDUpdateLLD" method="post">
    <input name="zAction" id="zAction" type="hidden" value="NOVALUE">
    <input name="zTableRowSelect" id="zTableRowSelect" type="hidden" value="NOVALUE">
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
@@ -517,10 +463,14 @@ else
    View lSPLDLST = null;
    View mLLD_LST = null;
    View mMasLC = null;
+   View mPrimReg = null;
    View mSPLDef = null;
+   View mSPLDefBlock = null;
+   View mSPLDefPanel = null;
    View mSubLC = null;
    View mSubProd = null;
    View mSubreg = null;
+   View wWebXfer = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";
@@ -586,7 +536,7 @@ else
 
    strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
 
-   strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSLC", "SPLD_VersionCopy" );
+   strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wSPLD", "UpdateLLD" );
    strOpenFile = VmlOperation.FindOpenFile( task );
    strDateFormat = "YYYY.MM.DD";
 
@@ -624,21 +574,47 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
+<div style="height:8px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* MasterLabelContent:GroupBox */ %>
+<span style="height:16px;">&nbsp&nbsp</span>
+<% /* Text:Text */ %>
 
-<div id="MasterLabelContent" name="MasterLabelContent" class="withborder"   style="float:left;position:relative; width:732px; height:60px;">  <!-- MasterLabelContent --> 
+<span  id="Text" name="Text" style="width:254px;height:16px;">Delete LLD Confirmation</span>
 
-<% /* Version::Text */ %>
+</div>  <!-- End of a new line -->
 
-<label  id="Version:" name="Version:" style="width:154px;height:16px;position:absolute;left:12px;top:22px;">New SPLD Name:</label>
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
-<% /* MasterLabelContentVersion:EditBox */ %>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
+<% /* Registrants:GroupBox */ %>
+
+<div id="Registrants" name="Registrants" style="width:678px;height:90px;float:left;">  <!-- Registrants --> 
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:26px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox1:GroupBox */ %>
+<div id="GroupBox1" name="GroupBox1" style="float:left;width:534px;" >
+
+<table cols=2 style="width:534px;"  class="grouptable">
+
+<tr>
+<td valign="top" style="width:140px;">
+<% /* PrimaryRegistrantName::Text */ %>
+
+<span  id="PrimaryRegistrantName:" name="PrimaryRegistrantName:" style="width:130px;height:16px;">LLD Name:</span>
+
+</td>
+<td valign="top"  class="text14bold" style="width:366px;">
+<% /* TXName:EditBox */ %>
 <%
-   strErrorMapValue = VmlOperation.CheckError( "MasterLabelContentVersion", strError );
+   strErrorMapValue = VmlOperation.CheckError( "TXName", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -647,38 +623,97 @@ else
    else
    {
       strErrorColor = "";
-      mSPLDef = task.getViewByName( "mSPLDef" );
-      if ( VmlOperation.isValid( mSPLDef ) == false )
-         task.log( ).debug( "Invalid View: " + "MasterLabelContentVersion" );
+      mLLD_LST = task.getViewByName( "mLLD_LST" );
+      if ( VmlOperation.isValid( mLLD_LST ) == false )
+         task.log( ).debug( "Invalid View: " + "TXName" );
       else
       {
-         nRC = mSPLDef.cursor( "SubregPhysicalLabelDef" ).checkExistenceOfEntity( ).toInt();
+         nRC = mLLD_LST.cursor( "LLD" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
             try
             {
-               strErrorMapValue = mSPLDef.cursor( "SubregPhysicalLabelDef" ).getAttribute( "Name" ).getString( "" );
+               strErrorMapValue = mLLD_LST.cursor( "LLD" ).getAttribute( "Name" ).getString( "" );
             }
             catch (Exception e)
             {
-               out.println("There is an error on MasterLabelContentVersion: " + e.getMessage());
-               task.log().error( "*** Error on ctrl MasterLabelContentVersion", e );
+               out.println("There is an error on TXName: " + e.getMessage());
+               task.log().error( "*** Error on ctrl TXName", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "SubregPhysicalLabelDef.Name: " + strErrorMapValue );
+            task.log( ).debug( "LLD.Name: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for MasterLabelContentVersion: " + "mSPLDef.SubregPhysicalLabelDef" );
+            task.log( ).debug( "Entity does not exist for TXName: " + "mLLD_LST.LLD" );
       }
    }
 %>
 
-<input class="text12" name="MasterLabelContentVersion" id="MasterLabelContentVersion" style="width:182px;position:absolute;left:170px;top:22px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text14bold" name="TXName" id="TXName" style="width:366px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
+</td>
+</tr>
+<tr>
+<td valign="top" style="width:140px;">
+<% /* FileName::Text */ %>
+
+<span  id="FileName:" name="FileName:" style="width:130px;height:16px;">CSS File Name:</span>
+
+</td>
+<td valign="top"  class="text14bold" style="width:366px;">
+<% /* EditBox1:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "EditBox1", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mLLD_LST = task.getViewByName( "mLLD_LST" );
+      if ( VmlOperation.isValid( mLLD_LST ) == false )
+         task.log( ).debug( "Invalid View: " + "EditBox1" );
+      else
+      {
+         nRC = mLLD_LST.cursor( "LLD" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = mLLD_LST.cursor( "LLD" ).getAttribute( "CSS_FileName" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on EditBox1: " + e.getMessage());
+               task.log().error( "*** Error on ctrl EditBox1", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "LLD.CSS_FileName: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for EditBox1: " + "mLLD_LST.LLD" );
+      }
+   }
+%>
+
+<input class="text14bold" name="EditBox1" id="EditBox1" style="width:366px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
+</td>
+</tr>
+</table>
+
+</div>  <!-- GroupBox1 --> 
+
+</div>  <!-- End of a new line -->
 
 
-</div>  <!--  MasterLabelContent --> 
+</div>  <!--  Registrants --> 
 </div>  <!-- End of a new line -->
 
 
@@ -710,7 +745,7 @@ else
 </body>
 </html>
 <%
-   session.setAttribute( "ZeidonWindow", "wSLCSPLD_VersionCopy" );
+   session.setAttribute( "ZeidonWindow", "wSPLDUpdateLLD" );
    session.setAttribute( "ZeidonAction", null );
 
    strActionToProcess = "";

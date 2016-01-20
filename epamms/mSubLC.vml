@@ -337,6 +337,7 @@ BuildNewSLC_Version( VIEW NewSLC      BASED ON LOD mSubLC,
    STRING ( 1 )  szEntityFoundFlag
    STRING ( 50 )  szMessageComponent
    STRING ( 50 )  szMessageSubComponent
+   
 
    // Create a new SLC from a previous SLC, tying the new back to the original.
    // Note that the data content must come from the next MLC for the MLC tied to the original SLC.
@@ -376,6 +377,7 @@ BuildNewSLC_Version( VIEW NewSLC      BASED ON LOD mSubLC,
                GetStringFromAttributeByContext( szMessageSubComponent, PreviousSLC, "S_UsageType", "UsageType", "FullUsageType", 50 )
                GetStringFromAttributeByContext( szMessageComponent, PreviousSLC, "S_Usage", "Name", "", 50 )
                NewSLC.S_VersionChangeMessage.ChangeText = "Deleted " + szMessageSubComponent + " Usage: " + szMessageComponent
+               CREATE ENTITY NewSLC.S_VersionChangeMessage   // Skip a line
             END
          END
       END
@@ -428,6 +430,7 @@ BuildNewSLC_Version( VIEW NewSLC      BASED ON LOD mSubLC,
          CREATE ENTITY NewSLC.S_VersionChangeMessage 
          GetStringFromAttributeByContext( szMessageComponent, PreviousSLC, "S_StorageDisposalSection", "ContainerVolume", "", 50 )
          NewSLC.S_VersionChangeMessage.ChangeText = "Deleted Storage and Disposal Section, " + szMessageComponent 
+         CREATE ENTITY NewSLC.S_VersionChangeMessage   // Skip a line
       END
    END
 
@@ -444,6 +447,7 @@ BuildNewSLC_Version( VIEW NewSLC      BASED ON LOD mSubLC,
          CREATE ENTITY NewSLC.S_VersionChangeMessage 
          GetStringFromAttributeByContext( szMessageComponent, PreviousSLC, "S_DirectionsForUseSection", "Name", "", 50 )
          NewSLC.S_VersionChangeMessage.ChangeText = "Deleted Directions for Use Section, " + szMessageComponent
+         CREATE ENTITY NewSLC.S_VersionChangeMessage   // Skip a line
       ELSE
          // Copy the MLC Section to the SLC.
          CREATE ENTITY NewSLC.S_DirectionsForUseSection
@@ -488,12 +492,23 @@ BuildNewSLC_Version( VIEW NewSLC      BASED ON LOD mSubLC,
          CREATE ENTITY NewSLC.S_VersionChangeMessage 
          GetStringFromAttributeByContext( szMessageComponent, PreviousSLC, "S_MarketingSection", "Name", "", 50 )
          NewSLC.S_VersionChangeMessage.ChangeText = "Deleted Marketing Section, " + szMessageComponent
+         CREATE ENTITY NewSLC.S_VersionChangeMessage   // Skip a line
       ELSE
          // The MLC Marketing Section has been copied, so bring it over.
          CREATE ENTITY NewSLC.S_MarketingSection
          SetMatchingAttributesByName( NewSLC, "S_MarketingSection", SourceMLC, "M_MarketingSection", zSET_NULL )
          INCLUDE NewSLC.M_MarketingSection FROM SourceMLC.M_MarketingSection
          INCLUDE NewSLC.SP_MarketingSection FROM PreviousSLC.S_MarketingSection
+         
+         // Create Title has changed message.
+         IF PreviousSLC.S_MarketingSection.Title != NewSLC.S_MarketingSection.Title 
+            CREATE ENTITY NewSLC.S_VersionChangeMessage 
+            GetStringFromAttributeByContext( szMessageComponent, NewSLC, "S_MarketingSection", "Title", "", 50 )
+            GetStringFromAttributeByContext( szMessageSubComponent, PreviousSLC, "S_MarketingSection", "Title", "", 50 )
+            NewSLC.S_VersionChangeMessage.ChangeText = "Marketing Section Title has changed from '" + szMessageSubComponent +
+                                                       "' to: '" + szMessageComponent + "'"
+            CREATE ENTITY NewSLC.S_VersionChangeMessage   // Skip a line
+         END
 
          // Statements
          FOR EACH PreviousSLC.S_MarketingStatement
@@ -508,6 +523,7 @@ BuildNewSLC_Version( VIEW NewSLC      BASED ON LOD mSubLC,
                CREATE ENTITY NewSLC.S_VersionChangeMessage 
                GetStringFromAttributeByContext( szMessageComponent, PreviousSLC, "S_MarketingStatement", "Text", "", 50 )
                NewSLC.S_VersionChangeMessage.ChangeText = "Deleted Marketing Statement, " + NEW_LINE + NEW_LINE + szMessageComponent
+               CREATE ENTITY NewSLC.S_VersionChangeMessage   // Skip a line
             ELSE
                CREATE ENTITY NewSLC.S_MarketingStatement
                SetMatchingAttributesByName( NewSLC, "S_MarketingStatement", SourceMLC, "M_MarketingStatement", zSET_NULL )
@@ -519,24 +535,26 @@ BuildNewSLC_Version( VIEW NewSLC      BASED ON LOD mSubLC,
                   CREATE ENTITY NewSLC.S_VersionChangeMessage 
                   GetStringFromAttributeByContext( szMessageComponent, NewSLC, "S_MarketingStatement", "Title", "", 50 )
                   NewSLC.S_VersionChangeMessage.ChangeText = "Marketing Statement Title has changed to: " + szMessageComponent
+                  CREATE ENTITY NewSLC.S_VersionChangeMessage   // Skip a line
                END
                IF PreviousSLC.S_MarketingStatement.Text != NewSLC.S_MarketingStatement.Text 
                   CREATE ENTITY NewSLC.S_VersionChangeMessage 
-                  NewSLC.S_VersionChangeMessage.ChangeText = "Marketing Statement Text has changed to the following text: "
+                  NewSLC.S_VersionChangeMessage.ChangeText = "Marketing Statement Text has changed from the first statement to the second: "
+                  GetStringFromAttributeByContext( szMessageComponent, PreviousSLC, "S_MarketingStatement", "Text", "", 50 )
+                  CREATE ENTITY NewSLC.S_VersionChangeMessage 
+                  NewSLC.S_VersionChangeMessage.ChangeText = szMessageComponent
                   GetStringFromAttributeByContext( szMessageComponent, NewSLC, "S_MarketingStatement", "Text", "", 50 )
                   CREATE ENTITY NewSLC.S_VersionChangeMessage 
                   NewSLC.S_VersionChangeMessage.ChangeText = szMessageComponent
-                  
+                  CREATE ENTITY NewSLC.S_VersionChangeMessage   // Skip a line
                END
             END
-         END
 
-         // Usages
-         // Create only MarketingUsages from the MLC under the statement that are among the Usage entries included in the NewSLC.
-         FOR EACH SourceMLC.M_MarketingUsageOrdering
-            IF SourceMLC.M_MarketingUsage EXISTS
-               SET CURSOR FIRST NewSLC.S_UsageType WHERE NewSLC.S_UsageType.UsageType = SourceMLC.M_MarketingUsage.UsageType
-               SET CURSOR FIRST NewSLC.S_Usage WHERE NewSLC.S_Usage.Name = SourceMLC.M_MarketingUsage.Name
+            // Usages
+            // Create only MarketingUsages from the original SLC under the statement that are among the Usage entries included in the NewSLC.
+            FOR EACH PreviousSLC.S_MarketingUsageOrdering 
+               SET CURSOR FIRST NewSLC.S_UsageType WHERE NewSLC.S_UsageType.UsageType = PreviousSLC.S_MarketingUsage.UsageType 
+               SET CURSOR FIRST NewSLC.S_Usage WHERE NewSLC.S_Usage.Name = PreviousSLC.S_MarketingUsage.Name 
                IF RESULT >= zCURSOR_SET
                   CREATE ENTITY NewSLC.S_MarketingUsageOrdering 
                   INCLUDE NewSLC.S_MarketingUsage FROM NewSLC.S_Usage
