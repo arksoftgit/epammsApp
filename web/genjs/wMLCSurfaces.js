@@ -205,6 +205,21 @@ function ADD_SurfacesUsageItems( )
    }
 }
 
+function GOTO_DeleteSelectedEntries( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCSurfaces.zAction.value = "GOTO_DeleteSelectedEntries";
+      document.wMLCSurfaces.submit( );
+   }
+}
+
 function DELETE_SelectedUsageEntries( )
 {
 
@@ -459,21 +474,6 @@ function smEnvironmentalHazards( )
       _DisableFormElements( true );
 
       document.wMLCSurfaces.zAction.value = "smEnvironmentalHazards";
-      document.wMLCSurfaces.submit( );
-   }
-}
-
-function smEditChemicalHazardsSection( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCSurfaces.zAction.value = "smEditChemicalHazardsSection";
       document.wMLCSurfaces.submit( );
    }
 }

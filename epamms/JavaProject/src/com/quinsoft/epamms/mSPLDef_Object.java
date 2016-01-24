@@ -62,6 +62,8 @@ omSPLDef_GeneratePDF_Label( View     mSPLDef )
    int      RESULT = 0;
    //:VIEW mSPLDefPDF BASED ON LOD mSPLDef
    zVIEW    mSPLDefPDF = new zVIEW( );
+   //:VIEW mSPLDefContinue BASED ON LOD mSPLDef
+   zVIEW    mSPLDefContinue = new zVIEW( );
    //:STRING ( 32000 ) szWriteBuffer
    String   szWriteBuffer = null;
    //:INTEGER lFile
@@ -1017,6 +1019,9 @@ omSPLDef_GeneratePDF_Label( View     mSPLDef )
    //:ComputeTopPositions( mSPLDef )
    omSPLDef_ComputeTopPositions( mSPLDef );
 
+   //:// Reset the wContinuedFromTag for each Block and SubBlock.
+   //:// TraverseBlocks( mSPLDef )  May use when we include "continuation" blocks
+
    //:// Loop through each PANEL, creating a Panel with Block containers.
    //:lCount          = 0
    lCount = 0;
@@ -1239,7 +1244,7 @@ omSPLDef_GeneratePDF_Label( View     mSPLDef )
       }
 
       //:// Panel Number
-      //:szWriteBuffer = "                  <!-- Panel Number " + szCount + " -->"
+      //:szWriteBuffer = "                  <!-- Panel Number " + szCount
        {StringBuilder sb_szWriteBuffer;
       if ( szWriteBuffer == null )
          sb_szWriteBuffer = new StringBuilder( 32 );
@@ -1253,13 +1258,6 @@ omSPLDef_GeneratePDF_Label( View     mSPLDef )
       else
          sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
             ZeidonStringConcat( sb_szWriteBuffer, 1, 0, szCount, 1, 0, 32001 );
-      szWriteBuffer = sb_szWriteBuffer.toString( );}
-       {StringBuilder sb_szWriteBuffer;
-      if ( szWriteBuffer == null )
-         sb_szWriteBuffer = new StringBuilder( 32 );
-      else
-         sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-            ZeidonStringConcat( sb_szWriteBuffer, 1, 0, " -->", 1, 0, 32001 );
       szWriteBuffer = sb_szWriteBuffer.toString( );}
       //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
       try
@@ -1407,8 +1405,39 @@ omSPLDef_GeneratePDF_Label( View     mSPLDef )
       {
          throw ZeidonException.wrapException( e );
       }
+      //:szWriteBuffer = " -->"
+       {StringBuilder sb_szWriteBuffer;
+      if ( szWriteBuffer == null )
+         sb_szWriteBuffer = new StringBuilder( 32 );
+      else
+         sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
+            ZeidonStringCopy( sb_szWriteBuffer, 1, 0, " -->", 1, 0, 32001 );
+      szWriteBuffer = sb_szWriteBuffer.toString( );}
+      //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+      try
+      {
+          {
+       ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mSPLDef );
+       m_ZGlobal1_Operation.WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 );
+       // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+      };
+      }
+      catch ( Exception e )
+      {
+         throw ZeidonException.wrapException( e );
+      }
 
       //:// Process each Block within the Panel.
+      //:CreateViewFromView( mSPLDefPDF, mSPLDef )
+      CreateViewFromView( mSPLDefPDF, mSPLDef );
+      //:CreateViewFromView( mSPLDefContinue, mSPLDef )
+      CreateViewFromView( mSPLDefContinue, mSPLDef );
+      //:NAME VIEW mSPLDefPDF "mSPLDefPDF"
+      SetNameForView( mSPLDefPDF, "mSPLDefPDF", null, zLEVEL_TASK );
+      //://NAME VIEW mSPLDefContinue "mSPLDefContinue"
+      //://NAME VIEW mSPLDef "mSPLDef"
+
+      //:// Top call to ProcessPDF_Blocks <<=====================
       //:szLeadingBlanks = "               "
        {StringBuilder sb_szLeadingBlanks;
       if ( szLeadingBlanks == null )
@@ -1417,13 +1446,10 @@ omSPLDef_GeneratePDF_Label( View     mSPLDef )
          sb_szLeadingBlanks = new StringBuilder( szLeadingBlanks );
             ZeidonStringCopy( sb_szLeadingBlanks, 1, 0, "               ", 1, 0, 51 );
       szLeadingBlanks = sb_szLeadingBlanks.toString( );}
-      //:CreateViewFromView( mSPLDefPDF, mSPLDef )
-      CreateViewFromView( mSPLDefPDF, mSPLDef );
-      //:NAME VIEW mSPLDefPDF "mSPLDefPDF"
-      SetNameForView( mSPLDefPDF, "mSPLDefPDF", null, zLEVEL_TASK );
-      //://NAME VIEW mSPLDef "mSPLDef"
-      //:nRC = ProcessPDF_Blocks( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer )
-      nRC = omSPLDef_ProcessPDF_Blocks( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer );
+      //:nRC = ProcessPDF_Blocks( mSPLDef, mSPLDefPDF, mSPLDefContinue, lFile, szLeadingBlanks, szWriteBuffer )
+      nRC = omSPLDef_ProcessPDF_Blocks( mSPLDef, mSPLDefPDF, mSPLDefContinue, lFile, szLeadingBlanks, szWriteBuffer );
+      //:DropView( mSPLDefContinue )
+      DropView( mSPLDefContinue );
       //:DropView( mSPLDefPDF )
       DropView( mSPLDefPDF );
       //:IF nRC = 2
@@ -3978,7 +4004,7 @@ omSPLDef_FormatContinueBlock( View     mSPLDefPDF,
    int      lTempInteger_9 = 0;
 
 
-   //:// Process Storage & Disposal, Directions for Use or Marketing Continuation Statements from previous Panel.
+   //:// Process Storage & Disposal, Directions For Use or Marketing Continuation Statements from previous Panel.
 
    //:szLeadingBlanks = szPassedBlanks
     {StringBuilder sb_szLeadingBlanks;
@@ -3991,12 +4017,17 @@ omSPLDef_FormatContinueBlock( View     mSPLDefPDF,
 
    //:// Create Block Container. Top is overridden to top of Panel.
    //:// TraceLineS( "$$$$ Begin of FormatContinueBlock", "" )
+   //://IF mSPLDef.ContinuationStatement DOES NOT EXIST
+   //://   IssueError( mSPLDef,0,0, "stop" )
+   //://END
+   //://TraceLineS( "##########********** Continue Block: ", mSPLDefPDF.LLD_Block.LLD_SectionType )
+   //://TraceLineS( "##########********** Format Continue: ", mSPLDef.ContinuationStatement.Text )
 
    //:FormatBlockContainer( mSPLDefPDF, mSPLDef, lFile, szLeadingBlanks, szWriteBuffer, "" )
    omSPLDef_FormatBlockContainer( mSPLDefPDF, mSPLDef, lFile, szLeadingBlanks, szWriteBuffer, "" );
 
    //:// If the continuation is to another Panel, put out Continuation text.
-   //:IF szContinueType = "P"
+   //:IF szContinueType = "P"  // continuation is to another Panel
    if ( ZeidonStringCompare( szContinueType, 1, 0, "P", 1, 0, 2 ) == 0 )
    { 
       //:// Add the Continuation verbage to the current Panel.
@@ -4279,25 +4310,23 @@ omSPLDef_FormatContinueBlock( View     mSPLDefPDF,
       { 
 
 
-
          //:ELSE
       } 
       else
       { 
 
-         //:IF szStatementFormat = "SN"
+         //:IF szStatementFormat = "SN"   // SN - Separate Numbered Paragraph
          if ( ZeidonStringCompare( szStatementFormat, 1, 0, "SN", 1, 0, 3 ) == 0 )
          { 
          } 
 
 
          //:   // This will be skipped for now.
-         //:   // SN - Separate Numbered Paragraph
+
          //:   // Process each Statement within the Section, indenting any text that follows a number.
          //:   // We will do this by determining if the first character in the text is a number.
          //:   // If it is not, we'll simply format as for SP above.
          //:   // If it is, we'll find the first character after any spaces following the number and indent that text, after the number.
-
 
          //:END
       } 
@@ -4664,6 +4693,7 @@ omSPLDef_FormatContinueBlock( View     mSPLDefPDF,
 //:TRANSFORMATION OPERATION
 //:ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
 //:                   VIEW mSPLDefPDF BASED ON LOD mSPLDef,
+//:                   VIEW mSPLDefContinue BASED ON LOD mSPLDef,
 //:                   INTEGER lFile,
 //:                   STRING ( 50 )    szPassedBlanks,
 //:                   STRING ( 32000 ) szWriteBuffer )
@@ -4672,13 +4702,14 @@ omSPLDef_FormatContinueBlock( View     mSPLDefPDF,
 public int 
 omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
                             View     mSPLDefPDF,
+                            View     mSPLDefContinue,
                             int      lFile,
                             String   szPassedBlanks,
                             String   szWriteBuffer )
 {
    zVIEW    mSPLDefTopBlock = new zVIEW( );
-   //:VIEW mSPLDef2        BASED ON LOD mSPLDef
-   zVIEW    mSPLDef2 = new zVIEW( );
+   //:STRING ( 64 ) szTag
+   String   szTag = null;
    //:STRING ( 50 ) szLeadingBlanks
    String   szLeadingBlanks = null;
    //:STRING ( 50 ) szBlockBlanks
@@ -4697,33 +4728,49 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
    String   szTitle = null;
    //:STRING ( 90 ) szMsg
    String   szMsg = null;
+   //:INTEGER       lControl
+   int      lControl = 0;
    //:SHORT         nRC
    int      nRC = 0;
    int      lTempInteger_0 = 0;
-   int      RESULT = 0;
    int      lTempInteger_1 = 0;
+   int      RESULT = 0;
    int      lTempInteger_2 = 0;
    int      lTempInteger_3 = 0;
    int      lTempInteger_4 = 0;
    int      lTempInteger_5 = 0;
    int      lTempInteger_6 = 0;
-   String   szTempString_0 = null;
    int      lTempInteger_7 = 0;
-   String   szTempString_1 = null;
    int      lTempInteger_8 = 0;
-   String   szTempString_2 = null;
+   String   szTempString_0 = null;
    int      lTempInteger_9 = 0;
-   String   szTempString_3 = null;
+   String   szTempString_1 = null;
    int      lTempInteger_10 = 0;
+   String   szTempString_2 = null;
+   int      lTempInteger_11 = 0;
+   String   szTempString_3 = null;
+   int      lTempInteger_12 = 0;
 
 
+   //:szTag = mSPLDefPDF.LLD_Block.Tag
+   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+   StringBuilder sb_szTag;
+   if ( szTag == null )
+      sb_szTag = new StringBuilder( 32 );
+   else
+      sb_szTag = new StringBuilder( szTag );
+       GetVariableFromAttribute( sb_szTag, mi_lTempInteger_0, 'S', 65, mSPLDefPDF, "LLD_Block", "Tag", "", 0 );
+   lTempInteger_0 = mi_lTempInteger_0.intValue( );
+   szTag = sb_szTag.toString( );}
+   //:TraceLineS( "Processing Block: ", szTag )
+   TraceLineS( "Processing Block: ", szTag );
    //:// Process each LLD_Block Container and subobject data.
 
    //:// Note that mSPLDefPDF is pointing to the LLD Panel and Block substructure, which recursively steps
    //:// to a subblock, while mSPLDef points to the rest of the structure at the root level.
    //:// mSPLDefTopBlock will be pointing to the top Block structure, which will be the same as mSPLDefPDF unless
-   //:// we've stepped down a level to SubBlock.
-
+   //:// we've stepped down a level to SubBlock.  nSPLDefContinue is used to get position on the Continuation
+   //:// block for a block that is continued.
 
    //:szLeadingBlanks = szPassedBlanks + "   "
     {StringBuilder sb_szLeadingBlanks;
@@ -4743,9 +4790,10 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
 
    //:// If the first LLD_Block is a Continuation LLD_Block from the previous Panel, process it first.
    //:IF mSPLDefPDF.LLD_Block.ContinuationBlockFlag = "Y" AND mSPLDefPDF.ContinuationStatement EXISTS
-   lTempInteger_0 = CheckExistenceOfEntity( mSPLDefPDF, "ContinuationStatement" );
-   if ( CompareAttributeToString( mSPLDefPDF, "LLD_Block", "ContinuationBlockFlag", "Y" ) == 0 && lTempInteger_0 == 0 )
+   lTempInteger_1 = CheckExistenceOfEntity( mSPLDefPDF, "ContinuationStatement" );
+   if ( CompareAttributeToString( mSPLDefPDF, "LLD_Block", "ContinuationBlockFlag", "Y" ) == 0 && lTempInteger_1 == 0 )
    { 
+      //:// continuation is to another Panel ... put out Continuation text "ContNextPageText..."
       //:FormatContinueBlock( mSPLDefPDF, mSPLDef, lFile, szLeadingBlanks, szWriteBuffer, "P" )
       omSPLDef_FormatContinueBlock( mSPLDefPDF, mSPLDef, lFile, szLeadingBlanks, szWriteBuffer, "P" );
    } 
@@ -4756,11 +4804,32 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
    RESULT = SetCursorFirstEntity( mSPLDefPDF, "LLD_Block", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
+      //://TraceLineS( "##########********** Block: ", mSPLDefPDF.LLD_Block.LLD_SectionType )
+      //://TraceLineS( "##########********** ContinuationBlockFlag: ", mSPLDefPDF.LLD_Block.ContinuationBlockFlag )
 
+      //:szTag = mSPLDefPDF.LLD_Block.Tag
+      {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
+      StringBuilder sb_szTag;
+      if ( szTag == null )
+         sb_szTag = new StringBuilder( 32 );
+      else
+         sb_szTag = new StringBuilder( szTag );
+             GetVariableFromAttribute( sb_szTag, mi_lTempInteger_2, 'S', 65, mSPLDefPDF, "LLD_Block", "Tag", "", 0 );
+      lTempInteger_2 = mi_lTempInteger_2.intValue( );
+      szTag = sb_szTag.toString( );}
       //:IF mSPLDefPDF.LLD_Block.ContinuationBlockFlag = "Y"
       if ( CompareAttributeToString( mSPLDefPDF, "LLD_Block", "ContinuationBlockFlag", "Y" ) == 0 )
       { 
+         //:TraceLineS( "Processing Continued Block: ", szTag )
+         TraceLineS( "Processing Continued Block: ", szTag );
+         //:IF szTag = "Tag666"
+         if ( ZeidonStringCompare( szTag, 1, 0, "Tag666", 1, 0, 65 ) == 0 )
+         { 
+            //:TraceLineS( "Processing skip tag: ", szTag )
+            TraceLineS( "Processing skip tag: ", szTag );
+         } 
 
+         //:END
          //:// This is a continuation from the last Block, so format if there is continuation data.
          //:// Note that mSPLDef is pointing to the Panel entity that holds the continuation statements.
          //:SET CURSOR FIRST mSPLDef.ContinuationStatement
@@ -4768,8 +4837,9 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
          //:IF RESULT >= zCURSOR_SET
          if ( RESULT >= zCURSOR_SET )
          { 
-            //:FormatContinueBlock( mSPLDefPDF, mSPLDef, lFile, szLeadingBlanks, szWriteBuffer, "B" )
+            //:FormatContinueBlock( mSPLDefPDF, mSPLDef, lFile, szLeadingBlanks, szWriteBuffer, "B" )  // continuation from the last Block
             omSPLDef_FormatContinueBlock( mSPLDefPDF, mSPLDef, lFile, szLeadingBlanks, szWriteBuffer, "B" );
+            //://TraceLineS( "##########********** FormatContinueBlock ", mSPLDefPDF.LLD_Block.ContinuationBlockFlag )
 
             //:// Remove continuation entries.
             //:FOR EACH mSPLDef.ContinuationStatement
@@ -4784,12 +4854,16 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
             //:END
          } 
 
+         //://         ELSE
+         //://  IssueError( mSPLDef,0,0, "stop" )
          //:END
 
          //:ELSE
       } 
       else
       { 
+         //:TraceLineS( "Processing Normal Block: ", szTag )
+         TraceLineS( "Processing Normal Block: ", szTag );
 
          //:// Create LLD_Block Container.
          //:FormatBlockContainer( mSPLDefPDF, mSPLDef, lFile, szLeadingBlanks, szWriteBuffer, "" )
@@ -4799,19 +4873,20 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
          //:// If it is just a Container, then format the LLD_Block and process each LLD_SubBlock.
          //:// Otherwise, go to the proper suboperation for processing the type of LLD_Block.
          //:IF mSPLDefPDF.LLD_SubBlock EXISTS
-         lTempInteger_1 = CheckExistenceOfEntity( mSPLDefPDF, "LLD_SubBlock" );
-         if ( lTempInteger_1 == 0 )
+         lTempInteger_3 = CheckExistenceOfEntity( mSPLDefPDF, "LLD_SubBlock" );
+         if ( lTempInteger_3 == 0 )
          { 
             //:// Process each LLD_SubBlock as regular Block, after stepping into subobject.
 
             //:// Create a view to the top Block for debug purposes.
             //:CreateViewFromView( mSPLDefTopBlock, mSPLDefPDF )
             CreateViewFromView( mSPLDefTopBlock, mSPLDefPDF );
-
             //:SetViewToSubobject( mSPLDefPDF, "LLD_SubBlock" )
             SetViewToSubobject( mSPLDefPDF, "LLD_SubBlock" );
-            //:nRC = ProcessPDF_Blocks( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer )
-            nRC = omSPLDef_ProcessPDF_Blocks( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer );
+
+            //:// Recursive call to ProcessPDF_Blocks
+            //:nRC = ProcessPDF_Blocks( mSPLDef, mSPLDefPDF, mSPLDefContinue, lFile, szLeadingBlanks, szWriteBuffer )
+            nRC = omSPLDef_ProcessPDF_Blocks( mSPLDef, mSPLDefPDF, mSPLDefContinue, lFile, szLeadingBlanks, szWriteBuffer );
             //:IF nRC = 2
             if ( nRC == 2 )
             { 
@@ -4833,26 +4908,7 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
             } 
 
             //:END
-            //:// Temporary code to process LLD_Block without recursive subobject LLD_SubBlock.
-            //://OrderEntityForView( mSPLDefPDF, "LLD_SubBlock", "Left A wComputedTopPosition A" )
-            //:/*ACTIVATE mSPLDefPDF2 EMPTY
-            //:NAME VIEW mSPLDefPDF2 "mSPLDefPDF2"
-            //:CREATE ENTITY mSPLDefPDF2.SubregPhysicalLabelDef
-            //:CREATE ENTITY mSPLDefPDF2.SPLD_LLD
-            //:CREATE ENTITY mSPLDefPDF2.LLD_Page
-            //:CREATE ENTITY mSPLDefPDF2.LLD_Panel
-            //:FOR EACH mSPLDefPDF.LLD_SubBlock
-            //:   CREATE ENTITY mSPLDefPDF2.LLD_Block
-            //:   SetMatchingAttributesByName( mSPLDefPDF2, "LLD_Block", mSPLDefPDF, "LLD_SubBlock", zSET_ALL )
-            //:   FOR EACH mSPLDefPDF.LLD_SpecialSectionAttributeSub
-            //:      CREATE ENTITY mSPLDefPDF2.LLD_SpecialSectionAttribute
-            //:      mSPLDefPDF2.LLD_SpecialSectionAttribute.Name = mSPLDefPDF.LLD_SpecialSectionAttributeSub.Name
-            //:      CREATE ENTITY mSPLDefPDF2.LLD_SpecialSectionAttrBlock
-            //:      SetMatchingAttributesByName( mSPLDefPDF2, "LLD_SpecialSectionAttrBlock", mSPLDefPDF, "LLD_SpecialSectionAttrSubBlock", zSET_ALL )
-            //:   END
-            //:END
-            //:ProcessPDF_Blocks( mSPLDef, mSPLDefPDF2, lFile, szLeadingBlanks, szWriteBuffer )
-            //:DropObjectInstance( mSPLDefPDF2 )*/
+
             //:ELSE
          } 
          else
@@ -4860,14 +4916,14 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
             //:// Determine what kind of LLD_Block it is and go to process accordingly.
 
             //:szSectionType = mSPLDefPDF.LLD_Block.LLD_SectionType
-            {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
+            {MutableInt mi_lTempInteger_4 = new MutableInt( lTempInteger_4 );
             StringBuilder sb_szSectionType;
             if ( szSectionType == null )
                sb_szSectionType = new StringBuilder( 32 );
             else
                sb_szSectionType = new StringBuilder( szSectionType );
-                         GetVariableFromAttribute( sb_szSectionType, mi_lTempInteger_2, 'S', 51, mSPLDefPDF, "LLD_Block", "LLD_SectionType", "", 0 );
-            lTempInteger_2 = mi_lTempInteger_2.intValue( );
+                         GetVariableFromAttribute( sb_szSectionType, mi_lTempInteger_4, 'S', 51, mSPLDefPDF, "LLD_Block", "LLD_SectionType", "", 0 );
+            lTempInteger_4 = mi_lTempInteger_4.intValue( );
             szSectionType = sb_szSectionType.toString( );}
 
             //:// IMAGE
@@ -4875,44 +4931,44 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
             if ( ZeidonStringCompare( szSectionType, 1, 0, "Graphic", 1, 0, 51 ) == 0 )
             { 
                //:szHeight = mSPLDefPDF.LLD_Block.Height
-               {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
+               {MutableInt mi_lTempInteger_5 = new MutableInt( lTempInteger_5 );
                StringBuilder sb_szHeight;
                if ( szHeight == null )
                   sb_szHeight = new StringBuilder( 32 );
                else
                   sb_szHeight = new StringBuilder( szHeight );
-                               GetVariableFromAttribute( sb_szHeight, mi_lTempInteger_3, 'S', 33, mSPLDefPDF, "LLD_Block", "Height", "", 0 );
-               lTempInteger_3 = mi_lTempInteger_3.intValue( );
+                               GetVariableFromAttribute( sb_szHeight, mi_lTempInteger_5, 'S', 33, mSPLDefPDF, "LLD_Block", "Height", "", 0 );
+               lTempInteger_5 = mi_lTempInteger_5.intValue( );
                szHeight = sb_szHeight.toString( );}
                //:szWidth  = mSPLDefPDF.LLD_Block.Width
-               {MutableInt mi_lTempInteger_4 = new MutableInt( lTempInteger_4 );
+               {MutableInt mi_lTempInteger_6 = new MutableInt( lTempInteger_6 );
                StringBuilder sb_szWidth;
                if ( szWidth == null )
                   sb_szWidth = new StringBuilder( 32 );
                else
                   sb_szWidth = new StringBuilder( szWidth );
-                               GetVariableFromAttribute( sb_szWidth, mi_lTempInteger_4, 'S', 33, mSPLDefPDF, "LLD_Block", "Width", "", 0 );
-               lTempInteger_4 = mi_lTempInteger_4.intValue( );
+                               GetVariableFromAttribute( sb_szWidth, mi_lTempInteger_6, 'S', 33, mSPLDefPDF, "LLD_Block", "Width", "", 0 );
+               lTempInteger_6 = mi_lTempInteger_6.intValue( );
                szWidth = sb_szWidth.toString( );}
                //:szTop    = mSPLDefPDF.LLD_Block.Top
-               {MutableInt mi_lTempInteger_5 = new MutableInt( lTempInteger_5 );
+               {MutableInt mi_lTempInteger_7 = new MutableInt( lTempInteger_7 );
                StringBuilder sb_szTop;
                if ( szTop == null )
                   sb_szTop = new StringBuilder( 32 );
                else
                   sb_szTop = new StringBuilder( szTop );
-                               GetVariableFromAttribute( sb_szTop, mi_lTempInteger_5, 'S', 33, mSPLDefPDF, "LLD_Block", "Top", "", 0 );
-               lTempInteger_5 = mi_lTempInteger_5.intValue( );
+                               GetVariableFromAttribute( sb_szTop, mi_lTempInteger_7, 'S', 33, mSPLDefPDF, "LLD_Block", "Top", "", 0 );
+               lTempInteger_7 = mi_lTempInteger_7.intValue( );
                szTop = sb_szTop.toString( );}
                //:szLeft   = mSPLDefPDF.LLD_Block.Left
-               {MutableInt mi_lTempInteger_6 = new MutableInt( lTempInteger_6 );
+               {MutableInt mi_lTempInteger_8 = new MutableInt( lTempInteger_8 );
                StringBuilder sb_szLeft;
                if ( szLeft == null )
                   sb_szLeft = new StringBuilder( 32 );
                else
                   sb_szLeft = new StringBuilder( szLeft );
-                               GetVariableFromAttribute( sb_szLeft, mi_lTempInteger_6, 'S', 51, mSPLDefPDF, "LLD_Block", "Left", "", 0 );
-               lTempInteger_6 = mi_lTempInteger_6.intValue( );
+                               GetVariableFromAttribute( sb_szLeft, mi_lTempInteger_8, 'S', 51, mSPLDefPDF, "LLD_Block", "Left", "", 0 );
+               lTempInteger_8 = mi_lTempInteger_8.intValue( );
                szLeft = sb_szLeft.toString( );}
 
                //:szWriteBuffer = "                     <fo:block text-align=^left^>"
@@ -4938,14 +4994,14 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
                }
                //:szWriteBuffer = "                        <fo:external-graphic src=^c:/lplr/epamms/xsl/images/" + mSPLDefPDF.LLD_Block.ImageName +
                //:                "^ height=^" + szHeight + "in^ width=^" + szWidth + "in^ content-height=^scale-to-fit^ content-width=^scale-to-fit^/>"
-               {MutableInt mi_lTempInteger_7 = new MutableInt( lTempInteger_7 );
+               {MutableInt mi_lTempInteger_9 = new MutableInt( lTempInteger_9 );
                StringBuilder sb_szTempString_0;
                if ( szTempString_0 == null )
                   sb_szTempString_0 = new StringBuilder( 32 );
                else
                   sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_7, 'S', 255, mSPLDefPDF, "LLD_Block", "ImageName", "", 0 );
-               lTempInteger_7 = mi_lTempInteger_7.intValue( );
+                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_9, 'S', 255, mSPLDefPDF, "LLD_Block", "ImageName", "", 0 );
+               lTempInteger_9 = mi_lTempInteger_9.intValue( );
                szTempString_0 = sb_szTempString_0.toString( );}
                 {StringBuilder sb_szWriteBuffer;
                if ( szWriteBuffer == null )
@@ -5044,13 +5100,13 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
                   //:// TraceLineS( "Major Block: ", szSectionType )
 
                   //:// Check if Title should be converted to upper case.
-                  //:szTitle = "Directions for Use"
+                  //:szTitle = "Directions For Use"
                    {StringBuilder sb_szTitle;
                   if ( szTitle == null )
                      sb_szTitle = new StringBuilder( 32 );
                   else
                      sb_szTitle = new StringBuilder( szTitle );
-                                    ZeidonStringCopy( sb_szTitle, 1, 0, "Directions for Use", 1, 0, 91 );
+                                    ZeidonStringCopy( sb_szTitle, 1, 0, "Directions For Use", 1, 0, 91 );
                   szTitle = sb_szTitle.toString( );}
                   //:SET CURSOR FIRST mSPLDefPDF.LLD_SpecialSectionAttribute WHERE mSPLDefPDF.LLD_SpecialSectionAttribute.Name = "Header"
                   RESULT = SetCursorFirstEntityByString( mSPLDefPDF, "LLD_SpecialSectionAttribute", "Name", "Header", "" );
@@ -5069,7 +5125,7 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
 
                   //:END
 
-                  //:// Set up Directions for Use Title.
+                  //:// Set up Directions For Use Title.
                   //:szWriteBuffer = szLeadingBlanks + "   <fo:block "
                    {StringBuilder sb_szWriteBuffer;
                   if ( szWriteBuffer == null )
@@ -5262,14 +5318,14 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
                         else
                         { 
                            //:szMsg = "No match on Marketing Section Name: " + mSPLDefPDF.LLD_Block.Name
-                           {MutableInt mi_lTempInteger_8 = new MutableInt( lTempInteger_8 );
+                           {MutableInt mi_lTempInteger_10 = new MutableInt( lTempInteger_10 );
                            StringBuilder sb_szTempString_1;
                            if ( szTempString_1 == null )
                               sb_szTempString_1 = new StringBuilder( 32 );
                            else
                               sb_szTempString_1 = new StringBuilder( szTempString_1 );
-                                                       GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_8, 'S', 129, mSPLDefPDF, "LLD_Block", "Name", "", 0 );
-                           lTempInteger_8 = mi_lTempInteger_8.intValue( );
+                                                       GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_10, 'S', 129, mSPLDefPDF, "LLD_Block", "Name", "", 0 );
+                           lTempInteger_10 = mi_lTempInteger_10.intValue( );
                            szTempString_1 = sb_szTempString_1.toString( );}
                             {StringBuilder sb_szMsg;
                            if ( szMsg == null )
@@ -5510,8 +5566,8 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
                            { 
 
                               //:// PHYSICAL HAZARD
-                              //:IF szSectionType = "PhysicalHazard"
-                              if ( ZeidonStringCompare( szSectionType, 1, 0, "PhysicalHazard", 1, 0, 51 ) == 0 )
+                              //:IF szSectionType = "EnvironmentalHazard"
+                              if ( ZeidonStringCompare( szSectionType, 1, 0, "EnvironmentalHazard", 1, 0, 51 ) == 0 )
                               { 
 
                                  //:// TraceLineS( "Major Block: ", szSectionType )
@@ -5826,14 +5882,14 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
                                                    //:// It is an error because there is no processing for the Block.
 
                                                    //:szMsg = "The Block is empty for Panel: " + mSPLDef.LLD_Panel.Tag + ", Block: " + mSPLDefPDF.LLD_Block.Tag + "."
-                                                   {MutableInt mi_lTempInteger_9 = new MutableInt( lTempInteger_9 );
+                                                   {MutableInt mi_lTempInteger_11 = new MutableInt( lTempInteger_11 );
                                                    StringBuilder sb_szTempString_2;
                                                    if ( szTempString_2 == null )
                                                       sb_szTempString_2 = new StringBuilder( 32 );
                                                    else
                                                       sb_szTempString_2 = new StringBuilder( szTempString_2 );
-                                                                                                       GetVariableFromAttribute( sb_szTempString_2, mi_lTempInteger_9, 'S', 65, mSPLDef, "LLD_Panel", "Tag", "", 0 );
-                                                   lTempInteger_9 = mi_lTempInteger_9.intValue( );
+                                                                                                       GetVariableFromAttribute( sb_szTempString_2, mi_lTempInteger_11, 'S', 65, mSPLDef, "LLD_Panel", "Tag", "", 0 );
+                                                   lTempInteger_11 = mi_lTempInteger_11.intValue( );
                                                    szTempString_2 = sb_szTempString_2.toString( );}
                                                     {StringBuilder sb_szMsg;
                                                    if ( szMsg == null )
@@ -5856,14 +5912,14 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
                                                       sb_szMsg = new StringBuilder( szMsg );
                                                                                                       ZeidonStringConcat( sb_szMsg, 1, 0, ", Block: ", 1, 0, 91 );
                                                    szMsg = sb_szMsg.toString( );}
-                                                   {MutableInt mi_lTempInteger_10 = new MutableInt( lTempInteger_10 );
+                                                   {MutableInt mi_lTempInteger_12 = new MutableInt( lTempInteger_12 );
                                                    StringBuilder sb_szTempString_3;
                                                    if ( szTempString_3 == null )
                                                       sb_szTempString_3 = new StringBuilder( 32 );
                                                    else
                                                       sb_szTempString_3 = new StringBuilder( szTempString_3 );
-                                                                                                       GetVariableFromAttribute( sb_szTempString_3, mi_lTempInteger_10, 'S', 65, mSPLDefPDF, "LLD_Block", "Tag", "", 0 );
-                                                   lTempInteger_10 = mi_lTempInteger_10.intValue( );
+                                                                                                       GetVariableFromAttribute( sb_szTempString_3, mi_lTempInteger_12, 'S', 65, mSPLDefPDF, "LLD_Block", "Tag", "", 0 );
+                                                   lTempInteger_12 = mi_lTempInteger_12.intValue( );
                                                    szTempString_3 = sb_szTempString_3.toString( );}
                                                     {StringBuilder sb_szMsg;
                                                    if ( szMsg == null )
@@ -6069,7 +6125,6 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
             //:END
          } 
 
-
          //:END
 
          //:// Process Termination.
@@ -6104,6 +6159,18 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
       } 
 
       RESULT = SetCursorNextEntity( mSPLDefPDF, "LLD_Block", "" );
+      //:/*?
+      //:   szTag = mSPLDefPDF.LLD_Block.ContinuationBlockTag
+      //:   IF szTag != ""
+      //:      lControl = zQUAL_STRING + zPOS_FIRST + zQUAL_SCOPE_OI
+      //:      IF SetEntityCursor( mSPLDefContinue, "LLD_Block", "Tag", lControl, szTag, "", "", 0, "", "" ) >= zCURSOR_SET
+
+      //:         IF mSPLDefContinue.LLD_Block.ContinuationBlockFlag = "Y" AND mSPLDefContinue.ContinuationStatement EXISTS
+      //:            FormatContinueBlock( mSPLDefContinue, mSPLDef, lFile, szLeadingBlanks, szWriteBuffer, "B" )
+      //:         END
+      //:      END
+      //:   END
+      //:?*/
       //:END
    } 
 
@@ -6137,6 +6204,8 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
                           String   szWriteBuffer )
 {
    zVIEW    mSPLDefPanelLevel = new zVIEW( );
+   //:VIEW mSPLDefContinue   BASED ON LOD mSPLDef
+   zVIEW    mSPLDefContinue = new zVIEW( );
    //:STRING ( 32000 )  szStatementText
    String   szStatementText = null;
    //:STRING ( 32000 )  szTemporaryText
@@ -6222,8 +6291,6 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
    int      lTempInteger_21 = 0;
    String   szTempString_9 = null;
    int      lTempInteger_22 = 0;
-   String   szTempString_10 = null;
-   int      lTempInteger_23 = 0;
 
 
    //:// Generate PDF for a "Directions of Use" or "Marketing" Section.
@@ -6865,13 +6932,13 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
          //:// Storage and Disposal has no keyword mapping.
          //:InsertMappingWordsIntoString( mSPLDef, szStatementText, szUsageTypeEntity, szLoopingEntity, szSeparatorCharacters )
          {
-          ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( mSPLDef );
+          ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mSPLDef );
           {StringBuilder sb_szStatementText;
          if ( szStatementText == null )
             sb_szStatementText = new StringBuilder( 32 );
          else
             sb_szStatementText = new StringBuilder( szStatementText );
-                   m_ZGlobalV_Operation.InsertMappingWordsIntoString( mSPLDef, sb_szStatementText, szUsageTypeEntity, szLoopingEntity, szSeparatorCharacters );
+                   m_ZGlobal1_Operation.InsertMappingWordsIntoString( mSPLDef, sb_szStatementText, szUsageTypeEntity, szLoopingEntity, szSeparatorCharacters );
          szStatementText = sb_szStatementText.toString( );}
           // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
          }
@@ -7169,7 +7236,6 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
             //:// be seen under view mSPLDefPDF. Thus the reason for the somewhat awkward code below where mSPLDefPanelLevel
             //:// is the same view as mSPLDefPDF for the case where the continuation is to the next Block.
 
-
             //:szDebugMsg = mSPLDefPDF.LLD_Block.ID
             {MutableInt mi_lTempInteger_11 = new MutableInt( lTempInteger_11 );
             StringBuilder sb_szDebugMsg;
@@ -7305,13 +7371,13 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
 
 
             //:// First look to see if the next Block is a Continuation Block and set flag.
-            //:SET CURSOR NEXT mSPLDefPDF.LLD_Block
-            RESULT = SetCursorNextEntity( mSPLDefPDF, "LLD_Block", "" );
+            //:CreateViewFromView( mSPLDefContinue, mSPLDefPDF )
+            CreateViewFromView( mSPLDefContinue, mSPLDefPDF );
+            //:SET CURSOR NEXT mSPLDefContinue.LLD_Block WHERE mSPLDefContinue.LLD_Block.ContinuationBlockFlag = "Y"
+            RESULT = SetCursorNextEntityByString( mSPLDefContinue, "LLD_Block", "ContinuationBlockFlag", "Y", "" );
             //:IF RESULT >= zCURSOR_SET
             if ( RESULT >= zCURSOR_SET )
             { 
-
-
                //:szDebugMsg = mSPLDefPDF.LLD_Block.ID
                {MutableInt mi_lTempInteger_17 = new MutableInt( lTempInteger_17 );
                StringBuilder sb_szDebugMsg;
@@ -7322,7 +7388,7 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
                                GetVariableFromAttribute( sb_szDebugMsg, mi_lTempInteger_17, 'S', 513, mSPLDefPDF, "LLD_Block", "ID", "", 0 );
                lTempInteger_17 = mi_lTempInteger_17.intValue( );
                szDebugMsg = sb_szDebugMsg.toString( );}
-               //:szDebugMsg = szDebugMsg + "   Tag: " + mSPLDefPDF.LLD_Block.Tag
+               //:szDebugMsg = szDebugMsg + "   Tag: " + mSPLDefContinue.LLD_Block.Tag
                 {StringBuilder sb_szDebugMsg;
                if ( szDebugMsg == null )
                   sb_szDebugMsg = new StringBuilder( 32 );
@@ -7336,7 +7402,7 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
                   sb_szTempString_5 = new StringBuilder( 32 );
                else
                   sb_szTempString_5 = new StringBuilder( szTempString_5 );
-                               GetVariableFromAttribute( sb_szTempString_5, mi_lTempInteger_18, 'S', 65, mSPLDefPDF, "LLD_Block", "Tag", "", 0 );
+                               GetVariableFromAttribute( sb_szTempString_5, mi_lTempInteger_18, 'S', 65, mSPLDefContinue, "LLD_Block", "Tag", "", 0 );
                lTempInteger_18 = mi_lTempInteger_18.intValue( );
                szTempString_5 = sb_szTempString_5.toString( );}
                 {StringBuilder sb_szDebugMsg;
@@ -7346,7 +7412,7 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
                   sb_szDebugMsg = new StringBuilder( szDebugMsg );
                               ZeidonStringConcat( sb_szDebugMsg, 1, 0, szTempString_5, 1, 0, 513 );
                szDebugMsg = sb_szDebugMsg.toString( );}
-               //:szDebugMsg = szDebugMsg + "   Name: " + mSPLDefPDF.LLD_Block.Name
+               //:szDebugMsg = szDebugMsg + "   Name: " + mSPLDefContinue.LLD_Block.Name
                 {StringBuilder sb_szDebugMsg;
                if ( szDebugMsg == null )
                   sb_szDebugMsg = new StringBuilder( 32 );
@@ -7360,7 +7426,7 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
                   sb_szTempString_6 = new StringBuilder( 32 );
                else
                   sb_szTempString_6 = new StringBuilder( szTempString_6 );
-                               GetVariableFromAttribute( sb_szTempString_6, mi_lTempInteger_19, 'S', 129, mSPLDefPDF, "LLD_Block", "Name", "", 0 );
+                               GetVariableFromAttribute( sb_szTempString_6, mi_lTempInteger_19, 'S', 129, mSPLDefContinue, "LLD_Block", "Name", "", 0 );
                lTempInteger_19 = mi_lTempInteger_19.intValue( );
                szTempString_6 = sb_szTempString_6.toString( );}
                 {StringBuilder sb_szDebugMsg;
@@ -7370,7 +7436,7 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
                   sb_szDebugMsg = new StringBuilder( szDebugMsg );
                               ZeidonStringConcat( sb_szDebugMsg, 1, 0, szTempString_6, 1, 0, 513 );
                szDebugMsg = sb_szDebugMsg.toString( );}
-               //:szDebugMsg = szDebugMsg + "   Title: " + mSPLDefPDF.LLD_Block.BlockTitle
+               //:szDebugMsg = szDebugMsg + "   Title: " + mSPLDefContinue.LLD_Block.BlockTitle
                 {StringBuilder sb_szDebugMsg;
                if ( szDebugMsg == null )
                   sb_szDebugMsg = new StringBuilder( 32 );
@@ -7384,7 +7450,7 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
                   sb_szTempString_7 = new StringBuilder( 32 );
                else
                   sb_szTempString_7 = new StringBuilder( szTempString_7 );
-                               GetVariableFromAttribute( sb_szTempString_7, mi_lTempInteger_20, 'S', 255, mSPLDefPDF, "LLD_Block", "BlockTitle", "", 0 );
+                               GetVariableFromAttribute( sb_szTempString_7, mi_lTempInteger_20, 'S', 255, mSPLDefContinue, "LLD_Block", "BlockTitle", "", 0 );
                lTempInteger_20 = mi_lTempInteger_20.intValue( );
                szTempString_7 = sb_szTempString_7.toString( );}
                 {StringBuilder sb_szDebugMsg;
@@ -7394,7 +7460,7 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
                   sb_szDebugMsg = new StringBuilder( szDebugMsg );
                               ZeidonStringConcat( sb_szDebugMsg, 1, 0, szTempString_7, 1, 0, 513 );
                szDebugMsg = sb_szDebugMsg.toString( );}
-               //:szDebugMsg = szDebugMsg + "   Section Type: " + mSPLDefPDF.LLD_Block.LLD_SectionType
+               //:szDebugMsg = szDebugMsg + "   Section Type: " + mSPLDefContinue.LLD_Block.LLD_SectionType
                 {StringBuilder sb_szDebugMsg;
                if ( szDebugMsg == null )
                   sb_szDebugMsg = new StringBuilder( 32 );
@@ -7408,7 +7474,7 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
                   sb_szTempString_8 = new StringBuilder( 32 );
                else
                   sb_szTempString_8 = new StringBuilder( szTempString_8 );
-                               GetVariableFromAttribute( sb_szTempString_8, mi_lTempInteger_21, 'S', 33, mSPLDefPDF, "LLD_Block", "LLD_SectionType", "", 0 );
+                               GetVariableFromAttribute( sb_szTempString_8, mi_lTempInteger_21, 'S', 33, mSPLDefContinue, "LLD_Block", "LLD_SectionType", "", 0 );
                lTempInteger_21 = mi_lTempInteger_21.intValue( );
                szTempString_8 = sb_szTempString_8.toString( );}
                 {StringBuilder sb_szDebugMsg;
@@ -7418,7 +7484,7 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
                   sb_szDebugMsg = new StringBuilder( szDebugMsg );
                               ZeidonStringConcat( sb_szDebugMsg, 1, 0, szTempString_8, 1, 0, 513 );
                szDebugMsg = sb_szDebugMsg.toString( );}
-               //:szDebugMsg = szDebugMsg + "   Continuation: " + mSPLDefPDF.LLD_Block.ContinuationBlockFlag
+               //:szDebugMsg = szDebugMsg + "   Continuation: " + mSPLDefContinue.LLD_Block.ContinuationBlockFlag
                 {StringBuilder sb_szDebugMsg;
                if ( szDebugMsg == null )
                   sb_szDebugMsg = new StringBuilder( 32 );
@@ -7432,7 +7498,7 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
                   sb_szTempString_9 = new StringBuilder( 32 );
                else
                   sb_szTempString_9 = new StringBuilder( szTempString_9 );
-                               GetVariableFromAttribute( sb_szTempString_9, mi_lTempInteger_22, 'S', 2, mSPLDefPDF, "LLD_Block", "ContinuationBlockFlag", "", 0 );
+                               GetVariableFromAttribute( sb_szTempString_9, mi_lTempInteger_22, 'S', 2, mSPLDefContinue, "LLD_Block", "ContinuationBlockFlag", "", 0 );
                lTempInteger_22 = mi_lTempInteger_22.intValue( );
                szTempString_9 = sb_szTempString_9.toString( );}
                 {StringBuilder sb_szDebugMsg;
@@ -7446,39 +7512,24 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
                TraceLineS( "Checking Continuation To Block ID: ", szDebugMsg );
 
 
-               //:IF mSPLDefPDF.LLD_Block.ContinuationBlockFlag = "Y"
-               if ( CompareAttributeToString( mSPLDefPDF, "LLD_Block", "ContinuationBlockFlag", "Y" ) == 0 )
-               { 
-                  //:szBlockContinuationType = "B"
-                   {StringBuilder sb_szBlockContinuationType;
-                  if ( szBlockContinuationType == null )
-                     sb_szBlockContinuationType = new StringBuilder( 32 );
-                  else
-                     sb_szBlockContinuationType = new StringBuilder( szBlockContinuationType );
-                                    ZeidonStringCopy( sb_szBlockContinuationType, 1, 0, "B", 1, 0, 2 );
-                  szBlockContinuationType = sb_szBlockContinuationType.toString( );}
-                  //:ELSE
-               } 
+               //://IF mSPLDefPDF.LLD_Block.ContinuationBlockFlag = "Y"
+               //:   szBlockContinuationType = "B"
+                {StringBuilder sb_szBlockContinuationType;
+               if ( szBlockContinuationType == null )
+                  sb_szBlockContinuationType = new StringBuilder( 32 );
                else
-               { 
-                  //:szBlockContinuationType = "P"
-                   {StringBuilder sb_szBlockContinuationType;
-                  if ( szBlockContinuationType == null )
-                     sb_szBlockContinuationType = new StringBuilder( 32 );
-                  else
-                     sb_szBlockContinuationType = new StringBuilder( szBlockContinuationType );
-                                    ZeidonStringCopy( sb_szBlockContinuationType, 1, 0, "P", 1, 0, 2 );
-                  szBlockContinuationType = sb_szBlockContinuationType.toString( );}
-                  //:SET CURSOR PREVIOUS mSPLDefPDF.LLD_Block     // We need to undo the set cursor next above.
-                  RESULT = SetCursorPrevEntity( mSPLDefPDF, "LLD_Block", "" );
-               } 
-
-               //:END
+                  sb_szBlockContinuationType = new StringBuilder( szBlockContinuationType );
+                              ZeidonStringCopy( sb_szBlockContinuationType, 1, 0, "B", 1, 0, 2 );
+               szBlockContinuationType = sb_szBlockContinuationType.toString( );}
+               //://ELSE
+               //:   //szBlockContinuationType = "P"
+               //:   //SET CURSOR PREVIOUS mSPLDefPDF.LLD_Block     // We need to undo the set cursor next above.
+               //://END
                //:ELSE
             } 
             else
             { 
-               //:szBlockContinuationType = "P"
+               //:   szBlockContinuationType = "P"
                 {StringBuilder sb_szBlockContinuationType;
                if ( szBlockContinuationType == null )
                   sb_szBlockContinuationType = new StringBuilder( 32 );
@@ -7488,33 +7539,25 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
                szBlockContinuationType = sb_szBlockContinuationType.toString( );}
             } 
 
-            //:END
+            //:   // SET CURSOR PREVIOUS mSPLDefPDF.LLD_Block     // We need to undo the set cursor next above.
+            //:   END
+            //:DropView( mSPLDefContinue )
+            DropView( mSPLDefContinue );
 
             //:// Create Panel view that will hold Continuation statements and position on next Panel, if this
             //:// is a Panel continuation, rather than a Block continuation.
-            //:CreateViewFromView( mSPLDefPanelLevel, mSPLDef )
-            CreateViewFromView( mSPLDefPanelLevel, mSPLDef );
-            //:NAME VIEW mSPLDefPanelLevel "mSPLDefPanelLevel"
-            SetNameForView( mSPLDefPanelLevel, "mSPLDefPanelLevel", null, zLEVEL_TASK );
-            //:IF szBlockContinuationType = "P"
-            if ( ZeidonStringCompare( szBlockContinuationType, 1, 0, "P", 1, 0, 2 ) == 0 )
-            { 
-               //:SET CURSOR NEXT mSPLDefPanelLevel.LLD_Panel
-               RESULT = SetCursorNextEntity( mSPLDefPanelLevel, "LLD_Panel", "" );
-            } 
-
-            //:END
+            //:// DonC deleted the following commented lines because of a JOE error where the ContinuationStatement created
+            //:// under mSPLDefPanelLevel didn't show under mSPLDef.
+            //:// Also, we won't have to check continuing to a new Panel because we'll include the continue block.
+            //://        CreateViewFromView( mSPLDefPanelLevel, mSPLDef )
+            //://        NAME VIEW mSPLDefPanelLevel "mSPLDefPanelLevel"
+            //://        IF szBlockContinuationType = "P"
+            //://           SET CURSOR NEXT mSPLDefPanelLevel.LLD_Panel
+            //://        END
             //:// Remove any existing Continuation Statements.
-            //:FOR EACH mSPLDefPanelLevel.ContinuationStatement
-            RESULT = SetCursorFirstEntity( mSPLDefPanelLevel, "ContinuationStatement", "" );
-            while ( RESULT > zCURSOR_UNCHANGED )
-            { 
-               //:DELETE ENTITY mSPLDefPanelLevel.ContinuationStatement NONE
-               RESULT = DeleteEntity( mSPLDefPanelLevel, "ContinuationStatement", zREPOS_NONE );
-               RESULT = SetCursorNextEntity( mSPLDefPanelLevel, "ContinuationStatement", "" );
-            } 
-
-            //:END
+            //://        FOR EACH mSPLDefPanelLevel.ContinuationStatement
+            //://           DELETE ENTITY mSPLDefPanelLevel.ContinuationStatement NONE
+            //://        END
 
             //:IF szBlockContinuationType = "B"
             if ( ZeidonStringCompare( szBlockContinuationType, 1, 0, "B", 1, 0, 2 ) == 0 )
@@ -7534,30 +7577,31 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
                      sb_szTemporaryText = new StringBuilder( szTemporaryText );
                                      GetStringFromAttribute( sb_szTemporaryText, mSPLDef, szStatementName, "ContinuationText" );
                   szTemporaryText = sb_szTemporaryText.toString( );}
-                  //:CREATE ENTITY mSPLDefPanelLevel.ContinuationStatement
-                  RESULT = CreateEntity( mSPLDefPanelLevel, "ContinuationStatement", zPOS_AFTER );
-                  //:mSPLDefPanelLevel.ContinuationStatement.Text = szTemporaryText
-                  SetAttributeFromString( mSPLDefPanelLevel, "ContinuationStatement", "Text", szTemporaryText );
+                  //:CREATE ENTITY mSPLDef.ContinuationStatement
+                  RESULT = CreateEntity( mSPLDef, "ContinuationStatement", zPOS_AFTER );
+                  //:mSPLDef.ContinuationStatement.Text = szTemporaryText
+                  SetAttributeFromString( mSPLDef, "ContinuationStatement", "Text", szTemporaryText );
                   //:ELSE
                } 
                else
                { 
                   //:// Initialize Continuation entry with Regular Text.
-                  //:CREATE ENTITY mSPLDefPanelLevel.ContinuationStatement
-                  RESULT = CreateEntity( mSPLDefPanelLevel, "ContinuationStatement", zPOS_AFTER );
+                  //:CREATE ENTITY mSPLDef.ContinuationStatement
+                  RESULT = CreateEntity( mSPLDef, "ContinuationStatement", zPOS_AFTER );
                   //:IF szStatementTitle != "" AND szStatementTitlePosition = "SL"
                   if ( ZeidonStringCompare( szStatementTitle, 1, 0, "", 1, 0, 257 ) != 0 && ZeidonStringCompare( szStatementTitlePosition, 1, 0, "SL", 1, 0, 3 ) == 0 )
                   { 
-                     //:mSPLDefPanelLevel.ContinuationStatement.Title = szStatementTitle
-                     SetAttributeFromString( mSPLDefPanelLevel, "ContinuationStatement", "Title", szStatementTitle );
+                     //:mSPLDef.ContinuationStatement.Title = szStatementTitle
+                     SetAttributeFromString( mSPLDef, "ContinuationStatement", "Title", szStatementTitle );
                   } 
 
                   //:END
-                  //:mSPLDefPanelLevel.ContinuationStatement.Text = szStatementText
-                  SetAttributeFromString( mSPLDefPanelLevel, "ContinuationStatement", "Text", szStatementText );
+                  //:mSPLDef.ContinuationStatement.Text = szStatementText
+                  SetAttributeFromString( mSPLDef, "ContinuationStatement", "Text", szStatementText );
                } 
 
                //:END
+               //://TraceLineS( "##########********** Create Continue 1: ", mSPLDefPDF.LLD_Block.LLD_SectionType )
 
                //:// Add any remaining Statement entries to continuation, that will be generated for the next Panel.
                //:// This will position us on the last Statement under the Section so that we will exit this operation without generating
@@ -7583,236 +7627,98 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
                      sb_szStatementTitle = new StringBuilder( szStatementTitle );
                                      GetStringFromAttribute( sb_szStatementTitle, mSPLDef, szStatementName, "Title" );
                   szStatementTitle = sb_szStatementTitle.toString( );}
-                  //:CREATE ENTITY mSPLDefPanelLevel.ContinuationStatement
-                  RESULT = CreateEntity( mSPLDefPanelLevel, "ContinuationStatement", zPOS_AFTER );
+                  //:CREATE ENTITY mSPLDef.ContinuationStatement
+                  RESULT = CreateEntity( mSPLDef, "ContinuationStatement", zPOS_AFTER );
                   //:IF szStatementTitle != "" AND szStatementTitlePosition = "SL"
                   if ( ZeidonStringCompare( szStatementTitle, 1, 0, "", 1, 0, 257 ) != 0 && ZeidonStringCompare( szStatementTitlePosition, 1, 0, "SL", 1, 0, 3 ) == 0 )
                   { 
-                     //:mSPLDefPanelLevel.ContinuationStatement.Title = szStatementTitle
-                     SetAttributeFromString( mSPLDefPanelLevel, "ContinuationStatement", "Title", szStatementTitle );
+                     //:mSPLDef.ContinuationStatement.Title = szStatementTitle
+                     SetAttributeFromString( mSPLDef, "ContinuationStatement", "Title", szStatementTitle );
                   } 
 
                   //:END
-                  //:mSPLDefPanelLevel.ContinuationStatement.Text = szStatementText
-                  SetAttributeFromString( mSPLDefPanelLevel, "ContinuationStatement", "Text", szStatementText );
+                  //:mSPLDef.ContinuationStatement.Text = szStatementText
+                  SetAttributeFromString( mSPLDef, "ContinuationStatement", "Text", szStatementText );
 
                   //:nRC = SetCursorNextEntity( mSPLDef, szStatementName, "" )
                   nRC = SetCursorNextEntity( mSPLDef, szStatementName, "" );
                } 
 
                //:END
-               //:SET CURSOR PREVIOUS mSPLDefPDF.LLD_Block     // We need to undo the set cursor next above.
-               RESULT = SetCursorPrevEntity( mSPLDefPDF, "LLD_Block", "" );
+               //://     // Debug Code
+               //://     SET CURSOR FIRST mSPLDef.ContinuationStatement
+               //://     IF RESULT >= zCURSOR_SET
+               //://        TraceLineS( "##########********** Continue Text: ", mSPLDef.ContinuationStatement.Text )
+               //://     ELSE
+               //://        IssueError( mSPLDef,0,0, "stop" )
+               //://     END
+               //://     TraceLineS( "##########********** szStatementName: ", szStatementName )
+               //://SET CURSOR PREVIOUS mSPLDefPDF.LLD_Block     // We need to undo the set cursor next above.
                //:ELSE
             } 
             else
             { 
-
-               //:// Panel continuation
-
-               //:IF szContinuationFlag = "M"
-               if ( ZeidonStringCompare( szContinuationFlag, 1, 0, "M", 1, 0, 2 ) == 0 )
-               { 
-                  //:// Continuation is in two pieces, so next text is ContinuationText.
-                  //:GetStringFromAttribute( szTemporaryText, mSPLDef, szStatementName, "ContinuationText" )
-                  {StringBuilder sb_szTemporaryText;
-                  if ( szTemporaryText == null )
-                     sb_szTemporaryText = new StringBuilder( 32 );
-                  else
-                     sb_szTemporaryText = new StringBuilder( szTemporaryText );
-                                     GetStringFromAttribute( sb_szTemporaryText, mSPLDef, szStatementName, "ContinuationText" );
-                  szTemporaryText = sb_szTemporaryText.toString( );}
-                  //:CREATE ENTITY mSPLDefPanelLevel.ContinuationStatement
-                  RESULT = CreateEntity( mSPLDefPanelLevel, "ContinuationStatement", zPOS_AFTER );
-                  //:mSPLDefPanelLevel.ContinuationStatement.Text = szTemporaryText
-                  SetAttributeFromString( mSPLDefPanelLevel, "ContinuationStatement", "Text", szTemporaryText );
-                  //:ELSE
-               } 
-               else
-               { 
-                  //:// Initialize Continuation entry with Regular Text.
-                  //:CREATE ENTITY mSPLDefPanelLevel.ContinuationStatement
-                  RESULT = CreateEntity( mSPLDefPanelLevel, "ContinuationStatement", zPOS_AFTER );
-                  //:IF szStatementTitle != "" AND szStatementTitlePosition = "SL"
-                  if ( ZeidonStringCompare( szStatementTitle, 1, 0, "", 1, 0, 257 ) != 0 && ZeidonStringCompare( szStatementTitlePosition, 1, 0, "SL", 1, 0, 3 ) == 0 )
-                  { 
-                     //:mSPLDefPanelLevel.ContinuationStatement.Title = szStatementTitle
-                     SetAttributeFromString( mSPLDefPanelLevel, "ContinuationStatement", "Title", szStatementTitle );
-                  } 
-
-                  //:END
-                  //:mSPLDefPanelLevel.ContinuationStatement.Text = szStatementText
-                  SetAttributeFromString( mSPLDefPanelLevel, "ContinuationStatement", "Text", szStatementText );
-               } 
-
-               //:END
-
-               //:// Copy BlockSpecialAttributeBlock entries.
-               //:// I decided not to do the following but use the formatting characteristics specified on the Continuation Block.
-               //:/*FOR EACH mSPLDefPanelLevel.LLD_SpecialSectionAttribute
-               //:   DELETE ENTITY mSPLDefPanelLevel.LLD_SpecialSectionAttribute NONE
-               //:END
-               //:FOR EACH mSPLDefPDF.LLD_SpecialSectionAttribute
-               //:   CREATE ENTITY mSPLDefPanelLevel.LLD_SpecialSectionAttribute
-               //:   mSPLDefPanelLevel.LLD_SpecialSectionAttribute.Name = mSPLDefPDF.LLD_SpecialSectionAttribute.Name
-               //:   CREATE ENTITY mSPLDefPanelLevel.LLD_SpecialSectionAttrBlock
-               //:   SetMatchingAttributesByName( mSPLDefPanelLevel, "LLD_SpecialSectionAttrBlock", mSPLDefPDF, "LLD_SpecialSectionAttrBlock", zSET_NULL )
-               //:END*/
-
-               //:// Add any remaining Statement entries to continuation, that will be generated for the next Panel.
-               //:// This will position us on the last Statement under the Section so that we will exit this operation without generating
-               //:// another Statement for this Panel.
-               //:nRC = SetCursorNextEntity( mSPLDef, szStatementName, "" )
-               nRC = SetCursorNextEntity( mSPLDef, szStatementName, "" );
-               //:LOOP WHILE nRC >= zCURSOR_SET
-               while ( nRC >= zCURSOR_SET )
-               { 
-                  //:GetStringFromAttribute( szStatementText, mSPLDef, szStatementName, "Text" )
-                  {StringBuilder sb_szStatementText;
-                  if ( szStatementText == null )
-                     sb_szStatementText = new StringBuilder( 32 );
-                  else
-                     sb_szStatementText = new StringBuilder( szStatementText );
-                                     GetStringFromAttribute( sb_szStatementText, mSPLDef, szStatementName, "Text" );
-                  szStatementText = sb_szStatementText.toString( );}
-                  //:GetStringFromAttribute( szStatementTitle, mSPLDef, szStatementName, "Title" )
-                  {StringBuilder sb_szStatementTitle;
-                  if ( szStatementTitle == null )
-                     sb_szStatementTitle = new StringBuilder( 32 );
-                  else
-                     sb_szStatementTitle = new StringBuilder( szStatementTitle );
-                                     GetStringFromAttribute( sb_szStatementTitle, mSPLDef, szStatementName, "Title" );
-                  szStatementTitle = sb_szStatementTitle.toString( );}
-                  //:CREATE ENTITY mSPLDefPanelLevel.ContinuationStatement
-                  RESULT = CreateEntity( mSPLDefPanelLevel, "ContinuationStatement", zPOS_AFTER );
-                  //:IF szStatementTitle != "" AND szStatementTitlePosition = "SL"
-                  if ( ZeidonStringCompare( szStatementTitle, 1, 0, "", 1, 0, 257 ) != 0 && ZeidonStringCompare( szStatementTitlePosition, 1, 0, "SL", 1, 0, 3 ) == 0 )
-                  { 
-                     //:mSPLDefPanelLevel.ContinuationStatement.Title = szStatementTitle
-                     SetAttributeFromString( mSPLDefPanelLevel, "ContinuationStatement", "Title", szStatementTitle );
-                  } 
-
-                  //:END
-                  //:mSPLDefPanelLevel.ContinuationStatement.Text = szStatementText
-                  SetAttributeFromString( mSPLDefPanelLevel, "ContinuationStatement", "Text", szStatementText );
-
-                  //:nRC = SetCursorNextEntity( mSPLDef, szStatementName, "" )
-                  nRC = SetCursorNextEntity( mSPLDef, szStatementName, "" );
-               } 
-
-               //:END
-
-               //:// Since this is a Panel continuation, add the Continuation verbage to the current Panel.
-               //:szWriteBuffer = szLeadingBlanks + "   <fo:block margin-top=^.05in^>"
-                {StringBuilder sb_szWriteBuffer;
-               if ( szWriteBuffer == null )
-                  sb_szWriteBuffer = new StringBuilder( 32 );
-               else
-                  sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-                              ZeidonStringCopy( sb_szWriteBuffer, 1, 0, szLeadingBlanks, 1, 0, 32001 );
-               szWriteBuffer = sb_szWriteBuffer.toString( );}
-                {StringBuilder sb_szWriteBuffer;
-               if ( szWriteBuffer == null )
-                  sb_szWriteBuffer = new StringBuilder( 32 );
-               else
-                  sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-                              ZeidonStringConcat( sb_szWriteBuffer, 1, 0, "   <fo:block margin-top=^.05in^>", 1, 0, 32001 );
-               szWriteBuffer = sb_szWriteBuffer.toString( );}
-               //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-               try
-               {
-                   {
-                ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mSPLDef );
-                m_ZGlobal1_Operation.WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 );
-                // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
-               };
-               }
-               catch ( Exception e )
-               {
-                  throw ZeidonException.wrapException( e );
-               }
-
-               //:szWriteBuffer = szLeadingBlanks + "      " + mSPLDef.SPLD_LLD.ContinuationPreviousPageText
-                {StringBuilder sb_szWriteBuffer;
-               if ( szWriteBuffer == null )
-                  sb_szWriteBuffer = new StringBuilder( 32 );
-               else
-                  sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-                              ZeidonStringCopy( sb_szWriteBuffer, 1, 0, szLeadingBlanks, 1, 0, 32001 );
-               szWriteBuffer = sb_szWriteBuffer.toString( );}
-                {StringBuilder sb_szWriteBuffer;
-               if ( szWriteBuffer == null )
-                  sb_szWriteBuffer = new StringBuilder( 32 );
-               else
-                  sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-                              ZeidonStringConcat( sb_szWriteBuffer, 1, 0, "      ", 1, 0, 32001 );
-               szWriteBuffer = sb_szWriteBuffer.toString( );}
-               {MutableInt mi_lTempInteger_23 = new MutableInt( lTempInteger_23 );
-               StringBuilder sb_szTempString_10;
-               if ( szTempString_10 == null )
-                  sb_szTempString_10 = new StringBuilder( 32 );
-               else
-                  sb_szTempString_10 = new StringBuilder( szTempString_10 );
-                               GetVariableFromAttribute( sb_szTempString_10, mi_lTempInteger_23, 'S', 32001, mSPLDef, "SPLD_LLD", "ContinuationPreviousPageText", "", 0 );
-               lTempInteger_23 = mi_lTempInteger_23.intValue( );
-               szTempString_10 = sb_szTempString_10.toString( );}
-                {StringBuilder sb_szWriteBuffer;
-               if ( szWriteBuffer == null )
-                  sb_szWriteBuffer = new StringBuilder( 32 );
-               else
-                  sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-                              ZeidonStringConcat( sb_szWriteBuffer, 1, 0, szTempString_10, 1, 0, 32001 );
-               szWriteBuffer = sb_szWriteBuffer.toString( );}
-               //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-               try
-               {
-                   {
-                ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mSPLDef );
-                m_ZGlobal1_Operation.WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 );
-                // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
-               };
-               }
-               catch ( Exception e )
-               {
-                  throw ZeidonException.wrapException( e );
-               }
-
-               //:szWriteBuffer = szLeadingBlanks + "   </fo:block>"
-                {StringBuilder sb_szWriteBuffer;
-               if ( szWriteBuffer == null )
-                  sb_szWriteBuffer = new StringBuilder( 32 );
-               else
-                  sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-                              ZeidonStringCopy( sb_szWriteBuffer, 1, 0, szLeadingBlanks, 1, 0, 32001 );
-               szWriteBuffer = sb_szWriteBuffer.toString( );}
-                {StringBuilder sb_szWriteBuffer;
-               if ( szWriteBuffer == null )
-                  sb_szWriteBuffer = new StringBuilder( 32 );
-               else
-                  sb_szWriteBuffer = new StringBuilder( szWriteBuffer );
-                              ZeidonStringConcat( sb_szWriteBuffer, 1, 0, "   </fo:block>", 1, 0, 32001 );
-               szWriteBuffer = sb_szWriteBuffer.toString( );}
-               //:WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
-               try
-               {
-                   {
-                ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mSPLDef );
-                m_ZGlobal1_Operation.WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 );
-                // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
-               };
-               }
-               catch ( Exception e )
-               {
-                  throw ZeidonException.wrapException( e );
-               }
             } 
 
-            //:END
 
-            //:DropView( mSPLDefPanelLevel )
-            DropView( mSPLDefPanelLevel );
+            //:   // Panel continuation
+
+            //:   /*IF szContinuationFlag = "M"
+            //:      // Continuation is in two pieces, so next text is ContinuationText.
+            //:      GetStringFromAttribute( szTemporaryText, mSPLDef, szStatementName, "ContinuationText" )
+            //:      CREATE ENTITY mSPLDefPanelLevel.ContinuationStatement
+            //:      mSPLDefPanelLevel.ContinuationStatement.Text = szTemporaryText
+            //:   ELSE
+            //:      // Initialize Continuation entry with Regular Text.
+            //:      CREATE ENTITY mSPLDefPanelLevel.ContinuationStatement
+            //:      IF szStatementTitle != "" AND szStatementTitlePosition = "SL"
+            //:         mSPLDefPanelLevel.ContinuationStatement.Title = szStatementTitle
+            //:      END
+            //:      mSPLDefPanelLevel.ContinuationStatement.Text = szStatementText
+            //:   END*/
+
+            //:   // Copy BlockSpecialAttributeBlock entries.
+            //:   // I decided not to do the following but use the formatting characteristics specified on the Continuation Block.
+            //:   /*FOR EACH mSPLDefPanelLevel.LLD_SpecialSectionAttribute
+            //:      DELETE ENTITY mSPLDefPanelLevel.LLD_SpecialSectionAttribute NONE
+            //:   END
+            //:   FOR EACH mSPLDefPDF.LLD_SpecialSectionAttribute
+            //:      CREATE ENTITY mSPLDefPanelLevel.LLD_SpecialSectionAttribute
+            //:      mSPLDefPanelLevel.LLD_SpecialSectionAttribute.Name = mSPLDefPDF.LLD_SpecialSectionAttribute.Name
+            //:      CREATE ENTITY mSPLDefPanelLevel.LLD_SpecialSectionAttrBlock
+            //:      SetMatchingAttributesByName( mSPLDefPanelLevel, "LLD_SpecialSectionAttrBlock", mSPLDefPDF, "LLD_SpecialSectionAttrBlock", zSET_NULL )
+            //:   END*/
+
+            //:   // Add any remaining Statement entries to continuation, that will be generated for the next Panel.
+            //:   // This will position us on the last Statement under the Section so that we will exit this operation without generating
+            //:   // another Statement for this Panel.
+            //:   /*nRC = SetCursorNextEntity( mSPLDef, szStatementName, "" )
+            //:   LOOP WHILE nRC >= zCURSOR_SET
+            //:      GetStringFromAttribute( szStatementText, mSPLDef, szStatementName, "Text" )
+            //:      GetStringFromAttribute( szStatementTitle, mSPLDef, szStatementName, "Title" )
+            //:      CREATE ENTITY mSPLDefPanelLevel.ContinuationStatement
+            //:      IF szStatementTitle != "" AND szStatementTitlePosition = "SL"
+            //:         mSPLDefPanelLevel.ContinuationStatement.Title = szStatementTitle
+            //:      END
+            //:      mSPLDefPanelLevel.ContinuationStatement.Text = szStatementText
+
+            //:      nRC = SetCursorNextEntity( mSPLDef, szStatementName, "" )
+            //:   END
+
+            //:   // Since this is a Panel continuation, add the Continuation verbage to the current Panel.
+            //:   szWriteBuffer = szLeadingBlanks + "   <fo:block margin-top=^.05in^>"
+            //:   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+
+            //:   szWriteBuffer = szLeadingBlanks + "      " + mSPLDef.SPLD_LLD.ContinuationPreviousPageText
+            //:   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+
+            //:   szWriteBuffer = szLeadingBlanks + "   </fo:block>"
+            //:   WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )*/
+            //:END
          } 
 
+
+         //:   //DropView( mSPLDefPanelLevel )
          //:END
       } 
 
@@ -10643,7 +10549,7 @@ omSPLDef_GeneratePDF_StorDisp( View     mSPLDef,
 
    return( 0 );
 //    // Right now there appears to be no reason why the Storage and Disposal section can't reuse the same code
-//    // as the Directions for Use and Marketing sections.
+//    // as the Directions For Use and Marketing sections.
 // END
 } 
 
@@ -11476,7 +11382,7 @@ omSPLDef_BuildSPLD_FromSLC( View     NewSPLD,
 
    //:END
 
-   //:// Build Directions for Use Entries (without Usage entries).
+   //:// Build Directions For Use Entries (without Usage entries).
    //:FOR EACH SourceSLC.S_DirectionsForUseSection
    RESULT = SetCursorFirstEntity( SourceSLC, "S_DirectionsForUseSection", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
@@ -11546,7 +11452,7 @@ omSPLDef_BuildSPLD_FromSLC( View     NewSPLD,
 
    //:END
 
-   //:// Go to build Directions for Use and Marketing Usage entries.
+   //:// Go to build Directions For Use and Marketing Usage entries.
    //:BuildUsageEntriesFrSLC( NewSPLD, SourceSLC )
    omSPLDef_BuildUsageEntriesFrSLC( NewSPLD, SourceSLC );
    return( 0 );
@@ -11572,7 +11478,7 @@ omSPLDef_RebuildSPLD_FromSLC( View     NewSPLD,
 //    FOR EACH NewSPLD.SPLD_MarketingSection
 //       DELETE ENTITY NewSPLD.SPLD_MarketingSection NONE
 //    END
-//    // Build Directions for Use Entries (without Usage entries).
+//    // Build Directions For Use Entries (without Usage entries).
 //    FOR EACH SourceSLC.S_DirectionsForUseSection
 //       CREATE ENTITY NewSPLD.SPLD_DirectionsForUseSection
 //       SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseSection", SourceSLC, "S_DirectionsForUseSection", zSET_NULL )
@@ -11592,7 +11498,7 @@ omSPLDef_RebuildSPLD_FromSLC( View     NewSPLD,
 //          SetMatchingAttributesByName( NewSPLD, "SPLD_MarketingStatement", SourceSLC, "S_MarketingStatement", zSET_NULL )
 //       END
 //    END
-//    // Go to build Directions for Use and Marketing entries.
+//    // Go to build Directions For Use and Marketing entries.
 //    BuildUsageEntriesFrSLC( NewSPLD, SourceSLC )*/
 // END
 } 
@@ -12112,7 +12018,7 @@ omSPLDef_DuplicateSPLD( View     NewSPLD,
    //:DuplicateSPLD( VIEW NewSPLD    BASED ON LOD mSPLDef,
    //:            VIEW SourceSPLD BASED ON LOD mSPLDef )
 
-   //:// Build an new SPLD from an existing SPLD.
+   //:// Build a new SPLD from an existing SPLD.
    //:CREATE ENTITY NewSPLD.SubregPhysicalLabelDef
    RESULT = CreateEntity( NewSPLD, "SubregPhysicalLabelDef", zPOS_AFTER );
    //:SetMatchingAttributesByName( NewSPLD, "SubregPhysicalLabelDef", SourceSPLD, "SubregPhysicalLabelDef", zSET_NULL )
@@ -12475,6 +12381,7 @@ omSPLDef_DuplicateSPLD_Block( View     NewSPLD,
    int      RESULT = 0;
    int      lTempInteger_0 = 0;
    int      lTempInteger_1 = 0;
+   int      lTempInteger_2 = 0;
 
    //:DuplicateSPLD_Block( VIEW NewSPLD    BASED ON LOD mSPLDef,
    //:                  VIEW SourceSPLD BASED ON LOD mSPLDef )
@@ -12514,7 +12421,16 @@ omSPLDef_DuplicateSPLD_Block( View     NewSPLD,
       RESULT = CreateEntity( NewSPLD, "LLD_SpecialSectionAttrBlock", zPOS_AFTER );
       //:SetMatchingAttributesByName( NewSPLD, "LLD_SpecialSectionAttrBlock", SourceSPLD, "LLD_SpecialSectionAttrBlock", zSET_NULL )
       SetMatchingAttributesByName( NewSPLD, "LLD_SpecialSectionAttrBlock", SourceSPLD, "LLD_SpecialSectionAttrBlock", zSET_NULL );
+      //:IF SourceSPLD.SpecialAttributeTextColor EXISTS
+      lTempInteger_2 = CheckExistenceOfEntity( SourceSPLD, "SpecialAttributeTextColor" );
+      if ( lTempInteger_2 == 0 )
+      { 
+         //:INCLUDE NewSPLD.SpecialAttributeTextColor FROM SourceSPLD.SpecialAttributeTextColor
+         RESULT = IncludeSubobjectFromSubobject( NewSPLD, "SpecialAttributeTextColor", SourceSPLD, "SpecialAttributeTextColor", zPOS_AFTER );
+      } 
+
       RESULT = SetCursorNextEntity( SourceSPLD, "LLD_SpecialSectionAttribute", "" );
+      //:END
    } 
 
    //:END
@@ -17105,106 +17021,32 @@ omSPLDef_GenerateAttribute( View     mSPLDef,
 
 
 //:TRANSFORMATION OPERATION
-//:ComputeTopPositions( VIEW mSPLDef BASED ON LOD mSPLDef )
-
-//:   DECIMAL LastBlockTopPosition
 public int 
 omSPLDef_ComputeTopPositions( View     mSPLDef )
 {
-   double  LastBlockTopPosition = 0.0;
-   //:DECIMAL LastSubBlockTopPosition
-   double  LastSubBlockTopPosition = 0.0;
    int      RESULT = 0;
-   double  dTempDecimal_0 = 0.0;
-   double  dTempDecimal_1 = 0.0;
-   double  dTempDecimal_2 = 0.0;
-   double  dTempDecimal_3 = 0.0;
-   double  dTempDecimal_4 = 0.0;
-   double  dTempDecimal_5 = 0.0;
 
+   //:ComputeTopPositions( VIEW mSPLDef BASED ON LOD mSPLDef )
 
    //:// Calculate the Top position for each Block and SubBlock. SubBlock positions are relative
-   //:// to the parent Block
+   //:// to the parent Block.
    //:// If the Top Position is specified, we'll use it. Otherwise, we'll use the last position of the
-   //:// previous Block or SubBlock entry plust its Height.
-   //:FOR EACH mSPLDef.LLD_Panel WITHIN mSPLDef.SubregPhysicalLabelDef
-   RESULT = SetCursorFirstEntity( mSPLDef, "LLD_Panel", "SubregPhysicalLabelDef" );
+   //:// previous Block or SubBlock entry plus its Height.
+   //:// FOR EACH mSPLDef.LLD_Page WITHIN mSPLDef.SubregPhysicalLabelDef
+   //:FOR EACH mSPLDef.LLD_Page  // only do it within the current SPLD_LLD
+   RESULT = SetCursorFirstEntity( mSPLDef, "LLD_Page", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
-      //:LastBlockTopPosition = 0
-      LastBlockTopPosition = 0;
-      //:FOR EACH mSPLDef.LLD_Block
-      RESULT = SetCursorFirstEntity( mSPLDef, "LLD_Block", "" );
+      //:FOR EACH mSPLDef.LLD_Panel
+      RESULT = SetCursorFirstEntity( mSPLDef, "LLD_Panel", "" );
       while ( RESULT > zCURSOR_UNCHANGED )
       { 
-         //:IF mSPLDef.LLD_Block.Top != ""
-         if ( CompareAttributeToString( mSPLDef, "LLD_Block", "Top", "" ) != 0 )
-         { 
-            //:mSPLDef.LLD_Block.wComputedTopPosition = mSPLDef.LLD_Block.Top
-            SetAttributeFromAttribute( mSPLDef, "LLD_Block", "wComputedTopPosition", mSPLDef, "LLD_Block", "Top" );
-            //:LastBlockTopPosition = mSPLDef.LLD_Block.Top + mSPLDef.LLD_Block.Height
-            {MutableDouble md_dTempDecimal_0 = new MutableDouble( dTempDecimal_0 );
-                         GetDecimalFromAttribute( md_dTempDecimal_0, mSPLDef, "LLD_Block", "Top" );
-            dTempDecimal_0 = md_dTempDecimal_0.doubleValue( );}
-            {MutableDouble md_dTempDecimal_1 = new MutableDouble( dTempDecimal_1 );
-                         GetDecimalFromAttribute( md_dTempDecimal_1, mSPLDef, "LLD_Block", "Height" );
-            dTempDecimal_1 = md_dTempDecimal_1.doubleValue( );}
-            LastBlockTopPosition = dTempDecimal_0 + dTempDecimal_1;
-            //:ELSE
-         } 
-         else
-         { 
-            //:mSPLDef.LLD_Block.wComputedTopPosition = LastBlockTopPosition
-            SetAttributeFromDecimal( mSPLDef, "LLD_Block", "wComputedTopPosition", LastBlockTopPosition );
-            //:LastBlockTopPosition = LastBlockTopPosition + mSPLDef.LLD_Block.Height
-            {MutableDouble md_dTempDecimal_2 = new MutableDouble( dTempDecimal_2 );
-                         GetDecimalFromAttribute( md_dTempDecimal_2, mSPLDef, "LLD_Block", "Height" );
-            dTempDecimal_2 = md_dTempDecimal_2.doubleValue( );}
-            LastBlockTopPosition = LastBlockTopPosition + dTempDecimal_2;
-         } 
-
-         //:END
-         //:LastSubBlockTopPosition = 0
-         LastSubBlockTopPosition = 0;
-         //:FOR EACH mSPLDef.LLD_SubBlock
-         RESULT = SetCursorFirstEntity( mSPLDef, "LLD_SubBlock", "" );
-         while ( RESULT > zCURSOR_UNCHANGED )
-         { 
-            //:IF mSPLDef.LLD_SubBlock.Top != ""
-            if ( CompareAttributeToString( mSPLDef, "LLD_SubBlock", "Top", "" ) != 0 )
-            { 
-               //:mSPLDef.LLD_SubBlock.wComputedTopPosition = mSPLDef.LLD_SubBlock.Top
-               SetAttributeFromAttribute( mSPLDef, "LLD_SubBlock", "wComputedTopPosition", mSPLDef, "LLD_SubBlock", "Top" );
-               //:LastSubBlockTopPosition = mSPLDef.LLD_SubBlock.Top + mSPLDef.LLD_SubBlock.Height
-               {MutableDouble md_dTempDecimal_3 = new MutableDouble( dTempDecimal_3 );
-                               GetDecimalFromAttribute( md_dTempDecimal_3, mSPLDef, "LLD_SubBlock", "Top" );
-               dTempDecimal_3 = md_dTempDecimal_3.doubleValue( );}
-               {MutableDouble md_dTempDecimal_4 = new MutableDouble( dTempDecimal_4 );
-                               GetDecimalFromAttribute( md_dTempDecimal_4, mSPLDef, "LLD_SubBlock", "Height" );
-               dTempDecimal_4 = md_dTempDecimal_4.doubleValue( );}
-               LastSubBlockTopPosition = dTempDecimal_3 + dTempDecimal_4;
-               //:ELSE
-            } 
-            else
-            { 
-               //:mSPLDef.LLD_SubBlock.wComputedTopPosition = LastSubBlockTopPosition
-               SetAttributeFromDecimal( mSPLDef, "LLD_SubBlock", "wComputedTopPosition", LastSubBlockTopPosition );
-               //:LastSubBlockTopPosition = LastSubBlockTopPosition + mSPLDef.LLD_SubBlock.Height
-               {MutableDouble md_dTempDecimal_5 = new MutableDouble( dTempDecimal_5 );
-                               GetDecimalFromAttribute( md_dTempDecimal_5, mSPLDef, "LLD_SubBlock", "Height" );
-               dTempDecimal_5 = md_dTempDecimal_5.doubleValue( );}
-               LastSubBlockTopPosition = LastSubBlockTopPosition + dTempDecimal_5;
-            } 
-
-            RESULT = SetCursorNextEntity( mSPLDef, "LLD_SubBlock", "" );
-            //:END
-         } 
-
-         RESULT = SetCursorNextEntity( mSPLDef, "LLD_Block", "" );
-         //:END
+         //:ComputeTopPosRecursive( mSPLDef )
+         omSPLDef_ComputeTopPosRecursive( mSPLDef );
+         RESULT = SetCursorNextEntity( mSPLDef, "LLD_Panel", "" );
       } 
 
-      RESULT = SetCursorNextEntity( mSPLDef, "LLD_Panel", "SubregPhysicalLabelDef" );
+      RESULT = SetCursorNextEntity( mSPLDef, "LLD_Page", "" );
       //:END
    } 
 
@@ -17349,7 +17191,7 @@ omSPLDef_BuildUsageEntriesFrSLC( View     mSPLDef,
    //:BuildUsageEntriesFrSLC( VIEW mSPLDef   BASED ON LOD mSPLDef,
    //:                     VIEW SourceSLC BASED ON LOD mSubLC )
 
-   //:// Build the Usage, Directions for Use and Marketing subobject structures from the creating SourceSLC.
+   //:// Build the Usage, Directions For Use and Marketing subobject structures from the creating SourceSLC.
 
    //:// Delete current entries.
    //:FOR EACH mSPLDef.SPLD_UsageType
@@ -17391,7 +17233,7 @@ omSPLDef_BuildUsageEntriesFrSLC( View     mSPLDef,
 
    //:END
 
-   //:// Build Directions for Use Usage Entries.
+   //:// Build Directions For Use Usage Entries.
    //:FOR EACH SourceSLC.S_DirectionsForUseSection
    RESULT = SetCursorFirstEntity( SourceSLC, "S_DirectionsForUseSection", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
@@ -17626,7 +17468,7 @@ omSPLDef_SetUpKeywordEntries( View     mSPLDefBlock,
             //:IF szSectionType = "DirectionsForUse" OR szSectionType = "FirstAid"
             if ( ZeidonStringCompare( szSectionType, 1, 0, "DirectionsForUse", 1, 0, 51 ) == 0 || ZeidonStringCompare( szSectionType, 1, 0, "FirstAid", 1, 0, 51 ) == 0 )
             { 
-               //:// Directions for Use or First Aid
+               //:// Directions For Use or First Aid
                //:CheckAddKeywordEntry( mSPLDefBlock, "Header" )
                omSPLDef_CheckAddKeywordEntry( mSPLDefBlock, "Header" );
                //:CheckAddKeywordEntry( mSPLDefBlock, "Title" )
@@ -17807,6 +17649,147 @@ omSPLDef_BuildSPLD_FromSPLD( View     NewSPLD,
       } 
 
       RESULT = SetCursorNextEntity( SourceSPLD, "LLD_Page", "" );
+      //:END
+   } 
+
+   //:END
+   return( 0 );
+// END
+} 
+
+
+//:TRANSFORMATION OPERATION
+//:ComputeTopPosRecursive( VIEW mSPLDef BASED ON LOD mSPLDef )
+
+//:   DECIMAL LastBlockTopPosition
+public int 
+omSPLDef_ComputeTopPosRecursive( View     mSPLDef )
+{
+   double  LastBlockTopPosition = 0.0;
+   int      RESULT = 0;
+   double  dTempDecimal_0 = 0.0;
+   double  dTempDecimal_1 = 0.0;
+   double  dTempDecimal_2 = 0.0;
+
+
+   //:LastBlockTopPosition = 0
+   LastBlockTopPosition = 0;
+   //:FOR EACH mSPLDef.LLD_Block
+   RESULT = SetCursorFirstEntity( mSPLDef, "LLD_Block", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:IF mSPLDef.LLD_Block.Top != ""
+      if ( CompareAttributeToString( mSPLDef, "LLD_Block", "Top", "" ) != 0 )
+      { 
+         //:mSPLDef.LLD_Block.wComputedTopPosition = mSPLDef.LLD_Block.Top
+         SetAttributeFromAttribute( mSPLDef, "LLD_Block", "wComputedTopPosition", mSPLDef, "LLD_Block", "Top" );
+         //:LastBlockTopPosition = mSPLDef.LLD_Block.Top + mSPLDef.LLD_Block.Height
+         {MutableDouble md_dTempDecimal_0 = new MutableDouble( dTempDecimal_0 );
+                   GetDecimalFromAttribute( md_dTempDecimal_0, mSPLDef, "LLD_Block", "Top" );
+         dTempDecimal_0 = md_dTempDecimal_0.doubleValue( );}
+         {MutableDouble md_dTempDecimal_1 = new MutableDouble( dTempDecimal_1 );
+                   GetDecimalFromAttribute( md_dTempDecimal_1, mSPLDef, "LLD_Block", "Height" );
+         dTempDecimal_1 = md_dTempDecimal_1.doubleValue( );}
+         LastBlockTopPosition = dTempDecimal_0 + dTempDecimal_1;
+         //:ELSE
+      } 
+      else
+      { 
+         //:mSPLDef.LLD_Block.wComputedTopPosition = LastBlockTopPosition
+         SetAttributeFromDecimal( mSPLDef, "LLD_Block", "wComputedTopPosition", LastBlockTopPosition );
+         //:LastBlockTopPosition = LastBlockTopPosition + mSPLDef.LLD_Block.Height
+         {MutableDouble md_dTempDecimal_2 = new MutableDouble( dTempDecimal_2 );
+                   GetDecimalFromAttribute( md_dTempDecimal_2, mSPLDef, "LLD_Block", "Height" );
+         dTempDecimal_2 = md_dTempDecimal_2.doubleValue( );}
+         LastBlockTopPosition = LastBlockTopPosition + dTempDecimal_2;
+      } 
+
+      //:END
+      //:FOR EACH mSPLDef.LLD_SubBlock
+      RESULT = SetCursorFirstEntity( mSPLDef, "LLD_SubBlock", "" );
+      while ( RESULT > zCURSOR_UNCHANGED )
+      { 
+         //:SetViewToSubobject( mSPLDef, "LLD_SubBlock" )
+         SetViewToSubobject( mSPLDef, "LLD_SubBlock" );
+         //:ComputeTopPosRecursive( mSPLDef )
+         omSPLDef_ComputeTopPosRecursive( mSPLDef );
+         //:ResetViewFromSubobject( mSPLDef )
+         ResetViewFromSubobject( mSPLDef );
+         RESULT = SetCursorNextEntity( mSPLDef, "LLD_SubBlock", "" );
+      } 
+
+      RESULT = SetCursorNextEntity( mSPLDef, "LLD_Block", "" );
+      //:END
+   } 
+
+   //:END
+   return( 0 );
+// END
+} 
+
+
+//:TRANSFORMATION OPERATION
+public int 
+omSPLDef_TraverseBlockRecursive( View     mSPLDef )
+{
+   int      RESULT = 0;
+
+   //:TraverseBlockRecursive( VIEW mSPLDef BASED ON LOD mSPLDef )
+
+   //:FOR EACH mSPLDef.LLD_Block
+   RESULT = SetCursorFirstEntity( mSPLDef, "LLD_Block", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:mSPLDef.LLD_Block.wContinuedFromTag = ""
+      SetAttributeFromString( mSPLDef, "LLD_Block", "wContinuedFromTag", "" );
+      //:FOR EACH mSPLDef.LLD_SubBlock
+      RESULT = SetCursorFirstEntity( mSPLDef, "LLD_SubBlock", "" );
+      while ( RESULT > zCURSOR_UNCHANGED )
+      { 
+         //:SetViewToSubobject( mSPLDef, "LLD_SubBlock" )
+         SetViewToSubobject( mSPLDef, "LLD_SubBlock" );
+         //:TraverseBlockRecursive( mSPLDef )
+         omSPLDef_TraverseBlockRecursive( mSPLDef );
+         //:ResetViewFromSubobject( mSPLDef )
+         ResetViewFromSubobject( mSPLDef );
+         RESULT = SetCursorNextEntity( mSPLDef, "LLD_SubBlock", "" );
+      } 
+
+      RESULT = SetCursorNextEntity( mSPLDef, "LLD_Block", "" );
+      //:END
+   } 
+
+   //:END
+   return( 0 );
+// END
+} 
+
+
+//:TRANSFORMATION OPERATION
+public int 
+omSPLDef_TraverseBlocks( View     mSPLDef )
+{
+   int      RESULT = 0;
+
+   //:TraverseBlocks( VIEW mSPLDef BASED ON LOD mSPLDef )
+
+   //:// FOR EACH mSPLDef.LLD_Page WITHIN mSPLDef.SubregPhysicalLabelDef
+   //:FOR EACH mSPLDef.LLD_Page  // only do it within the current SPLD_LLD
+   RESULT = SetCursorFirstEntity( mSPLDef, "LLD_Page", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:FOR EACH mSPLDef.LLD_Panel
+      RESULT = SetCursorFirstEntity( mSPLDef, "LLD_Panel", "" );
+      while ( RESULT > zCURSOR_UNCHANGED )
+      { 
+         //:TraverseBlockRecursive( mSPLDef )
+         omSPLDef_TraverseBlockRecursive( mSPLDef );
+         //:OrderEntityForView( mSPLDef, "LLD_Block", "Left A wComputedTopPosition A" )  // ContinuationBlockFlag D
+         OrderEntityForView( mSPLDef, "LLD_Block", "Left A wComputedTopPosition A" );
+         RESULT = SetCursorNextEntity( mSPLDef, "LLD_Panel", "" );
+      } 
+
+      RESULT = SetCursorNextEntity( mSPLDef, "LLD_Page", "" );
       //:END
    } 
 

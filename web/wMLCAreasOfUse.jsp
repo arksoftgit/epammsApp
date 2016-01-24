@@ -317,6 +317,23 @@ if ( strActionToProcess != null )
       break;
    }
 
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DeleteSelectedEntries" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAreasOfUse", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "DeleteUsageStatements" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
    while ( bDone == false && StringUtils.equals( strActionToProcess, "DELETE_SelectedUsageEntries" ) )
    {
       bDone = true;
@@ -881,44 +898,6 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditChemicalHazardsSection" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAreasOfUse", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAreasOfUse", "wMLC.EditChemicalHazardsSection" );
-      nOptRC = wMLC.EditChemicalHazardsSection( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "PhysicalChemicalHazardsSection" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
    while ( bDone == false && StringUtils.equals( strActionToProcess, "smGOTO_DilutionEntries" ) )
    {
       bDone = true;
@@ -1384,16 +1363,6 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New3" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smNew3" name="smNew3"><a href="#"  onclick="smEditChemicalHazardsSection()">Phys/Chem Hazards</a></li>
-<%
-   }
-%>
-
-<%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New2" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
@@ -1458,7 +1427,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smDirectionsForUse" name="smDirectionsForUse"><a href="#"  onclick="smEditDirectionsUseSect()">Directions for Use</a></li>
+       <li id="smDirectionsForUse" name="smDirectionsForUse"><a href="#"  onclick="smEditDirectionsUseSect()">Directions For Use</a></li>
 <%
    }
 %>
@@ -1492,10 +1461,11 @@ else
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
-   View mMasLC = null;
    View mEPA = null;
+   View mMasLC = null;
    View mMasProd = null;
    View mMasProdLST = null;
+   View mOrganiz = null;
    View mPrimReg = null;
    View wWebXfer = null;
    String strRadioGroupValue = "";
@@ -1629,7 +1599,7 @@ else
 <label class="groupbox"  id="OrganismClaimsStatements" name="OrganismClaimsStatements" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Areas of Use Statements</label>
 
 <% /* PushBtn1:PushBtn */ %>
-<button type="button" name="PushBtn1" id="PushBtn1" value="" onclick="DELETE_SelectedUsageEntries( )" style="width:210px;height:26px;position:absolute;left:264px;top:12px;">Delete Selected Areas of Use</button>
+<button type="button" name="PushBtn1" id="PushBtn1" value="" onclick="GOTO_DeleteSelectedEntries( )" style="width:210px;height:26px;position:absolute;left:264px;top:12px;">Delete Selected Areas of Use</button>
 
 <% /* PBNew:PushBtn */ %>
 <button type="button" name="PBNew" id="PBNew" value="" onclick="ADD_AreasUsageItems( )" style="width:78px;height:26px;position:absolute;left:482px;top:12px;">New</button>

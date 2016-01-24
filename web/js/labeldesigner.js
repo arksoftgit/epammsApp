@@ -2828,9 +2828,13 @@ public class FileServer {
                document.title = "ePamms Label Designer";
                // if ( value ) will evaluate to true if value is not: null/undefined/NaN/empty string ("")/0/false
                if ( objSPLD["Name"] ) {
-                  $("#zheader_title").text( "Label: " + objSPLD["Name"] );
+                  if ( objSPLD["ProductName"] ) {
+                     $("#zheader_title").text( "Product: " + objSPLD["ProductName"] + "   Label: " + objSPLD["Name"] );
+                  } else {
+                     $("#zheader_title").text( "Label: " + objSPLD["Name"] );
+                  }
                } else if ( objSPLD["ProductName"] ) {
-                  $("#zheader_title").text( "Label: " + objSPLD["ProductName"] );
+                  $("#zheader_title").text( "Product: " + objSPLD["ProductName"] );
                } else {
                   $("#zheader_title").text( "ePamms Label Designer" );
                }

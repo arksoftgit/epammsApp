@@ -190,7 +190,7 @@ function CheckAllInGrid(id, CheckBoxName)
    }
 }
 
-function ADD_AreasUsageItems( )
+function ADD_ApplTypesUsageItems( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -200,7 +200,22 @@ function ADD_AreasUsageItems( )
    {
       _DisableFormElements( true );
 
-      document.wMLCApplicationTypes.zAction.value = "ADD_AreasUsageItems";
+      document.wMLCApplicationTypes.zAction.value = "ADD_ApplTypesUsageItems";
+      document.wMLCApplicationTypes.submit( );
+   }
+}
+
+function GOTO_DeleteSelectedEntries( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCApplicationTypes.zAction.value = "GOTO_DeleteSelectedEntries";
       document.wMLCApplicationTypes.submit( );
    }
 }
@@ -216,7 +231,7 @@ function DELETE_SelectedUsageEntries( )
       // Javascript code entered by user.
 
 // Confirmation of  Delete.
-if (!confirm("OK to delete selected Surfaces?"))
+if (!confirm("OK to delete selected Application Types?"))
 {
    return;
 }
@@ -459,21 +474,6 @@ function smEnvironmentalHazards( )
       _DisableFormElements( true );
 
       document.wMLCApplicationTypes.zAction.value = "smEnvironmentalHazards";
-      document.wMLCApplicationTypes.submit( );
-   }
-}
-
-function smEditChemicalHazardsSection( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCApplicationTypes.zAction.value = "smEditChemicalHazardsSection";
       document.wMLCApplicationTypes.submit( );
    }
 }

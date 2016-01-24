@@ -279,7 +279,7 @@ if ( strActionToProcess != null )
 
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "ADD_AreasUsageItems" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "ADD_ApplTypesUsageItems" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCApplicationTypes", strActionToProcess );
@@ -312,6 +312,23 @@ if ( strActionToProcess != null )
          strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "AddItemsMultiple" );
       }
 
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DeleteSelectedEntries" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCApplicationTypes", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "DeleteUsageStatements" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -461,7 +478,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "AreasOfUseGroup" );
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "ApplicationTypesGroup" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -565,7 +582,7 @@ if ( strActionToProcess != null )
       }
 
       // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "AreasOfUseGroup" );
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "ApplicationTypesGroup" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -874,44 +891,6 @@ if ( strActionToProcess != null )
       {
          // Next Window
          strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "EnvironmentalHazards" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditChemicalHazardsSection" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCApplicationTypes", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCApplicationTypes", "wMLC.EditChemicalHazardsSection" );
-      nOptRC = wMLC.EditChemicalHazardsSection( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "PhysicalChemicalHazardsSection" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -1377,16 +1356,6 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New3" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smNew3" name="smNew3"><a href="#"  onclick="smEditChemicalHazardsSection()">Phys/Chem Hazards</a></li>
-<%
-   }
-%>
-
-<%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New2" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
@@ -1451,7 +1420,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smDirectionsForUse" name="smDirectionsForUse"><a href="#"  onclick="smEditDirectionsUseSect()">Directions for Use</a></li>
+       <li id="smDirectionsForUse" name="smDirectionsForUse"><a href="#"  onclick="smEditDirectionsUseSect()">Directions For Use</a></li>
 <%
    }
 %>
@@ -1485,10 +1454,11 @@ else
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
-   View mMasLC = null;
    View mEPA = null;
+   View mMasLC = null;
    View mMasProd = null;
    View mMasProdLST = null;
+   View mOrganiz = null;
    View mPrimReg = null;
    View wWebXfer = null;
    String strRadioGroupValue = "";
@@ -1603,9 +1573,9 @@ else
 <div id="Tab1" class="tab-pane" style="width:660px;"> <!-- Beginning of Tab Control Tab1 -->
 <script type="text/javascript">Tab1 = new WebFXTabPane( document.getElementById( "Tab1" ) );</script>
 
-<div id="IndividualAreasofUse" class="tab-page " > <!-- Tab item IndividualAreasofUse -->
-<h2 class="tab"><span>Individual Areas of Use</span></h2>
-<script type="text/javascript">Tab1.addTabPage( document.getElementById( "IndividualAreasofUse" ) );</script>
+<div id="IndividualApplicationTypes" class="tab-page " > <!-- Tab item IndividualApplicationTypes -->
+<h2 class="tab"><span>Individual Application Types</span></h2>
+<script type="text/javascript">Tab1.addTabPage( document.getElementById( "IndividualApplicationTypes" ) );</script>
 
 
  <!-- This is added as a line spacer -->
@@ -1619,13 +1589,13 @@ else
 
 <% /* OrganismClaimsStatements:Text */ %>
 
-<label class="groupbox"  id="OrganismClaimsStatements" name="OrganismClaimsStatements" style="">Areas of Use Statements</label>
+<label class="groupbox"  id="OrganismClaimsStatements" name="OrganismClaimsStatements" style="">Application Types Statements</label>
 
 <% /* PushBtn1:PushBtn */ %>
-<button type="button" name="PushBtn1" id="PushBtn1" value="" onclick="DELETE_SelectedUsageEntries( )" style="width:210px;height:26px;position:absolute;left:264px;top:12px;" tabindex=-1 >Delete Selected Areas of Use</button>
+<button type="button" name="PushBtn1" id="PushBtn1" value="" onclick="GOTO_DeleteSelectedEntries( )" style="width:226px;height:26px;position:absolute;left:264px;top:12px;" tabindex=-1 >Delete Selected Application Types</button>
 
 <% /* PBNew:PushBtn */ %>
-<button type="button" name="PBNew" id="PBNew" value="" onclick="ADD_AreasUsageItems( )" style="width:78px;height:26px;position:absolute;left:482px;top:12px;" tabindex=-1 >New</button>
+<button type="button" name="PBNew" id="PBNew" value="" onclick="ADD_ApplTypesUsageItems( )" style="width:78px;height:26px;position:absolute;left:498px;top:12px;" tabindex=-1 >New</button>
 
 
 </div>  <!--  GBClaimsStatements --> 
@@ -1645,7 +1615,7 @@ else
 <thead><tr>
 
    <th>Select</th>
-   <th>Areas of Use</th>
+   <th>Application Types</th>
    <th>Update</th>
 
 </tr></thead>
@@ -1666,7 +1636,7 @@ try
       String strTag;
       String strGS_Select;
       String strGS_SelectValue;
-      String strAreasOfUse;
+      String strApplicationTypes;
       String strBMBUpdateClaimsStatement;
       
       View vGridClaims;
@@ -1700,25 +1670,25 @@ try
             strGS_Select = "<input name='" + strGS_SelectValue + "' id='" + strGS_SelectValue + "' value='Y' type='checkbox' > ";
          }
 
-         strAreasOfUse = "";
+         strApplicationTypes = "";
          nRC = vGridClaims.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strAreasOfUse = vGridClaims.cursor( "M_Usage" ).getAttribute( "Name" ).getString( "" );
+            strApplicationTypes = vGridClaims.cursor( "M_Usage" ).getAttribute( "Name" ).getString( "" );
 
-            if ( strAreasOfUse == null )
-               strAreasOfUse = "";
+            if ( strApplicationTypes == null )
+               strApplicationTypes = "";
          }
 
-         if ( StringUtils.isBlank( strAreasOfUse ) )
-            strAreasOfUse = "&nbsp";
+         if ( StringUtils.isBlank( strApplicationTypes ) )
+            strApplicationTypes = "&nbsp";
 
 %>
 
 <tr<%=strOdd%>>
 
    <td nowrap><%=strGS_Select%></td>
-   <td><a href="#" onclick="GOTO_UpdateApplTypesStatement( this.id )" id="AreasOfUse::<%=strEntityKey%>"><%=strAreasOfUse%></a></td>
+   <td><a href="#" onclick="GOTO_UpdateApplTypesStatement( this.id )" id="ApplicationTypes::<%=strEntityKey%>"><%=strApplicationTypes%></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateClaimsStatement" onclick="GOTO_UpdateApplTypesStatement( this.id )" id="BMBUpdateClaimsStatement::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
 
 </tr>
@@ -1740,11 +1710,11 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 </div>  <!-- End of a new line -->
 
-</div> <!-- End of Tab item IndividualAreasofUse -->
+</div> <!-- End of Tab item IndividualApplicationTypes -->
 
-<div id="GroupAreasOfUse" class="tab-page " > <!-- Tab item GroupAreasOfUse -->
-<h2 class="tab"><span>Group Areas of Use</span></h2>
-<script type="text/javascript">Tab1.addTabPage( document.getElementById( "GroupAreasOfUse" ) );</script>
+<div id="GroupApplicationTypes" class="tab-page " > <!-- Tab item GroupApplicationTypes -->
+<h2 class="tab"><span>Group Application Types</span></h2>
+<script type="text/javascript">Tab1.addTabPage( document.getElementById( "GroupApplicationTypes" ) );</script>
 
 
  <!-- This is added as a line spacer -->
@@ -1758,16 +1728,16 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <% /* OrganismClaimsStatements1:Text */ %>
 
-<label class="groupbox"  id="OrganismClaimsStatements1" name="OrganismClaimsStatements1" style="">Areas of Use Groups</label>
+<label class="groupbox"  id="OrganismClaimsStatements1" name="OrganismClaimsStatements1" style="">Application Types Groups</label>
 
 <% /* PushBtn2:PushBtn */ %>
-<button type="button" name="PushBtn2" id="PushBtn2" value="" onclick="DELETE_UsageGroupEntriesOnly( )" style="width:258px;height:26px;position:absolute;left:194px;top:12px;" tabindex=-1 >Delete Selected Groups Only</button>
+<button type="button" name="PushBtn2" id="PushBtn2" value="" onclick="DELETE_UsageGroupEntriesOnly( )" style="width:294px;height:26px;position:absolute;left:194px;top:12px;" tabindex=-1 >Delete Selected Groups Only</button>
 
 <% /* PBNew1:PushBtn */ %>
-<button type="button" name="PBNew1" id="PBNew1" value="" onclick="GOTO_AddUsageGroup( )" style="width:78px;height:26px;position:absolute;left:482px;top:12px;" tabindex=-1 >New</button>
+<button type="button" name="PBNew1" id="PBNew1" value="" onclick="GOTO_AddUsageGroup( )" style="width:78px;height:26px;position:absolute;left:512px;top:12px;" tabindex=-1 >New</button>
 
 <% /* PushBtn3:PushBtn */ %>
-<button type="button" name="PushBtn3" id="PushBtn3" value="" onclick="DELETE_UsageGroupEntries( )" style="width:258px;height:26px;position:absolute;left:194px;top:38px;" tabindex=-1 >Delete Selected Groups & Areas</button>
+<button type="button" name="PushBtn3" id="PushBtn3" value="" onclick="DELETE_UsageGroupEntries( )" style="width:294px;height:26px;position:absolute;left:194px;top:38px;" tabindex=-1 >Delete Selected Groups & Application Types</button>
 
 
 </div>  <!--  GBClaimsStatements1 --> 
@@ -1787,7 +1757,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <thead><tr>
 
    <th>Select</th>
-   <th>Areas of Use Groups</th>
+   <th>Application Types Groups</th>
    <th>Update</th>
 
 </tr></thead>
@@ -1882,11 +1852,11 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 </div>  <!-- End of a new line -->
 
-</div> <!-- End of Tab item GroupAreasOfUse -->
+</div> <!-- End of Tab item GroupApplicationTypes -->
 
-<div id="NonGroupAreasOfUse" class="tab-page " > <!-- Tab item NonGroupAreasOfUse -->
-<h2 class="tab"><span>Nongroup Areas of Use</span></h2>
-<script type="text/javascript">Tab1.addTabPage( document.getElementById( "NonGroupAreasOfUse" ) );</script>
+<div id="NonGroupApplicationTypes" class="tab-page " > <!-- Tab item NonGroupApplicationTypes -->
+<h2 class="tab"><span>Nongroup Application Types</span></h2>
+<script type="text/javascript">Tab1.addTabPage( document.getElementById( "NonGroupApplicationTypes" ) );</script>
 
 
  <!-- This is added as a line spacer -->
@@ -1899,7 +1869,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <thead><tr>
 
-   <th>Areas of Use</th>
+   <th>Application Types</th>
 
 </tr></thead>
 
@@ -1967,7 +1937,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 </div>  <!-- End of a new line -->
 
-</div> <!-- End of Tab item NonGroupAreasOfUse -->
+</div> <!-- End of Tab item NonGroupApplicationTypes -->
 
 </div> <!-- End of Tab Control Tab1 -->
 

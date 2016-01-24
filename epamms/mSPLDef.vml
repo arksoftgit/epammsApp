@@ -21,6 +21,7 @@ GeneratePDF_Label( VIEW mSPLDef BASED ON LOD mSPLDef )
 
    VIEW wWebXfer REGISTERED AS wWebXfer
    VIEW mSPLDefPDF BASED ON LOD mSPLDef
+   VIEW mSPLDefContinue BASED ON LOD mSPLDef
    STRING ( 32000 ) szWriteBuffer
    INTEGER lFile
    INTEGER lControl
@@ -170,6 +171,9 @@ GeneratePDF_Label( VIEW mSPLDef BASED ON LOD mSPLDef )
    // Compute the Top Position values for each Block and SubBlock.
    ComputeTopPositions( mSPLDef )
 
+   // Reset the wContinuedFromTag for each Block and SubBlock.
+// TraverseBlocks( mSPLDef )  May use when we include "continuation" blocks
+
    // Loop through each PANEL, creating a Panel with Block containers.
    lCount          = 0
    Left            = 1.0
@@ -220,11 +224,16 @@ GeneratePDF_Label( VIEW mSPLDef BASED ON LOD mSPLDef )
       WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
 
       // Process each Block within the Panel.
-      szLeadingBlanks = "               "
       CreateViewFromView( mSPLDefPDF, mSPLDef )
+      CreateViewFromView( mSPLDefContinue, mSPLDef )
       NAME VIEW mSPLDefPDF "mSPLDefPDF"
+      //NAME VIEW mSPLDefContinue "mSPLDefContinue"
       //NAME VIEW mSPLDef "mSPLDef"
-      nRC = ProcessPDF_Blocks( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer )
+
+      // Top call to ProcessPDF_Blocks <<=====================
+      szLeadingBlanks = "               "
+      nRC = ProcessPDF_Blocks( mSPLDef, mSPLDefPDF, mSPLDefContinue, lFile, szLeadingBlanks, szWriteBuffer )
+      DropView( mSPLDefContinue )
       DropView( mSPLDefPDF )
       IF nRC = 2
          RETURN 2
@@ -637,17 +646,22 @@ FormatContinueBlock( VIEW mSPLDefPDF BASED ON LOD mSPLDef,
    STRING ( 3 )      szDisplaySectionSuffix
    SHORT             nRC
 
-   // Process Storage & Disposal, Directions for Use or Marketing Continuation Statements from previous Panel.
+   // Process Storage & Disposal, Directions For Use or Marketing Continuation Statements from previous Panel.
 
    szLeadingBlanks = szPassedBlanks
 
    // Create Block Container. Top is overridden to top of Panel.
 // TraceLineS( "$$$$ Begin of FormatContinueBlock", "" )
+//IF mSPLDef.ContinuationStatement DOES NOT EXIST
+//   IssueError( mSPLDef,0,0, "stop" )
+//END
+//TraceLineS( "##########********** Continue Block: ", mSPLDefPDF.LLD_Block.LLD_SectionType )
+//TraceLineS( "##########********** Format Continue: ", mSPLDef.ContinuationStatement.Text )
 
    FormatBlockContainer( mSPLDefPDF, mSPLDef, lFile, szLeadingBlanks, szWriteBuffer, "" )
 
    // If the continuation is to another Panel, put out Continuation text.
-   IF szContinueType = "P"
+   IF szContinueType = "P"  // continuation is to another Panel
       // Add the Continuation verbage to the current Panel.
       szWriteBuffer = szLeadingBlanks + "   <fo:block margin-bottom=^.05in^>"
       WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
@@ -697,18 +711,16 @@ FormatContinueBlock( VIEW mSPLDefPDF BASED ON LOD mSPLDef,
       IF szTitleFormat = "PU"
 
 
-
       ELSE
 
-         IF szStatementFormat = "SN"
+         IF szStatementFormat = "SN"   // SN - Separate Numbered Paragraph
 
             // This will be skipped for now.
-            // SN - Separate Numbered Paragraph
+
             // Process each Statement within the Section, indenting any text that follows a number.
             // We will do this by determining if the first character in the text is a number.
             // If it is not, we'll simply format as for SP above.
             // If it is, we'll find the first character after any spaces following the number and indent that text, after the number.
-
 
          END
       END
@@ -773,12 +785,13 @@ END
 TRANSFORMATION OPERATION
 ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
                    VIEW mSPLDefPDF BASED ON LOD mSPLDef,
+                   VIEW mSPLDefContinue BASED ON LOD mSPLDef,
                    INTEGER lFile,
                    STRING ( 50 )    szPassedBlanks,
                    STRING ( 32000 ) szWriteBuffer )
 
    VIEW mSPLDefTopBlock BASED ON LOD mSPLDef
-   VIEW mSPLDef2        BASED ON LOD mSPLDef
+   STRING ( 64 ) szTag
    STRING ( 50 ) szLeadingBlanks
    STRING ( 50 ) szBlockBlanks
    STRING ( 32 ) szHeight
@@ -788,40 +801,54 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
    STRING ( 50 ) szLeft
    STRING ( 90 ) szTitle
    STRING ( 90 ) szMsg
+   INTEGER       lControl
    SHORT         nRC
 
+   szTag = mSPLDefPDF.LLD_Block.Tag
+   TraceLineS( "Processing Block: ", szTag )
    // Process each LLD_Block Container and subobject data.
 
    // Note that mSPLDefPDF is pointing to the LLD Panel and Block substructure, which recursively steps
    // to a subblock, while mSPLDef points to the rest of the structure at the root level.
    // mSPLDefTopBlock will be pointing to the top Block structure, which will be the same as mSPLDefPDF unless
-   // we've stepped down a level to SubBlock.
-
+   // we've stepped down a level to SubBlock.  nSPLDefContinue is used to get position on the Continuation
+   // block for a block that is continued.
 
    szLeadingBlanks = szPassedBlanks + "   "
 
    // If the first LLD_Block is a Continuation LLD_Block from the previous Panel, process it first.
    IF mSPLDefPDF.LLD_Block.ContinuationBlockFlag = "Y" AND mSPLDefPDF.ContinuationStatement EXISTS
+      // continuation is to another Panel ... put out Continuation text "ContNextPageText..."
       FormatContinueBlock( mSPLDefPDF, mSPLDef, lFile, szLeadingBlanks, szWriteBuffer, "P" )
    END
 
    FOR EACH mSPLDefPDF.LLD_Block
+//TraceLineS( "##########********** Block: ", mSPLDefPDF.LLD_Block.LLD_SectionType )
+//TraceLineS( "##########********** ContinuationBlockFlag: ", mSPLDefPDF.LLD_Block.ContinuationBlockFlag )
 
+      szTag = mSPLDefPDF.LLD_Block.Tag
       IF mSPLDefPDF.LLD_Block.ContinuationBlockFlag = "Y"
-
+         TraceLineS( "Processing Continued Block: ", szTag )
+         IF szTag = "Tag666"
+            TraceLineS( "Processing skip tag: ", szTag )
+         END
          // This is a continuation from the last Block, so format if there is continuation data.
          // Note that mSPLDef is pointing to the Panel entity that holds the continuation statements.
          SET CURSOR FIRST mSPLDef.ContinuationStatement
          IF RESULT >= zCURSOR_SET
-            FormatContinueBlock( mSPLDefPDF, mSPLDef, lFile, szLeadingBlanks, szWriteBuffer, "B" )
+            FormatContinueBlock( mSPLDefPDF, mSPLDef, lFile, szLeadingBlanks, szWriteBuffer, "B" )  // continuation from the last Block
+//TraceLineS( "##########********** FormatContinueBlock ", mSPLDefPDF.LLD_Block.ContinuationBlockFlag )
 
             // Remove continuation entries.
             FOR EACH mSPLDef.ContinuationStatement
                DELETE ENTITY mSPLDef.ContinuationStatement NONE
             END
+//         ELSE
+//  IssueError( mSPLDef,0,0, "stop" )
          END
 
       ELSE
+         TraceLineS( "Processing Normal Block: ", szTag )
 
          // Create LLD_Block Container.
          FormatBlockContainer( mSPLDefPDF, mSPLDef, lFile, szLeadingBlanks, szWriteBuffer, "" )
@@ -834,9 +861,10 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
 
             // Create a view to the top Block for debug purposes.
             CreateViewFromView( mSPLDefTopBlock, mSPLDefPDF )
-
             SetViewToSubobject( mSPLDefPDF, "LLD_SubBlock" )
-            nRC = ProcessPDF_Blocks( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer )
+
+            // Recursive call to ProcessPDF_Blocks
+            nRC = ProcessPDF_Blocks( mSPLDef, mSPLDefPDF, mSPLDefContinue, lFile, szLeadingBlanks, szWriteBuffer )
             IF nRC = 2
                RETURN 2
             END
@@ -846,26 +874,7 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
             IF RESULT >= 0
                DropView( mSPLDefTopBlock )
             END
-            // Temporary code to process LLD_Block without recursive subobject LLD_SubBlock.
-            //OrderEntityForView( mSPLDefPDF, "LLD_SubBlock", "Left A wComputedTopPosition A" )
-            /*ACTIVATE mSPLDefPDF2 EMPTY
-            NAME VIEW mSPLDefPDF2 "mSPLDefPDF2"
-            CREATE ENTITY mSPLDefPDF2.SubregPhysicalLabelDef
-            CREATE ENTITY mSPLDefPDF2.SPLD_LLD
-            CREATE ENTITY mSPLDefPDF2.LLD_Page
-            CREATE ENTITY mSPLDefPDF2.LLD_Panel
-            FOR EACH mSPLDefPDF.LLD_SubBlock
-               CREATE ENTITY mSPLDefPDF2.LLD_Block
-               SetMatchingAttributesByName( mSPLDefPDF2, "LLD_Block", mSPLDefPDF, "LLD_SubBlock", zSET_ALL )
-               FOR EACH mSPLDefPDF.LLD_SpecialSectionAttributeSub
-                  CREATE ENTITY mSPLDefPDF2.LLD_SpecialSectionAttribute
-                  mSPLDefPDF2.LLD_SpecialSectionAttribute.Name = mSPLDefPDF.LLD_SpecialSectionAttributeSub.Name
-                  CREATE ENTITY mSPLDefPDF2.LLD_SpecialSectionAttrBlock
-                  SetMatchingAttributesByName( mSPLDefPDF2, "LLD_SpecialSectionAttrBlock", mSPLDefPDF, "LLD_SpecialSectionAttrSubBlock", zSET_ALL )
-               END
-            END
-            ProcessPDF_Blocks( mSPLDef, mSPLDefPDF2, lFile, szLeadingBlanks, szWriteBuffer )
-            DropObjectInstance( mSPLDefPDF2 )*/
+
          ELSE
             // Determine what kind of LLD_Block it is and go to process accordingly.
 
@@ -894,13 +903,13 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
             // TraceLineS( "Major Block: ", szSectionType )
 
                // Check if Title should be converted to upper case.
-               szTitle = "Directions for Use"
+               szTitle = "Directions For Use"
                SET CURSOR FIRST mSPLDefPDF.LLD_SpecialSectionAttribute WHERE mSPLDefPDF.LLD_SpecialSectionAttribute.Name = "Header"
                IF RESULT >= zCURSOR_SET
                   szTitle = "DIRECTIONS FOR USE"
                END
 
-               // Set up Directions for Use Title.
+               // Set up Directions For Use Title.
                szWriteBuffer = szLeadingBlanks + "   <fo:block "
                AddFormatToSpecialText( mSPLDefPDF, "Header", szWriteBuffer )
                WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
@@ -1044,7 +1053,7 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
             ELSE
 
             // PHYSICAL HAZARD
-            IF szSectionType = "PhysicalHazard"
+            IF szSectionType = "EnvironmentalHazard"
 
             // TraceLineS( "Major Block: ", szSectionType )
                SET CURSOR FIRST mSPLDef.SPLD_GeneralSection WHERE mSPLDef.SPLD_GeneralSection.SectionType = "E"  // SectionType of E is Environmental Hazard
@@ -1170,20 +1179,32 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
                   GeneratePDF_ClmList( mSPLDef, mSPLDefPDF, lFile, szLeadingBlanks, szWriteBuffer, 2 )
                END
             END
-
          END
 
          // Process Termination.
          szWriteBuffer = szLeadingBlanks + "</fo:block-container>"
          WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+/*?
+         szTag = mSPLDefPDF.LLD_Block.ContinuationBlockTag
+         IF szTag != ""
+            lControl = zQUAL_STRING + zPOS_FIRST + zQUAL_SCOPE_OI
+            IF SetEntityCursor( mSPLDefContinue, "LLD_Block", "Tag", lControl, szTag, "", "", 0, "", "" ) >= zCURSOR_SET
+
+               IF mSPLDefContinue.LLD_Block.ContinuationBlockFlag = "Y" AND mSPLDefContinue.ContinuationStatement EXISTS
+                  FormatContinueBlock( mSPLDefContinue, mSPLDef, lFile, szLeadingBlanks, szWriteBuffer, "B" )
+               END
+            END
+         END
+?*/
       END
    END
-
 END
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // OPERATION: FormatBlockContainer
+//
+// this formats the fo:block-container
 //
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
@@ -1213,7 +1234,7 @@ FormatBlockContainer( VIEW mSPLDefPDF BASED ON LOD mSPLDef,
    STRING ( 256 ) szImg
 
    STRING ( 512 ) szDebugMsg
-   
+
 // szDebugMsg = mSPLDefPDF.LLD_Block.ID
 // szDebugMsg = szDebugMsg + "   Tag: " + mSPLDefPDF.LLD_Block.Tag
 // szDebugMsg = szDebugMsg + "   Name: " + mSPLDefPDF.LLD_Block.Name
@@ -1689,6 +1710,7 @@ GeneratePDF_DFU( VIEW mSPLDef    BASED ON LOD mSPLDef,
                  STRING ( 32000 ) szWriteBuffer )
 
    VIEW mSPLDefPanelLevel BASED ON LOD mSPLDef
+   VIEW mSPLDefContinue   BASED ON LOD mSPLDef
    STRING ( 32000 )  szStatementText
    STRING ( 32000 )  szTemporaryText
    STRING ( 256 )    szStatementTitle
@@ -1715,7 +1737,7 @@ GeneratePDF_DFU( VIEW mSPLDef    BASED ON LOD mSPLDef,
    SHORT             nRC
 
    STRING ( 512 ) szDebugMsg
-   
+
    // Generate PDF for a "Directions of Use" or "Marketing" Section.
 
    szLeadingBlanks = szPassedBlanks + "   "
@@ -1898,7 +1920,6 @@ GeneratePDF_DFU( VIEW mSPLDef    BASED ON LOD mSPLDef,
             // be seen under view mSPLDefPDF. Thus the reason for the somewhat awkward code below where mSPLDefPanelLevel
             // is the same view as mSPLDefPDF for the case where the continuation is to the next Block.
 
-
             szDebugMsg = mSPLDefPDF.LLD_Block.ID
             szDebugMsg = szDebugMsg + "   Tag: " + mSPLDefPDF.LLD_Block.Tag
             szDebugMsg = szDebugMsg + "   Name: " + mSPLDefPDF.LLD_Block.Name
@@ -1909,40 +1930,44 @@ GeneratePDF_DFU( VIEW mSPLDef    BASED ON LOD mSPLDef,
 
 
             // First look to see if the next Block is a Continuation Block and set flag.
-            SET CURSOR NEXT mSPLDefPDF.LLD_Block
+            CreateViewFromView( mSPLDefContinue, mSPLDefPDF )
+            SET CURSOR NEXT mSPLDefContinue.LLD_Block WHERE mSPLDefContinue.LLD_Block.ContinuationBlockFlag = "Y"
             IF RESULT >= zCURSOR_SET
-
-
                szDebugMsg = mSPLDefPDF.LLD_Block.ID
-               szDebugMsg = szDebugMsg + "   Tag: " + mSPLDefPDF.LLD_Block.Tag
-               szDebugMsg = szDebugMsg + "   Name: " + mSPLDefPDF.LLD_Block.Name
-               szDebugMsg = szDebugMsg + "   Title: " + mSPLDefPDF.LLD_Block.BlockTitle
-               szDebugMsg = szDebugMsg + "   Section Type: " + mSPLDefPDF.LLD_Block.LLD_SectionType
-               szDebugMsg = szDebugMsg + "   Continuation: " + mSPLDefPDF.LLD_Block.ContinuationBlockFlag
+               szDebugMsg = szDebugMsg + "   Tag: " + mSPLDefContinue.LLD_Block.Tag
+               szDebugMsg = szDebugMsg + "   Name: " + mSPLDefContinue.LLD_Block.Name
+               szDebugMsg = szDebugMsg + "   Title: " + mSPLDefContinue.LLD_Block.BlockTitle
+               szDebugMsg = szDebugMsg + "   Section Type: " + mSPLDefContinue.LLD_Block.LLD_SectionType
+               szDebugMsg = szDebugMsg + "   Continuation: " + mSPLDefContinue.LLD_Block.ContinuationBlockFlag
                TraceLineS( "Checking Continuation To Block ID: ",  szDebugMsg )
 
 
-               IF mSPLDefPDF.LLD_Block.ContinuationBlockFlag = "Y"
+               //IF mSPLDefPDF.LLD_Block.ContinuationBlockFlag = "Y"
                   szBlockContinuationType = "B"
+               //ELSE
+                  //szBlockContinuationType = "P"
+                  //SET CURSOR PREVIOUS mSPLDefPDF.LLD_Block     // We need to undo the set cursor next above.
+               //END
                ELSE
                   szBlockContinuationType = "P"
-                  SET CURSOR PREVIOUS mSPLDefPDF.LLD_Block     // We need to undo the set cursor next above.
+               // SET CURSOR PREVIOUS mSPLDefPDF.LLD_Block     // We need to undo the set cursor next above.
                END
-            ELSE
-               szBlockContinuationType = "P"
-            END
+            DropView( mSPLDefContinue )
 
             // Create Panel view that will hold Continuation statements and position on next Panel, if this
             // is a Panel continuation, rather than a Block continuation.
-            CreateViewFromView( mSPLDefPanelLevel, mSPLDef )
-            NAME VIEW mSPLDefPanelLevel "mSPLDefPanelLevel"
-            IF szBlockContinuationType = "P"
-               SET CURSOR NEXT mSPLDefPanelLevel.LLD_Panel
-            END
+    // DonC deleted the following commented lines because of a JOE error where the ContinuationStatement created
+    // under mSPLDefPanelLevel didn't show under mSPLDef.
+    // Also, we won't have to check continuing to a new Panel because we'll include the continue block.
+    //        CreateViewFromView( mSPLDefPanelLevel, mSPLDef )
+    //        NAME VIEW mSPLDefPanelLevel "mSPLDefPanelLevel"
+    //        IF szBlockContinuationType = "P"
+    //           SET CURSOR NEXT mSPLDefPanelLevel.LLD_Panel
+    //        END
             // Remove any existing Continuation Statements.
-            FOR EACH mSPLDefPanelLevel.ContinuationStatement
-               DELETE ENTITY mSPLDefPanelLevel.ContinuationStatement NONE
-            END
+    //        FOR EACH mSPLDefPanelLevel.ContinuationStatement
+    //           DELETE ENTITY mSPLDefPanelLevel.ContinuationStatement NONE
+    //        END
 
             IF szBlockContinuationType = "B"
 
@@ -1951,16 +1976,17 @@ GeneratePDF_DFU( VIEW mSPLDef    BASED ON LOD mSPLDef,
                IF szContinuationFlag = "M"
                   // Continuation is in two pieces, so next text is ContinuationText.
                   GetStringFromAttribute( szTemporaryText, mSPLDef, szStatementName, "ContinuationText" )
-                  CREATE ENTITY mSPLDefPanelLevel.ContinuationStatement
-                  mSPLDefPanelLevel.ContinuationStatement.Text = szTemporaryText
+                  CREATE ENTITY mSPLDef.ContinuationStatement
+                  mSPLDef.ContinuationStatement.Text = szTemporaryText
                ELSE
                   // Initialize Continuation entry with Regular Text.
-                  CREATE ENTITY mSPLDefPanelLevel.ContinuationStatement
+                  CREATE ENTITY mSPLDef.ContinuationStatement
                   IF szStatementTitle != "" AND szStatementTitlePosition = "SL"
-                     mSPLDefPanelLevel.ContinuationStatement.Title = szStatementTitle
+                     mSPLDef.ContinuationStatement.Title = szStatementTitle
                   END
-                  mSPLDefPanelLevel.ContinuationStatement.Text = szStatementText
+                  mSPLDef.ContinuationStatement.Text = szStatementText
                END
+//TraceLineS( "##########********** Create Continue 1: ", mSPLDefPDF.LLD_Block.LLD_SectionType )
 
                // Add any remaining Statement entries to continuation, that will be generated for the next Panel.
                // This will position us on the last Statement under the Section so that we will exit this operation without generating
@@ -1969,20 +1995,28 @@ GeneratePDF_DFU( VIEW mSPLDef    BASED ON LOD mSPLDef,
                LOOP WHILE nRC >= zCURSOR_SET
                   GetStringFromAttribute( szStatementText, mSPLDef, szStatementName, "Text" )
                   GetStringFromAttribute( szStatementTitle, mSPLDef, szStatementName, "Title" )
-                  CREATE ENTITY mSPLDefPanelLevel.ContinuationStatement
+                  CREATE ENTITY mSPLDef.ContinuationStatement
                   IF szStatementTitle != "" AND szStatementTitlePosition = "SL"
-                     mSPLDefPanelLevel.ContinuationStatement.Title = szStatementTitle
+                     mSPLDef.ContinuationStatement.Title = szStatementTitle
                   END
-                  mSPLDefPanelLevel.ContinuationStatement.Text = szStatementText
+                  mSPLDef.ContinuationStatement.Text = szStatementText
 
                   nRC = SetCursorNextEntity( mSPLDef, szStatementName, "" )
                END
-               SET CURSOR PREVIOUS mSPLDefPDF.LLD_Block     // We need to undo the set cursor next above.
+//     // Debug Code
+//     SET CURSOR FIRST mSPLDef.ContinuationStatement
+//     IF RESULT >= zCURSOR_SET
+//        TraceLineS( "##########********** Continue Text: ", mSPLDef.ContinuationStatement.Text )
+//     ELSE
+//        IssueError( mSPLDef,0,0, "stop" )
+//     END
+//     TraceLineS( "##########********** szStatementName: ", szStatementName )
+               //SET CURSOR PREVIOUS mSPLDefPDF.LLD_Block     // We need to undo the set cursor next above.
             ELSE
 
                // Panel continuation
 
-               IF szContinuationFlag = "M"
+               /*IF szContinuationFlag = "M"
                   // Continuation is in two pieces, so next text is ContinuationText.
                   GetStringFromAttribute( szTemporaryText, mSPLDef, szStatementName, "ContinuationText" )
                   CREATE ENTITY mSPLDefPanelLevel.ContinuationStatement
@@ -1994,7 +2028,7 @@ GeneratePDF_DFU( VIEW mSPLDef    BASED ON LOD mSPLDef,
                      mSPLDefPanelLevel.ContinuationStatement.Title = szStatementTitle
                   END
                   mSPLDefPanelLevel.ContinuationStatement.Text = szStatementText
-               END
+               END*/
 
                // Copy BlockSpecialAttributeBlock entries.
                // I decided not to do the following but use the formatting characteristics specified on the Continuation Block.
@@ -2011,7 +2045,7 @@ GeneratePDF_DFU( VIEW mSPLDef    BASED ON LOD mSPLDef,
                // Add any remaining Statement entries to continuation, that will be generated for the next Panel.
                // This will position us on the last Statement under the Section so that we will exit this operation without generating
                // another Statement for this Panel.
-               nRC = SetCursorNextEntity( mSPLDef, szStatementName, "" )
+               /*nRC = SetCursorNextEntity( mSPLDef, szStatementName, "" )
                LOOP WHILE nRC >= zCURSOR_SET
                   GetStringFromAttribute( szStatementText, mSPLDef, szStatementName, "Text" )
                   GetStringFromAttribute( szStatementTitle, mSPLDef, szStatementName, "Title" )
@@ -2032,10 +2066,10 @@ GeneratePDF_DFU( VIEW mSPLDef    BASED ON LOD mSPLDef,
                WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
 
                szWriteBuffer = szLeadingBlanks + "   </fo:block>"
-               WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )
+               WL_QC( mSPLDef, lFile, szWriteBuffer, "^", 0 )*/
             END
 
-            DropView( mSPLDefPanelLevel )
+            //DropView( mSPLDefPanelLevel )
          END
 
       END
@@ -2717,7 +2751,7 @@ GeneratePDF_StorDisp( VIEW mSPLDef    BASED ON LOD mSPLDef,
                       STRING ( 32000 ) szWriteBuffer )
 
    // Right now there appears to be no reason why the Storage and Disposal section can't reuse the same code
-   // as the Directions for Use and Marketing sections.
+   // as the Directions For Use and Marketing sections.
 
 END
 
@@ -2805,7 +2839,7 @@ BuildSPLD_FromSLC( VIEW NewSPLD   BASED ON LOD mSPLDef,
       INCLUDE NewSPLD.S_HumanHazardSection FROM SourceSLC.S_HumanHazardSection
    END
 
-   // Build Directions for Use Entries (without Usage entries).
+   // Build Directions For Use Entries (without Usage entries).
    FOR EACH SourceSLC.S_DirectionsForUseSection
       CREATE ENTITY NewSPLD.SPLD_DirectionsForUseSection
       SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseSection", SourceSLC, "S_DirectionsForUseSection", zSET_NULL )
@@ -2814,7 +2848,7 @@ BuildSPLD_FromSLC( VIEW NewSPLD   BASED ON LOD mSPLDef,
          CREATE ENTITY NewSPLD.SPLD_DirectionsForUseStatement
          SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseStatement", SourceSLC, "S_DirectionsForUseStatement", zSET_NULL )
          INCLUDE NewSPLD.S_DirectionsForUseStatement FROM SourceSLC.S_DirectionsForUseStatement
-         
+
          // Temporary code created by DonC on 1/13/2016 because NotForUseType was set to NotNull in the ER.
          IF NewSPLD.SPLD_DirectionsForUseStatement.NotForUseType = ""
             NewSPLD.SPLD_DirectionsForUseStatement.NotForUseType = "NA"
@@ -2834,7 +2868,7 @@ BuildSPLD_FromSLC( VIEW NewSPLD   BASED ON LOD mSPLDef,
       END
    END
 
-   // Go to build Directions for Use and Marketing Usage entries.
+   // Go to build Directions For Use and Marketing Usage entries.
    BuildUsageEntriesFrSLC( NewSPLD, SourceSLC )
 
 END
@@ -2858,7 +2892,7 @@ RebuildSPLD_FromSLC( VIEW NewSPLD   BASED ON LOD mSPLDef,
    FOR EACH NewSPLD.SPLD_MarketingSection
       DELETE ENTITY NewSPLD.SPLD_MarketingSection NONE
    END
-   // Build Directions for Use Entries (without Usage entries).
+   // Build Directions For Use Entries (without Usage entries).
    FOR EACH SourceSLC.S_DirectionsForUseSection
       CREATE ENTITY NewSPLD.SPLD_DirectionsForUseSection
       SetMatchingAttributesByName( NewSPLD, "SPLD_DirectionsForUseSection", SourceSLC, "S_DirectionsForUseSection", zSET_NULL )
@@ -2878,7 +2912,7 @@ RebuildSPLD_FromSLC( VIEW NewSPLD   BASED ON LOD mSPLDef,
          SetMatchingAttributesByName( NewSPLD, "SPLD_MarketingStatement", SourceSLC, "S_MarketingStatement", zSET_NULL )
       END
    END
-   // Go to build Directions for Use and Marketing entries.
+   // Go to build Directions For Use and Marketing entries.
    BuildUsageEntriesFrSLC( NewSPLD, SourceSLC )*/
 
 END
@@ -2892,7 +2926,7 @@ TRANSFORMATION OPERATION
 BuildUsageEntriesFrSLC( VIEW mSPLDef   BASED ON LOD mSPLDef,
                         VIEW SourceSLC BASED ON LOD mSubLC )
 
-   // Build the Usage, Directions for Use and Marketing subobject structures from the creating SourceSLC.
+   // Build the Usage, Directions For Use and Marketing subobject structures from the creating SourceSLC.
 
    // Delete current entries.
    FOR EACH mSPLDef.SPLD_UsageType
@@ -2910,7 +2944,7 @@ BuildUsageEntriesFrSLC( VIEW mSPLDef   BASED ON LOD mSPLDef,
       END
    END
 
-   // Build Directions for Use Usage Entries.
+   // Build Directions For Use Usage Entries.
    FOR EACH SourceSLC.S_DirectionsForUseSection
       SET CURSOR FIRST mSPLDef.S_DirectionsForUseSection WITHIN mSPLDef.SubregPhysicalLabelDef
                  WHERE mSPLDef.S_DirectionsForUseSection.ID = SourceSLC.S_DirectionsForUseSection.ID
@@ -2977,7 +3011,7 @@ BuildSPLD_FromSPLD( VIEW NewSPLD    BASED ON LOD mSPLDef,
    // So, reuse the BuildSPLD_FromSLC operation, then reuse the code for building an LLD section.
 
    BuildSPLD_FromSLC( NewSPLD, ParentSLC )
-   
+
    // Copy the SPLD_LLD subobject.
    CREATE ENTITY NewSPLD.SPLD_LLD
    SetMatchingAttributesByName( NewSPLD, "S_HumanHazardSection", SourceSPLD, "S_HumanHazardSection", zSET_NULL )
@@ -4185,7 +4219,7 @@ SetUpFormattingSelect( VIEW mSPLDefPanel BASED ON LOD mSPLDef,
       mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Ingredients Total"
    ELSE
    IF szSectionType = "DirectionsForUse" OR szSectionType = "FirstAid"
-      // Directions for Use or First Aid
+      // Directions For Use or First Aid
       CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
       mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Header"
       CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
@@ -4203,7 +4237,7 @@ SetUpFormattingSelect( VIEW mSPLDefPanel BASED ON LOD mSPLDef,
       mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Column List"
    ELSE
       // Default
-      IF szSectionType != "NetContents" AND szSectionType != "EPA_RegAndEstNbr" 
+      IF szSectionType != "NetContents" AND szSectionType != "EPA_RegAndEstNbr"
          CREATE ENTITY mSPLDefPanel.SpecialFormattingSelectEntry
          mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Title"
       END
@@ -4221,42 +4255,86 @@ END
 
 /*************************************************************************************************
 **
+**    OPERATION: ComputeTopPosRecursive
+**
+*************************************************************************************************/
+TRANSFORMATION OPERATION
+ComputeTopPosRecursive( VIEW mSPLDef BASED ON LOD mSPLDef )
+
+   DECIMAL LastBlockTopPosition
+
+   LastBlockTopPosition = 0
+   FOR EACH mSPLDef.LLD_Block
+      IF mSPLDef.LLD_Block.Top != ""
+         mSPLDef.LLD_Block.wComputedTopPosition = mSPLDef.LLD_Block.Top
+         LastBlockTopPosition = mSPLDef.LLD_Block.Top + mSPLDef.LLD_Block.Height
+      ELSE
+         mSPLDef.LLD_Block.wComputedTopPosition = LastBlockTopPosition
+         LastBlockTopPosition = LastBlockTopPosition + mSPLDef.LLD_Block.Height
+      END
+      FOR EACH mSPLDef.LLD_SubBlock
+         SetViewToSubobject( mSPLDef, "LLD_SubBlock" )
+         ComputeTopPosRecursive( mSPLDef )
+         ResetViewFromSubobject( mSPLDef )
+      END
+   END
+END
+
+/*************************************************************************************************
+**
 **    OPERATION: ComputeTopPositions
 **
 *************************************************************************************************/
 TRANSFORMATION OPERATION
 ComputeTopPositions( VIEW mSPLDef BASED ON LOD mSPLDef )
 
-   DECIMAL LastBlockTopPosition
-   DECIMAL LastSubBlockTopPosition
-
    // Calculate the Top position for each Block and SubBlock. SubBlock positions are relative
-   // to the parent Block
+   // to the parent Block.
    // If the Top Position is specified, we'll use it. Otherwise, we'll use the last position of the
-   // previous Block or SubBlock entry plust its Height.
-   FOR EACH mSPLDef.LLD_Panel WITHIN mSPLDef.SubregPhysicalLabelDef
-      LastBlockTopPosition = 0
-      FOR EACH mSPLDef.LLD_Block
-         IF mSPLDef.LLD_Block.Top != ""
-            mSPLDef.LLD_Block.wComputedTopPosition = mSPLDef.LLD_Block.Top
-            LastBlockTopPosition = mSPLDef.LLD_Block.Top + mSPLDef.LLD_Block.Height
-         ELSE
-            mSPLDef.LLD_Block.wComputedTopPosition = LastBlockTopPosition
-            LastBlockTopPosition = LastBlockTopPosition + mSPLDef.LLD_Block.Height
-         END
-         LastSubBlockTopPosition = 0
-         FOR EACH mSPLDef.LLD_SubBlock
-            IF mSPLDef.LLD_SubBlock.Top != ""
-               mSPLDef.LLD_SubBlock.wComputedTopPosition = mSPLDef.LLD_SubBlock.Top
-               LastSubBlockTopPosition = mSPLDef.LLD_SubBlock.Top + mSPLDef.LLD_SubBlock.Height
-            ELSE
-               mSPLDef.LLD_SubBlock.wComputedTopPosition = LastSubBlockTopPosition
-               LastSubBlockTopPosition = LastSubBlockTopPosition + mSPLDef.LLD_SubBlock.Height
-            END
-         END
+   // previous Block or SubBlock entry plus its Height.
+// FOR EACH mSPLDef.LLD_Page WITHIN mSPLDef.SubregPhysicalLabelDef
+   FOR EACH mSPLDef.LLD_Page  // only do it within the current SPLD_LLD
+      FOR EACH mSPLDef.LLD_Panel
+         ComputeTopPosRecursive( mSPLDef )
       END
    END
+END
 
+/*************************************************************************************************
+**
+**    OPERATION: TraverseBlockRecursive
+**
+**
+*************************************************************************************************/
+TRANSFORMATION OPERATION
+TraverseBlockRecursive( VIEW mSPLDef BASED ON LOD mSPLDef )
+
+   FOR EACH mSPLDef.LLD_Block
+      mSPLDef.LLD_Block.wContinuedFromTag = ""
+      FOR EACH mSPLDef.LLD_SubBlock
+         SetViewToSubobject( mSPLDef, "LLD_SubBlock" )
+         TraverseBlockRecursive( mSPLDef )
+         ResetViewFromSubobject( mSPLDef )
+      END
+   END
+END
+
+/*************************************************************************************************
+**
+**    OPERATION: TraverseBlocks
+**    Reset the wContinuedFromTag
+**
+*************************************************************************************************/
+TRANSFORMATION OPERATION
+TraverseBlocks( VIEW mSPLDef BASED ON LOD mSPLDef )
+
+// FOR EACH mSPLDef.LLD_Page WITHIN mSPLDef.SubregPhysicalLabelDef
+   FOR EACH mSPLDef.LLD_Page  // only do it within the current SPLD_LLD
+      FOR EACH mSPLDef.LLD_Panel
+         TraverseBlockRecursive( mSPLDef )
+         OrderEntityForView( mSPLDef, "LLD_Block", "Left A wComputedTopPosition A" )  // ContinuationBlockFlag D
+      END
+   END
 END
 
 /*************************************************************************************************
@@ -4366,7 +4444,7 @@ SetUpKeywordEntries( VIEW mSPLDefBlock BASED ON LOD mSPLDef,
       CheckAddKeywordEntry( mSPLDefBlock, "Ingredients Total" )
    ELSE
    IF szSectionType = "DirectionsForUse" OR szSectionType = "FirstAid"
-      // Directions for Use or First Aid
+      // Directions For Use or First Aid
       CheckAddKeywordEntry( mSPLDefBlock, "Header" )
       CheckAddKeywordEntry( mSPLDefBlock, "Title" )
       CheckAddKeywordEntry( mSPLDefBlock, "Text" )

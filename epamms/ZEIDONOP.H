@@ -1,4 +1,4 @@
-//start mSPLDef 2016.01.16 16:47:57
+//start mSPLDef 2016.01.22 19:25:44
 zOPER_EXPORT zSHORT OPERATION
 omSPLDef_GeneratePDF_Label( zVIEW vViewToInstance0 );
 
@@ -18,9 +18,10 @@ omSPLDef_FormatContinueBlock( zVIEW vViewToInstance0,
 zOPER_EXPORT zSHORT OPERATION
 omSPLDef_ProcessPDF_Blocks( zVIEW vViewToInstance0,
                             zVIEW vmSPLDefPanel1,
-                            zLONG llFile2,
-                            zPCHAR pchszPassedBlanks3,
-                            zPCHAR pchszWriteBuffer4 );
+                            zVIEW vmSPLDefContinuation2,
+                            zLONG llFile3,
+                            zPCHAR pchszPassedBlanks4,
+                            zPCHAR pchszWriteBuffer5 );
 
 zOPER_EXPORT zSHORT OPERATION
 omSPLDef_GeneratePDF_DFU( zVIEW vViewToInstance0,
@@ -153,13 +154,22 @@ omSPLDef_BuildSPLD_FromSPLD( zVIEW vViewToInstance0,
                              zVIEW vPreviousSPLD1,
                              zVIEW vSourceSLC2 );
 
+zOPER_EXPORT zSHORT OPERATION
+omSPLDef_ComputeTopPosRecursive( zVIEW vViewToInstance0 );
+
+zOPER_EXPORT zSHORT OPERATION
+omSPLDef_TraverseBlockRecursive( zVIEW vViewToInstance0 );
+
+zOPER_EXPORT zSHORT OPERATION
+omSPLDef_TraverseBlocks( zVIEW vViewToInstance0 );
+
 //end
 //start mTempl 2014.04.11 13:18:24
 zOPER_EXPORT zSHORT OPERATION
 omTempl_BuildDisplayStructure( zVIEW vViewToInstance0 );
 
 //end
-//start mMasLC 2016.01.16 17:02:20
+//start mMasLC 2016.01.21 19:25:13
 zOPER_EXPORT zSHORT OPERATION
 omMasLC_MergeUsageSelectEnts( zVIEW vViewToInstance0 );
 
@@ -210,7 +220,7 @@ zOPER_EXPORT zSHORT OPERATION
 omMasLC_BuildNonGroupEntries( zVIEW vViewToInstance0 );
 
 //end
-//start mSubLC 2016.01.16 16:47:59
+//start mSubLC 2016.01.21 19:25:15
 zOPER_EXPORT zSHORT OPERATION
 omSubLC_BuildNewSLC_Version( zVIEW vViewToInstance0,
                              zVIEW vOriginalSLC1,
@@ -254,7 +264,7 @@ omSubLC_ObjectConstraints( zVIEW vViewtoInstance0,
                            zSHORT nState2 );
 
 //end
-//start DOMAINT 2016.01.16 16:47:39
+//start DOMAINT 2016.01.21 19:25:10
 zOPER_EXPORT zSHORT OPERATION
 oDOMAINT_ActivateDomainList( zPVIEW vViewToInstance0,
                              zVIEW vViewToWindow1 );
@@ -275,7 +285,7 @@ oDOMAINT_PreloadSystemDomains( zVIEW vViewToInstance0,
                                zPCHAR pchInstallApp2 );
 
 //end
-//start lMLCATgt 2016.01.16 16:47:43
+//start lMLCATgt 2016.01.21 19:25:11
 zOPER_EXPORT zSHORT OPERATION
 olMLCATgt_BuildDifferencesMLC( zVIEW vViewToInstance0,
                                zVIEW vSourceCompareObject1 );

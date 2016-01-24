@@ -1,4 +1,4 @@
-z1000-Zeidon    ZEIDON   TZDMXGPO 01/16/16   17:06:40 1.0a2   
+z1000-Zeidon    ZEIDON   TZDMXGPO 01/21/16   17:17:00 1.0a2   
 eDomainGroup 1
 aName      ePamms
 
@@ -566,12 +566,12 @@ aIsDefault Y
 
 eTableEntry 4
 aZKey      110059063
-aExternalValue < 5 gallon
+aExternalValue < 5 gallons
 aInternalValue <5
 
 eTableEntry 4
 aZKey      110059064
-aExternalValue >= 5 gallon
+aExternalValue >= 5 gallons
 aInternalValue >=5
 
 eDomain    2
@@ -598,31 +598,6 @@ eTableEntry 4
 aZKey      110059060
 aExternalValue > 1 gallon
 aInternalValue >1
-
-eTableEntry 4
-aZKey      110363536
-aExternalValue 1 to 5 gallons
-aInternalValue 1-5
-
-eTableEntry 4
-aZKey      110363537
-aExternalValue <= 5 gallons
-aInternalValue <=5
-
-eTableEntry 4
-aZKey      110388981
-aExternalValue > 5 gallons
-aInternalValue >5
-
-eTableEntry 4
-aZKey      110183167
-aExternalValue Old Value 1
-aInternalValue 1
-
-eTableEntry 4
-aZKey      110183168
-aExternalValue Old Value 5
-aInternalValue 5
 
 eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
@@ -3017,8 +2992,8 @@ aInternalValue Hazards
 
 eTableEntry 4
 aZKey      69081350
-aExternalValue Physical Hazard
-aInternalValue PhysicalHazard
+aExternalValue Environmental Hazard
+aInternalValue EnvironmentalHazard
 
 eTableEntry 4
 aZKey      3911627

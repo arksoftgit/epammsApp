@@ -36,6 +36,7 @@ public int DoInputMapping( HttpServletRequest request,
    Task task = objectEngine.getTaskById( taskId );
 
    View mMasProdLST = null;
+   View mOrganiz = null;
    View vGridTmp = null; // temp view to grid view
    View vRepeatingGrp = null; // temp view to repeating group view
    String strDateFormat = "";
@@ -78,6 +79,11 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       vGridTmp.drop( );
+   }
+
+   mOrganiz = task.getViewByName( "mOrganiz" );
+   if ( VmlOperation.isValid( mOrganiz ) )
+   {
    }
 
    if ( webMapping == true )
@@ -629,10 +635,11 @@ else
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
-   View mMasLC = null;
    View mEPA = null;
+   View mMasLC = null;
    View mMasProd = null;
    View mMasProdLST = null;
+   View mOrganiz = null;
    View mPrimReg = null;
    View wWebXfer = null;
    String strRadioGroupValue = "";
@@ -744,14 +751,41 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBMasterProducts:GroupBox */ %>
 
-<div id="GBMasterProducts" name="GBMasterProducts" class="listgroup"   style="float:left;position:relative; width:486px; height:40px;">  <!-- GBMasterProducts --> 
+<div id="GBMasterProducts" name="GBMasterProducts" class="listgroup"   style="float:left;position:relative; width:630px; height:40px;">  <!-- GBMasterProducts --> 
 
 <% /* MasterProducts:Text */ %>
 
-<label class="groupbox"  id="MasterProducts" name="MasterProducts" style="width:154px;height:16px;position:absolute;left:10px;top:12px;">Master Products</label>
+<label class="groupbox"  id="MasterProducts" name="MasterProducts" style="width:124px;height:16px;position:absolute;left:6px;top:12px;">Master Products</label>
+
+<% /* PrimaryRegistrant:Text */ %>
+<% strTextDisplayValue = "";
+   mOrganiz = task.getViewByName( "mOrganiz" );
+   if ( VmlOperation.isValid( mOrganiz ) == false )
+      task.log( ).debug( "Invalid View: " + "PrimaryRegistrant" );
+   else
+   {
+      nRC = mOrganiz.cursor( "Organization" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mOrganiz.cursor( "Organization" ).getAttribute( "Name" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on PrimaryRegistrant: " + e.getMessage());
+         task.log().info( "*** Error on ctrl PrimaryRegistrant" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<label  id="PrimaryRegistrant" name="PrimaryRegistrant" style="width:370px;height:16px;position:absolute;left:148px;top:12px;"><%=strTextDisplayValue%></label>
 
 <% /* PBNewMasterLabel:PushBtn */ %>
-<button type="button" class="newbutton" name="PBNewMasterLabel" id="PBNewMasterLabel" value="" onclick="NEW_MasterProduct( )" style="width:78px;height:26px;position:absolute;left:342px;top:12px;">New</button>
+<button type="button" class="newbutton" name="PBNewMasterLabel" id="PBNewMasterLabel" value="" onclick="NEW_MasterProduct( )" style="width:78px;height:26px;position:absolute;left:540px;top:12px;">New</button>
 
 
 </div>  <!--  GBMasterProducts --> 
@@ -842,7 +876,7 @@ try
    <td><a href="#" onclick="GOTO_UpdateMasterProduct( this.id )" id="GEDescription::<%=strEntityKey%>"><%=strGEDescription%></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateMasterProduct" onclick="GOTO_UpdateMasterProduct( this.id )" id="BMBUpdateMasterProduct::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteMasterProduct" onclick="GOTO_DeleteMasterProduct( this.id )" id="BMBDeleteMasterProduct::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBCopyMasterProduct" onclick="CopyToNewProductMLC( this.id )" id="BMBCopyMasterProduct::<%=strEntityKey%>"><img src="./images/ePammsNew.png" alt="Copy Master Product"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBCopyMasterProduct" onclick="CopyToNewProductMLC( this.id )" id="BMBCopyMasterProduct::<%=strEntityKey%>"><img src="./images/ePammsCopy.png" alt="Copy Master Product"></a></td>
 
 </tr>
 

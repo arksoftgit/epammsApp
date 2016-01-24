@@ -124,14 +124,14 @@ public int DoInputMapping( HttpServletRequest request,
       // grids on the same window with the same view we do not mess up the 
       // entity positions. 
       vGridTmp = mMasLC.newView( );
-      csrRC = vGridTmp.cursor( "M_GeneralSubStatement" ).setFirst(  );
+      csrRC = vGridTmp.cursor( "M_GeneralStatement" ).setFirst(  );
       while ( csrRC.isSet() )
       {
-         lEntityKey = vGridTmp.cursor( "M_GeneralSubStatement" ).getEntityKey( );
+         lEntityKey = vGridTmp.cursor( "M_GeneralStatement" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
 
-         csrRC = vGridTmp.cursor( "M_GeneralSubStatement" ).setNextContinue( );
+         csrRC = vGridTmp.cursor( "M_GeneralStatement" ).setNextContinue( );
       }
 
       vGridTmp.drop( );
@@ -350,14 +350,14 @@ if ( strActionToProcess != null )
       if ( VmlOperation.isValid( mMasLC ) )
       {
          lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mMasLC.cursor( "M_GeneralSubStatement" ).setByEntityKey( lEKey );
+         csrRC = mMasLC.cursor( "M_GeneralStatement" ).setByEntityKey( lEKey );
          if ( !csrRC.isSet() )
          {
             boolean bFound = false;
-            csrRCk = mMasLC.cursor( "M_GeneralSubStatement" ).setFirst( );
+            csrRCk = mMasLC.cursor( "M_GeneralStatement" ).setFirst( );
             while ( csrRCk.isSet() && !bFound )
             {
-               lEKey = mMasLC.cursor( "M_GeneralSubStatement" ).getEntityKey( );
+               lEKey = mMasLC.cursor( "M_GeneralStatement" ).getEntityKey( );
                strKey = Long.toString( lEKey );
                if ( StringUtils.equals( strKey, strEntityKey ) )
                {
@@ -365,7 +365,7 @@ if ( strActionToProcess != null )
                   bFound = true;
                }
                else
-                  csrRCk = mMasLC.cursor( "M_GeneralSubStatement" ).setNextContinue( );
+                  csrRCk = mMasLC.cursor( "M_GeneralStatement" ).setNextContinue( );
             } // Grid
          }
       }
@@ -414,14 +414,14 @@ if ( strActionToProcess != null )
       if ( VmlOperation.isValid( mMasLC ) )
       {
          lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mMasLC.cursor( "M_GeneralSubStatement" ).setByEntityKey( lEKey );
+         csrRC = mMasLC.cursor( "M_GeneralStatement" ).setByEntityKey( lEKey );
          if ( !csrRC.isSet() )
          {
             boolean bFound = false;
-            csrRCk = mMasLC.cursor( "M_GeneralSubStatement" ).setFirst( );
+            csrRCk = mMasLC.cursor( "M_GeneralStatement" ).setFirst( );
             while ( csrRCk.isSet() && !bFound )
             {
-               lEKey = mMasLC.cursor( "M_GeneralSubStatement" ).getEntityKey( );
+               lEKey = mMasLC.cursor( "M_GeneralStatement" ).getEntityKey( );
                strKey = Long.toString( lEKey );
                if ( StringUtils.equals( strKey, strEntityKey ) )
                {
@@ -429,7 +429,7 @@ if ( strActionToProcess != null )
                   bFound = true;
                }
                else
-                  csrRCk = mMasLC.cursor( "M_GeneralSubStatement" ).setNextContinue( );
+                  csrRCk = mMasLC.cursor( "M_GeneralStatement" ).setNextContinue( );
             } // Grid
          }
       }
@@ -676,10 +676,11 @@ else
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
-   View mMasLC = null;
    View mEPA = null;
+   View mMasLC = null;
    View mMasProd = null;
    View mMasProdLST = null;
+   View mOrganiz = null;
    View mPrimReg = null;
    View wWebXfer = null;
    String strRadioGroupValue = "";
@@ -1117,19 +1118,19 @@ try
       
       View vGridDirectionsUse1;
       vGridDirectionsUse1 = mMasLC.newView( );
-      csrRC2 = vGridDirectionsUse1.cursor( "M_GeneralSubStatement" ).setFirst(  );
+      csrRC2 = vGridDirectionsUse1.cursor( "M_GeneralStatement" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGridDirectionsUse1.cursor( "M_GeneralSubStatement" ).getEntityKey( );
+         lEntityKey = vGridDirectionsUse1.cursor( "M_GeneralStatement" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          strGridEditDirectionsUse1 = "";
-         nRC = vGridDirectionsUse1.cursor( "M_GeneralSubStatement" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGridDirectionsUse1.cursor( "M_GeneralStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditDirectionsUse1 = vGridDirectionsUse1.cursor( "M_GeneralSubStatement" ).getAttribute( "Text" ).getString( "" );
+            strGridEditDirectionsUse1 = vGridDirectionsUse1.cursor( "M_GeneralStatement" ).getAttribute( "Text" ).getString( "" );
 
             if ( strGridEditDirectionsUse1 == null )
                strGridEditDirectionsUse1 = "";
@@ -1149,7 +1150,7 @@ try
 </tr>
 
 <%
-         csrRC2 = vGridDirectionsUse1.cursor( "M_GeneralSubStatement" ).setNextContinue( );
+         csrRC2 = vGridDirectionsUse1.cursor( "M_GeneralStatement" ).setNextContinue( );
       }
       vGridDirectionsUse1.drop( );
    }

@@ -317,6 +317,23 @@ if ( strActionToProcess != null )
       break;
    }
 
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DeleteSelectedEntries" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCSurfaces", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "DeleteUsageStatements" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
    while ( bDone == false && StringUtils.equals( strActionToProcess, "DELETE_SelectedUsageEntries" ) )
    {
       bDone = true;
@@ -881,44 +898,6 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditChemicalHazardsSection" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCSurfaces", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCSurfaces", "wMLC.EditChemicalHazardsSection" );
-      nOptRC = wMLC.EditChemicalHazardsSection( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "PhysicalChemicalHazardsSection" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
    while ( bDone == false && StringUtils.equals( strActionToProcess, "smGOTO_DilutionEntries" ) )
    {
       bDone = true;
@@ -1253,6 +1232,8 @@ else
 <%@ include file="./include/timeout.inc" %>
 <link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/css.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/sts.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
@@ -1261,7 +1242,12 @@ else
 
 </head>
 
-<body onLoad="_AfterPageLoaded( )" onSubmit="_DisableFormElements( true )" onBeforeUnload="_BeforePageUnload( )">
+<!-- 
+// If we have table sorting on this page, the table sorting does not work in Firefox 
+// (seems to work in IE and Opera).  The solution is to not call _AfterPageLoaded in OnLoad event. 
+// In the Standardista code (sts.js) there is an addEvent that will call _AfterPageLoaded. 
+--> 
+<body onSubmit="_DisableFormElements( true )" onBeforeUnload="_BeforePageUnload( )">
 
 <%@ include file="./include/pagebackground.inc" %>  <!-- just temporary until we get the painter dialog updates from Kelly ... 2011.10.08 dks -->
 
@@ -1377,16 +1363,6 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New3" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smNew3" name="smNew3"><a href="#"  onclick="smEditChemicalHazardsSection()">Phys/Chem Hazards</a></li>
-<%
-   }
-%>
-
-<%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New2" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
@@ -1451,7 +1427,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smDirectionsForUse" name="smDirectionsForUse"><a href="#"  onclick="smEditDirectionsUseSect()">Directions for Use</a></li>
+       <li id="smDirectionsForUse" name="smDirectionsForUse"><a href="#"  onclick="smEditDirectionsUseSect()">Directions For Use</a></li>
 <%
    }
 %>
@@ -1485,10 +1461,11 @@ else
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
-   View mMasLC = null;
    View mEPA = null;
+   View mMasLC = null;
    View mMasProd = null;
    View mMasProdLST = null;
+   View mOrganiz = null;
    View mPrimReg = null;
    View wWebXfer = null;
    String strRadioGroupValue = "";
@@ -1622,7 +1599,7 @@ else
 <label class="groupbox"  id="OrganismClaimsStatements" name="OrganismClaimsStatements" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Surfaces Statements</label>
 
 <% /* PushBtn1:PushBtn */ %>
-<button type="button" name="PushBtn1" id="PushBtn1" value="" onclick="DELETE_SelectedUsageEntries( )" style="width:198px;height:26px;position:absolute;left:274px;top:12px;">Delete Selected Surfaces</button>
+<button type="button" name="PushBtn1" id="PushBtn1" value="" onclick="GOTO_DeleteSelectedEntries( )" style="width:198px;height:26px;position:absolute;left:274px;top:12px;">Delete Selected Surfaces</button>
 
 <% /* PBNew:PushBtn */ %>
 <button type="button" name="PBNew" id="PBNew" value="" onclick="ADD_SurfacesUsageItems( )" style="width:78px;height:26px;position:absolute;left:482px;top:12px;">New</button>
@@ -1640,9 +1617,9 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridClaims:Grid */ %>
-<table  cols=3 style="width:616px;"  name="GridClaims" id="GridClaims">
+<table class="sortable"  cols=3 style="width:616px;"  name="GridClaims" id="GridClaims">
 
-<thead><tr>
+<thead bgcolor=green><tr>
 
    <th>Select</th>
    <th>Surfaces</th>
@@ -1782,9 +1759,9 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridClaims1:Grid */ %>
-<table  cols=3 style="width:616px;"  name="GridClaims1" id="GridClaims1">
+<table class="sortable"  cols=3 style="width:616px;"  name="GridClaims1" id="GridClaims1">
 
-<thead><tr>
+<thead bgcolor=green><tr>
 
    <th>Select</th>
    <th>Surface Groups</th>
@@ -1895,9 +1872,9 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridClaims2:Grid */ %>
-<table  cols=1 style="width:498px;"  name="GridClaims2" id="GridClaims2">
+<table class="sortable"  cols=1 style="width:498px;"  name="GridClaims2" id="GridClaims2">
 
-<thead><tr>
+<thead bgcolor=green><tr>
 
    <th>Surfaces</th>
 

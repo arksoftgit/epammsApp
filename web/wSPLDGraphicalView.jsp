@@ -899,8 +899,8 @@ else
                      <span>
                      <div style="overflow:hidden; white-space:nowrap;">
                         <input type="text" id="zBlockId" class="zeidon" data-zmap="block.z_^i^d" style="float:right; font-size:9px; text-align:right; font-weight:100;" disabled />
-                        </div>
-                        <div style="overflow:hidden; white-space:nowrap;">
+                     </div>
+                     <div style="overflow:hidden; white-space:nowrap;">
                        <label for="zBlockTag">Tag:</label>
                        <input type="text" id="zBlockTag" class="zeidon" data-zmap="block.z_^tag" style="float:right" />
                      </div>
@@ -928,7 +928,7 @@ else
                          <option value="Ingredients">Ingredients</option>
                          <option value="Marketing">Marketing</option>
                          <option value="NetContents">Net Contents</option>
-                         <option value="PhysicalHazard">Physical Hazard</option>
+                         <option value="EnvironmentalHazard">Environmental Hazard</option>
                          <option value="Precautionary">Precautionary</option>
                          <option value="ProductDescription">Product Description</option>
                          <option value="ProductName">Product Name</option>
@@ -1022,6 +1022,11 @@ else
                      <p style="clear:both;position:relative"></p>
                      <div id="zCheckContinuationBlockToggle" style="overflow:hidden; white-space:nowrap; padding-bottom:20px;">
                         <input type="checkbox" id="zCheckContinuationBlock" name="zCheckContinuationBlock" class="zeidon" data-zmap="block.z_^continuation^block^flag" /><label for="zCheckContinuationBlock">Continuation from Previous Section/Statement</label>
+                        &nbsp;
+                        <div style="overflow:hidden; white-space:nowrap;">
+                           <label for="zContinuationBlockTag">Continuation Block Tag:</label>
+                           <input type="text" id="zContinuationBlockTag" class="zeidon" data-zmap="block.z_^continuation^block^tag" style="float:right" />
+                        </div>
                      </div>
                      <p style="clear:both;position:relative"></p>
                      <div id="zMarketingSectionToggle" style="overflow:hidden; white-space:nowrap;">

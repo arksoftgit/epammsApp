@@ -253,11 +253,11 @@ COMMIT NewMLC
       // Include appropriate Usage statements.
 TraceLineS( "!!! Commit 4", "" )
 COMMIT NewMLC
-      /*FOR EACH PreviousMLC.M_DirectionsUsageOrdering 
+      /*FOR EACH PreviousMLC.M_DirectionsUsageOrdering
          // Check to see if the Usage already exists. This can happen if two Usages have the same name.
          SET CURSOR FIRST NewMLC.M_DirectionsUsage WHERE NewMLC.M_DirectionsUsage.Name                 = PreviousMLC.M_DirectionsUsage.Name
                                                      AND NewMLC.M_DirectionsUsage.UsageType            = PreviousMLC.M_DirectionsUsage.UsageType
-                                                     AND NewMLC.M_DirectionsUsage.ClaimsClassification = PreviousMLC.M_DirectionsUsage.ClaimsClassification 
+                                                     AND NewMLC.M_DirectionsUsage.ClaimsClassification = PreviousMLC.M_DirectionsUsage.ClaimsClassification
          IF RESULT < zCURSOR_SET
             SET CURSOR FIRST NewMLC.M_Usage WHERE NewMLC.M_Usage.Name                 = PreviousMLC.M_DirectionsUsage.Name
                                               AND NewMLC.M_Usage.UsageType            = PreviousMLC.M_DirectionsUsage.UsageType
@@ -330,14 +330,20 @@ CopyMLCToNewProduct( VIEW TargetMLC BASED ON LOD mMasLC,
    // For root, only set attributes.
    SetMatchingAttributesByName( TargetMLC, "MasterLabelContent", SourceMLC, "MasterLabelContent", zSET_NULL )
    TargetMLC.MasterLabelContent.Finalized = "W"
-   
+
    // Tie to previous version.
-   INCLUDE TargetMLC.MP_MasterLabelContent FROM SourceMLC.MasterLabelContent 
+   INCLUDE TargetMLC.MP_MasterLabelContent FROM SourceMLC.MasterLabelContent
+
+   // Usage Footnotes.
+   FOR EACH SourceMLC.M_UsageFootnote
+      CREATE ENTITY TargetMLC.M_UsageFootnote
+      SetMatchingAttributesByName( TargetMLC, "M_UsageFootnote", SourceMLC, "M_UsageFootnote", zSET_NULL )
+   END
 
    // M_Usage Subobject
    // Check to make sure we are not copying duplicates.
    FOR EACH SourceMLC.M_UsageType
-      CREATE ENTITY TargetMLC.M_UsageType 
+      CREATE ENTITY TargetMLC.M_UsageType
       SetMatchingAttributesByName( TargetMLC, "M_UsageType", SourceMLC, "M_UsageType", zSET_NULL )
       FOR EACH SourceMLC.M_Usage
          SET CURSOR FIRST TargetMLC.M_Usage WHERE TargetMLC.M_Usage.UsageType = SourceMLC.M_Usage.UsageType
@@ -345,7 +351,14 @@ CopyMLCToNewProduct( VIEW TargetMLC BASED ON LOD mMasLC,
          IF RESULT < zCURSOR_SET
             CREATE ENTITY TargetMLC.M_Usage
             SetMatchingAttributesByName( TargetMLC, "M_Usage", SourceMLC, "M_Usage", zSET_NULL )
-            INCLUDE TargetMLC.MP_Usage FROM SourceMLC.M_Usage 
+            INCLUDE TargetMLC.MP_Usage FROM SourceMLC.M_Usage
+            IF SourceMLC.M_UsageFootnoteUsed EXISTS
+               SET CURSOR FIRST TargetMLC.M_UsageFootnote
+                          WHERE TargetMLC.M_UsageFootnote.Text = SourceMLC.M_UsageFootnoteUsed.Text
+               IF RESULT >= zCURSOR_SET
+                  INCLUDE TargetMLC.M_UsageFootnoteUsed FROM TargetMLC.M_UsageFootnote
+               END
+            END
          END
       END
    END
@@ -360,10 +373,10 @@ CopyMLCToNewProduct( VIEW TargetMLC BASED ON LOD mMasLC,
          SetMatchingAttributesByName( TargetMLC, "M_GeneralStatement", SourceMLC, "M_GeneralStatement", zSET_NULL )
          INCLUDE TargetMLC.MP_GeneralStatement FROM SourceMLC.M_GeneralStatement
       END
-      
+
       // ReviewerNote
-      FOR EACH SourceMLC.M_GeneralReviewerNote 
-         CREATE ENTITY TargetMLC.M_GeneralReviewerNote 
+      FOR EACH SourceMLC.M_GeneralReviewerNote
+         CREATE ENTITY TargetMLC.M_GeneralReviewerNote
          SetMatchingAttributesByName( TargetMLC, "M_GeneralReviewerNote", SourceMLC, "M_GeneralReviewerNote", zSET_NULL )
       END
    END
@@ -378,10 +391,10 @@ CopyMLCToNewProduct( VIEW TargetMLC BASED ON LOD mMasLC,
          SetMatchingAttributesByName( TargetMLC, "M_IngredientsStatement", SourceMLC, "M_IngredientsStatement", zSET_NULL )
          INCLUDE TargetMLC.MP_IngredientsStatement FROM SourceMLC.M_IngredientsStatement
       END
-      
+
       // ReviewerNote
-      FOR EACH SourceMLC.M_IngredientsReviewerNote 
-         CREATE ENTITY TargetMLC.M_IngredientsReviewerNote 
+      FOR EACH SourceMLC.M_IngredientsReviewerNote
+         CREATE ENTITY TargetMLC.M_IngredientsReviewerNote
          SetMatchingAttributesByName( TargetMLC, "M_IngredientsReviewerNote", SourceMLC, "M_IngredientsReviewerNote", zSET_NULL )
       END
    END
@@ -402,52 +415,52 @@ CopyMLCToNewProduct( VIEW TargetMLC BASED ON LOD mMasLC,
    FOR EACH SourceMLC.M_DirectionsForUseSection
       CREATE ENTITY TargetMLC.M_DirectionsForUseSection
       SetMatchingAttributesByName( TargetMLC, "M_DirectionsForUseSection", SourceMLC, "M_DirectionsForUseSection", zSET_NULL )
-      INCLUDE TargetMLC.MP_DirectionsForUseSection FROM SourceMLC.M_DirectionsForUseSection 
+      INCLUDE TargetMLC.MP_DirectionsForUseSection FROM SourceMLC.M_DirectionsForUseSection
       FOR EACH SourceMLC.M_DirectionsForUseStatement
          CREATE ENTITY TargetMLC.M_DirectionsForUseStatement
          SetMatchingAttributesByName( TargetMLC, "M_DirectionsForUseStatement", SourceMLC, "M_DirectionsForUseStatement", zSET_NULL )
-         INCLUDE TargetMLC.MP_DirectionsForUseStatement FROM SourceMLC.M_DirectionsForUseStatement 
-         
+         INCLUDE TargetMLC.MP_DirectionsForUseStatement FROM SourceMLC.M_DirectionsForUseStatement
+
          // Statement Directions Usage
-         FOR EACH SourceMLC.M_DirectionsUsageOrdering 
-            CREATE ENTITY TargetMLC.M_DirectionsUsageOrdering 
+         FOR EACH SourceMLC.M_DirectionsUsageOrdering
+            CREATE ENTITY TargetMLC.M_DirectionsUsageOrdering
             SetMatchingAttributesByName( TargetMLC, "M_DirectionsUsageOrdering", SourceMLC, "M_DirectionsUsageOrdering", zSET_NULL )
-            SET CURSOR FIRST TargetMLC.MP_Usage WITHIN TargetMLC.MasterLabelContent 
-                       WHERE TargetMLC.MP_Usage.ID = SourceMLC.M_Usage.ID 
+            SET CURSOR FIRST TargetMLC.MP_Usage WITHIN TargetMLC.MasterLabelContent
+                       WHERE TargetMLC.MP_Usage.ID = SourceMLC.M_Usage.ID
             IF RESULT >= zCURSOR_SET
-               INCLUDE TargetMLC.M_DirectionsUsage FROM TargetMLC.M_Usage 
+               INCLUDE TargetMLC.M_DirectionsUsage FROM TargetMLC.M_Usage
             ELSE
                TraceLineS( "Programming Error 1", "" )
                IssueError( TargetMLC,0,0, "Programming Error 1" )
             END
          END
       END
-      
+
       // Driving Usage
-      FOR EACH SourceMLC.M_DrivingUsage 
-         SET CURSOR FIRST TargetMLC.MP_Usage WITHIN TargetMLC.MasterLabelContent 
-                    WHERE TargetMLC.MP_Usage.ID = SourceMLC.M_DrivingUsage.ID 
+      FOR EACH SourceMLC.M_DrivingUsage
+         SET CURSOR FIRST TargetMLC.MP_Usage WITHIN TargetMLC.MasterLabelContent
+                    WHERE TargetMLC.MP_Usage.ID = SourceMLC.M_DrivingUsage.ID
          IF RESULT >= zCURSOR_SET
-            INCLUDE TargetMLC.M_DrivingUsage FROM TargetMLC.M_Usage 
+            INCLUDE TargetMLC.M_DrivingUsage FROM TargetMLC.M_Usage
          ELSE
             TraceLineS( "Programming Error 2", "" )
             IssueError( TargetMLC,0,0, "Programming Error 2" )
          END
       END
-      
+
       // Text Keyword
-      /*FOR EACH SourceMLC.M_InsertTextKeywordTitleDU 
-         CREATE ENTITY TargetMLC.M_InsertTextKeywordTitleDU 
+      /*FOR EACH SourceMLC.M_InsertTextKeywordTitleDU
+         CREATE ENTITY TargetMLC.M_InsertTextKeywordTitleDU
          SetMatchingAttributesByName( TargetMLC, "M_InsertTextKeywordTitleDU", SourceMLC, "M_InsertTextKeywordTitleDU", zSET_NULL )
-         FOR EACH SourceMLC.M_InsertTextTitleDU 
-            CREATE ENTITY TargetMLC.M_InsertTextTitleDU 
+         FOR EACH SourceMLC.M_InsertTextTitleDU
+            CREATE ENTITY TargetMLC.M_InsertTextTitleDU
             SetMatchingAttributesByName( TargetMLC, "M_InsertTextTitleDU", SourceMLC, "M_InsertTextTitleDU", zSET_NULL )
          END
       END*/
-      
+
       // Reviewer Note
-      FOR EACH SourceMLC.M_DirectionsForUseReviewerNote 
-         CREATE ENTITY TargetMLC.M_DirectionsForUseReviewerNote 
+      FOR EACH SourceMLC.M_DirectionsForUseReviewerNote
+         CREATE ENTITY TargetMLC.M_DirectionsForUseReviewerNote
          SetMatchingAttributesByName( TargetMLC, "M_DirectionsForUseReviewerNote", SourceMLC, "M_DirectionsForUseReviewerNote", zSET_NULL )
       END
    END
@@ -456,29 +469,31 @@ CopyMLCToNewProduct( VIEW TargetMLC BASED ON LOD mMasLC,
    FOR EACH SourceMLC.M_MarketingSection
       CREATE ENTITY TargetMLC.M_MarketingSection
       SetMatchingAttributesByName( TargetMLC, "M_MarketingSection", SourceMLC, "M_MarketingSection", zSET_NULL )
-      INCLUDE TargetMLC.MP_MarketingSection FROM SourceMLC.M_MarketingSection 
+      INCLUDE TargetMLC.MP_MarketingSection FROM SourceMLC.M_MarketingSection
       FOR EACH SourceMLC.M_MarketingStatement
          CREATE ENTITY TargetMLC.M_MarketingStatement
          SetMatchingAttributesByName( TargetMLC, "M_MarketingStatement", SourceMLC, "M_MarketingStatement", zSET_NULL )
-         INCLUDE TargetMLC.MP_MarketingStatement FROM SourceMLC.M_MarketingStatement 
+         INCLUDE TargetMLC.MP_MarketingStatement FROM SourceMLC.M_MarketingStatement
          // Statement Marketing Usage
-         FOR EACH SourceMLC.M_MarketingUsageOrdering 
-            CREATE ENTITY TargetMLC.M_MarketingUsageOrdering 
-            SetMatchingAttributesByName( TargetMLC, "M_MarketingUsageOrdering", SourceMLC, "M_MarketingUsageOrdering", zSET_NULL )
-            SET CURSOR FIRST TargetMLC.MP_Usage WITHIN TargetMLC.MasterLabelContent 
-                       WHERE TargetMLC.MP_Usage.ID = SourceMLC.M_MarketingUsage.ID 
-            IF RESULT >= zCURSOR_SET
-               INCLUDE TargetMLC.M_MarketingUsage FROM TargetMLC.M_Usage 
-            ELSE
-               TraceLineS( "Programming Error 3", "" )
-               IssueError( TargetMLC,0,0, "Programming Error 3" )
+         FOR EACH SourceMLC.M_MarketingUsageOrdering
+            IF SourceMLC.M_MarketingUsage EXISTS
+               CREATE ENTITY TargetMLC.M_MarketingUsageOrdering
+               SetMatchingAttributesByName( TargetMLC, "M_MarketingUsageOrdering", SourceMLC, "M_MarketingUsageOrdering", zSET_NULL )
+               SET CURSOR FIRST TargetMLC.MP_Usage WITHIN TargetMLC.MasterLabelContent
+                          WHERE TargetMLC.MP_Usage.ID = SourceMLC.M_MarketingUsage.ID
+               IF RESULT >= zCURSOR_SET
+                  INCLUDE TargetMLC.M_MarketingUsage FROM TargetMLC.M_Usage
+               ELSE
+                  TraceLineS( "Programming Error 3", "" )
+                  IssueError( TargetMLC,0,0, "Programming Error 3" )
+               END
             END
          END
       END
-      
+
       // Reviewer Note
-      FOR EACH SourceMLC.M_MarketingReviewerNote 
-         CREATE ENTITY TargetMLC.M_MarketingReviewerNote 
+      FOR EACH SourceMLC.M_MarketingReviewerNote
+         CREATE ENTITY TargetMLC.M_MarketingReviewerNote
          SetMatchingAttributesByName( TargetMLC, "M_MarketingReviewerNote", SourceMLC, "M_MarketingReviewerNote", zSET_NULL )
       END
    END
@@ -487,7 +502,7 @@ CopyMLCToNewProduct( VIEW TargetMLC BASED ON LOD mMasLC,
    FOR EACH SourceMLC.M_HumanHazardSection
       CREATE ENTITY TargetMLC.M_HumanHazardSection
       SetMatchingAttributesByName( TargetMLC, "M_HumanHazardSection", SourceMLC, "M_HumanHazardSection", zSET_NULL )
-      INCLUDE TargetMLC.MP_HumanHazardSection FROM SourceMLC.M_HumanHazardSection 
+      INCLUDE TargetMLC.MP_HumanHazardSection FROM SourceMLC.M_HumanHazardSection
    END
 
 END
@@ -509,11 +524,11 @@ ObjectConstraints( VIEW mMasLC BASED ON LOD mMasLC,
 
       // Go to build the flat display of all components subobject.
       //BuildCompositeEntries( mMasLC )
-      
+
       // Build Usage Group Usages.
       BuildUsageGroupEntries( mMasLC )
-      
-      
+
+
 
         /* end zOCE_ACTIVATE */
    OF   zOCE_ACTIVATE_EMPTY:
@@ -676,13 +691,13 @@ dDisplayDU_Statement( VIEW mMasLC BASED ON LOD mMasLC,
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
 
-      // Directions for Use Display Statement Text is a combination of Title and Text.
+      // Directions For Use Display Statement Text is a combination of Title and Text.
       IF mMasLC.M_DirectionsForUseStatement.Title != ""
-         szTitle            = mMasLC.M_DirectionsForUseStatement.Title 
-         szStatementText    = mMasLC.M_DirectionsForUseStatement.Text 
+         szTitle            = mMasLC.M_DirectionsForUseStatement.Title
+         szStatementText    = mMasLC.M_DirectionsForUseStatement.Text
          szDisplayStatement = szTitle + " --- " + szStatementText
       ELSE
-         szStatementText    = mMasLC.M_DirectionsForUseStatement.Text 
+         szStatementText    = mMasLC.M_DirectionsForUseStatement.Text
          szDisplayStatement = szStatementText
       END
 
@@ -721,11 +736,11 @@ dDisplaySD_Statement( VIEW mMasLC BASED ON LOD mMasLC,
 
       // Storage and Disposal Display Statement Text is a combination of Title and Text.
       IF mMasLC.M_StorageDisposalStatement.Title != ""
-         szTitle            = mMasLC.M_StorageDisposalStatement.Title 
-         szStatementText    = mMasLC.M_StorageDisposalStatement.Text 
+         szTitle            = mMasLC.M_StorageDisposalStatement.Title
+         szStatementText    = mMasLC.M_StorageDisposalStatement.Text
          szDisplayStatement = szTitle + " --- " + szStatementText
       ELSE
-         szStatementText    = mMasLC.M_StorageDisposalStatement.Text 
+         szStatementText    = mMasLC.M_StorageDisposalStatement.Text
          szDisplayStatement = szStatementText
       END
 
@@ -765,11 +780,11 @@ dTitleText( VIEW mMasLC BASED ON LOD mMasLC,
       IF mMasLC.M_IngredientsStatement EXISTS
          szTitle = mMasLC.M_StorageDisposalStatement.Title
          IF szTitle != ""
-            szString = "<strong>" + szTitle + ": </strong>" 
+            szString = "<strong>" + szTitle + ": </strong>"
          ELSE
             szString = ""
          END
-         
+
          szString = szString + mMasLC.M_StorageDisposalStatement.Text
       ELSE
          szString = ""
@@ -808,8 +823,8 @@ dCombinedContainerVol( VIEW mMasLC BASED ON LOD mMasLC,
    OF   zDERIVED_GET:
 
       // Combine each volume name that drives this section.
-      szCombinedName = "" 
-/*    FOR EACH mMasLC.M_StorageDisposalDrivingConVol 
+      szCombinedName = ""
+/*    FOR EACH mMasLC.M_StorageDisposalDrivingConVol
   ???         GetStringFromAttributeByContext( szContainerVolume, mMasLC, "M_StorageDisposalDrivingConVol", "ContainerVolume", "", 20 )
          IF szCombinedName = ""
             szCombinedName = szContainerVolume
@@ -834,9 +849,9 @@ dCombinedContainerVol( VIEW mMasLC BASED ON LOD mMasLC,
 END
 
 /////////////////////////////////////////////////////////////////////////////
-//    
+//
 // OPERATION: dDisplayUsageName
-//    
+//
 /////////////////////////////////////////////////////////////////////////////
 DERIVED ATTRIBUTE OPERATION
 dDisplayUsageName( VIEW mMasLC BASED ON LOD mMasLC,
@@ -852,7 +867,7 @@ dDisplayUsageName( VIEW mMasLC BASED ON LOD mMasLC,
    STRING ( 100 ) szCombinedName
    STRING ( 3 )   szFootnoteNumber
    INTEGER        Count
-   
+
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
 
@@ -867,22 +882,22 @@ dDisplayUsageName( VIEW mMasLC BASED ON LOD mMasLC,
       ELSE
          szCombinedName = szName
       END
-      
+
       // Set Footnote Number, if footnote exists.
       IF mMasLC.M_UsageFootnoteUsed EXISTS
          IF mMasLC.M_UsageFootnoteUsed.ID != ""
-            SET CURSOR FIRST mMasLC.M_UsageFootnote WHERE mMasLC.M_UsageFootnote.ID = mMasLC.M_UsageFootnoteUsed.ID 
+            SET CURSOR FIRST mMasLC.M_UsageFootnote WHERE mMasLC.M_UsageFootnote.ID = mMasLC.M_UsageFootnoteUsed.ID
             IF mMasLC.M_UsageFootnote.wFootNoteRelativeNumber = ""
                // Relative numbers haven't be set, so set them here.
                CreateViewFromView( mMasLC2, mMasLC )
                Count = 0
-               FOR EACH mMasLC2.M_UsageFootnote 
+               FOR EACH mMasLC2.M_UsageFootnote
                   Count = Count + 1
                   mMasLC2.M_UsageFootnote.wFootNoteRelativeNumber = Count
                END
                DropView( mMasLC2 )
-            END 
-            szFootnoteNumber = mMasLC.M_UsageFootnote.wFootNoteRelativeNumber 
+            END
+            szFootnoteNumber = mMasLC.M_UsageFootnote.wFootNoteRelativeNumber
             szCombinedName = szCombinedName + "<sup> " + szFootnoteNumber + "</sup>"
          END
       END
@@ -901,9 +916,9 @@ dDisplayUsageName( VIEW mMasLC BASED ON LOD mMasLC,
 END
 
 /////////////////////////////////////////////////////////////////////////////
-//    
+//
 // OPERATION: dDisplayPathogenName
-//    
+//
 /////////////////////////////////////////////////////////////////////////////
 DERIVED ATTRIBUTE OPERATION
 dDisplayPathogenName( VIEW mMasLC BASED ON LOD mMasLC,
@@ -918,7 +933,7 @@ dDisplayPathogenName( VIEW mMasLC BASED ON LOD mMasLC,
    STRING ( 100 ) szCombinedName
    STRING ( 3 )   szFootnoteNumber
    INTEGER        Count
-   
+
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
 
@@ -927,22 +942,22 @@ dDisplayPathogenName( VIEW mMasLC BASED ON LOD mMasLC,
       GetStringFromAttribute( szUsageType, mMasLC, szEntityName, "UsageType" )
       GetStringFromAttribute( szClassification, mMasLC, szEntityName, "ClaimsClassification" )
       GetStringFromAttribute( szCombinedName, mMasLC, szEntityName, "Name" )
-      
+
       // Set Footnote Number, if footnote exists.
       IF mMasLC.M_UsageFootnoteUsed EXISTS
          IF mMasLC.M_UsageFootnoteUsed.ID != ""
-            SET CURSOR FIRST mMasLC.M_UsageFootnote WHERE mMasLC.M_UsageFootnote.ID = mMasLC.M_UsageFootnoteUsed.ID 
+            SET CURSOR FIRST mMasLC.M_UsageFootnote WHERE mMasLC.M_UsageFootnote.ID = mMasLC.M_UsageFootnoteUsed.ID
             IF mMasLC.M_UsageFootnote.wFootNoteRelativeNumber = ""
                // Relative numbers haven't be set, so set them here.
                CreateViewFromView( mMasLC2, mMasLC )
                Count = 0
-               FOR EACH mMasLC2.M_UsageFootnote 
+               FOR EACH mMasLC2.M_UsageFootnote
                   Count = Count + 1
                   mMasLC2.M_UsageFootnote.wFootNoteRelativeNumber = Count
                END
                DropView( mMasLC2 )
-            END 
-            szFootnoteNumber = mMasLC.M_UsageFootnote.wFootNoteRelativeNumber 
+            END
+            szFootnoteNumber = mMasLC.M_UsageFootnote.wFootNoteRelativeNumber
             szCombinedName = szCombinedName + "<sup> " + szFootnoteNumber + "</sup>"
          END
       END
@@ -959,9 +974,9 @@ dDisplayPathogenName( VIEW mMasLC BASED ON LOD mMasLC,
    END  /* case */
 
 END/////////////////////////////////////////////////////////////////////////////
-//    
+//
 // OPERATION: dDisplayUsageName
-//    
+//
 /////////////////////////////////////////////////////////////////////////////
 DERIVED ATTRIBUTE OPERATION
 dDisplayGenStmtText( VIEW mMasLC BASED ON LOD mMasLC,
@@ -971,24 +986,24 @@ dDisplayGenStmtText( VIEW mMasLC BASED ON LOD mMasLC,
 
    VIEW mMasLC2 BASED ON LOD mMasLC
    STRING ( 5000 )  szCombinedText
-   
+
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
 
       // If a Title exists, concatenate Title and Text.
       // Otherwise, just show text.
-   
+
       IF mMasLC.M_GeneralStatement.Title = ""
-         szCombinedText = mMasLC.M_GeneralStatement.Text 
+         szCombinedText = mMasLC.M_GeneralStatement.Text
       ELSE
-         szCombinedText = mMasLC.M_GeneralStatement.Title + " " + mMasLC.M_GeneralStatement.Text 
+         szCombinedText = mMasLC.M_GeneralStatement.Title + " " + mMasLC.M_GeneralStatement.Text
       END
-  
+
       // Store the calculated value in the object.
       StoreStringInRecord( mMasLC,
                            InternalEntityStructure,
                            InternalAttribStructure, szCombinedText )
-   
+
         /* end zDERIVED_GET */
    OF   zDERIVED_SET:
 
@@ -1015,7 +1030,7 @@ dDisplayUsageKeyText( VIEW mMasLC BASED ON LOD mMasLC,
 
       // Expand the current Text attribute by replacing inbedded Keywords with the Keyword
       // values in the M_InsertText subentities.
-      szGeneratedString = mMasLC.DisplayKeywordText.Text 
+      szGeneratedString = mMasLC.DisplayKeywordText.Text
       IF szGeneratedString != ""
          GenerateKeywordTextIntoString( mMasLC,
                                         szGeneratedString,
@@ -1023,7 +1038,7 @@ dDisplayUsageKeyText( VIEW mMasLC BASED ON LOD mMasLC,
                                         "M_InsertText",
                                         ", " )
       END
-      
+
       // Store the resulting value in the object.
       StoreStringInRecord( mMasLC,
                            InternalEntityStructure,
@@ -1056,7 +1071,7 @@ dDisplayUsageKeyTitle( VIEW mMasLC BASED ON LOD mMasLC,
 
       // Expand the current Title attribute by replacing inbedded Keywords with the Keyword
       // values in the M_InsertText subentities.
-      szGeneratedString = mMasLC.DisplayKeywordText.Title 
+      szGeneratedString = mMasLC.DisplayKeywordText.Title
       IF szGeneratedString != ""
          GenerateKeywordTextIntoString( mMasLC,
                                         szGeneratedString,
@@ -1097,11 +1112,11 @@ dMarketingKeywordText( VIEW mMasLC BASED ON LOD mMasLC,
 
       // Concatenate all the Keyword values for a Marketing Keyword entry.
       szGeneratedString = ""
-      FOR EACH mMasLC.M_InsertTextMarketing 
+      FOR EACH mMasLC.M_InsertTextMarketing
          IF szGeneratedString = ""
             szGeneratedString = mMasLC.M_InsertTextMarketing.Text
          ELSE
-            szGeneratedString = szGeneratedString + ", " + mMasLC.M_InsertTextMarketing.Text 
+            szGeneratedString = szGeneratedString + ", " + mMasLC.M_InsertTextMarketing.Text
          END
       END
 
@@ -1141,7 +1156,7 @@ dDU_KeywordText( VIEW mMasLC BASED ON LOD mMasLC,
          IF szGeneratedString = ""
             szGeneratedString = mMasLC.M_InsertTextDU.Text
          ELSE
-            szGeneratedString = szGeneratedString + ", " + mMasLC.M_InsertTextDU.Text 
+            szGeneratedString = szGeneratedString + ", " + mMasLC.M_InsertTextDU.Text
          END
       END
 
@@ -1181,7 +1196,7 @@ dSD_KeywordText( VIEW mMasLC BASED ON LOD mMasLC,
          IF szGeneratedString = ""
             szGeneratedString = mMasLC.M_InsertTextSD.Text
          ELSE
-            szGeneratedString = szGeneratedString + ", " + mMasLC.M_InsertTextSD.Text 
+            szGeneratedString = szGeneratedString + ", " + mMasLC.M_InsertTextSD.Text
          END
       END
 
@@ -1221,7 +1236,7 @@ dGeneralKeywordText( VIEW mMasLC BASED ON LOD mMasLC,
          IF szGeneratedString = ""
             szGeneratedString = mMasLC.M_InsertTextGeneral.Text
          ELSE
-            szGeneratedString = szGeneratedString + ", " + mMasLC.M_InsertTextGeneral.Text 
+            szGeneratedString = szGeneratedString + ", " + mMasLC.M_InsertTextGeneral.Text
          END
       END
 
@@ -1257,8 +1272,8 @@ dMarketingTitleText( VIEW mMasLC BASED ON LOD mMasLC,
 
       // Concatenate a string combining Title and Text, with Title made bold.
       szGeneratedString = "<b>" + mMasLC.M_MarketingStatement.Title + "</b>" +
-                          mMasLC.M_MarketingStatement.Text 
-      
+                          mMasLC.M_MarketingStatement.Text
+
       // Store the resulting value in the object.
       StoreStringInRecord( mMasLC,
                            InternalEntityStructure,
@@ -1274,31 +1289,31 @@ dMarketingTitleText( VIEW mMasLC BASED ON LOD mMasLC,
 END
 
 /////////////////////////////////////////////////////////////////////////////
-//    
+//
 // OPERATION: BuildCompEntsWO_Usage
-//    
+//
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
 BuildCompEntsWO_Usage( VIEW mMasLC BASED ON LOD mMasLC )
 
    // Build Composite entries without Usage Statements.
-   
+
    // Go to build Composite.
    BuildFullCompEntries( mMasLC )
-   
+
    // Remove Usage entries.
-   FOR EACH mMasLC.CompositeComponentList 
+   FOR EACH mMasLC.CompositeComponentList
       IF mMasLC.CompositeComponentList.DisplayType = "MarketingUsage" OR mMasLC.CompositeComponentList.DisplayType = "DirUseUsage"
-         DELETE ENTITY mMasLC.CompositeComponentList NONE 
+         DELETE ENTITY mMasLC.CompositeComponentList NONE
       END
    END
 
 END
 
 /////////////////////////////////////////////////////////////////////////////
-//    
+//
 // OPERATION: BuildCompositeEntries
-//    
+//
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
 BuildCompositeEntries( VIEW mMasLC BASED ON LOD mMasLC )
@@ -1310,46 +1325,46 @@ BuildCompositeEntries( VIEW mMasLC BASED ON LOD mMasLC )
    INTEGER          MaxDisplayLength
    INTEGER          OriginalStringLength
    INTEGER          Count
-   
+
    // Build Marketing Section and Statement components.
-   FOR EACH mMasLC.M_MarketingSection 
-      CREATE ENTITY mMasLC.CompositeComponentList 
+   FOR EACH mMasLC.M_MarketingSection
+      CREATE ENTITY mMasLC.CompositeComponentList
       mMasLC.CompositeComponentList.Type              = "M_MarketingSection"
       mMasLC.CompositeComponentList.SelectLevel       = 1
       mMasLC.CompositeComponentList.DisplayType       = "Marketing"
       mMasLC.CompositeComponentList.DisplayTypeIndent = "Marketing"
-      mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_MarketingSection.ID 
-      mMasLC.CompositeComponentList.Name              = mMasLC.M_MarketingSection.Name 
+      mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_MarketingSection.ID
+      mMasLC.CompositeComponentList.Name              = mMasLC.M_MarketingSection.Name
       TraceLineS( "BuildComposite Name: ", mMasLC.M_MarketingSection.Name )
       IF mMasLC.M_MarketingSection.Title != ""
          IF mMasLC.M_MarketingSection.Name = ""
             mMasLC.CompositeComponentList.DisplayValue = mMasLC.M_MarketingSection.Title
          ELSE
             mMasLC.CompositeComponentList.DisplayValue = mMasLC.M_MarketingSection.Name + " - " +
-                                                         mMasLC.M_MarketingSection.Title 
+                                                         mMasLC.M_MarketingSection.Title
          END
       ELSE
-         mMasLC.CompositeComponentList.DisplayValue = mMasLC.M_MarketingSection.Name 
+         mMasLC.CompositeComponentList.DisplayValue = mMasLC.M_MarketingSection.Name
       END
       mMasLC.CompositeComponentList.Title             = mMasLC.M_MarketingSection.Title
       mMasLC.CompositeComponentList.Value             = mMasLC.CompositeComponentList.DisplayValue
-      
-      FOR EACH mMasLC.M_MarketingStatement 
-         CREATE ENTITY mMasLC.CompositeComponentList 
+
+      FOR EACH mMasLC.M_MarketingStatement
+         CREATE ENTITY mMasLC.CompositeComponentList
          mMasLC.CompositeComponentList.Type              = "M_MarketingStatement"
          mMasLC.CompositeComponentList.SelectLevel       = 2
          mMasLC.CompositeComponentList.DisplayType       = "Statement"
          mMasLC.CompositeComponentList.DisplayTypeIndent = "...Statement"
-         mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_MarketingStatement.ID 
+         mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_MarketingStatement.ID
          mMasLC.CompositeComponentList.Title             = mMasLC.M_MarketingStatement.Title
          mMasLC.CompositeComponentList.Value             = mMasLC.M_MarketingStatement.Text
-         
-         szOriginalDisplayValue = mMasLC.M_MarketingStatement.Text 
+
+         szOriginalDisplayValue = mMasLC.M_MarketingStatement.Text
          GetAttributeLength( OriginalStringLength, mMasLC, "M_MarketingStatement", "Text" )
          IF MaxDisplayLength < OriginalStringLength
             szDisplayValue = szOriginalDisplayValue + "....."
          ELSE
-            szDisplayValue = szOriginalDisplayValue    
+            szDisplayValue = szOriginalDisplayValue
          END
          mMasLC.CompositeComponentList.DisplayValue = szDisplayValue
       END
@@ -1357,295 +1372,295 @@ BuildCompositeEntries( VIEW mMasLC BASED ON LOD mMasLC )
 
    // Build the flat display of all components subobject.
    /*MaxDisplayLength = 100
-   
+
    // First clear any current entries.
    FOR EACH mMasLC.CompositeComponentList
-      DELETE ENTITY mMasLC.CompositeComponentList NONE 
+      DELETE ENTITY mMasLC.CompositeComponentList NONE
    END
-   
+
    // General Section and Statements.
-   FOR EACH mMasLC.M_GeneralSection 
-      CREATE ENTITY mMasLC.CompositeComponentList 
+   FOR EACH mMasLC.M_GeneralSection
+      CREATE ENTITY mMasLC.CompositeComponentList
       mMasLC.CompositeComponentList.Type              = "M_GeneralSection"
       mMasLC.CompositeComponentList.SelectLevel       = 1
       mMasLC.CompositeComponentList.DisplayType       = "General"
       mMasLC.CompositeComponentList.DisplayTypeIndent = "General"
-      mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_GeneralSection.ID 
+      mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_GeneralSection.ID
       mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_GeneralSection.Title
       mMasLC.CompositeComponentList.Title             = mMasLC.M_GeneralSection.Title
       mMasLC.CompositeComponentList.Value             = mMasLC.CompositeComponentList.DisplayValue
-      
-      FOR EACH mMasLC.M_GeneralStatement 
-         CREATE ENTITY mMasLC.CompositeComponentList 
+
+      FOR EACH mMasLC.M_GeneralStatement
+         CREATE ENTITY mMasLC.CompositeComponentList
          mMasLC.CompositeComponentList.Type              = "M_GeneralStatement"
          mMasLC.CompositeComponentList.SelectLevel       = 2
          mMasLC.CompositeComponentList.DisplayType       = "Statement"
          mMasLC.CompositeComponentList.DisplayTypeIndent = "...Statement"
-         mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_GeneralStatement.ID 
+         mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_GeneralStatement.ID
          mMasLC.CompositeComponentList.Title             = mMasLC.M_GeneralStatement.Title
          mMasLC.CompositeComponentList.Value             = mMasLC.M_GeneralStatement.Text
-         
+
          szOriginalDisplayValue = mMasLC.M_GeneralStatement.Text
          GetAttributeLength( OriginalStringLength, mMasLC, "M_GeneralStatement", "Text" )
          IF MaxDisplayLength < OriginalStringLength
             szDisplayValue = szOriginalDisplayValue + "....."
          ELSE
-            szDisplayValue = szOriginalDisplayValue    
+            szDisplayValue = szOriginalDisplayValue
          END
          mMasLC.CompositeComponentList.DisplayValue   = szDisplayValue
       END
    END
-   
+
    // Ingredients Section and Statements.
-   FOR EACH mMasLC.M_IngredientsSection 
-      CREATE ENTITY mMasLC.CompositeComponentList 
+   FOR EACH mMasLC.M_IngredientsSection
+      CREATE ENTITY mMasLC.CompositeComponentList
       mMasLC.CompositeComponentList.Type              = "M_IngredientsSection"
       mMasLC.CompositeComponentList.SelectLevel       = 1
       mMasLC.CompositeComponentList.DisplayType       = "Ingredients"
       mMasLC.CompositeComponentList.DisplayTypeIndent = "Ingredients"
-      mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_IngredientsSection.ID 
-      mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_IngredientsSection.ActiveTitle 
+      mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_IngredientsSection.ID
+      mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_IngredientsSection.ActiveTitle
       mMasLC.CompositeComponentList.Value             = mMasLC.CompositeComponentList.DisplayValue
-      
-      FOR EACH mMasLC.M_IngredientsStatement 
-         CREATE ENTITY mMasLC.CompositeComponentList 
+
+      FOR EACH mMasLC.M_IngredientsStatement
+         CREATE ENTITY mMasLC.CompositeComponentList
          mMasLC.CompositeComponentList.Type              = "M_IngredientsStatement"
          mMasLC.CompositeComponentList.SelectLevel       = 2
          mMasLC.CompositeComponentList.DisplayType       = "Statement"
          mMasLC.CompositeComponentList.DisplayTypeIndent = "...Statement"
-         mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_IngredientsStatement.ID 
-         mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_IngredientsStatement.ChemicalName 
+         mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_IngredientsStatement.ID
+         mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_IngredientsStatement.ChemicalName
          mMasLC.CompositeComponentList.Value             = mMasLC.M_IngredientsStatement.ChemicalName
       END
    END
-   
+
    // StorageDisposal Section and Statements.
-   FOR EACH mMasLC.M_StorageDisposalSection 
-      CREATE ENTITY mMasLC.CompositeComponentList 
+   FOR EACH mMasLC.M_StorageDisposalSection
+      CREATE ENTITY mMasLC.CompositeComponentList
       mMasLC.CompositeComponentList.Type              = "M_StorageDisposalSection"
       mMasLC.CompositeComponentList.SelectLevel       = 1
       mMasLC.CompositeComponentList.DisplayType       = "Storage and Disposal"
       mMasLC.CompositeComponentList.DisplayTypeIndent = "Storage and Disposal"
-      mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_StorageDisposalSection.ID 
-      mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_StorageDisposalSection.Title 
+      mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_StorageDisposalSection.ID
+      mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_StorageDisposalSection.Title
       mMasLC.CompositeComponentList.Title             = mMasLC.M_StorageDisposalSection.Title
       mMasLC.CompositeComponentList.Value             = mMasLC.CompositeComponentList.DisplayValue
-      
-      FOR EACH mMasLC.M_StorageDisposalStatement 
-         CREATE ENTITY mMasLC.CompositeComponentList 
+
+      FOR EACH mMasLC.M_StorageDisposalStatement
+         CREATE ENTITY mMasLC.CompositeComponentList
          mMasLC.CompositeComponentList.Type              = "M_StorageDisposalStatement"
          mMasLC.CompositeComponentList.SelectLevel       = 2
          mMasLC.CompositeComponentList.DisplayType       = "Statement"
          mMasLC.CompositeComponentList.DisplayTypeIndent = "...Statement"
-         mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_StorageDisposalStatement.ID 
+         mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_StorageDisposalStatement.ID
          mMasLC.CompositeComponentList.Title             = mMasLC.M_StorageDisposalStatement.Title
          mMasLC.CompositeComponentList.Value             = mMasLC.M_StorageDisposalStatement.Text
-         
+
          szOriginalDisplayValue = mMasLC.M_StorageDisposalStatement.Text
          GetAttributeLength( OriginalStringLength, mMasLC, "M_StorageDisposalStatement", "Text" )
          IF MaxDisplayLength < OriginalStringLength
             szDisplayValue = szOriginalDisplayValue + "....."
          ELSE
-            szDisplayValue = szOriginalDisplayValue    
+            szDisplayValue = szOriginalDisplayValue
          END
          mMasLC.CompositeComponentList.DisplayValue   = szDisplayValue
       END
    END
-   
+
    // DirectionsForUse Section and Statements.
-   FOR EACH mMasLC.M_DirectionsForUseSection 
-      CREATE ENTITY mMasLC.CompositeComponentList 
+   FOR EACH mMasLC.M_DirectionsForUseSection
+      CREATE ENTITY mMasLC.CompositeComponentList
       mMasLC.CompositeComponentList.Type              = "M_DirectionsForUseSection"
       mMasLC.CompositeComponentList.SelectLevel       = 1
       mMasLC.CompositeComponentList.DisplayType       = "Directions For Use"
       mMasLC.CompositeComponentList.DisplayTypeIndent = "Directions For Use"
-      mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_DirectionsForUseSection.ID 
+      mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_DirectionsForUseSection.ID
       IF mMasLC.M_DirectionsForUseSection.Title != ""
          IF mMasLC.M_DirectionsForUseSection.Name = ""
             mMasLC.CompositeComponentList.DisplayValue = mMasLC.M_DirectionsForUseSection.Title
          ELSE
             mMasLC.CompositeComponentList.DisplayValue = mMasLC.M_DirectionsForUseSection.Name + " - " +
-                                                         mMasLC.M_DirectionsForUseSection.Title 
+                                                         mMasLC.M_DirectionsForUseSection.Title
          END
       ELSE
-         mMasLC.CompositeComponentList.DisplayValue = mMasLC.M_DirectionsForUseSection.Name 
+         mMasLC.CompositeComponentList.DisplayValue = mMasLC.M_DirectionsForUseSection.Name
       END
       mMasLC.CompositeComponentList.Title             = mMasLC.M_DirectionsForUseSection.Title
       mMasLC.CompositeComponentList.Value             = mMasLC.CompositeComponentList.DisplayValue
-      
-      FOR EACH mMasLC.M_DirectionsForUseStatement 
-         CREATE ENTITY mMasLC.CompositeComponentList 
+
+      FOR EACH mMasLC.M_DirectionsForUseStatement
+         CREATE ENTITY mMasLC.CompositeComponentList
          mMasLC.CompositeComponentList.Type              = "M_DirectionsForUseStatement"
          mMasLC.CompositeComponentList.SelectLevel       = 2
          mMasLC.CompositeComponentList.DisplayType       = "Statement"
          mMasLC.CompositeComponentList.DisplayTypeIndent = "...Statement"
-         mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_DirectionsForUseStatement.ID 
+         mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_DirectionsForUseStatement.ID
          mMasLC.CompositeComponentList.Title             = mMasLC.M_DirectionsForUseStatement.Title
          mMasLC.CompositeComponentList.Value             = mMasLC.M_DirectionsForUseStatement.Text
-         
+
          szOriginalDisplayValue = mMasLC.M_DirectionsForUseStatement.Text
          GetAttributeLength( OriginalStringLength, mMasLC, "M_DirectionsForUseStatement", "Text" )
          IF MaxDisplayLength < OriginalStringLength
             szDisplayValue = szOriginalDisplayValue + "....."
          ELSE
-            szDisplayValue = szOriginalDisplayValue    
+            szDisplayValue = szOriginalDisplayValue
          END
          mMasLC.CompositeComponentList.DisplayValue   = szDisplayValue
       END
-      
+
       // Add any Usage entries.
       // First sort by Usage Type, but keeping the entries in their original order otherwise.
       Count = 0
-      FOR EACH mMasLC.M_DirectionsUsageOrdering 
+      FOR EACH mMasLC.M_DirectionsUsageOrdering
          Count = Count + 1
          mMasLC.M_DirectionsUsageOrdering.wSortOrder = Count
       END
       OrderEntityForView( mMasLC, "M_DirectionsUsageOrdering", "M_DirectionsUsage.UsageType A wSortOrder A" )
-      FOR EACH mMasLC.M_DirectionsUsageOrdering 
-         CREATE ENTITY mMasLC.CompositeComponentList 
+      FOR EACH mMasLC.M_DirectionsUsageOrdering
+         CREATE ENTITY mMasLC.CompositeComponentList
          GetStringFromAttributeByContext( szUsageType, mMasLC, "M_DirectionsUsage", "UsageType", "FullUsageType", 20 )
          mMasLC.CompositeComponentList.Type              = "M_DirectionsUsageOrdering"
          mMasLC.CompositeComponentList.SelectLevel       = 3
          mMasLC.CompositeComponentList.DisplayType       = "DirUseUsage"
          mMasLC.CompositeComponentList.DisplayTypeIndent = "...DU " + szUsageType
-         mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_DirectionsUsage.ID 
-         mMasLC.CompositeComponentList.Value             = mMasLC.M_DirectionsUsage.Name 
-         mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_DirectionsUsage.Name 
+         mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_DirectionsUsage.ID
+         mMasLC.CompositeComponentList.Value             = mMasLC.M_DirectionsUsage.Name
+         mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_DirectionsUsage.Name
       END
    END
-   
+
    // Marketing Section and Statements.
-   FOR EACH mMasLC.M_MarketingSection 
-      CREATE ENTITY mMasLC.CompositeComponentList 
+   FOR EACH mMasLC.M_MarketingSection
+      CREATE ENTITY mMasLC.CompositeComponentList
       mMasLC.CompositeComponentList.Type              = "M_MarketingSection"
       mMasLC.CompositeComponentList.SelectLevel       = 1
       mMasLC.CompositeComponentList.DisplayType       = "Marketing"
       mMasLC.CompositeComponentList.DisplayTypeIndent = "Marketing"
-      mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_MarketingSection.ID 
+      mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_MarketingSection.ID
       IF mMasLC.M_MarketingSection.Title != ""
          IF mMasLC.M_MarketingSection.Name = ""
             mMasLC.CompositeComponentList.DisplayValue = mMasLC.M_MarketingSection.Title
          ELSE
             mMasLC.CompositeComponentList.DisplayValue = mMasLC.M_MarketingSection.Name + " - " +
-                                                         mMasLC.M_MarketingSection.Title 
+                                                         mMasLC.M_MarketingSection.Title
          END
       ELSE
-         mMasLC.CompositeComponentList.DisplayValue = mMasLC.M_MarketingSection.Name 
+         mMasLC.CompositeComponentList.DisplayValue = mMasLC.M_MarketingSection.Name
       END
       mMasLC.CompositeComponentList.Title             = mMasLC.M_MarketingSection.Title
       mMasLC.CompositeComponentList.Value             = mMasLC.CompositeComponentList.DisplayValue
-      
-      FOR EACH mMasLC.M_MarketingStatement 
-         CREATE ENTITY mMasLC.CompositeComponentList 
+
+      FOR EACH mMasLC.M_MarketingStatement
+         CREATE ENTITY mMasLC.CompositeComponentList
          mMasLC.CompositeComponentList.Type              = "M_MarketingStatement"
          mMasLC.CompositeComponentList.SelectLevel       = 2
          mMasLC.CompositeComponentList.DisplayType       = "Statement"
          mMasLC.CompositeComponentList.DisplayTypeIndent = "...Statement"
-         mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_MarketingStatement.ID 
+         mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_MarketingStatement.ID
          mMasLC.CompositeComponentList.Title             = mMasLC.M_MarketingStatement.Title
          mMasLC.CompositeComponentList.Value             = mMasLC.M_MarketingStatement.Text
-         
-         szOriginalDisplayValue = mMasLC.M_MarketingStatement.Text 
+
+         szOriginalDisplayValue = mMasLC.M_MarketingStatement.Text
          GetAttributeLength( OriginalStringLength, mMasLC, "M_MarketingStatement", "Text" )
          IF MaxDisplayLength < OriginalStringLength
             szDisplayValue = szOriginalDisplayValue + "....."
          ELSE
-            szDisplayValue = szOriginalDisplayValue    
+            szDisplayValue = szOriginalDisplayValue
          END
          mMasLC.CompositeComponentList.DisplayValue = szDisplayValue
       END
-      
+
       // Add any Usage entries.
       // First sort by Usage Type, but keeping the entries in their original order otherwise.
       Count = 0
-      FOR EACH mMasLC.M_MarketingUsageOrdering 
+      FOR EACH mMasLC.M_MarketingUsageOrdering
          Count = Count + 1
          mMasLC.M_MarketingUsageOrdering.wSortOrder = Count
       END
       OrderEntityForView( mMasLC, "M_MarketingUsageOrdering", "M_MarketingUsage.UsageType A wSortOrder A" )
-      FOR EACH mMasLC.M_MarketingUsageOrdering 
-         CREATE ENTITY mMasLC.CompositeComponentList 
+      FOR EACH mMasLC.M_MarketingUsageOrdering
+         CREATE ENTITY mMasLC.CompositeComponentList
          GetStringFromAttributeByContext( szUsageType, mMasLC, "M_MarketingUsage", "UsageType", "FullUsageType", 20 )
          mMasLC.CompositeComponentList.Type              = "M_MarketingUsageOrdering"
          mMasLC.CompositeComponentList.SelectLevel       = 3
          mMasLC.CompositeComponentList.DisplayType       = "MarketingUsage"
          mMasLC.CompositeComponentList.DisplayTypeIndent = "...Mktg " + szUsageType
-         mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_MarketingUsage.ID 
-         mMasLC.CompositeComponentList.Value             = mMasLC.M_MarketingUsage.Name 
-         mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_MarketingUsage.Name 
+         mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_MarketingUsage.ID
+         mMasLC.CompositeComponentList.Value             = mMasLC.M_MarketingUsage.Name
+         mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_MarketingUsage.Name
       END
    END
-   
+
    // Hazards Section
-   CREATE ENTITY mMasLC.CompositeComponentList 
+   CREATE ENTITY mMasLC.CompositeComponentList
    mMasLC.CompositeComponentList.Type              = "M_HumanHazardSection"
    mMasLC.CompositeComponentList.SelectLevel       = 1
    mMasLC.CompositeComponentList.DisplayType       = "Hazards"
    mMasLC.CompositeComponentList.DisplayTypeIndent = "Hazards"
-   mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_HumanHazardSection.ID 
+   mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_HumanHazardSection.ID
    mMasLC.CompositeComponentList.DisplayValue      = ""
-   
-   CREATE ENTITY mMasLC.CompositeComponentList 
+
+   CREATE ENTITY mMasLC.CompositeComponentList
    mMasLC.CompositeComponentList.SelectLevel       = 2
    mMasLC.CompositeComponentList.DisplayType       = "Signal Word"
    mMasLC.CompositeComponentList.DisplayTypeIndent = "...Signal Word"
-   mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_HumanHazardSection.EPA_SignalWord 
-   
-   CREATE ENTITY mMasLC.CompositeComponentList 
+   mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_HumanHazardSection.EPA_SignalWord
+
+   CREATE ENTITY mMasLC.CompositeComponentList
    mMasLC.CompositeComponentList.SelectLevel       = 2
    mMasLC.CompositeComponentList.DisplayType       = "Child Warning"
    mMasLC.CompositeComponentList.DisplayTypeIndent = "...Child Warning"
-   mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_HumanHazardSection.EPA_ChildHazardWarning 
-   
-   CREATE ENTITY mMasLC.CompositeComponentList 
+   mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_HumanHazardSection.EPA_ChildHazardWarning
+
+   CREATE ENTITY mMasLC.CompositeComponentList
    mMasLC.CompositeComponentList.SelectLevel       = 2
    mMasLC.CompositeComponentList.DisplayType       = "Precautionary Stmt"
    mMasLC.CompositeComponentList.DisplayTypeIndent = "...Precautionary Stmt"
-   mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_HumanHazardSection.PrecautionaryStatement 
-   
-   CREATE ENTITY mMasLC.CompositeComponentList 
+   mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_HumanHazardSection.PrecautionaryStatement
+
+   CREATE ENTITY mMasLC.CompositeComponentList
    mMasLC.CompositeComponentList.DisplayType       = "Location"
    mMasLC.CompositeComponentList.DisplayTypeIndent = "Location"
-   szCompositeLocation = "..." + mMasLC.M_HumanHazardSection.PanelLoc1 
+   szCompositeLocation = "..." + mMasLC.M_HumanHazardSection.PanelLoc1
    IF mMasLC.M_HumanHazardSection.PanelLoc2 != ""
-      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc2 
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc2
    END
    IF mMasLC.M_HumanHazardSection.PanelLoc3 != ""
       szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc3
    END
    IF mMasLC.M_HumanHazardSection.PanelLoc4 != ""
-      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc4 
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc4
    END
    IF mMasLC.M_HumanHazardSection.PanelLoc5 != ""
-      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc5 
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc5
    END
    mMasLC.CompositeComponentList.DisplayValue   = szCompositeLocation*/
-   
+
    // Usage Section
-   /*CREATE ENTITY mMasLC.CompositeComponentList 
+   /*CREATE ENTITY mMasLC.CompositeComponentList
    mMasLC.CompositeComponentList.Type           = "UsageSection"
    mMasLC.CompositeComponentList.DisplayType    = "Usage"
-   mMasLC.CompositeComponentList.OriginalTypeID = mMasLC.M_Usage.ID 
+   mMasLC.CompositeComponentList.OriginalTypeID = mMasLC.M_Usage.ID
    mMasLC.CompositeComponentList.DisplayValue   = ""
-   FOR EACH mMasLC.M_Usage 
-      CREATE ENTITY mMasLC.CompositeComponentList 
+   FOR EACH mMasLC.M_Usage
+      CREATE ENTITY mMasLC.CompositeComponentList
       mMasLC.CompositeComponentList.Type           = "M_Usage"
       GetStringFromAttributeByContext( szUsageType, mMasLC, "M_Usage", "UsageType", "FullUsageType", 20 )
-      mMasLC.CompositeComponentList.DisplayType    = "..." + szUsageType 
-      mMasLC.CompositeComponentList.OriginalTypeID = mMasLC.M_Usage.ID 
-      mMasLC.CompositeComponentList.DisplayValue   = mMasLC.M_Usage.Name 
+      mMasLC.CompositeComponentList.DisplayType    = "..." + szUsageType
+      mMasLC.CompositeComponentList.OriginalTypeID = mMasLC.M_Usage.ID
+      mMasLC.CompositeComponentList.DisplayValue   = mMasLC.M_Usage.Name
    END*/
 
 END
 
 /////////////////////////////////////////////////////////////////////////////
-//    
+//
 // OPERATION: BuildFullCompEntries
-//    
+//
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
 BuildFullCompEntries( VIEW mMasLC BASED ON LOD mMasLC )
-   
+
    STRING ( 100 ) szCompositeLocation
    STRING ( 105 )   szDisplayValue
    STRING ( 100 )   szOriginalDisplayValue
@@ -1655,170 +1670,170 @@ BuildFullCompEntries( VIEW mMasLC BASED ON LOD mMasLC )
 
    // Build the flat display of all components subobject.
    MaxDisplayLength = 100
-   
+
    // First clear any current entries.
    FOR EACH mMasLC.CompositeComponentList
-      DELETE ENTITY mMasLC.CompositeComponentList NONE 
+      DELETE ENTITY mMasLC.CompositeComponentList NONE
    END
-   
+
    // General Section and Statements.
-   FOR EACH mMasLC.M_GeneralSection 
-      CREATE ENTITY mMasLC.CompositeComponentList 
+   FOR EACH mMasLC.M_GeneralSection
+      CREATE ENTITY mMasLC.CompositeComponentList
       mMasLC.CompositeComponentList.Type              = "M_GeneralSection"
       mMasLC.CompositeComponentList.DisplayType       = "General"
       mMasLC.CompositeComponentList.DisplayTypeIndent = "General"
-      mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_GeneralSection.ID 
+      mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_GeneralSection.ID
       mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_GeneralSection.Title
       mMasLC.CompositeComponentList.Title             = mMasLC.M_GeneralSection.Title
       mMasLC.CompositeComponentList.Value             = mMasLC.CompositeComponentList.DisplayValue
-      
-      FOR EACH mMasLC.M_GeneralStatement 
-         CREATE ENTITY mMasLC.CompositeComponentList 
+
+      FOR EACH mMasLC.M_GeneralStatement
+         CREATE ENTITY mMasLC.CompositeComponentList
          mMasLC.CompositeComponentList.Type              = "M_GeneralStatement"
          mMasLC.CompositeComponentList.DisplayType       = "Statement"
          mMasLC.CompositeComponentList.DisplayTypeIndent = "...Statement"
-         mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_GeneralStatement.ID 
+         mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_GeneralStatement.ID
          mMasLC.CompositeComponentList.Title             = mMasLC.M_GeneralStatement.Title
          mMasLC.CompositeComponentList.Value             = mMasLC.M_GeneralStatement.Text
          mMasLC.CompositeComponentList.DisplayValue      = mMasLC.CompositeComponentList.Value
       END
    END
-   
+
    // Ingredients Section and Statements.
-   FOR EACH mMasLC.M_IngredientsSection 
-      CREATE ENTITY mMasLC.CompositeComponentList 
+   FOR EACH mMasLC.M_IngredientsSection
+      CREATE ENTITY mMasLC.CompositeComponentList
       mMasLC.CompositeComponentList.Type              = "M_IngredientsSection"
       mMasLC.CompositeComponentList.DisplayType       = "Ingredients"
       mMasLC.CompositeComponentList.DisplayTypeIndent = "Ingredients"
-      mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_IngredientsSection.ID 
-      mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_IngredientsSection.ActiveTitle 
+      mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_IngredientsSection.ID
+      mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_IngredientsSection.ActiveTitle
       mMasLC.CompositeComponentList.Value             = mMasLC.CompositeComponentList.DisplayValue
-      
-      FOR EACH mMasLC.M_IngredientsStatement 
-         CREATE ENTITY mMasLC.CompositeComponentList 
+
+      FOR EACH mMasLC.M_IngredientsStatement
+         CREATE ENTITY mMasLC.CompositeComponentList
          mMasLC.CompositeComponentList.Type              = "M_IngredientsStatement"
          mMasLC.CompositeComponentList.DisplayType       = "Statement"
          mMasLC.CompositeComponentList.DisplayTypeIndent = "...Statement"
-         mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_IngredientsStatement.ID 
-         mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_IngredientsStatement.ChemicalName 
+         mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_IngredientsStatement.ID
+         mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_IngredientsStatement.ChemicalName
          mMasLC.CompositeComponentList.Value             = mMasLC.M_IngredientsStatement.ChemicalName
       END
    END
-   
+
    // StorageDisposal Section and Statements.
-   FOR EACH mMasLC.M_StorageDisposalSection 
-      CREATE ENTITY mMasLC.CompositeComponentList 
+   FOR EACH mMasLC.M_StorageDisposalSection
+      CREATE ENTITY mMasLC.CompositeComponentList
       mMasLC.CompositeComponentList.Type              = "M_StorageDisposalSection"
       mMasLC.CompositeComponentList.DisplayType       = "Storage and Disposal"
       mMasLC.CompositeComponentList.DisplayTypeIndent = "Storage and Disposal"
-      mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_StorageDisposalSection.ID 
-      mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_StorageDisposalSection.Title 
+      mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_StorageDisposalSection.ID
+      mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_StorageDisposalSection.Title
       mMasLC.CompositeComponentList.Title             = mMasLC.M_StorageDisposalSection.Title
       mMasLC.CompositeComponentList.Value             = mMasLC.CompositeComponentList.DisplayValue
-      
-      FOR EACH mMasLC.M_StorageDisposalStatement 
-         CREATE ENTITY mMasLC.CompositeComponentList 
+
+      FOR EACH mMasLC.M_StorageDisposalStatement
+         CREATE ENTITY mMasLC.CompositeComponentList
          mMasLC.CompositeComponentList.Type              = "M_StorageDisposalStatement"
          mMasLC.CompositeComponentList.DisplayType       = "Statement"
          mMasLC.CompositeComponentList.DisplayTypeIndent = "...Statement"
-         mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_StorageDisposalStatement.ID 
+         mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_StorageDisposalStatement.ID
          mMasLC.CompositeComponentList.Title             = mMasLC.M_StorageDisposalStatement.Title
          mMasLC.CompositeComponentList.Value             = mMasLC.M_StorageDisposalStatement.Text
          mMasLC.CompositeComponentList.DisplayValue      = mMasLC.CompositeComponentList.Value
       END
    END
-   
+
    // DirectionsForUse Section and Statements.
-   FOR EACH mMasLC.M_DirectionsForUseSection 
-      CREATE ENTITY mMasLC.CompositeComponentList 
+   FOR EACH mMasLC.M_DirectionsForUseSection
+      CREATE ENTITY mMasLC.CompositeComponentList
       mMasLC.CompositeComponentList.Type              = "M_DirectionsForUseSection"
       mMasLC.CompositeComponentList.DisplayType       = "Directions For Use"
       mMasLC.CompositeComponentList.DisplayTypeIndent = "Directions For Use"
-      mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_DirectionsForUseSection.ID 
-      mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_DirectionsForUseSection.Title 
+      mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_DirectionsForUseSection.ID
+      mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_DirectionsForUseSection.Title
       mMasLC.CompositeComponentList.Title             = mMasLC.M_DirectionsForUseSection.Title
       mMasLC.CompositeComponentList.Value             = mMasLC.CompositeComponentList.DisplayValue
-      
-      FOR EACH mMasLC.M_DirectionsForUseStatement 
-         CREATE ENTITY mMasLC.CompositeComponentList 
+
+      FOR EACH mMasLC.M_DirectionsForUseStatement
+         CREATE ENTITY mMasLC.CompositeComponentList
          mMasLC.CompositeComponentList.Type              = "M_DirectionsForUseStatement"
          mMasLC.CompositeComponentList.DisplayType       = "Statement"
          mMasLC.CompositeComponentList.DisplayTypeIndent = "...Statement"
-         mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_DirectionsForUseStatement.ID 
+         mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_DirectionsForUseStatement.ID
          mMasLC.CompositeComponentList.Title             = mMasLC.M_DirectionsForUseStatement.Title
          mMasLC.CompositeComponentList.Value             = mMasLC.M_DirectionsForUseStatement.Text
          mMasLC.CompositeComponentList.DisplayValue      = mMasLC.CompositeComponentList.Value
       END
    END
-   
+
    // Marketing Section and Statements.
-   FOR EACH mMasLC.M_MarketingSection 
-      CREATE ENTITY mMasLC.CompositeComponentList 
+   FOR EACH mMasLC.M_MarketingSection
+      CREATE ENTITY mMasLC.CompositeComponentList
       mMasLC.CompositeComponentList.Type              = "M_MarketingSection"
       mMasLC.CompositeComponentList.DisplayType       = "Marketing"
       mMasLC.CompositeComponentList.DisplayTypeIndent = "Marketing"
-      mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_MarketingSection.ID 
-      mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_MarketingSection.Title 
+      mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_MarketingSection.ID
+      mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_MarketingSection.Title
       mMasLC.CompositeComponentList.Title             = mMasLC.M_MarketingSection.Title
       mMasLC.CompositeComponentList.Value             = mMasLC.CompositeComponentList.DisplayValue
-      
-      FOR EACH mMasLC.M_MarketingStatement 
-         CREATE ENTITY mMasLC.CompositeComponentList 
+
+      FOR EACH mMasLC.M_MarketingStatement
+         CREATE ENTITY mMasLC.CompositeComponentList
          mMasLC.CompositeComponentList.Type              = "M_MarketingStatement"
          mMasLC.CompositeComponentList.DisplayType       = "Statement"
          mMasLC.CompositeComponentList.DisplayTypeIndent = "...Statement"
-         mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_MarketingStatement.ID 
+         mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_MarketingStatement.ID
          mMasLC.CompositeComponentList.Title             = mMasLC.M_MarketingStatement.Title
          mMasLC.CompositeComponentList.Value             = mMasLC.M_MarketingStatement.Text
          mMasLC.CompositeComponentList.DisplayValue      = mMasLC.CompositeComponentList.Value
       END
    END
-   
+
    // Hazards Section
-   CREATE ENTITY mMasLC.CompositeComponentList 
+   CREATE ENTITY mMasLC.CompositeComponentList
    mMasLC.CompositeComponentList.Type              = "M_HumanHazardSection"
    mMasLC.CompositeComponentList.DisplayType       = "Hazards"
-   mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_HumanHazardSection.ID 
+   mMasLC.CompositeComponentList.OriginalTypeID    = mMasLC.M_HumanHazardSection.ID
    mMasLC.CompositeComponentList.DisplayValue      = ""
-   
-   CREATE ENTITY mMasLC.CompositeComponentList 
+
+   CREATE ENTITY mMasLC.CompositeComponentList
    mMasLC.CompositeComponentList.DisplayType       = "Signal Word"
    mMasLC.CompositeComponentList.DisplayTypeIndent = "...Signal Word"
-   mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_HumanHazardSection.EPA_SignalWord 
-   
-   CREATE ENTITY mMasLC.CompositeComponentList 
+   mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_HumanHazardSection.EPA_SignalWord
+
+   CREATE ENTITY mMasLC.CompositeComponentList
    mMasLC.CompositeComponentList.DisplayType       = "Child Warning"
    mMasLC.CompositeComponentList.DisplayTypeIndent = "...Child Warning"
-   mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_HumanHazardSection.EPA_ChildHazardWarning 
-   
-   CREATE ENTITY mMasLC.CompositeComponentList 
+   mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_HumanHazardSection.EPA_ChildHazardWarning
+
+   CREATE ENTITY mMasLC.CompositeComponentList
    mMasLC.CompositeComponentList.DisplayType       = "Precautionary Stmt"
    mMasLC.CompositeComponentList.DisplayTypeIndent = "...Precautionary Stmt"
-   mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_HumanHazardSection.PrecautionaryStatement 
-   
-   CREATE ENTITY mMasLC.CompositeComponentList 
+   mMasLC.CompositeComponentList.DisplayValue      = mMasLC.M_HumanHazardSection.PrecautionaryStatement
+
+   CREATE ENTITY mMasLC.CompositeComponentList
    mMasLC.CompositeComponentList.DisplayType    = "Location"
-   szCompositeLocation = "..." + mMasLC.M_HumanHazardSection.PanelLoc1 
+   szCompositeLocation = "..." + mMasLC.M_HumanHazardSection.PanelLoc1
    IF mMasLC.M_HumanHazardSection.PanelLoc2 != ""
-      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc2 
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc2
    END
    IF mMasLC.M_HumanHazardSection.PanelLoc3 != ""
       szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc3
    END
    IF mMasLC.M_HumanHazardSection.PanelLoc4 != ""
-      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc4 
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc4
    END
    IF mMasLC.M_HumanHazardSection.PanelLoc5 != ""
-      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc5 
+      szCompositeLocation = szCompositeLocation + " / " + mMasLC.M_HumanHazardSection.PanelLoc5
    END
    mMasLC.CompositeComponentList.DisplayValue   = szCompositeLocation
 
 END
 
 /////////////////////////////////////////////////////////////////////////////
-//    
+//
 // OPERATION: BuildUsageSelectEnts
-//    
+//
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
 BuildUsageSelectEnts( VIEW mMasLC BASED ON LOD mMasLC )
@@ -1833,11 +1848,11 @@ BuildUsageSelectEnts( VIEW mMasLC BASED ON LOD mMasLC )
 
    // Use the source and target information defined in the UsageSelection entity to include the proper
    // M_UsageSelectTarget and M_UsageSelectSource entities for setting up the selection of Usage entries.
-   szOrderingEntityName           = mMasLC.UsageSelection.TargetOrderingEntityName 
-   szUsageEntityName              = mMasLC.UsageSelection.TargetUsageEntityName 
-   szSelectedUsageType            = mMasLC.UsageSelection.UsageType 
-   szSelectedClaimsClassification = mMasLC.UsageSelection.ClaimsClassification 
-   
+   szOrderingEntityName           = mMasLC.UsageSelection.TargetOrderingEntityName
+   szUsageEntityName              = mMasLC.UsageSelection.TargetUsageEntityName
+   szSelectedUsageType            = mMasLC.UsageSelection.UsageType
+   szSelectedClaimsClassification = mMasLC.UsageSelection.ClaimsClassification
+
    // First build the target entries from the current Target Ordering and Usage Entity Names.
    // This is of the form "FOR EACH mMasLC.M_MarketingUsageOrdering "
    nRC = SetCursorFirstEntity( mMasLC, szOrderingEntityName, "" )
@@ -1847,23 +1862,23 @@ BuildUsageSelectEnts( VIEW mMasLC BASED ON LOD mMasLC )
       IF szUsageType = szSelectedUsageType AND szClaimsClassification = szSelectedClaimsClassification
          IncludeSubobjectFromSubobject( mMasLC, "M_UsageSelectTarget", mMasLC, szUsageEntityName, zPOS_AFTER )
       END
-      
+
       nRC = SetCursorNextEntity( mMasLC, szOrderingEntityName, "" )
    END
-   
+
    // Next build the Source entries from each M_Usage entry of the requested type.
-   FOR EACH mMasLC.M_Usage 
+   FOR EACH mMasLC.M_Usage
       IF mMasLC.M_Usage.UsageType = szSelectedUsageType AND mMasLC.M_Usage.ClaimsClassification = szSelectedClaimsClassification
-         INCLUDE mMasLC.M_UsageSelectSource FROM mMasLC.M_Usage 
+         INCLUDE mMasLC.M_UsageSelectSource FROM mMasLC.M_Usage
       END
    END
 
 END
 
 /////////////////////////////////////////////////////////////////////////////
-//    
+//
 // OPERATION: BuildUsageWorkEnts
-//    
+//
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
 BuildUsageWorkEnts( VIEW mMasLC BASED ON LOD mMasLC,
@@ -1875,27 +1890,27 @@ BuildUsageWorkEnts( VIEW mMasLC BASED ON LOD mMasLC,
 
    // Build the work entities of the form, "DirectionsAppType" for each M_DirectionsUsage or M_MarketingUsage,
    // depending on whether the szDirUseOrMarketingType value is "D" or "M".
-   
+
    /*IF szDirUseOrMarketingType = "D"
-      // Directions for Use work entities.
-      FOR EACH mMasLC.M_DirectionsUsageOrdering 
-         szUsageType = mMasLC.M_DirectionsUsage.UsageType 
+      // Directions For Use work entities.
+      FOR EACH mMasLC.M_DirectionsUsageOrdering
+         szUsageType = mMasLC.M_DirectionsUsage.UsageType
          IF szUsageType = "C"
             // For Claim type, we need to determine ClaimsClassification.
-            szClaimsClassification = mMasLC.M_DirectionsUsage.ClaimsClassification 
+            szClaimsClassification = mMasLC.M_DirectionsUsage.ClaimsClassification
             IF szClaimsClassification = "Fungi"
                IF mMasLC.DirectionsFungi DOES NOT EXIST
-                  CREATE ENTITY mMasLC.DirectionsFungi 
+                  CREATE ENTITY mMasLC.DirectionsFungi
                END
-            ELSE 
+            ELSE
                IF szClaimsClassification = "Bacteria"
                   IF mMasLC.DirectionsBacteria DOES NOT EXIST
-                     CREATE ENTITY mMasLC.DirectionsBacteria 
+                     CREATE ENTITY mMasLC.DirectionsBacteria
                   END
                ELSE
                   IF szClaimsClassification = "Viruses"
                      IF mMasLC.DirectionsViruses DOES NOT EXIST
-                        CREATE ENTITY mMasLC.DirectionsViruses 
+                        CREATE ENTITY mMasLC.DirectionsViruses
                      END
                   ELSE
                      // Protazoa (nothing is currently done for this.
@@ -1906,18 +1921,18 @@ BuildUsageWorkEnts( VIEW mMasLC BASED ON LOD mMasLC,
             IF szUsageType = "S"
                // Surface
                IF mMasLC.DirectionsSurface DOES NOT EXIST
-                  CREATE ENTITY mMasLC.DirectionsSurface 
+                  CREATE ENTITY mMasLC.DirectionsSurface
                END
             ELSE
                IF szUsageType = "U"
-                  // Area of Use 
+                  // Area of Use
                   IF mMasLC.DirectionsAreasOfUse DOES NOT EXIST
-                     CREATE ENTITY mMasLC.DirectionsAreasOfUse 
+                     CREATE ENTITY mMasLC.DirectionsAreasOfUse
                   END
                ELSE
                   // Application Type
                   IF mMasLC.DirectionsAppType DOES NOT EXIST
-                     CREATE ENTITY mMasLC.DirectionsAppType 
+                     CREATE ENTITY mMasLC.DirectionsAppType
                   END
                END
             END
@@ -1925,24 +1940,24 @@ BuildUsageWorkEnts( VIEW mMasLC BASED ON LOD mMasLC,
       END
    ELSE
       // Marketing work entities.
-      FOR EACH mMasLC.M_MarketingUsageOrdering 
-         szUsageType = mMasLC.M_MarketingUsage.UsageType 
+      FOR EACH mMasLC.M_MarketingUsageOrdering
+         szUsageType = mMasLC.M_MarketingUsage.UsageType
          IF szUsageType = "C"
             // For Claim type, we need to determine ClaimsClassification.
-            szClaimsClassification = mMasLC.M_MarketingUsage.ClaimsClassification 
+            szClaimsClassification = mMasLC.M_MarketingUsage.ClaimsClassification
             IF szClaimsClassification = "Fungi"
                IF mMasLC.MarketingFungi DOES NOT EXIST
-                  CREATE ENTITY mMasLC.MarketingFungi 
+                  CREATE ENTITY mMasLC.MarketingFungi
                END
-            ELSE 
+            ELSE
                IF szClaimsClassification = "Bacteria"
                   IF mMasLC.MarketingBacteria DOES NOT EXIST
-                     CREATE ENTITY mMasLC.MarketingBacteria 
+                     CREATE ENTITY mMasLC.MarketingBacteria
                   END
                ELSE
                   IF szClaimsClassification = "Viruses"
                      IF mMasLC.MarketingViruses DOES NOT EXIST
-                        CREATE ENTITY mMasLC.MarketingViruses 
+                        CREATE ENTITY mMasLC.MarketingViruses
                      END
                   ELSE
                      // Protazoa (nothing is currently done for this.
@@ -1953,18 +1968,18 @@ BuildUsageWorkEnts( VIEW mMasLC BASED ON LOD mMasLC,
             IF szUsageType = "S"
                // Surface
                IF mMasLC.MarketingSurface DOES NOT EXIST
-                  CREATE ENTITY mMasLC.MarketingSurface 
+                  CREATE ENTITY mMasLC.MarketingSurface
                END
             ELSE
                IF szUsageType = "U"
-                  // Area of Use 
+                  // Area of Use
                   IF mMasLC.MarketingAreasOfUse DOES NOT EXIST
-                     CREATE ENTITY mMasLC.MarketingAreasOfUse 
+                     CREATE ENTITY mMasLC.MarketingAreasOfUse
                   END
                ELSE
                   // Application Type
                   IF mMasLC.MarketingAppType DOES NOT EXIST
-                     CREATE ENTITY mMasLC.MarketingAppType 
+                     CREATE ENTITY mMasLC.MarketingAppType
                   END
                END
             END
@@ -1975,36 +1990,36 @@ BuildUsageWorkEnts( VIEW mMasLC BASED ON LOD mMasLC,
 END
 
 /////////////////////////////////////////////////////////////////////////////
-//    
+//
 // OPERATION: SetMLC_SelectedFlags
-//    
+//
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
 SetMLC_SelectedFlags( VIEW mMasLC BASED ON LOD mMasLC,
                       VIEW mSubLC BASED ON LOD mSubLC )
 
    // Select mMLC Component entries from Components currently in the mSLC.
-   
+
    // First, initialize mMLC flags to null.
-   FOR EACH mMasLC.CompositeComponentList 
+   FOR EACH mMasLC.CompositeComponentList
       mMasLC.CompositeComponentList.Selected = ""
    END
-   
+
    // Then set those from mSLC.
-   FOR EACH mSubLC.CompositeComponentList 
+   FOR EACH mSubLC.CompositeComponentList
       IF mSubLC.CompositeComponentList.OriginalTypeID != ""
-         SET CURSOR FIRST mMasLC.CompositeComponentList 
+         SET CURSOR FIRST mMasLC.CompositeComponentList
                     WHERE mMasLC.CompositeComponentList.OriginalTypeID = mSubLC.CompositeComponentList.OriginalTypeID
-                      AND mMasLC.CompositeComponentList.DisplayType    = mSubLC.CompositeComponentList.DisplayType 
+                      AND mMasLC.CompositeComponentList.DisplayType    = mSubLC.CompositeComponentList.DisplayType
          IF RESULT >= zCURSOR_SET
             mMasLC.CompositeComponentList.Selected = "Y"
          END
       END
    END
-   
-   // Finally, set any remaining components with null Type to selected. (This only effects display and not the inclusion of 
+
+   // Finally, set any remaining components with null Type to selected. (This only effects display and not the inclusion of
    // MLC components in the SLC, as components with null Type are not processed.
-   FOR EACH mMasLC.CompositeComponentList 
+   FOR EACH mMasLC.CompositeComponentList
       IF mMasLC.CompositeComponentList.Selected = ""
          IF mMasLC.CompositeComponentList.Type = ""
             mMasLC.CompositeComponentList.Selected = "Y"
@@ -2032,11 +2047,11 @@ dUsageKeywordText( VIEW mMasLC BASED ON LOD mMasLC,
 
       // Concatenate all the Keyword values for a Marketing Keyword entry.
       szGeneratedString = ""
-      FOR EACH mMasLC.M_InsertTextUsage 
+      FOR EACH mMasLC.M_InsertTextUsage
          IF szGeneratedString = ""
             szGeneratedString = mMasLC.M_InsertTextUsage.Text
          ELSE
-            szGeneratedString = szGeneratedString + ", " + mMasLC.M_InsertTextUsage.Text 
+            szGeneratedString = szGeneratedString + ", " + mMasLC.M_InsertTextUsage.Text
          END
       END
 
@@ -2055,9 +2070,9 @@ dUsageKeywordText( VIEW mMasLC BASED ON LOD mMasLC,
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: dSubUsageCombinedText
-**    
+**
 *************************************************************************************************/
 DERIVED ATTRIBUTE OPERATION
 dSubUsageCombinedText( VIEW mMasLC BASED ON LOD mMasLC,
@@ -2073,11 +2088,11 @@ dSubUsageCombinedText( VIEW mMasLC BASED ON LOD mMasLC,
       // Expand the current Text attribute by replacing imbedded Keywords with the Keyword
       // values in the M_InsertTextMarketing subentities.
       szCombinedText = ""
-      FOR EACH mMasLC.M_UsageGroupUsage 
+      FOR EACH mMasLC.M_UsageGroupUsage
          IF szCombinedText = ""
-            szCombinedText = mMasLC.M_UsageGroupUsage.Name 
+            szCombinedText = mMasLC.M_UsageGroupUsage.Name
          ELSE
-            szCombinedText = szCombinedText + ", " + mMasLC.M_UsageGroupUsage.Name 
+            szCombinedText = szCombinedText + ", " + mMasLC.M_UsageGroupUsage.Name
          END
       END
 
@@ -2096,9 +2111,9 @@ dSubUsageCombinedText( VIEW mMasLC BASED ON LOD mMasLC,
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: BuildUsageGroupEntries
-**    
+**
 *************************************************************************************************/
 TRANSFORMATION OPERATION
 BuildUsageGroupEntries( VIEW mMasLC BASED ON LOD mMasLC )
@@ -2106,26 +2121,26 @@ BuildUsageGroupEntries( VIEW mMasLC BASED ON LOD mMasLC )
    // Build Usage Group Usages.
    // We treat M_UsageGroupUsage as a derived relationship, because we had JOE problems when we
    // updated the same entity down two separate paths.
-   FOR EACH mMasLC.M_UsageType 
-      FOR EACH mMasLC.M_UsageGroup 
-         FOR EACH mMasLC.M_UsageGroupUsage 
+   FOR EACH mMasLC.M_UsageType
+      FOR EACH mMasLC.M_UsageGroup
+         FOR EACH mMasLC.M_UsageGroupUsage
             EXCLUDE mMasLC.M_UsageGroupUsage NONE
          END
       END
-      FOR EACH mMasLC.M_Usage 
+      FOR EACH mMasLC.M_Usage
          IF mMasLC.M_UsageUsageGroup EXISTS
-            SET CURSOR FIRST mMasLC.M_UsageGroup 
-                       WHERE mMasLC.M_UsageGroup.ID = mMasLC.M_UsageUsageGroup.ID  
+            SET CURSOR FIRST mMasLC.M_UsageGroup
+                       WHERE mMasLC.M_UsageGroup.ID = mMasLC.M_UsageUsageGroup.ID
             IF RESULT >= zCURSOR_SET
-               INCLUDE mMasLC.M_UsageGroupUsage FROM mMasLC.M_Usage 
+               INCLUDE mMasLC.M_UsageGroupUsage FROM mMasLC.M_Usage
             END
          END
       END
    END
-   
+
    // Sort everything by Name.
-   FOR EACH mMasLC.M_UsageType 
-      FOR EACH mMasLC.M_UsageGroup 
+   FOR EACH mMasLC.M_UsageType
+      FOR EACH mMasLC.M_UsageGroup
          OrderEntityForView( mMasLC, "M_UsageGroupUsage", "Name A" )
       END
       OrderEntityForView( mMasLC, "M_Usage", "Name A" )
@@ -2134,9 +2149,9 @@ BuildUsageGroupEntries( VIEW mMasLC BASED ON LOD mMasLC )
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: BuildUsageKeyEntries
-**    
+**
 *************************************************************************************************/
 TRANSFORMATION OPERATION
 BuildUsageKeyEntries( VIEW mMasLC BASED ON LOD mMasLC,
@@ -2151,55 +2166,55 @@ BuildUsageKeyEntries( VIEW mMasLC BASED ON LOD mMasLC,
    // Build the M_InsertTextKeywordBase subobject based on the entity names passed in.
    // If the keyword Type allows only a single keyword value, set the selected flag for the first one.
    // Otherwise, set the selected flag for all text entries.
-   
+
    // Then build the actual M_InsertTextKeyword subobject from the selected entries from M_InsertTextKeywordBase.
-   
+
    // Delete any current entries.
-   IF mMasLC.DisplayKeywordText EXISTS 
-      DELETE ENTITY mMasLC.DisplayKeywordText  
+   IF mMasLC.DisplayKeywordText EXISTS
+      DELETE ENTITY mMasLC.DisplayKeywordText
    END
-   
+
    // Create Display entity containing Text and optionally Title.
-   CREATE ENTITY mMasLC.DisplayKeywordText 
+   CREATE ENTITY mMasLC.DisplayKeywordText
    mMasLC.DisplayKeywordText.Text  = TextValue
    mMasLC.DisplayKeywordText.Title = TitleValue
-   
+
    // Copy over the basic entities.
    nRC1 = SetCursorFirstEntity( mMasLC, SourceKeywordEntityName, "" )
    LOOP WHILE nRC1 >= zCURSOR_SET
-      CREATE ENTITY mMasLC.M_InsertTextKeywordBase 
+      CREATE ENTITY mMasLC.M_InsertTextKeywordBase
       SetMatchingAttributesByName( mMasLC, "M_InsertTextKeywordBase", mMasLC, SourceKeywordEntityName, zSET_ALL )
-      
+
       nRC2 = SetCursorFirstEntity( mMasLC, SourceTextEntityName, "" )
       LOOP WHILE nRC2 >= zCURSOR_SET
-         CREATE ENTITY mMasLC.M_InsertTextBase 
+         CREATE ENTITY mMasLC.M_InsertTextBase
          SetMatchingAttributesByName( mMasLC, "M_InsertTextBase", mMasLC, SourceTextEntityName, zSET_ALL )
-         
+
          nRC2 = SetCursorNextEntity( mMasLC, SourceTextEntityName, "" )
       END
       nRC1 = SetCursorNextEntity( mMasLC, SourceKeywordEntityName, "" )
    END
-   
+
    // Initialize the selected flags as indicated above.
-   FOR EACH mMasLC.M_InsertTextKeywordBase 
+   FOR EACH mMasLC.M_InsertTextKeywordBase
       IF mMasLC.M_InsertTextKeywordBase.Type = "O"
          // Set the flag for the first entry.
          mMasLC.M_InsertTextBase.wSelected = "Y"
       ELSE
          // Set the flag for all entries.
-         FOR EACH mMasLC.M_InsertTextBase 
+         FOR EACH mMasLC.M_InsertTextBase
             mMasLC.M_InsertTextBase.wSelected = "Y"
          END
       END
    END
-   
+
    // Build the M_InsertTextKeyword subobject as described above.
-   FOR EACH mMasLC.M_InsertTextKeywordBase 
-      CREATE ENTITY mMasLC.M_InsertTextKeyword 
+   FOR EACH mMasLC.M_InsertTextKeywordBase
+      CREATE ENTITY mMasLC.M_InsertTextKeyword
       SetMatchingAttributesByName( mMasLC, "M_InsertTextKeyword", mMasLC, "M_InsertTextKeywordBase", zSET_ALL )
-      FOR EACH mMasLC.M_InsertTextBase 
+      FOR EACH mMasLC.M_InsertTextBase
          IF mMasLC.M_InsertTextBase.wSelected = "Y"
-            CREATE ENTITY mMasLC.M_InsertText 
+            CREATE ENTITY mMasLC.M_InsertText
             SetMatchingAttributesByName( mMasLC, "M_InsertText", mMasLC, "M_InsertTextBase", zSET_ALL )
          END
       END
@@ -2208,9 +2223,9 @@ BuildUsageKeyEntries( VIEW mMasLC BASED ON LOD mMasLC,
 END
 
 /*************************************************************************************************
-**    
+**
 **    OPERATION: BuildNonGroupEntries
-**    
+**
 *************************************************************************************************/
 TRANSFORMATION OPERATION
 BuildNonGroupEntries( VIEW mMasLC BASED ON LOD mMasLC )
@@ -2219,23 +2234,23 @@ BuildNonGroupEntries( VIEW mMasLC BASED ON LOD mMasLC )
    INTEGER UsageGroupID
 
    // Build the M_UsageNonGroupUsage derived entries from any M_Usage entries that aren't tied to a M_UsageGroup.
-   
+
    // Because of a JOE error on reincluding excluded entities from a different view, we're saving position by saving
    // the ID of the M_UsageGroup entity and using it to reposition.
-   UsageGroupID = mMasLC.M_UsageGroup.ID 
-   
+   UsageGroupID = mMasLC.M_UsageGroup.ID
+
    // First remove existing entries.
-   FOR EACH mMasLC.M_UsageNonGroupUsage 
+   FOR EACH mMasLC.M_UsageNonGroupUsage
       EXCLUDE mMasLC.M_UsageNonGroupUsage NONE
    END
-   
+
    // Add any Usage entry that's not tied to a Group.
    CreateViewFromView( mMasLC2, mMasLC )
-   FOR EACH mMasLC2.M_Usage 
-      SET CURSOR FIRST mMasLC.M_UsageGroupUsage WITHIN mMasLC2.M_UsageType 
-                 WHERE mMasLC.M_UsageGroupUsage.ID = mMasLC2.M_Usage.ID 
+   FOR EACH mMasLC2.M_Usage
+      SET CURSOR FIRST mMasLC.M_UsageGroupUsage WITHIN mMasLC2.M_UsageType
+                 WHERE mMasLC.M_UsageGroupUsage.ID = mMasLC2.M_Usage.ID
       IF RESULT < zCURSOR_SET
-         INCLUDE mMasLC.M_UsageNonGroupUsage FROM mMasLC2.M_Usage 
+         INCLUDE mMasLC.M_UsageNonGroupUsage FROM mMasLC2.M_Usage
       END
    END
    OrderEntityForView( mMasLC2, "M_UsageNonGroupUsage", "Name A" )

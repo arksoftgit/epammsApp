@@ -16,16 +16,16 @@ dMasterProductNameNbr( VIEW lMasLCA BASED ON LOD lMasLCA,
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
 
-      IF mMasLCA.MasterProduct  EXISTS
-         szString = mMasLCA.MasterProduct.Name + " (" +
-                    mMasLCA.PrimaryRegistrant.EPA_CompanyNumber + "-" +
-                    mMasLCA.MasterProduct.Number + ")"
+      IF lMasLCA.MasterProduct  EXISTS
+         szString = lMasLCA.MasterProduct.Name + " (" +
+                    lMasLCA.PrimaryRegistrant.EPA_CompanyNumber + "-" +
+                    lMasLCA.MasterProduct.Number + ")"
        ELSE
           szString = ""
        END
 
        // Store the calculated value in the object.
-       StoreStringInRecord( mMasLCA,
+       StoreStringInRecord( lMasLCA,
                             InternalEntityStructure,
                             InternalAttribStructure, szString )
        RETURN 0

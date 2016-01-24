@@ -1025,11 +1025,11 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "OtherHazard" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "EnvironmentalHazards" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smOtherHazard" name="smOtherHazard"><a href="#"  onclick="smDisplayHazardSection()">Other Hazard</a></li>
+       <li id="smEnvironmentalHazards" name="smEnvironmentalHazards"><a href="#"  onclick="smDisplayHazardSection()">Environmental Hazards</a></li>
 <%
    }
 %>
@@ -1079,7 +1079,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smDirectionsForUse" name="smDirectionsForUse"><a href="#"  onclick="smDisplayDirectionsUseSect()">Directions for Use</a></li>
+       <li id="smDirectionsForUse" name="smDirectionsForUse"><a href="#"  onclick="smDisplayDirectionsUseSect()">Directions For Use</a></li>
 <%
    }
 %>

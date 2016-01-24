@@ -553,7 +553,7 @@ public class GraphicalLabelDesignerServlet extends HttpServlet {
    }
 
    private void displaySPLD( View mSPLDef, String entity, String id ) {
-      logger.debug( "displaySPLD" );
+   // logger.debug( "displaySPLD" );
       EntityCursor ec;
       if ( entity != null ) {
          boolean display = false;
@@ -1260,8 +1260,8 @@ end debug code */
          ecb = mBlockRU.getCursor( "Subregistrant" );
          ecb.includeSubobject( vLLD.getCursor( "Subregistrant" ) );
          copyBlockToReuse( vLLD, vBlockCopy, mBlockRU );
-         logger.debug( "Reusable Block OI: " );
-         mBlockRU.logObjectInstance();
+      // logger.debug( "Reusable Block OI: " );
+      // mBlockRU.logObjectInstance();
          mBlockRU.commit();
          mBlockRU.drop();
          vBlockCopy.drop();
@@ -1514,7 +1514,7 @@ end debug code */
                // logger.debug( "After RefreshLabel" );
                // vLLD.logObjectInstance();
                   jsonLabel = convertLLD_ToJSON( vLLD );
-                  logger.debug( "Completed refresh Json Label: " + jsonLabel );
+               // logger.debug( "Completed refresh Json Label: " + jsonLabel );
                } else {
                   jsonLabel = "{}";
                }
@@ -1542,7 +1542,7 @@ end debug code */
          // displaySPLD( vLLD, null, "" );
          // vLLD.logObjectInstance();
             jsonLabel = convertLLD_ToJSON( vLLD );
-            logger.debug( "LoadLabel JSON: " + jsonLabel );
+         // logger.debug( "LoadLabel JSON: " + jsonLabel );
          // jsonLabel = jsonLabel.replaceFirst( "\"TZLLD\",", "\"TZLLD\",\n      \"fileName\" : \"" + fileName + "\"," );
          } catch( ZeidonException ze ) {
             logger.error( "Error loading Json Label: " + ze.getMessage() );
@@ -1568,14 +1568,14 @@ end debug code */
       } else if ( action.equals( "sethazardpanel" ) ) {
          String location = request.getParameter( "location" );
          EntityCursor ec = vLLD.cursor( "SPLD_HumanHazardSection" );
-         logger.debug( "Set Hazard Panel Location: " + location );
+      // logger.debug( "Set Hazard Panel Location: " + location );
          ec.getAttribute( "PanelLoc" ).setValue( location );
          response.setContentType( "text/json" );
          response.getWriter().write( new Gson().toJson( "{}" ) );
       } else if ( action.equals( "sethazardlabel" ) ) {
          String location = request.getParameter( "location" );
          EntityCursor ec = vLLD.cursor( "SPLD_HumanHazardSection" );
-         logger.debug( "Set Hazard Label Location: " + location );
+      // logger.debug( "Set Hazard Label Location: " + location );
          ec.getAttribute( "LabelLoc" ).setValue( location );
          response.setContentType( "text/json" );
          response.getWriter().write( new Gson().toJson( "{}" ) );

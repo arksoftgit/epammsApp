@@ -13,7 +13,7 @@
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
 <%@ page import="com.quinsoft.epamms.*" %>
 
-<%!
+<%! 
 
 ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
@@ -177,9 +177,9 @@ public int DoInputMapping( HttpServletRequest request,
       // Grid: GridMasterLabelContent
       iTableRowCnt = 0;
 
-      // We are creating a temp view to the grid view so that if there are
-      // grids on the same window with the same view we do not mess up the
-      // entity positions.
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
       vGridTmp = mMasProd.newView( );
       csrRC = vGridTmp.cursor( "MasterLabelContent" ).setFirst(  );
       while ( csrRC.isSet() )
@@ -252,7 +252,7 @@ String strInputFileName = "";
 strActionToProcess = (String) request.getParameter( "zAction" );
 
 strLastWindow = (String) session.getAttribute( "ZeidonWindow" );
-if ( StringUtils.isBlank( strLastWindow ) )
+if ( StringUtils.isBlank( strLastWindow ) ) 
    strLastWindow = "NoLastWindow";
 
 strLastAction = (String) session.getAttribute( "ZeidonAction" );
@@ -669,7 +669,7 @@ if ( strActionToProcess != null )
             task.log().info( "Action Error Redirect to: " + strURL );
          }
 
-         if ( ! strURL.equals("wMLCUpdateMasterProduct.jsp") )
+         if ( ! strURL.equals("wMLCUpdateMasterProduct.jsp") ) 
          {
             response.sendRedirect( strURL );
             // If we are redirecting to a new page, then we need this return so that the rest of this page doesn't get built.
@@ -786,10 +786,11 @@ else
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
-   View mMasLC = null;
    View mEPA = null;
+   View mMasLC = null;
    View mMasProd = null;
    View mMasProdLST = null;
+   View mOrganiz = null;
    View mPrimReg = null;
    View wWebXfer = null;
    String strRadioGroupValue = "";
@@ -901,14 +902,41 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBStorDispSections5:GroupBox */ %>
 
-<div id="GBStorDispSections5" name="GBStorDispSections5" class="listgroup"   style="float:left;position:relative; width:780px; height:36px;">  <!-- GBStorDispSections5 -->
+<div id="GBStorDispSections5" name="GBStorDispSections5" class="listgroup"   style="float:left;position:relative; width:780px; height:36px;">  <!-- GBStorDispSections5 --> 
 
 <% /* IngredientsText:Text */ %>
 
-<label class="groupbox"  id="IngredientsText" name="IngredientsText" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Master Product</label>
+<label class="groupbox"  id="IngredientsText" name="IngredientsText" style="width:126px;height:16px;position:absolute;left:6px;top:12px;">Master Product</label>
+
+<% /* PrimaryRegistrant:Text */ %>
+<% strTextDisplayValue = "";
+   mMasProd = task.getViewByName( "mMasProd" );
+   if ( VmlOperation.isValid( mMasProd ) == false )
+      task.log( ).debug( "Invalid View: " + "PrimaryRegistrant" );
+   else
+   {
+      nRC = mMasProd.cursor( "Organization" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mMasProd.cursor( "Organization" ).getAttribute( "Name" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on PrimaryRegistrant: " + e.getMessage());
+         task.log().info( "*** Error on ctrl PrimaryRegistrant" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<label  id="PrimaryRegistrant" name="PrimaryRegistrant" style="width:370px;height:16px;position:absolute;left:148px;top:12px;"><%=strTextDisplayValue%></label>
 
 
-</div>  <!--  GBStorDispSections5 -->
+</div>  <!--  GBStorDispSections5 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -918,7 +946,7 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBMasterProduct:GroupBox */ %>
 
-<div id="GBMasterProduct" name="GBMasterProduct"   style="float:left;position:relative; width:798px; height:218px;">  <!-- GBMasterProduct -->
+<div id="GBMasterProduct" name="GBMasterProduct"   style="float:left;position:relative; width:798px; height:218px;">  <!-- GBMasterProduct --> 
 
 <% /* ProductName::Text */ %>
 
@@ -1057,8 +1085,8 @@ else
       {
          String internalValue = entry.getInternalValue( );
          String externalValue = entry.getExternalValue( );
-         // Perhaps getInternalValue and getExternalValue should return an empty string,
-         // but currently it returns null.  Set to empty string.
+         // Perhaps getInternalValue and getExternalValue should return an empty string, 
+         // but currently it returns null.  Set to empty string. 
          if ( externalValue == null )
          {
             internalValue = "";
@@ -1084,11 +1112,11 @@ else
       }  // for ( TableEntry entry
       // The value from the database isn't in the domain, add it to the list as disabled.
       if ( !inListChemicalFamily )
-      {
+      { 
 %>
          <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
 <%
-      }
+      }  
    }  // if view != null
 %>
 </select>
@@ -1186,8 +1214,8 @@ else
       {
          String internalValue = entry.getInternalValue( );
          String externalValue = entry.getExternalValue( );
-         // Perhaps getInternalValue and getExternalValue should return an empty string,
-         // but currently it returns null.  Set to empty string.
+         // Perhaps getInternalValue and getExternalValue should return an empty string, 
+         // but currently it returns null.  Set to empty string. 
          if ( externalValue == null )
          {
             internalValue = "";
@@ -1213,11 +1241,11 @@ else
       }  // for ( TableEntry entry
       // The value from the database isn't in the domain, add it to the list as disabled.
       if ( !inListToxicityCategory )
-      {
+      { 
 %>
          <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
 <%
-      }
+      }  
    }  // if view != null
 %>
 </select>
@@ -1262,7 +1290,7 @@ else
 <textarea name="MasterProductDescription" id="MasterProductDescription" style="width:578px;height:84px;position:absolute;left:198px;top:128px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 
-</div>  <!--  GBMasterProduct -->
+</div>  <!--  GBMasterProduct --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -1272,7 +1300,7 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBMasterLabelContent:GroupBox */ %>
 
-<div id="GBMasterLabelContent" name="GBMasterLabelContent" class="listgroup"   style="float:left;position:relative; width:486px; height:40px;">  <!-- GBMasterLabelContent -->
+<div id="GBMasterLabelContent" name="GBMasterLabelContent" class="listgroup"   style="float:left;position:relative; width:486px; height:40px;">  <!-- GBMasterLabelContent --> 
 
 <% /* MasterLabelContent:Text */ %>
 
@@ -1282,7 +1310,7 @@ else
 <button type="button" class="newbutton" name="PBNewMasterLabelContent" id="PBNewMasterLabelContent" value="" onclick="NEW_MLC( )" style="width:78px;height:26px;position:absolute;left:342px;top:12px;">New</button>
 
 
-</div>  <!--  GBMasterLabelContent -->
+</div>  <!--  GBMasterLabelContent --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -1329,7 +1357,7 @@ try
       String strBMBUpdateDirectionsUseStatement;
       String strDeleteBtn;
       String strCopyBtn;
-
+      
       View vGridMasterLabelContent;
       vGridMasterLabelContent = mMasProd.newView( );
       csrRC2 = vGridMasterLabelContent.cursor( "MasterLabelContent" ).setFirst(  );
@@ -1402,7 +1430,7 @@ try
    <td nowrap><%=strGridEditStatus%></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateDirectionsUseStatement" onclick="GOTO_UpdateMLC( this.id )" id="BMBUpdateDirectionsUseStatement::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="DeleteBtn" onclick="DELETE_MLC_Version( this.id )" id="DeleteBtn::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="CopyBtn" onclick="GOTO_CopyMLC_Version( this.id )" id="CopyBtn::<%=strEntityKey%>"><img src="./images/ePammsNew.png" alt="Copy"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="CopyBtn" onclick="GOTO_CopyMLC_Version( this.id )" id="CopyBtn::<%=strEntityKey%>"><img src="./images/ePammsCopy.png" alt="Copy"></a></td>
 
 </tr>
 

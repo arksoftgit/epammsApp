@@ -36,6 +36,7 @@ public int DoInputMapping( HttpServletRequest request,
    Task task = objectEngine.getTaskById( taskId );
 
    View mMasLC = null;
+   View mMasProd = null;
    View vGridTmp = null; // temp view to grid view
    View vRepeatingGrp = null; // temp view to repeating group view
    String strDateFormat = "";
@@ -79,6 +80,11 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
+   }
+
+   mMasProd = task.getViewByName( "mMasProd" );
+   if ( VmlOperation.isValid( mMasProd ) )
+   {
    }
 
    if ( webMapping == true )
@@ -541,44 +547,6 @@ if ( strActionToProcess != null )
       {
          // Next Window
          strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "EnvironmentalHazards" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditChemicalHazardsSection" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCVersionData", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCVersionData", "wMLC.EditChemicalHazardsSection" );
-      nOptRC = wMLC.EditChemicalHazardsSection( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "PhysicalChemicalHazardsSection" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -1063,16 +1031,6 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New3" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smNew3" name="smNew3"><a href="#"  onclick="smEditChemicalHazardsSection()">Phys/Chem Hazards</a></li>
-<%
-   }
-%>
-
-<%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New2" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
@@ -1137,7 +1095,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smDirectionsForUse" name="smDirectionsForUse"><a href="#"  onclick="smEditDirectionsUseSect()">Directions for Use</a></li>
+       <li id="smDirectionsForUse" name="smDirectionsForUse"><a href="#"  onclick="smEditDirectionsUseSect()">Directions For Use</a></li>
 <%
    }
 %>
@@ -1181,10 +1139,11 @@ else
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
-   View mMasLC = null;
    View mEPA = null;
+   View mMasLC = null;
    View mMasProd = null;
    View mMasProdLST = null;
+   View mOrganiz = null;
    View mPrimReg = null;
    View wWebXfer = null;
    String strRadioGroupValue = "";
@@ -1298,9 +1257,67 @@ else
 
 <div id="MasterLabelContent" name="MasterLabelContent" class="withborder"   style="float:left;position:relative; width:732px; height:264px;">  <!-- MasterLabelContent --> 
 
+<% /* PrimaryRegistrant:Text */ %>
+<% strTextDisplayValue = "";
+   mMasProd = task.getViewByName( "mMasProd" );
+   if ( VmlOperation.isValid( mMasProd ) == false )
+      task.log( ).debug( "Invalid View: " + "PrimaryRegistrant" );
+   else
+   {
+      nRC = mMasProd.cursor( "Organization" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mMasProd.cursor( "Organization" ).getAttribute( "Name" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on PrimaryRegistrant: " + e.getMessage());
+         task.log().info( "*** Error on ctrl PrimaryRegistrant" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<label  id="PrimaryRegistrant" name="PrimaryRegistrant" style="width:370px;height:16px;position:absolute;left:12px;top:24px;"><%=strTextDisplayValue%></label>
+
+<% /* Product::Text */ %>
+
+<label  id="Product:" name="Product:" style="width:154px;height:16px;position:absolute;left:12px;top:48px;">Product:</label>
+
+<% /* Product:Text */ %>
+<% strTextDisplayValue = "";
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) == false )
+      task.log( ).debug( "Invalid View: " + "Product" );
+   else
+   {
+      nRC = mMasLC.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mMasLC.cursor( "MasterProduct" ).getAttribute( "Name" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on Product: " + e.getMessage());
+         task.log().info( "*** Error on ctrl Product" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<label  id="Product" name="Product" style="width:370px;height:24px;position:absolute;left:170px;top:48px;"><%=strTextDisplayValue%></label>
+
 <% /* EPA_RegistrationNbr:Text */ %>
 
-<label  id="EPA_RegistrationNbr" name="EPA_RegistrationNbr" style="width:154px;height:16px;position:absolute;left:12px;top:28px;">Registration Number:</label>
+<label  id="EPA_RegistrationNbr" name="EPA_RegistrationNbr" style="width:154px;height:16px;position:absolute;left:12px;top:76px;">Registration Number:</label>
 
 <% /* EPA_RegNbr:Text */ %>
 <% strTextDisplayValue = "";
@@ -1327,11 +1344,11 @@ else
    }
 %>
 
-<label  id="EPA_RegNbr" name="EPA_RegNbr" style="width:182px;height:24px;position:absolute;left:170px;top:28px;"><%=strTextDisplayValue%></label>
+<label  id="EPA_RegNbr" name="EPA_RegNbr" style="width:182px;height:24px;position:absolute;left:170px;top:76px;"><%=strTextDisplayValue%></label>
 
 <% /* Version::Text */ %>
 
-<label  id="Version:" name="Version:" style="width:154px;height:16px;position:absolute;left:12px;top:56px;">Version:</label>
+<label  id="Version:" name="Version:" style="width:154px;height:16px;position:absolute;left:12px;top:104px;">Version:</label>
 
 <% /* MasterLabelContentVersion:EditBox */ %>
 <%
@@ -1372,11 +1389,11 @@ else
    }
 %>
 
-<input class="text12" name="MasterLabelContentVersion" id="MasterLabelContentVersion" style="width:182px;position:absolute;left:170px;top:56px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="MasterLabelContentVersion" id="MasterLabelContentVersion" style="width:182px;position:absolute;left:170px;top:104px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* RevisionDate::Text */ %>
 
-<label  id="RevisionDate:" name="RevisionDate:" style="width:154px;height:16px;position:absolute;left:12px;top:84px;">Revision Date:</label>
+<label  id="RevisionDate:" name="RevisionDate:" style="width:154px;height:16px;position:absolute;left:12px;top:132px;">Revision Date:</label>
 
 <% /* RevisionDate:Text */ %>
 <% strTextDisplayValue = "";
@@ -1390,7 +1407,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "RevisionDate" ).getString( "" );
+         strTextDisplayValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "RevisionDate" ).getString( "REVMMDDYY" );
       }
       catch (Exception e)
       {
@@ -1403,11 +1420,11 @@ else
    }
 %>
 
-<label  id="RevisionDate" name="RevisionDate" style="width:182px;height:24px;position:absolute;left:170px;top:84px;"><%=strTextDisplayValue%></label>
+<label  id="RevisionDate" name="RevisionDate" style="width:182px;height:24px;position:absolute;left:170px;top:132px;"><%=strTextDisplayValue%></label>
 
 <% /* Status::Text */ %>
 
-<label  id="Status:" name="Status:" style="width:154px;height:16px;position:absolute;left:12px;top:114px;">Status:</label>
+<label  id="Status:" name="Status:" style="width:154px;height:16px;position:absolute;left:12px;top:162px;">Status:</label>
 
 <% /* Finalized:Text */ %>
 <% strTextDisplayValue = "";
@@ -1434,7 +1451,7 @@ else
    }
 %>
 
-<label class="text12"  id="Finalized" name="Finalized" style="width:54px;height:16px;position:absolute;left:170px;top:114px;"><%=strTextDisplayValue%></label>
+<label class="text12"  id="Finalized" name="Finalized" style="width:182px;height:24px;position:absolute;left:170px;top:162px;"><%=strTextDisplayValue%></label>
 
 
 </div>  <!--  MasterLabelContent --> 

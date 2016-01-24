@@ -13,7 +13,7 @@
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
 <%@ page import="com.quinsoft.epamms.*" %>
 
-<%!
+<%! 
 
 ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
@@ -63,9 +63,9 @@ public int DoInputMapping( HttpServletRequest request,
       // Grid: GridStorDisp
       iTableRowCnt = 0;
 
-      // We are creating a temp view to the grid view so that if there are
-      // grids on the same window with the same view we do not mess up the
-      // entity positions.
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
       vGridTmp = mMasLC.newView( );
       csrRC = vGridTmp.cursor( "M_StorageDisposalSection" ).setFirst(  );
       while ( csrRC.isSet() )
@@ -138,7 +138,7 @@ String strInputFileName = "";
 strActionToProcess = (String) request.getParameter( "zAction" );
 
 strLastWindow = (String) session.getAttribute( "ZeidonWindow" );
-if ( StringUtils.isBlank( strLastWindow ) )
+if ( StringUtils.isBlank( strLastWindow ) ) 
    strLastWindow = "NoLastWindow";
 
 strLastAction = (String) session.getAttribute( "ZeidonAction" );
@@ -794,44 +794,6 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditChemicalHazardsSection" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCStorageDisposal", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCStorageDisposal", "wMLC.EditChemicalHazardsSection" );
-      nOptRC = wMLC.EditChemicalHazardsSection( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "PhysicalChemicalHazardsSection" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
    while ( bDone == false && StringUtils.equals( strActionToProcess, "smGOTO_DilutionEntries" ) )
    {
       bDone = true;
@@ -1111,7 +1073,7 @@ if ( strActionToProcess != null )
             task.log().info( "Action Error Redirect to: " + strURL );
          }
 
-         if ( ! strURL.equals("wMLCStorageDisposal.jsp") )
+         if ( ! strURL.equals("wMLCStorageDisposal.jsp") ) 
          {
             response.sendRedirect( strURL );
             // If we are redirecting to a new page, then we need this return so that the rest of this page doesn't get built.
@@ -1289,16 +1251,6 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New3" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smNew3" name="smNew3"><a href="#"  onclick="smEditChemicalHazardsSection()">Phys/Chem Hazards</a></li>
-<%
-   }
-%>
-
-<%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New2" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
@@ -1363,7 +1315,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smDirectionsForUse" name="smDirectionsForUse"><a href="#"  onclick="smEditDirectionsUseSect()">Directions for Use</a></li>
+       <li id="smDirectionsForUse" name="smDirectionsForUse"><a href="#"  onclick="smEditDirectionsUseSect()">Directions For Use</a></li>
 <%
    }
 %>
@@ -1397,10 +1349,11 @@ else
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
-   View mMasLC = null;
    View mEPA = null;
+   View mMasLC = null;
    View mMasProd = null;
    View mMasProdLST = null;
+   View mOrganiz = null;
    View mPrimReg = null;
    View wWebXfer = null;
    String strRadioGroupValue = "";
@@ -1512,7 +1465,7 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBStorDispSections:GroupBox */ %>
 
-<div id="GBStorDispSections" name="GBStorDispSections" class="listgroup"   style="float:left;position:relative; width:782px; height:36px;">  <!-- GBStorDispSections -->
+<div id="GBStorDispSections" name="GBStorDispSections" class="listgroup"   style="float:left;position:relative; width:782px; height:36px;">  <!-- GBStorDispSections --> 
 
 <% /* OrganismClaimsStatements:Text */ %>
 
@@ -1522,7 +1475,7 @@ else
 <button type="button" class="newbutton" name="New" id="New" value="" onclick="GOTO_StorageDispSectionAdd( )" style="width:78px;height:24px;position:absolute;left:650px;top:12px;">New</button>
 
 
-</div>  <!--  GBStorDispSections -->
+</div>  <!--  GBStorDispSections --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -1567,7 +1520,7 @@ try
       String strBMBAddStorDispSect;
       String strBMBUpdateStorDispSect;
       String strBMBDeleteStorDispSect;
-
+      
       View vGridStorDisp;
       vGridStorDisp = mMasLC.newView( );
       csrRC2 = vGridStorDisp.cursor( "M_StorageDisposalSection" ).setFirst(  );

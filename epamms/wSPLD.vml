@@ -157,7 +157,7 @@ GOTO_UpdateSubregProductSLC( VIEW ViewToWindow )
    NAME VIEW mSubLC "mSubLC"
    
    // Delete any S_Usage entries that aren't tied to an MLC.
-   // Also delete any Directions for Use or Marketing Ordering entries not tied to a Usage.
+   // Also delete any Directions For Use or Marketing Ordering entries not tied to a Usage.
    FOR EACH mSubLC.S_UsageType 
       FOR EACH mSubLC.S_Usage 
          IF mSubLC.M_Usage DOES NOT EXIST
@@ -471,7 +471,7 @@ SelectMLC_ComponentsForSLC( VIEW ViewToWindow )
    
    // Copy the selected MLC components to the SLC.
    
-   // Note that we will only process Marketing Statements and Usage entries under Directions for Use or Marketing Sections.
+   // Note that we will only process Marketing Statements and Usage entries under Directions For Use or Marketing Sections.
    
    // There's a problem keeping the correct order. So, to solve that we will go through any existing SLC Marketing and 
    // Directions components and select the corresponding MLC component. Then we'll delete all the existing Marketing and 
@@ -529,11 +529,11 @@ SelectMLC_ComponentsForSLC( VIEW ViewToWindow )
    END
    
    // Create an SLC entry for each selected MLC entry, which is either Marketing Section, Marketing Statement,
-   // Marketing Usage or Directions for Use Usage.
+   // Marketing Usage or Directions For Use Usage.
    szFirstMarketingSectionFlag = "Y"
    FOR EACH mMasLC.CompositeComponentList 
    
-      // If the Composite Component is a Directions for Use Section, position on the corresponding SLC Composite
+      // If the Composite Component is a Directions For Use Section, position on the corresponding SLC Composite
       // entry for creation of potential Usage entries.
       IF mMasLC.CompositeComponentList.Type = "M_DirectionsForUseSection"
          SET CURSOR FIRST mSubLC.CompositeComponentList 
@@ -545,7 +545,7 @@ SelectMLC_ComponentsForSLC( VIEW ViewToWindow )
       END
       
       // If the Composite Component is a Marketing Section, positioning depends on whether or not this is the first 
-      // Marketing Section. If so, we need to position on the last Directions for Use Section or Statement. 
+      // Marketing Section. If so, we need to position on the last Directions For Use Section or Statement. 
       // Otherwise, we are already correctly positioned.
       IF mMasLC.CompositeComponentList.Type = "M_MarketingSection"
          IF szFirstMarketingSectionFlag = "Y"
@@ -621,7 +621,7 @@ SaveSubregistrantLabelContent( VIEW ViewToWindow )
    COMMIT mSubLC
    
    // Process any Changes in the CompositeComponentList entries against the main subobject structure of the SLC.
-   // Note that only Marketing Statements and Usage entries under Directions for Use and Marketing are affected.
+   // Note that only Marketing Statements and Usage entries under Directions For Use and Marketing are affected.
    
    // First delete any entries that are in the main structure but not in the Composite Component List.
    // Note that we only consider Marketing Statements and Directions Usage and Marketing Usage Statements.
@@ -674,7 +674,7 @@ SaveSubregistrantLabelContent( VIEW ViewToWindow )
    // Note that we only consider Marketing Statements and Directions and Marketing Usage Statements.
    FOR EACH mSubLC.CompositeComponentList 
       OriginalTypeID = mSubLC.CompositeComponentList.OriginalTypeID
-      // Directions for Use Section
+      // Directions For Use Section
       IF mSubLC.CompositeComponentList.Type = "M_DirectionsForUseSection"
          SET CURSOR FIRST mSubLC.M_DirectionsForUseSection WITHIN mSubLC.SubregLabelContent 
                     WHERE mSubLC.M_DirectionsForUseSection.ID = OriginalTypeID 
@@ -714,7 +714,7 @@ SaveSubregistrantLabelContent( VIEW ViewToWindow )
          END
       END
       
-      // Directions for Use Usage
+      // Directions For Use Usage
       IF mSubLC.CompositeComponentList.Type = "M_DirectionsUsageOrdering"
          SET CURSOR FIRST mSubLC.M_Usage WITHIN mSubLC.SubregLabelContent 
                     WHERE mSubLC.M_Usage.ID = OriginalTypeID 
@@ -767,7 +767,7 @@ DeleteMLC_ComponentsForSLC( VIEW ViewToWindow )
    
    // Delete the selected SLC component entries.
    
-   // Make sure that only Marketing Statements Usage entries under Directions for Use and Marketing are marked for removal.
+   // Make sure that only Marketing Statements Usage entries under Directions For Use and Marketing are marked for removal.
    SET CURSOR FIRST mSubLC.CompositeComponentList WHERE mSubLC.CompositeComponentList.Selected = "Y"
                                                     AND mSubLC.CompositeComponentList.Type != "M_DirectionsUsageOrdering"
                                                     AND mSubLC.CompositeComponentList.Type != "M_MarketingUsageOrdering"
@@ -1096,8 +1096,8 @@ GOTO_UpdateSubregProductSPLD( VIEW ViewToWindow )
    END
    
    // Build the work components
-   BuildCompositeEntriesForSPLD( mSPLDef )
-// TraceLineS( "$$$$$$ end of oper", "GOTO_UpdateSubregProductSPLD" )
+   BuildCompositeEntriesForSPLD( mSPLDef ) // Need this for Update SPLD Block Definition to work
+   TraceLineS( "$$$$$$ end of SPLD oper", "GOTO_UpdateSubregProductSPLD" )
 // DisplayObjectInstance( mSPLDef, "", "" )
    
    // Also activate the corresponding SLC and build the composite subobject.
@@ -1325,12 +1325,30 @@ fnGenerateSPLD_Label( VIEW ViewToWindow, SHORT bBorders )
       NAME VIEW mSPLDef "mSPLDefPanel"
    END
 
+/*
+   // Sort Panels and Blocks by position and sort the blocks so that any "continued" block is the first one in the panel.
+   TraceLineS( "Ordering Panels/Blocks + continuation", "  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" )
+   ComputeTopPositions( mSPLDef )
+   FOR EACH mSPLDef.LLD_Page
+      OrderEntityForView( mSPLDef, "LLD_Panel", "Top A Left A" )
+      FOR EACH mSPLDef.LLD_Panel 
+         OrderEntityForView( mSPLDef, "LLD_Block", "ContinuationBlockFlag D Left A wComputedTopPosition A" )
+         FOR EACH mSPLDef.LLD_Block 
+            OrderEntityForView( mSPLDef, "LLD_SubBlock", "Left A wComputedTopPosition A" )
+         END
+      END 
+   END 
+   SET CURSOR FIRST mSPLDef.LLD_Page 
+*/
+   
    // Generate the label using LLD and SLC data defined in mSPLDef.
    IF bBorders = 1
       mSPLDef.SubregPhysicalLabelDef.wFormatWithDottedBorders = "Y"
    ELSE
       mSPLDef.SubregPhysicalLabelDef.wFormatWithDottedBorders = ""
    END
+
+   // Here's where we generate the XML
    nRC = GeneratePDF_Label( mSPLDef )
    IF nRC = 2
       RETURN 2
@@ -1938,7 +1956,7 @@ ACCEPT_SPLD_StatementUpdate( VIEW ViewToWindow )
    STRING ( 32 ) szEntityName
    INTEGER       OriginalID
    
-   // Unless this is Storage and Disposal, Directions for Use or Marketing Statement, cancel the subobject.
+   // Unless this is Storage and Disposal, Directions For Use or Marketing Statement, cancel the subobject.
    // For those three Statements, accept changes.
    szEntityName = mSPLDef.CompositeComponentList.Type
    IF szEntityName = "SPLD_StorageDisposalStatement" OR 

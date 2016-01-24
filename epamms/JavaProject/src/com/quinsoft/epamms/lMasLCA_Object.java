@@ -55,7 +55,6 @@ olMasLCA_dMasterProductNameNbr( View     lMasLCA,
                                 Integer   GetOrSetFlag )
 {
    String   szString = null;
-   zVIEW    mMasLCA = new zVIEW( );
    int      lTempInteger_0 = 0;
 
 
@@ -65,13 +64,13 @@ olMasLCA_dMasterProductNameNbr( View     lMasLCA,
       //:OF   zDERIVED_GET:
       case zDERIVED_GET :
 
-         //:IF mMasLCA.MasterProduct  EXISTS
+         //:IF lMasLCA.MasterProduct  EXISTS
          lTempInteger_0 = CheckExistenceOfEntity( lMasLCA, "MasterProduct" );
          if ( lTempInteger_0 == 0 )
          { 
-            //:szString = mMasLCA.MasterProduct.Name + " (" +
-            //:        mMasLCA.PrimaryRegistrant.EPA_CompanyNumber + "-" +
-            //:        mMasLCA.MasterProduct.Number + ")"
+            //:szString = lMasLCA.MasterProduct.Name + " (" +
+            //:        lMasLCA.PrimaryRegistrant.EPA_CompanyNumber + "-" +
+            //:        lMasLCA.MasterProduct.Number + ")"
             //:ELSE
          } 
          else
@@ -82,10 +81,10 @@ olMasLCA_dMasterProductNameNbr( View     lMasLCA,
          //:END
 
          //:// Store the calculated value in the object.
-         //:StoreStringInRecord( mMasLCA,
+         //:StoreStringInRecord( lMasLCA,
          //:                   InternalEntityStructure,
          //:                   InternalAttribStructure, szString )
-         StoreStringInRecord( mMasLCA, InternalEntityStructure, InternalAttribStructure, szString );
+         StoreStringInRecord( lMasLCA, InternalEntityStructure, InternalAttribStructure, szString );
          //:RETURN 0
          if(8==8)return( 0 );
 

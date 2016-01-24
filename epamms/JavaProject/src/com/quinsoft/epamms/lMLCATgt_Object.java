@@ -923,7 +923,7 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
       //:// Title
       //:CREATE ENTITY lMLCATgt.ComparisonDifference
       RESULT = CreateEntity( lMLCATgt, "ComparisonDifference", zPOS_AFTER );
-      //:lMLCATgt.ComparisonDifference.Title = "Directions for Use: " + lMLCATgt.M_DirectionsForUseSection.Title
+      //:lMLCATgt.ComparisonDifference.Title = "Directions For Use: " + lMLCATgt.M_DirectionsForUseSection.Title
       {MutableInt mi_lTempInteger_12 = new MutableInt( lTempInteger_12 );
       StringBuilder sb_szTempString_9;
       if ( szTempString_9 == null )
@@ -938,7 +938,7 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
          sb_szTempString_8 = new StringBuilder( 32 );
       else
          sb_szTempString_8 = new StringBuilder( szTempString_8 );
-            ZeidonStringCopy( sb_szTempString_8, 1, 0, "Directions for Use: ", 1, 0, 255 );
+            ZeidonStringCopy( sb_szTempString_8, 1, 0, "Directions For Use: ", 1, 0, 255 );
       szTempString_8 = sb_szTempString_8.toString( );}
        {StringBuilder sb_szTempString_8;
       if ( szTempString_8 == null )
@@ -1046,20 +1046,20 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
                    GetIntegerFromAttribute( mi_lTempInteger_15, lMLCATgt, "MP_DirectionsForUseSection", "ID" );
          lTempInteger_15 = mi_lTempInteger_15.intValue( );}
          RESULT = SetCursorFirstEntityByInteger( lMLCASrc, "M_DirectionsForUseSection", "ID", lTempInteger_15, "" );
-         //:FOR EACH lMLCATgt.M_DirectionsUsage WITHIN lMLCATgt.M_DirectionsForUseSection
-         RESULT = SetCursorFirstEntity( lMLCATgt, "M_DirectionsUsage", "M_DirectionsForUseSection" );
+         //:FOR EACH lMLCATgt.M_DirectionsForUseStatement WITHIN lMLCATgt.M_DirectionsForUseSection
+         RESULT = SetCursorFirstEntity( lMLCATgt, "M_DirectionsForUseStatement", "M_DirectionsForUseSection" );
          while ( RESULT > zCURSOR_UNCHANGED )
          { 
-            //:SET CURSOR FIRST lMLCASrc.M_DirectionsUsage WITHIN lMLCASrc.M_DirectionsForUseSection
-            //:           WHERE lMLCASrc.M_DirectionsUsage.UsageType = lMLCATgt.M_DirectionsUsage.UsageType
-            //:             AND lMLCASrc.M_DirectionsUsage.Name = lMLCATgt.M_DirectionsUsage.Name
-            RESULT = SetCursorFirstEntity( lMLCASrc, "M_DirectionsUsage", "M_DirectionsForUseSection" );
+            //:SET CURSOR FIRST lMLCASrc.M_DirectionsForUseStatement WITHIN lMLCASrc.M_DirectionsForUseSection
+            //:           WHERE lMLCASrc.M_DirectionsForUseStatement.UsageType = lMLCATgt.M_DirectionsUsage.UsageType
+            //:             AND lMLCASrc.M_DirectionsForUseStatement.Name = lMLCATgt.M_DirectionsUsage.Name
+            RESULT = SetCursorFirstEntity( lMLCASrc, "M_DirectionsForUseStatement", "M_DirectionsForUseSection" );
             if ( RESULT > zCURSOR_UNCHANGED )
             { 
-               while ( RESULT > zCURSOR_UNCHANGED && ( CompareAttributeToAttribute( lMLCASrc, "M_DirectionsUsage", "UsageType", lMLCATgt, "M_DirectionsUsage", "UsageType" ) != 0 ||
-                       CompareAttributeToAttribute( lMLCASrc, "M_DirectionsUsage", "Name", lMLCATgt, "M_DirectionsUsage", "Name" ) != 0 ) )
+               while ( RESULT > zCURSOR_UNCHANGED && ( CompareAttributeToAttribute( lMLCASrc, "M_DirectionsForUseStatement", "UsageType", lMLCATgt, "M_DirectionsUsage", "UsageType" ) != 0 ||
+                       CompareAttributeToAttribute( lMLCASrc, "M_DirectionsForUseStatement", "Name", lMLCATgt, "M_DirectionsUsage", "Name" ) != 0 ) )
                { 
-                  RESULT = SetCursorNextEntity( lMLCASrc, "M_DirectionsUsage", "M_DirectionsForUseSection" );
+                  RESULT = SetCursorNextEntity( lMLCASrc, "M_DirectionsForUseStatement", "M_DirectionsForUseSection" );
                } 
 
             } 
@@ -1084,7 +1084,7 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
                olMLCATgt_SetDifferencesSortVs( lMLCATgt, lSortEntryNbr, szSortTitle );
             } 
 
-            RESULT = SetCursorNextEntity( lMLCATgt, "M_DirectionsUsage", "M_DirectionsForUseSection" );
+            RESULT = SetCursorNextEntity( lMLCATgt, "M_DirectionsForUseStatement", "M_DirectionsForUseSection" );
             //:END
          } 
 
@@ -1094,16 +1094,16 @@ olMLCATgt_BuildDifferencesMLC( View     lMLCATgt,
          RESULT = SetCursorFirstEntity( lMLCASrc, "M_DirectionsUsage", "M_DirectionsForUseSection" );
          while ( RESULT > zCURSOR_UNCHANGED )
          { 
-            //:SET CURSOR FIRST lMLCATgt.M_DirectionsUsage WITHIN lMLCATgt.M_DirectionsForUseSection
-            //:           WHERE lMLCATgt.M_DirectionsUsage.UsageType = lMLCASrc.M_DirectionsUsage.UsageType
-            //:             AND lMLCATgt.M_DirectionsUsage.Name = lMLCASrc.M_DirectionsUsage.Name
-            RESULT = SetCursorFirstEntity( lMLCATgt, "M_DirectionsUsage", "M_DirectionsForUseSection" );
+            //:SET CURSOR FIRST lMLCATgt.M_DirectionsForUseStatement WITHIN lMLCATgt.M_DirectionsForUseSection
+            //:           WHERE lMLCATgt.M_DirectionsForUseStatement.UsageType = lMLCASrc.M_DirectionsUsage.UsageType
+            //:             AND lMLCATgt.M_DirectionsForUseStatement.Name = lMLCASrc.M_DirectionsUsage.Name
+            RESULT = SetCursorFirstEntity( lMLCATgt, "M_DirectionsForUseStatement", "M_DirectionsForUseSection" );
             if ( RESULT > zCURSOR_UNCHANGED )
             { 
-               while ( RESULT > zCURSOR_UNCHANGED && ( CompareAttributeToAttribute( lMLCATgt, "M_DirectionsUsage", "UsageType", lMLCASrc, "M_DirectionsUsage", "UsageType" ) != 0 ||
-                       CompareAttributeToAttribute( lMLCATgt, "M_DirectionsUsage", "Name", lMLCASrc, "M_DirectionsUsage", "Name" ) != 0 ) )
+               while ( RESULT > zCURSOR_UNCHANGED && ( CompareAttributeToAttribute( lMLCATgt, "M_DirectionsForUseStatement", "UsageType", lMLCASrc, "M_DirectionsUsage", "UsageType" ) != 0 ||
+                       CompareAttributeToAttribute( lMLCATgt, "M_DirectionsForUseStatement", "Name", lMLCASrc, "M_DirectionsUsage", "Name" ) != 0 ) )
                { 
-                  RESULT = SetCursorNextEntity( lMLCATgt, "M_DirectionsUsage", "M_DirectionsForUseSection" );
+                  RESULT = SetCursorNextEntity( lMLCATgt, "M_DirectionsForUseStatement", "M_DirectionsForUseSection" );
                } 
 
             } 

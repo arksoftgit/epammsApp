@@ -144,4 +144,12 @@ VmlPwdOld\*.*
 bin\xod\*.*
 image\*.*
 xsl\*.*
-JavaProject\*.*
+.classpath
+.project
+.settings
+build\
+build.xml
+dist\
+maven.bat
+pom.xml
+target\

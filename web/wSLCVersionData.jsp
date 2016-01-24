@@ -268,6 +268,44 @@ if ( strActionToProcess != null )
 
    }
 
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "Sync" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCVersionData", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCVersionData", "wSLC.CorrectSLC_Data" );
+      nOptRC = wSLC.CorrectSLC_Data( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wSLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
    while ( bDone == false && strActionToProcess.equals( "ZEIDON_ComboBoxSubmit" ) )
    {
       bDone = true;
@@ -991,11 +1029,11 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "OtherHazard" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "EnvironmentalHazards" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smOtherHazard" name="smOtherHazard"><a href="#"  onclick="smDisplayHazardSection()">Other Hazard</a></li>
+       <li id="smEnvironmentalHazards" name="smEnvironmentalHazards"><a href="#"  onclick="smDisplayHazardSection()">Environmental Hazards</a></li>
 <%
    }
 %>
@@ -1045,7 +1083,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smDirectionsForUse" name="smDirectionsForUse"><a href="#"  onclick="smDisplayDirectionsUseSect()">Directions for Use</a></li>
+       <li id="smDirectionsForUse" name="smDirectionsForUse"><a href="#"  onclick="smDisplayDirectionsUseSect()">Directions For Use</a></li>
 <%
    }
 %>
@@ -1056,6 +1094,16 @@ else
    {
 %>
        <li id="smMarketing" name="smMarketing"><a href="#"  onclick="smDisplayMarketingSect()">Marketing</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "SyncMLC" );
+   if ( !csrRC.isSet( ) )
+   {
+%>
+       <li id="Marketing" name="Marketing"><a href="#"  onclick="Sync()">Sync MLC</a></li>
 <%
    }
 %>

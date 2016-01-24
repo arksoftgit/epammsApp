@@ -13,7 +13,7 @@
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
 <%@ page import="com.quinsoft.epamms.*" %>
 
-<%!
+<%! 
 
 ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
@@ -112,10 +112,10 @@ public int DoInputMapping( HttpServletRequest request,
                nRelPos--;    // For Auto Include combos, we need to decrement for the blank entry.
                mMasLC.cursor( "M_UsageFootnote" ).setPosition( nRelPos, "" );
             }
-
-            // Auto Include Code
+ 
+            // Auto Include Code 
             // If the value is "0" then the user has selected the null entry, we do not want to do an include.
-            // If there is an entity, we want to exclude it.
+            // If there is an entity, we want to exclude it. 
             if ( !StringUtils.equals( strMapValue, "0" ) )
             {
                nRC = mMasLC.cursor( "M_UsageFootnoteUsed" ).checkExistenceOfEntity( ).toInt();
@@ -146,9 +146,9 @@ public int DoInputMapping( HttpServletRequest request,
       // Grid: Grid4
       iTableRowCnt = 0;
 
-      // We are creating a temp view to the grid view so that if there are
-      // grids on the same window with the same view we do not mess up the
-      // entity positions.
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
       vGridTmp = mMasLC.newView( );
       csrRC = vGridTmp.cursor( "M_InsertTextKeywordUsage" ).setFirst(  );
       while ( csrRC.isSet() )
@@ -164,9 +164,9 @@ public int DoInputMapping( HttpServletRequest request,
       // Grid: Grid5
       iTableRowCnt = 0;
 
-      // We are creating a temp view to the grid view so that if there are
-      // grids on the same window with the same view we do not mess up the
-      // entity positions.
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
       vGridTmp = mMasLC.newView( );
       csrRC = vGridTmp.cursor( "M_InsertTextKeywordUsage" ).setFirst(  );
       while ( csrRC.isSet() )
@@ -177,8 +177,8 @@ public int DoInputMapping( HttpServletRequest request,
 
          strTag = "Keyword3::" + strEntityKey;
          strMapValue = request.getParameter( strTag );
-         if ( strMapValue != null )
-         {
+         if ( strMapValue != null ) 
+         { 
             try
             {
                if ( webMapping )
@@ -191,12 +191,12 @@ public int DoInputMapping( HttpServletRequest request,
                nMapError = -16;
                VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
          }
-      }
+      } 
 
          strTag = "KeywordText3::" + strEntityKey;
          strMapValue = request.getParameter( strTag );
-         if ( strMapValue != null )
-         {
+         if ( strMapValue != null ) 
+         { 
             try
             {
                if ( webMapping )
@@ -209,7 +209,7 @@ public int DoInputMapping( HttpServletRequest request,
                nMapError = -16;
                VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
          }
-      }
+      } 
 
          csrRC = vGridTmp.cursor( "M_InsertTextKeywordUsage" ).setNextContinue( );
       }
@@ -275,7 +275,7 @@ String strInputFileName = "";
 strActionToProcess = (String) request.getParameter( "zAction" );
 
 strLastWindow = (String) session.getAttribute( "ZeidonWindow" );
-if ( StringUtils.isBlank( strLastWindow ) )
+if ( StringUtils.isBlank( strLastWindow ) ) 
    strLastWindow = "NoLastWindow";
 
 strLastAction = (String) session.getAttribute( "ZeidonAction" );
@@ -895,7 +895,7 @@ if ( strActionToProcess != null )
             task.log().info( "Action Error Redirect to: " + strURL );
          }
 
-         if ( ! strURL.equals("wMLCOrganismClaimsStatement.jsp") )
+         if ( ! strURL.equals("wMLCOrganismClaimsStatement.jsp") ) 
          {
             response.sendRedirect( strURL );
             // If we are redirecting to a new page, then we need this return so that the rest of this page doesn't get built.
@@ -960,11 +960,11 @@ else
 
 </head>
 
-<!--
-// If we have table sorting on this page, the table sorting does not work in Firefox
-// (seems to work in IE and Opera).  The solution is to not call _AfterPageLoaded in OnLoad event.
-// In the Standardista code (sts.js) there is an addEvent that will call _AfterPageLoaded.
--->
+<!-- 
+// If we have table sorting on this page, the table sorting does not work in Firefox 
+// (seems to work in IE and Opera).  The solution is to not call _AfterPageLoaded in OnLoad event. 
+// In the Standardista code (sts.js) there is an addEvent that will call _AfterPageLoaded. 
+--> 
 <body onSubmit="_DisableFormElements( true )" onBeforeUnload="_BeforePageUnload( )">
 
 <%@ include file="./include/pagebackground.inc" %>  <!-- just temporary until we get the painter dialog updates from Kelly ... 2011.10.08 dks -->
@@ -1039,10 +1039,11 @@ else
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
-   View mMasLC = null;
    View mEPA = null;
+   View mMasLC = null;
    View mMasProd = null;
    View mMasProdLST = null;
+   View mOrganiz = null;
    View mPrimReg = null;
    View wWebXfer = null;
    String strRadioGroupValue = "";
@@ -1154,7 +1155,7 @@ else
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox4:GroupBox */ %>
 
-<div id="GroupBox4" name="GroupBox4" style="width:472px;height:28px;float:left;">  <!-- GroupBox4 -->
+<div id="GroupBox4" name="GroupBox4" style="width:472px;height:28px;float:left;">  <!-- GroupBox4 --> 
 
 
  <!-- This is added as a line spacer -->
@@ -1169,7 +1170,7 @@ else
 </div>  <!-- End of a new line -->
 
 
-</div>  <!--  GroupBox4 -->
+</div>  <!--  GroupBox4 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -1179,7 +1180,7 @@ else
 <div style="height:1px;width:18px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBPrecautionarySection:GroupBox */ %>
 
-<div id="GBPrecautionarySection" name="GBPrecautionarySection" class="withborder" style="width:834px;height:96px;float:left;">  <!-- GBPrecautionarySection -->
+<div id="GBPrecautionarySection" name="GBPrecautionarySection" class="withborder" style="width:834px;height:96px;float:left;">  <!-- GBPrecautionarySection --> 
 
 
 <div>  <!-- Beginning of a new line -->
@@ -1240,8 +1241,8 @@ else
       {
          String internalValue = entry.getInternalValue( );
          String externalValue = entry.getExternalValue( );
-         // Perhaps getInternalValue and getExternalValue should return an empty string,
-         // but currently it returns null.  Set to empty string.
+         // Perhaps getInternalValue and getExternalValue should return an empty string, 
+         // but currently it returns null.  Set to empty string. 
          if ( externalValue == null )
          {
             internalValue = "";
@@ -1267,11 +1268,11 @@ else
       }  // for ( TableEntry entry
       // The value from the database isn't in the domain, add it to the list as disabled.
       if ( !inListUsage )
-      {
+      { 
 %>
          <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
 <%
-      }
+      }  
    }  // if view != null
 %>
 </select>
@@ -1415,12 +1416,12 @@ else
 </tr>
 </table>
 
-</div>  <!-- GroupBox2 -->
+</div>  <!-- GroupBox2 --> 
 
 </div>  <!-- End of a new line -->
 
 
-</div>  <!--  GBPrecautionarySection -->
+</div>  <!--  GBPrecautionarySection --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -1448,7 +1449,7 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox8:GroupBox */ %>
 
-<div id="GroupBox8" name="GroupBox8" style="width:810px;float:left;">  <!-- GroupBox8 -->
+<div id="GroupBox8" name="GroupBox8" style="width:810px;float:left;">  <!-- GroupBox8 --> 
 
 
  <!-- This is added as a line spacer -->
@@ -1457,7 +1458,7 @@ else
 <div>  <!-- Beginning of a new line -->
 <% /* GroupBox3:GroupBox */ %>
 
-<div id="GroupBox3" name="GroupBox3"   style="float:left;position:relative; width:754px; height:30px;">  <!-- GroupBox3 -->
+<div id="GroupBox3" name="GroupBox3"   style="float:left;position:relative; width:754px; height:30px;">  <!-- GroupBox3 --> 
 
 <% /* ShowText:PushBtn */ %>
 <button type="button" class="newbutton" name="ShowText" id="ShowText" value="" onclick="GOTO_DisplayGeneratedTextUsage( )" style="width:158px;height:26px;position:absolute;left:402px;top:4px;">Show Generated Text</button>
@@ -1473,7 +1474,7 @@ else
 <label class="listheader"  id="KeywordEmbedding1" name="KeywordEmbedding1" style="width:334px;height:16px;position:absolute;left:10px;top:8px;">Keyword text for Embedding in Statement Text</label>
 
 
-</div>  <!--  GroupBox3 -->
+</div>  <!--  GroupBox3 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -1516,7 +1517,7 @@ try
       String strUpdate;
       String strDelete2;
       String strCopy;
-
+      
       View vGrid4;
       vGrid4 = mMasLC.newView( );
       csrRC2 = vGrid4.cursor( "M_InsertTextKeywordUsage" ).setFirst(  );
@@ -1583,7 +1584,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </div>  <!-- End of a new line -->
 
 
-</div>  <!--  GroupBox8 -->
+</div>  <!--  GroupBox8 --> 
 </div>  <!-- End of a new line -->
 
 </div> <!-- End of Tab item TabCtl1 -->
@@ -1600,7 +1601,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox9:GroupBox */ %>
 
-<div id="GroupBox9" name="GroupBox9" style="width:774px;float:left;">  <!-- GroupBox9 -->
+<div id="GroupBox9" name="GroupBox9" style="width:774px;float:left;">  <!-- GroupBox9 --> 
 
 
  <!-- This is added as a line spacer -->
@@ -1609,7 +1610,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <div>  <!-- Beginning of a new line -->
 <% /* GroupBox5:GroupBox */ %>
 
-<div id="GroupBox5" name="GroupBox5"   style="float:left;position:relative; width:756px; height:30px;">  <!-- GroupBox5 -->
+<div id="GroupBox5" name="GroupBox5"   style="float:left;position:relative; width:756px; height:30px;">  <!-- GroupBox5 --> 
 
 <% /* ShowText2:PushBtn */ %>
 <button type="button" class="newbutton" name="ShowText2" id="ShowText2" value="" onclick="GOTO_DisplayGeneratedTextUsage( )" style="width:158px;height:26px;position:absolute;left:396px;top:4px;">Show Generated Text</button>
@@ -1622,7 +1623,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <label class="listheader"  id="KeywordEmbedding2" name="KeywordEmbedding2" style="width:346px;height:16px;position:absolute;left:10px;top:8px;">Keyword text for Embedding in Statement Text</label>
 
 
-</div>  <!--  GroupBox5 -->
+</div>  <!--  GroupBox5 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -1663,7 +1664,7 @@ try
       String strKeywordText3;
       String strKeywordText3ErrorColor;
       String strDelete3;
-
+      
       View vGrid5;
       vGrid5 = mMasLC.newView( );
       csrRC2 = vGrid5.cursor( "M_InsertTextKeywordUsage" ).setFirst(  );
@@ -1750,7 +1751,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </div>  <!-- End of a new line -->
 
 
-</div>  <!--  GroupBox9 -->
+</div>  <!--  GroupBox9 --> 
 </div>  <!-- End of a new line -->
 
 </div> <!-- End of Tab item TabCtl2 -->

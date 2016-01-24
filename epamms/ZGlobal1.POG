@@ -1,7 +1,7 @@
-z1000-Zeidon    ZGLOBAL1 TZOGSRCO 01/15/16   20:02:15 1.0a2   
+z1000-Zeidon    ZGLOBAL1 TZOGSRCO 01/23/16   23:15:05 1.0a2   
 eGlobalOperationGroup 1
 aZKey      89816452
-aNextZKeyToAssign 110040683
+aNextZKeyToAssign 110040688
 aName      ZGlobal1
 aDesc      Global Operations in C
 aExtension C
@@ -50,6 +50,47 @@ aDataType  L
 aPFlag     N
 aUFlag     N
 aZKey      89816458
+
+eOperation 2
+aName      InsertMappingWordsIntoString
+aZKey      69087046
+aType      G
+aReturnDataType N
+
+eParameter 3
+aShortDesc mSPLDef
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      110040684
+
+eParameter 3
+aShortDesc szString
+aDataType  S
+aPFlag     Y
+aUFlag     N
+aZKey      110040685
+
+eParameter 3
+aShortDesc szUsageEntityName
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      110040686
+
+eParameter 3
+aShortDesc szUsageNameScope
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      110040687
+
+eParameter 3
+aShortDesc szSeparaterCharacters
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      110040688
 
 eOperation 2
 aName      BuildSimpleIntegerQualification

@@ -13,7 +13,7 @@
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
 <%@ page import="com.quinsoft.epamms.*" %>
 
-<%!
+<%! 
 
 ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
@@ -139,9 +139,9 @@ public int DoInputMapping( HttpServletRequest request,
       // Grid: GridMarketing
       iTableRowCnt = 0;
 
-      // We are creating a temp view to the grid view so that if there are
-      // grids on the same window with the same view we do not mess up the
-      // entity positions.
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
       vGridTmp = mMasLC.newView( );
       csrRC = vGridTmp.cursor( "M_MarketingStatement" ).setFirst(  );
       while ( csrRC.isSet() )
@@ -157,9 +157,9 @@ public int DoInputMapping( HttpServletRequest request,
       // Grid: Grid3
       iTableRowCnt = 0;
 
-      // We are creating a temp view to the grid view so that if there are
-      // grids on the same window with the same view we do not mess up the
-      // entity positions.
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
       vGridTmp = mMasLC.newView( );
       csrRC = vGridTmp.cursor( "M_MarketingReviewerNote" ).setFirst(  );
       while ( csrRC.isSet() )
@@ -232,7 +232,7 @@ String strInputFileName = "";
 strActionToProcess = (String) request.getParameter( "zAction" );
 
 strLastWindow = (String) session.getAttribute( "ZeidonWindow" );
-if ( StringUtils.isBlank( strLastWindow ) )
+if ( StringUtils.isBlank( strLastWindow ) ) 
    strLastWindow = "NoLastWindow";
 
 strLastAction = (String) session.getAttribute( "ZeidonAction" );
@@ -757,7 +757,7 @@ if ( strActionToProcess != null )
             task.log().info( "Action Error Redirect to: " + strURL );
          }
 
-         if ( ! strURL.equals("wMLCMarketingSection.jsp") )
+         if ( ! strURL.equals("wMLCMarketingSection.jsp") ) 
          {
             response.sendRedirect( strURL );
             // If we are redirecting to a new page, then we need this return so that the rest of this page doesn't get built.
@@ -874,10 +874,11 @@ else
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
-   View mMasLC = null;
    View mEPA = null;
+   View mMasLC = null;
    View mMasProd = null;
    View mMasProdLST = null;
+   View mOrganiz = null;
    View mPrimReg = null;
    View wWebXfer = null;
    String strRadioGroupValue = "";
@@ -989,14 +990,14 @@ else
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBStorDispSections1:GroupBox */ %>
 
-<div id="GBStorDispSections1" name="GBStorDispSections1" class="listgroup"   style="float:left;position:relative; width:780px; height:36px;">  <!-- GBStorDispSections1 -->
+<div id="GBStorDispSections1" name="GBStorDispSections1" class="listgroup"   style="float:left;position:relative; width:780px; height:36px;">  <!-- GBStorDispSections1 --> 
 
 <% /* OrganismClaimsStatements2:Text */ %>
 
 <label class="groupbox"  id="OrganismClaimsStatements2" name="OrganismClaimsStatements2" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Marketing Section</label>
 
 
-</div>  <!--  GBStorDispSections1 -->
+</div>  <!--  GBStorDispSections1 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -1218,7 +1219,7 @@ else
 </tr>
 </table>
 
-</div>  <!-- GroupBox5 -->
+</div>  <!-- GroupBox5 --> 
 
 </div>  <!-- End of a new line -->
 
@@ -1247,7 +1248,7 @@ else
 <div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox6:GroupBox */ %>
 
-<div id="GroupBox6" name="GroupBox6"   style="float:left;position:relative; width:758px; height:30px;">  <!-- GroupBox6 -->
+<div id="GroupBox6" name="GroupBox6"   style="float:left;position:relative; width:758px; height:30px;">  <!-- GroupBox6 --> 
 
 <% /* Text4:Text */ %>
 
@@ -1257,7 +1258,7 @@ else
 <button type="button" class="newbutton" name="PushBtn3" id="PushBtn3" value="" onclick="GOTO_MarketingStatementAdd( )" style="width:78px;height:26px;position:absolute;left:560px;top:4px;">New</button>
 
 
-</div>  <!--  GroupBox6 -->
+</div>  <!--  GroupBox6 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -1267,7 +1268,7 @@ else
 <div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBMarketingStatements:GroupBox */ %>
 
-<div id="GBMarketingStatements" name="GBMarketingStatements" style="width:758px;float:left;">  <!-- GBMarketingStatements -->
+<div id="GBMarketingStatements" name="GBMarketingStatements" style="width:758px;float:left;">  <!-- GBMarketingStatements --> 
 
 
  <!-- This is added as a line spacer -->
@@ -1303,7 +1304,7 @@ try
       String strGridEditMarketing;
       String strBMBUpdateMarketingStatement;
       String strBMBDeleteMarketingStatement;
-
+      
       View vGridMarketing;
       vGridMarketing = mMasLC.newView( );
       csrRC2 = vGridMarketing.cursor( "M_MarketingStatement" ).setFirst(  );
@@ -1355,7 +1356,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </div>  <!-- End of a new line -->
 
 
-</div>  <!--  GBMarketingStatements -->
+</div>  <!--  GBMarketingStatements --> 
 </div>  <!-- End of a new line -->
 
 </div> <!-- End of Tab item TabCtl1 -->
@@ -1368,7 +1369,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <div>  <!-- Beginning of a new line -->
 <% /* GroupBox4:GroupBox */ %>
 
-<div id="GroupBox4" name="GroupBox4" style="width:762px;float:left;">  <!-- GroupBox4 -->
+<div id="GroupBox4" name="GroupBox4" style="width:762px;float:left;">  <!-- GroupBox4 --> 
 
 
  <!-- This is added as a line spacer -->
@@ -1378,7 +1379,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox7:GroupBox */ %>
 
-<div id="GroupBox7" name="GroupBox7"   style="float:left;position:relative; width:686px; height:30px;">  <!-- GroupBox7 -->
+<div id="GroupBox7" name="GroupBox7"   style="float:left;position:relative; width:686px; height:30px;">  <!-- GroupBox7 --> 
 
 <% /* Text3:Text */ %>
 
@@ -1388,7 +1389,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <button type="button" class="newbutton"  title="Go to add one orPushBtn2" id="PushBtn2" value="" onclick="GOTO_ReviewerNoteAdd( )" style="width:78px;height:26px;position:absolute;left:544px;top:4px;">New</button>
 
 
-</div>  <!--  GroupBox7 -->
+</div>  <!--  GroupBox7 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -1427,7 +1428,7 @@ try
       String strGridEditCtl4;
       String strBitmapBtn2;
       String strBitmapBtn3;
-
+      
       View vGrid3;
       vGrid3 = mMasLC.newView( );
       csrRC2 = vGrid3.cursor( "M_MarketingReviewerNote" ).setFirst(  );
@@ -1479,7 +1480,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </div>  <!-- End of a new line -->
 
 
-</div>  <!--  GroupBox4 -->
+</div>  <!--  GroupBox4 --> 
 </div>  <!-- End of a new line -->
 
 </div> <!-- End of Tab item TabCtl2 -->
@@ -1500,10 +1501,10 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <div style="height:1px;width:32px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox1:GroupBox */ %>
 
-<div id="GroupBox1" name="GroupBox1" style="width:40px;height:24px;float:left;">  <!-- GroupBox1 -->
+<div id="GroupBox1" name="GroupBox1" style="width:40px;height:24px;float:left;">  <!-- GroupBox1 --> 
 
 
-</div>  <!--  GroupBox1 -->
+</div>  <!--  GroupBox1 --> 
 </div>  <!-- End of a new line -->
 
 

@@ -19,7 +19,7 @@
 GLOBAL OPERATION
 BuildCompositeEntriesForSPLD( VIEW mSPLDef BASED ON LOD mSPLDef )
 
-   STRING ( 100 )   szCompositeLocation
+   STRING ( 256 )   szCompositeLocation
    STRING ( 4000 )  szDisplayValue
    STRING ( 4000 )  szOriginalDisplayValue
    STRING ( 32 )    szUsageType
@@ -28,7 +28,7 @@ BuildCompositeEntriesForSPLD( VIEW mSPLDef BASED ON LOD mSPLDef )
    INTEGER          Count
 
    // Build the flat display of all components subobject.
-   MaxDisplayLength = 100
+   MaxDisplayLength = 256
 
    // First clear any current entries.
    FOR EACH mSPLDef.CompositeComponentList

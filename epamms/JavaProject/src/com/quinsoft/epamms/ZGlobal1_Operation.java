@@ -4601,6 +4601,7 @@ public class ZGlobal1_Operation extends VmlOperation
                              String delimiters )
    {
    // TraceLineS( "SplitParagraphOnLinefeed delimiters: ", delimiters );
+      String replace;
       String value;
       int count = 0;
       EntityCursor ec = view.cursor( entityName );
@@ -4609,10 +4610,10 @@ public class ZGlobal1_Operation extends VmlOperation
       if ( delimiters.isEmpty() ) {
          delimiters = "\r\n";
       } else {
-         while ( (pos = delimiters.indexOf( "\\" )) >= 0 ) {
-            String replace = "\\";
+         while ( (pos = delimiters.indexOf( "\\", pos ) ) >= 0 ) {
+            replace = "\\";
             int adjust = 1;
-            if ( pos < delimEnd - 2 ) {
+            if ( pos < delimEnd - 1 ) {
                adjust = 2;
                char ch = delimiters.charAt( pos + 1 );
                if ( ch == 't' ) {
@@ -4636,6 +4637,7 @@ public class ZGlobal1_Operation extends VmlOperation
          }
       }
 
+      delimEnd = delimiters.length();
       int lth = view.getLodDef().getEntityDef( entityName ).getAttribute( attributeName ).getLength();
       int posPrev = 0;
       int end = paragraph.length();
@@ -4644,7 +4646,7 @@ public class ZGlobal1_Operation extends VmlOperation
       pos = 0;
       while ( pos < end ) {
          for ( k = 0; k < delimEnd; k++ ) {
-            if ( paragraph.charAt( pos ) == delimiters.charAt( k ) ) {
+            if ( paragraph.charAt( pos ) == delimiters.charAt( k ) || (posPrev < pos && pos == end - 1)) {
                token = paragraph.substring( posPrev, pos );
                posPrev = pos + 1;
                value = token.trim();
@@ -4683,6 +4685,117 @@ public class ZGlobal1_Operation extends VmlOperation
       }
       sbFileName.setLength( pos );
       return sbFileName.toString();
+   }
+
+   public int 
+   InsertMappingWordsIntoString( View     mSPLDef,
+                                 StringBuilder sbSourceToModify,
+                                 String   szUsageTypeEntityName,
+                                 String   szLoopingEntityName,
+                                 String   szSeparatorCharacters )
+   {
+      StringBuilder sbTarget = new StringBuilder();
+      String   szOrigSource = sbSourceToModify.toString();
+      int      sourceLth = szOrigSource.length();
+      String   szUsageType = null;
+      String   szUsageValue = null;
+      String   szInsertValue = null;
+      String   szSelectUsageType = null;
+      boolean  changed = false;
+      int      count = 0;
+      int      sourcePos = 0;  // keeps track of last position in source copied to target
+      int      openBracePos = 0;
+      int      closeBracePos;
+      int      nRC = 0;
+
+      // Insert Usage text into a position in szStringArea that is identified by a Usage Keyword.
+      // The entries inserted will be separated by one or more characters as identified by the variable szSeparatorCharacters.
+      // After determining the position of the insertion, we will loop through Usage entries, formatting each entry as we go.
+   // TraceLineS( "### Insert szUsageTypeEntityName: ", szUsageTypeEntityName )
+   // TraceLineS( "### Insert szLoopingEntityName: ", szLoopingEntityName )
+
+   // For use in: {{Area Of Use}}. Disinfects, cleans, and deodorizes the following hard nonporous inanimate surfaces: {{Surface}}, etc.).
+   // 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123  << lth = 133
+   //          1         2         3         4         5         6         7         8         9        10        11        12        13
+      sbTarget.setLength( 0 );
+      openBracePos = szOrigSource.indexOf( "{{", sourcePos );
+      while ( openBracePos >= 0 ) {
+         // Copy static text up to the brace to the target.
+         sbTarget.append( szOrigSource.substring( sourcePos, openBracePos ) );
+         
+         // Parse the Usage Type out of the string of the form {{xxxxx}}.
+         closeBracePos = szOrigSource.indexOf( "}}", openBracePos + 2 );
+         if ( closeBracePos >= 0 ) {
+            changed = true;
+            szUsageType = szOrigSource.substring( openBracePos + 2, closeBracePos );
+            sourcePos = closeBracePos + 2; // point to the next static text portion in the original source string
+            
+            // Copy the Usage values into the text. This will depend on Type.
+
+            // Claim, Surface, Area of Use, and Application Type.
+            if ( szUsageType.equals( "Claim" ) || szUsageType.equals( "Claims" ) || 
+                 szUsageType.equals( "Surface" ) || szUsageType.equals( "Surfaces" ) || 
+                 szUsageType.equals( "Area Of Use" ) || szUsageType.equals( "Areas Of Use" ) || 
+                 szUsageType.equals( "Application Type" ) ||  szUsageType.equals( "Application Types" ) ) {
+
+               if ( szUsageType.equals( "Claim" ) || szUsageType.equals( "Claims" ) ) {
+                  szSelectUsageType = "C";
+               } else if ( szUsageType.equals( "Surface" ) || szUsageType.equals( "Surfaces" ) ) {
+                  szSelectUsageType = "S";
+               } else if ( szUsageType.equals( "Area Of Use" ) || szUsageType.equals( "Areas Of Use" ) ) {
+                  szSelectUsageType = "U";
+               } else {
+                  szSelectUsageType = "T";
+               }
+
+               // Process Usage entries if the Looping Entity Name is specified.
+               if ( szLoopingEntityName.isEmpty() == false ) {  // SPLD_MarketingUsageOrdering
+
+                  count = 0;
+                  nRC = mSPLDef.cursor( szLoopingEntityName ).setFirst().toInt();
+                  while ( nRC >= zCURSOR_SET ) {
+                     szUsageType = mSPLDef.cursor( szUsageTypeEntityName ).getAttribute( "UsageType" ).getString();  // "U"
+                     if ( szUsageType.equals( szSelectUsageType ) ) {
+                        // There is a match on UsageType.
+                        // Copy Usage variable to text. If not first entry, put in a separator character.
+                        count++;
+                        szUsageValue = mSPLDef.cursor( szUsageTypeEntityName ).getAttribute( "Name" ).getString();  // "Airports"
+                        if ( count > 1 ) {
+                           // If szSeparatorCharacters are ", ", substitute " and " for the separator characters before the last Usage entry.
+                           if ( mSPLDef.cursor( szLoopingEntityName ).hasNext() == false )
+                              sbTarget.append( " and " );
+                           else
+                              sbTarget.append( szSeparatorCharacters );
+                        }
+                        sbTarget.append( szUsageValue );
+                     }
+                     nRC = mSPLDef.cursor( szLoopingEntityName ).setNext().toInt();
+                  }
+               }
+            } else if ( szUsageType.equals( "Product Name" ) ) {
+               //:szInsertValue = mSPLDef.SubregPhysicalLabelDef.ProductName 
+               szInsertValue = mSPLDef.cursor( "SubregPhysicalLabelDef" ).getAttribute( "ProductName" ).getString();
+               sbTarget.append( szInsertValue );
+            } 
+         } else {
+            sbSourceToModify.append( " ### Error replacing keywords" );
+            return -1;
+         }
+
+         openBracePos = szOrigSource.indexOf( "{{", sourcePos );
+      }
+
+      if ( changed ) {
+         sbSourceToModify.setLength( 0 );
+         sbSourceToModify.append( sbTarget.toString() );
+
+         // Move in remaining characters.
+         if ( sourcePos < sourceLth ) {
+            sbSourceToModify.append( szOrigSource.substring( sourcePos ) );
+         }
+      }
+
+      return( 0 );
    }
 
    /////////////////////////////////////////////////////////////////////////////

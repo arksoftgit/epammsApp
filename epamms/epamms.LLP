@@ -1,4 +1,4 @@
-z1000-Zeidon    EPAMMS   TZCMLPLO 01/19/16   19:34:50 1.0a2   
+z1000-Zeidon    EPAMMS   TZCMLPLO 01/23/16   23:46:28 1.0a2   
 eLPLR      1
 aName      epamms
 aDesc      ePamms Application
@@ -7,7 +7,7 @@ aPgmSrcDir %kzd%:\lplr\epamms
 aExecDir   %kzd%:\lplr\epamms\bin
 aMetaSrcDir %kzd%:\lplr\epamms
 aTaskUseCount 0
-aLastBuildDate 20160114191257423
+aLastBuildDate 20160120165150149
 aLPLR_Type 2
 aCurrentCompilerSpec DKS
 aTempDesc  ePamms Application
@@ -39,56 +39,56 @@ aCPLR_ZKey 89816628
 aStatus    1
 aUpdateInd 2
 aName      ActivateWorkObjectFromFile
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816623
 aStatus    1
 aUpdateInd 2
 aName      AddDaysToDate
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816557
 aStatus    1
 aUpdateInd 2
 aName      AddMonthsToDate
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816593
 aStatus    1
 aUpdateInd 2
 aName      AddressFormatToMultiLine
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816515
 aStatus    1
 aUpdateInd 2
 aName      AddSpacesToString
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816681
 aStatus    1
 aUpdateInd 2
 aName      AddToAttrFromIntByContext
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816638
 aStatus    1
 aUpdateInd 2
 aName      AddWorkingDaysToDate
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816539
 aStatus    1
 aUpdateInd 2
 aName      AGetRegistryValue
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 110010001
@@ -102,21 +102,21 @@ aCPLR_ZKey 110009888
 aStatus    1
 aUpdateInd 2
 aName      BuildSimpleIntegerQualification
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 110009882
 aStatus    1
 aUpdateInd 2
 aName      BuildSimpleStringQualification
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816542
 aStatus    1
 aUpdateInd 2
 aName      CallObjectOperation
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 1662524
@@ -130,35 +130,35 @@ aCPLR_ZKey 89816651
 aStatus    1
 aUpdateInd 2
 aName      CharToCode
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816653
 aStatus    1
 aUpdateInd 2
 aName      CodeToChar
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816633
 aStatus    1
 aUpdateInd 2
 aName      CompareAttributeByShortString
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816522
 aStatus    1
 aUpdateInd 2
 aName      ConvertExternalValueOfAttribute
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816453
 aStatus    1
 aUpdateInd 2
 aName      ConvertLineToEntity
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 1399847
@@ -186,42 +186,42 @@ aCPLR_ZKey 89816585
 aStatus    1
 aUpdateInd 2
 aName      dAdressLabel
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816580
 aStatus    1
 aUpdateInd 2
 aName      dAdressLabelFull
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816488
 aStatus    1
 aUpdateInd 2
 aName      DBQualEntityByString
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816658
 aStatus    1
 aUpdateInd 2
 aName      DecimalSumOf
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 2196645
 aStatus    1
 aUpdateInd 2
 aName      DetermineNextVersion
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816517
 aStatus    1
 aUpdateInd 2
 aName      FindStringInAttribute
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 110215868
@@ -235,112 +235,112 @@ aCPLR_ZKey 89816577
 aStatus    1
 aUpdateInd 2
 aName      GetAttribNameFromStructure
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816554
 aStatus    1
 aUpdateInd 2
 aName      GetButtonHeaderName
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816495
 aStatus    1
 aUpdateInd 2
 aName      GetCurrentApplicationName
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816510
 aStatus    1
 aUpdateInd 2
 aName      GetDataTypeForAttribute
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816643
 aStatus    1
 aUpdateInd 2
 aName      GetDateAttributeDifferenceInDays
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816590
 aStatus    1
 aUpdateInd 2
 aName      GetEntityNameFromStructure
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816665
 aStatus    1
 aUpdateInd 2
 aName      GetEnvVariable
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816483
 aStatus    1
 aUpdateInd 2
 aName      GetGeneralPath
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816528
 aStatus    1
 aUpdateInd 2
 aName      GetHTMLPath
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816535
 aStatus    1
 aUpdateInd 2
 aName      GetImagingPath
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816694
 aStatus    1
 aUpdateInd 2
 aName      GetIntFromAttrByContext
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816532
 aStatus    1
 aUpdateInd 2
 aName      GetRegistryCLSID
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816472
 aStatus    1
 aUpdateInd 2
 aName      GetRTFPath
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816687
 aStatus    1
 aUpdateInd 2
 aName      GetStrFromAttrByContext
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816601
 aStatus    1
 aUpdateInd 2
 aName      GetViewFromBlobAttribute
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816547
 aStatus    1
 aUpdateInd 2
 aName      GetWindowsUserName
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 1399844
@@ -359,135 +359,134 @@ aLastUpdateDate 20150826181446662
 eW_MetaDef 3
 aCPLR_ZKey 69087046
 aStatus    1
-aUpdateInd 2
 aName      InsertMappingWordsIntoString
-aLastUpdateDate 20150826181446662
+aGroupName ZGlobal1
 
 eW_MetaDef 3
 aCPLR_ZKey 89816459
 aStatus    1
 aUpdateInd 2
 aName      InsertOI_DataIntoEmailTemplate
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816503
 aStatus    1
 aUpdateInd 2
 aName      InsertOI_DataIntoTemplateFile
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816476
 aStatus    1
 aUpdateInd 2
 aName      ParseBooleanExpression
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816567
 aStatus    1
 aUpdateInd 2
 aName      PersonName_FirstMiddleLast
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816572
 aStatus    1
 aUpdateInd 2
 aName      PersonName_LastFirstMiddle
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 1178394
 aStatus    1
 aUpdateInd 2
 aName      PositionOnEntityByZID
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816499
 aStatus    1
 aUpdateInd 2
 aName      ReadLine5000
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816615
 aStatus    1
 aUpdateInd 2
 aName      ReadLineIntoGlobalBuffer
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816550
 aStatus    1
 aUpdateInd 2
 aName      RemoveLeadingBlanksFromAttrib
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816611
 aStatus    1
 aUpdateInd 2
 aName      SeparateName
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 69214769
 aStatus    1
 aUpdateInd 2
 aName      SeparateNumberedStatement
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816675
 aStatus    1
 aUpdateInd 2
 aName      SetAttrFromIntByContext
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816669
 aStatus    1
 aUpdateInd 2
 aName      SetAttrFromStrByContext
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816704
 aStatus    1
 aUpdateInd 2
 aName      SetAttributeFromCurrentDateTime
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816618
 aStatus    1
 aUpdateInd 2
 aName      SetAttributeFromTabField
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816606
 aStatus    1
 aUpdateInd 2
 aName      SetBlobAttributeFromView
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816700
 aStatus    1
 aUpdateInd 2
 aName      SetCursorLatestEntity
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816562
 aStatus    1
 aUpdateInd 2
 aName      SetDecimalPrecisionRounded
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 1511099
@@ -501,21 +500,21 @@ aCPLR_ZKey 110040677
 aStatus    1
 aUpdateInd 2
 aName      SplitParagraphOnLinefeed
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816656
 aStatus    1
 aUpdateInd 2
 aName      StrToDecimal
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816663
 aStatus    1
 aUpdateInd 2
 aName      StrToInt
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 1664968
@@ -529,21 +528,21 @@ aCPLR_ZKey 89816478
 aStatus    1
 aUpdateInd 2
 aName      WinShellExecute
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 69086455
 aStatus    1
 aUpdateInd 2
 aName      WL_QC
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaDef 3
 aCPLR_ZKey 89816565
 aStatus    1
 aUpdateInd 2
 aName      zTrim
-aLastUpdateDate 20150909150523088
+aLastUpdateDate 20160116010215272
 
 eW_MetaType 2
 aType      3
@@ -553,7 +552,7 @@ aCPLR_ZKey 68567480
 aStatus    1
 aUpdateInd 2
 aName      Blob
-aLastUpdateDate 20160119084401291
+aLastUpdateDate 20160119134401291
 
 eW_MetaDef 3
 aCPLR_ZKey 68568187
@@ -948,192 +947,193 @@ aName      AlphaNumericUpperStrip
 aLastUpdateDate 20140411211038000
 
 eW_MetaDef 3
+aCPLR_ZKey 130001711
+aStatus    1
+aUpdateInd 2
+aName      Status
+aLastUpdateDate 20160119134401291
+
+eW_MetaDef 3
 aCPLR_ZKey 110370112
 aStatus    1
 aUpdateInd 2
 aName      ContainerTypeStorageDisposal
-aLastUpdateDate 20160119084401291
+aLastUpdateDate 20160119134401291
 
 eW_MetaDef 3
 aCPLR_ZKey 110226099
 aStatus    1
 aUpdateInd 2
 aName      InsertTextKeywordType
-aLastUpdateDate 20160119084401291
+aLastUpdateDate 20160119134401291
 
 eW_MetaDef 3
 aCPLR_ZKey 110059061
 aStatus    1
 aUpdateInd 2
 aName      ContainerVolumeEnvironmentHazard
-aLastUpdateDate 20160119084401291
+aLastUpdateDate 20160119134401291
 
 eW_MetaDef 3
 aCPLR_ZKey 110059057
 aStatus    1
 aUpdateInd 2
 aName      ContainerVolumeStorageDisposal
-aLastUpdateDate 20160119084401291
+aLastUpdateDate 20160119134401291
 
 eW_MetaDef 3
 aCPLR_ZKey 110006612
 aStatus    1
 aUpdateInd 2
 aName      CompositeSectionType
-aLastUpdateDate 20160119084401291
+aLastUpdateDate 20160119134401291
 
 eW_MetaDef 3
 aCPLR_ZKey 110003579
 aStatus    1
 aUpdateInd 2
 aName      HazardLocationSeparator
-aLastUpdateDate 20160119084401291
+aLastUpdateDate 20160119134401291
 
 eW_MetaDef 3
 aCPLR_ZKey 130001702
 aStatus    1
 aUpdateInd 2
 aName      DonTest
-aLastUpdateDate 20160119084401291
+aLastUpdateDate 20160119134401291
 
 eW_MetaDef 3
 aCPLR_ZKey 4730208
 aStatus    1
 aUpdateInd 2
 aName      DirectionsNotForUseType
-aLastUpdateDate 20160119084401291
+aLastUpdateDate 20160119134401291
 
 eW_MetaDef 3
 aCPLR_ZKey 1186473
 aStatus    1
 aUpdateInd 2
 aName      BoldItalic
-aLastUpdateDate 20160119084401291
+aLastUpdateDate 20160119134401291
 
 eW_MetaDef 3
 aCPLR_ZKey 3934625
 aStatus    1
 aUpdateInd 2
 aName      StorageDisposalSectionType
-aLastUpdateDate 20160119084401291
+aLastUpdateDate 20160119134401291
 
 eW_MetaDef 3
 aCPLR_ZKey 3898401
 aStatus    1
 aUpdateInd 2
 aName      HazardPanel
-aLastUpdateDate 20160119084401291
+aLastUpdateDate 20160119134401291
 
 eW_MetaDef 3
 aCPLR_ZKey 3785525
 aStatus    1
 aUpdateInd 2
 aName      HTML Units
-aLastUpdateDate 20160119084401291
+aLastUpdateDate 20160119134401291
 
 eW_MetaDef 3
 aCPLR_ZKey 2294674
 aStatus    1
 aUpdateInd 2
 aName      REVDate
-aLastUpdateDate 20160119084401291
+aLastUpdateDate 20160119134401291
 
 eW_MetaDef 3
 aCPLR_ZKey 2294672
 aStatus    1
 aUpdateInd 2
 aName      ESLDate
-aLastUpdateDate 20160119084401291
+aLastUpdateDate 20160119134401291
 
 eW_MetaDef 3
 aCPLR_ZKey 70220060
 aStatus    1
 aUpdateInd 2
 aName      ClaimsClassification
-aLastUpdateDate 20160119084401291
+aLastUpdateDate 20160119134401291
 
 eW_MetaDef 3
 aCPLR_ZKey 1639285
 aStatus    1
 aUpdateInd 2
 aName      CompanyRole
-aLastUpdateDate 20160119084401291
+aLastUpdateDate 20160119134401291
 
 eW_MetaDef 3
 aCPLR_ZKey 1266501
 aStatus    1
 aUpdateInd 2
 aName      ActiveInert
-aLastUpdateDate 20160119084401291
+aLastUpdateDate 20160119134401291
 
 eW_MetaDef 3
 aCPLR_ZKey 1206938
 aStatus    1
 aUpdateInd 2
 aName      ContentSectionType
-aLastUpdateDate 20160119084401291
+aLastUpdateDate 20160119134401291
 
 eW_MetaDef 3
 aCPLR_ZKey 1164066
 aStatus    1
 aUpdateInd 2
 aName      ExperienceLevel
-aLastUpdateDate 20160119084401291
+aLastUpdateDate 20160119134401291
 
 eW_MetaDef 3
 aCPLR_ZKey 69055597
 aStatus    1
 aUpdateInd 2
 aName      GeneralSectionType
-aLastUpdateDate 20160119084401291
+aLastUpdateDate 20160119134401291
 
 eW_MetaDef 3
 aCPLR_ZKey 1178868
 aStatus    1
 aUpdateInd 2
 aName      EPA_StatementType
-aLastUpdateDate 20160119084401291
+aLastUpdateDate 20160119134401291
 
 eW_MetaDef 3
 aCPLR_ZKey 1178527
 aStatus    1
 aUpdateInd 2
 aName      ToxicityCategory
-aLastUpdateDate 20160119084401291
+aLastUpdateDate 20160119134401291
 
 eW_MetaDef 3
 aCPLR_ZKey 1178519
 aStatus    1
 aUpdateInd 2
 aName      ChemicalFamily
-aLastUpdateDate 20160119084401291
+aLastUpdateDate 20160119134401291
 
 eW_MetaDef 3
 aCPLR_ZKey 1178421
 aStatus    1
 aUpdateInd 2
 aName      ChildHazardWarning
-aLastUpdateDate 20160119084401291
+aLastUpdateDate 20160119134401291
 
 eW_MetaDef 3
 aCPLR_ZKey 1178406
 aStatus    1
 aUpdateInd 2
 aName      SignalWord
-aLastUpdateDate 20160119084401291
+aLastUpdateDate 20160119134401291
 
 eW_MetaDef 3
 aCPLR_ZKey 68567482
 aStatus    1
 aUpdateInd 2
 aName      Y/N
-aLastUpdateDate 20160119084401291
-
-eW_MetaDef 3
-aCPLR_ZKey 130001711
-aStatus    1
-aName      Status
-aGroupName Base
+aLastUpdateDate 20160119134401291
 
 eW_MetaType 2
 aType      4
@@ -1150,8 +1150,8 @@ Additions:
 1. Added a relationship between M_UsageOrdering, S_UsageOrdering and SPLD_UsageOrdering and their corresponding DirectionsForUse and Marketing Statement entities.
 2. Added Default attributes to LLD and SPLD_LLD.
 3. Add 
-aLastSyncDate 20160115161345819
-aLastUpdateDate 20160115161345819
+aLastSyncDate 20160121192434381
+aLastUpdateDate 20160121192434381
 
 eW_MetaType 2
 aType      5
@@ -1174,8 +1174,8 @@ aStatus    1
 aUpdateInd 2
 aName      ePamms
 aDesc      ePamms Application
-aLastSyncDate 20160118093952771
-aLastUpdateDate 20160118093952771
+aLastSyncDate 20160121192522329
+aLastUpdateDate 20160121192522329
 
 eW_MetaType 2
 aType      7
@@ -1401,8 +1401,8 @@ aStatus    1
 aUpdateInd 2
 aName      mMasLC
 aDesc      Master Label Content Maintenance
-aLastSyncDate 20160118093816391
-aLastUpdateDate 20160118093816391
+aLastSyncDate 20160118143816391
+aLastUpdateDate 20160118143816391
 
 eW_MetaDef 3
 aCPLR_ZKey 69033348
@@ -1463,8 +1463,8 @@ aStatus    1
 aUpdateInd 2
 aName      mSPLDef
 aDesc      Subregistrant Physical Label Maintenance
-aLastSyncDate 20160118093732242
-aLastUpdateDate 20160118093732242
+aLastSyncDate 20160122192544242
+aLastUpdateDate 20160122192544242
 
 eW_MetaDef 3
 aCPLR_ZKey 69035258
@@ -2223,9 +2223,9 @@ aCPLR_ZKey 120229917
 aStatus    1
 aUpdateInd 2
 aName      wMLC
-aDesc      2nd Version of wMLC
-aLastSyncDate 20160116145326663
-aLastUpdateDate 20160116145326663
+aDesc      Master (Primary Registrant) Label Content
+aLastSyncDate 20160123170101154
+aLastUpdateDate 20160123170101154
 
 eW_MetaDef 3
 aCPLR_ZKey 1158563
@@ -2241,8 +2241,9 @@ aCPLR_ZKey 120336464
 aStatus    1
 aUpdateInd 2
 aName      wSLC
-aLastSyncDate 20160119131658796
-aLastUpdateDate 20160119131658796
+aDesc      Subregistrant Label Content
+aLastSyncDate 20160122095644259
+aLastUpdateDate 20160122095644259
 
 eW_MetaDef 3
 aCPLR_ZKey 11205
@@ -2250,8 +2251,8 @@ aStatus    1
 aUpdateInd 2
 aName      wSPLD
 aDesc      Subregistrant Physical Label Definition
-aLastSyncDate 20160119125734884
-aLastUpdateDate 20160119125734884
+aLastSyncDate 20160119175734884
+aLastUpdateDate 20160119175734884
 
 eW_MetaDef 3
 aCPLR_ZKey 93086489
@@ -2300,8 +2301,8 @@ aCPLR_ZKey 68567479
 aStatus    1
 aUpdateInd 2
 aName      Base
-aLastSyncDate 20160119084401291
-aLastUpdateDate 20160119084401291
+aLastSyncDate 20160119134401291
+aLastUpdateDate 20160119134401291
 
 eW_MetaDef 3
 aCPLR_ZKey 68567489
@@ -2325,8 +2326,8 @@ aCPLR_ZKey 69081339
 aStatus    1
 aUpdateInd 2
 aName      Template
-aLastSyncDate 20150606004858214
-aLastUpdateDate 20150606004858214
+aLastSyncDate 20160121171700258
+aLastUpdateDate 20160121171700258
 
 eW_MetaDef 3
 aCPLR_ZKey 68568034
@@ -2370,8 +2371,8 @@ aStatus    1
 aUpdateInd 2
 aName      ZGlobal1
 aDesc      Global Operations in C
-aLastSyncDate 20160115200215272
-aLastUpdateDate 20160115200215272
+aLastSyncDate 20160123231505281
+aLastUpdateDate 20160123231505281
 
 eW_MetaDef 3
 aCPLR_ZKey 110010003
@@ -2388,8 +2389,8 @@ aStatus    1
 aUpdateInd 2
 aName      ZGlobalV
 aDesc      VML operations
-aLastSyncDate 20150826181446662
-aLastUpdateDate 20150826181446662
+aLastSyncDate 20160123231505218
+aLastUpdateDate 20160123231505218
 
 eW_MetaType 2
 aType      15
@@ -2548,7 +2549,10 @@ eW_MetaDef 3
 aGroupName ZGlobalV
 
 eW_MetaDef 3
-aGroupName ZGlobalV
+aCPLR_ZKey 69087046
+aStatus    1
+aName      InsertMappingWordsIntoString
+aGroupName ZGlobal1
 
 eW_MetaDef 3
 aGroupName ZGlobal1
@@ -2845,10 +2849,6 @@ eW_MetaDef 3
 aGroupName TablesA
 
 eW_MetaDef 3
-aCPLR_ZKey 130001711
-aStatus    1
-aName      Status
-aLastUpdateDate 20160119084401291
 aGroupName Base
 
 eW_MetaDef 3
@@ -3220,7 +3220,7 @@ aCompilerDir c:\msvc32\bin
 aMakefileDir c:\lplr\epamms
 aEnvironmentDir c:\lplr\epamms\objlib
 aCloseWindowAfterCompile N
-aMakeOption 4
+aMakeOption 7
 aPath      551
 C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\Program Files\ATI Technologies\ATI Control Panel;C:\Program Files\Microsoft SQL Server\80\Tools\Binn\;c:\b\bat;c:\b\bin;c:\10e\w\bin;C:\Program Files\Java\jdk1.6.0_16\bin;C:\Program Files\DataDirect\ODBC32v52\Drivers;C:\Program Files\Common Files\Compuware\NMShared;C:\Program Files\QuickTime\QTSystem\;C:\Program Files\Microsoft Visual Studio\Common\Tools\WinNT;C:\Program Files\Microsoft Visual Studio\Common\MSDev98\Bin;C:\Program Files\Microsoft Visual Studio\Common\Tools;C:\MSVC32\bin; 
 aCurrentCompilerSpec Y
@@ -3537,13 +3537,13 @@ aZKey      89816452
 aMetaType  2014
 
 eMeta      3
-aName      ZGlobalV
-aZKey      1399843
+aName      ZGlobalS
+aZKey      110010003
 aMetaType  2014
 
 eMeta      3
-aName      ZGlobalS
-aZKey      110010003
+aName      ZGlobalV
+aZKey      1399843
 aMetaType  2014
 
 eDomainJavaClass 2
@@ -3639,7 +3639,6 @@ i360       47
 i361       48
 i362       49
 i363       50
-i364       51
 i365       52
 i366       53
 i367       54
@@ -3666,22 +3665,22 @@ i387       74
 i388       75
 i389       76
 i390       77
-i392       152
+i392       153
 i393       99
 i394       135
 i395       79
-i396       144
+i396       145
 i397       128
-i398       158
-i399       159
-i400       150
+i398       159
+i399       160
+i400       151
 i401       127
-i402       151
-i403       140
-i404       136
-i405       138
-i406       139
-i407       153
+i402       152
+i403       141
+i404       137
+i405       139
+i406       140
+i407       154
 i408       120
 i409       93
 i410       98
@@ -3698,12 +3697,12 @@ i420       85
 i421       84
 i422       83
 i423       82
-i424       143
-i425       142
+i424       144
+i425       143
 i426       113
-i427       156
-i428       149
-i429       154
+i427       157
+i428       150
+i429       155
 i430       96
 i431       101
 i432       109
@@ -3713,11 +3712,11 @@ i435       125
 i436       115
 i437       118
 i438       108
-i439       155
-i440       141
-i441       146
-i442       147
-i443       137
+i439       156
+i440       142
+i441       147
+i442       148
+i443       138
 i444       106
 i445       110
 i446       121
@@ -3730,23 +3729,24 @@ i452       103
 i453       102
 i454       81
 i455       116
-i456       148
+i456       149
 i457       134
 i458       122
 i459       112
 i460       111
-i461       160
+i461       161
 i462       133
-i464       145
+i463       136
+i464       146
 i465       131
 i466       119
 i467       130
 i468       105
 i469       123
 i470       97
-i471       157
+i471       158
 i472       129
-i473       161
+i473       162
 i474       94
 i475       114
 i477       164
@@ -3802,69 +3802,69 @@ i529       216
 i530       217
 i531       218
 i532       219
-i535       222
-i536       223
-i537       224
-i538       225
-i539       226
-i540       227
-i541       228
-i542       229
-i543       230
-i544       231
-i545       232
-i546       233
-i547       234
-i548       235
-i549       236
-i550       237
-i551       238
-i552       239
-i553       240
-i554       241
-i555       242
-i556       243
-i557       244
-i558       245
-i559       246
-i560       247
-i561       248
-i562       249
-i563       250
-i564       251
-i565       252
-i566       253
-i567       254
-i568       255
-i569       256
-i570       257
-i571       258
-i572       259
-i573       260
-i574       261
-i575       262
-i576       263
-i577       264
-i578       265
-i579       266
-i580       267
-i581       268
-i582       269
-i583       270
-i584       271
-i585       272
-i586       273
-i587       274
-i588       275
-i589       276
-i590       277
-i591       278
-i592       279
-i593       280
-i594       281
-i595       282
-i596       283
-i597       284
+i535       251
+i536       253
+i537       252
+i538       254
+i539       255
+i540       276
+i541       256
+i542       257
+i543       261
+i544       268
+i545       267
+i546       266
+i547       246
+i548       234
+i549       232
+i550       270
+i551       269
+i552       271
+i553       282
+i554       264
+i555       265
+i556       262
+i557       235
+i558       238
+i559       247
+i560       281
+i561       227
+i562       239
+i563       275
+i564       248
+i565       277
+i566       222
+i567       283
+i568       259
+i569       258
+i570       284
+i571       249
+i572       237
+i573       223
+i574       224
+i575       263
+i576       242
+i577       272
+i578       250
+i579       260
+i580       230
+i581       243
+i582       229
+i583       226
+i584       274
+i585       280
+i586       244
+i587       245
+i588       231
+i589       233
+i590       279
+i591       236
+i592       240
+i593       273
+i594       278
+i595       241
+i596       225
+i597       228
 i600       287
 i601       288
 i602       289

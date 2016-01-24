@@ -218,7 +218,7 @@ if ( strActionToProcess != null )
 
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "AcceptAndReturnAreasStatement" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "AcceptAndReturnAppTypesStatement" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCApplicationTypesStatement", strActionToProcess );
@@ -249,7 +249,7 @@ if ( strActionToProcess != null )
       catch ( Exception e )
       {
          nRC = 2;
-         VmlOperation.CreateMessage( task, "AcceptAndReturnAreasStatement", e.getMessage( ), "" );
+         VmlOperation.CreateMessage( task, "AcceptAndReturnAppTypesStatement", e.getMessage( ), "" );
          break;
       }
       // Next Window
@@ -713,7 +713,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="AcceptAndReturn" name="AcceptAndReturn"><a href="#"  onclick="AcceptAndReturnAreasStatement()">Accept & Return</a></li>
+       <li id="AcceptAndReturn" name="AcceptAndReturn"><a href="#"  onclick="AcceptAndReturnAppTypesStatement()">Accept & Return</a></li>
 <%
    }
 %>
@@ -767,10 +767,11 @@ else
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
-   View mMasLC = null;
    View mEPA = null;
+   View mMasLC = null;
    View mMasProd = null;
    View mMasProdLST = null;
+   View mOrganiz = null;
    View mPrimReg = null;
    View wWebXfer = null;
    String strRadioGroupValue = "";

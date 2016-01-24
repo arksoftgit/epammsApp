@@ -631,7 +631,7 @@ else
 <html>
 <head>
 
-<title>List Subregistrant Products</title>
+<title>Subregistrant Products List</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->

@@ -1,15 +1,15 @@
-z1000-Zeidon    TEMPLATE TZDGSRCO 06/05/15   20:48:58 1.0a2    
+z1000-Zeidon    TEMPLATE TZDGSRCO 01/21/16   17:17:00 1.0a2   
 eDomainGroup 1
 aZKey      69081339
 aName      Template
 aExtension C
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      69081340
 aName      TemplateTitlePosition
 aDesc      Where the Title is to be formatted for a Section
 aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
 aMaxStringLth 5
 aContextRestriction N
@@ -37,10 +37,10 @@ aExternalValue Skip Title
 aInternalValue SK
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      120154151
 aName      ContinuationBreakFlag
 aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
 aMaxStringLth 1
 aContextRestriction N
@@ -81,10 +81,10 @@ aExternalValue Part
 aInternalValue M
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      120150076
 aName      LLD_ColumnListType
 aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
 aMaxStringLth 2
 aContextRestriction N
@@ -105,10 +105,10 @@ aExternalValue Usage List - 3 Column
 aInternalValue C3
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      120129882
 aName      SelectUsageType
 aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
 aMaxStringLth 2
 aContextRestriction N
@@ -149,10 +149,10 @@ aExternalValue Claims Viruses
 aInternalValue CV
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      4322672
 aName      TextAlign
 aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
 aMaxStringLth 20
 aContextRestriction N
@@ -183,10 +183,10 @@ aExternalValue Justify
 aInternalValue justify
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      4322656
 aName      FontSize
 aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
 aMaxStringLth 20
 aContextRestriction N
@@ -372,10 +372,10 @@ aExternalValue 40
 aInternalValue 40
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      4322651
 aName      FontWeight
 aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
 aMaxStringLth 20
 aContextRestriction N
@@ -396,10 +396,10 @@ aExternalValue Normal
 aInternalValue normal
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      4322644
 aName      FontFamily
 aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
 aMaxStringLth 20
 aContextRestriction N
@@ -430,10 +430,10 @@ aExternalValue Serif
 aInternalValue Serif
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      4322642
 aName      Color
 aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
 aMaxStringLth 20
 aContextRestriction N
@@ -462,10 +462,10 @@ aExternalValue Green
 aInternalValue green
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      4322633
 aName      BorderStyle
 aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
 aMaxStringLth 20
 aContextRestriction N
@@ -504,11 +504,11 @@ aExternalValue Groove
 aInternalValue groove
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      1181561
 aName      UsageType
 aDesc      Claim, Surface, Application Type, Area of Use (C,S,T,U)
 aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
 aMaxStringLth 1
 aContextRestriction N
@@ -565,11 +565,11 @@ aExternalValue U
 aInternalValue U
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      69080530
 aName      TemplateUsageFormatType
 aDesc      How any related Usage entries will be formatted for the Section.
 aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
 aMaxStringLth 2
 aContextRestriction N
@@ -605,11 +605,11 @@ aExternalValue Listed in 3 Columns
 aInternalValue C3
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      69080546
 aName      TemplateStatementFormat
 aDesc      How Statements for a Section will be formatted.
 aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
 aMaxStringLth 5
 aContextRestriction N
@@ -650,11 +650,11 @@ aExternalValue 3 Column Usage List
 aInternalValue L3
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      69080516
 aName      LLD_SectionType
 aDesc      Template Section Types are usually the same as regular Section Types.
 aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
 aMaxStringLth 32
 aContextRestriction N
@@ -686,8 +686,8 @@ aInternalValue Hazards
 
 eTableEntry 4
 aZKey      69081350
-aExternalValue Physical Hazard
-aInternalValue PhysicalHazard
+aExternalValue Environmental Hazard
+aInternalValue EnvironmentalHazard
 
 eTableEntry 4
 aZKey      3911627

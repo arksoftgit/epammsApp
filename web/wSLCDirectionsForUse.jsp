@@ -845,7 +845,7 @@ else
 <html>
 <head>
 
-<title>Direction for Use</title>
+<title>Directions For Use</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
@@ -966,11 +966,11 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "OtherHazard" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "EnvironmentalHazards" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smOtherHazard" name="smOtherHazard"><a href="#"  onclick="smDisplayHazardSection()">Other Hazard</a></li>
+       <li id="smEnvironmentalHazards" name="smEnvironmentalHazards"><a href="#"  onclick="smDisplayHazardSection()">Environmental Hazards</a></li>
 <%
    }
 %>
@@ -1020,7 +1020,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smDirectionsForUse" name="smDirectionsForUse"><a href="#"  class="sideselected"  onclick="smDisplayDirectionsUseSect()">Directions for Use</a></li>
+       <li id="smDirectionsForUse" name="smDirectionsForUse"><a href="#"  class="sideselected"  onclick="smDisplayDirectionsUseSect()">Directions For Use</a></li>
 <%
    }
 %>
@@ -1260,7 +1260,7 @@ try
 
    <td><a href="#" onclick="GOTO_DirsForUseSectionDetail( this.id )" id="Name::<%=strEntityKey%>"><%=strName%></a></td>
    <td><a href="#" onclick="GOTO_DirsForUseSectionDetail( this.id )" id="Title::<%=strEntityKey%>"><%=strTitle%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateStorDispSect" onclick="GOTO_DirsForUseSectionDetail( this.id )" id="BMBUpdateStorDispSect::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Display"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateStorDispSect" onclick="GOTO_DirsForUseSectionDetail( this.id )" id="BMBUpdateStorDispSect::<%=strEntityKey%>"><img src="./images/ePammsDisplay.png" alt="Display"></a></td>
 
 </tr>
 

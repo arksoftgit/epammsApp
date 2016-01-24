@@ -44,7 +44,7 @@ public class ZGlobalS_Operation extends VmlDialog
 //:GLOBAL OPERATION
 //:BuildCompositeEntriesForSPLD( VIEW mSPLDef BASED ON LOD mSPLDef )
 
-//:   STRING ( 100 )   szCompositeLocation
+//:   STRING ( 256 )   szCompositeLocation
 public void 
 BuildCompositeEntriesForSPLD( View     mSPLDef )
 {
@@ -88,8 +88,8 @@ BuildCompositeEntriesForSPLD( View     mSPLDef )
 
 
    //:// Build the flat display of all components subobject.
-   //:MaxDisplayLength = 100
-   MaxDisplayLength = 100;
+   //:MaxDisplayLength = 256
+   MaxDisplayLength = 256;
 
    //:// First clear any current entries.
    //:FOR EACH mSPLDef.CompositeComponentList
@@ -1009,14 +1009,14 @@ BuildCompositeEntriesForSPLD( View     mSPLDef )
       sb_szCompositeLocation = new StringBuilder( 32 );
    else
       sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
-      ZeidonStringCopy( sb_szCompositeLocation, 1, 0, "...", 1, 0, 101 );
+      ZeidonStringCopy( sb_szCompositeLocation, 1, 0, "...", 1, 0, 257 );
    szCompositeLocation = sb_szCompositeLocation.toString( );}
     {StringBuilder sb_szCompositeLocation;
    if ( szCompositeLocation == null )
       sb_szCompositeLocation = new StringBuilder( 32 );
    else
       sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
-      ZeidonStringConcat( sb_szCompositeLocation, 1, 0, szTempString_7, 1, 0, 101 );
+      ZeidonStringConcat( sb_szCompositeLocation, 1, 0, szTempString_7, 1, 0, 257 );
    szCompositeLocation = sb_szCompositeLocation.toString( );}
    //:IF mSPLDef.SPLD_HumanHazardSection.PanelLoc2 != ""
    if ( CompareAttributeToString( mSPLDef, "SPLD_HumanHazardSection", "PanelLoc2", "" ) != 0 )
@@ -1027,7 +1027,7 @@ BuildCompositeEntriesForSPLD( View     mSPLDef )
          sb_szCompositeLocation = new StringBuilder( 32 );
       else
          sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
-            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, " / ", 1, 0, 101 );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, " / ", 1, 0, 257 );
       szCompositeLocation = sb_szCompositeLocation.toString( );}
       {MutableInt mi_lTempInteger_7 = new MutableInt( lTempInteger_7 );
       StringBuilder sb_szTempString_8;
@@ -1043,7 +1043,7 @@ BuildCompositeEntriesForSPLD( View     mSPLDef )
          sb_szCompositeLocation = new StringBuilder( 32 );
       else
          sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
-            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, szTempString_8, 1, 0, 101 );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, szTempString_8, 1, 0, 257 );
       szCompositeLocation = sb_szCompositeLocation.toString( );}
    } 
 
@@ -1057,7 +1057,7 @@ BuildCompositeEntriesForSPLD( View     mSPLDef )
          sb_szCompositeLocation = new StringBuilder( 32 );
       else
          sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
-            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, " / ", 1, 0, 101 );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, " / ", 1, 0, 257 );
       szCompositeLocation = sb_szCompositeLocation.toString( );}
       {MutableInt mi_lTempInteger_8 = new MutableInt( lTempInteger_8 );
       StringBuilder sb_szTempString_9;
@@ -1073,7 +1073,7 @@ BuildCompositeEntriesForSPLD( View     mSPLDef )
          sb_szCompositeLocation = new StringBuilder( 32 );
       else
          sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
-            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, szTempString_9, 1, 0, 101 );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, szTempString_9, 1, 0, 257 );
       szCompositeLocation = sb_szCompositeLocation.toString( );}
    } 
 
@@ -1087,7 +1087,7 @@ BuildCompositeEntriesForSPLD( View     mSPLDef )
          sb_szCompositeLocation = new StringBuilder( 32 );
       else
          sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
-            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, " / ", 1, 0, 101 );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, " / ", 1, 0, 257 );
       szCompositeLocation = sb_szCompositeLocation.toString( );}
       {MutableInt mi_lTempInteger_9 = new MutableInt( lTempInteger_9 );
       StringBuilder sb_szTempString_10;
@@ -1103,7 +1103,7 @@ BuildCompositeEntriesForSPLD( View     mSPLDef )
          sb_szCompositeLocation = new StringBuilder( 32 );
       else
          sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
-            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, szTempString_10, 1, 0, 101 );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, szTempString_10, 1, 0, 257 );
       szCompositeLocation = sb_szCompositeLocation.toString( );}
    } 
 
@@ -1117,7 +1117,7 @@ BuildCompositeEntriesForSPLD( View     mSPLDef )
          sb_szCompositeLocation = new StringBuilder( 32 );
       else
          sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
-            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, " / ", 1, 0, 101 );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, " / ", 1, 0, 257 );
       szCompositeLocation = sb_szCompositeLocation.toString( );}
       {MutableInt mi_lTempInteger_10 = new MutableInt( lTempInteger_10 );
       StringBuilder sb_szTempString_11;
@@ -1133,7 +1133,7 @@ BuildCompositeEntriesForSPLD( View     mSPLDef )
          sb_szCompositeLocation = new StringBuilder( 32 );
       else
          sb_szCompositeLocation = new StringBuilder( szCompositeLocation );
-            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, szTempString_11, 1, 0, 101 );
+            ZeidonStringConcat( sb_szCompositeLocation, 1, 0, szTempString_11, 1, 0, 257 );
       szCompositeLocation = sb_szCompositeLocation.toString( );}
    } 
 

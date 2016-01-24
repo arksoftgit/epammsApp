@@ -13,7 +13,7 @@
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
 <%@ page import="com.quinsoft.epamms.*" %>
 
-<%!
+<%! 
 
 ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
@@ -63,9 +63,9 @@ public int DoInputMapping( HttpServletRequest request,
       // Grid: GridClaims
       iTableRowCnt = 0;
 
-      // We are creating a temp view to the grid view so that if there are
-      // grids on the same window with the same view we do not mess up the
-      // entity positions.
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
       vGridTmp = mMasLC.newView( );
       csrRC = vGridTmp.cursor( "M_Usage" ).setFirst(  );
       while ( csrRC.isSet() )
@@ -160,7 +160,7 @@ String strInputFileName = "";
 strActionToProcess = (String) request.getParameter( "zAction" );
 
 strLastWindow = (String) session.getAttribute( "ZeidonWindow" );
-if ( StringUtils.isBlank( strLastWindow ) )
+if ( StringUtils.isBlank( strLastWindow ) ) 
    strLastWindow = "NoLastWindow";
 
 strLastAction = (String) session.getAttribute( "ZeidonAction" );
@@ -644,44 +644,6 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditChemicalHazardsSection" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCOrganismClaims", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCOrganismClaims", "wMLC.EditChemicalHazardsSection" );
-      nOptRC = wMLC.EditChemicalHazardsSection( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "PhysicalChemicalHazardsSection" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
    while ( bDone == false && StringUtils.equals( strActionToProcess, "smGOTO_DilutionEntries" ) )
    {
       bDone = true;
@@ -961,7 +923,7 @@ if ( strActionToProcess != null )
             task.log().info( "Action Error Redirect to: " + strURL );
          }
 
-         if ( ! strURL.equals("wMLCOrganismClaims.jsp") )
+         if ( ! strURL.equals("wMLCOrganismClaims.jsp") ) 
          {
             response.sendRedirect( strURL );
             // If we are redirecting to a new page, then we need this return so that the rest of this page doesn't get built.
@@ -1025,11 +987,11 @@ else
 
 </head>
 
-<!--
-// If we have table sorting on this page, the table sorting does not work in Firefox
-// (seems to work in IE and Opera).  The solution is to not call _AfterPageLoaded in OnLoad event.
-// In the Standardista code (sts.js) there is an addEvent that will call _AfterPageLoaded.
--->
+<!-- 
+// If we have table sorting on this page, the table sorting does not work in Firefox 
+// (seems to work in IE and Opera).  The solution is to not call _AfterPageLoaded in OnLoad event. 
+// In the Standardista code (sts.js) there is an addEvent that will call _AfterPageLoaded. 
+--> 
 <body onSubmit="_DisableFormElements( true )" onBeforeUnload="_BeforePageUnload( )">
 
 <%@ include file="./include/pagebackground.inc" %>  <!-- just temporary until we get the painter dialog updates from Kelly ... 2011.10.08 dks -->
@@ -1146,16 +1108,6 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New3" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smNew3" name="smNew3"><a href="#"  onclick="smEditChemicalHazardsSection()">Phys/Chem Hazards</a></li>
-<%
-   }
-%>
-
-<%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New2" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
@@ -1220,7 +1172,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smDirectionsForUse" name="smDirectionsForUse"><a href="#"  onclick="smEditDirectionsUseSect()">Directions for Use</a></li>
+       <li id="smDirectionsForUse" name="smDirectionsForUse"><a href="#"  onclick="smEditDirectionsUseSect()">Directions For Use</a></li>
 <%
    }
 %>
@@ -1254,10 +1206,11 @@ else
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
-   View mMasLC = null;
    View mEPA = null;
+   View mMasLC = null;
    View mMasProd = null;
    View mMasProdLST = null;
+   View mOrganiz = null;
    View mPrimReg = null;
    View wWebXfer = null;
    String strRadioGroupValue = "";
@@ -1369,7 +1322,7 @@ else
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBStorDispSections3:GroupBox */ %>
 
-<div id="GBStorDispSections3" name="GBStorDispSections3" class="listgroup"   style="float:left;position:relative; width:780px; height:40px;">  <!-- GBStorDispSections3 -->
+<div id="GBStorDispSections3" name="GBStorDispSections3" class="listgroup"   style="float:left;position:relative; width:780px; height:40px;">  <!-- GBStorDispSections3 --> 
 
 <% /* EnvironmentalHazardsSection1:Text */ %>
 
@@ -1382,7 +1335,7 @@ else
 <button type="button" name="PBNew" id="PBNew" value="" onclick="GOTO_AddUsageStatements( )" style="width:78px;height:26px;position:absolute;left:518px;top:12px;">New</button>
 
 
-</div>  <!--  GBStorDispSections3 -->
+</div>  <!--  GBStorDispSections3 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -1395,7 +1348,7 @@ else
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox1:GroupBox */ %>
 
-<div id="GroupBox1" name="GroupBox1" style="width:780px;float:left;">  <!-- GroupBox1 -->
+<div id="GroupBox1" name="GroupBox1" style="width:780px;float:left;">  <!-- GroupBox1 --> 
 
 
  <!-- This is added as a line spacer -->
@@ -1434,7 +1387,7 @@ try
       String strGEClassification;
       String strGEPathogen;
       String strBMBUpdateClaimsStatement;
-
+      
       View vGridClaims;
       vGridClaims = mMasLC.newView( );
       csrRC2 = vGridClaims.cursor( "M_Usage" ).setFirst(  );
@@ -1521,7 +1474,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </div>  <!-- End of a new line -->
 
 
-</div>  <!--  GroupBox1 -->
+</div>  <!--  GroupBox1 --> 
 </div>  <!-- End of a new line -->
 
 

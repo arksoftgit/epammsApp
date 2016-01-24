@@ -205,6 +205,21 @@ function ADD_AreasUsageItems( )
    }
 }
 
+function GOTO_DeleteSelectedEntries( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCAreasOfUse.zAction.value = "GOTO_DeleteSelectedEntries";
+      document.wMLCAreasOfUse.submit( );
+   }
+}
+
 function DELETE_SelectedUsageEntries( )
 {
 
@@ -216,7 +231,7 @@ function DELETE_SelectedUsageEntries( )
       // Javascript code entered by user.
 
 // Confirmation of  Delete.
-if (!confirm("OK to delete selected Surfaces?"))
+if (!confirm("OK to delete selected Areas of Use?"))
 {
    return;
 }
@@ -459,21 +474,6 @@ function smEnvironmentalHazards( )
       _DisableFormElements( true );
 
       document.wMLCAreasOfUse.zAction.value = "smEnvironmentalHazards";
-      document.wMLCAreasOfUse.submit( );
-   }
-}
-
-function smEditChemicalHazardsSection( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCAreasOfUse.zAction.value = "smEditChemicalHazardsSection";
       document.wMLCAreasOfUse.submit( );
    }
 }

@@ -417,7 +417,7 @@ else
 <html>
 <head>
 
-<title>Directions for Use Section</title>
+<title>Directions For Use Section</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->

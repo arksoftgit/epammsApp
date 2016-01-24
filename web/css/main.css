@@ -211,7 +211,7 @@ font-weight:bold;
    z-index:-1;
    height:400px;
    width:100%;
-   top:351px;
+   top:350px;
    left:0px;;
 }
 
@@ -540,12 +540,15 @@ width:20px;
 background-position:right;
 }
 
+
 .full_width{
 width:960px;
-margin-left:0;
-margin-right:0;
-display:inline;
 float:left;
+text-align: left;
+font-weight: bold;
+color: #999;
+font-size: 100%;
+font-family: Verdana,Arial,Helvetica,sans-serif;
 }
 
 .breadcrumb, .breadcrumb a{

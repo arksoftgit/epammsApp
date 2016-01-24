@@ -189,6 +189,21 @@ function CheckAllInGrid(id, CheckBoxName)
    }
 }
 
+function Sync( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCVersionData.zAction.value = "Sync";
+      document.wSLCVersionData.submit( );
+   }
+}
+
 function smSaveAndReturnMLC( )
 {
 

@@ -1208,6 +1208,7 @@ END
 **    OPERATION: InsertMappingWordsIntoString
 **    
 *************************************************************************************************/
+/**** moved to ZGlobal1
 GLOBAL OPERATION
 InsertMappingWordsIntoString( VIEW mSPLDef BASED ON LOD mSPLDef,
                               STRING ( 10000 ) szSourceString,
@@ -1238,39 +1239,45 @@ InsertMappingWordsIntoString( VIEW mSPLDef BASED ON LOD mSPLDef,
    // After determining the position of the insertion, we will loop through Usage entries, formatting each entry as we go.
 //TraceLineS( "### Insert szUsageTypeEntityName: ", szUsageTypeEntityName )
 //TraceLineS( "### Insert szLoopingEntityName: ", szLoopingEntityName )
-   
+
+//For use in: {{Area Of Use}}. Disinfects, cleans, and deodorizes the following hard nonporous inanimate surfaces: {{Surface}}, etc.).
+//1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123  << lth == 133
+//         1         2         3         4         5         6         7         8         9        10        11        12        13
+   szToString = ""
    SourceIndex  = 1
    SourceOffset = 1
    MoveStringLength = 1
-   szToString = ""
-   Length = zGetStringLen( szSourceString )
-   Length = Length - 4    // We need to back off the end of the string so that the two character compare doesn't go beyond the string.
+   Length = zGetStringLen( szSourceString )  // 133
+   Length = Length - 4  // 129  Back off the end of the string so that the two character compare doesn't go beyond the string.
    LOOP WHILE SourceIndex <= Length
-      IF szSourceString[SourceIndex:2] = "{{"
+      IF szSourceString[SourceIndex:2] = "{{"  // 13,115
       
          // First copy over the characters we've just skipped over and reset length (unless {{ are first two characters).
          // ZeidonStringCopy( Target, TargetOffset, TargetMaxToReceive, Source, SourceOffset, NoCharsToCopy, TargetMaxLength )
-         IF SourceIndex > 1
-            TargetOffset = zstrlen( szToString )
-            TargetOffset = TargetOffset + 1
-            MoveStringLength = MoveStringLength - 1
+         IF SourceIndex > 1  // 13,115
+            TargetOffset = zstrlen( szToString )  // 0,132("For use in: Airports, Animal Care, Animal Laboratories, Animal Life Science Laboratories, Athletic Facilities and Automotive Industy")
+            TargetOffset = TargetOffset + 1  // 1,133
+            MoveStringLength = MoveStringLength - 1 // 12,86
             ZeidonStringCopy( szToString, TargetOffset, 5000, szSourceString, SourceOffset, MoveStringLength, 10000 )
-            SourceOffset = SourceOffset + MoveStringLength   // Skip past characters just moved.
+            // "For use in: "
+            // "For use in: Airports, Animal Care, Animal Laboratories, Animal Life Science Laboratories, Athletic Facilities and Automotive Industy. Disinfects, cleans, and deodorizes the following hard nonporous inanimate surfaces:"
+            SourceOffset = SourceOffset + MoveStringLength   // 13,114=28+86  Skip past characters just moved.
             MoveStringLength = 0
          END
          
          // Parse the Usage Type out of the string of the form {{xxxxx}}.
-         SourceIndex  = SourceIndex + 2
+         SourceIndex  = SourceIndex + 2  // 15,117
          TypeLength  = 0
-         TempLength = Length + 4  // We need to add the characters back to the length in case the Type is at the end of the Source.
+         TempLength = Length + 4  // 133,133  We need to add the characters back to the length in case the Type is at the end of the Source.
          LOOP WHILE szSourceString[SourceIndex:2] != "}}" AND TypeLength <= 32 AND SourceIndex < TempLength
             SourceIndex = SourceIndex + 1
             TypeLength  = TypeLength + 1
          END
-         SourceOffset = SourceOffset + 2  // Skip past closing double parens and length of keyword.
-         ZeidonStringCopy( szUsageType, 1, 50, szSourceString, SourceOffset, TypeLength, 100 )
-         SourceIndex = SourceIndex + 2
-         SourceOffset = SourceOffset + TypeLength + 2  // Skip past closing double parens and length of keyword.
+         // SourceIndex == 26,124   TypeLength == 11,7 ("Area of Use"),("{Surfac")
+         SourceOffset = SourceOffset + 2  // 15,116  Skip past closing double parens and length of keyword.
+         ZeidonStringCopy( szUsageType, 1, 50, szSourceString, SourceOffset, TypeLength, 100 )  // "Area of Use","{Surfac"  <== ERROR!!!
+         SourceIndex = SourceIndex + 2  // 28
+         SourceOffset = SourceOffset + TypeLength + 2  // 28  Skip past closing double parens and length of keyword.
          
          // Copy the Usage values into the text. This will depend on Type.
          
@@ -1295,16 +1302,16 @@ InsertMappingWordsIntoString( VIEW mSPLDef BASED ON LOD mSPLDef,
             END
             
             // Process Usage entries if the Looping Entity Name is specified.
-            IF szLoopingEntityName != ""
+            IF szLoopingEntityName != ""  // SPLD_MarketingUsageOrdering
                Count = 0
                nRC = SetCursorFirstEntity( mSPLDef, szLoopingEntityName, "" )
                LOOP WHILE nRC >= zCURSOR_SET
-                  nRC = CompareAttributeToString( mSPLDef, szUsageTypeEntityName, "UsageType", szSelectUsageType )
+                  nRC = CompareAttributeToString( mSPLDef, szUsageTypeEntityName, "UsageType", szSelectUsageType )  // "U"
                   IF nRC = 0
                      // There is a match on UsageType.
                      // Copy Usage variable to text. If not first entry, put in a separator character.
                      Count = Count + 1
-                     GetStringFromAttribute( szUsageValue, mSPLDef, szUsageTypeEntityName, "Name" )
+                     GetStringFromAttribute( szUsageValue, mSPLDef, szUsageTypeEntityName, "Name" )  // "Airports"
                      IF Count > 1
                         // If szSeparatorCharacters are ", ", substitute " and " for the separator characters before the last
                         // Usage entry.
@@ -1331,8 +1338,8 @@ InsertMappingWordsIntoString( VIEW mSPLDef BASED ON LOD mSPLDef,
          END
       END
       
-      SourceIndex      = SourceIndex + 1
-      MoveStringLength = MoveStringLength + 1
+      SourceIndex      = SourceIndex + 1  // 29
+      MoveStringLength = MoveStringLength + 1  // 1
    END
    
    // Move in remaining characters.
@@ -1341,7 +1348,7 @@ InsertMappingWordsIntoString( VIEW mSPLDef BASED ON LOD mSPLDef,
    TargetOffset = TargetOffset + 1
    ZeidonStringCopy( szToString, TargetOffset, 5000, szSourceString, SourceOffset, MoveStringLength, 10000 )
    szSourceString = szToString
-
+***/
     /*****
        zVIEW  viewT;
        String  szCurrentType[ 2 ];
@@ -1430,7 +1437,7 @@ InsertMappingWordsIntoString( VIEW mSPLDef BASED ON LOD mSPLDef,
        SysFreeMemory( lMemHandle  );
     ****/
 
-END
+// END
 
 /*************************************************************************************************
 **    

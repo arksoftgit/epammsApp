@@ -1485,7 +1485,7 @@ try
    <td><%=strGridESL_Date2%></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateSubregProduct2" onclick="GOTO_UpdateSubregProductSLC( this.id )" id="BMBUpdateSubregProduct2::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteSubregProduct2" onclick="DeleteSubregProductSLC( this.id )" id="BMBDeleteSubregProduct2::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn4" onclick="GOTO_CopySLC_Version( this.id )" id="BitmapBtn4::<%=strEntityKey%>"><img src="./images/ePammsNew.png" alt="Copy"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn4" onclick="GOTO_CopySLC_Version( this.id )" id="BitmapBtn4::<%=strEntityKey%>"><img src="./images/ePammsCopy.png" alt="Copy"></a></td>
 
 </tr>
 
@@ -1655,7 +1655,7 @@ try
    <td><a href="#" onclick="GOTO_UpdateSubregProductSPLD( this.id )" id="GridEditCtl4::<%=strEntityKey%>"><%=strGridEditCtl4%></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn2" onclick="GOTO_UpdateSubregProductSPLD( this.id )" id="BitmapBtn2::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn3" onclick="GOTO_DeleteSPLD( this.id )" id="BitmapBtn3::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn5" onclick="GOTO_CopySPLD_Version( this.id )" id="BitmapBtn5::<%=strEntityKey%>"><img src="./images/ePammsNew.png" alt="Copy"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn5" onclick="GOTO_CopySPLD_Version( this.id )" id="BitmapBtn5::<%=strEntityKey%>"><img src="./images/ePammsCopy.png" alt="Copy"></a></td>
 
 </tr>
 

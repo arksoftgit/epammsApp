@@ -307,7 +307,7 @@ BuildDifferencesMLC( VIEW lMLCATgt BASED ON LOD lMLCATgt,
    FOR EACH lMLCATgt.M_DirectionsForUseSection
       // Title
       CREATE ENTITY lMLCATgt.ComparisonDifference
-      lMLCATgt.ComparisonDifference.Title = "Directions for Use: " + lMLCATgt.M_DirectionsForUseSection.Title
+      lMLCATgt.ComparisonDifference.Title = "Directions For Use: " + lMLCATgt.M_DirectionsForUseSection.Title
       lMLCATgt.ComparisonDifference.TitleFlag = "Y"
       lSortSectionNbr = lSortSectionNbr + 1
       lMLCATgt.M_DirectionsForUseSection.wSectionSortOrder = lSortSectionNbr
@@ -348,10 +348,10 @@ BuildDifferencesMLC( VIEW lMLCATgt BASED ON LOD lMLCATgt,
          END
          // Target Usages not in Source
          SET CURSOR FIRST lMLCASrc.M_DirectionsForUseSection WHERE lMLCASrc.M_DirectionsForUseSection.ID = lMLCATgt.MP_DirectionsForUseSection.ID
-         FOR EACH lMLCATgt.M_DirectionsUsage WITHIN lMLCATgt.M_DirectionsForUseSection
-            SET CURSOR FIRST lMLCASrc.M_DirectionsUsage WITHIN lMLCASrc.M_DirectionsForUseSection
-                       WHERE lMLCASrc.M_DirectionsUsage.UsageType = lMLCATgt.M_DirectionsUsage.UsageType
-                         AND lMLCASrc.M_DirectionsUsage.Name = lMLCATgt.M_DirectionsUsage.Name
+         FOR EACH lMLCATgt.M_DirectionsForUseStatement WITHIN lMLCATgt.M_DirectionsForUseSection
+            SET CURSOR FIRST lMLCASrc.M_DirectionsForUseStatement WITHIN lMLCASrc.M_DirectionsForUseSection
+                       WHERE lMLCASrc.M_DirectionsForUseStatement.UsageType = lMLCATgt.M_DirectionsUsage.UsageType
+                         AND lMLCASrc.M_DirectionsForUseStatement.Name = lMLCATgt.M_DirectionsUsage.Name
             IF RESULT < zCURSOR_SET
                GetStringFromAttributeByContext( szUsageType, lMLCATgt, "M_DirectionsUsage", "UsageType", "", 20 )
                CREATE ENTITY lMLCATgt.ComparisonDifference
@@ -363,9 +363,9 @@ BuildDifferencesMLC( VIEW lMLCATgt BASED ON LOD lMLCATgt,
          END
          // Source Usages not in Target
          FOR EACH lMLCASrc.M_DirectionsUsage WITHIN lMLCASrc.M_DirectionsForUseSection
-            SET CURSOR FIRST lMLCATgt.M_DirectionsUsage WITHIN lMLCATgt.M_DirectionsForUseSection
-                       WHERE lMLCATgt.M_DirectionsUsage.UsageType = lMLCASrc.M_DirectionsUsage.UsageType
-                         AND lMLCATgt.M_DirectionsUsage.Name = lMLCASrc.M_DirectionsUsage.Name
+            SET CURSOR FIRST lMLCATgt.M_DirectionsForUseStatement WITHIN lMLCATgt.M_DirectionsForUseSection
+                       WHERE lMLCATgt.M_DirectionsForUseStatement.UsageType = lMLCASrc.M_DirectionsUsage.UsageType
+                         AND lMLCATgt.M_DirectionsForUseStatement.Name = lMLCASrc.M_DirectionsUsage.Name
             IF RESULT < zCURSOR_SET
                GetStringFromAttributeByContext( szUsageType, lMLCASrc, "M_DirectionsUsage", "UsageType", "", 20 )
                CREATE ENTITY lMLCATgt.ComparisonDifference

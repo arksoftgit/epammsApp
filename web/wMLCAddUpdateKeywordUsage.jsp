@@ -675,10 +675,11 @@ else
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
 
 <%
-   View mMasLC = null;
    View mEPA = null;
+   View mMasLC = null;
    View mMasProd = null;
    View mMasProdLST = null;
+   View mOrganiz = null;
    View mPrimReg = null;
    View wWebXfer = null;
    String strRadioGroupValue = "";
@@ -1094,7 +1095,7 @@ try
 <tr<%=strOdd%>>
 
    <td><input size="53" value="<%=strGridCtrlText11%>"<%=strGridCtrlText11ErrorColor%> name="GridCtrlText11::<%=strEntityKey%>" id="GridCtrlText11::<%=strEntityKey%>" ></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="DeleteBtn1" onclick="ADD_UsageKeywordTextItem( this.id )" id="DeleteBtn1::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Add"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="DeleteBtn1" onclick="ADD_UsageKeywordTextItem( this.id )" id="DeleteBtn1::<%=strEntityKey%>"><img src="./images/ePammsNew.png" alt="Add"></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn1" onclick="DELETE_InsertTextItem( this.id )" id="BitmapBtn1::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>

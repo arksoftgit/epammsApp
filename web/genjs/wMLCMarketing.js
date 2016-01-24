@@ -430,21 +430,6 @@ function smEnvironmentalHazards( )
    }
 }
 
-function smEditChemicalHazardsSection( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCMarketing.zAction.value = "smEditChemicalHazardsSection";
-      document.wMLCMarketing.submit( );
-   }
-}
-
 function smGOTO_DilutionEntries( )
 {
 

@@ -189,7 +189,7 @@ function CheckAllInGrid(id, CheckBoxName)
    }
 }
 
-function AcceptAndReturnAreasStatement( )
+function AcceptAndReturnAppTypesStatement( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -199,7 +199,7 @@ function AcceptAndReturnAreasStatement( )
    {
       _DisableFormElements( true );
 
-      document.wMLCApplicationTypesStatement.zAction.value = "AcceptAndReturnAreasStatement";
+      document.wMLCApplicationTypesStatement.zAction.value = "AcceptAndReturnAppTypesStatement";
       document.wMLCApplicationTypesStatement.submit( );
    }
 }

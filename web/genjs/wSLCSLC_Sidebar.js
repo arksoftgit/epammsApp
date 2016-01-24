@@ -204,6 +204,21 @@ function CancelAndReturnSLC( )
    }
 }
 
+function DisplayPhysicalChemicalHazards( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCSLC_Sidebar.zAction.value = "DisplayPhysicalChemicalHazards";
+      document.wSLCSLC_Sidebar.submit( );
+   }
+}
+
 function DisplayApplicationTypesSection( )
 {
 
@@ -309,21 +324,6 @@ function DisplayHumanHazardSect( )
    }
 }
 
-function DisplayVersionData( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSLCSLC_Sidebar.zAction.value = "DisplayVersionData";
-      document.wSLCSLC_Sidebar.submit( );
-   }
-}
-
 function DisplayIngredientsSect( )
 {
 
@@ -395,6 +395,21 @@ function DisplaySurfacesSection( )
       _DisableFormElements( true );
 
       document.wSLCSLC_Sidebar.zAction.value = "DisplaySurfacesSection";
+      document.wSLCSLC_Sidebar.submit( );
+   }
+}
+
+function DisplayVersionData( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCSLC_Sidebar.zAction.value = "DisplayVersionData";
       document.wSLCSLC_Sidebar.submit( );
    }
 }

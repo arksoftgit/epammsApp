@@ -928,7 +928,7 @@ else
                          <option value="Ingredients">Ingredients</option>
                          <option value="Marketing">Marketing</option>
                          <option value="NetContents">Net Contents</option>
-                         <option value="PhysicalHazard">Physical Hazard</option>
+                         <option value="EnvironmentalHazard">Environmental Hazard</option>
                          <option value="Precautionary">Precautionary</option>
                          <option value="ProductDescription">Product Description</option>
                          <option value="ProductName">Product Name</option>

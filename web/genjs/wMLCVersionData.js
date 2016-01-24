@@ -169,19 +169,6 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
-   // Prebuild action has javascript code entered by user.
-   var thisLi;
-
-// if ( keyRole !== "Subregistrant" ) // If we are here, we have to be a Primary.
-   thisLi = document.getElementById( "lmStateRegistrations" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   // Cannot go to product management if already there.
-   thisLi = document.getElementById( "lmProductManagement" );
-   thisLi.disabled = true;
-   // END of Javascript code entered by user.
-
 var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
 }
@@ -235,6 +222,8 @@ function InitMasterLabelContentForUpdate( )
 
    if ( _IsDocDisabled( ) == false )
    {
+      _DisableFormElements( true );
+
       document.wMLCVersionData.zAction.value = "InitMasterLabelContentForUpdate";
       document.wMLCVersionData.submit( );
    }
@@ -386,21 +375,6 @@ function smEnvironmentalHazards( )
       _DisableFormElements( true );
 
       document.wMLCVersionData.zAction.value = "smEnvironmentalHazards";
-      document.wMLCVersionData.submit( );
-   }
-}
-
-function smEditChemicalHazardsSection( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCVersionData.zAction.value = "smEditChemicalHazardsSection";
       document.wMLCVersionData.submit( );
    }
 }

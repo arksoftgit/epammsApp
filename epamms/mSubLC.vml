@@ -435,7 +435,7 @@ BuildNewSLC_Version( VIEW NewSLC      BASED ON LOD mSubLC,
    END
 
    // S_DirectionsForUseSection
-   // Until we understand better the rules that drive Directions for Use Sections, we will just use the same sections as those
+   // Until we understand better the rules that drive Directions For Use Sections, we will just use the same sections as those
    // in use by the source SLC.
    FOR EACH PreviousSLC.S_DirectionsForUseSection 
       SET CURSOR FIRST PreviousMLC.M_DirectionsForUseSection 
@@ -443,10 +443,10 @@ BuildNewSLC_Version( VIEW NewSLC      BASED ON LOD mSubLC,
       SET CURSOR FIRST SourceMLC.MP_DirectionsForUseSection WITHIN PreviousMLC.MasterLabelContent 
                  WHERE SourceMLC.MP_DirectionsForUseSection.ID = PreviousMLC.M_DirectionsForUseSection.ID 
       IF RESULT < zCURSOR_SET
-         // Create message that the Directions for Use Section has been deleted.
+         // Create message that the Directions For Use Section has been deleted.
          CREATE ENTITY NewSLC.S_VersionChangeMessage 
          GetStringFromAttributeByContext( szMessageComponent, PreviousSLC, "S_DirectionsForUseSection", "Name", "", 50 )
-         NewSLC.S_VersionChangeMessage.ChangeText = "Deleted Directions for Use Section, " + szMessageComponent
+         NewSLC.S_VersionChangeMessage.ChangeText = "Deleted Directions For Use Section, " + szMessageComponent
          CREATE ENTITY NewSLC.S_VersionChangeMessage   // Skip a line
       ELSE
          // Copy the MLC Section to the SLC.
@@ -454,7 +454,7 @@ BuildNewSLC_Version( VIEW NewSLC      BASED ON LOD mSubLC,
          SetMatchingAttributesByName( NewSLC, "S_DirectionsForUseSection", SourceMLC, "M_DirectionsForUseSection", zSET_NULL )
          INCLUDE NewSLC.M_DirectionsForUseSection FROM SourceMLC.M_DirectionsForUseSection
          
-         // Copy each MLC Directions for Use Statement to SLC.
+         // Copy each MLC Directions For Use Statement to SLC.
          FOR EACH SourceMLC.M_DirectionsForUseStatement
             CREATE ENTITY NewSLC.S_DirectionsForUseStatement
             SetMatchingAttributesByName( NewSLC, "S_DirectionsForUseStatement", SourceMLC, "M_DirectionsForUseStatement", zSET_NULL )
@@ -799,7 +799,7 @@ BuildSLC_FromMLC( VIEW NewSLC    BASED ON LOD mSubLC,
       NewSLC.S_HumanHazardSection.PrimaryMLC_ID = SourceMLC.M_HumanHazardSection.ID 
    END
    
-   // Add any Directions for Use Sections that aren't driven by Usage entries.
+   // Add any Directions For Use Sections that aren't driven by Usage entries.
    FOR EACH SourceMLC.M_DirectionsForUseSection 
       IF SourceMLC.M_DrivingUsage DOES NOT EXIST
          // No Driving Usage entry exists, so always copy the section.
@@ -821,14 +821,14 @@ BuildDirsForUseSects( VIEW NewSLC    BASED ON LOD mSubLC,
    STRING ( 1 ) szFoundFlag
    SHORT        nRC
 
-   // Build Directions for Use Sections based on Driving Usage entries.
+   // Build Directions For Use Sections based on Driving Usage entries.
    
    // First remove existing entries.
    FOR EACH NewSLC.S_DirectionsForUseSection 
       DELETE ENTITY NewSLC.S_DirectionsForUseSection NONE 
    END
    
-   // Loop through each MLC Directions for Use Section and see if it should be copied to the SLC.
+   // Loop through each MLC Directions For Use Section and see if it should be copied to the SLC.
    // Sections are copied under two conditions.
    // 1. There are no driving Usage entries for the section in the MLC, meaning that the section is always
    //    to be included in the SLC.
@@ -866,7 +866,7 @@ TRANSFORMATION OPERATION
 CopyDirsForUseSection( VIEW NewSLC    BASED ON LOD mSubLC,
                        VIEW SourceMLC BASED ON LOD mMasLC )
 
-   // Copy a Directions for Use Section from the MLC to the SLC
+   // Copy a Directions For Use Section from the MLC to the SLC
    // No Driving Usage entry exists, so always copy the section.
    CREATE ENTITY NewSLC.S_DirectionsForUseSection 
    SetMatchingAttributesByName( NewSLC,    "S_DirectionsForUseSection", 
@@ -956,14 +956,14 @@ RefreshSLC_FromMLC( VIEW mSubLC BASED ON LOD mSubLC,
       END 
    END
    
-   // Delete any Directions for Use Sections in SLC not in MLC.
+   // Delete any Directions For Use Sections in SLC not in MLC.
    FOR EACH mSubLC.S_DirectionsForUseSection 
       IF mSubLC.M_DirectionsForUseSection DOES NOT EXIST
          DELETE ENTITY mSubLC.S_DirectionsForUseSection NONE 
       END
    END
    
-   // Add/Refresh SLC Directions for Use Sections.
+   // Add/Refresh SLC Directions For Use Sections.
    FOR EACH mSubLC.S_DirectionsForUseSection 
       SET CURSOR FIRST mMasLC.M_DirectionsForUseSection WHERE mMasLC.M_DirectionsForUseSection.ID = mSubLC.M_DirectionsForUseSection.ID 
       IF RESULT >= zCURSOR_SET
@@ -1039,7 +1039,7 @@ BuildWorkVariables( VIEW mSubLC BASED ON LOD mSubLC,
 
    // Build any work variable for the mSubLC.
    
-   // Build list of Directions for Use Section Driving Usage entries by selecting the Driving Usage entries
+   // Build list of Directions For Use Section Driving Usage entries by selecting the Driving Usage entries
    // from the MLC that have been selected for the SLC.
    FOR EACH mSubLC.S_DirectionsForUseSection 
       ID = mSubLC.S_DirectionsForUseSection.PrimaryMLC_ID
@@ -1059,7 +1059,7 @@ BuildWorkVariables( VIEW mSubLC BASED ON LOD mSubLC,
       END 
    END
    
-   // Build list of Directions for Use Statement Usage entries by selecting the Statement Usage entries
+   // Build list of Directions For Use Statement Usage entries by selecting the Statement Usage entries
    // from the MLC that have been selected for the SLC.
    FOR EACH mSubLC.S_DirectionsForUseStatement WITHIN mSubLC.SubregLabelContent 
       ID = mSubLC.S_DirectionsForUseStatement.PrimaryMLC_ID 

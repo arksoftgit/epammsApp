@@ -150,6 +150,7 @@ END
 DIALOG OPERATION
 FinalizeMasterLabelContent( VIEW ViewToWindow )
 
+   VIEW mMasProd REGISTERED AS mMasProd
    VIEW mMasLC REGISTERED AS mMasLC
    SHORT nRC
 
@@ -162,7 +163,18 @@ FinalizeMasterLabelContent( VIEW ViewToWindow )
 // END
 
    IF mMasLC.MasterLabelContent.Finalized = "" OR mMasLC.MasterLabelContent.Finalized = "W"
+      FOR EACH mMasProd.MasterLabelContent
+         IF mMasProd.MasterLabelContent.Finalized = "P"
+            mMasProd.MasterLabelContent.Finalized = "H"
+         END
+      END
       mMasLC.MasterLabelContent.Finalized = "P"
+   ELSE
+      MessageSend( ViewToWindow, "", "Finalize Master Label Content",
+                   "Cannot change Historical Master Label Content to Production",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      RETURN 2      // Return 2 to indicate Web client must prompt operator
    END
 
 END
@@ -1048,8 +1060,8 @@ ConfirmDeleteUsageEntry( VIEW ViewToWindow )
             END
          END
 
-         // Delete any Usage entries that have been tied to a Directions for Use Statement or that
-         // drive a Directions for Use Section.
+         // Delete any Usage entries that have been tied to a Directions For Use Statement or that
+         // drive a Directions For Use Section.
          FOR EACH mMasLC.M_DirectionsForUseSection
             FOR EACH mMasLC.M_DirectionsForUseStatement
                SET CURSOR FIRST mMasLC.M_DirectionsUsage WITHIN mMasLC.M_DirectionsForUseStatement
@@ -1065,11 +1077,26 @@ ConfirmDeleteUsageEntry( VIEW ViewToWindow )
          END
 
          // Delete the actual Usage entry.
+
+         // We don't believe this should be necessary, but JOE is being extremely picky ... DKS 2016.01.23
+         SET CURSOR FIRST mMasLC.M_UsageNonGroupUsage WHERE mMasLC.M_UsageNonGroupUsage.Name = mMasLC.M_Usage.Name 
+         IF RESULT >= zCURSOR_SET
+            EXCLUDE mMasLC.M_UsageNonGroupUsage NONE
+         ELSE
+            SET CURSOR FIRST mMasLC.M_UsageGroupUsage WITHIN mMasLC.M_UsageType 
+                       WHERE mMasLC.M_UsageGroupUsage.Name = mMasLC.M_Usage.Name 
+            IF RESULT >= zCURSOR_SET
+               EXCLUDE mMasLC.M_UsageGroupUsage NONE
+            END
+         END
+         // We don't believe the above should be necessary, but JOE is being extremely picky ... DKS 2016.01.23
+
          DELETE ENTITY mMasLC.M_Usage NONE
       END
    END
 
 END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -1201,7 +1228,7 @@ GOTO_DirsForUseSectionDelete( VIEW ViewToWindow )
 
    VIEW mMasLC   REGISTERED AS mMasLC
 
-   mMasLC.MasterLabelContent.wDeleteType       = "Directions for Use Section"
+   mMasLC.MasterLabelContent.wDeleteType       = "Directions For Use Section"
    mMasLC.MasterLabelContent.wDeleteText       = mMasLC.M_DirectionsForUseSection.Name
    mMasLC.MasterLabelContent.wDeleteEntityName = "M_DirectionsForUseSection"
 
@@ -1458,7 +1485,7 @@ GOTO_DirsForUseStatementDelete( VIEW ViewToWindow )
 
    VIEW mMasLC   REGISTERED AS mMasLC
 
-   mMasLC.MasterLabelContent.wDeleteType       = "Directions for Use Statement"
+   mMasLC.MasterLabelContent.wDeleteType       = "Directions For Use Statement"
    mMasLC.MasterLabelContent.wDeleteText       = mMasLC.M_DirectionsForUseStatement.Text
    mMasLC.MasterLabelContent.wDeleteEntityName = "M_DirectionsForUseStatement"
 
@@ -2093,7 +2120,7 @@ GOTO_DisplayGeneratedTextDU( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
 
-   // Build the display Keyword entries from the Directions for Use keyword entries.
+   // Build the display Keyword entries from the Directions For Use keyword entries.
    BuildUsageKeyEntries( mMasLC,
                          "M_InsertTextKeywordDU",
                          "M_InsertTextDU",
@@ -2112,7 +2139,7 @@ GOTO_DisplayGeneratedTextSD( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
 
-   // Build the display Keyword entries from the Directions for Use keyword entries.
+   // Build the display Keyword entries from the Directions For Use keyword entries.
    BuildUsageKeyEntries( mMasLC,
                          "M_InsertTextKeywordSD",
                          "M_InsertTextSD",
@@ -2131,7 +2158,7 @@ GOTO_DisplayGeneratedTextGeneral( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
 
-   // Build the display Keyword entries from the Directions for Use keyword entries.
+   // Build the display Keyword entries from the Directions For Use keyword entries.
    BuildUsageKeyEntries( mMasLC,
                          "M_InsertTextKeywordGeneral",
                          "M_InsertTextGeneral",
@@ -2462,7 +2489,7 @@ GOTO_EnvironmentalSectionBefore( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
 
-   CreateTemporalEntity( mMasLC, "M_GeneralSubsection", zPOS_BEFORE )
+   CreateTemporalEntity( mMasLC, "M_GeneralSection", zPOS_BEFORE )
 
 END
 
