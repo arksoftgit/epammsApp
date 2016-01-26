@@ -4644,9 +4644,9 @@ public class ZGlobal1_Operation extends VmlOperation
       int k;
       String token;
       pos = 0;
-      while ( pos < end ) {
+      while ( pos <= end ) {
          for ( k = 0; k < delimEnd; k++ ) {
-            if ( paragraph.charAt( pos ) == delimiters.charAt( k ) || (posPrev < pos && pos == end - 1)) {
+            if ( (posPrev < pos && pos == end) || paragraph.charAt( pos ) == delimiters.charAt( k ) ) {
                token = paragraph.substring( posPrev, pos );
                posPrev = pos + 1;
                value = token.trim();

@@ -805,7 +805,7 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
    SHORT         nRC
 
    szTag = mSPLDefPDF.LLD_Block.Tag
-   TraceLineS( "Processing Block: ", szTag )
+// TraceLineS( "Processing Block: ", szTag )
    // Process each LLD_Block Container and subobject data.
 
    // Note that mSPLDefPDF is pointing to the LLD Panel and Block substructure, which recursively steps
@@ -828,10 +828,10 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
 
       szTag = mSPLDefPDF.LLD_Block.Tag
       IF mSPLDefPDF.LLD_Block.ContinuationBlockFlag = "Y"
-         TraceLineS( "Processing Continued Block: ", szTag )
-         IF szTag = "Tag666"
-            TraceLineS( "Processing skip tag: ", szTag )
-         END
+      // TraceLineS( "Processing Continued Block: ", szTag )
+      // IF szTag = "Tag666"
+      //    TraceLineS( "Processing skip tag: ", szTag )
+      // END
          // This is a continuation from the last Block, so format if there is continuation data.
          // Note that mSPLDef is pointing to the Panel entity that holds the continuation statements.
          SET CURSOR FIRST mSPLDef.ContinuationStatement
@@ -848,7 +848,7 @@ ProcessPDF_Blocks( VIEW mSPLDef    BASED ON LOD mSPLDef,
          END
 
       ELSE
-         TraceLineS( "Processing Normal Block: ", szTag )
+      // TraceLineS( "Processing Normal Block: ", szTag )
 
          // Create LLD_Block Container.
          FormatBlockContainer( mSPLDefPDF, mSPLDef, lFile, szLeadingBlanks, szWriteBuffer, "" )

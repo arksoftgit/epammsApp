@@ -44,25 +44,25 @@ ProcessUserLogin( VIEW ViewToWindow )
    VIEW wWebXfer REGISTERED AS wWebXfer
    VIEW mSubreg  BASED ON LOD  mSubreg
    VIEW mLLD_LST BASED ON LOD  mLLD
-   
+
    // Activate the Subreg for the Organization specified and the list of all LLD entries.
-   
+
    GET VIEW mSubreg NAMED "mSubreg"
    IF RESULT >= 0
       DropObjectInstance( mSubreg )
    END
-   
+
    GET VIEW mLLD_LST NAMED "mLLD_LST"
    IF RESULT >= 0
       DropObjectInstance( mLLD_LST )
    END
 
    // *** NOTE THAT WE ARE CURRENTLY ACTIVATING THE ONLY SUBREG.
-   ACTIVATE mSubreg WHERE mSubreg.SubregOrganization.Name = wWebXfer.Root.AttemptLoginRegistrant 
+   ACTIVATE mSubreg WHERE mSubreg.SubregOrganization.Name = wWebXfer.Root.AttemptLoginRegistrant
    NAME VIEW mSubreg "mSubreg"
-   
+
    ACTIVATE mLLD_LST RootOnlyMultiple
-   NAME VIEW mLLD_LST "mLLD_LST" 
+   NAME VIEW mLLD_LST "mLLD_LST"
 
 END
 
@@ -76,7 +76,7 @@ ProcessLogout( VIEW ViewToWindow )
 
    VIEW wWebXfer REGISTERED AS wWebXfer
    VIEW mSubreg  BASED ON LOD  mSubreg
-   
+
    // Clean up any views.
    DropObjectInstance( wWebXfer )
    GET VIEW mSubreg NAMED "mSubreg"
@@ -103,7 +103,7 @@ InitListSubregProducts( VIEW ViewToWindow )
       DropObjectInstance( mLLD_LST )
    END
    ACTIVATE mLLD_LST RootOnlyMultiple
-   NAME VIEW mLLD_LST "mLLD_LST" 
+   NAME VIEW mLLD_LST "mLLD_LST"
 
 END
 
@@ -116,27 +116,27 @@ DIALOG OPERATION
 GOTO_UpdateSubregProduct( VIEW ViewToWindow )
 
    VIEW mSubreg    REGISTERED AS mSubreg
-   VIEW mSubProd   BASED ON LOD  mSubProd 
-   VIEW mSubLC     BASED ON LOD  mSubLC 
+   VIEW mSubProd   BASED ON LOD  mSubProd
+   VIEW mSubLC     BASED ON LOD  mSubLC
    VIEW lSPLDLST   BASED ON LOD  lSPLDLST
    STRING ( 30 )  szDateTime
-   
+
    // Activate selected Subreg Product.
-   ACTIVATE mSubProd WHERE mSubProd.SubregProduct.ID = mSubreg.SubregProduct.ID 
+   ACTIVATE mSubProd WHERE mSubProd.SubregProduct.ID = mSubreg.SubregProduct.ID
    NAME VIEW mSubProd "mSubProd"
-   
-   ACTIVATE lSPLDLST Multiple WHERE lSPLDLST.SubregProduct.ID = mSubreg.SubregProduct.ID 
+
+   ACTIVATE lSPLDLST Multiple WHERE lSPLDLST.SubregProduct.ID = mSubreg.SubregProduct.ID
    NAME VIEW lSPLDLST "lSPLDLST"
-   
+
    // Temp code to correct name.
    SET CURSOR FIRST mSubProd.SubregLabelContent WHERE mSubProd.SubregLabelContent.Description = ""
    IF RESULT >= zCURSOR_SET
-      ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSubProd.SubregLabelContent.ID 
+      ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSubProd.SubregLabelContent.ID
       NAME VIEW mSubLC "mSubLCName"
       mSubLC.SubregLabelContent.Description = "TempName"
       COMMIT mSubLC
       DropObjectInstance( mSubLC )
-   END 
+   END
 
 END
 
@@ -149,72 +149,72 @@ DIALOG OPERATION
 GOTO_UpdateSubregProductSLC( VIEW ViewToWindow )
 
    VIEW mSubProd REGISTERED AS mSubProd
-   VIEW mSubLC   BASED ON LOD  mSubLC 
+   VIEW mSubLC   BASED ON LOD  mSubLC
    VIEW mMasLC   BASED ON LOD  mMasLC
-   
+
    // Activate selected Subreg SLC and build the Components work entries from persistent entries.
-   ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSubProd.SubregLabelContent.ID 
+   ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSubProd.SubregLabelContent.ID
    NAME VIEW mSubLC "mSubLC"
-   
+
    // Delete any S_Usage entries that aren't tied to an MLC.
    // Also delete any Directions For Use or Marketing Ordering entries not tied to a Usage.
-   FOR EACH mSubLC.S_UsageType 
-      FOR EACH mSubLC.S_Usage 
+   FOR EACH mSubLC.S_UsageType
+      FOR EACH mSubLC.S_Usage
          IF mSubLC.M_Usage DOES NOT EXIST
-            DELETE ENTITY mSubLC.S_Usage NONE 
+            DELETE ENTITY mSubLC.S_Usage NONE
          END
       END
    END
-   FOR EACH mSubLC.S_DirectionsForUseStatement WITHIN mSubLC.SubregLabelContent 
-      FOR EACH mSubLC.S_DirectionsUsageOrdering 
+   FOR EACH mSubLC.S_DirectionsForUseStatement WITHIN mSubLC.SubregLabelContent
+      FOR EACH mSubLC.S_DirectionsUsageOrdering
          IF mSubLC.S_DirectionsUsage DOES NOT EXIST
-            DELETE ENTITY mSubLC.S_DirectionsUsageOrdering NONE 
+            DELETE ENTITY mSubLC.S_DirectionsUsageOrdering NONE
          END
       END
    END
-   FOR EACH mSubLC.S_MarketingStatement WITHIN mSubLC.SubregLabelContent 
-      FOR EACH mSubLC.S_MarketingUsageOrdering 
+   FOR EACH mSubLC.S_MarketingStatement WITHIN mSubLC.SubregLabelContent
+      FOR EACH mSubLC.S_MarketingUsageOrdering
          IF mSubLC.S_MarketingUsage DOES NOT EXIST
-            DELETE ENTITY mSubLC.S_MarketingUsageOrdering NONE 
+            DELETE ENTITY mSubLC.S_MarketingUsageOrdering NONE
          END
       END
    END
-   
-   FOR EACH mSubLC.S_MarketingSection 
-      FOR EACH mSubLC.S_MarketingStatement 
-         FOR EACH mSubLC.S_MarketingUsageOrdering 
+
+   FOR EACH mSubLC.S_MarketingSection
+      FOR EACH mSubLC.S_MarketingStatement
+         FOR EACH mSubLC.S_MarketingUsageOrdering
             IF mSubLC.S_MarketingUsage DOES NOT EXIST
                MessageSend( ViewToWindow, "", "Test",
                             "Missing usage.",
                             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
                SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-               RETURN 2            
-            END         
-         END      
-      END   
+               RETURN 2
+            END
+         END
+      END
    END
    COMMIT mSubLC
-   
+
    BuildCompositeEntries( mSubLC )
-   
+
    // Relink Usage.
-   FOR EACH mSubLC.S_DirectionsForUseSection 
-      FOR EACH mSubLC.S_DirectionsUsageOrdering 
-         SET CURSOR FIRST mSubLC.S_Usage WHERE mSubLC.S_Usage.ID = mSubLC.S_DirectionsUsage.ID 
+   FOR EACH mSubLC.S_DirectionsForUseSection
+      FOR EACH mSubLC.S_DirectionsUsageOrdering
+         SET CURSOR FIRST mSubLC.S_Usage WHERE mSubLC.S_Usage.ID = mSubLC.S_DirectionsUsage.ID
          IF RESULT < zCURSOR_SET
             TraceLineS( "######## No DU Link: ", mSubLC.S_DirectionsUsage.Name )
-         END 
+         END
       END
-      FOR EACH mSubLC.S_MarketingUsageOrdering 
-         SET CURSOR FIRST mSubLC.S_Usage WHERE mSubLC.S_Usage.ID = mSubLC.S_MarketingUsage.ID 
+      FOR EACH mSubLC.S_MarketingUsageOrdering
+         SET CURSOR FIRST mSubLC.S_Usage WHERE mSubLC.S_Usage.ID = mSubLC.S_MarketingUsage.ID
          IF RESULT < zCURSOR_SET
             TraceLineS( "######## No Mkt Link: ", mSubLC.S_MarketingUsage.Name )
          END
       END
    END
-   
+
    // Activate related MLC, which has the selectable content.
-   ACTIVATE mMasLC WHERE mMasLC.MasterLabelContent.ID = mSubProd.MasterLabelContent.ID 
+   ACTIVATE mMasLC WHERE mMasLC.MasterLabelContent.ID = mSubProd.MasterLabelContent.ID
    NAME VIEW mMasLC "mMasLC"
    BuildCompositeEntries( mMasLC )
    BuildWorkVariables( mSubLC, mMasLC )
@@ -230,12 +230,12 @@ DIALOG OPERATION
 DELETE_SubregProductSLC( VIEW ViewToWindow )
 
    VIEW mSubProd REGISTERED AS mSubProd
-   VIEW mSubLC   BASED ON LOD  mSubLC 
-   
+   VIEW mSubLC   BASED ON LOD  mSubLC
+
    // Delete selected mSubLC.
-   ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSubProd.SubregLabelContent.ID 
+   ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSubProd.SubregLabelContent.ID
    NAME VIEW mSubLC "mSubLCDelete"
-   DELETE ENTITY mSubLC.SubregLabelContent 
+   DELETE ENTITY mSubLC.SubregLabelContent
    COMMIT mSubLC
    DropObjectInstance( mSubLC )
    DropEntity( mSubProd, "SubregLabelContent", zREPOS_NONE )
@@ -283,13 +283,13 @@ GOTO_NewSubregProductSLC( VIEW ViewToWindow )
 
    VIEW mSubreg  REGISTERED AS mSubreg
    VIEW lMLC     BASED ON LOD  lMLC
-   
+
    // Activate lMLC for selecting a MLC for creation of a new SLC.
    GET VIEW lMLC NAMED "lMLC"
    IF RESULT >= 0
       DropObjectInstance( lMLC )
    END
-   ACTIVATE lMLC Multiple WHERE lMLC.MasterProduct.ID = mSubreg.MasterProduct.ID 
+   ACTIVATE lMLC Multiple WHERE lMLC.MasterProduct.ID = mSubreg.MasterProduct.ID
    NAME VIEW lMLC "lMLC"
 
 END
@@ -304,9 +304,9 @@ SELECT_MLC_ForNewSLC( VIEW ViewToWindow )
 
    VIEW mSubProd REGISTERED AS mSubProd
    VIEW lMLC     REGISTERED AS lMLC
-   VIEW mSubLC   BASED ON LOD  mSubLC 
+   VIEW mSubLC   BASED ON LOD  mSubLC
    VIEW mMasLC   BASED ON LOD  mMasLC
-   
+
    // Make sure that an MLC has been selected.
    SET CURSOR FIRST lMLC.MasterLabelContent WHERE lMLC.MasterLabelContent.wSelected = "Y"
    IF RESULT < zCURSOR_SET
@@ -314,25 +314,25 @@ SELECT_MLC_ForNewSLC( VIEW ViewToWindow )
                    "An MLC must be selected.",
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
       RETURN 2
-   END 
-   
+   END
+
    // Create a new empty Subregistrant SLC.
-   ACTIVATE mSubLC EMPTY 
+   ACTIVATE mSubLC EMPTY
    NAME VIEW mSubLC "mSubLC"
-   CREATE ENTITY mSubLC.SubregLabelContent 
-   INCLUDE mSubLC.SubregProduct FROM mSubProd.SubregProduct 
-   
+   CREATE ENTITY mSubLC.SubregLabelContent
+   INCLUDE mSubLC.SubregProduct FROM mSubProd.SubregProduct
+
    // Activate the selected MLC, which has the selectable content.
-   ACTIVATE mMasLC WHERE mMasLC.MasterLabelContent.ID = lMLC.MasterLabelContent.ID 
+   ACTIVATE mMasLC WHERE mMasLC.MasterLabelContent.ID = lMLC.MasterLabelContent.ID
    NAME VIEW mMasLC "mMasLC"
-   INCLUDE mSubLC.MasterLabelContent FROM mMasLC.MasterLabelContent 
+   INCLUDE mSubLC.MasterLabelContent FROM mMasLC.MasterLabelContent
    BuildCompositeEntries( mMasLC )
-   
+
    DisplayObjectInstance( mSubLC, "", "" )
 
    // Initialize the data in the SLC from the MLC.
    BuildSLC_FromMLC( mSubLC, mMasLC )
-   
+
    // Build SLC Components subobject.
    BuildCompositeEntries( mSubLC )
 
@@ -349,7 +349,7 @@ SELECT_SLC_ForNewSPLD( VIEW ViewToWindow )
    VIEW mSubProd REGISTERED AS mSubProd
    VIEW mSPLDef  BASED ON LOD  mSPLDef
    VIEW mSubLC   BASED ON LOD  mSubLC
-   
+
    // Make sure that an SLC has been selected.
    SET CURSOR FIRST mSubProd.SubregLabelContent WHERE mSubProd.SubregLabelContent.wSelected = "Y"
    IF RESULT < zCURSOR_SET
@@ -358,12 +358,12 @@ SELECT_SLC_ForNewSPLD( VIEW ViewToWindow )
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
       RETURN 2
    END
-   
+
    // Create a new mSPLDef object instance and ititialize it with data from the mSubLC data from the
    // selected SubregLabelContent entry in mSubProd.
    ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSubProd.SubregLabelContent.ID
    NAME VIEW mSubLC "mSubLC"
-   
+
    ACTIVATE mSPLDef EMPTY
    CREATE ENTITY mSPLDef.SubregPhysicalLabelDef
    NAME VIEW mSPLDef "mSPLDef"
@@ -371,17 +371,17 @@ SELECT_SLC_ForNewSPLD( VIEW ViewToWindow )
    CREATE ENTITY mSPLDef.SPLD_LLD
    CREATE ENTITY mSPLDef.LLD_Page
    mSPLDef.LLD_Page.Height = 14.0
-   mSPLDef.LLD_Page.Width = 19.5         
+   mSPLDef.LLD_Page.Width = 19.5
 
-   CREATE ENTITY mSPLDef.LLD_Panel 
-   mSPLDef.LLD_Panel.Top = 1.0         
+   CREATE ENTITY mSPLDef.LLD_Panel
+   mSPLDef.LLD_Panel.Top = 1.0
    mSPLDef.LLD_Panel.Left = 1.0
    mSPLDef.LLD_Panel.Height = 7.0
    mSPLDef.LLD_Panel.Width = 9.0
-   
+
    // Build the Components of the SPLD from the SLC.
    BuildSPLD_FromSLC( mSPLDef, mSubLC )
-   
+
    DropObjectInstance( mSubLC )
 
 END
@@ -395,13 +395,13 @@ DIALOG OPERATION
 SaveSubregProduct( VIEW ViewToWindow )
 
    VIEW mSubreg  REGISTERED AS mSubreg
-   VIEW mSubProd REGISTERED AS mSubProd 
+   VIEW mSubProd REGISTERED AS mSubProd
    INTEGER SubregID
-   
+
    // Save the Subreg Product and reactivate the Product list.
    COMMIT mSubProd
    DropObjectInstance( mSubProd )
-   SubregID = mSubreg.Subregistrant.ID 
+   SubregID = mSubreg.Subregistrant.ID
    DropObjectInstance( mSubreg )
    ACTIVATE mSubreg WHERE mSubreg.Subregistrant.ID = SubregID
    NAME VIEW mSubreg "mSubreg"
@@ -416,8 +416,8 @@ END
 DIALOG OPERATION
 CancelSubregProduct( VIEW ViewToWindow )
 
-   VIEW mSubProd REGISTERED AS mSubProd 
-   
+   VIEW mSubProd REGISTERED AS mSubProd
+
    // Simply drop the Subreg Product.
    DropObjectInstance( mSubProd )
 
@@ -433,7 +433,7 @@ CancelSubregistrantLabelContent( VIEW ViewToWindow )
 
    VIEW mSubLC REGISTERED AS mSubLC
    VIEW mMasLC REGISTERED AS mMasLC
-   
+
    DropObjectInstance( mMasLC )
    DropObjectInstance( mSubLC )
 
@@ -449,7 +449,7 @@ REFRESH_SLC_FromMLC( VIEW ViewToWindow )
 
    VIEW mSubLC  REGISTERED AS mSubLC
    VIEW mMasLC  REGISTERED AS mMasLC
-   
+
    RefreshSLC_FromMLC( mSubLC, mMasLC )
    BuildCompositeEntries( mSubLC )
 
@@ -468,42 +468,42 @@ SelectMLC_ComponentsForSLC( VIEW ViewToWindow )
    VIEW mMasLC1 BASED ON LOD  mMasLC
    SHORT nRC
    STRING ( 1 ) szFirstMarketingSectionFlag
-   
+
    // Copy the selected MLC components to the SLC.
-   
+
    // Note that we will only process Marketing Statements and Usage entries under Directions For Use or Marketing Sections.
-   
-   // There's a problem keeping the correct order. So, to solve that we will go through any existing SLC Marketing and 
-   // Directions components and select the corresponding MLC component. Then we'll delete all the existing Marketing and 
+
+   // There's a problem keeping the correct order. So, to solve that we will go through any existing SLC Marketing and
+   // Directions components and select the corresponding MLC component. Then we'll delete all the existing Marketing and
    // Directions SLC components and recreate them from all selected MLC components.
    // Also, we will need to be sure that any Section entries for selected Statement entries are also selected.
-   
-   // Delete all Directions Usage and Marketing Component entries, after setting the selected flag for the corresponding 
+
+   // Delete all Directions Usage and Marketing Component entries, after setting the selected flag for the corresponding
    // MLC entry..
    FOR EACH mSubLC.CompositeComponentList
-      IF mSubLC.CompositeComponentList.Type = "M_MarketingSection" OR 
-         mSubLC.CompositeComponentList.Type = "M_MarketingStatement" //OR 
-         //mSubLC.CompositeComponentList.Type = "M_MarketingUsageOrdering" OR 
+      IF mSubLC.CompositeComponentList.Type = "M_MarketingSection" OR
+         mSubLC.CompositeComponentList.Type = "M_MarketingStatement" //OR
+         //mSubLC.CompositeComponentList.Type = "M_MarketingUsageOrdering" OR
          //mSubLC.CompositeComponentList.Type = "M_DirectionsUsageOrdering"
-         
+
          IF mSubLC.CompositeComponentList.OriginalTypeID != ""
-            SET CURSOR FIRST mMasLC.CompositeComponentList 
+            SET CURSOR FIRST mMasLC.CompositeComponentList
                        WHERE mMasLC.CompositeComponentList.OriginalTypeID = mSubLC.CompositeComponentList.OriginalTypeID
-                         AND mMasLC.CompositeComponentList.DisplayType    = mSubLC.CompositeComponentList.DisplayType 
+                         AND mMasLC.CompositeComponentList.DisplayType    = mSubLC.CompositeComponentList.DisplayType
             IF RESULT >= zCURSOR_SET
                mMasLC.CompositeComponentList.Selected = "Y"
             END
          END
-      
-         DELETE ENTITY mSubLC.CompositeComponentList NONE 
+
+         DELETE ENTITY mSubLC.CompositeComponentList NONE
       END
    END
-   
+
    // Make sure that if a lower level entry is selected, its parent entry is also selected.
    // We will do this in two loops, setting level 2 entries from selected level 3 entries first and then
    // setting level 1 entries from selected level 2 entries.
    CreateViewFromView( mMasLC1, mMasLC )
-   FOR EACH mMasLC.CompositeComponentList 
+   FOR EACH mMasLC.CompositeComponentList
       IF mMasLC.CompositeComponentList.SelectLevel = 2
          DropView( mMasLC1 )
          CreateViewFromView( mMasLC1, mMasLC )
@@ -515,7 +515,7 @@ SelectMLC_ComponentsForSLC( VIEW ViewToWindow )
          END
       END
    END
-   FOR EACH mMasLC.CompositeComponentList 
+   FOR EACH mMasLC.CompositeComponentList
       IF mMasLC.CompositeComponentList.SelectLevel = 1
          DropView( mMasLC1 )
          CreateViewFromView( mMasLC1, mMasLC )
@@ -527,51 +527,51 @@ SelectMLC_ComponentsForSLC( VIEW ViewToWindow )
          END
       END
    END
-   
+
    // Create an SLC entry for each selected MLC entry, which is either Marketing Section, Marketing Statement,
    // Marketing Usage or Directions For Use Usage.
    szFirstMarketingSectionFlag = "Y"
-   FOR EACH mMasLC.CompositeComponentList 
-   
+   FOR EACH mMasLC.CompositeComponentList
+
       // If the Composite Component is a Directions For Use Section, position on the corresponding SLC Composite
       // entry for creation of potential Usage entries.
       IF mMasLC.CompositeComponentList.Type = "M_DirectionsForUseSection"
-         SET CURSOR FIRST mSubLC.CompositeComponentList 
-                    WHERE mSubLC.CompositeComponentList.Type           = "M_DirectionsForUseSection" 
-                      AND mSubLC.CompositeComponentList.OriginalTypeID = mMasLC.CompositeComponentList.OriginalTypeID 
+         SET CURSOR FIRST mSubLC.CompositeComponentList
+                    WHERE mSubLC.CompositeComponentList.Type           = "M_DirectionsForUseSection"
+                      AND mSubLC.CompositeComponentList.OriginalTypeID = mMasLC.CompositeComponentList.OriginalTypeID
          IF RESULT < zCURSOR_SET
             TraceLineI( "#### No Match on M_Dir ID: ", mMasLC.CompositeComponentList.OriginalTypeID )
          END
       END
-      
-      // If the Composite Component is a Marketing Section, positioning depends on whether or not this is the first 
-      // Marketing Section. If so, we need to position on the last Directions For Use Section or Statement. 
+
+      // If the Composite Component is a Marketing Section, positioning depends on whether or not this is the first
+      // Marketing Section. If so, we need to position on the last Directions For Use Section or Statement.
       // Otherwise, we are already correctly positioned.
       IF mMasLC.CompositeComponentList.Type = "M_MarketingSection"
          IF szFirstMarketingSectionFlag = "Y"
-            SET CURSOR LAST mSubLC.CompositeComponentList 
-                      WHERE mSubLC.CompositeComponentList.Type = "M_DirectionsForUseSection" 
+            SET CURSOR LAST mSubLC.CompositeComponentList
+                      WHERE mSubLC.CompositeComponentList.Type = "M_DirectionsForUseSection"
                          OR mSubLC.CompositeComponentList.Type = "M_DirectionsForUseStatement"
             szFirstMarketingSectionFlag = "N"
          END
-         CREATE ENTITY mSubLC.CompositeComponentList 
+         CREATE ENTITY mSubLC.CompositeComponentList
          SetMatchingAttributesByName( mSubLC, "CompositeComponentList", mMasLC, "CompositeComponentList", zSET_ALL )
-         mSubLC.CompositeComponentList.Selected = "" 
+         mSubLC.CompositeComponentList.Selected = ""
       END
-      
+
       // Process the three entry types defined above.
-      IF mMasLC.CompositeComponentList.Type = "M_DirectionsUsageOrdering" OR 
-         mMasLC.CompositeComponentList.Type = "M_MarketingUsageOrdering" OR 
+      IF mMasLC.CompositeComponentList.Type = "M_DirectionsUsageOrdering" OR
+         mMasLC.CompositeComponentList.Type = "M_MarketingUsageOrdering" OR
          mMasLC.CompositeComponentList.Type = "M_MarketingStatement"
-   
+
          IF mMasLC.CompositeComponentList.Selected = "Y"
-            CREATE ENTITY mSubLC.CompositeComponentList 
+            CREATE ENTITY mSubLC.CompositeComponentList
             SetMatchingAttributesByName( mSubLC, "CompositeComponentList", mMasLC, "CompositeComponentList", zSET_ALL )
-            mSubLC.CompositeComponentList.Selected = "" 
+            mSubLC.CompositeComponentList.Selected = ""
          END
       END
    END
-   
+
 END
 
 ////////////////////////////////////////////////////////////////
@@ -585,7 +585,7 @@ SaveSubregistrantLabelContent( VIEW ViewToWindow )
    VIEW mSubLC REGISTERED AS mSubLC
    VIEW mMasLC REGISTERED AS mMasLC
    INTEGER OriginalTypeID
-   
+
    // Name and Version must be entered.
    IF mSubLC.SubregLabelContent.Description = "" OR mSubLC.SubregLabelContent.Version = ""
       MessageSend( ViewToWindow, "", "Save Subregistrant Label Content",
@@ -593,73 +593,73 @@ SaveSubregistrantLabelContent( VIEW ViewToWindow )
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
       RETURN 2
    END
-   
+
    // Make sure that any selected Components Usage entries have S_Usage entries.
    /*FOR EACH mSubLC.CompositeComponentList
-      IF mSubLC.CompositeComponentList.Type = "M_DirectionsUsageOrdering" OR 
+      IF mSubLC.CompositeComponentList.Type = "M_DirectionsUsageOrdering" OR
          mSubLC.CompositeComponentList.Type = "M_MarketingUsageOrdering"
-         
-         OriginalTypeID = mSubLC.CompositeComponentList.OriginalTypeID 
-         SET CURSOR FIRST mSubLC.M_Usage WITHIN mSubLC.SubregLabelContent 
+
+         OriginalTypeID = mSubLC.CompositeComponentList.OriginalTypeID
+         SET CURSOR FIRST mSubLC.M_Usage WITHIN mSubLC.SubregLabelContent
                     WHERE mSubLC.M_Usage.ID = OriginalTypeID
          IF RESULT < zCURSOR_SET
             SET CURSOR FIRST mMasLC.M_Usage WHERE mMasLC.M_Usage.ID = OriginalTypeID
-            SET CURSOR LAST mSubLC.S_Usage 
-            CREATE ENTITY mSubLC.S_Usage 
+            SET CURSOR LAST mSubLC.S_Usage
+            CREATE ENTITY mSubLC.S_Usage
             SetMatchingAttributesByName( mSubLC, "S_Usage", mMasLC, "M_Usage", zSET_NULL )
-            INCLUDE mSubLC.M_Usage FROM mMasLC.M_Usage 
+            INCLUDE mSubLC.M_Usage FROM mMasLC.M_Usage
          END
       END
    END*/
-   
+
    // If the S_Usage Statements are null, then we need to first commit mSubLC to get the ID's set.
-   /*SET CURSOR FIRST mSubLC.S_Usage 
+   /*SET CURSOR FIRST mSubLC.S_Usage
    IF mSubLC.S_Usage.ID = ""
       COMMIT mSubLC
    END */
    // Commit the mSubLC object to make sure any S_Usage statements have ID's.
    COMMIT mSubLC
-   
+
    // Process any Changes in the CompositeComponentList entries against the main subobject structure of the SLC.
    // Note that only Marketing Statements and Usage entries under Directions For Use and Marketing are affected.
-   
+
    // First delete any entries that are in the main structure but not in the Composite Component List.
    // Note that we only consider Marketing Statements and Directions Usage and Marketing Usage Statements.
-   /*FOR EACH mSubLC.S_DirectionsForUseSection 
-      FOR EACH mSubLC.S_DirectionsUsageOrdering 
-         SET CURSOR FIRST mSubLC.CompositeComponentList 
-                    WHERE mSubLC.CompositeComponentList.SLC_OriginalTypeID = mSubLC.S_DirectionsUsage.ID 
-                      AND mSubLC.CompositeComponentList.Type               = "M_DirectionsUsageOrdering" 
+   /*FOR EACH mSubLC.S_DirectionsForUseSection
+      FOR EACH mSubLC.S_DirectionsUsageOrdering
+         SET CURSOR FIRST mSubLC.CompositeComponentList
+                    WHERE mSubLC.CompositeComponentList.SLC_OriginalTypeID = mSubLC.S_DirectionsUsage.ID
+                      AND mSubLC.CompositeComponentList.Type               = "M_DirectionsUsageOrdering"
          IF RESULT < zCURSOR_SET
-            //SET CURSOR FIRST mSubLC.S_Usage WHERE mSubLC.S_Usage.ID = mSubLC.S_DirectionsUsage.ID 
+            //SET CURSOR FIRST mSubLC.S_Usage WHERE mSubLC.S_Usage.ID = mSubLC.S_DirectionsUsage.ID
             //IF RESULT >= zCURSOR_SET
-            //   DELETE ENTITY mSubLC.S_Usage NONE 
-            //END 
-            DELETE ENTITY mSubLC.S_DirectionsUsageOrdering NONE 
+            //   DELETE ENTITY mSubLC.S_Usage NONE
+            //END
+            DELETE ENTITY mSubLC.S_DirectionsUsageOrdering NONE
          END
       END
    END
-   FOR EACH mSubLC.S_MarketingSection 
-      SET CURSOR FIRST mSubLC.CompositeComponentList 
-                 WHERE mSubLC.CompositeComponentList.SLC_OriginalTypeID = mSubLC.S_MarketingSection.ID 
-                   AND mSubLC.CompositeComponentList.Type               = "M_MarketingSection" 
+   FOR EACH mSubLC.S_MarketingSection
+      SET CURSOR FIRST mSubLC.CompositeComponentList
+                 WHERE mSubLC.CompositeComponentList.SLC_OriginalTypeID = mSubLC.S_MarketingSection.ID
+                   AND mSubLC.CompositeComponentList.Type               = "M_MarketingSection"
       IF RESULT >= zCURSOR_SET
          // The Marketing Section was NOT deleted.
-         FOR EACH mSubLC.S_MarketingStatement 
-            SET CURSOR FIRST mSubLC.CompositeComponentList 
-                       WHERE mSubLC.CompositeComponentList.SLC_OriginalTypeID = mSubLC.S_MarketingStatement.ID 
-                         AND mSubLC.CompositeComponentList.Type               = "M_MarketingStatement" 
+         FOR EACH mSubLC.S_MarketingStatement
+            SET CURSOR FIRST mSubLC.CompositeComponentList
+                       WHERE mSubLC.CompositeComponentList.SLC_OriginalTypeID = mSubLC.S_MarketingStatement.ID
+                         AND mSubLC.CompositeComponentList.Type               = "M_MarketingStatement"
             IF RESULT < zCURSOR_SET
                // Delete the Marketing Statement.
                DELETE ENTITY mSubLC.S_MarketingStatement NONE
             ELSE
                // See if we need to delete any Marketing Usage entries.
-               FOR EACH mSubLC.S_MarketingUsageOrdering 
-                  SET CURSOR FIRST mSubLC.CompositeComponentList 
-                             WHERE mSubLC.CompositeComponentList.SLC_OriginalTypeID = mSubLC.S_MarketingUsage.ID 
-                               AND mSubLC.CompositeComponentList.Type               = "M_MarketingUsageOrdering" 
+               FOR EACH mSubLC.S_MarketingUsageOrdering
+                  SET CURSOR FIRST mSubLC.CompositeComponentList
+                             WHERE mSubLC.CompositeComponentList.SLC_OriginalTypeID = mSubLC.S_MarketingUsage.ID
+                               AND mSubLC.CompositeComponentList.Type               = "M_MarketingUsageOrdering"
                   IF RESULT < zCURSOR_SET
-                     DELETE ENTITY mSubLC.S_MarketingUsageOrdering NONE 
+                     DELETE ENTITY mSubLC.S_MarketingUsageOrdering NONE
                   END
                END
             END
@@ -669,24 +669,24 @@ SaveSubregistrantLabelContent( VIEW ViewToWindow )
          DELETE ENTITY mSubLC.S_MarketingSection NONE
       END
    END
-   
+
    // Next add any new CompositeComponentList entries.
    // Note that we only consider Marketing Statements and Directions and Marketing Usage Statements.
-   FOR EACH mSubLC.CompositeComponentList 
+   FOR EACH mSubLC.CompositeComponentList
       OriginalTypeID = mSubLC.CompositeComponentList.OriginalTypeID
       // Directions For Use Section
       IF mSubLC.CompositeComponentList.Type = "M_DirectionsForUseSection"
-         SET CURSOR FIRST mSubLC.M_DirectionsForUseSection WITHIN mSubLC.SubregLabelContent 
-                    WHERE mSubLC.M_DirectionsForUseSection.ID = OriginalTypeID 
+         SET CURSOR FIRST mSubLC.M_DirectionsForUseSection WITHIN mSubLC.SubregLabelContent
+                    WHERE mSubLC.M_DirectionsForUseSection.ID = OriginalTypeID
       END
-      
+
       // Marketing Section
-      IF mSubLC.CompositeComponentList.Type = "M_MarketingSection" 
-         SET CURSOR FIRST mSubLC.M_MarketingSection WITHIN mSubLC.SubregLabelContent 
-                    WHERE mSubLC.M_MarketingSection.ID = OriginalTypeID 
+      IF mSubLC.CompositeComponentList.Type = "M_MarketingSection"
+         SET CURSOR FIRST mSubLC.M_MarketingSection WITHIN mSubLC.SubregLabelContent
+                    WHERE mSubLC.M_MarketingSection.ID = OriginalTypeID
          IF RESULT < zCURSOR_SET
-            SET CURSOR FIRST mMasLC.M_MarketingSection 
-                       WHERE mMasLC.M_MarketingSection.ID = OriginalTypeID 
+            SET CURSOR FIRST mMasLC.M_MarketingSection
+                       WHERE mMasLC.M_MarketingSection.ID = OriginalTypeID
             IF RESULT < zCURSOR_SET
                TraceLineI( "######### No match on Marketing Section ID", OriginalTypeID )
             END
@@ -696,14 +696,14 @@ SaveSubregistrantLabelContent( VIEW ViewToWindow )
             INCLUDE mSubLC.M_MarketingSection FROM mMasLC.M_MarketingSection
          END
       END
-      
+
       // Marketing Statement
-      IF mSubLC.CompositeComponentList.Type = "M_MarketingStatement" 
-         SET CURSOR FIRST mSubLC.M_MarketingStatement WITHIN mSubLC.S_MarketingSection 
-                    WHERE mSubLC.M_MarketingStatement.ID = OriginalTypeID 
+      IF mSubLC.CompositeComponentList.Type = "M_MarketingStatement"
+         SET CURSOR FIRST mSubLC.M_MarketingStatement WITHIN mSubLC.S_MarketingSection
+                    WHERE mSubLC.M_MarketingStatement.ID = OriginalTypeID
          IF RESULT < zCURSOR_SET
-            SET CURSOR FIRST mMasLC.M_MarketingStatement WITHIN mMasLC.MasterLabelContent 
-                       WHERE mMasLC.M_MarketingStatement.ID = OriginalTypeID 
+            SET CURSOR FIRST mMasLC.M_MarketingStatement WITHIN mMasLC.MasterLabelContent
+                       WHERE mMasLC.M_MarketingStatement.ID = OriginalTypeID
             IF RESULT < zCURSOR_SET
                TraceLineI( "######### No match on Marketing Statement ID", OriginalTypeID )
             END
@@ -713,24 +713,24 @@ SaveSubregistrantLabelContent( VIEW ViewToWindow )
             INCLUDE mSubLC.M_MarketingStatement FROM mMasLC.M_MarketingStatement
          END
       END
-      
+
       // Directions For Use Usage
       IF mSubLC.CompositeComponentList.Type = "M_DirectionsUsageOrdering"
-         SET CURSOR FIRST mSubLC.M_Usage WITHIN mSubLC.SubregLabelContent 
-                    WHERE mSubLC.M_Usage.ID = OriginalTypeID 
-         SET CURSOR FIRST mSubLC.S_DirectionsUsage WITHIN mSubLC.S_DirectionsForUseSection 
-                    WHERE mSubLC.S_DirectionsUsage.ID = mSubLC.S_Usage.ID 
+         SET CURSOR FIRST mSubLC.M_Usage WITHIN mSubLC.SubregLabelContent
+                    WHERE mSubLC.M_Usage.ID = OriginalTypeID
+         SET CURSOR FIRST mSubLC.S_DirectionsUsage WITHIN mSubLC.S_DirectionsForUseSection
+                    WHERE mSubLC.S_DirectionsUsage.ID = mSubLC.S_Usage.ID
          IF RESULT < zCURSOR_SET
             CREATE ENTITY mSubLC.S_DirectionsUsageOrdering
             INCLUDE mSubLC.S_DirectionsUsage FROM mSubLC.S_Usage
          END
       END
-      
+
       // Marketing Usage
       IF mSubLC.CompositeComponentList.Type = "M_MarketingUsageOrdering"
-         SET CURSOR FIRST mSubLC.M_Usage WITHIN mSubLC.SubregLabelContent 
-                    WHERE mSubLC.M_Usage.ID = OriginalTypeID 
-         SET CURSOR FIRST mSubLC.S_MarketingUsage WITHIN mSubLC.S_MarketingSection 
+         SET CURSOR FIRST mSubLC.M_Usage WITHIN mSubLC.SubregLabelContent
+                    WHERE mSubLC.M_Usage.ID = OriginalTypeID
+         SET CURSOR FIRST mSubLC.S_MarketingUsage WITHIN mSubLC.S_MarketingSection
                     WHERE mSubLC.S_MarketingUsage.ID = mSubLC.S_Usage.ID
          IF RESULT < zCURSOR_SET
             CREATE ENTITY mSubLC.S_MarketingUsageOrdering
@@ -738,7 +738,7 @@ SaveSubregistrantLabelContent( VIEW ViewToWindow )
          END
       END
    END
-   
+
    SetAttributeFromCurrentDateTime( mSubLC, "SubregLabelContent", "ModifiedDateTime" )
    COMMIT mSubLC
    IF RESULT < 0
@@ -764,14 +764,14 @@ DeleteMLC_ComponentsForSLC( VIEW ViewToWindow )
    VIEW mMasLC  REGISTERED AS mMasLC
    VIEW mSubLC2 BASED ON LOD  mSubLC
    SHORT nRC
-   
+
    // Delete the selected SLC component entries.
-   
+
    // Make sure that only Marketing Statements Usage entries under Directions For Use and Marketing are marked for removal.
    SET CURSOR FIRST mSubLC.CompositeComponentList WHERE mSubLC.CompositeComponentList.Selected = "Y"
                                                     AND mSubLC.CompositeComponentList.Type != "M_DirectionsUsageOrdering"
                                                     AND mSubLC.CompositeComponentList.Type != "M_MarketingUsageOrdering"
-                                                    AND mSubLC.CompositeComponentList.Type != "M_MarketingStatement" 
+                                                    AND mSubLC.CompositeComponentList.Type != "M_MarketingStatement"
                                                     AND mSubLC.CompositeComponentList.Type != "M_MarketingSection"
    IF RESULT >= zCURSOR_SET
       MessageSend( ViewToWindow, "", "Remove Components",
@@ -779,80 +779,80 @@ DeleteMLC_ComponentsForSLC( VIEW ViewToWindow )
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
       RETURN 2
    END
-   
+
    // First, for each Marketing Section selected, set the delete flag for all corresponding Marketing Statement entries.
    FOR EACH mSubLC.CompositeComponentList
       IF mSubLC.CompositeComponentList.Type = "M_MarketingSection" AND mSubLC.CompositeComponentList.Selected = "Y"
          CreateViewFromView( mSubLC2, mSubLC )
-         SET CURSOR NEXT mSubLC2.CompositeComponentList 
+         SET CURSOR NEXT mSubLC2.CompositeComponentList
          LOOP WHILE RESULT >= zCURSOR_SET AND mSubLC2.CompositeComponentList.Type = "M_MarketingStatement"
             mSubLC2.CompositeComponentList.Selected = "Y"
-            SET CURSOR NEXT mSubLC2.CompositeComponentList 
+            SET CURSOR NEXT mSubLC2.CompositeComponentList
          END
          DropView( mSubLC2 )
       END
    END
-   
+
    // Next delete each selected Statement entry.
    FOR EACH mSubLC.CompositeComponentList WHERE mSubLC.CompositeComponentList.Selected = "Y"
       IF mSubLC.CompositeComponentList.OriginalTypeID != ""
-         SET CURSOR FIRST mMasLC.CompositeComponentList 
-                    WHERE mMasLC.CompositeComponentList.OriginalTypeID = mSubLC.CompositeComponentList.OriginalTypeID 
+         SET CURSOR FIRST mMasLC.CompositeComponentList
+                    WHERE mMasLC.CompositeComponentList.OriginalTypeID = mSubLC.CompositeComponentList.OriginalTypeID
          IF RESULT >= zCURSOR_SET
             // Turn off mMasLC selected.
             mMasLC.CompositeComponentList.Selected = ""
          END
-         DELETE ENTITY mSubLC.CompositeComponentList NONE 
+         DELETE ENTITY mSubLC.CompositeComponentList NONE
       ELSE
          IF mSubLC.CompositeComponentList.SLC_OriginalTypeID != ""
             DELETE ENTITY mSubLC.CompositeComponentList NONE
             /*IF mSubLC.CompositeComponentList.Type = "M_MarketingStatement"
-               SET CURSOR FIRST mSubLC.S_MarketingStatement WITHIN mSubLC.SubregLabelContent 
+               SET CURSOR FIRST mSubLC.S_MarketingStatement WITHIN mSubLC.SubregLabelContent
                           WHERE mSubLC.S_MarketingStatement.ID = mSubLC.CompositeComponentList.SLC_OriginalTypeID
                IF RESULT >= zCURSOR_SET
                   mSubLC.S_MarketingStatement.wDeleteFlag = "Y"
-                  DELETE ENTITY mSubLC.CompositeComponentList NONE 
+                  DELETE ENTITY mSubLC.CompositeComponentList NONE
                END
             ELSE
                SET CURSOR FIRST mSubLC.S_MarketingSection WHERE mSubLC.S_MarketingSection.ID = mSubLC.CompositeComponentList.SLC_OriginalTypeID
                IF RESULT >= zCURSOR_SET
                   mSubLC.S_MarketingSection.wDeleteFlag = "Y"
-                  DELETE ENTITY mSubLC.CompositeComponentList NONE 
+                  DELETE ENTITY mSubLC.CompositeComponentList NONE
                END
             END*/
          END
       END
    END
-   
+
    // Next delete any Marketing Section entries without Statement entries.
    // (A Section entry does not have DisplayType = "Statement".)
-   FOR EACH mSubLC.CompositeComponentList 
+   FOR EACH mSubLC.CompositeComponentList
       IF mSubLC.CompositeComponentList.Type = "S_MarketingSection"
          CreateViewFromView( mSubLC2, mSubLC )
-         SET CURSOR NEXT mSubLC2.CompositeComponentList 
+         SET CURSOR NEXT mSubLC2.CompositeComponentList
          IF RESULT >= zCURSOR_SET AND mSubLC2.CompositeComponentList.DisplayType != "Statement"
             // The next entry is also not a Statement.
-            SET CURSOR FIRST mMasLC.CompositeComponentList 
-                       WHERE mMasLC.CompositeComponentList.OriginalTypeID = mSubLC.CompositeComponentList.OriginalTypeID 
-                         AND mMasLC.CompositeComponentList.DisplayType    = mSubLC.CompositeComponentList.DisplayType 
+            SET CURSOR FIRST mMasLC.CompositeComponentList
+                       WHERE mMasLC.CompositeComponentList.OriginalTypeID = mSubLC.CompositeComponentList.OriginalTypeID
+                         AND mMasLC.CompositeComponentList.DisplayType    = mSubLC.CompositeComponentList.DisplayType
             IF RESULT >= zCURSOR_SET
                // Turn off mMasLC selected.
                mMasLC.CompositeComponentList.Selected = ""
             END
-            DELETE ENTITY mSubLC.CompositeComponentList NONE 
+            DELETE ENTITY mSubLC.CompositeComponentList NONE
          END
          DropView( mSubLC2 )
       END
    END
-   
+
    // If all entries have been deleted, put the null entry back.
-   SET CURSOR FIRST mSubLC.CompositeComponentList 
+   SET CURSOR FIRST mSubLC.CompositeComponentList
    IF RESULT < zCURSOR_SET
-      CREATE ENTITY mSubLC.CompositeComponentList 
+      CREATE ENTITY mSubLC.CompositeComponentList
       mSubLC.CompositeComponentList.DisplayType  = "-null-"
-      mSubLC.CompositeComponentList.DisplayValue = "-----------null components------------" 
+      mSubLC.CompositeComponentList.DisplayValue = "-----------null components------------"
    END
-   
+
 END
 
 ////////////////////////////////////////////////////////////////
@@ -864,9 +864,9 @@ DIALOG OPERATION
 RemoveMLC_UsageEntries( VIEW ViewToWindow )
 
    VIEW mMasLC  REGISTERED AS mMasLC
-   
+
    // Remove each selected Usage entry in the Target subobject.
-   FOR EACH mMasLC.M_UsageSelectTarget 
+   FOR EACH mMasLC.M_UsageSelectTarget
       IF mMasLC.M_UsageSelectTarget.wSelected = "Y"
          EXCLUDE mMasLC.M_UsageSelectTarget NONE
       END
@@ -884,11 +884,11 @@ PrebuildSLC_Update( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
    VIEW mSubLC REGISTERED AS mSubLC
-   
+
    // Remove any S_Usage statements not tied to M_Usage statements.
-   FOR EACH mSubLC.S_Usage 
+   FOR EACH mSubLC.S_Usage
       IF mSubLC.M_Usage DOES NOT EXIST
-         DELETE ENTITY mSubLC.S_Usage NONE 
+         DELETE ENTITY mSubLC.S_Usage NONE
       END
    END
 
@@ -909,7 +909,7 @@ SaveSPLD( VIEW ViewToWindow )
    VIEW mSPLDef  REGISTERED AS mSPLDef
    VIEW lSPLDLST REGISTERED AS lSPLDLST
    INTEGER SubregProductID
-   
+
    // Name and Version must be entered.
    IF mSPLDef.SubregPhysicalLabelDef.Name = ""
       MessageSend( ViewToWindow, "", "Save Subregistrant Label Content",
@@ -917,23 +917,23 @@ SaveSPLD( VIEW ViewToWindow )
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
       RETURN 2
    END
-   
+
    // Order SubBlocks according to Y Position.
-   FOR EACH mSPLDef.LLD_Page 
-      FOR EACH mSPLDef.LLD_Panel 
-         FOR EACH mSPLDef.LLD_Block 
+   FOR EACH mSPLDef.LLD_Page
+      FOR EACH mSPLDef.LLD_Panel
+         FOR EACH mSPLDef.LLD_Block
             OrderEntityForView( mSPLDef, "LLD_SubBlock", "wComputedTopPosition A" )
          END
-      END 
+      END
    END
-   
+
    // Delete work attributes that cause error curing commit validations.
-   FOR EACH mSPLDef.DisplaySection 
-      DELETE ENTITY mSPLDef.DisplaySection NONE 
+   FOR EACH mSPLDef.DisplaySection
+      DELETE ENTITY mSPLDef.DisplaySection NONE
    END
-   
+
    COMMIT mSPLDef
-   
+
 END
 
 ////////////////////////////////////////////////////////////////
@@ -951,7 +951,7 @@ SaveSPLD_AndReturn( VIEW ViewToWindow )
    VIEW mSubLC  BASED ON LOD  mSubLC
    VIEW lSPLDLST REGISTERED AS lSPLDLST
    INTEGER SubregProductID
-   
+
    // Name and Version must be entered.
    IF mSPLDef.SubregPhysicalLabelDef.Name = ""
       MessageSend( ViewToWindow, "", "Save Subregistrant Label Content",
@@ -959,7 +959,7 @@ SaveSPLD_AndReturn( VIEW ViewToWindow )
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
       RETURN 2
    END
-   
+
    // Other than the COMMIT, the following block of code is for debugging purposes
 // SubregProductID = mSPLDef.SubregPhysicalLabelDef.ID
 // TraceLineS( "SaveSPLD_AndReturn", "#1" )
@@ -992,13 +992,13 @@ SaveSPLD_AndReturn( VIEW ViewToWindow )
       DropNameForView( mSubLC, "mSubLC", ViewToWindow, zLEVEL_TASK )
       DropObjectInstance( mSubLC )
    END
-   
+
    // Reactivate the lSPLDLST object.
-   SubregProductID = lSPLDLST.SubregProduct.ID 
+   SubregProductID = lSPLDLST.SubregProduct.ID
    DropObjectInstance( lSPLDLST )
    ACTIVATE lSPLDLST Multiple WHERE lSPLDLST.SubregProduct.ID = SubregProductID
    NAME VIEW lSPLDLST "lSPLDLST"
-   
+
 END
 
 ////////////////////////////////////////////////////////////////
@@ -1013,7 +1013,7 @@ CancelSPLD( VIEW ViewToWindow )
    VIEW mSPLDefPanel BASED ON LOD mSPLDef
    VIEW mSPLDefBlock BASED ON LOD mSPLDef
    VIEW mSubLC  BASED ON LOD  mSubLC
-   
+
    GET VIEW mSPLDefPanel NAMED "mSPLDefPanel"
    IF RESULT >= 0
       DropNameForView( mSPLDefPanel, "mSPLDefPanel", ViewToWindow, zLEVEL_TASK )
@@ -1049,15 +1049,15 @@ GOTO_UpdateSubregProductSPLD( VIEW ViewToWindow )
    VIEW lSPLDLST REGISTERED AS lSPLDLST
    VIEW mSPLDef  BASED ON LOD  mSPLDef
    VIEW mSubLC   BASED ON LOD  mSubLC
-   
+
    // Activate the mSPLDef object selected in mSubProd.
-   ACTIVATE mSPLDef WHERE mSPLDef.SubregPhysicalLabelDef.ID = lSPLDLST.SubregPhysicalLabelDef.ID 
+   ACTIVATE mSPLDef WHERE mSPLDef.SubregPhysicalLabelDef.ID = lSPLDLST.SubregPhysicalLabelDef.ID
    NAME VIEW mSPLDef "mSPLDef"
-   
+
    // Activate the related mSubLC object.
-   ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSPLDef.SubregLabelContent.ID 
+   ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSPLDef.SubregLabelContent.ID
    NAME VIEW mSubLC "mSubLC"
-   
+
    // Rebuild DirectionsForUse and Marketing data.
    // If the DirectionsForUse or Marketing Statements are not tied to their SLC counterparts, then rebuild them.
    // (This is a correction to a data error.)
@@ -1067,41 +1067,41 @@ GOTO_UpdateSubregProductSPLD( VIEW ViewToWindow )
    ELSE
       BuildUsageEntriesFrSLC( mSPLDef, mSubLC )
    END
-   
+
    // Save and reactivate mSPLDef to make the object easier to see in the object browser.
    COMMIT mSPLDef
    DropObjectInstance( mSPLDef )
-   ACTIVATE mSPLDef WHERE mSPLDef.SubregPhysicalLabelDef.ID = lSPLDLST.SubregPhysicalLabelDef.ID 
+   ACTIVATE mSPLDef WHERE mSPLDef.SubregPhysicalLabelDef.ID = lSPLDLST.SubregPhysicalLabelDef.ID
    NAME VIEW mSPLDef "mSPLDef"
-   
+
    // Sort Panels and SubBlocks by position.
    ComputeTopPositions( mSPLDef )
-   FOR EACH mSPLDef.LLD_Page 
+   FOR EACH mSPLDef.LLD_Page
       OrderEntityForView( mSPLDef, "LLD_Panel", "Top A Left A" )
-      FOR EACH mSPLDef.LLD_Panel 
-         FOR EACH mSPLDef.LLD_Block 
+      FOR EACH mSPLDef.LLD_Panel
+         FOR EACH mSPLDef.LLD_Block
             OrderEntityForView( mSPLDef, "LLD_SubBlock", "LLD_SubBlock.Left A wComputedTopPosition A" )
          END
-      END 
-   END 
-   SET CURSOR FIRST mSPLDef.LLD_Page 
-   
+      END
+   END
+   SET CURSOR FIRST mSPLDef.LLD_Page
+
    // Initialize LLD data, if it's not already initialized.
    IF mSPLDef.SPLD_LLD DOES NOT EXIST
-      CREATE ENTITY mSPLDef.SPLD_LLD 
-      CREATE ENTITY mSPLDef.LLD_Page 
-      CREATE ENTITY mSPLDef.LLD_Panel 
+      CREATE ENTITY mSPLDef.SPLD_LLD
+      CREATE ENTITY mSPLDef.LLD_Page
+      CREATE ENTITY mSPLDef.LLD_Panel
       mSPLDef.LLD_Panel.Left = 0
-      mSPLDef.LLD_Panel.Top = 0 
+      mSPLDef.LLD_Panel.Top = 0
    END
-   
+
    // Build the work components
    BuildCompositeEntriesForSPLD( mSPLDef ) // Need this for Update SPLD Block Definition to work
    TraceLineS( "$$$$$$ end of SPLD oper", "GOTO_UpdateSubregProductSPLD" )
 // DisplayObjectInstance( mSPLDef, "", "" )
-   
+
    // Also activate the corresponding SLC and build the composite subobject.
-   //ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSPLDef.SubregLabelContent.ID 
+   //ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSPLDef.SubregLabelContent.ID
    //NAME VIEW mSubLC "mSubLC"
    //BuildCompositeEntries( mSubLC )
 
@@ -1116,12 +1116,12 @@ DIALOG OPERATION
 DeleteSubregProductSPLD( VIEW ViewToWindow )
 
    VIEW lSPLDLST REGISTERED AS lSPLDLST
-   VIEW mSPLDef  BASED ON LOD  mSPLDef 
-   
+   VIEW mSPLDef  BASED ON LOD  mSPLDef
+
    // Delete selected mSPLDef.
-   ACTIVATE mSPLDef WHERE mSPLDef.SubregPhysicalLabelDef.ID = lSPLDLST.SubregPhysicalLabelDef.ID 
+   ACTIVATE mSPLDef WHERE mSPLDef.SubregPhysicalLabelDef.ID = lSPLDLST.SubregPhysicalLabelDef.ID
    NAME VIEW mSPLDef "mSPLDefDelete"
-   DELETE ENTITY mSPLDef.SubregPhysicalLabelDef 
+   DELETE ENTITY mSPLDef.SubregPhysicalLabelDef
    COMMIT mSPLDef
    DropObjectInstance( mSPLDef )
    DropEntity( lSPLDLST, "SubregPhysicalLabelDef", zREPOS_NONE )
@@ -1137,14 +1137,14 @@ DIALOG OPERATION
 DeletePanelEntry( VIEW ViewToWindow )
 
    VIEW mSPLDef REGISTERED AS mSPLDef
-   
-   DELETE ENTITY mSPLDef.LLD_Panel 
-   SET CURSOR FIRST mSPLDef.LLD_Panel 
+
+   DELETE ENTITY mSPLDef.LLD_Panel
+   SET CURSOR FIRST mSPLDef.LLD_Panel
    IF RESULT < zCURSOR_SET
       CREATE ENTITY mSPLDef.LLD_Panel
       mSPLDef.LLD_Panel.Left = 0
-      mSPLDef.LLD_Panel.Top = 0 
-   END  
+      mSPLDef.LLD_Panel.Top = 0
+   END
 
 END
 
@@ -1157,10 +1157,10 @@ DIALOG OPERATION
 GOTO_AddPanelEntry( VIEW ViewToWindow )
 
    VIEW mSPLDef REGISTERED AS mSPLDef
-   
+
    //CreateTemporalEntity( mSPLDef, "LLD_Panel", zPOS_AFTER )
-   CREATE ENTITY mSPLDef.LLD_Panel 
-   CREATE ENTITY mSPLDef.LLD_Block  
+   CREATE ENTITY mSPLDef.LLD_Panel
+   CREATE ENTITY mSPLDef.LLD_Block
 
 END
 
@@ -1175,39 +1175,39 @@ GOTO_UpdatePanelEntry( VIEW ViewToWindow )
    VIEW mSPLDef  REGISTERED AS mSPLDef
    VIEW mSPLDef2 BASED ON LOD  mSPLDef
    INTEGER RelativeBlockNumber
-   
+
    // Create a Block if one doesn't already exist for the Panel.
    SET CURSOR FIRST mSPLDef.LLD_Block
    IF RESULT < zCURSOR_SET
-      CREATE ENTITY mSPLDef.LLD_Block 
+      CREATE ENTITY mSPLDef.LLD_Block
    END
-   
+
    // Make sure there are no existing LLD_Block entries.
    FOR EACH mSPLDef.LLD_Block
-      DELETE ENTITY mSPLDef.LLD_Block NONE 
+      DELETE ENTITY mSPLDef.LLD_Block NONE
    END
-   
+
    // Make sure entries are sorted correctly.
    CreateViewFromView( mSPLDef2, mSPLDef )
    ComputeTopPositions( mSPLDef2 )
    DropView( mSPLDef2 )
    OrderEntityForView( mSPLDef, "LLD_Block", "Left A wComputedTopPosition A" )
-   FOR EACH mSPLDef.LLD_Block  
+   FOR EACH mSPLDef.LLD_Block
       OrderEntityForView( mSPLDef, "LLD_SubBlock", "Left A wComputedTopPosition A" )
    END
-   
+
    // Build the flat component list from the two-level Block/SubBlock structure.
    RelativeBlockNumber = 0
-   FOR EACH mSPLDef.LLD_Block 
+   FOR EACH mSPLDef.LLD_Block
       RelativeBlockNumber = RelativeBlockNumber + 1
-      CREATE ENTITY mSPLDef.LLD_Block  
+      CREATE ENTITY mSPLDef.LLD_Block
       SetMatchingAttributesByName( mSPLDef, "LLD_Block", mSPLDef, "LLD_Block", zSET_ALL )
       mSPLDef.LLD_Block.Type = "Block"
       mSPLDef.LLD_Block.wRelativeBlockNumber = RelativeBlockNumber
       mSPLDef.LLD_Block.wRelativeBlockNumber = RelativeBlockNumber
-      FOR EACH mSPLDef.LLD_SubBlock 
+      FOR EACH mSPLDef.LLD_SubBlock
          RelativeBlockNumber = RelativeBlockNumber + 1
-         CREATE ENTITY mSPLDef.LLD_Block  
+         CREATE ENTITY mSPLDef.LLD_Block
          SetMatchingAttributesByName( mSPLDef, "LLD_Block", mSPLDef, "LLD_SubBlock", zSET_ALL )
          mSPLDef.LLD_Block.Type = "SubBlock"
          mSPLDef.LLD_Block.wRelativeBlockNumber = RelativeBlockNumber
@@ -1216,16 +1216,16 @@ GOTO_UpdatePanelEntry( VIEW ViewToWindow )
    END
 */
    // Recursive code that didn't quite work.
-   /*FOR EACH mSPLDef.LLD_Block 
-      CREATE ENTITY mSPLDef.LLD_SubBlock  
+   /*FOR EACH mSPLDef.LLD_Block
+      CREATE ENTITY mSPLDef.LLD_SubBlock
       SetMatchingAttributesByName( mSPLDef, "LLD_SubBlock", mSPLDef, "LLD_Block", zSET_ALL )
       mSPLDef.LLD_SubBlock.Type = "Block"
       TraceLineS( "#### Block 2", "" )
       CreateViewFromView( mSPLDef2, mSPLDef )
       SetViewToSubobject( mSPLDef2, "LLD_SubBlock" )
-      FOR EACH mSPLDef2.LLD_Block 
+      FOR EACH mSPLDef2.LLD_Block
          TraceLineS( "#### SubBlock 2", "" )
-         CREATE ENTITY mSPLDef.LLD_SubBlock  
+         CREATE ENTITY mSPLDef.LLD_SubBlock
          SetMatchingAttributesByName( mSPLDef, "LLD_SubBlock", mSPLDef2, "LLD_Block", zSET_ALL )
          mSPLDef.LLD_SubBlock.Type = "SubBlock"
       END
@@ -1244,14 +1244,14 @@ ACCEPT_SPLD_Panel( VIEW ViewToWindow )
 
    VIEW mSPLDef  REGISTERED AS mSPLDef
    VIEW mSPLDef2 BASED ON LOD  mSPLDef
-   
+
    // Make sure that any Blocks and SubBlocks are in Y position order, but first calculate order, since
    // some blocks have Top position specified and others will have it computed.
    CreateViewFromView( mSPLDef2, mSPLDef )
    ComputeTopPositions( mSPLDef2 )
    DropView( mSPLDef2 )
    OrderEntityForView( mSPLDef, "LLD_Block", "wComputedTopPosition A" )
-   FOR EACH mSPLDef.LLD_Block 
+   FOR EACH mSPLDef.LLD_Block
       IF mSPLDef.LLD_SubBlock EXISTS
          OrderEntityForView( mSPLDef, "LLD_SubBlock", "wComputedTopPosition A" )
       END
@@ -1271,13 +1271,13 @@ SELECT_MarketingSectionForBlock( VIEW ViewToWindow )
    VIEW mSPLDefBlock REGISTERED AS mSPLDefBlock
    STRING ( 256 ) szName
    INTEGER lCount
-   
+
    lCount = 0
    // User selected Marketing Section to set Block Name in component.
    SET CURSOR FIRST mSPLDefPanel.SPLD_MarketingSection WHERE mSPLDefPanel.SPLD_MarketingSection.wSelected = "Y"
    IF RESULT = zCURSOR_SET
       lCount = 1
-      szName = mSPLDefPanel.SPLD_MarketingSection.Name 
+      szName = mSPLDefPanel.SPLD_MarketingSection.Name
       SET CURSOR NEXT mSPLDefPanel.SPLD_MarketingSection WHERE mSPLDefPanel.SPLD_MarketingSection.wSelected = "Y"
       IF RESULT = zCURSOR_SET
          lCount = 2
@@ -1289,9 +1289,9 @@ SELECT_MarketingSectionForBlock( VIEW ViewToWindow )
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
       RETURN 2
    END
-   
-   mSPLDefBlock.LLD_Block.Name = szName 
-   
+
+   mSPLDefBlock.LLD_Block.Name = szName
+
    // Remove any existing entries, including the one just processed.
    FOR EACH mSPLDefPanel.SPLD_MarketingSection
       mSPLDefPanel.SPLD_MarketingSection.wSelected = ""
@@ -1314,7 +1314,7 @@ fnGenerateSPLD_Label( VIEW ViewToWindow, SHORT bBorders )
    STRING ( 256 ) szFopConfigFile
    STRING ( 1 )   szUseFopConfig
    SHORT         nRC
-   
+
    // We will use mSPLDefPanel, if it exists, as it will always be pointing to the top of the LLD_Block
    // subobject, while mSPLDef sometimes is pointing to a recursive subobject.
    GET VIEW mSPLDef NAMED "mSPLDefPanel"
@@ -1331,16 +1331,16 @@ fnGenerateSPLD_Label( VIEW ViewToWindow, SHORT bBorders )
    ComputeTopPositions( mSPLDef )
    FOR EACH mSPLDef.LLD_Page
       OrderEntityForView( mSPLDef, "LLD_Panel", "Top A Left A" )
-      FOR EACH mSPLDef.LLD_Panel 
+      FOR EACH mSPLDef.LLD_Panel
          OrderEntityForView( mSPLDef, "LLD_Block", "ContinuationBlockFlag D Left A wComputedTopPosition A" )
-         FOR EACH mSPLDef.LLD_Block 
+         FOR EACH mSPLDef.LLD_Block
             OrderEntityForView( mSPLDef, "LLD_SubBlock", "Left A wComputedTopPosition A" )
          END
-      END 
-   END 
-   SET CURSOR FIRST mSPLDef.LLD_Page 
+      END
+   END
+   SET CURSOR FIRST mSPLDef.LLD_Page
 */
-   
+
    // Generate the label using LLD and SLC data defined in mSPLDef.
    IF bBorders = 1
       mSPLDef.SubregPhysicalLabelDef.wFormatWithDottedBorders = "Y"
@@ -1405,7 +1405,7 @@ END
 DIALOG OPERATION
 GENERATE_SPLD_Label( VIEW ViewToWindow )
    SHORT nRC
-   
+
    nRC = fnGenerateSPLD_Label( ViewToWindow, 0 )
    return nRC
 END
@@ -1418,7 +1418,7 @@ END
 DIALOG OPERATION
 GENERATE_SPLD_LabelDottedBorders( VIEW ViewToWindow )
    SHORT nRC
-   
+
    nRC = fnGenerateSPLD_Label( ViewToWindow, 1 )
    return nRC
 END
@@ -1434,9 +1434,9 @@ GENERATE_LLD_FromSPLD( VIEW ViewToWindow )
    VIEW mSPLDef  REGISTERED AS mSPLDef
    VIEW mLLD     BASED ON LOD  mLLD
    VIEW mLLD_LST BASED ON LOD  mLLD
-   
+
    // Generate LLD from the current SPLD.
-   
+
    // Make sure that the name is not blank.
    IF mSPLDef.SubregPhysicalLabelDef.wSavedLLD_Name = ""
       MessageSend( ViewToWindow, "", "Generate LLD",
@@ -1445,9 +1445,9 @@ GENERATE_LLD_FromSPLD( VIEW ViewToWindow )
       DropObjectInstance( mLLD )
       RETURN 2
    END
-   
+
    // Make sure the name entered is unique.
-   ACTIVATE mLLD WHERE mLLD.LLD.Name = mSPLDef.SubregPhysicalLabelDef.wSavedLLD_Name 
+   ACTIVATE mLLD WHERE mLLD.LLD.Name = mSPLDef.SubregPhysicalLabelDef.wSavedLLD_Name
    IF RESULT >= 0
       MessageSend( ViewToWindow, "", "Generate LLD",
                    "The LLD Name entered is not unique.",
@@ -1456,31 +1456,31 @@ GENERATE_LLD_FromSPLD( VIEW ViewToWindow )
       RETURN 2
    END
    DropObjectInstance( mLLD )
-   
+
    // Copy the SPLD Structure.
-   ACTIVATE mLLD EMPTY 
-   NAME VIEW mLLD "mLLD" 
-   CREATE ENTITY mLLD.LLD 
+   ACTIVATE mLLD EMPTY
+   NAME VIEW mLLD "mLLD"
+   CREATE ENTITY mLLD.LLD
    SetMatchingAttributesByName( mLLD, "LLD", mSPLDef, "SPLD_LLD", zSET_NULL )
    mLLD.LLD.Name = mSPLDef.SubregPhysicalLabelDef.wSavedLLD_Name
-   FOR EACH mSPLDef.LLD_Page 
-      CREATE ENTITY mLLD.LLD_Page 
+   FOR EACH mSPLDef.LLD_Page
+      CREATE ENTITY mLLD.LLD_Page
       SetMatchingAttributesByName( mLLD, "LLD_Page", mSPLDef, "LLD_Page", zSET_NULL )
-      FOR EACH mSPLDef.LLD_Panel 
-         CREATE ENTITY mLLD.LLD_Panel 
+      FOR EACH mSPLDef.LLD_Panel
+         CREATE ENTITY mLLD.LLD_Panel
          SetMatchingAttributesByName( mLLD, "LLD_Panel", mSPLDef, "LLD_Panel", zSET_NULL )
-         FOR EACH mSPLDef.LLD_Block 
-            CREATE ENTITY mLLD.LLD_Block 
+         FOR EACH mSPLDef.LLD_Block
+            CREATE ENTITY mLLD.LLD_Block
             SetMatchingAttributesByName( mLLD, "LLD_Block", mSPLDef, "LLD_Block", zSET_NULL )
-            FOR EACH mSPLDef.LLD_SubBlock 
-               CREATE ENTITY mLLD.LLD_SubBlock 
+            FOR EACH mSPLDef.LLD_SubBlock
+               CREATE ENTITY mLLD.LLD_SubBlock
                SetMatchingAttributesByName( mLLD, "LLD_SubBlock", mSPLDef, "LLD_SubBlock", zSET_NULL )
             END
-            FOR EACH mSPLDef.LLD_SpecialSectionAttribute 
-               CREATE ENTITY mLLD.LLD_SpecialSectionAttribute 
+            FOR EACH mSPLDef.LLD_SpecialSectionAttribute
+               CREATE ENTITY mLLD.LLD_SpecialSectionAttribute
                SetMatchingAttributesByName( mLLD, "LLD_SpecialSectionAttribute", mSPLDef, "LLD_SpecialSectionAttribute", zSET_NULL )
                FOR EACH mSPLDef.LLD_SpecialSectionAttrBlock
-                  CREATE ENTITY mLLD.LLD_SpecialSectionAttrBlock 
+                  CREATE ENTITY mLLD.LLD_SpecialSectionAttrBlock
                   SetMatchingAttributesByName( mLLD, "LLD_SpecialSectionAttrBlock", mSPLDef, "LLD_SpecialSectionAttrBlock", zSET_NULL )
                END
             END
@@ -1496,14 +1496,14 @@ GENERATE_LLD_FromSPLD( VIEW ViewToWindow )
       RETURN 2
    END
    DropObjectInstance( mLLD )
-   
+
    // Reactivate the list of all LLD's.
    GET VIEW mLLD_LST NAMED "mLLD_LST"
    IF RESULT >= 0
       DropObjectInstance( mLLD_LST )
    END
    ACTIVATE mLLD_LST RootOnlyMultiple
-   NAME VIEW mLLD_LST "mLLD_LST" 
+   NAME VIEW mLLD_LST "mLLD_LST"
 
 END
 
@@ -1516,29 +1516,29 @@ DIALOG OPERATION
 BACKUP_Objects( VIEW ViewToWindow )
 
    VIEW mSubreg  REGISTERED AS mSubreg
-   VIEW mSubProd REGISTERED AS mSubProd 
-   VIEW mSubLC   BASED ON LOD  mSubLC 
+   VIEW mSubProd REGISTERED AS mSubProd
+   VIEW mSubLC   BASED ON LOD  mSubLC
    VIEW mMasLC   BASED ON LOD  mMasLC
    STRING ( 100 )  szFileName
    STRING ( 100 )  szNamedView
    STRING ( 2 )    szCount
    INTEGER         Count
-   
+
    // Commit each object to a file.
    CommitOI_ToFile( mSubreg, "c:\lplr\epamms\objectback\mSubreg.por", zASCII )
    CommitOI_ToFile( mSubProd, "c:\lplr\epamms\objectback\mSubProd.por", zASCII )
    Count = 0
-   FOR EACH mSubProd.SubregLabelContent 
+   FOR EACH mSubProd.SubregLabelContent
       Count = Count + 1
       szCount = Count
       szFileName = "c:\lplr\epamms\objectback\mSubLC" + szCount + ".por"
       szNamedView = "mSubLC" + szCount
-      ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSubProd.SubregLabelContent.ID 
+      ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSubProd.SubregLabelContent.ID
       NAME VIEW mSubLC szNamedView
       CommitOI_ToFile( mSubLC, szFileName, zASCII )
    END
    IF mSubProd.MasterLabelContent EXISTS
-      ACTIVATE mMasLC WHERE mMasLC.MasterLabelContent.ID = mSubProd.MasterLabelContent.ID 
+      ACTIVATE mMasLC WHERE mMasLC.MasterLabelContent.ID = mSubProd.MasterLabelContent.ID
       NAME VIEW mMasLC "mMasLC"
       CommitOI_ToFile( mSubProd, "c:\lplr\epamms\objectback\mMasLC.por", zASCII )
    END
@@ -1555,45 +1555,45 @@ ExecuteJOE_Test1( VIEW ViewToWindow )
 
    VIEW mSPLDef  BASED ON LOD mSPLDef
    VIEW mSPLDef2 BASED ON LOD mSPLDef
-   
+
    // Execute Tests to Check for JOE Bugs.
-   
+
    // TEST 1
    // Recursive Subobject Test.
    // The current error is that the basic SetViewToSubobject function did not change the view to the subobject.
-   
+
    // Create subobject with one level of recursive subobject.
-   ACTIVATE mSPLDef EMPTY 
-   NAME VIEW mSPLDef "mSPLDef" 
-   CREATE ENTITY mSPLDef.SubregPhysicalLabelDef 
-   CREATE ENTITY mSPLDef.SPLD_LLD 
+   ACTIVATE mSPLDef EMPTY
+   NAME VIEW mSPLDef "mSPLDef"
+   CREATE ENTITY mSPLDef.SubregPhysicalLabelDef
+   CREATE ENTITY mSPLDef.SPLD_LLD
    mSPLDef.SPLD_LLD.Name = "Test"
-   CREATE ENTITY mSPLDef.LLD_Page 
+   CREATE ENTITY mSPLDef.LLD_Page
    mSPLDef.LLD_Page.Width = 10
-   CREATE ENTITY mSPLDef.LLD_Panel 
+   CREATE ENTITY mSPLDef.LLD_Panel
    mSPLDef.LLD_Panel.Width = 11
-   
-   CREATE ENTITY mSPLDef.LLD_Block 
+
+   CREATE ENTITY mSPLDef.LLD_Block
    mSPLDef.LLD_Block.Name = "Block Level 1"
-   CREATE ENTITY mSPLDef.LLD_SpecialSectionAttribute 
+   CREATE ENTITY mSPLDef.LLD_SpecialSectionAttribute
    mSPLDef.LLD_SpecialSectionAttribute.Name = "Spec Attribute 1"
-   
-   SetViewToSubobject( mSPLDef, "LLD_SubBlock" ) 
-   
+
+   SetViewToSubobject( mSPLDef, "LLD_SubBlock" )
+
    IF mSPLDef.LLD_Block EXISTS
       MessageSend( ViewToWindow, "", "JOE Test 1",
                    "SetViewToSubobject didn't work.",
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
       RETURN 2
    END
-   
-   CREATE ENTITY mSPLDef.LLD_Block 
+
+   CREATE ENTITY mSPLDef.LLD_Block
    mSPLDef.LLD_Block.Name = "Block Level 2"
-   CREATE ENTITY mSPLDef.LLD_SpecialSectionAttribute 
-   mSPLDef.LLD_SpecialSectionAttribute.Name = "Spec Attribute 2" 
+   CREATE ENTITY mSPLDef.LLD_SpecialSectionAttribute
+   mSPLDef.LLD_SpecialSectionAttribute.Name = "Spec Attribute 2"
 
    ResetViewFromSubobject( mSPLDef )
-   
+
    // See if we can now read what we created.
    IF mSPLDef.LLD_Block.Name != "Block Level 1"
       MessageSend( ViewToWindow, "", "JOE Test 1",
@@ -1621,10 +1621,10 @@ ExecuteJOE_Test1( VIEW ViewToWindow )
       RETURN 2
    END
    ResetViewFromSubobject( mSPLDef )
-   
+
    // Now try the subobject from a different view.
    CreateViewFromView( mSPLDef2, mSPLDef )
-   
+
    SetViewToSubobject( mSPLDef2, "LLD_SubBlock" )
    IF mSPLDef2.LLD_Block.Name != "Block Level 2"
       MessageSend( ViewToWindow, "", "JOE Test 2",
@@ -1639,25 +1639,25 @@ ExecuteJOE_Test1( VIEW ViewToWindow )
       RETURN 2
    END
    ResetViewFromSubobject( mSPLDef2 )
-   
+
    DropView( mSPLDef2 )
-   
+
    // Now try creating a new view when the first view is positioned on the subobject.
    SetViewToSubobject( mSPLDef, "LLD_SubBlock" )
    CreateViewFromView( mSPLDef2, mSPLDef )
    DropView( mSPLDef2 )
    ResetViewFromSubobject( mSPLDef )
-   
+
    TraceLineS( "*** JOE Test 1 successfully completed", "" )
-   
+
    // Recursive code that didn't quite work.
-   /*FOR EACH mSPLDef.LLD_SubBlock 
+   /*FOR EACH mSPLDef.LLD_SubBlock
       IF mSPLDef.LLD_SubBlock.Type = "Block"
-         CREATE ENTITY mSPLDef.LLD_Block 
+         CREATE ENTITY mSPLDef.LLD_Block
          SetMatchingAttributesByName( mSPLDef, "LLD_Block", mSPLDef, "LLD_SubBlock", zSET_NULL )
       ELSE
          IF mSPLDef.LLD_SubBlock.Type = "SubBlock"
-            CREATE ENTITY mSPLDef.LLD_SubBlock 
+            CREATE ENTITY mSPLDef.LLD_SubBlock
             CreateViewFromView( mSPLDef2, mSPLDef )
             SetViewToSubobject( mSPLDef2, "LLD_SubBlock" )
             SetMatchingAttributesByName( mSPLDef2, "LLD_Block", mSPLDef, "LLD_SubBlock", zSET_NULL )
@@ -1684,17 +1684,17 @@ ExecuteJOE_Test2( VIEW ViewToWindow )
 
    ACTIVATE ZPLOCKO Multiple
    NAME VIEW ZPLOCKO "ZPLOCKO1"
-   
+
    //ACTIVATE mSPLDef WHERE mSPLDef.SubregPhysicalLabelDef.ID > 0
    //NAME VIEW mSPLDef "mSPLDef"
-   
+
    ACTIVATE mSubreg SingleForUpdate WHERE mSubreg.Subregistrant.ID = 1
    NAME VIEW mSubreg "mSubreg"
-   
+
    ACTIVATE ZPLOCKO Multiple
    NAME VIEW ZPLOCKO "ZPLOCKO2"
-   
-   SET CURSOR FIRST ZPLOCKO.ZeidonLock 
+
+   SET CURSOR FIRST ZPLOCKO.ZeidonLock
    IF RESULT >= zCURSOR_SET
       MessageSend( ViewToWindow, "", "Test Locking",
                    "Lock Exists",
@@ -1705,66 +1705,66 @@ ExecuteJOE_Test2( VIEW ViewToWindow )
                    "Lock DOES NOT Exist",
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
       RETURN 2
-   END 
+   END
 
    /*VIEW mSPLDef  BASED ON LOD mSPLDef
    VIEW mSPLDef2 BASED ON LOD mSPLDef
    INTEGER SaveID
-   
+
    // Execute Tests to Check for JOE Bugs.
-   
+
    // TEST 2
    // Test of Entity created in one view is not showing second view.
    // This only happens when the object is activated from the database and changed.
-   
+
    // Activate the basic object.
    //ActivateOI_FromFile( mSPLDef, "mSPLDef", ViewToWindow, "c:\temp\JOE_Test2.por", zSINGLE )
    ACTIVATE mSPLDef WHERE mSPLDef.SubregPhysicalLabelDef.ID = 5
    NAME VIEW mSPLDef "mSPLDef"
-   
+
    // First, do a simple create and see if entity is seen in other view.
-   
-   SET CURSOR LAST mSPLDef.LLD_Panel  
+
+   SET CURSOR LAST mSPLDef.LLD_Panel
    CreateViewFromView( mSPLDef2, mSPLDef )
    NAME VIEW mSPLDef2 "mSPLDef2"
-   
-   CREATE ENTITY mSPLDef.ContinuationStatement 
+
+   CREATE ENTITY mSPLDef.ContinuationStatement
    mSPLDef.ContinuationStatement.Title = "Title 1"
    mSPLDef.ContinuationStatement.Text  = "Text 1"
-   
+
    IF mSPLDef2.ContinuationStatement DOES NOT EXIST
       MessageSend( ViewToWindow, "", "JOE Test 2",
                    "ContinuationStatement doesn't exist 1",
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
       RETURN 2
-   END 
-   
+   END
+
    // Next, do the same test except that the entity is first deleted from the primary view.
-   
-   DELETE ENTITY mSPLDef.ContinuationStatement NONE 
-   
-   CREATE ENTITY mSPLDef.ContinuationStatement 
+
+   DELETE ENTITY mSPLDef.ContinuationStatement NONE
+
+   CREATE ENTITY mSPLDef.ContinuationStatement
    mSPLDef.ContinuationStatement.Title = "Title 1"
    mSPLDef.ContinuationStatement.Text  = "Text 1"
-   
+
    SET CURSOR FIRST mSPLDef2.ContinuationStatement
    IF RESULT < zCURSOR_SET
       MessageSend( ViewToWindow, "", "JOE Test 2",
                    "ContinuationStatement doesn't exist 2",
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
       RETURN 2
-   END 
+   END
    DropView( mSPLDef2 )
-   
+
    // Test accepting and canceling subobjects with this new view.
-   SET CURSOR FIRST mSPLDef.LLD_Panel  
+   SET CURSOR FIRST mSPLDef.LLD_Panel
    CreateViewFromView( mSPLDef2, mSPLDef )
    NAME VIEW mSPLDef2 "mSPLDef2"
-   SET CURSOR NEXT mSPLDef2.LLD_Panel 
-   SET CURSOR NEXT mSPLDef2.LLD_Panel  
+   SET CURSOR NEXT mSPLDef2.LLD_Panel
+   SET CURSOR NEXT mSPLDef2.LLD_Panel
    TraceLineI( "$$$$ Panel ID: ", mSPLDef2.LLD_Panel.ID )
    CreateTemporalSubobjectVersion( mSPLDef2, "LLD_Panel" )
-   //SET CURSOR NEXT mSPLDef2.LLD_Block 
+   //SET CURSOR NEXT mSPLDef2.LLD_Block
    //SET CURSOR NEXT mSPLDef2.LLD_Block
    TraceLineI( "$$$$ Block ID: ", mSPLDef2.LLD_Block.ID )
    SetViewToSubobject( mSPLDef2, "LLD_SubBlock" )
@@ -1784,12 +1784,12 @@ ExecuteJOE_Test2( VIEW ViewToWindow )
    TraceLineS( "$$$$ Trace 6", "" )
    CancelSubobject( mSPLDef2, "LLD_Panel" )
    TraceLineS( "$$$$ Trace 7", "" )
-   
+
    // First CancelSubobject test after delete of a subentity.
    CreateTemporalSubobjectVersion( mSPLDef, "LLD_Page" )
-   SET CURSOR FIRST mSPLDef.LLD_Panel 
-   SaveID = mSPLDef.LLD_Panel.ID  
-   DELETE ENTITY mSPLDef.LLD_Panel 
+   SET CURSOR FIRST mSPLDef.LLD_Panel
+   SaveID = mSPLDef.LLD_Panel.ID
+   DELETE ENTITY mSPLDef.LLD_Panel
    CancelSubobject( mSPLDef, "LLD_Page" )
    SET CURSOR FIRST mSPLDef.LLD_Panel WHERE mSPLDef.LLD_Panel.ID = SaveID
    IF RESULT < zCURSOR_SET
@@ -1799,15 +1799,15 @@ ExecuteJOE_Test2( VIEW ViewToWindow )
       RETURN 2
    END
    TraceLineS( "$$$$ Cancel of deleted Panel worked", "" )
-   
+
    // Second CancelSubobject test after delete of a subentity.
-   SET CURSOR FIRST mSPLDef.LLD_Panel 
-   SET CURSOR NEXT mSPLDef.LLD_Panel 
+   SET CURSOR FIRST mSPLDef.LLD_Panel
+   SET CURSOR NEXT mSPLDef.LLD_Panel
    SET CURSOR NEXT mSPLDef.LLD_Panel
    CreateTemporalSubobjectVersion( mSPLDef, "LLD_Block" )
    SaveID = mSPLDef.LLD_SpecialSectionAttribute.ID
    TraceLineI( "$$$$ Attribute ID: ", SaveID )
-   DELETE ENTITY mSPLDef.LLD_SpecialSectionAttribute 
+   DELETE ENTITY mSPLDef.LLD_SpecialSectionAttribute
    CancelSubobject( mSPLDef, "LLD_Block" )
    SET CURSOR FIRST mSPLDef.LLD_SpecialSectionAttribute WHERE mSPLDef.LLD_SpecialSectionAttribute.ID = SaveID
    IF RESULT < zCURSOR_SET
@@ -1815,8 +1815,8 @@ ExecuteJOE_Test2( VIEW ViewToWindow )
                    "CancelSubobject did not restore deleted entity.",
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
       RETURN 2
-   END 
-   
+   END
+
    TraceLineS( "*** JOE Test 2 successfully completed", "" )*/
 
 END
@@ -1830,12 +1830,12 @@ DIALOG OPERATION
 DELETE_LLD( VIEW ViewToWindow )
 
    VIEW mLLD_LST REGISTERED AS mLLD_LST
-   VIEW mLLD  BASED ON LOD  mLLD 
-   
+   VIEW mLLD  BASED ON LOD  mLLD
+
    // Delete selected mLLD.
-   ACTIVATE mLLD WHERE mLLD.LLD.ID = mLLD_LST.LLD.ID 
+   ACTIVATE mLLD WHERE mLLD.LLD.ID = mLLD_LST.LLD.ID
    NAME VIEW mLLD "mLLDDelete"
-   DELETE ENTITY mLLD.LLD 
+   DELETE ENTITY mLLD.LLD
    COMMIT mLLD
    DropObjectInstance( mLLD )
    DropEntity( mLLD_LST, "LLD", zREPOS_NONE )
@@ -1851,10 +1851,10 @@ DIALOG OPERATION
 UPDATE_LLD( VIEW ViewToWindow )
 
    VIEW mLLD_LST REGISTERED AS mLLD_LST
-   VIEW mLLD  BASED ON LOD  mLLD 
-   
+   VIEW mLLD  BASED ON LOD  mLLD
+
    // Delete selected mLLD.
-   ACTIVATE mLLD WHERE mLLD.LLD.ID = mLLD_LST.LLD.ID 
+   ACTIVATE mLLD WHERE mLLD.LLD.ID = mLLD_LST.LLD.ID
    SetAttributeFromAttribute( mLLD, "LLD", "Name", mLLD_LST, "LLD", "Name" )
    SetAttributeFromAttribute( mLLD, "LLD", "CSS_FileName", mLLD_LST, "LLD", "CSS_FileName" )
    SetMatchingAttributesByName( mLLD, "LLD", mLLD_LST, "LLD", zSET_NULL )
@@ -1872,10 +1872,10 @@ SELECT_LLD_ForSPLD( VIEW ViewToWindow )
 
    VIEW mSPLDef REGISTERED AS mSPLDef
    VIEW mLLD_LST REGISTERED AS mLLD_LST
-   VIEW mLLD  BASED ON LOD  mLLD 
-   
+   VIEW mLLD  BASED ON LOD  mLLD
+
    // Use the selected LLD to create an LLD subobject in mSPLDef.
-   
+
    // Make sure an entry is selected.
    SET CURSOR FIRST mLLD_LST.LLD WHERE mLLD_LST.LLD.wSelected = "Y"
    IF RESULT < zCURSOR_SET
@@ -1885,42 +1885,42 @@ SELECT_LLD_ForSPLD( VIEW ViewToWindow )
       RETURN 2
    END
    mLLD_LST.LLD.wSelected = ""
-   
+
    // Delete any current SPLD_LLD subobject.
    IF mSPLDef.SPLD_LLD EXISTS
-      DELETE ENTITY mSPLDef.SPLD_LLD  
+      DELETE ENTITY mSPLDef.SPLD_LLD
    END
-   ACTIVATE mLLD WHERE mLLD.LLD.ID = mLLD_LST.LLD.ID 
+   ACTIVATE mLLD WHERE mLLD.LLD.ID = mLLD_LST.LLD.ID
    NAME VIEW mLLD "mLLD"
-   
+
    // Build the SPLD_LLD subobject from the LLD.
-   CREATE ENTITY mSPLDef.SPLD_LLD 
+   CREATE ENTITY mSPLDef.SPLD_LLD
    SetMatchingAttributesByName( mSPLDef, "SPLD_LLD", mLLD, "LLD", zSET_NULL )
-   FOR EACH mLLD.LLD_Page 
-      CREATE ENTITY mSPLDef.LLD_Page 
+   FOR EACH mLLD.LLD_Page
+      CREATE ENTITY mSPLDef.LLD_Page
       SetMatchingAttributesByName( mSPLDef, "LLD_Page", mLLD, "LLD_Page", zSET_NULL )
-      FOR EACH mLLD.LLD_Panel 
-         CREATE ENTITY mSPLDef.LLD_Panel 
+      FOR EACH mLLD.LLD_Panel
+         CREATE ENTITY mSPLDef.LLD_Panel
          SetMatchingAttributesByName( mSPLDef, "LLD_Panel", mLLD, "LLD_Panel", zSET_NULL )
-         FOR EACH mLLD.LLD_Block 
-            CREATE ENTITY mSPLDef.LLD_Block 
+         FOR EACH mLLD.LLD_Block
+            CREATE ENTITY mSPLDef.LLD_Block
             SetMatchingAttributesByName( mSPLDef, "LLD_Block", mLLD, "LLD_Block", zSET_NULL )
-            FOR EACH mLLD.LLD_SubBlock 
-               CREATE ENTITY mSPLDef.LLD_SubBlock 
+            FOR EACH mLLD.LLD_SubBlock
+               CREATE ENTITY mSPLDef.LLD_SubBlock
                SetMatchingAttributesByName( mSPLDef, "LLD_SubBlock", mLLD, "LLD_SubBlock", zSET_NULL )
             END
-            FOR EACH mLLD.LLD_SpecialSectionAttribute 
-               CREATE ENTITY mSPLDef.LLD_SpecialSectionAttribute 
+            FOR EACH mLLD.LLD_SpecialSectionAttribute
+               CREATE ENTITY mSPLDef.LLD_SpecialSectionAttribute
                SetMatchingAttributesByName( mSPLDef, "LLD_SpecialSectionAttribute", mLLD, "LLD_SpecialSectionAttribute", zSET_NULL )
                FOR EACH mLLD.LLD_SpecialSectionAttrBlock
-                  CREATE ENTITY mSPLDef.LLD_SpecialSectionAttrBlock 
+                  CREATE ENTITY mSPLDef.LLD_SpecialSectionAttrBlock
                   SetMatchingAttributesByName( mSPLDef, "LLD_SpecialSectionAttrBlock", mLLD, "LLD_SpecialSectionAttrBlock", zSET_NULL )
                END
             END
          END
       END
    END
-   
+
    DropObjectInstance( mLLD )
 
 END
@@ -1934,10 +1934,10 @@ DIALOG OPERATION
 REFRESH_SPLD_FromSLC( VIEW ViewToWindow )
 
    VIEW mSPLDef REGISTERED AS mSPLDef
-   VIEW mSubLC  BASED ON LOD  mSubLC 
+   VIEW mSubLC  BASED ON LOD  mSubLC
 
    // Activate the corresponding SLC and build the composite subobject.
-   ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID =mSPLDef.SubregLabelContent.ID 
+   ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID =mSPLDef.SubregLabelContent.ID
    NAME VIEW mSubLC "mSubLC"
    BuildSPLD_FromSLC( mSPLDef, mSubLC )
    BuildCompositeEntriesForSPLD( mSPLDef )
@@ -1955,15 +1955,15 @@ ACCEPT_SPLD_StatementUpdate( VIEW ViewToWindow )
    VIEW mSPLDef REGISTERED AS mSPLDef
    STRING ( 32 ) szEntityName
    INTEGER       OriginalID
-   
+
    // Unless this is Storage and Disposal, Directions For Use or Marketing Statement, cancel the subobject.
    // For those three Statements, accept changes.
    szEntityName = mSPLDef.CompositeComponentList.Type
-   IF szEntityName = "SPLD_StorageDisposalStatement" OR 
+   IF szEntityName = "SPLD_StorageDisposalStatement" OR
       szEntityName = "SPLD_DirectionsForUseStatement" OR
       szEntityName = "SPLD_GeneralStatement" OR
       szEntityName = "SPLD_MarketingStatement"
-      
+
       // It is an error if Continuation Text is specified if no ContinuationBreakFlag is specified.
       IF mSPLDef.CompositeComponentList.ContinuationLeadingText != "" AND mSPLDef.CompositeComponentList.ContinuationBreakFlag = ""
          MessageSend( ViewToWindow, "", "Accept Statement",
@@ -1971,7 +1971,7 @@ ACCEPT_SPLD_StatementUpdate( VIEW ViewToWindow )
                       zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
          RETURN 2
       END
-      
+
       // Make sure that if a Partial Split is requested, both the leading and following text attributes have
       // non-null values.
       // If there is no Partial Continuation request, set those attributes to null.
@@ -1984,8 +1984,8 @@ ACCEPT_SPLD_StatementUpdate( VIEW ViewToWindow )
          ELSE
             // Since this is a split of the Text, make sure that the two components still equal the whole.
             mSPLDef.CompositeComponentList.BreakupText = mSPLDef.CompositeComponentList.ContinuationLeadingText +
-                                                   mSPLDef.CompositeComponentList.ContinuationText 
-            IF mSPLDef.CompositeComponentList.BreakupText != mSPLDef.CompositeComponentList.Value 
+                                                   mSPLDef.CompositeComponentList.ContinuationText
+            IF mSPLDef.CompositeComponentList.BreakupText != mSPLDef.CompositeComponentList.Value
                // Before giving an error message, reset the breakup text to the original value.
                mSPLDef.CompositeComponentList.BreakupText = mSPLDef.CompositeComponentList.Value
                MessageSend( ViewToWindow, "", "Accept Statement",
@@ -1998,17 +1998,17 @@ ACCEPT_SPLD_StatementUpdate( VIEW ViewToWindow )
          mSPLDef.CompositeComponentList.ContinuationText       = ""
          mSPLDef.CompositeComponentList.ContinuationLeadingText = ""
       END
-      
+
       // Position on original Statement entry and set values.
-      OriginalID = mSPLDef.CompositeComponentList.OriginalTypeID  
+      OriginalID = mSPLDef.CompositeComponentList.OriginalTypeID
       SetCursorFirstEntityByInteger( mSPLDef, szEntityName, "ID", OriginalID, "SubregPhysicalLabelDef" )
       SetAttributeFromAttribute( mSPLDef, szEntityName, "ContinuationBreakFlag",
                                  mSPLDef, "CompositeComponentList", "ContinuationBreakFlag" )
-      SetAttributeFromAttribute( mSPLDef, szEntityName, "ContinuationText", 
-                                 mSPLDef, "CompositeComponentList", "ContinuationText" ) 
-      SetAttributeFromAttribute( mSPLDef, szEntityName, "ContinuationLeadingText", 
+      SetAttributeFromAttribute( mSPLDef, szEntityName, "ContinuationText",
+                                 mSPLDef, "CompositeComponentList", "ContinuationText" )
+      SetAttributeFromAttribute( mSPLDef, szEntityName, "ContinuationLeadingText",
                                  mSPLDef, "CompositeComponentList", "ContinuationLeadingText" )
-      
+
       // Accept the temporal subobject.
       AcceptSubobject( mSPLDef, "CompositeComponentList" )
    ELSE
@@ -2027,10 +2027,10 @@ DIALOG OPERATION
 GOTO_UpdateSPLD_Statement( VIEW ViewToWindow )
 
    VIEW mSPLDef REGISTERED AS mSPLDef
-   
+
    // Create temporal subobject version and initialize the Breakup Text.
    CreateTemporalSubobjectVersion( mSPLDef, "CompositeComponentList" )
-   mSPLDef.CompositeComponentList.BreakupText = mSPLDef.CompositeComponentList.Value 
+   mSPLDef.CompositeComponentList.BreakupText = mSPLDef.CompositeComponentList.Value
 
 END
 
@@ -2051,24 +2051,24 @@ SPLIT_StatementForContinuation( VIEW ViewToWindow )
    INTEGER SourceIndex
    INTEGER MoveStringLength
    INTEGER SourceOffset
-   
+
    // Split the string in attribute BreakupText at the characters || and put the two parts into the Continuation Leading
    // Text and Continuation Text attributes.
-   szFullText                  = mSPLDef.CompositeComponentList.BreakupText 
+   szFullText                  = mSPLDef.CompositeComponentList.BreakupText
    szContinuationLeadingText   = ""
    szContinuationFollowingText = ""
    SourceIndex  = 1
    MoveStringLength = 0
    Length = zGetStringLen( szFullText )
    MaxLength = Length - 4    // We need to back off the end of the string so that the two character compare doesn't go beyond the string.
-   
+
    // Loop until we've come to the break characters or the end of the string.
    LOOP WHILE SourceIndex <= MaxLength AND szContinuationFollowingText = ""
       IF szFullText[SourceIndex:2] = "||||"
-      
+
          // First copy over the characters we've just skipped over.
          ZeidonStringCopy( szContinuationLeadingText, 1, 5000, szFullText, 1, MoveStringLength, 10000 )
-         
+
          // Then copy over the characters after the break characters.
          SourceOffset = MoveStringLength + 3
          MoveStringLength = Length
@@ -2078,11 +2078,11 @@ SPLIT_StatementForContinuation( VIEW ViewToWindow )
          MoveStringLength = MoveStringLength + 1
       END
    END
-   
+
    // Set the final attributes for the Composite.
    mSPLDef.CompositeComponentList.ContinuationLeadingText = szContinuationLeadingText
    mSPLDef.CompositeComponentList.ContinuationText       = szContinuationFollowingText
-   mSPLDef.CompositeComponentList.BreakupText            = mSPLDef.CompositeComponentList.Value 
+   mSPLDef.CompositeComponentList.BreakupText            = mSPLDef.CompositeComponentList.Value
 
 END
 
@@ -2095,17 +2095,17 @@ DIALOG OPERATION
 CLEAN_ClaimEntries( VIEW ViewToWindow )
 
    /*VIEW mSubLC  REGISTERED AS mSubLC
-   
-   FOR EACH mSubLC.S_MarketingSection 
-      FOR EACH mSubLC.S_MarketingUsageOrdering 
+
+   FOR EACH mSubLC.S_MarketingSection
+      FOR EACH mSubLC.S_MarketingUsageOrdering
          IF mSubLC.S_MarketingUsage.UsageType = "C"
-            DELETE ENTITY mSubLC.S_MarketingUsageOrdering NONE 
+            DELETE ENTITY mSubLC.S_MarketingUsageOrdering NONE
          END
       END
    END
-   FOR EACH mSubLC.S_Usage 
+   FOR EACH mSubLC.S_Usage
       IF mSubLC.S_Usage.UsageType = "C"
-         DELETE ENTITY mSubLC.S_Usage NONE 
+         DELETE ENTITY mSubLC.S_Usage NONE
       END
    END
    BuildCompositeEntries( mSubLC )*/
@@ -2122,42 +2122,42 @@ CLEAN_SPLD_Data( VIEW ViewToWindow )
 
    VIEW mSPLDef  REGISTERED AS mSPLDef
    VIEW mSPLDef2 BASED ON LOD  mSPLDef
-   
+
    // First, do a simple create and see if entity is seen in other view.
-   
+
    CommitOI_ToFile( mSPLDef, "c:\temp\JOE_Test2.por", zINCREMENTAL )
-   
-   SET CURSOR LAST mSPLDef.LLD_Panel  
+
+   SET CURSOR LAST mSPLDef.LLD_Panel
    CreateViewFromView( mSPLDef2, mSPLDef )
    NAME VIEW mSPLDef2 "mSPLDef2"
-   
-   CREATE ENTITY mSPLDef.ContinuationStatement 
+
+   CREATE ENTITY mSPLDef.ContinuationStatement
    mSPLDef.ContinuationStatement.Title = "Title 1"
    mSPLDef.ContinuationStatement.Text  = "Text 1"
-   
+
    IF mSPLDef2.ContinuationStatement DOES NOT EXIST
       MessageSend( ViewToWindow, "", "JOE Test 2",
                    "ContinuationStatement doesn't exist 1",
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
       RETURN 2
-   END 
-   
+   END
+
    // Next, do the same test except that the entity is first deleted from the primary view.
-   
-   DELETE ENTITY mSPLDef.ContinuationStatement NONE 
-   
-   CREATE ENTITY mSPLDef.ContinuationStatement 
+
+   DELETE ENTITY mSPLDef.ContinuationStatement NONE
+
+   CREATE ENTITY mSPLDef.ContinuationStatement
    mSPLDef.ContinuationStatement.Title = "Title 1"
    mSPLDef.ContinuationStatement.Text  = "Text 1"
-   
+
    SET CURSOR FIRST mSPLDef2.ContinuationStatement
    IF RESULT < zCURSOR_SET
       MessageSend( ViewToWindow, "", "JOE Test 2",
                    "ContinuationStatement doesn't exist 2",
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
       RETURN 2
-   END 
-   
+   END
+
    TraceLineS( "*** JOE Test 2 successfully completed", "" )
 
 END
@@ -2191,7 +2191,7 @@ PrebuildBlockDefinitionUpdate( VIEW ViewToWindow )
    szType = mSPLDefBlock.LLD_Block.LLD_SectionType
    szName = mSPLDefBlock.LLD_Block.Name
    szSearch = szName
-   szGraphic = mSPLDefBlock.LLD_Block.ImageName 
+   szGraphic = mSPLDefBlock.LLD_Block.ImageName
    IF szType != ""
       szMsg = szType
       szSpace = ": "
@@ -2219,7 +2219,7 @@ PrebuildBlockDefinitionUpdate( VIEW ViewToWindow )
    SetUpKeywordEntries( mSPLDefBlock, mSPLDefBlock.LLD_Block.LLD_SectionType )
 
    // Select which of the CompositeComponentList entities are to be displayed
-   FOR EACH mSPLDef.Display WITHIN mSPLDef.SubregPhysicalLabelDef 
+   FOR EACH mSPLDef.Display WITHIN mSPLDef.SubregPhysicalLabelDef
       DELETE ENTITY mSPLDef.Display NONE
    END
 
@@ -2255,7 +2255,7 @@ PrebuildBlockDefinitionUpdate( VIEW ViewToWindow )
          MessageSend( ViewToWindow, "", "Block Update",
                       szMsg,
                       zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-         FOR EACH mSPLDef.CompositeComponentList 
+         FOR EACH mSPLDef.CompositeComponentList
             szMsg = "Component Type: " + mSPLDef.CompositeComponentList.DisplayType
             szMsg = szMsg + "   Name: " + mSPLDef.CompositeComponentList.Value
             TraceLineS( szMsg, "" )
@@ -2267,7 +2267,7 @@ PrebuildBlockDefinitionUpdate( VIEW ViewToWindow )
          LOOP WHILE RESULT = zCURSOR_SET AND mSPLDef.CompositeComponentList.SelectLevel > 1
             IF mSPLDef.CompositeComponentList.SelectLevel = 2
                CREATE ENTITY mSPLDef.Display
-               DisplayEntityInstance( mSPLDef, "CompositeComponentList" )
+            // DisplayEntityInstance( mSPLDef, "CompositeComponentList" )  this bombs sometimes
             END
             SET CURSOR NEXT mSPLDef.CompositeComponentList
          END
@@ -2284,16 +2284,16 @@ DIALOG OPERATION
 ACCEPT_BlockSpecialFormat( VIEW ViewToWindow )
 
    VIEW mSPLDefBlock REGISTERED AS mSPLDefBlock
-   
+
 // TraceLineS( "ACCEPT_BlockSpecialFormat LLD_Block", "" )
-// DisplayEntityInstance( mSPLDefBlock, "LLD_Block" ) 
+// DisplayEntityInstance( mSPLDefBlock, "LLD_Block" )
 
 /*
    VIEW mSPLDef      REGISTERED AS mSPLDef
    VIEW mSPLDefPanel REGISTERED AS mSPLDefPanel
-   
+
    // Set the selected Name in the LLD_SpecialSectionAttribute entry.
-   mSPLDef.LLD_SpecialSectionAttribute.Name = mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName 
+   mSPLDef.LLD_SpecialSectionAttribute.Name = mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName
    AcceptSubobject( mSPLDef, "LLD_SpecialSectionAttribute" )
 */
 END
@@ -2307,7 +2307,7 @@ DIALOG OPERATION
 CANCEL_BlockSpecialFormat( VIEW ViewToWindow )
 /*
    VIEW mSPLDef REGISTERED AS mSPLDef
-   
+
    CancelSubobject( mSPLDef, "LLD_SpecialSectionAttribute" )
 */
 END
@@ -2321,10 +2321,10 @@ DIALOG OPERATION
 GOTO_NewSpecialFormatDefinition( VIEW ViewToWindow )
 /*
    VIEW mSPLDef REGISTERED AS mSPLDef
-   
+
    // Create the temporal LLD_SpecialSectionAttribute entry.
    CreateTemporalEntity( mSPLDef, "LLD_SpecialSectionAttribute", zPOS_AFTER )
-   CREATE ENTITY mSPLDef.LLD_SpecialSectionAttrBlock 
+   CREATE ENTITY mSPLDef.LLD_SpecialSectionAttrBlock
 */
 END
 
@@ -2339,7 +2339,7 @@ GOTO_UpdateBlockComponent( VIEW ViewToWindow )
    VIEW mSPLDef      REGISTERED AS mSPLDef
    VIEW mSPLDefPanel BASED ON LOD  mSPLDef
    VIEW mSPLDefBlock BASED ON LOD  mSPLDef
-   
+
    // Create view, mSPLDefPanel, which will always be pointing at the Panel level, and will not
    // step down to a lower level subobject of LLD_Block.
    GET VIEW mSPLDefPanel NAMED "mSPLDefPanel"
@@ -2348,7 +2348,7 @@ GOTO_UpdateBlockComponent( VIEW ViewToWindow )
    END
    CreateViewFromView( mSPLDefPanel, mSPLDef )
    NAME VIEW mSPLDefPanel "mSPLDefPanel"
-   
+
    // Also create named view mSPLDefBlock.
    GET VIEW mSPLDefBlock NAMED "mSPLDefBlock"
    IF RESULT >= 0
@@ -2359,13 +2359,13 @@ GOTO_UpdateBlockComponent( VIEW ViewToWindow )
 /*
    // If the Block/SubBlock is Marketing, redirect to Marketing update window.
    // Create version first.
-// IF mSPLDef.LLD_Block.Type = "Block" 
-      SET CURSOR FIRST mSPLDef.LLD_Block WHERE mSPLDef.LLD_Block.wRelativeBlockNumber = mSPLDef.LLD_Block.wRelativeBlockNumber  
+// IF mSPLDef.LLD_Block.Type = "Block"
+      SET CURSOR FIRST mSPLDef.LLD_Block WHERE mSPLDef.LLD_Block.wRelativeBlockNumber = mSPLDef.LLD_Block.wRelativeBlockNumber
       //CreateTemporalSubobjectVersion( mSPLDef, "LLD_Block" )
       CreateViewFromView( mSPLDefPanel, mSPLDef )
       NAME VIEW mSPLDefPanel "mSPLDefPanel"
  //ELSE
- //   SET CURSOR FIRST mSPLDef.LLD_SubBlock WITHIN mSPLDef.LLD_Panel 
+ //   SET CURSOR FIRST mSPLDef.LLD_SubBlock WITHIN mSPLDef.LLD_Panel
  //              WHERE mSPLDef.LLD_SubBlock.wRelativeBlockNumber = mSPLDef.LLD_Block.wRelativeBlockNumber
  //   CreateViewFromView( mSPLDefPanel, mSPLDef )
  //   NAME VIEW mSPLDefPanel "mSPLDefPanel"
@@ -2391,15 +2391,15 @@ DELETE_BlockComponentEntry( VIEW ViewToWindow )
    VIEW mSPLDef REGISTERED AS mSPLDef
 
    // Simply delete the Component.
-// IF mSPLDef.LLD_Block.Type = "Block" 
-      SET CURSOR FIRST mSPLDef.LLD_Block WHERE mSPLDef.LLD_Block.wRelativeBlockNumber = mSPLDef.LLD_Block.wRelativeBlockNumber  
-      DELETE ENTITY mSPLDef.LLD_Block 
+// IF mSPLDef.LLD_Block.Type = "Block"
+      SET CURSOR FIRST mSPLDef.LLD_Block WHERE mSPLDef.LLD_Block.wRelativeBlockNumber = mSPLDef.LLD_Block.wRelativeBlockNumber
+      DELETE ENTITY mSPLDef.LLD_Block
 // ELSE
-//    SET CURSOR FIRST mSPLDef.LLD_SubBlock WITHIN mSPLDef.LLD_Panel 
-//               WHERE mSPLDef.LLD_SubBlock.wRelativeBlockNumber = mSPLDef.LLD_Block.wRelativeBlockNumber  
-//    DELETE ENTITY mSPLDef.LLD_SubBlock 
+//    SET CURSOR FIRST mSPLDef.LLD_SubBlock WITHIN mSPLDef.LLD_Panel
+//               WHERE mSPLDef.LLD_SubBlock.wRelativeBlockNumber = mSPLDef.LLD_Block.wRelativeBlockNumber
+//    DELETE ENTITY mSPLDef.LLD_SubBlock
 // END
-   DELETE ENTITY mSPLDef.LLD_Block  
+   DELETE ENTITY mSPLDef.LLD_Block
 
 END
 
@@ -2417,12 +2417,12 @@ GOTO_AddBlockComponent( VIEW ViewToWindow )
    // Simply create a temporal LLD_Block of type "Block".
    //CreateTemporalEntity( mSPLDef, "LLD_Block", zPOS_AFTER )
    //CreateTemporalEntity( mSPLDef, "LLD_Block", zPOS_AFTER )
-   CREATE ENTITY mSPLDef.LLD_Block 
-   CREATE ENTITY mSPLDef.LLD_Block   
+   CREATE ENTITY mSPLDef.LLD_Block
+   CREATE ENTITY mSPLDef.LLD_Block
    CreateViewFromView( mSPLDefPanel, mSPLDef )
    NAME VIEW mSPLDefPanel "mSPLDefPanel"
 // mSPLDefPanel.LLD_Block.Type = "Block"
-   
+
 END
 
 ////////////////////////////////////////////////////////////////
@@ -2435,26 +2435,26 @@ GOTO_AddSubBlockComponent( VIEW ViewToWindow )
 
    VIEW mSPLDef      REGISTERED AS mSPLDef
    VIEW mSPLDefPanel BASED ON LOD  mSPLDef
-   
+
    // Simply create a temporal LLD_Block of type "SubBlock".
 // IF mSPLDef.LLD_Block.Type = "Block"
       SET CURSOR FIRST mSPLDef.LLD_Block
-                 WHERE mSPLDef.LLD_Block.wRelativeBlockNumber = mSPLDef.LLD_Block.wRelativeBlockNumber 
+                 WHERE mSPLDef.LLD_Block.wRelativeBlockNumber = mSPLDef.LLD_Block.wRelativeBlockNumber
       //CreateTemporalEntity( mSPLDef, "LLD_SubBlock", zPOS_BEFORE )
       CREATE ENTITY mSPLDef.LLD_SubBlock  BEFORE
       CreateViewFromView( mSPLDefPanel, mSPLDef )
       NAME VIEW mSPLDefPanel "mSPLDefPanel"
 // ELSE
-//    SET CURSOR FIRST mSPLDef.LLD_SubBlock WITHIN mSPLDef.LLD_Panel 
-//               WHERE mSPLDef.LLD_SubBlock.wRelativeBlockNumber = mSPLDef.LLD_Block.wRelativeBlockNumber 
+//    SET CURSOR FIRST mSPLDef.LLD_SubBlock WITHIN mSPLDef.LLD_Panel
+//               WHERE mSPLDef.LLD_SubBlock.wRelativeBlockNumber = mSPLDef.LLD_Block.wRelativeBlockNumber
 //    //CreateTemporalEntity( mSPLDef, "LLD_SubBlock", zPOS_AFTER )
 //    CREATE ENTITY mSPLDef.LLD_SubBlock
 //    CreateViewFromView( mSPLDefPanel, mSPLDef )
 //    NAME VIEW mSPLDefPanel "mSPLDefPanel"
 // END
-   
+
    //CreateTemporalEntity( mSPLDefPanel, "LLD_Block", zPOS_AFTER )
-   CREATE ENTITY mSPLDefPanel.LLD_Block  
+   CREATE ENTITY mSPLDefPanel.LLD_Block
 // mSPLDefPanel.LLD_Block.Type = "SubBlock"
 
 END
@@ -2471,14 +2471,14 @@ ACCEPT_BlockSubBlockDefinition( VIEW ViewToWindow )
    VIEW mSPLDefPanel REGISTERED AS mSPLDefPanel
    VIEW mSPLDef2     BASED ON LOD  mSPLDef
    INTEGER HighestBlockNumber
-   
+
    // If this entry doesn't have a wRelativeBlockNumber value, set it to the next highest value.
    IF mSPLDefPanel.LLD_Block.wRelativeBlockNumber = ""
       HighestBlockNumber = 0
       CreateViewFromView( mSPLDef2, mSPLDefPanel )
-      FOR EACH mSPLDef2.LLD_Block 
-         IF HighestBlockNumber < mSPLDef2.LLD_Block.wRelativeBlockNumber 
-            HighestBlockNumber = mSPLDef2.LLD_Block.wRelativeBlockNumber 
+      FOR EACH mSPLDef2.LLD_Block
+         IF HighestBlockNumber < mSPLDef2.LLD_Block.wRelativeBlockNumber
+            HighestBlockNumber = mSPLDef2.LLD_Block.wRelativeBlockNumber
          END
       END
       HighestBlockNumber = HighestBlockNumber + 1
@@ -2490,7 +2490,7 @@ ACCEPT_BlockSubBlockDefinition( VIEW ViewToWindow )
 //    END
       DropView( mSPLDef2 )
    END
-   
+
    // Accept both LLD_Block and the associated LLD_Block or LLD_SubBlock entry.
    //AcceptSubobject( mSPLDef, "LLD_Block" )
    SetMatchingAttributesByName( mSPLDefPanel, "LLD_Block", mSPLDef, "LLD_Block", zSET_NOTNULL )
@@ -2509,9 +2509,9 @@ DIALOG OPERATION
 CANCEL_BlockSubBlockDefinition( VIEW ViewToWindow )
 
    VIEW mSPLDef REGISTERED AS mSPLDef
-   
+
    // Cancel both LLD_Block and the associated LLD_Block or LLD_SubBlock entry.
-   /*IF mSPLDef.LLD_Block.Type = "Block" 
+   /*IF mSPLDef.LLD_Block.Type = "Block"
       CancelSubobject( mSPLDef, "LLD_Block" )
    ELSE
       CancelSubobject( mSPLDef, "LLD_SubBlock" )
@@ -2533,12 +2533,12 @@ PrebuildBlockSpecialFormatDef( VIEW ViewToWindow )
    VIEW mSPLDefPanel REGISTERED AS mSPLDefPanel
    VIEW mSPLDefBlock REGISTERED AS mSPLDefBlock
    STRING ( 256 ) szName
-   
+
    szName = mSPLDefBlock.LLD_SpecialSectionAttribute.Name
 // TraceLineS( "PrebuildBlockSpecialFormatDef Position on Name: ", szName )
 // DisplayEntityInstance( mSPLDefBlock, "LLD_Block" )
    // Position on the correct SpecialFormattingSelectEntry.
-   SET CURSOR FIRST mSPLDefPanel.SpecialFormattingSelectEntry 
+   SET CURSOR FIRST mSPLDefPanel.SpecialFormattingSelectEntry
               WHERE mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = szName
 
 END
@@ -2552,9 +2552,9 @@ DIALOG OPERATION
 CONTINUE_BlockSubBlockDefAdd( VIEW ViewToWindow )
 
    VIEW mSPLDef REGISTERED AS mSPLDef
-   
+
    // Transfer to the correct next page (block or subblock).
-   
+
    // A Section must be selected.
 // IF mSPLDef.LLD_Block.Type = ""
       MessageSend( ViewToWindow, "", "Add Block/SubBlock",
@@ -2562,12 +2562,12 @@ CONTINUE_BlockSubBlockDefAdd( VIEW ViewToWindow )
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
       RETURN 2
 // END
-   
-   /*IF mSPLDef.LLD_Block.Type = "Block" 
-      mSPLDef.LLD_Block.LLD_SectionType = mSPLDef.LLD_Block.LLD_SectionType 
+
+   /*IF mSPLDef.LLD_Block.Type = "Block"
+      mSPLDef.LLD_Block.LLD_SectionType = mSPLDef.LLD_Block.LLD_SectionType
       SetWindowActionBehavior( ViewToWindow, zWAB_ReplaceWindowWithModalWindow, "wSPLD", "SPLD_BlockDefinitionUpdate" )
    ELSE
-      mSPLDef.LLD_SubBlock.LLD_SectionType = mSPLDef.LLD_Block.LLD_SectionType 
+      mSPLDef.LLD_SubBlock.LLD_SectionType = mSPLDef.LLD_Block.LLD_SectionType
       SetWindowActionBehavior( ViewToWindow, zWAB_ReplaceWindowWithModalWindow, "wSPLD", "SPLD_BlockDefinitionUpdateSub" )
    END*/
 
@@ -2582,8 +2582,8 @@ DIALOG OPERATION
 DELETE_SpecialFormatDef( VIEW ViewToWindow )
 
    VIEW mSPLDef REGISTERED AS mSPLDef
-   
-   DELETE ENTITY mSPLDef.LLD_SpecialSectionAttribute  
+
+   DELETE ENTITY mSPLDef.LLD_SpecialSectionAttribute
 
 END
 
@@ -2601,13 +2601,13 @@ TestLocking( VIEW ViewToWindow )
 
    //ACTIVATE ZPLOCKO Multiple
    //NAME VIEW ZPLOCKO "ZPLOCKO1"
-   
+
    //ACTIVATE mSPLDef WHERE mSPLDef.SubregPhysicalLabelDef.ID > 0
    //NAME VIEW mSPLDef "mSPLDef"
-   
+
    ACTIVATE mSubreg WHERE mSubreg.Subregistrant.ID > 0
    NAME VIEW mSubreg "mSubreg"
-   
+
    //ACTIVATE ZPLOCKO Multiple
    //NAME VIEW ZPLOCKO "ZPLOCKO2"
 
@@ -2831,9 +2831,9 @@ CreateSLC( VIEW ViewToWindow )
 END
 
 /////////////////////////////////////////////////////////////////////////////
-//  
+//
 // OPERATION: CopySPLD
-//    
+//
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 CopySPLD( VIEW ViewToWindow )
@@ -2860,13 +2860,13 @@ CopySPLD( VIEW ViewToWindow )
    ACTIVATE mSPLDefNew EMPTY
    NAME VIEW mSPLDefNew "NewSPLD"
    BuildSPLD_FromSPLD( mSPLDefNew, mSPLDef, mSubLC )
-   
+
 END
 
 /////////////////////////////////////////////////////////////////////////////
-//  
+//
 // OPERATION: GOTO_UpdateSpecialFormatDef
-//    
+//
 /////////////////////////////////////////////////////////////////////////////
 
 DIALOG OPERATION
@@ -2877,35 +2877,35 @@ GOTO_UpdateSpecialFormatDef( VIEW ViewToWindow )
 END
 
 /////////////////////////////////////////////////////////////////////////////
-//    
+//
 // OPERATION: DuplicateSubregProductSLC
-//    
+//
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 DuplicateSubregProductSLC( VIEW ViewToWindow )
 
    VIEW mSubProd   REGISTERED AS mSubProd
-   VIEW mSubLCOrig BASED ON LOD  mSubLC 
-   VIEW mSubLCNew  BASED ON LOD  mSubLC 
+   VIEW mSubLCOrig BASED ON LOD  mSubLC
+   VIEW mSubLCNew  BASED ON LOD  mSubLC
    INTEGER SubProdID
-   
+
    // Activate selected Subreg SLC and duplicate it.
-   ACTIVATE mSubLCOrig WHERE mSubLCOrig.SubregLabelContent.ID = mSubProd.SubregLabelContent.ID 
+   ACTIVATE mSubLCOrig WHERE mSubLCOrig.SubregLabelContent.ID = mSubProd.SubregLabelContent.ID
    NAME VIEW mSubLCOrig "mSubLCOrig"
-   
+
    // Create empty target object.
-   ACTIVATE mSubLCNew EMPTY 
+   ACTIVATE mSubLCNew EMPTY
    NAME VIEW mSubLCNew "mSubLCNew"
-   
+
    // Execute duplication operation and commit it.
    DuplicateSLC( mSubLCNew, mSubLCOrig )
    COMMIT mSubLCNew
-   
+
    DropObjectInstance( mSubLCOrig )
    DropObjectInstance( mSubLCNew )
-   
+
    // Reactivate mSubProd to pick up new SubLC.
-   SubProdID = mSubProd.SubregProduct.ID 
+   SubProdID = mSubProd.SubregProduct.ID
    DropObjectInstance( mSubProd )
    ACTIVATE mSubProd WHERE mSubProd.SubregProduct.ID = SubProdID
    NAME VIEW mSubProd "mSubProd"
@@ -2913,9 +2913,9 @@ DuplicateSubregProductSLC( VIEW ViewToWindow )
 END
 
 /////////////////////////////////////////////////////////////////////////////
-//    
+//
 // OPERATION: DuplicateSubregProductSPLD
-//    
+//
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 DuplicateSubregProductSPLD( VIEW ViewToWindow )
@@ -2924,74 +2924,27 @@ DuplicateSubregProductSPLD( VIEW ViewToWindow )
    VIEW lSPLDLST    REGISTERED AS lSPLDLST
    VIEW mSPLDefOrig BASED ON LOD  mSPLDef
    VIEW mSPLDefNew  BASED ON LOD  mSPLDef
-   
+
    // Activate selected Subreg SLC and duplicate it.
-   //ACTIVATE mSPLDefOrig WHERE mSPLDefOrig.SubregPhysicalLabelDef.ID = mSubProd.SubregPhysicalLabelDef.ID 
-   ACTIVATE mSPLDefOrig WHERE mSPLDefOrig.SubregPhysicalLabelDef.ID = lSPLDLST.SubregPhysicalLabelDef.ID 
+   //ACTIVATE mSPLDefOrig WHERE mSPLDefOrig.SubregPhysicalLabelDef.ID = mSubProd.SubregPhysicalLabelDef.ID
+   ACTIVATE mSPLDefOrig WHERE mSPLDefOrig.SubregPhysicalLabelDef.ID = lSPLDLST.SubregPhysicalLabelDef.ID
    NAME VIEW mSPLDefOrig "mSPLDefOrig"
 
    // Create empty target object.
-   ACTIVATE mSPLDefNew EMPTY 
+   ACTIVATE mSPLDefNew EMPTY
    NAME VIEW mSPLDefNew "mSPLDefNew"
-   
+
    // Execute duplication operation and commit it.
    DuplicateSPLD( mSPLDefNew, mSPLDefOrig )
    COMMIT mSPLDefNew
-   
+
    DropObjectInstance( mSPLDefOrig )
    DropObjectInstance( mSPLDefNew )
-   
+
    // Reactivate mSubProd to pick up new SubLC.
    DropObjectInstance( lSPLDLST )
-   ACTIVATE lSPLDLST Multiple WHERE lSPLDLST.SubregProduct.ID = mSubProd.SubregProduct.ID 
+   ACTIVATE lSPLDLST Multiple WHERE lSPLDLST.SubregProduct.ID = mSubProd.SubregProduct.ID
    NAME VIEW lSPLDLST "lSPLDLST"
-
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// OPERATION: SaveReusableBlock
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-SaveReusableBlock( VIEW ViewToWindow )
-   VIEW wWebXfer REGISTERED AS wWebXfer
-   VIEW mSPLDefPanel REGISTERED AS mSPLDefPanel
-   VIEW mBlockRU BASED ON LOD mBlockRU
-   VIEW qBlockRU BASED ON LOD qBlockRU
-   INTEGER ID
-
-   ID = mSPLDefPanel.ReusableBlockDefinition.ID
-
-   ACTIVATE qBlockRU WHERE qBlockRU.Subregistrant.ID = mSPLDefPanel.Subregistrant.ID
-   SET CURSOR FIRST qBlockRU.ReusableBlockDefinition WHERE qBlockRU.ReusableBlockDefinition.Name = wWebXfer.Root.SearchName
-   IF RESULT >= zCURSOR_SET
-      IF qBlockRU.ReusableBlockDefinition.ID != ID
-         MessageSend( ViewToWindow, "", "Select Reusable Block",
-                      "Reusable Block Name already exists",
-                      zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-         DropObjectInstance( qBlockRU )
-         RETURN 2
-      END
-      SET CURSOR NEXT qBlockRU.ReusableBlockDefinition WHERE qBlockRU.ReusableBlockDefinition.Name = wWebXfer.Root.SearchName
-      IF RESULT >= zCURSOR_SET AND qBlockRU.ReusableBlockDefinition.ID != ID
-         MessageSend( ViewToWindow, "", "Select Reusable Block",
-                      "Reusable Block Name already exists",
-                      zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-         DropObjectInstance( qBlockRU )
-         RETURN 2
-      END
-   END
-
-   ACTIVATE mBlockRU WHERE mBlockRU.ReusableBlockDefinition.ID = mSPLDefPanel.ReusableBlockDefinition.ID
-   IF mBlockRU.LLD_Block EXISTS
-      mSPLDefPanel.ReusableBlockDefinition.Name = wWebXfer.Root.SearchName
-      mBlockRU.ReusableBlockDefinition.Name = mSPLDefPanel.ReusableBlockDefinition.Name
-      mBlockRU.ReusableBlockDefinition.Description = mSPLDefPanel.ReusableBlockDefinition.Description
-      DisplayObjectInstance( mBlockRU, "", "" )
-      COMMIT mBlockRU
-   END
-   DropObjectInstance( mBlockRU )
 
 END
 
@@ -3015,44 +2968,56 @@ CopyFromReusableBlock( VIEW mSPLDef )
    VIEW mBlockRU BASED ON LOD mBlockRU
 
    GET VIEW mBlockRU NAMED "ReusableBlock"
-   SetMatchingAttributesByName( mSPLDefBlock, "LLD_Block", mBlockRU, "LLD_Block", zSET_NOTNULL )
+
+// TraceLineS( "Copying selected reusable block", "<<================================" )
+// DisplayEntityInstance( mBlockRU, "ReusableBlockDefinition" )
+// DisplayEntityInstance( mBlockRU, "LLD_Block" )
+
+   SetMatchingAttributesByName( mSPLDefBlock, "LLD_Block", mBlockRU, "LLD_Block", zSET_NULL )
 
    FOR EACH mSPLDefBlock.LLD_SubBlock
-      DELETE ENTITY mSPLDefBlock.LLD_SubBlock NONE 
+      DELETE ENTITY mSPLDefBlock.LLD_SubBlock NONE
    END
 
-   IF mSPLDefBlock.BlockBackgroundColor EXISTS 
-      EXCLUDE mSPLDefBlock.BlockBackgroundColor NONE 
+   FOR EACH mSPLDefBlock.LLD_SpecialSectionAttribute
+      DELETE ENTITY mSPLDefBlock.LLD_SpecialSectionAttribute NONE
+   END
+
+   IF mSPLDefBlock.BlockBackgroundColor EXISTS
+      EXCLUDE mSPLDefBlock.BlockBackgroundColor NONE
    END
 
    IF mSPLDefBlock.BlockBorderColor EXISTS
-      EXCLUDE mSPLDefBlock.BlockBorderColor NONE 
+      EXCLUDE mSPLDefBlock.BlockBorderColor NONE
    END
 
-   FOR EACH mBlockRU.LLD_SpecialSectionAttribute 
+   FOR EACH mBlockRU.LLD_SpecialSectionAttribute
       CREATE ENTITY mSPLDefBlock.LLD_SpecialSectionAttribute
-      SetMatchingAttributesByName( mSPLDefBlock, "LLD_SpecialSectionAttribute", mBlockRU, "LLD_SpecialSectionAttribute", zSET_NOTNULL )
+      SetMatchingAttributesByName( mSPLDefBlock, "LLD_SpecialSectionAttribute", mBlockRU, "LLD_SpecialSectionAttribute", zSET_NULL )
       FOR EACH mBlockRU.LLD_SpecialSectionAttrBlock
          CREATE ENTITY mSPLDefBlock.LLD_SpecialSectionAttrBlock
-         SetMatchingAttributesByName( mSPLDefBlock, "LLD_SpecialSectionAttrBlock", mBlockRU, "LLD_SpecialSectionAttrBlock", zSET_NOTNULL )
+         SetMatchingAttributesByName( mSPLDefBlock, "LLD_SpecialSectionAttrBlock", mBlockRU, "LLD_SpecialSectionAttrBlock", zSET_NULL )
          IF mBlockRU.SpecialAttributeTextColor EXISTS
-            INCLUDE mSPLDefBlock.SpecialAttributeTextColor FROM mBlockRU.SpecialAttributeTextColor 
+            INCLUDE mSPLDefBlock.SpecialAttributeTextColor FROM mBlockRU.SpecialAttributeTextColor
          END
       END
    END
 
    IF mBlockRU.BlockBackgroundColor EXISTS
-      INCLUDE mSPLDefBlock.BlockBackgroundColor FROM mBlockRU.BlockBackgroundColor 
+      INCLUDE mSPLDefBlock.BlockBackgroundColor FROM mBlockRU.BlockBackgroundColor
    END
 
    IF mBlockRU.BlockBorderColor EXISTS
-      INCLUDE mSPLDefBlock.BlockBorderColor FROM mBlockRU.BlockBorderColor 
+      INCLUDE mSPLDefBlock.BlockBorderColor FROM mBlockRU.BlockBorderColor
    END
+
+// TraceLineS( "After Copying selected reusable block", "<<================================" )
+// DisplayEntityInstance( mSPLDefBlock, "LLD_Block" )
 
    FOR EACH mBlockRU.LLD_SubBlock
       SetViewToSubobject( mBlockRU, "LLD_SubBlock" )
       SetViewToSubobject( mSPLDefBlock, "LLD_SubBlock" )
-      SetMatchingAttributesByName( mSPLDefBlock, "LLD_Block", mBlockRU, "LLD_Block", zSET_NOTNULL )
+      CREATE ENTITY mSPLDefBlock.LLD_Block
       CopyFromReusableBlock( mSPLDef )
       ResetViewFromSubobject( mSPLDefBlock )
       ResetViewFromSubobject( mBlockRU )
@@ -3081,7 +3046,7 @@ ACCEPT_ReusableBlock( VIEW ViewToWindow )
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
       RETURN 2
    END
- 
+
    SET CURSOR NEXT mSPLDef.ReusableBlockDefinition WHERE mSPLDef.ReusableBlockDefinition.wkSelected = "Y"
    IF RESULT >= zCURSOR_SET
       MessageSend( ViewToWindow, "", "Select Reusable Block",
@@ -3098,9 +3063,6 @@ ACCEPT_ReusableBlock( VIEW ViewToWindow )
       szTag = mSPLDefBlock.LLD_Block.Tag
       dTop = mSPLDefBlock.LLD_Block.Top
       dLeft = mSPLDefBlock.LLD_Block.Left
-   // TraceLineS( "Selecting reusable block: ", szTag )
-   // TraceLineI( "          reusable top: ", dTop )
-   // TraceLineI( "          reusable left: ", dLeft )
       CopyFromReusableBlock( mSPLDef )
       mSPLDefBlock.LLD_Block.Tag = szTag
       mSPLDefBlock.LLD_Block.Top = dTop
@@ -3108,6 +3070,61 @@ ACCEPT_ReusableBlock( VIEW ViewToWindow )
    END
    DropObjectInstance( mBlockRU )
 
+END
+
+/*************************************************************************************************
+**
+**    OPERATION: TraverseBlockRecursive
+**
+**
+*************************************************************************************************/
+TRANSFORMATION OPERATION
+TraverseSPLD_Recursive( VIEW mSPLDef BASED ON LOD mSPLDef,
+                        STRING ( 64 ) szTag )
+   INTEGER lRC
+   
+   lRC = 0
+   FOR EACH mSPLDef.LLD_Block
+      IF szTag != "" AND mSPLDef.LLD_Block.Tag = szTag
+         RETURN 1
+      END
+      FOR EACH mSPLDef.LLD_SubBlock
+         SetViewToSubobject( mSPLDef, "LLD_SubBlock" )
+         lRC = TraverseBlockRecursive( mSPLDef )
+         ResetViewFromSubobject( mSPLDef )
+         IF lRC != 0
+            lRC = lRC + 1
+            RETURN lRC
+         END
+      END
+   END
+   RETURN 0
+END
+
+/*************************************************************************************************
+**
+**    OPERATION: TraverseBlocks
+**    Reset the wContinuedFromTag
+**
+*************************************************************************************************/
+TRANSFORMATION OPERATION
+TraverseSPLD( VIEW mSPLDef BASED ON LOD mSPLDef,
+              STRING ( 64 ) szTag )
+
+   INTEGER lRC
+   
+   lRC = 0
+// FOR EACH mSPLDef.LLD_Page WITHIN mSPLDef.SubregPhysicalLabelDef
+   FOR EACH mSPLDef.LLD_Page  // only do it within the current SPLD_LLD
+      FOR EACH mSPLDef.LLD_Panel
+         lRC = TraverseBlockRecursive( mSPLDef )
+         IF lRC != 0
+            RETURN lRC
+         END
+      // OrderEntityForView( mSPLDef, "LLD_Block", "Left A wComputedTopPosition A" )  // ContinuationBlockFlag D
+      END
+   END
+   RETURN 0
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -3124,40 +3141,77 @@ PreviewSelectedBlock( VIEW ViewToWindow )
    VIEW mSPLDef2 BASED ON LOD mSPLDef
    VIEW mSPLDefPanel2 BASED ON LOD mSPLDef
    VIEW mSPLDefBlock2 BASED ON LOD mSPLDef
+   VIEW mBlockRU_Save BASED ON LOD mBlockRU
    VIEW mBlockRU BASED ON LOD mBlockRU
    STRING (64) szTag
    INTEGER lControl
+   INTEGER lLevel
    INTEGER nRC
-   
+   DECIMAL dTop
+   DECIMAL dLeft
+
    szTag = mSPLDefBlock.LLD_Block.Tag
-   DropNameForView( mSPLDef, "mSPLDef", ViewToWindow, zLEVEL_TASK )
-   DropNameForView( mSPLDefPanel, "mSPLDefPanel", ViewToWindow, zLEVEL_TASK )
-   DropNameForView( mSPLDefBlock, "mSPLDefBlock", ViewToWindow, zLEVEL_TASK )
+//xDropNameForView( mSPLDef, "mSPLDef", ViewToWindow, zLEVEL_TASK )
+//xDropNameForView( mSPLDefPanel, "mSPLDefPanel", ViewToWindow, zLEVEL_TASK )
+//xDropNameForView( mSPLDefBlock, "mSPLDefBlock", ViewToWindow, zLEVEL_TASK )
 
-   ActivateOI_FromOI( mSPLDef2, mSPLDef, zSINGLE )
-   ResetViewFromSubobjectTop( mSPLDef2 )
-   CreateViewFromView( mSPLDefPanel2, mSPLDef2 )
-   CreateViewFromView( mSPLDefBlock2, mSPLDef2 )
-   lControl = zQUAL_STRING + zPOS_FIRST + zRECURS
-   SetEntityCursor( mSPLDefBlock2, "LLD_Block", "Tag", lControl, szTag, "", "", 0, "SPLD_LLD", "" )   
-   NAME VIEW mSPLDef2 "mSPLDef"
-   NAME VIEW mSPLDefPanel2 "mSPLDefPanel"
-   NAME VIEW mSPLDefBlock2 "mSPLDefBlock"
+// ActivateOI_FromOI( mSPLDef2, mSPLDef, zSINGLE )
+//xACTIVATE mSPLDef2 EMPTY
+//xCREATE ENTITY mSPLDef2.SubregPhysicalLabelDef
+//xDuplicateSPLD( mSPLDef2, mSPLDef )
+//xResetViewFromSubobjectTop( mSPLDef2 )
+//xCreateViewFromView( mSPLDefPanel2, mSPLDef2 )
+//xCreateViewFromView( mSPLDefBlock2, mSPLDef2 )
+//xNAME VIEW mSPLDef2 "mSPLDef"
+//xNAME VIEW mSPLDefPanel2 "mSPLDefPanel"
+//xNAME VIEW mSPLDefBlock2 "mSPLDefBlock"
+
+//xTraceLineS( "Traverse looking for Tag: ", szTag )
+//xlLevel = TraverseSPLD( mSPLDefBlock2, szTag )
+//xTraceLineI( "Tag found at level: ", lLevel )
+/* lControl = zQUAL_STRING + zPOS_FIRST + zRECURS
+   SetEntityCursor( mSPLDefBlock2, "LLD_Block", "Tag", lControl, szTag, "", "", 0, "SPLD_LLD", "" )
    ClearReusableBlockSelections( ViewToWindow )
-   SetViewFromView( mSPLDef2, mSPLDef )
+//xSetViewFromView( mSPLDef2, mSPLDef )
    mSPLDef2.ReusableBlockDefinition.wkSelected = "Y"
-   nRC = ACCEPT_ReusableBlock( ViewToWindow )
-   IF nRC = 0
-      GENERATE_SPLD_LabelDottedBorders( ViewToWindow )
-   END
-   DropNameForView( mSPLDef2, "mSPLDef", ViewToWindow, zLEVEL_TASK )
-   DropNameForView( mSPLDefPanel2, "mSPLDefPanel", ViewToWindow, zLEVEL_TASK )
-   DropNameForView( mSPLDefBlock2, "mSPLDefBlock", ViewToWindow, zLEVEL_TASK )
-   DropObjectInstance( mSPLDef2 )
+// TraceLineS( "Displaying selected reusable block definition", "<<================================" )
+// DisplayEntityInstance( mSPLDef2, "ReusableBlockDefinition" )
+*/
+   ACTIVATE mBlockRU WHERE mBlockRU.ReusableBlockDefinition.ID  = mSPLDef.ReusableBlockDefinition.ID
+   IF mBlockRU.LLD_Block EXISTS
+      ACTIVATE mBlockRU_Save EMPTY
+      NAME VIEW mBlockRU_Save "ReusableBlock"
+      CREATE ENTITY mBlockRU_Save.ReusableBlockDefinition
+      CopyToReusableBlock( mSPLDefBlock )
+      DropNameForView( mBlockRU_Save, "ReusableBlock", ViewToWindow, zLEVEL_TASK )
 
-   NAME VIEW mSPLDef "mSPLDef"
-   NAME VIEW mSPLDefPanel "mSPLDefPanel"
-   NAME VIEW mSPLDefBlock "mSPLDefBlock"
+   //xnRC = ACCEPT_ReusableBlock( ViewToWindow )
+
+      NAME VIEW mBlockRU "ReusableBlock"
+      szTag = mSPLDefBlock.LLD_Block.Tag
+      dTop = mSPLDefBlock.LLD_Block.Top
+      dLeft = mSPLDefBlock.LLD_Block.Left
+      CopyFromReusableBlock( mSPLDef )
+      mSPLDefBlock.LLD_Block.Tag = szTag
+      mSPLDefBlock.LLD_Block.Top = dTop
+      mSPLDefBlock.LLD_Block.Left = dLeft
+      GENERATE_SPLD_LabelDottedBorders( ViewToWindow )
+      NAME VIEW mBlockRU_Save "ReusableBlock"
+      CopyFromReusableBlock( mSPLDef )
+      DropObjectInstance( mBlockRU_Save )
+   END
+   DropObjectInstance( mBlockRU )
+//xIF nRC = 0
+//xEND
+
+//xDropNameForView( mSPLDef2, "mSPLDef", ViewToWindow, zLEVEL_TASK )
+//xDropNameForView( mSPLDefPanel2, "mSPLDefPanel", ViewToWindow, zLEVEL_TASK )
+//xDropNameForView( mSPLDefBlock2, "mSPLDefBlock", ViewToWindow, zLEVEL_TASK )
+//xDropObjectInstance( mSPLDef2 )
+
+//xNAME VIEW mSPLDef "mSPLDef"
+//xNAME VIEW mSPLDefPanel "mSPLDefPanel"
+//xNAME VIEW mSPLDefBlock "mSPLDefBlock"
 
 END
 
@@ -3240,26 +3294,27 @@ CopyToReusableBlock( VIEW mSPLDefBlock )
 
    GET VIEW mBlockRU NAMED "ReusableBlock"
    CREATE ENTITY mBlockRU.LLD_Block
-   SetMatchingAttributesByName( mBlockRU, "LLD_Block", mSPLDefBlock, "LLD_Block", zSET_NOTNULL )
-
-   FOR EACH mSPLDefBlock.LLD_SpecialSectionAttribute 
+   SetMatchingAttributesByName( mBlockRU, "LLD_Block", mSPLDefBlock, "LLD_Block", zSET_NULL )
+// TraceLineS( "Copying to new reusable block", "  <<<<============================================================================" )
+// DisplayObjectInstance( mBlockRU, "", "" )
+   FOR EACH mSPLDefBlock.LLD_SpecialSectionAttribute
       CREATE ENTITY mBlockRU.LLD_SpecialSectionAttribute
-      SetMatchingAttributesByName( mBlockRU, "LLD_SpecialSectionAttribute", mSPLDefBlock, "LLD_SpecialSectionAttribute", zSET_NOTNULL )
+      SetMatchingAttributesByName( mBlockRU, "LLD_SpecialSectionAttribute", mSPLDefBlock, "LLD_SpecialSectionAttribute", zSET_NULL )
       FOR EACH mSPLDefBlock.LLD_SpecialSectionAttrBlock
          CREATE ENTITY mBlockRU.LLD_SpecialSectionAttrBlock
-         SetMatchingAttributesByName( mBlockRU, "LLD_SpecialSectionAttrBlock", mSPLDefBlock, "LLD_SpecialSectionAttrBlock", zSET_NOTNULL )
+         SetMatchingAttributesByName( mBlockRU, "LLD_SpecialSectionAttrBlock", mSPLDefBlock, "LLD_SpecialSectionAttrBlock", zSET_NULL )
          IF mSPLDefBlock.SpecialAttributeTextColor EXISTS
-            INCLUDE mBlockRU.SpecialAttributeTextColor FROM mSPLDefBlock.SpecialAttributeTextColor 
+            INCLUDE mBlockRU.SpecialAttributeTextColor FROM mSPLDefBlock.SpecialAttributeTextColor
          END
       END
    END
 
    IF mSPLDefBlock.BlockBackgroundColor EXISTS
-      INCLUDE mBlockRU.BlockBackgroundColor FROM mSPLDefBlock.BlockBackgroundColor 
+      INCLUDE mBlockRU.BlockBackgroundColor FROM mSPLDefBlock.BlockBackgroundColor
    END
 
    IF mSPLDefBlock.BlockBorderColor EXISTS
-      INCLUDE mBlockRU.BlockBorderColor FROM mSPLDefBlock.BlockBorderColor 
+      INCLUDE mBlockRU.BlockBorderColor FROM mSPLDefBlock.BlockBorderColor
    END
 
    FOR EACH mSPLDefBlock.LLD_SubBlock
@@ -3288,14 +3343,97 @@ InitializeNewReusableBlock( VIEW ViewToWindow )
    CREATE ENTITY mBlockRU.ReusableBlockDefinition
    mBlockRU.ReusableBlockDefinition.Name = "Set Name of Reusable Block"
    mBlockRU.ReusableBlockDefinition.Description = "Set Description of Reusable Block"
-   mBlockRU.ReusableBlockDefinition.LLD_SectionType = mSPLDef.LLD_Block.LLD_SectionType
+   mBlockRU.ReusableBlockDefinition.LLD_SectionType = mSPLDefBlock.LLD_Block.LLD_SectionType
+
+// INCLUDE mBlockRU.Subregistrant FROM mSPLDef.Subregistrant
+// IF mSPLDefBlock.LLD_Block EXISTS
+//    CopyToReusableBlock( mSPLDefBlock )
+// END
+// COMMIT mBlockRU
+// DropObjectInstance( mBlockRU )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: SaveNewReusableBlock
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+SaveNewReusableBlock( VIEW ViewToWindow )
+   VIEW mSPLDefBlock REGISTERED AS mSPLDefBlock
+   VIEW mSPLDef REGISTERED AS mSPLDef
+   VIEW mBlockRU BASED ON LOD mBlockRU
+   STRING ( 128 ) szName
+   STRING ( 256 ) szMessage
+
+   GET VIEW mBlockRU NAMED "ReusableBlock"
+   szName = mBlockRU.ReusableBlockDefinition.Name
+   SET CURSOR FIRST mSPLDef.ReusableBlockDefinition WHERE mSPLDef.ReusableBlockDefinition.Name = szName
+   IF RESULT >= zCURSOR_SET OR szName = "Set Name of Reusable Block"
+      szMessage = "Reusable Block Name (" +  szName
+      szMessage = szMessage + ") already exists.  Please choose a unique name."
+      MessageSend( ViewToWindow, "", "Select Reusable Block",
+                   szMessage,
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
 
    INCLUDE mBlockRU.Subregistrant FROM mSPLDef.Subregistrant
    IF mSPLDefBlock.LLD_Block EXISTS
       CopyToReusableBlock( mSPLDefBlock )
    END
-// COMMIT mBlockRU
-// DropObjectInstance( mBlockRU )
+   COMMIT mBlockRU
+   COMMIT mSPLDef
+
+   DropObjectInstance( mBlockRU )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: SaveReusableBlock
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+SaveReusableBlock( VIEW ViewToWindow )
+   VIEW wWebXfer REGISTERED AS wWebXfer
+   VIEW mSPLDefPanel REGISTERED AS mSPLDefPanel
+   VIEW mBlockRU BASED ON LOD mBlockRU
+   VIEW qBlockRU BASED ON LOD qBlockRU
+   INTEGER ID
+
+   ID = mSPLDefPanel.ReusableBlockDefinition.ID
+
+   ACTIVATE qBlockRU WHERE qBlockRU.Subregistrant.ID = mSPLDefPanel.Subregistrant.ID
+   SET CURSOR FIRST qBlockRU.ReusableBlockDefinition WHERE qBlockRU.ReusableBlockDefinition.Name = wWebXfer.Root.SearchName
+   IF RESULT >= zCURSOR_SET
+      IF qBlockRU.ReusableBlockDefinition.ID != ID
+         MessageSend( ViewToWindow, "", "Select Reusable Block",
+                      "Reusable Block Name already exists",
+                      zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         DropObjectInstance( qBlockRU )
+         RETURN 2
+      END
+      SET CURSOR NEXT qBlockRU.ReusableBlockDefinition WHERE qBlockRU.ReusableBlockDefinition.Name = wWebXfer.Root.SearchName
+      IF RESULT >= zCURSOR_SET AND qBlockRU.ReusableBlockDefinition.ID != ID
+         MessageSend( ViewToWindow, "", "Select Reusable Block",
+                      "Reusable Block Name already exists",
+                      zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         DropObjectInstance( qBlockRU )
+         RETURN 2
+      END
+   END
+
+   ACTIVATE mBlockRU WHERE mBlockRU.ReusableBlockDefinition.ID = mSPLDefPanel.ReusableBlockDefinition.ID
+   IF mBlockRU.LLD_Block EXISTS
+      mSPLDefPanel.ReusableBlockDefinition.Name = wWebXfer.Root.SearchName
+      mBlockRU.ReusableBlockDefinition.Name = mSPLDefPanel.ReusableBlockDefinition.Name
+      mBlockRU.ReusableBlockDefinition.Description = mSPLDefPanel.ReusableBlockDefinition.Description
+      DisplayObjectInstance( mBlockRU, "", "" )
+      COMMIT mBlockRU
+   END
+   DropObjectInstance( mBlockRU )
 
 END
 

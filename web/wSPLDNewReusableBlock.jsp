@@ -35,8 +35,7 @@ public int DoInputMapping( HttpServletRequest request,
    String taskId = (String) session.getAttribute( "ZeidonTaskId" );
    Task task = objectEngine.getTaskById( taskId );
 
-   View mSPLDefPanel = null;
-   View wWebXfer = null;
+   View ReusableBlock = null;
    View vGridTmp = null; // temp view to grid view
    View vRepeatingGrp = null; // temp view to repeating group view
    String strDateFormat = "";
@@ -58,35 +57,11 @@ public int DoInputMapping( HttpServletRequest request,
    if ( webMapping == false )
       session.setAttribute( "ZeidonError", null );
 
-   mSPLDefPanel = task.getViewByName( "mSPLDefPanel" );
-   if ( VmlOperation.isValid( mSPLDefPanel ) )
-   {
-      // MLEdit: Description
-      nRC = mSPLDefPanel.cursor( "ReusableBlockDefinition" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
-      {
-         strMapValue = request.getParameter( "Description" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "Description", "", strMapValue );
-            else
-               mSPLDefPanel.cursor( "ReusableBlockDefinition" ).getAttribute( "Description" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "Description", e.getReason( ), strMapValue );
-         }
-      }
-
-   }
-
-   wWebXfer = task.getViewByName( "wWebXfer" );
-   if ( VmlOperation.isValid( wWebXfer ) )
+   ReusableBlock = task.getViewByName( "ReusableBlock" );
+   if ( VmlOperation.isValid( ReusableBlock ) )
    {
       // EditBox: ReusableBlockName
-      nRC = wWebXfer.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
+      nRC = ReusableBlock.cursor( "ReusableBlockDefinition" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
          strMapValue = request.getParameter( "ReusableBlockName" );
@@ -95,12 +70,31 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "ReusableBlockName", "", strMapValue );
             else
-               wWebXfer.cursor( "Root" ).getAttribute( "SearchName" ).setValue( strMapValue, "" );
+               ReusableBlock.cursor( "ReusableBlockDefinition" ).getAttribute( "Name" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
             VmlOperation.CreateMessage( task, "ReusableBlockName", e.getReason( ), strMapValue );
+         }
+      }
+
+      // MLEdit: Description
+      nRC = ReusableBlock.cursor( "ReusableBlockDefinition" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "Description" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "Description", "", strMapValue );
+            else
+               ReusableBlock.cursor( "ReusableBlockDefinition" ).getAttribute( "Description" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "Description", e.getReason( ), strMapValue );
          }
       }
 
@@ -275,8 +269,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDNewReusableBlock", "wSPLD.SaveReusableBlock" );
-      nOptRC = wSPLD.SaveReusableBlock( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSPLDNewReusableBlock", "wSPLD.SaveNewReusableBlock" );
+      nOptRC = wSPLD.SaveNewReusableBlock( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -516,6 +510,7 @@ else
    View mLLD_LST = null;
    View mMasLC = null;
    View mPrimReg = null;
+   View ReusableBlock = null;
    View mSPLDef = null;
    View mSPLDefBlock = null;
    View mSPLDefPanel = null;
@@ -639,46 +634,32 @@ else
 
 <label  id="SectionType:" name="SectionType:" style="width:94px;height:20px;position:absolute;left:12px;top:24px;">Section Type:</label>
 
-<% /* SectionType:EditBox */ %>
-<%
-   strErrorMapValue = VmlOperation.CheckError( "SectionType", strError );
-   if ( !StringUtils.isBlank( strErrorMapValue ) )
-   {
-      if ( StringUtils.equals( strErrorFlag, "Y" ) )
-         strErrorColor = "color:red;";
-   }
+<% /* SectionType:Text */ %>
+<% strTextDisplayValue = "";
+   ReusableBlock = task.getViewByName( "ReusableBlock" );
+   if ( VmlOperation.isValid( ReusableBlock ) == false )
+      task.log( ).debug( "Invalid View: " + "SectionType" );
    else
    {
-      strErrorColor = "";
-      mSPLDefPanel = task.getViewByName( "mSPLDefPanel" );
-      if ( VmlOperation.isValid( mSPLDefPanel ) == false )
-         task.log( ).debug( "Invalid View: " + "SectionType" );
-      else
+      nRC = ReusableBlock.cursor( "ReusableBlockDefinition" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         nRC = mSPLDefPanel.cursor( "ReusableBlockDefinition" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            try
-            {
-               strErrorMapValue = mSPLDefPanel.cursor( "ReusableBlockDefinition" ).getAttribute( "LLD_SectionType" ).getString( "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on SectionType: " + e.getMessage());
-               task.log().error( "*** Error on ctrl SectionType", e );
-            }
-            if ( strErrorMapValue == null )
-               strErrorMapValue = "";
-
-            task.log( ).debug( "ReusableBlockDefinition.LLD_SectionType: " + strErrorMapValue );
-         }
-         else
-            task.log( ).debug( "Entity does not exist for SectionType: " + "mSPLDefPanel.ReusableBlockDefinition" );
+      try
+      {
+         strTextDisplayValue = ReusableBlock.cursor( "ReusableBlockDefinition" ).getAttribute( "LLD_SectionType" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on SectionType: " + e.getMessage());
+         task.log().info( "*** Error on ctrl SectionType" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
       }
    }
 %>
 
-<input name="SectionType" id="SectionType"  disabled style="width:346px;position:absolute;left:114px;top:24px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<label  id="SectionType" name="SectionType" style="width:350px;height:24px;position:absolute;left:114px;top:24px;"><%=strTextDisplayValue%></label>
 
 <% /* Name::Text */ %>
 
@@ -695,17 +676,17 @@ else
    else
    {
       strErrorColor = "";
-      wWebXfer = task.getViewByName( "wWebXfer" );
-      if ( VmlOperation.isValid( wWebXfer ) == false )
+      ReusableBlock = task.getViewByName( "ReusableBlock" );
+      if ( VmlOperation.isValid( ReusableBlock ) == false )
          task.log( ).debug( "Invalid View: " + "ReusableBlockName" );
       else
       {
-         nRC = wWebXfer.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
+         nRC = ReusableBlock.cursor( "ReusableBlockDefinition" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
             try
             {
-               strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "SearchName" ).getString( "" );
+               strErrorMapValue = ReusableBlock.cursor( "ReusableBlockDefinition" ).getAttribute( "Name" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -715,15 +696,15 @@ else
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "Root.SearchName: " + strErrorMapValue );
+            task.log( ).debug( "ReusableBlockDefinition.Name: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for ReusableBlockName: " + "wWebXfer.Root" );
+            task.log( ).debug( "Entity does not exist for ReusableBlockName: " + "ReusableBlock.ReusableBlockDefinition" );
       }
    }
 %>
 
-<input name="ReusableBlockName" id="ReusableBlockName" style="width:346px;position:absolute;left:114px;top:52px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="ReusableBlockName" id="ReusableBlockName" style="width:350px;position:absolute;left:114px;top:52px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* Description::Text */ %>
 
@@ -741,22 +722,22 @@ else
    else
    {
       strErrorColor = "";
-      mSPLDefPanel = task.getViewByName( "mSPLDefPanel" );
-      if ( VmlOperation.isValid( mSPLDefPanel ) == false )
+      ReusableBlock = task.getViewByName( "ReusableBlock" );
+      if ( VmlOperation.isValid( ReusableBlock ) == false )
          task.log( ).info( "Invalid View: " + "Description" );
       else
       {
-         nRC = mSPLDefPanel.cursor( "ReusableBlockDefinition" ).checkExistenceOfEntity( ).toInt();
+         nRC = ReusableBlock.cursor( "ReusableBlockDefinition" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strErrorMapValue = mSPLDefPanel.cursor( "ReusableBlockDefinition" ).getAttribute( "Description" ).getString( "" );
+            strErrorMapValue = ReusableBlock.cursor( "ReusableBlockDefinition" ).getAttribute( "Description" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
             task.log( ).info( "ReusableBlockDefinition.Description: " + strErrorMapValue );
          }
          else
-            task.log( ).info( "Entity does not exist for Description: " + "mSPLDefPanel.ReusableBlockDefinition" );
+            task.log( ).info( "Entity does not exist for Description: " + "ReusableBlock.ReusableBlockDefinition" );
       }
    }
 %>

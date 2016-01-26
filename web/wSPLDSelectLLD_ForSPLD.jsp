@@ -462,6 +462,7 @@ else
    View mLLD_LST = null;
    View mMasLC = null;
    View mPrimReg = null;
+   View ReusableBlock = null;
    View mSPLDef = null;
    View mSPLDefBlock = null;
    View mSPLDefPanel = null;

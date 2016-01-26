@@ -601,6 +601,8 @@ COPY_SPLD_VersionNext( View     ViewToWindow )
    } 
 
    //:END
+   //:mSPLDefNew.SubregPhysicalLabelDef.ProductName = mSPLDefOld.SubregPhysicalLabelDef.ProductName
+   SetAttributeFromAttribute( mSPLDefNew, "SubregPhysicalLabelDef", "ProductName", mSPLDefOld, "SubregPhysicalLabelDef", "ProductName" );
    //:COMMIT mSPLDefNew
    RESULT = CommitObjectInstance( mSPLDefNew );
 

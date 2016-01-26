@@ -1022,6 +1022,11 @@ else
                      <p style="clear:both;position:relative"></p>
                      <div id="zCheckContinuationBlockToggle" style="overflow:hidden; white-space:nowrap; padding-bottom:20px;">
                         <input type="checkbox" id="zCheckContinuationBlock" name="zCheckContinuationBlock" class="zeidon" data-zmap="block.z_^continuation^block^flag" /><label for="zCheckContinuationBlock">Continuation from Previous Section/Statement</label>
+                        &nbsp;
+                        <div style="overflow:hidden; white-space:nowrap;">
+                           <label for="zContinuationBlockTag">Continuation Block Tag:</label>
+                           <input type="text" id="zContinuationBlockTag" class="zeidon" data-zmap="block.z_^continuation^block^tag" style="float:right" />
+                     </div>
                      </div>
                      <p style="clear:both;position:relative"></p>
                      <div id="zMarketingSectionToggle" style="overflow:hidden; white-space:nowrap;">

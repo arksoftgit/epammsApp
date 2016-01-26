@@ -55,26 +55,7 @@ public class wSPLD_Dialog extends VmlDialog
 
 
 private int 
-o_fnLocalBuildQual_29( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lTempInteger_1 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregPhysicalLabelDef" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregProduct" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_1 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_30( View     vSubtask,
+o_fnLocalBuildQual_33( View     vSubtask,
                        zVIEW    vQualObject,
                        int      lTempInteger_0 )
 {
@@ -93,7 +74,7 @@ o_fnLocalBuildQual_30( View     vSubtask,
 
 
 private int 
-o_fnLocalBuildQual_31( View     vSubtask,
+o_fnLocalBuildQual_34( View     vSubtask,
                        zVIEW    vQualObject,
                        int      lTempInteger_1 )
 {
@@ -106,63 +87,6 @@ o_fnLocalBuildQual_31( View     vSubtask,
    SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "ReusableBlockDefinition" );
    SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
    SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_1 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_32( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lTempInteger_0 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "ReusableBlockDefinition" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "ReusableBlockDefinition" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_33( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lTempInteger_0 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "User" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "User" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_26( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lTempInteger_0 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregLabelContent" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregLabelContent" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
    return( 0 );
 } 
@@ -199,6 +123,101 @@ o_fnLocalBuildQual_28( View     vSubtask,
    SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregPhysicalLabelDef" );
    CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
    SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregPhysicalLabelDef" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_29( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lTempInteger_1 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregPhysicalLabelDef" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregProduct" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_1 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_30( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lTempInteger_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "ReusableBlockDefinition" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "ReusableBlockDefinition" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_31( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lTempInteger_1 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "ReusableBlockDefinition" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "ReusableBlockDefinition" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_1 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_32( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lTempInteger_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "User" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "User" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_26( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lTempInteger_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregLabelContent" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregLabelContent" );
    SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
    SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
@@ -332,6 +351,139 @@ o_fnLocalBuildQual_25( View     vSubtask,
    SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterLabelContent" );
    SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
    SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_10( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      SubregID )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "Subregistrant" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "Subregistrant" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", SubregID );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_11( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      SubregProductID )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregPhysicalLabelDef" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregProduct" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", SubregProductID );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_12( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lTempInteger_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregPhysicalLabelDef" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregPhysicalLabelDef" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_13( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lTempInteger_1 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregLabelContent" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregLabelContent" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_1 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_14( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lTempInteger_4 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregPhysicalLabelDef" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregPhysicalLabelDef" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_4 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_15( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lTempInteger_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregPhysicalLabelDef" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregPhysicalLabelDef" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_16( View     vSubtask,
+                       zVIEW    vQualObject,
+                       String   szTempString_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "LLD" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "LLD" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "Name" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Value", szTempString_0.toString( ) );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
    return( 0 );
 } 
@@ -547,9 +699,9 @@ o_fnLocalBuildQual_9( View     vSubtask,
 
 
 private int 
-o_fnLocalBuildQual_10( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      SubregID )
+o_fnLocalBuildQual_0( View     vSubtask,
+                      zVIEW    vQualObject,
+                      String   szTempString_0 )
 {
    int      RESULT = 0;
 
@@ -557,121 +709,7 @@ o_fnLocalBuildQual_10( View     vSubtask,
    CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
    SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "Subregistrant" );
    CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "Subregistrant" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", SubregID );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_11( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      SubregProductID )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregPhysicalLabelDef" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregProduct" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", SubregProductID );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_12( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lTempInteger_0 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregPhysicalLabelDef" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregPhysicalLabelDef" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_13( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lTempInteger_1 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregLabelContent" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregLabelContent" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_1 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_14( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lTempInteger_4 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregPhysicalLabelDef" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregPhysicalLabelDef" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_4 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_15( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lTempInteger_0 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "SubregPhysicalLabelDef" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregPhysicalLabelDef" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_16( View     vSubtask,
-                       zVIEW    vQualObject,
-                       String   szTempString_0 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "LLD" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "LLD" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregOrganization" );
    SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "Name" );
    SetAttributeFromString( vQualObject, "QualAttrib", "Value", szTempString_0.toString( ) );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
@@ -714,7 +752,7 @@ SaveReusableBlock( View     ViewToWindow )
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
        GetIntegerFromAttribute( mi_lTempInteger_0, mSPLDefPanel, "Subregistrant", "ID" );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );}
-   o_fnLocalBuildQual_30( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
+   o_fnLocalBuildQual_33( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
    RESULT = ActivateObjectInstance( qBlockRU, "qBlockRU", ViewToWindow, vTempViewVar_0, zSINGLE );
    DropView( vTempViewVar_0 );
    //:SET CURSOR FIRST qBlockRU.ReusableBlockDefinition WHERE qBlockRU.ReusableBlockDefinition.Name = wWebXfer.Root.SearchName
@@ -774,7 +812,7 @@ SaveReusableBlock( View     ViewToWindow )
    {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
        GetIntegerFromAttribute( mi_lTempInteger_1, mSPLDefPanel, "ReusableBlockDefinition", "ID" );
    lTempInteger_1 = mi_lTempInteger_1.intValue( );}
-   o_fnLocalBuildQual_31( ViewToWindow, vTempViewVar_1, lTempInteger_1 );
+   o_fnLocalBuildQual_34( ViewToWindow, vTempViewVar_1, lTempInteger_1 );
    RESULT = ActivateObjectInstance( mBlockRU, "mBlockRU", ViewToWindow, vTempViewVar_1, zSINGLE );
    DropView( vTempViewVar_1 );
    //:IF mBlockRU.LLD_Block EXISTS
@@ -794,6 +832,101 @@ SaveReusableBlock( View     ViewToWindow )
    } 
 
    //:END
+   //:DropObjectInstance( mBlockRU )
+   DropObjectInstance( mBlockRU );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:SaveNewReusableBlock( VIEW ViewToWindow )
+//:   VIEW mSPLDefBlock REGISTERED AS mSPLDefBlock
+public int 
+SaveNewReusableBlock( View     ViewToWindow )
+{
+   zVIEW    mSPLDefBlock = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW mSPLDef REGISTERED AS mSPLDef
+   zVIEW    mSPLDef = new zVIEW( );
+   //:VIEW mBlockRU BASED ON LOD mBlockRU
+   zVIEW    mBlockRU = new zVIEW( );
+   //:STRING ( 128 ) szName
+   String   szName = null;
+   //:STRING ( 256 ) szMessage
+   String   szMessage = null;
+   int      lTempInteger_0 = 0;
+   int      lTempInteger_1 = 0;
+
+   RESULT = GetViewByName( mSPLDefBlock, "mSPLDefBlock", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( mSPLDef, "mSPLDef", ViewToWindow, zLEVEL_TASK );
+
+   //:GET VIEW mBlockRU NAMED "ReusableBlock"
+   RESULT = GetViewByName( mBlockRU, "ReusableBlock", ViewToWindow, zLEVEL_TASK );
+   //:szName = mBlockRU.ReusableBlockDefinition.Name
+   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+   StringBuilder sb_szName;
+   if ( szName == null )
+      sb_szName = new StringBuilder( 32 );
+   else
+      sb_szName = new StringBuilder( szName );
+       GetVariableFromAttribute( sb_szName, mi_lTempInteger_0, 'S', 129, mBlockRU, "ReusableBlockDefinition", "Name", "", 0 );
+   lTempInteger_0 = mi_lTempInteger_0.intValue( );
+   szName = sb_szName.toString( );}
+   //:SET CURSOR FIRST mSPLDef.ReusableBlockDefinition WHERE mSPLDef.ReusableBlockDefinition.Name = szName
+   RESULT = SetCursorFirstEntityByString( mSPLDef, "ReusableBlockDefinition", "Name", szName, "" );
+   //:IF RESULT >= zCURSOR_SET OR szName = "Set Name of Reusable Block"
+   if ( RESULT >= zCURSOR_SET || ZeidonStringCompare( szName, 1, 0, "Set Name of Reusable Block", 1, 0, 129 ) == 0 )
+   { 
+      //:szMessage = "Reusable Block Name (" +  szName
+       {StringBuilder sb_szMessage;
+      if ( szMessage == null )
+         sb_szMessage = new StringBuilder( 32 );
+      else
+         sb_szMessage = new StringBuilder( szMessage );
+            ZeidonStringCopy( sb_szMessage, 1, 0, "Reusable Block Name (", 1, 0, 257 );
+      szMessage = sb_szMessage.toString( );}
+       {StringBuilder sb_szMessage;
+      if ( szMessage == null )
+         sb_szMessage = new StringBuilder( 32 );
+      else
+         sb_szMessage = new StringBuilder( szMessage );
+            ZeidonStringConcat( sb_szMessage, 1, 0, szName, 1, 0, 257 );
+      szMessage = sb_szMessage.toString( );}
+      //:szMessage = szMessage + ") already exists.  Please choose a unique name."
+       {StringBuilder sb_szMessage;
+      if ( szMessage == null )
+         sb_szMessage = new StringBuilder( 32 );
+      else
+         sb_szMessage = new StringBuilder( szMessage );
+            ZeidonStringConcat( sb_szMessage, 1, 0, ") already exists.  Please choose a unique name.", 1, 0, 257 );
+      szMessage = sb_szMessage.toString( );}
+      //:MessageSend( ViewToWindow, "", "Select Reusable Block",
+      //:             szMessage,
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Select Reusable Block", szMessage, zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+
+   //:INCLUDE mBlockRU.Subregistrant FROM mSPLDef.Subregistrant
+   RESULT = IncludeSubobjectFromSubobject( mBlockRU, "Subregistrant", mSPLDef, "Subregistrant", zPOS_AFTER );
+   //:IF mSPLDefBlock.LLD_Block EXISTS
+   lTempInteger_1 = CheckExistenceOfEntity( mSPLDefBlock, "LLD_Block" );
+   if ( lTempInteger_1 == 0 )
+   { 
+      //:CopyToReusableBlock( mSPLDefBlock )
+      o_CopyToReusableBlock( mSPLDefBlock );
+   } 
+
+   //:END
+   //:COMMIT mBlockRU
+   RESULT = CommitObjectInstance( mBlockRU );
+   //:COMMIT mSPLDef
+   RESULT = CommitObjectInstance( mSPLDef );
+
    //:DropObjectInstance( mBlockRU )
    DropObjectInstance( mBlockRU );
    return( 0 );
@@ -843,25 +976,41 @@ o_CopyFromReusableBlock( View     mSPLDef )
 
    //:GET VIEW mBlockRU NAMED "ReusableBlock"
    RESULT = GetViewByName( mBlockRU, "ReusableBlock", mSPLDef, zLEVEL_TASK );
-   //:SetMatchingAttributesByName( mSPLDefBlock, "LLD_Block", mBlockRU, "LLD_Block", zSET_NOTNULL )
-   SetMatchingAttributesByName( mSPLDefBlock, "LLD_Block", mBlockRU, "LLD_Block", zSET_NOTNULL );
+
+   //:// TraceLineS( "Copying selected reusable block", "<<================================" )
+   //:// DisplayEntityInstance( mBlockRU, "ReusableBlockDefinition" )
+   //:// DisplayEntityInstance( mBlockRU, "LLD_Block" )
+
+   //:SetMatchingAttributesByName( mSPLDefBlock, "LLD_Block", mBlockRU, "LLD_Block", zSET_NULL )
+   SetMatchingAttributesByName( mSPLDefBlock, "LLD_Block", mBlockRU, "LLD_Block", zSET_NULL );
 
    //:FOR EACH mSPLDefBlock.LLD_SubBlock
    RESULT = SetCursorFirstEntity( mSPLDefBlock, "LLD_SubBlock", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
-      //:DELETE ENTITY mSPLDefBlock.LLD_SubBlock NONE 
+      //:DELETE ENTITY mSPLDefBlock.LLD_SubBlock NONE
       RESULT = DeleteEntity( mSPLDefBlock, "LLD_SubBlock", zREPOS_NONE );
       RESULT = SetCursorNextEntity( mSPLDefBlock, "LLD_SubBlock", "" );
    } 
 
    //:END
 
-   //:IF mSPLDefBlock.BlockBackgroundColor EXISTS 
+   //:FOR EACH mSPLDefBlock.LLD_SpecialSectionAttribute
+   RESULT = SetCursorFirstEntity( mSPLDefBlock, "LLD_SpecialSectionAttribute", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:DELETE ENTITY mSPLDefBlock.LLD_SpecialSectionAttribute NONE
+      RESULT = DeleteEntity( mSPLDefBlock, "LLD_SpecialSectionAttribute", zREPOS_NONE );
+      RESULT = SetCursorNextEntity( mSPLDefBlock, "LLD_SpecialSectionAttribute", "" );
+   } 
+
+   //:END
+
+   //:IF mSPLDefBlock.BlockBackgroundColor EXISTS
    lTempInteger_0 = CheckExistenceOfEntity( mSPLDefBlock, "BlockBackgroundColor" );
    if ( lTempInteger_0 == 0 )
    { 
-      //:EXCLUDE mSPLDefBlock.BlockBackgroundColor NONE 
+      //:EXCLUDE mSPLDefBlock.BlockBackgroundColor NONE
       RESULT = ExcludeEntity( mSPLDefBlock, "BlockBackgroundColor", zREPOS_NONE );
    } 
 
@@ -871,33 +1020,33 @@ o_CopyFromReusableBlock( View     mSPLDef )
    lTempInteger_1 = CheckExistenceOfEntity( mSPLDefBlock, "BlockBorderColor" );
    if ( lTempInteger_1 == 0 )
    { 
-      //:EXCLUDE mSPLDefBlock.BlockBorderColor NONE 
+      //:EXCLUDE mSPLDefBlock.BlockBorderColor NONE
       RESULT = ExcludeEntity( mSPLDefBlock, "BlockBorderColor", zREPOS_NONE );
    } 
 
    //:END
 
-   //:FOR EACH mBlockRU.LLD_SpecialSectionAttribute 
+   //:FOR EACH mBlockRU.LLD_SpecialSectionAttribute
    RESULT = SetCursorFirstEntity( mBlockRU, "LLD_SpecialSectionAttribute", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
       //:CREATE ENTITY mSPLDefBlock.LLD_SpecialSectionAttribute
       RESULT = CreateEntity( mSPLDefBlock, "LLD_SpecialSectionAttribute", zPOS_AFTER );
-      //:SetMatchingAttributesByName( mSPLDefBlock, "LLD_SpecialSectionAttribute", mBlockRU, "LLD_SpecialSectionAttribute", zSET_NOTNULL )
-      SetMatchingAttributesByName( mSPLDefBlock, "LLD_SpecialSectionAttribute", mBlockRU, "LLD_SpecialSectionAttribute", zSET_NOTNULL );
+      //:SetMatchingAttributesByName( mSPLDefBlock, "LLD_SpecialSectionAttribute", mBlockRU, "LLD_SpecialSectionAttribute", zSET_NULL )
+      SetMatchingAttributesByName( mSPLDefBlock, "LLD_SpecialSectionAttribute", mBlockRU, "LLD_SpecialSectionAttribute", zSET_NULL );
       //:FOR EACH mBlockRU.LLD_SpecialSectionAttrBlock
       RESULT = SetCursorFirstEntity( mBlockRU, "LLD_SpecialSectionAttrBlock", "" );
       while ( RESULT > zCURSOR_UNCHANGED )
       { 
          //:CREATE ENTITY mSPLDefBlock.LLD_SpecialSectionAttrBlock
          RESULT = CreateEntity( mSPLDefBlock, "LLD_SpecialSectionAttrBlock", zPOS_AFTER );
-         //:SetMatchingAttributesByName( mSPLDefBlock, "LLD_SpecialSectionAttrBlock", mBlockRU, "LLD_SpecialSectionAttrBlock", zSET_NOTNULL )
-         SetMatchingAttributesByName( mSPLDefBlock, "LLD_SpecialSectionAttrBlock", mBlockRU, "LLD_SpecialSectionAttrBlock", zSET_NOTNULL );
+         //:SetMatchingAttributesByName( mSPLDefBlock, "LLD_SpecialSectionAttrBlock", mBlockRU, "LLD_SpecialSectionAttrBlock", zSET_NULL )
+         SetMatchingAttributesByName( mSPLDefBlock, "LLD_SpecialSectionAttrBlock", mBlockRU, "LLD_SpecialSectionAttrBlock", zSET_NULL );
          //:IF mBlockRU.SpecialAttributeTextColor EXISTS
          lTempInteger_2 = CheckExistenceOfEntity( mBlockRU, "SpecialAttributeTextColor" );
          if ( lTempInteger_2 == 0 )
          { 
-            //:INCLUDE mSPLDefBlock.SpecialAttributeTextColor FROM mBlockRU.SpecialAttributeTextColor 
+            //:INCLUDE mSPLDefBlock.SpecialAttributeTextColor FROM mBlockRU.SpecialAttributeTextColor
             RESULT = IncludeSubobjectFromSubobject( mSPLDefBlock, "SpecialAttributeTextColor", mBlockRU, "SpecialAttributeTextColor", zPOS_AFTER );
          } 
 
@@ -915,7 +1064,7 @@ o_CopyFromReusableBlock( View     mSPLDef )
    lTempInteger_3 = CheckExistenceOfEntity( mBlockRU, "BlockBackgroundColor" );
    if ( lTempInteger_3 == 0 )
    { 
-      //:INCLUDE mSPLDefBlock.BlockBackgroundColor FROM mBlockRU.BlockBackgroundColor 
+      //:INCLUDE mSPLDefBlock.BlockBackgroundColor FROM mBlockRU.BlockBackgroundColor
       RESULT = IncludeSubobjectFromSubobject( mSPLDefBlock, "BlockBackgroundColor", mBlockRU, "BlockBackgroundColor", zPOS_AFTER );
    } 
 
@@ -925,11 +1074,14 @@ o_CopyFromReusableBlock( View     mSPLDef )
    lTempInteger_4 = CheckExistenceOfEntity( mBlockRU, "BlockBorderColor" );
    if ( lTempInteger_4 == 0 )
    { 
-      //:INCLUDE mSPLDefBlock.BlockBorderColor FROM mBlockRU.BlockBorderColor 
+      //:INCLUDE mSPLDefBlock.BlockBorderColor FROM mBlockRU.BlockBorderColor
       RESULT = IncludeSubobjectFromSubobject( mSPLDefBlock, "BlockBorderColor", mBlockRU, "BlockBorderColor", zPOS_AFTER );
    } 
 
    //:END
+
+   //:// TraceLineS( "After Copying selected reusable block", "<<================================" )
+   //:// DisplayEntityInstance( mSPLDefBlock, "LLD_Block" )
 
    //:FOR EACH mBlockRU.LLD_SubBlock
    RESULT = SetCursorFirstEntity( mBlockRU, "LLD_SubBlock", "" );
@@ -939,8 +1091,8 @@ o_CopyFromReusableBlock( View     mSPLDef )
       SetViewToSubobject( mBlockRU, "LLD_SubBlock" );
       //:SetViewToSubobject( mSPLDefBlock, "LLD_SubBlock" )
       SetViewToSubobject( mSPLDefBlock, "LLD_SubBlock" );
-      //:SetMatchingAttributesByName( mSPLDefBlock, "LLD_Block", mBlockRU, "LLD_Block", zSET_NOTNULL )
-      SetMatchingAttributesByName( mSPLDefBlock, "LLD_Block", mBlockRU, "LLD_Block", zSET_NOTNULL );
+      //:CREATE ENTITY mSPLDefBlock.LLD_Block
+      RESULT = CreateEntity( mSPLDefBlock, "LLD_Block", zPOS_AFTER );
       //:CopyFromReusableBlock( mSPLDef )
       o_CopyFromReusableBlock( mSPLDef );
       //:ResetViewFromSubobject( mSPLDefBlock )
@@ -991,7 +1143,7 @@ CANCEL_BlockSubBlockDefinition( View     ViewToWindow )
    RESULT = GetViewByName( mSPLDef, "mSPLDef", ViewToWindow, zLEVEL_TASK );
 
    //:// Cancel both LLD_Block and the associated LLD_Block or LLD_SubBlock entry.
-   //:/*IF mSPLDef.LLD_Block.Type = "Block" 
+   //:/*IF mSPLDef.LLD_Block.Type = "Block"
    //:   CancelSubobject( mSPLDef, "LLD_Block" )
    //:ELSE
    //:   CancelSubobject( mSPLDef, "LLD_SubBlock" )
@@ -1019,14 +1171,13 @@ ACCEPT_BlockSubBlockDefinition( View     ViewToWindow )
 //    VIEW mSPLDefPanel REGISTERED AS mSPLDefPanel
 //    VIEW mSPLDef2     BASED ON LOD  mSPLDef
 //    INTEGER HighestBlockNumber
-//    
 //    // If this entry doesn't have a wRelativeBlockNumber value, set it to the next highest value.
 //    IF mSPLDefPanel.LLD_Block.wRelativeBlockNumber = ""
 //       HighestBlockNumber = 0
 //       CreateViewFromView( mSPLDef2, mSPLDefPanel )
-//       FOR EACH mSPLDef2.LLD_Block 
-//          IF HighestBlockNumber < mSPLDef2.LLD_Block.wRelativeBlockNumber 
-//             HighestBlockNumber = mSPLDef2.LLD_Block.wRelativeBlockNumber 
+//       FOR EACH mSPLDef2.LLD_Block
+//          IF HighestBlockNumber < mSPLDef2.LLD_Block.wRelativeBlockNumber
+//             HighestBlockNumber = mSPLDef2.LLD_Block.wRelativeBlockNumber
 //          END
 //       END
 //       HighestBlockNumber = HighestBlockNumber + 1
@@ -1038,7 +1189,6 @@ ACCEPT_BlockSubBlockDefinition( View     ViewToWindow )
 // //    END
 //       DropView( mSPLDef2 )
 //    END
-//    
 //    // Accept both LLD_Block and the associated LLD_Block or LLD_SubBlock entry.
 //    //AcceptSubobject( mSPLDef, "LLD_Block" )
 //    SetMatchingAttributesByName( mSPLDefPanel, "LLD_Block", mSPLDef, "LLD_Block", zSET_NOTNULL )
@@ -1058,10 +1208,9 @@ GOTO_NewSpecialFormatDefinition( View     ViewToWindow )
 
    return( 0 );
 //    VIEW mSPLDef REGISTERED AS mSPLDef
-//    
 //    // Create the temporal LLD_SpecialSectionAttribute entry.
 //    CreateTemporalEntity( mSPLDef, "LLD_SpecialSectionAttribute", zPOS_AFTER )
-//    CREATE ENTITY mSPLDef.LLD_SpecialSectionAttrBlock 
+//    CREATE ENTITY mSPLDef.LLD_SpecialSectionAttrBlock
 // */
 // END
 } 
@@ -1087,14 +1236,14 @@ CLEAN_SPLD_Data( View     ViewToWindow )
    //:CommitOI_ToFile( mSPLDef, "c:\temp\JOE_Test2.por", zINCREMENTAL )
    CommitOI_ToFile( mSPLDef, "c:\\temp\\JOE_Test2.por", zINCREMENTAL );
 
-   //:SET CURSOR LAST mSPLDef.LLD_Panel  
+   //:SET CURSOR LAST mSPLDef.LLD_Panel
    RESULT = SetCursorLastEntity( mSPLDef, "LLD_Panel", "" );
    //:CreateViewFromView( mSPLDef2, mSPLDef )
    CreateViewFromView( mSPLDef2, mSPLDef );
    //:NAME VIEW mSPLDef2 "mSPLDef2"
    SetNameForView( mSPLDef2, "mSPLDef2", null, zLEVEL_TASK );
 
-   //:CREATE ENTITY mSPLDef.ContinuationStatement 
+   //:CREATE ENTITY mSPLDef.ContinuationStatement
    RESULT = CreateEntity( mSPLDef, "ContinuationStatement", zPOS_AFTER );
    //:mSPLDef.ContinuationStatement.Title = "Title 1"
    SetAttributeFromString( mSPLDef, "ContinuationStatement", "Title", "Title 1" );
@@ -1113,14 +1262,14 @@ CLEAN_SPLD_Data( View     ViewToWindow )
       if(8==8)return( 2 );
    } 
 
-   //:END 
+   //:END
 
    //:// Next, do the same test except that the entity is first deleted from the primary view.
 
-   //:DELETE ENTITY mSPLDef.ContinuationStatement NONE 
+   //:DELETE ENTITY mSPLDef.ContinuationStatement NONE
    RESULT = DeleteEntity( mSPLDef, "ContinuationStatement", zREPOS_NONE );
 
-   //:CREATE ENTITY mSPLDef.ContinuationStatement 
+   //:CREATE ENTITY mSPLDef.ContinuationStatement
    RESULT = CreateEntity( mSPLDef, "ContinuationStatement", zPOS_AFTER );
    //:mSPLDef.ContinuationStatement.Title = "Title 1"
    SetAttributeFromString( mSPLDef, "ContinuationStatement", "Title", "Title 1" );
@@ -1140,7 +1289,7 @@ CLEAN_SPLD_Data( View     ViewToWindow )
       if(8==8)return( 2 );
    } 
 
-   //:END 
+   //:END
 
    //:TraceLineS( "*** JOE Test 2 successfully completed", "" )
    TraceLineS( "*** JOE Test 2 successfully completed", "" );
@@ -1160,7 +1309,7 @@ SELECT_LLD_ForSPLD( View     ViewToWindow )
    int      RESULT = 0;
    //:VIEW mLLD_LST REGISTERED AS mLLD_LST
    zVIEW    mLLD_LST = new zVIEW( );
-   //:VIEW mLLD  BASED ON LOD  mLLD 
+   //:VIEW mLLD  BASED ON LOD  mLLD
    zVIEW    mLLD = new zVIEW( );
    int      lTempInteger_0 = 0;
    int      lTempInteger_1 = 0;
@@ -1194,12 +1343,12 @@ SELECT_LLD_ForSPLD( View     ViewToWindow )
    lTempInteger_0 = CheckExistenceOfEntity( mSPLDef, "SPLD_LLD" );
    if ( lTempInteger_0 == 0 )
    { 
-      //:DELETE ENTITY mSPLDef.SPLD_LLD  
+      //:DELETE ENTITY mSPLDef.SPLD_LLD
       RESULT = DeleteEntity( mSPLDef, "SPLD_LLD", zPOS_NEXT );
    } 
 
    //:END
-   //:ACTIVATE mLLD WHERE mLLD.LLD.ID = mLLD_LST.LLD.ID 
+   //:ACTIVATE mLLD WHERE mLLD.LLD.ID = mLLD_LST.LLD.ID
    {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
        GetIntegerFromAttribute( mi_lTempInteger_1, mLLD_LST, "LLD", "ID" );
    lTempInteger_1 = mi_lTempInteger_1.intValue( );}
@@ -1210,39 +1359,39 @@ SELECT_LLD_ForSPLD( View     ViewToWindow )
    SetNameForView( mLLD, "mLLD", null, zLEVEL_TASK );
 
    //:// Build the SPLD_LLD subobject from the LLD.
-   //:CREATE ENTITY mSPLDef.SPLD_LLD 
+   //:CREATE ENTITY mSPLDef.SPLD_LLD
    RESULT = CreateEntity( mSPLDef, "SPLD_LLD", zPOS_AFTER );
    //:SetMatchingAttributesByName( mSPLDef, "SPLD_LLD", mLLD, "LLD", zSET_NULL )
    SetMatchingAttributesByName( mSPLDef, "SPLD_LLD", mLLD, "LLD", zSET_NULL );
-   //:FOR EACH mLLD.LLD_Page 
+   //:FOR EACH mLLD.LLD_Page
    RESULT = SetCursorFirstEntity( mLLD, "LLD_Page", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
-      //:CREATE ENTITY mSPLDef.LLD_Page 
+      //:CREATE ENTITY mSPLDef.LLD_Page
       RESULT = CreateEntity( mSPLDef, "LLD_Page", zPOS_AFTER );
       //:SetMatchingAttributesByName( mSPLDef, "LLD_Page", mLLD, "LLD_Page", zSET_NULL )
       SetMatchingAttributesByName( mSPLDef, "LLD_Page", mLLD, "LLD_Page", zSET_NULL );
-      //:FOR EACH mLLD.LLD_Panel 
+      //:FOR EACH mLLD.LLD_Panel
       RESULT = SetCursorFirstEntity( mLLD, "LLD_Panel", "" );
       while ( RESULT > zCURSOR_UNCHANGED )
       { 
-         //:CREATE ENTITY mSPLDef.LLD_Panel 
+         //:CREATE ENTITY mSPLDef.LLD_Panel
          RESULT = CreateEntity( mSPLDef, "LLD_Panel", zPOS_AFTER );
          //:SetMatchingAttributesByName( mSPLDef, "LLD_Panel", mLLD, "LLD_Panel", zSET_NULL )
          SetMatchingAttributesByName( mSPLDef, "LLD_Panel", mLLD, "LLD_Panel", zSET_NULL );
-         //:FOR EACH mLLD.LLD_Block 
+         //:FOR EACH mLLD.LLD_Block
          RESULT = SetCursorFirstEntity( mLLD, "LLD_Block", "" );
          while ( RESULT > zCURSOR_UNCHANGED )
          { 
-            //:CREATE ENTITY mSPLDef.LLD_Block 
+            //:CREATE ENTITY mSPLDef.LLD_Block
             RESULT = CreateEntity( mSPLDef, "LLD_Block", zPOS_AFTER );
             //:SetMatchingAttributesByName( mSPLDef, "LLD_Block", mLLD, "LLD_Block", zSET_NULL )
             SetMatchingAttributesByName( mSPLDef, "LLD_Block", mLLD, "LLD_Block", zSET_NULL );
-            //:FOR EACH mLLD.LLD_SubBlock 
+            //:FOR EACH mLLD.LLD_SubBlock
             RESULT = SetCursorFirstEntity( mLLD, "LLD_SubBlock", "" );
             while ( RESULT > zCURSOR_UNCHANGED )
             { 
-               //:CREATE ENTITY mSPLDef.LLD_SubBlock 
+               //:CREATE ENTITY mSPLDef.LLD_SubBlock
                RESULT = CreateEntity( mSPLDef, "LLD_SubBlock", zPOS_AFTER );
                //:SetMatchingAttributesByName( mSPLDef, "LLD_SubBlock", mLLD, "LLD_SubBlock", zSET_NULL )
                SetMatchingAttributesByName( mSPLDef, "LLD_SubBlock", mLLD, "LLD_SubBlock", zSET_NULL );
@@ -1250,11 +1399,11 @@ SELECT_LLD_ForSPLD( View     ViewToWindow )
             } 
 
             //:END
-            //:FOR EACH mLLD.LLD_SpecialSectionAttribute 
+            //:FOR EACH mLLD.LLD_SpecialSectionAttribute
             RESULT = SetCursorFirstEntity( mLLD, "LLD_SpecialSectionAttribute", "" );
             while ( RESULT > zCURSOR_UNCHANGED )
             { 
-               //:CREATE ENTITY mSPLDef.LLD_SpecialSectionAttribute 
+               //:CREATE ENTITY mSPLDef.LLD_SpecialSectionAttribute
                RESULT = CreateEntity( mSPLDef, "LLD_SpecialSectionAttribute", zPOS_AFTER );
                //:SetMatchingAttributesByName( mSPLDef, "LLD_SpecialSectionAttribute", mLLD, "LLD_SpecialSectionAttribute", zSET_NULL )
                SetMatchingAttributesByName( mSPLDef, "LLD_SpecialSectionAttribute", mLLD, "LLD_SpecialSectionAttribute", zSET_NULL );
@@ -1262,7 +1411,7 @@ SELECT_LLD_ForSPLD( View     ViewToWindow )
                RESULT = SetCursorFirstEntity( mLLD, "LLD_SpecialSectionAttrBlock", "" );
                while ( RESULT > zCURSOR_UNCHANGED )
                { 
-                  //:CREATE ENTITY mSPLDef.LLD_SpecialSectionAttrBlock 
+                  //:CREATE ENTITY mSPLDef.LLD_SpecialSectionAttrBlock
                   RESULT = CreateEntity( mSPLDef, "LLD_SpecialSectionAttrBlock", zPOS_AFTER );
                   //:SetMatchingAttributesByName( mSPLDef, "LLD_SpecialSectionAttrBlock", mLLD, "LLD_SpecialSectionAttrBlock", zSET_NULL )
                   SetMatchingAttributesByName( mSPLDef, "LLD_SpecialSectionAttrBlock", mLLD, "LLD_SpecialSectionAttrBlock", zSET_NULL );
@@ -1303,7 +1452,7 @@ DELETE_LLD( View     ViewToWindow )
 {
    zVIEW    mLLD_LST = new zVIEW( );
    int      RESULT = 0;
-   //:VIEW mLLD  BASED ON LOD  mLLD 
+   //:VIEW mLLD  BASED ON LOD  mLLD
    zVIEW    mLLD = new zVIEW( );
    int      lTempInteger_0 = 0;
    zVIEW    vTempViewVar_0 = new zVIEW( );
@@ -1311,7 +1460,7 @@ DELETE_LLD( View     ViewToWindow )
    RESULT = GetViewByName( mLLD_LST, "mLLD_LST", ViewToWindow, zLEVEL_TASK );
 
    //:// Delete selected mLLD.
-   //:ACTIVATE mLLD WHERE mLLD.LLD.ID = mLLD_LST.LLD.ID 
+   //:ACTIVATE mLLD WHERE mLLD.LLD.ID = mLLD_LST.LLD.ID
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
        GetIntegerFromAttribute( mi_lTempInteger_0, mLLD_LST, "LLD", "ID" );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );}
@@ -1320,7 +1469,7 @@ DELETE_LLD( View     ViewToWindow )
    DropView( vTempViewVar_0 );
    //:NAME VIEW mLLD "mLLDDelete"
    SetNameForView( mLLD, "mLLDDelete", null, zLEVEL_TASK );
-   //:DELETE ENTITY mLLD.LLD 
+   //:DELETE ENTITY mLLD.LLD
    RESULT = DeleteEntity( mLLD, "LLD", zPOS_NEXT );
    //:COMMIT mLLD
    RESULT = CommitObjectInstance( mLLD );
@@ -1351,7 +1500,7 @@ GOTO_AddSubBlockComponent( View     ViewToWindow )
    //:// Simply create a temporal LLD_Block of type "SubBlock".
    //:// IF mSPLDef.LLD_Block.Type = "Block"
    //:   SET CURSOR FIRST mSPLDef.LLD_Block
-   //:              WHERE mSPLDef.LLD_Block.wRelativeBlockNumber = mSPLDef.LLD_Block.wRelativeBlockNumber 
+   //:              WHERE mSPLDef.LLD_Block.wRelativeBlockNumber = mSPLDef.LLD_Block.wRelativeBlockNumber
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
        GetIntegerFromAttribute( mi_lTempInteger_0, mSPLDef, "LLD_Block", "wRelativeBlockNumber" );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );}
@@ -1364,8 +1513,8 @@ GOTO_AddSubBlockComponent( View     ViewToWindow )
    //:   NAME VIEW mSPLDefPanel "mSPLDefPanel"
    SetNameForView( mSPLDefPanel, "mSPLDefPanel", null, zLEVEL_TASK );
    //:// ELSE
-   //://    SET CURSOR FIRST mSPLDef.LLD_SubBlock WITHIN mSPLDef.LLD_Panel 
-   //://               WHERE mSPLDef.LLD_SubBlock.wRelativeBlockNumber = mSPLDef.LLD_Block.wRelativeBlockNumber 
+   //://    SET CURSOR FIRST mSPLDef.LLD_SubBlock WITHIN mSPLDef.LLD_Panel
+   //://               WHERE mSPLDef.LLD_SubBlock.wRelativeBlockNumber = mSPLDef.LLD_Block.wRelativeBlockNumber
    //://    //CreateTemporalEntity( mSPLDef, "LLD_SubBlock", zPOS_AFTER )
    //://    CREATE ENTITY mSPLDef.LLD_SubBlock
    //://    CreateViewFromView( mSPLDefPanel, mSPLDef )
@@ -1373,7 +1522,7 @@ GOTO_AddSubBlockComponent( View     ViewToWindow )
    //:// END
 
    //://CreateTemporalEntity( mSPLDefPanel, "LLD_Block", zPOS_AFTER )
-   //:CREATE ENTITY mSPLDefPanel.LLD_Block  
+   //:CREATE ENTITY mSPLDefPanel.LLD_Block
    RESULT = CreateEntity( mSPLDefPanel, "LLD_Block", zPOS_AFTER );
    return( 0 );
 // // mSPLDefPanel.LLD_Block.Type = "SubBlock"
@@ -1398,9 +1547,9 @@ GOTO_AddBlockComponent( View     ViewToWindow )
    //:// Simply create a temporal LLD_Block of type "Block".
    //://CreateTemporalEntity( mSPLDef, "LLD_Block", zPOS_AFTER )
    //://CreateTemporalEntity( mSPLDef, "LLD_Block", zPOS_AFTER )
-   //:CREATE ENTITY mSPLDef.LLD_Block 
+   //:CREATE ENTITY mSPLDef.LLD_Block
    RESULT = CreateEntity( mSPLDef, "LLD_Block", zPOS_AFTER );
-   //:CREATE ENTITY mSPLDef.LLD_Block   
+   //:CREATE ENTITY mSPLDef.LLD_Block
    RESULT = CreateEntity( mSPLDef, "LLD_Block", zPOS_AFTER );
    //:CreateViewFromView( mSPLDefPanel, mSPLDef )
    CreateViewFromView( mSPLDefPanel, mSPLDef );
@@ -1408,7 +1557,6 @@ GOTO_AddBlockComponent( View     ViewToWindow )
    SetNameForView( mSPLDefPanel, "mSPLDefPanel", null, zLEVEL_TASK );
    return( 0 );
 // // mSPLDefPanel.LLD_Block.Type = "Block"
-//    
 // END
 } 
 
@@ -1426,9 +1574,9 @@ GOTO_AddPanelEntry( View     ViewToWindow )
    RESULT = GetViewByName( mSPLDef, "mSPLDef", ViewToWindow, zLEVEL_TASK );
 
    //://CreateTemporalEntity( mSPLDef, "LLD_Panel", zPOS_AFTER )
-   //:CREATE ENTITY mSPLDef.LLD_Panel 
+   //:CREATE ENTITY mSPLDef.LLD_Panel
    RESULT = CreateEntity( mSPLDef, "LLD_Panel", zPOS_AFTER );
-   //:CREATE ENTITY mSPLDef.LLD_Block  
+   //:CREATE ENTITY mSPLDef.LLD_Block
    RESULT = CreateEntity( mSPLDef, "LLD_Block", zPOS_AFTER );
    return( 0 );
 // END
@@ -1447,9 +1595,9 @@ DeletePanelEntry( View     ViewToWindow )
 
    RESULT = GetViewByName( mSPLDef, "mSPLDef", ViewToWindow, zLEVEL_TASK );
 
-   //:DELETE ENTITY mSPLDef.LLD_Panel 
+   //:DELETE ENTITY mSPLDef.LLD_Panel
    RESULT = DeleteEntity( mSPLDef, "LLD_Panel", zPOS_NEXT );
-   //:SET CURSOR FIRST mSPLDef.LLD_Panel 
+   //:SET CURSOR FIRST mSPLDef.LLD_Panel
    RESULT = SetCursorFirstEntity( mSPLDef, "LLD_Panel", "" );
    //:IF RESULT < zCURSOR_SET
    if ( RESULT < zCURSOR_SET )
@@ -1458,11 +1606,11 @@ DeletePanelEntry( View     ViewToWindow )
       RESULT = CreateEntity( mSPLDef, "LLD_Panel", zPOS_AFTER );
       //:mSPLDef.LLD_Panel.Left = 0
       SetAttributeFromInteger( mSPLDef, "LLD_Panel", "Left", 0 );
-      //:mSPLDef.LLD_Panel.Top = 0 
+      //:mSPLDef.LLD_Panel.Top = 0
       SetAttributeFromInteger( mSPLDef, "LLD_Panel", "Top", 0 );
    } 
 
-   //:END  
+   //:END
    return( 0 );
 // END
 } 
@@ -1479,39 +1627,35 @@ GOTO_UpdatePanelEntry( View     ViewToWindow )
 //    VIEW mSPLDef  REGISTERED AS mSPLDef
 //    VIEW mSPLDef2 BASED ON LOD  mSPLDef
 //    INTEGER RelativeBlockNumber
-//    
 //    // Create a Block if one doesn't already exist for the Panel.
 //    SET CURSOR FIRST mSPLDef.LLD_Block
 //    IF RESULT < zCURSOR_SET
-//       CREATE ENTITY mSPLDef.LLD_Block 
+//       CREATE ENTITY mSPLDef.LLD_Block
 //    END
-//    
 //    // Make sure there are no existing LLD_Block entries.
 //    FOR EACH mSPLDef.LLD_Block
-//       DELETE ENTITY mSPLDef.LLD_Block NONE 
+//       DELETE ENTITY mSPLDef.LLD_Block NONE
 //    END
-//    
 //    // Make sure entries are sorted correctly.
 //    CreateViewFromView( mSPLDef2, mSPLDef )
 //    ComputeTopPositions( mSPLDef2 )
 //    DropView( mSPLDef2 )
 //    OrderEntityForView( mSPLDef, "LLD_Block", "Left A wComputedTopPosition A" )
-//    FOR EACH mSPLDef.LLD_Block  
+//    FOR EACH mSPLDef.LLD_Block
 //       OrderEntityForView( mSPLDef, "LLD_SubBlock", "Left A wComputedTopPosition A" )
 //    END
-//    
 //    // Build the flat component list from the two-level Block/SubBlock structure.
 //    RelativeBlockNumber = 0
-//    FOR EACH mSPLDef.LLD_Block 
+//    FOR EACH mSPLDef.LLD_Block
 //       RelativeBlockNumber = RelativeBlockNumber + 1
-//       CREATE ENTITY mSPLDef.LLD_Block  
+//       CREATE ENTITY mSPLDef.LLD_Block
 //       SetMatchingAttributesByName( mSPLDef, "LLD_Block", mSPLDef, "LLD_Block", zSET_ALL )
 //       mSPLDef.LLD_Block.Type = "Block"
 //       mSPLDef.LLD_Block.wRelativeBlockNumber = RelativeBlockNumber
 //       mSPLDef.LLD_Block.wRelativeBlockNumber = RelativeBlockNumber
-//       FOR EACH mSPLDef.LLD_SubBlock 
+//       FOR EACH mSPLDef.LLD_SubBlock
 //          RelativeBlockNumber = RelativeBlockNumber + 1
-//          CREATE ENTITY mSPLDef.LLD_Block  
+//          CREATE ENTITY mSPLDef.LLD_Block
 //          SetMatchingAttributesByName( mSPLDef, "LLD_Block", mSPLDef, "LLD_SubBlock", zSET_ALL )
 //          mSPLDef.LLD_Block.Type = "SubBlock"
 //          mSPLDef.LLD_Block.wRelativeBlockNumber = RelativeBlockNumber
@@ -1520,16 +1664,16 @@ GOTO_UpdatePanelEntry( View     ViewToWindow )
 //    END
 // */
 //    // Recursive code that didn't quite work.
-//    /*FOR EACH mSPLDef.LLD_Block 
-//       CREATE ENTITY mSPLDef.LLD_SubBlock  
+//    /*FOR EACH mSPLDef.LLD_Block
+//       CREATE ENTITY mSPLDef.LLD_SubBlock
 //       SetMatchingAttributesByName( mSPLDef, "LLD_SubBlock", mSPLDef, "LLD_Block", zSET_ALL )
 //       mSPLDef.LLD_SubBlock.Type = "Block"
 //       TraceLineS( "#### Block 2", "" )
 //       CreateViewFromView( mSPLDef2, mSPLDef )
 //       SetViewToSubobject( mSPLDef2, "LLD_SubBlock" )
-//       FOR EACH mSPLDef2.LLD_Block 
+//       FOR EACH mSPLDef2.LLD_Block
 //          TraceLineS( "#### SubBlock 2", "" )
-//          CREATE ENTITY mSPLDef.LLD_SubBlock  
+//          CREATE ENTITY mSPLDef.LLD_SubBlock
 //          SetMatchingAttributesByName( mSPLDef, "LLD_SubBlock", mSPLDef2, "LLD_Block", zSET_ALL )
 //          mSPLDef.LLD_SubBlock.Type = "SubBlock"
 //       END
@@ -1633,7 +1777,7 @@ GOTO_UpdateSubregProductSPLD( View     ViewToWindow )
    RESULT = GetViewByName( lSPLDLST, "lSPLDLST", ViewToWindow, zLEVEL_TASK );
 
    //:// Activate the mSPLDef object selected in mSubProd.
-   //:ACTIVATE mSPLDef WHERE mSPLDef.SubregPhysicalLabelDef.ID = lSPLDLST.SubregPhysicalLabelDef.ID 
+   //:ACTIVATE mSPLDef WHERE mSPLDef.SubregPhysicalLabelDef.ID = lSPLDLST.SubregPhysicalLabelDef.ID
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
        GetIntegerFromAttribute( mi_lTempInteger_0, lSPLDLST, "SubregPhysicalLabelDef", "ID" );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );}
@@ -1644,7 +1788,7 @@ GOTO_UpdateSubregProductSPLD( View     ViewToWindow )
    SetNameForView( mSPLDef, "mSPLDef", null, zLEVEL_TASK );
 
    //:// Activate the related mSubLC object.
-   //:ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSPLDef.SubregLabelContent.ID 
+   //:ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSPLDef.SubregLabelContent.ID
    {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
        GetIntegerFromAttribute( mi_lTempInteger_1, mSPLDef, "SubregLabelContent", "ID" );
    lTempInteger_1 = mi_lTempInteger_1.intValue( );}
@@ -1688,7 +1832,7 @@ GOTO_UpdateSubregProductSPLD( View     ViewToWindow )
    RESULT = CommitObjectInstance( mSPLDef );
    //:DropObjectInstance( mSPLDef )
    DropObjectInstance( mSPLDef );
-   //:ACTIVATE mSPLDef WHERE mSPLDef.SubregPhysicalLabelDef.ID = lSPLDLST.SubregPhysicalLabelDef.ID 
+   //:ACTIVATE mSPLDef WHERE mSPLDef.SubregPhysicalLabelDef.ID = lSPLDLST.SubregPhysicalLabelDef.ID
    {MutableInt mi_lTempInteger_4 = new MutableInt( lTempInteger_4 );
        GetIntegerFromAttribute( mi_lTempInteger_4, lSPLDLST, "SubregPhysicalLabelDef", "ID" );
    lTempInteger_4 = mi_lTempInteger_4.intValue( );}
@@ -1705,17 +1849,17 @@ GOTO_UpdateSubregProductSPLD( View     ViewToWindow )
     m_mSPLDef_Object.omSPLDef_ComputeTopPositions( mSPLDef );
     // m_mSPLDef_Object = null;  // permit gc  (unnecessary)
    }
-   //:FOR EACH mSPLDef.LLD_Page 
+   //:FOR EACH mSPLDef.LLD_Page
    RESULT = SetCursorFirstEntity( mSPLDef, "LLD_Page", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
       //:OrderEntityForView( mSPLDef, "LLD_Panel", "Top A Left A" )
       OrderEntityForView( mSPLDef, "LLD_Panel", "Top A Left A" );
-      //:FOR EACH mSPLDef.LLD_Panel 
+      //:FOR EACH mSPLDef.LLD_Panel
       RESULT = SetCursorFirstEntity( mSPLDef, "LLD_Panel", "" );
       while ( RESULT > zCURSOR_UNCHANGED )
       { 
-         //:FOR EACH mSPLDef.LLD_Block 
+         //:FOR EACH mSPLDef.LLD_Block
          RESULT = SetCursorFirstEntity( mSPLDef, "LLD_Block", "" );
          while ( RESULT > zCURSOR_UNCHANGED )
          { 
@@ -1729,11 +1873,11 @@ GOTO_UpdateSubregProductSPLD( View     ViewToWindow )
       } 
 
       RESULT = SetCursorNextEntity( mSPLDef, "LLD_Page", "" );
-      //:END 
+      //:END
    } 
 
-   //:END 
-   //:SET CURSOR FIRST mSPLDef.LLD_Page 
+   //:END
+   //:SET CURSOR FIRST mSPLDef.LLD_Page
    RESULT = SetCursorFirstEntity( mSPLDef, "LLD_Page", "" );
 
    //:// Initialize LLD data, if it's not already initialized.
@@ -1741,15 +1885,15 @@ GOTO_UpdateSubregProductSPLD( View     ViewToWindow )
    lTempInteger_5 = CheckExistenceOfEntity( mSPLDef, "SPLD_LLD" );
    if ( lTempInteger_5 != 0 )
    { 
-      //:CREATE ENTITY mSPLDef.SPLD_LLD 
+      //:CREATE ENTITY mSPLDef.SPLD_LLD
       RESULT = CreateEntity( mSPLDef, "SPLD_LLD", zPOS_AFTER );
-      //:CREATE ENTITY mSPLDef.LLD_Page 
+      //:CREATE ENTITY mSPLDef.LLD_Page
       RESULT = CreateEntity( mSPLDef, "LLD_Page", zPOS_AFTER );
-      //:CREATE ENTITY mSPLDef.LLD_Panel 
+      //:CREATE ENTITY mSPLDef.LLD_Panel
       RESULT = CreateEntity( mSPLDef, "LLD_Panel", zPOS_AFTER );
       //:mSPLDef.LLD_Panel.Left = 0
       SetAttributeFromInteger( mSPLDef, "LLD_Panel", "Left", 0 );
-      //:mSPLDef.LLD_Panel.Top = 0 
+      //:mSPLDef.LLD_Panel.Top = 0
       SetAttributeFromInteger( mSPLDef, "LLD_Panel", "Top", 0 );
    } 
 
@@ -1766,9 +1910,8 @@ GOTO_UpdateSubregProductSPLD( View     ViewToWindow )
    TraceLineS( "$$$$$$ end of SPLD oper", "GOTO_UpdateSubregProductSPLD" );
    return( 0 );
 // // DisplayObjectInstance( mSPLDef, "", "" )
-//    
 //    // Also activate the corresponding SLC and build the composite subobject.
-//    //ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSPLDef.SubregLabelContent.ID 
+//    //ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSPLDef.SubregLabelContent.ID
 //    //NAME VIEW mSubLC "mSubLC"
 //    //BuildCompositeEntries( mSubLC )
 // END
@@ -1810,15 +1953,15 @@ SaveSPLD( View     ViewToWindow )
    //:END
 
    //:// Order SubBlocks according to Y Position.
-   //:FOR EACH mSPLDef.LLD_Page 
+   //:FOR EACH mSPLDef.LLD_Page
    RESULT = SetCursorFirstEntity( mSPLDef, "LLD_Page", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
-      //:FOR EACH mSPLDef.LLD_Panel 
+      //:FOR EACH mSPLDef.LLD_Panel
       RESULT = SetCursorFirstEntity( mSPLDef, "LLD_Panel", "" );
       while ( RESULT > zCURSOR_UNCHANGED )
       { 
-         //:FOR EACH mSPLDef.LLD_Block 
+         //:FOR EACH mSPLDef.LLD_Block
          RESULT = SetCursorFirstEntity( mSPLDef, "LLD_Block", "" );
          while ( RESULT > zCURSOR_UNCHANGED )
          { 
@@ -1832,17 +1975,17 @@ SaveSPLD( View     ViewToWindow )
       } 
 
       RESULT = SetCursorNextEntity( mSPLDef, "LLD_Page", "" );
-      //:END 
+      //:END
    } 
 
    //:END
 
    //:// Delete work attributes that cause error curing commit validations.
-   //:FOR EACH mSPLDef.DisplaySection 
+   //:FOR EACH mSPLDef.DisplaySection
    RESULT = SetCursorFirstEntity( mSPLDef, "DisplaySection", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
-      //:DELETE ENTITY mSPLDef.DisplaySection NONE 
+      //:DELETE ENTITY mSPLDef.DisplaySection NONE
       RESULT = DeleteEntity( mSPLDef, "DisplaySection", zREPOS_NONE );
       RESULT = SetCursorNextEntity( mSPLDef, "DisplaySection", "" );
    } 
@@ -1852,7 +1995,6 @@ SaveSPLD( View     ViewToWindow )
    //:COMMIT mSPLDef
    RESULT = CommitObjectInstance( mSPLDef );
    return( 0 );
-//    
 // END
 } 
 
@@ -1957,7 +2099,7 @@ SaveSPLD_AndReturn( View     ViewToWindow )
    //:END
 
    //:// Reactivate the lSPLDLST object.
-   //:SubregProductID = lSPLDLST.SubregProduct.ID 
+   //:SubregProductID = lSPLDLST.SubregProduct.ID
    {MutableInt mi_SubregProductID = new MutableInt( SubregProductID );
        GetIntegerFromAttribute( mi_SubregProductID, lSPLDLST, "SubregProduct", "ID" );
    SubregProductID = mi_SubregProductID.intValue( );}
@@ -1970,7 +2112,6 @@ SaveSPLD_AndReturn( View     ViewToWindow )
    //:NAME VIEW lSPLDLST "lSPLDLST"
    SetNameForView( lSPLDLST, "lSPLDLST", null, zLEVEL_TASK );
    return( 0 );
-//    
 // END
 } 
 
@@ -1988,7 +2129,7 @@ RemoveMLC_UsageEntries( View     ViewToWindow )
    RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
 
    //:// Remove each selected Usage entry in the Target subobject.
-   //:FOR EACH mMasLC.M_UsageSelectTarget 
+   //:FOR EACH mMasLC.M_UsageSelectTarget
    RESULT = SetCursorFirstEntity( mMasLC, "M_UsageSelectTarget", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
@@ -2026,7 +2167,7 @@ PrebuildSLC_Update( View     ViewToWindow )
    RESULT = GetViewByName( mSubLC, "mSubLC", ViewToWindow, zLEVEL_TASK );
 
    //:// Remove any S_Usage statements not tied to M_Usage statements.
-   //:FOR EACH mSubLC.S_Usage 
+   //:FOR EACH mSubLC.S_Usage
    RESULT = SetCursorFirstEntity( mSubLC, "S_Usage", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
@@ -2034,7 +2175,7 @@ PrebuildSLC_Update( View     ViewToWindow )
       lTempInteger_0 = CheckExistenceOfEntity( mSubLC, "M_Usage" );
       if ( lTempInteger_0 != 0 )
       { 
-         //:DELETE ENTITY mSubLC.S_Usage NONE 
+         //:DELETE ENTITY mSubLC.S_Usage NONE
          RESULT = DeleteEntity( mSubLC, "S_Usage", zREPOS_NONE );
       } 
 
@@ -2065,7 +2206,7 @@ DeleteSubregProductSPLD( View     ViewToWindow )
 {
    zVIEW    lSPLDLST = new zVIEW( );
    int      RESULT = 0;
-   //:VIEW mSPLDef  BASED ON LOD  mSPLDef 
+   //:VIEW mSPLDef  BASED ON LOD  mSPLDef
    zVIEW    mSPLDef = new zVIEW( );
    int      lTempInteger_0 = 0;
    zVIEW    vTempViewVar_0 = new zVIEW( );
@@ -2073,7 +2214,7 @@ DeleteSubregProductSPLD( View     ViewToWindow )
    RESULT = GetViewByName( lSPLDLST, "lSPLDLST", ViewToWindow, zLEVEL_TASK );
 
    //:// Delete selected mSPLDef.
-   //:ACTIVATE mSPLDef WHERE mSPLDef.SubregPhysicalLabelDef.ID = lSPLDLST.SubregPhysicalLabelDef.ID 
+   //:ACTIVATE mSPLDef WHERE mSPLDef.SubregPhysicalLabelDef.ID = lSPLDLST.SubregPhysicalLabelDef.ID
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
        GetIntegerFromAttribute( mi_lTempInteger_0, lSPLDLST, "SubregPhysicalLabelDef", "ID" );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );}
@@ -2082,7 +2223,7 @@ DeleteSubregProductSPLD( View     ViewToWindow )
    DropView( vTempViewVar_0 );
    //:NAME VIEW mSPLDef "mSPLDefDelete"
    SetNameForView( mSPLDef, "mSPLDefDelete", null, zLEVEL_TASK );
-   //:DELETE ENTITY mSPLDef.SubregPhysicalLabelDef 
+   //:DELETE ENTITY mSPLDef.SubregPhysicalLabelDef
    RESULT = DeleteEntity( mSPLDef, "SubregPhysicalLabelDef", zPOS_NEXT );
    //:COMMIT mSPLDef
    RESULT = CommitObjectInstance( mSPLDef );
@@ -2155,12 +2296,12 @@ SELECT_SLC_ForNewSPLD( View     ViewToWindow )
    RESULT = CreateEntity( mSPLDef, "LLD_Page", zPOS_AFTER );
    //:mSPLDef.LLD_Page.Height = 14.0
    SetAttributeFromDecimal( mSPLDef, "LLD_Page", "Height", (double) 14.0 );
-   //:mSPLDef.LLD_Page.Width = 19.5         
+   //:mSPLDef.LLD_Page.Width = 19.5
    SetAttributeFromDecimal( mSPLDef, "LLD_Page", "Width", (double) 19.5 );
 
-   //:CREATE ENTITY mSPLDef.LLD_Panel 
+   //:CREATE ENTITY mSPLDef.LLD_Panel
    RESULT = CreateEntity( mSPLDef, "LLD_Panel", zPOS_AFTER );
-   //:mSPLDef.LLD_Panel.Top = 1.0         
+   //:mSPLDef.LLD_Panel.Top = 1.0
    SetAttributeFromDecimal( mSPLDef, "LLD_Panel", "Top", (double) 1.0 );
    //:mSPLDef.LLD_Panel.Left = 1.0
    SetAttributeFromDecimal( mSPLDef, "LLD_Panel", "Left", (double) 1.0 );
@@ -2193,7 +2334,7 @@ SaveSubregProduct( View     ViewToWindow )
 {
    zVIEW    mSubreg = new zVIEW( );
    int      RESULT = 0;
-   //:VIEW mSubProd REGISTERED AS mSubProd 
+   //:VIEW mSubProd REGISTERED AS mSubProd
    zVIEW    mSubProd = new zVIEW( );
    //:INTEGER SubregID
    int      SubregID = 0;
@@ -2207,7 +2348,7 @@ SaveSubregProduct( View     ViewToWindow )
    RESULT = CommitObjectInstance( mSubProd );
    //:DropObjectInstance( mSubProd )
    DropObjectInstance( mSubProd );
-   //:SubregID = mSubreg.Subregistrant.ID 
+   //:SubregID = mSubreg.Subregistrant.ID
    {MutableInt mi_SubregID = new MutableInt( SubregID );
        GetIntegerFromAttribute( mi_SubregID, mSubreg, "Subregistrant", "ID" );
    SubregID = mi_SubregID.intValue( );}
@@ -2227,7 +2368,7 @@ SaveSubregProduct( View     ViewToWindow )
 //:DIALOG OPERATION
 //:CancelSubregProduct( VIEW ViewToWindow )
 
-//:   VIEW mSubProd REGISTERED AS mSubProd 
+//:   VIEW mSubProd REGISTERED AS mSubProd
 public int 
 CancelSubregProduct( View     ViewToWindow )
 {
@@ -2326,30 +2467,30 @@ SelectMLC_ComponentsForSLC( View     ViewToWindow )
 
    //:// Note that we will only process Marketing Statements and Usage entries under Directions For Use or Marketing Sections.
 
-   //:// There's a problem keeping the correct order. So, to solve that we will go through any existing SLC Marketing and 
-   //:// Directions components and select the corresponding MLC component. Then we'll delete all the existing Marketing and 
+   //:// There's a problem keeping the correct order. So, to solve that we will go through any existing SLC Marketing and
+   //:// Directions components and select the corresponding MLC component. Then we'll delete all the existing Marketing and
    //:// Directions SLC components and recreate them from all selected MLC components.
    //:// Also, we will need to be sure that any Section entries for selected Statement entries are also selected.
 
-   //:// Delete all Directions Usage and Marketing Component entries, after setting the selected flag for the corresponding 
+   //:// Delete all Directions Usage and Marketing Component entries, after setting the selected flag for the corresponding
    //:// MLC entry..
    //:FOR EACH mSubLC.CompositeComponentList
    RESULT = SetCursorFirstEntity( mSubLC, "CompositeComponentList", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
-      //:IF mSubLC.CompositeComponentList.Type = "M_MarketingSection" OR 
-      //:   mSubLC.CompositeComponentList.Type = "M_MarketingStatement" //OR 
+      //:IF mSubLC.CompositeComponentList.Type = "M_MarketingSection" OR
+      //:   mSubLC.CompositeComponentList.Type = "M_MarketingStatement" //OR
       if ( CompareAttributeToString( mSubLC, "CompositeComponentList", "Type", "M_MarketingSection" ) == 0 || CompareAttributeToString( mSubLC, "CompositeComponentList", "Type", "M_MarketingStatement" ) == 0 )
       { 
-         //://mSubLC.CompositeComponentList.Type = "M_MarketingUsageOrdering" OR 
+         //://mSubLC.CompositeComponentList.Type = "M_MarketingUsageOrdering" OR
          //://mSubLC.CompositeComponentList.Type = "M_DirectionsUsageOrdering"
 
          //:IF mSubLC.CompositeComponentList.OriginalTypeID != ""
          if ( CompareAttributeToString( mSubLC, "CompositeComponentList", "OriginalTypeID", "" ) != 0 )
          { 
-            //:SET CURSOR FIRST mMasLC.CompositeComponentList 
+            //:SET CURSOR FIRST mMasLC.CompositeComponentList
             //:           WHERE mMasLC.CompositeComponentList.OriginalTypeID = mSubLC.CompositeComponentList.OriginalTypeID
-            //:             AND mMasLC.CompositeComponentList.DisplayType    = mSubLC.CompositeComponentList.DisplayType 
+            //:             AND mMasLC.CompositeComponentList.DisplayType    = mSubLC.CompositeComponentList.DisplayType
             RESULT = SetCursorFirstEntity( mMasLC, "CompositeComponentList", "" );
             if ( RESULT > zCURSOR_UNCHANGED )
             { 
@@ -2373,7 +2514,7 @@ SelectMLC_ComponentsForSLC( View     ViewToWindow )
 
          //:END
 
-         //:DELETE ENTITY mSubLC.CompositeComponentList NONE 
+         //:DELETE ENTITY mSubLC.CompositeComponentList NONE
          RESULT = DeleteEntity( mSubLC, "CompositeComponentList", zREPOS_NONE );
       } 
 
@@ -2388,7 +2529,7 @@ SelectMLC_ComponentsForSLC( View     ViewToWindow )
    //:// setting level 1 entries from selected level 2 entries.
    //:CreateViewFromView( mMasLC1, mMasLC )
    CreateViewFromView( mMasLC1, mMasLC );
-   //:FOR EACH mMasLC.CompositeComponentList 
+   //:FOR EACH mMasLC.CompositeComponentList
    RESULT = SetCursorFirstEntity( mMasLC, "CompositeComponentList", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
@@ -2424,7 +2565,7 @@ SelectMLC_ComponentsForSLC( View     ViewToWindow )
    } 
 
    //:END
-   //:FOR EACH mMasLC.CompositeComponentList 
+   //:FOR EACH mMasLC.CompositeComponentList
    RESULT = SetCursorFirstEntity( mMasLC, "CompositeComponentList", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
@@ -2471,7 +2612,7 @@ SelectMLC_ComponentsForSLC( View     ViewToWindow )
       sb_szFirstMarketingSectionFlag = new StringBuilder( szFirstMarketingSectionFlag );
       ZeidonStringCopy( sb_szFirstMarketingSectionFlag, 1, 0, "Y", 1, 0, 2 );
    szFirstMarketingSectionFlag = sb_szFirstMarketingSectionFlag.toString( );}
-   //:FOR EACH mMasLC.CompositeComponentList 
+   //:FOR EACH mMasLC.CompositeComponentList
    RESULT = SetCursorFirstEntity( mMasLC, "CompositeComponentList", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
@@ -2481,9 +2622,9 @@ SelectMLC_ComponentsForSLC( View     ViewToWindow )
       //:IF mMasLC.CompositeComponentList.Type = "M_DirectionsForUseSection"
       if ( CompareAttributeToString( mMasLC, "CompositeComponentList", "Type", "M_DirectionsForUseSection" ) == 0 )
       { 
-         //:SET CURSOR FIRST mSubLC.CompositeComponentList 
-         //:           WHERE mSubLC.CompositeComponentList.Type           = "M_DirectionsForUseSection" 
-         //:             AND mSubLC.CompositeComponentList.OriginalTypeID = mMasLC.CompositeComponentList.OriginalTypeID 
+         //:SET CURSOR FIRST mSubLC.CompositeComponentList
+         //:           WHERE mSubLC.CompositeComponentList.Type           = "M_DirectionsForUseSection"
+         //:             AND mSubLC.CompositeComponentList.OriginalTypeID = mMasLC.CompositeComponentList.OriginalTypeID
          RESULT = SetCursorFirstEntity( mSubLC, "CompositeComponentList", "" );
          if ( RESULT > zCURSOR_UNCHANGED )
          { 
@@ -2510,8 +2651,8 @@ SelectMLC_ComponentsForSLC( View     ViewToWindow )
 
       //:END
 
-      //:// If the Composite Component is a Marketing Section, positioning depends on whether or not this is the first 
-      //:// Marketing Section. If so, we need to position on the last Directions For Use Section or Statement. 
+      //:// If the Composite Component is a Marketing Section, positioning depends on whether or not this is the first
+      //:// Marketing Section. If so, we need to position on the last Directions For Use Section or Statement.
       //:// Otherwise, we are already correctly positioned.
       //:IF mMasLC.CompositeComponentList.Type = "M_MarketingSection"
       if ( CompareAttributeToString( mMasLC, "CompositeComponentList", "Type", "M_MarketingSection" ) == 0 )
@@ -2519,8 +2660,8 @@ SelectMLC_ComponentsForSLC( View     ViewToWindow )
          //:IF szFirstMarketingSectionFlag = "Y"
          if ( ZeidonStringCompare( szFirstMarketingSectionFlag, 1, 0, "Y", 1, 0, 2 ) == 0 )
          { 
-            //:SET CURSOR LAST mSubLC.CompositeComponentList 
-            //:          WHERE mSubLC.CompositeComponentList.Type = "M_DirectionsForUseSection" 
+            //:SET CURSOR LAST mSubLC.CompositeComponentList
+            //:          WHERE mSubLC.CompositeComponentList.Type = "M_DirectionsForUseSection"
             //:             OR mSubLC.CompositeComponentList.Type = "M_DirectionsForUseStatement"
             RESULT = SetCursorLastEntity( mSubLC, "CompositeComponentList", "" );
             if ( RESULT > zCURSOR_UNCHANGED )
@@ -2544,19 +2685,19 @@ SelectMLC_ComponentsForSLC( View     ViewToWindow )
          } 
 
          //:END
-         //:CREATE ENTITY mSubLC.CompositeComponentList 
+         //:CREATE ENTITY mSubLC.CompositeComponentList
          RESULT = CreateEntity( mSubLC, "CompositeComponentList", zPOS_AFTER );
          //:SetMatchingAttributesByName( mSubLC, "CompositeComponentList", mMasLC, "CompositeComponentList", zSET_ALL )
          SetMatchingAttributesByName( mSubLC, "CompositeComponentList", mMasLC, "CompositeComponentList", zSET_ALL );
-         //:mSubLC.CompositeComponentList.Selected = "" 
+         //:mSubLC.CompositeComponentList.Selected = ""
          SetAttributeFromString( mSubLC, "CompositeComponentList", "Selected", "" );
       } 
 
       //:END
 
       //:// Process the three entry types defined above.
-      //:IF mMasLC.CompositeComponentList.Type = "M_DirectionsUsageOrdering" OR 
-      //:   mMasLC.CompositeComponentList.Type = "M_MarketingUsageOrdering" OR 
+      //:IF mMasLC.CompositeComponentList.Type = "M_DirectionsUsageOrdering" OR
+      //:   mMasLC.CompositeComponentList.Type = "M_MarketingUsageOrdering" OR
       //:   mMasLC.CompositeComponentList.Type = "M_MarketingStatement"
       if ( CompareAttributeToString( mMasLC, "CompositeComponentList", "Type", "M_DirectionsUsageOrdering" ) == 0 || CompareAttributeToString( mMasLC, "CompositeComponentList", "Type", "M_MarketingUsageOrdering" ) == 0 ||
            CompareAttributeToString( mMasLC, "CompositeComponentList", "Type", "M_MarketingStatement" ) == 0 )
@@ -2565,11 +2706,11 @@ SelectMLC_ComponentsForSLC( View     ViewToWindow )
          //:IF mMasLC.CompositeComponentList.Selected = "Y"
          if ( CompareAttributeToString( mMasLC, "CompositeComponentList", "Selected", "Y" ) == 0 )
          { 
-            //:CREATE ENTITY mSubLC.CompositeComponentList 
+            //:CREATE ENTITY mSubLC.CompositeComponentList
             RESULT = CreateEntity( mSubLC, "CompositeComponentList", zPOS_AFTER );
             //:SetMatchingAttributesByName( mSubLC, "CompositeComponentList", mMasLC, "CompositeComponentList", zSET_ALL )
             SetMatchingAttributesByName( mSubLC, "CompositeComponentList", mMasLC, "CompositeComponentList", zSET_ALL );
-            //:mSubLC.CompositeComponentList.Selected = "" 
+            //:mSubLC.CompositeComponentList.Selected = ""
             SetAttributeFromString( mSubLC, "CompositeComponentList", "Selected", "" );
          } 
 
@@ -2582,7 +2723,6 @@ SelectMLC_ComponentsForSLC( View     ViewToWindow )
 
    //:END
    return( 0 );
-//    
 // END
 } 
 
@@ -2620,24 +2760,24 @@ SaveSubregistrantLabelContent( View     ViewToWindow )
 
    //:// Make sure that any selected Components Usage entries have S_Usage entries.
    //:/*FOR EACH mSubLC.CompositeComponentList
-   //:   IF mSubLC.CompositeComponentList.Type = "M_DirectionsUsageOrdering" OR 
+   //:   IF mSubLC.CompositeComponentList.Type = "M_DirectionsUsageOrdering" OR
    //:      mSubLC.CompositeComponentList.Type = "M_MarketingUsageOrdering"
-   //:      
-   //:      OriginalTypeID = mSubLC.CompositeComponentList.OriginalTypeID 
-   //:      SET CURSOR FIRST mSubLC.M_Usage WITHIN mSubLC.SubregLabelContent 
+
+   //:      OriginalTypeID = mSubLC.CompositeComponentList.OriginalTypeID
+   //:      SET CURSOR FIRST mSubLC.M_Usage WITHIN mSubLC.SubregLabelContent
    //:                 WHERE mSubLC.M_Usage.ID = OriginalTypeID
    //:      IF RESULT < zCURSOR_SET
    //:         SET CURSOR FIRST mMasLC.M_Usage WHERE mMasLC.M_Usage.ID = OriginalTypeID
-   //:         SET CURSOR LAST mSubLC.S_Usage 
-   //:         CREATE ENTITY mSubLC.S_Usage 
+   //:         SET CURSOR LAST mSubLC.S_Usage
+   //:         CREATE ENTITY mSubLC.S_Usage
    //:         SetMatchingAttributesByName( mSubLC, "S_Usage", mMasLC, "M_Usage", zSET_NULL )
-   //:         INCLUDE mSubLC.M_Usage FROM mMasLC.M_Usage 
+   //:         INCLUDE mSubLC.M_Usage FROM mMasLC.M_Usage
    //:      END
    //:   END
    //:END*/
 
    //:// If the S_Usage Statements are null, then we need to first commit mSubLC to get the ID's set.
-   //:/*SET CURSOR FIRST mSubLC.S_Usage 
+   //:/*SET CURSOR FIRST mSubLC.S_Usage
    //:IF mSubLC.S_Usage.ID = ""
    //:   COMMIT mSubLC
    //:END */
@@ -2650,41 +2790,41 @@ SaveSubregistrantLabelContent( View     ViewToWindow )
 
    //:// First delete any entries that are in the main structure but not in the Composite Component List.
    //:// Note that we only consider Marketing Statements and Directions Usage and Marketing Usage Statements.
-   //:/*FOR EACH mSubLC.S_DirectionsForUseSection 
-   //:   FOR EACH mSubLC.S_DirectionsUsageOrdering 
-   //:      SET CURSOR FIRST mSubLC.CompositeComponentList 
-   //:                 WHERE mSubLC.CompositeComponentList.SLC_OriginalTypeID = mSubLC.S_DirectionsUsage.ID 
-   //:                   AND mSubLC.CompositeComponentList.Type               = "M_DirectionsUsageOrdering" 
+   //:/*FOR EACH mSubLC.S_DirectionsForUseSection
+   //:   FOR EACH mSubLC.S_DirectionsUsageOrdering
+   //:      SET CURSOR FIRST mSubLC.CompositeComponentList
+   //:                 WHERE mSubLC.CompositeComponentList.SLC_OriginalTypeID = mSubLC.S_DirectionsUsage.ID
+   //:                   AND mSubLC.CompositeComponentList.Type               = "M_DirectionsUsageOrdering"
    //:      IF RESULT < zCURSOR_SET
-   //:         //SET CURSOR FIRST mSubLC.S_Usage WHERE mSubLC.S_Usage.ID = mSubLC.S_DirectionsUsage.ID 
+   //:         //SET CURSOR FIRST mSubLC.S_Usage WHERE mSubLC.S_Usage.ID = mSubLC.S_DirectionsUsage.ID
    //:         //IF RESULT >= zCURSOR_SET
-   //:         //   DELETE ENTITY mSubLC.S_Usage NONE 
-   //:         //END 
-   //:         DELETE ENTITY mSubLC.S_DirectionsUsageOrdering NONE 
+   //:         //   DELETE ENTITY mSubLC.S_Usage NONE
+   //:         //END
+   //:         DELETE ENTITY mSubLC.S_DirectionsUsageOrdering NONE
    //:      END
    //:   END
    //:END
-   //:FOR EACH mSubLC.S_MarketingSection 
-   //:   SET CURSOR FIRST mSubLC.CompositeComponentList 
-   //:              WHERE mSubLC.CompositeComponentList.SLC_OriginalTypeID = mSubLC.S_MarketingSection.ID 
-   //:                AND mSubLC.CompositeComponentList.Type               = "M_MarketingSection" 
+   //:FOR EACH mSubLC.S_MarketingSection
+   //:   SET CURSOR FIRST mSubLC.CompositeComponentList
+   //:              WHERE mSubLC.CompositeComponentList.SLC_OriginalTypeID = mSubLC.S_MarketingSection.ID
+   //:                AND mSubLC.CompositeComponentList.Type               = "M_MarketingSection"
    //:   IF RESULT >= zCURSOR_SET
    //:      // The Marketing Section was NOT deleted.
-   //:      FOR EACH mSubLC.S_MarketingStatement 
-   //:         SET CURSOR FIRST mSubLC.CompositeComponentList 
-   //:                    WHERE mSubLC.CompositeComponentList.SLC_OriginalTypeID = mSubLC.S_MarketingStatement.ID 
-   //:                      AND mSubLC.CompositeComponentList.Type               = "M_MarketingStatement" 
+   //:      FOR EACH mSubLC.S_MarketingStatement
+   //:         SET CURSOR FIRST mSubLC.CompositeComponentList
+   //:                    WHERE mSubLC.CompositeComponentList.SLC_OriginalTypeID = mSubLC.S_MarketingStatement.ID
+   //:                      AND mSubLC.CompositeComponentList.Type               = "M_MarketingStatement"
    //:         IF RESULT < zCURSOR_SET
    //:            // Delete the Marketing Statement.
    //:            DELETE ENTITY mSubLC.S_MarketingStatement NONE
    //:         ELSE
    //:            // See if we need to delete any Marketing Usage entries.
-   //:            FOR EACH mSubLC.S_MarketingUsageOrdering 
-   //:               SET CURSOR FIRST mSubLC.CompositeComponentList 
-   //:                          WHERE mSubLC.CompositeComponentList.SLC_OriginalTypeID = mSubLC.S_MarketingUsage.ID 
-   //:                            AND mSubLC.CompositeComponentList.Type               = "M_MarketingUsageOrdering" 
+   //:            FOR EACH mSubLC.S_MarketingUsageOrdering
+   //:               SET CURSOR FIRST mSubLC.CompositeComponentList
+   //:                          WHERE mSubLC.CompositeComponentList.SLC_OriginalTypeID = mSubLC.S_MarketingUsage.ID
+   //:                            AND mSubLC.CompositeComponentList.Type               = "M_MarketingUsageOrdering"
    //:               IF RESULT < zCURSOR_SET
-   //:                  DELETE ENTITY mSubLC.S_MarketingUsageOrdering NONE 
+   //:                  DELETE ENTITY mSubLC.S_MarketingUsageOrdering NONE
    //:               END
    //:            END
    //:         END
@@ -2697,21 +2837,21 @@ SaveSubregistrantLabelContent( View     ViewToWindow )
 
    //:// Next add any new CompositeComponentList entries.
    //:// Note that we only consider Marketing Statements and Directions and Marketing Usage Statements.
-   //:FOR EACH mSubLC.CompositeComponentList 
+   //:FOR EACH mSubLC.CompositeComponentList
    //:   OriginalTypeID = mSubLC.CompositeComponentList.OriginalTypeID
    //:   // Directions For Use Section
    //:   IF mSubLC.CompositeComponentList.Type = "M_DirectionsForUseSection"
-   //:      SET CURSOR FIRST mSubLC.M_DirectionsForUseSection WITHIN mSubLC.SubregLabelContent 
-   //:                 WHERE mSubLC.M_DirectionsForUseSection.ID = OriginalTypeID 
+   //:      SET CURSOR FIRST mSubLC.M_DirectionsForUseSection WITHIN mSubLC.SubregLabelContent
+   //:                 WHERE mSubLC.M_DirectionsForUseSection.ID = OriginalTypeID
    //:   END
-   //:   
+
    //:   // Marketing Section
-   //:   IF mSubLC.CompositeComponentList.Type = "M_MarketingSection" 
-   //:      SET CURSOR FIRST mSubLC.M_MarketingSection WITHIN mSubLC.SubregLabelContent 
-   //:                 WHERE mSubLC.M_MarketingSection.ID = OriginalTypeID 
+   //:   IF mSubLC.CompositeComponentList.Type = "M_MarketingSection"
+   //:      SET CURSOR FIRST mSubLC.M_MarketingSection WITHIN mSubLC.SubregLabelContent
+   //:                 WHERE mSubLC.M_MarketingSection.ID = OriginalTypeID
    //:      IF RESULT < zCURSOR_SET
-   //:         SET CURSOR FIRST mMasLC.M_MarketingSection 
-   //:                    WHERE mMasLC.M_MarketingSection.ID = OriginalTypeID 
+   //:         SET CURSOR FIRST mMasLC.M_MarketingSection
+   //:                    WHERE mMasLC.M_MarketingSection.ID = OriginalTypeID
    //:         IF RESULT < zCURSOR_SET
    //:            TraceLineI( "######### No match on Marketing Section ID", OriginalTypeID )
    //:         END
@@ -2721,14 +2861,14 @@ SaveSubregistrantLabelContent( View     ViewToWindow )
    //:         INCLUDE mSubLC.M_MarketingSection FROM mMasLC.M_MarketingSection
    //:      END
    //:   END
-   //:   
+
    //:   // Marketing Statement
-   //:   IF mSubLC.CompositeComponentList.Type = "M_MarketingStatement" 
-   //:      SET CURSOR FIRST mSubLC.M_MarketingStatement WITHIN mSubLC.S_MarketingSection 
-   //:                 WHERE mSubLC.M_MarketingStatement.ID = OriginalTypeID 
+   //:   IF mSubLC.CompositeComponentList.Type = "M_MarketingStatement"
+   //:      SET CURSOR FIRST mSubLC.M_MarketingStatement WITHIN mSubLC.S_MarketingSection
+   //:                 WHERE mSubLC.M_MarketingStatement.ID = OriginalTypeID
    //:      IF RESULT < zCURSOR_SET
-   //:         SET CURSOR FIRST mMasLC.M_MarketingStatement WITHIN mMasLC.MasterLabelContent 
-   //:                    WHERE mMasLC.M_MarketingStatement.ID = OriginalTypeID 
+   //:         SET CURSOR FIRST mMasLC.M_MarketingStatement WITHIN mMasLC.MasterLabelContent
+   //:                    WHERE mMasLC.M_MarketingStatement.ID = OriginalTypeID
    //:         IF RESULT < zCURSOR_SET
    //:            TraceLineI( "######### No match on Marketing Statement ID", OriginalTypeID )
    //:         END
@@ -2738,24 +2878,24 @@ SaveSubregistrantLabelContent( View     ViewToWindow )
    //:         INCLUDE mSubLC.M_MarketingStatement FROM mMasLC.M_MarketingStatement
    //:      END
    //:   END
-   //:   
+
    //:   // Directions For Use Usage
    //:   IF mSubLC.CompositeComponentList.Type = "M_DirectionsUsageOrdering"
-   //:      SET CURSOR FIRST mSubLC.M_Usage WITHIN mSubLC.SubregLabelContent 
-   //:                 WHERE mSubLC.M_Usage.ID = OriginalTypeID 
-   //:      SET CURSOR FIRST mSubLC.S_DirectionsUsage WITHIN mSubLC.S_DirectionsForUseSection 
-   //:                 WHERE mSubLC.S_DirectionsUsage.ID = mSubLC.S_Usage.ID 
+   //:      SET CURSOR FIRST mSubLC.M_Usage WITHIN mSubLC.SubregLabelContent
+   //:                 WHERE mSubLC.M_Usage.ID = OriginalTypeID
+   //:      SET CURSOR FIRST mSubLC.S_DirectionsUsage WITHIN mSubLC.S_DirectionsForUseSection
+   //:                 WHERE mSubLC.S_DirectionsUsage.ID = mSubLC.S_Usage.ID
    //:      IF RESULT < zCURSOR_SET
    //:         CREATE ENTITY mSubLC.S_DirectionsUsageOrdering
    //:         INCLUDE mSubLC.S_DirectionsUsage FROM mSubLC.S_Usage
    //:      END
    //:   END
-   //:   
+
    //:   // Marketing Usage
    //:   IF mSubLC.CompositeComponentList.Type = "M_MarketingUsageOrdering"
-   //:      SET CURSOR FIRST mSubLC.M_Usage WITHIN mSubLC.SubregLabelContent 
-   //:                 WHERE mSubLC.M_Usage.ID = OriginalTypeID 
-   //:      SET CURSOR FIRST mSubLC.S_MarketingUsage WITHIN mSubLC.S_MarketingSection 
+   //:      SET CURSOR FIRST mSubLC.M_Usage WITHIN mSubLC.SubregLabelContent
+   //:                 WHERE mSubLC.M_Usage.ID = OriginalTypeID
+   //:      SET CURSOR FIRST mSubLC.S_MarketingUsage WITHIN mSubLC.S_MarketingSection
    //:                 WHERE mSubLC.S_MarketingUsage.ID = mSubLC.S_Usage.ID
    //:      IF RESULT < zCURSOR_SET
    //:         CREATE ENTITY mSubLC.S_MarketingUsageOrdering
@@ -2807,7 +2947,7 @@ DeleteMLC_ComponentsForSLC( View     ViewToWindow )
    //:SET CURSOR FIRST mSubLC.CompositeComponentList WHERE mSubLC.CompositeComponentList.Selected = "Y"
    //:                                                 AND mSubLC.CompositeComponentList.Type != "M_DirectionsUsageOrdering"
    //:                                                 AND mSubLC.CompositeComponentList.Type != "M_MarketingUsageOrdering"
-   //:                                                 AND mSubLC.CompositeComponentList.Type != "M_MarketingStatement" 
+   //:                                                 AND mSubLC.CompositeComponentList.Type != "M_MarketingStatement"
    //:                                                 AND mSubLC.CompositeComponentList.Type != "M_MarketingSection"
    RESULT = SetCursorFirstEntity( mSubLC, "CompositeComponentList", "" );
    if ( RESULT > zCURSOR_UNCHANGED )
@@ -2844,14 +2984,14 @@ DeleteMLC_ComponentsForSLC( View     ViewToWindow )
       { 
          //:CreateViewFromView( mSubLC2, mSubLC )
          CreateViewFromView( mSubLC2, mSubLC );
-         //:SET CURSOR NEXT mSubLC2.CompositeComponentList 
+         //:SET CURSOR NEXT mSubLC2.CompositeComponentList
          RESULT = SetCursorNextEntity( mSubLC2, "CompositeComponentList", "" );
          //:LOOP WHILE RESULT >= zCURSOR_SET AND mSubLC2.CompositeComponentList.Type = "M_MarketingStatement"
          while ( RESULT >= zCURSOR_SET && CompareAttributeToString( mSubLC2, "CompositeComponentList", "Type", "M_MarketingStatement" ) == 0 )
          { 
             //:mSubLC2.CompositeComponentList.Selected = "Y"
             SetAttributeFromString( mSubLC2, "CompositeComponentList", "Selected", "Y" );
-            //:SET CURSOR NEXT mSubLC2.CompositeComponentList 
+            //:SET CURSOR NEXT mSubLC2.CompositeComponentList
             RESULT = SetCursorNextEntity( mSubLC2, "CompositeComponentList", "" );
          } 
 
@@ -2874,8 +3014,8 @@ DeleteMLC_ComponentsForSLC( View     ViewToWindow )
       //:IF mSubLC.CompositeComponentList.OriginalTypeID != ""
       if ( CompareAttributeToString( mSubLC, "CompositeComponentList", "OriginalTypeID", "" ) != 0 )
       { 
-         //:SET CURSOR FIRST mMasLC.CompositeComponentList 
-         //:           WHERE mMasLC.CompositeComponentList.OriginalTypeID = mSubLC.CompositeComponentList.OriginalTypeID 
+         //:SET CURSOR FIRST mMasLC.CompositeComponentList
+         //:           WHERE mMasLC.CompositeComponentList.OriginalTypeID = mSubLC.CompositeComponentList.OriginalTypeID
          {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
                    GetIntegerFromAttribute( mi_lTempInteger_0, mSubLC, "CompositeComponentList", "OriginalTypeID" );
          lTempInteger_0 = mi_lTempInteger_0.intValue( );}
@@ -2889,7 +3029,7 @@ DeleteMLC_ComponentsForSLC( View     ViewToWindow )
          } 
 
          //:END
-         //:DELETE ENTITY mSubLC.CompositeComponentList NONE 
+         //:DELETE ENTITY mSubLC.CompositeComponentList NONE
          RESULT = DeleteEntity( mSubLC, "CompositeComponentList", zREPOS_NONE );
          //:ELSE
       } 
@@ -2903,17 +3043,17 @@ DeleteMLC_ComponentsForSLC( View     ViewToWindow )
          } 
 
          //:   /*IF mSubLC.CompositeComponentList.Type = "M_MarketingStatement"
-         //:      SET CURSOR FIRST mSubLC.S_MarketingStatement WITHIN mSubLC.SubregLabelContent 
+         //:      SET CURSOR FIRST mSubLC.S_MarketingStatement WITHIN mSubLC.SubregLabelContent
          //:                 WHERE mSubLC.S_MarketingStatement.ID = mSubLC.CompositeComponentList.SLC_OriginalTypeID
          //:      IF RESULT >= zCURSOR_SET
          //:         mSubLC.S_MarketingStatement.wDeleteFlag = "Y"
-         //:         DELETE ENTITY mSubLC.CompositeComponentList NONE 
+         //:         DELETE ENTITY mSubLC.CompositeComponentList NONE
          //:      END
          //:   ELSE
          //:      SET CURSOR FIRST mSubLC.S_MarketingSection WHERE mSubLC.S_MarketingSection.ID = mSubLC.CompositeComponentList.SLC_OriginalTypeID
          //:      IF RESULT >= zCURSOR_SET
          //:         mSubLC.S_MarketingSection.wDeleteFlag = "Y"
-         //:         DELETE ENTITY mSubLC.CompositeComponentList NONE 
+         //:         DELETE ENTITY mSubLC.CompositeComponentList NONE
          //:      END
          //:   END*/
          //:END
@@ -2927,7 +3067,7 @@ DeleteMLC_ComponentsForSLC( View     ViewToWindow )
 
    //:// Next delete any Marketing Section entries without Statement entries.
    //:// (A Section entry does not have DisplayType = "Statement".)
-   //:FOR EACH mSubLC.CompositeComponentList 
+   //:FOR EACH mSubLC.CompositeComponentList
    RESULT = SetCursorFirstEntity( mSubLC, "CompositeComponentList", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
@@ -2936,15 +3076,15 @@ DeleteMLC_ComponentsForSLC( View     ViewToWindow )
       { 
          //:CreateViewFromView( mSubLC2, mSubLC )
          CreateViewFromView( mSubLC2, mSubLC );
-         //:SET CURSOR NEXT mSubLC2.CompositeComponentList 
+         //:SET CURSOR NEXT mSubLC2.CompositeComponentList
          RESULT = SetCursorNextEntity( mSubLC2, "CompositeComponentList", "" );
          //:IF RESULT >= zCURSOR_SET AND mSubLC2.CompositeComponentList.DisplayType != "Statement"
          if ( RESULT >= zCURSOR_SET && CompareAttributeToString( mSubLC2, "CompositeComponentList", "DisplayType", "Statement" ) != 0 )
          { 
             //:// The next entry is also not a Statement.
-            //:SET CURSOR FIRST mMasLC.CompositeComponentList 
-            //:           WHERE mMasLC.CompositeComponentList.OriginalTypeID = mSubLC.CompositeComponentList.OriginalTypeID 
-            //:             AND mMasLC.CompositeComponentList.DisplayType    = mSubLC.CompositeComponentList.DisplayType 
+            //:SET CURSOR FIRST mMasLC.CompositeComponentList
+            //:           WHERE mMasLC.CompositeComponentList.OriginalTypeID = mSubLC.CompositeComponentList.OriginalTypeID
+            //:             AND mMasLC.CompositeComponentList.DisplayType    = mSubLC.CompositeComponentList.DisplayType
             RESULT = SetCursorFirstEntity( mMasLC, "CompositeComponentList", "" );
             if ( RESULT > zCURSOR_UNCHANGED )
             { 
@@ -2965,7 +3105,7 @@ DeleteMLC_ComponentsForSLC( View     ViewToWindow )
             } 
 
             //:END
-            //:DELETE ENTITY mSubLC.CompositeComponentList NONE 
+            //:DELETE ENTITY mSubLC.CompositeComponentList NONE
             RESULT = DeleteEntity( mSubLC, "CompositeComponentList", zREPOS_NONE );
          } 
 
@@ -2981,22 +3121,21 @@ DeleteMLC_ComponentsForSLC( View     ViewToWindow )
    //:END
 
    //:// If all entries have been deleted, put the null entry back.
-   //:SET CURSOR FIRST mSubLC.CompositeComponentList 
+   //:SET CURSOR FIRST mSubLC.CompositeComponentList
    RESULT = SetCursorFirstEntity( mSubLC, "CompositeComponentList", "" );
    //:IF RESULT < zCURSOR_SET
    if ( RESULT < zCURSOR_SET )
    { 
-      //:CREATE ENTITY mSubLC.CompositeComponentList 
+      //:CREATE ENTITY mSubLC.CompositeComponentList
       RESULT = CreateEntity( mSubLC, "CompositeComponentList", zPOS_AFTER );
       //:mSubLC.CompositeComponentList.DisplayType  = "-null-"
       SetAttributeFromString( mSubLC, "CompositeComponentList", "DisplayType", "-null-" );
-      //:mSubLC.CompositeComponentList.DisplayValue = "-----------null components------------" 
+      //:mSubLC.CompositeComponentList.DisplayValue = "-----------null components------------"
       SetAttributeFromString( mSubLC, "CompositeComponentList", "DisplayValue", "-----------null components------------" );
    } 
 
    //:END
    return( 0 );
-//    
 // END
 } 
 
@@ -3030,7 +3169,7 @@ ACCEPT_SPLD_Panel( View     ViewToWindow )
    DropView( mSPLDef2 );
    //:OrderEntityForView( mSPLDef, "LLD_Block", "wComputedTopPosition A" )
    OrderEntityForView( mSPLDef, "LLD_Block", "wComputedTopPosition A" );
-   //:FOR EACH mSPLDef.LLD_Block 
+   //:FOR EACH mSPLDef.LLD_Block
    RESULT = SetCursorFirstEntity( mSPLDef, "LLD_Block", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
@@ -3066,20 +3205,20 @@ DELETE_BlockComponentEntry( View     ViewToWindow )
    RESULT = GetViewByName( mSPLDef, "mSPLDef", ViewToWindow, zLEVEL_TASK );
 
    //:// Simply delete the Component.
-   //:// IF mSPLDef.LLD_Block.Type = "Block" 
-   //:   SET CURSOR FIRST mSPLDef.LLD_Block WHERE mSPLDef.LLD_Block.wRelativeBlockNumber = mSPLDef.LLD_Block.wRelativeBlockNumber  
+   //:// IF mSPLDef.LLD_Block.Type = "Block"
+   //:   SET CURSOR FIRST mSPLDef.LLD_Block WHERE mSPLDef.LLD_Block.wRelativeBlockNumber = mSPLDef.LLD_Block.wRelativeBlockNumber
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
        GetIntegerFromAttribute( mi_lTempInteger_0, mSPLDef, "LLD_Block", "wRelativeBlockNumber" );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );}
    RESULT = SetCursorFirstEntityByInteger( mSPLDef, "LLD_Block", "wRelativeBlockNumber", lTempInteger_0, "" );
-   //:   DELETE ENTITY mSPLDef.LLD_Block 
+   //:   DELETE ENTITY mSPLDef.LLD_Block
    RESULT = DeleteEntity( mSPLDef, "LLD_Block", zPOS_NEXT );
    //:// ELSE
-   //://    SET CURSOR FIRST mSPLDef.LLD_SubBlock WITHIN mSPLDef.LLD_Panel 
-   //://               WHERE mSPLDef.LLD_SubBlock.wRelativeBlockNumber = mSPLDef.LLD_Block.wRelativeBlockNumber  
-   //://    DELETE ENTITY mSPLDef.LLD_SubBlock 
+   //://    SET CURSOR FIRST mSPLDef.LLD_SubBlock WITHIN mSPLDef.LLD_Panel
+   //://               WHERE mSPLDef.LLD_SubBlock.wRelativeBlockNumber = mSPLDef.LLD_Block.wRelativeBlockNumber
+   //://    DELETE ENTITY mSPLDef.LLD_SubBlock
    //:// END
-   //:DELETE ENTITY mSPLDef.LLD_Block  
+   //:DELETE ENTITY mSPLDef.LLD_Block
    RESULT = DeleteEntity( mSPLDef, "LLD_Block", zPOS_NEXT );
    return( 0 );
 // END
@@ -3155,13 +3294,13 @@ GOTO_UpdateBlockComponent( View     ViewToWindow )
 // /*
 //    // If the Block/SubBlock is Marketing, redirect to Marketing update window.
 //    // Create version first.
-// // IF mSPLDef.LLD_Block.Type = "Block" 
-//       SET CURSOR FIRST mSPLDef.LLD_Block WHERE mSPLDef.LLD_Block.wRelativeBlockNumber = mSPLDef.LLD_Block.wRelativeBlockNumber  
+// // IF mSPLDef.LLD_Block.Type = "Block"
+//       SET CURSOR FIRST mSPLDef.LLD_Block WHERE mSPLDef.LLD_Block.wRelativeBlockNumber = mSPLDef.LLD_Block.wRelativeBlockNumber
 //       //CreateTemporalSubobjectVersion( mSPLDef, "LLD_Block" )
 //       CreateViewFromView( mSPLDefPanel, mSPLDef )
 //       NAME VIEW mSPLDefPanel "mSPLDefPanel"
 //  //ELSE
-//  //   SET CURSOR FIRST mSPLDef.LLD_SubBlock WITHIN mSPLDef.LLD_Panel 
+//  //   SET CURSOR FIRST mSPLDef.LLD_SubBlock WITHIN mSPLDef.LLD_Panel
 //  //              WHERE mSPLDef.LLD_SubBlock.wRelativeBlockNumber = mSPLDef.LLD_Block.wRelativeBlockNumber
 //  //   CreateViewFromView( mSPLDefPanel, mSPLDef )
 //  //   NAME VIEW mSPLDefPanel "mSPLDefPanel"
@@ -3207,7 +3346,7 @@ SELECT_MarketingSectionForBlock( View     ViewToWindow )
    { 
       //:lCount = 1
       lCount = 1;
-      //:szName = mSPLDefPanel.SPLD_MarketingSection.Name 
+      //:szName = mSPLDefPanel.SPLD_MarketingSection.Name
       {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
       StringBuilder sb_szName;
       if ( szName == null )
@@ -3243,7 +3382,7 @@ SELECT_MarketingSectionForBlock( View     ViewToWindow )
 
    //:END
 
-   //:mSPLDefBlock.LLD_Block.Name = szName 
+   //:mSPLDefBlock.LLD_Block.Name = szName
    SetAttributeFromString( mSPLDefBlock, "LLD_Block", "Name", szName );
 
    //:// Remove any existing entries, including the one just processed.
@@ -3332,14 +3471,14 @@ o_fnGenerateSPLD_Label( View     ViewToWindow,
    //:ComputeTopPositions( mSPLDef )
    //:FOR EACH mSPLDef.LLD_Page
    //:   OrderEntityForView( mSPLDef, "LLD_Panel", "Top A Left A" )
-   //:   FOR EACH mSPLDef.LLD_Panel 
+   //:   FOR EACH mSPLDef.LLD_Panel
    //:      OrderEntityForView( mSPLDef, "LLD_Block", "ContinuationBlockFlag D Left A wComputedTopPosition A" )
-   //:      FOR EACH mSPLDef.LLD_Block 
+   //:      FOR EACH mSPLDef.LLD_Block
    //:         OrderEntityForView( mSPLDef, "LLD_SubBlock", "Left A wComputedTopPosition A" )
    //:      END
-   //:   END 
-   //:END 
-   //:SET CURSOR FIRST mSPLDef.LLD_Page 
+   //:   END
+   //:END
+   //:SET CURSOR FIRST mSPLDef.LLD_Page
    //:*/
 
    //:// Generate the label using LLD and SLC data defined in mSPLDef.
@@ -3730,7 +3869,7 @@ GENERATE_LLD_FromSPLD( View     ViewToWindow )
    //:END
 
    //:// Make sure the name entered is unique.
-   //:ACTIVATE mLLD WHERE mLLD.LLD.Name = mSPLDef.SubregPhysicalLabelDef.wSavedLLD_Name 
+   //:ACTIVATE mLLD WHERE mLLD.LLD.Name = mSPLDef.SubregPhysicalLabelDef.wSavedLLD_Name
    {StringBuilder sb_szTempString_0;
    if ( szTempString_0 == null )
       sb_szTempString_0 = new StringBuilder( 32 );
@@ -3759,45 +3898,45 @@ GENERATE_LLD_FromSPLD( View     ViewToWindow )
    DropObjectInstance( mLLD );
 
    //:// Copy the SPLD Structure.
-   //:ACTIVATE mLLD EMPTY 
+   //:ACTIVATE mLLD EMPTY
    RESULT = ActivateEmptyObjectInstance( mLLD, "mLLD", ViewToWindow, zSINGLE );
-   //:NAME VIEW mLLD "mLLD" 
+   //:NAME VIEW mLLD "mLLD"
    SetNameForView( mLLD, "mLLD", null, zLEVEL_TASK );
-   //:CREATE ENTITY mLLD.LLD 
+   //:CREATE ENTITY mLLD.LLD
    RESULT = CreateEntity( mLLD, "LLD", zPOS_AFTER );
    //:SetMatchingAttributesByName( mLLD, "LLD", mSPLDef, "SPLD_LLD", zSET_NULL )
    SetMatchingAttributesByName( mLLD, "LLD", mSPLDef, "SPLD_LLD", zSET_NULL );
    //:mLLD.LLD.Name = mSPLDef.SubregPhysicalLabelDef.wSavedLLD_Name
    SetAttributeFromAttribute( mLLD, "LLD", "Name", mSPLDef, "SubregPhysicalLabelDef", "wSavedLLD_Name" );
-   //:FOR EACH mSPLDef.LLD_Page 
+   //:FOR EACH mSPLDef.LLD_Page
    RESULT = SetCursorFirstEntity( mSPLDef, "LLD_Page", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
-      //:CREATE ENTITY mLLD.LLD_Page 
+      //:CREATE ENTITY mLLD.LLD_Page
       RESULT = CreateEntity( mLLD, "LLD_Page", zPOS_AFTER );
       //:SetMatchingAttributesByName( mLLD, "LLD_Page", mSPLDef, "LLD_Page", zSET_NULL )
       SetMatchingAttributesByName( mLLD, "LLD_Page", mSPLDef, "LLD_Page", zSET_NULL );
-      //:FOR EACH mSPLDef.LLD_Panel 
+      //:FOR EACH mSPLDef.LLD_Panel
       RESULT = SetCursorFirstEntity( mSPLDef, "LLD_Panel", "" );
       while ( RESULT > zCURSOR_UNCHANGED )
       { 
-         //:CREATE ENTITY mLLD.LLD_Panel 
+         //:CREATE ENTITY mLLD.LLD_Panel
          RESULT = CreateEntity( mLLD, "LLD_Panel", zPOS_AFTER );
          //:SetMatchingAttributesByName( mLLD, "LLD_Panel", mSPLDef, "LLD_Panel", zSET_NULL )
          SetMatchingAttributesByName( mLLD, "LLD_Panel", mSPLDef, "LLD_Panel", zSET_NULL );
-         //:FOR EACH mSPLDef.LLD_Block 
+         //:FOR EACH mSPLDef.LLD_Block
          RESULT = SetCursorFirstEntity( mSPLDef, "LLD_Block", "" );
          while ( RESULT > zCURSOR_UNCHANGED )
          { 
-            //:CREATE ENTITY mLLD.LLD_Block 
+            //:CREATE ENTITY mLLD.LLD_Block
             RESULT = CreateEntity( mLLD, "LLD_Block", zPOS_AFTER );
             //:SetMatchingAttributesByName( mLLD, "LLD_Block", mSPLDef, "LLD_Block", zSET_NULL )
             SetMatchingAttributesByName( mLLD, "LLD_Block", mSPLDef, "LLD_Block", zSET_NULL );
-            //:FOR EACH mSPLDef.LLD_SubBlock 
+            //:FOR EACH mSPLDef.LLD_SubBlock
             RESULT = SetCursorFirstEntity( mSPLDef, "LLD_SubBlock", "" );
             while ( RESULT > zCURSOR_UNCHANGED )
             { 
-               //:CREATE ENTITY mLLD.LLD_SubBlock 
+               //:CREATE ENTITY mLLD.LLD_SubBlock
                RESULT = CreateEntity( mLLD, "LLD_SubBlock", zPOS_AFTER );
                //:SetMatchingAttributesByName( mLLD, "LLD_SubBlock", mSPLDef, "LLD_SubBlock", zSET_NULL )
                SetMatchingAttributesByName( mLLD, "LLD_SubBlock", mSPLDef, "LLD_SubBlock", zSET_NULL );
@@ -3805,11 +3944,11 @@ GENERATE_LLD_FromSPLD( View     ViewToWindow )
             } 
 
             //:END
-            //:FOR EACH mSPLDef.LLD_SpecialSectionAttribute 
+            //:FOR EACH mSPLDef.LLD_SpecialSectionAttribute
             RESULT = SetCursorFirstEntity( mSPLDef, "LLD_SpecialSectionAttribute", "" );
             while ( RESULT > zCURSOR_UNCHANGED )
             { 
-               //:CREATE ENTITY mLLD.LLD_SpecialSectionAttribute 
+               //:CREATE ENTITY mLLD.LLD_SpecialSectionAttribute
                RESULT = CreateEntity( mLLD, "LLD_SpecialSectionAttribute", zPOS_AFTER );
                //:SetMatchingAttributesByName( mLLD, "LLD_SpecialSectionAttribute", mSPLDef, "LLD_SpecialSectionAttribute", zSET_NULL )
                SetMatchingAttributesByName( mLLD, "LLD_SpecialSectionAttribute", mSPLDef, "LLD_SpecialSectionAttribute", zSET_NULL );
@@ -3817,7 +3956,7 @@ GENERATE_LLD_FromSPLD( View     ViewToWindow )
                RESULT = SetCursorFirstEntity( mSPLDef, "LLD_SpecialSectionAttrBlock", "" );
                while ( RESULT > zCURSOR_UNCHANGED )
                { 
-                  //:CREATE ENTITY mLLD.LLD_SpecialSectionAttrBlock 
+                  //:CREATE ENTITY mLLD.LLD_SpecialSectionAttrBlock
                   RESULT = CreateEntity( mLLD, "LLD_SpecialSectionAttrBlock", zPOS_AFTER );
                   //:SetMatchingAttributesByName( mLLD, "LLD_SpecialSectionAttrBlock", mSPLDef, "LLD_SpecialSectionAttrBlock", zSET_NULL )
                   SetMatchingAttributesByName( mLLD, "LLD_SpecialSectionAttrBlock", mSPLDef, "LLD_SpecialSectionAttrBlock", zSET_NULL );
@@ -3873,7 +4012,7 @@ GENERATE_LLD_FromSPLD( View     ViewToWindow )
    //:END
    //:ACTIVATE mLLD_LST RootOnlyMultiple
    RESULT = ActivateObjectInstance( mLLD_LST, "mLLD", ViewToWindow, 0, zACTIVATE_ROOTONLY_MULTIPLE );
-   //:NAME VIEW mLLD_LST "mLLD_LST" 
+   //:NAME VIEW mLLD_LST "mLLD_LST"
    SetNameForView( mLLD_LST, "mLLD_LST", null, zLEVEL_TASK );
    return( 0 );
 // END
@@ -3889,9 +4028,9 @@ BACKUP_Objects( View     ViewToWindow )
 {
    zVIEW    mSubreg = new zVIEW( );
    int      RESULT = 0;
-   //:VIEW mSubProd REGISTERED AS mSubProd 
+   //:VIEW mSubProd REGISTERED AS mSubProd
    zVIEW    mSubProd = new zVIEW( );
-   //:VIEW mSubLC   BASED ON LOD  mSubLC 
+   //:VIEW mSubLC   BASED ON LOD  mSubLC
    zVIEW    mSubLC = new zVIEW( );
    //:VIEW mMasLC   BASED ON LOD  mMasLC
    zVIEW    mMasLC = new zVIEW( );
@@ -3919,7 +4058,7 @@ BACKUP_Objects( View     ViewToWindow )
    CommitOI_ToFile( mSubProd, "c:\\lplr\\epamms\\objectback\\mSubProd.por", zASCII );
    //:Count = 0
    Count = 0;
-   //:FOR EACH mSubProd.SubregLabelContent 
+   //:FOR EACH mSubProd.SubregLabelContent
    RESULT = SetCursorFirstEntity( mSubProd, "SubregLabelContent", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
@@ -3970,7 +4109,7 @@ BACKUP_Objects( View     ViewToWindow )
          sb_szNamedView = new StringBuilder( szNamedView );
             ZeidonStringConcat( sb_szNamedView, 1, 0, szCount, 1, 0, 101 );
       szNamedView = sb_szNamedView.toString( );}
-      //:ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSubProd.SubregLabelContent.ID 
+      //:ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSubProd.SubregLabelContent.ID
       {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
              GetIntegerFromAttribute( mi_lTempInteger_0, mSubProd, "SubregLabelContent", "ID" );
       lTempInteger_0 = mi_lTempInteger_0.intValue( );}
@@ -3989,7 +4128,7 @@ BACKUP_Objects( View     ViewToWindow )
    lTempInteger_1 = CheckExistenceOfEntity( mSubProd, "MasterLabelContent" );
    if ( lTempInteger_1 == 0 )
    { 
-      //:ACTIVATE mMasLC WHERE mMasLC.MasterLabelContent.ID = mSubProd.MasterLabelContent.ID 
+      //:ACTIVATE mMasLC WHERE mMasLC.MasterLabelContent.ID = mSubProd.MasterLabelContent.ID
       {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
              GetIntegerFromAttribute( mi_lTempInteger_2, mSubProd, "MasterLabelContent", "ID" );
       lTempInteger_2 = mi_lTempInteger_2.intValue( );}
@@ -4029,35 +4168,35 @@ ExecuteJOE_Test1( View     ViewToWindow )
    //:// The current error is that the basic SetViewToSubobject function did not change the view to the subobject.
 
    //:// Create subobject with one level of recursive subobject.
-   //:ACTIVATE mSPLDef EMPTY 
+   //:ACTIVATE mSPLDef EMPTY
    RESULT = ActivateEmptyObjectInstance( mSPLDef, "mSPLDef", ViewToWindow, zSINGLE );
-   //:NAME VIEW mSPLDef "mSPLDef" 
+   //:NAME VIEW mSPLDef "mSPLDef"
    SetNameForView( mSPLDef, "mSPLDef", null, zLEVEL_TASK );
-   //:CREATE ENTITY mSPLDef.SubregPhysicalLabelDef 
+   //:CREATE ENTITY mSPLDef.SubregPhysicalLabelDef
    RESULT = CreateEntity( mSPLDef, "SubregPhysicalLabelDef", zPOS_AFTER );
-   //:CREATE ENTITY mSPLDef.SPLD_LLD 
+   //:CREATE ENTITY mSPLDef.SPLD_LLD
    RESULT = CreateEntity( mSPLDef, "SPLD_LLD", zPOS_AFTER );
    //:mSPLDef.SPLD_LLD.Name = "Test"
    SetAttributeFromString( mSPLDef, "SPLD_LLD", "Name", "Test" );
-   //:CREATE ENTITY mSPLDef.LLD_Page 
+   //:CREATE ENTITY mSPLDef.LLD_Page
    RESULT = CreateEntity( mSPLDef, "LLD_Page", zPOS_AFTER );
    //:mSPLDef.LLD_Page.Width = 10
    SetAttributeFromInteger( mSPLDef, "LLD_Page", "Width", 10 );
-   //:CREATE ENTITY mSPLDef.LLD_Panel 
+   //:CREATE ENTITY mSPLDef.LLD_Panel
    RESULT = CreateEntity( mSPLDef, "LLD_Panel", zPOS_AFTER );
    //:mSPLDef.LLD_Panel.Width = 11
    SetAttributeFromInteger( mSPLDef, "LLD_Panel", "Width", 11 );
 
-   //:CREATE ENTITY mSPLDef.LLD_Block 
+   //:CREATE ENTITY mSPLDef.LLD_Block
    RESULT = CreateEntity( mSPLDef, "LLD_Block", zPOS_AFTER );
    //:mSPLDef.LLD_Block.Name = "Block Level 1"
    SetAttributeFromString( mSPLDef, "LLD_Block", "Name", "Block Level 1" );
-   //:CREATE ENTITY mSPLDef.LLD_SpecialSectionAttribute 
+   //:CREATE ENTITY mSPLDef.LLD_SpecialSectionAttribute
    RESULT = CreateEntity( mSPLDef, "LLD_SpecialSectionAttribute", zPOS_AFTER );
    //:mSPLDef.LLD_SpecialSectionAttribute.Name = "Spec Attribute 1"
    SetAttributeFromString( mSPLDef, "LLD_SpecialSectionAttribute", "Name", "Spec Attribute 1" );
 
-   //:SetViewToSubobject( mSPLDef, "LLD_SubBlock" ) 
+   //:SetViewToSubobject( mSPLDef, "LLD_SubBlock" )
    SetViewToSubobject( mSPLDef, "LLD_SubBlock" );
 
    //:IF mSPLDef.LLD_Block EXISTS
@@ -4074,13 +4213,13 @@ ExecuteJOE_Test1( View     ViewToWindow )
 
    //:END
 
-   //:CREATE ENTITY mSPLDef.LLD_Block 
+   //:CREATE ENTITY mSPLDef.LLD_Block
    RESULT = CreateEntity( mSPLDef, "LLD_Block", zPOS_AFTER );
    //:mSPLDef.LLD_Block.Name = "Block Level 2"
    SetAttributeFromString( mSPLDef, "LLD_Block", "Name", "Block Level 2" );
-   //:CREATE ENTITY mSPLDef.LLD_SpecialSectionAttribute 
+   //:CREATE ENTITY mSPLDef.LLD_SpecialSectionAttribute
    RESULT = CreateEntity( mSPLDef, "LLD_SpecialSectionAttribute", zPOS_AFTER );
-   //:mSPLDef.LLD_SpecialSectionAttribute.Name = "Spec Attribute 2" 
+   //:mSPLDef.LLD_SpecialSectionAttribute.Name = "Spec Attribute 2"
    SetAttributeFromString( mSPLDef, "LLD_SpecialSectionAttribute", "Name", "Spec Attribute 2" );
 
    //:ResetViewFromSubobject( mSPLDef )
@@ -4189,15 +4328,14 @@ ExecuteJOE_Test1( View     ViewToWindow )
    //:TraceLineS( "*** JOE Test 1 successfully completed", "" )
    TraceLineS( "*** JOE Test 1 successfully completed", "" );
    return( 0 );
-//    
 //    // Recursive code that didn't quite work.
-//    /*FOR EACH mSPLDef.LLD_SubBlock 
+//    /*FOR EACH mSPLDef.LLD_SubBlock
 //       IF mSPLDef.LLD_SubBlock.Type = "Block"
-//          CREATE ENTITY mSPLDef.LLD_Block 
+//          CREATE ENTITY mSPLDef.LLD_Block
 //          SetMatchingAttributesByName( mSPLDef, "LLD_Block", mSPLDef, "LLD_SubBlock", zSET_NULL )
 //       ELSE
 //          IF mSPLDef.LLD_SubBlock.Type = "SubBlock"
-//             CREATE ENTITY mSPLDef.LLD_SubBlock 
+//             CREATE ENTITY mSPLDef.LLD_SubBlock
 //             CreateViewFromView( mSPLDef2, mSPLDef )
 //             SetViewToSubobject( mSPLDef2, "LLD_SubBlock" )
 //             SetMatchingAttributesByName( mSPLDef2, "LLD_Block", mSPLDef, "LLD_SubBlock", zSET_NULL )
@@ -4246,7 +4384,7 @@ ExecuteJOE_Test2( View     ViewToWindow )
    //:NAME VIEW ZPLOCKO "ZPLOCKO2"
    SetNameForView( ZPLOCKO, "ZPLOCKO2", null, zLEVEL_TASK );
 
-   //:SET CURSOR FIRST ZPLOCKO.ZeidonLock 
+   //:SET CURSOR FIRST ZPLOCKO.ZeidonLock
    RESULT = SetCursorFirstEntity( ZPLOCKO, "ZeidonLock", "" );
    //:IF RESULT >= zCURSOR_SET
    if ( RESULT >= zCURSOR_SET )
@@ -4269,66 +4407,54 @@ ExecuteJOE_Test2( View     ViewToWindow )
       if(8==8)return( 2 );
    } 
 
-   //:END 
+   //:END
    return( 0 );
 //    /*VIEW mSPLDef  BASED ON LOD mSPLDef
 //    VIEW mSPLDef2 BASED ON LOD mSPLDef
 //    INTEGER SaveID
-//    
 //    // Execute Tests to Check for JOE Bugs.
-//    
 //    // TEST 2
 //    // Test of Entity created in one view is not showing second view.
 //    // This only happens when the object is activated from the database and changed.
-//    
 //    // Activate the basic object.
 //    //ActivateOI_FromFile( mSPLDef, "mSPLDef", ViewToWindow, "c:\temp\JOE_Test2.por", zSINGLE )
 //    ACTIVATE mSPLDef WHERE mSPLDef.SubregPhysicalLabelDef.ID = 5
 //    NAME VIEW mSPLDef "mSPLDef"
-//    
 //    // First, do a simple create and see if entity is seen in other view.
-//    
-//    SET CURSOR LAST mSPLDef.LLD_Panel  
+//    SET CURSOR LAST mSPLDef.LLD_Panel
 //    CreateViewFromView( mSPLDef2, mSPLDef )
 //    NAME VIEW mSPLDef2 "mSPLDef2"
-//    
-//    CREATE ENTITY mSPLDef.ContinuationStatement 
+//    CREATE ENTITY mSPLDef.ContinuationStatement
 //    mSPLDef.ContinuationStatement.Title = "Title 1"
 //    mSPLDef.ContinuationStatement.Text  = "Text 1"
-//    
 //    IF mSPLDef2.ContinuationStatement DOES NOT EXIST
 //       MessageSend( ViewToWindow, "", "JOE Test 2",
 //                    "ContinuationStatement doesn't exist 1",
 //                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
 //       RETURN 2
-//    END 
-//    
+//    END
 //    // Next, do the same test except that the entity is first deleted from the primary view.
-//    
-//    DELETE ENTITY mSPLDef.ContinuationStatement NONE 
-//    
-//    CREATE ENTITY mSPLDef.ContinuationStatement 
+//    DELETE ENTITY mSPLDef.ContinuationStatement NONE
+//    CREATE ENTITY mSPLDef.ContinuationStatement
 //    mSPLDef.ContinuationStatement.Title = "Title 1"
 //    mSPLDef.ContinuationStatement.Text  = "Text 1"
-//    
 //    SET CURSOR FIRST mSPLDef2.ContinuationStatement
 //    IF RESULT < zCURSOR_SET
 //       MessageSend( ViewToWindow, "", "JOE Test 2",
 //                    "ContinuationStatement doesn't exist 2",
 //                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
 //       RETURN 2
-//    END 
+//    END
 //    DropView( mSPLDef2 )
-//    
 //    // Test accepting and canceling subobjects with this new view.
-//    SET CURSOR FIRST mSPLDef.LLD_Panel  
+//    SET CURSOR FIRST mSPLDef.LLD_Panel
 //    CreateViewFromView( mSPLDef2, mSPLDef )
 //    NAME VIEW mSPLDef2 "mSPLDef2"
-//    SET CURSOR NEXT mSPLDef2.LLD_Panel 
-//    SET CURSOR NEXT mSPLDef2.LLD_Panel  
+//    SET CURSOR NEXT mSPLDef2.LLD_Panel
+//    SET CURSOR NEXT mSPLDef2.LLD_Panel
 //    TraceLineI( "$$$$ Panel ID: ", mSPLDef2.LLD_Panel.ID )
 //    CreateTemporalSubobjectVersion( mSPLDef2, "LLD_Panel" )
-//    //SET CURSOR NEXT mSPLDef2.LLD_Block 
+//    //SET CURSOR NEXT mSPLDef2.LLD_Block
 //    //SET CURSOR NEXT mSPLDef2.LLD_Block
 //    TraceLineI( "$$$$ Block ID: ", mSPLDef2.LLD_Block.ID )
 //    SetViewToSubobject( mSPLDef2, "LLD_SubBlock" )
@@ -4348,12 +4474,11 @@ ExecuteJOE_Test2( View     ViewToWindow )
 //    TraceLineS( "$$$$ Trace 6", "" )
 //    CancelSubobject( mSPLDef2, "LLD_Panel" )
 //    TraceLineS( "$$$$ Trace 7", "" )
-//    
 //    // First CancelSubobject test after delete of a subentity.
 //    CreateTemporalSubobjectVersion( mSPLDef, "LLD_Page" )
-//    SET CURSOR FIRST mSPLDef.LLD_Panel 
-//    SaveID = mSPLDef.LLD_Panel.ID  
-//    DELETE ENTITY mSPLDef.LLD_Panel 
+//    SET CURSOR FIRST mSPLDef.LLD_Panel
+//    SaveID = mSPLDef.LLD_Panel.ID
+//    DELETE ENTITY mSPLDef.LLD_Panel
 //    CancelSubobject( mSPLDef, "LLD_Page" )
 //    SET CURSOR FIRST mSPLDef.LLD_Panel WHERE mSPLDef.LLD_Panel.ID = SaveID
 //    IF RESULT < zCURSOR_SET
@@ -4363,15 +4488,14 @@ ExecuteJOE_Test2( View     ViewToWindow )
 //       RETURN 2
 //    END
 //    TraceLineS( "$$$$ Cancel of deleted Panel worked", "" )
-//    
 //    // Second CancelSubobject test after delete of a subentity.
-//    SET CURSOR FIRST mSPLDef.LLD_Panel 
-//    SET CURSOR NEXT mSPLDef.LLD_Panel 
+//    SET CURSOR FIRST mSPLDef.LLD_Panel
+//    SET CURSOR NEXT mSPLDef.LLD_Panel
 //    SET CURSOR NEXT mSPLDef.LLD_Panel
 //    CreateTemporalSubobjectVersion( mSPLDef, "LLD_Block" )
 //    SaveID = mSPLDef.LLD_SpecialSectionAttribute.ID
 //    TraceLineI( "$$$$ Attribute ID: ", SaveID )
-//    DELETE ENTITY mSPLDef.LLD_SpecialSectionAttribute 
+//    DELETE ENTITY mSPLDef.LLD_SpecialSectionAttribute
 //    CancelSubobject( mSPLDef, "LLD_Block" )
 //    SET CURSOR FIRST mSPLDef.LLD_SpecialSectionAttribute WHERE mSPLDef.LLD_SpecialSectionAttribute.ID = SaveID
 //    IF RESULT < zCURSOR_SET
@@ -4379,8 +4503,7 @@ ExecuteJOE_Test2( View     ViewToWindow )
 //                    "CancelSubobject did not restore deleted entity.",
 //                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
 //       RETURN 2
-//    END 
-//    
+//    END
 //    TraceLineS( "*** JOE Test 2 successfully completed", "" )*/
 // END
 } 
@@ -4395,7 +4518,7 @@ REFRESH_SPLD_FromSLC( View     ViewToWindow )
 {
    zVIEW    mSPLDef = new zVIEW( );
    int      RESULT = 0;
-   //:VIEW mSubLC  BASED ON LOD  mSubLC 
+   //:VIEW mSubLC  BASED ON LOD  mSubLC
    zVIEW    mSubLC = new zVIEW( );
    int      lTempInteger_0 = 0;
    zVIEW    vTempViewVar_0 = new zVIEW( );
@@ -4403,7 +4526,7 @@ REFRESH_SPLD_FromSLC( View     ViewToWindow )
    RESULT = GetViewByName( mSPLDef, "mSPLDef", ViewToWindow, zLEVEL_TASK );
 
    //:// Activate the corresponding SLC and build the composite subobject.
-   //:ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID =mSPLDef.SubregLabelContent.ID 
+   //:ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID =mSPLDef.SubregLabelContent.ID
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
        GetIntegerFromAttribute( mi_lTempInteger_0, mSPLDef, "SubregLabelContent", "ID" );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );}
@@ -4460,7 +4583,7 @@ ACCEPT_SPLD_StatementUpdate( View     ViewToWindow )
        GetVariableFromAttribute( sb_szEntityName, mi_lTempInteger_0, 'S', 33, mSPLDef, "CompositeComponentList", "Type", "", 0 );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );
    szEntityName = sb_szEntityName.toString( );}
-   //:IF szEntityName = "SPLD_StorageDisposalStatement" OR 
+   //:IF szEntityName = "SPLD_StorageDisposalStatement" OR
    //:   szEntityName = "SPLD_DirectionsForUseStatement" OR
    //:   szEntityName = "SPLD_GeneralStatement" OR
    //:   szEntityName = "SPLD_MarketingStatement"
@@ -4503,7 +4626,7 @@ ACCEPT_SPLD_StatementUpdate( View     ViewToWindow )
          { 
             //:// Since this is a split of the Text, make sure that the two components still equal the whole.
             //:mSPLDef.CompositeComponentList.BreakupText = mSPLDef.CompositeComponentList.ContinuationLeadingText +
-            //:                                       mSPLDef.CompositeComponentList.ContinuationText 
+            //:                                       mSPLDef.CompositeComponentList.ContinuationText
             {StringBuilder sb_szTempString_0;
             if ( szTempString_0 == null )
                sb_szTempString_0 = new StringBuilder( 32 );
@@ -4526,7 +4649,7 @@ ACCEPT_SPLD_StatementUpdate( View     ViewToWindow )
                         ZeidonStringConcat( sb_szTempString_0, 1, 0, szTempString_1, 1, 0, 32001 );
             szTempString_0 = sb_szTempString_0.toString( );}
             SetAttributeFromString( mSPLDef, "CompositeComponentList", "BreakupText", szTempString_0 );
-            //:IF mSPLDef.CompositeComponentList.BreakupText != mSPLDef.CompositeComponentList.Value 
+            //:IF mSPLDef.CompositeComponentList.BreakupText != mSPLDef.CompositeComponentList.Value
             if ( CompareAttributeToAttribute( mSPLDef, "CompositeComponentList", "BreakupText", mSPLDef, "CompositeComponentList", "Value" ) != 0 )
             { 
                //:// Before giving an error message, reset the breakup text to the original value.
@@ -4557,7 +4680,7 @@ ACCEPT_SPLD_StatementUpdate( View     ViewToWindow )
       //:END
 
       //:// Position on original Statement entry and set values.
-      //:OriginalID = mSPLDef.CompositeComponentList.OriginalTypeID  
+      //:OriginalID = mSPLDef.CompositeComponentList.OriginalTypeID
       {MutableInt mi_OriginalID = new MutableInt( OriginalID );
              GetIntegerFromAttribute( mi_OriginalID, mSPLDef, "CompositeComponentList", "OriginalTypeID" );
       OriginalID = mi_OriginalID.intValue( );}
@@ -4566,10 +4689,10 @@ ACCEPT_SPLD_StatementUpdate( View     ViewToWindow )
       //:SetAttributeFromAttribute( mSPLDef, szEntityName, "ContinuationBreakFlag",
       //:                           mSPLDef, "CompositeComponentList", "ContinuationBreakFlag" )
       SetAttributeFromAttribute( mSPLDef, szEntityName, "ContinuationBreakFlag", mSPLDef, "CompositeComponentList", "ContinuationBreakFlag" );
-      //:SetAttributeFromAttribute( mSPLDef, szEntityName, "ContinuationText", 
-      //:                           mSPLDef, "CompositeComponentList", "ContinuationText" ) 
+      //:SetAttributeFromAttribute( mSPLDef, szEntityName, "ContinuationText",
+      //:                           mSPLDef, "CompositeComponentList", "ContinuationText" )
       SetAttributeFromAttribute( mSPLDef, szEntityName, "ContinuationText", mSPLDef, "CompositeComponentList", "ContinuationText" );
-      //:SetAttributeFromAttribute( mSPLDef, szEntityName, "ContinuationLeadingText", 
+      //:SetAttributeFromAttribute( mSPLDef, szEntityName, "ContinuationLeadingText",
       //:                           mSPLDef, "CompositeComponentList", "ContinuationLeadingText" )
       SetAttributeFromAttribute( mSPLDef, szEntityName, "ContinuationLeadingText", mSPLDef, "CompositeComponentList", "ContinuationLeadingText" );
 
@@ -4606,7 +4729,7 @@ GOTO_UpdateSPLD_Statement( View     ViewToWindow )
    //:// Create temporal subobject version and initialize the Breakup Text.
    //:CreateTemporalSubobjectVersion( mSPLDef, "CompositeComponentList" )
    CreateTemporalSubobjectVersion( mSPLDef, "CompositeComponentList" );
-   //:mSPLDef.CompositeComponentList.BreakupText = mSPLDef.CompositeComponentList.Value 
+   //:mSPLDef.CompositeComponentList.BreakupText = mSPLDef.CompositeComponentList.Value
    SetAttributeFromAttribute( mSPLDef, "CompositeComponentList", "BreakupText", mSPLDef, "CompositeComponentList", "Value" );
    return( 0 );
 // END
@@ -4644,7 +4767,7 @@ SPLIT_StatementForContinuation( View     ViewToWindow )
 
    //:// Split the string in attribute BreakupText at the characters || and put the two parts into the Continuation Leading
    //:// Text and Continuation Text attributes.
-   //:szFullText                  = mSPLDef.CompositeComponentList.BreakupText 
+   //:szFullText                  = mSPLDef.CompositeComponentList.BreakupText
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
    StringBuilder sb_szFullText;
    if ( szFullText == null )
@@ -4730,7 +4853,7 @@ SPLIT_StatementForContinuation( View     ViewToWindow )
    SetAttributeFromString( mSPLDef, "CompositeComponentList", "ContinuationLeadingText", szContinuationLeadingText );
    //:mSPLDef.CompositeComponentList.ContinuationText       = szContinuationFollowingText
    SetAttributeFromString( mSPLDef, "CompositeComponentList", "ContinuationText", szContinuationFollowingText );
-   //:mSPLDef.CompositeComponentList.BreakupText            = mSPLDef.CompositeComponentList.Value 
+   //:mSPLDef.CompositeComponentList.BreakupText            = mSPLDef.CompositeComponentList.Value
    SetAttributeFromAttribute( mSPLDef, "CompositeComponentList", "BreakupText", mSPLDef, "CompositeComponentList", "Value" );
    return( 0 );
 // END
@@ -4746,17 +4869,16 @@ CLEAN_ClaimEntries( View     ViewToWindow )
 
    return( 0 );
 //    /*VIEW mSubLC  REGISTERED AS mSubLC
-//    
-//    FOR EACH mSubLC.S_MarketingSection 
-//       FOR EACH mSubLC.S_MarketingUsageOrdering 
+//    FOR EACH mSubLC.S_MarketingSection
+//       FOR EACH mSubLC.S_MarketingUsageOrdering
 //          IF mSubLC.S_MarketingUsage.UsageType = "C"
-//             DELETE ENTITY mSubLC.S_MarketingUsageOrdering NONE 
+//             DELETE ENTITY mSubLC.S_MarketingUsageOrdering NONE
 //          END
 //       END
 //    END
-//    FOR EACH mSubLC.S_Usage 
+//    FOR EACH mSubLC.S_Usage
 //       IF mSubLC.S_Usage.UsageType = "C"
-//          DELETE ENTITY mSubLC.S_Usage NONE 
+//          DELETE ENTITY mSubLC.S_Usage NONE
 //       END
 //    END
 //    BuildCompositeEntries( mSubLC )*/
@@ -4841,7 +4963,7 @@ PrebuildBlockDefinitionUpdate( View     ViewToWindow )
       sb_szSearch = new StringBuilder( szSearch );
       ZeidonStringCopy( sb_szSearch, 1, 0, szName, 1, 0, 257 );
    szSearch = sb_szSearch.toString( );}
-   //:szGraphic = mSPLDefBlock.LLD_Block.ImageName 
+   //:szGraphic = mSPLDefBlock.LLD_Block.ImageName
    {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
    StringBuilder sb_szGraphic;
    if ( szGraphic == null )
@@ -4988,7 +5110,7 @@ PrebuildBlockDefinitionUpdate( View     ViewToWindow )
    }
 
    //:// Select which of the CompositeComponentList entities are to be displayed
-   //:FOR EACH mSPLDef.Display WITHIN mSPLDef.SubregPhysicalLabelDef 
+   //:FOR EACH mSPLDef.Display WITHIN mSPLDef.SubregPhysicalLabelDef
    RESULT = SetCursorFirstEntity( mSPLDef, "Display", "SubregPhysicalLabelDef" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
@@ -5165,7 +5287,7 @@ PrebuildBlockDefinitionUpdate( View     ViewToWindow )
          //:             szMsg,
          //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
          MessageSend( ViewToWindow, "", "Block Update", szMsg, zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
-         //:FOR EACH mSPLDef.CompositeComponentList 
+         //:FOR EACH mSPLDef.CompositeComponentList
          RESULT = SetCursorFirstEntity( mSPLDef, "CompositeComponentList", "" );
          while ( RESULT > zCURSOR_UNCHANGED )
          { 
@@ -5240,10 +5362,9 @@ PrebuildBlockDefinitionUpdate( View     ViewToWindow )
             { 
                //:CREATE ENTITY mSPLDef.Display
                RESULT = CreateEntity( mSPLDef, "Display", zPOS_AFTER );
-               //:DisplayEntityInstance( mSPLDef, "CompositeComponentList" )
-               DisplayEntityInstance( mSPLDef, "CompositeComponentList" );
             } 
 
+            //:// DisplayEntityInstance( mSPLDef, "CompositeComponentList" )  this bombs sometimes
             //:END
             //:SET CURSOR NEXT mSPLDef.CompositeComponentList
             RESULT = SetCursorNextEntity( mSPLDef, "CompositeComponentList", "" );
@@ -5273,15 +5394,13 @@ ACCEPT_BlockSpecialFormat( View     ViewToWindow )
 
    RESULT = GetViewByName( mSPLDefBlock, "mSPLDefBlock", ViewToWindow, zLEVEL_TASK );
    return( 0 );
-//    
 // // TraceLineS( "ACCEPT_BlockSpecialFormat LLD_Block", "" )
-// // DisplayEntityInstance( mSPLDefBlock, "LLD_Block" ) 
+// // DisplayEntityInstance( mSPLDefBlock, "LLD_Block" )
 // /*
 //    VIEW mSPLDef      REGISTERED AS mSPLDef
 //    VIEW mSPLDefPanel REGISTERED AS mSPLDefPanel
-//    
 //    // Set the selected Name in the LLD_SpecialSectionAttribute entry.
-//    mSPLDef.LLD_SpecialSectionAttribute.Name = mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName 
+//    mSPLDef.LLD_SpecialSectionAttribute.Name = mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName
 //    AcceptSubobject( mSPLDef, "LLD_SpecialSectionAttribute" )
 // */
 // END
@@ -5297,7 +5416,6 @@ CANCEL_BlockSpecialFormat( View     ViewToWindow )
 
    return( 0 );
 //    VIEW mSPLDef REGISTERED AS mSPLDef
-//    
 //    CancelSubobject( mSPLDef, "LLD_SpecialSectionAttribute" )
 // */
 // END
@@ -5335,7 +5453,7 @@ PrebuildBlockSpecialFormatDef( View     ViewToWindow )
    //:// TraceLineS( "PrebuildBlockSpecialFormatDef Position on Name: ", szName )
    //:// DisplayEntityInstance( mSPLDefBlock, "LLD_Block" )
    //:// Position on the correct SpecialFormattingSelectEntry.
-   //:SET CURSOR FIRST mSPLDefPanel.SpecialFormattingSelectEntry 
+   //:SET CURSOR FIRST mSPLDefPanel.SpecialFormattingSelectEntry
    //:           WHERE mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = szName
    RESULT = SetCursorFirstEntityByString( mSPLDefPanel, "SpecialFormattingSelectEntry", "KeywordName", szName, "" );
    return( 0 );
@@ -5383,12 +5501,11 @@ CONTINUE_BlockSubBlockDefAdd( View     ViewToWindow )
    //:   RETURN 2
    return( 2 );
 // // END
-//    
-//    /*IF mSPLDef.LLD_Block.Type = "Block" 
-//       mSPLDef.LLD_Block.LLD_SectionType = mSPLDef.LLD_Block.LLD_SectionType 
+//    /*IF mSPLDef.LLD_Block.Type = "Block"
+//       mSPLDef.LLD_Block.LLD_SectionType = mSPLDef.LLD_Block.LLD_SectionType
 //       SetWindowActionBehavior( ViewToWindow, zWAB_ReplaceWindowWithModalWindow, "wSPLD", "SPLD_BlockDefinitionUpdate" )
 //    ELSE
-//       mSPLDef.LLD_SubBlock.LLD_SectionType = mSPLDef.LLD_Block.LLD_SectionType 
+//       mSPLDef.LLD_SubBlock.LLD_SectionType = mSPLDef.LLD_Block.LLD_SectionType
 //       SetWindowActionBehavior( ViewToWindow, zWAB_ReplaceWindowWithModalWindow, "wSPLD", "SPLD_BlockDefinitionUpdateSub" )
 //    END*/
 // END
@@ -5407,7 +5524,7 @@ DELETE_SpecialFormatDef( View     ViewToWindow )
 
    RESULT = GetViewByName( mSPLDef, "mSPLDef", ViewToWindow, zLEVEL_TASK );
 
-   //:DELETE ENTITY mSPLDef.LLD_SpecialSectionAttribute  
+   //:DELETE ENTITY mSPLDef.LLD_SpecialSectionAttribute
    RESULT = DeleteEntity( mSPLDef, "LLD_SpecialSectionAttribute", zPOS_NEXT );
    return( 0 );
 // END
@@ -5441,7 +5558,6 @@ TestLocking( View     ViewToWindow )
    //:NAME VIEW mSubreg "mSubreg"
    SetNameForView( mSubreg, "mSubreg", null, zLEVEL_TASK );
    return( 0 );
-//    
 //    //ACTIVATE ZPLOCKO Multiple
 //    //NAME VIEW ZPLOCKO "ZPLOCKO2"
 // END
@@ -5987,7 +6103,6 @@ CopySPLD( View     ViewToWindow )
     // m_mSPLDef_Object = null;  // permit gc  (unnecessary)
    }
    return( 0 );
-//    
 // END
 } 
 
@@ -6014,9 +6129,9 @@ DuplicateSubregProductSLC( View     ViewToWindow )
 {
    zVIEW    mSubProd = new zVIEW( );
    int      RESULT = 0;
-   //:VIEW mSubLCOrig BASED ON LOD  mSubLC 
+   //:VIEW mSubLCOrig BASED ON LOD  mSubLC
    zVIEW    mSubLCOrig = new zVIEW( );
-   //:VIEW mSubLCNew  BASED ON LOD  mSubLC 
+   //:VIEW mSubLCNew  BASED ON LOD  mSubLC
    zVIEW    mSubLCNew = new zVIEW( );
    //:INTEGER SubProdID
    int      SubProdID = 0;
@@ -6027,7 +6142,7 @@ DuplicateSubregProductSLC( View     ViewToWindow )
    RESULT = GetViewByName( mSubProd, "mSubProd", ViewToWindow, zLEVEL_TASK );
 
    //:// Activate selected Subreg SLC and duplicate it.
-   //:ACTIVATE mSubLCOrig WHERE mSubLCOrig.SubregLabelContent.ID = mSubProd.SubregLabelContent.ID 
+   //:ACTIVATE mSubLCOrig WHERE mSubLCOrig.SubregLabelContent.ID = mSubProd.SubregLabelContent.ID
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
        GetIntegerFromAttribute( mi_lTempInteger_0, mSubProd, "SubregLabelContent", "ID" );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );}
@@ -6038,7 +6153,7 @@ DuplicateSubregProductSLC( View     ViewToWindow )
    SetNameForView( mSubLCOrig, "mSubLCOrig", null, zLEVEL_TASK );
 
    //:// Create empty target object.
-   //:ACTIVATE mSubLCNew EMPTY 
+   //:ACTIVATE mSubLCNew EMPTY
    RESULT = ActivateEmptyObjectInstance( mSubLCNew, "mSubLC", ViewToWindow, zSINGLE );
    //:NAME VIEW mSubLCNew "mSubLCNew"
    SetNameForView( mSubLCNew, "mSubLCNew", null, zLEVEL_TASK );
@@ -6059,7 +6174,7 @@ DuplicateSubregProductSLC( View     ViewToWindow )
    DropObjectInstance( mSubLCNew );
 
    //:// Reactivate mSubProd to pick up new SubLC.
-   //:SubProdID = mSubProd.SubregProduct.ID 
+   //:SubProdID = mSubProd.SubregProduct.ID
    {MutableInt mi_SubProdID = new MutableInt( SubProdID );
        GetIntegerFromAttribute( mi_SubProdID, mSubProd, "SubregProduct", "ID" );
    SubProdID = mi_SubProdID.intValue( );}
@@ -6100,8 +6215,8 @@ DuplicateSubregProductSPLD( View     ViewToWindow )
    RESULT = GetViewByName( lSPLDLST, "lSPLDLST", ViewToWindow, zLEVEL_TASK );
 
    //:// Activate selected Subreg SLC and duplicate it.
-   //://ACTIVATE mSPLDefOrig WHERE mSPLDefOrig.SubregPhysicalLabelDef.ID = mSubProd.SubregPhysicalLabelDef.ID 
-   //:ACTIVATE mSPLDefOrig WHERE mSPLDefOrig.SubregPhysicalLabelDef.ID = lSPLDLST.SubregPhysicalLabelDef.ID 
+   //://ACTIVATE mSPLDefOrig WHERE mSPLDefOrig.SubregPhysicalLabelDef.ID = mSubProd.SubregPhysicalLabelDef.ID
+   //:ACTIVATE mSPLDefOrig WHERE mSPLDefOrig.SubregPhysicalLabelDef.ID = lSPLDLST.SubregPhysicalLabelDef.ID
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
        GetIntegerFromAttribute( mi_lTempInteger_0, lSPLDLST, "SubregPhysicalLabelDef", "ID" );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );}
@@ -6112,7 +6227,7 @@ DuplicateSubregProductSPLD( View     ViewToWindow )
    SetNameForView( mSPLDefOrig, "mSPLDefOrig", null, zLEVEL_TASK );
 
    //:// Create empty target object.
-   //:ACTIVATE mSPLDefNew EMPTY 
+   //:ACTIVATE mSPLDefNew EMPTY
    RESULT = ActivateEmptyObjectInstance( mSPLDefNew, "mSPLDef", ViewToWindow, zSINGLE );
    //:NAME VIEW mSPLDefNew "mSPLDefNew"
    SetNameForView( mSPLDefNew, "mSPLDefNew", null, zLEVEL_TASK );
@@ -6135,7 +6250,7 @@ DuplicateSubregProductSPLD( View     ViewToWindow )
    //:// Reactivate mSubProd to pick up new SubLC.
    //:DropObjectInstance( lSPLDLST )
    DropObjectInstance( lSPLDLST );
-   //:ACTIVATE lSPLDLST Multiple WHERE lSPLDLST.SubregProduct.ID = mSubProd.SubregProduct.ID 
+   //:ACTIVATE lSPLDLST Multiple WHERE lSPLDLST.SubregProduct.ID = mSubProd.SubregProduct.ID
    {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
        GetIntegerFromAttribute( mi_lTempInteger_1, mSubProd, "SubregProduct", "ID" );
    lTempInteger_1 = mi_lTempInteger_1.intValue( );}
@@ -6168,15 +6283,27 @@ PreviewSelectedBlock( View     ViewToWindow )
    zVIEW    mSPLDefPanel2 = new zVIEW( );
    //:VIEW mSPLDefBlock2 BASED ON LOD mSPLDef
    zVIEW    mSPLDefBlock2 = new zVIEW( );
+   //:VIEW mBlockRU_Save BASED ON LOD mBlockRU
+   zVIEW    mBlockRU_Save = new zVIEW( );
    //:VIEW mBlockRU BASED ON LOD mBlockRU
    zVIEW    mBlockRU = new zVIEW( );
    //:STRING (64) szTag
    String   szTag = null;
    //:INTEGER lControl
    int      lControl = 0;
+   //:INTEGER lLevel
+   int      lLevel = 0;
    //:INTEGER nRC
    int      nRC = 0;
+   //:DECIMAL dTop
+   double  dTop = 0.0;
+   //:DECIMAL dLeft
+   double  dLeft = 0.0;
    int      lTempInteger_0 = 0;
+   int      lTempInteger_1 = 0;
+   zVIEW    vTempViewVar_0 = new zVIEW( );
+   int      lTempInteger_2 = 0;
+   int      lTempInteger_3 = 0;
 
    RESULT = GetViewByName( mSPLDef, "mSPLDef", ViewToWindow, zLEVEL_TASK );
    RESULT = GetViewByName( mSPLDefPanel, "mSPLDefPanel", ViewToWindow, zLEVEL_TASK );
@@ -6192,63 +6319,107 @@ PreviewSelectedBlock( View     ViewToWindow )
        GetVariableFromAttribute( sb_szTag, mi_lTempInteger_0, 'S', 65, mSPLDefBlock, "LLD_Block", "Tag", "", 0 );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );
    szTag = sb_szTag.toString( );}
-   //:DropNameForView( mSPLDef, "mSPLDef", ViewToWindow, zLEVEL_TASK )
-   DropNameForView( mSPLDef, "mSPLDef", ViewToWindow, zLEVEL_TASK );
-   //:DropNameForView( mSPLDefPanel, "mSPLDefPanel", ViewToWindow, zLEVEL_TASK )
-   DropNameForView( mSPLDefPanel, "mSPLDefPanel", ViewToWindow, zLEVEL_TASK );
-   //:DropNameForView( mSPLDefBlock, "mSPLDefBlock", ViewToWindow, zLEVEL_TASK )
-   DropNameForView( mSPLDefBlock, "mSPLDefBlock", ViewToWindow, zLEVEL_TASK );
+   //://xDropNameForView( mSPLDef, "mSPLDef", ViewToWindow, zLEVEL_TASK )
+   //://xDropNameForView( mSPLDefPanel, "mSPLDefPanel", ViewToWindow, zLEVEL_TASK )
+   //://xDropNameForView( mSPLDefBlock, "mSPLDefBlock", ViewToWindow, zLEVEL_TASK )
 
-   //:ActivateOI_FromOI( mSPLDef2, mSPLDef, zSINGLE )
-   ActivateOI_FromOI( mSPLDef2, mSPLDef, zSINGLE );
-   //:ResetViewFromSubobjectTop( mSPLDef2 )
-   ResetViewFromSubobjectTop( mSPLDef2 );
-   //:CreateViewFromView( mSPLDefPanel2, mSPLDef2 )
-   CreateViewFromView( mSPLDefPanel2, mSPLDef2 );
-   //:CreateViewFromView( mSPLDefBlock2, mSPLDef2 )
-   CreateViewFromView( mSPLDefBlock2, mSPLDef2 );
-   //:lControl = zQUAL_STRING + zPOS_FIRST + zRECURS
-   lControl = zQUAL_STRING + zPOS_FIRST + zRECURS;
-   //:SetEntityCursor( mSPLDefBlock2, "LLD_Block", "Tag", lControl, szTag, "", "", 0, "SPLD_LLD", "" )   
-   SetEntityCursor( mSPLDefBlock2, "LLD_Block", "Tag", lControl, szTag, "", "", 0, "SPLD_LLD", "" );
-   //:NAME VIEW mSPLDef2 "mSPLDef"
-   SetNameForView( mSPLDef2, "mSPLDef", null, zLEVEL_TASK );
-   //:NAME VIEW mSPLDefPanel2 "mSPLDefPanel"
-   SetNameForView( mSPLDefPanel2, "mSPLDefPanel", null, zLEVEL_TASK );
-   //:NAME VIEW mSPLDefBlock2 "mSPLDefBlock"
-   SetNameForView( mSPLDefBlock2, "mSPLDefBlock", null, zLEVEL_TASK );
+   //:// ActivateOI_FromOI( mSPLDef2, mSPLDef, zSINGLE )
+   //://xACTIVATE mSPLDef2 EMPTY
+   //://xCREATE ENTITY mSPLDef2.SubregPhysicalLabelDef
+   //://xDuplicateSPLD( mSPLDef2, mSPLDef )
+   //://xResetViewFromSubobjectTop( mSPLDef2 )
+   //://xCreateViewFromView( mSPLDefPanel2, mSPLDef2 )
+   //://xCreateViewFromView( mSPLDefBlock2, mSPLDef2 )
+   //://xNAME VIEW mSPLDef2 "mSPLDef"
+   //://xNAME VIEW mSPLDefPanel2 "mSPLDefPanel"
+   //://xNAME VIEW mSPLDefBlock2 "mSPLDefBlock"
+
+   //://xTraceLineS( "Traverse looking for Tag: ", szTag )
+   //://xlLevel = TraverseSPLD( mSPLDefBlock2, szTag )
+   //://xTraceLineI( "Tag found at level: ", lLevel )
+   //:/* lControl = zQUAL_STRING + zPOS_FIRST + zRECURS
+   //:SetEntityCursor( mSPLDefBlock2, "LLD_Block", "Tag", lControl, szTag, "", "", 0, "SPLD_LLD", "" )
    //:ClearReusableBlockSelections( ViewToWindow )
-   ClearReusableBlockSelections( ViewToWindow );
-   //:SetViewFromView( mSPLDef2, mSPLDef )
-   SetViewFromView( mSPLDef2, mSPLDef );
+   //://xSetViewFromView( mSPLDef2, mSPLDef )
    //:mSPLDef2.ReusableBlockDefinition.wkSelected = "Y"
-   SetAttributeFromString( mSPLDef2, "ReusableBlockDefinition", "wkSelected", "Y" );
-   //:nRC = ACCEPT_ReusableBlock( ViewToWindow )
-   nRC = ACCEPT_ReusableBlock( ViewToWindow );
-   //:IF nRC = 0
-   if ( nRC == 0 )
+   //:// TraceLineS( "Displaying selected reusable block definition", "<<================================" )
+   //:// DisplayEntityInstance( mSPLDef2, "ReusableBlockDefinition" )
+   //:*/
+   //:ACTIVATE mBlockRU WHERE mBlockRU.ReusableBlockDefinition.ID  = mSPLDef.ReusableBlockDefinition.ID
+   {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+       GetIntegerFromAttribute( mi_lTempInteger_1, mSPLDef, "ReusableBlockDefinition", "ID" );
+   lTempInteger_1 = mi_lTempInteger_1.intValue( );}
+   o_fnLocalBuildQual_31( ViewToWindow, vTempViewVar_0, lTempInteger_1 );
+   RESULT = ActivateObjectInstance( mBlockRU, "mBlockRU", ViewToWindow, vTempViewVar_0, zSINGLE );
+   DropView( vTempViewVar_0 );
+   //:IF mBlockRU.LLD_Block EXISTS
+   lTempInteger_2 = CheckExistenceOfEntity( mBlockRU, "LLD_Block" );
+   if ( lTempInteger_2 == 0 )
    { 
+      //:ACTIVATE mBlockRU_Save EMPTY
+      RESULT = ActivateEmptyObjectInstance( mBlockRU_Save, "mBlockRU", ViewToWindow, zSINGLE );
+      //:NAME VIEW mBlockRU_Save "ReusableBlock"
+      SetNameForView( mBlockRU_Save, "ReusableBlock", null, zLEVEL_TASK );
+      //:CREATE ENTITY mBlockRU_Save.ReusableBlockDefinition
+      RESULT = CreateEntity( mBlockRU_Save, "ReusableBlockDefinition", zPOS_AFTER );
+      //:CopyToReusableBlock( mSPLDefBlock )
+      o_CopyToReusableBlock( mSPLDefBlock );
+      //:DropNameForView( mBlockRU_Save, "ReusableBlock", ViewToWindow, zLEVEL_TASK )
+      DropNameForView( mBlockRU_Save, "ReusableBlock", ViewToWindow, zLEVEL_TASK );
+
+      //://xnRC = ACCEPT_ReusableBlock( ViewToWindow )
+
+      //:NAME VIEW mBlockRU "ReusableBlock"
+      SetNameForView( mBlockRU, "ReusableBlock", null, zLEVEL_TASK );
+      //:szTag = mSPLDefBlock.LLD_Block.Tag
+      {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
+      StringBuilder sb_szTag;
+      if ( szTag == null )
+         sb_szTag = new StringBuilder( 32 );
+      else
+         sb_szTag = new StringBuilder( szTag );
+             GetVariableFromAttribute( sb_szTag, mi_lTempInteger_3, 'S', 65, mSPLDefBlock, "LLD_Block", "Tag", "", 0 );
+      lTempInteger_3 = mi_lTempInteger_3.intValue( );
+      szTag = sb_szTag.toString( );}
+      //:dTop = mSPLDefBlock.LLD_Block.Top
+      {MutableDouble md_dTop = new MutableDouble( dTop );
+             GetDecimalFromAttribute( md_dTop, mSPLDefBlock, "LLD_Block", "Top" );
+      dTop = md_dTop.doubleValue( );}
+      //:dLeft = mSPLDefBlock.LLD_Block.Left
+      {MutableDouble md_dLeft = new MutableDouble( dLeft );
+             GetDecimalFromAttribute( md_dLeft, mSPLDefBlock, "LLD_Block", "Left" );
+      dLeft = md_dLeft.doubleValue( );}
+      //:CopyFromReusableBlock( mSPLDef )
+      o_CopyFromReusableBlock( mSPLDef );
+      //:mSPLDefBlock.LLD_Block.Tag = szTag
+      SetAttributeFromString( mSPLDefBlock, "LLD_Block", "Tag", szTag );
+      //:mSPLDefBlock.LLD_Block.Top = dTop
+      SetAttributeFromDecimal( mSPLDefBlock, "LLD_Block", "Top", dTop );
+      //:mSPLDefBlock.LLD_Block.Left = dLeft
+      SetAttributeFromDecimal( mSPLDefBlock, "LLD_Block", "Left", dLeft );
       //:GENERATE_SPLD_LabelDottedBorders( ViewToWindow )
       GENERATE_SPLD_LabelDottedBorders( ViewToWindow );
+      //:NAME VIEW mBlockRU_Save "ReusableBlock"
+      SetNameForView( mBlockRU_Save, "ReusableBlock", null, zLEVEL_TASK );
+      //:CopyFromReusableBlock( mSPLDef )
+      o_CopyFromReusableBlock( mSPLDef );
+      //:DropObjectInstance( mBlockRU_Save )
+      DropObjectInstance( mBlockRU_Save );
    } 
 
    //:END
-   //:DropNameForView( mSPLDef2, "mSPLDef", ViewToWindow, zLEVEL_TASK )
-   DropNameForView( mSPLDef2, "mSPLDef", ViewToWindow, zLEVEL_TASK );
-   //:DropNameForView( mSPLDefPanel2, "mSPLDefPanel", ViewToWindow, zLEVEL_TASK )
-   DropNameForView( mSPLDefPanel2, "mSPLDefPanel", ViewToWindow, zLEVEL_TASK );
-   //:DropNameForView( mSPLDefBlock2, "mSPLDefBlock", ViewToWindow, zLEVEL_TASK )
-   DropNameForView( mSPLDefBlock2, "mSPLDefBlock", ViewToWindow, zLEVEL_TASK );
-   //:DropObjectInstance( mSPLDef2 )
-   DropObjectInstance( mSPLDef2 );
-
-   //:NAME VIEW mSPLDef "mSPLDef"
-   SetNameForView( mSPLDef, "mSPLDef", null, zLEVEL_TASK );
-   //:NAME VIEW mSPLDefPanel "mSPLDefPanel"
-   SetNameForView( mSPLDefPanel, "mSPLDefPanel", null, zLEVEL_TASK );
-   //:NAME VIEW mSPLDefBlock "mSPLDefBlock"
-   SetNameForView( mSPLDefBlock, "mSPLDefBlock", null, zLEVEL_TASK );
+   //:DropObjectInstance( mBlockRU )
+   DropObjectInstance( mBlockRU );
    return( 0 );
+// //xIF nRC = 0
+// //xEND
+// //xDropNameForView( mSPLDef2, "mSPLDef", ViewToWindow, zLEVEL_TASK )
+// //xDropNameForView( mSPLDefPanel2, "mSPLDefPanel", ViewToWindow, zLEVEL_TASK )
+// //xDropNameForView( mSPLDefBlock2, "mSPLDefBlock", ViewToWindow, zLEVEL_TASK )
+// //xDropObjectInstance( mSPLDef2 )
+// //xNAME VIEW mSPLDef "mSPLDef"
+// //xNAME VIEW mSPLDefPanel "mSPLDefPanel"
+// //xNAME VIEW mSPLDefBlock "mSPLDefBlock"
 // END
 } 
 
@@ -6336,7 +6507,7 @@ ProcessUserLogin( View     ViewToWindow )
    //:END
 
    //:// *** NOTE THAT WE ARE CURRENTLY ACTIVATING THE ONLY SUBREG.
-   //:ACTIVATE mSubreg WHERE mSubreg.SubregOrganization.Name = wWebXfer.Root.AttemptLoginRegistrant 
+   //:ACTIVATE mSubreg WHERE mSubreg.SubregOrganization.Name = wWebXfer.Root.AttemptLoginRegistrant
    {StringBuilder sb_szTempString_0;
    if ( szTempString_0 == null )
       sb_szTempString_0 = new StringBuilder( 32 );
@@ -6352,7 +6523,7 @@ ProcessUserLogin( View     ViewToWindow )
 
    //:ACTIVATE mLLD_LST RootOnlyMultiple
    RESULT = ActivateObjectInstance( mLLD_LST, "mLLD", ViewToWindow, 0, zACTIVATE_ROOTONLY_MULTIPLE );
-   //:NAME VIEW mLLD_LST "mLLD_LST" 
+   //:NAME VIEW mLLD_LST "mLLD_LST"
    SetNameForView( mLLD_LST, "mLLD_LST", null, zLEVEL_TASK );
    return( 0 );
 // END
@@ -6421,7 +6592,7 @@ InitListSubregProducts( View     ViewToWindow )
    //:END
    //:ACTIVATE mLLD_LST RootOnlyMultiple
    RESULT = ActivateObjectInstance( mLLD_LST, "mLLD", ViewToWindow, 0, zACTIVATE_ROOTONLY_MULTIPLE );
-   //:NAME VIEW mLLD_LST "mLLD_LST" 
+   //:NAME VIEW mLLD_LST "mLLD_LST"
    SetNameForView( mLLD_LST, "mLLD_LST", null, zLEVEL_TASK );
    return( 0 );
 // END
@@ -6437,9 +6608,9 @@ GOTO_UpdateSubregProduct( View     ViewToWindow )
 {
    zVIEW    mSubreg = new zVIEW( );
    int      RESULT = 0;
-   //:VIEW mSubProd   BASED ON LOD  mSubProd 
+   //:VIEW mSubProd   BASED ON LOD  mSubProd
    zVIEW    mSubProd = new zVIEW( );
-   //:VIEW mSubLC     BASED ON LOD  mSubLC 
+   //:VIEW mSubLC     BASED ON LOD  mSubLC
    zVIEW    mSubLC = new zVIEW( );
    //:VIEW lSPLDLST   BASED ON LOD  lSPLDLST
    zVIEW    lSPLDLST = new zVIEW( );
@@ -6455,7 +6626,7 @@ GOTO_UpdateSubregProduct( View     ViewToWindow )
    RESULT = GetViewByName( mSubreg, "mSubreg", ViewToWindow, zLEVEL_TASK );
 
    //:// Activate selected Subreg Product.
-   //:ACTIVATE mSubProd WHERE mSubProd.SubregProduct.ID = mSubreg.SubregProduct.ID 
+   //:ACTIVATE mSubProd WHERE mSubProd.SubregProduct.ID = mSubreg.SubregProduct.ID
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
        GetIntegerFromAttribute( mi_lTempInteger_0, mSubreg, "SubregProduct", "ID" );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );}
@@ -6465,7 +6636,7 @@ GOTO_UpdateSubregProduct( View     ViewToWindow )
    //:NAME VIEW mSubProd "mSubProd"
    SetNameForView( mSubProd, "mSubProd", null, zLEVEL_TASK );
 
-   //:ACTIVATE lSPLDLST Multiple WHERE lSPLDLST.SubregProduct.ID = mSubreg.SubregProduct.ID 
+   //:ACTIVATE lSPLDLST Multiple WHERE lSPLDLST.SubregProduct.ID = mSubreg.SubregProduct.ID
    {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
        GetIntegerFromAttribute( mi_lTempInteger_1, mSubreg, "SubregProduct", "ID" );
    lTempInteger_1 = mi_lTempInteger_1.intValue( );}
@@ -6481,7 +6652,7 @@ GOTO_UpdateSubregProduct( View     ViewToWindow )
    //:IF RESULT >= zCURSOR_SET
    if ( RESULT >= zCURSOR_SET )
    { 
-      //:ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSubProd.SubregLabelContent.ID 
+      //:ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSubProd.SubregLabelContent.ID
       {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
              GetIntegerFromAttribute( mi_lTempInteger_2, mSubProd, "SubregLabelContent", "ID" );
       lTempInteger_2 = mi_lTempInteger_2.intValue( );}
@@ -6498,7 +6669,7 @@ GOTO_UpdateSubregProduct( View     ViewToWindow )
       DropObjectInstance( mSubLC );
    } 
 
-   //:END 
+   //:END
    return( 0 );
 // END
 } 
@@ -6513,7 +6684,7 @@ GOTO_UpdateSubregProductSLC( View     ViewToWindow )
 {
    zVIEW    mSubProd = new zVIEW( );
    int      RESULT = 0;
-   //:VIEW mSubLC   BASED ON LOD  mSubLC 
+   //:VIEW mSubLC   BASED ON LOD  mSubLC
    zVIEW    mSubLC = new zVIEW( );
    //:VIEW mMasLC   BASED ON LOD  mMasLC
    zVIEW    mMasLC = new zVIEW( );
@@ -6533,7 +6704,7 @@ GOTO_UpdateSubregProductSLC( View     ViewToWindow )
    RESULT = GetViewByName( mSubProd, "mSubProd", ViewToWindow, zLEVEL_TASK );
 
    //:// Activate selected Subreg SLC and build the Components work entries from persistent entries.
-   //:ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSubProd.SubregLabelContent.ID 
+   //:ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSubProd.SubregLabelContent.ID
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
        GetIntegerFromAttribute( mi_lTempInteger_0, mSubProd, "SubregLabelContent", "ID" );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );}
@@ -6545,11 +6716,11 @@ GOTO_UpdateSubregProductSLC( View     ViewToWindow )
 
    //:// Delete any S_Usage entries that aren't tied to an MLC.
    //:// Also delete any Directions For Use or Marketing Ordering entries not tied to a Usage.
-   //:FOR EACH mSubLC.S_UsageType 
+   //:FOR EACH mSubLC.S_UsageType
    RESULT = SetCursorFirstEntity( mSubLC, "S_UsageType", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
-      //:FOR EACH mSubLC.S_Usage 
+      //:FOR EACH mSubLC.S_Usage
       RESULT = SetCursorFirstEntity( mSubLC, "S_Usage", "" );
       while ( RESULT > zCURSOR_UNCHANGED )
       { 
@@ -6557,7 +6728,7 @@ GOTO_UpdateSubregProductSLC( View     ViewToWindow )
          lTempInteger_1 = CheckExistenceOfEntity( mSubLC, "M_Usage" );
          if ( lTempInteger_1 != 0 )
          { 
-            //:DELETE ENTITY mSubLC.S_Usage NONE 
+            //:DELETE ENTITY mSubLC.S_Usage NONE
             RESULT = DeleteEntity( mSubLC, "S_Usage", zREPOS_NONE );
          } 
 
@@ -6570,11 +6741,11 @@ GOTO_UpdateSubregProductSLC( View     ViewToWindow )
    } 
 
    //:END
-   //:FOR EACH mSubLC.S_DirectionsForUseStatement WITHIN mSubLC.SubregLabelContent 
+   //:FOR EACH mSubLC.S_DirectionsForUseStatement WITHIN mSubLC.SubregLabelContent
    RESULT = SetCursorFirstEntity( mSubLC, "S_DirectionsForUseStatement", "SubregLabelContent" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
-      //:FOR EACH mSubLC.S_DirectionsUsageOrdering 
+      //:FOR EACH mSubLC.S_DirectionsUsageOrdering
       RESULT = SetCursorFirstEntity( mSubLC, "S_DirectionsUsageOrdering", "" );
       while ( RESULT > zCURSOR_UNCHANGED )
       { 
@@ -6582,7 +6753,7 @@ GOTO_UpdateSubregProductSLC( View     ViewToWindow )
          lTempInteger_2 = CheckExistenceOfEntity( mSubLC, "S_DirectionsUsage" );
          if ( lTempInteger_2 != 0 )
          { 
-            //:DELETE ENTITY mSubLC.S_DirectionsUsageOrdering NONE 
+            //:DELETE ENTITY mSubLC.S_DirectionsUsageOrdering NONE
             RESULT = DeleteEntity( mSubLC, "S_DirectionsUsageOrdering", zREPOS_NONE );
          } 
 
@@ -6595,11 +6766,11 @@ GOTO_UpdateSubregProductSLC( View     ViewToWindow )
    } 
 
    //:END
-   //:FOR EACH mSubLC.S_MarketingStatement WITHIN mSubLC.SubregLabelContent 
+   //:FOR EACH mSubLC.S_MarketingStatement WITHIN mSubLC.SubregLabelContent
    RESULT = SetCursorFirstEntity( mSubLC, "S_MarketingStatement", "SubregLabelContent" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
-      //:FOR EACH mSubLC.S_MarketingUsageOrdering 
+      //:FOR EACH mSubLC.S_MarketingUsageOrdering
       RESULT = SetCursorFirstEntity( mSubLC, "S_MarketingUsageOrdering", "" );
       while ( RESULT > zCURSOR_UNCHANGED )
       { 
@@ -6607,7 +6778,7 @@ GOTO_UpdateSubregProductSLC( View     ViewToWindow )
          lTempInteger_3 = CheckExistenceOfEntity( mSubLC, "S_MarketingUsage" );
          if ( lTempInteger_3 != 0 )
          { 
-            //:DELETE ENTITY mSubLC.S_MarketingUsageOrdering NONE 
+            //:DELETE ENTITY mSubLC.S_MarketingUsageOrdering NONE
             RESULT = DeleteEntity( mSubLC, "S_MarketingUsageOrdering", zREPOS_NONE );
          } 
 
@@ -6621,15 +6792,15 @@ GOTO_UpdateSubregProductSLC( View     ViewToWindow )
 
    //:END
 
-   //:FOR EACH mSubLC.S_MarketingSection 
+   //:FOR EACH mSubLC.S_MarketingSection
    RESULT = SetCursorFirstEntity( mSubLC, "S_MarketingSection", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
-      //:FOR EACH mSubLC.S_MarketingStatement 
+      //:FOR EACH mSubLC.S_MarketingStatement
       RESULT = SetCursorFirstEntity( mSubLC, "S_MarketingStatement", "" );
       while ( RESULT > zCURSOR_UNCHANGED )
       { 
-         //:FOR EACH mSubLC.S_MarketingUsageOrdering 
+         //:FOR EACH mSubLC.S_MarketingUsageOrdering
          RESULT = SetCursorFirstEntity( mSubLC, "S_MarketingUsageOrdering", "" );
          while ( RESULT > zCURSOR_UNCHANGED )
          { 
@@ -6643,20 +6814,20 @@ GOTO_UpdateSubregProductSLC( View     ViewToWindow )
                MessageSend( ViewToWindow, "", "Test", "Missing usage.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
                //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
                m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
-               //:RETURN 2            
+               //:RETURN 2
                if(8==8)return( 2 );
             } 
 
             RESULT = SetCursorNextEntity( mSubLC, "S_MarketingUsageOrdering", "" );
-            //:END         
+            //:END
          } 
 
          RESULT = SetCursorNextEntity( mSubLC, "S_MarketingStatement", "" );
-         //:END      
+         //:END
       } 
 
       RESULT = SetCursorNextEntity( mSubLC, "S_MarketingSection", "" );
-      //:END   
+      //:END
    } 
 
    //:END
@@ -6671,15 +6842,15 @@ GOTO_UpdateSubregProductSLC( View     ViewToWindow )
    }
 
    //:// Relink Usage.
-   //:FOR EACH mSubLC.S_DirectionsForUseSection 
+   //:FOR EACH mSubLC.S_DirectionsForUseSection
    RESULT = SetCursorFirstEntity( mSubLC, "S_DirectionsForUseSection", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
-      //:FOR EACH mSubLC.S_DirectionsUsageOrdering 
+      //:FOR EACH mSubLC.S_DirectionsUsageOrdering
       RESULT = SetCursorFirstEntity( mSubLC, "S_DirectionsUsageOrdering", "" );
       while ( RESULT > zCURSOR_UNCHANGED )
       { 
-         //:SET CURSOR FIRST mSubLC.S_Usage WHERE mSubLC.S_Usage.ID = mSubLC.S_DirectionsUsage.ID 
+         //:SET CURSOR FIRST mSubLC.S_Usage WHERE mSubLC.S_Usage.ID = mSubLC.S_DirectionsUsage.ID
          {MutableInt mi_lTempInteger_5 = new MutableInt( lTempInteger_5 );
                    GetIntegerFromAttribute( mi_lTempInteger_5, mSubLC, "S_DirectionsUsage", "ID" );
          lTempInteger_5 = mi_lTempInteger_5.intValue( );}
@@ -6699,15 +6870,15 @@ GOTO_UpdateSubregProductSLC( View     ViewToWindow )
          } 
 
          RESULT = SetCursorNextEntity( mSubLC, "S_DirectionsUsageOrdering", "" );
-         //:END 
+         //:END
       } 
 
       //:END
-      //:FOR EACH mSubLC.S_MarketingUsageOrdering 
+      //:FOR EACH mSubLC.S_MarketingUsageOrdering
       RESULT = SetCursorFirstEntity( mSubLC, "S_MarketingUsageOrdering", "" );
       while ( RESULT > zCURSOR_UNCHANGED )
       { 
-         //:SET CURSOR FIRST mSubLC.S_Usage WHERE mSubLC.S_Usage.ID = mSubLC.S_MarketingUsage.ID 
+         //:SET CURSOR FIRST mSubLC.S_Usage WHERE mSubLC.S_Usage.ID = mSubLC.S_MarketingUsage.ID
          {MutableInt mi_lTempInteger_6 = new MutableInt( lTempInteger_6 );
                    GetIntegerFromAttribute( mi_lTempInteger_6, mSubLC, "S_MarketingUsage", "ID" );
          lTempInteger_6 = mi_lTempInteger_6.intValue( );}
@@ -6737,7 +6908,7 @@ GOTO_UpdateSubregProductSLC( View     ViewToWindow )
    //:END
 
    //:// Activate related MLC, which has the selectable content.
-   //:ACTIVATE mMasLC WHERE mMasLC.MasterLabelContent.ID = mSubProd.MasterLabelContent.ID 
+   //:ACTIVATE mMasLC WHERE mMasLC.MasterLabelContent.ID = mSubProd.MasterLabelContent.ID
    {MutableInt mi_lTempInteger_7 = new MutableInt( lTempInteger_7 );
        GetIntegerFromAttribute( mi_lTempInteger_7, mSubProd, "MasterLabelContent", "ID" );
    lTempInteger_7 = mi_lTempInteger_7.intValue( );}
@@ -6772,7 +6943,7 @@ DELETE_SubregProductSLC( View     ViewToWindow )
 {
    zVIEW    mSubProd = new zVIEW( );
    int      RESULT = 0;
-   //:VIEW mSubLC   BASED ON LOD  mSubLC 
+   //:VIEW mSubLC   BASED ON LOD  mSubLC
    zVIEW    mSubLC = new zVIEW( );
    int      lTempInteger_0 = 0;
    zVIEW    vTempViewVar_0 = new zVIEW( );
@@ -6780,7 +6951,7 @@ DELETE_SubregProductSLC( View     ViewToWindow )
    RESULT = GetViewByName( mSubProd, "mSubProd", ViewToWindow, zLEVEL_TASK );
 
    //:// Delete selected mSubLC.
-   //:ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSubProd.SubregLabelContent.ID 
+   //:ACTIVATE mSubLC WHERE mSubLC.SubregLabelContent.ID = mSubProd.SubregLabelContent.ID
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
        GetIntegerFromAttribute( mi_lTempInteger_0, mSubProd, "SubregLabelContent", "ID" );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );}
@@ -6789,7 +6960,7 @@ DELETE_SubregProductSLC( View     ViewToWindow )
    DropView( vTempViewVar_0 );
    //:NAME VIEW mSubLC "mSubLCDelete"
    SetNameForView( mSubLC, "mSubLCDelete", null, zLEVEL_TASK );
-   //:DELETE ENTITY mSubLC.SubregLabelContent 
+   //:DELETE ENTITY mSubLC.SubregLabelContent
    RESULT = DeleteEntity( mSubLC, "SubregLabelContent", zPOS_NEXT );
    //:COMMIT mSubLC
    RESULT = CommitObjectInstance( mSubLC );
@@ -6889,7 +7060,7 @@ GOTO_NewSubregProductSLC( View     ViewToWindow )
    } 
 
    //:END
-   //:ACTIVATE lMLC Multiple WHERE lMLC.MasterProduct.ID = mSubreg.MasterProduct.ID 
+   //:ACTIVATE lMLC Multiple WHERE lMLC.MasterProduct.ID = mSubreg.MasterProduct.ID
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
        GetIntegerFromAttribute( mi_lTempInteger_0, mSubreg, "MasterProduct", "ID" );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );}
@@ -6914,7 +7085,7 @@ SELECT_MLC_ForNewSLC( View     ViewToWindow )
    int      RESULT = 0;
    //:VIEW lMLC     REGISTERED AS lMLC
    zVIEW    lMLC = new zVIEW( );
-   //:VIEW mSubLC   BASED ON LOD  mSubLC 
+   //:VIEW mSubLC   BASED ON LOD  mSubLC
    zVIEW    mSubLC = new zVIEW( );
    //:VIEW mMasLC   BASED ON LOD  mMasLC
    zVIEW    mMasLC = new zVIEW( );
@@ -6938,20 +7109,20 @@ SELECT_MLC_ForNewSLC( View     ViewToWindow )
       if(8==8)return( 2 );
    } 
 
-   //:END 
+   //:END
 
    //:// Create a new empty Subregistrant SLC.
-   //:ACTIVATE mSubLC EMPTY 
+   //:ACTIVATE mSubLC EMPTY
    RESULT = ActivateEmptyObjectInstance( mSubLC, "mSubLC", ViewToWindow, zSINGLE );
    //:NAME VIEW mSubLC "mSubLC"
    SetNameForView( mSubLC, "mSubLC", null, zLEVEL_TASK );
-   //:CREATE ENTITY mSubLC.SubregLabelContent 
+   //:CREATE ENTITY mSubLC.SubregLabelContent
    RESULT = CreateEntity( mSubLC, "SubregLabelContent", zPOS_AFTER );
-   //:INCLUDE mSubLC.SubregProduct FROM mSubProd.SubregProduct 
+   //:INCLUDE mSubLC.SubregProduct FROM mSubProd.SubregProduct
    RESULT = IncludeSubobjectFromSubobject( mSubLC, "SubregProduct", mSubProd, "SubregProduct", zPOS_AFTER );
 
    //:// Activate the selected MLC, which has the selectable content.
-   //:ACTIVATE mMasLC WHERE mMasLC.MasterLabelContent.ID = lMLC.MasterLabelContent.ID 
+   //:ACTIVATE mMasLC WHERE mMasLC.MasterLabelContent.ID = lMLC.MasterLabelContent.ID
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
        GetIntegerFromAttribute( mi_lTempInteger_0, lMLC, "MasterLabelContent", "ID" );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );}
@@ -6960,7 +7131,7 @@ SELECT_MLC_ForNewSLC( View     ViewToWindow )
    DropView( vTempViewVar_0 );
    //:NAME VIEW mMasLC "mMasLC"
    SetNameForView( mMasLC, "mMasLC", null, zLEVEL_TASK );
-   //:INCLUDE mSubLC.MasterLabelContent FROM mMasLC.MasterLabelContent 
+   //:INCLUDE mSubLC.MasterLabelContent FROM mMasLC.MasterLabelContent
    RESULT = IncludeSubobjectFromSubobject( mSubLC, "MasterLabelContent", mMasLC, "MasterLabelContent", zPOS_AFTER );
    //:BuildCompositeEntries( mMasLC )
    {
@@ -7056,7 +7227,7 @@ ACCEPT_ReusableBlock( View     ViewToWindow )
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
        GetIntegerFromAttribute( mi_lTempInteger_0, mSPLDef, "ReusableBlockDefinition", "ID" );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );}
-   o_fnLocalBuildQual_32( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
+   o_fnLocalBuildQual_30( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
    RESULT = ActivateObjectInstance( mBlockRU, "mBlockRU", ViewToWindow, vTempViewVar_0, zSINGLE );
    DropView( vTempViewVar_0 );
    //:IF mBlockRU.LLD_Block EXISTS
@@ -7083,9 +7254,6 @@ ACCEPT_ReusableBlock( View     ViewToWindow )
       {MutableDouble md_dLeft = new MutableDouble( dLeft );
              GetDecimalFromAttribute( md_dLeft, mSPLDefBlock, "LLD_Block", "Left" );
       dLeft = md_dLeft.doubleValue( );}
-      //:// TraceLineS( "Selecting reusable block: ", szTag )
-      //:// TraceLineI( "          reusable top: ", dTop )
-      //:// TraceLineI( "          reusable left: ", dLeft )
       //:CopyFromReusableBlock( mSPLDef )
       o_CopyFromReusableBlock( mSPLDef );
       //:mSPLDefBlock.LLD_Block.Tag = szTag
@@ -7179,7 +7347,7 @@ SetSPLD_Resume( View     ViewToWindow )
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
        GetIntegerFromAttribute( mi_lTempInteger_0, qOrganiz, "User", "ID" );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );}
-   o_fnLocalBuildQual_33( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
+   o_fnLocalBuildQual_32( ViewToWindow, vTempViewVar_0, lTempInteger_0 );
    RESULT = ActivateObjectInstance( mUser, "mUser", ViewToWindow, vTempViewVar_0, zSINGLE );
    DropView( vTempViewVar_0 );
    //:SET CURSOR FIRST mUser.ResumePath WHERE mUser.ResumePath.DialogWindow = "wSPLDGraphicalView"
@@ -7258,30 +7426,31 @@ o_CopyToReusableBlock( View     mSPLDefBlock )
    RESULT = GetViewByName( mBlockRU, "ReusableBlock", mSPLDefBlock, zLEVEL_TASK );
    //:CREATE ENTITY mBlockRU.LLD_Block
    RESULT = CreateEntity( mBlockRU, "LLD_Block", zPOS_AFTER );
-   //:SetMatchingAttributesByName( mBlockRU, "LLD_Block", mSPLDefBlock, "LLD_Block", zSET_NOTNULL )
-   SetMatchingAttributesByName( mBlockRU, "LLD_Block", mSPLDefBlock, "LLD_Block", zSET_NOTNULL );
-
-   //:FOR EACH mSPLDefBlock.LLD_SpecialSectionAttribute 
+   //:SetMatchingAttributesByName( mBlockRU, "LLD_Block", mSPLDefBlock, "LLD_Block", zSET_NULL )
+   SetMatchingAttributesByName( mBlockRU, "LLD_Block", mSPLDefBlock, "LLD_Block", zSET_NULL );
+   //:// TraceLineS( "Copying to new reusable block", "  <<<<============================================================================" )
+   //:// DisplayObjectInstance( mBlockRU, "", "" )
+   //:FOR EACH mSPLDefBlock.LLD_SpecialSectionAttribute
    RESULT = SetCursorFirstEntity( mSPLDefBlock, "LLD_SpecialSectionAttribute", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
       //:CREATE ENTITY mBlockRU.LLD_SpecialSectionAttribute
       RESULT = CreateEntity( mBlockRU, "LLD_SpecialSectionAttribute", zPOS_AFTER );
-      //:SetMatchingAttributesByName( mBlockRU, "LLD_SpecialSectionAttribute", mSPLDefBlock, "LLD_SpecialSectionAttribute", zSET_NOTNULL )
-      SetMatchingAttributesByName( mBlockRU, "LLD_SpecialSectionAttribute", mSPLDefBlock, "LLD_SpecialSectionAttribute", zSET_NOTNULL );
+      //:SetMatchingAttributesByName( mBlockRU, "LLD_SpecialSectionAttribute", mSPLDefBlock, "LLD_SpecialSectionAttribute", zSET_NULL )
+      SetMatchingAttributesByName( mBlockRU, "LLD_SpecialSectionAttribute", mSPLDefBlock, "LLD_SpecialSectionAttribute", zSET_NULL );
       //:FOR EACH mSPLDefBlock.LLD_SpecialSectionAttrBlock
       RESULT = SetCursorFirstEntity( mSPLDefBlock, "LLD_SpecialSectionAttrBlock", "" );
       while ( RESULT > zCURSOR_UNCHANGED )
       { 
          //:CREATE ENTITY mBlockRU.LLD_SpecialSectionAttrBlock
          RESULT = CreateEntity( mBlockRU, "LLD_SpecialSectionAttrBlock", zPOS_AFTER );
-         //:SetMatchingAttributesByName( mBlockRU, "LLD_SpecialSectionAttrBlock", mSPLDefBlock, "LLD_SpecialSectionAttrBlock", zSET_NOTNULL )
-         SetMatchingAttributesByName( mBlockRU, "LLD_SpecialSectionAttrBlock", mSPLDefBlock, "LLD_SpecialSectionAttrBlock", zSET_NOTNULL );
+         //:SetMatchingAttributesByName( mBlockRU, "LLD_SpecialSectionAttrBlock", mSPLDefBlock, "LLD_SpecialSectionAttrBlock", zSET_NULL )
+         SetMatchingAttributesByName( mBlockRU, "LLD_SpecialSectionAttrBlock", mSPLDefBlock, "LLD_SpecialSectionAttrBlock", zSET_NULL );
          //:IF mSPLDefBlock.SpecialAttributeTextColor EXISTS
          lTempInteger_0 = CheckExistenceOfEntity( mSPLDefBlock, "SpecialAttributeTextColor" );
          if ( lTempInteger_0 == 0 )
          { 
-            //:INCLUDE mBlockRU.SpecialAttributeTextColor FROM mSPLDefBlock.SpecialAttributeTextColor 
+            //:INCLUDE mBlockRU.SpecialAttributeTextColor FROM mSPLDefBlock.SpecialAttributeTextColor
             RESULT = IncludeSubobjectFromSubobject( mBlockRU, "SpecialAttributeTextColor", mSPLDefBlock, "SpecialAttributeTextColor", zPOS_AFTER );
          } 
 
@@ -7299,7 +7468,7 @@ o_CopyToReusableBlock( View     mSPLDefBlock )
    lTempInteger_1 = CheckExistenceOfEntity( mSPLDefBlock, "BlockBackgroundColor" );
    if ( lTempInteger_1 == 0 )
    { 
-      //:INCLUDE mBlockRU.BlockBackgroundColor FROM mSPLDefBlock.BlockBackgroundColor 
+      //:INCLUDE mBlockRU.BlockBackgroundColor FROM mSPLDefBlock.BlockBackgroundColor
       RESULT = IncludeSubobjectFromSubobject( mBlockRU, "BlockBackgroundColor", mSPLDefBlock, "BlockBackgroundColor", zPOS_AFTER );
    } 
 
@@ -7309,7 +7478,7 @@ o_CopyToReusableBlock( View     mSPLDefBlock )
    lTempInteger_2 = CheckExistenceOfEntity( mSPLDefBlock, "BlockBorderColor" );
    if ( lTempInteger_2 == 0 )
    { 
-      //:INCLUDE mBlockRU.BlockBorderColor FROM mSPLDefBlock.BlockBorderColor 
+      //:INCLUDE mBlockRU.BlockBorderColor FROM mSPLDefBlock.BlockBorderColor
       RESULT = IncludeSubobjectFromSubobject( mBlockRU, "BlockBorderColor", mSPLDefBlock, "BlockBorderColor", zPOS_AFTER );
    } 
 
@@ -7385,7 +7554,6 @@ InitializeNewReusableBlock( View     ViewToWindow )
    zVIEW    mSPLDef = new zVIEW( );
    //:VIEW mBlockRU BASED ON LOD mBlockRU
    zVIEW    mBlockRU = new zVIEW( );
-   int      lTempInteger_0 = 0;
 
    RESULT = GetViewByName( mSPLDefBlock, "mSPLDefBlock", ViewToWindow, zLEVEL_TASK );
    RESULT = GetViewByName( mSPLDef, "mSPLDef", ViewToWindow, zLEVEL_TASK );
@@ -7400,21 +7568,13 @@ InitializeNewReusableBlock( View     ViewToWindow )
    SetAttributeFromString( mBlockRU, "ReusableBlockDefinition", "Name", "Set Name of Reusable Block" );
    //:mBlockRU.ReusableBlockDefinition.Description = "Set Description of Reusable Block"
    SetAttributeFromString( mBlockRU, "ReusableBlockDefinition", "Description", "Set Description of Reusable Block" );
-   //:mBlockRU.ReusableBlockDefinition.LLD_SectionType = mSPLDef.LLD_Block.LLD_SectionType
-   SetAttributeFromAttribute( mBlockRU, "ReusableBlockDefinition", "LLD_SectionType", mSPLDef, "LLD_Block", "LLD_SectionType" );
-
-   //:INCLUDE mBlockRU.Subregistrant FROM mSPLDef.Subregistrant
-   RESULT = IncludeSubobjectFromSubobject( mBlockRU, "Subregistrant", mSPLDef, "Subregistrant", zPOS_AFTER );
-   //:IF mSPLDefBlock.LLD_Block EXISTS
-   lTempInteger_0 = CheckExistenceOfEntity( mSPLDefBlock, "LLD_Block" );
-   if ( lTempInteger_0 == 0 )
-   { 
-      //:CopyToReusableBlock( mSPLDefBlock )
-      o_CopyToReusableBlock( mSPLDefBlock );
-   } 
-
-   //:END
+   //:mBlockRU.ReusableBlockDefinition.LLD_SectionType = mSPLDefBlock.LLD_Block.LLD_SectionType
+   SetAttributeFromAttribute( mBlockRU, "ReusableBlockDefinition", "LLD_SectionType", mSPLDefBlock, "LLD_Block", "LLD_SectionType" );
    return( 0 );
+// // INCLUDE mBlockRU.Subregistrant FROM mSPLDef.Subregistrant
+// // IF mSPLDefBlock.LLD_Block EXISTS
+// //    CopyToReusableBlock( mSPLDefBlock )
+// // END
 // // COMMIT mBlockRU
 // // DropObjectInstance( mBlockRU )
 // END
@@ -7430,7 +7590,7 @@ UPDATE_LLD( View     ViewToWindow )
 {
    zVIEW    mLLD_LST = new zVIEW( );
    int      RESULT = 0;
-   //:VIEW mLLD  BASED ON LOD  mLLD 
+   //:VIEW mLLD  BASED ON LOD  mLLD
    zVIEW    mLLD = new zVIEW( );
    int      lTempInteger_0 = 0;
    zVIEW    vTempViewVar_0 = new zVIEW( );
@@ -7438,7 +7598,7 @@ UPDATE_LLD( View     ViewToWindow )
    RESULT = GetViewByName( mLLD_LST, "mLLD_LST", ViewToWindow, zLEVEL_TASK );
 
    //:// Delete selected mLLD.
-   //:ACTIVATE mLLD WHERE mLLD.LLD.ID = mLLD_LST.LLD.ID 
+   //:ACTIVATE mLLD WHERE mLLD.LLD.ID = mLLD_LST.LLD.ID
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
        GetIntegerFromAttribute( mi_lTempInteger_0, mLLD_LST, "LLD", "ID" );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );}
@@ -7460,22 +7620,120 @@ UPDATE_LLD( View     ViewToWindow )
 } 
 
 
-private int 
-o_fnLocalBuildQual_0( View     vSubtask,
-                      zVIEW    vQualObject,
-                      String   szTempString_0 )
+//:TRANSFORMATION OPERATION
+//:TraverseSPLD_Recursive( VIEW mSPLDef BASED ON LOD mSPLDef,
+//:                        STRING ( 64 ) szTag )
+//:   INTEGER lRC
+private int  
+o_TraverseSPLD_Recursive( View     mSPLDef,
+                          String   szTag )
 {
+   int      lRC = 0;
    int      RESULT = 0;
 
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "Subregistrant" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "SubregOrganization" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "Name" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Value", szTempString_0.toString( ) );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+
+   //:lRC = 0
+   lRC = 0;
+   //:FOR EACH mSPLDef.LLD_Block
+   RESULT = SetCursorFirstEntity( mSPLDef, "LLD_Block", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:IF szTag != "" AND mSPLDef.LLD_Block.Tag = szTag
+      if ( ZeidonStringCompare( szTag, 1, 0, "", 1, 0, 65 ) != 0 && CompareAttributeToString( mSPLDef, "LLD_Block", "Tag", szTag ) == 0 )
+      { 
+         //:RETURN 1
+         if(8==8)return( 1 );
+      } 
+
+      //:END
+      //:FOR EACH mSPLDef.LLD_SubBlock
+      RESULT = SetCursorFirstEntity( mSPLDef, "LLD_SubBlock", "" );
+      while ( RESULT > zCURSOR_UNCHANGED )
+      { 
+         //:SetViewToSubobject( mSPLDef, "LLD_SubBlock" )
+         SetViewToSubobject( mSPLDef, "LLD_SubBlock" );
+         //:lRC = TraverseBlockRecursive( mSPLDef )
+         {
+          mSPLDef_Object m_mSPLDef_Object = new mSPLDef_Object( mSPLDef );
+          lRC = m_mSPLDef_Object.omSPLDef_TraverseBlockRecursive( mSPLDef );
+          // m_mSPLDef_Object = null;  // permit gc  (unnecessary)
+         }
+         //:ResetViewFromSubobject( mSPLDef )
+         ResetViewFromSubobject( mSPLDef );
+         //:IF lRC != 0
+         if ( lRC != 0 )
+         { 
+            //:lRC = lRC + 1
+            lRC = lRC + 1;
+            //:RETURN lRC
+            if(8==8)return( lRC );
+         } 
+
+         RESULT = SetCursorNextEntity( mSPLDef, "LLD_SubBlock", "" );
+         //:END
+      } 
+
+      RESULT = SetCursorNextEntity( mSPLDef, "LLD_Block", "" );
+      //:END
+   } 
+
+   //:END
+   //:RETURN 0
    return( 0 );
+// END
+} 
+
+
+//:TRANSFORMATION OPERATION
+//:TraverseSPLD( VIEW mSPLDef BASED ON LOD mSPLDef,
+//:              STRING ( 64 ) szTag )
+
+//:   INTEGER lRC
+private int  
+o_TraverseSPLD( View     mSPLDef,
+                String   szTag )
+{
+   int      lRC = 0;
+   int      RESULT = 0;
+
+
+   //:lRC = 0
+   lRC = 0;
+   //:// FOR EACH mSPLDef.LLD_Page WITHIN mSPLDef.SubregPhysicalLabelDef
+   //:FOR EACH mSPLDef.LLD_Page  // only do it within the current SPLD_LLD
+   RESULT = SetCursorFirstEntity( mSPLDef, "LLD_Page", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:FOR EACH mSPLDef.LLD_Panel
+      RESULT = SetCursorFirstEntity( mSPLDef, "LLD_Panel", "" );
+      while ( RESULT > zCURSOR_UNCHANGED )
+      { 
+         //:lRC = TraverseBlockRecursive( mSPLDef )
+         {
+          mSPLDef_Object m_mSPLDef_Object = new mSPLDef_Object( mSPLDef );
+          lRC = m_mSPLDef_Object.omSPLDef_TraverseBlockRecursive( mSPLDef );
+          // m_mSPLDef_Object = null;  // permit gc  (unnecessary)
+         }
+         //:IF lRC != 0
+         if ( lRC != 0 )
+         { 
+            //:RETURN lRC
+            if(8==8)return( lRC );
+         } 
+
+         RESULT = SetCursorNextEntity( mSPLDef, "LLD_Panel", "" );
+         //:END
+      } 
+
+      RESULT = SetCursorNextEntity( mSPLDef, "LLD_Page", "" );
+      //:// OrderEntityForView( mSPLDef, "LLD_Block", "Left A wComputedTopPosition A" )  // ContinuationBlockFlag D
+      //:END
+   } 
+
+   //:END
+   //:RETURN 0
+   return( 0 );
+// END
 } 
 
 

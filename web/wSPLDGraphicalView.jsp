@@ -899,8 +899,8 @@ else
                      <span>
                      <div style="overflow:hidden; white-space:nowrap;">
                         <input type="text" id="zBlockId" class="zeidon" data-zmap="block.z_^i^d" style="float:right; font-size:9px; text-align:right; font-weight:100;" disabled />
-                     </div>
-                     <div style="overflow:hidden; white-space:nowrap;">
+                        </div>
+                        <div style="overflow:hidden; white-space:nowrap;">
                        <label for="zBlockTag">Tag:</label>
                        <input type="text" id="zBlockTag" class="zeidon" data-zmap="block.z_^tag" style="float:right" />
                      </div>
@@ -1026,7 +1026,7 @@ else
                         <div style="overflow:hidden; white-space:nowrap;">
                            <label for="zContinuationBlockTag">Continuation Block Tag:</label>
                            <input type="text" id="zContinuationBlockTag" class="zeidon" data-zmap="block.z_^continuation^block^tag" style="float:right" />
-                        </div>
+                     </div>
                      </div>
                      <p style="clear:both;position:relative"></p>
                      <div id="zMarketingSectionToggle" style="overflow:hidden; white-space:nowrap;">

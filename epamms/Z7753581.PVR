@@ -1,0 +1,11 @@
+z1000-Zeidon    Z7753581 TZWDVORO 01/25/16   12:20:00 1.0a2   
+eViewObjRef 1
+aZKey      125121921
+aNextZKeyToAssign 125121921
+aName      ReusableBlock
+
+eLOD       2
+aZKey      110030723
+aName      mBlockRU
+aDesc      Reusable LLD_Block Maintenance object
+

@@ -30,7 +30,6 @@ import org.apache.commons.lang3.mutable.MutableDouble;
 import org.apache.commons.lang3.mutable.MutableInt;
 
 import com.quinsoft.epamms.ZGlobal1_Operation;
-import com.quinsoft.epamms.ZGlobalV_Operation;
 
 import com.quinsoft.zeidon.zeidonoperations.KZOEP1AA;
 import com.quinsoft.zeidon.zeidonoperations.ZDRVROPR;
@@ -4762,8 +4761,7 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
        GetVariableFromAttribute( sb_szTag, mi_lTempInteger_0, 'S', 65, mSPLDefPDF, "LLD_Block", "Tag", "", 0 );
    lTempInteger_0 = mi_lTempInteger_0.intValue( );
    szTag = sb_szTag.toString( );}
-   //:TraceLineS( "Processing Block: ", szTag )
-   TraceLineS( "Processing Block: ", szTag );
+   //:// TraceLineS( "Processing Block: ", szTag )
    //:// Process each LLD_Block Container and subobject data.
 
    //:// Note that mSPLDefPDF is pointing to the LLD Panel and Block substructure, which recursively steps
@@ -4820,16 +4818,10 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
       //:IF mSPLDefPDF.LLD_Block.ContinuationBlockFlag = "Y"
       if ( CompareAttributeToString( mSPLDefPDF, "LLD_Block", "ContinuationBlockFlag", "Y" ) == 0 )
       { 
-         //:TraceLineS( "Processing Continued Block: ", szTag )
-         TraceLineS( "Processing Continued Block: ", szTag );
-         //:IF szTag = "Tag666"
-         if ( ZeidonStringCompare( szTag, 1, 0, "Tag666", 1, 0, 65 ) == 0 )
-         { 
-            //:TraceLineS( "Processing skip tag: ", szTag )
-            TraceLineS( "Processing skip tag: ", szTag );
-         } 
-
-         //:END
+         //:// TraceLineS( "Processing Continued Block: ", szTag )
+         //:// IF szTag = "Tag666"
+         //://    TraceLineS( "Processing skip tag: ", szTag )
+         //:// END
          //:// This is a continuation from the last Block, so format if there is continuation data.
          //:// Note that mSPLDef is pointing to the Panel entity that holds the continuation statements.
          //:SET CURSOR FIRST mSPLDef.ContinuationStatement
@@ -4862,8 +4854,7 @@ omSPLDef_ProcessPDF_Blocks( View     mSPLDef,
       } 
       else
       { 
-         //:TraceLineS( "Processing Normal Block: ", szTag )
-         TraceLineS( "Processing Normal Block: ", szTag );
+         //:// TraceLineS( "Processing Normal Block: ", szTag )
 
          //:// Create LLD_Block Container.
          //:FormatBlockContainer( mSPLDefPDF, mSPLDef, lFile, szLeadingBlanks, szWriteBuffer, "" )
@@ -6940,7 +6931,7 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
             sb_szStatementText = new StringBuilder( szStatementText );
                    m_ZGlobal1_Operation.InsertMappingWordsIntoString( mSPLDef, sb_szStatementText, szUsageTypeEntity, szLoopingEntity, szSeparatorCharacters );
          szStatementText = sb_szStatementText.toString( );}
-          // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
+          // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
          }
          //:SetAttributeFromString( mSPLDef, szStatementName, "DisplayText", szStatementText )
          SetAttributeFromString( mSPLDef, szStatementName, "DisplayText", szStatementText );
