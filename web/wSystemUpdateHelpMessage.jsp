@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSystemUpdateHelpMessage --%>
+<%-- wSystemUpdateHelpMessage   Generate Timestamp: 20160317151026988 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -536,7 +536,7 @@ tinymce.init({
    }
 %>
 
-   <textarea name="HelpMsg" id="HelpMsg" style="width:100%"><%=strErrorMapValue%></textarea>
+<input class="mceSimple" name="HelpMsg" id="HelpMsg" style="width:988px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -567,6 +567,7 @@ tinymce.init({
 </div>  <!-- This is the end tag for wrapper -->
 
 </body>
+<script type="text/javascript">animatedcollapse.init();</script>
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSystemUpdateHelpMessage" );

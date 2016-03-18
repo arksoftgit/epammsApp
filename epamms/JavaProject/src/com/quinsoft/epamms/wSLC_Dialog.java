@@ -14,7 +14,7 @@
     You should have received a copy of the GNU Lesser General Public License
     along with Zeidon JOE.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2009-2010 QuinSoft
+    Copyright (c) 2009 - 2016 QuinSoft, Inc.
 **/
 
 package com.quinsoft.epamms;
@@ -3630,13 +3630,13 @@ DisplayPhysicalChemicalHazards( View     ViewToWindow )
 //:DIALOG OPERATION
 //:CorrectSLC_Data( VIEW ViewToWindow )
 
-//:    VIEW mSubLC REGISTERED AS mSubLC
+//:   VIEW mSubLC REGISTERED AS mSubLC
 public int 
 CorrectSLC_Data( View     ViewToWindow )
 {
    zVIEW    mSubLC = new zVIEW( );
    int      RESULT = 0;
-   //: VIEW mMasLC REGISTERED AS mMasLC
+   //:VIEW mMasLC REGISTERED AS mMasLC
    zVIEW    mMasLC = new zVIEW( );
    int      lTempInteger_0 = 0;
    int      lTempInteger_1 = 0;
@@ -3644,53 +3644,53 @@ CorrectSLC_Data( View     ViewToWindow )
    RESULT = GetViewByName( mSubLC, "mSubLC", ViewToWindow, zLEVEL_TASK );
    RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
 
-   //: // Sync Marketing Text and Title of SLC with MLC.
-   //: FOR EACH mSubLC.S_MarketingSection
+   //:// Sync Marketing Text and Title of SLC with MLC.
+   //:FOR EACH mSubLC.S_MarketingSection
    RESULT = SetCursorFirstEntity( mSubLC, "S_MarketingSection", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
-      //: SET CURSOR FIRST mMasLC.M_MarketingSection
-      //:     WHERE mMasLC.M_MarketingSection.ID = mSubLC.M_MarketingSection.ID
+      //:SET CURSOR FIRST mMasLC.M_MarketingSection
+      //:    WHERE mMasLC.M_MarketingSection.ID = mSubLC.M_MarketingSection.ID
       {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
              GetIntegerFromAttribute( mi_lTempInteger_0, mSubLC, "M_MarketingSection", "ID" );
       lTempInteger_0 = mi_lTempInteger_0.intValue( );}
       RESULT = SetCursorFirstEntityByInteger( mMasLC, "M_MarketingSection", "ID", lTempInteger_0, "" );
-      //: IF RESULT >= zCURSOR_SET
+      //:IF RESULT >= zCURSOR_SET
       if ( RESULT >= zCURSOR_SET )
       { 
-         //: mSubLC.S_MarketingSection.Title = mMasLC.M_MarketingSection.Title
+         //:mSubLC.S_MarketingSection.Title = mMasLC.M_MarketingSection.Title
          SetAttributeFromAttribute( mSubLC, "S_MarketingSection", "Title", mMasLC, "M_MarketingSection", "Title" );
-         //: FOR EACH mSubLC.S_MarketingStatement
+         //:FOR EACH mSubLC.S_MarketingStatement
          RESULT = SetCursorFirstEntity( mSubLC, "S_MarketingStatement", "" );
          while ( RESULT > zCURSOR_UNCHANGED )
          { 
-            //: SET CURSOR FIRST mMasLC.M_MarketingStatement
-            //:         WHERE mMasLC.M_MarketingStatement.ID = mSubLC.M_MarketingStatement.ID
+            //:SET CURSOR FIRST mMasLC.M_MarketingStatement
+            //:        WHERE mMasLC.M_MarketingStatement.ID = mSubLC.M_MarketingStatement.ID
             {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
                          GetIntegerFromAttribute( mi_lTempInteger_1, mSubLC, "M_MarketingStatement", "ID" );
             lTempInteger_1 = mi_lTempInteger_1.intValue( );}
             RESULT = SetCursorFirstEntityByInteger( mMasLC, "M_MarketingStatement", "ID", lTempInteger_1, "" );
-            //: IF RESULT >= zCURSOR_SET
+            //:IF RESULT >= zCURSOR_SET
             if ( RESULT >= zCURSOR_SET )
             { 
-               //: mSubLC.S_MarketingStatement.Title = mMasLC.M_MarketingStatement.Title
+               //:mSubLC.S_MarketingStatement.Title = mMasLC.M_MarketingStatement.Title
                SetAttributeFromAttribute( mSubLC, "S_MarketingStatement", "Title", mMasLC, "M_MarketingStatement", "Title" );
-               //: mSubLC.S_MarketingStatement.Text = mMasLC.M_MarketingStatement.Text
+               //:mSubLC.S_MarketingStatement.Text = mMasLC.M_MarketingStatement.Text
                SetAttributeFromAttribute( mSubLC, "S_MarketingStatement", "Text", mMasLC, "M_MarketingStatement", "Text" );
             } 
 
             RESULT = SetCursorNextEntity( mSubLC, "S_MarketingStatement", "" );
-            //: END
+            //:END
          } 
 
-         //:   END
+         //:END
       } 
 
       RESULT = SetCursorNextEntity( mSubLC, "S_MarketingSection", "" );
-      //:    END
+      //:END
    } 
 
-   //: END
+   //:END
    return( 0 );
 // END
 } 

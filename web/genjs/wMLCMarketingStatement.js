@@ -204,40 +204,6 @@ function AcceptMarketingStatement( )
    }
 }
 
-function PASTE_InsertKeyword( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCMarketingStatement.zAction.value = "PASTE_InsertKeyword";
-      document.wMLCMarketingStatement.submit( );
-   }
-}
-
-function COPY_InsertKeyword( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCMarketingStatement.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wMLCMarketingStatement.zAction.value = "COPY_InsertKeyword";
-      document.wMLCMarketingStatement.submit( );
-   }
-}
-
 function ADD_MarketingStatementKeyword( )
 {
 
@@ -264,6 +230,25 @@ function CancelMarketingStatement( )
       _DisableFormElements( true );
 
       document.wMLCMarketingStatement.zAction.value = "CancelMarketingStatement";
+      document.wMLCMarketingStatement.submit( );
+   }
+}
+
+function COPY_InsertKeyword( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCMarketingStatement.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCMarketingStatement.zAction.value = "COPY_InsertKeyword";
       document.wMLCMarketingStatement.submit( );
    }
 }
@@ -349,6 +334,21 @@ function GOTO_SelectRemoveMktgEntries( )
       _DisableFormElements( true );
 
       document.wMLCMarketingStatement.zAction.value = "GOTO_SelectRemoveMktgEntries";
+      document.wMLCMarketingStatement.submit( );
+   }
+}
+
+function PASTE_InsertKeyword( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCMarketingStatement.zAction.value = "PASTE_InsertKeyword";
       document.wMLCMarketingStatement.submit( );
    }
 }

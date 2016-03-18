@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wStartSecurityQuestionAnswers --%>
+<%-- wStartSecurityQuestionAnswers   Generate Timestamp: 20160317151021853 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -151,7 +151,7 @@ if ( task == null )
 vKZXMLPGO = JspWebUtils.createWebSession( null, task, "" );
 mMsgQ = new KZMSGQOO_Object( vKZXMLPGO );
 mMsgQ.setView( VmlOperation.getMessageObject( task ) );
-wStart_Dialog wStart = new wStart_Dialog( vKZXMLPGO );
+wStartUp_Dialog wStartUp = new wStartUp_Dialog( vKZXMLPGO );
 
 strURL = "";
 bDone = false;
@@ -710,6 +710,7 @@ else
 </div>  <!-- This is the end tag for wrapper -->
 
 </body>
+<script type="text/javascript">animatedcollapse.init();</script>
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wStartSecurityQuestionAnswers" );

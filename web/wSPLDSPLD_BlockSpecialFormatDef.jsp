@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSPLDSPLD_BlockSpecialFormatDef --%>
+<%-- wSPLDSPLD_BlockSpecialFormatDef   Generate Timestamp: 20160317151021475 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1190,11 +1190,11 @@ else
       }  // for ( TableEntry entry
       // The value from the database isn't in the domain, add it to the list as disabled.
       if ( !inListTextAlign )
-      { 
+      {
 %>
          <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
 <%
-      }  
+      }
    }  // if view != null
 %>
 </select>
@@ -1281,11 +1281,11 @@ else
       }  // for ( TableEntry entry
       // The value from the database isn't in the domain, add it to the list as disabled.
       if ( !inListFontFamily )
-      { 
+      {
 %>
          <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
 <%
-      }  
+      }
    }  // if view != null
 %>
 </select>
@@ -1372,11 +1372,11 @@ else
       }  // for ( TableEntry entry
       // The value from the database isn't in the domain, add it to the list as disabled.
       if ( !inListFontSize )
-      { 
+      {
 %>
          <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
 <%
-      }  
+      }
    }  // if view != null
 %>
 </select>
@@ -1463,11 +1463,11 @@ else
       }  // for ( TableEntry entry
       // The value from the database isn't in the domain, add it to the list as disabled.
       if ( !inListFontWeight )
-      { 
+      {
 %>
          <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
 <%
-      }  
+      }
    }  // if view != null
 %>
 </select>
@@ -1695,11 +1695,11 @@ else
       }  // for ( TableEntry entry
       // The value from the database isn't in the domain, add it to the list as disabled.
       if ( !inListTitlePosition )
-      { 
+      {
 %>
          <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
 <%
-      }  
+      }
    }  // if view != null
 %>
 </select>
@@ -1771,6 +1771,7 @@ else
 </div>  <!-- This is the end tag for wrapper -->
 
 </body>
+<script type="text/javascript">animatedcollapse.init();</script>
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSPLDSPLD_BlockSpecialFormatDef" );

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSPLDNewSPLD_SelectSLC --%>
+<%-- wSPLDNewSPLD_SelectSLC   Generate Timestamp: 20160317151021327 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -750,6 +750,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </div>  <!-- This is the end tag for wrapper -->
 
 </body>
+<script type="text/javascript">animatedcollapse.init();</script>
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSPLDNewSPLD_SelectSLC" );

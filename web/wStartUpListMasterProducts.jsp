@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wStartUpListMasterProducts --%>
+<%-- wStartUpListMasterProducts   Generate Timestamp: 20160317151023505 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1313,6 +1313,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </div>  <!-- This is the end tag for wrapper -->
 
 </body>
+<script type="text/javascript">animatedcollapse.init();</script>
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wStartUpListMasterProducts" );

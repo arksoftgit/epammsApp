@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wPrimRDeleteMasterProductContent --%>
+<%-- wPrimRDeleteMasterProductContent   Generate Timestamp: 20160317151010481 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1267,6 +1267,7 @@ else
 </div>  <!-- This is the end tag for wrapper -->
 
 </body>
+<script type="text/javascript">animatedcollapse.init();</script>
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wPrimRDeleteMasterProductContent" );

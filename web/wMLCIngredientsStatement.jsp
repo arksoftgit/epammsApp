@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCIngredientsStatement --%>
+<%-- wMLCIngredientsStatement   Generate Timestamp: 20160317151008100 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -496,6 +496,12 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
+
+<!-- TinyMCE -->
+<script language="JavaScript" type="text/javascript" src="./js/tinymce/js/tinymce/tinymce.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/TinyMCE.js"></script>
+<!-- /TinyMCE -->
+
 <script language="JavaScript" type="text/javascript" src="./genjs/wMLCIngredientsStatement.js"></script>
 
 </head>
@@ -720,7 +726,7 @@ else
 <span  id="ActiveTitle:" name="ActiveTitle:" style="width:118px;height:20px;">Active Title:</span>
 
 </td>
-<td valign="top"  class="text14bold" style="width:568px;">
+<td valign="top"  class="text14bold" style="width:634px;">
 <% /* ActiveTitle:Text */ %>
 <% strTextDisplayValue = "";
    mMasLC = task.getViewByName( "mMasLC" );
@@ -746,7 +752,7 @@ else
    }
 %>
 
-<span class="text14bold"  id="ActiveTitle" name="ActiveTitle" style="width:568px;height:20px;"><%=strTextDisplayValue%></span>
+<span class="text14bold"  id="ActiveTitle" name="ActiveTitle" style="width:634px;height:20px;"><%=strTextDisplayValue%></span>
 
 </td>
 </tr>
@@ -757,7 +763,7 @@ else
 <span  id="InertTitle:" name="InertTitle:" style="width:118px;height:20px;">Inert Title:</span>
 
 </td>
-<td valign="top"  class="text14bold" style="width:568px;">
+<td valign="top"  class="text14bold" style="width:634px;">
 <% /* InertTitle:Text */ %>
 <% strTextDisplayValue = "";
    mMasLC = task.getViewByName( "mMasLC" );
@@ -783,7 +789,7 @@ else
    }
 %>
 
-<span class="text14bold"  id="InertTitle" name="InertTitle" style="width:568px;height:20px;"><%=strTextDisplayValue%></span>
+<span class="text14bold"  id="InertTitle" name="InertTitle" style="width:634px;height:20px;"><%=strTextDisplayValue%></span>
 
 </td>
 </tr>
@@ -794,7 +800,7 @@ else
 <span  id="ChemicalName:" name="ChemicalName:" style="width:118px;height:20px;">Chemical Name:</span>
 
 </td>
-<td valign="top" style="width:568px;">
+<td valign="top" style="width:634px;">
 <% /* ChemicalName:MLEdit */ %>
 <%
    // MLEdit: ChemicalName
@@ -827,7 +833,7 @@ else
    }
 %>
 
-<textarea id="ChemicalName" name="ChemicalName" class="" style="width:568px;height:52px;border:solid;border-width:2px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+<textarea id="ChemicalName" name="ChemicalName" class="mceSimple" style="width:634px;height:52px;border:solid;border-width:2px;border-style:groove;"><%=strErrorMapValue%></textarea>
 
 </td>
 </tr>
@@ -909,11 +915,11 @@ else
       }  // for ( TableEntry entry
       // The value from the database isn't in the domain, add it to the list as disabled.
       if ( !inListIngredientsActive )
-      { 
+      {
 %>
          <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
 <%
-      }  
+      }
    }  // if view != null
 %>
 </select>
@@ -1009,6 +1015,7 @@ else
 </div>  <!-- This is the end tag for wrapper -->
 
 </body>
+<script type="text/javascript">animatedcollapse.init();</script>
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCIngredientsStatement" );

@@ -2,7 +2,7 @@
 // Project ePamms
 //
 // This is a part of the ePamms applications package.
-// Copyright © 2007 - 2015 Arksoft, Inc.
+// Copyright (c) 2007 - 2016 Arksoft, Inc.
 // All Rights Reserved.
 //
 // SUBSYSTEM:    mSPLDef       - Primary Registrant Label Content operations
@@ -13,7 +13,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: GeneratePDF_Label
+//  OPERATION: GeneratePDF_Label
 //
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
@@ -387,7 +387,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: FormatPrintIcons
+//  OPERATION: FormatPrintIcons
 //
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
@@ -622,7 +622,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: FormatContinueBlock
+//  OPERATION: FormatContinueBlock
 //
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
@@ -779,7 +779,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: ProcessPDF_Blocks
+//  OPERATION: ProcessPDF_Blocks
 //
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
@@ -1202,9 +1202,9 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: FormatBlockContainer
+//  OPERATION: FormatBlockContainer
 //
-// this formats the fo:block-container
+//  this formats the fo:block-container
 //
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
@@ -1414,7 +1414,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: FormatBlock
+//  OPERATION: FormatBlock
 //
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
@@ -1534,7 +1534,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: AddFormatToSpecialText
+//  OPERATION: AddFormatToSpecialText
 //
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
@@ -1694,8 +1694,8 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: GeneratePDF_DFU
-//   Directions For Use / Storage and Disposal / General / Marketing
+//  OPERATION: GeneratePDF_DFU
+//  Directions For Use / Storage and Disposal / General / Marketing
 //
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
@@ -2081,7 +2081,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: GeneratePDF_ClmList
+//  OPERATION: GeneratePDF_ClmList
 //
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
@@ -2454,8 +2454,8 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: GeneratePDF_Ingred
-//    Generate Active Ingredients
+//  OPERATION: GeneratePDF_Ingred
+//  Generate Active Ingredients
 //
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
@@ -2553,8 +2553,8 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: GeneratePDF_Content
-//    Generate Net Contents
+//  OPERATION: GeneratePDF_Content
+//  Generate Net Contents
 //
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
@@ -2629,8 +2629,8 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: GeneratePDF_Hazards
-//    Generate Hazards
+//  OPERATION: GeneratePDF_Hazards
+//  Generate Hazards
 //
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
@@ -2689,8 +2689,8 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: GeneratePDF_General
-//    Generate  Precautionary, Environmental/Physical Hazard or First Aid Statements
+//  OPERATION: GeneratePDF_General
+//  Generate  Precautionary, Environmental/Physical Hazard or First Aid Statements
 //
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
@@ -2738,8 +2738,8 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: GeneratePDF_StorDisp
-//    Generate Storage and Disposal Statements
+//  OPERATION: GeneratePDF_StorDisp
+//  Generate Storage and Disposal Statements
 //
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
@@ -2757,7 +2757,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: BuildSPLD_FromSLC
+//  OPERATION: BuildSPLD_FromSLC
 //
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
@@ -2875,7 +2875,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: RebuildSPLD_FromSLC
+//  OPERATION: RebuildSPLD_FromSLC
 //
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
@@ -2917,11 +2917,11 @@ RebuildSPLD_FromSLC( VIEW NewSPLD   BASED ON LOD mSPLDef,
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: BuildUsageEntriesFrSLC
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: BuildUsageEntriesFrSLC
+//
+/////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
 BuildUsageEntriesFrSLC( VIEW mSPLDef   BASED ON LOD mSPLDef,
                         VIEW SourceSLC BASED ON LOD mSubLC )
@@ -2998,7 +2998,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: BuildSPLD_FromSPLD
+//  OPERATION: BuildSPLD_FromSPLD
 //
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
@@ -3041,7 +3041,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: DuplicateSPLD
+//  OPERATION: DuplicateSPLD
 //
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
@@ -3187,7 +3187,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: DuplicateSPLD
+//  OPERATION: DuplicateSPLD
 //
 /////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
@@ -3226,7 +3226,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-//    OPERATION: dFullNameLFM
+//  OPERATION: dFullNameLFM
 //
 /////////////////////////////////////////////////////////////////////////////
 DERIVED ATTRIBUTE OPERATION
@@ -3250,7 +3250,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-//    OPERATION: dFullNameFML
+//  OPERATION: dFullNameFML
 //
 /////////////////////////////////////////////////////////////////////////////
 DERIVED ATTRIBUTE OPERATION
@@ -3275,8 +3275,8 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: dPrimRegNameID
-// Registrant Name + EPA Registrant Number
+//  OPERATION: dPrimRegNameID
+//  Registrant Name + EPA Registrant Number
 //
 /////////////////////////////////////////////////////////////////////////////
 DERIVED ATTRIBUTE OPERATION
@@ -3314,8 +3314,8 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: dSubregNameID
-// Registrant Name + EPA Registrant Number
+//  OPERATION: dSubregNameID
+//  Registrant Name + EPA Registrant Number
 //
 /////////////////////////////////////////////////////////////////////////////
 DERIVED ATTRIBUTE OPERATION
@@ -3353,7 +3353,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: dIngredientName
+//  OPERATION: dIngredientName
 //
 /////////////////////////////////////////////////////////////////////////////
 DERIVED ATTRIBUTE OPERATION
@@ -3390,7 +3390,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: dPanelName
+//  OPERATION: dPanelName
 //
 /////////////////////////////////////////////////////////////////////////////
 DERIVED ATTRIBUTE OPERATION
@@ -3421,7 +3421,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: dSectionIdentifier
+//  OPERATION: dSectionIdentifier
 //
 /////////////////////////////////////////////////////////////////////////////
 DERIVED ATTRIBUTE OPERATION
@@ -3454,7 +3454,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: dMasterProductNameNbr
+//  OPERATION: dMasterProductNameNbr
 //
 /////////////////////////////////////////////////////////////////////////////
 DERIVED ATTRIBUTE OPERATION
@@ -3491,7 +3491,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: dSubregProductNameNbr
+//  OPERATION: dSubregProductNameNbr
 //
 /////////////////////////////////////////////////////////////////////////////
 DERIVED ATTRIBUTE OPERATION
@@ -3524,7 +3524,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: dDisplayPathogenName
+//  OPERATION: dDisplayPathogenName
 //
 /////////////////////////////////////////////////////////////////////////////
 DERIVED ATTRIBUTE OPERATION
@@ -3579,7 +3579,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: dFullHazardStatement
+//  OPERATION: dFullHazardStatement
 //
 /////////////////////////////////////////////////////////////////////////////
 DERIVED ATTRIBUTE OPERATION
@@ -3708,7 +3708,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: dSelectedHazardStmt
+//  OPERATION: dSelectedHazardStmt
 //
 /////////////////////////////////////////////////////////////////////////////
 DERIVED ATTRIBUTE OPERATION
@@ -3761,12 +3761,11 @@ dSelectedHazardStmt( VIEW mSPLDef BASED ON LOD mSPLDef,
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: GetLPLR_SourceDirectory
-**
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GetLPLR_SourceDirectory
+//
+/////////////////////////////////////////////////////////////////////////////
 LOCAL OPERATION
 GetLPLR_SourceDirectory( VIEW mSPLDef BASED ON LOD mSPLDef,
                          STRING ( 400 ) ReturnedDirectory )
@@ -3807,11 +3806,11 @@ GetLPLR_SourceDirectory( VIEW mSPLDef BASED ON LOD mSPLDef,
 END
 
 
-/*************************************************************************************************
-**
-**    OPERATION: GenerateXML_File
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GenerateXML_File
+//
+/////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
 GenerateXML_File( VIEW mSPLDef BASED ON LOD mSPLDef,
                   STRING ( 32 )  szTopEntityName,
@@ -4150,11 +4149,11 @@ GenerateXML_File( VIEW mSPLDef BASED ON LOD mSPLDef,
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: GenerateLine
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GenerateLine
+//
+/////////////////////////////////////////////////////////////////////////////
 LOCAL OPERATION
 GenerateLine( VIEW mSPLDef BASED ON LOD mSPLDef,
               INTEGER lFileHandle,
@@ -4166,11 +4165,11 @@ GenerateLine( VIEW mSPLDef BASED ON LOD mSPLDef,
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: GenerateLine
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GenerateLine
+//
+/////////////////////////////////////////////////////////////////////////////
 LOCAL OPERATION
 GenerateAttribute( VIEW mSPLDef BASED ON LOD mSPLDef,
                    INTEGER lFileHandle,
@@ -4186,11 +4185,12 @@ GenerateAttribute( VIEW mSPLDef BASED ON LOD mSPLDef,
 
 END
 
-/*************************************************************************************************
-**  No longer used ... incorrectly deletes everything up front.  Replaced by SetUpKeywordEntries.
-**
-**    OPERATION: SetUpFormattingSelect
-**
+/*
+/////////////////////////////////////////////////////////////////////////////
+//  No longer used ... incorrectly deletes everything up front.  Replaced by SetUpKeywordEntries.
+//
+//  OPERATION: SetUpFormattingSelect
+//
 TRANSFORMATION OPERATION
 SetUpFormattingSelect( VIEW mSPLDefPanel BASED ON LOD mSPLDef,
                        STRING ( 50 ) szSectionType )
@@ -4251,13 +4251,14 @@ SetUpFormattingSelect( VIEW mSPLDefPanel BASED ON LOD mSPLDef,
    mSPLDefPanel.SpecialFormattingSelectEntry.KeywordName = "Block"
    SET CURSOR FIRST mSPLDefPanel.SpecialFormattingSelectEntry
 END
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+*/
 
-/*************************************************************************************************
-**
-**    OPERATION: ComputeTopPosRecursive
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: ComputeTopPosRecursive
+//
+/////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
 ComputeTopPosRecursive( VIEW mSPLDef BASED ON LOD mSPLDef )
 
@@ -4280,11 +4281,11 @@ ComputeTopPosRecursive( VIEW mSPLDef BASED ON LOD mSPLDef )
    END
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: ComputeTopPositions
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: ComputeTopPositions
+//
+/////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
 ComputeTopPositions( VIEW mSPLDef BASED ON LOD mSPLDef )
 
@@ -4300,12 +4301,11 @@ ComputeTopPositions( VIEW mSPLDef BASED ON LOD mSPLDef )
    END
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: TraverseBlockRecursive
-**
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: TraverseBlockRecursive
+//
+/////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
 TraverseBlockRecursive( VIEW mSPLDef BASED ON LOD mSPLDef )
 
@@ -4319,12 +4319,12 @@ TraverseBlockRecursive( VIEW mSPLDef BASED ON LOD mSPLDef )
    END
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: TraverseBlocks
-**    Reset the wContinuedFromTag
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: TraverseBlocks
+//  Reset the wContinuedFromTag
+//
+/////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
 TraverseBlocks( VIEW mSPLDef BASED ON LOD mSPLDef )
 
@@ -4337,11 +4337,11 @@ TraverseBlocks( VIEW mSPLDef BASED ON LOD mSPLDef )
    END
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: ObjectConstraints
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: ObjectConstraints
+//
+/////////////////////////////////////////////////////////////////////////////
 OBJECT CONSTRAINT OPERATION
 ObjectConstraints( VIEW mSPLDef BASED ON LOD mSPLDef,
                    SHORT Event,
@@ -4390,11 +4390,11 @@ ObjectConstraints( VIEW mSPLDef BASED ON LOD mSPLDef,
 END
 
 
-/*************************************************************************************************
-**
-**    OPERATION: CheckAddKeywordEntry
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: CheckAddKeywordEntry
+//
+/////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
 CheckAddKeywordEntry( VIEW mSPLDefBlock BASED ON LOD mSPLDef,
                       STRING ( 50 ) szKeywordName )
@@ -4414,11 +4414,11 @@ CheckAddKeywordEntry( VIEW mSPLDefBlock BASED ON LOD mSPLDef,
 END
 
 
-/*************************************************************************************************
-**
-**    OPERATION: SetUpKeywordEntries
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: SetUpKeywordEntries
+//
+/////////////////////////////////////////////////////////////////////////////
 TRANSFORMATION OPERATION
 SetUpKeywordEntries( VIEW mSPLDefBlock BASED ON LOD mSPLDef,
                      STRING ( 50 ) szSectionType )
@@ -4461,7 +4461,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: dColorName
+//  OPERATION: dColorName
 //
 /////////////////////////////////////////////////////////////////////////////
 DERIVED ATTRIBUTE OPERATION

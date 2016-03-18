@@ -2,7 +2,7 @@
 // Project ePamms
 //
 // This is a part of the ePamms applications package.
-// Copyright © 2007 - 2015 Arksoft, Inc.
+// Copyright (c) 2007 - 2016 Arksoft, Inc.
 // All Rights Reserved.
 //
 // SUBSYSTEM:    lPrimReg      - Primary Registrant maintenance operations
@@ -13,7 +13,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 //
-//    OPERATION: dFullNameLFM
+//  OPERATION: dFullNameLFM
 //
 /////////////////////////////////////////////////////////////////////////////
 DERIVED ATTRIBUTE OPERATION
@@ -38,7 +38,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-//    OPERATION: dFullNameFML
+//  OPERATION: dFullNameFML
 //
 /////////////////////////////////////////////////////////////////////////////
 DERIVED ATTRIBUTE OPERATION
@@ -62,8 +62,8 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: dRegistrantNameID
-// Registrant Name + EPA Registrant Number
+//  OPERATION: dRegistrantNameID
+//  Registrant Name + EPA Registrant Number
 //
 /////////////////////////////////////////////////////////////////////////////
 DERIVED ATTRIBUTE OPERATION
@@ -104,11 +104,11 @@ dRegistrantNameID( VIEW lPrimReg BASED ON LOD lPrimReg,
 END
 
 
-/*************************************************************************************************
-**    
-**    OPERATION: dMasterProductNameNbr
-**    
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//    
+//  OPERATION: dMasterProductNameNbr
+//    
+/////////////////////////////////////////////////////////////////////////////
 DERIVED ATTRIBUTE OPERATION
 dMasterProductNameNbr( VIEW lPrimReg BASED ON LOD lPrimReg,
                        STRING ( 32 ) InternalEntityStructure,

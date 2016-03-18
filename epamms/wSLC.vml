@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: CancelAndReturnSLC
+//  OPERATION: CancelAndReturnSLC
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -15,7 +15,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: SaveSLC
+//  OPERATION: SaveSLC
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -1396,11 +1396,11 @@ GOTO_MarketingKeywordSelect( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: CANCEL_MLC_Version
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: CANCEL_MLC_Version
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 CANCEL_MLC_Version( VIEW ViewToWindow )
 
@@ -1411,11 +1411,11 @@ CANCEL_MLC_Version( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: GOTO_CopySPLD_Version
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_CopySPLD_Version
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_CopySPLD_Version( VIEW ViewToWindow )
 
@@ -1468,11 +1468,11 @@ COPY_SPLD_VersionCurrent( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: COPY_SPLD_VersionNext
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: COPY_SPLD_VersionNext
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 COPY_SPLD_VersionNext( VIEW ViewToWindow )
 
@@ -1556,11 +1556,11 @@ COPY_SPLD_VersionNext( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: CANCEL_SPLD_Version
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: CANCEL_SPLD_Version
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 CANCEL_SPLD_Version( VIEW ViewToWindow )
 
@@ -1570,11 +1570,11 @@ CANCEL_SPLD_Version( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: GOTO_CopySLC_Version
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_CopySLC_Version
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_CopySLC_Version( VIEW ViewToWindow )
 
@@ -1628,11 +1628,11 @@ COPY_SLC_VersionCurrent( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: COPY_SLC_VersionNext
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: COPY_SLC_VersionNext
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 COPY_SLC_VersionNext( VIEW ViewToWindow )
 
@@ -1678,11 +1678,11 @@ COPY_SLC_VersionNext( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: CANCEL_SLC_Version
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: CANCEL_SLC_Version
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 CANCEL_SLC_Version( VIEW ViewToWindow )
 
@@ -1692,11 +1692,11 @@ CANCEL_SLC_Version( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: CLOSE_ChangeMessages
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: CLOSE_ChangeMessages
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 CLOSE_ChangeMessages( VIEW ViewToWindow )
 
@@ -1706,33 +1706,33 @@ CLOSE_ChangeMessages( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-** OPERATION: CorrectSLC_Data
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: CorrectSLC_Data
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 CorrectSLC_Data( VIEW ViewToWindow )
 
-    VIEW mSubLC REGISTERED AS mSubLC
-    VIEW mMasLC REGISTERED AS mMasLC
+   VIEW mSubLC REGISTERED AS mSubLC
+   VIEW mMasLC REGISTERED AS mMasLC
 
-    // Sync Marketing Text and Title of SLC with MLC.
-    FOR EACH mSubLC.S_MarketingSection
-       SET CURSOR FIRST mMasLC.M_MarketingSection
-           WHERE mMasLC.M_MarketingSection.ID = mSubLC.M_MarketingSection.ID
-       IF RESULT >= zCURSOR_SET
-          mSubLC.S_MarketingSection.Title = mMasLC.M_MarketingSection.Title
-          FOR EACH mSubLC.S_MarketingStatement
-             SET CURSOR FIRST mMasLC.M_MarketingStatement
-                     WHERE mMasLC.M_MarketingStatement.ID = mSubLC.M_MarketingStatement.ID
-             IF RESULT >= zCURSOR_SET
-                mSubLC.S_MarketingStatement.Title = mMasLC.M_MarketingStatement.Title
-                mSubLC.S_MarketingStatement.Text = mMasLC.M_MarketingStatement.Text
-             END
+   // Sync Marketing Text and Title of SLC with MLC.
+   FOR EACH mSubLC.S_MarketingSection
+      SET CURSOR FIRST mMasLC.M_MarketingSection
+          WHERE mMasLC.M_MarketingSection.ID = mSubLC.M_MarketingSection.ID
+      IF RESULT >= zCURSOR_SET
+         mSubLC.S_MarketingSection.Title = mMasLC.M_MarketingSection.Title
+         FOR EACH mSubLC.S_MarketingStatement
+            SET CURSOR FIRST mMasLC.M_MarketingStatement
+                    WHERE mMasLC.M_MarketingStatement.ID = mSubLC.M_MarketingStatement.ID
+            IF RESULT >= zCURSOR_SET
+               mSubLC.S_MarketingStatement.Title = mMasLC.M_MarketingStatement.Title
+               mSubLC.S_MarketingStatement.Text = mMasLC.M_MarketingStatement.Text
             END
-          END
-    END
+         END
+      END
+   END
 END
 
 

@@ -2,7 +2,7 @@
 // Project ePamms
 //
 // This is a part of the ePamms applications package.
-// Copyright © 2007 - 2015 Arksoft, Inc.
+// Copyright (c) 2007 - 2016 Arksoft, Inc.
 // All Rights Reserved.
 //
 // SUBSYSTEM:    wStart      - ePamms start operations
@@ -13,7 +13,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: ContrivedError
+//  OPERATION: ContrivedError
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCAddUpdateKeywordMarketing --%>
+<%-- wMLCAddUpdateKeywordMarketing   Generate Timestamp: 20160317151006328 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -115,7 +115,7 @@ public int DoInputMapping( HttpServletRequest request,
          strTag = "GridCtrlText11::" + strEntityKey;
          strMapValue = request.getParameter( strTag );
          if ( strMapValue != null ) 
-         { 
+         {
             try
             {
                if ( webMapping )
@@ -128,7 +128,7 @@ public int DoInputMapping( HttpServletRequest request,
                nMapError = -16;
                VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
          }
-      } 
+      }
 
          csrRC = vGridTmp.cursor( "M_InsertTextMarketing" ).setNextContinue( );
       }
@@ -940,11 +940,11 @@ else
       }  // for ( TableEntry entry
       // The value from the database isn't in the domain, add it to the list as disabled.
       if ( !inListComboBox1 )
-      { 
+      {
 %>
          <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
 <%
-      }  
+      }
    }  // if view != null
 %>
 </select>
@@ -968,7 +968,7 @@ else
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox1:GroupBox */ %>
 
-<div id="GroupBox1" name="GroupBox1" style="width:838px;height:142px;float:left;">  <!-- GroupBox1 --> 
+<div id="GroupBox1" name="GroupBox1" style="width:716px;height:142px;float:left;">  <!-- GroupBox1 --> 
 
 
  <!-- This is added as a line spacer -->
@@ -978,7 +978,7 @@ else
 <div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox7:GroupBox */ %>
 
-<div id="GroupBox7" name="GroupBox7"   style="float:left;position:relative; width:786px; height:30px;">  <!-- GroupBox7 --> 
+<div id="GroupBox7" name="GroupBox7"   style="float:left;position:relative; width:702px; height:30px;">  <!-- GroupBox7 --> 
 
 <% /* Text5:Text */ %>
 
@@ -1067,7 +1067,7 @@ try
 
 <tr<%=strOdd%>>
 
-   <td><input size="115" value="<%=strGridCtrlText11%>"<%=strGridCtrlText11ErrorColor%> name="GridCtrlText11::<%=strEntityKey%>" id="GridCtrlText11::<%=strEntityKey%>" ></td>
+   <td><input size="99" value="<%=strGridCtrlText11%>"<%=strGridCtrlText11ErrorColor%> name="GridCtrlText11::<%=strEntityKey%>" id="GridCtrlText11::<%=strEntityKey%>" ></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="DeleteBtn1" onclick="ADD_MarketingKeywordTextItem( this.id )" id="DeleteBtn1::<%=strEntityKey%>"><img src="./images/ePammsNew.png" alt="Add"></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn1" onclick="DELETE_InsertTextItem( this.id )" id="BitmapBtn1::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
@@ -1121,6 +1121,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </div>  <!-- This is the end tag for wrapper -->
 
 </body>
+<script type="text/javascript">animatedcollapse.init();</script>
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCAddUpdateKeywordMarketing" );

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wStartUpePammsPortal --%>
+<%-- wStartUpePammsPortal   Generate Timestamp: 20160317151023466 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -179,6 +179,39 @@ if ( strActionToProcess != null )
          vMsgQ.drop( );
       }
 
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "TEST_IncludeError" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wStartUpePammsPortal", strActionToProcess );
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wStartUpePammsPortal", "wStartUp.TEST_IncludeError" );
+      nOptRC = wStartUp.TEST_IncludeError( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wStartUp.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wStartUp.SetWebRedirection( vKZXMLPGO, wStartUp.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
    }
 
    while ( bDone == false && StringUtils.equals( strActionToProcess, "ReturnToLogin" ) )
@@ -995,6 +1028,19 @@ else
 
 </div>  <!-- End of a new line -->
 
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:46px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:60px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+<% /* Test:PushBtn */ %>
+<button type="button" name="Test" id="Test" value="" onclick="TEST_IncludeError( )" style="width:190px;height:60px;">TEST_IncludeError</button>
+
+</div>  <!-- End of a new line -->
+
 
 <%
    if ( StringUtils.equals( strErrorFlag, "X" ) )
@@ -1022,6 +1068,7 @@ else
 </div>  <!-- This is the end tag for wrapper -->
 
 </body>
+<script type="text/javascript">animatedcollapse.init();</script>
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wStartUpePammsPortal" );

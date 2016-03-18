@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSPLDGraphicalView --%>
+<%-- wSPLDGraphicalView   Generate Timestamp: 20160317151021241 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1461,6 +1461,7 @@ else
 </div>  <!-- This is the end tag for wrapper -->
 
 </body>
+<script type="text/javascript">animatedcollapse.init();</script>
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSPLDGraphicalView" );

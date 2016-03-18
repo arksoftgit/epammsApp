@@ -2,7 +2,7 @@
 // Project ePamms
 //
 // This is a part of the ePamms applications package.
-// Copyright © 2007 - 2015 Arksoft, Inc.
+// Copyright (c) 2007 - 2016 Arksoft, Inc.
 // All Rights Reserved.
 //
 // SUBSYSTEM:    wMLC          - Primary Registrant Label Content operations
@@ -13,7 +13,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: CancelAndReturnMLC
+//  OPERATION: CancelAndReturnMLC
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -37,7 +37,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: SaveAndReturnMLC
+//  OPERATION: SaveAndReturnMLC
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -66,7 +66,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: SaveMLC
+//  OPERATION: SaveMLC
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -122,7 +122,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: InitMasterLabelContentForUpdate
+//  OPERATION: InitMasterLabelContentForUpdate
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -144,7 +144,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: FinalizeMasterLabelContent
+//  OPERATION: FinalizeMasterLabelContent
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -181,7 +181,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: GOTO_IngredientsStatementDelete
+//  OPERATION: GOTO_IngredientsStatementDelete
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -197,7 +197,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: AcceptAddNewIngredient
+//  OPERATION: AcceptAddNewIngredient
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -222,7 +222,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: GOTO_StorageDispSectionDelete
+//  OPERATION: GOTO_StorageDispSectionDelete
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -238,7 +238,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: CleanStorDispStmtHTML
+//  OPERATION: CleanStorDispStmtHTML
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -252,7 +252,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: AcceptAddNewStorDispSect
+//  OPERATION: AcceptAddNewStorDispSect
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -275,7 +275,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: GOTO_StorageDispStatementDelete
+//  OPERATION: GOTO_StorageDispStatementDelete
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -291,7 +291,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: AcceptAddNewStorDispStmt
+//  OPERATION: AcceptAddNewStorDispStmt
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -313,11 +313,11 @@ AcceptAddNewStorDispStmt( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: GOTO_StorageDispStatementAdd
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_StorageDispStatementAdd
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_StorageDispStatementAdd( VIEW ViewToWindow )
 
@@ -334,7 +334,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: ConfirmDeleteComponent
+//  OPERATION: ConfirmDeleteComponent
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -351,7 +351,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: CancelDeleteComponent
+//  OPERATION: CancelDeleteComponent
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -366,7 +366,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: GOTO_UpdateMasterProduct
+//  OPERATION: GOTO_UpdateMasterProduct
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -385,7 +385,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: NEW_MasterProduct
+//  OPERATION: NEW_MasterProduct
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -410,7 +410,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: InitListMasterProducts
+//  OPERATION: InitListMasterProducts
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -432,7 +432,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: SAVE_MasterProduct
+//  OPERATION: SAVE_MasterProduct
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -491,7 +491,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: CancelUpdateMasterProduct
+//  OPERATION: CancelUpdateMasterProduct
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -507,7 +507,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: GOTO_UpdateMLC
+//  OPERATION: GOTO_UpdateMLC
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -589,7 +589,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: NEW_MLC
+//  OPERATION: NEW_MLC
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -607,7 +607,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: GenerateNewMLC_Version
+//  OPERATION: GenerateNewMLC_Version
 //
 // Creates a new version of an MLC from a previous version. It copies one
 // MLC to another and ties the second back to the first.
@@ -636,7 +636,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: CompareToPreviousMLC
+//  OPERATION: CompareToPreviousMLC
 //
 // Used by the Primary Registrant to analyze changes made to an MLC by
 // comparing it to the MLC from which it was created. It's not for comparing
@@ -677,7 +677,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: CancelDeleteMasterProduct
+//  OPERATION: CancelDeleteMasterProduct
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -691,7 +691,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: ConfirmDeleteMasterProduct
+//  OPERATION: ConfirmDeleteMasterProduct
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -716,11 +716,11 @@ ConfirmDeleteMasterProduct( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: GOTO_StorageDispSectionUpdate
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_StorageDispSectionUpdate
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_StorageDispSectionUpdate( VIEW ViewToWindow )
 
@@ -733,7 +733,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: ConfirmDeleteMasterLabelContent
+//  OPERATION: ConfirmDeleteMasterLabelContent
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -753,7 +753,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: InitIngredientsSect
+//  OPERATION: InitIngredientsSect
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -776,7 +776,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: InitHumanHazardSect
+//  OPERATION: InitHumanHazardSect
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -805,7 +805,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: GOTO_PrecautionaryStmtDelete
+//  OPERATION: GOTO_PrecautionaryStmtDelete
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -819,11 +819,11 @@ GOTO_PrecautionaryStmtDelete( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: EditPrecautionarySection
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: EditPrecautionarySection
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 EditPrecautionarySection( VIEW ViewToWindow )
 
@@ -840,7 +840,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: GOTO_FirstAidStmtDelete
+//  OPERATION: GOTO_FirstAidStmtDelete
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -854,11 +854,11 @@ GOTO_FirstAidStmtDelete( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: EditFirstAidSection
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: EditFirstAidSection
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 EditFirstAidSection( VIEW ViewToWindow )
 
@@ -875,7 +875,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: GOTO_HazardsStmtDelete
+//  OPERATION: GOTO_HazardsStmtDelete
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -889,11 +889,11 @@ GOTO_HazardsStmtDelete( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: EditEnvironmentalHazardsSection
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: EditEnvironmentalHazardsSection
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 EditEnvironmentalHazardsSection( VIEW ViewToWindow )
 
@@ -908,11 +908,11 @@ EditEnvironmentalHazardsSection( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: EditChemicalHazardsSection
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: EditChemicalHazardsSection
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 EditChemicalHazardsSection( VIEW ViewToWindow )
 
@@ -929,7 +929,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: DELETE_SelectedUsageEntries
+//  OPERATION: DELETE_SelectedUsageEntries
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -961,7 +961,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: SaveAddNewUsage
+//  OPERATION: SaveAddNewUsage
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -982,11 +982,11 @@ SaveAddNewUsage( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: AcceptAndNextUsage
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: AcceptAndNextUsage
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 AcceptAndNextUsage( VIEW ViewToWindow )
 
@@ -1008,7 +1008,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: ConfirmDeleteUsageEntry
+//  OPERATION: ConfirmDeleteUsageEntry
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -1100,7 +1100,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: CancelDeleteUsageEntry
+//  OPERATION: CancelDeleteUsageEntry
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -1117,11 +1117,11 @@ CancelDeleteUsageEntry( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: PrebuildDeleteUsageStatements
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: PrebuildDeleteUsageStatements
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 PrebuildDeleteUsageStatements( VIEW ViewToWindow )
 
@@ -1139,11 +1139,11 @@ PrebuildDeleteUsageStatements( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: EditClaimsSection
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: EditClaimsSection
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 EditClaimsSection( VIEW ViewToWindow )
 
@@ -1158,11 +1158,11 @@ EditClaimsSection( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: EditAreasOfUseSection
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: EditAreasOfUseSection
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 EditAreasOfUseSection( VIEW ViewToWindow )
 
@@ -1177,11 +1177,11 @@ EditAreasOfUseSection( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: EditSurfacesSection
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: EditSurfacesSection
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 EditSurfacesSection( VIEW ViewToWindow )
 
@@ -1199,11 +1199,11 @@ EditSurfacesSection( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: EditApplicationTypesSection
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: EditApplicationTypesSection
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 EditApplicationTypesSection( VIEW ViewToWindow )
 
@@ -1218,11 +1218,11 @@ EditApplicationTypesSection( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: GOTO_DirsForUseSectionDelete
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_DirsForUseSectionDelete
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_DirsForUseSectionDelete( VIEW ViewToWindow )
 
@@ -1234,11 +1234,11 @@ GOTO_DirsForUseSectionDelete( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: GOTO_SelectRemoveDrivingDU
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_SelectRemoveDrivingDU
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_SelectRemoveDrivingDU( VIEW ViewToWindow )
 
@@ -1249,11 +1249,11 @@ GOTO_SelectRemoveDrivingDU( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: GOTO_SelectRemoveDUEntries
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_SelectRemoveDUEntries
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_SelectRemoveDUEntries( VIEW ViewToWindow )
 
@@ -1264,11 +1264,11 @@ GOTO_SelectRemoveDUEntries( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: GOTO_DirsForUseStatementAdd
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_DirsForUseStatementAdd
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_DirsForUseStatementAdd( VIEW ViewToWindow )
 
@@ -1280,11 +1280,11 @@ GOTO_DirsForUseStatementAdd( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: AcceptAddNewDU_Stmt
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: AcceptAddNewDU_Stmt
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 AcceptAddNewDU_Stmt( VIEW ViewToWindow )
 
@@ -1305,11 +1305,11 @@ AcceptAddNewDU_Stmt( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: SelectMLC_UsageEntries
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: SelectMLC_UsageEntries
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 SelectMLC_UsageEntries( VIEW ViewToWindow )
 
@@ -1350,11 +1350,11 @@ SelectMLC_UsageEntries( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: RemoveMLC_UsageEntries
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: RemoveMLC_UsageEntries
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 RemoveMLC_UsageEntries( VIEW ViewToWindow )
 
@@ -1385,11 +1385,11 @@ RemoveMLC_UsageEntries( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: CLEAR_MLC_UsageTarget
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: CLEAR_MLC_UsageTarget
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 CLEAR_MLC_UsageTarget( VIEW ViewToWindow )
 
@@ -1414,11 +1414,11 @@ CLEAR_MLC_UsageTarget( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: SETALL_MLC_UsageTarget
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: SETALL_MLC_UsageTarget
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 SETALL_MLC_UsageTarget( VIEW ViewToWindow )
 
@@ -1443,11 +1443,11 @@ SETALL_MLC_UsageTarget( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: CLEAR_MLC_UsageSource
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: CLEAR_MLC_UsageSource
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 CLEAR_MLC_UsageSource( VIEW ViewToWindow )
 
@@ -1459,11 +1459,11 @@ CLEAR_MLC_UsageSource( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: SETALL_MLC_UsageSource
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: SETALL_MLC_UsageSource
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 SETALL_MLC_UsageSource( VIEW ViewToWindow )
 
@@ -1477,7 +1477,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: GOTO_DirsForUseStatementDelete
+//  OPERATION: GOTO_DirsForUseStatementDelete
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -1491,11 +1491,11 @@ GOTO_DirsForUseStatementDelete( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: GOTO_MarketingSectionDelete
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_MarketingSectionDelete
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_MarketingSectionDelete( VIEW ViewToWindow )
 
@@ -1507,11 +1507,11 @@ GOTO_MarketingSectionDelete( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: GOTO_SelectRemoveMktgEntries
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_SelectRemoveMktgEntries
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_SelectRemoveMktgEntries( VIEW ViewToWindow )
 
@@ -1522,11 +1522,11 @@ GOTO_SelectRemoveMktgEntries( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: GOTO_FootnoteStmtDelete
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_FootnoteStmtDelete
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_FootnoteStmtDelete( VIEW ViewToWindow )
 
@@ -1538,11 +1538,11 @@ GOTO_FootnoteStmtDelete( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: GOTO_DilutionChartItemDelete
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_DilutionChartItemDelete
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_DilutionChartItemDelete( VIEW ViewToWindow )
 
@@ -1554,11 +1554,11 @@ GOTO_DilutionChartItemDelete( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: GOTO_DilutionGroupDelete
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_DilutionGroupDelete
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_DilutionGroupDelete( VIEW ViewToWindow )
 
@@ -1570,11 +1570,11 @@ GOTO_DilutionGroupDelete( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: GOTO_DilutionGroupItemDelete
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_DilutionGroupItemDelete
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_DilutionGroupItemDelete( VIEW ViewToWindow )
 
@@ -1588,7 +1588,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: ConfirmAddClaimsStmts
+//  OPERATION: ConfirmAddClaimsStmts
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -1624,7 +1624,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: CancelAddClaimsStmts
+//  OPERATION: CancelAddClaimsStmts
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -1638,7 +1638,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: ConfirmAddAppTypesStmts
+//  OPERATION: ConfirmAddAppTypesStmts
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -1673,7 +1673,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: CancelAddAppTypesStmts
+//  OPERATION: CancelAddAppTypesStmts
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -1687,7 +1687,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: ConfirmAddAreasOfUseStmts
+//  OPERATION: ConfirmAddAreasOfUseStmts
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -1722,7 +1722,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: CancelAddAreasOfUseStmts
+//  OPERATION: CancelAddAreasOfUseStmts
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -1736,7 +1736,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: ConfirmAddSurfacesStmts
+//  OPERATION: ConfirmAddSurfacesStmts
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -1771,7 +1771,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: CancelAddSurfacesStmts
+//  OPERATION: CancelAddSurfacesStmts
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -1786,7 +1786,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: InitClaimsStmtsForInsert
+//  OPERATION: InitClaimsStmtsForInsert
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -1818,7 +1818,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: InitSurfacesStmtsForInsert
+//  OPERATION: InitSurfacesStmtsForInsert
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -1840,7 +1840,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: InitAreasOfUseStmtsForInsert
+//  OPERATION: InitAreasOfUseStmtsForInsert
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -1862,7 +1862,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: InitAppTypesStmtsForInsert
+//  OPERATION: InitAppTypesStmtsForInsert
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -1884,7 +1884,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: InitAddItems
+//  OPERATION: InitAddItems
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -1896,11 +1896,11 @@ InitAddItems( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: ConfirmAddItemsMultiple
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: ConfirmAddItemsMultiple
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 ConfirmAddItemsMultiple( VIEW ViewToWindow )
 
@@ -1947,11 +1947,11 @@ ConfirmAddItemsMultiple( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: ConfirmAddItemsMultipleClaims
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: ConfirmAddItemsMultipleClaims
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 ConfirmAddItemsMultipleClaims( VIEW ViewToWindow )
 
@@ -1986,11 +1986,11 @@ ConfirmAddItemsMultipleClaims( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: GOTO_MarketingStatementAdd
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_MarketingStatementAdd
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_MarketingStatementAdd( VIEW ViewToWindow )
 
@@ -2005,11 +2005,11 @@ GOTO_MarketingStatementAdd( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: GOTO_AddUsageStatements
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_AddUsageStatements
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_AddUsageStatements( VIEW ViewToWindow )
 
@@ -2038,11 +2038,11 @@ GOTO_AddUsageStatements( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: GOTO_AddGroupUsageStatements
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_AddGroupUsageStatements
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_AddGroupUsageStatements( VIEW ViewToWindow )
 
@@ -2071,11 +2071,11 @@ GOTO_AddGroupUsageStatements( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: GOTO_UpdateGroupUsageStatement
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_UpdateGroupUsageStatement
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_UpdateGroupUsageStatement( VIEW ViewToWindow )
 
@@ -2091,11 +2091,11 @@ GOTO_UpdateGroupUsageStatement( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: GOTO_DisplayGeneratedTextMktg
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_DisplayGeneratedTextMktg
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_DisplayGeneratedTextMktg( VIEW ViewToWindow )
 
@@ -2110,11 +2110,11 @@ GOTO_DisplayGeneratedTextMktg( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: GOTO_DisplayGeneratedTextDU
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_DisplayGeneratedTextDU
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_DisplayGeneratedTextDU( VIEW ViewToWindow )
 
@@ -2129,11 +2129,11 @@ GOTO_DisplayGeneratedTextDU( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: GOTO_DisplayGeneratedTextSD
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_DisplayGeneratedTextSD
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_DisplayGeneratedTextSD( VIEW ViewToWindow )
 
@@ -2148,11 +2148,11 @@ GOTO_DisplayGeneratedTextSD( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: GOTO_DisplayGeneratedTextGeneral
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_DisplayGeneratedTextGeneral
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_DisplayGeneratedTextGeneral( VIEW ViewToWindow )
 
@@ -2167,11 +2167,11 @@ GOTO_DisplayGeneratedTextGeneral( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: GOTO_DisplayGeneratedTextUsage
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_DisplayGeneratedTextUsage
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_DisplayGeneratedTextUsage( VIEW ViewToWindow )
 
@@ -2185,11 +2185,11 @@ GOTO_DisplayGeneratedTextUsage( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: GOTO_AddFirstAidStatements
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_AddFirstAidStatements
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_AddFirstAidStatements( VIEW ViewToWindow )
 
@@ -2204,11 +2204,11 @@ GOTO_AddFirstAidStatements( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: GOTO_AddUsageGroup
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_AddUsageGroup
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_AddUsageGroup( VIEW ViewToWindow )
 
@@ -2228,11 +2228,11 @@ GOTO_AddUsageGroup( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: REGENERATE_TitleText
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: REGENERATE_TitleText
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 REGENERATE_TitleText( VIEW ViewToWindow )
 
@@ -2255,11 +2255,11 @@ REGENERATE_TitleText( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: COPY_InsertKeywordMarketing
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: COPY_InsertKeywordMarketing
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 COPY_InsertKeywordMarketing( VIEW ViewToWindow )
 
@@ -2280,11 +2280,11 @@ COPY_InsertKeywordMarketing( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: COPY_InsertKeywordDU
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: COPY_InsertKeywordDU
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 COPY_InsertKeywordDU( VIEW ViewToWindow )
 
@@ -2305,11 +2305,11 @@ COPY_InsertKeywordDU( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: COPY_InsertKeywordSD
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: COPY_InsertKeywordSD
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 COPY_InsertKeywordSD( VIEW ViewToWindow )
 
@@ -2330,11 +2330,11 @@ COPY_InsertKeywordSD( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: COPY_InsertKeywordGeneral
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: COPY_InsertKeywordGeneral
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 COPY_InsertKeywordGeneral( VIEW ViewToWindow )
 
@@ -2355,11 +2355,11 @@ COPY_InsertKeywordGeneral( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: PASTE_InsertKeywordMarketing
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: PASTE_InsertKeywordMarketing
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 PASTE_InsertKeywordMarketing( VIEW ViewToWindow )
 
@@ -2386,11 +2386,11 @@ PASTE_InsertKeywordMarketing( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: PASTE_InsertKeywordDU
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: PASTE_InsertKeywordDU
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 PASTE_InsertKeywordDU( VIEW ViewToWindow )
 
@@ -2417,11 +2417,11 @@ PASTE_InsertKeywordDU( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: PASTE_InsertKeywordSD
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: PASTE_InsertKeywordSD
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 PASTE_InsertKeywordSD( VIEW ViewToWindow )
 
@@ -2448,11 +2448,11 @@ PASTE_InsertKeywordSD( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: PASTE_InsertKeywordGeneral
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: PASTE_InsertKeywordGeneral
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 PASTE_InsertKeywordGeneral( VIEW ViewToWindow )
 
@@ -2479,11 +2479,11 @@ PASTE_InsertKeywordGeneral( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: GOTO_EnvironmentalSectionBefore
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_EnvironmentalSectionBefore
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_EnvironmentalSectionBefore( VIEW ViewToWindow )
 
@@ -2493,11 +2493,11 @@ GOTO_EnvironmentalSectionBefore( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: GOTO_StorageDispSectionAddBefore
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_StorageDispSectionAddBefore
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_StorageDispSectionAddBefore( VIEW ViewToWindow )
 
@@ -2507,11 +2507,11 @@ GOTO_StorageDispSectionAddBefore( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: GOTO_DU_SectionAddBefore
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_DU_SectionAddBefore
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_DU_SectionAddBefore( VIEW ViewToWindow )
 
@@ -2521,11 +2521,11 @@ GOTO_DU_SectionAddBefore( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: GOTO_MarketingSectionAddBefore
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_MarketingSectionAddBefore
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_MarketingSectionAddBefore( VIEW ViewToWindow )
 
@@ -2535,11 +2535,11 @@ GOTO_MarketingSectionAddBefore( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: ADD_BlankClaimsKeywordAndText
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: ADD_BlankClaimsKeywordAndText
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 ADD_BlankClaimsKeywordAndText( VIEW ViewToWindow )
 
@@ -2551,11 +2551,11 @@ ADD_BlankClaimsKeywordAndText( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: AcceptAndReturnUsageStatement
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: AcceptAndReturnUsageStatement
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 AcceptAndReturnUsageStatement( VIEW ViewToWindow )
 
@@ -2567,11 +2567,11 @@ AcceptAndReturnUsageStatement( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: DELETE_UsageGroupEntriesOnly
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: DELETE_UsageGroupEntriesOnly
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 DELETE_UsageGroupEntriesOnly( VIEW ViewToWindow )
 
@@ -2596,11 +2596,11 @@ DELETE_UsageGroupEntriesOnly( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: DELETE_UsageGroupEntries
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: DELETE_UsageGroupEntries
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 DELETE_UsageGroupEntries( VIEW ViewToWindow )
 
@@ -2626,11 +2626,11 @@ DELETE_UsageGroupEntries( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: DELETE_SelectedGroupUsageEntries
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: DELETE_SelectedGroupUsageEntries
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 DELETE_SelectedGroupUsageEntries( VIEW ViewToWindow )
 
@@ -2652,11 +2652,11 @@ DELETE_SelectedGroupUsageEntries( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: SelectMLC_UsageEntriesForGroup
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: SelectMLC_UsageEntriesForGroup
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 SelectMLC_UsageEntriesForGroup( VIEW ViewToWindow )
 
@@ -2675,11 +2675,11 @@ SelectMLC_UsageEntriesForGroup( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: RemoveMLC_UsageEntriesFromGroup
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: RemoveMLC_UsageEntriesFromGroup
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 RemoveMLC_UsageEntriesFromGroup( VIEW ViewToWindow )
 
@@ -2697,11 +2697,11 @@ RemoveMLC_UsageEntriesFromGroup( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: COPY_UsageKeywordAndText
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: COPY_UsageKeywordAndText
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 COPY_UsageKeywordAndText( VIEW ViewToWindow )
 
@@ -2724,11 +2724,11 @@ COPY_UsageKeywordAndText( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: PASTE_UsageKeywordAndText
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: PASTE_UsageKeywordAndText
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 PASTE_UsageKeywordAndText( VIEW ViewToWindow )
 
@@ -2753,11 +2753,11 @@ PASTE_UsageKeywordAndText( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: GOTO_CopyMLC_Version
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_CopyMLC_Version
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 GOTO_CopyMLC_Version( VIEW ViewToWindow )
 
@@ -2777,11 +2777,11 @@ GOTO_CopyMLC_Version( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: CANCEL_MLC_Version
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: CANCEL_MLC_Version
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 CANCEL_MLC_Version( VIEW ViewToWindow )
 
@@ -2792,11 +2792,11 @@ CANCEL_MLC_Version( VIEW ViewToWindow )
 
 END
 
-/*************************************************************************************************
-**
-**    OPERATION: COPY_MLC_Version
-**
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: COPY_MLC_Version
+//
+/////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
 COPY_MLC_Version( VIEW ViewToWindow )
 

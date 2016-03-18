@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCEnvironmentalHazardsSection --%>
+<%-- wMLCEnvironmentalHazardsSection   Generate Timestamp: 20160317151007690 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1033,11 +1033,11 @@ else
       }  // for ( TableEntry entry
       // The value from the database isn't in the domain, add it to the list as disabled.
       if ( !inListComboBox1 )
-      { 
+      {
 %>
          <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
 <%
-      }  
+      }
    }  // if view != null
 %>
 </select>
@@ -1197,6 +1197,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </div>  <!-- This is the end tag for wrapper -->
 
 </body>
+<script type="text/javascript">animatedcollapse.init();</script>
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCEnvironmentalHazardsSection" );

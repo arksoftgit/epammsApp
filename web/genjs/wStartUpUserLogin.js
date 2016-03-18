@@ -195,6 +195,13 @@ function _AfterPageLoaded( )
       timerID = null; // No timeout specified
 
    // Prebuild action has javascript code entered by user.
+   document.getElementById( "EBUserName" ).value = localStorage.getItem( "epamms_user" );
+   document.getElementById( "EBRegistrantName" ).value = localStorage.getItem( "epamms_registrant" );
+   var e1 = document.getElementById( "PrimaryRegistrants" );
+   e1.value = localStorage.getItem( "epamms_organization" );
+   var e2 = document.getElementById( "hPrimaryRegistrants" );
+   e2.value = e1.selectedIndex;
+
 /* var thisLi;
 
    // If the Role is not set when we get here, it is because there is no admin (KeyRole = "U"), so we will only permit the user to go to set up the administrator.
@@ -302,6 +309,11 @@ function ProcessUserLogin( )
 
    // This is for indicating whether the user hit the window close box.
    isWindowClosing = false;
+
+   localStorage.setItem( "epamms_user", document.getElementById( "EBUserName" ).value );
+   localStorage.setItem( "epamms_registrant", document.getElementById( "EBRegistrantName" ).value );
+   var e = document.getElementById("PrimaryRegistrants");
+   localStorage.setItem( "epamms_organization", e.options[e.selectedIndex].text );
 
    if ( _IsDocDisabled( ) == false )
    {

@@ -38,7 +38,7 @@ public class ZeidonObjectEngineConfiguration extends DefaultJavaOeConfiguration
 
     /**
      * This creates a hash map for caching tasks.  It will expire tasks if they have not
-     * been accessed in the last 30 minutes.
+     * been accessed in the last 60 minutes.
      */
     @Override
     public ConcurrentMap<String, Task> getPersistentTaskCacheMap()
@@ -47,7 +47,7 @@ public class ZeidonObjectEngineConfiguration extends DefaultJavaOeConfiguration
         {
             Cache<String, Task> c = CacheBuilder.newBuilder()
                                                 .concurrencyLevel( 10 )
-                                                .expireAfterAccess( 30, TimeUnit.MINUTES )
+                                                .expireAfterAccess( 60, TimeUnit.MINUTES )
                                                 .removalListener( new TaskCacheRemovalListener() )
                                                 .build();
             taskCacheMap = c.asMap();

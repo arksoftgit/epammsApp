@@ -2,7 +2,7 @@
 // Project ePamms
 //
 // This is a part of the ePamms applications package.
-// Copyright © 2007 - 2015 Arksoft, Inc.
+// Copyright (c) 2007 - 2016 Arksoft, Inc.
 // All Rights Reserved.
 //
 // SUBSYSTEM:    mMasProd      - Primary Registrant Master Product operations
@@ -13,7 +13,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: dMasterProductNameNbr
+//  OPERATION: dMasterProductNameNbr
 //
 /////////////////////////////////////////////////////////////////////////////
 DERIVED ATTRIBUTE OPERATION
@@ -51,8 +51,8 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: dRegistrantNameID
-// Registrant Name + EPA Registrant Number
+//  OPERATION: dRegistrantNameID
+//  Registrant Name + EPA Registrant Number
 //
 /////////////////////////////////////////////////////////////////////////////
 DERIVED ATTRIBUTE OPERATION
@@ -93,7 +93,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: dMasterProduct
+//  OPERATION: dMasterProduct
 //
 /////////////////////////////////////////////////////////////////////////////
 DERIVED ATTRIBUTE OPERATION
@@ -130,7 +130,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: dMasterProductDesc
+//  OPERATION: dMasterProductDesc
 //
 /////////////////////////////////////////////////////////////////////////////
 DERIVED ATTRIBUTE OPERATION
@@ -166,7 +166,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: dContentVersionRevDate
+//  OPERATION: dContentVersionRevDate
 //
 /////////////////////////////////////////////////////////////////////////////
 DERIVED ATTRIBUTE OPERATION
@@ -210,11 +210,11 @@ dContentVersionRevDate( VIEW mMasProd BASED ON LOD mMasProd,
 END
 
 
-/*************************************************************************************************
-**    
-**    OPERATION: dSubregProductNameNbr
-**    
-*************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////
+//    
+//  OPERATION: dSubregProductNameNbr
+//    
+/////////////////////////////////////////////////////////////////////////////
 DERIVED ATTRIBUTE OPERATION
 dSubregProductNameNbr( VIEW mMasProd BASED ON LOD mMasProd,
                         STRING ( 32 ) InternalEntityStructure,

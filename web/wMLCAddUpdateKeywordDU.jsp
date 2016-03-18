@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCAddUpdateKeywordDU --%>
+<%-- wMLCAddUpdateKeywordDU   Generate Timestamp: 20160317151006234 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -115,7 +115,7 @@ public int DoInputMapping( HttpServletRequest request,
          strTag = "GridCtrlText11::" + strEntityKey;
          strMapValue = request.getParameter( strTag );
          if ( strMapValue != null ) 
-         { 
+         {
             try
             {
                if ( webMapping )
@@ -128,7 +128,7 @@ public int DoInputMapping( HttpServletRequest request,
                nMapError = -16;
                VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
          }
-      } 
+      }
 
          csrRC = vGridTmp.cursor( "M_InsertTextDU" ).setNextContinue( );
       }
@@ -940,11 +940,11 @@ else
       }  // for ( TableEntry entry
       // The value from the database isn't in the domain, add it to the list as disabled.
       if ( !inListComboBox1 )
-      { 
+      {
 %>
          <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
 <%
-      }  
+      }
    }  // if view != null
 %>
 </select>
@@ -1121,6 +1121,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </div>  <!-- This is the end tag for wrapper -->
 
 </body>
+<script type="text/javascript">animatedcollapse.init();</script>
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wMLCAddUpdateKeywordDU" );

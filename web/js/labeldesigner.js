@@ -2829,7 +2829,7 @@ public class FileServer {
                // if ( value ) will evaluate to true if value is not: null/undefined/NaN/empty string ("")/0/false
                if ( objSPLD["Name"] ) {
                   if ( objSPLD["ProductName"] ) {
-                     $("#zheader_title").text( "Product: " + objSPLD["ProductName"] + "   Label: " + objSPLD["Name"] );
+                     $("#zheader_title").text( "Product: " + objSPLD["ProductName"] + " .... Label: " + objSPLD["Name"] );
                   } else {
                      $("#zheader_title").text( "Label: " + objSPLD["Name"] );
                   }

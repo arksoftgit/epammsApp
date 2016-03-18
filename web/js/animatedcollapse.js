@@ -174,10 +174,22 @@ init:function(){
 },
 
 uninit:function(){
-	var opendivids='', groupswithpersist=''
+	var ac=this;
+	var opendivids=ac.getCookie('acopendivids');
+        var groupswithpersist='';
+	var opendividsNew=(opendivids==null || opendivids=='nada')? [] : opendivids.split(',') //Get list of groups with divs that are persisted
+        if (opendivids==null || opendivids=='nada')
+           opendivids='';
+        else
+           opendivids=opendivids + ',';
 	jQuery.each(this.divholders, function(){
-		if (this.$divref.css('display')!='none'){
+                // If this div is open and not in the "open" list, add it.
+		if (this.$divref.css('display')!='none' && jQuery.inArray(this.id, opendividsNew) == -1){
 			opendivids+=this.id+',' //store ids of DIVs that are expanded when page unloads: 'div1,div2,etc'
+		}
+                // If this div is not open and is in the "open" list, delete it.
+		if (this.$divref.css('display')=='none' && jQuery.inArray(this.id, opendividsNew) != -1){
+                     opendivids=opendivids.replace(this.id+',', '');
 		}
 		if (this.getAttr('group') && this.getAttr('persist'))
 			groupswithpersist+=this.getAttr('group')+',' //store groups with which at least one DIV has persistance enabled: 'group1,group2,etc'

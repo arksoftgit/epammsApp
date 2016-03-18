@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSystemExitHelpMessage --%>
+<%-- wSystemExitHelpMessage   Generate Timestamp: 20160317151025854 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -38,6 +38,7 @@ session = request.getSession( );
 </form>
 </div>  <!-- This is the end tag for wrapper -->
 </body>
+<script type="text/javascript">animatedcollapse.init();</script>
 </html>
 <%
    session.setAttribute( "ZeidonAction", null );

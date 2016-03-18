@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCSPLD_VersionCopy --%>
+<%-- wSLCSPLD_VersionCopy   Generate Timestamp: 20160317151020717 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -708,6 +708,7 @@ else
 </div>  <!-- This is the end tag for wrapper -->
 
 </body>
+<script type="text/javascript">animatedcollapse.init();</script>
 </html>
 <%
    session.setAttribute( "ZeidonWindow", "wSLCSPLD_VersionCopy" );

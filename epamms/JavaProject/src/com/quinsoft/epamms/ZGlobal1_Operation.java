@@ -14,7 +14,7 @@
     You should have received a copy of the GNU Lesser General Public License
     along with Zeidon JOE.  If not, see <http://www.gnu.org/licenses/>.
 
-    Copyright 2009-2010 QuinSoft
+    Copyright (c) 2009 - 2016 Arksoft, Inc.
 **/
 
 package com.quinsoft.epamms;
@@ -4665,7 +4665,7 @@ public class ZGlobal1_Operation extends VmlOperation
          }
          pos++;
       }
-      
+
       return count;
    }
 
@@ -4687,7 +4687,7 @@ public class ZGlobal1_Operation extends VmlOperation
       return sbFileName.toString();
    }
 
-   public int 
+   public int
    InsertMappingWordsIntoString( View     mSPLDef,
                                  StringBuilder sbSourceToModify,
                                  String   szUsageTypeEntityName,
@@ -4722,20 +4722,20 @@ public class ZGlobal1_Operation extends VmlOperation
       while ( openBracePos >= 0 ) {
          // Copy static text up to the brace to the target.
          sbTarget.append( szOrigSource.substring( sourcePos, openBracePos ) );
-         
+
          // Parse the Usage Type out of the string of the form {{xxxxx}}.
          closeBracePos = szOrigSource.indexOf( "}}", openBracePos + 2 );
          if ( closeBracePos >= 0 ) {
             changed = true;
             szUsageType = szOrigSource.substring( openBracePos + 2, closeBracePos );
             sourcePos = closeBracePos + 2; // point to the next static text portion in the original source string
-            
+
             // Copy the Usage values into the text. This will depend on Type.
 
             // Claim, Surface, Area of Use, and Application Type.
-            if ( szUsageType.equals( "Claim" ) || szUsageType.equals( "Claims" ) || 
-                 szUsageType.equals( "Surface" ) || szUsageType.equals( "Surfaces" ) || 
-                 szUsageType.equals( "Area Of Use" ) || szUsageType.equals( "Areas Of Use" ) || 
+            if ( szUsageType.equals( "Claim" ) || szUsageType.equals( "Claims" ) ||
+                 szUsageType.equals( "Surface" ) || szUsageType.equals( "Surfaces" ) ||
+                 szUsageType.equals( "Area Of Use" ) || szUsageType.equals( "Areas Of Use" ) ||
                  szUsageType.equals( "Application Type" ) ||  szUsageType.equals( "Application Types" ) ) {
 
                if ( szUsageType.equals( "Claim" ) || szUsageType.equals( "Claims" ) ) {
@@ -4773,10 +4773,10 @@ public class ZGlobal1_Operation extends VmlOperation
                   }
                }
             } else if ( szUsageType.equals( "Product Name" ) ) {
-               //:szInsertValue = mSPLDef.SubregPhysicalLabelDef.ProductName 
+               //:szInsertValue = mSPLDef.SubregPhysicalLabelDef.ProductName
                szInsertValue = mSPLDef.cursor( "SubregPhysicalLabelDef" ).getAttribute( "ProductName" ).getString();
                sbTarget.append( szInsertValue );
-            } 
+            }
          } else {
             sbSourceToModify.append( " ### Error replacing keywords" );
             return -1;
