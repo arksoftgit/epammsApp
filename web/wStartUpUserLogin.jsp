@@ -341,7 +341,7 @@ if ( strActionToProcess != null )
          strNextJSP_Name = wStartUp.GetWebRedirection( vKZXMLPGO );
       }
 
-      JspWebUtils.createWebSession( session, task, VmlOperation.SfGetUserIdForTask( task ) );  // Post Operation
+JspWebUtils.createWebSession( session, task, VmlOperation.SfGetUserIdForTask( task ) );  // Post Operation
 
       if ( strNextJSP_Name.equals( "" ) )
       {

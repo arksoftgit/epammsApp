@@ -1,4 +1,4 @@
-//start mSPLDef 2016.01.22 19:25:44
+//start mSPLDef 2016.03.18 19:02:04
 zOPER_EXPORT zSHORT OPERATION
 omSPLDef_GeneratePDF_Label( zVIEW vViewToInstance0 );
 
@@ -169,7 +169,7 @@ zOPER_EXPORT zSHORT OPERATION
 omTempl_BuildDisplayStructure( zVIEW vViewToInstance0 );
 
 //end
-//start mMasLC 2016.01.21 19:25:13
+//start mMasLC 2016.03.23 10:01:09
 zOPER_EXPORT zSHORT OPERATION
 omMasLC_MergeUsageSelectEnts( zVIEW vViewToInstance0 );
 
@@ -220,7 +220,7 @@ zOPER_EXPORT zSHORT OPERATION
 omMasLC_BuildNonGroupEntries( zVIEW vViewToInstance0 );
 
 //end
-//start mSubLC 2016.01.21 19:25:15
+//start mSubLC 2016.03.18 19:00:43
 zOPER_EXPORT zSHORT OPERATION
 omSubLC_BuildNewSLC_Version( zVIEW vViewToInstance0,
                              zVIEW vOriginalSLC1,
@@ -264,7 +264,7 @@ omSubLC_ObjectConstraints( zVIEW vViewtoInstance0,
                            zSHORT nState2 );
 
 //end
-//start DOMAINT 2016.01.21 19:25:10
+//start DOMAINT 2016.03.18 19:00:38
 zOPER_EXPORT zSHORT OPERATION
 oDOMAINT_ActivateDomainList( zPVIEW vViewToInstance0,
                              zVIEW vViewToWindow1 );
@@ -285,7 +285,7 @@ oDOMAINT_PreloadSystemDomains( zVIEW vViewToInstance0,
                                zPCHAR pchInstallApp2 );
 
 //end
-//start lMLCATgt 2016.01.21 19:25:11
+//start lMLCATgt 2016.03.18 19:00:39
 zOPER_EXPORT zSHORT OPERATION
 olMLCATgt_BuildDifferencesMLC( zVIEW vViewToInstance0,
                                zVIEW vSourceCompareObject1 );
@@ -304,13 +304,24 @@ zOPER_EXPORT zSHORT OPERATION
 olMLCATgt_DeleteEmptyTitles( zVIEW vViewToInstance0 );
 
 //end
-//start ZGlobal1 2016.01.15 20:02:15
+//start ZGlobal1 2016.03.23 09:54:03
 zOPER_EXPORT zSHORT OPERATION
 ConvertLineToEntity( zVIEW vEntityView0,
                      zVIEW vXOD_View1,
                      zPCHAR pchRecordArea2,
                      zPCHAR pchDelimiterType3,
                      zLONG lMaxRecordLth4 );
+
+zOPER_EXPORT zVOID OPERATION
+InsertOptionalSubUsages( zVIEW vmMasLC0,
+                         zPCHAR pchReturnFormatted1 );
+
+zOPER_EXPORT zSHORT OPERATION
+InsertMappingWordsIntoString( zVIEW vmSPLDef0,
+                              zPCHAR pchszString1,
+                              zPCHAR pchszUsageEntityName2,
+                              zPCHAR pchszUsageNameScope3,
+                              zPCHAR pchszSeparaterCharacter4 );
 
 zOPER_EXPORT zSHORT OPERATION
 BuildSimpleIntegerQualification( zVIEW vvSubtask0,

@@ -675,6 +675,39 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+//  OPERATION: dDisplayAtomicNames
+//  Display required text + optional atomic usages
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dDisplayAtomicNames( VIEW ViewtoInstance BASED ON LOD mMasLC,
+                     STRING ( 32 ) InternalEntityStructure,
+                     STRING ( 32 ) InternalAttribStructure,
+                     SHORT GetOrSetFlag )
+
+   STRING ( 32000 ) szDisplayStatement
+
+   szDisplayStatement = ViewtoInstance.M_Usage.Name
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Display Atomic Name combines required text with optional usage(s).
+      InsertOptionalSubUsages( ViewtoInstance, szDisplayStatement )
+
+      // Store the calculated value in the object.
+      StoreStringInRecord( ViewtoInstance, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
+      RETURN 0
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
 //  OPERATION: dDisplayDU_Statement
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -700,7 +733,6 @@ dDisplayDU_Statement( VIEW mMasLC BASED ON LOD mMasLC,
          szStatementText    = mMasLC.M_DirectionsForUseStatement.Text
          szDisplayStatement = szStatementText
       END
-
 
       // Store the calculated value in the object.
       StoreStringInRecord( mMasLC,

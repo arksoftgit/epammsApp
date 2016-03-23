@@ -1,7 +1,7 @@
-z1000-Zeidon    ZGLOBAL1 TZOGSRCO 01/23/16   23:15:05 1.0a2   
+z1000-Zeidon    ZGLOBAL1 TZOGSRCO 03/23/16   09:54:03 1.0a2   
 eGlobalOperationGroup 1
 aZKey      89816452
-aNextZKeyToAssign 110040688
+aNextZKeyToAssign 110040691
 aName      ZGlobal1
 aDesc      Global Operations in C
 aExtension C
@@ -50,6 +50,26 @@ aDataType  L
 aPFlag     N
 aUFlag     N
 aZKey      89816458
+
+eOperation 2
+aName      InsertOptionalSubUsages
+aZKey      110040689
+aDesc      Insert {sub-usages} into Usage string
+aType      G
+
+eParameter 3
+aShortDesc mMasLC
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      110040690
+
+eParameter 3
+aShortDesc ReturnFormatted
+aDataType  S
+aPFlag     Y
+aUFlag     N
+aZKey      110040691
 
 eOperation 2
 aName      InsertMappingWordsIntoString

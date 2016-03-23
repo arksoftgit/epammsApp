@@ -1866,6 +1866,72 @@ omMasLC_dFullHazardStatement( View     mMasLC,
 
 
    //:DERIVED ATTRIBUTE OPERATION
+   //:dDisplayAtomicNames( VIEW ViewtoInstance BASED ON LOD mMasLC,
+   //:                  STRING ( 32 ) InternalEntityStructure,
+   //:                  STRING ( 32 ) InternalAttribStructure,
+   //:                  SHORT GetOrSetFlag )
+
+   //:STRING ( 32000 ) szDisplayStatement
+public int 
+omMasLC_dDisplayAtomicNames( View     ViewtoInstance,
+                             String InternalEntityStructure,
+                             String InternalAttribStructure,
+                             Integer   GetOrSetFlag )
+{
+   String   szDisplayStatement = null;
+   int      lTempInteger_0 = 0;
+
+
+   //:szDisplayStatement = ViewtoInstance.M_Usage.Name
+   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+   StringBuilder sb_szDisplayStatement;
+   if ( szDisplayStatement == null )
+      sb_szDisplayStatement = new StringBuilder( 32 );
+   else
+      sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+       GetVariableFromAttribute( sb_szDisplayStatement, mi_lTempInteger_0, 'S', 32001, ViewtoInstance, "M_Usage", "Name", "", 0 );
+   lTempInteger_0 = mi_lTempInteger_0.intValue( );
+   szDisplayStatement = sb_szDisplayStatement.toString( );}
+   //:CASE GetOrSetFlag
+   switch( GetOrSetFlag )
+   { 
+      //:OF   zDERIVED_GET:
+      case zDERIVED_GET :
+
+         //:// Display Atomic Name combines required text with optional usage(s).
+         //:InsertOptionalSubUsages( ViewtoInstance, szDisplayStatement )
+         {
+          ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( ViewtoInstance );
+           {StringBuilder sb_szDisplayStatement;
+         if ( szDisplayStatement == null )
+            sb_szDisplayStatement = new StringBuilder( 32 );
+         else
+            sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                  m_ZGlobal1_Operation.InsertOptionalSubUsages( ViewtoInstance, sb_szDisplayStatement );
+         szDisplayStatement = sb_szDisplayStatement.toString( );}
+          // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+         }
+
+         //:// Store the calculated value in the object.
+         //:StoreStringInRecord( ViewtoInstance, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
+         StoreStringInRecord( ViewtoInstance, InternalEntityStructure, InternalAttribStructure, szDisplayStatement );
+         //:RETURN 0
+         if(8==8)return( 0 );
+
+         //:/* end zDERIVED_GET */
+         //:OF   zDERIVED_SET:
+         case zDERIVED_SET :
+            break ;
+      } 
+
+
+      //:  /* end zDERIVED_SET */
+      //:END  /* case */
+      return( 0 );
+   } 
+
+
+   //:DERIVED ATTRIBUTE OPERATION
    //:dDisplayDU_Statement( VIEW mMasLC BASED ON LOD mMasLC,
    //:                   STRING ( 32 ) InternalEntityStructure,
    //:                   STRING ( 32 ) InternalAttribStructure,
@@ -1965,7 +2031,6 @@ omMasLC_dDisplayDU_Statement( View     mMasLC,
          } 
 
          //:END
-
 
          //:// Store the calculated value in the object.
          //:StoreStringInRecord( mMasLC,

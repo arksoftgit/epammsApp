@@ -1,4 +1,4 @@
-z1000-Zeidon    EPAMMS   TZZOXOGO 01/15/16   20:02:15 1.0a2   
+z1000-Zeidon    EPAMMS   TZZOXOGO 03/23/16   09:54:03 1.0a2   
 eTZZOXOGO  1
 aNAME      epamms
 
@@ -29,6 +29,42 @@ aDATATYPE  S
 ePARAMETER 4
 aNAME      MaxRecordLth
 aDATATYPE  L
+
+eOPERATION 3
+aNAME      InsertOptionalSubUsages
+aTYPE      G
+
+ePARAMETER 4
+aNAME      mMasLC
+aDATATYPE  V
+
+ePARAMETER 4
+aNAME      ReturnFormatted
+aDATATYPE  S
+
+eOPERATION 3
+aNAME      InsertMappingWordsIntoString
+aTYPE      G
+
+ePARAMETER 4
+aNAME      mSPLDef
+aDATATYPE  V
+
+ePARAMETER 4
+aNAME      szString
+aDATATYPE  S
+
+ePARAMETER 4
+aNAME      szUsageEntityName
+aDATATYPE  S
+
+ePARAMETER 4
+aNAME      szUsageNameScope
+aDATATYPE  S
+
+ePARAMETER 4
+aNAME      szSeparaterCharacters
+aDATATYPE  S
 
 eOPERATION 3
 aNAME      BuildSimpleIntegerQualification
@@ -1228,30 +1264,6 @@ aDATATYPE  S
 
 ePARAMETER 4
 aNAME      SeparatorCharacters
-aDATATYPE  S
-
-eOPERATION 3
-aNAME      InsertMappingWordsIntoString
-aTYPE      G
-
-ePARAMETER 4
-aNAME      mSPLDef
-aDATATYPE  V
-
-ePARAMETER 4
-aNAME      szString
-aDATATYPE  S
-
-ePARAMETER 4
-aNAME      szUsageEntityName
-aDATATYPE  S
-
-ePARAMETER 4
-aNAME      szUsageNameScope
-aDATATYPE  S
-
-ePARAMETER 4
-aNAME      szSeparaterCharacters
 aDATATYPE  S
 
 eOPERATION 3

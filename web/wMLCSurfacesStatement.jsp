@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCSurfacesStatement   Generate Timestamp: 20160317151009093 --%>
+<%-- wMLCSurfacesStatement   Generate Timestamp: 20160323110418407 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -60,25 +60,43 @@ public int DoInputMapping( HttpServletRequest request,
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
    {
-      // EditBox: PrecautionarySubtitle1
+      // EditBox: PrecautionarySubtitle
       nRC = mMasLC.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "PrecautionarySubtitle1" );
+         strMapValue = request.getParameter( "PrecautionarySubtitle" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "PrecautionarySubtitle1", "", strMapValue );
+               VmlOperation.CreateMessage( task, "PrecautionarySubtitle", "", strMapValue );
             else
                mMasLC.cursor( "M_Usage" ).getAttribute( "Name" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "PrecautionarySubtitle1", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "PrecautionarySubtitle", e.getReason( ), strMapValue );
          }
       }
 
+      // Grid: GridClaims
+      iTableRowCnt = 0;
+
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
+      vGridTmp = mMasLC.newView( );
+      csrRC = vGridTmp.cursor( "M_SubUsage" ).setFirst(  );
+      while ( csrRC.isSet() )
+      {
+         lEntityKey = vGridTmp.cursor( "M_SubUsage" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         iTableRowCnt++;
+
+         csrRC = vGridTmp.cursor( "M_SubUsage" ).setNextContinue( );
+      }
+
+      vGridTmp.drop( );
       // Grid: Grid5
       iTableRowCnt = 0;
 
@@ -288,6 +306,38 @@ if ( strActionToProcess != null )
       break;
    }
 
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_AddSubSurface" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCSurfacesStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Auto Object Function
+      nRC = 0;
+      try
+      {
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_SubUsage" );
+      cursor.createTemporalEntity( );
+
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "GOTO_AddSubSurface", e.getMessage( ), "" );
+         break;
+      }
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "SurfaceText" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
    while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelAreasOfUseStatement" ) )
    {
       bDone = true;
@@ -421,6 +471,64 @@ if ( strActionToProcess != null )
          strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "GeneratedTextDisplay" );
       }
 
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_UpdateSurfacesSubStatement" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCSurfacesStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mMasLC;
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mMasLC.cursor( "M_SubUsage" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mMasLC.cursor( "M_SubUsage" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mMasLC.cursor( "M_SubUsage" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mMasLC.cursor( "M_SubUsage" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Action Auto Object Function
+      nRC = 0;
+      try
+      {
+      EntityCursor cursor = mMasLC.cursor( "M_SubUsage" );
+      cursor.createTemporalSubobjectVersion( );
+
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "GOTO_UpdateSurfacesSubStatement", e.getMessage( ), "" );
+         break;
+      }
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "SurfaceText" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -834,7 +942,7 @@ else
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox4:GroupBox */ %>
 
-<div id="GroupBox4" name="GroupBox4" style="width:480px;height:28px;float:left;">  <!-- GroupBox4 --> 
+<div id="GroupBox4" name="GroupBox4" style="width:826px;height:28px;float:left;">  <!-- GroupBox4 --> 
 
 
  <!-- This is added as a line spacer -->
@@ -842,9 +950,9 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <span style="height:16px;">&nbsp</span>
-<% /* PrecautionarySection1:Text */ %>
+<% /* PrecautionarySection:Text */ %>
 
-<span class="groupbox"  id="PrecautionarySection1" name="PrecautionarySection1" style="width:338px;height:16px;">Surfaces Statement</span>
+<span class="groupbox"  id="PrecautionarySection" name="PrecautionarySection" style="width:338px;height:16px;">Surfaces Statement</span>
 
 </div>  <!-- End of a new line -->
 
@@ -857,17 +965,17 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GBPrecautionarySection1:GroupBox */ %>
+<% /* GBPrecautionarySection:GroupBox */ %>
 
-<div id="GBPrecautionarySection1" name="GBPrecautionarySection1" class="withborder" style="width:480px;height:28px;float:left;">  <!-- GBPrecautionarySection1 --> 
+<div id="GBPrecautionarySection" name="GBPrecautionarySection" class="withborder" style="width:826px;height:28px;float:left;">  <!-- GBPrecautionarySection --> 
 
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox2:GroupBox */ %>
-<div id="GroupBox2" name="GroupBox2" style="float:left;width:464px;" >
+<div id="GroupBox2" name="GroupBox2" style="float:left;width:816px;" >
 
-<table cols=0 style="width:464px;"  class="grouptable">
+<table cols=0 style="width:816px;"  class="grouptable">
 
 <tr>
 <td valign="top" style="width:132px;">
@@ -876,10 +984,10 @@ else
 <span  id="Description" name="Description" style="width:128px;height:16px;">Surface Text:</span>
 
 </td>
-<td valign="top"  class="text12" style="width:312px;">
-<% /* PrecautionarySubtitle1:EditBox */ %>
+<td valign="top"  class="text12" style="width:666px;">
+<% /* PrecautionarySubtitle:EditBox */ %>
 <%
-   strErrorMapValue = VmlOperation.CheckError( "PrecautionarySubtitle1", strError );
+   strErrorMapValue = VmlOperation.CheckError( "PrecautionarySubtitle", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -890,7 +998,7 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "PrecautionarySubtitle1" );
+         task.log( ).debug( "Invalid View: " + "PrecautionarySubtitle" );
       else
       {
          nRC = mMasLC.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
@@ -902,8 +1010,8 @@ else
             }
             catch (Exception e)
             {
-               out.println("There is an error on PrecautionarySubtitle1: " + e.getMessage());
-               task.log().error( "*** Error on ctrl PrecautionarySubtitle1", e );
+               out.println("There is an error on PrecautionarySubtitle: " + e.getMessage());
+               task.log().error( "*** Error on ctrl PrecautionarySubtitle", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -911,12 +1019,12 @@ else
             task.log( ).debug( "M_Usage.Name: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for PrecautionarySubtitle1: " + "mMasLC.M_Usage" );
+            task.log( ).debug( "Entity does not exist for PrecautionarySubtitle: " + "mMasLC.M_Usage" );
       }
    }
 %>
 
-<input class="text12" name="PrecautionarySubtitle1" id="PrecautionarySubtitle1" style="width:312px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="PrecautionarySubtitle" id="PrecautionarySubtitle" style="width:666px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -927,14 +1035,121 @@ else
 </div>  <!-- End of a new line -->
 
 
-</div>  <!--  GBPrecautionarySection1 --> 
+</div>  <!--  GBPrecautionarySection --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
  <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
+<div style="height:18px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox1:GroupBox */ %>
+
+<div id="GroupBox1" name="GroupBox1"   style="float:left;position:relative; width:832px; height:198px;">  <!-- GroupBox1 --> 
+
+<% /* GroupBox6:GroupBox */ %>
+
+<div id="GroupBox6" name="GroupBox6" style="width:756px;height:30px;position:absolute;left:0px;top:8px;">  <!-- GroupBox6 --> 
+
+<% /* NewSubSurface:PushBtn */ %>
+<button type="button" class="newbutton" name="NewSubSurface" id="NewSubSurface" value="" onclick="GOTO_AddSubSurface( )" style="width:66px;height:26px;position:absolute;left:618px;top:4px;">New</button>
+
+<% /* OptionalSurfaces:Text */ %>
+
+<label class="listheader"  id="OptionalSurfaces" name="OptionalSurfaces" style="width:398px;height:16px;position:absolute;left:10px;top:8px;">Optional Surfaces</label>
+
+
+</div>  <!--  GroupBox6 --> 
+<% /* GridClaims:Grid */ %>
+<div class="tableScroll"  style="position:absolute;top:46px;left:6px;width:616px;height:148px;">
+
+<table name="GridClaims" id="GridClaims" cellspacing=0 class="sortable"  cols=2  >
+
+<thead bgcolor=green><tr>
+
+   <th>Surfaces</th>
+   <th>Update</th>
+
+</tr></thead>
+
+<tbody height="98px;">
+
+<%
+try
+{
+   iTableRowCnt = 0;
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) )
+   {
+      long   lEntityKey;
+      String strEntityKey;
+      String strButtonName;
+      String strOdd;
+      String strTag;
+      String strSurfaces;
+      String strBMBUpdateClaimsStatement;
+      
+      View vGridClaims;
+      vGridClaims = mMasLC.newView( );
+      csrRC2 = vGridClaims.cursor( "M_SubUsage" ).setFirst(  );
+      while ( csrRC2.isSet() )
+      {
+         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
+         iTableRowCnt++;
+
+         lEntityKey = vGridClaims.cursor( "M_SubUsage" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         strSurfaces = "";
+         nRC = vGridClaims.cursor( "M_SubUsage" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strSurfaces = vGridClaims.cursor( "M_SubUsage" ).getAttribute( "Name" ).getString( "" );
+
+            if ( strSurfaces == null )
+               strSurfaces = "";
+         }
+
+         if ( StringUtils.isBlank( strSurfaces ) )
+            strSurfaces = "&nbsp";
+
+%>
+
+<tr<%=strOdd%>>
+
+   <td><a href="#" onclick="GOTO_UpdateSurfacesSubStatement( this.id )" id="Surfaces::<%=strEntityKey%>"><%=strSurfaces%></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateClaimsStatement" onclick="GOTO_UpdateSurfacesSubStatement( this.id )" id="BMBUpdateClaimsStatement::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+
+</tr>
+
+<%
+         csrRC2 = vGridClaims.cursor( "M_SubUsage" ).setNextContinue( );
+      }
+      vGridClaims.drop( );
+   }
+}
+catch (Exception e)
+{
+out.println("There is an error in grid: " + e.getMessage());
+task.log().info( "*** Error in grid" + e.getMessage() );
+}
+%>
+</tbody>
+</table>
+
+</div>
+
+
+</div>  <!--  GroupBox1 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:18px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
@@ -954,8 +1169,8 @@ else
 <% /* PushBtn5:PushBtn */ %>
 <button type="button" class="newbutton" name="PushBtn5" id="PushBtn5" value="" onclick="GOTO_DisplayGeneratedTextUsage( )" style="width:158px;height:26px;position:absolute;left:438px;top:4px;">Show Generated Text</button>
 
-<% /* PushBtn4:PushBtn */ %>
-<button type="button" class="newbutton" name="PushBtn4" id="PushBtn4" value="" onclick="ADD_UsageKeyword( )" style="width:66px;height:26px;position:absolute;left:618px;top:4px;">New</button>
+<% /* NewKeyword:PushBtn */ %>
+<button type="button" class="newbutton" name="NewKeyword" id="NewKeyword" value="" onclick="ADD_UsageKeyword( )" style="width:66px;height:26px;position:absolute;left:618px;top:4px;">New</button>
 
 <% /* Text6:Text */ %>
 

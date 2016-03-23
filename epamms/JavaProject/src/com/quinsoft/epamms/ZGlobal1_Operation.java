@@ -4804,6 +4804,58 @@ public class ZGlobal1_Operation extends VmlOperation
    /////////////////////////////////////////////////////////////////////////////
 
    public int
+   InsertOptionalSubUsages( View     mMasLC,
+                            StringBuilder sbSourceToModify )
+   {
+      StringBuilder sbTarget = new StringBuilder();
+      String   szOrigSource = sbSourceToModify.toString();
+      String   szOpenBrace = "{";
+      boolean  changed = false;
+      int      openBracePos = 0;
+      int      closeBracePos;
+      int      nRC = 0;
+
+   // Food [{{}}] areas
+   // preparation storage
+   // Automobile [{{}}]
+   // interiors mats crates cabs wheels
+   // 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123  << lth = 133
+   //          1         2         3         4         5         6         7         8         9        10        11        12        13
+      sbTarget.setLength( 0 );
+
+      // Parse the double braces out of the string of the form {{}}.
+      openBracePos = szOrigSource.indexOf( "{{", 0 );
+      closeBracePos = szOrigSource.indexOf( "}}", openBracePos + 2 );
+      if ( openBracePos >= 0 && closeBracePos >= 0 && (nRC = mMasLC.cursor( "M_SubUsage" ).setFirst().toInt()) >= zCURSOR_SET ) {
+         // Copy static text up to the brace to the target.
+         sbTarget.append( szOrigSource.substring( 0, openBracePos ) );
+
+         // Copy the SubUsage values into the text - surounded by single braces to signify the values are optional.
+         while ( nRC >= zCURSOR_SET ) {
+            sbTarget.append( szOpenBrace + mMasLC.cursor( "M_SubUsage" ).getAttribute( "Name" ).getString() + "}" );
+            if ( changed == false ) {
+               changed = true;
+               szOpenBrace = ", {";
+            }
+            nRC = mMasLC.cursor( "M_SubUsage" ).setNext().toInt();
+         }
+         sbTarget.append( szOrigSource.substring( closeBracePos + 2 ) ); // append remaining static text in the original source string
+      }
+
+      if ( changed ) {
+         sbSourceToModify.setLength( 0 );
+         sbSourceToModify.append( sbTarget.toString() );
+      }
+
+      return( 0 );
+   }
+
+   /////////////////////////////////////////////////////////////////////////////
+   /////////////////////////////////////////////////////////////////////////////
+   /////////////////////////////////////////////////////////////////////////////
+   /////////////////////////////////////////////////////////////////////////////
+
+   public int
    FixLegacyReportDate( View wWebXfer, View vLegacyTranscript,
                         String stringEntity, String stringAttribute,
                         String searchString )

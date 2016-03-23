@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCSurfaces   Generate Timestamp: 20160317151009007 --%>
+<%-- wMLCSurfaces   Generate Timestamp: 20160323102718144 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -100,6 +100,24 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       vGridTmp.drop( );
+      // Grid: GridClaims2
+      iTableRowCnt = 0;
+
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
+      vGridTmp = mMasLC.newView( );
+      csrRC = vGridTmp.cursor( "M_UsageNonGroupUsage" ).setFirst(  );
+      while ( csrRC.isSet() )
+      {
+         lEntityKey = vGridTmp.cursor( "M_UsageNonGroupUsage" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         iTableRowCnt++;
+
+         csrRC = vGridTmp.cursor( "M_UsageNonGroupUsage" ).setNextContinue( );
+      }
+
+      vGridTmp.drop( );
       // Grid: GridClaims1
       iTableRowCnt = 0;
 
@@ -137,24 +155,6 @@ public int DoInputMapping( HttpServletRequest request,
          }
 
          csrRC = vGridTmp.cursor( "M_UsageGroup" ).setNextContinue( );
-      }
-
-      vGridTmp.drop( );
-      // Grid: GridClaims2
-      iTableRowCnt = 0;
-
-      // We are creating a temp view to the grid view so that if there are 
-      // grids on the same window with the same view we do not mess up the 
-      // entity positions. 
-      vGridTmp = mMasLC.newView( );
-      csrRC = vGridTmp.cursor( "M_UsageNonGroupUsage" ).setFirst(  );
-      while ( csrRC.isSet() )
-      {
-         lEntityKey = vGridTmp.cursor( "M_UsageNonGroupUsage" ).getEntityKey( );
-         strEntityKey = Long.toString( lEntityKey );
-         iTableRowCnt++;
-
-         csrRC = vGridTmp.cursor( "M_UsageNonGroupUsage" ).setNextContinue( );
       }
 
       vGridTmp.drop( );
@@ -1681,7 +1681,7 @@ try
          nRC = vGridClaims.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strSurfaces = vGridClaims.cursor( "M_Usage" ).getAttribute( "Name" ).getString( "" );
+            strSurfaces = vGridClaims.cursor( "M_Usage" ).getAttribute( "dDisplayAtomicNames" ).getString( "" );
 
             if ( strSurfaces == null )
                strSurfaces = "";

@@ -1,0 +1,137 @@
+z1000-Zeidon    ZEIDON   KZHKEYSO 12/12/06   07:54:05 1.0b0    
+eApplication 1
+aZKey      1100000
+
+eHotkey    2
+aZKey      1100001
+aTag       PainterHotkey
+aKeyCombo  U4
+$`0!%````
+`
+aTitle     PainterHotkey
+aVKey      69
+aDLL_Name  ZDRAPP
+
+eOperation 3
+aName      HotkeyToPainter
+aZKey      1319673
+aType      G
+aReturnDesc nReturnCode
+aReturnDataType N
+
+eHotkey    2
+aZKey      1111232
+aTag       SaveActiveCtrlToCSV
+aKeyCombo  U4
+$`0!3````
+`
+aTitle     SaveToCSV
+aVKey      83
+aDLL_Name  zdrapp
+
+eOperation 3
+aName      SaveActiveCtrlToCSV
+aZKey      1157959
+aType      G
+aReturnDataType N
+
+eHotkey    2
+aZKey      1111111
+aTag       SelectAll
+aKeyCombo  U4
+$`0!!````
+`
+aTitle     SelectAll
+aVKey      65
+aDLL_Name  ZDRAPP
+
+eOperation 3
+aName      zkSelectAll
+aZKey      1054540
+aDesc      Call control with focus to Select All
+aType      G
+aReturnDesc <= 0 ==> error
+aReturnDataType N
+
+eHotkey    2
+aZKey      1319612
+aTag       CtrlTagInfo
+aKeyCombo  U4
+$!P"_````
+`
+aTitle     Ctrl+Alt+Shift+?
+aVKey      191
+aDLL_Name  ZDRAPP
+
+eOperation 3
+aName      zkCtrlInfo
+aZKey      1012098
+aType      G
+aReturnDataType N
+
+eHotkey    2
+aZKey      1100002
+aTag       Cancel
+aKeyCombo  U4
+$```;````
+`
+aTitle     Standard Cancel via Esc
+aVKey      27
+aDLL_Name  ZDRAPP
+
+eOperation 3
+aName      zkCancel
+aZKey      1319712
+aType      G
+aReturnDataType N
+
+eHotkey    2
+aZKey      1100003
+aTag       ExitCloseOK
+aKeyCombo  U4
+$`@!S````
+`
+aTitle     Standard Close via Alt-F4
+aVKey      115
+aDLL_Name  ZDRAPP
+
+eOperation 3
+aName      zkExitCloseOK
+aZKey      1319714
+aType      G
+
+eHotkey    2
+aZKey      1100004
+aTag       PrintActiveWindow
+aKeyCombo  U4
+$`0!0````
+`
+aTitle     PrintActiveWindow
+aVKey      80
+aDLL_Name  ZDRAPP
+
+eOperation 3
+aName      PrintActiveWindow
+aZKey      1319686
+aDesc      Print the active window
+aType      G
+aReturnDesc nReturnCode
+aReturnDataType N
+
+eHotkey    2
+aZKey      1000005
+aTag       DialogList
+aKeyCombo  U4
+$!0!:````
+`
+aTitle     ListSubtasks
+aVKey      90
+aDLL_Name  ZDRAPP
+
+eOperation 3
+aName      ListSubtasks
+aZKey      1169920
+aDesc      List all current subtasks
+aType      G
+aReturnDataType L
+

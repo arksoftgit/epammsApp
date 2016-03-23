@@ -491,7 +491,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-//  OPERATION: CancelUpdateMasterProduct
+//  OPERATION: CANCEL_MasterProduct
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
@@ -2564,6 +2564,23 @@ AcceptAndReturnUsageStatement( VIEW ViewToWindow )
    // Accept temporal Usage statement and go to build nongroup entries.
    AcceptSubobject( mMasLC, "M_Usage" )
    BuildNonGroupEntries( mMasLC )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: AcceptAndReturnSubUsageStatement
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+AcceptAndReturnSubUsageStatement( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   mMasLC.M_SubUsage.UsageType = "S"
+      
+   // Accept temporal Usage statement.
+   AcceptSubobject( mMasLC, "M_SubUsage" )
 
 END
 
