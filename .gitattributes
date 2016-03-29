@@ -1,0 +1,77 @@
+# Set the default behavior, in case people don't have core.autocrlf set.
+* text eol=crlf
+
+*.lod text eol=crlf
+
+# Explicitly declare text files you want to always be normalized and converted to native line endings on checkout.
+
+# Declare files that will always have CRLF line endings on checkout.
+*.cpp text eol=crlf
+*.c text eol=crlf
+*.h text eol=crlf
+*.java text eol=crlf
+*.sln text eol=crlf
+*.dsw text eol=crlf
+*.dsp text eol=crlf
+*.vcproj text eol=crlf
+*.vcxproj text eol=crlf
+*.filters text eol=crlf
+*.user text eol=crlf
+*.rc text eol=crlf
+*.phk text eol=crlf
+*.pwd text eol=crlf
+
+# Denote all files that are truly binary and should not be modified.
+*.png binary
+*.jpg binary
+*.gif binary
+*.exe binary
+*.dll binary
+*.lib binary
+*.pwd binary
+*.xwd binary
+*.lod binary
+*.xod binary
+*.prp binary
+*.xrp binary
+*.hky binary
+*.ppe binary
+*.xdm binary
+*.xlp binary
+*.xmd binary
+*.xog binary
+*.xpe binary
+*.PNG binary
+*.JPG binary
+*.GIF binary
+*.EXE binary
+*.DLL binary
+*.LIB binary
+*.PWD binary
+*.XWD binary
+*.LOD binary
+*.XOD binary
+*.PRP binary
+*.XRP binary
+*.HKY binary
+*.PPE binary
+*.XDM binary
+*.XLP binary
+*.XMD binary
+*.XOG binary
+*.XPE binary
+
+
+# You'll notice that files are matched--*.c, *.sln, *.png--, separated by a space, then given a setting--text, text eol=crlf, binary. We'll go over some possible settings below.
+#
+# text=auto
+# Git will handle the files in whatever way it thinks is best. This is a good default option.
+
+# text eol=crlf
+# Git will always convert line endings to CRLF on checkout. You should use this for files that must keep CRLF endings, even on OSX or Linux. For example, here is a Windows project that enforces CRLF line endings.
+
+# text eol=lf
+# Git will always convert line endings to LF on checkout. You should use this for files that must keep LF endings, even on Windows. For example, here is a project that enforces LF line endings.
+
+# binary
+# Git will understand that the files specified are not text, and it should not try to change them. The binary setting is also an alias for -text -diff.

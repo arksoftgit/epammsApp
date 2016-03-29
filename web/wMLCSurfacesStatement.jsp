@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCSurfacesStatement   Generate Timestamp: 20160323110418407 --%>
+<%-- wMLCSurfacesStatement   Generate Timestamp: 20160328163909785 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -60,7 +60,7 @@ public int DoInputMapping( HttpServletRequest request,
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
    {
-      // EditBox: PrecautionarySubtitle
+      // MLEdit: PrecautionarySubtitle
       nRC = mMasLC.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
@@ -763,6 +763,12 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
+
+<!-- TinyMCE -->
+<script language="JavaScript" type="text/javascript" src="./js/tinymce/js/tinymce/tinymce.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/TinyMCE.js"></script>
+<!-- /TinyMCE -->
+
 <script language="JavaScript" type="text/javascript" src="./genjs/wMLCSurfacesStatement.js"></script>
 
 </head>
@@ -967,15 +973,15 @@ else
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBPrecautionarySection:GroupBox */ %>
 
-<div id="GBPrecautionarySection" name="GBPrecautionarySection" class="withborder" style="width:826px;height:28px;float:left;">  <!-- GBPrecautionarySection --> 
+<div id="GBPrecautionarySection" name="GBPrecautionarySection" class="withborder" style="width:826px;height:236px;float:left;">  <!-- GBPrecautionarySection --> 
 
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox2:GroupBox */ %>
-<div id="GroupBox2" name="GroupBox2" style="float:left;width:816px;" >
+<div id="GroupBox2" name="GroupBox2" style="float:left;width:800px;" >
 
-<table cols=0 style="width:816px;"  class="grouptable">
+<table cols=0 style="width:800px;"  class="grouptable">
 
 <tr>
 <td valign="top" style="width:132px;">
@@ -984,9 +990,10 @@ else
 <span  id="Description" name="Description" style="width:128px;height:16px;">Surface Text:</span>
 
 </td>
-<td valign="top"  class="text12" style="width:666px;">
-<% /* PrecautionarySubtitle:EditBox */ %>
+<td valign="top" style="width:600px;">
+<% /* PrecautionarySubtitle:MLEdit */ %>
 <%
+   // MLEdit: PrecautionarySubtitle
    strErrorMapValue = VmlOperation.CheckError( "PrecautionarySubtitle", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
@@ -1004,15 +1011,7 @@ else
          nRC = mMasLC.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            try
-            {
-               strErrorMapValue = mMasLC.cursor( "M_Usage" ).getAttribute( "Name" ).getString( "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on PrecautionarySubtitle: " + e.getMessage());
-               task.log().error( "*** Error on ctrl PrecautionarySubtitle", e );
-            }
+            strErrorMapValue = mMasLC.cursor( "M_Usage" ).getAttribute( "Name" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
@@ -1024,7 +1023,7 @@ else
    }
 %>
 
-<input class="text12" name="PrecautionarySubtitle" id="PrecautionarySubtitle" style="width:666px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<textarea id="PrecautionarySubtitle" name="PrecautionarySubtitle" class="mceSimple" style="width:600px;height:216px;border:solid;border-width:2px;border-style:groove;"><%=strErrorMapValue%></textarea>
 
 </td>
 </tr>
@@ -1042,7 +1041,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:18px;width:100px;"></div>
+<div style="height:12px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->

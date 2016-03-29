@@ -1,38 +1,51 @@
 tinymce.init({
-  selector: "textarea",
-  height: 100,
+  selector: 'div.mceSimpleZeidon',
+  inline: true,
   menubar: false,
+  width : "100%",
+  oninit : "resizeTiny",
+  toolbar: "bold italic underline strikethrough | subscript superscript | undo redo | removeformat visualchars visualblocks nonbreaking | charmap preview fullscreen",
   plugins: [
-    "advlist autolink autosave link image lists charmap print preview hr anchor pagebreak spellchecker",
-    "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-    "table contextmenu directionality emoticons template textcolor paste fullpage textcolor colorpicker textpattern"
-  ],
-
-  toolbar1: "bold italic underline strikethrough | cut copy paste | searchreplace | undo redo | preview | charmap | fullscreen",
-  toolbar2: "removeformat | subscript superscript | visualchars visualblocks nonbreaking | forecolor backcolor",
-
-  content_css: [
-    '//fast.fonts.net/cssapi/e6dc9b99-64fe-4292-ad98-6974f93cd2a2.css',
-    '//www.tinymce.com/css/codepen.min.css'
+    "autoresize charmap preview visualblocks visualchars fullscreen paste fullpage"
   ]
 });
 
+// Returns text statistics for the specified editor by id
+function getTinyStats(id) {
+    var body = tinymce.get(id).getBody(), text = tinymce.trim(body.innerText || body.textContent);
+
+    return {
+        chars: text.length,
+        words: text.split(/[\w\u2019\'-]+/).length
+    };
+}
+
+function resizeTiny() {
+    if (!tinyMCE) return;
+    var footer = document.getElementById("overview-footer");
+    var header = document.getElementById("main-box-header");
+    tinyMCE.get("editor1").theme.resizeTo(
+        footer.clientWidth - 2,
+        footer.offsetTop - header.offsetHeight - 105
+    );
+}
+
+//tinyMCE.dom.Event.add(window,'resize',function(){
+//    resizeTiny();
+//});
 
 
-tinymce.init({
-  selector: 'h2.editable',
-  inline: true,
-  toolbar: 'undo redo',
-  menubar: false
-});
 
-tinymce.init({
-  selector: 'div.editable',
-  inline: true,
-  plugins: [
-    'advlist autolink lists link image charmap print preview anchor',
-    'searchreplace visualblocks code fullscreen',
-    'insertdatetime media table contextmenu paste'
-  ],
-  toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image'
-});
+
+
+
+
+
+
+
+
+
+
+
+
+

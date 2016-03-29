@@ -1,4 +1,4 @@
-z1000-Zeidon    RPRIMREG TZZOLODO 07/16/15   11:50:51 1.0a2    
+z1000-Zeidon    RPRIMREG TZZOLODO 03/25/16   16:36:32 1.0a2   
 eLOD       1
 aZKey      1157074
 aName      rPrimReg
@@ -329,12 +329,12 @@ aName      Finalized
 aZKey      1179769
 
 eDomainRec 7
-aZKey      68567482
-aName      Y/N
+aZKey      130001711
+aName      Status
 aDomainType T
 aDataType  S
 aMaxStringLth 1
-aDesc      Yes or No
+aDesc      Historical, Production, Work in Progress
 aContextRestriction N
 
 eER_EntityRec 5
@@ -393,14 +393,13 @@ eER_AttributeRec 5
 aName      Number
 aZKey      69031557
 aLth       5
-aNotNull   Y
 aDesc      1-5 digit number assigned to the product (e.g. 141 for Mason MAQUAT 256-NHQ or 129 for Lonza HWS-256)
 aCaseSens  Y
 
 eDomainRec 6
 aZKey      18568062
 aName      NumericId
-aDomainType F
+aDomainType A
 aDataType  S
 aMaxStringLth 32
 aDesc      Numeric Text (0-9).
@@ -414,6 +413,13 @@ aName      Description
 aZKey      69031560
 
 eDomainRec 6
+aZKey      68568087
+aName      TextDescription
+aDomainType A
+aDataType  S
+aMaxStringLth 1024
+aDesc      Long text
+aContextRestriction N
 
 eLOD_AttributeRec 4
 aZKey      3961574
@@ -422,7 +428,6 @@ aUpdate    Y
 eER_AttributeRec 5
 aName      ChemicalFamily
 aZKey      1942093
-aNotNull   Y
 aDesc      Chemical Family (e.g. Pesticide, Quat Disinfectant, Iodine Disinfectant)
 
 eDomainRec 6
@@ -992,7 +997,6 @@ i38        18
 i47        44
 i56        5
 i59        18
-i65        18
 i74        71
 i77        41
 i80        41
@@ -1055,7 +1059,7 @@ i154       61
 i155       62
 i156       63
 i157       64
-i158       18
+i158       65
 i159       66
 i160       67
 i161       68

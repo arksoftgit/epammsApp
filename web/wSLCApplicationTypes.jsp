@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCApplicationTypes   Generate Timestamp: 20160317151019750 --%>
+<%-- wSLCApplicationTypes   Generate Timestamp: 20160328163920522 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>

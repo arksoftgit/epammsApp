@@ -338,9 +338,7 @@ NewAreasOfUse( VIEW ViewToWindow )
    AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "NewAreasOfUse: " )
    CREATE ENTITY mEPA.EPA_AreaOfUse
    mEPA.EPA_AreaOfUse.Name = wWebXfer.Root.CurrentStatement
-   mEPA.EPA_AreaOfUse.BoldItalic = wWebXfer.Root.CurrentBoldItalic
    wWebXfer.Root.CurrentStatement = ""
-   wWebXfer.Root.CurrentBoldItalic = ""
    COMMIT mEPA
 
 END
@@ -505,9 +503,7 @@ NewAppType( VIEW ViewToWindow )
    AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "NewAppType: " )
    CREATE ENTITY mEPA.EPA_ApplicationType
    mEPA.EPA_ApplicationType.Name = wWebXfer.Root.CurrentStatement
-   mEPA.EPA_ApplicationType.BoldItalic = wWebXfer.Root.CurrentBoldItalic
    wWebXfer.Root.CurrentStatement = ""
-   wWebXfer.Root.CurrentBoldItalic = ""
    COMMIT mEPA
 
 END
@@ -672,10 +668,8 @@ NewBacteria( VIEW ViewToWindow )
    AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "NewBacteria: " )
    CREATE ENTITY mEPA.EPA_Claim
    mEPA.EPA_Claim.Name = wWebXfer.Root.CurrentStatement
-   mEPA.EPA_Claim.BoldItalic = wWebXfer.Root.CurrentBoldItalic
    mEPA.EPA_Claim.ClaimsClassification = "Bacteria"
    wWebXfer.Root.CurrentStatement = ""
-   wWebXfer.Root.CurrentBoldItalic = ""
    COMMIT mEPA
 
 END
@@ -921,10 +915,8 @@ NewFungi( VIEW ViewToWindow )
    AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "NewFungi: " )
    CREATE ENTITY mEPA.EPA_Claim
    mEPA.EPA_Claim.Name = wWebXfer.Root.CurrentStatement
-   mEPA.EPA_Claim.BoldItalic = wWebXfer.Root.CurrentBoldItalic
    mEPA.EPA_Claim.ClaimsClassification = "Fungi"
    wWebXfer.Root.CurrentStatement = ""
-   wWebXfer.Root.CurrentBoldItalic = ""
    COMMIT mEPA
 
 END
@@ -1103,10 +1095,8 @@ NewVirus( VIEW ViewToWindow )
    AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "NewVirus: " )
    CREATE ENTITY mEPA.EPA_Claim
    mEPA.EPA_Claim.Name = wWebXfer.Root.CurrentStatement
-   mEPA.EPA_Claim.BoldItalic = wWebXfer.Root.CurrentBoldItalic
    mEPA.EPA_Claim.ClaimsClassification = "Viruses"
    wWebXfer.Root.CurrentStatement = ""
-   wWebXfer.Root.CurrentBoldItalic = ""
    COMMIT mEPA
 
 END
@@ -1285,9 +1275,7 @@ NewSurface( VIEW ViewToWindow )
    AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "NewSurface: " )
    CREATE ENTITY mEPA.EPA_Surface
    mEPA.EPA_Surface.Name = wWebXfer.Root.CurrentStatement
-   mEPA.EPA_Surface.BoldItalic = wWebXfer.Root.CurrentBoldItalic
    wWebXfer.Root.CurrentStatement = ""
-   wWebXfer.Root.CurrentBoldItalic = ""
    COMMIT mEPA
 
 END

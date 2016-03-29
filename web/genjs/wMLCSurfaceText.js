@@ -204,6 +204,21 @@ function AcceptAndReturnSubUsageStatement( )
    }
 }
 
+function AcceptAndAddNewSubUsage( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCSurfaceText.zAction.value = "AcceptAndAddNewSubUsage";
+      document.wMLCSurfaceText.submit( );
+   }
+}
+
 function GOTO_UpdateSurfacesSubStatement( )
 {
 

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wPrimRDeleteMasterProductContent   Generate Timestamp: 20160317151010481 --%>
+<%-- wPrimRDeleteMasterProductContent   Generate Timestamp: 20160328163911253 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>

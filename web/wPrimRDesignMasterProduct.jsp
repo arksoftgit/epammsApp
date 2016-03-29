@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wPrimRDesignMasterProduct   Generate Timestamp: 20160317151011941 --%>
+<%-- wPrimRDesignMasterProduct   Generate Timestamp: 20160328163912738 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1027,7 +1027,7 @@ else
    }
 %>
 
-<textarea name="wysiwygEditor" id="wysiwygEditor" class="mceSimple mceAdvancedFull" style="width:910px;height:824px;position:absolute;left:20px;top:88px;border:solid;border-width:4px;border-style:groove;"><%=strErrorMapValue%></textarea>
+<textarea name="wysiwygEditor" id="wysiwygEditor" class="mceAdvancedFull" style="width:910px;height:824px;position:absolute;left:20px;top:88px;border:solid;border-width:4px;border-style:groove;"><%=strErrorMapValue%></textarea>
 
 </div>  <!-- End of a new line -->
 

@@ -1,6 +1,7 @@
-z1000-Zeidon    TZAPDMAA TZDGSRCO 05/07/14   10:12:13 1.0a2    
+z1000-Zeidon    TZAPDMAA TZDGSRCO 03/25/16   16:27:51 1.0a2   
 eDomainGroup 1
 aZKey      68568067
+aNextZKeyToAssign 68568088
 aName      TZAPDMAA
 aExtension C
 aLanguageType C
@@ -8,11 +9,11 @@ aDomainAndGlobalOpGroupName TZAPDMAA
 aWorkNumeric 12
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StringDomain
 aZKey      68568073
 aName      AlphaNumeric
 aDesc      Characters 'a-z', 'A-Z', '0-9'
 aDomainType E
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
 aDataType  S
 aMaxStringLth 254
 aContextRestriction N
@@ -30,10 +31,25 @@ aType      M
 aReturnDataType N
 
 eDomain    2
+aZKey      68568087
+aName      TextDescription
+aDesc      Long text
+aDomainType A
 aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aDataType  S
+aMaxStringLth 1024
+aContextRestriction N
+
+eContext   3
+aZKey      68568088
+aName      TextDescription
+aIsDefault Y
+
+eDomain    2
 aZKey      68568051
 aName      Note
 aDomainType A
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
 aDataType  S
 aMaxStringLth 32000
 aContextRestriction N
@@ -46,10 +62,10 @@ aIsDefault Y
 eSelectedOperation 3
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StringDomain
 aZKey      1763284
 aName      FileName
 aDomainType A
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
 aDataType  S
 aMaxStringLth 254
 aContextRestriction N
@@ -60,11 +76,11 @@ aName      FileName
 aIsDefault Y
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StringDomain
 aZKey      68568075
 aName      PasswordUL
 aDesc      Password in Upper and Lower case
 aDomainType A
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
 aDataType  S
 aMaxStringLth 128
 aContextRestriction N
@@ -80,10 +96,10 @@ aZKey      68568070
 aType      M
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.PasswordDomain
 aZKey      68568077
 aName      Password
 aDomainType A
+aJavaClass com.quinsoft.zeidon.domains.PasswordDomain
 aDataType  S
 aMaxStringLth 128
 aContextRestriction N
@@ -101,11 +117,11 @@ aType      M
 aReturnDataType N
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.IntegerDomain
 aZKey      68568079
 aName      Day
 aDesc      Number of day in month
 aDomainType A
+aJavaClass com.quinsoft.zeidon.domains.IntegerDomain
 aDataType  L
 aContextRestriction N
 
@@ -123,11 +139,11 @@ aType      M
 aReturnDataType N
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StringDomain
 aZKey      68568081
 aName      Text
 aDesc      Any Character String
 aDomainType E
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
 aDataType  S
 aMaxStringLth 254
 aContextRestriction N
@@ -139,11 +155,11 @@ aName      TEXT
 eSelectedOperation 3
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.IntegerDomain
 aZKey      68568083
 aName      Integer
 aDesc      Integer numbers from -lots to +lots
 aDomainType E
+aJavaClass com.quinsoft.zeidon.domains.IntegerDomain
 aDataType  L
 aMaxStringLth 4
 aContextRestriction N
@@ -183,10 +199,10 @@ aZKey      3750104
 aDesc      Remove all HTML except a select set (effectively trying to remove Microsoft Word stuff)
 aType      M
 
-i6         3
-i20        3
-i24        17
-i25        17
-i26        14
-i27        11
-i29        3
+i8         3
+i22        3
+i26        19
+i27        19
+i28        16
+i29        13
+i31        3

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wStartUpAdminDeleteSubregUser   Generate Timestamp: 20160317151022283 --%>
+<%-- wStartUpAdminDeleteSubregUser   Generate Timestamp: 20160328163924165 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCUpdateMasterProduct   Generate Timestamp: 20160317151009144 --%>
+<%-- wMLCUpdateMasterProduct   Generate Timestamp: 20160328202610778 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -13,7 +13,7 @@
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
 <%@ page import="com.quinsoft.epamms.*" %>
 
-<%! 
+<%!
 
 ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
@@ -155,11 +155,33 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
+      // EditBox: ReviewerNote
+      nRC = mMasProd.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "ReviewerNote" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "ReviewerNote", "", strMapValue );
+            else
+               mMasProd.cursor( "MasterProduct" ).getAttribute( "ReviewerNote" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "ReviewerNote", e.getReason( ), strMapValue );
+         }
+      }
+
       // MLEdit: MasterProductDescription
       nRC = mMasProd.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
          strMapValue = request.getParameter( "MasterProductDescription" );
+         task.log().debug( "MasterProductDescription prior to TrimTinyHtml: " + strMapValue );
+         strMapValue = VmlOperation.TrimTinyHtml( strMapValue );
+         task.log().debug( "MasterProductDescription after TrimTinyHtml: " + strMapValue );
          try
          {
             if ( webMapping )
@@ -174,12 +196,34 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
+      // MLEdit: Footnote
+      nRC = mMasProd.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "Footnote" );
+         task.log().debug( "Footnote prior to TrimTinyHtml: " + strMapValue );
+         strMapValue = VmlOperation.TrimTinyHtml( strMapValue );
+         task.log().debug( "Footnote after TrimTinyHtml: " + strMapValue );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "Footnote", "", strMapValue );
+            else
+               mMasProd.cursor( "MasterProduct" ).getAttribute( "Footnote" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "Footnote", e.getReason( ), strMapValue );
+         }
+      }
+
       // Grid: GridMasterLabelContent
       iTableRowCnt = 0;
 
-      // We are creating a temp view to the grid view so that if there are 
-      // grids on the same window with the same view we do not mess up the 
-      // entity positions. 
+      // We are creating a temp view to the grid view so that if there are
+      // grids on the same window with the same view we do not mess up the
+      // entity positions.
       vGridTmp = mMasProd.newView( );
       csrRC = vGridTmp.cursor( "MasterLabelContent" ).setFirst(  );
       while ( csrRC.isSet() )
@@ -252,7 +296,7 @@ String strInputFileName = "";
 strActionToProcess = (String) request.getParameter( "zAction" );
 
 strLastWindow = (String) session.getAttribute( "ZeidonWindow" );
-if ( StringUtils.isBlank( strLastWindow ) ) 
+if ( StringUtils.isBlank( strLastWindow ) )
    strLastWindow = "NoLastWindow";
 
 strLastAction = (String) session.getAttribute( "ZeidonAction" );
@@ -669,7 +713,7 @@ if ( strActionToProcess != null )
             task.log().info( "Action Error Redirect to: " + strURL );
          }
 
-         if ( ! strURL.equals("wMLCUpdateMasterProduct.jsp") ) 
+         if ( ! strURL.equals("wMLCUpdateMasterProduct.jsp") )
          {
             response.sendRedirect( strURL );
             // If we are redirecting to a new page, then we need this return so that the rest of this page doesn't get built.
@@ -727,6 +771,12 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
+
+<!-- TinyMCE -->
+<script language="JavaScript" type="text/javascript" src="./js/tinymce/js/tinymce/tinymce.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/TinyMCE.js"></script>
+<!-- /TinyMCE -->
+
 <script language="JavaScript" type="text/javascript" src="./genjs/wMLCUpdateMasterProduct.js"></script>
 
 </head>
@@ -902,7 +952,7 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBStorDispSections5:GroupBox */ %>
 
-<div id="GBStorDispSections5" name="GBStorDispSections5" class="listgroup"   style="float:left;position:relative; width:780px; height:36px;">  <!-- GBStorDispSections5 --> 
+<div id="GBStorDispSections5" name="GBStorDispSections5" class="listgroup"   style="float:left;position:relative; width:780px; height:36px;">  <!-- GBStorDispSections5 -->
 
 <% /* IngredientsText:Text */ %>
 
@@ -936,7 +986,7 @@ else
 <label  id="PrimaryRegistrant" name="PrimaryRegistrant" style="width:370px;height:16px;position:absolute;left:148px;top:12px;"><%=strTextDisplayValue%></label>
 
 
-</div>  <!--  GBStorDispSections5 --> 
+</div>  <!--  GBStorDispSections5 -->
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -946,7 +996,7 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBMasterProduct:GroupBox */ %>
 
-<div id="GBMasterProduct" name="GBMasterProduct"   style="float:left;position:relative; width:798px; height:218px;">  <!-- GBMasterProduct --> 
+<div id="GBMasterProduct" name="GBMasterProduct"   style="float:left;position:relative; width:798px; height:284px;">  <!-- GBMasterProduct -->
 
 <% /* ProductName::Text */ %>
 
@@ -1040,12 +1090,12 @@ else
 
 <% /* ChemicalFamily::Text */ %>
 
-<label  id="ChemicalFamily:" name="ChemicalFamily:" style="width:178px;height:16px;position:absolute;left:12px;top:54px;">Chemical Family:</label>
+<label  id="ChemicalFamily:" name="ChemicalFamily:" style="width:178px;height:16px;position:absolute;left:12px;top:56px;">Chemical Family:</label>
 
 <% /* ChemicalFamily:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="ChemicalFamily" id="ChemicalFamily" size="1" style="width:210px;position:absolute;left:198px;top:54px;" onchange="ChemicalFamilyOnChange( )">
+<select  name="ChemicalFamily" id="ChemicalFamily" size="1" style="width:210px;position:absolute;left:198px;top:56px;" onchange="ChemicalFamilyOnChange( )">
 
 <%
    boolean inListChemicalFamily = false;
@@ -1085,8 +1135,8 @@ else
       {
          String internalValue = entry.getInternalValue( );
          String externalValue = entry.getExternalValue( );
-         // Perhaps getInternalValue and getExternalValue should return an empty string, 
-         // but currently it returns null.  Set to empty string. 
+         // Perhaps getInternalValue and getExternalValue should return an empty string,
+         // but currently it returns null.  Set to empty string.
          if ( externalValue == null )
          {
             internalValue = "";
@@ -1169,12 +1219,12 @@ else
 
 <% /* ToxicityCategory::Text */ %>
 
-<label  id="ToxicityCategory:" name="ToxicityCategory:" style="width:178px;height:16px;position:absolute;left:12px;top:104px;">Toxicity Category:</label>
+<label  id="ToxicityCategory:" name="ToxicityCategory:" style="width:178px;height:16px;position:absolute;left:12px;top:108px;">Toxicity Category:</label>
 
 <% /* ToxicityCategory:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="ToxicityCategory" id="ToxicityCategory" size="1" style="width:142px;position:absolute;left:198px;top:104px;" onchange="ToxicityCategoryOnChange( )">
+<select  name="ToxicityCategory" id="ToxicityCategory" size="1" style="width:142px;position:absolute;left:198px;top:108px;" onchange="ToxicityCategoryOnChange( )">
 
 <%
    boolean inListToxicityCategory = false;
@@ -1214,8 +1264,8 @@ else
       {
          String internalValue = entry.getInternalValue( );
          String externalValue = entry.getExternalValue( );
-         // Perhaps getInternalValue and getExternalValue should return an empty string, 
-         // but currently it returns null.  Set to empty string. 
+         // Perhaps getInternalValue and getExternalValue should return an empty string,
+         // but currently it returns null.  Set to empty string.
          if ( externalValue == null )
          {
             internalValue = "";
@@ -1251,9 +1301,62 @@ else
 </select>
 
 <input name="hToxicityCategory" id="hToxicityCategory" type="hidden" value="<%=strComboCurrentValue%>" >
+<% /* ReviewerNote::Text */ %>
+
+<label  id="ReviewerNote:" name="ReviewerNote:" style="width:178px;height:16px;position:absolute;left:12px;top:134px;">Reviewer Note:</label>
+
+<% /* ReviewerNote:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "ReviewerNote", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasProd = task.getViewByName( "mMasProd" );
+      if ( VmlOperation.isValid( mMasProd ) == false )
+         task.log( ).debug( "Invalid View: " + "ReviewerNote" );
+      else
+      {
+         nRC = mMasProd.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = mMasProd.cursor( "MasterProduct" ).getAttribute( "ReviewerNote" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on ReviewerNote: " + e.getMessage());
+               task.log().error( "*** Error on ctrl ReviewerNote", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "MasterProduct.ReviewerNote: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for ReviewerNote: " + "mMasProd.MasterProduct" );
+      }
+   }
+%>
+
+<input class="text12" name="ReviewerNote" id="ReviewerNote"  title="Product Number within this Registrant" style="width:578px;position:absolute;left:198px;top:134px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
+<% /* GroupBox1:GroupBox */ %>
+
+<div id="GroupBox1" name="GroupBox1" style="width:766px;height:120px;position:absolute;left:12px;top:160px;">  <!-- GroupBox1 -->
+
 <% /* Description::Text */ %>
 
-<label  id="Description:" name="Description:" style="width:178px;height:16px;position:absolute;left:12px;top:128px;">Description:</label>
+<label  id="Description:" name="Description:" style="width:88px;height:16px;position:absolute;left:0px;top:0px;">Description:</label>
+
+<% /* GroupBox2:GroupBox */ %>
+
+<div id="GroupBox2" name="GroupBox2" style="width:658px;height:48px;position:absolute;left:98px;top:0px;">  <!-- GroupBox2 -->
 
 <% /* MasterProductDescription:MLEdit */ %>
 <%
@@ -1287,10 +1390,60 @@ else
    }
 %>
 
-<textarea name="MasterProductDescription" id="MasterProductDescription" style="width:578px;height:84px;position:absolute;left:198px;top:128px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+<div style="background-color:#eee;border:1px solid #042;width:650px;height:48px;position:absolute;left:0px;top:0px;overflow:auto;">
+<div class="mceSimpleZeidon" name="MasterProductDescription" id="MasterProductDescription" style="width:650px;height:48px;position:absolute;left:0px;top:0px;"><%=strErrorMapValue%></div></div>
 
 
-</div>  <!--  GBMasterProduct --> 
+</div>  <!--  GroupBox2 -->
+<% /* Footnote::Text */ %>
+
+<label  id="Footnote:" name="Footnote:" style="width:88px;height:16px;position:absolute;left:0px;top:56px;">Footnote:</label>
+
+<% /* GroupBox3:GroupBox */ %>
+
+<div id="GroupBox3" name="GroupBox3" style="width:658px;height:64px;position:absolute;left:98px;top:56px;">  <!-- GroupBox3 -->
+
+<% /* Footnote:MLEdit */ %>
+<%
+   // : Footnote
+   strErrorMapValue = VmlOperation.CheckError( "Footnote", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasProd = task.getViewByName( "mMasProd" );
+      if ( VmlOperation.isValid( mMasProd ) == false )
+         task.log( ).info( "Invalid View: " + "Footnote" );
+      else
+      {
+         nRC = mMasProd.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strErrorMapValue = mMasProd.cursor( "MasterProduct" ).getAttribute( "Footnote" ).getString( "" );
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).info( "MasterProduct.Footnote: " + strErrorMapValue );
+         }
+         else
+            task.log( ).info( "Entity does not exist for Footnote: " + "mMasProd.MasterProduct" );
+      }
+   }
+%>
+
+<div style="background-color:#eee;border:1px solid #042;width:650px;height:64px;position:absolute;left:0px;top:0px;overflow:auto;">
+<div class="mceSimpleZeidon" name="Footnote" id="Footnote" style="width:650px;height:64px;position:absolute;left:0px;top:0px;"><%=strErrorMapValue%></div></div>
+
+
+</div>  <!--  GroupBox3 -->
+
+</div>  <!--  GroupBox1 -->
+
+</div>  <!--  GBMasterProduct -->
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -1300,7 +1453,7 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBMasterLabelContent:GroupBox */ %>
 
-<div id="GBMasterLabelContent" name="GBMasterLabelContent" class="listgroup"   style="float:left;position:relative; width:486px; height:40px;">  <!-- GBMasterLabelContent --> 
+<div id="GBMasterLabelContent" name="GBMasterLabelContent" class="listgroup"   style="float:left;position:relative; width:486px; height:40px;">  <!-- GBMasterLabelContent -->
 
 <% /* MasterLabelContent:Text */ %>
 
@@ -1310,14 +1463,11 @@ else
 <button type="button" class="newbutton" name="PBNewMasterLabelContent" id="PBNewMasterLabelContent" value="" onclick="NEW_MLC( )" style="width:78px;height:26px;position:absolute;left:342px;top:12px;">New</button>
 
 
-</div>  <!--  GBMasterLabelContent --> 
+</div>  <!--  GBMasterLabelContent -->
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
-
- <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
@@ -1357,7 +1507,7 @@ try
       String strBMBUpdateDirectionsUseStatement;
       String strDeleteBtn;
       String strCopyBtn;
-      
+
       View vGridMasterLabelContent;
       vGridMasterLabelContent = mMasProd.newView( );
       csrRC2 = vGridMasterLabelContent.cursor( "MasterLabelContent" ).setFirst(  );

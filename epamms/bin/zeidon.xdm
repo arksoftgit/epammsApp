@@ -1,4 +1,4 @@
-z1000-Zeidon    ZEIDON   TZDMXGPO 01/21/16   17:17:00 1.0a2   
+z1000-Zeidon    ZEIDON   TZDMXGPO 03/25/16   16:27:52 1.0a2   
 eDomainGroup 1
 aName      ePamms
 
@@ -4172,6 +4172,21 @@ eTableEntry 4
 aZKey      110006665
 aExternalValue Justify
 aInternalValue justify
+
+eDomain    2
+aZKey      68568087
+aName      TextDescription
+aDesc      Long text
+aDomainType A
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aDataType  S
+aMaxStringLth 1024
+aContextRestriction N
+
+eContext   3
+aZKey      68568088
+aName      TextDescription
+aIsDefault Y
 
 eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.DateDomain

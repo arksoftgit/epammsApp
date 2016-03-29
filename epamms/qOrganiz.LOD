@@ -1,4 +1,4 @@
-z1000-Zeidon    QORGANIZ TZZOLODO 07/20/15   16:14:00 1.0a2    
+z1000-Zeidon    QORGANIZ TZZOLODO 03/25/16   16:36:32 1.0a2   
 eLOD       1
 aZKey      1658404
 aName      qOrganiz
@@ -73,7 +73,7 @@ aDesc      1-6 digit number assigned to the company by the EPA (e.g. 10324 for M
 eDomainRec 6
 aZKey      18568062
 aName      NumericId
-aDomainType F
+aDomainType A
 aDataType  S
 aMaxStringLth 32
 aDesc      Numeric Text (0-9).
