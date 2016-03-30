@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCOrganismClaims   Generate Timestamp: 20160328163909059 --%>
+<%-- wMLCOrganismClaims   Generate Timestamp: 20160329170553863 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -60,6 +60,44 @@ public int DoInputMapping( HttpServletRequest request,
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
    {
+      // EditBox: Title1
+      nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "Title1" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "Title1", "", strMapValue );
+            else
+               mMasLC.cursor( "M_UsageType" ).getAttribute( "Title" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "Title1", e.getReason( ), strMapValue );
+         }
+      }
+
+      // EditBox: ReviewerNote1
+      nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "ReviewerNote1" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "ReviewerNote1", "", strMapValue );
+            else
+               mMasLC.cursor( "M_UsageType" ).getAttribute( "ReviewerNote" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "ReviewerNote1", e.getReason( ), strMapValue );
+         }
+      }
+
       // Grid: GridClaims
       iTableRowCnt = 0;
 
@@ -1316,7 +1354,128 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
+<div style="height:12px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox2:GroupBox */ %>
+<div id="GroupBox2" name="GroupBox2" style="float:left;width:620px;" >
+
+<table cols=2 style="width:620px;"  class="grouptable">
+
+<tr>
+<td valign="top" style="width:136px;">
+<% /* Title:1:Text */ %>
+
+<span  id="Title:1" name="Title:1" style="width:132px;height:20px;">Title:</span>
+
+</td>
+<td valign="top" style="width:466px;">
+<% /* Title1:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "Title1", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "Title1" );
+      else
+      {
+         nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = mMasLC.cursor( "M_UsageType" ).getAttribute( "Title" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on Title1: " + e.getMessage());
+               task.log().error( "*** Error on ctrl Title1", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "M_UsageType.Title: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for Title1: " + "mMasLC.M_UsageType" );
+      }
+   }
+%>
+
+<input name="Title1" id="Title1" style="width:466px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
+</td>
+</tr>
+<tr>
+<td valign="top" style="width:136px;">
+<% /* ReviewerNote:1:Text */ %>
+
+<span  id="ReviewerNote:1" name="ReviewerNote:1" style="width:132px;height:20px;">Note to Reviewer:</span>
+
+</td>
+<td valign="top" style="width:466px;">
+<% /* ReviewerNote1:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "ReviewerNote1", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "ReviewerNote1" );
+      else
+      {
+         nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = mMasLC.cursor( "M_UsageType" ).getAttribute( "ReviewerNote" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on ReviewerNote1: " + e.getMessage());
+               task.log().error( "*** Error on ctrl ReviewerNote1", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "M_UsageType.ReviewerNote: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for ReviewerNote1: " + "mMasLC.M_UsageType" );
+      }
+   }
+%>
+
+<input name="ReviewerNote1" id="ReviewerNote1" style="width:466px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
+</td>
+</tr>
+</table>
+
+</div>  <!-- GroupBox2 --> 
+
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:4px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
@@ -1342,7 +1501,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
+<div style="height:10px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->

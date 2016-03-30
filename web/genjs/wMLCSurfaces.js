@@ -3,6 +3,7 @@ var timerID = null;
 onerror = handleErr;
 window.history.forward( 1 );
 var Tab1;
+var Tab2;
 
 function handleErr( msg, url, l )
 {

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCUpdateMasterProduct   Generate Timestamp: 20160328202610778 --%>
+<%-- wMLCUpdateMasterProduct   Generate Timestamp: 20160329115448846 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -13,7 +13,7 @@
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
 <%@ page import="com.quinsoft.epamms.*" %>
 
-<%!
+<%! 
 
 ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
@@ -221,9 +221,9 @@ public int DoInputMapping( HttpServletRequest request,
       // Grid: GridMasterLabelContent
       iTableRowCnt = 0;
 
-      // We are creating a temp view to the grid view so that if there are
-      // grids on the same window with the same view we do not mess up the
-      // entity positions.
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
       vGridTmp = mMasProd.newView( );
       csrRC = vGridTmp.cursor( "MasterLabelContent" ).setFirst(  );
       while ( csrRC.isSet() )
@@ -296,7 +296,7 @@ String strInputFileName = "";
 strActionToProcess = (String) request.getParameter( "zAction" );
 
 strLastWindow = (String) session.getAttribute( "ZeidonWindow" );
-if ( StringUtils.isBlank( strLastWindow ) )
+if ( StringUtils.isBlank( strLastWindow ) ) 
    strLastWindow = "NoLastWindow";
 
 strLastAction = (String) session.getAttribute( "ZeidonAction" );
@@ -383,6 +383,44 @@ if ( strActionToProcess != null )
       {
          // Next Window
          strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "NetContents" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCUpdateMasterProduct", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCUpdateMasterProduct", "wMLC.AddUpdateNetContents" );
+      nOptRC = wMLC.AddUpdateNetContents( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "NetContents" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -713,7 +751,7 @@ if ( strActionToProcess != null )
             task.log().info( "Action Error Redirect to: " + strURL );
          }
 
-         if ( ! strURL.equals("wMLCUpdateMasterProduct.jsp") )
+         if ( ! strURL.equals("wMLCUpdateMasterProduct.jsp") ) 
          {
             response.sendRedirect( strURL );
             // If we are redirecting to a new page, then we need this return so that the rest of this page doesn't get built.
@@ -812,6 +850,16 @@ else
    {
 %>
        <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CANCEL_MasterProduct()">Cancel & Return</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "NetContents" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="NetContents" name="NetContents"><a href="#"  onclick="NetContents()">Net Contents</a></li>
 <%
    }
 %>
@@ -952,7 +1000,7 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBStorDispSections5:GroupBox */ %>
 
-<div id="GBStorDispSections5" name="GBStorDispSections5" class="listgroup"   style="float:left;position:relative; width:780px; height:36px;">  <!-- GBStorDispSections5 -->
+<div id="GBStorDispSections5" name="GBStorDispSections5" class="listgroup"   style="float:left;position:relative; width:780px; height:36px;">  <!-- GBStorDispSections5 --> 
 
 <% /* IngredientsText:Text */ %>
 
@@ -986,7 +1034,7 @@ else
 <label  id="PrimaryRegistrant" name="PrimaryRegistrant" style="width:370px;height:16px;position:absolute;left:148px;top:12px;"><%=strTextDisplayValue%></label>
 
 
-</div>  <!--  GBStorDispSections5 -->
+</div>  <!--  GBStorDispSections5 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -996,7 +1044,7 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBMasterProduct:GroupBox */ %>
 
-<div id="GBMasterProduct" name="GBMasterProduct"   style="float:left;position:relative; width:798px; height:284px;">  <!-- GBMasterProduct -->
+<div id="GBMasterProduct" name="GBMasterProduct"   style="float:left;position:relative; width:798px; height:284px;">  <!-- GBMasterProduct --> 
 
 <% /* ProductName::Text */ %>
 
@@ -1135,8 +1183,8 @@ else
       {
          String internalValue = entry.getInternalValue( );
          String externalValue = entry.getExternalValue( );
-         // Perhaps getInternalValue and getExternalValue should return an empty string,
-         // but currently it returns null.  Set to empty string.
+         // Perhaps getInternalValue and getExternalValue should return an empty string, 
+         // but currently it returns null.  Set to empty string. 
          if ( externalValue == null )
          {
             internalValue = "";
@@ -1264,8 +1312,8 @@ else
       {
          String internalValue = entry.getInternalValue( );
          String externalValue = entry.getExternalValue( );
-         // Perhaps getInternalValue and getExternalValue should return an empty string,
-         // but currently it returns null.  Set to empty string.
+         // Perhaps getInternalValue and getExternalValue should return an empty string, 
+         // but currently it returns null.  Set to empty string. 
          if ( externalValue == null )
          {
             internalValue = "";
@@ -1348,7 +1396,7 @@ else
 
 <% /* GroupBox1:GroupBox */ %>
 
-<div id="GroupBox1" name="GroupBox1" style="width:766px;height:120px;position:absolute;left:12px;top:160px;">  <!-- GroupBox1 -->
+<div id="GroupBox1" name="GroupBox1" style="width:766px;height:120px;position:absolute;left:12px;top:160px;">  <!-- GroupBox1 --> 
 
 <% /* Description::Text */ %>
 
@@ -1356,7 +1404,7 @@ else
 
 <% /* GroupBox2:GroupBox */ %>
 
-<div id="GroupBox2" name="GroupBox2" style="width:658px;height:48px;position:absolute;left:98px;top:0px;">  <!-- GroupBox2 -->
+<div id="GroupBox2" name="GroupBox2" style="width:658px;height:48px;position:absolute;left:98px;top:0px;">  <!-- GroupBox2 --> 
 
 <% /* MasterProductDescription:MLEdit */ %>
 <%
@@ -1394,14 +1442,14 @@ else
 <div class="mceSimpleZeidon" name="MasterProductDescription" id="MasterProductDescription" style="width:650px;height:48px;position:absolute;left:0px;top:0px;"><%=strErrorMapValue%></div></div>
 
 
-</div>  <!--  GroupBox2 -->
+</div>  <!--  GroupBox2 --> 
 <% /* Footnote::Text */ %>
 
 <label  id="Footnote:" name="Footnote:" style="width:88px;height:16px;position:absolute;left:0px;top:56px;">Footnote:</label>
 
 <% /* GroupBox3:GroupBox */ %>
 
-<div id="GroupBox3" name="GroupBox3" style="width:658px;height:64px;position:absolute;left:98px;top:56px;">  <!-- GroupBox3 -->
+<div id="GroupBox3" name="GroupBox3" style="width:658px;height:64px;position:absolute;left:98px;top:56px;">  <!-- GroupBox3 --> 
 
 <% /* Footnote:MLEdit */ %>
 <%
@@ -1439,11 +1487,11 @@ else
 <div class="mceSimpleZeidon" name="Footnote" id="Footnote" style="width:650px;height:64px;position:absolute;left:0px;top:0px;"><%=strErrorMapValue%></div></div>
 
 
-</div>  <!--  GroupBox3 -->
+</div>  <!--  GroupBox3 --> 
 
-</div>  <!--  GroupBox1 -->
+</div>  <!--  GroupBox1 --> 
 
-</div>  <!--  GBMasterProduct -->
+</div>  <!--  GBMasterProduct --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -1453,7 +1501,7 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBMasterLabelContent:GroupBox */ %>
 
-<div id="GBMasterLabelContent" name="GBMasterLabelContent" class="listgroup"   style="float:left;position:relative; width:486px; height:40px;">  <!-- GBMasterLabelContent -->
+<div id="GBMasterLabelContent" name="GBMasterLabelContent" class="listgroup"   style="float:left;position:relative; width:486px; height:40px;">  <!-- GBMasterLabelContent --> 
 
 <% /* MasterLabelContent:Text */ %>
 
@@ -1463,7 +1511,7 @@ else
 <button type="button" class="newbutton" name="PBNewMasterLabelContent" id="PBNewMasterLabelContent" value="" onclick="NEW_MLC( )" style="width:78px;height:26px;position:absolute;left:342px;top:12px;">New</button>
 
 
-</div>  <!--  GBMasterLabelContent -->
+</div>  <!--  GBMasterLabelContent --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -1507,7 +1555,7 @@ try
       String strBMBUpdateDirectionsUseStatement;
       String strDeleteBtn;
       String strCopyBtn;
-
+      
       View vGridMasterLabelContent;
       vGridMasterLabelContent = mMasProd.newView( );
       csrRC2 = vGridMasterLabelContent.cursor( "MasterLabelContent" ).setFirst(  );
@@ -1535,7 +1583,7 @@ try
          nRC = vGridMasterLabelContent.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditRevisionDate = vGridMasterLabelContent.cursor( "MasterLabelContent" ).getAttribute( "RevisionDate" ).getString( "REVMMDDYY" );
+            strGridEditRevisionDate = vGridMasterLabelContent.cursor( "MasterLabelContent" ).getAttribute( "RevisionDate" ).getString( "" );
 
             if ( strGridEditRevisionDate == null )
                strGridEditRevisionDate = "";

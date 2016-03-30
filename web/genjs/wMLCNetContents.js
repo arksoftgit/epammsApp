@@ -43,8 +43,8 @@ function _OnAlmostTimeout()
       // If the time is less than one minute, resubmit the page.  Otherwise, go to the timeout window.
       if (tDiff < 60000)
       {
-         document.wMLCUpdateMasterProduct.zAction.value = "_OnResubmitPage";
-         document.wMLCUpdateMasterProduct.submit( );
+         document.wMLCNetContents.zAction.value = "_OnResubmitPage";
+         document.wMLCNetContents.submit( );
       }
       else
       {
@@ -59,8 +59,8 @@ function _OnTimeout( )
    {
       _DisableFormElements( true );
 
-      document.wMLCUpdateMasterProduct.zAction.value = "_OnTimeout";
-      document.wMLCUpdateMasterProduct.submit( );
+      document.wMLCNetContents.zAction.value = "_OnTimeout";
+      document.wMLCNetContents.submit( );
    }
 }
 
@@ -74,8 +74,8 @@ function _BeforePageUnload( )
       // If the user clicked the window close box, unregister zeidon.
       if (isWindowClosing)
       {
-         document.wMLCUpdateMasterProduct.zAction.value = "_OnUnload";
-         document.wMLCUpdateMasterProduct.submit( );
+         document.wMLCNetContents.zAction.value = "_OnUnload";
+         document.wMLCNetContents.submit( );
       }
    }
 }
@@ -128,16 +128,16 @@ function _AfterPageLoaded( )
 {
 // _DisableFormElements( false );
 
-   var szFocusCtrl = document.wMLCUpdateMasterProduct.zFocusCtrl.value;
+   var szFocusCtrl = document.wMLCNetContents.zFocusCtrl.value;
    if ( szFocusCtrl != "" && szFocusCtrl != "null" )
-      eval( 'document.wMLCUpdateMasterProduct.' + szFocusCtrl + '.focus( )' );
+      eval( 'document.wMLCNetContents.' + szFocusCtrl + '.focus( )' );
 
    // This is where we put out a message from the previous iteration on this window
-   var szMsg = document.wMLCUpdateMasterProduct.zError.value;
+   var szMsg = document.wMLCNetContents.zError.value;
    if ( szMsg != "" )
       alert( szMsg ); // "Houston ... We have a problem"
 
-   szMsg = document.wMLCUpdateMasterProduct.zOpenFile.value;
+   szMsg = document.wMLCNetContents.zOpenFile.value;
    if ( szMsg != "" )
    {
       var NewWin = window.open( szMsg );
@@ -149,10 +149,10 @@ function _AfterPageLoaded( )
       }
    }
 
-   var LoginName = document.wMLCUpdateMasterProduct.zLoginName.value;
-   var keyRole = document.wMLCUpdateMasterProduct.zKeyRole.value;
-   document.wMLCUpdateMasterProduct.zError.value = "";
-   document.wMLCUpdateMasterProduct.zOpenFile.value = "";
+   var LoginName = document.wMLCNetContents.zLoginName.value;
+   var keyRole = document.wMLCNetContents.zKeyRole.value;
+   document.wMLCNetContents.zError.value = "";
+   document.wMLCNetContents.zOpenFile.value = "";
 
    if ( timerID != null )
    {
@@ -160,10 +160,7 @@ function _AfterPageLoaded( )
       timerID = null;
    }
 
-   document.wMLCUpdateMasterProduct.hChemicalFamily.value = document.wMLCUpdateMasterProduct.ChemicalFamily.value
-   document.wMLCUpdateMasterProduct.hToxicityCategory.value = document.wMLCUpdateMasterProduct.ToxicityCategory.value
-
-   var varTimeout = document.wMLCUpdateMasterProduct.zTimeout.value;
+   var varTimeout = document.wMLCNetContents.zTimeout.value;
    if ( varTimeout > 0 )
    {
       var varDelay = 60000 * varTimeout;  // Timeout value in timeout.inc
@@ -192,7 +189,7 @@ function CheckAllInGrid(id, CheckBoxName)
    }
 }
 
-function CANCEL_MasterProduct( )
+function GOTO_AddFirstAidStatement( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -202,12 +199,12 @@ function CANCEL_MasterProduct( )
    {
       _DisableFormElements( true );
 
-      document.wMLCUpdateMasterProduct.zAction.value = "CANCEL_MasterProduct";
-      document.wMLCUpdateMasterProduct.submit( );
+      document.wMLCNetContents.zAction.value = "GOTO_AddFirstAidStatement";
+      document.wMLCNetContents.submit( );
    }
 }
 
-function NetContents( )
+function SaveReturn( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -217,69 +214,12 @@ function NetContents( )
    {
       _DisableFormElements( true );
 
-      document.wMLCUpdateMasterProduct.zAction.value = "NetContents";
-      document.wMLCUpdateMasterProduct.submit( );
+      document.wMLCNetContents.zAction.value = "SaveReturn";
+      document.wMLCNetContents.submit( );
    }
 }
 
-function DELETE_MLC_Version( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCUpdateMasterProduct.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wMLCUpdateMasterProduct.zAction.value = "DELETE_MLC_Version";
-      document.wMLCUpdateMasterProduct.submit( );
-   }
-}
-
-function GOTO_CopyMLC_Version( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCUpdateMasterProduct.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wMLCUpdateMasterProduct.zAction.value = "GOTO_CopyMLC_Version";
-      document.wMLCUpdateMasterProduct.submit( );
-   }
-}
-
-function GOTO_UpdateMLC( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCUpdateMasterProduct.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wMLCUpdateMasterProduct.zAction.value = "GOTO_UpdateMLC";
-      document.wMLCUpdateMasterProduct.submit( );
-   }
-}
-
-function NEW_MLC( )
+function Cancel( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -289,12 +229,12 @@ function NEW_MLC( )
    {
       _DisableFormElements( true );
 
-      document.wMLCUpdateMasterProduct.zAction.value = "NEW_MLC";
-      document.wMLCUpdateMasterProduct.submit( );
+      document.wMLCNetContents.zAction.value = "Cancel";
+      document.wMLCNetContents.submit( );
    }
 }
 
-function SAVE_MasterProduct( )
+function GOTO_FirstAidStmtDelete( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -304,12 +244,12 @@ function SAVE_MasterProduct( )
    {
       _DisableFormElements( true );
 
-      document.wMLCUpdateMasterProduct.zAction.value = "SAVE_MasterProduct";
-      document.wMLCUpdateMasterProduct.submit( );
+      document.wMLCNetContents.zAction.value = "GOTO_FirstAidStmtDelete";
+      document.wMLCNetContents.submit( );
    }
 }
 
-function ChemicalFamilyOnChange( )
+function GOTO_UpdateFirstAidStmt( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -317,11 +257,14 @@ function ChemicalFamilyOnChange( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      document.wMLCUpdateMasterProduct.hChemicalFamily.value = document.wMLCUpdateMasterProduct.ChemicalFamily.value;
+      _DisableFormElements( true );
+
+      document.wMLCNetContents.zAction.value = "GOTO_UpdateFirstAidStmt";
+      document.wMLCNetContents.submit( );
    }
 }
 
-function ToxicityCategoryOnChange( )
+function smSaveReturn( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -329,7 +272,25 @@ function ToxicityCategoryOnChange( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      document.wMLCUpdateMasterProduct.hToxicityCategory.value = document.wMLCUpdateMasterProduct.ToxicityCategory.value;
+      _DisableFormElements( true );
+
+      document.wMLCNetContents.zAction.value = "smSaveReturn";
+      document.wMLCNetContents.submit( );
+   }
+}
+
+function smCancel( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCNetContents.zAction.value = "smCancel";
+      document.wMLCNetContents.submit( );
    }
 }
 

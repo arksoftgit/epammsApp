@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCApplicationTypes   Generate Timestamp: 20160328163906809 --%>
+<%-- wMLCApplicationTypes   Generate Timestamp: 20160329171155458 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -100,24 +100,44 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       vGridTmp.drop( );
-      // Grid: GridClaims2
-      iTableRowCnt = 0;
-
-      // We are creating a temp view to the grid view so that if there are 
-      // grids on the same window with the same view we do not mess up the 
-      // entity positions. 
-      vGridTmp = mMasLC.newView( );
-      csrRC = vGridTmp.cursor( "M_UsageNonGroupUsage" ).setFirst(  );
-      while ( csrRC.isSet() )
+      // EditBox: Title
+      nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
       {
-         lEntityKey = vGridTmp.cursor( "M_UsageNonGroupUsage" ).getEntityKey( );
-         strEntityKey = Long.toString( lEntityKey );
-         iTableRowCnt++;
-
-         csrRC = vGridTmp.cursor( "M_UsageNonGroupUsage" ).setNextContinue( );
+         strMapValue = request.getParameter( "Title" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "Title", "", strMapValue );
+            else
+               mMasLC.cursor( "M_UsageType" ).getAttribute( "Title" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "Title", e.getReason( ), strMapValue );
+         }
       }
 
-      vGridTmp.drop( );
+      // EditBox: ReviewerNote
+      nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "ReviewerNote" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "ReviewerNote", "", strMapValue );
+            else
+               mMasLC.cursor( "M_UsageType" ).getAttribute( "ReviewerNote" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "ReviewerNote", e.getReason( ), strMapValue );
+         }
+      }
+
       // Grid: GridClaims1
       iTableRowCnt = 0;
 
@@ -155,6 +175,24 @@ public int DoInputMapping( HttpServletRequest request,
          }
 
          csrRC = vGridTmp.cursor( "M_UsageGroup" ).setNextContinue( );
+      }
+
+      vGridTmp.drop( );
+      // Grid: GridClaims2
+      iTableRowCnt = 0;
+
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
+      vGridTmp = mMasLC.newView( );
+      csrRC = vGridTmp.cursor( "M_UsageNonGroupUsage" ).setFirst(  );
+      while ( csrRC.isSet() )
+      {
+         lEntityKey = vGridTmp.cursor( "M_UsageNonGroupUsage" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         iTableRowCnt++;
+
+         csrRC = vGridTmp.cursor( "M_UsageNonGroupUsage" ).setNextContinue( );
       }
 
       vGridTmp.drop( );
@@ -1712,9 +1750,9 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 </div> <!-- End of Tab item IndividualApplicationTypes -->
 
-<div id="GroupApplicationTypes" class="tab-page " > <!-- Tab item GroupApplicationTypes -->
-<h2 class="tab"><span>Group Application Types</span></h2>
-<script type="text/javascript">Tab1.addTabPage( document.getElementById( "GroupApplicationTypes" ) );</script>
+<div id="GroupApplTypes" class="tab-page " > <!-- Tab item GroupApplTypes -->
+<h2 class="tab"><span>Group Types</span></h2>
+<script type="text/javascript">Tab1.addTabPage( document.getElementById( "GroupApplTypes" ) );</script>
 
 
  <!-- This is added as a line spacer -->
@@ -1852,11 +1890,11 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 </div>  <!-- End of a new line -->
 
-</div> <!-- End of Tab item GroupApplicationTypes -->
+</div> <!-- End of Tab item GroupApplTypes -->
 
-<div id="NonGroupApplicationTypes" class="tab-page " > <!-- Tab item NonGroupApplicationTypes -->
-<h2 class="tab"><span>Nongroup Application Types</span></h2>
-<script type="text/javascript">Tab1.addTabPage( document.getElementById( "NonGroupApplicationTypes" ) );</script>
+<div id="NonGroupApplTypes" class="tab-page " > <!-- Tab item NonGroupApplTypes -->
+<h2 class="tab"><span>Nongroup Types</span></h2>
+<script type="text/javascript">Tab1.addTabPage( document.getElementById( "NonGroupApplTypes" ) );</script>
 
 
  <!-- This is added as a line spacer -->
@@ -1937,7 +1975,132 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 </div>  <!-- End of a new line -->
 
-</div> <!-- End of Tab item NonGroupApplicationTypes -->
+</div> <!-- End of Tab item NonGroupApplTypes -->
+
+<div id="General" class="tab-page " > <!-- Tab item General -->
+<h2 class="tab"><span>General</span></h2>
+<script type="text/javascript">Tab1.addTabPage( document.getElementById( "General" ) );</script>
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:12px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox1:GroupBox */ %>
+<div id="GroupBox1" name="GroupBox1" style="float:left;width:620px;" >
+
+<table cols=2 style="width:620px;"  class="grouptable">
+
+<tr>
+<td valign="top" style="width:136px;">
+<% /* Title::Text */ %>
+
+<span  id="Title:" name="Title:" style="width:132px;height:20px;" tabindex=-1 >Title:</span>
+
+</td>
+<td valign="top" style="width:466px;">
+<% /* Title:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "Title", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "Title" );
+      else
+      {
+         nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = mMasLC.cursor( "M_UsageType" ).getAttribute( "Title" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on Title: " + e.getMessage());
+               task.log().error( "*** Error on ctrl Title", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "M_UsageType.Title: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for Title: " + "mMasLC.M_UsageType" );
+      }
+   }
+%>
+
+<input name="Title" id="Title" style="width:466px;<%=strErrorColor%>" tabindex=-1  type="text" value="<%=strErrorMapValue%>" >
+
+</td>
+</tr>
+<tr>
+<td valign="top" style="width:136px;">
+<% /* ReviewerNote::Text */ %>
+
+<span  id="ReviewerNote:" name="ReviewerNote:" style="width:132px;height:20px;" tabindex=-1 >Note to Reviewer:</span>
+
+</td>
+<td valign="top" style="width:466px;">
+<% /* ReviewerNote:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "ReviewerNote", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "ReviewerNote" );
+      else
+      {
+         nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = mMasLC.cursor( "M_UsageType" ).getAttribute( "ReviewerNote" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on ReviewerNote: " + e.getMessage());
+               task.log().error( "*** Error on ctrl ReviewerNote", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "M_UsageType.ReviewerNote: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for ReviewerNote: " + "mMasLC.M_UsageType" );
+      }
+   }
+%>
+
+<input name="ReviewerNote" id="ReviewerNote" style="width:466px;<%=strErrorColor%>" tabindex=-1  type="text" value="<%=strErrorMapValue%>" >
+
+</td>
+</tr>
+</table>
+
+</div>  <!-- GroupBox1 --> 
+
+</div>  <!-- End of a new line -->
+
+</div> <!-- End of Tab item General -->
 
 </div> <!-- End of Tab Control Tab1 -->
 

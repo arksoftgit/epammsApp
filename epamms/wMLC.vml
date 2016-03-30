@@ -2852,3 +2852,36 @@ COPY_MLC_Version( VIEW ViewToWindow )
    DropObjectInstance( mMasLCNew )
 
 END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: AddUpdateNetContents
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+AddUpdateNetContents( VIEW ViewToWindow )
+
+   VIEW mMasProd  REGISTERED AS mMasProd
+
+   IF mMasProd.NetContents EXISTS
+      CreateTemporalSubobjectVersion( mMasProd, "NetContents" )
+   ELSE
+      CreateTemporalEntity( mMasProd, "NetContents", zPOS_AFTER )
+   END
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: SaveNetContents
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+SaveNetContents( VIEW ViewToWindow )
+
+   VIEW mMasProd REGISTERED AS mMasProd
+      
+   // Accept temporal NetContents.
+   AcceptSubobject( mMasProd, "NetContents" )
+   COMMIT mMasProd
+   
+END

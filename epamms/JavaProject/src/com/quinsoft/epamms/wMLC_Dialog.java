@@ -2474,8 +2474,6 @@ InitHumanHazardSect( View     ViewToWindow )
       SetAttributeFromString( mMasLC, "M_HumanHazardSection", "LabelLoc1", "[of Panel]" );
       //:mMasLC.M_HumanHazardSection.LabelLoc2 = "[below]"
       SetAttributeFromString( mMasLC, "M_HumanHazardSection", "LabelLoc2", "[below]" );
-      //:mMasLC.M_HumanHazardSection.BoldItalic = "R"
-      SetAttributeFromString( mMasLC, "M_HumanHazardSection", "BoldItalic", "R" );
    } 
 
    //:END
@@ -5774,6 +5772,62 @@ InitAddItems( View     ViewToWindow )
    //:wWebXfer.Root.String = "\r\n"
    SetAttributeFromString( wWebXfer, "Root", "String", "\\r\\n" );
    return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:AddUpdateNetContents( VIEW ViewToWindow )
+
+//:   VIEW mMasProd  REGISTERED AS mMasProd
+public int 
+AddUpdateNetContents( View     ViewToWindow )
+{
+   zVIEW    mMasProd = new zVIEW( );
+   int      RESULT = 0;
+   int      lTempInteger_0 = 0;
+
+   RESULT = GetViewByName( mMasProd, "mMasProd", ViewToWindow, zLEVEL_TASK );
+
+   //:IF mMasProd.NetContents EXISTS
+   lTempInteger_0 = CheckExistenceOfEntity( mMasProd, "NetContents" );
+   if ( lTempInteger_0 == 0 )
+   { 
+      //:CreateTemporalSubobjectVersion( mMasProd, "NetContents" )
+      CreateTemporalSubobjectVersion( mMasProd, "NetContents" );
+      //:ELSE
+   } 
+   else
+   { 
+      //:CreateTemporalEntity( mMasProd, "NetContents", zPOS_AFTER )
+      CreateTemporalEntity( mMasProd, "NetContents", zPOS_AFTER );
+   } 
+
+   //:END
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:SaveNetContents( VIEW ViewToWindow )
+
+//:   VIEW mMasProd REGISTERED AS mMasProd
+public int 
+SaveNetContents( View     ViewToWindow )
+{
+   zVIEW    mMasProd = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mMasProd, "mMasProd", ViewToWindow, zLEVEL_TASK );
+   //:   
+   //:// Accept temporal NetContents.
+   //:AcceptSubobject( mMasProd, "NetContents" )
+   AcceptSubobject( mMasProd, "NetContents" );
+   //:COMMIT mMasProd
+   RESULT = CommitObjectInstance( mMasProd );
+   return( 0 );
+//    
 // END
 } 
 

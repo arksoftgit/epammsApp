@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCSurfaces   Generate Timestamp: 20160328163909707 --%>
+<%-- wMLCSurfaces   Generate Timestamp: 20160329170533204 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -100,6 +100,44 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       vGridTmp.drop( );
+      // EditBox: Title1
+      nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "Title1" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "Title1", "", strMapValue );
+            else
+               mMasLC.cursor( "M_UsageType" ).getAttribute( "Title" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "Title1", e.getReason( ), strMapValue );
+         }
+      }
+
+      // EditBox: ReviewerNote1
+      nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "ReviewerNote1" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "ReviewerNote1", "", strMapValue );
+            else
+               mMasLC.cursor( "M_UsageType" ).getAttribute( "ReviewerNote" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "ReviewerNote1", e.getReason( ), strMapValue );
+         }
+      }
+
       // Grid: GridClaims1
       iTableRowCnt = 0;
 
@@ -1596,13 +1634,13 @@ else
 
 <% /* OrganismClaimsStatements:Text */ %>
 
-<label class="groupbox"  id="OrganismClaimsStatements" name="OrganismClaimsStatements" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Surfaces Statements</label>
+<label class="groupbox"  id="OrganismClaimsStatements" name="OrganismClaimsStatements" style="">Surfaces Statements</label>
 
 <% /* PushBtn1:PushBtn */ %>
-<button type="button" name="PushBtn1" id="PushBtn1" value="" onclick="GOTO_DeleteSelectedEntries( )" style="width:198px;height:26px;position:absolute;left:274px;top:12px;">Delete Selected Surfaces</button>
+<button type="button" name="PushBtn1" id="PushBtn1" value="" onclick="GOTO_DeleteSelectedEntries( )" style="width:198px;height:26px;position:absolute;left:274px;top:12px;" tabindex=-1 >Delete Selected Surfaces</button>
 
 <% /* PBNew:PushBtn */ %>
-<button type="button" name="PBNew" id="PBNew" value="" onclick="ADD_SurfacesUsageItems( )" style="width:78px;height:26px;position:absolute;left:482px;top:12px;">New</button>
+<button type="button" name="PBNew" id="PBNew" value="" onclick="ADD_SurfacesUsageItems( )" style="width:78px;height:26px;position:absolute;left:482px;top:12px;" tabindex=-1 >New</button>
 
 
 </div>  <!--  GBClaimsStatements --> 
@@ -1735,16 +1773,16 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <% /* OrganismClaimsStatements1:Text */ %>
 
-<label class="groupbox"  id="OrganismClaimsStatements1" name="OrganismClaimsStatements1" style="width:166px;height:16px;position:absolute;left:6px;top:12px;">Surface Groups</label>
+<label class="groupbox"  id="OrganismClaimsStatements1" name="OrganismClaimsStatements1" style="">Surface Groups</label>
 
 <% /* PushBtn2:PushBtn */ %>
-<button type="button" name="PushBtn2" id="PushBtn2" value="" onclick="DELETE_UsageGroupEntriesOnly( )" style="width:258px;height:26px;position:absolute;left:194px;top:12px;">Delete Selected Groups Only</button>
+<button type="button" name="PushBtn2" id="PushBtn2" value="" onclick="DELETE_UsageGroupEntriesOnly( )" style="width:258px;height:26px;position:absolute;left:194px;top:12px;" tabindex=-1 >Delete Selected Groups Only</button>
 
 <% /* PBNew1:PushBtn */ %>
-<button type="button" name="PBNew1" id="PBNew1" value="" onclick="GOTO_AddUsageGroup( )" style="width:78px;height:26px;position:absolute;left:482px;top:12px;">New</button>
+<button type="button" name="PBNew1" id="PBNew1" value="" onclick="GOTO_AddUsageGroup( )" style="width:78px;height:26px;position:absolute;left:482px;top:12px;" tabindex=-1 >New</button>
 
 <% /* PushBtn3:PushBtn */ %>
-<button type="button" name="PushBtn3" id="PushBtn3" value="" onclick="DELETE_UsageGroupEntriesSurfaces( )" style="width:258px;height:26px;position:absolute;left:194px;top:38px;">Delete Selected Groups & Surfaces</button>
+<button type="button" name="PushBtn3" id="PushBtn3" value="" onclick="DELETE_UsageGroupEntriesSurfaces( )" style="width:258px;height:26px;position:absolute;left:194px;top:38px;" tabindex=-1 >Delete Selected Groups & Surfaces</button>
 
 
 </div>  <!--  GBClaimsStatements1 --> 
@@ -1946,7 +1984,141 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 </div> <!-- End of Tab item NonGroupSurfaces -->
 
+<div id="General" class="tab-page " > <!-- Tab item General -->
+<h2 class="tab"><span>General</span></h2>
+<script type="text/javascript">Tab1.addTabPage( document.getElementById( "General" ) );</script>
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:12px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox2:GroupBox */ %>
+<div id="GroupBox2" name="GroupBox2" style="float:left;width:620px;" >
+
+<table cols=2 style="width:620px;"  class="grouptable">
+
+<tr>
+<td valign="top" style="width:136px;">
+<% /* Title:1:Text */ %>
+
+<span  id="Title:1" name="Title:1" style="width:132px;height:20px;" tabindex=-1 >Title:</span>
+
+</td>
+<td valign="top" style="width:466px;">
+<% /* Title1:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "Title1", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "Title1" );
+      else
+      {
+         nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = mMasLC.cursor( "M_UsageType" ).getAttribute( "Title" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on Title1: " + e.getMessage());
+               task.log().error( "*** Error on ctrl Title1", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "M_UsageType.Title: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for Title1: " + "mMasLC.M_UsageType" );
+      }
+   }
+%>
+
+<input name="Title1" id="Title1" style="width:466px;<%=strErrorColor%>" tabindex=-1  type="text" value="<%=strErrorMapValue%>" >
+
+</td>
+</tr>
+<tr>
+<td valign="top" style="width:136px;">
+<% /* ReviewerNote:1:Text */ %>
+
+<span  id="ReviewerNote:1" name="ReviewerNote:1" style="width:132px;height:20px;" tabindex=-1 >Note to Reviewer:</span>
+
+</td>
+<td valign="top" style="width:466px;">
+<% /* ReviewerNote1:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "ReviewerNote1", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "ReviewerNote1" );
+      else
+      {
+         nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = mMasLC.cursor( "M_UsageType" ).getAttribute( "ReviewerNote" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on ReviewerNote1: " + e.getMessage());
+               task.log().error( "*** Error on ctrl ReviewerNote1", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "M_UsageType.ReviewerNote: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for ReviewerNote1: " + "mMasLC.M_UsageType" );
+      }
+   }
+%>
+
+<input name="ReviewerNote1" id="ReviewerNote1" style="width:466px;<%=strErrorColor%>" tabindex=-1  type="text" value="<%=strErrorMapValue%>" >
+
+</td>
+</tr>
+</table>
+
+</div>  <!-- GroupBox2 --> 
+
+</div>  <!-- End of a new line -->
+
+</div> <!-- End of Tab item General -->
+
 </div> <!-- End of Tab Control Tab1 -->
+
+<script type="text/javascript">setupAllTabs( );</script>
+
+<% /* Tab2:Tab */ %>
+
+<div id="Tab2" class="tab-pane" style="width:56px;"> <!-- Beginning of Tab Control Tab2 -->
+<script type="text/javascript">Tab2 = new WebFXTabPane( document.getElementById( "Tab2" ) );</script>
+
+</div> <!-- End of Tab Control Tab2 -->
 
 <script type="text/javascript">setupAllTabs( );</script>
 
