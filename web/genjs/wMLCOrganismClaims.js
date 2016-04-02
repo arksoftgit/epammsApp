@@ -204,6 +204,21 @@ function GOTO_AddUsageStatements( )
    }
 }
 
+function AttemptEmbedKeywords( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCOrganismClaims.zAction.value = "AttemptEmbedKeywords";
+      document.wMLCOrganismClaims.submit( );
+   }
+}
+
 function GOTO_DeleteSelectedEntries( )
 {
 

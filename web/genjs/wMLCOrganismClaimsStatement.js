@@ -207,6 +207,21 @@ function AcceptAndNextUsage( )
    }
 }
 
+function AcceptAndPreviousUsage( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCOrganismClaimsStatement.zAction.value = "AcceptAndPreviousUsage";
+      document.wMLCOrganismClaimsStatement.submit( );
+   }
+}
+
 function AcceptAndReturnClaimsStatement( )
 {
 
@@ -252,6 +267,21 @@ function ADD_UsageKeyword( )
    }
 }
 
+function AttemptDecipheredEntry( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCOrganismClaimsStatement.zAction.value = "AttemptDecipheredEntry";
+      document.wMLCOrganismClaimsStatement.submit( );
+   }
+}
+
 function CancelClaimsStmt( )
 {
 
@@ -282,21 +312,6 @@ function COPY_UsageKeywordAndText( strTagEntityKey )
       _DisableFormElements( true );
 
       document.wMLCOrganismClaimsStatement.zAction.value = "COPY_UsageKeywordAndText";
-      document.wMLCOrganismClaimsStatement.submit( );
-   }
-}
-
-function PASTE_UsageKeywordAndText( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCOrganismClaimsStatement.zAction.value = "PASTE_UsageKeywordAndText";
       document.wMLCOrganismClaimsStatement.submit( );
    }
 }
@@ -360,6 +375,21 @@ function GOTO_UsageUpdate( strTagEntityKey )
       _DisableFormElements( true );
 
       document.wMLCOrganismClaimsStatement.zAction.value = "GOTO_UsageUpdate";
+      document.wMLCOrganismClaimsStatement.submit( );
+   }
+}
+
+function PASTE_UsageKeywordAndText( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCOrganismClaimsStatement.zAction.value = "PASTE_UsageKeywordAndText";
       document.wMLCOrganismClaimsStatement.submit( );
    }
 }

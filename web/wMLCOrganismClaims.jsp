@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCOrganismClaims   Generate Timestamp: 20160329170553863 --%>
+<%-- wMLCOrganismClaims   Generate Timestamp: 20160401211852498 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -290,6 +290,44 @@ if ( strActionToProcess != null )
       {
          // Next Window
          strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "AddItemsMultipleClaims" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "AttemptEmbedKeywords" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCOrganismClaims", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCOrganismClaims", "wMLC.AttemptEmbedKeywords" );
+      nOptRC = wMLC.AttemptEmbedKeywords( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -1481,17 +1519,20 @@ else
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBStorDispSections3:GroupBox */ %>
 
-<div id="GBStorDispSections3" name="GBStorDispSections3" class="listgroup"   style="float:left;position:relative; width:780px; height:40px;">  <!-- GBStorDispSections3 --> 
+<div id="GBStorDispSections3" name="GBStorDispSections3" class="listgroup"   style="float:left;position:relative; width:666px; height:40px;">  <!-- GBStorDispSections3 --> 
 
 <% /* EnvironmentalHazardsSection1:Text */ %>
 
-<label class="groupbox"  id="EnvironmentalHazardsSection1" name="EnvironmentalHazardsSection1" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Organism Claims Statements</label>
+<label class="groupbox"  id="EnvironmentalHazardsSection1" name="EnvironmentalHazardsSection1" style="width:198px;height:16px;position:absolute;left:6px;top:12px;">Organism Claims Statements</label>
 
 <% /* PushBtn1:PushBtn */ %>
-<button type="button" name="PushBtn1" id="PushBtn1" value="" onclick="GOTO_DeleteSelectedEntries( )" style="width:166px;height:26px;position:absolute;left:334px;top:12px;">Delete Selected Claims</button>
+<button type="button" name="PushBtn1" id="PushBtn1" value="" onclick="GOTO_DeleteSelectedEntries( )" style="width:166px;height:26px;position:absolute;left:222px;top:12px;">Delete Selected Claims</button>
 
 <% /* PBNew:PushBtn */ %>
-<button type="button" name="PBNew" id="PBNew" value="" onclick="GOTO_AddUsageStatements( )" style="width:78px;height:26px;position:absolute;left:518px;top:12px;">New</button>
+<button type="button" name="PBNew" id="PBNew" value="" onclick="GOTO_AddUsageStatements( )" style="width:78px;height:26px;position:absolute;left:410px;top:12px;">New</button>
+
+<% /* EmbedKeywords:PushBtn */ %>
+<button type="button" name="EmbedKeywords" id="EmbedKeywords" value="" onclick="AttemptEmbedKeywords( )" style="width:132px;height:26px;position:absolute;left:510px;top:12px;">Embed Keywords</button>
 
 
 </div>  <!--  GBStorDispSections3 --> 
@@ -1507,7 +1548,7 @@ else
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox1:GroupBox */ %>
 
-<div id="GroupBox1" name="GroupBox1" style="width:780px;float:left;">  <!-- GroupBox1 --> 
+<div id="GroupBox1" name="GroupBox1" style="width:658px;float:left;">  <!-- GroupBox1 --> 
 
 
  <!-- This is added as a line spacer -->
@@ -1520,7 +1561,7 @@ else
 
 <thead bgcolor=green><tr>
 
-   <th>Select</th>
+   <th class="gridheading"><input type="checkbox" onclick="CheckAllInGrid(this,'GS_Select')"></th>
    <th>Classification</th>
    <th>Pathogen</th>
    <th>Update</th>

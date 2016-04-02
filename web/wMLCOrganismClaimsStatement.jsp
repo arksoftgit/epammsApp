@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCOrganismClaimsStatement   Generate Timestamp: 20160328163909175 --%>
+<%-- wMLCOrganismClaimsStatement   Generate Timestamp: 20160401195837811 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -374,6 +374,44 @@ if ( strActionToProcess != null )
       break;
    }
 
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "AcceptAndPreviousUsage" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCOrganismClaimsStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCOrganismClaimsStatement", "wMLC.AcceptAndPreviousUsage" );
+      nOptRC = wMLC.AcceptAndPreviousUsage( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
    while ( bDone == false && StringUtils.equals( strActionToProcess, "AcceptAndReturnClaimsStatement" ) )
    {
       bDone = true;
@@ -485,6 +523,44 @@ if ( strActionToProcess != null )
       break;
    }
 
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "AttemptDecipheredEntry" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCOrganismClaimsStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCOrganismClaimsStatement", "wMLC.AttemptDecipheredEntry" );
+      nOptRC = wMLC.AttemptDecipheredEntry( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
    while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelClaimsStmt" ) )
    {
       bDone = true;
@@ -562,44 +638,6 @@ if ( strActionToProcess != null )
       nRC = 0;
       VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCOrganismClaimsStatement", "wMLC.COPY_UsageKeywordAndText" );
       nOptRC = wMLC.COPY_UsageKeywordAndText( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "PASTE_UsageKeywordAndText" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCOrganismClaimsStatement", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCOrganismClaimsStatement", "wMLC.PASTE_UsageKeywordAndText" );
-      nOptRC = wMLC.PASTE_UsageKeywordAndText( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -779,6 +817,44 @@ if ( strActionToProcess != null )
       }
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "AddUpdateKeywordUsage" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "PASTE_UsageKeywordAndText" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCOrganismClaimsStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCOrganismClaimsStatement", "wMLC.PASTE_UsageKeywordAndText" );
+      nOptRC = wMLC.PASTE_UsageKeywordAndText( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -1011,11 +1087,21 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "New2" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Next" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="New2" name="New2"><a href="#"  onclick="AcceptAndNextUsage()">Next</a></li>
+       <li id="Next" name="Next"><a href="#"  onclick="AcceptAndNextUsage()">Next</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Prev" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="Prev" name="Prev"><a href="#"  onclick="AcceptAndPreviousUsage()">Previous</a></li>
 <%
    }
 %>
@@ -1180,15 +1266,15 @@ else
 <div style="height:1px;width:18px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBPrecautionarySection:GroupBox */ %>
 
-<div id="GBPrecautionarySection" name="GBPrecautionarySection" class="withborder" style="width:834px;height:96px;float:left;">  <!-- GBPrecautionarySection --> 
+<div id="GBPrecautionarySection" name="GBPrecautionarySection" class="withborder" style="width:810px;height:96px;float:left;">  <!-- GBPrecautionarySection --> 
 
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox2:GroupBox */ %>
-<div id="GroupBox2" name="GroupBox2" style="float:left;width:806px;" >
+<div id="GroupBox2" name="GroupBox2" style="float:left;width:782px;" >
 
-<table cols=2 style="width:806px;"  class="grouptable">
+<table cols=2 style="width:782px;"  class="grouptable">
 
 <tr>
 <td valign="top" style="width:96px;">
@@ -1434,7 +1520,7 @@ else
 <div style="height:1px;width:18px;float:left;"></div>   <!-- Width Spacer -->
 <% /* Tab:Tab */ %>
 
-<div id="Tab" class="tab-pane" style="width:834px;"> <!-- Beginning of Tab Control Tab -->
+<div id="Tab" class="tab-pane" style="width:814px;"> <!-- Beginning of Tab Control Tab -->
 <script type="text/javascript">Tab = new WebFXTabPane( document.getElementById( "Tab" ) );</script>
 
 <div id="TabCtl1" class="tab-page " > <!-- Tab item TabCtl1 -->
@@ -1449,7 +1535,7 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox8:GroupBox */ %>
 
-<div id="GroupBox8" name="GroupBox8" style="width:810px;float:left;">  <!-- GroupBox8 --> 
+<div id="GroupBox8" name="GroupBox8" style="width:768px;float:left;">  <!-- GroupBox8 --> 
 
 
  <!-- This is added as a line spacer -->
@@ -1486,7 +1572,7 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* Grid4:Grid */ %>
-<table class="sortable"  cols=5 style=""  name="Grid4" id="Grid4">
+<table class="sortable"  cols=5 style="width:758px;"  name="Grid4" id="Grid4">
 
 <thead bgcolor=green><tr>
 
@@ -1595,17 +1681,14 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 
  <!-- This is added as a line spacer -->
-<div style="height:14px;width:100px;"></div>
+<div style="height:22px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox9:GroupBox */ %>
+<% /* GroupBox1:GroupBox */ %>
 
-<div id="GroupBox9" name="GroupBox9" style="width:774px;float:left;">  <!-- GroupBox9 --> 
+<div id="GroupBox1" name="GroupBox1" style="width:758px;height:144px;float:left;">  <!-- GroupBox1 --> 
 
-
- <!-- This is added as a line spacer -->
-<div style="height:8px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <% /* GroupBox5:GroupBox */ %>
@@ -1613,14 +1696,17 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <div id="GroupBox5" name="GroupBox5"   style="float:left;position:relative; width:756px; height:30px;">  <!-- GroupBox5 --> 
 
 <% /* ShowText2:PushBtn */ %>
-<button type="button" class="newbutton" name="ShowText2" id="ShowText2" value="" onclick="GOTO_DisplayGeneratedTextUsage( )" style="width:158px;height:26px;position:absolute;left:396px;top:4px;">Show Generated Text</button>
+<button type="button" class="newbutton" name="ShowText2" id="ShowText2" value="" onclick="GOTO_DisplayGeneratedTextUsage( )" style="width:154px;height:26px;position:absolute;left:310px;top:4px;">Show Generated Text</button>
 
 <% /* AddBlank:PushBtn */ %>
-<button type="button" class="newbutton" name="AddBlank" id="AddBlank" value="" onclick="ADD_BlankClaimsKeywordAndText( )" style="width:126px;height:26px;position:absolute;left:576px;top:4px;">Add Blank Entry</button>
+<button type="button" class="newbutton" name="AddBlank" id="AddBlank" value="" onclick="ADD_BlankClaimsKeywordAndText( )" style="width:122px;height:26px;position:absolute;left:474px;top:4px;">Add Blank Entry</button>
+
+<% /* AttemptKeyword:PushBtn */ %>
+<button type="button" class="newbutton" name="AttemptKeyword" id="AttemptKeyword" value="" onclick="AttemptDecipheredEntry( )" style="width:122px;height:26px;position:absolute;left:606px;top:4px;">Attempt Keyword</button>
 
 <% /* KeywordEmbedding2:Text */ %>
 
-<label class="listheader"  id="KeywordEmbedding2" name="KeywordEmbedding2" style="width:346px;height:16px;position:absolute;left:10px;top:8px;">Keyword text for Embedding in Statement Text</label>
+<label class="listheader"  id="KeywordEmbedding2" name="KeywordEmbedding2" style="width:290px;height:16px;position:absolute;left:2px;top:8px;">Keyword text for Embedding in Statement</label>
 
 
 </div>  <!--  GroupBox5 --> 
@@ -1633,9 +1719,8 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <div style="height:8px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* Grid5:Grid */ %>
-<table class="sortable"  cols=3 style=""  name="Grid5" id="Grid5">
+<table class="sortable"  cols=3 style="width:756px;"  name="Grid5" id="Grid5">
 
 <thead bgcolor=green><tr>
 
@@ -1663,7 +1748,7 @@ try
       String strKeyword3ErrorColor;
       String strKeywordText3;
       String strKeywordText3ErrorColor;
-      String strDelete3;
+      String strDelete;
       
       View vGrid5;
       vGrid5 = mMasLC.newView( );
@@ -1729,7 +1814,7 @@ try
 
    <td><input size="30" value="<%=strKeyword3%>"<%=strKeyword3ErrorColor%> name="Keyword3::<%=strEntityKey%>" id="Keyword3::<%=strEntityKey%>" ></td>
    <td><input size="78" value="<%=strKeywordText3%>"<%=strKeywordText3ErrorColor%> name="KeywordText3::<%=strEntityKey%>" id="KeywordText3::<%=strEntityKey%>" ></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="Delete3" onclick="DELETE_UsageKeyword( this.id )" id="Delete3::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="Delete" onclick="DELETE_UsageKeyword( this.id )" id="Delete::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 
@@ -1751,7 +1836,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </div>  <!-- End of a new line -->
 
 
-</div>  <!--  GroupBox9 --> 
+</div>  <!--  GroupBox1 --> 
 </div>  <!-- End of a new line -->
 
 </div> <!-- End of Tab item TabCtl2 -->

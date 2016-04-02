@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCSurfacesStatement   Generate Timestamp: 20160328163909785 --%>
+<%-- wMLCSurfacesStatement   Generate Timestamp: 20160401094611716 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -65,6 +65,9 @@ public int DoInputMapping( HttpServletRequest request,
       if ( nRC >= 0 ) // CursorResult.SET
       {
          strMapValue = request.getParameter( "PrecautionarySubtitle" );
+         task.log().debug( "PrecautionarySubtitle prior to TrimTinyHtml: " + strMapValue );
+         strMapValue = VmlOperation.TrimTinyHtml( strMapValue );
+         task.log().debug( "PrecautionarySubtitle after TrimTinyHtml: " + strMapValue );
          try
          {
             if ( webMapping )
@@ -973,27 +976,26 @@ else
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBPrecautionarySection:GroupBox */ %>
 
-<div id="GBPrecautionarySection" name="GBPrecautionarySection" class="withborder" style="width:826px;height:236px;float:left;">  <!-- GBPrecautionarySection --> 
+<div id="GBPrecautionarySection" name="GBPrecautionarySection" class="withborder" style="width:826px;height:126px;float:left;">  <!-- GBPrecautionarySection --> 
 
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox2:GroupBox */ %>
-<div id="GroupBox2" name="GroupBox2" style="float:left;width:800px;" >
 
-<table cols=0 style="width:800px;"  class="grouptable">
+<div id="GroupBox2" name="GroupBox2"   style="float:left;position:relative; width:800px; height:126px;">  <!-- GroupBox2 --> 
 
-<tr>
-<td valign="top" style="width:132px;">
 <% /* Description:Text */ %>
 
-<span  id="Description" name="Description" style="width:128px;height:16px;">Surface Text:</span>
+<label  id="Description" name="Description" style="width:128px;height:16px;position:absolute;left:6px;top:8px;">Surface Text:</label>
 
-</td>
-<td valign="top" style="width:600px;">
+<% /* GroupBox3:GroupBox */ %>
+
+<div id="GroupBox3" name="GroupBox3" style="width:600px;height:116px;position:absolute;left:138px;top:8px;">  <!-- GroupBox3 --> 
+
 <% /* PrecautionarySubtitle:MLEdit */ %>
 <%
-   // MLEdit: PrecautionarySubtitle
+   // : PrecautionarySubtitle
    strErrorMapValue = VmlOperation.CheckError( "PrecautionarySubtitle", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
@@ -1005,7 +1007,7 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "PrecautionarySubtitle" );
+         task.log( ).info( "Invalid View: " + "PrecautionarySubtitle" );
       else
       {
          nRC = mMasLC.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
@@ -1015,22 +1017,21 @@ else
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "M_Usage.Name: " + strErrorMapValue );
+            task.log( ).info( "M_Usage.Name: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for PrecautionarySubtitle: " + "mMasLC.M_Usage" );
+            task.log( ).info( "Entity does not exist for PrecautionarySubtitle: " + "mMasLC.M_Usage" );
       }
    }
 %>
 
-<textarea id="PrecautionarySubtitle" name="PrecautionarySubtitle" class="mceSimple" style="width:600px;height:216px;border:solid;border-width:2px;border-style:groove;"><%=strErrorMapValue%></textarea>
+<div style="background-color:#eee;border:1px solid #042;width:600px;height:116px;position:absolute;left:0px;top:0px;overflow:auto;">
+<div class="mceSimpleZeidon" name="PrecautionarySubtitle" id="PrecautionarySubtitle" style="width:600px;height:116px;position:absolute;left:0px;top:0px;"><%=strErrorMapValue%></div></div>
 
-</td>
-</tr>
-</table>
 
-</div>  <!-- GroupBox2 --> 
+</div>  <!--  GroupBox3 --> 
 
+</div>  <!--  GroupBox2 --> 
 </div>  <!-- End of a new line -->
 
 
@@ -1041,7 +1042,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:12px;width:100px;"></div>
+<div style="height:8px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->

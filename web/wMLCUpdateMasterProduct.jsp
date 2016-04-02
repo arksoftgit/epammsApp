@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCUpdateMasterProduct   Generate Timestamp: 20160329115448846 --%>
+<%-- wMLCUpdateMasterProduct   Generate Timestamp: 20160330091035177 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -850,16 +850,6 @@ else
    {
 %>
        <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CANCEL_MasterProduct()">Cancel & Return</a></li>
-<%
-   }
-%>
-
-<%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "NetContents" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="NetContents" name="NetContents"><a href="#"  onclick="NetContents()">Net Contents</a></li>
 <%
    }
 %>

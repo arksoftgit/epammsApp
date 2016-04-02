@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCMarketingSelectByType   Generate Timestamp: 20160328163908872 --%>
+<%-- wMLCMarketingSelectByType   Generate Timestamp: 20160401194102807 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -886,24 +886,6 @@ else
 
 </div>  <!-- End of a new line -->
 
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp</span>
-<% /* HTSelectAllAreasOfUse2:Text */ %>
-
-<a href="#" id="HTSelectAllAreasOfUse2" name="HTSelectAllAreasOfUse2"  onclick="CLEAR_MLC_UsageTarget( );" style="width:134px;height:16px;">Clear Target Entries</a>
-
-<% /* Text4:Text */ %>
-
-<a href="#" id="Text4" name="Text4"  onclick="SETALL_MLC_UsageTarget( );" style="width:178px;height:16px;">         Set All Target Entries</a>
-
-</div>  <!-- End of a new line -->
-
 
 </div>  <!--  GroupBox6 --> 
 </div>  <!-- End of a new line -->
@@ -990,7 +972,7 @@ try
          nRC = vGrid1.cursor( "M_MarketingUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl3 = vGrid1.cursor( "M_MarketingUsage" ).getAttribute( "dDisplayUsageName" ).getString( "" );
+            strGridEditCtl3 = vGrid1.cursor( "M_MarketingUsage" ).getAttribute( "dDisplayMarketUseName" ).getString( "" );
 
             if ( strGridEditCtl3 == null )
                strGridEditCtl3 = "";
@@ -1142,22 +1124,6 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 </div>  <!-- End of a new line -->
 
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
-<% /* HTSelectAllAreasOfUse1:Text */ %>
-
-<a href="#" id="HTSelectAllAreasOfUse1" name="HTSelectAllAreasOfUse1"  onclick="CLEAR_MLC_UsageSource( );" style="width:152px;height:16px;">Clear Source Entries</a>
-
-<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
-<% /* Text2:Text */ %>
-
-<a href="#" id="Text2" name="Text2"  onclick="SETALL_MLC_UsageSource( );" style="width:184px;height:16px;">         Set All Source Entries</a>
-
-</div>  <!-- End of a new line -->
-
 
 </div>  <!--  GroupBox7 --> 
 </div>  <!-- End of a new line -->
@@ -1229,7 +1195,7 @@ try
          nRC = vGrid2.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl1 = vGrid2.cursor( "M_Usage" ).getAttribute( "dDisplayUsageName" ).getString( "" );
+            strGridEditCtl1 = vGrid2.cursor( "M_Usage" ).getAttribute( "dDisplayPathogenName" ).getString( "" );
 
             if ( strGridEditCtl1 == null )
                strGridEditCtl1 = "";

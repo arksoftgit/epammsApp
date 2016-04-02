@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCNetContents   Generate Timestamp: 20160329154112834 --%>
+<%-- wMLCNetContents   Generate Timestamp: 20160330094008694 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -35,7 +35,7 @@ public int DoInputMapping( HttpServletRequest request,
    String taskId = (String) session.getAttribute( "ZeidonTaskId" );
    Task task = objectEngine.getTaskById( taskId );
 
-   View mMasProd = null;
+   View mMasLC = null;
    View vGridTmp = null; // temp view to grid view
    View vRepeatingGrp = null; // temp view to repeating group view
    String strDateFormat = "";
@@ -57,11 +57,11 @@ public int DoInputMapping( HttpServletRequest request,
    if ( webMapping == false )
       session.setAttribute( "ZeidonError", null );
 
-   mMasProd = task.getViewByName( "mMasProd" );
-   if ( VmlOperation.isValid( mMasProd ) )
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) )
    {
       // EditBox: NetContentsTitle
-      nRC = mMasProd.cursor( "NetContents" ).checkExistenceOfEntity( ).toInt();
+      nRC = mMasLC.cursor( "NetContents" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
          strMapValue = request.getParameter( "NetContentsTitle" );
@@ -70,7 +70,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "NetContentsTitle", "", strMapValue );
             else
-               mMasProd.cursor( "NetContents" ).getAttribute( "Title" ).setValue( strMapValue, "" );
+               mMasLC.cursor( "NetContents" ).getAttribute( "Title" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -80,7 +80,7 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       // MLEdit: Description
-      nRC = mMasProd.cursor( "NetContents" ).checkExistenceOfEntity( ).toInt();
+      nRC = mMasLC.cursor( "NetContents" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
          strMapValue = request.getParameter( "Description" );
@@ -92,7 +92,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "Description", "", strMapValue );
             else
-               mMasProd.cursor( "NetContents" ).getAttribute( "Description" ).setValue( strMapValue, "" );
+               mMasLC.cursor( "NetContents" ).getAttribute( "Description" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -102,7 +102,7 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       // MLEdit: Text
-      nRC = mMasProd.cursor( "NetContents" ).checkExistenceOfEntity( ).toInt();
+      nRC = mMasLC.cursor( "NetContents" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
          strMapValue = request.getParameter( "Text" );
@@ -114,7 +114,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "Text", "", strMapValue );
             else
-               mMasProd.cursor( "NetContents" ).getAttribute( "Text" ).setValue( strMapValue, "" );
+               mMasLC.cursor( "NetContents" ).getAttribute( "Text" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -334,8 +334,8 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mMasProd = task.getViewByName( "mMasProd" );
-      EntityCursor cursor = mMasProd.cursor( "NetContents" );
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "NetContents" );
       if ( cursor.isNull() )
          nRC = 0;
       else
@@ -497,8 +497,8 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mMasProd = task.getViewByName( "mMasProd" );
-      EntityCursor cursor = mMasProd.cursor( "NetContents" );
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "NetContents" );
       if ( cursor.isNull() )
          nRC = 0;
       else
@@ -864,17 +864,17 @@ else
    else
    {
       strErrorColor = "";
-      mMasProd = task.getViewByName( "mMasProd" );
-      if ( VmlOperation.isValid( mMasProd ) == false )
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
          task.log( ).debug( "Invalid View: " + "NetContentsTitle" );
       else
       {
-         nRC = mMasProd.cursor( "NetContents" ).checkExistenceOfEntity( ).toInt();
+         nRC = mMasLC.cursor( "NetContents" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
             try
             {
-               strErrorMapValue = mMasProd.cursor( "NetContents" ).getAttribute( "Title" ).getString( "" );
+               strErrorMapValue = mMasLC.cursor( "NetContents" ).getAttribute( "Title" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -887,7 +887,7 @@ else
             task.log( ).debug( "NetContents.Title: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for NetContentsTitle: " + "mMasProd.NetContents" );
+            task.log( ).debug( "Entity does not exist for NetContentsTitle: " + "mMasLC.NetContents" );
       }
    }
 %>
@@ -925,22 +925,22 @@ else
    else
    {
       strErrorColor = "";
-      mMasProd = task.getViewByName( "mMasProd" );
-      if ( VmlOperation.isValid( mMasProd ) == false )
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
          task.log( ).info( "Invalid View: " + "Description" );
       else
       {
-         nRC = mMasProd.cursor( "NetContents" ).checkExistenceOfEntity( ).toInt();
+         nRC = mMasLC.cursor( "NetContents" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strErrorMapValue = mMasProd.cursor( "NetContents" ).getAttribute( "Description" ).getString( "" );
+            strErrorMapValue = mMasLC.cursor( "NetContents" ).getAttribute( "Description" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
             task.log( ).info( "NetContents.Description: " + strErrorMapValue );
          }
          else
-            task.log( ).info( "Entity does not exist for Description: " + "mMasProd.NetContents" );
+            task.log( ).info( "Entity does not exist for Description: " + "mMasLC.NetContents" );
       }
    }
 %>
@@ -970,22 +970,22 @@ else
    else
    {
       strErrorColor = "";
-      mMasProd = task.getViewByName( "mMasProd" );
-      if ( VmlOperation.isValid( mMasProd ) == false )
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
          task.log( ).info( "Invalid View: " + "Text" );
       else
       {
-         nRC = mMasProd.cursor( "NetContents" ).checkExistenceOfEntity( ).toInt();
+         nRC = mMasLC.cursor( "NetContents" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strErrorMapValue = mMasProd.cursor( "NetContents" ).getAttribute( "Text" ).getString( "" );
+            strErrorMapValue = mMasLC.cursor( "NetContents" ).getAttribute( "Text" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
             task.log( ).info( "NetContents.Text: " + strErrorMapValue );
          }
          else
-            task.log( ).info( "Entity does not exist for Text: " + "mMasProd.NetContents" );
+            task.log( ).info( "Entity does not exist for Text: " + "mMasLC.NetContents" );
       }
    }
 %>
