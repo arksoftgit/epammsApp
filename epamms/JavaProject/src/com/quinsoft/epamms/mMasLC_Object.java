@@ -4092,7 +4092,7 @@ omMasLC_dDisplayUsageName( View     mMasLC,
    String   szClassification = null;
    //:STRING ( 100 ) szName
    String   szName = null;
-   //:STRING ( 100 ) szCombinedName
+   //:STRING ( 512 ) szCombinedName
    String   szCombinedName = null;
    //:STRING ( 3 )   szFootnoteNumber
    String   szFootnoteNumber = null;
@@ -4102,6 +4102,11 @@ omMasLC_dDisplayUsageName( View     mMasLC,
    int      RESULT = 0;
    int      lTempInteger_1 = 0;
    int      lTempInteger_2 = 0;
+   int      lTempInteger_3 = 0;
+   String   szTempString_0 = null;
+   int      lTempInteger_4 = 0;
+   String   szTempString_1 = null;
+   int      lTempInteger_5 = 0;
 
 
    //:CASE GetOrSetFlag
@@ -4157,21 +4162,21 @@ omMasLC_dDisplayUsageName( View     mMasLC,
                sb_szCombinedName = new StringBuilder( 32 );
             else
                sb_szCombinedName = new StringBuilder( szCombinedName );
-                        ZeidonStringCopy( sb_szCombinedName, 1, 0, szClassification, 1, 0, 101 );
+                        ZeidonStringCopy( sb_szCombinedName, 1, 0, szClassification, 1, 0, 513 );
             szCombinedName = sb_szCombinedName.toString( );}
              {StringBuilder sb_szCombinedName;
             if ( szCombinedName == null )
                sb_szCombinedName = new StringBuilder( 32 );
             else
                sb_szCombinedName = new StringBuilder( szCombinedName );
-                        ZeidonStringConcat( sb_szCombinedName, 1, 0, " - ", 1, 0, 101 );
+                        ZeidonStringConcat( sb_szCombinedName, 1, 0, " - ", 1, 0, 513 );
             szCombinedName = sb_szCombinedName.toString( );}
              {StringBuilder sb_szCombinedName;
             if ( szCombinedName == null )
                sb_szCombinedName = new StringBuilder( 32 );
             else
                sb_szCombinedName = new StringBuilder( szCombinedName );
-                        ZeidonStringConcat( sb_szCombinedName, 1, 0, szName, 1, 0, 101 );
+                        ZeidonStringConcat( sb_szCombinedName, 1, 0, szName, 1, 0, 513 );
             szCombinedName = sb_szCombinedName.toString( );}
             //:ELSE
          } 
@@ -4183,7 +4188,7 @@ omMasLC_dDisplayUsageName( View     mMasLC,
                sb_szCombinedName = new StringBuilder( 32 );
             else
                sb_szCombinedName = new StringBuilder( szCombinedName );
-                        ZeidonStringCopy( sb_szCombinedName, 1, 0, szName, 1, 0, 101 );
+                        ZeidonStringCopy( sb_szCombinedName, 1, 0, szName, 1, 0, 513 );
             szCombinedName = sb_szCombinedName.toString( );}
          } 
 
@@ -4205,7 +4210,7 @@ omMasLC_dDisplayUsageName( View     mMasLC,
                //:IF mMasLC.M_UsageFootnote.wFootNoteRelativeNumber = ""
                if ( CompareAttributeToString( mMasLC, "M_UsageFootnote", "wFootNoteRelativeNumber", "" ) == 0 )
                { 
-                  //:// Relative numbers haven't be set, so set them here.
+                  //:// Relative numbers haven't been set, so set them here.
                   //:CreateViewFromView( mMasLC2, mMasLC )
                   CreateViewFromView( mMasLC2, mMasLC );
                   //:Count = 0
@@ -4243,25 +4248,115 @@ omMasLC_dDisplayUsageName( View     mMasLC,
                   sb_szCombinedName = new StringBuilder( 32 );
                else
                   sb_szCombinedName = new StringBuilder( szCombinedName );
-                              ZeidonStringConcat( sb_szCombinedName, 1, 0, "<sup> ", 1, 0, 101 );
+                              ZeidonStringConcat( sb_szCombinedName, 1, 0, "<sup> ", 1, 0, 513 );
                szCombinedName = sb_szCombinedName.toString( );}
                 {StringBuilder sb_szCombinedName;
                if ( szCombinedName == null )
                   sb_szCombinedName = new StringBuilder( 32 );
                else
                   sb_szCombinedName = new StringBuilder( szCombinedName );
-                              ZeidonStringConcat( sb_szCombinedName, 1, 0, szFootnoteNumber, 1, 0, 101 );
+                              ZeidonStringConcat( sb_szCombinedName, 1, 0, szFootnoteNumber, 1, 0, 513 );
                szCombinedName = sb_szCombinedName.toString( );}
                 {StringBuilder sb_szCombinedName;
                if ( szCombinedName == null )
                   sb_szCombinedName = new StringBuilder( 32 );
                else
                   sb_szCombinedName = new StringBuilder( szCombinedName );
-                              ZeidonStringConcat( sb_szCombinedName, 1, 0, "</sup>", 1, 0, 101 );
+                              ZeidonStringConcat( sb_szCombinedName, 1, 0, "</sup>", 1, 0, 513 );
                szCombinedName = sb_szCombinedName.toString( );}
             } 
 
             //:END
+         } 
+
+         //:END
+         //:IF mMasLC.M_InsertTextKeywordUsage EXISTS
+         lTempInteger_3 = CheckExistenceOfEntity( mMasLC, "M_InsertTextKeywordUsage" );
+         if ( lTempInteger_3 == 0 )
+         { 
+            //:CreateViewFromView( mMasLC2, mMasLC )
+            CreateViewFromView( mMasLC2, mMasLC );
+            //:FOR EACH mMasLC2.M_InsertTextKeywordUsage
+            RESULT = SetCursorFirstEntity( mMasLC2, "M_InsertTextKeywordUsage", "" );
+            while ( RESULT > zCURSOR_UNCHANGED )
+            { 
+               //:// Reuse szUsageType and szClassification
+               //:szUsageType = "{" + mMasLC2.M_InsertTextKeywordUsage.Name + "}"
+               {MutableInt mi_lTempInteger_4 = new MutableInt( lTempInteger_4 );
+               StringBuilder sb_szTempString_0;
+               if ( szTempString_0 == null )
+                  sb_szTempString_0 = new StringBuilder( 32 );
+               else
+                  sb_szTempString_0 = new StringBuilder( szTempString_0 );
+                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_4, 'S', 255, mMasLC2, "M_InsertTextKeywordUsage", "Name", "", 0 );
+               lTempInteger_4 = mi_lTempInteger_4.intValue( );
+               szTempString_0 = sb_szTempString_0.toString( );}
+                {StringBuilder sb_szUsageType;
+               if ( szUsageType == null )
+                  sb_szUsageType = new StringBuilder( 32 );
+               else
+                  sb_szUsageType = new StringBuilder( szUsageType );
+                              ZeidonStringCopy( sb_szUsageType, 1, 0, "{", 1, 0, 101 );
+               szUsageType = sb_szUsageType.toString( );}
+                {StringBuilder sb_szUsageType;
+               if ( szUsageType == null )
+                  sb_szUsageType = new StringBuilder( 32 );
+               else
+                  sb_szUsageType = new StringBuilder( szUsageType );
+                              ZeidonStringConcat( sb_szUsageType, 1, 0, szTempString_0, 1, 0, 101 );
+               szUsageType = sb_szUsageType.toString( );}
+                {StringBuilder sb_szUsageType;
+               if ( szUsageType == null )
+                  sb_szUsageType = new StringBuilder( 32 );
+               else
+                  sb_szUsageType = new StringBuilder( szUsageType );
+                              ZeidonStringConcat( sb_szUsageType, 1, 0, "}", 1, 0, 101 );
+               szUsageType = sb_szUsageType.toString( );}
+               //:szClassification = "<b>" + mMasLC2.M_InsertTextUsage.Text + "</b>"
+               {MutableInt mi_lTempInteger_5 = new MutableInt( lTempInteger_5 );
+               StringBuilder sb_szTempString_1;
+               if ( szTempString_1 == null )
+                  sb_szTempString_1 = new StringBuilder( 32 );
+               else
+                  sb_szTempString_1 = new StringBuilder( szTempString_1 );
+                               GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_5, 'S', 255, mMasLC2, "M_InsertTextUsage", "Text", "", 0 );
+               lTempInteger_5 = mi_lTempInteger_5.intValue( );
+               szTempString_1 = sb_szTempString_1.toString( );}
+                {StringBuilder sb_szClassification;
+               if ( szClassification == null )
+                  sb_szClassification = new StringBuilder( 32 );
+               else
+                  sb_szClassification = new StringBuilder( szClassification );
+                              ZeidonStringCopy( sb_szClassification, 1, 0, "<b>", 1, 0, 101 );
+               szClassification = sb_szClassification.toString( );}
+                {StringBuilder sb_szClassification;
+               if ( szClassification == null )
+                  sb_szClassification = new StringBuilder( 32 );
+               else
+                  sb_szClassification = new StringBuilder( szClassification );
+                              ZeidonStringConcat( sb_szClassification, 1, 0, szTempString_1, 1, 0, 101 );
+               szClassification = sb_szClassification.toString( );}
+                {StringBuilder sb_szClassification;
+               if ( szClassification == null )
+                  sb_szClassification = new StringBuilder( 32 );
+               else
+                  sb_szClassification = new StringBuilder( szClassification );
+                              ZeidonStringConcat( sb_szClassification, 1, 0, "</b>", 1, 0, 101 );
+               szClassification = sb_szClassification.toString( );}
+               //:zSearchAndReplace( szCombinedName, 512, szUsageType, szClassification )
+               {StringBuilder sb_szCombinedName;
+               if ( szCombinedName == null )
+                  sb_szCombinedName = new StringBuilder( 32 );
+               else
+                  sb_szCombinedName = new StringBuilder( szCombinedName );
+                               zSearchAndReplace( sb_szCombinedName, 512, szUsageType, szClassification );
+               szCombinedName = sb_szCombinedName.toString( );}
+               RESULT = SetCursorNextEntity( mMasLC2, "M_InsertTextKeywordUsage", "" );
+            } 
+
+            //:END
+            //:DropView( mMasLC2 )
+            DropView( mMasLC2 );
          } 
 
          //:END
@@ -4307,7 +4402,7 @@ omMasLC_dDisplayPathogenName( View     mMasLC,
    String   szUsageType = null;
    //:STRING ( 100 ) szClassification
    String   szClassification = null;
-   //:STRING ( 100 ) szCombinedName
+   //:STRING ( 512 ) szCombinedName
    String   szCombinedName = null;
    //:STRING ( 3 )   szFootnoteNumber
    String   szFootnoteNumber = null;
@@ -4317,6 +4412,11 @@ omMasLC_dDisplayPathogenName( View     mMasLC,
    int      RESULT = 0;
    int      lTempInteger_1 = 0;
    int      lTempInteger_2 = 0;
+   int      lTempInteger_3 = 0;
+   String   szTempString_0 = null;
+   int      lTempInteger_4 = 0;
+   String   szTempString_1 = null;
+   int      lTempInteger_5 = 0;
 
 
    //:CASE GetOrSetFlag
@@ -4379,7 +4479,7 @@ omMasLC_dDisplayPathogenName( View     mMasLC,
                //:IF mMasLC.M_UsageFootnote.wFootNoteRelativeNumber = ""
                if ( CompareAttributeToString( mMasLC, "M_UsageFootnote", "wFootNoteRelativeNumber", "" ) == 0 )
                { 
-                  //:// Relative numbers haven't be set, so set them here.
+                  //:// Relative numbers haven't been set, so set them here.
                   //:CreateViewFromView( mMasLC2, mMasLC )
                   CreateViewFromView( mMasLC2, mMasLC );
                   //:Count = 0
@@ -4417,25 +4517,115 @@ omMasLC_dDisplayPathogenName( View     mMasLC,
                   sb_szCombinedName = new StringBuilder( 32 );
                else
                   sb_szCombinedName = new StringBuilder( szCombinedName );
-                              ZeidonStringConcat( sb_szCombinedName, 1, 0, "<sup> ", 1, 0, 101 );
+                              ZeidonStringConcat( sb_szCombinedName, 1, 0, "<sup> ", 1, 0, 513 );
                szCombinedName = sb_szCombinedName.toString( );}
                 {StringBuilder sb_szCombinedName;
                if ( szCombinedName == null )
                   sb_szCombinedName = new StringBuilder( 32 );
                else
                   sb_szCombinedName = new StringBuilder( szCombinedName );
-                              ZeidonStringConcat( sb_szCombinedName, 1, 0, szFootnoteNumber, 1, 0, 101 );
+                              ZeidonStringConcat( sb_szCombinedName, 1, 0, szFootnoteNumber, 1, 0, 513 );
                szCombinedName = sb_szCombinedName.toString( );}
                 {StringBuilder sb_szCombinedName;
                if ( szCombinedName == null )
                   sb_szCombinedName = new StringBuilder( 32 );
                else
                   sb_szCombinedName = new StringBuilder( szCombinedName );
-                              ZeidonStringConcat( sb_szCombinedName, 1, 0, "</sup>", 1, 0, 101 );
+                              ZeidonStringConcat( sb_szCombinedName, 1, 0, "</sup>", 1, 0, 513 );
                szCombinedName = sb_szCombinedName.toString( );}
             } 
 
             //:END
+         } 
+
+         //:END
+         //:IF mMasLC.M_InsertTextKeywordUsage EXISTS
+         lTempInteger_3 = CheckExistenceOfEntity( mMasLC, "M_InsertTextKeywordUsage" );
+         if ( lTempInteger_3 == 0 )
+         { 
+            //:CreateViewFromView( mMasLC2, mMasLC )
+            CreateViewFromView( mMasLC2, mMasLC );
+            //:FOR EACH mMasLC2.M_InsertTextKeywordUsage
+            RESULT = SetCursorFirstEntity( mMasLC2, "M_InsertTextKeywordUsage", "" );
+            while ( RESULT > zCURSOR_UNCHANGED )
+            { 
+               //:// Reuse szUsageType and szClassification
+               //:szUsageType = "{" + mMasLC2.M_InsertTextKeywordUsage.Name + "}"
+               {MutableInt mi_lTempInteger_4 = new MutableInt( lTempInteger_4 );
+               StringBuilder sb_szTempString_0;
+               if ( szTempString_0 == null )
+                  sb_szTempString_0 = new StringBuilder( 32 );
+               else
+                  sb_szTempString_0 = new StringBuilder( szTempString_0 );
+                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_4, 'S', 255, mMasLC2, "M_InsertTextKeywordUsage", "Name", "", 0 );
+               lTempInteger_4 = mi_lTempInteger_4.intValue( );
+               szTempString_0 = sb_szTempString_0.toString( );}
+                {StringBuilder sb_szUsageType;
+               if ( szUsageType == null )
+                  sb_szUsageType = new StringBuilder( 32 );
+               else
+                  sb_szUsageType = new StringBuilder( szUsageType );
+                              ZeidonStringCopy( sb_szUsageType, 1, 0, "{", 1, 0, 101 );
+               szUsageType = sb_szUsageType.toString( );}
+                {StringBuilder sb_szUsageType;
+               if ( szUsageType == null )
+                  sb_szUsageType = new StringBuilder( 32 );
+               else
+                  sb_szUsageType = new StringBuilder( szUsageType );
+                              ZeidonStringConcat( sb_szUsageType, 1, 0, szTempString_0, 1, 0, 101 );
+               szUsageType = sb_szUsageType.toString( );}
+                {StringBuilder sb_szUsageType;
+               if ( szUsageType == null )
+                  sb_szUsageType = new StringBuilder( 32 );
+               else
+                  sb_szUsageType = new StringBuilder( szUsageType );
+                              ZeidonStringConcat( sb_szUsageType, 1, 0, "}", 1, 0, 101 );
+               szUsageType = sb_szUsageType.toString( );}
+               //:szClassification = "<b>" + mMasLC2.M_InsertTextUsage.Text + "</b>"
+               {MutableInt mi_lTempInteger_5 = new MutableInt( lTempInteger_5 );
+               StringBuilder sb_szTempString_1;
+               if ( szTempString_1 == null )
+                  sb_szTempString_1 = new StringBuilder( 32 );
+               else
+                  sb_szTempString_1 = new StringBuilder( szTempString_1 );
+                               GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_5, 'S', 255, mMasLC2, "M_InsertTextUsage", "Text", "", 0 );
+               lTempInteger_5 = mi_lTempInteger_5.intValue( );
+               szTempString_1 = sb_szTempString_1.toString( );}
+                {StringBuilder sb_szClassification;
+               if ( szClassification == null )
+                  sb_szClassification = new StringBuilder( 32 );
+               else
+                  sb_szClassification = new StringBuilder( szClassification );
+                              ZeidonStringCopy( sb_szClassification, 1, 0, "<b>", 1, 0, 101 );
+               szClassification = sb_szClassification.toString( );}
+                {StringBuilder sb_szClassification;
+               if ( szClassification == null )
+                  sb_szClassification = new StringBuilder( 32 );
+               else
+                  sb_szClassification = new StringBuilder( szClassification );
+                              ZeidonStringConcat( sb_szClassification, 1, 0, szTempString_1, 1, 0, 101 );
+               szClassification = sb_szClassification.toString( );}
+                {StringBuilder sb_szClassification;
+               if ( szClassification == null )
+                  sb_szClassification = new StringBuilder( 32 );
+               else
+                  sb_szClassification = new StringBuilder( szClassification );
+                              ZeidonStringConcat( sb_szClassification, 1, 0, "</b>", 1, 0, 101 );
+               szClassification = sb_szClassification.toString( );}
+               //:zSearchAndReplace( szCombinedName, 512, szUsageType, szClassification )
+               {StringBuilder sb_szCombinedName;
+               if ( szCombinedName == null )
+                  sb_szCombinedName = new StringBuilder( 32 );
+               else
+                  sb_szCombinedName = new StringBuilder( szCombinedName );
+                               zSearchAndReplace( sb_szCombinedName, 512, szUsageType, szClassification );
+               szCombinedName = sb_szCombinedName.toString( );}
+               RESULT = SetCursorNextEntity( mMasLC2, "M_InsertTextKeywordUsage", "" );
+            } 
+
+            //:END
+            //:DropView( mMasLC2 )
+            DropView( mMasLC2 );
          } 
 
          //:END
@@ -4457,7 +4647,276 @@ omMasLC_dDisplayPathogenName( View     mMasLC,
    //:     /* end zDERIVED_SET */
    //:END  /* case */
    return( 0 );
-// END/////////////////////////////////////////////////////////////////////////////
+// END
+} 
+
+
+//:DERIVED ATTRIBUTE OPERATION
+//:dDisplayMarketUseName( VIEW mMasLC BASED ON LOD mMasLC,
+//:                       STRING ( 32 ) InternalEntityStructure,
+//:                       STRING ( 32 ) InternalAttribStructure,
+//:                       SHORT GetOrSetFlag )
+
+//:   VIEW mMasLC2 BASED ON LOD mMasLC
+public int 
+omMasLC_dDisplayMarketUseName( View     mMasLC,
+                               String InternalEntityStructure,
+                               String InternalAttribStructure,
+                               Integer   GetOrSetFlag )
+{
+   zVIEW    mMasLC2 = new zVIEW( );
+   //:STRING ( 32 )  szEntityName
+   String   szEntityName = null;
+   //:STRING ( 100 ) szUsageType
+   String   szUsageType = null;
+   //:STRING ( 100 ) szClassification
+   String   szClassification = null;
+   //:STRING ( 512 ) szCombinedName
+   String   szCombinedName = null;
+   //:STRING ( 3 )   szFootnoteNumber
+   String   szFootnoteNumber = null;
+   //:INTEGER        Count
+   int      Count = 0;
+   int      lTempInteger_0 = 0;
+   int      RESULT = 0;
+   int      lTempInteger_1 = 0;
+   int      lTempInteger_2 = 0;
+   int      lTempInteger_3 = 0;
+   String   szTempString_0 = null;
+   int      lTempInteger_4 = 0;
+   String   szTempString_1 = null;
+   int      lTempInteger_5 = 0;
+
+
+   //:CASE GetOrSetFlag
+   switch( GetOrSetFlag )
+   { 
+      //:OF   zDERIVED_GET:
+      case zDERIVED_GET :
+
+         //:// Combine the Footnote Number as a subscript to the Claim Name, if it exists.
+         //:GetEntityNameFromStructure( InternalEntityStructure, szEntityName )
+         {
+          ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mMasLC );
+          {StringBuilder sb_szEntityName;
+         if ( szEntityName == null )
+            sb_szEntityName = new StringBuilder( 32 );
+         else
+            sb_szEntityName = new StringBuilder( szEntityName );
+                   m_ZGlobal1_Operation.GetEntityNameFromStructure( InternalEntityStructure, sb_szEntityName );
+         szEntityName = sb_szEntityName.toString( );}
+          // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+         }
+         //:GetStringFromAttribute( szUsageType, mMasLC, szEntityName, "UsageType" )
+         {StringBuilder sb_szUsageType;
+         if ( szUsageType == null )
+            sb_szUsageType = new StringBuilder( 32 );
+         else
+            sb_szUsageType = new StringBuilder( szUsageType );
+                   GetStringFromAttribute( sb_szUsageType, mMasLC, szEntityName, "UsageType" );
+         szUsageType = sb_szUsageType.toString( );}
+         //:GetStringFromAttribute( szClassification, mMasLC, szEntityName, "ClaimsClassification" )
+         {StringBuilder sb_szClassification;
+         if ( szClassification == null )
+            sb_szClassification = new StringBuilder( 32 );
+         else
+            sb_szClassification = new StringBuilder( szClassification );
+                   GetStringFromAttribute( sb_szClassification, mMasLC, szEntityName, "ClaimsClassification" );
+         szClassification = sb_szClassification.toString( );}
+         //:GetStringFromAttribute( szCombinedName, mMasLC, szEntityName, "Name" )
+         {StringBuilder sb_szCombinedName;
+         if ( szCombinedName == null )
+            sb_szCombinedName = new StringBuilder( 32 );
+         else
+            sb_szCombinedName = new StringBuilder( szCombinedName );
+                   GetStringFromAttribute( sb_szCombinedName, mMasLC, szEntityName, "Name" );
+         szCombinedName = sb_szCombinedName.toString( );}
+
+         //:// Set Footnote Number, if footnote exists.
+         //:IF mMasLC.M_UsageFootnoteUsed EXISTS
+         lTempInteger_0 = CheckExistenceOfEntity( mMasLC, "M_UsageFootnoteUsed" );
+         if ( lTempInteger_0 == 0 )
+         { 
+            //:IF mMasLC.M_UsageFootnoteUsed.ID != ""
+            if ( CompareAttributeToString( mMasLC, "M_UsageFootnoteUsed", "ID", "" ) != 0 )
+            { 
+               //:SET CURSOR FIRST mMasLC.M_UsageFootnote WHERE mMasLC.M_UsageFootnote.ID = mMasLC.M_UsageFootnoteMarketUsed.ID
+               {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+                               GetIntegerFromAttribute( mi_lTempInteger_1, mMasLC, "M_UsageFootnoteMarketUsed", "ID" );
+               lTempInteger_1 = mi_lTempInteger_1.intValue( );}
+               RESULT = SetCursorFirstEntityByInteger( mMasLC, "M_UsageFootnote", "ID", lTempInteger_1, "" );
+               //:IF mMasLC.M_UsageFootnote.wFootNoteRelativeNumber = ""
+               if ( CompareAttributeToString( mMasLC, "M_UsageFootnote", "wFootNoteRelativeNumber", "" ) == 0 )
+               { 
+                  //:// Relative numbers haven't been set, so set them here.
+                  //:CreateViewFromView( mMasLC2, mMasLC )
+                  CreateViewFromView( mMasLC2, mMasLC );
+                  //:Count = 0
+                  Count = 0;
+                  //:FOR EACH mMasLC2.M_UsageFootnote
+                  RESULT = SetCursorFirstEntity( mMasLC2, "M_UsageFootnote", "" );
+                  while ( RESULT > zCURSOR_UNCHANGED )
+                  { 
+                     //:Count = Count + 1
+                     Count = Count + 1;
+                     //:mMasLC2.M_UsageFootnote.wFootNoteRelativeNumber = Count
+                     SetAttributeFromInteger( mMasLC2, "M_UsageFootnote", "wFootNoteRelativeNumber", Count );
+                     RESULT = SetCursorNextEntity( mMasLC2, "M_UsageFootnote", "" );
+                  } 
+
+                  //:END
+                  //:DropView( mMasLC2 )
+                  DropView( mMasLC2 );
+               } 
+
+               //:END
+               //:szFootnoteNumber = mMasLC.M_UsageFootnote.wFootNoteRelativeNumber
+               {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
+               StringBuilder sb_szFootnoteNumber;
+               if ( szFootnoteNumber == null )
+                  sb_szFootnoteNumber = new StringBuilder( 32 );
+               else
+                  sb_szFootnoteNumber = new StringBuilder( szFootnoteNumber );
+                               GetVariableFromAttribute( sb_szFootnoteNumber, mi_lTempInteger_2, 'S', 4, mMasLC, "M_UsageFootnote", "wFootNoteRelativeNumber", "", 0 );
+               lTempInteger_2 = mi_lTempInteger_2.intValue( );
+               szFootnoteNumber = sb_szFootnoteNumber.toString( );}
+               //:szCombinedName = szCombinedName + "<sup> " + szFootnoteNumber + "</sup>"
+                {StringBuilder sb_szCombinedName;
+               if ( szCombinedName == null )
+                  sb_szCombinedName = new StringBuilder( 32 );
+               else
+                  sb_szCombinedName = new StringBuilder( szCombinedName );
+                              ZeidonStringConcat( sb_szCombinedName, 1, 0, "<sup> ", 1, 0, 513 );
+               szCombinedName = sb_szCombinedName.toString( );}
+                {StringBuilder sb_szCombinedName;
+               if ( szCombinedName == null )
+                  sb_szCombinedName = new StringBuilder( 32 );
+               else
+                  sb_szCombinedName = new StringBuilder( szCombinedName );
+                              ZeidonStringConcat( sb_szCombinedName, 1, 0, szFootnoteNumber, 1, 0, 513 );
+               szCombinedName = sb_szCombinedName.toString( );}
+                {StringBuilder sb_szCombinedName;
+               if ( szCombinedName == null )
+                  sb_szCombinedName = new StringBuilder( 32 );
+               else
+                  sb_szCombinedName = new StringBuilder( szCombinedName );
+                              ZeidonStringConcat( sb_szCombinedName, 1, 0, "</sup>", 1, 0, 513 );
+               szCombinedName = sb_szCombinedName.toString( );}
+            } 
+
+            //:END
+         } 
+
+         //:END
+         //:IF mMasLC.M_InsertTextKeywordMarketUsage EXISTS
+         lTempInteger_3 = CheckExistenceOfEntity( mMasLC, "M_InsertTextKeywordMarketUsage" );
+         if ( lTempInteger_3 == 0 )
+         { 
+            //:CreateViewFromView( mMasLC2, mMasLC )
+            CreateViewFromView( mMasLC2, mMasLC );
+            //:FOR EACH mMasLC2.M_InsertTextKeywordMarketUsage
+            RESULT = SetCursorFirstEntity( mMasLC2, "M_InsertTextKeywordMarketUsage", "" );
+            while ( RESULT > zCURSOR_UNCHANGED )
+            { 
+               //:// Reuse szUsageType and szClassification
+               //:szUsageType = "{" + mMasLC2.M_InsertTextKeywordMarketUsage.Name + "}"
+               {MutableInt mi_lTempInteger_4 = new MutableInt( lTempInteger_4 );
+               StringBuilder sb_szTempString_0;
+               if ( szTempString_0 == null )
+                  sb_szTempString_0 = new StringBuilder( 32 );
+               else
+                  sb_szTempString_0 = new StringBuilder( szTempString_0 );
+                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_4, 'S', 255, mMasLC2, "M_InsertTextKeywordMarketUsage", "Name", "", 0 );
+               lTempInteger_4 = mi_lTempInteger_4.intValue( );
+               szTempString_0 = sb_szTempString_0.toString( );}
+                {StringBuilder sb_szUsageType;
+               if ( szUsageType == null )
+                  sb_szUsageType = new StringBuilder( 32 );
+               else
+                  sb_szUsageType = new StringBuilder( szUsageType );
+                              ZeidonStringCopy( sb_szUsageType, 1, 0, "{", 1, 0, 101 );
+               szUsageType = sb_szUsageType.toString( );}
+                {StringBuilder sb_szUsageType;
+               if ( szUsageType == null )
+                  sb_szUsageType = new StringBuilder( 32 );
+               else
+                  sb_szUsageType = new StringBuilder( szUsageType );
+                              ZeidonStringConcat( sb_szUsageType, 1, 0, szTempString_0, 1, 0, 101 );
+               szUsageType = sb_szUsageType.toString( );}
+                {StringBuilder sb_szUsageType;
+               if ( szUsageType == null )
+                  sb_szUsageType = new StringBuilder( 32 );
+               else
+                  sb_szUsageType = new StringBuilder( szUsageType );
+                              ZeidonStringConcat( sb_szUsageType, 1, 0, "}", 1, 0, 101 );
+               szUsageType = sb_szUsageType.toString( );}
+               //:szClassification = "<b>" + mMasLC2.M_InsertTextMarketUsage.Text + "</b>"
+               {MutableInt mi_lTempInteger_5 = new MutableInt( lTempInteger_5 );
+               StringBuilder sb_szTempString_1;
+               if ( szTempString_1 == null )
+                  sb_szTempString_1 = new StringBuilder( 32 );
+               else
+                  sb_szTempString_1 = new StringBuilder( szTempString_1 );
+                               GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_5, 'S', 255, mMasLC2, "M_InsertTextMarketUsage", "Text", "", 0 );
+               lTempInteger_5 = mi_lTempInteger_5.intValue( );
+               szTempString_1 = sb_szTempString_1.toString( );}
+                {StringBuilder sb_szClassification;
+               if ( szClassification == null )
+                  sb_szClassification = new StringBuilder( 32 );
+               else
+                  sb_szClassification = new StringBuilder( szClassification );
+                              ZeidonStringCopy( sb_szClassification, 1, 0, "<b>", 1, 0, 101 );
+               szClassification = sb_szClassification.toString( );}
+                {StringBuilder sb_szClassification;
+               if ( szClassification == null )
+                  sb_szClassification = new StringBuilder( 32 );
+               else
+                  sb_szClassification = new StringBuilder( szClassification );
+                              ZeidonStringConcat( sb_szClassification, 1, 0, szTempString_1, 1, 0, 101 );
+               szClassification = sb_szClassification.toString( );}
+                {StringBuilder sb_szClassification;
+               if ( szClassification == null )
+                  sb_szClassification = new StringBuilder( 32 );
+               else
+                  sb_szClassification = new StringBuilder( szClassification );
+                              ZeidonStringConcat( sb_szClassification, 1, 0, "</b>", 1, 0, 101 );
+               szClassification = sb_szClassification.toString( );}
+               //:zSearchAndReplace( szCombinedName, 512, szUsageType, szClassification )
+               {StringBuilder sb_szCombinedName;
+               if ( szCombinedName == null )
+                  sb_szCombinedName = new StringBuilder( 32 );
+               else
+                  sb_szCombinedName = new StringBuilder( szCombinedName );
+                               zSearchAndReplace( sb_szCombinedName, 512, szUsageType, szClassification );
+               szCombinedName = sb_szCombinedName.toString( );}
+               RESULT = SetCursorNextEntity( mMasLC2, "M_InsertTextKeywordMarketUsage", "" );
+            } 
+
+            //:END
+            //:DropView( mMasLC2 )
+            DropView( mMasLC2 );
+         } 
+
+         //:END
+
+         //:// Store the calculated value in the object.
+         //:StoreStringInRecord( mMasLC,
+         //:                  InternalEntityStructure,
+         //:                  InternalAttribStructure, szCombinedName )
+         StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szCombinedName );
+         break ;
+
+      //:  /* end zDERIVED_GET */
+      //:OF   zDERIVED_SET:
+      case zDERIVED_SET :
+         break ;
+   } 
+
+
+   //:     /* end zDERIVED_SET */
+   //:END  /* case */
+   return( 0 );
+// END
 } 
 
 

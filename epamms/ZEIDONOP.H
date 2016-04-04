@@ -1,4 +1,4 @@
-//start mSPLDef 2016.03.29 16:18:10
+//start mSPLDef 2016.03.30 08:50:04
 zOPER_EXPORT zSHORT OPERATION
 omSPLDef_GeneratePDF_Label( zVIEW vViewToInstance0 );
 
@@ -169,7 +169,7 @@ zOPER_EXPORT zSHORT OPERATION
 omTempl_BuildDisplayStructure( zVIEW vViewToInstance0 );
 
 //end
-//start mMasLC 2016.03.29 16:21:30
+//start mMasLC 2016.04.01 19:10:35
 zOPER_EXPORT zSHORT OPERATION
 omMasLC_MergeUsageSelectEnts( zVIEW vViewToInstance0 );
 
@@ -220,7 +220,7 @@ zOPER_EXPORT zSHORT OPERATION
 omMasLC_BuildNonGroupEntries( zVIEW vViewToInstance0 );
 
 //end
-//start mSubLC 2016.03.29 16:18:10
+//start mSubLC 2016.03.30 08:50:05
 zOPER_EXPORT zSHORT OPERATION
 omSubLC_BuildNewSLC_Version( zVIEW vViewToInstance0,
                              zVIEW vOriginalSLC1,
@@ -264,7 +264,7 @@ omSubLC_ObjectConstraints( zVIEW vViewtoInstance0,
                            zSHORT nState2 );
 
 //end
-//start DOMAINT 2016.03.29 16:18:06
+//start DOMAINT 2016.03.30 08:49:58
 zOPER_EXPORT zSHORT OPERATION
 oDOMAINT_ActivateDomainList( zPVIEW vViewToInstance0,
                              zVIEW vViewToWindow1 );
@@ -285,7 +285,7 @@ oDOMAINT_PreloadSystemDomains( zVIEW vViewToInstance0,
                                zPCHAR pchInstallApp2 );
 
 //end
-//start lMLCATgt 2016.03.29 16:18:06
+//start lMLCATgt 2016.03.30 08:49:59
 zOPER_EXPORT zSHORT OPERATION
 olMLCATgt_BuildDifferencesMLC( zVIEW vViewToInstance0,
                                zVIEW vSourceCompareObject1 );
@@ -304,13 +304,22 @@ zOPER_EXPORT zSHORT OPERATION
 olMLCATgt_DeleteEmptyTitles( zVIEW vViewToInstance0 );
 
 //end
-//start ZGlobal1 2016.03.23 09:54:03
+//start ZGlobal1 2016.03.30 18:16:35
 zOPER_EXPORT zSHORT OPERATION
 ConvertLineToEntity( zVIEW vEntityView0,
                      zVIEW vXOD_View1,
                      zPCHAR pchRecordArea2,
                      zPCHAR pchDelimiterType3,
                      zLONG lMaxRecordLth4 );
+
+zOPER_EXPORT zSHORT OPERATION
+DecipherUsageKeyword( zPCHAR pchFullUsage0,
+                      zPCHAR pchOpenKeyword1,
+                      zPCHAR pchCloseKeyword2,
+                      zPCHAR pchKeyword3,
+                      zSHORT nMaxKeywordLth4,
+                      zPCHAR pchKeyValue5,
+                      zSHORT nMaxKeyValueLth6 );
 
 zOPER_EXPORT zVOID OPERATION
 InsertOptionalSubUsages( zVIEW vmMasLC0,

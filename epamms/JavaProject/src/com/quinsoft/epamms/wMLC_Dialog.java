@@ -381,7 +381,7 @@ COPY_MLC_Version( View     ViewToWindow )
    RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
    RESULT = GetViewByName( mMasLCNew, "mMasLC", ViewToWindow, zLEVEL_TASK );
 
-   //:// Copy the selected MLC in mMasProd, creating the content of mMasLCNew.
+   //:// Copy the selected MLC in mMasProd, creating a new version of the content in mMasLCNew.
    //:ACTIVATE mMasLCOld WHERE mMasLCOld.MasterLabelContent.ID = mMasProd.MasterLabelContent.ID
    {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
        GetIntegerFromAttribute( mi_lTempInteger_0, mMasProd, "MasterLabelContent", "ID" );
@@ -4712,11 +4712,8 @@ GOTO_DisplayGeneratedTextUsage( View     ViewToWindow )
 
    RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
 
-   //:BuildUsageKeyEntries( mMasLC,
-   //:                      "M_InsertTextKeywordUsage",
-   //:                      "M_InsertTextUsage",
-   //:                      mMasLC.M_Usage.Name,
-   //:                      "" )
+   //:BuildUsageKeyEntries( mMasLC, "M_InsertTextKeywordUsage",
+   //:                      "M_InsertTextUsage", mMasLC.M_Usage.Name, "" )
    {StringBuilder sb_szTempString_0;
    if ( szTempString_0 == null )
       sb_szTempString_0 = new StringBuilder( 32 );
@@ -4765,6 +4762,44 @@ AcceptAndNextUsage( View     ViewToWindow )
 
    //:SET CURSOR NEXT mMasLC.M_Usage
    RESULT = SetCursorNextEntity( mMasLC, "M_Usage", "" );
+   //:CreateTemporalSubobjectVersion( mMasLC, "M_Usage" )
+   CreateTemporalSubobjectVersion( mMasLC, "M_Usage" );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:AcceptAndPreviousUsage( VIEW ViewToWindow )
+
+//:   VIEW  mMasLC REGISTERED AS mMasLC
+public int 
+AcceptAndPreviousUsage( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+   //:SHORT nRC
+   int      nRC = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:nRC = AcceptSubobject( mMasLC, "M_Usage" )
+   nRC = AcceptSubobject( mMasLC, "M_Usage" );
+   //:IF nRC < 0
+   if ( nRC < 0 )
+   { 
+      //:MessageSend( ViewToWindow, "", "Next Usage Statement",
+      //:             "Error accepting current Statement.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Next Usage Statement", "Error accepting current Statement.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:RETURN 2
+      if(8==8)return( 2 );
+   } 
+
+   //:END
+
+   //:SET CURSOR PREVIOUS mMasLC.M_Usage
+   RESULT = SetCursorPrevEntity( mMasLC, "M_Usage", "" );
    //:CreateTemporalSubobjectVersion( mMasLC, "M_Usage" )
    CreateTemporalSubobjectVersion( mMasLC, "M_Usage" );
    return( 0 );
@@ -5779,28 +5814,28 @@ InitAddItems( View     ViewToWindow )
 //:DIALOG OPERATION
 //:AddUpdateNetContents( VIEW ViewToWindow )
 
-//:   VIEW mMasProd  REGISTERED AS mMasProd
+//:   VIEW mMasLC REGISTERED AS mMasLC
 public int 
 AddUpdateNetContents( View     ViewToWindow )
 {
-   zVIEW    mMasProd = new zVIEW( );
+   zVIEW    mMasLC = new zVIEW( );
    int      RESULT = 0;
    int      lTempInteger_0 = 0;
 
-   RESULT = GetViewByName( mMasProd, "mMasProd", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
 
-   //:IF mMasProd.NetContents EXISTS
-   lTempInteger_0 = CheckExistenceOfEntity( mMasProd, "NetContents" );
+   //:IF mMasLC.NetContents EXISTS
+   lTempInteger_0 = CheckExistenceOfEntity( mMasLC, "NetContents" );
    if ( lTempInteger_0 == 0 )
    { 
-      //:CreateTemporalSubobjectVersion( mMasProd, "NetContents" )
-      CreateTemporalSubobjectVersion( mMasProd, "NetContents" );
+      //:CreateTemporalSubobjectVersion( mMasLC, "NetContents" )
+      CreateTemporalSubobjectVersion( mMasLC, "NetContents" );
       //:ELSE
    } 
    else
    { 
-      //:CreateTemporalEntity( mMasProd, "NetContents", zPOS_AFTER )
-      CreateTemporalEntity( mMasProd, "NetContents", zPOS_AFTER );
+      //:CreateTemporalEntity( mMasLC, "NetContents", zPOS_AFTER )
+      CreateTemporalEntity( mMasLC, "NetContents", zPOS_AFTER );
    } 
 
    //:END
@@ -5812,22 +5847,127 @@ AddUpdateNetContents( View     ViewToWindow )
 //:DIALOG OPERATION
 //:SaveNetContents( VIEW ViewToWindow )
 
-//:   VIEW mMasProd REGISTERED AS mMasProd
+//:   VIEW mMasLC REGISTERED AS mMasLC
 public int 
 SaveNetContents( View     ViewToWindow )
 {
-   zVIEW    mMasProd = new zVIEW( );
+   zVIEW    mMasLC = new zVIEW( );
    int      RESULT = 0;
 
-   RESULT = GetViewByName( mMasProd, "mMasProd", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
    //:   
    //:// Accept temporal NetContents.
-   //:AcceptSubobject( mMasProd, "NetContents" )
-   AcceptSubobject( mMasProd, "NetContents" );
-   //:COMMIT mMasProd
-   RESULT = CommitObjectInstance( mMasProd );
+   //:AcceptSubobject( mMasLC, "NetContents" )
+   AcceptSubobject( mMasLC, "NetContents" );
+   //:COMMIT mMasLC
+   RESULT = CommitObjectInstance( mMasLC );
    return( 0 );
 //    
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:AttemptDecipheredEntry( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+AttemptDecipheredEntry( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+   //:STRING ( 2048 ) szName
+   String   szName = null;
+   //:STRING ( 256 ) szKeyword
+   String   szKeyword = null;
+   //:STRING ( 256 ) szKeyValue
+   String   szKeyValue = null;
+   //:SHORT  nRC
+   int      nRC = 0;
+   int      lTempInteger_0 = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+   //:   
+   //:// Try to decipher the Keyword and the Text
+   //:szName = mMasLC.M_Usage.Name
+   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+   StringBuilder sb_szName;
+   if ( szName == null )
+      sb_szName = new StringBuilder( 32 );
+   else
+      sb_szName = new StringBuilder( szName );
+       GetVariableFromAttribute( sb_szName, mi_lTempInteger_0, 'S', 2049, mMasLC, "M_Usage", "Name", "", 0 );
+   lTempInteger_0 = mi_lTempInteger_0.intValue( );
+   szName = sb_szName.toString( );}
+   //:nRC = DecipherUsageKeyword( szName, "{(", ")}", szKeyword, 256, szKeyValue, 256 )
+   {
+    ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( ViewToWindow );
+    {StringBuilder sb_szKeyValue;
+   if ( szKeyValue == null )
+      sb_szKeyValue = new StringBuilder( 32 );
+   else
+      sb_szKeyValue = new StringBuilder( szKeyValue );
+   StringBuilder sb_szKeyword;
+   if ( szKeyword == null )
+      sb_szKeyword = new StringBuilder( 32 );
+   else
+      sb_szKeyword = new StringBuilder( szKeyword );
+   StringBuilder sb_szName;
+   if ( szName == null )
+      sb_szName = new StringBuilder( 32 );
+   else
+      sb_szName = new StringBuilder( szName );
+       nRC = m_ZGlobal1_Operation.DecipherUsageKeyword( sb_szName, "{(", ")}", sb_szKeyword, 256, sb_szKeyValue, 256 );
+   szKeyValue = sb_szKeyValue.toString( );
+   szKeyword = sb_szKeyword.toString( );
+   szName = sb_szName.toString( );}
+    // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+   }
+   //:IF nRC = 0
+   if ( nRC == 0 )
+   { 
+      //:// Create Usage Keyword and one subordinate text entity.
+      //:CREATE ENTITY mMasLC.M_InsertTextKeywordUsage
+      RESULT = CreateEntity( mMasLC, "M_InsertTextKeywordUsage", zPOS_AFTER );
+      //:CREATE ENTITY mMasLC.M_InsertTextUsage
+      RESULT = CreateEntity( mMasLC, "M_InsertTextUsage", zPOS_AFTER );
+      //:mMasLC.M_Usage.Name = szName
+      SetAttributeFromString( mMasLC, "M_Usage", "Name", szName );
+      //:mMasLC.M_InsertTextKeywordUsage.Name = szKeyword
+      SetAttributeFromString( mMasLC, "M_InsertTextKeywordUsage", "Name", szKeyword );
+      //:mMasLC.M_InsertTextUsage.Text = szKeyValue
+      SetAttributeFromString( mMasLC, "M_InsertTextUsage", "Text", szKeyValue );
+   } 
+
+   //:END
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:AttemptEmbedKeywords( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+AttemptEmbedKeywords( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:FOR EACH mMasLC.M_Usage
+   RESULT = SetCursorFirstEntity( mMasLC, "M_Usage", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:AttemptDecipheredEntry( ViewToWindow )
+      AttemptDecipheredEntry( ViewToWindow );
+      RESULT = SetCursorNextEntity( mMasLC, "M_Usage", "" );
+   } 
+
+   //:END
+   return( 0 );
 // END
 } 
 

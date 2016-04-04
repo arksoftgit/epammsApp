@@ -896,7 +896,7 @@ dDisplayUsageName( VIEW mMasLC BASED ON LOD mMasLC,
    STRING ( 100 ) szUsageType
    STRING ( 100 ) szClassification
    STRING ( 100 ) szName
-   STRING ( 100 ) szCombinedName
+   STRING ( 512 ) szCombinedName
    STRING ( 3 )   szFootnoteNumber
    INTEGER        Count
 
@@ -920,7 +920,7 @@ dDisplayUsageName( VIEW mMasLC BASED ON LOD mMasLC,
          IF mMasLC.M_UsageFootnoteUsed.ID != ""
             SET CURSOR FIRST mMasLC.M_UsageFootnote WHERE mMasLC.M_UsageFootnote.ID = mMasLC.M_UsageFootnoteUsed.ID
             IF mMasLC.M_UsageFootnote.wFootNoteRelativeNumber = ""
-               // Relative numbers haven't be set, so set them here.
+               // Relative numbers haven't been set, so set them here.
                CreateViewFromView( mMasLC2, mMasLC )
                Count = 0
                FOR EACH mMasLC2.M_UsageFootnote
@@ -933,7 +933,17 @@ dDisplayUsageName( VIEW mMasLC BASED ON LOD mMasLC,
             szCombinedName = szCombinedName + "<sup> " + szFootnoteNumber + "</sup>"
          END
       END
-
+      IF mMasLC.M_InsertTextKeywordUsage EXISTS
+         CreateViewFromView( mMasLC2, mMasLC )
+         FOR EACH mMasLC2.M_InsertTextKeywordUsage
+            // Reuse szUsageType and szClassification
+            szUsageType = "{" + mMasLC2.M_InsertTextKeywordUsage.Name + "}"
+            szClassification = "<b>" + mMasLC2.M_InsertTextUsage.Text + "</b>"
+            zSearchAndReplace( szCombinedName, 512, szUsageType, szClassification )
+         END
+         DropView( mMasLC2 )
+      END
+      
       // Store the calculated value in the object.
       StoreStringInRecord( mMasLC,
                            InternalEntityStructure,
@@ -962,7 +972,7 @@ dDisplayPathogenName( VIEW mMasLC BASED ON LOD mMasLC,
    STRING ( 32 )  szEntityName
    STRING ( 100 ) szUsageType
    STRING ( 100 ) szClassification
-   STRING ( 100 ) szCombinedName
+   STRING ( 512 ) szCombinedName
    STRING ( 3 )   szFootnoteNumber
    INTEGER        Count
 
@@ -980,7 +990,7 @@ dDisplayPathogenName( VIEW mMasLC BASED ON LOD mMasLC,
          IF mMasLC.M_UsageFootnoteUsed.ID != ""
             SET CURSOR FIRST mMasLC.M_UsageFootnote WHERE mMasLC.M_UsageFootnote.ID = mMasLC.M_UsageFootnoteUsed.ID
             IF mMasLC.M_UsageFootnote.wFootNoteRelativeNumber = ""
-               // Relative numbers haven't be set, so set them here.
+               // Relative numbers haven't been set, so set them here.
                CreateViewFromView( mMasLC2, mMasLC )
                Count = 0
                FOR EACH mMasLC2.M_UsageFootnote
@@ -992,6 +1002,16 @@ dDisplayPathogenName( VIEW mMasLC BASED ON LOD mMasLC,
             szFootnoteNumber = mMasLC.M_UsageFootnote.wFootNoteRelativeNumber
             szCombinedName = szCombinedName + "<sup> " + szFootnoteNumber + "</sup>"
          END
+      END
+      IF mMasLC.M_InsertTextKeywordUsage EXISTS
+         CreateViewFromView( mMasLC2, mMasLC )
+         FOR EACH mMasLC2.M_InsertTextKeywordUsage
+            // Reuse szUsageType and szClassification
+            szUsageType = "{" + mMasLC2.M_InsertTextKeywordUsage.Name + "}"
+            szClassification = "<b>" + mMasLC2.M_InsertTextUsage.Text + "</b>"
+            zSearchAndReplace( szCombinedName, 512, szUsageType, szClassification )
+         END
+         DropView( mMasLC2 )
       END
 
       // Store the calculated value in the object.
@@ -1005,9 +1025,81 @@ dDisplayPathogenName( VIEW mMasLC BASED ON LOD mMasLC,
         /* end zDERIVED_SET */
    END  /* case */
 
-END/////////////////////////////////////////////////////////////////////////////
+END
+
+/////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: dDisplayUsageName
+//  OPERATION: dDisplayMarketUseName
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dDisplayMarketUseName( VIEW mMasLC BASED ON LOD mMasLC,
+                       STRING ( 32 ) InternalEntityStructure,
+                       STRING ( 32 ) InternalAttribStructure,
+                       SHORT GetOrSetFlag )
+
+   VIEW mMasLC2 BASED ON LOD mMasLC
+   STRING ( 32 )  szEntityName
+   STRING ( 100 ) szUsageType
+   STRING ( 100 ) szClassification
+   STRING ( 512 ) szCombinedName
+   STRING ( 3 )   szFootnoteNumber
+   INTEGER        Count
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Combine the Footnote Number as a subscript to the Claim Name, if it exists.
+      GetEntityNameFromStructure( InternalEntityStructure, szEntityName )
+      GetStringFromAttribute( szUsageType, mMasLC, szEntityName, "UsageType" )
+      GetStringFromAttribute( szClassification, mMasLC, szEntityName, "ClaimsClassification" )
+      GetStringFromAttribute( szCombinedName, mMasLC, szEntityName, "Name" )
+
+      // Set Footnote Number, if footnote exists.
+      IF mMasLC.M_UsageFootnoteUsed EXISTS
+         IF mMasLC.M_UsageFootnoteUsed.ID != ""
+            SET CURSOR FIRST mMasLC.M_UsageFootnote WHERE mMasLC.M_UsageFootnote.ID = mMasLC.M_UsageFootnoteMarketUsed.ID
+            IF mMasLC.M_UsageFootnote.wFootNoteRelativeNumber = ""
+               // Relative numbers haven't been set, so set them here.
+               CreateViewFromView( mMasLC2, mMasLC )
+               Count = 0
+               FOR EACH mMasLC2.M_UsageFootnote
+                  Count = Count + 1
+                  mMasLC2.M_UsageFootnote.wFootNoteRelativeNumber = Count
+               END
+               DropView( mMasLC2 )
+            END
+            szFootnoteNumber = mMasLC.M_UsageFootnote.wFootNoteRelativeNumber
+            szCombinedName = szCombinedName + "<sup> " + szFootnoteNumber + "</sup>"
+         END
+      END
+      IF mMasLC.M_InsertTextKeywordMarketUsage EXISTS
+         CreateViewFromView( mMasLC2, mMasLC )
+         FOR EACH mMasLC2.M_InsertTextKeywordMarketUsage
+            // Reuse szUsageType and szClassification
+            szUsageType = "{" + mMasLC2.M_InsertTextKeywordMarketUsage.Name + "}"
+            szClassification = "<b>" + mMasLC2.M_InsertTextMarketUsage.Text + "</b>"
+            zSearchAndReplace( szCombinedName, 512, szUsageType, szClassification )
+         END
+         DropView( mMasLC2 )
+      END
+
+      // Store the calculated value in the object.
+      StoreStringInRecord( mMasLC,
+                           InternalEntityStructure,
+                           InternalAttribStructure, szCombinedName )
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// OPERATION: dDisplayGenStmtText
 //
 /////////////////////////////////////////////////////////////////////////////
 DERIVED ATTRIBUTE OPERATION

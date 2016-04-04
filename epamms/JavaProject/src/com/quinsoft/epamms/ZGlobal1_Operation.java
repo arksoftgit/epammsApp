@@ -6420,4 +6420,34 @@ ioe.printStackTrace();
       return( 0 );
    }
 
+   // Equine Influenza A Virus {(H3N8)}
+   // Escherichia coli O26:H11 {(ATCC BAA-1653)}
+   public int
+   DecipherUsageKeyword( StringBuilder sbName, String openKey, String closeKey,
+                         StringBuilder sbKeyword, int keywordMaxLth, StringBuilder sbKeyValue, int keyValueMaxLth )
+   {
+      sbKeyword.setLength( 0 );
+      sbKeyValue.setLength( 0 );
+      int nLth = openKey.length();
+      int nPos1 = sbName.indexOf( openKey );
+      if ( nPos1 >= 0 )
+      {
+         int nPos2 = sbName.indexOf( closeKey, nPos1 + nLth );
+         if ( nPos2 >= 0 )
+         {
+            String key = sbName.substring( nPos1 + nLth, nPos2 );
+            sbName.delete( nPos1, nPos2 + closeKey.length() );
+            sbKeyValue.append( "(" + key + ")" );
+            int nPos = key.indexOf( ' ', nLth );
+            if ( nPos > 0 && nPos < key.length() - 1 )  // ignore if space is leading or trailing
+            {
+               key = key.substring( 0, nPos ) + "#";
+            }
+            sbKeyword.append( key );
+            sbName.insert( nPos1, "{{" + key + "}}" );
+            return 0;
+         }
+      }
+      return -1;
+   }
 }

@@ -1,4 +1,4 @@
-z1000-Zeidon    EPAMMS   TZZOXOGO 03/23/16   09:54:03 1.0a2   
+z1000-Zeidon    EPAMMS   TZZOXOGO 03/30/16   18:16:35 1.0a2   
 eTZZOXOGO  1
 aNAME      epamms
 
@@ -29,6 +29,38 @@ aDATATYPE  S
 ePARAMETER 4
 aNAME      MaxRecordLth
 aDATATYPE  L
+
+eOPERATION 3
+aNAME      DecipherUsageKeyword
+aTYPE      G
+
+ePARAMETER 4
+aNAME      FullUsage
+aDATATYPE  S
+
+ePARAMETER 4
+aNAME      OpenKeyword
+aDATATYPE  S
+
+ePARAMETER 4
+aNAME      CloseKeyword
+aDATATYPE  S
+
+ePARAMETER 4
+aNAME      Keyword
+aDATATYPE  S
+
+ePARAMETER 4
+aNAME      MaxKeywordLth
+aDATATYPE  N
+
+ePARAMETER 4
+aNAME      KeyValue
+aDATATYPE  S
+
+ePARAMETER 4
+aNAME      MaxKeyValueLth
+aDATATYPE  N
 
 eOPERATION 3
 aNAME      InsertOptionalSubUsages

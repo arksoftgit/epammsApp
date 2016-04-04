@@ -1006,6 +1006,30 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+//  OPERATION: AcceptAndNextUsage
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+AcceptAndPreviousUsage( VIEW ViewToWindow )
+
+   VIEW  mMasLC REGISTERED AS mMasLC
+   SHORT nRC
+
+   nRC = AcceptSubobject( mMasLC, "M_Usage" )
+   IF nRC < 0
+      MessageSend( ViewToWindow, "", "Next Usage Statement",
+                   "Error accepting current Statement.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+
+   SET CURSOR PREVIOUS mMasLC.M_Usage
+   CreateTemporalSubobjectVersion( mMasLC, "M_Usage" )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
 //  OPERATION: ConfirmDeleteUsageEntry
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -2174,11 +2198,8 @@ GOTO_DisplayGeneratedTextUsage( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
 
-   BuildUsageKeyEntries( mMasLC,
-                         "M_InsertTextKeywordUsage",
-                         "M_InsertTextUsage",
-                         mMasLC.M_Usage.Name,
-                         "" )
+   BuildUsageKeyEntries( mMasLC, "M_InsertTextKeywordUsage",
+                         "M_InsertTextUsage", mMasLC.M_Usage.Name, "" )
 
 END
 
@@ -2550,6 +2571,48 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+//  OPERATION: AttemptDecipheredEntry
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+AttemptDecipheredEntry( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   STRING ( 2048 ) szName
+   STRING ( 256 ) szKeyword
+   STRING ( 256 ) szKeyValue
+   SHORT  nRC
+      
+   // Try to decipher the Keyword and the Text
+   szName = mMasLC.M_Usage.Name
+   nRC = DecipherUsageKeyword( szName, "{(", ")}", szKeyword, 256, szKeyValue, 256 )
+   IF nRC = 0
+      // Create Usage Keyword and one subordinate text entity.
+      CREATE ENTITY mMasLC.M_InsertTextKeywordUsage
+      CREATE ENTITY mMasLC.M_InsertTextUsage
+      mMasLC.M_Usage.Name = szName
+      mMasLC.M_InsertTextKeywordUsage.Name = szKeyword
+      mMasLC.M_InsertTextUsage.Text = szKeyValue
+   END
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: AttemptEmbedKeywords
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+AttemptEmbedKeywords( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   FOR EACH mMasLC.M_Usage
+      AttemptDecipheredEntry( ViewToWindow )
+   END
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
 //  OPERATION: AcceptAndReturnUsageStatement
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -2844,7 +2907,7 @@ COPY_MLC_Version( VIEW ViewToWindow )
    VIEW mMasLCNew REGISTERED AS mMasLC
    VIEW mMasLCOld BASED ON LOD  mMasLC
 
-   // Copy the selected MLC in mMasProd, creating the content of mMasLCNew.
+   // Copy the selected MLC in mMasProd, creating a new version of the content in mMasLCNew.
    ACTIVATE mMasLCOld WHERE mMasLCOld.MasterLabelContent.ID = mMasProd.MasterLabelContent.ID
    NAME VIEW mMasLCOld "mMasLCOld"
    CopyMLCToNewProduct( mMasLCNew,mMasLCOld )
@@ -2861,12 +2924,12 @@ END
 DIALOG OPERATION
 AddUpdateNetContents( VIEW ViewToWindow )
 
-   VIEW mMasProd  REGISTERED AS mMasProd
+   VIEW mMasLC REGISTERED AS mMasLC
 
-   IF mMasProd.NetContents EXISTS
-      CreateTemporalSubobjectVersion( mMasProd, "NetContents" )
+   IF mMasLC.NetContents EXISTS
+      CreateTemporalSubobjectVersion( mMasLC, "NetContents" )
    ELSE
-      CreateTemporalEntity( mMasProd, "NetContents", zPOS_AFTER )
+      CreateTemporalEntity( mMasLC, "NetContents", zPOS_AFTER )
    END
 END
 
@@ -2878,10 +2941,10 @@ END
 DIALOG OPERATION
 SaveNetContents( VIEW ViewToWindow )
 
-   VIEW mMasProd REGISTERED AS mMasProd
+   VIEW mMasLC REGISTERED AS mMasLC
       
    // Accept temporal NetContents.
-   AcceptSubobject( mMasProd, "NetContents" )
-   COMMIT mMasProd
+   AcceptSubobject( mMasLC, "NetContents" )
+   COMMIT mMasLC
    
 END

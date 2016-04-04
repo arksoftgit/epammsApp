@@ -1,7 +1,7 @@
-z1000-Zeidon    ZGLOBAL1 TZOGSRCO 03/23/16   09:54:03 1.0a2   
+z1000-Zeidon    ZGLOBAL1 TZOGSRCO 03/30/16   18:16:35 1.0a2   
 eGlobalOperationGroup 1
 aZKey      89816452
-aNextZKeyToAssign 110040691
+aNextZKeyToAssign 110040699
 aName      ZGlobal1
 aDesc      Global Operations in C
 aExtension C
@@ -50,6 +50,61 @@ aDataType  L
 aPFlag     N
 aUFlag     N
 aZKey      89816458
+
+eOperation 2
+aName      DecipherUsageKeyword
+aZKey      110040692
+aType      G
+aReturnDataType N
+
+eParameter 3
+aShortDesc FullUsage
+aDataType  S
+aPFlag     Y
+aUFlag     N
+aZKey      110040693
+
+eParameter 3
+aShortDesc OpenKeyword
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      110040694
+
+eParameter 3
+aShortDesc CloseKeyword
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      110040695
+
+eParameter 3
+aShortDesc Keyword
+aDataType  S
+aPFlag     Y
+aUFlag     N
+aZKey      110040696
+
+eParameter 3
+aShortDesc MaxKeywordLth
+aDataType  N
+aPFlag     N
+aUFlag     N
+aZKey      110040698
+
+eParameter 3
+aShortDesc KeyValue
+aDataType  S
+aPFlag     Y
+aUFlag     N
+aZKey      110040697
+
+eParameter 3
+aShortDesc MaxKeyValueLth
+aDataType  N
+aPFlag     N
+aUFlag     N
+aZKey      110040699
 
 eOperation 2
 aName      InsertOptionalSubUsages
