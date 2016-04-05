@@ -1,4 +1,4 @@
-z1000-Zeidon    EPAMMS   TZCMLPLO 04/01/16   21:38:53 1.0a2   
+z1000-Zeidon    EPAMMS   TZCMLPLO 04/05/16   11:55:01 1.0a2   
 eLPLR      1
 aName      epamms
 aDesc      ePamms Application
@@ -1171,8 +1171,8 @@ Additions:
 1. Added a relationship between M_UsageOrdering, S_UsageOrdering and SPLD_UsageOrdering and their corresponding DirectionsForUse and Marketing Statement entities.
 2. Added Default attributes to LLD and SPLD_LLD.
 3. Add 
-aLastSyncDate 20160330084848045
-aLastUpdateDate 20160330084848045
+aLastSyncDate 20160404110601202
+aLastUpdateDate 20160404110601202
 
 eW_MetaType 2
 aType      5
@@ -1195,8 +1195,8 @@ aStatus    1
 aUpdateInd 2
 aName      ePamms
 aDesc      ePamms Application
-aLastSyncDate 20160330085021217
-aLastUpdateDate 20160330085021217
+aLastSyncDate 20160404110719728
+aLastUpdateDate 20160404110719728
 
 eW_MetaType 2
 aType      7
@@ -1422,8 +1422,8 @@ aStatus    1
 aUpdateInd 2
 aName      mMasLC
 aDesc      Master Label Content Maintenance
-aLastSyncDate 20160401191035437
-aLastUpdateDate 20160401191035437
+aLastSyncDate 20160405085757427
+aLastUpdateDate 20160405085757427
 
 eW_MetaDef 3
 aCPLR_ZKey 69033348
@@ -2253,8 +2253,8 @@ aStatus    1
 aUpdateInd 2
 aName      wMLC
 aDesc      Master (Primary Registrant) Label Content
-aLastSyncDate 20160401211848433
-aLastUpdateDate 20160401211848433
+aLastSyncDate 20160405111943500
+aLastUpdateDate 20160405111943500
 
 eW_MetaDef 3
 aCPLR_ZKey 1158563

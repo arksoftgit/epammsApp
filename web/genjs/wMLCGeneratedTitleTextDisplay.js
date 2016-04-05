@@ -173,7 +173,7 @@ var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
 }
 
-function CheckAllInGrid(id, CheckBoxName)
+function CheckAllInGrid(id, CheckBoxName) // triggered by no text checkbox
 {
    var wcontrols = id.form.elements;
    var check = id.checked;
@@ -189,7 +189,7 @@ function CheckAllInGrid(id, CheckBoxName)
    }
 }
 
-function Close( )
+function Return( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -199,7 +199,22 @@ function Close( )
    {
       _DisableFormElements( true );
 
-      document.wMLCGeneratedTitleTextDisplay.zAction.value = "Close";
+      document.wMLCGeneratedTitleTextDisplay.zAction.value = "Return";
+      document.wMLCGeneratedTitleTextDisplay.submit( );
+   }
+}
+
+function Cancel( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCGeneratedTitleTextDisplay.zAction.value = "Cancel";
       document.wMLCGeneratedTitleTextDisplay.submit( );
    }
 }

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCGeneratedTitleTextDisplay   Generate Timestamp: 20160328163908325 --%>
+<%-- wMLCGeneratedTitleTextDisplay   Generate Timestamp: 20160405095905475 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -60,41 +60,41 @@ public int DoInputMapping( HttpServletRequest request,
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
    {
-      // MLEdit: MLEdit3
-      nRC = mMasLC.cursor( "DisplayKeywordText" ).checkExistenceOfEntity( ).toInt();
+      // MLEdit: Title
+      nRC = mMasLC.cursor( "M_MarketingStatement" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "MLEdit3" );
+         strMapValue = request.getParameter( "Title" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "MLEdit3", "", strMapValue );
+               VmlOperation.CreateMessage( task, "Title", "", strMapValue );
             else
-               mMasLC.cursor( "DisplayKeywordText" ).getAttribute( "dDisplayKeywordStatementTitle" ).setValue( strMapValue, "" );
+               mMasLC.cursor( "M_MarketingStatement" ).getAttribute( "Title" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "MLEdit3", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "Title", e.getReason( ), strMapValue );
          }
       }
 
-      // MLEdit: MLEdit1
-      nRC = mMasLC.cursor( "DisplayKeywordText" ).checkExistenceOfEntity( ).toInt();
+      // MLEdit: Text
+      nRC = mMasLC.cursor( "M_MarketingStatement" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "MLEdit1" );
+         strMapValue = request.getParameter( "Text" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "MLEdit1", "", strMapValue );
+               VmlOperation.CreateMessage( task, "Text", "", strMapValue );
             else
-               mMasLC.cursor( "DisplayKeywordText" ).getAttribute( "dDisplayKeywordStatementText" ).setValue( strMapValue, "" );
+               mMasLC.cursor( "M_MarketingStatement" ).getAttribute( "Text" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "MLEdit1", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "Text", e.getReason( ), strMapValue );
          }
       }
 
@@ -255,11 +255,57 @@ if ( strActionToProcess != null )
 
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "Close" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "Return" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCGeneratedTitleTextDisplay", strActionToProcess );
 
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "Cancel" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCGeneratedTitleTextDisplay", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Auto Object Function
+      nRC = 0;
+      try
+      {
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_MarketingStatement" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
+      {
+         if ( cursor.isVersioned( ) )
+         {
+            cursor.cancelSubobject( );
+         }
+         nRC = 0;
+      }
+
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "Cancel", e.getMessage( ), "" );
+         break;
+      }
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -456,11 +502,11 @@ else
 <div id="sidenavigation">
    <ul id="Return" name="Return">
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Close" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Return" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="Close" name="Close"><a href="#"  onclick="Close()">Return</a></li>
+       <li id="Return" name="Return"><a href="#"  onclick="Return()">Return</a></li>
 <%
    }
 %>
@@ -598,16 +644,16 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GBStorDispSections2:GroupBox */ %>
+<% /* GBMarketingEncodedTitle:GroupBox */ %>
 
-<div id="GBStorDispSections2" name="GBStorDispSections2" class="listgroup"   style="float:left;position:relative; width:780px; height:36px;">  <!-- GBStorDispSections2 --> 
+<div id="GBMarketingEncodedTitle" name="GBMarketingEncodedTitle" class="listgroup"   style="float:left;position:relative; width:780px; height:36px;">  <!-- GBMarketingEncodedTitle --> 
 
-<% /* OrganismClaimsStatements3:Text */ %>
+<% /* EncodedTitle::Text */ %>
 
-<label class="groupbox"  id="OrganismClaimsStatements3" name="OrganismClaimsStatements3" style="width:324px;height:16px;position:absolute;left:6px;top:12px;">Full Generated Statement Title</label>
+<label class="groupbox"  id="EncodedTitle:" name="EncodedTitle:" style="width:324px;height:16px;position:absolute;left:6px;top:12px;">Encoded Statement Title</label>
 
 
-</div>  <!--  GBStorDispSections2 --> 
+</div>  <!--  GBMarketingEncodedTitle --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -622,10 +668,10 @@ else
 
 <tr>
 <td valign="top" style="width:754px;">
-<% /* MLEdit3:MLEdit */ %>
+<% /* Title:MLEdit */ %>
 <%
-   // MLEdit: MLEdit3
-   strErrorMapValue = VmlOperation.CheckError( "MLEdit3", strError );
+   // MLEdit: Title
+   strErrorMapValue = VmlOperation.CheckError( "Title", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -636,25 +682,25 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "MLEdit3" );
+         task.log( ).debug( "Invalid View: " + "Title" );
       else
       {
-         nRC = mMasLC.cursor( "DisplayKeywordText" ).checkExistenceOfEntity( ).toInt();
+         nRC = mMasLC.cursor( "M_MarketingStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strErrorMapValue = mMasLC.cursor( "DisplayKeywordText" ).getAttribute( "dDisplayKeywordStatementTitle" ).getString( "" );
+            strErrorMapValue = mMasLC.cursor( "M_MarketingStatement" ).getAttribute( "Title" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "DisplayKeywordText.dDisplayKeywordStatementTitle: " + strErrorMapValue );
+            task.log( ).debug( "M_MarketingStatement.Title: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for MLEdit3: " + "mMasLC.DisplayKeywordText" );
+            task.log( ).debug( "Entity does not exist for Title: " + "mMasLC.M_MarketingStatement" );
       }
    }
 %>
 
-<textarea id="MLEdit3" name="MLEdit3" class="" style="width:754px;height:60px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+<textarea id="Title" name="Title" class="" style="width:754px;height:60px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 </td>
 </tr>
@@ -669,16 +715,16 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox3:GroupBox */ %>
+<% /* GBMarketingEncodedText:GroupBox */ %>
 
-<div id="GroupBox3" name="GroupBox3" class="listgroup"   style="float:left;position:relative; width:780px; height:36px;">  <!-- GroupBox3 --> 
+<div id="GBMarketingEncodedText" name="GBMarketingEncodedText" class="listgroup"   style="float:left;position:relative; width:780px; height:36px;">  <!-- GBMarketingEncodedText --> 
 
-<% /* Text1:Text */ %>
+<% /* EncodedText::Text */ %>
 
-<label class="groupbox"  id="Text1" name="Text1" style="width:324px;height:16px;position:absolute;left:6px;top:12px;">Full Generated Statement Text</label>
+<label class="groupbox"  id="EncodedText:" name="EncodedText:" style="width:324px;height:16px;position:absolute;left:6px;top:12px;">Encoded Statement Text</label>
 
 
-</div>  <!--  GroupBox3 --> 
+</div>  <!--  GBMarketingEncodedText --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -693,10 +739,10 @@ else
 
 <tr>
 <td valign="top" style="width:754px;">
-<% /* MLEdit1:MLEdit */ %>
+<% /* Text:MLEdit */ %>
 <%
-   // MLEdit: MLEdit1
-   strErrorMapValue = VmlOperation.CheckError( "MLEdit1", strError );
+   // MLEdit: Text
+   strErrorMapValue = VmlOperation.CheckError( "Text", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -707,25 +753,25 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "MLEdit1" );
+         task.log( ).debug( "Invalid View: " + "Text" );
       else
       {
-         nRC = mMasLC.cursor( "DisplayKeywordText" ).checkExistenceOfEntity( ).toInt();
+         nRC = mMasLC.cursor( "M_MarketingStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strErrorMapValue = mMasLC.cursor( "DisplayKeywordText" ).getAttribute( "dDisplayKeywordStatementText" ).getString( "" );
+            strErrorMapValue = mMasLC.cursor( "M_MarketingStatement" ).getAttribute( "Text" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "DisplayKeywordText.dDisplayKeywordStatementText: " + strErrorMapValue );
+            task.log( ).debug( "M_MarketingStatement.Text: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for MLEdit1: " + "mMasLC.DisplayKeywordText" );
+            task.log( ).debug( "Entity does not exist for Text: " + "mMasLC.M_MarketingStatement" );
       }
    }
 %>
 
-<textarea id="MLEdit1" name="MLEdit1" class="" style="width:754px;height:116px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+<textarea id="Text" name="Text" class="" style="width:754px;height:116px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 </td>
 </tr>
@@ -749,30 +795,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:8px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
-<% /* TitleGroupM_InsertTextBase5:GroupBox */ %>
-
-<div id="TitleGroupM_InsertTextBase5" name="TitleGroupM_InsertTextBase5"   style="float:left;position:relative; width:754px; height:30px;">  <!-- TitleGroupM_InsertTextBase5 --> 
-
-<% /* NewBtn5:PushBtn */ %>
-<button type="button" name="NewBtn5" id="NewBtn5" value="" onclick="REGENERATE_TitleText( )" style="width:142px;height:26px;position:absolute;left:502px;top:4px;">Regenerate</button>
-
-<% /* Title5:Text */ %>
-
-<label class="listheader"  id="Title5" name="Title5" style="width:434px;height:16px;position:absolute;left:12px;top:8px;">Regenerate Title and Text with Selected Values</label>
-
-
-</div>  <!--  TitleGroupM_InsertTextBase5 --> 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:8px;width:100px;"></div>
+<div style="height:18px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->

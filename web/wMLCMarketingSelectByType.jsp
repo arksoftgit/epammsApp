@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCMarketingSelectByType   Generate Timestamp: 20160401194102807 --%>
+<%-- wMLCMarketingSelectByType   Generate Timestamp: 20160404174903179 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -959,7 +959,7 @@ try
          nRC = vGrid1.cursor( "M_MarketingUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl2 = vGrid1.cursor( "M_MarketingUsage" ).getAttribute( "UsageType" ).getString( "FullUsageType" );
+            strGridEditCtl2 = vGrid1.cursor( "M_MarketingUsage" ).getAttribute( "dDisplayUsageClaim" ).getString( "" );
 
             if ( strGridEditCtl2 == null )
                strGridEditCtl2 = "";

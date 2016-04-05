@@ -1029,6 +1029,45 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+//  OPERATION: dDisplayUsageClaim
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dDisplayUsageClaim( VIEW mMasLC BASED ON LOD mMasLC,
+                    STRING ( 32 ) InternalEntityStructure,
+                    STRING ( 32 ) InternalAttribStructure,
+                    SHORT GetOrSetFlag )
+
+   STRING ( 32 )  szEntityName
+   STRING ( 64  ) szUsageType
+   STRING ( 32 )  szClassification
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Combine the UsageType and the ClaimsClassification.
+      GetEntityNameFromStructure( InternalEntityStructure, szEntityName )
+      GetStringFromAttributeByContext( szUsageType, mMasLC, szEntityName, "UsageType", "FullUsageType", 32 )
+      GetStringFromAttribute( szClassification, mMasLC, szEntityName, "ClaimsClassification" )
+      IF szClassification != ""
+         szUsageType = szUsageType + "/" + szClassification
+      END
+      
+      // Store the calculated value in the object.
+      StoreStringInRecord( mMasLC,
+                           InternalEntityStructure,
+                           InternalAttribStructure, szUsageType )
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
 //  OPERATION: dDisplayMarketUseName
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -1229,25 +1268,26 @@ dMarketingKeywordText( VIEW mMasLC BASED ON LOD mMasLC,
                        STRING ( 32 ) InternalAttribStructure,
                        SHORT GetOrSetFlag )
 
-   STRING ( 1000 ) szGeneratedString
+   STRING ( 1024 ) szKeyValue
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
 
       // Concatenate all the Keyword values for a Marketing Keyword entry.
-      szGeneratedString = ""
+      szKeyValue = ""
       FOR EACH mMasLC.M_InsertTextMarketing
-         IF szGeneratedString = ""
-            szGeneratedString = mMasLC.M_InsertTextMarketing.Text
+         IF szKeyValue = ""
+            szKeyValue = "<b>" + mMasLC.M_InsertTextMarketing.Text
          ELSE
-            szGeneratedString = szGeneratedString + ", " + mMasLC.M_InsertTextMarketing.Text
+            szKeyValue = szKeyValue + ", " + mMasLC.M_InsertTextMarketing.Text
          END
+      END
+      IF szKeyValue != ""
+         szKeyValue = szKeyValue  + "</b>"
       END
 
       // Store the resulting value in the object.
-      StoreStringInRecord( mMasLC,
-                           InternalEntityStructure,
-                           InternalAttribStructure, szGeneratedString )
+      StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szKeyValue )
       RETURN 0
 
         /* end zDERIVED_GET */
@@ -1269,25 +1309,23 @@ dDU_KeywordText( VIEW mMasLC BASED ON LOD mMasLC,
                  STRING ( 32 ) InternalAttribStructure,
                  SHORT GetOrSetFlag )
 
-   STRING ( 1000 ) szGeneratedString
+   STRING ( 1000 ) szKeyValue
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
 
       // Concatenate all the Keyword values for a Marketing Keyword entry.
-      szGeneratedString = ""
+      szKeyValue = ""
       FOR EACH mMasLC.M_InsertTextDU
-         IF szGeneratedString = ""
-            szGeneratedString = mMasLC.M_InsertTextDU.Text
+         IF szKeyValue = ""
+            szKeyValue = mMasLC.M_InsertTextDU.Text
          ELSE
-            szGeneratedString = szGeneratedString + ", " + mMasLC.M_InsertTextDU.Text
+            szKeyValue = szKeyValue + ", " + mMasLC.M_InsertTextDU.Text
          END
       END
 
       // Store the resulting value in the object.
-      StoreStringInRecord( mMasLC,
-                           InternalEntityStructure,
-                           InternalAttribStructure, szGeneratedString )
+      StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szKeyValue )
       RETURN 0
 
         /* end zDERIVED_GET */
@@ -1380,6 +1418,120 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+//  OPERATION: dMarketingTitleKeyword
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dMarketingTitleKeyword( VIEW mMasLC BASED ON LOD mMasLC,
+                        STRING ( 32 ) InternalEntityStructure,
+                        STRING ( 32 ) InternalAttribStructure,
+                        SHORT GetOrSetFlag )
+
+   VIEW mMasLC2 BASED ON LOD mMasLC
+   STRING ( 32 )  szEntityName
+   STRING ( 100 ) szKeyword
+   STRING ( 1024 ) szKeyValue
+   STRING ( 1024 ) szCombinedName
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // For a Marketing Statement entity, this is the combined name of Title and any keyword(s).
+      GetEntityNameFromStructure( InternalEntityStructure, szEntityName )
+      GetStringFromAttribute( szCombinedName, mMasLC, szEntityName, "Title" )
+
+      IF mMasLC.M_InsertTextKeywordMarketing EXISTS
+         CreateViewFromView( mMasLC2, mMasLC )
+         FOR EACH mMasLC2.M_InsertTextKeywordMarketing
+            szKeyword = "{(" + mMasLC2.M_InsertTextKeywordMarketing.Name  + ")}"
+            
+            // Concatenate all the Keyword values for a Marketing Keyword entry.
+            szKeyValue = ""
+            FOR EACH mMasLC2.M_InsertTextMarketing
+               IF szKeyValue = ""
+                  szKeyValue = "{<b>(" + mMasLC2.M_InsertTextMarketing.Text
+               ELSE
+                  szKeyValue = szKeyValue + ", " + mMasLC2.M_InsertTextMarketing.Text
+               END
+            END
+            IF szKeyValue != ""
+               szKeyValue = szKeyValue  + ")</b>}"
+            END
+            zSearchAndReplace( szCombinedName, 1024, szKeyword, szKeyValue )
+         END
+         DropView( mMasLC2 )
+      END
+
+      // Store the calculated value in the object.
+      StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szCombinedName )
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: dMarketingTextKeyword
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dMarketingTextKeyword( VIEW mMasLC BASED ON LOD mMasLC,
+                       STRING ( 32 ) InternalEntityStructure,
+                       STRING ( 32 ) InternalAttribStructure,
+                       SHORT GetOrSetFlag )
+
+   VIEW mMasLC2 BASED ON LOD mMasLC
+   STRING ( 32 )  szEntityName
+   STRING ( 100 ) szKeyword
+   STRING ( 1024 ) szKeyValue
+   STRING ( 1024 ) szCombinedName
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // For a Marketing Statement entity, this is the combined name of Text and any keyword(s).
+      GetEntityNameFromStructure( InternalEntityStructure, szEntityName )
+      GetStringFromAttribute( szCombinedName, mMasLC, szEntityName, "Text" )
+
+      IF mMasLC.M_InsertTextKeywordMarketing EXISTS
+         CreateViewFromView( mMasLC2, mMasLC )
+         FOR EACH mMasLC2.M_InsertTextKeywordMarketing
+            szKeyword = "{(" + mMasLC2.M_InsertTextKeywordMarketing.Name  + ")}"
+            
+            // Concatenate all the Keyword values for a Marketing Keyword entry.
+            szKeyValue = ""
+            FOR EACH mMasLC2.M_InsertTextMarketing
+               IF szKeyValue = ""
+                  szKeyValue = "{<b>(" + mMasLC2.M_InsertTextMarketing.Text
+               ELSE
+                  szKeyValue = szKeyValue + ", " + mMasLC2.M_InsertTextMarketing.Text
+               END
+            END
+            IF szKeyValue != ""
+               szKeyValue = szKeyValue  + ")</b>}"
+            END
+            zSearchAndReplace( szCombinedName, 1024, szKeyword, szKeyValue )
+         END
+         DropView( mMasLC2 )
+      END
+
+      // Store the calculated value in the object.
+      StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szCombinedName )
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
 //  OPERATION: dMarketingTitleText
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -1389,7 +1541,7 @@ dMarketingTitleText( VIEW mMasLC BASED ON LOD mMasLC,
                      STRING ( 32 ) InternalAttribStructure,
                      SHORT GetOrSetFlag )
 
-   STRING ( 1000 ) szGeneratedString
+   STRING ( 1024 ) szGeneratedString
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -1399,9 +1551,7 @@ dMarketingTitleText( VIEW mMasLC BASED ON LOD mMasLC,
                           mMasLC.M_MarketingStatement.Text
 
       // Store the resulting value in the object.
-      StoreStringInRecord( mMasLC,
-                           InternalEntityStructure,
-                           InternalAttribStructure, szGeneratedString )
+      StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szGeneratedString )
       RETURN 0
 
         /* end zDERIVED_GET */
@@ -2155,7 +2305,7 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-//  OPERATION: dMarketingKeywordText
+//  OPERATION: dUsageKeywordText
 //
 /////////////////////////////////////////////////////////////////////////////
 DERIVED ATTRIBUTE OPERATION

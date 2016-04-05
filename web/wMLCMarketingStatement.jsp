@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCMarketingStatement   Generate Timestamp: 20160401191254035 --%>
+<%-- wMLCMarketingStatement   Generate Timestamp: 20160405115500007 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -60,44 +60,6 @@ public int DoInputMapping( HttpServletRequest request,
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
    {
-      // MLEdit: MLEdit2
-      nRC = mMasLC.cursor( "M_MarketingStatement" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
-      {
-         strMapValue = request.getParameter( "MLEdit2" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "MLEdit2", "", strMapValue );
-            else
-               mMasLC.cursor( "M_MarketingStatement" ).getAttribute( "Title" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "MLEdit2", e.getReason( ), strMapValue );
-         }
-      }
-
-      // MLEdit: MLEdit1
-      nRC = mMasLC.cursor( "M_MarketingStatement" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
-      {
-         strMapValue = request.getParameter( "MLEdit1" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "MLEdit1", "", strMapValue );
-            else
-               mMasLC.cursor( "M_MarketingStatement" ).getAttribute( "Text" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "MLEdit1", e.getReason( ), strMapValue );
-         }
-      }
-
       // Grid: Grid3
       iTableRowCnt = 0;
 
@@ -1000,16 +962,16 @@ else
 
 <tr>
 <td valign="top" style="width:54px;">
-<% /* Text3:Text */ %>
+<% /* Title::Text */ %>
 
-<span  id="Text3" name="Text3" style="width:46px;height:18px;">Title:</span>
+<span  id="Title:" name="Title:" style="width:46px;height:18px;">Title:</span>
 
 </td>
-<td valign="top" style="width:738px;">
-<% /* MLEdit2:MLEdit */ %>
+<td valign="top" style="width:754px;">
+<% /* Title:MLEdit */ %>
 <%
-   // MLEdit: MLEdit2
-   strErrorMapValue = VmlOperation.CheckError( "MLEdit2", strError );
+   // MLEdit: Title
+   strErrorMapValue = VmlOperation.CheckError( "Title", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -1020,40 +982,40 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "MLEdit2" );
+         task.log( ).debug( "Invalid View: " + "Title" );
       else
       {
          nRC = mMasLC.cursor( "M_MarketingStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strErrorMapValue = mMasLC.cursor( "M_MarketingStatement" ).getAttribute( "Title" ).getString( "" );
+            strErrorMapValue = mMasLC.cursor( "M_MarketingStatement" ).getAttribute( "dMarketingTitleKeyword" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "M_MarketingStatement.Title: " + strErrorMapValue );
+            task.log( ).debug( "M_MarketingStatement.dMarketingTitleKeyword: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for MLEdit2: " + "mMasLC.M_MarketingStatement" );
+            task.log( ).debug( "Entity does not exist for Title: " + "mMasLC.M_MarketingStatement" );
       }
    }
 %>
 
-<textarea id="MLEdit2" name="MLEdit2" class="" style="width:738px;height:30px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+<div id="Title" name="Title" class="" style="width:754px;height:30px;border:solid;border-width:4px;border-style:groove;background-color:lightgray;" wrap="wrap"><%=strErrorMapValue%></div>
 
 </td>
 </tr>
 <tr>
 <td valign="top" style="width:54px;">
-<% /* Text1:Text */ %>
+<% /* Text::Text */ %>
 
-<span  id="Text1" name="Text1" style="width:38px;height:18px;">Text:</span>
+<span  id="Text:" name="Text:" style="width:38px;height:18px;">Text:</span>
 
 </td>
 <td valign="top" style="width:754px;">
-<% /* MLEdit1:MLEdit */ %>
+<% /* Text:MLEdit */ %>
 <%
-   // MLEdit: MLEdit1
-   strErrorMapValue = VmlOperation.CheckError( "MLEdit1", strError );
+   // MLEdit: Text
+   strErrorMapValue = VmlOperation.CheckError( "Text", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -1064,25 +1026,25 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "MLEdit1" );
+         task.log( ).debug( "Invalid View: " + "Text" );
       else
       {
          nRC = mMasLC.cursor( "M_MarketingStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strErrorMapValue = mMasLC.cursor( "M_MarketingStatement" ).getAttribute( "Text" ).getString( "" );
+            strErrorMapValue = mMasLC.cursor( "M_MarketingStatement" ).getAttribute( "dMarketingTextKeyword" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "M_MarketingStatement.Text: " + strErrorMapValue );
+            task.log( ).debug( "M_MarketingStatement.dMarketingTextKeyword: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for MLEdit1: " + "mMasLC.M_MarketingStatement" );
+            task.log( ).debug( "Entity does not exist for Text: " + "mMasLC.M_MarketingStatement" );
       }
    }
 %>
 
-<textarea id="MLEdit1" name="MLEdit1" class="" style="width:754px;height:76px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+<div id="Text" name="Text" class="" style="width:754px;height:76px;border:solid;border-width:4px;border-style:groove;background-color:lightgray;" wrap="wrap"><%=strErrorMapValue%></div>
 
 </td>
 </tr>
@@ -1114,7 +1076,7 @@ else
 <div id="GroupBox2" name="GroupBox2"   style="float:left;position:relative; width:756px; height:30px;">  <!-- GroupBox2 --> 
 
 <% /* PushBtn3:PushBtn */ %>
-<button type="button" class="newbutton" name="PushBtn3" id="PushBtn3" value="" onclick="GOTO_DisplayGeneratedTextMktg( )" style="width:158px;height:26px;position:absolute;left:354px;top:4px;">Show Generated Text</button>
+<button type="button" class="newbutton" name="PushBtn3" id="PushBtn3" value="" onclick="GOTO_DisplayGeneratedTextMktg( )" style="width:158px;height:26px;position:absolute;left:354px;top:4px;">Update Text and Title</button>
 
 <% /* PushBtn4:PushBtn */ %>
 <button type="button" class="newbutton" name="PushBtn4" id="PushBtn4" value="" onclick="PASTE_InsertKeyword( )" style="width:74px;height:26px;position:absolute;left:530px;top:4px;">Paste</button>
@@ -1212,7 +1174,7 @@ try
 <tr<%=strOdd%>>
 
    <td><a href="#" onclick="GOTO_MarketingKeywordUpdate( this.id )" id="GridEditCtl3::<%=strEntityKey%>"><%=strGridEditCtl3%></a></td>
-   <td><%=strGridEditCtl4%></td>
+   <td><a href="#" onclick="GOTO_MarketingKeywordUpdate( this.id )" id="GridEditCtl4::<%=strEntityKey%>"><%=strGridEditCtl4%></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn2" onclick="GOTO_MarketingKeywordUpdate( this.id )" id="BitmapBtn2::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteDirectionsUseStatement1" onclick="COPY_InsertKeyword( this.id )" id="BMBDeleteDirectionsUseStatement1::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Copy"></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn1" onclick="DELETE_MarketingStatementKeyword( this.id )" id="BitmapBtn1::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
@@ -1321,7 +1283,7 @@ try
          nRC = vGrid1.cursor( "M_MarketingUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl1 = vGrid1.cursor( "M_MarketingUsage" ).getAttribute( "UsageType" ).getString( "FullUsageType" );
+            strGridEditCtl1 = vGrid1.cursor( "M_MarketingUsage" ).getAttribute( "dDisplayUsageClaim" ).getString( "" );
 
             if ( strGridEditCtl1 == null )
                strGridEditCtl1 = "";
