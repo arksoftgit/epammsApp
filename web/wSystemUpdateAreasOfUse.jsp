@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSystemUpdateAreasOfUse   Generate Timestamp: 20160328163929982 --%>
+<%-- wSystemUpdateAreasOfUse   Generate Timestamp: 20160406121838450 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -68,14 +68,14 @@ public int DoInputMapping( HttpServletRequest request,
       // grids on the same window with the same view we do not mess up the 
       // entity positions. 
       vGridTmp = mEPA.newView( );
-      csrRC = vGridTmp.cursor( "EPA_AreaOfUse" ).setFirst(  );
+      csrRC = vGridTmp.cursor( "EPA_Location" ).setFirst(  );
       while ( csrRC.isSet() )
       {
-         lEntityKey = vGridTmp.cursor( "EPA_AreaOfUse" ).getEntityKey( );
+         lEntityKey = vGridTmp.cursor( "EPA_Location" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
 
-         csrRC = vGridTmp.cursor( "EPA_AreaOfUse" ).setNextContinue( );
+         csrRC = vGridTmp.cursor( "EPA_Location" ).setNextContinue( );
       }
 
       vGridTmp.drop( );
@@ -258,14 +258,14 @@ if ( strActionToProcess != null )
       if ( VmlOperation.isValid( mEPA ) )
       {
          lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mEPA.cursor( "EPA_AreaOfUse" ).setByEntityKey( lEKey );
+         csrRC = mEPA.cursor( "EPA_Location" ).setByEntityKey( lEKey );
          if ( !csrRC.isSet() )
          {
             boolean bFound = false;
-            csrRCk = mEPA.cursor( "EPA_AreaOfUse" ).setFirst( );
+            csrRCk = mEPA.cursor( "EPA_Location" ).setFirst( );
             while ( csrRCk.isSet() && !bFound )
             {
-               lEKey = mEPA.cursor( "EPA_AreaOfUse" ).getEntityKey( );
+               lEKey = mEPA.cursor( "EPA_Location" ).getEntityKey( );
                strKey = Long.toString( lEKey );
                if ( StringUtils.equals( strKey, strEntityKey ) )
                {
@@ -273,7 +273,7 @@ if ( strActionToProcess != null )
                   bFound = true;
                }
                else
-                  csrRCk = mEPA.cursor( "EPA_AreaOfUse" ).setNextContinue( );
+                  csrRCk = mEPA.cursor( "EPA_Location" ).setNextContinue( );
             } // Grid
          }
       }
@@ -335,14 +335,14 @@ if ( strActionToProcess != null )
       if ( VmlOperation.isValid( mEPA ) )
       {
          lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mEPA.cursor( "EPA_AreaOfUse" ).setByEntityKey( lEKey );
+         csrRC = mEPA.cursor( "EPA_Location" ).setByEntityKey( lEKey );
          if ( !csrRC.isSet() )
          {
             boolean bFound = false;
-            csrRCk = mEPA.cursor( "EPA_AreaOfUse" ).setFirst( );
+            csrRCk = mEPA.cursor( "EPA_Location" ).setFirst( );
             while ( csrRCk.isSet() && !bFound )
             {
-               lEKey = mEPA.cursor( "EPA_AreaOfUse" ).getEntityKey( );
+               lEKey = mEPA.cursor( "EPA_Location" ).getEntityKey( );
                strKey = Long.toString( lEKey );
                if ( StringUtils.equals( strKey, strEntityKey ) )
                {
@@ -350,7 +350,7 @@ if ( strActionToProcess != null )
                   bFound = true;
                }
                else
-                  csrRCk = mEPA.cursor( "EPA_AreaOfUse" ).setNextContinue( );
+                  csrRCk = mEPA.cursor( "EPA_Location" ).setNextContinue( );
             } // Grid
          }
       }
@@ -476,14 +476,14 @@ if ( strActionToProcess != null )
       if ( VmlOperation.isValid( mEPA ) )
       {
          lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mEPA.cursor( "EPA_AreaOfUse" ).setByEntityKey( lEKey );
+         csrRC = mEPA.cursor( "EPA_Location" ).setByEntityKey( lEKey );
          if ( !csrRC.isSet() )
          {
             boolean bFound = false;
-            csrRCk = mEPA.cursor( "EPA_AreaOfUse" ).setFirst( );
+            csrRCk = mEPA.cursor( "EPA_Location" ).setFirst( );
             while ( csrRCk.isSet() && !bFound )
             {
-               lEKey = mEPA.cursor( "EPA_AreaOfUse" ).getEntityKey( );
+               lEKey = mEPA.cursor( "EPA_Location" ).getEntityKey( );
                strKey = Long.toString( lEKey );
                if ( StringUtils.equals( strKey, strEntityKey ) )
                {
@@ -491,7 +491,7 @@ if ( strActionToProcess != null )
                   bFound = true;
                }
                else
-                  csrRCk = mEPA.cursor( "EPA_AreaOfUse" ).setNextContinue( );
+                  csrRCk = mEPA.cursor( "EPA_Location" ).setNextContinue( );
             } // Grid
          }
       }
@@ -537,14 +537,14 @@ if ( strActionToProcess != null )
       if ( VmlOperation.isValid( mEPA ) )
       {
          lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mEPA.cursor( "EPA_AreaOfUse" ).setByEntityKey( lEKey );
+         csrRC = mEPA.cursor( "EPA_Location" ).setByEntityKey( lEKey );
          if ( !csrRC.isSet() )
          {
             boolean bFound = false;
-            csrRCk = mEPA.cursor( "EPA_AreaOfUse" ).setFirst( );
+            csrRCk = mEPA.cursor( "EPA_Location" ).setFirst( );
             while ( csrRCk.isSet() && !bFound )
             {
-               lEKey = mEPA.cursor( "EPA_AreaOfUse" ).getEntityKey( );
+               lEKey = mEPA.cursor( "EPA_Location" ).getEntityKey( );
                strKey = Long.toString( lEKey );
                if ( StringUtils.equals( strKey, strEntityKey ) )
                {
@@ -552,7 +552,7 @@ if ( strActionToProcess != null )
                   bFound = true;
                }
                else
-                  csrRCk = mEPA.cursor( "EPA_AreaOfUse" ).setNextContinue( );
+                  csrRCk = mEPA.cursor( "EPA_Location" ).setNextContinue( );
             } // Grid
          }
       }
@@ -1235,19 +1235,19 @@ try
       
       View vGridAreasOfUse;
       vGridAreasOfUse = mEPA.newView( );
-      csrRC2 = vGridAreasOfUse.cursor( "EPA_AreaOfUse" ).setFirst(  );
+      csrRC2 = vGridAreasOfUse.cursor( "EPA_Location" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGridAreasOfUse.cursor( "EPA_AreaOfUse" ).getEntityKey( );
+         lEntityKey = vGridAreasOfUse.cursor( "EPA_Location" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          strGEAreasOfUse = "";
-         nRC = vGridAreasOfUse.cursor( "EPA_AreaOfUse" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGridAreasOfUse.cursor( "EPA_Location" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGEAreasOfUse = vGridAreasOfUse.cursor( "EPA_AreaOfUse" ).getAttribute( "Name" ).getString( "" );
+            strGEAreasOfUse = vGridAreasOfUse.cursor( "EPA_Location" ).getAttribute( "Name" ).getString( "" );
 
             if ( strGEAreasOfUse == null )
                strGEAreasOfUse = "";
@@ -1268,7 +1268,7 @@ try
 </tr>
 
 <%
-         csrRC2 = vGridAreasOfUse.cursor( "EPA_AreaOfUse" ).setNextContinue( );
+         csrRC2 = vGridAreasOfUse.cursor( "EPA_Location" ).setNextContinue( );
       }
       vGridAreasOfUse.drop( );
    }

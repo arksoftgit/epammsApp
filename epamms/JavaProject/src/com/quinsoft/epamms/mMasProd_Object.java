@@ -468,7 +468,7 @@ omMasProd_dMasterProductDesc( View     mMasProd,
                sb_szTempString_0 = new StringBuilder( 32 );
             else
                sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                         GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_1, 'S', 255, mMasProd, "MasterProduct", "Description", "", 0 );
+                         GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_1, 'S', 1025, mMasProd, "MasterProduct", "Description", "", 0 );
             lTempInteger_1 = mi_lTempInteger_1.intValue( );
             szTempString_0 = sb_szTempString_0.toString( );}
              {StringBuilder sb_szString;

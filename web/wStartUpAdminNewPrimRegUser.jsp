@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wStartUpAdminNewPrimRegUser   Generate Timestamp: 20160328163924619 --%>
+<%-- wStartUpAdminNewPrimRegUser   Generate Timestamp: 20160406142155496 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>

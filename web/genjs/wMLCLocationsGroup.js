@@ -43,8 +43,8 @@ function _OnAlmostTimeout()
       // If the time is less than one minute, resubmit the page.  Otherwise, go to the timeout window.
       if (tDiff < 60000)
       {
-         document.wMLCAddAreasOfUseList.zAction.value = "_OnResubmitPage";
-         document.wMLCAddAreasOfUseList.submit( );
+         document.wMLCLocationsGroup.zAction.value = "_OnResubmitPage";
+         document.wMLCLocationsGroup.submit( );
       }
       else
       {
@@ -59,8 +59,8 @@ function _OnTimeout( )
    {
       _DisableFormElements( true );
 
-      document.wMLCAddAreasOfUseList.zAction.value = "_OnTimeout";
-      document.wMLCAddAreasOfUseList.submit( );
+      document.wMLCLocationsGroup.zAction.value = "_OnTimeout";
+      document.wMLCLocationsGroup.submit( );
    }
 }
 
@@ -74,8 +74,8 @@ function _BeforePageUnload( )
       // If the user clicked the window close box, unregister zeidon.
       if (isWindowClosing)
       {
-         document.wMLCAddAreasOfUseList.zAction.value = "_OnUnload";
-         document.wMLCAddAreasOfUseList.submit( );
+         document.wMLCLocationsGroup.zAction.value = "_OnUnload";
+         document.wMLCLocationsGroup.submit( );
       }
    }
 }
@@ -128,16 +128,16 @@ function _AfterPageLoaded( )
 {
 // _DisableFormElements( false );
 
-   var szFocusCtrl = document.wMLCAddAreasOfUseList.zFocusCtrl.value;
+   var szFocusCtrl = document.wMLCLocationsGroup.zFocusCtrl.value;
    if ( szFocusCtrl != "" && szFocusCtrl != "null" )
-      eval( 'document.wMLCAddAreasOfUseList.' + szFocusCtrl + '.focus( )' );
+      eval( 'document.wMLCLocationsGroup.' + szFocusCtrl + '.focus( )' );
 
    // This is where we put out a message from the previous iteration on this window
-   var szMsg = document.wMLCAddAreasOfUseList.zError.value;
+   var szMsg = document.wMLCLocationsGroup.zError.value;
    if ( szMsg != "" )
       alert( szMsg ); // "Houston ... We have a problem"
 
-   szMsg = document.wMLCAddAreasOfUseList.zOpenFile.value;
+   szMsg = document.wMLCLocationsGroup.zOpenFile.value;
    if ( szMsg != "" )
    {
       var NewWin = window.open( szMsg );
@@ -149,10 +149,10 @@ function _AfterPageLoaded( )
       }
    }
 
-   var LoginName = document.wMLCAddAreasOfUseList.zLoginName.value;
-   var keyRole = document.wMLCAddAreasOfUseList.zKeyRole.value;
-   document.wMLCAddAreasOfUseList.zError.value = "";
-   document.wMLCAddAreasOfUseList.zOpenFile.value = "";
+   var LoginName = document.wMLCLocationsGroup.zLoginName.value;
+   var keyRole = document.wMLCLocationsGroup.zKeyRole.value;
+   document.wMLCLocationsGroup.zError.value = "";
+   document.wMLCLocationsGroup.zOpenFile.value = "";
 
    if ( timerID != null )
    {
@@ -160,7 +160,7 @@ function _AfterPageLoaded( )
       timerID = null;
    }
 
-   var varTimeout = document.wMLCAddAreasOfUseList.zTimeout.value;
+   var varTimeout = document.wMLCLocationsGroup.zTimeout.value;
    if ( varTimeout > 0 )
    {
       var varDelay = 60000 * varTimeout;  // Timeout value in timeout.inc
@@ -169,24 +169,11 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
-   // Prebuild action has javascript code entered by user.
-   var thisLi;
-
-// if ( keyRole !== "Subregistrant" ) // If we are here, we have to be a Primary.
-   thisLi = document.getElementById( "lmStateRegistrations" );
-   thisLi.style.visibility = "hidden";
-   thisLi.style.display = "none";
-
-   // Cannot go to product management if already there.
-   thisLi = document.getElementById( "lmProductManagement" );
-   thisLi.disabled = true;
-   // END of Javascript code entered by user.
-
 var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
 }
 
-function CheckAllInGrid(id, CheckBoxName)
+function CheckAllInGrid(id, CheckBoxName) // triggered by no text checkbox
 {
    var wcontrols = id.form.elements;
    var check = id.checked;
@@ -202,7 +189,7 @@ function CheckAllInGrid(id, CheckBoxName)
    }
 }
 
-function CancelAddAreasOfUseStmts( )
+function DELETE_SelectedGroupUsageEntries( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -212,58 +199,12 @@ function CancelAddAreasOfUseStmts( )
    {
       _DisableFormElements( true );
 
-      document.wMLCAddAreasOfUseList.zAction.value = "CancelAddAreasOfUseStmts";
-      document.wMLCAddAreasOfUseList.submit( );
+      document.wMLCLocationsGroup.zAction.value = "DELETE_SelectedGroupUsageEntries";
+      document.wMLCLocationsGroup.submit( );
    }
 }
 
-function ClearSelectedAreasOfUse( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      // Javascript code entered by user.
-
-      var theForm;
-      var type;
-      var name;
-      var str;
-      var j;
-      var k;
-
-      for ( j = 0; j < document.forms.length; j++ )
-      {
-         theForm = document.forms[ j ];
-         for ( k = 0; k < theForm.length; k++ )
-         {
-            type = theForm.elements[ k ].type;
-
-            if ( type == "checkbox" )
-            {
-               name = theForm.elements[ k ].name;
-               str = name.substr( 0, 9 );
-               if ( str.match("GS_Select") )
-               {
-                  theForm.elements[ k ].checked = false;
-               }
-            }
-         }
-      }
-
-      return;
-
-
-      // END of Javascript code entered by user.
-
-      document.wMLCAddAreasOfUseList.zAction.value = "ClearSelectedAreasOfUse";
-      document.wMLCAddAreasOfUseList.submit( );
-   }
-}
-
-function ConfirmAddAreasOfUseStmtsReturn( )
+function GOTO_AddGroupUsageStatements( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -273,12 +214,12 @@ function ConfirmAddAreasOfUseStmtsReturn( )
    {
       _DisableFormElements( true );
 
-      document.wMLCAddAreasOfUseList.zAction.value = "ConfirmAddAreasOfUseStmtsReturn";
-      document.wMLCAddAreasOfUseList.submit( );
+      document.wMLCLocationsGroup.zAction.value = "GOTO_AddGroupUsageStatements";
+      document.wMLCLocationsGroup.submit( );
    }
 }
 
-function ConfirmAddSelectedAreasOfUse( )
+function GOTO_SelectUsagesForGroup( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -288,12 +229,12 @@ function ConfirmAddSelectedAreasOfUse( )
    {
       _DisableFormElements( true );
 
-      document.wMLCAddAreasOfUseList.zAction.value = "ConfirmAddSelectedAreasOfUse";
-      document.wMLCAddAreasOfUseList.submit( );
+      document.wMLCLocationsGroup.zAction.value = "GOTO_SelectUsagesForGroup";
+      document.wMLCLocationsGroup.submit( );
    }
 }
 
-function InitAreasOfUseStmtsForInsert( )
+function GOTO_UpdateGroupUsageStatement( strTagEntityKey )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -301,12 +242,18 @@ function InitAreasOfUseStmtsForInsert( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      document.wMLCAddAreasOfUseList.zAction.value = "InitAreasOfUseStmtsForInsert";
-      document.wMLCAddAreasOfUseList.submit( );
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCLocationsGroup.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCLocationsGroup.zAction.value = "GOTO_UpdateGroupUsageStatement";
+      document.wMLCLocationsGroup.submit( );
    }
 }
 
-function SelectAllAreasOfUse( )
+function RemoveMLC_UsageEntriesFromGroup( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -314,41 +261,25 @@ function SelectAllAreasOfUse( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      // Javascript code entered by user.
+      _DisableFormElements( true );
 
-      var theForm;
-      var type;
-      var name;
-      var str;
-      var j;
-      var k;
+      document.wMLCLocationsGroup.zAction.value = "RemoveMLC_UsageEntriesFromGroup";
+      document.wMLCLocationsGroup.submit( );
+   }
+}
 
-      for ( j = 0; j < document.forms.length; j++ )
-      {
-         theForm = document.forms[ j ];
-         for ( k = 0; k < theForm.length; k++ )
-         {
-            type = theForm.elements[ k ].type;
+function Return( )
+{
 
-            if ( type == "checkbox" )
-            {
-               name = theForm.elements[ k ].name;
-               str = name.substr( 0, 9 );
-               if ( str.match("GS_Select") )
-               {
-                  theForm.elements[ k ].checked = true;
-               }
-            }
-         }
-      }
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
 
-      return;
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
 
-
-      // END of Javascript code entered by user.
-
-      document.wMLCAddAreasOfUseList.zAction.value = "SelectAllAreasOfUse";
-      document.wMLCAddAreasOfUseList.submit( );
+      document.wMLCLocationsGroup.zAction.value = "Return";
+      document.wMLCLocationsGroup.submit( );
    }
 }
 

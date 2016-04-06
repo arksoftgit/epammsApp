@@ -175,7 +175,7 @@ var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
 }
 
-function CheckAllInGrid(id, CheckBoxName)
+function CheckAllInGrid(id, CheckBoxName) // triggered by no text checkbox
 {
    var wcontrols = id.form.elements;
    var check = id.checked;
@@ -236,7 +236,7 @@ function CancelUpdateSystemChemical( )
    }
 }
 
-function UpdateAreasOfUseList( )
+function UpdateLocationsList( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -246,7 +246,7 @@ function UpdateAreasOfUseList( )
    {
       _DisableFormElements( true );
 
-      document.wSystemUpdateSystemChemical.zAction.value = "UpdateAreasOfUseList";
+      document.wSystemUpdateSystemChemical.zAction.value = "UpdateLocationsList";
       document.wSystemUpdateSystemChemical.submit( );
    }
 }
@@ -326,7 +326,7 @@ function InitSystemChemicalForUpdate( )
    }
 }
 
-function smUpdateAreasOfUseList( )
+function smUpdateLocationsList( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -336,7 +336,7 @@ function smUpdateAreasOfUseList( )
    {
       _DisableFormElements( true );
 
-      document.wSystemUpdateSystemChemical.zAction.value = "smUpdateAreasOfUseList";
+      document.wSystemUpdateSystemChemical.zAction.value = "smUpdateLocationsList";
       document.wSystemUpdateSystemChemical.submit( );
    }
 }

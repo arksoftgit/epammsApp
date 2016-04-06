@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDirectionsForUseSection   Generate Timestamp: 20160328163907793 --%>
+<%-- wMLCDirectionsForUseSection   Generate Timestamp: 20160406142140255 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1281,7 +1281,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <% /* Text4:Text */ %>
 
-<label class="listheader"  id="Text4" name="Text4" style="width:402px;height:16px;position:absolute;left:4px;top:4px;">Claims/Applications/Areas of Use that Drive this Section to be Included in SLC entries created from this MLC</label>
+<label class="listheader"  id="Text4" name="Text4" style="width:402px;height:16px;position:absolute;left:4px;top:4px;">Claims/Applications/Locations that Drive this Section to be Included in SLC entries created from this MLC</label>
 
 <% /* PushBtn3:PushBtn */ %>
 <button type="button" class="newbutton"  title="Go to add or remPushBtn3" id="PushBtn3" value="" onclick="GOTO_SelectRemoveDrivingDU( )" style="width:130px;height:26px;position:absolute;left:502px;top:4px;">Select/Remove</button>
@@ -1365,7 +1365,7 @@ try
 
 <tr<%=strOdd%>>
 
-   <td title="The Type of Usage Entry (Claim, Surface, Area of Use, Application)" ><%=strGridEditCtl1%></td>
+   <td title="The Type of Usage Entry (Claim, Surface, Location, Application)" ><%=strGridEditCtl1%></td>
    <td title="The particular Name/text for the selected Usage entry" ><%=strGridEditCtl2%></td>
 
 </tr>

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCDirectionsForUse   Generate Timestamp: 20160328163920709 --%>
+<%-- wSLCDirectionsForUse   Generate Timestamp: 20160406142152915 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -629,7 +629,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smDisplayAreasOfUseSection" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smDisplayLocationsSection" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSLCDirectionsForUse", strActionToProcess );
@@ -641,8 +641,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCDirectionsForUse", "wSLC.DisplayAreasOfUseSection" );
-      nOptRC = wSLC.DisplayAreasOfUseSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSLCDirectionsForUse", "wSLC.DisplayLocationsSection" );
+      nOptRC = wSLC.DisplayLocationsSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -659,7 +659,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReplaceWindowWithModalWindow, "wSLC", "AreasOfUse" );
+         strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_ReplaceWindowWithModalWindow, "wSLC", "Locations" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -996,11 +996,11 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "AreasOfUse" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Locations" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smAreasOfUse" name="smAreasOfUse"><a href="#"  onclick="smDisplayAreasOfUseSection()">Areas of Use</a></li>
+       <li id="smLocations" name="smLocations"><a href="#"  onclick="smDisplayLocationsSection()">Locations</a></li>
 <%
    }
 %>

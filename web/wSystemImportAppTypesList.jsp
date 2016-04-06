@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSystemImportAppTypesList   Generate Timestamp: 20160328163928762 --%>
+<%-- wSystemImportAppTypesList   Generate Timestamp: 20160406142158715 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -914,13 +914,13 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:22px;float:left;"></div>   <!-- Width Spacer -->
-<% /* ImportAreasOfUseList:GroupBox */ %>
+<% /* ImportAppTypesList:GroupBox */ %>
 
-<div id="ImportAreasOfUseList" name="ImportAreasOfUseList" class="withborder"   style="float:left;position:relative; width:822px; height:430px;">  <!-- ImportAreasOfUseList --> 
+<div id="ImportAppTypesList" name="ImportAppTypesList" class="withborder"   style="float:left;position:relative; width:822px; height:430px;">  <!-- ImportAppTypesList --> 
 
-<% /* AreasOfUseFileName::Text */ %>
+<% /* AppTypesFileName::Text */ %>
 
-<label  id="AreasOfUseFileName:" name="AreasOfUseFileName:" style="width:78px;height:16px;position:absolute;left:12px;top:28px;">File Name:</label>
+<label  id="AppTypesFileName:" name="AppTypesFileName:" style="width:78px;height:16px;position:absolute;left:12px;top:28px;">File Name:</label>
 
 <% /* FileName:EditBox */ %>
 <%
@@ -1002,7 +1002,7 @@ else
 <textarea name="Import" id="Import" style="width:798px;height:330px;position:absolute;left:8px;top:84px;border:solid;border-width:2px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 
-</div>  <!--  ImportAreasOfUseList --> 
+</div>  <!--  ImportAppTypesList --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->

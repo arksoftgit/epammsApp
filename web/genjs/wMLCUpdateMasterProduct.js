@@ -176,7 +176,7 @@ var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
 }
 
-function CheckAllInGrid(id, CheckBoxName)
+function CheckAllInGrid(id, CheckBoxName) // triggered by no text checkbox
 {
    var wcontrols = id.form.elements;
    var check = id.checked;
@@ -203,21 +203,6 @@ function CANCEL_MasterProduct( )
       _DisableFormElements( true );
 
       document.wMLCUpdateMasterProduct.zAction.value = "CANCEL_MasterProduct";
-      document.wMLCUpdateMasterProduct.submit( );
-   }
-}
-
-function NetContents( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCUpdateMasterProduct.zAction.value = "NetContents";
       document.wMLCUpdateMasterProduct.submit( );
    }
 }

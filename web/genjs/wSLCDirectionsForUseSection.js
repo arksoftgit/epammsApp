@@ -174,7 +174,7 @@ var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
 }
 
-function CheckAllInGrid(id, CheckBoxName)
+function CheckAllInGrid(id, CheckBoxName) // triggered by no text checkbox
 {
    var wcontrols = id.form.elements;
    var check = id.checked;

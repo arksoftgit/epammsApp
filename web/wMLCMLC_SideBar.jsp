@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCMLC_Sidebar   Generate Timestamp: 20160328163908997 --%>
+<%-- wMLCMLC_Sidebar   Generate Timestamp: 20160406142141274 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -251,7 +251,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "EditAreasOfUseSection" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "EditLocationsSection" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCMLC_Sidebar", strActionToProcess );
@@ -263,8 +263,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMLC_Sidebar", "wMLC.EditAreasOfUseSection" );
-      nOptRC = wMLC.EditAreasOfUseSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMLC_Sidebar", "wMLC.EditLocationsSection" );
+      nOptRC = wMLC.EditLocationsSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -281,7 +281,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "AreasOfUse" );
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "Locations" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -1010,11 +1010,11 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "AreasOfUse" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Locations" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="AreasOfUse" name="AreasOfUse"><a href="#"  onclick="EditAreasOfUseSection()">Areas of Use</a></li>
+       <li id="Locations" name="Locations"><a href="#"  onclick="EditLocationsSection()">Locations</a></li>
 <%
    }
 %>

@@ -432,7 +432,7 @@ eER_AttributeRec 6
 aName      UsageType
 aZKey      2108097
 aNotNull   Y
-aDesc      Claim, Surface, Application Type, Area of Use (C,S,T,U)
+aDesc      Claim, Surface, Application Type, Location (C,S,T,L)
 
 eDomainRec 7
 aZKey      1181561
@@ -440,7 +440,7 @@ aName      UsageType
 aDomainType T
 aDataType  S
 aMaxStringLth 1
-aDesc      Claim, Surface, Application Type, Area of Use (C,S,T,U)
+aDesc      Claim, Surface, Application Type, Location (C,S,T,L)
 aContextRestriction N
 
 eLOD_AttributeRec 5
@@ -497,7 +497,7 @@ aSeqOrder  Y
 eER_AttributeRec 5
 aName      UsageType
 aZKey      2108091
-aDesc      Claim, Surface, Application Type, Area of Use (C,S,T,U)
+aDesc      Claim, Surface, Application Type, Location (C,S,T,L)
 
 eDomainRec 6
 
@@ -619,7 +619,7 @@ aSeqOrder  A
 eER_AttributeRec 4
 aName      CurrentContentType
 aZKey      1206954
-aDesc      Content Section Type ... Precautionary, Environmental/Physical Hazard, First Aid, Ingredients, Storage and Disposal, Directions for Use, Marketing, Human Hazard, Claims, Surfaces, Areas of Use
+aDesc      Content Section Type ... Precautionary, Environmental/Physical Hazard, First Aid, Ingredients, Storage and Disposal, Directions for Use, Marketing, Human Hazard, Claims, Surfaces, Locations
 
 eDomainRec 5
 aZKey      1206938
@@ -627,7 +627,7 @@ aName      ContentSectionType
 aDomainType T
 aDataType  S
 aMaxStringLth 1
-aDesc      Content Section Type ... Precautionary, Physical Hazard, First Aid, Ingredients, Storage and Disposal, Directions for Use, Marketing, Human Hazard, Claims, Surfaces, Areas of Use
+aDesc      Content Section Type ... Precautionary, Physical Hazard, First Aid, Ingredients, Storage and Disposal, Directions for Use, Marketing, Human Hazard, Claims, Surfaces, Locations
 aContextRestriction N
 
 eLOD_AttributeRec 3
@@ -837,7 +837,7 @@ aSeqOrder  Y
 eER_AttributeRec 4
 aName      CurrentUsageType
 aZKey      2108072
-aDesc      Claim, Surface, Application Type, Area of Use (C,S,T,U)
+aDesc      Claim, Surface, Application Type, Location (C,S,T,L)
 
 eDomainRec 5
 

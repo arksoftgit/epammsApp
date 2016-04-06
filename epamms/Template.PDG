@@ -1,4 +1,4 @@
-z1000-Zeidon    TEMPLATE TZDGSRCO 01/21/16   17:17:00 1.0a2   
+z1000-Zeidon    TEMPLATE TZDGSRCO 04/06/16   13:43:40 1.0a2   
 eDomainGroup 1
 aZKey      69081339
 aName      Template
@@ -120,7 +120,7 @@ aIsDefault Y
 
 eTableEntry 4
 aZKey      120129884
-aExternalValue Areas of Use
+aExternalValue Locations
 aInternalValue U
 
 eTableEntry 4
@@ -506,7 +506,7 @@ aInternalValue groove
 eDomain    2
 aZKey      1181561
 aName      UsageType
-aDesc      Claim, Surface, Application Type, Area of Use (C,S,T,U)
+aDesc      Claim, Surface, Application Type, Location (C,S,T,L)
 aDomainType T
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
@@ -515,7 +515,7 @@ aContextRestriction N
 
 eContext   3
 aZKey      69081369
-aDesc      Claim, Surface, Application Type, Area of Use (C,S,T,U)
+aDesc      Claim, Surface, Application Type, Location (C,S,T,L)
 aName      FullUsageType
 
 eTableEntry 4
@@ -535,12 +535,12 @@ aInternalValue T
 
 eTableEntry 4
 aZKey      69081374
-aExternalValue Area of Use
-aInternalValue U
+aExternalValue Location
+aInternalValue L
 
 eContext   3
 aZKey      4321553
-aDesc      Claim, Surface, Application Type, Area of Use (C,S,T,U)
+aDesc      Claim, Surface, Application Type, Location (C,S,T,L)
 aName      UsageType
 aIsDefault Y
 
@@ -561,8 +561,8 @@ aInternalValue T
 
 eTableEntry 4
 aZKey      4321557
-aExternalValue U
-aInternalValue U
+aExternalValue L
+aInternalValue L
 
 eDomain    2
 aZKey      69080530

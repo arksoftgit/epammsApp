@@ -167,21 +167,21 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-//  OPERATION: DisplayAreasOfUseSection
+//  OPERATION: DisplayLocationsSection
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
-DisplayAreasOfUseSection( VIEW ViewToWindow )
+DisplayLocationsSection( VIEW ViewToWindow )
 
    VIEW mSubLC REGISTERED AS mSubLC
 
-   // Position on Areas of Use Usage Type.
-   SET CURSOR FIRST mSubLC.S_UsageType WHERE mSubLC.S_UsageType.UsageType = "U"
+   // Position on Locations Usage Type.
+   SET CURSOR FIRST mSubLC.S_UsageType WHERE mSubLC.S_UsageType.UsageType = "L"
    IF RESULT < zCURSOR_SET
       CREATE ENTITY mSubLC.S_UsageType
-      mSubLC.S_UsageType.UsageType = "U"
+      mSubLC.S_UsageType.UsageType = "L"
    END
-   mSubLC.SubregLabelContent.wUsageSelectionText = "Areas of Use"
+   mSubLC.SubregLabelContent.wUsageSelectionText = "Locations"
 
 END
 
@@ -348,17 +348,17 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-//  OPERATION: GOTO_SelectAreasUsageEntries
+//  OPERATION: GOTO_SelectLocationsEntries
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
-GOTO_SelectAreasUsageEntries( VIEW ViewToWindow )
+GOTO_SelectLocationsEntries( VIEW ViewToWindow )
 
    VIEW mSubLC REGISTERED AS mSubLC
    VIEW mMasLC REGISTERED AS mMasLC
 
    // Give Error Message if MLC doesn't have Claims Usage Types.
-   SET CURSOR FIRST mMasLC.M_UsageType WHERE mMasLC.M_UsageType.UsageType = "U"
+   SET CURSOR FIRST mMasLC.M_UsageType WHERE mMasLC.M_UsageType.UsageType = "L"
    IF RESULT < zCURSOR_SET
       MessageSend( ViewToWindow, "", "Select MLC Claims Entries",
                    "The Master Product does not have any Claims entries.",
@@ -368,10 +368,10 @@ GOTO_SelectAreasUsageEntries( VIEW ViewToWindow )
    END
 
    // Position on SLC and MLC Claims Usage Type.
-   SET CURSOR FIRST mSubLC.S_UsageType WHERE mSubLC.S_UsageType.UsageType = "U"
+   SET CURSOR FIRST mSubLC.S_UsageType WHERE mSubLC.S_UsageType.UsageType = "L"
    IF RESULT < zCURSOR_SET
       CREATE ENTITY mSubLC.S_UsageType
-      mSubLC.S_UsageType.UsageType = "U"
+      mSubLC.S_UsageType.UsageType = "L"
    END
    CreateTemporalSubobjectVersion( mSubLC, "S_UsageType" )
 

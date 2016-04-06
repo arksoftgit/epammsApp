@@ -6910,7 +6910,7 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
       //://    {{Usage}}
       //://    {{Claim}}
       //://    {{Surface}}
-      //://    {{Area Of Use}}
+      //://    {{Location}}
       //://    {{Application Type}}
       //://    {{Product Name}}
       //://    {{Master Product}}
@@ -9107,7 +9107,7 @@ omSPLDef_GeneratePDF_ClmList( View     mSPLDef,
    DropObjectInstance( mSPLDef2 );
 
    //:// Build the work object containing each Claim under the appropriate Classification.
-   //:// Type: C - Claim;  S - Surface;  T - Application Type;  U - Area of Use.
+   //:// Type: C - Claim;  S - Surface;  T - Application Type;  U - Location.
    //:// ClaimsClassification: Bacteria; Protozoa; Viruses; Fungi.
    //:// First delete any existing entries.
    //:FOR EACH mSPLDef.SPLDI_ClaimsClassification
@@ -17196,7 +17196,7 @@ omSPLDef_BuildUsageEntriesFrSLC( View     mSPLDef,
 
    //:END
 
-   //:// Build Usage Entries (Surface, Application Type, Area of Use, Organism Claim)
+   //:// Build Usage Entries (Surface, Application Type, Location, Organism Claim)
    //:FOR EACH SourceSLC.S_UsageType WITHIN SourceSLC.SubregLabelContent
    RESULT = SetCursorFirstEntity( SourceSLC, "S_UsageType", "SubregLabelContent" );
    while ( RESULT > zCURSOR_UNCHANGED )

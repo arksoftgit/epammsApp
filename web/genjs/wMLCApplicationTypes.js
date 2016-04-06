@@ -174,7 +174,7 @@ var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
 }
 
-function CheckAllInGrid(id, CheckBoxName)
+function CheckAllInGrid(id, CheckBoxName) // triggered by no text checkbox
 {
    var wcontrols = id.form.elements;
    var check = id.checked;
@@ -523,7 +523,7 @@ function smEditSurfacesSection( )
    }
 }
 
-function smEditAreasOfUseSection( )
+function smEditLocationsSection( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -533,7 +533,7 @@ function smEditAreasOfUseSection( )
    {
       _DisableFormElements( true );
 
-      document.wMLCApplicationTypes.zAction.value = "smEditAreasOfUseSection";
+      document.wMLCApplicationTypes.zAction.value = "smEditLocationsSection";
       document.wMLCApplicationTypes.submit( );
    }
 }

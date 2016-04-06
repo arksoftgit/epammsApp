@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCHumanHazard   Generate Timestamp: 20160328163908434 --%>
+<%-- wMLCHumanHazard   Generate Timestamp: 20160406142140821 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -886,7 +886,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditAreasOfUseSection" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditLocationsSection" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCHumanHazard", strActionToProcess );
@@ -898,8 +898,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCHumanHazard", "wMLC.EditAreasOfUseSection" );
-      nOptRC = wMLC.EditAreasOfUseSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCHumanHazard", "wMLC.EditLocationsSection" );
+      nOptRC = wMLC.EditLocationsSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -916,7 +916,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "AreasOfUse" );
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "Locations" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -1300,11 +1300,11 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "AreasOfUse" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Locations" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smAreasOfUse" name="smAreasOfUse"><a href="#"  onclick="smEditAreasOfUseSection()">Areas of Use</a></li>
+       <li id="smLocations" name="smLocations"><a href="#"  onclick="smEditLocationsSection()">Locations</a></li>
 <%
    }
 %>
@@ -2331,7 +2331,7 @@ else
    }
 %>
 
-<textarea name="MLEditFullStatement" id="MLEditFullStatement" style="width:592px;height:100px;position:absolute;left:156px;top:0px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+<div name="MLEditFullStatement" id="MLEditFullStatement" style="width:592px;height:100px;position:absolute;left:156px;top:0px;border:solid;border-width:4px;border-style:groove;display:inline-block;text-overflow:hidden;background-color:lightgray;" wrap="wrap"><%=strErrorMapValue%></div>
 
 
 </div>  <!--  GroupBox3 --> 

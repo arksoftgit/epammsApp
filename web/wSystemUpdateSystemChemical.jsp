@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSystemUpdateSystemChemical   Generate Timestamp: 20160328163930310 --%>
+<%-- wSystemUpdateSystemChemical   Generate Timestamp: 20160406142159848 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -347,7 +347,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "UpdateAreasOfUseList" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "UpdateLocationsList" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemUpdateSystemChemical", strActionToProcess );
@@ -359,8 +359,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemChemical", "wSystem.UpdateAreasOfUse" );
-      nOptRC = wSystem.UpdateAreasOfUse( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemChemical", "wSystem.UpdateLocations" );
+      nOptRC = wSystem.UpdateLocations( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -377,7 +377,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wSystem.SetWebRedirection( vKZXMLPGO, wSystem.zWAB_StartModalSubwindow, "wSystem", "UpdateAreasOfUse" );
+         strNextJSP_Name = wSystem.SetWebRedirection( vKZXMLPGO, wSystem.zWAB_StartModalSubwindow, "wSystem", "UpdateLocations" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -551,7 +551,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smUpdateAreasOfUseList" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smUpdateLocationsList" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wSystemUpdateSystemChemical", strActionToProcess );
@@ -563,8 +563,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemChemical", "wSystem.UpdateAreasOfUse" );
-      nOptRC = wSystem.UpdateAreasOfUse( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wSystemUpdateSystemChemical", "wSystem.UpdateLocations" );
+      nOptRC = wSystem.UpdateLocations( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -581,7 +581,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wSystem.SetWebRedirection( vKZXMLPGO, wSystem.zWAB_StartModalSubwindow, "wSystem", "UpdateAreasOfUse" );
+         strNextJSP_Name = wSystem.SetWebRedirection( vKZXMLPGO, wSystem.zWAB_StartModalSubwindow, "wSystem", "UpdateLocations" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -1007,11 +1007,11 @@ else
 <div id="sidenavigation">
    <ul id="Return" name="Return">
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "UpdateAreasOfUseList" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "UpdateLocationsList" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smUpdateAreasOfUseList" name="smUpdateAreasOfUseList"><a href="#"  onclick="smUpdateAreasOfUseList()">Update Areas of Use List</a></li>
+       <li id="smUpdateLocationsList" name="smUpdateLocationsList"><a href="#"  onclick="smUpdateLocationsList()">Update Locations List</a></li>
 <%
    }
 %>

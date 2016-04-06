@@ -2516,7 +2516,7 @@ aRecursive N
 aDerived   N
 aParentDeleteBehave E
 aRelLinkIndicator H
-aDesc      Claim, Surface, Application Type, Area of Use (C,S,T,U)
+aDesc      Claim, Surface, Application Type, Location (C,S,T,L)
 
 eLOD_AttributeRec 7
 aZKey      120192362
@@ -2535,7 +2535,7 @@ aZKey      120192363
 eER_AttributeRec 8
 aName      UsageType
 aZKey      1181568
-aDesc      Claim, Surface, Application Type, Area of Use (C,S,T,U)
+aDesc      Claim, Surface, Application Type, Location (C,S,T,L)
 
 eDomainRec 9
 aZKey      1181561
@@ -2543,7 +2543,7 @@ aName      UsageType
 aDomainType T
 aDataType  S
 aMaxStringLth 1
-aDesc      Claim, Surface, Application Type, Area of Use (C,S,T,U)
+aDesc      Claim, Surface, Application Type, Location (C,S,T,L)
 aContextRestriction N
 
 eLOD_AttributeRec 7
@@ -2598,7 +2598,7 @@ eER_EntityRec 7
 aName      M_Usage
 aZKey      1178495
 aPurpose   A
-aDesc      Claim, Surface, Application Type, Area of Use (C,S,T,U)
+aDesc      Claim, Surface, Application Type, Location (C,S,T,L)
 aER_DiagramPosX 74
 aER_DiagramPosY 87
 
@@ -2918,7 +2918,7 @@ aRecursive N
 aDerived   N
 aParentDeleteBehave E
 aRelLinkIndicator L
-aDesc      Claim, Surface, Application Type, Area of Use (C,S,T,U)
+aDesc      Claim, Surface, Application Type, Location (C,S,T,L)
 aSeqNo     0
 
 eLOD_AttributeRec 5
@@ -3482,7 +3482,7 @@ aParentDeleteBehave E
 aDupEntityInstance N
 aDupRelationshipInstance N
 aRelLinkIndicator H
-aDesc      Claim, Surface, Application Type, Area of Use (C,S,T,U)
+aDesc      Claim, Surface, Application Type, Location (C,S,T,L)
 
 eLOD_EntityChild 7
 aName      M_UsageFootnoteMarketUsed
@@ -4675,7 +4675,7 @@ aRecursive N
 aDerived   N
 aParentDeleteBehave D
 aRelLinkIndicator L
-aDesc      Claim, Surface, Application Type, Area of Use (C,S,T,U)
+aDesc      Claim, Surface, Application Type, Location (C,S,T,L)
 
 eLOD_EntityChild 5
 aName      M_SubUsage
@@ -4695,7 +4695,7 @@ aParentDeleteBehave D
 aDupEntityInstance N
 aDupRelationshipInstance N
 aRelLinkIndicator L
-aDesc      Claim, Surface, Application Type, Area of Use (C,S,T,U)
+aDesc      Claim, Surface, Application Type, Location (C,S,T,L)
 aSeqNo     0
 
 eLOD_AttributeRec 6
@@ -4792,7 +4792,7 @@ aParentDeleteBehave E
 aDupEntityInstance N
 aDupRelationshipInstance N
 aRelLinkIndicator H
-aDesc      Claim, Surface, Application Type, Area of Use (C,S,T,U)
+aDesc      Claim, Surface, Application Type, Location (C,S,T,L)
 aSeqNo     0
 
 eLOD_AttributeRec 6
@@ -5222,7 +5222,7 @@ aWork      N
 aParentDeleteBehave E
 aDupEntityInstance N
 aDupRelationshipInstance N
-aDesc      Claim, Surface, Application Type, Area of Use (C,S,T,U)
+aDesc      Claim, Surface, Application Type, Location (C,S,T,L)
 
 eLOD_AttributeRec 6
 aZKey      110302680
@@ -5363,7 +5363,7 @@ aWork      N
 aParentDeleteBehave E
 aDupEntityInstance N
 aDupRelationshipInstance N
-aDesc      Claim, Surface, Application Type, Area of Use (C,S,T,U)
+aDesc      Claim, Surface, Application Type, Location (C,S,T,L)
 
 eLOD_AttributeRec 5
 aZKey      110303499
@@ -5492,7 +5492,7 @@ eER_AttributeRec 5
 aName      UsageType
 aZKey      120262379
 aNotNull   Y
-aDesc      Claim, Surface, Application Type, Area of Use (C,S,T,U)
+aDesc      Claim, Surface, Application Type, Location (C,S,T,L)
 
 eDomainRec 6
 
@@ -6475,7 +6475,7 @@ aWork      N
 aParentDeleteBehave E
 aDupEntityInstance N
 aDupRelationshipInstance N
-aDesc      Claim, Surface, Application Type, Area of Use (C,S,T,U)
+aDesc      Claim, Surface, Application Type, Location (C,S,T,L)
 
 eLOD_AttributeRec 5
 aZKey      70220941
@@ -6729,7 +6729,7 @@ aWork      N
 aParentDeleteBehave E
 aDupEntityInstance N
 aDupRelationshipInstance N
-aDesc      Claim, Surface, Application Type, Area of Use (C,S,T,U)
+aDesc      Claim, Surface, Application Type, Location (C,S,T,L)
 
 eLOD_AttributeRec 5
 aZKey      386934
@@ -6790,7 +6790,7 @@ aWork      N
 aParentDeleteBehave E
 aDupEntityInstance N
 aDupRelationshipInstance N
-aDesc      Claim, Surface, Application Type, Area of Use (C,S,T,U)
+aDesc      Claim, Surface, Application Type, Location (C,S,T,L)
 
 eLOD_AttributeRec 5
 aZKey      386943

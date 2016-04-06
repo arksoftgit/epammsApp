@@ -43,8 +43,8 @@ function _OnAlmostTimeout()
       // If the time is less than one minute, resubmit the page.  Otherwise, go to the timeout window.
       if (tDiff < 60000)
       {
-         document.wMLCAreasOfUseGroup.zAction.value = "_OnResubmitPage";
-         document.wMLCAreasOfUseGroup.submit( );
+         document.wMLCAddLocationsList.zAction.value = "_OnResubmitPage";
+         document.wMLCAddLocationsList.submit( );
       }
       else
       {
@@ -59,8 +59,8 @@ function _OnTimeout( )
    {
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUseGroup.zAction.value = "_OnTimeout";
-      document.wMLCAreasOfUseGroup.submit( );
+      document.wMLCAddLocationsList.zAction.value = "_OnTimeout";
+      document.wMLCAddLocationsList.submit( );
    }
 }
 
@@ -74,8 +74,8 @@ function _BeforePageUnload( )
       // If the user clicked the window close box, unregister zeidon.
       if (isWindowClosing)
       {
-         document.wMLCAreasOfUseGroup.zAction.value = "_OnUnload";
-         document.wMLCAreasOfUseGroup.submit( );
+         document.wMLCAddLocationsList.zAction.value = "_OnUnload";
+         document.wMLCAddLocationsList.submit( );
       }
    }
 }
@@ -128,16 +128,16 @@ function _AfterPageLoaded( )
 {
 // _DisableFormElements( false );
 
-   var szFocusCtrl = document.wMLCAreasOfUseGroup.zFocusCtrl.value;
+   var szFocusCtrl = document.wMLCAddLocationsList.zFocusCtrl.value;
    if ( szFocusCtrl != "" && szFocusCtrl != "null" )
-      eval( 'document.wMLCAreasOfUseGroup.' + szFocusCtrl + '.focus( )' );
+      eval( 'document.wMLCAddLocationsList.' + szFocusCtrl + '.focus( )' );
 
    // This is where we put out a message from the previous iteration on this window
-   var szMsg = document.wMLCAreasOfUseGroup.zError.value;
+   var szMsg = document.wMLCAddLocationsList.zError.value;
    if ( szMsg != "" )
       alert( szMsg ); // "Houston ... We have a problem"
 
-   szMsg = document.wMLCAreasOfUseGroup.zOpenFile.value;
+   szMsg = document.wMLCAddLocationsList.zOpenFile.value;
    if ( szMsg != "" )
    {
       var NewWin = window.open( szMsg );
@@ -149,10 +149,10 @@ function _AfterPageLoaded( )
       }
    }
 
-   var LoginName = document.wMLCAreasOfUseGroup.zLoginName.value;
-   var keyRole = document.wMLCAreasOfUseGroup.zKeyRole.value;
-   document.wMLCAreasOfUseGroup.zError.value = "";
-   document.wMLCAreasOfUseGroup.zOpenFile.value = "";
+   var LoginName = document.wMLCAddLocationsList.zLoginName.value;
+   var keyRole = document.wMLCAddLocationsList.zKeyRole.value;
+   document.wMLCAddLocationsList.zError.value = "";
+   document.wMLCAddLocationsList.zOpenFile.value = "";
 
    if ( timerID != null )
    {
@@ -160,7 +160,7 @@ function _AfterPageLoaded( )
       timerID = null;
    }
 
-   var varTimeout = document.wMLCAreasOfUseGroup.zTimeout.value;
+   var varTimeout = document.wMLCAddLocationsList.zTimeout.value;
    if ( varTimeout > 0 )
    {
       var varDelay = 60000 * varTimeout;  // Timeout value in timeout.inc
@@ -169,11 +169,24 @@ function _AfterPageLoaded( )
    else
       timerID = null; // No timeout specified
 
+   // Prebuild action has javascript code entered by user.
+   var thisLi;
+
+// if ( keyRole !== "Subregistrant" ) // If we are here, we have to be a Primary.
+   thisLi = document.getElementById( "lmStateRegistrations" );
+   thisLi.style.visibility = "hidden";
+   thisLi.style.display = "none";
+
+   // Cannot go to product management if already there.
+   thisLi = document.getElementById( "lmProductManagement" );
+   thisLi.disabled = true;
+   // END of Javascript code entered by user.
+
 var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
 }
 
-function CheckAllInGrid(id, CheckBoxName)
+function CheckAllInGrid(id, CheckBoxName) // triggered by no text checkbox
 {
    var wcontrols = id.form.elements;
    var check = id.checked;
@@ -189,7 +202,7 @@ function CheckAllInGrid(id, CheckBoxName)
    }
 }
 
-function DELETE_SelectedGroupUsageEntries( )
+function CancelAddLocationsStmts( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -199,12 +212,12 @@ function DELETE_SelectedGroupUsageEntries( )
    {
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUseGroup.zAction.value = "DELETE_SelectedGroupUsageEntries";
-      document.wMLCAreasOfUseGroup.submit( );
+      document.wMLCAddLocationsList.zAction.value = "CancelAddLocationsStmts";
+      document.wMLCAddLocationsList.submit( );
    }
 }
 
-function GOTO_AddGroupUsageStatements( )
+function ClearSelectedLocations( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -212,14 +225,45 @@ function GOTO_AddGroupUsageStatements( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      _DisableFormElements( true );
+      // Javascript code entered by user.
 
-      document.wMLCAreasOfUseGroup.zAction.value = "GOTO_AddGroupUsageStatements";
-      document.wMLCAreasOfUseGroup.submit( );
+      var theForm;
+      var type;
+      var name;
+      var str;
+      var j;
+      var k;
+
+      for ( j = 0; j < document.forms.length; j++ )
+      {
+         theForm = document.forms[ j ];
+         for ( k = 0; k < theForm.length; k++ )
+         {
+            type = theForm.elements[ k ].type;
+
+            if ( type == "checkbox" )
+            {
+               name = theForm.elements[ k ].name;
+               str = name.substr( 0, 9 );
+               if ( str.match("GS_Select") )
+               {
+                  theForm.elements[ k ].checked = false;
+               }
+            }
+         }
+      }
+
+      return;
+
+
+      // END of Javascript code entered by user.
+
+      document.wMLCAddLocationsList.zAction.value = "ClearSelectedLocations";
+      document.wMLCAddLocationsList.submit( );
    }
 }
 
-function GOTO_SelectUsagesForGroup( )
+function ConfirmAddLocationsStmtsReturn( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -229,12 +273,12 @@ function GOTO_SelectUsagesForGroup( )
    {
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUseGroup.zAction.value = "GOTO_SelectUsagesForGroup";
-      document.wMLCAreasOfUseGroup.submit( );
+      document.wMLCAddLocationsList.zAction.value = "ConfirmAddLocationsStmtsReturn";
+      document.wMLCAddLocationsList.submit( );
    }
 }
 
-function GOTO_UpdateGroupUsageStatement( strTagEntityKey )
+function ConfirmAddSelectedLocations( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -242,18 +286,14 @@ function GOTO_UpdateGroupUsageStatement( strTagEntityKey )
 
    if ( _IsDocDisabled( ) == false )
    {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCAreasOfUseGroup.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUseGroup.zAction.value = "GOTO_UpdateGroupUsageStatement";
-      document.wMLCAreasOfUseGroup.submit( );
+      document.wMLCAddLocationsList.zAction.value = "ConfirmAddSelectedLocations";
+      document.wMLCAddLocationsList.submit( );
    }
 }
 
-function RemoveMLC_UsageEntriesFromGroup( )
+function InitLocationsStmtsForInsert( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -261,14 +301,12 @@ function RemoveMLC_UsageEntriesFromGroup( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      _DisableFormElements( true );
-
-      document.wMLCAreasOfUseGroup.zAction.value = "RemoveMLC_UsageEntriesFromGroup";
-      document.wMLCAreasOfUseGroup.submit( );
+      document.wMLCAddLocationsList.zAction.value = "InitLocationsStmtsForInsert";
+      document.wMLCAddLocationsList.submit( );
    }
 }
 
-function Return( )
+function SelectAllLocations( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -276,10 +314,41 @@ function Return( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      _DisableFormElements( true );
+      // Javascript code entered by user.
 
-      document.wMLCAreasOfUseGroup.zAction.value = "Return";
-      document.wMLCAreasOfUseGroup.submit( );
+      var theForm;
+      var type;
+      var name;
+      var str;
+      var j;
+      var k;
+
+      for ( j = 0; j < document.forms.length; j++ )
+      {
+         theForm = document.forms[ j ];
+         for ( k = 0; k < theForm.length; k++ )
+         {
+            type = theForm.elements[ k ].type;
+
+            if ( type == "checkbox" )
+            {
+               name = theForm.elements[ k ].name;
+               str = name.substr( 0, 9 );
+               if ( str.match("GS_Select") )
+               {
+                  theForm.elements[ k ].checked = true;
+               }
+            }
+         }
+      }
+
+      return;
+
+
+      // END of Javascript code entered by user.
+
+      document.wMLCAddLocationsList.zAction.value = "SelectAllLocations";
+      document.wMLCAddLocationsList.submit( );
    }
 }
 

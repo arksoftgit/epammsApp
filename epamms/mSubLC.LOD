@@ -2637,7 +2637,7 @@ aZKey      120249182
 eER_AttributeRec 8
 aName      UsageType
 aZKey      1181569
-aDesc      Claim, Surface, Application Type, Area of Use (C,S,T,U)
+aDesc      Claim, Surface, Application Type, Location (C,S,T,L)
 
 eDomainRec 9
 aZKey      1181561
@@ -2645,7 +2645,7 @@ aName      UsageType
 aDomainType T
 aDataType  S
 aMaxStringLth 1
-aDesc      Claim, Surface, Application Type, Area of Use (C,S,T,U)
+aDesc      Claim, Surface, Application Type, Location (C,S,T,L)
 aContextRestriction N
 
 eLOD_AttributeRec 7
@@ -4796,7 +4796,7 @@ aRecursive N
 aDerived   N
 aParentDeleteBehave E
 aRelLinkIndicator H
-aDesc      Claim, Surface, Application Type, Area of Use (C,S,T,U)
+aDesc      Claim, Surface, Application Type, Location (C,S,T,L)
 aSeqNo     0
 
 eLOD_EntityChild 6
@@ -4868,7 +4868,7 @@ eER_EntityRec 6
 aName      M_Usage
 aZKey      1178495
 aPurpose   A
-aDesc      Claim, Surface, Application Type, Area of Use (C,S,T,U)
+aDesc      Claim, Surface, Application Type, Location (C,S,T,L)
 aER_DiagramPosX 74
 aER_DiagramPosY 87
 
@@ -5015,7 +5015,7 @@ eER_AttributeRec 5
 aName      UsageType
 aZKey      120262382
 aNotNull   Y
-aDesc      Claim, Surface, Application Type, Area of Use (C,S,T,U)
+aDesc      Claim, Surface, Application Type, Location (C,S,T,L)
 
 eDomainRec 6
 

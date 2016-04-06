@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDirsForUseDrivingUsageSelect   Generate Timestamp: 20160328163907918 --%>
+<%-- wMLCDirsForUseDrivingUsageSelect   Generate Timestamp: 20160406142140365 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -978,9 +978,9 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <span style="height:16px;">&nbsp&nbsp&nbsp</span>
-<% /* HTSelectAllAreasOfUse2:Text */ %>
+<% /* HTSelectAllLocations2:Text */ %>
 
-<a href="#" id="HTSelectAllAreasOfUse2" name="HTSelectAllAreasOfUse2"  onclick="CLEAR_MLC_UsageTarget( );" style="width:134px;height:16px;">Clear Target Entries</a>
+<a href="#" id="HTSelectAllLocations2" name="HTSelectAllLocations2"  onclick="CLEAR_MLC_UsageTarget( );" style="width:134px;height:16px;">Clear Target Entries</a>
 
 <span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
 <% /* Text4:Text */ %>
@@ -1168,9 +1168,9 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <div>  <!-- Beginning of a new line -->
 <span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
-<% /* HTSelectAllAreasOfUse1:Text */ %>
+<% /* HTSelectAllLocations1:Text */ %>
 
-<a href="#" id="HTSelectAllAreasOfUse1" name="HTSelectAllAreasOfUse1"  onclick="CLEAR_MLC_UsageSource( );" style="width:152px;height:16px;">Clear Source Entries</a>
+<a href="#" id="HTSelectAllLocations1" name="HTSelectAllLocations1"  onclick="CLEAR_MLC_UsageSource( );" style="width:152px;height:16px;">Clear Source Entries</a>
 
 <span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
 <% /* Text2:Text */ %>

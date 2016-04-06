@@ -248,7 +248,7 @@ InitImportAppTypesList( View     ViewToWindow )
    RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
    RESULT = GetViewByName( mEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
 
-   //:// Set up Areas of Use list in wWebXfer.Root.CurrentStatementText
+   //:// Set up Locations list in wWebXfer.Root.CurrentStatementText
    //:// to be set to multiline edit box.
    //:wWebXfer.Root.CurrentStatement = ""
    SetAttributeFromString( wWebXfer, "Root", "CurrentStatement", "" );
@@ -280,7 +280,7 @@ ConfirmImportAppTypesList( View     ViewToWindow )
    RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
    RESULT = GetViewByName( mEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
 
-   //:// Clean out previous list of areas of use.
+   //:// Clean out previous list of locations.
    //:nRC = SetCursorFirstEntity( mEPA, "EPA_ApplicationType", "" )
    nRC = SetCursorFirstEntity( mEPA, "EPA_ApplicationType", "" );
    //:LOOP WHILE nRC = zCURSOR_SET
@@ -294,7 +294,7 @@ ConfirmImportAppTypesList( View     ViewToWindow )
 
    //:END
 
-   //:// Set up Areas of Use list in wWebXfer.Root.CurrentStatementText
+   //:// Set up Locations list in wWebXfer.Root.CurrentStatementText
    //:// to be set to multiline edit box.
    //:BuildEntityAttributeFromCSV( wWebXfer, "Root",
    //:                             "CurrentStatementText",
@@ -394,23 +394,23 @@ CancelUpdateSystemKeyword( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
-//:DeleteAreasOfUse( VIEW ViewToWindow )
+//:DeleteLocations( VIEW ViewToWindow )
 
 //:   VIEW mEPA     REGISTERED AS mEPA
 public int 
-DeleteAreasOfUse( View     ViewToWindow )
+DeleteLocations( View     ViewToWindow )
 {
    zVIEW    mEPA = new zVIEW( );
    int      RESULT = 0;
 
    RESULT = GetViewByName( mEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
 
-   //:DELETE ENTITY mEPA.EPA_AreaOfUse
-   RESULT = DeleteEntity( mEPA, "EPA_AreaOfUse", zPOS_NEXT );
-   //:AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "DeleteAreasOfUse: " )
+   //:DELETE ENTITY mEPA.EPA_Location
+   RESULT = DeleteEntity( mEPA, "EPA_Location", zPOS_NEXT );
+   //:AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "DeleteLocations: " )
    {
     ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "DeleteAreasOfUse: " );
+    m_ZGlobalV_Operation.AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "DeleteLocations: " );
     // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
    }
    return( 0 );
@@ -538,16 +538,16 @@ CopyToNewSystemChemical( View     ViewToWindow )
 
    //:END
 
-   //:FOR EACH mEPA.EPA_AreaOfUse
-   RESULT = SetCursorFirstEntity( mEPA, "EPA_AreaOfUse", "" );
+   //:FOR EACH mEPA.EPA_Location
+   RESULT = SetCursorFirstEntity( mEPA, "EPA_Location", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
-      //:CREATE ENTITY mNew.EPA_AreaOfUse
-      RESULT = CreateEntity( mNew, "EPA_AreaOfUse", zPOS_AFTER );
-      //:SetMatchingAttributesByName( mNew, "EPA_AreaOfUse",
-      //:                             mEPA, "EPA_AreaOfUse", zSET_ALL )
-      SetMatchingAttributesByName( mNew, "EPA_AreaOfUse", mEPA, "EPA_AreaOfUse", zSET_ALL );
-      RESULT = SetCursorNextEntity( mEPA, "EPA_AreaOfUse", "" );
+      //:CREATE ENTITY mNew.EPA_Location
+      RESULT = CreateEntity( mNew, "EPA_Location", zPOS_AFTER );
+      //:SetMatchingAttributesByName( mNew, "EPA_Location",
+      //:                             mEPA, "EPA_Location", zSET_ALL )
+      SetMatchingAttributesByName( mNew, "EPA_Location", mEPA, "EPA_Location", zSET_ALL );
+      RESULT = SetCursorNextEntity( mEPA, "EPA_Location", "" );
    } 
 
    //:END
@@ -920,14 +920,14 @@ InitSystemChemicalForUpdate( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
-//:InitAreasOfUseForUpdate( VIEW ViewToWindow )
+//:InitLocationsForUpdate( VIEW ViewToWindow )
 
 public int 
-InitAreasOfUseForUpdate( View     ViewToWindow )
+InitLocationsForUpdate( View     ViewToWindow )
 {
 
    return( 0 );
-// // CreateCurrentTemporalVersion( ViewToWindow, 0, "mEPA", "EPA_AreaOfUse", "InitAreasOfUseForUpdate: " )
+// // CreateCurrentTemporalVersion( ViewToWindow, 0, "mEPA", "EPA_Location", "InitLocationsForUpdate: " )
 // END
 } 
 
@@ -2178,11 +2178,11 @@ CancelImportSurfacesList( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
-//:InitImportAreasOfUseList( VIEW ViewToWindow )
+//:InitImportLocationsList( VIEW ViewToWindow )
 
 //:   VIEW wWebXfer REGISTERED AS wWebXfer
 public int 
-InitImportAreasOfUseList( View     ViewToWindow )
+InitImportLocationsList( View     ViewToWindow )
 {
    zVIEW    wWebXfer = new zVIEW( );
    int      RESULT = 0;
@@ -2192,27 +2192,27 @@ InitImportAreasOfUseList( View     ViewToWindow )
    RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
    RESULT = GetViewByName( mEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
 
-   //:// Set up Areas of Use list in wWebXfer.Root.CurrentStatementText
+   //:// Set up Locations list in wWebXfer.Root.CurrentStatementText
    //:// to be set to multiline edit box.
    //:wWebXfer.Root.CurrentStatement = ""
    SetAttributeFromString( wWebXfer, "Root", "CurrentStatement", "" );
-   //:wWebXfer.Root.String = "AreasOfUse.epa"
-   SetAttributeFromString( wWebXfer, "Root", "String", "AreasOfUse.epa" );
+   //:wWebXfer.Root.String = "Locations.epa"
+   SetAttributeFromString( wWebXfer, "Root", "String", "Locations.epa" );
    //:BuildCSV_FromEntityAttribute( wWebXfer, "Root",
    //:                              "CurrentStatementText",
-   //:                              mEPA, "EPA_AreaOfUse", "Name", 0 )
-   m_ZDRVROPR.BuildCSV_FromEntityAttribute( wWebXfer, "Root", "CurrentStatementText", mEPA, "EPA_AreaOfUse", "Name", 0 );
+   //:                              mEPA, "EPA_Location", "Name", 0 )
+   m_ZDRVROPR.BuildCSV_FromEntityAttribute( wWebXfer, "Root", "CurrentStatementText", mEPA, "EPA_Location", "Name", 0 );
    return( 0 );
 // END
 } 
 
 
 //:DIALOG OPERATION
-//:ImportAreasOfUseList( VIEW ViewToWindow )
+//:ImportLocationsList( VIEW ViewToWindow )
 
 //:   VIEW wWebXfer REGISTERED AS wWebXfer
 public int 
-ImportAreasOfUseList( View     ViewToWindow )
+ImportLocationsList( View     ViewToWindow )
 {
    zVIEW    wWebXfer = new zVIEW( );
    int      RESULT = 0;
@@ -2224,10 +2224,10 @@ ImportAreasOfUseList( View     ViewToWindow )
 
    //:wWebXfer.Root.String = ""
    SetAttributeFromString( wWebXfer, "Root", "String", "" );
-   //:AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "ImportAreasOfUseList: " )
+   //:AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "ImportLocationsList: " )
    {
     ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "ImportAreasOfUseList: " );
+    m_ZGlobalV_Operation.AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "ImportLocationsList: " );
     // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
    }
    return( 0 );
@@ -2236,11 +2236,11 @@ ImportAreasOfUseList( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
-//:ImportAreasOfUseFromFile( VIEW ViewToWindow )
+//:ImportLocationsFromFile( VIEW ViewToWindow )
 
 //:   VIEW wWebXfer REGISTERED AS wWebXfer
 public int 
-ImportAreasOfUseFromFile( View     ViewToWindow )
+ImportLocationsFromFile( View     ViewToWindow )
 {
    zVIEW    wWebXfer = new zVIEW( );
    int      RESULT = 0;
@@ -2279,10 +2279,10 @@ ImportAreasOfUseFromFile( View     ViewToWindow )
    //:IF szDirectoryName = ""
    if ( ZeidonStringCompare( szDirectoryName, 1, 0, "", 1, 0, 513 ) == 0 )
    { 
-      //:MessageSend( ViewToWindow, "", "Import Areas Of Use Statements",
+      //:MessageSend( ViewToWindow, "", "Import Locations Statements",
       //:             "Zeidon INI file does not have WebDirectory entry in Application: App.epamms.",
       //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Import Areas Of Use Statements", "Zeidon INI file does not have WebDirectory entry in Application: App.epamms.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      MessageSend( ViewToWindow, "", "Import Locations Statements", "Zeidon INI file does not have WebDirectory entry in Application: App.epamms.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
       //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
       m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
       //:RETURN 2
@@ -2304,10 +2304,10 @@ ImportAreasOfUseFromFile( View     ViewToWindow )
    //:IF szFileName = ""
    if ( ZeidonStringCompare( szFileName, 1, 0, "", 1, 0, 257 ) == 0 )
    { 
-      //:MessageSend( ViewToWindow, "", "Import Areas Of Use Statements",
+      //:MessageSend( ViewToWindow, "", "Import Locations Statements",
       //:             "The Import File Name cannot be blank.",
       //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Import Areas Of Use Statements", "The Import File Name cannot be blank.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      MessageSend( ViewToWindow, "", "Import Locations Statements", "The Import File Name cannot be blank.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
       //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
       m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
       //:RETURN 2
@@ -2407,10 +2407,10 @@ ImportAreasOfUseFromFile( View     ViewToWindow )
 
       //:END
 
-      //:MessageSend( ViewToWindow, "", "Import Areas Of Use Statements",
+      //:MessageSend( ViewToWindow, "", "Import Locations Statements",
       //:             szMessage,
       //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      MessageSend( ViewToWindow, "", "Import Areas Of Use Statements", szMessage, zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      MessageSend( ViewToWindow, "", "Import Locations Statements", szMessage, zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
       //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
       m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
       //:RETURN 2
@@ -2424,11 +2424,11 @@ ImportAreasOfUseFromFile( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
-//:CancelImportAreasOfUseList( VIEW ViewToWindow )
+//:CancelImportLocationsList( VIEW ViewToWindow )
 
 //:   VIEW wWebXfer REGISTERED AS wWebXfer
 public int 
-CancelImportAreasOfUseList( View     ViewToWindow )
+CancelImportLocationsList( View     ViewToWindow )
 {
    zVIEW    wWebXfer = new zVIEW( );
    int      RESULT = 0;
@@ -3543,11 +3543,11 @@ ConfirmImportFungiList( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
-//:ConfirmImportAreasOfUseList( VIEW ViewToWindow )
+//:ConfirmImportLocationsList( VIEW ViewToWindow )
 
 //:   VIEW wWebXfer REGISTERED AS wWebXfer
 public int 
-ConfirmImportAreasOfUseList( View     ViewToWindow )
+ConfirmImportLocationsList( View     ViewToWindow )
 {
    zVIEW    wWebXfer = new zVIEW( );
    int      RESULT = 0;
@@ -3559,26 +3559,26 @@ ConfirmImportAreasOfUseList( View     ViewToWindow )
    RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
    RESULT = GetViewByName( mEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
 
-   //:// Clean out previous list of areas of use.
-   //:nRC = SetCursorFirstEntity( mEPA, "EPA_AreaOfUse", "" )
-   nRC = SetCursorFirstEntity( mEPA, "EPA_AreaOfUse", "" );
+   //:// Clean out previous list of locations.
+   //:nRC = SetCursorFirstEntity( mEPA, "EPA_Location", "" )
+   nRC = SetCursorFirstEntity( mEPA, "EPA_Location", "" );
    //:LOOP WHILE nRC = zCURSOR_SET
    while ( nRC == zCURSOR_SET )
    { 
-      //:DeleteEntity( mEPA, "EPA_AreaOfUse", zREPOS_NONE )
-      DeleteEntity( mEPA, "EPA_AreaOfUse", zREPOS_NONE );
-      //:nRC = SetCursorNextEntity( mEPA, "EPA_AreaOfUse", "" )
-      nRC = SetCursorNextEntity( mEPA, "EPA_AreaOfUse", "" );
+      //:DeleteEntity( mEPA, "EPA_Location", zREPOS_NONE )
+      DeleteEntity( mEPA, "EPA_Location", zREPOS_NONE );
+      //:nRC = SetCursorNextEntity( mEPA, "EPA_Location", "" )
+      nRC = SetCursorNextEntity( mEPA, "EPA_Location", "" );
    } 
 
    //:END
 
-   //:// Set up Areas of Use list in wWebXfer.Root.CurrentStatementText
+   //:// Set up Locations list in wWebXfer.Root.CurrentStatementText
    //:// to be set to multiline edit box.
    //:BuildEntityAttributeFromCSV( wWebXfer, "Root",
    //:                             "CurrentStatementText",
-   //:                             mEPA, "EPA_AreaOfUse", "Name", 0 )
-   m_ZDRVROPR.BuildEntityAttributeFromCSV( wWebXfer, "Root", "CurrentStatementText", mEPA, "EPA_AreaOfUse", "Name", 0 );
+   //:                             mEPA, "EPA_Location", "Name", 0 )
+   m_ZDRVROPR.BuildEntityAttributeFromCSV( wWebXfer, "Root", "CurrentStatementText", mEPA, "EPA_Location", "Name", 0 );
    //:COMMIT mEPA
    RESULT = CommitObjectInstance( mEPA );
    return( 0 );
@@ -3587,11 +3587,11 @@ ConfirmImportAreasOfUseList( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
-//:NewAreasOfUse( VIEW ViewToWindow )
+//:NewLocations( VIEW ViewToWindow )
 
 //:   VIEW wWebXfer REGISTERED AS wWebXfer
 public int 
-NewAreasOfUse( View     ViewToWindow )
+NewLocations( View     ViewToWindow )
 {
    zVIEW    wWebXfer = new zVIEW( );
    int      RESULT = 0;
@@ -3602,22 +3602,18 @@ NewAreasOfUse( View     ViewToWindow )
    RESULT = GetViewByName( mEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
 
    //:// Name guaranteed to be non-blank in JSP
-   //:AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "NewAreasOfUse: " )
+   //:AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "NewLocations: " )
    {
     ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "NewAreasOfUse: " );
+    m_ZGlobalV_Operation.AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "NewLocations: " );
     // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
    }
-   //:CREATE ENTITY mEPA.EPA_AreaOfUse
-   RESULT = CreateEntity( mEPA, "EPA_AreaOfUse", zPOS_AFTER );
-   //:mEPA.EPA_AreaOfUse.Name = wWebXfer.Root.CurrentStatement
-   SetAttributeFromAttribute( mEPA, "EPA_AreaOfUse", "Name", wWebXfer, "Root", "CurrentStatement" );
-   //:mEPA.EPA_AreaOfUse.BoldItalic = wWebXfer.Root.CurrentBoldItalic
-   SetAttributeFromAttribute( mEPA, "EPA_AreaOfUse", "BoldItalic", wWebXfer, "Root", "CurrentBoldItalic" );
+   //:CREATE ENTITY mEPA.EPA_Location
+   RESULT = CreateEntity( mEPA, "EPA_Location", zPOS_AFTER );
+   //:mEPA.EPA_Location.Name = wWebXfer.Root.CurrentStatement
+   SetAttributeFromAttribute( mEPA, "EPA_Location", "Name", wWebXfer, "Root", "CurrentStatement" );
    //:wWebXfer.Root.CurrentStatement = ""
    SetAttributeFromString( wWebXfer, "Root", "CurrentStatement", "" );
-   //:wWebXfer.Root.CurrentBoldItalic = ""
-   SetAttributeFromString( wWebXfer, "Root", "CurrentBoldItalic", "" );
    //:COMMIT mEPA
    RESULT = CommitObjectInstance( mEPA );
    return( 0 );
@@ -3651,12 +3647,8 @@ NewAppType( View     ViewToWindow )
    RESULT = CreateEntity( mEPA, "EPA_ApplicationType", zPOS_AFTER );
    //:mEPA.EPA_ApplicationType.Name = wWebXfer.Root.CurrentStatement
    SetAttributeFromAttribute( mEPA, "EPA_ApplicationType", "Name", wWebXfer, "Root", "CurrentStatement" );
-   //:mEPA.EPA_ApplicationType.BoldItalic = wWebXfer.Root.CurrentBoldItalic
-   SetAttributeFromAttribute( mEPA, "EPA_ApplicationType", "BoldItalic", wWebXfer, "Root", "CurrentBoldItalic" );
    //:wWebXfer.Root.CurrentStatement = ""
    SetAttributeFromString( wWebXfer, "Root", "CurrentStatement", "" );
-   //:wWebXfer.Root.CurrentBoldItalic = ""
-   SetAttributeFromString( wWebXfer, "Root", "CurrentBoldItalic", "" );
    //:COMMIT mEPA
    RESULT = CommitObjectInstance( mEPA );
    return( 0 );
@@ -3690,12 +3682,8 @@ NewSurface( View     ViewToWindow )
    RESULT = CreateEntity( mEPA, "EPA_Surface", zPOS_AFTER );
    //:mEPA.EPA_Surface.Name = wWebXfer.Root.CurrentStatement
    SetAttributeFromAttribute( mEPA, "EPA_Surface", "Name", wWebXfer, "Root", "CurrentStatement" );
-   //:mEPA.EPA_Surface.BoldItalic = wWebXfer.Root.CurrentBoldItalic
-   SetAttributeFromAttribute( mEPA, "EPA_Surface", "BoldItalic", wWebXfer, "Root", "CurrentBoldItalic" );
    //:wWebXfer.Root.CurrentStatement = ""
    SetAttributeFromString( wWebXfer, "Root", "CurrentStatement", "" );
-   //:wWebXfer.Root.CurrentBoldItalic = ""
-   SetAttributeFromString( wWebXfer, "Root", "CurrentBoldItalic", "" );
    //:COMMIT mEPA
    RESULT = CommitObjectInstance( mEPA );
    return( 0 );
@@ -3729,14 +3717,10 @@ NewBacteria( View     ViewToWindow )
    RESULT = CreateEntity( mEPA, "EPA_Claim", zPOS_AFTER );
    //:mEPA.EPA_Claim.Name = wWebXfer.Root.CurrentStatement
    SetAttributeFromAttribute( mEPA, "EPA_Claim", "Name", wWebXfer, "Root", "CurrentStatement" );
-   //:mEPA.EPA_Claim.BoldItalic = wWebXfer.Root.CurrentBoldItalic
-   SetAttributeFromAttribute( mEPA, "EPA_Claim", "BoldItalic", wWebXfer, "Root", "CurrentBoldItalic" );
    //:mEPA.EPA_Claim.ClaimsClassification = "Bacteria"
    SetAttributeFromString( mEPA, "EPA_Claim", "ClaimsClassification", "Bacteria" );
    //:wWebXfer.Root.CurrentStatement = ""
    SetAttributeFromString( wWebXfer, "Root", "CurrentStatement", "" );
-   //:wWebXfer.Root.CurrentBoldItalic = ""
-   SetAttributeFromString( wWebXfer, "Root", "CurrentBoldItalic", "" );
    //:COMMIT mEPA
    RESULT = CommitObjectInstance( mEPA );
    return( 0 );
@@ -3770,14 +3754,10 @@ NewFungi( View     ViewToWindow )
    RESULT = CreateEntity( mEPA, "EPA_Claim", zPOS_AFTER );
    //:mEPA.EPA_Claim.Name = wWebXfer.Root.CurrentStatement
    SetAttributeFromAttribute( mEPA, "EPA_Claim", "Name", wWebXfer, "Root", "CurrentStatement" );
-   //:mEPA.EPA_Claim.BoldItalic = wWebXfer.Root.CurrentBoldItalic
-   SetAttributeFromAttribute( mEPA, "EPA_Claim", "BoldItalic", wWebXfer, "Root", "CurrentBoldItalic" );
    //:mEPA.EPA_Claim.ClaimsClassification = "Fungi"
    SetAttributeFromString( mEPA, "EPA_Claim", "ClaimsClassification", "Fungi" );
    //:wWebXfer.Root.CurrentStatement = ""
    SetAttributeFromString( wWebXfer, "Root", "CurrentStatement", "" );
-   //:wWebXfer.Root.CurrentBoldItalic = ""
-   SetAttributeFromString( wWebXfer, "Root", "CurrentBoldItalic", "" );
    //:COMMIT mEPA
    RESULT = CommitObjectInstance( mEPA );
    return( 0 );
@@ -3811,14 +3791,10 @@ NewVirus( View     ViewToWindow )
    RESULT = CreateEntity( mEPA, "EPA_Claim", zPOS_AFTER );
    //:mEPA.EPA_Claim.Name = wWebXfer.Root.CurrentStatement
    SetAttributeFromAttribute( mEPA, "EPA_Claim", "Name", wWebXfer, "Root", "CurrentStatement" );
-   //:mEPA.EPA_Claim.BoldItalic = wWebXfer.Root.CurrentBoldItalic
-   SetAttributeFromAttribute( mEPA, "EPA_Claim", "BoldItalic", wWebXfer, "Root", "CurrentBoldItalic" );
    //:mEPA.EPA_Claim.ClaimsClassification = "Viruses"
    SetAttributeFromString( mEPA, "EPA_Claim", "ClaimsClassification", "Viruses" );
    //:wWebXfer.Root.CurrentStatement = ""
    SetAttributeFromString( wWebXfer, "Root", "CurrentStatement", "" );
-   //:wWebXfer.Root.CurrentBoldItalic = ""
-   SetAttributeFromString( wWebXfer, "Root", "CurrentBoldItalic", "" );
    //:COMMIT mEPA
    RESULT = CommitObjectInstance( mEPA );
    return( 0 );
@@ -3869,15 +3845,15 @@ UpdateSurface( View     ViewToWindow )
 
 //:DIALOG OPERATION
 public int 
-UpdateAreasOfUse( View     ViewToWindow )
+UpdateLocations( View     ViewToWindow )
 {
 
-   //:UpdateAreasOfUse( VIEW ViewToWindow )
+   //:UpdateLocations( VIEW ViewToWindow )
 
-   //:AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "UpdateAreasOfUse: " )
+   //:AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "UpdateLocations: " )
    {
     ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "UpdateAreasOfUse: " );
+    m_ZGlobalV_Operation.AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "UpdateLocations: " );
     // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
    }
    return( 0 );
@@ -3886,11 +3862,11 @@ UpdateAreasOfUse( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
-//:UpdateAreasOfUseFromCurrent( VIEW ViewToWindow )
+//:UpdateLocationsFromCurrent( VIEW ViewToWindow )
 
 //:   VIEW wWebXfer REGISTERED AS wWebXfer
 public int 
-UpdateAreasOfUseFromCurrent( View     ViewToWindow )
+UpdateLocationsFromCurrent( View     ViewToWindow )
 {
    zVIEW    wWebXfer = new zVIEW( );
    int      RESULT = 0;
@@ -3900,14 +3876,14 @@ UpdateAreasOfUseFromCurrent( View     ViewToWindow )
    RESULT = GetViewByName( wWebXfer, "wWebXfer", ViewToWindow, zLEVEL_TASK );
    RESULT = GetViewByName( mEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
 
-   //:AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "UpdateAreasOfUseFromCurrent: " )
+   //:AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "UpdateLocationsFromCurrent: " )
    {
     ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "UpdateAreasOfUseFromCurrent: " );
+    m_ZGlobalV_Operation.AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "UpdateLocationsFromCurrent: " );
     // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
    }
-   //:mEPA.EPA_AreaOfUse.Name = wWebXfer.Root.CurrentStatement
-   SetAttributeFromAttribute( mEPA, "EPA_AreaOfUse", "Name", wWebXfer, "Root", "CurrentStatement" );
+   //:mEPA.EPA_Location.Name = wWebXfer.Root.CurrentStatement
+   SetAttributeFromAttribute( mEPA, "EPA_Location", "Name", wWebXfer, "Root", "CurrentStatement" );
    //:COMMIT mEPA
    RESULT = CommitObjectInstance( mEPA );
    return( 0 );

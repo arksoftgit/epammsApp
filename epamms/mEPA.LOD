@@ -40,7 +40,7 @@ aParentDeleteBehave D
 aDupEntityInstance N
 aDupRelationshipInstance N
 aRelLinkIndicator L
-aDesc      Double Brace{{ ... }} enclosed replacable keyword:  Usage, Claim, Surface, AreaOfUse, ApplicationType
+aDesc      Double Brace{{ ... }} enclosed replacable keyword:  Usage, Claim, Surface, Location, ApplicationType
 
 eLOD_AttributeRec 4
 aZKey      2348767
@@ -83,7 +83,7 @@ eER_EntityRec 4
 aName      Keyword
 aZKey      2344470
 aPurpose   F
-aDesc      Double Brace{{ ... }} enclosed replacable keyword:  Usage, Claim, Surface, AreaOfUse, ApplicationType
+aDesc      Double Brace{{ ... }} enclosed replacable keyword:  Usage, Claim, Surface, Location, ApplicationType
 aER_DiagramPosX 44
 aER_DiagramPosY 8
 
@@ -235,8 +235,8 @@ aER_DiagramE2PosX 6
 aER_DiagramE2PosY 43
 
 eLOD_EntityChild 4
-aName      EPA_AreaOfUse
-aIndentName       EPA_AreaOfUse
+aName      EPA_Location
+aIndentName       EPA_Location
 aIndentLvl 6
 aZKey      2348780
 aCreate    Y
@@ -295,7 +295,7 @@ aDesc      Yes or No
 aContextRestriction N
 
 eER_EntityRec 5
-aName      EPA_AreaOfUse
+aName      EPA_Location
 aZKey      1178451
 aPurpose   F
 aER_DiagramPosX 19

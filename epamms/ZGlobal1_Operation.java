@@ -4714,7 +4714,7 @@ public class ZGlobal1_Operation extends VmlOperation
    // TraceLineS( "### Insert szUsageTypeEntityName: ", szUsageTypeEntityName )
    // TraceLineS( "### Insert szLoopingEntityName: ", szLoopingEntityName )
 
-   // For use in: {{Area Of Use}}. Disinfects, cleans, and deodorizes the following hard nonporous inanimate surfaces: {{Surface}}, etc.).
+   // For use in: {{Location}}. Disinfects, cleans, and deodorizes the following hard nonporous inanimate surfaces: {{Surface}}, etc.).
    // 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123  << lth = 133
    //          1         2         3         4         5         6         7         8         9        10        11        12        13
       sbTarget.setLength( 0 );
@@ -4732,17 +4732,17 @@ public class ZGlobal1_Operation extends VmlOperation
 
             // Copy the Usage values into the text. This will depend on Type.
 
-            // Claim, Surface, Area of Use, and Application Type.
+            // Claim, Surface, Location, and Application Type.
             if ( szUsageType.equals( "Claim" ) || szUsageType.equals( "Claims" ) ||
                  szUsageType.equals( "Surface" ) || szUsageType.equals( "Surfaces" ) ||
-                 szUsageType.equals( "Area Of Use" ) || szUsageType.equals( "Areas Of Use" ) ||
+                 szUsageType.equals( "Location" ) || szUsageType.equals( "Locations" ) ||
                  szUsageType.equals( "Application Type" ) ||  szUsageType.equals( "Application Types" ) ) {
 
                if ( szUsageType.equals( "Claim" ) || szUsageType.equals( "Claims" ) ) {
                   szSelectUsageType = "C";
                } else if ( szUsageType.equals( "Surface" ) || szUsageType.equals( "Surfaces" ) ) {
                   szSelectUsageType = "S";
-               } else if ( szUsageType.equals( "Area Of Use" ) || szUsageType.equals( "Areas Of Use" ) ) {
+               } else if ( szUsageType.equals( "Location" ) || szUsageType.equals( "Locations" ) ) {
                   szSelectUsageType = "U";
                } else {
                   szSelectUsageType = "T";
@@ -5921,7 +5921,7 @@ public class ZGlobal1_Operation extends VmlOperation
       // C - Insert only Claim Usage entries.
       // S - Insert only Surface Usage entries.
       // T - Insert only Application Type Usage entries.
-      // U - Insert only Area of Use Usage entries.
+      // U - Insert only Location Usage entries.
 
       // Copy all characters up to the point of the keyword. If there is no keyword match, we simply copy all characters.
       // If we get a match on the keyword, insert the characters and finish copying the rest of the text.

@@ -3646,10 +3646,10 @@ omMasLC_BuildUsageWorkEnts( View     mMasLC,
 //                   CREATE ENTITY mMasLC.DirectionsSurface
 //                END
 //             ELSE
-//                IF szUsageType = "U"
-//                   // Area of Use
-//                   IF mMasLC.DirectionsAreasOfUse DOES NOT EXIST
-//                      CREATE ENTITY mMasLC.DirectionsAreasOfUse
+//                IF szUsageType = "L"
+//                   // Location
+//                   IF mMasLC.DirectionsLocations DOES NOT EXIST
+//                      CREATE ENTITY mMasLC.DirectionsLocations
 //                   END
 //                ELSE
 //                   // Application Type
@@ -3693,10 +3693,10 @@ omMasLC_BuildUsageWorkEnts( View     mMasLC,
 //                   CREATE ENTITY mMasLC.MarketingSurface
 //                END
 //             ELSE
-//                IF szUsageType = "U"
-//                   // Area of Use
-//                   IF mMasLC.MarketingAreasOfUse DOES NOT EXIST
-//                      CREATE ENTITY mMasLC.MarketingAreasOfUse
+//                IF szUsageType = "L"
+//                   // Location
+//                   IF mMasLC.MarketingLocations DOES NOT EXIST
+//                      CREATE ENTITY mMasLC.MarketingLocations
 //                   END
 //                ELSE
 //                   // Application Type

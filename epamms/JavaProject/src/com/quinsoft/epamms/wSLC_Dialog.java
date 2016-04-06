@@ -2958,32 +2958,32 @@ DisplayClaimsSection( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
-//:DisplayAreasOfUseSection( VIEW ViewToWindow )
+//:DisplayLocationsSection( VIEW ViewToWindow )
 
 //:   VIEW mSubLC REGISTERED AS mSubLC
 public int 
-DisplayAreasOfUseSection( View     ViewToWindow )
+DisplayLocationsSection( View     ViewToWindow )
 {
    zVIEW    mSubLC = new zVIEW( );
    int      RESULT = 0;
 
    RESULT = GetViewByName( mSubLC, "mSubLC", ViewToWindow, zLEVEL_TASK );
 
-   //:// Position on Areas of Use Usage Type.
-   //:SET CURSOR FIRST mSubLC.S_UsageType WHERE mSubLC.S_UsageType.UsageType = "U"
-   RESULT = SetCursorFirstEntityByString( mSubLC, "S_UsageType", "UsageType", "U", "" );
+   //:// Position on Locations Usage Type.
+   //:SET CURSOR FIRST mSubLC.S_UsageType WHERE mSubLC.S_UsageType.UsageType = "L"
+   RESULT = SetCursorFirstEntityByString( mSubLC, "S_UsageType", "UsageType", "L", "" );
    //:IF RESULT < zCURSOR_SET
    if ( RESULT < zCURSOR_SET )
    { 
       //:CREATE ENTITY mSubLC.S_UsageType
       RESULT = CreateEntity( mSubLC, "S_UsageType", zPOS_AFTER );
-      //:mSubLC.S_UsageType.UsageType = "U"
-      SetAttributeFromString( mSubLC, "S_UsageType", "UsageType", "U" );
+      //:mSubLC.S_UsageType.UsageType = "L"
+      SetAttributeFromString( mSubLC, "S_UsageType", "UsageType", "L" );
    } 
 
    //:END
-   //:mSubLC.SubregLabelContent.wUsageSelectionText = "Areas of Use"
-   SetAttributeFromString( mSubLC, "SubregLabelContent", "wUsageSelectionText", "Areas of Use" );
+   //:mSubLC.SubregLabelContent.wUsageSelectionText = "Locations"
+   SetAttributeFromString( mSubLC, "SubregLabelContent", "wUsageSelectionText", "Locations" );
    return( 0 );
 // END
 } 
@@ -3276,11 +3276,11 @@ GOTO_SelectSurfacesUsageEntries( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
-//:GOTO_SelectAreasUsageEntries( VIEW ViewToWindow )
+//:GOTO_SelectLocationsEntries( VIEW ViewToWindow )
 
 //:   VIEW mSubLC REGISTERED AS mSubLC
 public int 
-GOTO_SelectAreasUsageEntries( View     ViewToWindow )
+GOTO_SelectLocationsEntries( View     ViewToWindow )
 {
    zVIEW    mSubLC = new zVIEW( );
    int      RESULT = 0;
@@ -3291,8 +3291,8 @@ GOTO_SelectAreasUsageEntries( View     ViewToWindow )
    RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
 
    //:// Give Error Message if MLC doesn't have Claims Usage Types.
-   //:SET CURSOR FIRST mMasLC.M_UsageType WHERE mMasLC.M_UsageType.UsageType = "U"
-   RESULT = SetCursorFirstEntityByString( mMasLC, "M_UsageType", "UsageType", "U", "" );
+   //:SET CURSOR FIRST mMasLC.M_UsageType WHERE mMasLC.M_UsageType.UsageType = "L"
+   RESULT = SetCursorFirstEntityByString( mMasLC, "M_UsageType", "UsageType", "L", "" );
    //:IF RESULT < zCURSOR_SET
    if ( RESULT < zCURSOR_SET )
    { 
@@ -3309,15 +3309,15 @@ GOTO_SelectAreasUsageEntries( View     ViewToWindow )
    //:END
 
    //:// Position on SLC and MLC Claims Usage Type.
-   //:SET CURSOR FIRST mSubLC.S_UsageType WHERE mSubLC.S_UsageType.UsageType = "U"
-   RESULT = SetCursorFirstEntityByString( mSubLC, "S_UsageType", "UsageType", "U", "" );
+   //:SET CURSOR FIRST mSubLC.S_UsageType WHERE mSubLC.S_UsageType.UsageType = "L"
+   RESULT = SetCursorFirstEntityByString( mSubLC, "S_UsageType", "UsageType", "L", "" );
    //:IF RESULT < zCURSOR_SET
    if ( RESULT < zCURSOR_SET )
    { 
       //:CREATE ENTITY mSubLC.S_UsageType
       RESULT = CreateEntity( mSubLC, "S_UsageType", zPOS_AFTER );
-      //:mSubLC.S_UsageType.UsageType = "U"
-      SetAttributeFromString( mSubLC, "S_UsageType", "UsageType", "U" );
+      //:mSubLC.S_UsageType.UsageType = "L"
+      SetAttributeFromString( mSubLC, "S_UsageType", "UsageType", "L" );
    } 
 
    //:END

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCSurfacesStatement   Generate Timestamp: 20160401094611716 --%>
+<%-- wMLCSurfacesStatement   Generate Timestamp: 20160406142141995 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -341,7 +341,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelAreasOfUseStatement" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelLocationsStatement" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCSurfacesStatement", strActionToProcess );
@@ -367,7 +367,7 @@ if ( strActionToProcess != null )
       catch ( Exception e )
       {
          nRC = 2;
-         VmlOperation.CreateMessage( task, "CancelAreasOfUseStatement", e.getMessage( ), "" );
+         VmlOperation.CreateMessage( task, "CancelLocationsStatement", e.getMessage( ), "" );
          break;
       }
       // Next Window
@@ -811,7 +811,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CancelAreasOfUseStatement()">Cancel & Return</a></li>
+       <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CancelLocationsStatement()">Cancel & Return</a></li>
 <%
    }
 %>

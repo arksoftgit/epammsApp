@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCAreasOfUse   Generate Timestamp: 20160329170731564 --%>
+<%-- wMLCLocations   Generate Timestamp: 20160406142139552 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -100,24 +100,6 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       vGridTmp.drop( );
-      // Grid: GridClaims2
-      iTableRowCnt = 0;
-
-      // We are creating a temp view to the grid view so that if there are 
-      // grids on the same window with the same view we do not mess up the 
-      // entity positions. 
-      vGridTmp = mMasLC.newView( );
-      csrRC = vGridTmp.cursor( "M_UsageNonGroupUsage" ).setFirst(  );
-      while ( csrRC.isSet() )
-      {
-         lEntityKey = vGridTmp.cursor( "M_UsageNonGroupUsage" ).getEntityKey( );
-         strEntityKey = Long.toString( lEntityKey );
-         iTableRowCnt++;
-
-         csrRC = vGridTmp.cursor( "M_UsageNonGroupUsage" ).setNextContinue( );
-      }
-
-      vGridTmp.drop( );
       // EditBox: Title1
       nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
@@ -196,6 +178,24 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       vGridTmp.drop( );
+      // Grid: GridClaims2
+      iTableRowCnt = 0;
+
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
+      vGridTmp = mMasLC.newView( );
+      csrRC = vGridTmp.cursor( "M_UsageNonGroupUsage" ).setFirst(  );
+      while ( csrRC.isSet() )
+      {
+         lEntityKey = vGridTmp.cursor( "M_UsageNonGroupUsage" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         iTableRowCnt++;
+
+         csrRC = vGridTmp.cursor( "M_UsageNonGroupUsage" ).setNextContinue( );
+      }
+
+      vGridTmp.drop( );
    }
 
    if ( webMapping == true )
@@ -261,7 +261,7 @@ if ( StringUtils.isBlank( strLastWindow ) )
 
 strLastAction = (String) session.getAttribute( "ZeidonAction" );
 
-if ( strLastWindow.equals("wMLCAreasOfUse") && StringUtils.isBlank( strActionToProcess ) && StringUtils.isBlank( strLastAction ) )
+if ( strLastWindow.equals("wMLCLocations") && StringUtils.isBlank( strActionToProcess ) && StringUtils.isBlank( strLastAction ) )
 {
    strURL = response.encodeRedirectURL( "logout.jsp" );
    response.sendRedirect( strURL );
@@ -299,9 +299,9 @@ strURL = "";
 bDone = false;
 nRC = 0;
 
-task.log().info("*** wMLCAreasOfUse strActionToProcess *** " + strActionToProcess );
-task.log().info("*** wMLCAreasOfUse LastWindow *** " + strLastWindow );
-task.log().info("*** wMLCAreasOfUse LastAction *** " + strLastAction );
+task.log().info("*** wMLCLocations strActionToProcess *** " + strActionToProcess );
+task.log().info("*** wMLCLocations LastWindow *** " + strLastWindow );
+task.log().info("*** wMLCLocations LastAction *** " + strLastAction );
 
 if ( strActionToProcess != null )
 {
@@ -317,10 +317,10 @@ if ( strActionToProcess != null )
 
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "ADD_AreasUsageItems" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "ADD_LocationItems" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAreasOfUse", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -329,7 +329,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAreasOfUse", "wMLC.GOTO_AddUsageStatements" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocations", "wMLC.GOTO_AddUsageStatements" );
       nOptRC = wMLC.GOTO_AddUsageStatements( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -358,7 +358,7 @@ if ( strActionToProcess != null )
    while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DeleteSelectedEntries" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAreasOfUse", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -375,7 +375,7 @@ if ( strActionToProcess != null )
    while ( bDone == false && StringUtils.equals( strActionToProcess, "DELETE_SelectedUsageEntries" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAreasOfUse", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -384,7 +384,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAreasOfUse", "wMLC.DELETE_SelectedUsageEntries" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocations", "wMLC.DELETE_SelectedUsageEntries" );
       nOptRC = wMLC.DELETE_SelectedUsageEntries( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -413,7 +413,7 @@ if ( strActionToProcess != null )
    while ( bDone == false && StringUtils.equals( strActionToProcess, "DELETE_UsageGroupEntries" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAreasOfUse", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -422,7 +422,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAreasOfUse", "wMLC.DELETE_UsageGroupEntries" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocations", "wMLC.DELETE_UsageGroupEntries" );
       nOptRC = wMLC.DELETE_UsageGroupEntries( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -451,7 +451,7 @@ if ( strActionToProcess != null )
    while ( bDone == false && StringUtils.equals( strActionToProcess, "DELETE_UsageGroupEntriesOnly" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAreasOfUse", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -460,7 +460,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAreasOfUse", "wMLC.DELETE_UsageGroupEntriesOnly" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocations", "wMLC.DELETE_UsageGroupEntriesOnly" );
       nOptRC = wMLC.DELETE_UsageGroupEntriesOnly( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -489,7 +489,7 @@ if ( strActionToProcess != null )
    while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_AddUsageGroup" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAreasOfUse", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -498,7 +498,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAreasOfUse", "wMLC.GOTO_AddUsageGroup" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocations", "wMLC.GOTO_AddUsageGroup" );
       nOptRC = wMLC.GOTO_AddUsageGroup( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -516,7 +516,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "AreasOfUseGroup" );
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "LocationsGroup" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -527,7 +527,7 @@ if ( strActionToProcess != null )
    while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_UpdateAreasStatement" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAreasOfUse", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -576,7 +576,7 @@ if ( strActionToProcess != null )
          break;
       }
       // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "AreasOfUseStatement" );
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "LocationsStatement" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -585,7 +585,7 @@ if ( strActionToProcess != null )
    while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_UpdateUsageGroup" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAreasOfUse", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -620,7 +620,7 @@ if ( strActionToProcess != null )
       }
 
       // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "AreasOfUseGroup" );
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "LocationsGroup" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -643,7 +643,7 @@ if ( strActionToProcess != null )
    while ( bDone == false && StringUtils.equals( strActionToProcess, "smSaveAndReturnMLC" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAreasOfUse", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -652,7 +652,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAreasOfUse", "wMLC.SaveAndReturnMLC" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocations", "wMLC.SaveAndReturnMLC" );
       nOptRC = wMLC.SaveAndReturnMLC( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -681,7 +681,7 @@ if ( strActionToProcess != null )
    while ( bDone == false && StringUtils.equals( strActionToProcess, "smSaveMLC" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAreasOfUse", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -690,7 +690,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAreasOfUse", "wMLC.SaveMLC" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocations", "wMLC.SaveMLC" );
       nOptRC = wMLC.SaveMLC( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -719,7 +719,7 @@ if ( strActionToProcess != null )
    while ( bDone == false && StringUtils.equals( strActionToProcess, "smCancelAndReturnMLC" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAreasOfUse", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -728,7 +728,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAreasOfUse", "wMLC.CancelAndReturnMLC" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocations", "wMLC.CancelAndReturnMLC" );
       nOptRC = wMLC.CancelAndReturnMLC( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -757,7 +757,7 @@ if ( strActionToProcess != null )
    while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditMasterLabelVersionData" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAreasOfUse", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -774,7 +774,7 @@ if ( strActionToProcess != null )
    while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditIngredientsSect" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAreasOfUse", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -791,7 +791,7 @@ if ( strActionToProcess != null )
    while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditStorDispSect" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAreasOfUse", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -808,7 +808,7 @@ if ( strActionToProcess != null )
    while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditHumanHazardSect" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAreasOfUse", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -825,7 +825,7 @@ if ( strActionToProcess != null )
    while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditPrecautionarySection" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAreasOfUse", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -834,7 +834,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAreasOfUse", "wMLC.EditPrecautionarySection" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocations", "wMLC.EditPrecautionarySection" );
       nOptRC = wMLC.EditPrecautionarySection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -863,7 +863,7 @@ if ( strActionToProcess != null )
    while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditFirstAidSect" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAreasOfUse", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -872,7 +872,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAreasOfUse", "wMLC.EditFirstAidSection" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocations", "wMLC.EditFirstAidSection" );
       nOptRC = wMLC.EditFirstAidSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -901,7 +901,7 @@ if ( strActionToProcess != null )
    while ( bDone == false && StringUtils.equals( strActionToProcess, "smEnvironmentalHazards" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAreasOfUse", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -910,7 +910,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAreasOfUse", "wMLC.EditEnvironmentalHazardsSection" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocations", "wMLC.EditEnvironmentalHazardsSection" );
       nOptRC = wMLC.EditEnvironmentalHazardsSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -939,7 +939,7 @@ if ( strActionToProcess != null )
    while ( bDone == false && StringUtils.equals( strActionToProcess, "smGOTO_DilutionEntries" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAreasOfUse", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -956,7 +956,7 @@ if ( strActionToProcess != null )
    while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditClaimsSection" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAreasOfUse", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -965,7 +965,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAreasOfUse", "wMLC.EditClaimsSection" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocations", "wMLC.EditClaimsSection" );
       nOptRC = wMLC.EditClaimsSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -994,7 +994,7 @@ if ( strActionToProcess != null )
    while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditSurfacesSection" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAreasOfUse", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -1003,7 +1003,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAreasOfUse", "wMLC.EditSurfacesSection" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocations", "wMLC.EditSurfacesSection" );
       nOptRC = wMLC.EditSurfacesSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -1029,10 +1029,10 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditAreasOfUseSection" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditLocationsSection" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAreasOfUse", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -1041,8 +1041,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAreasOfUse", "wMLC.EditAreasOfUseSection" );
-      nOptRC = wMLC.EditAreasOfUseSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocations", "wMLC.EditLocationsSection" );
+      nOptRC = wMLC.EditLocationsSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -1059,7 +1059,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "AreasOfUse" );
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "Locations" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -1070,7 +1070,7 @@ if ( strActionToProcess != null )
    while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditApplicationTypesSection" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAreasOfUse", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -1079,7 +1079,7 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAreasOfUse", "wMLC.EditApplicationTypesSection" );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocations", "wMLC.EditApplicationTypesSection" );
       nOptRC = wMLC.EditApplicationTypesSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
@@ -1108,7 +1108,7 @@ if ( strActionToProcess != null )
    while ( bDone == false && StringUtils.equals( strActionToProcess, "smGOTO_ClaimsFootnote" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAreasOfUse", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -1125,7 +1125,7 @@ if ( strActionToProcess != null )
    while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditDirectionsUseSect" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAreasOfUse", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -1142,7 +1142,7 @@ if ( strActionToProcess != null )
    while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditMarketingSect" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAreasOfUse", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -1161,7 +1161,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wMLCAreasOfUse" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wMLCLocations" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -1178,7 +1178,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ------->>> " + "wMLCAreasOfUse" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ------->>> " + "wMLCLocations" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -1193,14 +1193,14 @@ if ( strActionToProcess != null )
    while ( bDone == false && strActionToProcess.equals( "_OnResubmitPage" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAreasOfUse", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
       if ( nRC < 0 )
          break;
 
-      strURL = response.encodeRedirectURL( "wMLCAreasOfUse.jsp" );
+      strURL = response.encodeRedirectURL( "wMLCLocations.jsp" );
       nRC = 1;  //do the redirection
       break;
    }
@@ -1211,11 +1211,11 @@ if ( strActionToProcess != null )
       {
          if ( nRC > 1 )
          {
-            strURL = response.encodeRedirectURL( "wMLCAreasOfUse.jsp" );
+            strURL = response.encodeRedirectURL( "wMLCLocations.jsp" );
             task.log().info( "Action Error Redirect to: " + strURL );
          }
 
-         if ( ! strURL.equals("wMLCAreasOfUse.jsp") ) 
+         if ( ! strURL.equals("wMLCLocations.jsp") ) 
          {
             response.sendRedirect( strURL );
             // If we are redirecting to a new page, then we need this return so that the rest of this page doesn't get built.
@@ -1226,7 +1226,7 @@ if ( strActionToProcess != null )
       {
          if ( nRC > -128 )
          {
-            strURL = response.encodeRedirectURL( "wMLCAreasOfUse.jsp" );
+            strURL = response.encodeRedirectURL( "wMLCLocations.jsp" );
             task.log().info( "Mapping Error Redirect to: " + strURL );
          }
          else
@@ -1254,7 +1254,7 @@ else
    if ( VmlOperation.isValid( wWebXA ) )
    {
       wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wMLC", "" );
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "AreasOfUse", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "Locations", "" );
    }
 
 %>
@@ -1262,7 +1262,7 @@ else
 <html>
 <head>
 
-<title>Areas of Use</title>
+<title>Locations</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
@@ -1276,7 +1276,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/tabpane.js"></script>
-<script language="JavaScript" type="text/javascript" src="./genjs/wMLCAreasOfUse.js"></script>
+<script language="JavaScript" type="text/javascript" src="./genjs/wMLCLocations.js"></script>
 
 </head>
 
@@ -1431,11 +1431,11 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "AreasOfUse" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Locations" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smAreasOfUse" name="smAreasOfUse"><a href="#"  class="sideselected"  onclick="smEditAreasOfUseSection()">Areas of Use</a></li>
+       <li id="smLocations" name="smLocations"><a href="#"  class="sideselected"  onclick="smEditLocationsSection()">Locations</a></li>
 <%
    }
 %>
@@ -1493,7 +1493,7 @@ else
 <!-- END System Maintenance-->
 
 
-<form name="wMLCAreasOfUse" id="wMLCAreasOfUse" method="post">
+<form name="wMLCLocations" id="wMLCLocations" method="post">
    <input name="zAction" id="zAction" type="hidden" value="NOVALUE">
    <input name="zTableRowSelect" id="zTableRowSelect" type="hidden" value="NOVALUE">
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
@@ -1571,7 +1571,7 @@ else
 
    strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
 
-   strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wMLC", "AreasOfUse" );
+   strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wMLC", "Locations" );
    strOpenFile = VmlOperation.FindOpenFile( task );
    strDateFormat = "YYYY.MM.DD";
 
@@ -1618,9 +1618,9 @@ else
 <div id="Tab1" class="tab-pane" style="width:660px;"> <!-- Beginning of Tab Control Tab1 -->
 <script type="text/javascript">Tab1 = new WebFXTabPane( document.getElementById( "Tab1" ) );</script>
 
-<div id="IndividualAreasofUse" class="tab-page " > <!-- Tab item IndividualAreasofUse -->
-<h2 class="tab"><span>Individual Areas of Use</span></h2>
-<script type="text/javascript">Tab1.addTabPage( document.getElementById( "IndividualAreasofUse" ) );</script>
+<div id="IndividualLocations" class="tab-page " > <!-- Tab item IndividualLocations -->
+<h2 class="tab"><span>Individual Locations</span></h2>
+<script type="text/javascript">Tab1.addTabPage( document.getElementById( "IndividualLocations" ) );</script>
 
 
  <!-- This is added as a line spacer -->
@@ -1634,13 +1634,13 @@ else
 
 <% /* OrganismClaimsStatements:Text */ %>
 
-<label class="groupbox"  id="OrganismClaimsStatements" name="OrganismClaimsStatements" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Areas of Use Statements</label>
+<label class="groupbox"  id="OrganismClaimsStatements" name="OrganismClaimsStatements" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Locations Statements</label>
 
 <% /* PushBtn1:PushBtn */ %>
-<button type="button" name="PushBtn1" id="PushBtn1" value="" onclick="GOTO_DeleteSelectedEntries( )" style="width:210px;height:26px;position:absolute;left:264px;top:12px;">Delete Selected Areas of Use</button>
+<button type="button" name="PushBtn1" id="PushBtn1" value="" onclick="GOTO_DeleteSelectedEntries( )" style="width:210px;height:26px;position:absolute;left:264px;top:12px;">Delete Selected Locations</button>
 
 <% /* PBNew:PushBtn */ %>
-<button type="button" name="PBNew" id="PBNew" value="" onclick="ADD_AreasUsageItems( )" style="width:78px;height:26px;position:absolute;left:482px;top:12px;">New</button>
+<button type="button" name="PBNew" id="PBNew" value="" onclick="ADD_LocationItems( )" style="width:78px;height:26px;position:absolute;left:482px;top:12px;">New</button>
 
 
 </div>  <!--  GBClaimsStatements --> 
@@ -1660,7 +1660,7 @@ else
 <thead bgcolor=green><tr>
 
    <th>Select</th>
-   <th>Areas of Use</th>
+   <th>Locations</th>
    <th>Update</th>
 
 </tr></thead>
@@ -1681,7 +1681,7 @@ try
       String strTag;
       String strGS_Select;
       String strGS_SelectValue;
-      String strAreasOfUse;
+      String strLocations;
       String strBMBUpdateClaimsStatement;
       
       View vGridClaims;
@@ -1715,25 +1715,25 @@ try
             strGS_Select = "<input name='" + strGS_SelectValue + "' id='" + strGS_SelectValue + "' value='Y' type='checkbox' > ";
          }
 
-         strAreasOfUse = "";
+         strLocations = "";
          nRC = vGridClaims.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strAreasOfUse = vGridClaims.cursor( "M_Usage" ).getAttribute( "Name" ).getString( "" );
+            strLocations = vGridClaims.cursor( "M_Usage" ).getAttribute( "Name" ).getString( "" );
 
-            if ( strAreasOfUse == null )
-               strAreasOfUse = "";
+            if ( strLocations == null )
+               strLocations = "";
          }
 
-         if ( StringUtils.isBlank( strAreasOfUse ) )
-            strAreasOfUse = "&nbsp";
+         if ( StringUtils.isBlank( strLocations ) )
+            strLocations = "&nbsp";
 
 %>
 
 <tr<%=strOdd%>>
 
    <td nowrap><%=strGS_Select%></td>
-   <td><a href="#" onclick="GOTO_UpdateAreasStatement( this.id )" id="AreasOfUse::<%=strEntityKey%>"><%=strAreasOfUse%></a></td>
+   <td><a href="#" onclick="GOTO_UpdateAreasStatement( this.id )" id="Locations::<%=strEntityKey%>"><%=strLocations%></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateClaimsStatement" onclick="GOTO_UpdateAreasStatement( this.id )" id="BMBUpdateClaimsStatement::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
 
 </tr>
@@ -1755,11 +1755,11 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 </div>  <!-- End of a new line -->
 
-</div> <!-- End of Tab item IndividualAreasofUse -->
+</div> <!-- End of Tab item IndividualLocations -->
 
-<div id="GroupAreasOfUse" class="tab-page " > <!-- Tab item GroupAreasOfUse -->
-<h2 class="tab"><span>Group Areas of Use</span></h2>
-<script type="text/javascript">Tab1.addTabPage( document.getElementById( "GroupAreasOfUse" ) );</script>
+<div id="GroupLocations" class="tab-page " > <!-- Tab item GroupLocations -->
+<h2 class="tab"><span>Group Locations</span></h2>
+<script type="text/javascript">Tab1.addTabPage( document.getElementById( "GroupLocations" ) );</script>
 
 
  <!-- This is added as a line spacer -->
@@ -1773,7 +1773,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <% /* OrganismClaimsStatements1:Text */ %>
 
-<label class="groupbox"  id="OrganismClaimsStatements1" name="OrganismClaimsStatements1" style="width:166px;height:16px;position:absolute;left:6px;top:12px;">Areas of Use Groups</label>
+<label class="groupbox"  id="OrganismClaimsStatements1" name="OrganismClaimsStatements1" style="width:166px;height:16px;position:absolute;left:6px;top:12px;">Locations Groups</label>
 
 <% /* PushBtn2:PushBtn */ %>
 <button type="button" name="PushBtn2" id="PushBtn2" value="" onclick="DELETE_UsageGroupEntriesOnly( )" style="width:258px;height:26px;position:absolute;left:194px;top:12px;">Delete Selected Groups Only</button>
@@ -1802,7 +1802,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <thead bgcolor=green><tr>
 
    <th>Select</th>
-   <th>Areas of Use Groups</th>
+   <th>Locations Groups</th>
    <th>Update</th>
 
 </tr></thead>
@@ -1897,11 +1897,11 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 </div>  <!-- End of a new line -->
 
-</div> <!-- End of Tab item GroupAreasOfUse -->
+</div> <!-- End of Tab item GroupLocations -->
 
-<div id="NonGroupAreasOfUse" class="tab-page " > <!-- Tab item NonGroupAreasOfUse -->
-<h2 class="tab"><span>Nongroup Areas of Use</span></h2>
-<script type="text/javascript">Tab1.addTabPage( document.getElementById( "NonGroupAreasOfUse" ) );</script>
+<div id="NonGroupLocations" class="tab-page " > <!-- Tab item NonGroupLocations -->
+<h2 class="tab"><span>Nongroup Locations</span></h2>
+<script type="text/javascript">Tab1.addTabPage( document.getElementById( "NonGroupLocations" ) );</script>
 
 
  <!-- This is added as a line spacer -->
@@ -1914,7 +1914,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <thead bgcolor=green><tr>
 
-   <th>Areas of Use</th>
+   <th>Locations</th>
 
 </tr></thead>
 
@@ -1982,7 +1982,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 </div>  <!-- End of a new line -->
 
-</div> <!-- End of Tab item NonGroupAreasOfUse -->
+</div> <!-- End of Tab item NonGroupLocations -->
 
 <div id="General" class="tab-page " > <!-- Tab item General -->
 <h2 class="tab"><span>General</span></h2>
@@ -2145,7 +2145,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <script type="text/javascript">animatedcollapse.init();</script>
 </html>
 <%
-   session.setAttribute( "ZeidonWindow", "wMLCAreasOfUse" );
+   session.setAttribute( "ZeidonWindow", "wMLCLocations" );
    session.setAttribute( "ZeidonAction", null );
 
    strActionToProcess = "";

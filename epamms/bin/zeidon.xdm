@@ -1,4 +1,4 @@
-z1000-Zeidon    ZEIDON   TZDMXGPO 03/25/16   16:27:52 1.0a2   
+z1000-Zeidon    ZEIDON   TZDMXGPO 04/06/16   13:43:40 1.0a2   
 eDomainGroup 1
 aName      ePamms
 
@@ -603,7 +603,7 @@ eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      1206938
 aName      ContentSectionType
-aDesc      Content Section Type ... Precautionary, Physical Hazard, First Aid, Ingredients, Storage and Disposal, Directions for Use, Marketing, Human Hazard, Claims, Surfaces, Areas of Use
+aDesc      Content Section Type ... Precautionary, Physical Hazard, First Aid, Ingredients, Storage and Disposal, Directions for Use, Marketing, Human Hazard, Claims, Surfaces, Locations
 aDomainType T
 aDataType  S
 aMaxStringLth 1
@@ -3297,7 +3297,7 @@ aIsDefault Y
 
 eTableEntry 4
 aZKey      120129884
-aExternalValue Areas of Use
+aExternalValue Locations
 aInternalValue U
 
 eTableEntry 4
@@ -4174,11 +4174,11 @@ aExternalValue Justify
 aInternalValue justify
 
 eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
 aZKey      68568087
 aName      TextDescription
 aDesc      Long text
 aDomainType A
-aJavaClass com.quinsoft.zeidon.domains.StringDomain
 aDataType  S
 aMaxStringLth 1024
 aContextRestriction N
@@ -4271,7 +4271,7 @@ eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      1181561
 aName      UsageType
-aDesc      Claim, Surface, Application Type, Area of Use (C,S,T,U)
+aDesc      Claim, Surface, Application Type, Location (C,S,T,L)
 aDomainType T
 aDataType  S
 aMaxStringLth 1
@@ -4298,8 +4298,8 @@ aInternalValue T
 
 eTableEntry 4
 aZKey      69081374
-aExternalValue Area of Use
-aInternalValue U
+aExternalValue Location
+aInternalValue L
 
 eContext   3
 aZKey      4321553
@@ -4323,8 +4323,8 @@ aInternalValue T
 
 eTableEntry 4
 aZKey      4321557
-aExternalValue U
-aInternalValue U
+aExternalValue L
+aInternalValue L
 
 eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain

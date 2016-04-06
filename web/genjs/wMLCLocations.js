@@ -44,8 +44,8 @@ function _OnAlmostTimeout()
       // If the time is less than one minute, resubmit the page.  Otherwise, go to the timeout window.
       if (tDiff < 60000)
       {
-         document.wMLCAreasOfUse.zAction.value = "_OnResubmitPage";
-         document.wMLCAreasOfUse.submit( );
+         document.wMLCLocations.zAction.value = "_OnResubmitPage";
+         document.wMLCLocations.submit( );
       }
       else
       {
@@ -60,8 +60,8 @@ function _OnTimeout( )
    {
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUse.zAction.value = "_OnTimeout";
-      document.wMLCAreasOfUse.submit( );
+      document.wMLCLocations.zAction.value = "_OnTimeout";
+      document.wMLCLocations.submit( );
    }
 }
 
@@ -75,8 +75,8 @@ function _BeforePageUnload( )
       // If the user clicked the window close box, unregister zeidon.
       if (isWindowClosing)
       {
-         document.wMLCAreasOfUse.zAction.value = "_OnUnload";
-         document.wMLCAreasOfUse.submit( );
+         document.wMLCLocations.zAction.value = "_OnUnload";
+         document.wMLCLocations.submit( );
       }
    }
 }
@@ -129,16 +129,16 @@ function _AfterPageLoaded( )
 {
 // _DisableFormElements( false );
 
-   var szFocusCtrl = document.wMLCAreasOfUse.zFocusCtrl.value;
+   var szFocusCtrl = document.wMLCLocations.zFocusCtrl.value;
    if ( szFocusCtrl != "" && szFocusCtrl != "null" )
-      eval( 'document.wMLCAreasOfUse.' + szFocusCtrl + '.focus( )' );
+      eval( 'document.wMLCLocations.' + szFocusCtrl + '.focus( )' );
 
    // This is where we put out a message from the previous iteration on this window
-   var szMsg = document.wMLCAreasOfUse.zError.value;
+   var szMsg = document.wMLCLocations.zError.value;
    if ( szMsg != "" )
       alert( szMsg ); // "Houston ... We have a problem"
 
-   szMsg = document.wMLCAreasOfUse.zOpenFile.value;
+   szMsg = document.wMLCLocations.zOpenFile.value;
    if ( szMsg != "" )
    {
       var NewWin = window.open( szMsg );
@@ -150,10 +150,10 @@ function _AfterPageLoaded( )
       }
    }
 
-   var LoginName = document.wMLCAreasOfUse.zLoginName.value;
-   var keyRole = document.wMLCAreasOfUse.zKeyRole.value;
-   document.wMLCAreasOfUse.zError.value = "";
-   document.wMLCAreasOfUse.zOpenFile.value = "";
+   var LoginName = document.wMLCLocations.zLoginName.value;
+   var keyRole = document.wMLCLocations.zKeyRole.value;
+   document.wMLCLocations.zError.value = "";
+   document.wMLCLocations.zOpenFile.value = "";
 
    if ( timerID != null )
    {
@@ -161,7 +161,7 @@ function _AfterPageLoaded( )
       timerID = null;
    }
 
-   var varTimeout = document.wMLCAreasOfUse.zTimeout.value;
+   var varTimeout = document.wMLCLocations.zTimeout.value;
    if ( varTimeout > 0 )
    {
       var varDelay = 60000 * varTimeout;  // Timeout value in timeout.inc
@@ -174,7 +174,7 @@ var $wai = $("#wai"); if ( $wai ) { $wai.text( document.title ); }
    isWindowClosing = true;
 }
 
-function CheckAllInGrid(id, CheckBoxName)
+function CheckAllInGrid(id, CheckBoxName) // triggered by no text checkbox
 {
    var wcontrols = id.form.elements;
    var check = id.checked;
@@ -190,7 +190,7 @@ function CheckAllInGrid(id, CheckBoxName)
    }
 }
 
-function ADD_AreasUsageItems( )
+function ADD_LocationItems( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -200,8 +200,8 @@ function ADD_AreasUsageItems( )
    {
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUse.zAction.value = "ADD_AreasUsageItems";
-      document.wMLCAreasOfUse.submit( );
+      document.wMLCLocations.zAction.value = "ADD_LocationItems";
+      document.wMLCLocations.submit( );
    }
 }
 
@@ -215,8 +215,8 @@ function GOTO_DeleteSelectedEntries( )
    {
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUse.zAction.value = "GOTO_DeleteSelectedEntries";
-      document.wMLCAreasOfUse.submit( );
+      document.wMLCLocations.zAction.value = "GOTO_DeleteSelectedEntries";
+      document.wMLCLocations.submit( );
    }
 }
 
@@ -231,7 +231,7 @@ function DELETE_SelectedUsageEntries( )
       // Javascript code entered by user.
 
 // Confirmation of  Delete.
-if (!confirm("OK to delete selected Areas of Use?"))
+if (!confirm("OK to delete selected Locations?"))
 {
    return;
 }
@@ -240,8 +240,8 @@ if (!confirm("OK to delete selected Areas of Use?"))
 
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUse.zAction.value = "DELETE_SelectedUsageEntries";
-      document.wMLCAreasOfUse.submit( );
+      document.wMLCLocations.zAction.value = "DELETE_SelectedUsageEntries";
+      document.wMLCLocations.submit( );
    }
 }
 
@@ -255,8 +255,8 @@ function DELETE_UsageGroupEntries( )
    {
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUse.zAction.value = "DELETE_UsageGroupEntries";
-      document.wMLCAreasOfUse.submit( );
+      document.wMLCLocations.zAction.value = "DELETE_UsageGroupEntries";
+      document.wMLCLocations.submit( );
    }
 }
 
@@ -270,8 +270,8 @@ function DELETE_UsageGroupEntriesOnly( )
    {
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUse.zAction.value = "DELETE_UsageGroupEntriesOnly";
-      document.wMLCAreasOfUse.submit( );
+      document.wMLCLocations.zAction.value = "DELETE_UsageGroupEntriesOnly";
+      document.wMLCLocations.submit( );
    }
 }
 
@@ -285,8 +285,8 @@ function GOTO_AddUsageGroup( )
    {
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUse.zAction.value = "GOTO_AddUsageGroup";
-      document.wMLCAreasOfUse.submit( );
+      document.wMLCLocations.zAction.value = "GOTO_AddUsageGroup";
+      document.wMLCLocations.submit( );
    }
 }
 
@@ -301,11 +301,11 @@ function GOTO_UpdateAreasStatement( strTagEntityKey )
       var nIdx = strTagEntityKey.lastIndexOf( '::' );
       var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
 
-      document.wMLCAreasOfUse.zTableRowSelect.value = strEntityKey;
+      document.wMLCLocations.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUse.zAction.value = "GOTO_UpdateAreasStatement";
-      document.wMLCAreasOfUse.submit( );
+      document.wMLCLocations.zAction.value = "GOTO_UpdateAreasStatement";
+      document.wMLCLocations.submit( );
    }
 }
 
@@ -320,11 +320,11 @@ function GOTO_UpdateUsageGroup( strTagEntityKey )
       var nIdx = strTagEntityKey.lastIndexOf( '::' );
       var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
 
-      document.wMLCAreasOfUse.zTableRowSelect.value = strEntityKey;
+      document.wMLCLocations.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUse.zAction.value = "GOTO_UpdateUsageGroup";
-      document.wMLCAreasOfUse.submit( );
+      document.wMLCLocations.zAction.value = "GOTO_UpdateUsageGroup";
+      document.wMLCLocations.submit( );
    }
 }
 
@@ -338,8 +338,8 @@ function smSaveAndReturnMLC( )
    {
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUse.zAction.value = "smSaveAndReturnMLC";
-      document.wMLCAreasOfUse.submit( );
+      document.wMLCLocations.zAction.value = "smSaveAndReturnMLC";
+      document.wMLCLocations.submit( );
    }
 }
 
@@ -353,8 +353,8 @@ function smSaveMLC( )
    {
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUse.zAction.value = "smSaveMLC";
-      document.wMLCAreasOfUse.submit( );
+      document.wMLCLocations.zAction.value = "smSaveMLC";
+      document.wMLCLocations.submit( );
    }
 }
 
@@ -368,8 +368,8 @@ function smCancelAndReturnMLC( )
    {
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUse.zAction.value = "smCancelAndReturnMLC";
-      document.wMLCAreasOfUse.submit( );
+      document.wMLCLocations.zAction.value = "smCancelAndReturnMLC";
+      document.wMLCLocations.submit( );
    }
 }
 
@@ -383,8 +383,8 @@ function smEditMasterLabelVersionData( )
    {
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUse.zAction.value = "smEditMasterLabelVersionData";
-      document.wMLCAreasOfUse.submit( );
+      document.wMLCLocations.zAction.value = "smEditMasterLabelVersionData";
+      document.wMLCLocations.submit( );
    }
 }
 
@@ -398,8 +398,8 @@ function smEditIngredientsSect( )
    {
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUse.zAction.value = "smEditIngredientsSect";
-      document.wMLCAreasOfUse.submit( );
+      document.wMLCLocations.zAction.value = "smEditIngredientsSect";
+      document.wMLCLocations.submit( );
    }
 }
 
@@ -413,8 +413,8 @@ function smEditStorDispSect( )
    {
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUse.zAction.value = "smEditStorDispSect";
-      document.wMLCAreasOfUse.submit( );
+      document.wMLCLocations.zAction.value = "smEditStorDispSect";
+      document.wMLCLocations.submit( );
    }
 }
 
@@ -428,8 +428,8 @@ function smEditHumanHazardSect( )
    {
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUse.zAction.value = "smEditHumanHazardSect";
-      document.wMLCAreasOfUse.submit( );
+      document.wMLCLocations.zAction.value = "smEditHumanHazardSect";
+      document.wMLCLocations.submit( );
    }
 }
 
@@ -443,8 +443,8 @@ function smEditPrecautionarySection( )
    {
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUse.zAction.value = "smEditPrecautionarySection";
-      document.wMLCAreasOfUse.submit( );
+      document.wMLCLocations.zAction.value = "smEditPrecautionarySection";
+      document.wMLCLocations.submit( );
    }
 }
 
@@ -458,8 +458,8 @@ function smEditFirstAidSect( )
    {
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUse.zAction.value = "smEditFirstAidSect";
-      document.wMLCAreasOfUse.submit( );
+      document.wMLCLocations.zAction.value = "smEditFirstAidSect";
+      document.wMLCLocations.submit( );
    }
 }
 
@@ -473,8 +473,8 @@ function smEnvironmentalHazards( )
    {
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUse.zAction.value = "smEnvironmentalHazards";
-      document.wMLCAreasOfUse.submit( );
+      document.wMLCLocations.zAction.value = "smEnvironmentalHazards";
+      document.wMLCLocations.submit( );
    }
 }
 
@@ -488,8 +488,8 @@ function smGOTO_DilutionEntries( )
    {
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUse.zAction.value = "smGOTO_DilutionEntries";
-      document.wMLCAreasOfUse.submit( );
+      document.wMLCLocations.zAction.value = "smGOTO_DilutionEntries";
+      document.wMLCLocations.submit( );
    }
 }
 
@@ -503,8 +503,8 @@ function smEditClaimsSection( )
    {
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUse.zAction.value = "smEditClaimsSection";
-      document.wMLCAreasOfUse.submit( );
+      document.wMLCLocations.zAction.value = "smEditClaimsSection";
+      document.wMLCLocations.submit( );
    }
 }
 
@@ -518,12 +518,12 @@ function smEditSurfacesSection( )
    {
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUse.zAction.value = "smEditSurfacesSection";
-      document.wMLCAreasOfUse.submit( );
+      document.wMLCLocations.zAction.value = "smEditSurfacesSection";
+      document.wMLCLocations.submit( );
    }
 }
 
-function smEditAreasOfUseSection( )
+function smEditLocationsSection( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -533,8 +533,8 @@ function smEditAreasOfUseSection( )
    {
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUse.zAction.value = "smEditAreasOfUseSection";
-      document.wMLCAreasOfUse.submit( );
+      document.wMLCLocations.zAction.value = "smEditLocationsSection";
+      document.wMLCLocations.submit( );
    }
 }
 
@@ -548,8 +548,8 @@ function smEditApplicationTypesSection( )
    {
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUse.zAction.value = "smEditApplicationTypesSection";
-      document.wMLCAreasOfUse.submit( );
+      document.wMLCLocations.zAction.value = "smEditApplicationTypesSection";
+      document.wMLCLocations.submit( );
    }
 }
 
@@ -563,8 +563,8 @@ function smGOTO_ClaimsFootnote( )
    {
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUse.zAction.value = "smGOTO_ClaimsFootnote";
-      document.wMLCAreasOfUse.submit( );
+      document.wMLCLocations.zAction.value = "smGOTO_ClaimsFootnote";
+      document.wMLCLocations.submit( );
    }
 }
 
@@ -578,8 +578,8 @@ function smEditDirectionsUseSect( )
    {
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUse.zAction.value = "smEditDirectionsUseSect";
-      document.wMLCAreasOfUse.submit( );
+      document.wMLCLocations.zAction.value = "smEditDirectionsUseSect";
+      document.wMLCLocations.submit( );
    }
 }
 
@@ -593,8 +593,8 @@ function smEditMarketingSect( )
    {
       _DisableFormElements( true );
 
-      document.wMLCAreasOfUse.zAction.value = "smEditMarketingSect";
-      document.wMLCAreasOfUse.submit( );
+      document.wMLCLocations.zAction.value = "smEditMarketingSect";
+      document.wMLCLocations.submit( );
    }
 }
 

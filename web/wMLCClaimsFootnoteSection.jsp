@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCClaimsFootnoteSection   Generate Timestamp: 20160328163907168 --%>
+<%-- wMLCClaimsFootnoteSection   Generate Timestamp: 20160406142139732 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -757,7 +757,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditAreasOfUseSection" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditLocationsSection" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCClaimsFootnoteSection", strActionToProcess );
@@ -769,8 +769,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCClaimsFootnoteSection", "wMLC.EditAreasOfUseSection" );
-      nOptRC = wMLC.EditAreasOfUseSection( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCClaimsFootnoteSection", "wMLC.EditLocationsSection" );
+      nOptRC = wMLC.EditLocationsSection( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -787,7 +787,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "AreasOfUse" );
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "Locations" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -1151,11 +1151,11 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "AreasOfUse" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Locations" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smAreasOfUse" name="smAreasOfUse"><a href="#"  onclick="smEditAreasOfUseSection()">Areas of Use</a></li>
+       <li id="smLocations" name="smLocations"><a href="#"  onclick="smEditLocationsSection()">Locations</a></li>
 <%
    }
 %>

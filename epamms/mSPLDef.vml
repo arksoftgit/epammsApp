@@ -1858,7 +1858,7 @@ GeneratePDF_DFU( VIEW mSPLDef    BASED ON LOD mSPLDef,
       //    {{Usage}}
       //    {{Claim}}
       //    {{Surface}}
-      //    {{Area Of Use}}
+      //    {{Location}}
       //    {{Application Type}}
       //    {{Product Name}}
       //    {{Master Product}}
@@ -2405,7 +2405,7 @@ GeneratePDF_ClmList( VIEW mSPLDef    BASED ON LOD mSPLDef,
    DropObjectInstance( mSPLDef2 )
 
    // Build the work object containing each Claim under the appropriate Classification.
-   // Type: C - Claim;  S - Surface;  T - Application Type;  U - Area of Use.
+   // Type: C - Claim;  S - Surface;  T - Application Type;  U - Location.
    // ClaimsClassification: Bacteria; Protozoa; Viruses; Fungi.
    // First delete any existing entries.
    FOR EACH mSPLDef.SPLDI_ClaimsClassification
@@ -2933,7 +2933,7 @@ BuildUsageEntriesFrSLC( VIEW mSPLDef   BASED ON LOD mSPLDef,
       DELETE ENTITY mSPLDef.SPLD_UsageType NONE
    END
 
-   // Build Usage Entries (Surface, Application Type, Area of Use, Organism Claim)
+   // Build Usage Entries (Surface, Application Type, Location, Organism Claim)
    FOR EACH SourceSLC.S_UsageType WITHIN SourceSLC.SubregLabelContent
       CREATE ENTITY mSPLDef.SPLD_UsageType
       SetMatchingAttributesByName( mSPLDef, "SPLD_UsageType", SourceSLC, "S_UsageType", zSET_NULL )

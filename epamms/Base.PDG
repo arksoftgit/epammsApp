@@ -783,7 +783,7 @@ aInternalValue I
 eDomain    2
 aZKey      1206938
 aName      ContentSectionType
-aDesc      Content Section Type ... Precautionary, Physical Hazard, First Aid, Ingredients, Storage and Disposal, Directions for Use, Marketing, Human Hazard, Claims, Surfaces, Areas of Use
+aDesc      Content Section Type ... Precautionary, Physical Hazard, First Aid, Ingredients, Storage and Disposal, Directions for Use, Marketing, Human Hazard, Claims, Surfaces, Locations
 aDomainType T
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S

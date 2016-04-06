@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCAreasOfUseGroup   Generate Timestamp: 20160328163907075 --%>
+<%-- wMLCAddLocationsList   Generate Timestamp: 20160406142138926 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -35,7 +35,7 @@ public int DoInputMapping( HttpServletRequest request,
    String taskId = (String) session.getAttribute( "ZeidonTaskId" );
    Task task = objectEngine.getTaskById( taskId );
 
-   View mMasLC = null;
+   View mEPA = null;
    View vGridTmp = null; // temp view to grid view
    View vRepeatingGrp = null; // temp view to repeating group view
    String strDateFormat = "";
@@ -57,24 +57,24 @@ public int DoInputMapping( HttpServletRequest request,
    if ( webMapping == false )
       session.setAttribute( "ZeidonError", null );
 
-   mMasLC = task.getViewByName( "mMasLC" );
-   if ( VmlOperation.isValid( mMasLC ) )
+   mEPA = task.getViewByName( "mEPA" );
+   if ( VmlOperation.isValid( mEPA ) )
    {
-      // Grid: GridClaims1
+      // Grid: Grid
       iTableRowCnt = 0;
 
       // We are creating a temp view to the grid view so that if there are 
       // grids on the same window with the same view we do not mess up the 
       // entity positions. 
-      vGridTmp = mMasLC.newView( );
-      csrRC = vGridTmp.cursor( "M_UsageGroupUsage" ).setFirst(  );
+      vGridTmp = mEPA.newView( );
+      csrRC = vGridTmp.cursor( "EPA_Location" ).setFirst(  );
       while ( csrRC.isSet() )
       {
-         lEntityKey = vGridTmp.cursor( "M_UsageGroupUsage" ).getEntityKey( );
+         lEntityKey = vGridTmp.cursor( "EPA_Location" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
 
-         strTag = "GS_Select1" + strEntityKey;
+         strTag = "GS_Select" + strEntityKey;
          strMapValue = request.getParameter( strTag );
          // If the checkbox is not checked, then set to the unchecked value.
          if (strMapValue == null || strMapValue.isEmpty() )
@@ -83,12 +83,12 @@ public int DoInputMapping( HttpServletRequest request,
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "GS_Select1", "", strMapValue );
+               VmlOperation.CreateMessage( task, "GS_Select", "", strMapValue );
             else
                if ( strMapValue != null )
-                  vGridTmp.cursor( "M_UsageGroupUsage" ).getAttribute( "wSelected" ).setValue( strMapValue, "" );
+                  vGridTmp.cursor( "EPA_Location" ).getAttribute( "wkSelected" ).setValue( strMapValue, "" );
                else
-                  vGridTmp.cursor( "M_UsageGroupUsage" ).getAttribute( "wSelected" ).setValue( "", "" );
+                  vGridTmp.cursor( "EPA_Location" ).getAttribute( "wkSelected" ).setValue( "", "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -96,7 +96,7 @@ public int DoInputMapping( HttpServletRequest request,
             VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
          }
 
-         csrRC = vGridTmp.cursor( "M_UsageGroupUsage" ).setNextContinue( );
+         csrRC = vGridTmp.cursor( "EPA_Location" ).setNextContinue( );
       }
 
       vGridTmp.drop( );
@@ -165,7 +165,7 @@ if ( StringUtils.isBlank( strLastWindow ) )
 
 strLastAction = (String) session.getAttribute( "ZeidonAction" );
 
-if ( strLastWindow.equals("wMLCAreasOfUseGroup") && StringUtils.isBlank( strActionToProcess ) && StringUtils.isBlank( strLastAction ) )
+if ( strLastWindow.equals("wMLCAddLocationsList") && StringUtils.isBlank( strActionToProcess ) && StringUtils.isBlank( strLastAction ) )
 {
    strURL = response.encodeRedirectURL( "logout.jsp" );
    response.sendRedirect( strURL );
@@ -203,9 +203,9 @@ strURL = "";
 bDone = false;
 nRC = 0;
 
-task.log().info("*** wMLCAreasOfUseGroup strActionToProcess *** " + strActionToProcess );
-task.log().info("*** wMLCAreasOfUseGroup LastWindow *** " + strLastWindow );
-task.log().info("*** wMLCAreasOfUseGroup LastAction *** " + strLastAction );
+task.log().info("*** wMLCAddLocationsList strActionToProcess *** " + strActionToProcess );
+task.log().info("*** wMLCAddLocationsList LastWindow *** " + strLastWindow );
+task.log().info("*** wMLCAddLocationsList LastAction *** " + strLastAction );
 
 if ( strActionToProcess != null )
 {
@@ -221,10 +221,60 @@ if ( strActionToProcess != null )
 
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "DELETE_SelectedGroupUsageEntries" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelAddLocationsStmts" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAreasOfUseGroup", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAddLocationsList", strActionToProcess );
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddLocationsList", "wMLC.CancelAddLocationsStmts" );
+      nOptRC = wMLC.CancelAddLocationsStmts( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "ClearSelectedLocations" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAddLocationsList", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "ConfirmAddLocationsStmtsReturn" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAddLocationsList", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -233,8 +283,46 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAreasOfUseGroup", "wMLC.DELETE_SelectedGroupUsageEntries" );
-      nOptRC = wMLC.DELETE_SelectedGroupUsageEntries( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddLocationsList", "wMLC.ConfirmAddLocationsStmts" );
+      nOptRC = wMLC.ConfirmAddLocationsStmts( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "ConfirmAddSelectedLocations" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAddLocationsList", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddLocationsList", "wMLC.ConfirmAddLocationsStmts" );
+      nOptRC = wMLC.ConfirmAddLocationsStmts( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -259,48 +347,10 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_AddGroupUsageStatements" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "SelectAllLocations" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAreasOfUseGroup", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAreasOfUseGroup", "wMLC.GOTO_AddGroupUsageStatements" );
-      nOptRC = wMLC.GOTO_AddGroupUsageStatements( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "AddItemsMultiple" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_SelectUsagesForGroup" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAreasOfUseGroup", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAddLocationsList", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -308,127 +358,7 @@ if ( strActionToProcess != null )
          break;
 
       // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "UsageGroupSelect" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_UpdateGroupUsageStatement" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAreasOfUseGroup", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Position on the entity that was selected in the grid.
-      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
-      View mMasLC;
-      mMasLC = task.getViewByName( "mMasLC" );
-      if ( VmlOperation.isValid( mMasLC ) )
-      {
-         lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mMasLC.cursor( "M_UsageGroupUsage" ).setByEntityKey( lEKey );
-         if ( !csrRC.isSet() )
-         {
-            boolean bFound = false;
-            csrRCk = mMasLC.cursor( "M_UsageGroupUsage" ).setFirst( );
-            while ( csrRCk.isSet() && !bFound )
-            {
-               lEKey = mMasLC.cursor( "M_UsageGroupUsage" ).getEntityKey( );
-               strKey = Long.toString( lEKey );
-               if ( StringUtils.equals( strKey, strEntityKey ) )
-               {
-                  // Stop while loop because we have positioned on the correct entity.
-                  bFound = true;
-               }
-               else
-                  csrRCk = mMasLC.cursor( "M_UsageGroupUsage" ).setNextContinue( );
-            } // Grid
-         }
-      }
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAreasOfUseGroup", "wMLC.GOTO_UpdateGroupUsageStatement" );
-      nOptRC = wMLC.GOTO_UpdateGroupUsageStatement( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "SurfacesStatement" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "RemoveMLC_UsageEntriesFromGroup" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAreasOfUseGroup", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAreasOfUseGroup", "wMLC.RemoveMLC_UsageEntriesFromGroup" );
-      nOptRC = wMLC.RemoveMLC_UsageEntriesFromGroup( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "Return" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAreasOfUseGroup", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -453,7 +383,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wMLCAreasOfUseGroup" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wMLCAddLocationsList" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -470,7 +400,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ------->>> " + "wMLCAreasOfUseGroup" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ------->>> " + "wMLCAddLocationsList" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -485,14 +415,14 @@ if ( strActionToProcess != null )
    while ( bDone == false && strActionToProcess.equals( "_OnResubmitPage" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAreasOfUseGroup", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAddLocationsList", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
       if ( nRC < 0 )
          break;
 
-      strURL = response.encodeRedirectURL( "wMLCAreasOfUseGroup.jsp" );
+      strURL = response.encodeRedirectURL( "wMLCAddLocationsList.jsp" );
       nRC = 1;  //do the redirection
       break;
    }
@@ -503,11 +433,11 @@ if ( strActionToProcess != null )
       {
          if ( nRC > 1 )
          {
-            strURL = response.encodeRedirectURL( "wMLCAreasOfUseGroup.jsp" );
+            strURL = response.encodeRedirectURL( "wMLCAddLocationsList.jsp" );
             task.log().info( "Action Error Redirect to: " + strURL );
          }
 
-         if ( ! strURL.equals("wMLCAreasOfUseGroup.jsp") ) 
+         if ( ! strURL.equals("wMLCAddLocationsList.jsp") ) 
          {
             response.sendRedirect( strURL );
             // If we are redirecting to a new page, then we need this return so that the rest of this page doesn't get built.
@@ -518,7 +448,7 @@ if ( strActionToProcess != null )
       {
          if ( nRC > -128 )
          {
-            strURL = response.encodeRedirectURL( "wMLCAreasOfUseGroup.jsp" );
+            strURL = response.encodeRedirectURL( "wMLCAddLocationsList.jsp" );
             task.log().info( "Mapping Error Redirect to: " + strURL );
          }
          else
@@ -534,7 +464,27 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
    session.setAttribute( "ZeidonError", null );
 else
 {
+   VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCAddLocationsList", "wMLC.InitLocationsStmtsForInsert" );
+   nOptRC = wMLC.InitLocationsStmtsForInsert( new zVIEW( vKZXMLPGO ) );
+   if ( nOptRC == 2 )
+   {
+      View vView;
+      String strMessage;
+      String strURLParameters;
+
+      vView = task.getViewByName( "wXferO" );
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString( "" );
+      strURLParameters = "?CallingPage=wMLCAddLocationsList.jsp" +
+                         "&Message=" + strMessage +
+                         "&DialogName=" + "wMLC" +
+                         "&OperationName=" + "InitLocationsStmtsForInsert";
+      strURL = response.encodeRedirectURL( "MessageDisplay.jsp" + strURLParameters );
+      response.sendRedirect( strURL );
+      task.log().info( "Pre/Post Redirect to: " + strURL );
+      return;
+   }
 }
+
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wMLC", "" );
    if ( csrRC.isSet( ) )
       strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
@@ -546,7 +496,7 @@ else
    if ( VmlOperation.isValid( wWebXA ) )
    {
       wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wMLC", "" );
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "AreasOfUseGroup", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "AddLocationsList", "" );
    }
 
 %>
@@ -554,7 +504,7 @@ else
 <html>
 <head>
 
-<title>AreasOfUseGroup</title>
+<title>Add Locations List</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
@@ -562,21 +512,14 @@ else
 <%@ include file="./include/timeout.inc" %>
 <link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/css.js"></script>
-<script language="JavaScript" type="text/javascript" src="./js/sts.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-<script language="JavaScript" type="text/javascript" src="./genjs/wMLCAreasOfUseGroup.js"></script>
+<script language="JavaScript" type="text/javascript" src="./genjs/wMLCAddLocationsList.js"></script>
 
 </head>
 
-<!-- 
-// If we have table sorting on this page, the table sorting does not work in Firefox 
-// (seems to work in IE and Opera).  The solution is to not call _AfterPageLoaded in OnLoad event. 
-// In the Standardista code (sts.js) there is an addEvent that will call _AfterPageLoaded. 
---> 
-<body onSubmit="_DisableFormElements( true )" onBeforeUnload="_BeforePageUnload( )">
+<body onLoad="_AfterPageLoaded( )" onSubmit="_DisableFormElements( true )" onBeforeUnload="_BeforePageUnload( )">
 
 <%@ include file="./include/pagebackground.inc" %>  <!-- just temporary until we get the painter dialog updates from Kelly ... 2011.10.08 dks -->
 
@@ -592,11 +535,31 @@ else
 <div id="sidenavigation">
    <ul id="Return" name="Return">
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Return" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "AddSelectedLocations" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="Return" name="Return"><a href="#"  onclick="Return()">Return</a></li>
+       <li id="AddSelectedLocations" name="AddSelectedLocations"><a href="#"  onclick="ConfirmAddSelectedLocations()">Add Selected Locations</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "AddAndReturn" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="AddAndReturn" name="AddAndReturn"><a href="#"  onclick="ConfirmAddLocationsStmtsReturn()">Add and Return</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "CancelAndReturn" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CancelAddLocationsStmts()">Cancel and Return</a></li>
 <%
    }
 %>
@@ -607,7 +570,6 @@ else
 </div>  <!-- leftcontent -->
 
 <div id="content">
-
 <!--System Maintenance-->
 
 <%@ include file="./include/systemmaintenance.inc" %>
@@ -615,7 +577,7 @@ else
 <!-- END System Maintenance-->
 
 
-<form name="wMLCAreasOfUseGroup" id="wMLCAreasOfUseGroup" method="post">
+<form name="wMLCAddLocationsList" id="wMLCAddLocationsList" method="post">
    <input name="zAction" id="zAction" type="hidden" value="NOVALUE">
    <input name="zTableRowSelect" id="zTableRowSelect" type="hidden" value="NOVALUE">
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
@@ -693,7 +655,7 @@ else
 
    strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
 
-   strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wMLC", "AreasOfUseGroup" );
+   strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wMLC", "AddLocationsList" );
    strOpenFile = VmlOperation.FindOpenFile( task );
    strDateFormat = "YYYY.MM.DD";
 
@@ -731,77 +693,64 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:8px;width:100px;"></div>
+<div style="height:2px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GBClaimsStatements1:GroupBox */ %>
-
-<div id="GBClaimsStatements1" name="GBClaimsStatements1" class="withborder"   style="float:left;position:relative; width:616px; height:132px;">  <!-- GBClaimsStatements1 --> 
-
-<% /* OrganismClaimsStatements1:Text */ %>
-
-<label class="groupbox"  id="OrganismClaimsStatements1" name="OrganismClaimsStatements1" style="width:158px;height:16px;position:absolute;left:6px;top:12px;">Areas of Use Group Seq. No:</label>
-
-<% /* Text1:Text */ %>
-<% strTextDisplayValue = "";
-   mMasLC = task.getViewByName( "mMasLC" );
-   if ( VmlOperation.isValid( mMasLC ) == false )
-      task.log( ).debug( "Invalid View: " + "Text1" );
-   else
-   {
-      nRC = mMasLC.cursor( "M_UsageGroup" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-      try
-      {
-         strTextDisplayValue = mMasLC.cursor( "M_UsageGroup" ).getAttribute( "Name" ).getString( "" );
-      }
-      catch (Exception e)
-      {
-         out.println("There is an error on Text1: " + e.getMessage());
-         task.log().info( "*** Error on ctrl Text1" + e.getMessage() );
-      }
-         if ( strTextDisplayValue == null )
-            strTextDisplayValue = "";
-      }
-   }
-%>
-
-<label  id="Text1" name="Text1" style="width:54px;height:16px;position:absolute;left:166px;top:12px;"><%=strTextDisplayValue%></label>
-
-<% /* PushBtn2:PushBtn */ %>
-<button type="button" name="PushBtn2" id="PushBtn2" value="" onclick="DELETE_SelectedGroupUsageEntries( )" style="width:298px;height:26px;position:absolute;left:274px;top:12px;">Delete Selected Areas of Use</button>
-
-<% /* PushBtn1:PushBtn */ %>
-<button type="button" name="PushBtn1" id="PushBtn1" value="" onclick="RemoveMLC_UsageEntriesFromGroup( )" style="width:298px;height:26px;position:absolute;left:274px;top:40px;">Remove Selected Areas of Use from Group</button>
-
-<% /* PBNew1:PushBtn */ %>
-<button type="button" name="PBNew1" id="PBNew1" value="" onclick="GOTO_AddGroupUsageStatements( )" style="width:298px;height:26px;position:absolute;left:274px;top:68px;">Add New Areas of Use to Group</button>
-
-<% /* PushBtn3:PushBtn */ %>
-<button type="button" name="PushBtn3" id="PushBtn3" value="" onclick="GOTO_SelectUsagesForGroup( )" style="width:298px;height:26px;position:absolute;left:274px;top:98px;">Go to Select Existing Areas of Use for Group</button>
-
-
-</div>  <!--  GBClaimsStatements1 --> 
+<% /* BreadCrumb: */ %>
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
  <!-- This is added as a line spacer -->
-<div style="height:8px;width:100px;"></div>
+<div style="height:22px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GridClaims1:Grid */ %>
-<table class="sortable"  cols=3 style="width:616px;"  name="GridClaims1" id="GridClaims1">
+<div style="height:1px;width:16px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GBAddLocationsList:GroupBox */ %>
 
-<thead bgcolor=green><tr>
+<div id="GBAddLocationsList" name="GBAddLocationsList" style="width:730px;height:42px;float:left;">  <!-- GBAddLocationsList --> 
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:12px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp</span>
+<% /* AddLocationsList:Text */ %>
+
+<span class="groupbox"  id="AddLocationsList" name="AddLocationsList" style="width:176px;height:16px;">Add Locations List</span>
+
+<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+<% /* HTSelectAllLocations:Text */ %>
+
+<a href="#" id="HTSelectAllLocations" name="HTSelectAllLocations"  onclick="SelectAllLocations( );" style="width:80px;height:16px;">Select All</a>
+
+<% /* HTClearSelectedLocations:Text */ %>
+
+<a href="#" id="HTClearSelectedLocations" name="HTClearSelectedLocations"  onclick="ClearSelectedLocations( );" style="width:100px;height:16px;">Clear Selected</a>
+
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  GBAddLocationsList --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:28px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:22px;float:left;"></div>   <!-- Width Spacer -->
+<% /* Grid:Grid */ %>
+<table  cols=2 style=""  name="Grid" id="Grid">
+
+<thead><tr>
 
    <th>Select</th>
-   <th>Areas of Use within Group</th>
-   <th>Update</th>
+   <th>Location</th>
 
 </tr></thead>
 
@@ -811,77 +760,75 @@ else
 try
 {
    iTableRowCnt = 0;
-   mMasLC = task.getViewByName( "mMasLC" );
-   if ( VmlOperation.isValid( mMasLC ) )
+   mEPA = task.getViewByName( "mEPA" );
+   if ( VmlOperation.isValid( mEPA ) )
    {
       long   lEntityKey;
       String strEntityKey;
       String strButtonName;
       String strOdd;
       String strTag;
-      String strGS_Select1;
-      String strGS_Select1Value;
-      String strAreasOfUse1;
-      String strBMBUpdateClaimsStatement1;
+      String strGS_Select;
+      String strGS_SelectValue;
+      String strGE_Locations;
       
-      View vGridClaims1;
-      vGridClaims1 = mMasLC.newView( );
-      csrRC2 = vGridClaims1.cursor( "M_UsageGroupUsage" ).setFirst(  );
+      View vGrid;
+      vGrid = mEPA.newView( );
+      csrRC2 = vGrid.cursor( "EPA_Location" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGridClaims1.cursor( "M_UsageGroupUsage" ).getEntityKey( );
+         lEntityKey = vGrid.cursor( "EPA_Location" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strGS_Select1 = "";
-         nRC = vGridClaims1.cursor( "M_UsageGroupUsage" ).checkExistenceOfEntity( ).toInt();
+         strGS_Select = "";
+         nRC = vGrid.cursor( "EPA_Location" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGS_Select1 = vGridClaims1.cursor( "M_UsageGroupUsage" ).getAttribute( "wSelected" ).getString( "" );
+            strGS_Select = vGrid.cursor( "EPA_Location" ).getAttribute( "wkSelected" ).getString( "" );
 
-            if ( strGS_Select1 == null )
-               strGS_Select1 = "";
+            if ( strGS_Select == null )
+               strGS_Select = "";
          }
 
-         if ( StringUtils.equals( strGS_Select1, "Y" ) )
+         if ( StringUtils.equals( strGS_Select, "Y" ) )
          {
-            strGS_Select1Value = "GS_Select1" + strEntityKey;
-            strGS_Select1 = "<input name='" + strGS_Select1Value + "' id='" + strGS_Select1Value + "' value='Y' type='checkbox'  CHECKED > ";
+            strGS_SelectValue = "GS_Select" + strEntityKey;
+            strGS_Select = "<input name='" + strGS_SelectValue + "' id='" + strGS_SelectValue + "' value='Y' type='checkbox'  CHECKED > ";
          }
          else
          {
-            strGS_Select1Value = "GS_Select1" + strEntityKey;
-            strGS_Select1 = "<input name='" + strGS_Select1Value + "' id='" + strGS_Select1Value + "' value='Y' type='checkbox' > ";
+            strGS_SelectValue = "GS_Select" + strEntityKey;
+            strGS_Select = "<input name='" + strGS_SelectValue + "' id='" + strGS_SelectValue + "' value='Y' type='checkbox' > ";
          }
 
-         strAreasOfUse1 = "";
-         nRC = vGridClaims1.cursor( "M_UsageGroupUsage" ).checkExistenceOfEntity( ).toInt();
+         strGE_Locations = "";
+         nRC = vGrid.cursor( "EPA_Location" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strAreasOfUse1 = vGridClaims1.cursor( "M_UsageGroupUsage" ).getAttribute( "Name" ).getString( "" );
+            strGE_Locations = vGrid.cursor( "EPA_Location" ).getAttribute( "Name" ).getString( "" );
 
-            if ( strAreasOfUse1 == null )
-               strAreasOfUse1 = "";
+            if ( strGE_Locations == null )
+               strGE_Locations = "";
          }
 
-         if ( StringUtils.isBlank( strAreasOfUse1 ) )
-            strAreasOfUse1 = "&nbsp";
+         if ( StringUtils.isBlank( strGE_Locations ) )
+            strGE_Locations = "&nbsp";
 
 %>
 
 <tr<%=strOdd%>>
 
-   <td nowrap><%=strGS_Select1%></td>
-   <td><a href="#" onclick="GOTO_UpdateGroupUsageStatement( this.id )" id="AreasOfUse1::<%=strEntityKey%>"><%=strAreasOfUse1%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateClaimsStatement1" onclick="GOTO_UpdateGroupUsageStatement( this.id )" id="BMBUpdateClaimsStatement1::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><%=strGS_Select%></td>
+   <td nowrap><%=strGE_Locations%></td>
 
 </tr>
 
 <%
-         csrRC2 = vGridClaims1.cursor( "M_UsageGroupUsage" ).setNextContinue( );
+         csrRC2 = vGrid.cursor( "EPA_Location" ).setNextContinue( );
       }
-      vGridClaims1.drop( );
+      vGrid.drop( );
    }
 }
 catch (Exception e)
@@ -925,7 +872,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <script type="text/javascript">animatedcollapse.init();</script>
 </html>
 <%
-   session.setAttribute( "ZeidonWindow", "wMLCAreasOfUseGroup" );
+   session.setAttribute( "ZeidonWindow", "wMLCAddLocationsList" );
    session.setAttribute( "ZeidonAction", null );
 
    strActionToProcess = "";

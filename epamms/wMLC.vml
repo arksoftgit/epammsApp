@@ -1182,19 +1182,19 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-//  OPERATION: EditAreasOfUseSection
+//  OPERATION: EditLocationsSection
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
-EditAreasOfUseSection( VIEW ViewToWindow )
+EditLocationsSection( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
 
    // Position on Claims Usage Type.
-   SET CURSOR FIRST mMasLC.M_UsageType WHERE mMasLC.M_UsageType.UsageType = "U"
+   SET CURSOR FIRST mMasLC.M_UsageType WHERE mMasLC.M_UsageType.UsageType = "L"
    IF RESULT < zCURSOR_SET
       CREATE ENTITY mMasLC.M_UsageType
-      mMasLC.M_UsageType.UsageType = "U"
+      mMasLC.M_UsageType.UsageType = "L"
    END
 
 END
@@ -1708,11 +1708,11 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-//  OPERATION: ConfirmAddAreasOfUseStmts
+//  OPERATION: ConfirmAddLocationsStmts
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
-ConfirmAddAreasOfUseStmts( VIEW ViewToWindow )
+ConfirmAddLocationsStmts( VIEW ViewToWindow )
 
    VIEW mMasLC   REGISTERED AS mMasLC
    VIEW mEPA     REGISTERED AS mEPA
@@ -1725,12 +1725,12 @@ ConfirmAddAreasOfUseStmts( VIEW ViewToWindow )
          DeleteEntity( mMasLC, "M_Usage", zREPOS_NONE )
       END
    END
-   FOR EACH mEPA.EPA_AreaOfUse
-      IF mEPA.EPA_AreaOfUse.wkSelected = "Y"
-         szName = mEPA.EPA_AreaOfUse.Name
+   FOR EACH mEPA.EPA_Location
+      IF mEPA.EPA_Location.wkSelected = "Y"
+         szName = mEPA.EPA_Location.Name
          IF szName != ""
             CreateEntity( mMasLC, "M_Usage", zPOS_LAST )
-            mMasLC.M_Usage.UsageType = "U" // Area of Use
+            mMasLC.M_Usage.UsageType = "L" // Location
             mMasLC.M_Usage.Name = szName
          END
       END
@@ -1743,11 +1743,11 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-//  OPERATION: CancelAddAreasOfUseStmts
+//  OPERATION: CancelAddLocationsStmts
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
-CancelAddAreasOfUseStmts( VIEW ViewToWindow )
+CancelAddLocationsStmts( VIEW ViewToWindow )
 
    VIEW mEPA     REGISTERED AS mEPA
 
@@ -1861,16 +1861,16 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-//  OPERATION: InitAreasOfUseStmtsForInsert
+//  OPERATION: InitLocationsStmtsForInsert
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
-InitAreasOfUseStmtsForInsert( VIEW ViewToWindow )
+InitLocationsStmtsForInsert( VIEW ViewToWindow )
 
    VIEW mMasLC   REGISTERED AS mMasLC
    VIEW mEPA     BASED ON LOD  mEPA
 
-   CancelCurrentTemporalSubobject( ViewToWindow, "InitAreasOfUseStmtsForInsert: " )
+   CancelCurrentTemporalSubobject( ViewToWindow, "InitLocationsStmtsForInsert: " )
    GET VIEW mEPA NAMED "mEPA"
    IF mEPA != 0
       DropObjectInstance( mEPA )
@@ -2045,9 +2045,9 @@ GOTO_AddUsageStatements( VIEW ViewToWindow )
       // Surfaces
       mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Surfaces"
    ELSE
-      IF mMasLC.M_UsageType.UsageType = "U"
-         // Areas of Use
-         mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Areas of Use"
+      IF mMasLC.M_UsageType.UsageType = "L"
+         // Locations
+         mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Locations"
       ELSE
          IF mMasLC.M_UsageType.UsageType = "T"
             mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Application Use"
@@ -2078,9 +2078,9 @@ GOTO_AddGroupUsageStatements( VIEW ViewToWindow )
       // Surfaces
       mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Surfaces"
    ELSE
-      IF mMasLC.M_UsageType.UsageType = "U"
-         // Areas of Use
-         mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Areas of Use"
+      IF mMasLC.M_UsageType.UsageType = "L"
+         // Locations
+         mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Locations"
       ELSE
          IF mMasLC.M_UsageType.UsageType = "T"
             mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Application Use"

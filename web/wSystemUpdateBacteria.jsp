@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSystemUpdateBacteria   Generate Timestamp: 20160328163930044 --%>
+<%-- wSystemUpdateBacteria   Generate Timestamp: 20160406142159661 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1265,13 +1265,13 @@ else
 <span class="groupbox"  id="TXBacteria" name="TXBacteria" style="width:86px;height:16px;">Bacteria</span>
 
 <span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
-<% /* HTSelectAllAreasOfUse:Text */ %>
+<% /* HTSelectAllLocations:Text */ %>
 
-<a href="#" id="HTSelectAllAreasOfUse" name="HTSelectAllAreasOfUse"  onclick="SelectAllBacteria( );" style="width:72px;height:16px;">Select All</a>
+<a href="#" id="HTSelectAllLocations" name="HTSelectAllLocations"  onclick="SelectAllBacteria( );" style="width:72px;height:16px;">Select All</a>
 
-<% /* HTClearSelectedAreasOfUse:Text */ %>
+<% /* HTClearSelectedLocations:Text */ %>
 
-<a href="#" id="HTClearSelectedAreasOfUse" name="HTClearSelectedAreasOfUse"  onclick="ClearSelectedBacteria( );" style="width:100px;height:16px;">Clear Selected</a>
+<a href="#" id="HTClearSelectedLocations" name="HTClearSelectedLocations"  onclick="ClearSelectedBacteria( );" style="width:100px;height:16px;">Clear Selected</a>
 
 <% /* DeleteSelected:Text */ %>
 

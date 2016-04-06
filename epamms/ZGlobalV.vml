@@ -363,7 +363,7 @@ END
 //  OPERATION: AcceptSPLDef_TemporalSubobject
 //
 //    IF mSPLDef.SPLD_Usage.UsageType = "S" // "Surface"
-//    IF mSPLDef.SPLD_Usage.UsageType = "U" // "AreasOfUse"
+//    IF mSPLDef.SPLD_Usage.UsageType = "L" // "Locations"
 //    IF mSPLDef.SPLD_Usage.UsageType = "C" // "Claim"
 //       IncludeSubobjectFromSubobject( mSPLDef, "SPLDI_UsageList",
 //                                      mSPLDef, "SPLD_Usage", zPOS_LAST )
@@ -520,7 +520,7 @@ END
 //  OPERATION: AcceptSubLC_TemporalSubobject
 //
 //    IF mSubLC.S_Usage.UsageType = "S" // "Surface"
-//    IF mSubLC.S_Usage.UsageType = "U" // "AreasOfUse"
+//    IF mSubLC.S_Usage.UsageType = "L" // "Locations"
 //    IF mSubLC.S_Usage.UsageType = "C" // "Claim"
 //       IncludeSubobjectFromSubobject( mSubLC, "SI_UsageList",
 //                                      mSubLC, "S_Usage", zPOS_LAST )
@@ -1240,7 +1240,7 @@ InsertMappingWordsIntoString( VIEW mSPLDef BASED ON LOD mSPLDef,
 //TraceLineS( "### Insert szUsageTypeEntityName: ", szUsageTypeEntityName )
 //TraceLineS( "### Insert szLoopingEntityName: ", szLoopingEntityName )
 
-//For use in: {{Area Of Use}}. Disinfects, cleans, and deodorizes the following hard nonporous inanimate surfaces: {{Surface}}, etc.).
+//For use in: {{Location}}. Disinfects, cleans, and deodorizes the following hard nonporous inanimate surfaces: {{Surface}}, etc.).
 //1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123  << lth == 133
 //         1         2         3         4         5         6         7         8         9        10        11        12        13
    szToString = ""
@@ -1273,18 +1273,18 @@ InsertMappingWordsIntoString( VIEW mSPLDef BASED ON LOD mSPLDef,
             SourceIndex = SourceIndex + 1
             TypeLength  = TypeLength + 1
          END
-         // SourceIndex == 26,124   TypeLength == 11,7 ("Area of Use"),("{Surfac")
+         // SourceIndex == 26,124   TypeLength == 11,7 ("Location"),("{Surfac")
          SourceOffset = SourceOffset + 2  // 15,116  Skip past closing double parens and length of keyword.
-         ZeidonStringCopy( szUsageType, 1, 50, szSourceString, SourceOffset, TypeLength, 100 )  // "Area of Use","{Surfac"  <== ERROR!!!
+         ZeidonStringCopy( szUsageType, 1, 50, szSourceString, SourceOffset, TypeLength, 100 )  // "Location","{Surfac"     <== ERROR!!!
          SourceIndex = SourceIndex + 2  // 28
          SourceOffset = SourceOffset + TypeLength + 2  // 28  Skip past closing double parens and length of keyword.
          
          // Copy the Usage values into the text. This will depend on Type.
          
-         // Claim, Surface, Area of Use, and Application Type.
+         // Claim, Surface, Location, and Application Type.
          IF szUsageType = "Claim" OR szUsageType = "Claims" OR 
             szUsageType = "Surface" OR szUsageType = "Surfaces" OR 
-            szUsageType = "Area Of Use" OR szUsageType = "Areas Of Use" OR 
+            szUsageType = "Location" OR szUsageType = "Locations" OR 
             szUsageType = "Application Type" OR  szUsageType = "Application Types"
             
             IF szUsageType = "Claim" OR szUsageType = "Claims"
@@ -1293,8 +1293,8 @@ InsertMappingWordsIntoString( VIEW mSPLDef BASED ON LOD mSPLDef,
                IF szUsageType = "Surface" OR szUsageType = "Surfaces"
                   szSelectUsageType = "S"
                ELSE
-                  IF szUsageType = "Area Of Use" OR szUsageType = "Areas Of Use"
-                     szSelectUsageType = "U"
+                  IF szUsageType = "Location" OR szUsageType = "Locations"
+                     szSelectUsageType = "L"
                   ELSE
                      szSelectUsageType = "T"
                   END
@@ -1306,7 +1306,7 @@ InsertMappingWordsIntoString( VIEW mSPLDef BASED ON LOD mSPLDef,
                Count = 0
                nRC = SetCursorFirstEntity( mSPLDef, szLoopingEntityName, "" )
                LOOP WHILE nRC >= zCURSOR_SET
-                  nRC = CompareAttributeToString( mSPLDef, szUsageTypeEntityName, "UsageType", szSelectUsageType )  // "U"
+                  nRC = CompareAttributeToString( mSPLDef, szUsageTypeEntityName, "UsageType", szSelectUsageType )  // "L"
                   IF nRC = 0
                      // There is a match on UsageType.
                      // Copy Usage variable to text. If not first entry, put in a separator character.
@@ -1370,7 +1370,7 @@ InsertMappingWordsIntoString( VIEW mSPLDef BASED ON LOD mSPLDef,
        // C - Insert only Claim Usage entries.
        // S - Insert only Surface Usage entries.
        // T - Insert only Application Type Usage entries.
-       // U - Insert only Area of Use Usage entries.
+       // U - Insert only Location Usage entries.
        // Copy all characters up to the point of the keyword. If there is no keyword match, we simply copy all characters.
        // If we get a match on the keyword, insert the characters and finish copying the rest of the text.
        lMemHandle = SysAllocMemory( &pchToString, lMaxLth, 0, zCOREMEM_ALLOC, 0 );

@@ -663,12 +663,12 @@ GOTO_AddUsageStatements( View     ViewToWindow )
    } 
    else
    { 
-      //:IF mMasLC.M_UsageType.UsageType = "U"
-      if ( CompareAttributeToString( mMasLC, "M_UsageType", "UsageType", "U" ) == 0 )
+      //:IF mMasLC.M_UsageType.UsageType = "L"
+      if ( CompareAttributeToString( mMasLC, "M_UsageType", "UsageType", "L" ) == 0 )
       { 
-         //:// Areas of Use
-         //:mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Areas of Use"
-         SetAttributeFromString( mMasLC, "MasterLabelContent", "wAddStatementsPageTitle", "Areas of Use" );
+         //:// Locations
+         //:mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Locations"
+         SetAttributeFromString( mMasLC, "MasterLabelContent", "wAddStatementsPageTitle", "Locations" );
          //:ELSE
       } 
       else
@@ -728,12 +728,12 @@ GOTO_AddGroupUsageStatements( View     ViewToWindow )
    } 
    else
    { 
-      //:IF mMasLC.M_UsageType.UsageType = "U"
-      if ( CompareAttributeToString( mMasLC, "M_UsageType", "UsageType", "U" ) == 0 )
+      //:IF mMasLC.M_UsageType.UsageType = "L"
+      if ( CompareAttributeToString( mMasLC, "M_UsageType", "UsageType", "L" ) == 0 )
       { 
-         //:// Areas of Use
-         //:mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Areas of Use"
-         SetAttributeFromString( mMasLC, "MasterLabelContent", "wAddStatementsPageTitle", "Areas of Use" );
+         //:// Locations
+         //:mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Locations"
+         SetAttributeFromString( mMasLC, "MasterLabelContent", "wAddStatementsPageTitle", "Locations" );
          //:ELSE
       } 
       else
@@ -791,11 +791,11 @@ GOTO_MarketingStatementAdd( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
-//:InitAreasOfUseStmtsForInsert( VIEW ViewToWindow )
+//:InitLocationsStmtsForInsert( VIEW ViewToWindow )
 
 //:   VIEW mMasLC   REGISTERED AS mMasLC
 public int 
-InitAreasOfUseStmtsForInsert( View     ViewToWindow )
+InitLocationsStmtsForInsert( View     ViewToWindow )
 {
    zVIEW    mMasLC = new zVIEW( );
    int      RESULT = 0;
@@ -806,10 +806,10 @@ InitAreasOfUseStmtsForInsert( View     ViewToWindow )
 
    RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
 
-   //:CancelCurrentTemporalSubobject( ViewToWindow, "InitAreasOfUseStmtsForInsert: " )
+   //:CancelCurrentTemporalSubobject( ViewToWindow, "InitLocationsStmtsForInsert: " )
    {
     ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( ViewToWindow );
-    m_ZGlobalV_Operation.CancelCurrentTemporalSubobject( ViewToWindow, "InitAreasOfUseStmtsForInsert: " );
+    m_ZGlobalV_Operation.CancelCurrentTemporalSubobject( ViewToWindow, "InitLocationsStmtsForInsert: " );
     // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
    }
    //:GET VIEW mEPA NAMED "mEPA"
@@ -842,11 +842,11 @@ InitAreasOfUseStmtsForInsert( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
-//:ConfirmAddAreasOfUseStmts( VIEW ViewToWindow )
+//:ConfirmAddLocationsStmts( VIEW ViewToWindow )
 
 //:   VIEW mMasLC   REGISTERED AS mMasLC
 public int 
-ConfirmAddAreasOfUseStmts( View     ViewToWindow )
+ConfirmAddLocationsStmts( View     ViewToWindow )
 {
    zVIEW    mMasLC = new zVIEW( );
    int      RESULT = 0;
@@ -888,21 +888,21 @@ ConfirmAddAreasOfUseStmts( View     ViewToWindow )
    } 
 
    //:END
-   //:FOR EACH mEPA.EPA_AreaOfUse
-   RESULT = SetCursorFirstEntity( mEPA, "EPA_AreaOfUse", "" );
+   //:FOR EACH mEPA.EPA_Location
+   RESULT = SetCursorFirstEntity( mEPA, "EPA_Location", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
    { 
-      //:IF mEPA.EPA_AreaOfUse.wkSelected = "Y"
-      if ( CompareAttributeToString( mEPA, "EPA_AreaOfUse", "wkSelected", "Y" ) == 0 )
+      //:IF mEPA.EPA_Location.wkSelected = "Y"
+      if ( CompareAttributeToString( mEPA, "EPA_Location", "wkSelected", "Y" ) == 0 )
       { 
-         //:szName = mEPA.EPA_AreaOfUse.Name
+         //:szName = mEPA.EPA_Location.Name
          {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
          StringBuilder sb_szName;
          if ( szName == null )
             sb_szName = new StringBuilder( 32 );
          else
             sb_szName = new StringBuilder( szName );
-                   GetVariableFromAttribute( sb_szName, mi_lTempInteger_1, 'S', 257, mEPA, "EPA_AreaOfUse", "Name", "", 0 );
+                   GetVariableFromAttribute( sb_szName, mi_lTempInteger_1, 'S', 257, mEPA, "EPA_Location", "Name", "", 0 );
          lTempInteger_1 = mi_lTempInteger_1.intValue( );
          szName = sb_szName.toString( );}
          //:IF szName != ""
@@ -910,8 +910,8 @@ ConfirmAddAreasOfUseStmts( View     ViewToWindow )
          { 
             //:CreateEntity( mMasLC, "M_Usage", zPOS_LAST )
             CreateEntity( mMasLC, "M_Usage", zPOS_LAST );
-            //:mMasLC.M_Usage.UsageType = "U" // Area of Use
-            SetAttributeFromString( mMasLC, "M_Usage", "UsageType", "U" );
+            //:mMasLC.M_Usage.UsageType = "L" // Location
+            SetAttributeFromString( mMasLC, "M_Usage", "UsageType", "L" );
             //:mMasLC.M_Usage.Name = szName
             SetAttributeFromString( mMasLC, "M_Usage", "Name", szName );
          } 
@@ -919,7 +919,7 @@ ConfirmAddAreasOfUseStmts( View     ViewToWindow )
          //:END
       } 
 
-      RESULT = SetCursorNextEntity( mEPA, "EPA_AreaOfUse", "" );
+      RESULT = SetCursorNextEntity( mEPA, "EPA_Location", "" );
       //:END
    } 
 
@@ -935,11 +935,11 @@ ConfirmAddAreasOfUseStmts( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
-//:CancelAddAreasOfUseStmts( VIEW ViewToWindow )
+//:CancelAddLocationsStmts( VIEW ViewToWindow )
 
 //:   VIEW mEPA     REGISTERED AS mEPA
 public int 
-CancelAddAreasOfUseStmts( View     ViewToWindow )
+CancelAddLocationsStmts( View     ViewToWindow )
 {
    zVIEW    mEPA = new zVIEW( );
    int      RESULT = 0;
@@ -4082,11 +4082,11 @@ EditClaimsSection( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
-//:EditAreasOfUseSection( VIEW ViewToWindow )
+//:EditLocationsSection( VIEW ViewToWindow )
 
 //:   VIEW mMasLC REGISTERED AS mMasLC
 public int 
-EditAreasOfUseSection( View     ViewToWindow )
+EditLocationsSection( View     ViewToWindow )
 {
    zVIEW    mMasLC = new zVIEW( );
    int      RESULT = 0;
@@ -4094,15 +4094,15 @@ EditAreasOfUseSection( View     ViewToWindow )
    RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
 
    //:// Position on Claims Usage Type.
-   //:SET CURSOR FIRST mMasLC.M_UsageType WHERE mMasLC.M_UsageType.UsageType = "U"
-   RESULT = SetCursorFirstEntityByString( mMasLC, "M_UsageType", "UsageType", "U", "" );
+   //:SET CURSOR FIRST mMasLC.M_UsageType WHERE mMasLC.M_UsageType.UsageType = "L"
+   RESULT = SetCursorFirstEntityByString( mMasLC, "M_UsageType", "UsageType", "L", "" );
    //:IF RESULT < zCURSOR_SET
    if ( RESULT < zCURSOR_SET )
    { 
       //:CREATE ENTITY mMasLC.M_UsageType
       RESULT = CreateEntity( mMasLC, "M_UsageType", zPOS_AFTER );
-      //:mMasLC.M_UsageType.UsageType = "U"
-      SetAttributeFromString( mMasLC, "M_UsageType", "UsageType", "U" );
+      //:mMasLC.M_UsageType.UsageType = "L"
+      SetAttributeFromString( mMasLC, "M_UsageType", "UsageType", "L" );
    } 
 
    //:END

@@ -325,19 +325,19 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: NewAreasOfUse
+// OPERATION: NewLocations
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
-NewAreasOfUse( VIEW ViewToWindow )
+NewLocations( VIEW ViewToWindow )
 
    VIEW wWebXfer REGISTERED AS wWebXfer
    VIEW mEPA     REGISTERED AS mEPA
 
    // Name guaranteed to be non-blank in JSP
-   AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "NewAreasOfUse: " )
-   CREATE ENTITY mEPA.EPA_AreaOfUse
-   mEPA.EPA_AreaOfUse.Name = wWebXfer.Root.CurrentStatement
+   AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "NewLocations: " )
+   CREATE ENTITY mEPA.EPA_Location
+   mEPA.EPA_Location.Name = wWebXfer.Root.CurrentStatement
    wWebXfer.Root.CurrentStatement = ""
    COMMIT mEPA
 
@@ -345,48 +345,48 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: ImportAreasOfUseList
+// OPERATION: ImportLocationsList
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
-ImportAreasOfUseList( VIEW ViewToWindow )
+ImportLocationsList( VIEW ViewToWindow )
 
    VIEW wWebXfer REGISTERED AS wWebXfer
    VIEW mEPA     REGISTERED AS mEPA
 
    wWebXfer.Root.String = ""
-   AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "ImportAreasOfUseList: " )
+   AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "ImportLocationsList: " )
 
 END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: InitImportAreasOfUseList
+// OPERATION: InitImportLocationsList
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
-InitImportAreasOfUseList( VIEW ViewToWindow )
+InitImportLocationsList( VIEW ViewToWindow )
 
    VIEW wWebXfer REGISTERED AS wWebXfer
    VIEW mEPA     REGISTERED AS mEPA
 
-   // Set up Areas of Use list in wWebXfer.Root.CurrentStatementText
+   // Set up Locations list in wWebXfer.Root.CurrentStatementText
    // to be set to multiline edit box.
    wWebXfer.Root.CurrentStatement = ""
-   wWebXfer.Root.String = "AreasOfUse.epa"
+   wWebXfer.Root.String = "Locations.epa"
    BuildCSV_FromEntityAttribute( wWebXfer, "Root",
                                  "CurrentStatementText",
-                                 mEPA, "EPA_AreaOfUse", "Name", 0 )
+                                 mEPA, "EPA_Location", "Name", 0 )
 
 END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: ImportAreasOfUseFromFile
+// OPERATION: ImportLocationsFromFile
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
-ImportAreasOfUseFromFile( VIEW ViewToWindow )
+ImportLocationsFromFile( VIEW ViewToWindow )
 
    VIEW wWebXfer REGISTERED AS wWebXfer
    VIEW mEPA     REGISTERED AS mEPA
@@ -399,7 +399,7 @@ ImportAreasOfUseFromFile( VIEW ViewToWindow )
    szDirectoryName = ""
    SysReadZeidonIni( -1, "App.epamms", "WebDirectory", szDirectoryName )
    IF szDirectoryName = ""
-      MessageSend( ViewToWindow, "", "Import Areas Of Use Statements",
+      MessageSend( ViewToWindow, "", "Import Locations Statements",
                    "Zeidon INI file does not have WebDirectory entry in Application: App.epamms.",
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
       SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
@@ -408,7 +408,7 @@ ImportAreasOfUseFromFile( VIEW ViewToWindow )
 
    szFileName = wWebXfer.Root.String
    IF szFileName = ""
-      MessageSend( ViewToWindow, "", "Import Areas Of Use Statements",
+      MessageSend( ViewToWindow, "", "Import Locations Statements",
                    "The Import File Name cannot be blank.",
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
       SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
@@ -425,7 +425,7 @@ ImportAreasOfUseFromFile( VIEW ViewToWindow )
          szMessage = "The Import File " + szDirectoryName + " does not contain a valid entity.attribute header."
       END
 
-      MessageSend( ViewToWindow, "", "Import Areas Of Use Statements",
+      MessageSend( ViewToWindow, "", "Import Locations Statements",
                    szMessage,
                    zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
       SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
@@ -436,11 +436,11 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: CancelImportAreasOfUseList
+// OPERATION: CancelImportLocationsList
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
-CancelImportAreasOfUseList( VIEW ViewToWindow )
+CancelImportLocationsList( VIEW ViewToWindow )
 
    VIEW wWebXfer REGISTERED AS wWebXfer
 
@@ -450,41 +450,41 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: ConfirmImportAreasOfUseList
+// OPERATION: ConfirmImportLocationsList
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
-ConfirmImportAreasOfUseList( VIEW ViewToWindow )
+ConfirmImportLocationsList( VIEW ViewToWindow )
 
    VIEW wWebXfer REGISTERED AS wWebXfer
    VIEW mEPA     REGISTERED AS mEPA
    SHORT nRC
 
-   // Clean out previous list of areas of use.
-   nRC = SetCursorFirstEntity( mEPA, "EPA_AreaOfUse", "" )
+   // Clean out previous list of locations.
+   nRC = SetCursorFirstEntity( mEPA, "EPA_Location", "" )
    LOOP WHILE nRC = zCURSOR_SET
-      DeleteEntity( mEPA, "EPA_AreaOfUse", zREPOS_NONE )
-      nRC = SetCursorNextEntity( mEPA, "EPA_AreaOfUse", "" )
+      DeleteEntity( mEPA, "EPA_Location", zREPOS_NONE )
+      nRC = SetCursorNextEntity( mEPA, "EPA_Location", "" )
    END
 
-   // Set up Areas of Use list in wWebXfer.Root.CurrentStatementText
+   // Set up Locations list in wWebXfer.Root.CurrentStatementText
    // to be set to multiline edit box.
    BuildEntityAttributeFromCSV( wWebXfer, "Root",
                                 "CurrentStatementText",
-                                mEPA, "EPA_AreaOfUse", "Name", 0 )
+                                mEPA, "EPA_Location", "Name", 0 )
    COMMIT mEPA
 
 END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: InitAreasOfUseForUpdate
+// OPERATION: InitLocationsForUpdate
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
-InitAreasOfUseForUpdate( VIEW ViewToWindow )
+InitLocationsForUpdate( VIEW ViewToWindow )
 
-// CreateCurrentTemporalVersion( ViewToWindow, 0, "mEPA", "EPA_AreaOfUse", "InitAreasOfUseForUpdate: " )
+// CreateCurrentTemporalVersion( ViewToWindow, 0, "mEPA", "EPA_Location", "InitLocationsForUpdate: " )
 
 END
 
@@ -535,7 +535,7 @@ InitImportAppTypesList( VIEW ViewToWindow )
    VIEW wWebXfer REGISTERED AS wWebXfer
    VIEW mEPA     REGISTERED AS mEPA
 
-   // Set up Areas of Use list in wWebXfer.Root.CurrentStatementText
+   // Set up Locations list in wWebXfer.Root.CurrentStatementText
    // to be set to multiline edit box.
    wWebXfer.Root.CurrentStatement = ""
    wWebXfer.Root.String = "AppTypes.epa"
@@ -625,14 +625,14 @@ ConfirmImportAppTypesList( VIEW ViewToWindow )
    VIEW mEPA     REGISTERED AS mEPA
    SHORT nRC
 
-   // Clean out previous list of areas of use.
+   // Clean out previous list of locations.
    nRC = SetCursorFirstEntity( mEPA, "EPA_ApplicationType", "" )
    LOOP WHILE nRC = zCURSOR_SET
       DeleteEntity( mEPA, "EPA_ApplicationType", zREPOS_NONE )
       nRC = SetCursorNextEntity( mEPA, "EPA_ApplicationType", "" )
    END
 
-   // Set up Areas of Use list in wWebXfer.Root.CurrentStatementText
+   // Set up Locations list in wWebXfer.Root.CurrentStatementText
    // to be set to multiline edit box.
    BuildEntityAttributeFromCSV( wWebXfer, "Root",
                                 "CurrentStatementText",
@@ -1490,30 +1490,30 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: UpdateAreasOfUseFromCurrent
+// OPERATION: UpdateLocationsFromCurrent
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
-UpdateAreasOfUseFromCurrent( VIEW ViewToWindow )
+UpdateLocationsFromCurrent( VIEW ViewToWindow )
 
    VIEW wWebXfer REGISTERED AS wWebXfer
    VIEW mEPA     REGISTERED AS mEPA
 
-   AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "UpdateAreasOfUseFromCurrent: " )
-   mEPA.EPA_AreaOfUse.Name = wWebXfer.Root.CurrentStatement
+   AcceptCurrentTemporalSubobject( ViewToWindow, FALSE, "UpdateLocationsFromCurrent: " )
+   mEPA.EPA_Location.Name = wWebXfer.Root.CurrentStatement
    COMMIT mEPA
 
 END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: UpdateAreasOfUse
+// OPERATION: UpdateLocations
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
-UpdateAreasOfUse( VIEW ViewToWindow )
+UpdateLocations( VIEW ViewToWindow )
 
-   AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "UpdateAreasOfUse: " )
+   AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "UpdateLocations: " )
 
 END
 
@@ -2022,10 +2022,10 @@ CopyToNewSystemChemical( VIEW ViewToWindow )
                                    mEPA, "EPA_StorageDisposal", zSET_ALL )
    END
 
-   FOR EACH mEPA.EPA_AreaOfUse
-      CREATE ENTITY mNew.EPA_AreaOfUse
-      SetMatchingAttributesByName( mNew, "EPA_AreaOfUse",
-                                   mEPA, "EPA_AreaOfUse", zSET_ALL )
+   FOR EACH mEPA.EPA_Location
+      CREATE ENTITY mNew.EPA_Location
+      SetMatchingAttributesByName( mNew, "EPA_Location",
+                                   mEPA, "EPA_Location", zSET_ALL )
    END
 
    FOR EACH mEPA.EPA_Surface
@@ -2193,16 +2193,16 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// OPERATION: DeleteAreasOfUse
+// OPERATION: DeleteLocations
 //
 /////////////////////////////////////////////////////////////////////////////
 DIALOG OPERATION
-DeleteAreasOfUse( VIEW ViewToWindow )
+DeleteLocations( VIEW ViewToWindow )
 
    VIEW mEPA     REGISTERED AS mEPA
 
-   DELETE ENTITY mEPA.EPA_AreaOfUse
-   AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "DeleteAreasOfUse: " )
+   DELETE ENTITY mEPA.EPA_Location
+   AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "DeleteLocations: " )
 
 END
 

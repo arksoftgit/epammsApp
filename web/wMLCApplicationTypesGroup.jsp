@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCApplicationTypesGroup   Generate Timestamp: 20160328163906903 --%>
+<%-- wMLCApplicationTypesGroup   Generate Timestamp: 20160406142139458 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -554,7 +554,7 @@ else
 <html>
 <head>
 
-<title>AreasOfUseGroup</title>
+<title>LocationsGroup</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
