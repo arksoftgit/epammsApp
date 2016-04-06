@@ -1457,6 +1457,9 @@ dMarketingTitleKeyword( VIEW mMasLC BASED ON LOD mMasLC,
             IF szKeyValue != ""
                szKeyValue = szKeyValue  + ")</b>}"
             END
+         // TraceLineS( "Searching Title: ", szCombinedName )
+         // TraceLineS( "      for: ", szKeyword )
+         // TraceLineS( "  Replace: ", szKeyValue )
             zSearchAndReplace( szCombinedName, 1024, szKeyword, szKeyValue )
          END
          DropView( mMasLC2 )
@@ -1514,6 +1517,9 @@ dMarketingTextKeyword( VIEW mMasLC BASED ON LOD mMasLC,
             IF szKeyValue != ""
                szKeyValue = szKeyValue  + ")</b>}"
             END
+         // TraceLineS( "Searching Text: ", szCombinedName )
+         // TraceLineS( "      for: ", szKeyword )
+         // TraceLineS( "  Replace: ", szKeyValue )
             zSearchAndReplace( szCombinedName, 1024, szKeyword, szKeyValue )
          END
          DropView( mMasLC2 )
@@ -1541,18 +1547,50 @@ dMarketingTitleText( VIEW mMasLC BASED ON LOD mMasLC,
                      STRING ( 32 ) InternalAttribStructure,
                      SHORT GetOrSetFlag )
 
-   STRING ( 1024 ) szGeneratedString
+   VIEW mMasLC2 BASED ON LOD mMasLC
+   STRING ( 32 )  szEntityName
+   STRING ( 100 ) szKeyword
+   STRING ( 1024 ) szKeyValue
+   STRING ( 1024 ) szTitle
+   STRING ( 1024 ) szText
+   STRING ( 2048 ) szGeneratedString
+
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
 
-      // Concatenate a string combining Title and Text, with Title made bold.
-      szGeneratedString = "<b>" + mMasLC.M_MarketingStatement.Title + "</b>" +
-                          mMasLC.M_MarketingStatement.Text
+      // Concatenate a string combining Title and Text, with Title made bold.  Keyword substitutions
+      // are incorporated.
+      szTitle = mMasLC.M_MarketingStatement.Title
+      szText = mMasLC.M_MarketingStatement.Text
 
-      // Store the resulting value in the object.
+      IF mMasLC.M_InsertTextKeywordMarketing EXISTS
+         CreateViewFromView( mMasLC2, mMasLC )
+         FOR EACH mMasLC2.M_InsertTextKeywordMarketing
+            szKeyword = "{(" + mMasLC2.M_InsertTextKeywordMarketing.Name  + ")}"
+            
+            // Concatenate all the Keyword values for a Marketing Keyword entry.
+            szKeyValue = ""
+            FOR EACH mMasLC2.M_InsertTextMarketing
+               IF szKeyValue = ""
+                  szKeyValue = "{(" + mMasLC2.M_InsertTextMarketing.Text
+               ELSE
+                  szKeyValue = szKeyValue + ", " + mMasLC2.M_InsertTextMarketing.Text
+               END
+            END
+            IF szKeyValue != ""
+               szKeyValue = szKeyValue  + ")}"
+            END
+
+            zSearchAndReplace( szTitle, 1024, szKeyword, szKeyValue )
+            zSearchAndReplace( szText, 1024, szKeyword, szKeyValue )
+         END
+         DropView( mMasLC2 )
+      END
+      szGeneratedString = "<b>" + szTitle + "</b>  " + szText
+      
+      // Store the calculated value in the object.
       StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szGeneratedString )
-      RETURN 0
 
         /* end zDERIVED_GET */
    OF   zDERIVED_SET:

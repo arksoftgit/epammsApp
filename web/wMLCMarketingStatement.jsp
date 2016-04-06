@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCMarketingStatement   Generate Timestamp: 20160405115500007 --%>
+<%-- wMLCMarketingStatement   Generate Timestamp: 20160405153354723 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -485,7 +485,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "GeneratedTitleTextDisplay" );
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "EncodedTitleTextUpdate" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -1000,7 +1000,7 @@ else
    }
 %>
 
-<div id="Title" name="Title" class="" style="width:754px;height:30px;border:solid;border-width:4px;border-style:groove;background-color:lightgray;" wrap="wrap"><%=strErrorMapValue%></div>
+<div id="Title" name="Title" class="" style="width:754px;height:54px;border:solid;border-width:4px;border-style:groove;display:inline-block;text-overflow:hidden;background-color:lightgray;" wrap="wrap"><%=strErrorMapValue%></div>
 
 </td>
 </tr>
@@ -1044,7 +1044,7 @@ else
    }
 %>
 
-<div id="Text" name="Text" class="" style="width:754px;height:76px;border:solid;border-width:4px;border-style:groove;background-color:lightgray;" wrap="wrap"><%=strErrorMapValue%></div>
+<div id="Text" name="Text" class="" style="width:754px;height:76px;border:solid;border-width:4px;border-style:groove;display:inline-block;text-overflow:hidden;background-color:lightgray;" wrap="wrap"><%=strErrorMapValue%></div>
 
 </td>
 </tr>
@@ -1129,9 +1129,9 @@ try
       String strTag;
       String strGridEditCtl3;
       String strGridEditCtl4;
-      String strBitmapBtn2;
-      String strBMBDeleteDirectionsUseStatement1;
-      String strBitmapBtn1;
+      String strUpdate;
+      String strCopy;
+      String strDelete;
       
       View vGrid3;
       vGrid3 = mMasLC.newView( );
@@ -1175,9 +1175,9 @@ try
 
    <td><a href="#" onclick="GOTO_MarketingKeywordUpdate( this.id )" id="GridEditCtl3::<%=strEntityKey%>"><%=strGridEditCtl3%></a></td>
    <td><a href="#" onclick="GOTO_MarketingKeywordUpdate( this.id )" id="GridEditCtl4::<%=strEntityKey%>"><%=strGridEditCtl4%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn2" onclick="GOTO_MarketingKeywordUpdate( this.id )" id="BitmapBtn2::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteDirectionsUseStatement1" onclick="COPY_InsertKeyword( this.id )" id="BMBDeleteDirectionsUseStatement1::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Copy"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn1" onclick="DELETE_MarketingStatementKeyword( this.id )" id="BitmapBtn1::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="Update" onclick="GOTO_MarketingKeywordUpdate( this.id )" id="Update::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="Copy" onclick="COPY_InsertKeyword( this.id )" id="Copy::<%=strEntityKey%>"><img src="./images/ePammsCopy.png" alt="Copy"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="Delete" onclick="DELETE_MarketingStatementKeyword( this.id )" id="Delete::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 

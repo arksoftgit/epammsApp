@@ -5972,5 +5972,53 @@ AttemptEmbedKeywords( View     ViewToWindow )
 } 
 
 
+//:DIALOG OPERATION
+//:SaveMarketingSection( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+SaveMarketingSection( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+   //:   
+   //:// Accept temporal NetContents.
+   //:AcceptSubobject( mMasLC, "M_MarketingSection" )
+   AcceptSubobject( mMasLC, "M_MarketingSection" );
+   //:COMMIT mMasLC
+   RESULT = CommitObjectInstance( mMasLC );
+   return( 0 );
+//    
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:SaveMarketingSectionVersion( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+SaveMarketingSectionVersion( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+   //:   
+   //:// Accept temporal NetContents.
+   //:AcceptSubobject( mMasLC, "M_MarketingSection" )
+   AcceptSubobject( mMasLC, "M_MarketingSection" );
+   //:COMMIT mMasLC
+   RESULT = CommitObjectInstance( mMasLC );
+   //:CreateTemporalSubobjectVersion( mMasLC, "M_MarketingSection" )
+   CreateTemporalSubobjectVersion( mMasLC, "M_MarketingSection" );
+   return( 0 );
+//    
+// END
+} 
+
+
 
 }

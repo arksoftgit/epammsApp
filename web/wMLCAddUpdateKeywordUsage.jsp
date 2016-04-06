@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCAddUpdateKeywordUsage   Generate Timestamp: 20160328163906762 --%>
+<%-- wMLCAddUpdateKeywordUsage   Generate Timestamp: 20160405205420367 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -791,7 +791,7 @@ else
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBStorDispSections3:GroupBox */ %>
 
-<div id="GBStorDispSections3" name="GBStorDispSections3" class="listgroup"   style="float:left;position:relative; width:646px; height:34px;">  <!-- GBStorDispSections3 --> 
+<div id="GBStorDispSections3" name="GBStorDispSections3" class="listgroup"   style="float:left;position:relative; width:690px; height:46px;">  <!-- GBStorDispSections3 --> 
 
 <% /* EnvironmentalHazardsSection1:Text */ %>
 
@@ -822,7 +822,7 @@ else
    }
 %>
 
-<label class="groupbox"  id="TXName1" name="TXName1" style="width:450px;height:16px;position:absolute;left:180px;top:12px;"><%=strTextDisplayValue%></label>
+<label class="groupbox"  id="TXName1" name="TXName1" style="width:498px;height:34px;position:absolute;left:180px;top:12px;"><%=strTextDisplayValue%></label>
 
 
 </div>  <!--  GBStorDispSections3 --> 
@@ -830,6 +830,9 @@ else
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
+
+ <!-- This is added as a line spacer -->
+<div style="height:6px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->

@@ -2948,3 +2948,36 @@ SaveNetContents( VIEW ViewToWindow )
    COMMIT mMasLC
    
 END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: SaveMarketingSection
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+SaveMarketingSection( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+      
+   // Accept temporal NetContents.
+   AcceptSubobject( mMasLC, "M_MarketingSection" )
+   COMMIT mMasLC
+   
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: SaveMarketingSectionVersion
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+SaveMarketingSectionVersion( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+      
+   // Accept temporal NetContents.
+   AcceptSubobject( mMasLC, "M_MarketingSection" )
+   COMMIT mMasLC
+   CreateTemporalSubobjectVersion( mMasLC, "M_MarketingSection" )
+   
+END

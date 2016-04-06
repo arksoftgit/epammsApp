@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCMarketingSelectByType   Generate Timestamp: 20160404174903179 --%>
+<%-- wMLCMarketingSelectByType   Generate Timestamp: 20160405192044625 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -835,17 +835,51 @@ else
 <div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBAddAppTypesList1:GroupBox */ %>
 
-<div id="GBAddAppTypesList1" name="GBAddAppTypesList1" style="width:504px;height:32px;float:left;">  <!-- GBAddAppTypesList1 --> 
+<div id="GBAddAppTypesList1" name="GBAddAppTypesList1" style="width:838px;height:64px;float:left;">  <!-- GBAddAppTypesList1 --> 
 
 
  <!-- This is added as a line spacer -->
 <div style="height:12px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp</span>
 <% /* AddAppTypesList1:Text */ %>
 
-<span class="groupbox"  id="AddAppTypesList1" name="AddAppTypesList1" style="width:350px;height:16px;">Selection of MLC Usage Entries</span>
+<span class="groupbox"  id="AddAppTypesList1" name="AddAppTypesList1" style="width:206px;height:34px;">Selection of MLC Usage Entries</span>
+
+<span style="height:54px;">&nbsp</span>
+<% /* Title1:MLEdit */ %>
+<%
+   // : Title1
+   strErrorMapValue = VmlOperation.CheckError( "Title1", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).info( "Invalid View: " + "Title1" );
+      else
+      {
+         nRC = mMasLC.cursor( "M_MarketingStatement" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strErrorMapValue = mMasLC.cursor( "M_MarketingStatement" ).getAttribute( "dMarketingTitleKeyword" ).getString( "" );
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).info( "M_MarketingStatement.dMarketingTitleKeyword: " + strErrorMapValue );
+         }
+         else
+            task.log( ).info( "Entity does not exist for Title1: " + "mMasLC.M_MarketingStatement" );
+      }
+   }
+%>
+
+<div name="Title1" id="Title1" style="width:610px;height:54px;position:absolute;left:216px;top:12px;border:solid;border-width:4px;border-style:groove;display:inline-block;text-overflow:hidden;background-color:lightgray;" wrap="wrap"><%=strErrorMapValue%></div>
 
 </div>  <!-- End of a new line -->
 
@@ -855,6 +889,9 @@ else
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
+
+ <!-- This is added as a line spacer -->
+<div style="height:8px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
@@ -878,6 +915,9 @@ else
 
 <div id="GroupBox6" name="GroupBox6" style="width:342px;height:42px;float:left;">  <!-- GroupBox6 --> 
 
+
+ <!-- This is added as a line spacer -->
+<div style="height:10px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <% /* Text1:Text */ %>
@@ -1061,10 +1101,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 
 <div>  <!-- Beginning of a new line -->
-<% /* Text3:Text */ %>
-
-<span  id="Text3" name="Text3" style="width:244px;height:24px;">Potential MLC Usage Entries for Type</span>
-
+<span style="height:24px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
 <% /* ComboBox1:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
@@ -1121,6 +1158,16 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 %>
 </select>
 <input name="hComboBox1" id="hComboBox1" type="hidden" value="<%=strComboSelectedValue%>" >
+
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+<div>  <!-- Beginning of a new line -->
+<% /* Text3:Text */ %>
+
+<span  id="Text3" name="Text3" style="width:244px;height:24px;">Potential MLC Usage Entries for Type</span>
 
 </div>  <!-- End of a new line -->
 

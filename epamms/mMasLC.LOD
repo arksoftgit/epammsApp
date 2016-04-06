@@ -1,4 +1,4 @@
-z1000-Zeidon    MMASLC   TZZOLODO 04/05/16   08:57:57 1.0a2   
+z1000-Zeidon    MMASLC   TZZOLODO 04/05/16   19:57:27 1.0a2   
 eLOD       1
 aZKey      69033382
 aNextZKeyToAssign 130002871
@@ -9031,7 +9031,7 @@ eER_RelLink 3
 eER_RelType 4
 
 eLOD_Entity 2
-awkSelectedAttributeForDragSort 5
+awkSelectedAttributeForDragSort 7
 
 eLOD_Attribute 3
 awkSequence 1

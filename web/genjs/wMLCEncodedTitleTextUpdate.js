@@ -2,7 +2,6 @@ var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;
 window.history.forward( 1 );
-var Tab1;
 
 function handleErr( msg, url, l )
 {
@@ -44,8 +43,8 @@ function _OnAlmostTimeout()
       // If the time is less than one minute, resubmit the page.  Otherwise, go to the timeout window.
       if (tDiff < 60000)
       {
-         document.wMLCMarketingSection.zAction.value = "_OnResubmitPage";
-         document.wMLCMarketingSection.submit( );
+         document.wMLCEncodedTitleTextUpdate.zAction.value = "_OnResubmitPage";
+         document.wMLCEncodedTitleTextUpdate.submit( );
       }
       else
       {
@@ -60,8 +59,8 @@ function _OnTimeout( )
    {
       _DisableFormElements( true );
 
-      document.wMLCMarketingSection.zAction.value = "_OnTimeout";
-      document.wMLCMarketingSection.submit( );
+      document.wMLCEncodedTitleTextUpdate.zAction.value = "_OnTimeout";
+      document.wMLCEncodedTitleTextUpdate.submit( );
    }
 }
 
@@ -75,8 +74,8 @@ function _BeforePageUnload( )
       // If the user clicked the window close box, unregister zeidon.
       if (isWindowClosing)
       {
-         document.wMLCMarketingSection.zAction.value = "_OnUnload";
-         document.wMLCMarketingSection.submit( );
+         document.wMLCEncodedTitleTextUpdate.zAction.value = "_OnUnload";
+         document.wMLCEncodedTitleTextUpdate.submit( );
       }
    }
 }
@@ -129,16 +128,16 @@ function _AfterPageLoaded( )
 {
 // _DisableFormElements( false );
 
-   var szFocusCtrl = document.wMLCMarketingSection.zFocusCtrl.value;
+   var szFocusCtrl = document.wMLCEncodedTitleTextUpdate.zFocusCtrl.value;
    if ( szFocusCtrl != "" && szFocusCtrl != "null" )
-      eval( 'document.wMLCMarketingSection.' + szFocusCtrl + '.focus( )' );
+      eval( 'document.wMLCEncodedTitleTextUpdate.' + szFocusCtrl + '.focus( )' );
 
    // This is where we put out a message from the previous iteration on this window
-   var szMsg = document.wMLCMarketingSection.zError.value;
+   var szMsg = document.wMLCEncodedTitleTextUpdate.zError.value;
    if ( szMsg != "" )
       alert( szMsg ); // "Houston ... We have a problem"
 
-   szMsg = document.wMLCMarketingSection.zOpenFile.value;
+   szMsg = document.wMLCEncodedTitleTextUpdate.zOpenFile.value;
    if ( szMsg != "" )
    {
       var NewWin = window.open( szMsg );
@@ -150,10 +149,10 @@ function _AfterPageLoaded( )
       }
    }
 
-   var LoginName = document.wMLCMarketingSection.zLoginName.value;
-   var keyRole = document.wMLCMarketingSection.zKeyRole.value;
-   document.wMLCMarketingSection.zError.value = "";
-   document.wMLCMarketingSection.zOpenFile.value = "";
+   var LoginName = document.wMLCEncodedTitleTextUpdate.zLoginName.value;
+   var keyRole = document.wMLCEncodedTitleTextUpdate.zKeyRole.value;
+   document.wMLCEncodedTitleTextUpdate.zError.value = "";
+   document.wMLCEncodedTitleTextUpdate.zOpenFile.value = "";
 
    if ( timerID != null )
    {
@@ -161,7 +160,7 @@ function _AfterPageLoaded( )
       timerID = null;
    }
 
-   var varTimeout = document.wMLCMarketingSection.zTimeout.value;
+   var varTimeout = document.wMLCEncodedTitleTextUpdate.zTimeout.value;
    if ( varTimeout > 0 )
    {
       var varDelay = 60000 * varTimeout;  // Timeout value in timeout.inc
@@ -190,7 +189,7 @@ function CheckAllInGrid(id, CheckBoxName) // triggered by no text checkbox
    }
 }
 
-function SaveMarketingSectionReturn( )
+function Return( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -200,12 +199,12 @@ function SaveMarketingSectionReturn( )
    {
       _DisableFormElements( true );
 
-      document.wMLCMarketingSection.zAction.value = "SaveMarketingSectionReturn";
-      document.wMLCMarketingSection.submit( );
+      document.wMLCEncodedTitleTextUpdate.zAction.value = "Return";
+      document.wMLCEncodedTitleTextUpdate.submit( );
    }
 }
 
-function SaveMarketingSection( )
+function Cancel( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -215,12 +214,12 @@ function SaveMarketingSection( )
    {
       _DisableFormElements( true );
 
-      document.wMLCMarketingSection.zAction.value = "SaveMarketingSection";
-      document.wMLCMarketingSection.submit( );
+      document.wMLCEncodedTitleTextUpdate.zAction.value = "Cancel";
+      document.wMLCEncodedTitleTextUpdate.submit( );
    }
 }
 
-function CancelMarketingSect( )
+function REGENERATE_TitleText( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -230,134 +229,8 @@ function CancelMarketingSect( )
    {
       _DisableFormElements( true );
 
-      document.wMLCMarketingSection.zAction.value = "CancelMarketingSect";
-      document.wMLCMarketingSection.submit( );
-   }
-}
-
-function DELETE_MarketingStatement( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCMarketingSection.zTableRowSelect.value = strEntityKey;
-      // Javascript code entered by user.
-
-// Confirmation of  Delete.
-if (!confirm("OK to delete selected Marketing Statement?"))
-{
-   return;
-}
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wMLCMarketingSection.zAction.value = "DELETE_MarketingStatement";
-      document.wMLCMarketingSection.submit( );
-   }
-}
-
-function DELETE_ReviewerNote( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCMarketingSection.zTableRowSelect.value = strEntityKey;
-      // Javascript code entered by user.
-
-// Confirmation of  Delete.
-if (!confirm("OK to delete selected Reviewer Note?"))
-{
-   return;
-}
-
-      // END of Javascript code entered by user.
-
-      _DisableFormElements( true );
-
-      document.wMLCMarketingSection.zAction.value = "DELETE_ReviewerNote";
-      document.wMLCMarketingSection.submit( );
-   }
-}
-
-function GOTO_MarketingStatementAdd( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCMarketingSection.zAction.value = "GOTO_MarketingStatementAdd";
-      document.wMLCMarketingSection.submit( );
-   }
-}
-
-function GOTO_MarketingStatementUpdate( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCMarketingSection.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wMLCMarketingSection.zAction.value = "GOTO_MarketingStatementUpdate";
-      document.wMLCMarketingSection.submit( );
-   }
-}
-
-function GOTO_ReviewerNoteAdd( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCMarketingSection.zAction.value = "GOTO_ReviewerNoteAdd";
-      document.wMLCMarketingSection.submit( );
-   }
-}
-
-function GOTO_ReviewerNoteUpdate( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCMarketingSection.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wMLCMarketingSection.zAction.value = "GOTO_ReviewerNoteUpdate";
-      document.wMLCMarketingSection.submit( );
+      document.wMLCEncodedTitleTextUpdate.zAction.value = "REGENERATE_TitleText";
+      document.wMLCEncodedTitleTextUpdate.submit( );
    }
 }
 

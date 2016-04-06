@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCOrganismClaimsStatement   Generate Timestamp: 20160401195837811 --%>
+<%-- wMLCOrganismClaimsStatement   Generate Timestamp: 20160405132208745 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1648,7 +1648,7 @@ try
    <td><%=strKeywordText2%></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="Update" onclick="GOTO_UsageUpdate( this.id )" id="Update::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="Delete2" onclick="DELETE_UsageKeyword( this.id )" id="Delete2::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="Copy" onclick="COPY_UsageKeywordAndText( this.id )" id="Copy::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Copy"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="Copy" onclick="COPY_UsageKeywordAndText( this.id )" id="Copy::<%=strEntityKey%>"><img src="./images/ePammsCopy.png" alt="Copy"></a></td>
 
 </tr>
 
