@@ -680,23 +680,54 @@ END
 //
 /////////////////////////////////////////////////////////////////////////////
 DERIVED ATTRIBUTE OPERATION
-dDisplayAtomicNames( VIEW ViewtoInstance BASED ON LOD mMasLC,
+dDisplayAtomicNames( VIEW mMasLC BASED ON LOD mMasLC,
                      STRING ( 32 ) InternalEntityStructure,
                      STRING ( 32 ) InternalAttribStructure,
                      SHORT GetOrSetFlag )
 
    STRING ( 32000 ) szDisplayStatement
 
-   szDisplayStatement = ViewtoInstance.M_Usage.Name
+   szDisplayStatement = mMasLC.M_Usage.Name
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
 
       // Display Atomic Name combines required text with optional usage(s).
-      InsertOptionalSubUsages( ViewtoInstance, szDisplayStatement )
+      InsertOptionalSubUsages( mMasLC, szDisplayStatement, 1 )
 
       // Store the calculated value in the object.
-      StoreStringInRecord( ViewtoInstance, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
-      RETURN 0
+      StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: dFullEmbeddedName
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dFullEmbeddedName( VIEW mMasLC BASED ON LOD mMasLC,
+                   STRING ( 32 ) InternalEntityStructure,
+                   STRING ( 32 ) InternalAttribStructure,
+                   SHORT GetOrSetFlag )
+
+   STRING ( 32000 ) szDisplayStatement
+
+   szDisplayStatement = mMasLC.M_Usage.Name
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Display Atomic Name combines required text with optional usage(s).
+      InsertOptionalSubUsages( mMasLC, szDisplayStatement, 0 )
+      SetFirstCharacterCase( szDisplayStatement, 1 )
+
+      // Store the calculated value in the object.
+      StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
 
         /* end zDERIVED_GET */
    OF   zDERIVED_SET:

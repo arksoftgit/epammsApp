@@ -761,7 +761,7 @@ InitIngredientsSect( VIEW ViewToWindow )
    VIEW wWebXfer REGISTERED AS wWebXfer
    VIEW mMasLC   REGISTERED AS mMasLC
 
-   AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "InitIngredientsSect: " )
+// AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "InitIngredientsSect: " )
 
    IF mMasLC.M_IngredientsSection DOES NOT EXIST
       CREATE ENTITY mMasLC.M_IngredientsSection
@@ -784,7 +784,7 @@ InitHumanHazardSect( VIEW ViewToWindow )
    VIEW wWebXfer REGISTERED AS wWebXfer
    VIEW mMasLC   REGISTERED AS mMasLC
 
-   AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "InitHumanHazardSect: " )
+// AcceptCurrentTemporalSubobject( ViewToWindow, TRUE, "InitHumanHazardSect: " )
 
    IF mMasLC.M_HumanHazardSection DOES NOT EXIST
       CREATE ENTITY mMasLC.M_HumanHazardSection
@@ -1719,6 +1719,7 @@ ConfirmAddLocationsStmts( VIEW ViewToWindow )
    STRING ( 256 ) szName
    SHORT   nRC
 
+   AcceptSubobject( mMasLC, "M_Usage" )
    FOR EACH mMasLC.M_Usage
       szName = mMasLC.M_Usage.Name
       IF szName = ""
@@ -1738,6 +1739,7 @@ ConfirmAddLocationsStmts( VIEW ViewToWindow )
 
    COMMIT mMasLC
    DropObjectInstance( mEPA )
+   CreateTemporalSubobjectVersion( mMasLC, "M_Usage" )
 
 END
 
@@ -1804,7 +1806,6 @@ CancelAddSurfacesStmts( VIEW ViewToWindow )
 
 END
 
-
 /////////////////////////////////////////////////////////////////////////////
 //
 //  OPERATION: InitClaimsStmtsForInsert
@@ -1817,7 +1818,7 @@ InitClaimsStmtsForInsert( VIEW ViewToWindow )
    VIEW mEPA     BASED ON LOD  mEPA
    STRING ( 16 ) szClass
 
-   CancelCurrentTemporalSubobject( ViewToWindow, "InitClaimsStmtsForInsert: " )
+// CancelCurrentTemporalSubobject( ViewToWindow, "InitClaimsStmtsForInsert: " )
    GET VIEW mEPA NAMED "mEPA"
    IF mEPA != 0
       DropObjectInstance( mEPA )
@@ -1848,7 +1849,7 @@ InitSurfacesStmtsForInsert( VIEW ViewToWindow )
    VIEW mMasLC   REGISTERED AS mMasLC
    VIEW mEPA     BASED ON LOD  mEPA
 
-   CancelCurrentTemporalSubobject( ViewToWindow, "InitSurfacesStmtsForInsert: " )
+// CancelCurrentTemporalSubobject( ViewToWindow, "InitSurfacesStmtsForInsert: " )
    GET VIEW mEPA NAMED "mEPA"
    IF mEPA != 0
       DropObjectInstance( mEPA )
@@ -1870,7 +1871,7 @@ InitLocationsStmtsForInsert( VIEW ViewToWindow )
    VIEW mMasLC   REGISTERED AS mMasLC
    VIEW mEPA     BASED ON LOD  mEPA
 
-   CancelCurrentTemporalSubobject( ViewToWindow, "InitLocationsStmtsForInsert: " )
+// CancelCurrentTemporalSubobject( ViewToWindow, "InitLocationsStmtsForInsert: " )
    GET VIEW mEPA NAMED "mEPA"
    IF mEPA != 0
       DropObjectInstance( mEPA )
@@ -1892,7 +1893,7 @@ InitAppTypesStmtsForInsert( VIEW ViewToWindow )
    VIEW mMasLC   REGISTERED AS mMasLC
    VIEW mEPA     BASED ON LOD  mEPA
 
-   CancelCurrentTemporalSubobject( ViewToWindow, "InitAppTypesStmtsForInsert: " )
+// CancelCurrentTemporalSubobject( ViewToWindow, "InitAppTypesStmtsForInsert: " )
    GET VIEW mEPA NAMED "mEPA"
    IF mEPA != 0
       DropObjectInstance( mEPA )
@@ -1914,7 +1915,37 @@ InitAddItems( VIEW ViewToWindow )
    VIEW wWebXfer REGISTERED AS wWebXfer
 
    wWebXfer.Root.String = "\r\n"
+   wWebXfer.Root.Note = ","
 
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: ConfirmAddSubitems
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+ConfirmAddSubitems( VIEW ViewToWindow )
+
+   VIEW mMasLC   REGISTERED AS mMasLC
+   VIEW wWebXfer REGISTERED AS wWebXfer
+   SHORT nCount
+
+   // Call operation to split text up into one or more entities, depending on the view, EntityName and
+   // AttributeName passed in mMasLC root work entities.
+   nCount = SplitParagraphOnLinefeed( mMasLC.MasterLabelContent.wAddStatementsWorkText,
+                                      mMasLC,
+                                      mMasLC.MasterLabelContent.wAddStatementsEntityName,
+                                      mMasLC.MasterLabelContent.wAddStatementsAttributeName,
+                                      wWebXfer.Root.String ) // delimiters
+
+   // Set Usage Type and Claims Classification for any entry for which the values haven't been set.
+   IF mMasLC.MasterLabelContent.wAddStatementsEntityName = "M_SubUsage"
+      FOR EACH mMasLC.M_SubUsage
+         mMasLC.M_SubUsage.UsageType = mMasLC.M_UsageType.UsageType
+      END
+   END
+   RETURN nCount
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1927,15 +1958,18 @@ ConfirmAddItemsMultiple( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
    VIEW wWebXfer REGISTERED AS wWebXfer
+   STRING ( 2048 ) szName
+   SHORT nCount
+   SHORT nSubCount
    SHORT nRC
 
    // Call operation to split text up into one or more entities, depending on the view, EntityName and
    // AttributeName passed in mMasLC root work entities.
-   SplitParagraphOnLinefeed( mMasLC.MasterLabelContent.wAddStatementsWorkText,
-                             mMasLC,
-                             mMasLC.MasterLabelContent.wAddStatementsEntityName,
-                             mMasLC.MasterLabelContent.wAddStatementsAttributeName,
-                             wWebXfer.Root.String )
+   nCount = SplitParagraphOnLinefeed( mMasLC.MasterLabelContent.wAddStatementsWorkText,
+                                      mMasLC,
+                                      mMasLC.MasterLabelContent.wAddStatementsEntityName,
+                                      mMasLC.MasterLabelContent.wAddStatementsAttributeName,
+                                      wWebXfer.Root.String ) // delimiters
 
    // Usage Type Processing
    // Set Usage Type and Claims Classification for any entry for which the values haven't been set.
@@ -1965,7 +1999,27 @@ ConfirmAddItemsMultiple( VIEW ViewToWindow )
       OrderEntityForView( mMasLC, "M_Usage", "Name A" )
       OrderEntityForView( mMasLC, "M_UsageGroupUsage", "Name A" )
    END
-
+   
+   IF wWebXfer.Root.Note != ""
+      wWebXfer.Root.String = wWebXfer.Root.Note
+      mMasLC.MasterLabelContent.wAddStatementsEntityName = "M_SubUsage"
+      FOR EACH mMasLC.M_Usage
+         mMasLC.MasterLabelContent.wAddStatementsWorkText = mMasLC.M_Usage.Name
+         nSubCount = ConfirmAddSubitems( ViewToWindow )
+         IF nSubCount >= 2
+            SET CURSOR FIRST mMasLC.M_SubUsage
+            mMasLC.M_Usage.Name = "{{}}"
+            szName = mMasLC.M_SubUsage.Name
+            SetFirstCharacterCase( szName, 0 )
+            mMasLC.M_SubUsage.Name = szName
+         ELSE
+            FOR EACH mMasLC.M_SubUsage
+               DELETE ENTITY mMasLC.M_SubUsage NONE
+            END
+         END
+      END
+   END
+   RETURN nCount
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1995,12 +2049,12 @@ ConfirmAddItemsMultipleClaims( VIEW ViewToWindow )
                              mMasLC,
                              mMasLC.MasterLabelContent.wAddStatementsEntityName,
                              mMasLC.MasterLabelContent.wAddStatementsAttributeName,
-                             wWebXfer.Root.String )
+                             wWebXfer.Root.String ) // delimiters
 
    // Set Usage Type and Claims Classification for any entry for which the values haven't been set.
    FOR EACH mMasLC.M_Usage
       IF mMasLC.M_Usage.UsageType = ""
-         mMasLC.M_Usage.UsageType            = "C"
+         mMasLC.M_Usage.UsageType = "C"
          mMasLC.M_Usage.ClaimsClassification = mMasLC.MasterLabelContent.wSelectedClaimsClassification
       END
    END
@@ -2017,11 +2071,30 @@ GOTO_MarketingStatementAdd( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
 
-   // Set up the work areas that define to the Add Items page that the items being added are Marketing
-   // Statements.
+   // Set up the work areas that define to the Add Items page that the items being added are
+   // Marketing Statements.
    mMasLC.MasterLabelContent.wAddStatementsEntityName    = "M_MarketingStatement"
    mMasLC.MasterLabelContent.wAddStatementsAttributeName = "Text"
    mMasLC.MasterLabelContent.wAddStatementsPageTitle     = "Marketing Statements"
+   mMasLC.MasterLabelContent.wAddStatementsWorkText      = ""
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_LocationStatementAdd
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+GOTO_LocationStatementAdd( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   // Set up the work areas that define to the Add Items page that the items being added are
+   // Marketing Statements.
+   mMasLC.MasterLabelContent.wAddStatementsEntityName    = "M_Usage"
+   mMasLC.MasterLabelContent.wAddStatementsAttributeName = "Name"
+   mMasLC.MasterLabelContent.wAddStatementsPageTitle     = "Location Statements"
    mMasLC.MasterLabelContent.wAddStatementsWorkText      = ""
 
 END
@@ -2036,9 +2109,40 @@ GOTO_AddUsageStatements( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
 
-   // Set up the work areas that define to the Add Items page that the items being added are Claims
-   // Usage entries.
+   // Set up the work areas that define to the Add Items page which items are being added.
    mMasLC.MasterLabelContent.wAddStatementsEntityName    = "M_Usage"
+   mMasLC.MasterLabelContent.wAddStatementsAttributeName = "Name"
+   mMasLC.MasterLabelContent.wAddStatementsWorkText      = ""
+   IF mMasLC.M_UsageType.UsageType = "S"
+      // Surfaces
+      mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Surfaces"
+   ELSE
+      IF mMasLC.M_UsageType.UsageType = "L"
+         // Locations
+         mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Locations"
+      ELSE
+         IF mMasLC.M_UsageType.UsageType = "T"
+            mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Application Use"
+         ELSE
+            mMasLC.MasterLabelContent.wAddStatementsPageTitle = "Unknown"
+         END
+      END
+   END
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_AddSubUsageStatements
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+GOTO_AddSubUsageStatements( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   // Set up the work areas that define to the Add SubItems page which items are being added.
+   mMasLC.MasterLabelContent.wAddStatementsEntityName    = "M_SubUsage"
    mMasLC.MasterLabelContent.wAddStatementsAttributeName = "Name"
    mMasLC.MasterLabelContent.wAddStatementsWorkText      = ""
    IF mMasLC.M_UsageType.UsageType = "S"
@@ -2069,8 +2173,7 @@ GOTO_AddGroupUsageStatements( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
 
-   // Set up the work areas that define to the Add Items page that the items being added are Claims
-   // Usage entries.
+   // Set up the work areas that define to the Add Items page which items are being added.
    mMasLC.MasterLabelContent.wAddStatementsEntityName    = "M_UsageGroupUsageTemp"
    mMasLC.MasterLabelContent.wAddStatementsAttributeName = "Name"
    mMasLC.MasterLabelContent.wAddStatementsWorkText      = ""
@@ -2980,4 +3083,16 @@ SaveMarketingSectionVersion( VIEW ViewToWindow )
    COMMIT mMasLC
    CreateTemporalSubobjectVersion( mMasLC, "M_MarketingSection" )
    
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: DummyOperationForPositioning
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+DummyOperationForPositioning( VIEW ViewToWindow )
+
+   // Do nothing ... for positioning only
+
 END

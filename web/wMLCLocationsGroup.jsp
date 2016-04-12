@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCLocationsGroup   Generate Timestamp: 20160406142139638 --%>
+<%-- wMLCLocationsGroup   Generate Timestamp: 20160407171236795 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -735,13 +735,16 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GBClaimsStatements1:GroupBox */ %>
+<% /* GBLocationsGroup:GroupBox */ %>
 
-<div id="GBClaimsStatements1" name="GBClaimsStatements1" class="withborder"   style="float:left;position:relative; width:616px; height:132px;">  <!-- GBClaimsStatements1 --> 
+<div id="GBLocationsGroup" name="GBLocationsGroup" class="withborder"   style="float:left;position:relative; width:616px; height:132px;">  <!-- GBLocationsGroup --> 
 
-<% /* OrganismClaimsStatements1:Text */ %>
+<% /* PushBtn2:PushBtn */ %>
+<button type="button" name="PushBtn2" id="PushBtn2" value="" onclick="DELETE_SelectedGroupUsageEntries( )" style="width:298px;height:26px;position:absolute;left:274px;top:12px;">Delete Selected Locations</button>
 
-<label class="groupbox"  id="OrganismClaimsStatements1" name="OrganismClaimsStatements1" style="width:158px;height:16px;position:absolute;left:6px;top:12px;">Locations Group Seq. No:</label>
+<% /* SequenceNumber::Text */ %>
+
+<label class="groupbox"  id="SequenceNumber:" name="SequenceNumber:" style="width:178px;height:16px;position:absolute;left:6px;top:22px;">Sequence Number:</label>
 
 <% /* Text1:Text */ %>
 <% strTextDisplayValue = "";
@@ -768,10 +771,7 @@ else
    }
 %>
 
-<label  id="Text1" name="Text1" style="width:54px;height:16px;position:absolute;left:166px;top:12px;"><%=strTextDisplayValue%></label>
-
-<% /* PushBtn2:PushBtn */ %>
-<button type="button" name="PushBtn2" id="PushBtn2" value="" onclick="DELETE_SelectedGroupUsageEntries( )" style="width:298px;height:26px;position:absolute;left:274px;top:12px;">Delete Selected Locations</button>
+<label  id="Text1" name="Text1" style="width:54px;height:16px;position:absolute;left:186px;top:22px;"><%=strTextDisplayValue%></label>
 
 <% /* PushBtn1:PushBtn */ %>
 <button type="button" name="PushBtn1" id="PushBtn1" value="" onclick="RemoveMLC_UsageEntriesFromGroup( )" style="width:298px;height:26px;position:absolute;left:274px;top:40px;">Remove Selected Locations from Group</button>
@@ -783,7 +783,7 @@ else
 <button type="button" name="PushBtn3" id="PushBtn3" value="" onclick="GOTO_SelectUsagesForGroup( )" style="width:298px;height:26px;position:absolute;left:274px;top:98px;">Go to Select Existing Locations for Group</button>
 
 
-</div>  <!--  GBClaimsStatements1 --> 
+</div>  <!--  GBLocationsGroup --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -799,7 +799,7 @@ else
 
 <thead bgcolor=green><tr>
 
-   <th>Select</th>
+   <th class="gridheading"><input type="checkbox" onclick="CheckAllInGrid(this,'GS_Select1')"></th>
    <th>Locations within Group</th>
    <th>Update</th>
 

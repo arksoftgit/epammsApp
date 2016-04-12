@@ -1,7 +1,7 @@
-z1000-Zeidon    ZGLOBAL1 TZOGSRCO 03/30/16   18:16:35 1.0a2   
+z1000-Zeidon    ZGLOBAL1 TZOGSRCO 04/11/16   21:01:43 1.0a2   
 eGlobalOperationGroup 1
 aZKey      89816452
-aNextZKeyToAssign 110040699
+aNextZKeyToAssign 110040704
 aName      ZGlobal1
 aDesc      Global Operations in C
 aExtension C
@@ -50,6 +50,26 @@ aDataType  L
 aPFlag     N
 aUFlag     N
 aZKey      89816458
+
+eOperation 2
+aName      SetFirstCharacterCase
+aZKey      110040700
+aDesc      Set the first character of the string to Upper case (third parameter == 1) or lower case (third parameter == 0)
+aType      G
+
+eParameter 3
+aShortDesc TargetString
+aDataType  S
+aPFlag     Y
+aUFlag     N
+aZKey      110040701
+
+eParameter 3
+aShortDesc UpperCase
+aDataType  N
+aPFlag     N
+aUFlag     N
+aZKey      110040703
 
 eOperation 2
 aName      DecipherUsageKeyword
@@ -125,6 +145,13 @@ aDataType  S
 aPFlag     Y
 aUFlag     N
 aZKey      110040691
+
+eParameter 3
+aShortDesc bInsertBraces
+aDataType  N
+aPFlag     N
+aUFlag     N
+aZKey      110040704
 
 eOperation 2
 aName      InsertMappingWordsIntoString

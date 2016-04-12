@@ -1,4 +1,4 @@
-z1000-Zeidon    EPAMMS   TZZOXOGO 03/30/16   18:16:35 1.0a2   
+z1000-Zeidon    EPAMMS   TZZOXOGO 04/11/16   21:01:43 1.0a2   
 eTZZOXOGO  1
 aNAME      epamms
 
@@ -29,6 +29,18 @@ aDATATYPE  S
 ePARAMETER 4
 aNAME      MaxRecordLth
 aDATATYPE  L
+
+eOPERATION 3
+aNAME      SetFirstCharacterCase
+aTYPE      G
+
+ePARAMETER 4
+aNAME      TargetString
+aDATATYPE  S
+
+ePARAMETER 4
+aNAME      UpperCase
+aDATATYPE  N
 
 eOPERATION 3
 aNAME      DecipherUsageKeyword
@@ -73,6 +85,10 @@ aDATATYPE  V
 ePARAMETER 4
 aNAME      ReturnFormatted
 aDATATYPE  S
+
+ePARAMETER 4
+aNAME      bInsertBraces
+aDATATYPE  N
 
 eOPERATION 3
 aNAME      InsertMappingWordsIntoString

@@ -169,7 +169,7 @@ zOPER_EXPORT zSHORT OPERATION
 omTempl_BuildDisplayStructure( zVIEW vViewToInstance0 );
 
 //end
-//start mMasLC 2016.04.05 19:57:27
+//start mMasLC 2016.04.11 21:31:07
 zOPER_EXPORT zSHORT OPERATION
 omMasLC_MergeUsageSelectEnts( zVIEW vViewToInstance0 );
 
@@ -304,13 +304,17 @@ zOPER_EXPORT zSHORT OPERATION
 olMLCATgt_DeleteEmptyTitles( zVIEW vViewToInstance0 );
 
 //end
-//start ZGlobal1 2016.03.30 18:16:35
+//start ZGlobal1 2016.04.11 21:01:43
 zOPER_EXPORT zSHORT OPERATION
 ConvertLineToEntity( zVIEW vEntityView0,
                      zVIEW vXOD_View1,
                      zPCHAR pchRecordArea2,
                      zPCHAR pchDelimiterType3,
                      zLONG lMaxRecordLth4 );
+
+zOPER_EXPORT zVOID OPERATION
+SetFirstCharacterCase( zPCHAR pchTargetString0,
+                       zSHORT nUpperCase1 );
 
 zOPER_EXPORT zSHORT OPERATION
 DecipherUsageKeyword( zPCHAR pchFullUsage0,
@@ -323,7 +327,8 @@ DecipherUsageKeyword( zPCHAR pchFullUsage0,
 
 zOPER_EXPORT zVOID OPERATION
 InsertOptionalSubUsages( zVIEW vmMasLC0,
-                         zPCHAR pchReturnFormatted1 );
+                         zPCHAR pchReturnFormatted1,
+                         zSHORT nbInsertBraces2 );
 
 zOPER_EXPORT zSHORT OPERATION
 InsertMappingWordsIntoString( zVIEW vmSPLDef0,

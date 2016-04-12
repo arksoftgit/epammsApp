@@ -190,7 +190,7 @@ function CheckAllInGrid(id, CheckBoxName) // triggered by no text checkbox
    }
 }
 
-function ADD_LocationItems( )
+function ADD_LocationStatements( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -200,7 +200,7 @@ function ADD_LocationItems( )
    {
       _DisableFormElements( true );
 
-      document.wMLCLocations.zAction.value = "ADD_LocationItems";
+      document.wMLCLocations.zAction.value = "ADD_LocationStatements";
       document.wMLCLocations.submit( );
    }
 }
@@ -290,7 +290,7 @@ function GOTO_AddUsageGroup( )
    }
 }
 
-function GOTO_UpdateAreasStatement( strTagEntityKey )
+function GOTO_UpdateLocationsStatement( strTagEntityKey )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -304,7 +304,7 @@ function GOTO_UpdateAreasStatement( strTagEntityKey )
       document.wMLCLocations.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
-      document.wMLCLocations.zAction.value = "GOTO_UpdateAreasStatement";
+      document.wMLCLocations.zAction.value = "GOTO_UpdateLocationsStatement";
       document.wMLCLocations.submit( );
    }
 }

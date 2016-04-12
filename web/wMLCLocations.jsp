@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCLocations   Generate Timestamp: 20160406142139552 --%>
+<%-- wMLCLocations   Generate Timestamp: 20160411212816304 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -60,7 +60,7 @@ public int DoInputMapping( HttpServletRequest request,
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
    {
-      // Grid: GridClaims
+      // Grid: GridLocations
       iTableRowCnt = 0;
 
       // We are creating a temp view to the grid view so that if there are 
@@ -74,7 +74,7 @@ public int DoInputMapping( HttpServletRequest request,
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
 
-         strTag = "GS_Select" + strEntityKey;
+         strTag = "GS_SelectLocation" + strEntityKey;
          strMapValue = request.getParameter( strTag );
          // If the checkbox is not checked, then set to the unchecked value.
          if (strMapValue == null || strMapValue.isEmpty() )
@@ -83,7 +83,7 @@ public int DoInputMapping( HttpServletRequest request,
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "GS_Select", "", strMapValue );
+               VmlOperation.CreateMessage( task, "GS_SelectLocation", "", strMapValue );
             else
                if ( strMapValue != null )
                   vGridTmp.cursor( "M_Usage" ).getAttribute( "wSelected" ).setValue( strMapValue, "" );
@@ -100,45 +100,45 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       vGridTmp.drop( );
-      // EditBox: Title1
+      // EditBox: Title
       nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "Title1" );
+         strMapValue = request.getParameter( "Title" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "Title1", "", strMapValue );
+               VmlOperation.CreateMessage( task, "Title", "", strMapValue );
             else
                mMasLC.cursor( "M_UsageType" ).getAttribute( "Title" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "Title1", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "Title", e.getReason( ), strMapValue );
          }
       }
 
-      // EditBox: ReviewerNote1
+      // EditBox: ReviewerNote
       nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "ReviewerNote1" );
+         strMapValue = request.getParameter( "ReviewerNote" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "ReviewerNote1", "", strMapValue );
+               VmlOperation.CreateMessage( task, "ReviewerNote", "", strMapValue );
             else
                mMasLC.cursor( "M_UsageType" ).getAttribute( "ReviewerNote" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "ReviewerNote1", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "ReviewerNote", e.getReason( ), strMapValue );
          }
       }
 
-      // Grid: GridClaims1
+      // Grid: GridLocationGroup
       iTableRowCnt = 0;
 
       // We are creating a temp view to the grid view so that if there are 
@@ -152,7 +152,7 @@ public int DoInputMapping( HttpServletRequest request,
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
 
-         strTag = "GS_Select1" + strEntityKey;
+         strTag = "GS_SelectLocationGroup" + strEntityKey;
          strMapValue = request.getParameter( strTag );
          // If the checkbox is not checked, then set to the unchecked value.
          if (strMapValue == null || strMapValue.isEmpty() )
@@ -161,7 +161,7 @@ public int DoInputMapping( HttpServletRequest request,
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "GS_Select1", "", strMapValue );
+               VmlOperation.CreateMessage( task, "GS_SelectLocationGroup", "", strMapValue );
             else
                if ( strMapValue != null )
                   vGridTmp.cursor( "M_UsageGroup" ).getAttribute( "wSelected" ).setValue( strMapValue, "" );
@@ -178,7 +178,7 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       vGridTmp.drop( );
-      // Grid: GridClaims2
+      // Grid: GridNonGroupLocations
       iTableRowCnt = 0;
 
       // We are creating a temp view to the grid view so that if there are 
@@ -317,7 +317,7 @@ if ( strActionToProcess != null )
 
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "ADD_LocationItems" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "ADD_LocationStatements" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
@@ -329,8 +329,8 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocations", "wMLC.GOTO_AddUsageStatements" );
-      nOptRC = wMLC.GOTO_AddUsageStatements( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocations", "wMLC.GOTO_LocationStatementAdd" );
+      nOptRC = wMLC.GOTO_LocationStatementAdd( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -524,7 +524,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_UpdateAreasStatement" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_UpdateLocationsStatement" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
@@ -572,7 +572,7 @@ if ( strActionToProcess != null )
       catch ( Exception e )
       {
          nRC = 2;
-         VmlOperation.CreateMessage( task, "GOTO_UpdateAreasStatement", e.getMessage( ), "" );
+         VmlOperation.CreateMessage( task, "GOTO_UpdateLocationsStatement", e.getMessage( ), "" );
          break;
       }
       // Next Window
@@ -1628,22 +1628,22 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GBClaimsStatements:GroupBox */ %>
+<% /* GBLocationStatements:GroupBox */ %>
 
-<div id="GBClaimsStatements" name="GBClaimsStatements" class="withborder"   style="float:left;position:relative; width:616px; height:36px;">  <!-- GBClaimsStatements --> 
+<div id="GBLocationStatements" name="GBLocationStatements" class="withborder"   style="float:left;position:relative; width:616px; height:36px;">  <!-- GBLocationStatements --> 
 
-<% /* OrganismClaimsStatements:Text */ %>
+<% /* LocationsStatements:Text */ %>
 
-<label class="groupbox"  id="OrganismClaimsStatements" name="OrganismClaimsStatements" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Locations Statements</label>
+<label class="groupbox"  id="LocationsStatements" name="LocationsStatements" style="">Locations Statements</label>
 
-<% /* PushBtn1:PushBtn */ %>
-<button type="button" name="PushBtn1" id="PushBtn1" value="" onclick="GOTO_DeleteSelectedEntries( )" style="width:210px;height:26px;position:absolute;left:264px;top:12px;">Delete Selected Locations</button>
+<% /* DeleteLocations:PushBtn */ %>
+<button type="button" name="DeleteLocations" id="DeleteLocations" value="" onclick="GOTO_DeleteSelectedEntries( )" style="width:210px;height:26px;position:absolute;left:264px;top:12px;" tabindex=-1 >Delete Selected Locations</button>
 
-<% /* PBNew:PushBtn */ %>
-<button type="button" name="PBNew" id="PBNew" value="" onclick="ADD_LocationItems( )" style="width:78px;height:26px;position:absolute;left:482px;top:12px;">New</button>
+<% /* PBNew1:PushBtn */ %>
+<button type="button" name="PBNew1" id="PBNew1" value="" onclick="ADD_LocationStatements( )" style="width:78px;height:26px;position:absolute;left:482px;top:12px;" tabindex=-1 >New</button>
 
 
-</div>  <!--  GBClaimsStatements --> 
+</div>  <!--  GBLocationStatements --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -1654,12 +1654,12 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GridClaims:Grid */ %>
-<table class="sortable"  cols=3 style="width:616px;"  name="GridClaims" id="GridClaims">
+<% /* GridLocations:Grid */ %>
+<table class="sortable"  cols=3 style="width:616px;"  name="GridLocations" id="GridLocations">
 
 <thead bgcolor=green><tr>
 
-   <th>Select</th>
+   <th class="gridheading"><input type="checkbox" onclick="CheckAllInGrid(this,'GS_SelectLocation')"></th>
    <th>Locations</th>
    <th>Update</th>
 
@@ -1679,47 +1679,47 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
-      String strGS_Select;
-      String strGS_SelectValue;
+      String strGS_SelectLocation;
+      String strGS_SelectLocationValue;
       String strLocations;
-      String strBMBUpdateClaimsStatement;
+      String strBMBUpdateLocationsStatement;
       
-      View vGridClaims;
-      vGridClaims = mMasLC.newView( );
-      csrRC2 = vGridClaims.cursor( "M_Usage" ).setFirst(  );
+      View vGridLocations;
+      vGridLocations = mMasLC.newView( );
+      csrRC2 = vGridLocations.cursor( "M_Usage" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGridClaims.cursor( "M_Usage" ).getEntityKey( );
+         lEntityKey = vGridLocations.cursor( "M_Usage" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strGS_Select = "";
-         nRC = vGridClaims.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
+         strGS_SelectLocation = "";
+         nRC = vGridLocations.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGS_Select = vGridClaims.cursor( "M_Usage" ).getAttribute( "wSelected" ).getString( "" );
+            strGS_SelectLocation = vGridLocations.cursor( "M_Usage" ).getAttribute( "wSelected" ).getString( "" );
 
-            if ( strGS_Select == null )
-               strGS_Select = "";
+            if ( strGS_SelectLocation == null )
+               strGS_SelectLocation = "";
          }
 
-         if ( StringUtils.equals( strGS_Select, "Y" ) )
+         if ( StringUtils.equals( strGS_SelectLocation, "Y" ) )
          {
-            strGS_SelectValue = "GS_Select" + strEntityKey;
-            strGS_Select = "<input name='" + strGS_SelectValue + "' id='" + strGS_SelectValue + "' value='Y' type='checkbox'  CHECKED > ";
+            strGS_SelectLocationValue = "GS_SelectLocation" + strEntityKey;
+            strGS_SelectLocation = "<input name='" + strGS_SelectLocationValue + "' id='" + strGS_SelectLocationValue + "' value='Y' type='checkbox'  CHECKED > ";
          }
          else
          {
-            strGS_SelectValue = "GS_Select" + strEntityKey;
-            strGS_Select = "<input name='" + strGS_SelectValue + "' id='" + strGS_SelectValue + "' value='Y' type='checkbox' > ";
+            strGS_SelectLocationValue = "GS_SelectLocation" + strEntityKey;
+            strGS_SelectLocation = "<input name='" + strGS_SelectLocationValue + "' id='" + strGS_SelectLocationValue + "' value='Y' type='checkbox' > ";
          }
 
          strLocations = "";
-         nRC = vGridClaims.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGridLocations.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strLocations = vGridClaims.cursor( "M_Usage" ).getAttribute( "Name" ).getString( "" );
+            strLocations = vGridLocations.cursor( "M_Usage" ).getAttribute( "dFullEmbeddedName" ).getString( "" );
 
             if ( strLocations == null )
                strLocations = "";
@@ -1732,16 +1732,16 @@ try
 
 <tr<%=strOdd%>>
 
-   <td nowrap><%=strGS_Select%></td>
-   <td><a href="#" onclick="GOTO_UpdateAreasStatement( this.id )" id="Locations::<%=strEntityKey%>"><%=strLocations%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateClaimsStatement" onclick="GOTO_UpdateAreasStatement( this.id )" id="BMBUpdateClaimsStatement::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><%=strGS_SelectLocation%></td>
+   <td><a href="#" onclick="GOTO_UpdateLocationsStatement( this.id )" id="Locations::<%=strEntityKey%>"><%=strLocations%></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateLocationsStatement" onclick="GOTO_UpdateLocationsStatement( this.id )" id="BMBUpdateLocationsStatement::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
 
 </tr>
 
 <%
-         csrRC2 = vGridClaims.cursor( "M_Usage" ).setNextContinue( );
+         csrRC2 = vGridLocations.cursor( "M_Usage" ).setNextContinue( );
       }
-      vGridClaims.drop( );
+      vGridLocations.drop( );
    }
 }
 catch (Exception e)
@@ -1767,25 +1767,25 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GBClaimsStatements1:GroupBox */ %>
+<% /* GBLocationGroups:GroupBox */ %>
 
-<div id="GBClaimsStatements1" name="GBClaimsStatements1" class="withborder"   style="float:left;position:relative; width:616px; height:68px;">  <!-- GBClaimsStatements1 --> 
+<div id="GBLocationGroups" name="GBLocationGroups" class="withborder"   style="float:left;position:relative; width:616px; height:68px;">  <!-- GBLocationGroups --> 
 
-<% /* OrganismClaimsStatements1:Text */ %>
+<% /* LocationsGroupsStatements:Text */ %>
 
-<label class="groupbox"  id="OrganismClaimsStatements1" name="OrganismClaimsStatements1" style="width:166px;height:16px;position:absolute;left:6px;top:12px;">Locations Groups</label>
+<label class="groupbox"  id="LocationsGroupsStatements" name="LocationsGroupsStatements" style="">Locations Groups</label>
 
 <% /* PushBtn2:PushBtn */ %>
-<button type="button" name="PushBtn2" id="PushBtn2" value="" onclick="DELETE_UsageGroupEntriesOnly( )" style="width:258px;height:26px;position:absolute;left:194px;top:12px;">Delete Selected Groups Only</button>
+<button type="button" name="PushBtn2" id="PushBtn2" value="" onclick="DELETE_UsageGroupEntriesOnly( )" style="width:258px;height:26px;position:absolute;left:194px;top:12px;" tabindex=-1 >Delete Selected Groups Only</button>
 
-<% /* PBNew1:PushBtn */ %>
-<button type="button" name="PBNew1" id="PBNew1" value="" onclick="GOTO_AddUsageGroup( )" style="width:78px;height:26px;position:absolute;left:482px;top:12px;">New</button>
+<% /* PBNew2:PushBtn */ %>
+<button type="button" name="PBNew2" id="PBNew2" value="" onclick="GOTO_AddUsageGroup( )" style="width:78px;height:26px;position:absolute;left:482px;top:12px;" tabindex=-1 >New</button>
 
-<% /* PushBtn3:PushBtn */ %>
-<button type="button" name="PushBtn3" id="PushBtn3" value="" onclick="DELETE_UsageGroupEntries( )" style="width:258px;height:26px;position:absolute;left:194px;top:38px;">Delete Selected Groups & Areas</button>
+<% /* DeleteLocationGroups:PushBtn */ %>
+<button type="button" name="DeleteLocationGroups" id="DeleteLocationGroups" value="" onclick="DELETE_UsageGroupEntries( )" style="width:258px;height:26px;position:absolute;left:194px;top:38px;" tabindex=-1 >Delete Selected Groups & Locations</button>
 
 
-</div>  <!--  GBClaimsStatements1 --> 
+</div>  <!--  GBLocationGroups --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -1796,13 +1796,13 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GridClaims1:Grid */ %>
-<table class="sortable"  cols=3 style="width:616px;"  name="GridClaims1" id="GridClaims1">
+<% /* GridLocationGroup:Grid */ %>
+<table class="sortable"  cols=3 style="width:616px;"  name="GridLocationGroup" id="GridLocationGroup">
 
 <thead bgcolor=green><tr>
 
-   <th>Select</th>
-   <th>Locations Groups</th>
+   <th class="gridheading"><input type="checkbox" onclick="CheckAllInGrid(this,'GS_SelectLocationGroup')"></th>
+   <th>Location Groups</th>
    <th>Update</th>
 
 </tr></thead>
@@ -1821,69 +1821,69 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
-      String strGS_Select1;
-      String strGS_Select1Value;
-      String strSurfaces1;
-      String strBMBUpdateClaimsStatement1;
+      String strGS_SelectLocationGroup;
+      String strGS_SelectLocationGroupValue;
+      String strLocationGroups;
+      String strBMBUpdateLocationGroupsStatement;
       
-      View vGridClaims1;
-      vGridClaims1 = mMasLC.newView( );
-      csrRC2 = vGridClaims1.cursor( "M_UsageGroup" ).setFirst(  );
+      View vGridLocationGroup;
+      vGridLocationGroup = mMasLC.newView( );
+      csrRC2 = vGridLocationGroup.cursor( "M_UsageGroup" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGridClaims1.cursor( "M_UsageGroup" ).getEntityKey( );
+         lEntityKey = vGridLocationGroup.cursor( "M_UsageGroup" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strGS_Select1 = "";
-         nRC = vGridClaims1.cursor( "M_UsageGroup" ).checkExistenceOfEntity( ).toInt();
+         strGS_SelectLocationGroup = "";
+         nRC = vGridLocationGroup.cursor( "M_UsageGroup" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGS_Select1 = vGridClaims1.cursor( "M_UsageGroup" ).getAttribute( "wSelected" ).getString( "" );
+            strGS_SelectLocationGroup = vGridLocationGroup.cursor( "M_UsageGroup" ).getAttribute( "wSelected" ).getString( "" );
 
-            if ( strGS_Select1 == null )
-               strGS_Select1 = "";
+            if ( strGS_SelectLocationGroup == null )
+               strGS_SelectLocationGroup = "";
          }
 
-         if ( StringUtils.equals( strGS_Select1, "Y" ) )
+         if ( StringUtils.equals( strGS_SelectLocationGroup, "Y" ) )
          {
-            strGS_Select1Value = "GS_Select1" + strEntityKey;
-            strGS_Select1 = "<input name='" + strGS_Select1Value + "' id='" + strGS_Select1Value + "' value='Y' type='checkbox'  CHECKED > ";
+            strGS_SelectLocationGroupValue = "GS_SelectLocationGroup" + strEntityKey;
+            strGS_SelectLocationGroup = "<input name='" + strGS_SelectLocationGroupValue + "' id='" + strGS_SelectLocationGroupValue + "' value='Y' type='checkbox'  CHECKED > ";
          }
          else
          {
-            strGS_Select1Value = "GS_Select1" + strEntityKey;
-            strGS_Select1 = "<input name='" + strGS_Select1Value + "' id='" + strGS_Select1Value + "' value='Y' type='checkbox' > ";
+            strGS_SelectLocationGroupValue = "GS_SelectLocationGroup" + strEntityKey;
+            strGS_SelectLocationGroup = "<input name='" + strGS_SelectLocationGroupValue + "' id='" + strGS_SelectLocationGroupValue + "' value='Y' type='checkbox' > ";
          }
 
-         strSurfaces1 = "";
-         nRC = vGridClaims1.cursor( "M_UsageGroup" ).checkExistenceOfEntity( ).toInt();
+         strLocationGroups = "";
+         nRC = vGridLocationGroup.cursor( "M_UsageGroup" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strSurfaces1 = vGridClaims1.cursor( "M_UsageGroup" ).getAttribute( "dSubUsageCombinedText" ).getString( "" );
+            strLocationGroups = vGridLocationGroup.cursor( "M_UsageGroup" ).getAttribute( "dSubUsageCombinedText" ).getString( "" );
 
-            if ( strSurfaces1 == null )
-               strSurfaces1 = "";
+            if ( strLocationGroups == null )
+               strLocationGroups = "";
          }
 
-         if ( StringUtils.isBlank( strSurfaces1 ) )
-            strSurfaces1 = "&nbsp";
+         if ( StringUtils.isBlank( strLocationGroups ) )
+            strLocationGroups = "&nbsp";
 
 %>
 
 <tr<%=strOdd%>>
 
-   <td nowrap><%=strGS_Select1%></td>
-   <td><a href="#" onclick="GOTO_UpdateUsageGroup( this.id )" id="Surfaces1::<%=strEntityKey%>"><%=strSurfaces1%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateClaimsStatement1" onclick="GOTO_UpdateUsageGroup( this.id )" id="BMBUpdateClaimsStatement1::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><%=strGS_SelectLocationGroup%></td>
+   <td><a href="#" onclick="GOTO_UpdateUsageGroup( this.id )" id="LocationGroups::<%=strEntityKey%>"><%=strLocationGroups%></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateLocationGroupsStatement" onclick="GOTO_UpdateUsageGroup( this.id )" id="BMBUpdateLocationGroupsStatement::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
 
 </tr>
 
 <%
-         csrRC2 = vGridClaims1.cursor( "M_UsageGroup" ).setNextContinue( );
+         csrRC2 = vGridLocationGroup.cursor( "M_UsageGroup" ).setNextContinue( );
       }
-      vGridClaims1.drop( );
+      vGridLocationGroup.drop( );
    }
 }
 catch (Exception e)
@@ -1909,8 +1909,8 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GridClaims2:Grid */ %>
-<table class="sortable"  cols=1 style="width:498px;"  name="GridClaims2" id="GridClaims2">
+<% /* GridNonGroupLocations:Grid */ %>
+<table class="sortable"  cols=1 style="width:498px;"  name="GridNonGroupLocations" id="GridNonGroupLocations">
 
 <thead bgcolor=green><tr>
 
@@ -1932,43 +1932,43 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
-      String strSurfaces2;
+      String strGE_NonGroupLocations;
       
-      View vGridClaims2;
-      vGridClaims2 = mMasLC.newView( );
-      csrRC2 = vGridClaims2.cursor( "M_UsageNonGroupUsage" ).setFirst(  );
+      View vGridNonGroupLocations;
+      vGridNonGroupLocations = mMasLC.newView( );
+      csrRC2 = vGridNonGroupLocations.cursor( "M_UsageNonGroupUsage" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGridClaims2.cursor( "M_UsageNonGroupUsage" ).getEntityKey( );
+         lEntityKey = vGridNonGroupLocations.cursor( "M_UsageNonGroupUsage" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strSurfaces2 = "";
-         nRC = vGridClaims2.cursor( "M_UsageNonGroupUsage" ).checkExistenceOfEntity( ).toInt();
+         strGE_NonGroupLocations = "";
+         nRC = vGridNonGroupLocations.cursor( "M_UsageNonGroupUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strSurfaces2 = vGridClaims2.cursor( "M_UsageNonGroupUsage" ).getAttribute( "Name" ).getString( "" );
+            strGE_NonGroupLocations = vGridNonGroupLocations.cursor( "M_UsageNonGroupUsage" ).getAttribute( "Name" ).getString( "" );
 
-            if ( strSurfaces2 == null )
-               strSurfaces2 = "";
+            if ( strGE_NonGroupLocations == null )
+               strGE_NonGroupLocations = "";
          }
 
-         if ( StringUtils.isBlank( strSurfaces2 ) )
-            strSurfaces2 = "&nbsp";
+         if ( StringUtils.isBlank( strGE_NonGroupLocations ) )
+            strGE_NonGroupLocations = "&nbsp";
 
 %>
 
 <tr<%=strOdd%>>
 
-   <td><%=strSurfaces2%></td>
+   <td><%=strGE_NonGroupLocations%></td>
 
 </tr>
 
 <%
-         csrRC2 = vGridClaims2.cursor( "M_UsageNonGroupUsage" ).setNextContinue( );
+         csrRC2 = vGridNonGroupLocations.cursor( "M_UsageNonGroupUsage" ).setNextContinue( );
       }
-      vGridClaims2.drop( );
+      vGridNonGroupLocations.drop( );
    }
 }
 catch (Exception e)
@@ -2001,15 +2001,15 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <tr>
 <td valign="top" style="width:136px;">
-<% /* Title:1:Text */ %>
+<% /* Title::Text */ %>
 
-<span  id="Title:1" name="Title:1" style="width:132px;height:20px;">Title:</span>
+<span  id="Title:" name="Title:" style="width:132px;height:20px;" tabindex=-1 >Title:</span>
 
 </td>
 <td valign="top" style="width:466px;">
-<% /* Title1:EditBox */ %>
+<% /* Title:EditBox */ %>
 <%
-   strErrorMapValue = VmlOperation.CheckError( "Title1", strError );
+   strErrorMapValue = VmlOperation.CheckError( "Title", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -2020,7 +2020,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "Title1" );
+         task.log( ).debug( "Invalid View: " + "Title" );
       else
       {
          nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
@@ -2032,8 +2032,8 @@ task.log().info( "*** Error in grid" + e.getMessage() );
             }
             catch (Exception e)
             {
-               out.println("There is an error on Title1: " + e.getMessage());
-               task.log().error( "*** Error on ctrl Title1", e );
+               out.println("There is an error on Title: " + e.getMessage());
+               task.log().error( "*** Error on ctrl Title", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -2041,26 +2041,26 @@ task.log().info( "*** Error in grid" + e.getMessage() );
             task.log( ).debug( "M_UsageType.Title: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for Title1: " + "mMasLC.M_UsageType" );
+            task.log( ).debug( "Entity does not exist for Title: " + "mMasLC.M_UsageType" );
       }
    }
 %>
 
-<input name="Title1" id="Title1" style="width:466px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Title" id="Title" style="width:466px;<%=strErrorColor%>" tabindex=-1  type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
 <tr>
 <td valign="top" style="width:136px;">
-<% /* ReviewerNote:1:Text */ %>
+<% /* ReviewerNote::Text */ %>
 
-<span  id="ReviewerNote:1" name="ReviewerNote:1" style="width:132px;height:20px;">Note to Reviewer:</span>
+<span  id="ReviewerNote:" name="ReviewerNote:" style="width:132px;height:20px;" tabindex=-1 >Note to Reviewer:</span>
 
 </td>
 <td valign="top" style="width:466px;">
-<% /* ReviewerNote1:EditBox */ %>
+<% /* ReviewerNote:EditBox */ %>
 <%
-   strErrorMapValue = VmlOperation.CheckError( "ReviewerNote1", strError );
+   strErrorMapValue = VmlOperation.CheckError( "ReviewerNote", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -2071,7 +2071,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "ReviewerNote1" );
+         task.log( ).debug( "Invalid View: " + "ReviewerNote" );
       else
       {
          nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
@@ -2083,8 +2083,8 @@ task.log().info( "*** Error in grid" + e.getMessage() );
             }
             catch (Exception e)
             {
-               out.println("There is an error on ReviewerNote1: " + e.getMessage());
-               task.log().error( "*** Error on ctrl ReviewerNote1", e );
+               out.println("There is an error on ReviewerNote: " + e.getMessage());
+               task.log().error( "*** Error on ctrl ReviewerNote", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -2092,12 +2092,12 @@ task.log().info( "*** Error in grid" + e.getMessage() );
             task.log( ).debug( "M_UsageType.ReviewerNote: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for ReviewerNote1: " + "mMasLC.M_UsageType" );
+            task.log( ).debug( "Entity does not exist for ReviewerNote: " + "mMasLC.M_UsageType" );
       }
    }
 %>
 
-<input name="ReviewerNote1" id="ReviewerNote1" style="width:466px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="ReviewerNote" id="ReviewerNote" style="width:466px;<%=strErrorColor%>" tabindex=-1  type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

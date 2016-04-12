@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCAddItemsMultipleClaims   Generate Timestamp: 20160406142139004 --%>
+<%-- wMLCAddItemsMultipleClaims   Generate Timestamp: 20160407213357057 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -768,11 +768,7 @@ else
 
 <% /* AddSurfacesList:Text */ %>
 
-<label class="groupbox"  id="AddSurfacesList" name="AddSurfacesList" style="width:348px;height:16px;position:absolute;left:6px;top:12px;">Add One or Multiple Items Separated by Line Feeds</label>
-
-<% /* Delimiters::Text */ %>
-
-<label  id="Delimiters:" name="Delimiters:" style="width:74px;height:16px;position:absolute;left:392px;top:12px;">Delimiters:</label>
+<label class="groupbox"  id="AddSurfacesList" name="AddSurfacesList" style="width:410px;height:16px;position:absolute;left:6px;top:12px;">Add One or Multiple Items Separated by Specified Delimiters:</label>
 
 <% /* Delimiters:EditBox */ %>
 <%
@@ -813,11 +809,11 @@ else
    }
 %>
 
-<input name="Delimiters" id="Delimiters" style="width:90px;position:absolute;left:472px;top:12px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Delimiters" id="Delimiters" style="width:90px;position:absolute;left:432px;top:12px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* Doc:Text */ %>
 
-<label  id="Doc" name="Doc" style="width:168px;height:16px;position:absolute;left:578px;top:12px;">\t - tab; \r\n - CRLF</label>
+<label  id="Doc" name="Doc" style="width:168px;height:16px;position:absolute;left:538px;top:12px;">\t - Tab; \r\n - CRLF</label>
 
 <% /* MLEdit2:MLEdit */ %>
 <%

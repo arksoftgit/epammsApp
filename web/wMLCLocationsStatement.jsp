@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCLocationsStatement   Generate Timestamp: 20160406142139685 --%>
+<%-- wMLCLocationsStatement   Generate Timestamp: 20160408234735351 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -60,26 +60,25 @@ public int DoInputMapping( HttpServletRequest request,
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
    {
-      // EditBox: PrecautionarySubtitle1
-      nRC = mMasLC.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
+      // Grid: Grid1
+      iTableRowCnt = 0;
+
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
+      vGridTmp = mMasLC.newView( );
+      csrRC = vGridTmp.cursor( "M_SubUsage" ).setFirst(  );
+      while ( csrRC.isSet() )
       {
-         strMapValue = request.getParameter( "PrecautionarySubtitle1" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "PrecautionarySubtitle1", "", strMapValue );
-            else
-               mMasLC.cursor( "M_Usage" ).getAttribute( "Name" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "PrecautionarySubtitle1", e.getReason( ), strMapValue );
-         }
+         lEntityKey = vGridTmp.cursor( "M_SubUsage" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         iTableRowCnt++;
+
+         csrRC = vGridTmp.cursor( "M_SubUsage" ).setNextContinue( );
       }
 
-      // Grid: Grid6
+      vGridTmp.drop( );
+      // Grid: Grid2
       iTableRowCnt = 0;
 
       // We are creating a temp view to the grid view so that if there are 
@@ -291,7 +290,210 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "DELETE_UsageKeyword" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelLocationsStatement" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocationsStatement", strActionToProcess );
+
+      // Action Auto Object Function
+      nRC = 0;
+      try
+      {
+      View mMasLC = task.getViewByName( "mMasLC" );
+      EntityCursor cursor = mMasLC.cursor( "M_Usage" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
+      {
+         if ( cursor.isVersioned( ) )
+         {
+            cursor.cancelSubobject( );
+         }
+         nRC = 0;
+      }
+
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "CancelLocationsStatement", e.getMessage( ), "" );
+         break;
+      }
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "DELETE_SubUsage" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocationsStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mMasLC;
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mMasLC.cursor( "M_SubUsage" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mMasLC.cursor( "M_SubUsage" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mMasLC.cursor( "M_SubUsage" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mMasLC.cursor( "M_SubUsage" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Action Auto Object Function
+      nRC = 0;
+      try
+      {
+      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordUsage" );
+      if ( cursor.isNull() )
+         nRC = 0;
+      else
+      {
+         cursor.deleteEntity( CursorPosition.NEXT );
+         nRC = 0;
+      }
+
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "DELETE_SubUsage", e.getMessage( ), "" );
+         break;
+      }
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DisplayGeneratedTextUsage" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocationsStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocationsStatement", "wMLC.GOTO_DisplayGeneratedTextUsage" );
+      nOptRC = wMLC.GOTO_DisplayGeneratedTextUsage( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "GeneratedTextDisplay" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_KeywordUpdate" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocationsStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mMasLC;
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mMasLC.cursor( "M_InsertTextKeywordUsage" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mMasLC.cursor( "M_InsertTextKeywordUsage" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mMasLC.cursor( "M_InsertTextKeywordUsage" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mMasLC.cursor( "M_InsertTextKeywordUsage" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocationsStatement", "wMLC.DummyOperationForPositioning" );
+      nOptRC = wMLC.DummyOperationForPositioning( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "MaintainKeyword" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "DELETE_Keyword" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocationsStatement", strActionToProcess );
@@ -345,49 +547,11 @@ if ( strActionToProcess != null )
       catch ( Exception e )
       {
          nRC = 2;
-         VmlOperation.CreateMessage( task, "DELETE_UsageKeyword", e.getMessage( ), "" );
+         VmlOperation.CreateMessage( task, "DELETE_Keyword", e.getMessage( ), "" );
          break;
       }
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DisplayGeneratedTextUsage" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocationsStatement", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocationsStatement", "wMLC.GOTO_DisplayGeneratedTextUsage" );
-      nOptRC = wMLC.GOTO_DisplayGeneratedTextUsage( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "GeneratedTextDisplay" );
-      }
-
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -410,14 +574,14 @@ if ( strActionToProcess != null )
       if ( VmlOperation.isValid( mMasLC ) )
       {
          lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mMasLC.cursor( "M_InsertTextKeywordUsage" ).setByEntityKey( lEKey );
+         csrRC = mMasLC.cursor( "M_SubUsage" ).setByEntityKey( lEKey );
          if ( !csrRC.isSet() )
          {
             boolean bFound = false;
-            csrRCk = mMasLC.cursor( "M_InsertTextKeywordUsage" ).setFirst( );
+            csrRCk = mMasLC.cursor( "M_SubUsage" ).setFirst( );
             while ( csrRCk.isSet() && !bFound )
             {
-               lEKey = mMasLC.cursor( "M_InsertTextKeywordUsage" ).getEntityKey( );
+               lEKey = mMasLC.cursor( "M_SubUsage" ).getEntityKey( );
                strKey = Long.toString( lEKey );
                if ( StringUtils.equals( strKey, strEntityKey ) )
                {
@@ -425,41 +589,15 @@ if ( strActionToProcess != null )
                   bFound = true;
                }
                else
-                  csrRCk = mMasLC.cursor( "M_InsertTextKeywordUsage" ).setNextContinue( );
+                  csrRCk = mMasLC.cursor( "M_SubUsage" ).setNextContinue( );
             } // Grid
          }
       }
 
-      // Action Auto Object Function
-      nRC = 0;
-      try
-      {
-      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordUsage" );
-      cursor.createTemporalSubobjectVersion( );
-
-      }
-      catch ( Exception e )
-      {
-         nRC = 2;
-         VmlOperation.CreateMessage( task, "GOTO_UsageUpdate", e.getMessage( ), "" );
-         break;
-      }
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "AddUpdateKeywordUsage" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "InitLocationsStmtsForInsert" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocationsStatement", strActionToProcess );
-
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocationsStatement", "wMLC.InitLocationsStmtsForInsert" );
-      nOptRC = wMLC.InitLocationsStmtsForInsert( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocationsStatement", "wMLC.DummyOperationForPositioning" );
+      nOptRC = wMLC.DummyOperationForPositioning( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -476,7 +614,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "AddLocationsList" );
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "MaintainSubItemName" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -484,37 +622,35 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelLocationsStatement" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "InitLocationsStmtsForInsert" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocationsStatement", strActionToProcess );
 
-      // Action Auto Object Function
-      nRC = 0;
-      try
-      {
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_Usage" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         if ( cursor.isVersioned( ) )
-         {
-            cursor.cancelSubobject( );
-         }
-         nRC = 0;
-      }
-
-      }
-      catch ( Exception e )
-      {
-         nRC = 2;
-         VmlOperation.CreateMessage( task, "CancelLocationsStatement", e.getMessage( ), "" );
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
          break;
-      }
+
       // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "AddLocationsList" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "LocationStatementMaintenance" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocationsStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "LocationStatementMaintenance" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -890,7 +1026,7 @@ else
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox4:GroupBox */ %>
 
-<div id="GroupBox4" name="GroupBox4" style="width:480px;height:28px;float:left;">  <!-- GroupBox4 --> 
+<div id="GroupBox4" name="GroupBox4" style="width:826px;height:28px;float:left;">  <!-- GroupBox4 --> 
 
 
  <!-- This is added as a line spacer -->
@@ -898,9 +1034,9 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <span style="height:16px;">&nbsp</span>
-<% /* PrecautionarySection1:Text */ %>
+<% /* LocationsStatement:Text */ %>
 
-<span class="groupbox"  id="PrecautionarySection1" name="PrecautionarySection1" style="width:338px;height:16px;">Locations Statement</span>
+<span class="groupbox"  id="LocationsStatement" name="LocationsStatement" style="width:338px;height:16px;">Locations Statement</span>
 
 </div>  <!-- End of a new line -->
 
@@ -913,66 +1049,52 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GBPrecautionarySection1:GroupBox */ %>
+<% /* GBLocationsStatement:GroupBox */ %>
 
-<div id="GBPrecautionarySection1" name="GBPrecautionarySection1" class="withborder" style="width:480px;height:28px;float:left;">  <!-- GBPrecautionarySection1 --> 
+<div id="GBLocationsStatement" name="GBLocationsStatement" class="withborder" style="width:824px;height:28px;float:left;">  <!-- GBLocationsStatement --> 
 
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox2:GroupBox */ %>
-<div id="GroupBox2" name="GroupBox2" style="float:left;width:464px;" >
+<div id="GroupBox2" name="GroupBox2" style="float:left;width:810px;" >
 
-<table cols=0 style="width:464px;"  class="grouptable">
+<table cols=0 style="width:810px;"  class="grouptable">
 
 <tr>
-<td valign="top" style="width:132px;">
-<% /* Description:Text */ %>
+<td valign="top" style="width:66px;">
+<% /* Name::Text */ %>
 
-<span  id="Description" name="Description" style="width:128px;height:16px;">Description:</span>
+<span  id="Name:" name="Name:" style="width:54px;height:16px;">Name:</span>
 
 </td>
-<td valign="top"  class="text12" style="width:312px;">
-<% /* PrecautionarySubtitle1:EditBox */ %>
-<%
-   strErrorMapValue = VmlOperation.CheckError( "PrecautionarySubtitle1", strError );
-   if ( !StringUtils.isBlank( strErrorMapValue ) )
-   {
-      if ( StringUtils.equals( strErrorFlag, "Y" ) )
-         strErrorColor = "color:red;";
-   }
+<td valign="top"  class="text12" style="width:730px;">
+<% /* LocationsName:Text */ %>
+<% strTextDisplayValue = "";
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) == false )
+      task.log( ).debug( "Invalid View: " + "LocationsName" );
    else
    {
-      strErrorColor = "";
-      mMasLC = task.getViewByName( "mMasLC" );
-      if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "PrecautionarySubtitle1" );
-      else
+      nRC = mMasLC.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         nRC = mMasLC.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            try
-            {
-               strErrorMapValue = mMasLC.cursor( "M_Usage" ).getAttribute( "Name" ).getString( "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on PrecautionarySubtitle1: " + e.getMessage());
-               task.log().error( "*** Error on ctrl PrecautionarySubtitle1", e );
-            }
-            if ( strErrorMapValue == null )
-               strErrorMapValue = "";
-
-            task.log( ).debug( "M_Usage.Name: " + strErrorMapValue );
-         }
-         else
-            task.log( ).debug( "Entity does not exist for PrecautionarySubtitle1: " + "mMasLC.M_Usage" );
+      try
+      {
+         strTextDisplayValue = mMasLC.cursor( "M_Usage" ).getAttribute( "dDisplayAtomicNames" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on LocationsName: " + e.getMessage());
+         task.log().info( "*** Error on ctrl LocationsName" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
       }
    }
 %>
 
-<input class="text12" name="PrecautionarySubtitle1" id="PrecautionarySubtitle1" style="width:312px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<span class="text12"  id="LocationsName" name="LocationsName" style="width:730px;height:16px;"><%=strTextDisplayValue%></span>
 
 </td>
 </tr>
@@ -983,14 +1105,134 @@ else
 </div>  <!-- End of a new line -->
 
 
-</div>  <!--  GBPrecautionarySection1 --> 
+</div>  <!--  GBLocationsStatement --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
  <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
+<div style="height:10px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox1:GroupBox */ %>
+
+<div id="GroupBox1" name="GroupBox1" style="width:832px;float:left;">  <!-- GroupBox1 --> 
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:8px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<% /* GroupBox3:GroupBox */ %>
+
+<div id="GroupBox3" name="GroupBox3"   style="float:left;position:relative; width:756px; height:30px;">  <!-- GroupBox3 --> 
+
+<% /* Text1:Text */ %>
+
+<label class="listheader"  id="Text1" name="Text1" style="width:398px;height:16px;position:absolute;left:10px;top:8px;">Sub-Locations</label>
+
+<% /* UpdateLocation:PushBtn */ %>
+<button type="button" name="UpdateLocation" id="UpdateLocation" value="" onclick="LocationStatementMaintenance( )" style="width:134px;height:26px;position:absolute;left:566px;top:8px;">Update Location</button>
+
+
+</div>  <!--  GroupBox3 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:8px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* Grid1:Grid */ %>
+<table class="sortable"  cols=3 style=""  name="Grid1" id="Grid1">
+
+<thead bgcolor=green><tr>
+
+   <th>Sub-Location Text</th>
+   <th>Update</th>
+   <th>Delete</th>
+
+</tr></thead>
+
+<tbody>
+
+<%
+try
+{
+   iTableRowCnt = 0;
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) )
+   {
+      long   lEntityKey;
+      String strEntityKey;
+      String strButtonName;
+      String strOdd;
+      String strTag;
+      String strLocationText;
+      String strBMBUpdateSubUsage;
+      String strBMBDeleteSubUsage;
+      
+      View vGrid1;
+      vGrid1 = mMasLC.newView( );
+      csrRC2 = vGrid1.cursor( "M_SubUsage" ).setFirst(  );
+      while ( csrRC2.isSet() )
+      {
+         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
+         iTableRowCnt++;
+
+         lEntityKey = vGrid1.cursor( "M_SubUsage" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         strLocationText = "";
+         nRC = vGrid1.cursor( "M_SubUsage" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strLocationText = vGrid1.cursor( "M_SubUsage" ).getAttribute( "Name" ).getString( "" );
+
+            if ( strLocationText == null )
+               strLocationText = "";
+         }
+
+         if ( StringUtils.isBlank( strLocationText ) )
+            strLocationText = "&nbsp";
+
+%>
+
+<tr<%=strOdd%>>
+
+   <td><a href="#" onclick="GOTO_UsageUpdate( this.id )" id="LocationText::<%=strEntityKey%>"><%=strLocationText%></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateSubUsage" onclick="GOTO_UsageUpdate( this.id )" id="BMBUpdateSubUsage::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteSubUsage" onclick="DELETE_SubUsage( this.id )" id="BMBDeleteSubUsage::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
+
+</tr>
+
+<%
+         csrRC2 = vGrid1.cursor( "M_SubUsage" ).setNextContinue( );
+      }
+      vGrid1.drop( );
+   }
+}
+catch (Exception e)
+{
+out.println("There is an error in grid: " + e.getMessage());
+task.log().info( "*** Error in grid" + e.getMessage() );
+}
+%>
+</tbody>
+</table>
+
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  GroupBox1 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
@@ -1007,15 +1249,15 @@ else
 
 <div id="GroupBox6" name="GroupBox6"   style="float:left;position:relative; width:756px; height:30px;">  <!-- GroupBox6 --> 
 
-<% /* PushBtn6:PushBtn */ %>
-<button type="button" class="newbutton" name="PushBtn6" id="PushBtn6" value="" onclick="GOTO_DisplayGeneratedTextUsage( )" style="width:158px;height:26px;position:absolute;left:438px;top:4px;">Show Generated Text</button>
+<% /* ShowGeneratedText:PushBtn */ %>
+<button type="button" class="newbutton" name="ShowGeneratedText" id="ShowGeneratedText" value="" onclick="GOTO_DisplayGeneratedTextUsage( )" style="width:158px;height:26px;position:absolute;left:492px;top:4px;">Show Generated Text</button>
 
-<% /* PushBtn5:PushBtn */ %>
-<button type="button" class="newbutton" name="PushBtn5" id="PushBtn5" value="" onclick="ADD_UsageKeyword( )" style="width:66px;height:26px;position:absolute;left:618px;top:4px;">New</button>
+<% /* New:PushBtn */ %>
+<button type="button" class="newbutton" name="New" id="New" value="" onclick="ADD_UsageKeyword( )" style="width:66px;height:26px;position:absolute;left:672px;top:4px;">New</button>
 
-<% /* Text7:Text */ %>
+<% /* Keyword:Text */ %>
 
-<label class="listheader"  id="Text7" name="Text7" style="width:398px;height:16px;position:absolute;left:10px;top:8px;">Keyword text for Embedding in Statement Text</label>
+<label class="listheader"  id="Keyword" name="Keyword" style="width:398px;height:16px;position:absolute;left:10px;top:8px;">Keyword text for Embedding in Statement Text</label>
 
 
 </div>  <!--  GroupBox6 --> 
@@ -1029,8 +1271,8 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* Grid6:Grid */ %>
-<table class="sortable"  cols=4 style=""  name="Grid6" id="Grid6">
+<% /* Grid2:Grid */ %>
+<table class="sortable"  cols=4 style=""  name="Grid2" id="Grid2">
 
 <thead bgcolor=green><tr>
 
@@ -1055,62 +1297,62 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
-      String strGridEditCtl6;
-      String strGridEditCtl7;
-      String strBMBDeleteDirectionsUseStatement4;
-      String strBitmapBtn4;
+      String strKeywordName;
+      String strKeywordText;
+      String strBMBUpdateKeyword;
+      String strBMBDeleteKeyword;
       
-      View vGrid6;
-      vGrid6 = mMasLC.newView( );
-      csrRC2 = vGrid6.cursor( "M_InsertTextKeywordUsage" ).setFirst(  );
+      View vGrid2;
+      vGrid2 = mMasLC.newView( );
+      csrRC2 = vGrid2.cursor( "M_InsertTextKeywordUsage" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGrid6.cursor( "M_InsertTextKeywordUsage" ).getEntityKey( );
+         lEntityKey = vGrid2.cursor( "M_InsertTextKeywordUsage" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strGridEditCtl6 = "";
-         nRC = vGrid6.cursor( "M_InsertTextKeywordUsage" ).checkExistenceOfEntity( ).toInt();
+         strKeywordName = "";
+         nRC = vGrid2.cursor( "M_InsertTextKeywordUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl6 = vGrid6.cursor( "M_InsertTextKeywordUsage" ).getAttribute( "Name" ).getString( "" );
+            strKeywordName = vGrid2.cursor( "M_InsertTextKeywordUsage" ).getAttribute( "Name" ).getString( "" );
 
-            if ( strGridEditCtl6 == null )
-               strGridEditCtl6 = "";
+            if ( strKeywordName == null )
+               strKeywordName = "";
          }
 
-         if ( StringUtils.isBlank( strGridEditCtl6 ) )
-            strGridEditCtl6 = "&nbsp";
+         if ( StringUtils.isBlank( strKeywordName ) )
+            strKeywordName = "&nbsp";
 
-         strGridEditCtl7 = "";
-         nRC = vGrid6.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
+         strKeywordText = "";
+         nRC = vGrid2.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl7 = vGrid6.cursor( "M_Usage" ).getAttribute( "dUsageKeywordText" ).getString( "" );
+            strKeywordText = vGrid2.cursor( "M_Usage" ).getAttribute( "dUsageKeywordText" ).getString( "" );
 
-            if ( strGridEditCtl7 == null )
-               strGridEditCtl7 = "";
+            if ( strKeywordText == null )
+               strKeywordText = "";
          }
 
-         if ( StringUtils.isBlank( strGridEditCtl7 ) )
-            strGridEditCtl7 = "&nbsp";
+         if ( StringUtils.isBlank( strKeywordText ) )
+            strKeywordText = "&nbsp";
 
 %>
 
 <tr<%=strOdd%>>
 
-   <td><a href="#" onclick="GOTO_UsageUpdate( this.id )" id="GridEditCtl6::<%=strEntityKey%>"><%=strGridEditCtl6%></a></td>
-   <td><%=strGridEditCtl7%></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteDirectionsUseStatement4" onclick="GOTO_UsageUpdate( this.id )" id="BMBDeleteDirectionsUseStatement4::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn4" onclick="DELETE_UsageKeyword( this.id )" id="BitmapBtn4::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
+   <td><a href="#" onclick="GOTO_KeywordUpdate( this.id )" id="KeywordName::<%=strEntityKey%>"><%=strKeywordName%></a></td>
+   <td><a href="#" onclick="GOTO_KeywordUpdate( this.id )" id="KeywordText::<%=strEntityKey%>"><%=strKeywordText%></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateKeyword" onclick="GOTO_KeywordUpdate( this.id )" id="BMBUpdateKeyword::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteKeyword" onclick="DELETE_Keyword( this.id )" id="BMBDeleteKeyword::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 
 <%
-         csrRC2 = vGrid6.cursor( "M_InsertTextKeywordUsage" ).setNextContinue( );
+         csrRC2 = vGrid2.cursor( "M_InsertTextKeywordUsage" ).setNextContinue( );
       }
-      vGrid6.drop( );
+      vGrid2.drop( );
    }
 }
 catch (Exception e)

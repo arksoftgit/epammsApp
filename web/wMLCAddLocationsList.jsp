@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCAddLocationsList   Generate Timestamp: 20160406142138926 --%>
+<%-- wMLCAddLocationsList   Generate Timestamp: 20160408234746408 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -512,6 +512,8 @@ else
 <%@ include file="./include/timeout.inc" %>
 <link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/css.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/sts.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
@@ -519,7 +521,12 @@ else
 
 </head>
 
-<body onLoad="_AfterPageLoaded( )" onSubmit="_DisableFormElements( true )" onBeforeUnload="_BeforePageUnload( )">
+<!-- 
+// If we have table sorting on this page, the table sorting does not work in Firefox 
+// (seems to work in IE and Opera).  The solution is to not call _AfterPageLoaded in OnLoad event. 
+// In the Standardista code (sts.js) there is an addEvent that will call _AfterPageLoaded. 
+--> 
+<body onSubmit="_DisableFormElements( true )" onBeforeUnload="_BeforePageUnload( )">
 
 <%@ include file="./include/pagebackground.inc" %>  <!-- just temporary until we get the painter dialog updates from Kelly ... 2011.10.08 dks -->
 
@@ -721,15 +728,6 @@ else
 
 <span class="groupbox"  id="AddLocationsList" name="AddLocationsList" style="width:176px;height:16px;">Add Locations List</span>
 
-<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
-<% /* HTSelectAllLocations:Text */ %>
-
-<a href="#" id="HTSelectAllLocations" name="HTSelectAllLocations"  onclick="SelectAllLocations( );" style="width:80px;height:16px;">Select All</a>
-
-<% /* HTClearSelectedLocations:Text */ %>
-
-<a href="#" id="HTClearSelectedLocations" name="HTClearSelectedLocations"  onclick="ClearSelectedLocations( );" style="width:100px;height:16px;">Clear Selected</a>
-
 </div>  <!-- End of a new line -->
 
 
@@ -740,16 +738,16 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:28px;width:100px;"></div>
+<div style="height:6px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:22px;float:left;"></div>   <!-- Width Spacer -->
 <% /* Grid:Grid */ %>
-<table  cols=2 style=""  name="Grid" id="Grid">
+<table class="sortable"  cols=2 style=""  name="Grid" id="Grid">
 
-<thead><tr>
+<thead bgcolor=green><tr>
 
-   <th>Select</th>
+   <th class="gridheading"><input type="checkbox" onclick="CheckAllInGrid(this,'GS_Select')"></th>
    <th>Location</th>
 
 </tr></thead>

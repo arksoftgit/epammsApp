@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDeleteComponent   Generate Timestamp: 20160407171235308 --%>
+<%-- wMLCMaintainSubItems   Generate Timestamp: 20160407171237046 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -36,6 +36,7 @@ public int DoInputMapping( HttpServletRequest request,
    Task task = objectEngine.getTaskById( taskId );
 
    View mMasLC = null;
+   View wWebXfer = null;
    View vGridTmp = null; // temp view to grid view
    View vRepeatingGrp = null; // temp view to repeating group view
    String strDateFormat = "";
@@ -60,6 +61,49 @@ public int DoInputMapping( HttpServletRequest request,
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
    {
+      // MLEdit: MLEdit2
+      nRC = mMasLC.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "MLEdit2" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "MLEdit2", "", strMapValue );
+            else
+               mMasLC.cursor( "MasterLabelContent" ).getAttribute( "wAddStatementsWorkText" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "MLEdit2", e.getReason( ), strMapValue );
+         }
+      }
+
+   }
+
+   wWebXfer = task.getViewByName( "wWebXfer" );
+   if ( VmlOperation.isValid( wWebXfer ) )
+   {
+      // EditBox: Delimiters
+      nRC = wWebXfer.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "Delimiters" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "Delimiters", "", strMapValue );
+            else
+               wWebXfer.cursor( "Root" ).getAttribute( "String" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "Delimiters", e.getReason( ), strMapValue );
+         }
+      }
+
    }
 
    if ( webMapping == true )
@@ -125,7 +169,7 @@ if ( StringUtils.isBlank( strLastWindow ) )
 
 strLastAction = (String) session.getAttribute( "ZeidonAction" );
 
-if ( strLastWindow.equals("wMLCDeleteComponent") && StringUtils.isBlank( strActionToProcess ) && StringUtils.isBlank( strLastAction ) )
+if ( strLastWindow.equals("wMLCMaintainSubItems") && StringUtils.isBlank( strActionToProcess ) && StringUtils.isBlank( strLastAction ) )
 {
    strURL = response.encodeRedirectURL( "logout.jsp" );
    response.sendRedirect( strURL );
@@ -163,9 +207,9 @@ strURL = "";
 bDone = false;
 nRC = 0;
 
-task.log().info("*** wMLCDeleteComponent strActionToProcess *** " + strActionToProcess );
-task.log().info("*** wMLCDeleteComponent LastWindow *** " + strLastWindow );
-task.log().info("*** wMLCDeleteComponent LastAction *** " + strLastAction );
+task.log().info("*** wMLCMaintainSubItems strActionToProcess *** " + strActionToProcess );
+task.log().info("*** wMLCMaintainSubItems LastWindow *** " + strLastWindow );
+task.log().info("*** wMLCMaintainSubItems LastAction *** " + strLastAction );
 
 if ( strActionToProcess != null )
 {
@@ -181,15 +225,27 @@ if ( strActionToProcess != null )
 
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelDeleteComponent" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelAddItems" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDeleteComponent", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCMaintainSubItems", strActionToProcess );
+
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "InitAddItems" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCMaintainSubItems", strActionToProcess );
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDeleteComponent", "wMLC.CancelDeleteComponent" );
-      nOptRC = wMLC.CancelDeleteComponent( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMaintainSubItems", "wMLC.InitAddItems" );
+      nOptRC = wMLC.InitAddItems( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -206,7 +262,7 @@ if ( strActionToProcess != null )
       if ( strNextJSP_Name.equals( "" ) )
       {
          // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -214,10 +270,10 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "ConfirmDeleteComponent" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "ConfirmAddItemsMultiple" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDeleteComponent", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCMaintainSubItems", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -226,8 +282,46 @@ if ( strActionToProcess != null )
 
       // Action Operation
       nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDeleteComponent", "wMLC.ConfirmDeleteComponent" );
-      nOptRC = wMLC.ConfirmDeleteComponent( new zVIEW( vKZXMLPGO ) );
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMaintainSubItems", "wMLC.ConfirmAddItemsMultiple" );
+      nOptRC = wMLC.ConfirmAddItemsMultiple( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "ConfirmAddItemsMultipleReturn" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCMaintainSubItems", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCMaintainSubItems", "wMLC.ConfirmAddItemsMultiple" );
+      nOptRC = wMLC.ConfirmAddItemsMultiple( new zVIEW( vKZXMLPGO ) );
       if ( nOptRC == 2 )
       {
          nRC = 2;  // do the "error" redirection
@@ -271,7 +365,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wMLCDeleteComponent" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wMLCMaintainSubItems" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -288,7 +382,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ------->>> " + "wMLCDeleteComponent" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ------->>> " + "wMLCMaintainSubItems" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -303,14 +397,14 @@ if ( strActionToProcess != null )
    while ( bDone == false && strActionToProcess.equals( "_OnResubmitPage" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDeleteComponent", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCMaintainSubItems", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
       if ( nRC < 0 )
          break;
 
-      strURL = response.encodeRedirectURL( "wMLCDeleteComponent.jsp" );
+      strURL = response.encodeRedirectURL( "wMLCMaintainSubItems.jsp" );
       nRC = 1;  //do the redirection
       break;
    }
@@ -321,11 +415,11 @@ if ( strActionToProcess != null )
       {
          if ( nRC > 1 )
          {
-            strURL = response.encodeRedirectURL( "wMLCDeleteComponent.jsp" );
+            strURL = response.encodeRedirectURL( "wMLCMaintainSubItems.jsp" );
             task.log().info( "Action Error Redirect to: " + strURL );
          }
 
-         if ( ! strURL.equals("wMLCDeleteComponent.jsp") ) 
+         if ( ! strURL.equals("wMLCMaintainSubItems.jsp") ) 
          {
             response.sendRedirect( strURL );
             // If we are redirecting to a new page, then we need this return so that the rest of this page doesn't get built.
@@ -336,7 +430,7 @@ if ( strActionToProcess != null )
       {
          if ( nRC > -128 )
          {
-            strURL = response.encodeRedirectURL( "wMLCDeleteComponent.jsp" );
+            strURL = response.encodeRedirectURL( "wMLCMaintainSubItems.jsp" );
             task.log().info( "Mapping Error Redirect to: " + strURL );
          }
          else
@@ -364,7 +458,7 @@ else
    if ( VmlOperation.isValid( wWebXA ) )
    {
       wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wMLC", "" );
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "DeleteComponent", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "MaintainSubItems", "" );
    }
 
 %>
@@ -372,7 +466,7 @@ else
 <html>
 <head>
 
-<title>Directions For Use Statement</title>
+<title>Maintain Sub-Items</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
@@ -383,7 +477,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-<script language="JavaScript" type="text/javascript" src="./genjs/wMLCDeleteComponent.js"></script>
+<script language="JavaScript" type="text/javascript" src="./genjs/wMLCMaintainSubItems.js"></script>
 
 </head>
 
@@ -403,11 +497,21 @@ else
 <div id="sidenavigation">
    <ul id="Return" name="Return">
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "DeleteAndReturn" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "AddItems" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="DeleteAndReturn" name="DeleteAndReturn"><a href="#"  onclick="ConfirmDeleteComponent()">Confirm Delete & Return</a></li>
+       <li id="AddItems" name="AddItems"><a href="#"  onclick="ConfirmAddItemsMultiple()">Add Items</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "AddAndReturn" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="AddAndReturn" name="AddAndReturn"><a href="#"  onclick="ConfirmAddItemsMultipleReturn()">Add and Return</a></li>
 <%
    }
 %>
@@ -417,7 +521,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CancelDeleteComponent()">Cancel Delete & Return</a></li>
+       <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CancelAddItems()">Cancel and Return</a></li>
 <%
    }
 %>
@@ -435,7 +539,7 @@ else
 <!-- END System Maintenance-->
 
 
-<form name="wMLCDeleteComponent" id="wMLCDeleteComponent" method="post">
+<form name="wMLCMaintainSubItems" id="wMLCMaintainSubItems" method="post">
    <input name="zAction" id="zAction" type="hidden" value="NOVALUE">
    <input name="zTableRowSelect" id="zTableRowSelect" type="hidden" value="NOVALUE">
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
@@ -513,7 +617,7 @@ else
 
    strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
 
-   strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wMLC", "DeleteComponent" );
+   strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wMLC", "MaintainSubItems" );
    strOpenFile = VmlOperation.FindOpenFile( task );
    strDateFormat = "YYYY.MM.DD";
 
@@ -551,31 +655,19 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:16px;width:100px;"></div>
+<div style="height:2px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
-<% /* DirectionsForUseStatement:GroupBox */ %>
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GBStorDispSections3:GroupBox */ %>
 
-<div id="DirectionsForUseStatement" name="DirectionsForUseStatement" class="withborder" style="width:658px;height:354px;float:left;">  <!-- DirectionsForUseStatement --> 
+<div id="GBStorDispSections3" name="GBStorDispSections3" class="listgroup"   style="float:left;position:relative; width:780px; height:36px;">  <!-- GBStorDispSections3 --> 
 
-<div  id="DirectionsForUseStatement" name="DirectionsForUseStatement" >Component to Delete</div>
-
- <!-- This is added as a line spacer -->
-<div style="height:24px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
-<% /* DirectionsUseTitle::Text */ %>
-
-<span  id="DirectionsUseTitle:" name="DirectionsUseTitle:" style="width:56px;height:16px;">Type:</span>
-
-<span style="height:16px;">&nbsp</span>
-<% /* DirectionsUseTitle:Text */ %>
+<% /* EnvironmentalHazardsSection1:Text */ %>
 <% strTextDisplayValue = "";
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) == false )
-      task.log( ).debug( "Invalid View: " + "DirectionsUseTitle" );
+      task.log( ).debug( "Invalid View: " + "EnvironmentalHazardsSection1" );
    else
    {
       nRC = mMasLC.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
@@ -583,12 +675,12 @@ else
       {
       try
       {
-         strTextDisplayValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "wDeleteType" ).getString( "" );
+         strTextDisplayValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "wAddStatementsPageTitle" ).getString( "" );
       }
       catch (Exception e)
       {
-         out.println("There is an error on DirectionsUseTitle: " + e.getMessage());
-         task.log().info( "*** Error on ctrl DirectionsUseTitle" + e.getMessage() );
+         out.println("There is an error on EnvironmentalHazardsSection1: " + e.getMessage());
+         task.log().info( "*** Error on ctrl EnvironmentalHazardsSection1" + e.getMessage() );
       }
          if ( strTextDisplayValue == null )
             strTextDisplayValue = "";
@@ -596,27 +688,81 @@ else
    }
 %>
 
-<span class="text14bold"  id="DirectionsUseTitle" name="DirectionsUseTitle" style="width:566px;height:16px;"><%=strTextDisplayValue%></span>
+<label class="groupbox"  id="EnvironmentalHazardsSection1" name="EnvironmentalHazardsSection1" style="width:746px;height:16px;position:absolute;left:6px;top:12px;"><%=strTextDisplayValue%></label>
 
+
+</div>  <!--  GBStorDispSections3 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
  <!-- This is added as a line spacer -->
-<div style="height:14px;width:100px;"></div>
+<div style="height:86px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
-<% /* StatementText::Text */ %>
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GBAddSurfacesList:GroupBox */ %>
 
-<span  id="StatementText:" name="StatementText:" style="width:56px;height:16px;">Text:</span>
+<div id="GBAddSurfacesList" name="GBAddSurfacesList"   style="float:left;position:relative; width:778px; height:564px;">  <!-- GBAddSurfacesList --> 
 
-<span style="height:288px;">&nbsp</span>
-<% /* StatementText:MLEdit */ %>
+<% /* AddSurfacesList:Text */ %>
+
+<label class="groupbox"  id="AddSurfacesList" name="AddSurfacesList" style="width:374px;height:16px;position:absolute;left:6px;top:94px;">Add One or Multiple Items Separated by Line Feeds</label>
+
+<% /* Delimiters::Text */ %>
+
+<label  id="Delimiters:" name="Delimiters:" style="width:74px;height:16px;position:absolute;left:392px;top:94px;">Delimiters:</label>
+
+<% /* Delimiters:EditBox */ %>
 <%
-   // : StatementText
-   strErrorMapValue = VmlOperation.CheckError( "StatementText", strError );
+   strErrorMapValue = VmlOperation.CheckError( "Delimiters", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      wWebXfer = task.getViewByName( "wWebXfer" );
+      if ( VmlOperation.isValid( wWebXfer ) == false )
+         task.log( ).debug( "Invalid View: " + "Delimiters" );
+      else
+      {
+         nRC = wWebXfer.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "String" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on Delimiters: " + e.getMessage());
+               task.log().error( "*** Error on ctrl Delimiters", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "Root.String: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for Delimiters: " + "wWebXfer.Root" );
+      }
+   }
+%>
+
+<input name="Delimiters" id="Delimiters" style="width:90px;position:absolute;left:472px;top:94px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
+<% /* Doc:Text */ %>
+
+<label  id="Doc" name="Doc" style="width:168px;height:16px;position:absolute;left:578px;top:94px;">\t - tab; \r\n - CRLF</label>
+
+<% /* MLEdit2:MLEdit */ %>
+<%
+   // : MLEdit2
+   strErrorMapValue = VmlOperation.CheckError( "MLEdit2", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -627,30 +773,28 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).info( "Invalid View: " + "StatementText" );
+         task.log( ).info( "Invalid View: " + "MLEdit2" );
       else
       {
          nRC = mMasLC.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strErrorMapValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "wDeleteText" ).getString( "" );
+            strErrorMapValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "wAddStatementsWorkText" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).info( "MasterLabelContent.wDeleteText: " + strErrorMapValue );
+            task.log( ).info( "MasterLabelContent.wAddStatementsWorkText: " + strErrorMapValue );
          }
          else
-            task.log( ).info( "Entity does not exist for StatementText: " + "mMasLC.MasterLabelContent" );
+            task.log( ).info( "Entity does not exist for MLEdit2: " + "mMasLC.MasterLabelContent" );
       }
    }
 %>
 
-<div name="StatementText" id="StatementText" style="width:566px;height:288px;position:absolute;left:74px;top:54px;border:solid;border-width:4px;border-style:groove;display:inline-block;text-overflow:hidden;background-color:lightgray;" wrap="wrap"><%=strErrorMapValue%></div>
-
-</div>  <!-- End of a new line -->
+<textarea name="MLEdit2" id="MLEdit2" style="width:754px;height:442px;position:absolute;left:6px;top:116px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 
-</div>  <!--  DirectionsForUseStatement --> 
+</div>  <!--  GBAddSurfacesList --> 
 </div>  <!-- End of a new line -->
 
 
@@ -683,7 +827,7 @@ else
 <script type="text/javascript">animatedcollapse.init();</script>
 </html>
 <%
-   session.setAttribute( "ZeidonWindow", "wMLCDeleteComponent" );
+   session.setAttribute( "ZeidonWindow", "wMLCMaintainSubItems" );
    session.setAttribute( "ZeidonAction", null );
 
    strActionToProcess = "";

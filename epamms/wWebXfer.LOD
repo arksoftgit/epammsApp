@@ -1,4 +1,4 @@
-z1000-Zeidon    WWEBXFER TZZOLODO 03/28/16   16:23:23 1.0a2   
+z1000-Zeidon    WWEBXFER TZZOLODO 04/08/16   08:00:41 1.0a2   
 eLOD       1
 aZKey      1157145
 aName      wWebXfer
@@ -1332,7 +1332,7 @@ aZKey      1174501
 eDomainRec 5
 
 eLOD_Entity 2
-awkSelectedAttributeForDragSort 14
+awkSelectedAttributeForDragSort 24
 
 eLOD_Attribute 3
 awkSequence 1

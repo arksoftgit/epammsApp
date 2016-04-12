@@ -4644,7 +4644,7 @@ public class ZGlobal1_Operation extends VmlOperation
       int k;
       String token;
       pos = 0;
-      while ( pos <= end ) {
+      while ( pos <= end && posPrev < end ) {
          for ( k = 0; k < delimEnd; k++ ) {
             if ( (posPrev < pos && pos == end) || paragraph.charAt( pos ) == delimiters.charAt( k ) ) {
                token = paragraph.substring( posPrev, pos );
@@ -4667,6 +4667,24 @@ public class ZGlobal1_Operation extends VmlOperation
       }
 
       return count;
+   }
+
+   public void
+   SetFirstCharacterCase( StringBuilder sbTarget, int bUpper )
+   {
+      if ( sbTarget.length() > 0 )
+      {
+         char ch;
+         if ( bUpper != 0 )
+         {
+            ch = Character.toUpperCase(sbTarget.charAt(0));
+         }
+         else
+         {
+            ch = Character.toLowerCase(sbTarget.charAt(0));
+         }
+         sbTarget.setCharAt(0, ch);
+      }
    }
 
    public String
@@ -4805,7 +4823,8 @@ public class ZGlobal1_Operation extends VmlOperation
 
    public int
    InsertOptionalSubUsages( View     mMasLC,
-                            StringBuilder sbSourceToModify )
+                            StringBuilder sbSourceToModify,
+                            int      bInsertBraces )
    {
       StringBuilder sbTarget = new StringBuilder();
       String   szOrigSource = sbSourceToModify.toString();
@@ -4815,6 +4834,11 @@ public class ZGlobal1_Operation extends VmlOperation
       int      closeBracePos;
       int      nRC = 0;
 
+      if ( bInsertBraces != 0 )
+         szOpenBrace = "{";
+      else
+         szOpenBrace = "";
+      
    // Food [{{}}] areas
    // preparation storage
    // Automobile [{{}}]
@@ -4832,10 +4856,15 @@ public class ZGlobal1_Operation extends VmlOperation
 
          // Copy the SubUsage values into the text - surounded by single braces to signify the values are optional.
          while ( nRC >= zCURSOR_SET ) {
-            sbTarget.append( szOpenBrace + mMasLC.cursor( "M_SubUsage" ).getAttribute( "Name" ).getString() + "}" );
+            sbTarget.append( szOpenBrace + mMasLC.cursor( "M_SubUsage" ).getAttribute( "Name" ).getString() );
+            if ( bInsertBraces != 0 )
+               sbTarget.append( "}" );
             if ( changed == false ) {
                changed = true;
-               szOpenBrace = ", {";
+               if ( bInsertBraces != 0 )
+                  szOpenBrace = ", {";
+               else
+                  szOpenBrace = ", ";
             }
             nRC = mMasLC.cursor( "M_SubUsage" ).setNext().toInt();
          }

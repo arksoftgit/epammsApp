@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCAddItemsMultiple   Generate Timestamp: 20160406142138965 --%>
+<%-- wMLCAddItemsMultiple   Generate Timestamp: 20160411202009166 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -101,6 +101,25 @@ public int DoInputMapping( HttpServletRequest request,
          {
             nMapError = -16;
             VmlOperation.CreateMessage( task, "Delimiters", e.getReason( ), strMapValue );
+         }
+      }
+
+      // EditBox: EditBox1
+      nRC = wWebXfer.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "EditBox1" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "EditBox1", "", strMapValue );
+            else
+               wWebXfer.cursor( "Root" ).getAttribute( "Note" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "EditBox1", e.getReason( ), strMapValue );
          }
       }
 
@@ -695,11 +714,7 @@ else
 
 <% /* AddSurfacesList:Text */ %>
 
-<label class="groupbox"  id="AddSurfacesList" name="AddSurfacesList" style="width:374px;height:16px;position:absolute;left:6px;top:12px;">Add One or Multiple Items Separated by Line Feeds</label>
-
-<% /* Delimiters::Text */ %>
-
-<label  id="Delimiters:" name="Delimiters:" style="width:74px;height:16px;position:absolute;left:392px;top:12px;">Delimiters:</label>
+<label class="groupbox"  id="AddSurfacesList" name="AddSurfacesList" style="width:330px;height:16px;position:absolute;left:6px;top:12px;">Add Item(s) Separated by Specified Delimiters:</label>
 
 <% /* Delimiters:EditBox */ %>
 <%
@@ -740,11 +755,56 @@ else
    }
 %>
 
-<input name="Delimiters" id="Delimiters" style="width:90px;position:absolute;left:472px;top:12px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Delimiters" id="Delimiters" style="width:74px;position:absolute;left:338px;top:12px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
+<% /* SubItemsDelimiter::Text */ %>
+
+<label  id="SubItemsDelimiter:" name="SubItemsDelimiter:" style="width:146px;height:16px;position:absolute;left:422px;top:12px;">Sub-items Delimiter:</label>
+
+<% /* EditBox1:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "EditBox1", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      wWebXfer = task.getViewByName( "wWebXfer" );
+      if ( VmlOperation.isValid( wWebXfer ) == false )
+         task.log( ).debug( "Invalid View: " + "EditBox1" );
+      else
+      {
+         nRC = wWebXfer.cursor( "Root" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = wWebXfer.cursor( "Root" ).getAttribute( "Note" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on EditBox1: " + e.getMessage());
+               task.log().error( "*** Error on ctrl EditBox1", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "Root.Note: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for EditBox1: " + "wWebXfer.Root" );
+      }
+   }
+%>
+
+<input name="EditBox1" id="EditBox1" style="width:40px;position:absolute;left:570px;top:12px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* Doc:Text */ %>
 
-<label  id="Doc" name="Doc" style="width:168px;height:16px;position:absolute;left:578px;top:12px;">\t - tab; \r\n - CRLF</label>
+<label  id="Doc" name="Doc" style="width:146px;height:16px;position:absolute;left:622px;top:12px;">\t - Tab; \r\n - CRLF</label>
 
 <% /* MLEdit2:MLEdit */ %>
 <%

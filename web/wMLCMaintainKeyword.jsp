@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDeleteComponent   Generate Timestamp: 20160407171235308 --%>
+<%-- wMLCMaintainKeyword   Generate Timestamp: 20160408193433635 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -60,6 +60,44 @@ public int DoInputMapping( HttpServletRequest request,
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
    {
+      // EditBox: KeywordName:
+      nRC = mMasLC.cursor( "M_InsertTextKeywordUsage" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "KeywordName:" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "KeywordName:", "", strMapValue );
+            else
+               mMasLC.cursor( "M_InsertTextKeywordUsage" ).getAttribute( "Name" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "KeywordName:", e.getReason( ), strMapValue );
+         }
+      }
+
+      // EditBox: KeywordValue
+      nRC = mMasLC.cursor( "M_InsertTextUsage" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "KeywordValue" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "KeywordValue", "", strMapValue );
+            else
+               mMasLC.cursor( "M_InsertTextUsage" ).getAttribute( "Text" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "KeywordValue", e.getReason( ), strMapValue );
+         }
+      }
+
    }
 
    if ( webMapping == true )
@@ -125,7 +163,7 @@ if ( StringUtils.isBlank( strLastWindow ) )
 
 strLastAction = (String) session.getAttribute( "ZeidonAction" );
 
-if ( strLastWindow.equals("wMLCDeleteComponent") && StringUtils.isBlank( strActionToProcess ) && StringUtils.isBlank( strLastAction ) )
+if ( strLastWindow.equals("wMLCMaintainKeyword") && StringUtils.isBlank( strActionToProcess ) && StringUtils.isBlank( strLastAction ) )
 {
    strURL = response.encodeRedirectURL( "logout.jsp" );
    response.sendRedirect( strURL );
@@ -163,9 +201,9 @@ strURL = "";
 bDone = false;
 nRC = 0;
 
-task.log().info("*** wMLCDeleteComponent strActionToProcess *** " + strActionToProcess );
-task.log().info("*** wMLCDeleteComponent LastWindow *** " + strLastWindow );
-task.log().info("*** wMLCDeleteComponent LastAction *** " + strLastAction );
+task.log().info("*** wMLCMaintainKeyword strActionToProcess *** " + strActionToProcess );
+task.log().info("*** wMLCMaintainKeyword LastWindow *** " + strLastWindow );
+task.log().info("*** wMLCMaintainKeyword LastAction *** " + strLastAction );
 
 if ( strActionToProcess != null )
 {
@@ -181,72 +219,30 @@ if ( strActionToProcess != null )
 
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelDeleteComponent" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelUpdate" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDeleteComponent", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCMaintainKeyword", strActionToProcess );
 
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDeleteComponent", "wMLC.CancelDeleteComponent" );
-      nOptRC = wMLC.CancelDeleteComponent( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
-      }
-
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "ConfirmDeleteComponent" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "UpdateKeyword" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDeleteComponent", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCMaintainKeyword", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
       if ( nRC < 0 )
          break;
 
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDeleteComponent", "wMLC.ConfirmDeleteComponent" );
-      nOptRC = wMLC.ConfirmDeleteComponent( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
-      }
-
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -271,7 +267,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wMLCDeleteComponent" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wMLCMaintainKeyword" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -288,7 +284,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ------->>> " + "wMLCDeleteComponent" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ------->>> " + "wMLCMaintainKeyword" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -303,14 +299,14 @@ if ( strActionToProcess != null )
    while ( bDone == false && strActionToProcess.equals( "_OnResubmitPage" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDeleteComponent", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCMaintainKeyword", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
       if ( nRC < 0 )
          break;
 
-      strURL = response.encodeRedirectURL( "wMLCDeleteComponent.jsp" );
+      strURL = response.encodeRedirectURL( "wMLCMaintainKeyword.jsp" );
       nRC = 1;  //do the redirection
       break;
    }
@@ -321,11 +317,11 @@ if ( strActionToProcess != null )
       {
          if ( nRC > 1 )
          {
-            strURL = response.encodeRedirectURL( "wMLCDeleteComponent.jsp" );
+            strURL = response.encodeRedirectURL( "wMLCMaintainKeyword.jsp" );
             task.log().info( "Action Error Redirect to: " + strURL );
          }
 
-         if ( ! strURL.equals("wMLCDeleteComponent.jsp") ) 
+         if ( ! strURL.equals("wMLCMaintainKeyword.jsp") ) 
          {
             response.sendRedirect( strURL );
             // If we are redirecting to a new page, then we need this return so that the rest of this page doesn't get built.
@@ -336,7 +332,7 @@ if ( strActionToProcess != null )
       {
          if ( nRC > -128 )
          {
-            strURL = response.encodeRedirectURL( "wMLCDeleteComponent.jsp" );
+            strURL = response.encodeRedirectURL( "wMLCMaintainKeyword.jsp" );
             task.log().info( "Mapping Error Redirect to: " + strURL );
          }
          else
@@ -364,7 +360,7 @@ else
    if ( VmlOperation.isValid( wWebXA ) )
    {
       wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wMLC", "" );
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "DeleteComponent", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "MaintainKeyword", "" );
    }
 
 %>
@@ -372,7 +368,7 @@ else
 <html>
 <head>
 
-<title>Directions For Use Statement</title>
+<title>Update Name</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
@@ -383,7 +379,7 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-<script language="JavaScript" type="text/javascript" src="./genjs/wMLCDeleteComponent.js"></script>
+<script language="JavaScript" type="text/javascript" src="./genjs/wMLCMaintainKeyword.js"></script>
 
 </head>
 
@@ -403,11 +399,11 @@ else
 <div id="sidenavigation">
    <ul id="Return" name="Return">
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "DeleteAndReturn" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "UpdateAndReturn" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="DeleteAndReturn" name="DeleteAndReturn"><a href="#"  onclick="ConfirmDeleteComponent()">Confirm Delete & Return</a></li>
+       <li id="UpdateAndReturn" name="UpdateAndReturn"><a href="#"  onclick="UpdateKeyword()">Update</a></li>
 <%
    }
 %>
@@ -417,7 +413,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CancelDeleteComponent()">Cancel Delete & Return</a></li>
+       <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CancelUpdate()">Cancel</a></li>
 <%
    }
 %>
@@ -435,7 +431,7 @@ else
 <!-- END System Maintenance-->
 
 
-<form name="wMLCDeleteComponent" id="wMLCDeleteComponent" method="post">
+<form name="wMLCMaintainKeyword" id="wMLCMaintainKeyword" method="post">
    <input name="zAction" id="zAction" type="hidden" value="NOVALUE">
    <input name="zTableRowSelect" id="zTableRowSelect" type="hidden" value="NOVALUE">
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
@@ -513,7 +509,7 @@ else
 
    strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
 
-   strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wMLC", "DeleteComponent" );
+   strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wMLC", "MaintainKeyword" );
    strOpenFile = VmlOperation.FindOpenFile( task );
    strDateFormat = "YYYY.MM.DD";
 
@@ -551,72 +547,17 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:16px;width:100px;"></div>
+<div style="height:2px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
-<% /* DirectionsForUseStatement:GroupBox */ %>
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GB1:GroupBox */ %>
 
-<div id="DirectionsForUseStatement" name="DirectionsForUseStatement" class="withborder" style="width:658px;height:354px;float:left;">  <!-- DirectionsForUseStatement --> 
+<div id="GB1" name="GB1" class="listgroup"   style="float:left;position:relative; width:780px; height:54px;">  <!-- GB1 --> 
 
-<div  id="DirectionsForUseStatement" name="DirectionsForUseStatement" >Component to Delete</div>
-
- <!-- This is added as a line spacer -->
-<div style="height:24px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
-<% /* DirectionsUseTitle::Text */ %>
-
-<span  id="DirectionsUseTitle:" name="DirectionsUseTitle:" style="width:56px;height:16px;">Type:</span>
-
-<span style="height:16px;">&nbsp</span>
-<% /* DirectionsUseTitle:Text */ %>
-<% strTextDisplayValue = "";
-   mMasLC = task.getViewByName( "mMasLC" );
-   if ( VmlOperation.isValid( mMasLC ) == false )
-      task.log( ).debug( "Invalid View: " + "DirectionsUseTitle" );
-   else
-   {
-      nRC = mMasLC.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-      try
-      {
-         strTextDisplayValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "wDeleteType" ).getString( "" );
-      }
-      catch (Exception e)
-      {
-         out.println("There is an error on DirectionsUseTitle: " + e.getMessage());
-         task.log().info( "*** Error on ctrl DirectionsUseTitle" + e.getMessage() );
-      }
-         if ( strTextDisplayValue == null )
-            strTextDisplayValue = "";
-      }
-   }
-%>
-
-<span class="text14bold"  id="DirectionsUseTitle" name="DirectionsUseTitle" style="width:566px;height:16px;"><%=strTextDisplayValue%></span>
-
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:14px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp</span>
-<% /* StatementText::Text */ %>
-
-<span  id="StatementText:" name="StatementText:" style="width:56px;height:16px;">Text:</span>
-
-<span style="height:288px;">&nbsp</span>
-<% /* StatementText:MLEdit */ %>
+<% /* KeywordName::EditBox */ %>
 <%
-   // : StatementText
-   strErrorMapValue = VmlOperation.CheckError( "StatementText", strError );
+   strErrorMapValue = VmlOperation.CheckError( "KeywordName:", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -627,30 +568,77 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).info( "Invalid View: " + "StatementText" );
+         task.log( ).debug( "Invalid View: " + "KeywordName:" );
       else
       {
-         nRC = mMasLC.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
+         nRC = mMasLC.cursor( "M_InsertTextKeywordUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strErrorMapValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "wDeleteText" ).getString( "" );
+            try
+            {
+               strErrorMapValue = mMasLC.cursor( "M_InsertTextKeywordUsage" ).getAttribute( "Name" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on KeywordName:: " + e.getMessage());
+               task.log().error( "*** Error on ctrl KeywordName:", e );
+            }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).info( "MasterLabelContent.wDeleteText: " + strErrorMapValue );
+            task.log( ).debug( "M_InsertTextKeywordUsage.Name: " + strErrorMapValue );
          }
          else
-            task.log( ).info( "Entity does not exist for StatementText: " + "mMasLC.MasterLabelContent" );
+            task.log( ).debug( "Entity does not exist for KeywordName:: " + "mMasLC.M_InsertTextKeywordUsage" );
       }
    }
 %>
 
-<div name="StatementText" id="StatementText" style="width:566px;height:288px;position:absolute;left:74px;top:54px;border:solid;border-width:4px;border-style:groove;display:inline-block;text-overflow:hidden;background-color:lightgray;" wrap="wrap"><%=strErrorMapValue%></div>
+<input class="groupbox" name="KeywordName:" id="KeywordName:"  placeholder="Keyword"style="width:746px;position:absolute;left:6px;top:12px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-</div>  <!-- End of a new line -->
+<% /* KeywordValue:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "KeywordValue", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "KeywordValue" );
+      else
+      {
+         nRC = mMasLC.cursor( "M_InsertTextUsage" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = mMasLC.cursor( "M_InsertTextUsage" ).getAttribute( "Text" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on KeywordValue: " + e.getMessage());
+               task.log().error( "*** Error on ctrl KeywordValue", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "M_InsertTextUsage.Text: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for KeywordValue: " + "mMasLC.M_InsertTextUsage" );
+      }
+   }
+%>
+
+<input class="groupbox" name="KeywordValue" id="KeywordValue"  placeholder="Keyword Value"style="width:746px;position:absolute;left:6px;top:32px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 
-</div>  <!--  DirectionsForUseStatement --> 
+</div>  <!--  GB1 --> 
 </div>  <!-- End of a new line -->
 
 
@@ -683,7 +671,7 @@ else
 <script type="text/javascript">animatedcollapse.init();</script>
 </html>
 <%
-   session.setAttribute( "ZeidonWindow", "wMLCDeleteComponent" );
+   session.setAttribute( "ZeidonWindow", "wMLCMaintainKeyword" );
    session.setAttribute( "ZeidonAction", null );
 
    strActionToProcess = "";
