@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCAddAppTypesList   Generate Timestamp: 20160407171234458 --%>
+<%-- wMLCAddAppTypesList   Generate Timestamp: 20160412115804314 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -721,15 +721,6 @@ else
 
 <span class="groupbox"  id="AddAppTypesList" name="AddAppTypesList" style="width:176px;height:16px;">Add Application Types List</span>
 
-<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
-<% /* HTSelectAllAppTypes:Text */ %>
-
-<a href="#" id="HTSelectAllAppTypes" name="HTSelectAllAppTypes"  onclick="SelectAllAppTypes( );" style="width:80px;height:16px;">Select All</a>
-
-<% /* HTClearSelectedAppTypes:Text */ %>
-
-<a href="#" id="HTClearSelectedAppTypes" name="HTClearSelectedAppTypes"  onclick="ClearSelectedAppTypes( );" style="width:100px;height:16px;">Clear Selected</a>
-
 </div>  <!-- End of a new line -->
 
 
@@ -749,7 +740,7 @@ else
 
 <thead><tr>
 
-   <th>Select</th>
+   <th class="gridheading"><input type="checkbox" onclick="CheckAllInGrid(this,'GS_Select')"></th>
    <th>Application Type</th>
 
 </tr></thead>

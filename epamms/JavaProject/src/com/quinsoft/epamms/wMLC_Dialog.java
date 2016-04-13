@@ -1108,6 +1108,8 @@ ConfirmAddAppTypesStmts( View     ViewToWindow )
    RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
    RESULT = GetViewByName( mEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
 
+   //:AcceptSubobject( mMasLC, "M_Usage" )
+   AcceptSubobject( mMasLC, "M_Usage" );
    //:FOR EACH mMasLC.M_Usage
    RESULT = SetCursorFirstEntity( mMasLC, "M_Usage", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
@@ -1175,6 +1177,8 @@ ConfirmAddAppTypesStmts( View     ViewToWindow )
    RESULT = CommitObjectInstance( mMasLC );
    //:DropObjectInstance( mEPA )
    DropObjectInstance( mEPA );
+   //:CreateTemporalSubobjectVersion( mMasLC, "M_Usage" )
+   CreateTemporalSubobjectVersion( mMasLC, "M_Usage" );
    return( 0 );
 // END
 } 
@@ -1266,6 +1270,8 @@ ConfirmAddSurfacesStmts( View     ViewToWindow )
    RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
    RESULT = GetViewByName( mEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
 
+   //:AcceptSubobject( mMasLC, "M_Usage" )
+   AcceptSubobject( mMasLC, "M_Usage" );
    //:FOR EACH mMasLC.M_Usage
    RESULT = SetCursorFirstEntity( mMasLC, "M_Usage", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
@@ -1333,6 +1339,8 @@ ConfirmAddSurfacesStmts( View     ViewToWindow )
    RESULT = CommitObjectInstance( mMasLC );
    //:DropObjectInstance( mEPA )
    DropObjectInstance( mEPA );
+   //:CreateTemporalSubobjectVersion( mMasLC, "M_Usage" )
+   CreateTemporalSubobjectVersion( mMasLC, "M_Usage" );
    return( 0 );
 // END
 } 
@@ -1461,6 +1469,8 @@ ConfirmAddClaimsStmts( View     ViewToWindow )
    RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
    RESULT = GetViewByName( mEPA, "mEPA", ViewToWindow, zLEVEL_TASK );
 
+   //:AcceptSubobject( mMasLC, "M_Usage" )
+   AcceptSubobject( mMasLC, "M_Usage" );
    //:FOR EACH mMasLC.M_Usage
    RESULT = SetCursorFirstEntity( mMasLC, "M_Usage", "" );
    while ( RESULT > zCURSOR_UNCHANGED )
@@ -1530,6 +1540,8 @@ ConfirmAddClaimsStmts( View     ViewToWindow )
    RESULT = CommitObjectInstance( mMasLC );
    //:DropObjectInstance( mEPA )
    DropObjectInstance( mEPA );
+   //:CreateTemporalSubobjectVersion( mMasLC, "M_Usage" )
+   CreateTemporalSubobjectVersion( mMasLC, "M_Usage" );
    return( 0 );
 // END
 } 

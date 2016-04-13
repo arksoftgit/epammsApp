@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCMaintainSubItemName   Generate Timestamp: 20160408162415877 --%>
+<%-- wMLCMaintainSubItemName   Generate Timestamp: 20160412115806618 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -60,11 +60,14 @@ public int DoInputMapping( HttpServletRequest request,
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
    {
-      // EditBox: UsageName:
+      // MLEdit: UsageName:
       nRC = mMasLC.cursor( "M_SubUsage" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
          strMapValue = request.getParameter( "UsageName:" );
+         task.log().debug( "UsageName: prior to TrimTinyHtml: " + strMapValue );
+         strMapValue = VmlOperation.TrimTinyHtml( strMapValue );
+         task.log().debug( "UsageName: after TrimTinyHtml: '" + strMapValue + "'" );
          try
          {
             if ( webMapping )
@@ -360,6 +363,12 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
+
+<!-- TinyMCE -->
+<script language="JavaScript" type="text/javascript" src="./js/tinymce/js/tinymce/tinymce.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/TinyMCE.js"></script>
+<!-- /TinyMCE -->
+
 <script language="JavaScript" type="text/javascript" src="./genjs/wMLCMaintainSubItemName.js"></script>
 
 </head>
@@ -534,10 +543,11 @@ else
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GB1:GroupBox */ %>
 
-<div id="GB1" name="GB1" class="listgroup"   style="float:left;position:relative; width:780px; height:36px;">  <!-- GB1 --> 
+<div id="GB1" name="GB1" class="listgroup"   style="float:left;position:relative; width:780px; height:88px;">  <!-- GB1 --> 
 
-<% /* UsageName::EditBox */ %>
+<% /* UsageName::MLEdit */ %>
 <%
+   // : UsageName:
    strErrorMapValue = VmlOperation.CheckError( "UsageName:", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
@@ -549,33 +559,26 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "UsageName:" );
+         task.log( ).info( "Invalid View: " + "UsageName:" );
       else
       {
          nRC = mMasLC.cursor( "M_SubUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            try
-            {
-               strErrorMapValue = mMasLC.cursor( "M_SubUsage" ).getAttribute( "Name" ).getString( "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on UsageName:: " + e.getMessage());
-               task.log().error( "*** Error on ctrl UsageName:", e );
-            }
+            strErrorMapValue = mMasLC.cursor( "M_SubUsage" ).getAttribute( "Name" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "M_SubUsage.Name: " + strErrorMapValue );
+            task.log( ).info( "M_SubUsage.Name: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for UsageName:: " + "mMasLC.M_SubUsage" );
+            task.log( ).info( "Entity does not exist for UsageName:: " + "mMasLC.M_SubUsage" );
       }
    }
 %>
 
-<input class="groupbox" name="UsageName:" id="UsageName:" style="width:746px;position:absolute;left:6px;top:12px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<div style="background-color:#eee;border:1px solid #042;width:746px;height:46px;position:absolute;left:0px;top:0px;overflow:auto;">
+<div class="mceSimpleZeidon" name="UsageName:" id="UsageName:" style="width:746px;height:46px;position:absolute;left:0px;top:0px;"><%=strErrorMapValue%></div></div>
 
 
 </div>  <!--  GB1 --> 

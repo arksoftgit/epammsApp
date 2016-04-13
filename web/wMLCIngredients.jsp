@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCIngredients   Generate Timestamp: 20160407171236530 --%>
+<%-- wMLCIngredients   Generate Timestamp: 20160412115806152 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1222,7 +1222,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smTypesOfSurfaces" name="smTypesOfSurfaces"><a href="#"  onclick="smEditSurfacesSection()">Types of Surfaces</a></li>
+       <li id="smTypesOfSurfaces" name="smTypesOfSurfaces"><a href="#"  onclick="smEditSurfacesSection()">Surfaces</a></li>
 <%
    }
 %>

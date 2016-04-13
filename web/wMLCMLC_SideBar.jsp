@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCMLC_Sidebar   Generate Timestamp: 20160407171237421 --%>
+<%-- wMLCMLC_Sidebar   Generate Timestamp: 20160412115806946 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1004,7 +1004,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="TypesOfSurfaces" name="TypesOfSurfaces"><a href="#"  onclick="EditSurfacesSection()">Types of Surfaces</a></li>
+       <li id="TypesOfSurfaces" name="TypesOfSurfaces"><a href="#"  onclick="EditSurfacesSection()">Surfaces</a></li>
 <%
    }
 %>

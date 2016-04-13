@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCMarketingStatement   Generate Timestamp: 20160407171237359 --%>
+<%-- wMLCMarketingStatement   Generate Timestamp: 20160412115806891 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1000,7 +1000,7 @@ else
    }
 %>
 
-<div id="Title" name="Title" class="" style="width:754px;height:54px;border:solid;border-width:4px;border-style:groove;display:inline-block;text-overflow:hidden;background-color:lightgray;" wrap="wrap"><%=strErrorMapValue%></div>
+<div id="Title" name="Title" class="" style="width:754px;height:54px;border:solid;border-width:4px;border-style:groove;text-overflow:hidden;background-color:lightgray;" wrap="wrap"><%=strErrorMapValue%></div>
 
 </td>
 </tr>
@@ -1044,7 +1044,7 @@ else
    }
 %>
 
-<div id="Text" name="Text" class="" style="width:754px;height:76px;border:solid;border-width:4px;border-style:groove;display:inline-block;text-overflow:hidden;background-color:lightgray;" wrap="wrap"><%=strErrorMapValue%></div>
+<div id="Text" name="Text" class="" style="width:754px;height:76px;border:solid;border-width:4px;border-style:groove;text-overflow:hidden;background-color:lightgray;" wrap="wrap"><%=strErrorMapValue%></div>
 
 </td>
 </tr>

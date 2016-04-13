@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCAddSurfacesList   Generate Timestamp: 20160407171234685 --%>
+<%-- wMLCAddSurfacesList   Generate Timestamp: 20160412115804548 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -721,15 +721,6 @@ else
 
 <span class="groupbox"  id="AddSurfacesList" name="AddSurfacesList" style="width:176px;height:16px;">Add Surfaces List</span>
 
-<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
-<% /* HTSelectAllSurfaces:Text */ %>
-
-<a href="#" id="HTSelectAllSurfaces" name="HTSelectAllSurfaces"  onclick="SelectAllSurfaces( );" style="width:80px;height:16px;">Select All</a>
-
-<% /* HTClearSelectedSurfaces:Text */ %>
-
-<a href="#" id="HTClearSelectedSurfaces" name="HTClearSelectedSurfaces"  onclick="ClearSelectedSurfaces( );" style="width:100px;height:16px;">Clear Selected</a>
-
 </div>  <!-- End of a new line -->
 
 
@@ -740,7 +731,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:28px;width:100px;"></div>
+<div style="height:6px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:22px;float:left;"></div>   <!-- Width Spacer -->
@@ -749,7 +740,7 @@ else
 
 <thead><tr>
 
-   <th>Select</th>
+   <th class="gridheading"><input type="checkbox" onclick="CheckAllInGrid(this,'GS_Select')"></th>
    <th>Surface</th>
 
 </tr></thead>

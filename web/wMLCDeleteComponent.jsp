@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDeleteComponent   Generate Timestamp: 20160407171235308 --%>
+<%-- wMLCDeleteComponent   Generate Timestamp: 20160412115805056 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -645,7 +645,7 @@ else
    }
 %>
 
-<div name="StatementText" id="StatementText" style="width:566px;height:288px;position:absolute;left:74px;top:54px;border:solid;border-width:4px;border-style:groove;display:inline-block;text-overflow:hidden;background-color:lightgray;" wrap="wrap"><%=strErrorMapValue%></div>
+<div name="StatementText" id="StatementText" style="width:566px;height:288px;position:absolute;left:74px;top:54px;border:solid;border-width:4px;border-style:groove;text-overflow:hidden;background-color:lightgray;" wrap="wrap"><%=strErrorMapValue%></div>
 
 </div>  <!-- End of a new line -->
 

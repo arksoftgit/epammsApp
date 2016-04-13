@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCUpdateMasterProduct   Generate Timestamp: 20160407171238343 --%>
+<%-- wMLCUpdateMasterProduct   Generate Timestamp: 20160412115807767 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -181,7 +181,7 @@ public int DoInputMapping( HttpServletRequest request,
          strMapValue = request.getParameter( "MasterProductDescription" );
          task.log().debug( "MasterProductDescription prior to TrimTinyHtml: " + strMapValue );
          strMapValue = VmlOperation.TrimTinyHtml( strMapValue );
-         task.log().debug( "MasterProductDescription after TrimTinyHtml: " + strMapValue );
+         task.log().debug( "MasterProductDescription after TrimTinyHtml: '" + strMapValue + "'" );
          try
          {
             if ( webMapping )
@@ -203,7 +203,7 @@ public int DoInputMapping( HttpServletRequest request,
          strMapValue = request.getParameter( "Footnote" );
          task.log().debug( "Footnote prior to TrimTinyHtml: " + strMapValue );
          strMapValue = VmlOperation.TrimTinyHtml( strMapValue );
-         task.log().debug( "Footnote after TrimTinyHtml: " + strMapValue );
+         task.log().debug( "Footnote after TrimTinyHtml: '" + strMapValue + "'" );
          try
          {
             if ( webMapping )
@@ -1086,7 +1086,7 @@ else
    }
 %>
 
-<input class="text12" name="MasterProductNumber" id="MasterProductNumber"  title="Product Number within this Registrant" style="width:142px;position:absolute;left:198px;top:30px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="MasterProductNumber" id="MasterProductNumber"  title="Product Number within this Registrant"style="width:142px;position:absolute;left:198px;top:30px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* ChemicalFamily::Text */ %>
 
@@ -1215,7 +1215,7 @@ else
    }
 %>
 
-<input class="text12" name="EstablishmentNumber" id="EstablishmentNumber"  title="EPA Establishment Number" style="width:142px;position:absolute;left:198px;top:82px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="EstablishmentNumber" id="EstablishmentNumber"  title="EPA Establishment Number"style="width:142px;position:absolute;left:198px;top:82px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* ToxicityCategory::Text */ %>
 
@@ -1344,7 +1344,7 @@ else
    }
 %>
 
-<input class="text12" name="ReviewerNote" id="ReviewerNote"  title="Product Number within this Registrant" style="width:578px;position:absolute;left:198px;top:134px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="ReviewerNote" id="ReviewerNote"  title="Product Number within this Registrant"style="width:578px;position:absolute;left:198px;top:134px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* GroupBox1:GroupBox */ %>
 

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCLocationStatementMaintenance   Generate Timestamp: 20160408234725257 --%>
+<%-- wMLCLocationStatementMaintenance   Generate Timestamp: 20160412115806480 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -65,6 +65,9 @@ public int DoInputMapping( HttpServletRequest request,
       if ( nRC >= 0 ) // CursorResult.SET
       {
          strMapValue = request.getParameter( "Title" );
+         task.log().debug( "Title prior to TrimTinyHtml: " + strMapValue );
+         strMapValue = VmlOperation.TrimTinyHtml( strMapValue );
+         task.log().debug( "Title after TrimTinyHtml: '" + strMapValue + "'" );
          try
          {
             if ( webMapping )
@@ -719,7 +722,7 @@ else
 <span  id="Statement:" name="Statement:" style="width:76px;height:20px;">Statement:</span>
 
 </td>
-<td valign="top" style="width:722px;">
+<td valign="top"  class="mceSimpleZeidon" style="width:722px;">
 <% /* Title:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "Title", strError );
@@ -759,7 +762,7 @@ else
    }
 %>
 
-<input name="Title" id="Title" style="width:722px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="mceSimpleZeidon" name="Title" id="Title" style="width:722px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -777,9 +780,9 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GBStorDispSections3:GroupBox */ %>
+<% /* GBLocationSections:GroupBox */ %>
 
-<div id="GBStorDispSections3" name="GBStorDispSections3" class="listgroup"   style="float:left;position:relative; width:808px; height:40px;">  <!-- GBStorDispSections3 --> 
+<div id="GBLocationSections" name="GBLocationSections" class="listgroup"   style="float:left;position:relative; width:808px; height:40px;">  <!-- GBLocationSections --> 
 
 <% /* LocationStatements:Text */ %>
 
@@ -792,7 +795,7 @@ else
 <button type="button" name="PBNew" id="PBNew" value="" onclick="GOTO_AddLocationSubstatements( )" style="width:78px;height:26px;position:absolute;left:706px;top:10px;">New</button>
 
 
-</div>  <!--  GBStorDispSections3 --> 
+</div>  <!--  GBLocationSections --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->

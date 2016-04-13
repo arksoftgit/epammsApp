@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDirectionsForUseSection   Generate Timestamp: 20160407171235777 --%>
+<%-- wMLCDirectionsForUseSection   Generate Timestamp: 20160412115805470 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1058,7 +1058,7 @@ else
    }
 %>
 
-<input class="text12" name="DirectionsUseName" id="DirectionsUseName"  title="Required Name to differentiate Directions for Use Sections within a list" style="width:264px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="DirectionsUseName" id="DirectionsUseName"  title="Required Name to differentiate Directions for Use Sections within a list"style="width:264px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -1109,7 +1109,7 @@ else
    }
 %>
 
-<input class="text12" name="DirectionsForUseTitle" id="DirectionsForUseTitle"  title="Optional Title to appear with text on generated label" style="width:656px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="DirectionsForUseTitle" id="DirectionsForUseTitle"  title="Optional Title to appear with text on generated label"style="width:656px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

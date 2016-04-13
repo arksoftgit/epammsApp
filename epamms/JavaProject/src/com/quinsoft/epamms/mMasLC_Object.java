@@ -6821,5 +6821,90 @@ omMasLC_dFullEmbeddedName( View     mMasLC,
 } 
 
 
+//:DERIVED ATTRIBUTE OPERATION
+//:dFullEmbeddedNameL( VIEW mMasLC BASED ON LOD mMasLC,
+//:                    STRING ( 32 ) InternalEntityStructure,
+//:                    STRING ( 32 ) InternalAttribStructure,
+//:                    SHORT GetOrSetFlag )
+
+//:   VIEW mMasLC2 BASED ON LOD mMasLC
+public int 
+omMasLC_dFullEmbeddedNameL( View     mMasLC,
+                            String InternalEntityStructure,
+                            String InternalAttribStructure,
+                            Integer   GetOrSetFlag )
+{
+   zVIEW    mMasLC2 = new zVIEW( );
+   //:STRING ( 32000 ) szDisplayStatement
+   String   szDisplayStatement = null;
+   int      lTempInteger_0 = 0;
+
+
+   //:CreateViewFromView( mMasLC2, mMasLC )
+   CreateViewFromView( mMasLC2, mMasLC );
+   //:SetCursorFirstEntityByEntityCsr( mMasLC2, "M_Usage", mMasLC, "MI_UsageList", "" )
+   SetCursorFirstEntityByEntityCsr( mMasLC2, "M_Usage", mMasLC, "MI_UsageList", "" );
+
+   //:szDisplayStatement = mMasLC2.M_Usage.Name
+   {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
+   StringBuilder sb_szDisplayStatement;
+   if ( szDisplayStatement == null )
+      sb_szDisplayStatement = new StringBuilder( 32 );
+   else
+      sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+       GetVariableFromAttribute( sb_szDisplayStatement, mi_lTempInteger_0, 'S', 32001, mMasLC2, "M_Usage", "Name", "", 0 );
+   lTempInteger_0 = mi_lTempInteger_0.intValue( );
+   szDisplayStatement = sb_szDisplayStatement.toString( );}
+   //:CASE GetOrSetFlag
+   switch( GetOrSetFlag )
+   { 
+      //:OF   zDERIVED_GET:
+      case zDERIVED_GET :
+
+         //:// Display Atomic Name combines required text with optional usage(s).
+         //:InsertOptionalSubUsages( mMasLC2, szDisplayStatement, 0 )
+         {
+          ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mMasLC2 );
+           {StringBuilder sb_szDisplayStatement;
+         if ( szDisplayStatement == null )
+            sb_szDisplayStatement = new StringBuilder( 32 );
+         else
+            sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                  m_ZGlobal1_Operation.InsertOptionalSubUsages( mMasLC2, sb_szDisplayStatement, 0 );
+         szDisplayStatement = sb_szDisplayStatement.toString( );}
+          // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+         }
+         //:SetFirstCharacterCase( szDisplayStatement, 1 )
+         {
+          ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mMasLC );
+           {StringBuilder sb_szDisplayStatement;
+         if ( szDisplayStatement == null )
+            sb_szDisplayStatement = new StringBuilder( 32 );
+         else
+            sb_szDisplayStatement = new StringBuilder( szDisplayStatement );
+                  m_ZGlobal1_Operation.SetFirstCharacterCase( sb_szDisplayStatement, 1 );
+         szDisplayStatement = sb_szDisplayStatement.toString( );}
+          // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
+         }
+
+         //:// Store the calculated value in the object.
+         //:StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
+         StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement );
+         break ;
+
+      //:  /* end zDERIVED_GET */
+      //:OF   zDERIVED_SET:
+      case zDERIVED_SET :
+         break ;
+   } 
+
+
+   //:     /* end zDERIVED_SET */
+   //:END  /* case */
+   return( 0 );
+// END
+} 
+
+
 
 }

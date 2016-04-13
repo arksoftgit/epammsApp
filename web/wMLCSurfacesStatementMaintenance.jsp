@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCAddUpdateKeywordGeneral   Generate Timestamp: 20160412115804626 --%>
+<%-- wMLCSurfacesStatementMaintenance   Generate Timestamp: 20160412115806527 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -60,77 +60,65 @@ public int DoInputMapping( HttpServletRequest request,
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
    {
-      // EditBox: DirectionsUseName1
-      nRC = mMasLC.cursor( "M_InsertTextKeywordGeneral" ).checkExistenceOfEntity( ).toInt();
+      // EditBox: Title
+      nRC = mMasLC.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "DirectionsUseName1" );
+         strMapValue = request.getParameter( "Title" );
+         task.log().debug( "Title prior to TrimTinyHtml: " + strMapValue );
+         strMapValue = VmlOperation.TrimTinyHtml( strMapValue );
+         task.log().debug( "Title after TrimTinyHtml: '" + strMapValue + "'" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "DirectionsUseName1", "", strMapValue );
+               VmlOperation.CreateMessage( task, "Title", "", strMapValue );
             else
-               mMasLC.cursor( "M_InsertTextKeywordGeneral" ).getAttribute( "Name" ).setValue( strMapValue, "" );
+               mMasLC.cursor( "M_Usage" ).getAttribute( "Name" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "DirectionsUseName1", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "Title", e.getReason( ), strMapValue );
          }
       }
 
-      // ComboBox: ComboBox1
-      nRC = mMasLC.cursor( "M_InsertTextKeywordGeneral" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strMapValue = request.getParameter( "hComboBox1" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "ComboBox1", "", strMapValue );
-            else
-               mMasLC.cursor( "M_InsertTextKeywordGeneral" ).getAttribute( "Type" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "ComboBox1", e.getReason( ), strMapValue );
-         }
-      }
-
-      // Grid: GridM_InsertTextMarketing1
+      // Grid: GridClaims
       iTableRowCnt = 0;
 
       // We are creating a temp view to the grid view so that if there are 
       // grids on the same window with the same view we do not mess up the 
       // entity positions. 
       vGridTmp = mMasLC.newView( );
-      csrRC = vGridTmp.cursor( "M_InsertTextGeneral" ).setFirst(  );
+      csrRC = vGridTmp.cursor( "M_SubUsage" ).setFirst(  );
       while ( csrRC.isSet() )
       {
-         lEntityKey = vGridTmp.cursor( "M_InsertTextGeneral" ).getEntityKey( );
+         lEntityKey = vGridTmp.cursor( "M_SubUsage" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
 
-         strTag = "GridCtrlText11::" + strEntityKey;
+         strTag = "GS_Select" + strEntityKey;
          strMapValue = request.getParameter( strTag );
-         if ( strMapValue != null ) 
-         {
-            try
-            {
-               if ( webMapping )
-                  VmlOperation.CreateMessage( task, "GridCtrlText11", "", strMapValue );
-               else
-                  vGridTmp.cursor( "M_InsertTextGeneral" ).getAttribute( "Text" ).setValue( strMapValue, "" );
-            }
-            catch ( InvalidAttributeValueException e )
-            {
-               nMapError = -16;
-               VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
-         }
-      }
+         // If the checkbox is not checked, then set to the unchecked value.
+         if (strMapValue == null || strMapValue.isEmpty() )
+            strMapValue = "N";
 
-         csrRC = vGridTmp.cursor( "M_InsertTextGeneral" ).setNextContinue( );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "GS_Select", "", strMapValue );
+            else
+               if ( strMapValue != null )
+                  vGridTmp.cursor( "M_Usage" ).getAttribute( "wSelected" ).setValue( strMapValue, "" );
+               else
+                  vGridTmp.cursor( "M_Usage" ).getAttribute( "wSelected" ).setValue( "", "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
+         }
+
+         csrRC = vGridTmp.cursor( "M_SubUsage" ).setNextContinue( );
       }
 
       vGridTmp.drop( );
@@ -199,7 +187,7 @@ if ( StringUtils.isBlank( strLastWindow ) )
 
 strLastAction = (String) session.getAttribute( "ZeidonAction" );
 
-if ( strLastWindow.equals("wMLCAddUpdateKeywordGeneral") && StringUtils.isBlank( strActionToProcess ) && StringUtils.isBlank( strLastAction ) )
+if ( strLastWindow.equals("wMLCSurfacesStatementMaintenance") && StringUtils.isBlank( strActionToProcess ) && StringUtils.isBlank( strLastAction ) )
 {
    strURL = response.encodeRedirectURL( "logout.jsp" );
    response.sendRedirect( strURL );
@@ -237,9 +225,9 @@ strURL = "";
 bDone = false;
 nRC = 0;
 
-task.log().info("*** wMLCAddUpdateKeywordGeneral strActionToProcess *** " + strActionToProcess );
-task.log().info("*** wMLCAddUpdateKeywordGeneral LastWindow *** " + strLastWindow );
-task.log().info("*** wMLCAddUpdateKeywordGeneral LastAction *** " + strLastAction );
+task.log().info("*** wMLCSurfacesStatementMaintenance strActionToProcess *** " + strActionToProcess );
+task.log().info("*** wMLCSurfacesStatementMaintenance LastWindow *** " + strLastWindow );
+task.log().info("*** wMLCSurfacesStatementMaintenance LastAction *** " + strLastAction );
 
 if ( strActionToProcess != null )
 {
@@ -255,51 +243,65 @@ if ( strActionToProcess != null )
 
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "AcceptAndReturn" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_AddSurfaceSubstatements" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAddUpdateKeywordGeneral", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCSurfacesStatementMaintenance", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
       if ( nRC < 0 )
          break;
 
-      // Action Auto Object Function
+      // Action Operation
       nRC = 0;
-      try
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCSurfacesStatementMaintenance", "wMLC.GOTO_AddSubUsageStatements" );
+      nOptRC = wMLC.GOTO_AddSubUsageStatements( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
       {
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordGeneral" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         if ( cursor.isVersioned( ) )
-         {
-            cursor.acceptSubobject( );
-         }
-         nRC = 0;
-      }
-
-      }
-      catch ( Exception e )
-      {
-         nRC = 2;
-         VmlOperation.CreateMessage( task, "AcceptAndReturn", e.getMessage( ), "" );
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
          break;
       }
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "AddSubitems" );
+      }
+
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "ADD_GeneralKeywordTextItem" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DeleteSelectedEntries" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAddUpdateKeywordGeneral", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCSurfacesStatementMaintenance", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "DeleteUsageStatements" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_UpdateSurface" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCSurfacesStatementMaintenance", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
@@ -313,14 +315,14 @@ if ( strActionToProcess != null )
       if ( VmlOperation.isValid( mMasLC ) )
       {
          lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mMasLC.cursor( "M_InsertTextGeneral" ).setByEntityKey( lEKey );
+         csrRC = mMasLC.cursor( "M_SubUsage" ).setByEntityKey( lEKey );
          if ( !csrRC.isSet() )
          {
             boolean bFound = false;
-            csrRCk = mMasLC.cursor( "M_InsertTextGeneral" ).setFirst( );
+            csrRCk = mMasLC.cursor( "M_SubUsage" ).setFirst( );
             while ( csrRCk.isSet() && !bFound )
             {
-               lEKey = mMasLC.cursor( "M_InsertTextGeneral" ).getEntityKey( );
+               lEKey = mMasLC.cursor( "M_SubUsage" ).getEntityKey( );
                strKey = Long.toString( lEKey );
                if ( StringUtils.equals( strKey, strEntityKey ) )
                {
@@ -328,59 +330,30 @@ if ( strActionToProcess != null )
                   bFound = true;
                }
                else
-                  csrRCk = mMasLC.cursor( "M_InsertTextGeneral" ).setNextContinue( );
+                  csrRCk = mMasLC.cursor( "M_SubUsage" ).setNextContinue( );
             } // Grid
          }
       }
 
-      // Action Auto Object Function
-      nRC = 0;
-      try
-      {
-      EntityCursor cursor = mMasLC.cursor( "M_InsertTextGeneral" );
-      cursor.createEntity( );
-
-      }
-      catch ( Exception e )
-      {
-         nRC = 2;
-         VmlOperation.CreateMessage( task, "ADD_GeneralKeywordTextItem", e.getMessage( ), "" );
-         break;
-      }
       // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "MaintainSubItemName" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "ADD_GeneralKeywordTextItemInit" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "AcceptAndReturn" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAddUpdateKeywordGeneral", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCSurfacesStatementMaintenance", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
       if ( nRC < 0 )
          break;
 
-      // Action Auto Object Function
-      nRC = 0;
-      try
-      {
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_InsertTextGeneral" );
-      cursor.createEntity( );
-
-      }
-      catch ( Exception e )
-      {
-         nRC = 2;
-         VmlOperation.CreateMessage( task, "ADD_GeneralKeywordTextItemInit", e.getMessage( ), "" );
-         break;
-      }
       // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -389,98 +362,10 @@ if ( strActionToProcess != null )
    while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelAndReturn" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAddUpdateKeywordGeneral", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCSurfacesStatementMaintenance", strActionToProcess );
 
-      // Action Auto Object Function
-      nRC = 0;
-      try
-      {
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordGeneral" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         if ( cursor.isVersioned( ) )
-         {
-            cursor.cancelSubobject( );
-         }
-         nRC = 0;
-      }
-
-      }
-      catch ( Exception e )
-      {
-         nRC = 2;
-         VmlOperation.CreateMessage( task, "CancelAndReturn", e.getMessage( ), "" );
-         break;
-      }
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "DELETE_InsertTextItem" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAddUpdateKeywordGeneral", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Position on the entity that was selected in the grid.
-      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
-      View mMasLC;
-      mMasLC = task.getViewByName( "mMasLC" );
-      if ( VmlOperation.isValid( mMasLC ) )
-      {
-         lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mMasLC.cursor( "M_InsertTextGeneral" ).setByEntityKey( lEKey );
-         if ( !csrRC.isSet() )
-         {
-            boolean bFound = false;
-            csrRCk = mMasLC.cursor( "M_InsertTextGeneral" ).setFirst( );
-            while ( csrRCk.isSet() && !bFound )
-            {
-               lEKey = mMasLC.cursor( "M_InsertTextGeneral" ).getEntityKey( );
-               strKey = Long.toString( lEKey );
-               if ( StringUtils.equals( strKey, strEntityKey ) )
-               {
-                  // Stop while loop because we have positioned on the correct entity.
-                  bFound = true;
-               }
-               else
-                  csrRCk = mMasLC.cursor( "M_InsertTextGeneral" ).setNextContinue( );
-            } // Grid
-         }
-      }
-
-      // Action Auto Object Function
-      nRC = 0;
-      try
-      {
-      EntityCursor cursor = mMasLC.cursor( "M_InsertTextGeneral" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         cursor.deleteEntity( CursorPosition.NEXT );
-         nRC = 0;
-      }
-
-      }
-      catch ( Exception e )
-      {
-         nRC = 2;
-         VmlOperation.CreateMessage( task, "DELETE_InsertTextItem", e.getMessage( ), "" );
-         break;
-      }
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -500,12 +385,41 @@ if ( strActionToProcess != null )
       break;
    }
 
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smAcceptAndReturn" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCSurfacesStatementMaintenance", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smCancelAndReturn" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCSurfacesStatementMaintenance", strActionToProcess );
+
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
    while ( bDone == false && strActionToProcess.equals( "_OnUnload" ) )
    {
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wMLCAddUpdateKeywordGeneral" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ----->>> " + "wMLCSurfacesStatementMaintenance" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -522,7 +436,7 @@ if ( strActionToProcess != null )
       bDone = true;
       if ( task != null )
       {
-         task.log().info( "OnUnload UnregisterZeidonApplication: ------->>> " + "wMLCAddUpdateKeywordGeneral" );
+         task.log().info( "OnUnload UnregisterZeidonApplication: ------->>> " + "wMLCSurfacesStatementMaintenance" );
          task.dropTask();
          task = null;
          session.setAttribute( "ZeidonTaskId", task );
@@ -537,14 +451,14 @@ if ( strActionToProcess != null )
    while ( bDone == false && strActionToProcess.equals( "_OnResubmitPage" ) )
    {
       bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCAddUpdateKeywordGeneral", strActionToProcess );
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCSurfacesStatementMaintenance", strActionToProcess );
 
       // Input Mapping
       nRC = DoInputMapping( request, session, application, false );
       if ( nRC < 0 )
          break;
 
-      strURL = response.encodeRedirectURL( "wMLCAddUpdateKeywordGeneral.jsp" );
+      strURL = response.encodeRedirectURL( "wMLCSurfacesStatementMaintenance.jsp" );
       nRC = 1;  //do the redirection
       break;
    }
@@ -555,11 +469,11 @@ if ( strActionToProcess != null )
       {
          if ( nRC > 1 )
          {
-            strURL = response.encodeRedirectURL( "wMLCAddUpdateKeywordGeneral.jsp" );
+            strURL = response.encodeRedirectURL( "wMLCSurfacesStatementMaintenance.jsp" );
             task.log().info( "Action Error Redirect to: " + strURL );
          }
 
-         if ( ! strURL.equals("wMLCAddUpdateKeywordGeneral.jsp") ) 
+         if ( ! strURL.equals("wMLCSurfacesStatementMaintenance.jsp") ) 
          {
             response.sendRedirect( strURL );
             // If we are redirecting to a new page, then we need this return so that the rest of this page doesn't get built.
@@ -570,7 +484,7 @@ if ( strActionToProcess != null )
       {
          if ( nRC > -128 )
          {
-            strURL = response.encodeRedirectURL( "wMLCAddUpdateKeywordGeneral.jsp" );
+            strURL = response.encodeRedirectURL( "wMLCSurfacesStatementMaintenance.jsp" );
             task.log().info( "Mapping Error Redirect to: " + strURL );
          }
          else
@@ -598,7 +512,7 @@ else
    if ( VmlOperation.isValid( wWebXA ) )
    {
       wWebXA.cursor( "Root" ).getAttribute( "CurrentDialog" ).setValue( "wMLC", "" );
-      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "AddUpdateKeywordGeneral", "" );
+      wWebXA.cursor( "Root" ).getAttribute( "CurrentWindow" ).setValue( "SurfacesStatementMaintenance", "" );
    }
 
 %>
@@ -606,7 +520,7 @@ else
 <html>
 <head>
 
-<title>AddUpdateKeywordGeneral</title>
+<title>Surface Statement Content</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
@@ -614,14 +528,21 @@ else
 <%@ include file="./include/timeout.inc" %>
 <link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/css.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/sts.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
-<script language="JavaScript" type="text/javascript" src="./genjs/wMLCAddUpdateKeywordGeneral.js"></script>
+<script language="JavaScript" type="text/javascript" src="./genjs/wMLCSurfacesStatementMaintenance.js"></script>
 
 </head>
 
-<body onLoad="_AfterPageLoaded( )" onSubmit="_DisableFormElements( true )" onBeforeUnload="_BeforePageUnload( )">
+<!-- 
+// If we have table sorting on this page, the table sorting does not work in Firefox 
+// (seems to work in IE and Opera).  The solution is to not call _AfterPageLoaded in OnLoad event. 
+// In the Standardista code (sts.js) there is an addEvent that will call _AfterPageLoaded. 
+--> 
+<body onSubmit="_DisableFormElements( true )" onBeforeUnload="_BeforePageUnload( )">
 
 <%@ include file="./include/pagebackground.inc" %>  <!-- just temporary until we get the painter dialog updates from Kelly ... 2011.10.08 dks -->
 
@@ -637,21 +558,21 @@ else
 <div id="sidenavigation">
    <ul id="Return" name="Return">
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "AcceptAndReturn" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "AcceptReturn" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="AcceptAndReturn" name="AcceptAndReturn"><a href="#"  onclick="AcceptAndReturn()">Accept and Return</a></li>
+       <li id="smAcceptReturn" name="smAcceptReturn"><a href="#"  onclick="smAcceptAndReturn()">Return</a></li>
 <%
    }
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "CancelAndReturn" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "CancelReturn" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CancelAndReturn()">Cancel and Return</a></li>
+       <li id="smCancelReturn" name="smCancelReturn"><a href="#"  onclick="smCancelAndReturn()">Cancel</a></li>
 <%
    }
 %>
@@ -669,7 +590,7 @@ else
 <!-- END System Maintenance-->
 
 
-<form name="wMLCAddUpdateKeywordGeneral" id="wMLCAddUpdateKeywordGeneral" method="post">
+<form name="wMLCSurfacesStatementMaintenance" id="wMLCSurfacesStatementMaintenance" method="post">
    <input name="zAction" id="zAction" type="hidden" value="NOVALUE">
    <input name="zTableRowSelect" id="zTableRowSelect" type="hidden" value="NOVALUE">
    <input name="zDisable" id="zDisable" type="hidden" value="NOVALUE">
@@ -747,7 +668,7 @@ else
 
    strSolicitSave = vKZXMLPGO.cursor( "Session" ).getAttribute( "SolicitSaveFlag" ).getString( "" );
 
-   strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wMLC", "AddUpdateKeywordGeneral" );
+   strFocusCtrl = VmlOperation.GetFocusCtrl( task, "wMLC", "SurfacesStatementMaintenance" );
    strOpenFile = VmlOperation.FindOpenFile( task );
    strDateFormat = "YYYY.MM.DD";
 
@@ -785,43 +706,26 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
+<div style="height:12px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GBStorDispSections3:GroupBox */ %>
+<% /* GroupBox2:GroupBox */ %>
+<div id="GroupBox2" name="GroupBox2" style="float:left;width:808px;" >
 
-<div id="GBStorDispSections3" name="GBStorDispSections3" class="listgroup"   style="float:left;position:relative; width:426px; height:36px;">  <!-- GBStorDispSections3 --> 
-
-<% /* EnvironmentalHazardsSection1:Text */ %>
-
-<label class="groupbox"  id="EnvironmentalHazardsSection1" name="EnvironmentalHazardsSection1" style="width:410px;height:16px;position:absolute;left:6px;top:12px;">Keyword Update</label>
-
-
-</div>  <!--  GBStorDispSections3 --> 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
-<div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GBAddSurfacesList:GroupBox */ %>
-<div id="GBAddSurfacesList" name="GBAddSurfacesList" style="float:left;width:426px;" >
-
-<table cols=2 style="width:426px;"  class="grouptable">
+<table cols=0 style="width:808px;"  class="grouptable">
 
 <tr>
-<td valign="top" style="width:104px;">
-<% /* DirectionsUseTitle:1:Text */ %>
+<td valign="top" style="width:80px;">
+<% /* Statement::Text */ %>
 
-<span  id="DirectionsUseTitle:1" name="DirectionsUseTitle:1" style="width:104px;height:16px;">Keyword:</span>
+<span  id="Statement:" name="Statement:" style="width:76px;height:20px;">Statement:</span>
 
 </td>
-<td valign="top"  class="text12" style="width:184px;">
-<% /* DirectionsUseName1:EditBox */ %>
+<td valign="top"  class="mceSimpleZeidon" style="width:722px;">
+<% /* Title:EditBox */ %>
 <%
-   strErrorMapValue = VmlOperation.CheckError( "DirectionsUseName1", strError );
+   strErrorMapValue = VmlOperation.CheckError( "Title", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -832,129 +736,39 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "DirectionsUseName1" );
+         task.log( ).debug( "Invalid View: " + "Title" );
       else
       {
-         nRC = mMasLC.cursor( "M_InsertTextKeywordGeneral" ).checkExistenceOfEntity( ).toInt();
+         nRC = mMasLC.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
             try
             {
-               strErrorMapValue = mMasLC.cursor( "M_InsertTextKeywordGeneral" ).getAttribute( "Name" ).getString( "" );
+               strErrorMapValue = mMasLC.cursor( "M_Usage" ).getAttribute( "Name" ).getString( "" );
             }
             catch (Exception e)
             {
-               out.println("There is an error on DirectionsUseName1: " + e.getMessage());
-               task.log().error( "*** Error on ctrl DirectionsUseName1", e );
+               out.println("There is an error on Title: " + e.getMessage());
+               task.log().error( "*** Error on ctrl Title", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "M_InsertTextKeywordGeneral.Name: " + strErrorMapValue );
+            task.log( ).debug( "M_Usage.Name: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for DirectionsUseName1: " + "mMasLC.M_InsertTextKeywordGeneral" );
+            task.log( ).debug( "Entity does not exist for Title: " + "mMasLC.M_Usage" );
       }
    }
 %>
 
-<input class="text12" name="DirectionsUseName1" id="DirectionsUseName1"  title="Required Name to differentiate Directions for Use Sections within a list"style="width:184px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="mceSimpleZeidon" name="Title" id="Title" style="width:722px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-</td>
-</tr>
-<tr>
-<td valign="top" style="width:104px;">
-<% /* Text1:Text */ %>
-
-<span  id="Text1" name="Text1" style="width:104px;height:16px;">Keyword Type:</span>
-
-</td>
-<td valign="top" style="width:184px;">
-<% /* ComboBox1:ComboBox */ %>
-<% strErrorMapValue = "";  %>
-
-<select  name="ComboBox1" id="ComboBox1" size="1" style="width:184px;" onchange="ComboBox1OnChange( )">
-
-<%
-   boolean inListComboBox1 = false;
-
-   mMasLC = task.getViewByName( "mMasLC" );
-   if ( VmlOperation.isValid( mMasLC ) )
-   {
-      List<TableEntry> list = JspWebUtils.getTableDomainValues( mMasLC , "M_InsertTextKeywordGeneral", "Type", "" );
-
-      nRC = mMasLC.cursor( "M_InsertTextKeywordGeneral" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 )
-      {
-         strComboCurrentValue = mMasLC.cursor( "M_InsertTextKeywordGeneral" ).getAttribute( "Type" ).getString( "" );
-         if ( strComboCurrentValue == null )
-            strComboCurrentValue = "";
-      }
-      else
-      {
-         strComboCurrentValue = "";
-      }
-
-      // Code for NOT required attribute, which makes sure a blank entry exists.
-      if ( strComboCurrentValue == "" )
-      {
-         inListComboBox1 = true;
-%>
-         <option selected="selected" value=""></option>
-<%
-      }
-      else
-      {
-%>
-         <option value=""></option>
-<%
-      }
-      for ( TableEntry entry : list )
-      {
-         String internalValue = entry.getInternalValue( );
-         String externalValue = entry.getExternalValue( );
-         // Perhaps getInternalValue and getExternalValue should return an empty string, 
-         // but currently it returns null.  Set to empty string. 
-         if ( externalValue == null )
-         {
-            internalValue = "";
-            externalValue = "";
-         }
-
-         if ( !StringUtils.isBlank( externalValue ) )
-         {
-            if ( StringUtils.equals( strComboCurrentValue, externalValue ) )
-            {
-               inListComboBox1 = true;
-%>
-               <option selected="selected" value="<%=externalValue%>"><%=externalValue%></option>
-<%
-            }
-            else
-            {
-%>
-               <option value="<%=externalValue%>"><%=externalValue%></option>
-<%
-            }
-         }
-      }  // for ( TableEntry entry
-      // The value from the database isn't in the domain, add it to the list as disabled.
-      if ( !inListComboBox1 )
-      {
-%>
-         <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
-<%
-      }
-   }  // if view != null
-%>
-</select>
-
-<input name="hComboBox1" id="hComboBox1" type="hidden" value="<%=strComboCurrentValue%>" >
 </td>
 </tr>
 </table>
 
-</div>  <!-- GBAddSurfacesList --> 
+</div>  <!-- GroupBox2 --> 
 
 </div>  <!-- End of a new line -->
 
@@ -962,51 +776,54 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
+<div style="height:6px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GBSurfacesSections:GroupBox */ %>
+
+<div id="GBSurfacesSections" name="GBSurfacesSections" class="listgroup"   style="float:left;position:relative; width:808px; height:40px;">  <!-- GBSurfacesSections --> 
+
+<% /* SurfaceStatements:Text */ %>
+
+<label class="groupbox"  id="SurfaceStatements" name="SurfaceStatements" style="width:184px;height:16px;position:absolute;left:6px;top:10px;">Surface Sub-Statements</label>
+
+<% /* PBDelete:PushBtn */ %>
+<button type="button" name="PBDelete" id="PBDelete" value="" onclick="GOTO_DeleteSelectedEntries( )" style="width:190px;height:26px;position:absolute;left:500px;top:10px;">Delete Selected Surfaces</button>
+
+<% /* PBNew:PushBtn */ %>
+<button type="button" name="PBNew" id="PBNew" value="" onclick="GOTO_AddSurfaceSubstatements( )" style="width:78px;height:26px;position:absolute;left:706px;top:10px;">New</button>
+
+
+</div>  <!--  GBSurfacesSections --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:8px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox1:GroupBox */ %>
 
-<div id="GroupBox1" name="GroupBox1" style="width:838px;height:142px;float:left;">  <!-- GroupBox1 --> 
+<div id="GroupBox1" name="GroupBox1" style="width:808px;float:left;">  <!-- GroupBox1 --> 
 
 
  <!-- This is added as a line spacer -->
-<div style="height:4px;width:100px;"></div>
+<div style="height:8px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox7:GroupBox */ %>
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GridClaims:Grid */ %>
+<table class="sortable"  cols=3 style="width:786px;"  name="GridClaims" id="GridClaims">
 
-<div id="GroupBox7" name="GroupBox7"   style="float:left;position:relative; width:786px; height:30px;">  <!-- GroupBox7 --> 
+<thead bgcolor=green><tr>
 
-<% /* Text5:Text */ %>
-
-<label class="listheader"  id="Text5" name="Text5" style="width:240px;height:16px;position:absolute;left:6px;top:4px;">Text Items for Keyword Replace</label>
-
-<% /* PushBtn4:PushBtn */ %>
-<button type="button" class="newbutton" name="PushBtn4" id="PushBtn4" value="" onclick="ADD_GeneralKeywordTextItemInit( )" style="width:120px;height:26px;position:absolute;left:490px;top:4px;">Add Blank Entry</button>
-
-
-</div>  <!--  GroupBox7 --> 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GridM_InsertTextMarketing1:Grid */ %>
-<table  cols=3 style=""  name="GridM_InsertTextMarketing1" id="GridM_InsertTextMarketing1">
-
-<thead><tr>
-
-   <th>Replacement Text</th>
-   <th>Add</th>
-   <th>Delete</th>
+   <th class="gridheading"><input type="checkbox" onclick="CheckAllInGrid(this,'GS_Select')"></th>
+   <th>Surface</th>
+   <th>Update</th>
 
 </tr></thead>
 
@@ -1024,59 +841,69 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
-      String strGridCtrlText11;
-      String strGridCtrlText11ErrorColor;
-      String strDeleteBtn1;
-      String strBitmapBtn1;
+      String strGS_Select;
+      String strGS_SelectValue;
+      String strGESurface;
+      String strBMBUpdateSurface;
       
-      View vGridM_InsertTextMarketing1;
-      vGridM_InsertTextMarketing1 = mMasLC.newView( );
-      csrRC2 = vGridM_InsertTextMarketing1.cursor( "M_InsertTextGeneral" ).setFirst(  );
+      View vGridClaims;
+      vGridClaims = mMasLC.newView( );
+      csrRC2 = vGridClaims.cursor( "M_SubUsage" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGridM_InsertTextMarketing1.cursor( "M_InsertTextGeneral" ).getEntityKey( );
+         lEntityKey = vGridClaims.cursor( "M_SubUsage" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strGridCtrlText11 = "";
-         strGridCtrlText11ErrorColor = "";
-         nRC = vGridM_InsertTextMarketing1.cursor( "M_InsertTextGeneral" ).checkExistenceOfEntity( ).toInt();
+         strGS_Select = "";
+         nRC = vGridClaims.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strTag = "GridCtrlText11::" + strEntityKey;
-            strErrorMapValue = VmlOperation.CheckError( strTag, strError );
-            if ( !StringUtils.isBlank( strErrorMapValue ) )
-            {
-               if ( StringUtils.equals( strErrorFlag, "Y" ) )
-                  strGridCtrlText11ErrorColor = " style='color:red'";
-                  strGridCtrlText11 = strErrorMapValue;
-            }
-            else
-            {
-               strGridCtrlText11 = vGridM_InsertTextMarketing1.cursor( "M_InsertTextGeneral" ).getAttribute( "Text" ).getString( "" );
-               if ( strGridCtrlText11 == null )
-                  strGridCtrlText11 = "";
-            }
+            strGS_Select = vGridClaims.cursor( "M_Usage" ).getAttribute( "wSelected" ).getString( "" );
+
+            if ( strGS_Select == null )
+               strGS_Select = "";
          }
 
-         if ( StringUtils.isBlank( strGridCtrlText11 ) )
-            strGridCtrlText11 = "";
+         if ( StringUtils.equals( strGS_Select, "Y" ) )
+         {
+            strGS_SelectValue = "GS_Select" + strEntityKey;
+            strGS_Select = "<input name='" + strGS_SelectValue + "' id='" + strGS_SelectValue + "' value='Y' type='checkbox'  CHECKED > ";
+         }
+         else
+         {
+            strGS_SelectValue = "GS_Select" + strEntityKey;
+            strGS_Select = "<input name='" + strGS_SelectValue + "' id='" + strGS_SelectValue + "' value='Y' type='checkbox' > ";
+         }
+
+         strGESurface = "";
+         nRC = vGridClaims.cursor( "M_SubUsage" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strGESurface = vGridClaims.cursor( "M_SubUsage" ).getAttribute( "Name" ).getString( "" );
+
+            if ( strGESurface == null )
+               strGESurface = "";
+         }
+
+         if ( StringUtils.isBlank( strGESurface ) )
+            strGESurface = "&nbsp";
 
 %>
 
 <tr<%=strOdd%>>
 
-   <td><input size="115" value="<%=strGridCtrlText11%>"<%=strGridCtrlText11ErrorColor%> name="GridCtrlText11::<%=strEntityKey%>" id="GridCtrlText11::<%=strEntityKey%>" ></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="DeleteBtn1" onclick="ADD_GeneralKeywordTextItem( this.id )" id="DeleteBtn1::<%=strEntityKey%>"><img src="./images/ePammsNew.png" alt="Add"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn1" onclick="DELETE_InsertTextItem( this.id )" id="BitmapBtn1::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
+   <td nowrap><%=strGS_Select%></td>
+   <td><a href="#" onclick="GOTO_UpdateSurface( this.id )" id="GESurface::<%=strEntityKey%>"><%=strGESurface%></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateSurface" onclick="GOTO_UpdateSurface( this.id )" id="BMBUpdateSurface::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
 
 </tr>
 
 <%
-         csrRC2 = vGridM_InsertTextMarketing1.cursor( "M_InsertTextGeneral" ).setNextContinue( );
+         csrRC2 = vGridClaims.cursor( "M_SubUsage" ).setNextContinue( );
       }
-      vGridM_InsertTextMarketing1.drop( );
+      vGridClaims.drop( );
    }
 }
 catch (Exception e)
@@ -1124,7 +951,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <script type="text/javascript">animatedcollapse.init();</script>
 </html>
 <%
-   session.setAttribute( "ZeidonWindow", "wMLCAddUpdateKeywordGeneral" );
+   session.setAttribute( "ZeidonWindow", "wMLCSurfacesStatementMaintenance" );
    session.setAttribute( "ZeidonAction", null );
 
    strActionToProcess = "";

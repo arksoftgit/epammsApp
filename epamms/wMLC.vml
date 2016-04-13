@@ -1620,6 +1620,7 @@ ConfirmAddClaimsStmts( VIEW ViewToWindow )
    STRING ( 256 ) szName
    SHORT   nRC
 
+   AcceptSubobject( mMasLC, "M_Usage" )
    FOR EACH mMasLC.M_Usage
       szName = mMasLC.M_Usage.Name
       IF szName = ""
@@ -1640,6 +1641,7 @@ ConfirmAddClaimsStmts( VIEW ViewToWindow )
 
    COMMIT mMasLC
    DropObjectInstance( mEPA )
+   CreateTemporalSubobjectVersion( mMasLC, "M_Usage" )
 
 END
 
@@ -1670,6 +1672,7 @@ ConfirmAddAppTypesStmts( VIEW ViewToWindow )
    STRING ( 256 ) szName
    SHORT   nRC
 
+   AcceptSubobject( mMasLC, "M_Usage" )
    FOR EACH mMasLC.M_Usage
       szName = mMasLC.M_Usage.Name
       IF szName = ""
@@ -1689,6 +1692,7 @@ ConfirmAddAppTypesStmts( VIEW ViewToWindow )
 
    COMMIT mMasLC
    DropObjectInstance( mEPA )
+   CreateTemporalSubobjectVersion( mMasLC, "M_Usage" )
 
 END
 
@@ -1770,6 +1774,7 @@ ConfirmAddSurfacesStmts( VIEW ViewToWindow )
    STRING ( 256 ) szName
    SHORT   nRC
 
+   AcceptSubobject( mMasLC, "M_Usage" )
    FOR EACH mMasLC.M_Usage
       szName = mMasLC.M_Usage.Name
       IF szName = ""
@@ -1789,6 +1794,7 @@ ConfirmAddSurfacesStmts( VIEW ViewToWindow )
 
    COMMIT mMasLC
    DropObjectInstance( mEPA )
+   CreateTemporalSubobjectVersion( mMasLC, "M_Usage" )
 
 END
 

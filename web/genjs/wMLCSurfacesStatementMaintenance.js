@@ -43,8 +43,8 @@ function _OnAlmostTimeout()
       // If the time is less than one minute, resubmit the page.  Otherwise, go to the timeout window.
       if (tDiff < 60000)
       {
-         document.wMLCSurfacesStatement.zAction.value = "_OnResubmitPage";
-         document.wMLCSurfacesStatement.submit( );
+         document.wMLCSurfacesStatementMaintenance.zAction.value = "_OnResubmitPage";
+         document.wMLCSurfacesStatementMaintenance.submit( );
       }
       else
       {
@@ -59,8 +59,8 @@ function _OnTimeout( )
    {
       _DisableFormElements( true );
 
-      document.wMLCSurfacesStatement.zAction.value = "_OnTimeout";
-      document.wMLCSurfacesStatement.submit( );
+      document.wMLCSurfacesStatementMaintenance.zAction.value = "_OnTimeout";
+      document.wMLCSurfacesStatementMaintenance.submit( );
    }
 }
 
@@ -74,8 +74,8 @@ function _BeforePageUnload( )
       // If the user clicked the window close box, unregister zeidon.
       if (isWindowClosing)
       {
-         document.wMLCSurfacesStatement.zAction.value = "_OnUnload";
-         document.wMLCSurfacesStatement.submit( );
+         document.wMLCSurfacesStatementMaintenance.zAction.value = "_OnUnload";
+         document.wMLCSurfacesStatementMaintenance.submit( );
       }
    }
 }
@@ -128,16 +128,16 @@ function _AfterPageLoaded( )
 {
 // _DisableFormElements( false );
 
-   var szFocusCtrl = document.wMLCSurfacesStatement.zFocusCtrl.value;
+   var szFocusCtrl = document.wMLCSurfacesStatementMaintenance.zFocusCtrl.value;
    if ( szFocusCtrl != "" && szFocusCtrl != "null" )
-      eval( 'document.wMLCSurfacesStatement.' + szFocusCtrl + '.focus( )' );
+      eval( 'document.wMLCSurfacesStatementMaintenance.' + szFocusCtrl + '.focus( )' );
 
    // This is where we put out a message from the previous iteration on this window
-   var szMsg = document.wMLCSurfacesStatement.zError.value;
+   var szMsg = document.wMLCSurfacesStatementMaintenance.zError.value;
    if ( szMsg != "" )
       alert( szMsg ); // "Houston ... We have a problem"
 
-   szMsg = document.wMLCSurfacesStatement.zOpenFile.value;
+   szMsg = document.wMLCSurfacesStatementMaintenance.zOpenFile.value;
    if ( szMsg != "" )
    {
       var NewWin = window.open( szMsg );
@@ -149,10 +149,10 @@ function _AfterPageLoaded( )
       }
    }
 
-   var LoginName = document.wMLCSurfacesStatement.zLoginName.value;
-   var keyRole = document.wMLCSurfacesStatement.zKeyRole.value;
-   document.wMLCSurfacesStatement.zError.value = "";
-   document.wMLCSurfacesStatement.zOpenFile.value = "";
+   var LoginName = document.wMLCSurfacesStatementMaintenance.zLoginName.value;
+   var keyRole = document.wMLCSurfacesStatementMaintenance.zKeyRole.value;
+   document.wMLCSurfacesStatementMaintenance.zError.value = "";
+   document.wMLCSurfacesStatementMaintenance.zOpenFile.value = "";
 
    if ( timerID != null )
    {
@@ -160,7 +160,7 @@ function _AfterPageLoaded( )
       timerID = null;
    }
 
-   var varTimeout = document.wMLCSurfacesStatement.zTimeout.value;
+   var varTimeout = document.wMLCSurfacesStatementMaintenance.zTimeout.value;
    if ( varTimeout > 0 )
    {
       var varDelay = 60000 * varTimeout;  // Timeout value in timeout.inc
@@ -189,7 +189,7 @@ function CheckAllInGrid(id, CheckBoxName) // triggered by no text checkbox
    }
 }
 
-function AcceptAndReturnSurfacesStatement( )
+function GOTO_AddSurfaceSubstatements( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -199,12 +199,12 @@ function AcceptAndReturnSurfacesStatement( )
    {
       _DisableFormElements( true );
 
-      document.wMLCSurfacesStatement.zAction.value = "AcceptAndReturnSurfacesStatement";
-      document.wMLCSurfacesStatement.submit( );
+      document.wMLCSurfacesStatementMaintenance.zAction.value = "GOTO_AddSurfaceSubstatements";
+      document.wMLCSurfacesStatementMaintenance.submit( );
    }
 }
 
-function ADD_UsageKeyword( )
+function GOTO_DeleteSelectedEntries( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -214,27 +214,12 @@ function ADD_UsageKeyword( )
    {
       _DisableFormElements( true );
 
-      document.wMLCSurfacesStatement.zAction.value = "ADD_UsageKeyword";
-      document.wMLCSurfacesStatement.submit( );
+      document.wMLCSurfacesStatementMaintenance.zAction.value = "GOTO_DeleteSelectedEntries";
+      document.wMLCSurfacesStatementMaintenance.submit( );
    }
 }
 
-function CancelSurfacesStatement( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCSurfacesStatement.zAction.value = "CancelSurfacesStatement";
-      document.wMLCSurfacesStatement.submit( );
-   }
-}
-
-function DELETE_SubUsage( strTagEntityKey )
+function GOTO_UpdateSurface( strTagEntityKey )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -245,25 +230,15 @@ function DELETE_SubUsage( strTagEntityKey )
       var nIdx = strTagEntityKey.lastIndexOf( '::' );
       var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
 
-      document.wMLCSurfacesStatement.zTableRowSelect.value = strEntityKey;
-      // Javascript code entered by user.
-
-// Confirmation of  Delete.
-if (!confirm("OK to delete selected entry?"))
-{
-   return;
-}
-
-      // END of Javascript code entered by user.
-
+      document.wMLCSurfacesStatementMaintenance.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
-      document.wMLCSurfacesStatement.zAction.value = "DELETE_SubUsage";
-      document.wMLCSurfacesStatement.submit( );
+      document.wMLCSurfacesStatementMaintenance.zAction.value = "GOTO_UpdateSurface";
+      document.wMLCSurfacesStatementMaintenance.submit( );
    }
 }
 
-function GOTO_DisplayGeneratedTextUsage( )
+function AcceptAndReturn( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -273,69 +248,12 @@ function GOTO_DisplayGeneratedTextUsage( )
    {
       _DisableFormElements( true );
 
-      document.wMLCSurfacesStatement.zAction.value = "GOTO_DisplayGeneratedTextUsage";
-      document.wMLCSurfacesStatement.submit( );
+      document.wMLCSurfacesStatementMaintenance.zAction.value = "AcceptAndReturn";
+      document.wMLCSurfacesStatementMaintenance.submit( );
    }
 }
 
-function GOTO_KeywordUpdate( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCSurfacesStatement.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wMLCSurfacesStatement.zAction.value = "GOTO_KeywordUpdate";
-      document.wMLCSurfacesStatement.submit( );
-   }
-}
-
-function DELETE_Keyword( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCSurfacesStatement.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wMLCSurfacesStatement.zAction.value = "DELETE_Keyword";
-      document.wMLCSurfacesStatement.submit( );
-   }
-}
-
-function GOTO_UsageUpdate( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCSurfacesStatement.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wMLCSurfacesStatement.zAction.value = "GOTO_UsageUpdate";
-      document.wMLCSurfacesStatement.submit( );
-   }
-}
-
-function InitSurfacesStmtsForInsert( )
+function CancelAndReturn( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -345,12 +263,12 @@ function InitSurfacesStmtsForInsert( )
    {
       _DisableFormElements( true );
 
-      document.wMLCSurfacesStatement.zAction.value = "InitSurfacesStmtsForInsert";
-      document.wMLCSurfacesStatement.submit( );
+      document.wMLCSurfacesStatementMaintenance.zAction.value = "CancelAndReturn";
+      document.wMLCSurfacesStatementMaintenance.submit( );
    }
 }
 
-function SurfaceStatementMaintenance( )
+function smAcceptAndReturn( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -360,12 +278,12 @@ function SurfaceStatementMaintenance( )
    {
       _DisableFormElements( true );
 
-      document.wMLCSurfacesStatement.zAction.value = "SurfaceStatementMaintenance";
-      document.wMLCSurfacesStatement.submit( );
+      document.wMLCSurfacesStatementMaintenance.zAction.value = "smAcceptAndReturn";
+      document.wMLCSurfacesStatementMaintenance.submit( );
    }
 }
 
-function SaveAddNewUsage( )
+function smCancelAndReturn( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -375,8 +293,8 @@ function SaveAddNewUsage( )
    {
       _DisableFormElements( true );
 
-      document.wMLCSurfacesStatement.zAction.value = "SaveAddNewUsage";
-      document.wMLCSurfacesStatement.submit( );
+      document.wMLCSurfacesStatementMaintenance.zAction.value = "smCancelAndReturn";
+      document.wMLCSurfacesStatementMaintenance.submit( );
    }
 }
 

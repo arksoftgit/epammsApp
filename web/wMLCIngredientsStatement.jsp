@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCIngredientsStatement   Generate Timestamp: 20160407171236608 --%>
+<%-- wMLCIngredientsStatement   Generate Timestamp: 20160412115806222 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -67,7 +67,7 @@ public int DoInputMapping( HttpServletRequest request,
          strMapValue = request.getParameter( "ChemicalName" );
          task.log().debug( "ChemicalName prior to TrimTinyHtml: " + strMapValue );
          strMapValue = VmlOperation.TrimTinyHtml( strMapValue );
-         task.log().debug( "ChemicalName after TrimTinyHtml: " + strMapValue );
+         task.log().debug( "ChemicalName after TrimTinyHtml: '" + strMapValue + "'" );
          try
          {
             if ( webMapping )

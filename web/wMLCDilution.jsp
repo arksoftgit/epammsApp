@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDilution   Generate Timestamp: 20160407171235449 --%>
+<%-- wMLCDilution   Generate Timestamp: 20160412115805181 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1356,7 +1356,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smTypesOfSurfaces" name="smTypesOfSurfaces"><a href="#"  onclick="smEditSurfacesSection()">Types of Surfaces</a></li>
+       <li id="smTypesOfSurfaces" name="smTypesOfSurfaces"><a href="#"  onclick="smEditSurfacesSection()">Surfaces</a></li>
 <%
    }
 %>

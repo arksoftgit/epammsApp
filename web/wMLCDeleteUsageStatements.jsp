@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDeleteUsageStatements   Generate Timestamp: 20160407171235417 --%>
+<%-- wMLCDeleteUsageStatements   Generate Timestamp: 20160412123645056 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -590,13 +590,13 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:4px;width:100px;"></div>
+<div style="height:2px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
+<div style="height:1px;width:34px;float:left;"></div>   <!-- Width Spacer -->
 <% /* DirectionsForUseStatement1:GroupBox */ %>
 
-<div id="DirectionsForUseStatement1" name="DirectionsForUseStatement1" class="withborder" style="width:374px;height:354px;float:left;">  <!-- DirectionsForUseStatement1 --> 
+<div id="DirectionsForUseStatement1" name="DirectionsForUseStatement1" class="withborder" style="width:770px;height:600px;float:left;">  <!-- DirectionsForUseStatement1 --> 
 
 <div  id="DirectionsForUseStatement1" name="DirectionsForUseStatement1" >Entries to Delete</div>
 
@@ -606,7 +606,9 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
 <% /* Grid1:Grid */ %>
-<table  cols=1 style=""  name="Grid1" id="Grid1">
+<div class="tableScroll"  style="height:574px;">
+
+<table name="Grid1" id="Grid1" cellspacing=0  cols=1  >
 
 <thead><tr>
 
@@ -614,7 +616,7 @@ else
 
 </tr></thead>
 
-<tbody>
+<tbody height="524px;">
 
 <%
 try
@@ -644,7 +646,7 @@ try
          nRC = vGrid1.cursor( "MI_UsageList" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl1 = vGrid1.cursor( "MI_UsageList" ).getAttribute( "Name" ).getString( "" );
+            strGridEditCtl1 = vGrid1.cursor( "MI_UsageList" ).getAttribute( "dFullEmbeddedNameL" ).getString( "" );
 
             if ( strGridEditCtl1 == null )
                strGridEditCtl1 = "";
@@ -675,6 +677,8 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 %>
 </tbody>
 </table>
+
+</div>
 
 </div>  <!-- End of a new line -->
 

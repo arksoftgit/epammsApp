@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCMarketingSelectByType   Generate Timestamp: 20160407171237296 --%>
+<%-- wMLCMarketingSelectByType   Generate Timestamp: 20160412115806844 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -879,7 +879,7 @@ else
    }
 %>
 
-<div name="Title1" id="Title1" style="width:610px;height:54px;position:absolute;left:216px;top:12px;border:solid;border-width:4px;border-style:groove;display:inline-block;text-overflow:hidden;background-color:lightgray;" wrap="wrap"><%=strErrorMapValue%></div>
+<div name="Title1" id="Title1" style="width:610px;height:54px;position:absolute;left:216px;top:12px;border:solid;border-width:4px;border-style:groove;text-overflow:hidden;background-color:lightgray;" wrap="wrap"><%=strErrorMapValue%></div>
 
 </div>  <!-- End of a new line -->
 

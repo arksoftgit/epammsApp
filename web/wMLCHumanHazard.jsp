@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCHumanHazard   Generate Timestamp: 20160407171236452 --%>
+<%-- wMLCHumanHazard   Generate Timestamp: 20160413092443139 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1294,7 +1294,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smTypesOfSurfaces" name="smTypesOfSurfaces"><a href="#"  onclick="smEditSurfacesSection()">Types of Surfaces</a></li>
+       <li id="smTypesOfSurfaces" name="smTypesOfSurfaces"><a href="#"  onclick="smEditSurfacesSection()">Surfaces</a></li>
 <%
    }
 %>
@@ -1482,9 +1482,13 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox6:GroupBox */ %>
+
+<div id="GroupBox6" name="GroupBox6"   style="float:left;position:relative; width:780px; height:466px;">  <!-- GroupBox6 --> 
+
 <% /* GBStorDispSections3:GroupBox */ %>
 
-<div id="GBStorDispSections3" name="GBStorDispSections3" class="listgroup"   style="float:left;position:relative; width:780px; height:30px;">  <!-- GBStorDispSections3 --> 
+<div id="GBStorDispSections3" name="GBStorDispSections3" class="listgroup" style="width:780px;height:30px;position:absolute;left:0px;top:0px;">  <!-- GBStorDispSections3 --> 
 
 <% /* HumanHazardsText:Text */ %>
 
@@ -1492,16 +1496,9 @@ else
 
 
 </div>  <!--  GBStorDispSections3 --> 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
-<div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox1:GroupBox */ %>
 
-<div id="GroupBox1" name="GroupBox1"   style="float:left;position:relative; width:766px; height:288px;">  <!-- GroupBox1 --> 
+<div id="GroupBox1" name="GroupBox1" style="width:766px;height:288px;position:absolute;left:4px;top:28px;">  <!-- GroupBox1 --> 
 
 <% /* HazardText::Text */ %>
 
@@ -1671,9 +1668,17 @@ else
 </select>
 
 <input name="hSignalWord" id="hSignalWord" type="hidden" value="<%=strComboCurrentValue%>" >
+<% /* GroupBox4:GroupBox */ %>
+
+<div id="GroupBox4" name="GroupBox4" style="width:742px;height:56px;position:absolute;left:10px;top:60px;">  <!-- GroupBox4 --> 
+
 <% /* PanelLoc:Text */ %>
 
-<label  id="PanelLoc" name="PanelLoc" style="width:226px;height:16px;position:absolute;left:10px;top:60px;">Precautionary Location Text</label>
+<label  id="PanelLoc" name="PanelLoc" style="width:226px;height:16px;position:absolute;left:0px;top:0px;">Precautionary Location Text</label>
+
+<% /* GroupBox5:GroupBox */ %>
+
+<div id="GroupBox5" name="GroupBox5" style="width:498px;height:56px;position:absolute;left:244px;top:0px;">  <!-- GroupBox5 --> 
 
 <% /* Statement:MLEdit */ %>
 <%
@@ -1707,8 +1712,12 @@ else
    }
 %>
 
-<textarea name="Statement" id="Statement" style="width:498px;height:56px;position:absolute;left:254px;top:60px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+<textarea name="Statement" id="Statement"  title="This can include Keywords, '{{Precautionary Panel "style="width:498px;height:56px;position:absolute;left:0px;top:0px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
+
+</div>  <!--  GroupBox5 --> 
+
+</div>  <!--  GroupBox4 --> 
 <% /* LocSeparator::Text */ %>
 
 <label  id="LocSeparator:" name="LocSeparator:" style="width:234px;height:16px;position:absolute;left:10px;top:130px;">Location Separator:</label>
@@ -2265,36 +2274,19 @@ else
 
 
 </div>  <!--  GroupBox1 --> 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
-<div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox2:GroupBox */ %>
 
-<div id="GroupBox2" name="GroupBox2" class="withborder"   style="float:left;position:relative; width:766px; height:40px;">  <!-- GroupBox2 --> 
+<div id="GroupBox2" name="GroupBox2" class="withborder" style="width:766px;height:28px;position:absolute;left:8px;top:328px;">  <!-- GroupBox2 --> 
 
 <% /* FullHazardStatement:Text */ %>
 
-<label class="groupbox"  id="FullHazardStatement" name="FullHazardStatement" style="width:208px;height:16px;position:absolute;left:18px;top:14px;">Complete Hazard Statement</label>
+<label class="groupbox"  id="FullHazardStatement" name="FullHazardStatement" style="width:208px;height:16px;position:absolute;left:6px;top:8px;">Complete Hazard Statement</label>
 
 
 </div>  <!--  GroupBox2 --> 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox3:GroupBox */ %>
 
-<div id="GroupBox3" name="GroupBox3"   style="float:left;position:relative; width:766px; height:102px;">  <!-- GroupBox3 --> 
+<div id="GroupBox3" name="GroupBox3" style="width:766px;height:102px;position:absolute;left:4px;top:364px;">  <!-- GroupBox3 --> 
 
 <% /* Refresh:PushBtn */ %>
 <button type="button" name="Refresh" id="Refresh" value="" onclick="RefreshFullStatement( )" style="width:130px;height:24px;position:absolute;left:0px;top:0px;">Refresh</button>
@@ -2331,10 +2323,12 @@ else
    }
 %>
 
-<div name="MLEditFullStatement" id="MLEditFullStatement" style="width:592px;height:100px;position:absolute;left:156px;top:0px;border:solid;border-width:4px;border-style:groove;display:inline-block;text-overflow:hidden;background-color:lightgray;" wrap="wrap"><%=strErrorMapValue%></div>
+<div name="MLEditFullStatement" id="MLEditFullStatement" style="width:592px;height:100px;position:absolute;left:156px;top:0px;border:solid;border-width:4px;border-style:groove;text-overflow:hidden;background-color:lightgray;" wrap="wrap"><%=strErrorMapValue%></div>
 
 
 </div>  <!--  GroupBox3 --> 
+
+</div>  <!--  GroupBox6 --> 
 </div>  <!-- End of a new line -->
 
 

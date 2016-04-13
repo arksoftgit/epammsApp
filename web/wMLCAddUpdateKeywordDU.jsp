@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCAddUpdateKeywordDU   Generate Timestamp: 20160407171234732 --%>
+<%-- wMLCAddUpdateKeywordDU   Generate Timestamp: 20160412115804587 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -858,7 +858,7 @@ else
    }
 %>
 
-<input class="text12" name="DirectionsUseName1" id="DirectionsUseName1"  title="Required Name to differentiate Directions for Use Sections within a list" style="width:184px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="DirectionsUseName1" id="DirectionsUseName1"  title="Required Name to differentiate Directions for Use Sections within a list"style="width:184px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

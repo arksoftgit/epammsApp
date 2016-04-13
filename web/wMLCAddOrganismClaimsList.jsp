@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCAddOrganismClaimsList   Generate Timestamp: 20160407171234630 --%>
+<%-- wMLCAddOrganismClaimsList   Generate Timestamp: 20160412115804470 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -100,46 +100,6 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       vGridTmp.drop( );
-      // Grid: GridFungi
-      iTableRowCnt = 0;
-
-      // We are creating a temp view to the grid view so that if there are 
-      // grids on the same window with the same view we do not mess up the 
-      // entity positions. 
-      vGridTmp = mEPA.newView( );
-      csrRC = vGridTmp.cursor( "Fungi" ).setFirst( "EPA_ChemicalFamily" );
-      while ( csrRC.isSet() )
-      {
-         lEntityKey = vGridTmp.cursor( "Fungi" ).getEntityKey( );
-         strEntityKey = Long.toString( lEntityKey );
-         iTableRowCnt++;
-
-         strTag = "GS_SelectFungi" + strEntityKey;
-         strMapValue = request.getParameter( strTag );
-         // If the checkbox is not checked, then set to the unchecked value.
-         if (strMapValue == null || strMapValue.isEmpty() )
-            strMapValue = "N";
-
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "GS_SelectFungi", "", strMapValue );
-            else
-               if ( strMapValue != null )
-                  vGridTmp.cursor( "EPA_Claim" ).getAttribute( "wkSelected" ).setValue( strMapValue, "" );
-               else
-                  vGridTmp.cursor( "EPA_Claim" ).getAttribute( "wkSelected" ).setValue( "", "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
-         }
-
-         csrRC = vGridTmp.cursor( "Fungi" ).setNextContinue( );
-      }
-
-      vGridTmp.drop( );
       // Grid: GridViruses
       iTableRowCnt = 0;
 
@@ -177,6 +137,46 @@ public int DoInputMapping( HttpServletRequest request,
          }
 
          csrRC = vGridTmp.cursor( "Viruses" ).setNextContinue( );
+      }
+
+      vGridTmp.drop( );
+      // Grid: GridFungi
+      iTableRowCnt = 0;
+
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
+      vGridTmp = mEPA.newView( );
+      csrRC = vGridTmp.cursor( "Fungi" ).setFirst( "EPA_ChemicalFamily" );
+      while ( csrRC.isSet() )
+      {
+         lEntityKey = vGridTmp.cursor( "Fungi" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         iTableRowCnt++;
+
+         strTag = "GS_SelectFungi" + strEntityKey;
+         strMapValue = request.getParameter( strTag );
+         // If the checkbox is not checked, then set to the unchecked value.
+         if (strMapValue == null || strMapValue.isEmpty() )
+            strMapValue = "N";
+
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "GS_SelectFungi", "", strMapValue );
+            else
+               if ( strMapValue != null )
+                  vGridTmp.cursor( "EPA_Claim" ).getAttribute( "wkSelected" ).setValue( strMapValue, "" );
+               else
+                  vGridTmp.cursor( "EPA_Claim" ).getAttribute( "wkSelected" ).setValue( "", "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, strTag, e.getReason( ), strMapValue );
+         }
+
+         csrRC = vGridTmp.cursor( "Fungi" ).setNextContinue( );
       }
 
       vGridTmp.drop( );
@@ -810,25 +810,7 @@ else
 <div  id="AddBacteriaList" name="AddBacteriaList" >Add Bacteria List</div>
 
  <!-- This is added as a line spacer -->
-<div style="height:12px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
-<% /* HTSelectAllBacteria:Text */ %>
-
-<a href="#" id="HTSelectAllBacteria" name="HTSelectAllBacteria"  onclick="SelectAllClaims( );" style="width:80px;height:16px;">Select All</a>
-
-<% /* HTClearSelectedBacteria:Text */ %>
-
-<a href="#" id="HTClearSelectedBacteria" name="HTClearSelectedBacteria"  onclick="ClearSelectedClaims( );" style="width:100px;height:16px;">Clear Selected</a>
-
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
+<div style="height:34px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:16px;float:left;"></div>   <!-- Width Spacer -->
@@ -837,7 +819,7 @@ else
 
 <thead><tr>
 
-   <th>Select</th>
+   <th class="gridheading"><input type="checkbox" onclick="CheckAllInGrid(this,'GS_SelectBacteria')"></th>
    <th>Bacteria</th>
 
 </tr></thead>
@@ -953,25 +935,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <div  id="AddFungiList" name="AddFungiList" >Add Fungi List</div>
 
  <!-- This is added as a line spacer -->
-<div style="height:12px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
-<% /* HTSelectAllFungi:Text */ %>
-
-<a href="#" id="HTSelectAllFungi" name="HTSelectAllFungi"  onclick="SelectAllClaims( );" style="width:80px;height:16px;">Select All</a>
-
-<% /* HTClearSelectedFungi:Text */ %>
-
-<a href="#" id="HTClearSelectedFungi" name="HTClearSelectedFungi"  onclick="ClearSelectedClaims( );" style="width:100px;height:16px;">Clear Selected</a>
-
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
+<div style="height:34px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:16px;float:left;"></div>   <!-- Width Spacer -->
@@ -980,7 +944,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <thead><tr>
 
-   <th>Select</th>
+   <th class="gridheading"><input type="checkbox" onclick="CheckAllInGrid(this,'GS_SelectFungi')"></th>
    <th>Fungi</th>
 
 </tr></thead>
@@ -1096,25 +1060,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <div  id="AddVirusesList" name="AddVirusesList" >Add Viruses List</div>
 
  <!-- This is added as a line spacer -->
-<div style="height:12px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
-<% /* HTSelectAllViruses:Text */ %>
-
-<a href="#" id="HTSelectAllViruses" name="HTSelectAllViruses"  onclick="SelectAllClaims( );" style="width:80px;height:16px;">Select All</a>
-
-<% /* HTClearSelectedViruses:Text */ %>
-
-<a href="#" id="HTClearSelectedViruses" name="HTClearSelectedViruses"  onclick="ClearSelectedClaims( );" style="width:100px;height:16px;">Clear Selected</a>
-
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
+<div style="height:34px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:16px;float:left;"></div>   <!-- Width Spacer -->
@@ -1123,7 +1069,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <thead><tr>
 
-   <th>Select</th>
+   <th class="gridheading"><input type="checkbox" onclick="CheckAllInGrid(this,'GS_SelectViruses')"></th>
    <th>Viruses</th>
 
 </tr></thead>

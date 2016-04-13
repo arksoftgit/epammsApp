@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCNetContents   Generate Timestamp: 20160407171237484 --%>
+<%-- wMLCNetContents   Generate Timestamp: 20160412115807000 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -86,7 +86,7 @@ public int DoInputMapping( HttpServletRequest request,
          strMapValue = request.getParameter( "Description" );
          task.log().debug( "Description prior to TrimTinyHtml: " + strMapValue );
          strMapValue = VmlOperation.TrimTinyHtml( strMapValue );
-         task.log().debug( "Description after TrimTinyHtml: " + strMapValue );
+         task.log().debug( "Description after TrimTinyHtml: '" + strMapValue + "'" );
          try
          {
             if ( webMapping )
@@ -108,7 +108,7 @@ public int DoInputMapping( HttpServletRequest request,
          strMapValue = request.getParameter( "Text" );
          task.log().debug( "Text prior to TrimTinyHtml: " + strMapValue );
          strMapValue = VmlOperation.TrimTinyHtml( strMapValue );
-         task.log().debug( "Text after TrimTinyHtml: " + strMapValue );
+         task.log().debug( "Text after TrimTinyHtml: '" + strMapValue + "'" );
          try
          {
             if ( webMapping )

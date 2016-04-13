@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCSurfaces   Generate Timestamp: 20160407171238140 --%>
+<%-- wMLCSurfaces   Generate Timestamp: 20160412115807547 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -100,24 +100,6 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       vGridTmp.drop( );
-      // Grid: GridClaims2
-      iTableRowCnt = 0;
-
-      // We are creating a temp view to the grid view so that if there are 
-      // grids on the same window with the same view we do not mess up the 
-      // entity positions. 
-      vGridTmp = mMasLC.newView( );
-      csrRC = vGridTmp.cursor( "M_UsageNonGroupUsage" ).setFirst(  );
-      while ( csrRC.isSet() )
-      {
-         lEntityKey = vGridTmp.cursor( "M_UsageNonGroupUsage" ).getEntityKey( );
-         strEntityKey = Long.toString( lEntityKey );
-         iTableRowCnt++;
-
-         csrRC = vGridTmp.cursor( "M_UsageNonGroupUsage" ).setNextContinue( );
-      }
-
-      vGridTmp.drop( );
       // EditBox: Title1
       nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
@@ -193,6 +175,24 @@ public int DoInputMapping( HttpServletRequest request,
          }
 
          csrRC = vGridTmp.cursor( "M_UsageGroup" ).setNextContinue( );
+      }
+
+      vGridTmp.drop( );
+      // Grid: GridClaims2
+      iTableRowCnt = 0;
+
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
+      vGridTmp = mMasLC.newView( );
+      csrRC = vGridTmp.cursor( "M_UsageNonGroupUsage" ).setFirst(  );
+      while ( csrRC.isSet() )
+      {
+         lEntityKey = vGridTmp.cursor( "M_UsageNonGroupUsage" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         iTableRowCnt++;
+
+         csrRC = vGridTmp.cursor( "M_UsageNonGroupUsage" ).setNextContinue( );
       }
 
       vGridTmp.drop( );
@@ -1425,7 +1425,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="smTypesOfSurfaces" name="smTypesOfSurfaces"><a href="#"  class="sideselected"  onclick="smEditSurfacesSection()">Types of Surfaces</a></li>
+       <li id="smTypesOfSurfaces" name="smTypesOfSurfaces"><a href="#"  class="sideselected"  onclick="smEditSurfacesSection()">Surfaces</a></li>
 <%
    }
 %>
@@ -1659,7 +1659,7 @@ else
 
 <thead bgcolor=green><tr>
 
-   <th>Select</th>
+   <th class="gridheading"><input type="checkbox" onclick="CheckAllInGrid(this,'GS_Select')"></th>
    <th>Surfaces</th>
    <th>Update</th>
 
@@ -1719,7 +1719,7 @@ try
          nRC = vGridClaims.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strSurfaces = vGridClaims.cursor( "M_Usage" ).getAttribute( "dDisplayAtomicNames" ).getString( "" );
+            strSurfaces = vGridClaims.cursor( "M_Usage" ).getAttribute( "dFullEmbeddedName" ).getString( "" );
 
             if ( strSurfaces == null )
                strSurfaces = "";
