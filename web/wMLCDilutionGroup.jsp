@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDilutionGroup   Generate Timestamp: 20160412115805291 --%>
+<%-- wMLCDilutionGroup   Generate Timestamp: 20160415212146903 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -60,45 +60,158 @@ public int DoInputMapping( HttpServletRequest request,
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
    {
-      // EditBox: EditBox3
+      // EditBox: Title
       nRC = mMasLC.cursor( "M_DilutionGroup" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "EditBox3" );
+         strMapValue = request.getParameter( "Title" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "EditBox3", "", strMapValue );
+               VmlOperation.CreateMessage( task, "Title", "", strMapValue );
             else
-               mMasLC.cursor( "M_DilutionGroup" ).getAttribute( "DilutionRatioText" ).setValue( strMapValue, "" );
+               mMasLC.cursor( "M_DilutionGroup" ).getAttribute( "Title" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "EditBox3", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "Title", e.getReason( ), strMapValue );
          }
       }
 
-      // EditBox: EditBox2
+      // EditBox: Text
       nRC = mMasLC.cursor( "M_DilutionGroup" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "EditBox2" );
+         strMapValue = request.getParameter( "Text" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "EditBox2", "", strMapValue );
+               VmlOperation.CreateMessage( task, "Text", "", strMapValue );
             else
-               mMasLC.cursor( "M_DilutionGroup" ).getAttribute( "DilutionQuatText" ).setValue( strMapValue, "" );
+               mMasLC.cursor( "M_DilutionGroup" ).getAttribute( "Text" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "EditBox2", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "Text", e.getReason( ), strMapValue );
          }
       }
 
-      // Grid: GridDirectionsUse2
+      // EditBox: Ratio
+      nRC = mMasLC.cursor( "M_DilutionGroup" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "Ratio" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "Ratio", "", strMapValue );
+            else
+               mMasLC.cursor( "M_DilutionGroup" ).getAttribute( "Ratio" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "Ratio", e.getReason( ), strMapValue );
+         }
+      }
+
+      // EditBox: UnitsNumerator
+      nRC = mMasLC.cursor( "M_DilutionGroup" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "UnitsNumerator" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "UnitsNumerator", "", strMapValue );
+            else
+               mMasLC.cursor( "M_DilutionGroup" ).getAttribute( "UnitsNumerator" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "UnitsNumerator", e.getReason( ), strMapValue );
+         }
+      }
+
+      // EditBox: UnitsDenominator
+      nRC = mMasLC.cursor( "M_DilutionGroup" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "UnitsDenominator" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "UnitsDenominator", "", strMapValue );
+            else
+               mMasLC.cursor( "M_DilutionGroup" ).getAttribute( "UnitsDenominator" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "UnitsDenominator", e.getReason( ), strMapValue );
+         }
+      }
+
+      // EditBox: ReviewerNote
+      nRC = mMasLC.cursor( "M_DilutionGroup" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "ReviewerNote" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "ReviewerNote", "", strMapValue );
+            else
+               mMasLC.cursor( "M_DilutionGroup" ).getAttribute( "ReviewerNote" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "ReviewerNote", e.getReason( ), strMapValue );
+         }
+      }
+
+      // EditBox: ReviewerNoteTable
+      nRC = mMasLC.cursor( "M_DilutionGroup" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "ReviewerNoteTable" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "ReviewerNoteTable", "", strMapValue );
+            else
+               mMasLC.cursor( "M_DilutionGroup" ).getAttribute( "ReviewerNoteTable" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "ReviewerNoteTable", e.getReason( ), strMapValue );
+         }
+      }
+
+      // Grid: GridDilutionGroupItems
+      iTableRowCnt = 0;
+
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
+      vGridTmp = mMasLC.newView( );
+      csrRC = vGridTmp.cursor( "M_DilutionChartEntry" ).setFirst(  );
+      while ( csrRC.isSet() )
+      {
+         lEntityKey = vGridTmp.cursor( "M_DilutionChartEntry" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         iTableRowCnt++;
+
+         csrRC = vGridTmp.cursor( "M_DilutionChartEntry" ).setNextContinue( );
+      }
+
+      vGridTmp.drop( );
+      // Grid: GridGroupItems
       iTableRowCnt = 0;
 
       // We are creating a temp view to the grid view so that if there are 
@@ -237,7 +350,193 @@ if ( strActionToProcess != null )
 
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DilutionGroupItem" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "AcceptChartItem" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDilutionGroup", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Auto Object Function
+      nRC = 0;
+      try
+      {
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_DilutionGroup" );
+         if ( cursor.isNull() )
+            nRC = 0;
+         else
+         {
+            if ( cursor.isVersioned( ) )
+            {
+               cursor.acceptSubobject( );
+            }
+            nRC = 0;
+         }
+
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "AcceptChartItem", e.getMessage( ), "" );
+         break;
+      }
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "AcceptGroupItem" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDilutionGroup", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Auto Object Function
+      nRC = 0;
+      try
+      {
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_DilutionGroup" );
+         if ( cursor.isNull() )
+            nRC = 0;
+         else
+         {
+            if ( cursor.isVersioned( ) )
+            {
+               cursor.acceptSubobject( );
+            }
+            nRC = 0;
+         }
+
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "AcceptGroupItem", e.getMessage( ), "" );
+         break;
+      }
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelChartItem" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDilutionGroup", strActionToProcess );
+
+      // Action Auto Object Function
+      nRC = 0;
+      try
+      {
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_DilutionGroup" );
+         if ( cursor.isNull() )
+            nRC = 0;
+         else
+         {
+            if ( cursor.isVersioned( ) )
+            {
+               cursor.cancelSubobject( );
+            }
+            nRC = 0;
+         }
+
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "CancelChartItem", e.getMessage( ), "" );
+         break;
+      }
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelGroupItem" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDilutionGroup", strActionToProcess );
+
+      // Action Auto Object Function
+      nRC = 0;
+      try
+      {
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_DilutionGroupItem" );
+         if ( cursor.isNull() )
+            nRC = 0;
+         else
+         {
+            if ( cursor.isVersioned( ) )
+            {
+               cursor.cancelSubobject( );
+            }
+            nRC = 0;
+         }
+
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "CancelGroupItem", e.getMessage( ), "" );
+         break;
+      }
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DilutionChartItemAdd" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDilutionGroup", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Auto Object Function
+      nRC = 0;
+      try
+      {
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_DilutionChartEntry" );
+         cursor.createTemporalEntity( );
+
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "GOTO_DilutionChartItemAdd", e.getMessage( ), "" );
+         break;
+      }
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "DilutionChartItem" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DilutionChartItemDelete" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDilutionGroup", strActionToProcess );
@@ -254,14 +553,14 @@ if ( strActionToProcess != null )
       if ( VmlOperation.isValid( mMasLC ) )
       {
          lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mMasLC.cursor( "M_DilutionGroupItem" ).setByEntityKey( lEKey );
+         csrRC = mMasLC.cursor( "M_DilutionChartEntry" ).setByEntityKey( lEKey );
          if ( !csrRC.isSet() )
          {
             boolean bFound = false;
-            csrRCk = mMasLC.cursor( "M_DilutionGroupItem" ).setFirst( );
+            csrRCk = mMasLC.cursor( "M_DilutionChartEntry" ).setFirst( );
             while ( csrRCk.isSet() && !bFound )
             {
-               lEKey = mMasLC.cursor( "M_DilutionGroupItem" ).getEntityKey( );
+               lEKey = mMasLC.cursor( "M_DilutionChartEntry" ).getEntityKey( );
                strKey = Long.toString( lEKey );
                if ( StringUtils.equals( strKey, strEntityKey ) )
                {
@@ -269,33 +568,40 @@ if ( strActionToProcess != null )
                   bFound = true;
                }
                else
-                  csrRCk = mMasLC.cursor( "M_DilutionGroupItem" ).setNextContinue( );
+                  csrRCk = mMasLC.cursor( "M_DilutionChartEntry" ).setNextContinue( );
             } // Grid
          }
       }
 
-      // Action Auto Object Function
+      // Action Operation
       nRC = 0;
-      try
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDilutionGroup", "wMLC.GOTO_DilutionChartItemDelete" );
+      nOptRC = wMLC.GOTO_DilutionChartItemDelete( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
       {
-      EntityCursor cursor = mMasLC.cursor( "M_DilutionGroupItem" );
-      cursor.createTemporalSubobjectVersion( );
-
-      }
-      catch ( Exception e )
-      {
-         nRC = 2;
-         VmlOperation.CreateMessage( task, "GOTO_DilutionGroupItem", e.getMessage( ), "" );
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
          break;
       }
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "DilutionGroupItem" );
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "DeleteComponent" );
+      }
+
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "AcceptChartEntryItem" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DilutionChartItemUpdate" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDilutionGroup", strActionToProcess );
@@ -305,68 +611,49 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
-      // Action Auto Object Function
-      nRC = 0;
-      try
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mMasLC;
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
       {
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_DilutionGroup" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         if ( cursor.isVersioned( ) )
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mMasLC.cursor( "M_DilutionChartEntry" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
          {
-            cursor.acceptSubobject( );
+            boolean bFound = false;
+            csrRCk = mMasLC.cursor( "M_DilutionChartEntry" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mMasLC.cursor( "M_DilutionChartEntry" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mMasLC.cursor( "M_DilutionChartEntry" ).setNextContinue( );
+            } // Grid
          }
-         nRC = 0;
       }
-
-      }
-      catch ( Exception e )
-      {
-         nRC = 2;
-         VmlOperation.CreateMessage( task, "AcceptChartEntryItem", e.getMessage( ), "" );
-         break;
-      }
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelChartEntryItem" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDilutionGroup", strActionToProcess );
 
       // Action Auto Object Function
       nRC = 0;
       try
       {
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_DilutionGroup" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         if ( cursor.isVersioned( ) )
-         {
-            cursor.cancelSubobject( );
-         }
-         nRC = 0;
-      }
+         EntityCursor cursor = mMasLC.cursor( "M_DilutionChartEntry" );
+         cursor.createTemporalSubobjectVersion( );
 
       }
       catch ( Exception e )
       {
          nRC = 2;
-         VmlOperation.CreateMessage( task, "CancelChartEntryItem", e.getMessage( ), "" );
+         VmlOperation.CreateMessage( task, "GOTO_DilutionChartItemUpdate", e.getMessage( ), "" );
          break;
       }
       // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "DilutionChartItem" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -382,13 +669,40 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mMasLC;
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mMasLC.cursor( "M_DilutionChartEntry" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mMasLC.cursor( "M_DilutionChartEntry" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mMasLC.cursor( "M_DilutionChartEntry" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mMasLC.cursor( "M_DilutionChartEntry" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
       // Action Auto Object Function
       nRC = 0;
       try
       {
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_DilutionGroupItem" );
-      cursor.createTemporalEntity( );
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_DilutionGroupItem" );
+         cursor.createTemporalEntity( );
 
       }
       catch ( Exception e )
@@ -464,6 +778,64 @@ if ( strActionToProcess != null )
          strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "DeleteComponent" );
       }
 
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DilutionGroupItemUpdate" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDilutionGroup", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mMasLC;
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mMasLC.cursor( "M_DilutionGroupItem" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mMasLC.cursor( "M_DilutionGroupItem" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mMasLC.cursor( "M_DilutionGroupItem" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mMasLC.cursor( "M_DilutionGroupItem" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Action Auto Object Function
+      nRC = 0;
+      try
+      {
+         EntityCursor cursor = mMasLC.cursor( "M_DilutionGroupItem" );
+         cursor.createTemporalSubobjectVersion( );
+
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "GOTO_DilutionGroupItemUpdate", e.getMessage( ), "" );
+         break;
+      }
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "DilutionGroupItem" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -589,7 +961,7 @@ else
 <html>
 <head>
 
-<title>Dilution Group Item</title>
+<title>Dilution Group</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
@@ -624,7 +996,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="AcceptAndReturn" name="AcceptAndReturn"><a href="#"  onclick="AcceptChartEntryItem()">Accept & Return</a></li>
+       <li id="AcceptAndReturn" name="AcceptAndReturn"><a href="#"  onclick="AcceptChartItem()">Accept & Return</a></li>
 <%
    }
 %>
@@ -634,7 +1006,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CancelChartEntryItem()">Cancel & Return</a></li>
+       <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CancelChartItem()">Cancel & Return</a></li>
 <%
    }
 %>
@@ -773,49 +1145,21 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GBStorDispSections4:GroupBox */ %>
+<% /* GBDilution:GroupBox */ %>
 
-<div id="GBStorDispSections4" name="GBStorDispSections4" class="listgroup"   style="float:left;position:relative; width:574px; height:36px;">  <!-- GBStorDispSections4 --> 
+<div id="GBDilution" name="GBDilution" class="listgroup"   style="float:left;position:relative; width:770px; height:194px;">  <!-- GBDilution --> 
 
 <% /* DilutionGroup:Text */ %>
 
-<label class="groupbox"  id="DilutionGroup" name="DilutionGroup" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Dilution Group</label>
+<label class="groupbox"  id="DilutionGroup" name="DilutionGroup" style="width:116px;height:16px;position:absolute;left:6px;top:12px;">Dilution Group</label>
 
+<% /* Title::Text */ %>
 
-</div>  <!--  GBStorDispSections4 --> 
-</div>  <!-- End of a new line -->
+<label  id="Title:" name="Title:" style="width:138px;height:16px;position:absolute;left:18px;top:36px;">Title:</label>
 
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
- <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* MarketingSection3:GroupBox */ %>
-
-<div id="MarketingSection3" name="MarketingSection3" class="withborder" style="width:580px;height:60px;float:left;">  <!-- MarketingSection3 --> 
-
-
-<div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox7:GroupBox */ %>
-<div id="GroupBox7" name="GroupBox7" style="float:left;width:312px;" >
-
-<table cols=2 style="width:312px;"  class="grouptable">
-
-<tr>
-<td valign="top" style="width:52px;">
-<% /* Text4:Text */ %>
-
-<span  id="Text4" name="Text4" style="width:46px;height:16px;">Ratio:</span>
-
-</td>
-<td valign="top"  class="text12" style="width:202px;">
-<% /* EditBox3:EditBox */ %>
+<% /* Title:EditBox */ %>
 <%
-   strErrorMapValue = VmlOperation.CheckError( "EditBox3", strError );
+   strErrorMapValue = VmlOperation.CheckError( "Title", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -826,7 +1170,7 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "EditBox3" );
+         task.log( ).debug( "Invalid View: " + "Title" );
       else
       {
          nRC = mMasLC.cursor( "M_DilutionGroup" ).checkExistenceOfEntity( ).toInt();
@@ -834,39 +1178,33 @@ else
          {
             try
             {
-               strErrorMapValue = mMasLC.cursor( "M_DilutionGroup" ).getAttribute( "DilutionRatioText" ).getString( "" );
+               strErrorMapValue = mMasLC.cursor( "M_DilutionGroup" ).getAttribute( "Title" ).getString( "" );
             }
             catch (Exception e)
             {
-               out.println("There is an error on EditBox3: " + e.getMessage());
-               task.log().error( "*** Error on ctrl EditBox3", e );
+               out.println("There is an error on Title: " + e.getMessage());
+               task.log().error( "*** Error on ctrl Title", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "M_DilutionGroup.DilutionRatioText: " + strErrorMapValue );
+            task.log( ).debug( "M_DilutionGroup.Title: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for EditBox3: " + "mMasLC.M_DilutionGroup" );
+            task.log( ).debug( "Entity does not exist for Title: " + "mMasLC.M_DilutionGroup" );
       }
    }
 %>
 
-<input class="text12" name="EditBox3" id="EditBox3" style="width:202px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Title" id="Title" style="width:574px;position:absolute;left:164px;top:36px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-</td>
-</tr>
-<tr>
-<td valign="top" style="width:52px;">
-<% /* DirectionsUseTitle:3:Text */ %>
+<% /* Text::Text */ %>
 
-<span  id="DirectionsUseTitle:3" name="DirectionsUseTitle:3" style="width:46px;height:16px;">Title:</span>
+<label  id="Text:" name="Text:" style="width:138px;height:16px;position:absolute;left:18px;top:58px;">Text:</label>
 
-</td>
-<td valign="top"  class="text12" style="width:202px;">
-<% /* EditBox2:EditBox */ %>
+<% /* Text:EditBox */ %>
 <%
-   strErrorMapValue = VmlOperation.CheckError( "EditBox2", strError );
+   strErrorMapValue = VmlOperation.CheckError( "Text", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -877,7 +1215,7 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "EditBox2" );
+         task.log( ).debug( "Invalid View: " + "Text" );
       else
       {
          nRC = mMasLC.cursor( "M_DilutionGroup" ).checkExistenceOfEntity( ).toInt();
@@ -885,49 +1223,266 @@ else
          {
             try
             {
-               strErrorMapValue = mMasLC.cursor( "M_DilutionGroup" ).getAttribute( "DilutionQuatText" ).getString( "" );
+               strErrorMapValue = mMasLC.cursor( "M_DilutionGroup" ).getAttribute( "Text" ).getString( "" );
             }
             catch (Exception e)
             {
-               out.println("There is an error on EditBox2: " + e.getMessage());
-               task.log().error( "*** Error on ctrl EditBox2", e );
+               out.println("There is an error on Text: " + e.getMessage());
+               task.log().error( "*** Error on ctrl Text", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "M_DilutionGroup.DilutionQuatText: " + strErrorMapValue );
+            task.log( ).debug( "M_DilutionGroup.Text: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for EditBox2: " + "mMasLC.M_DilutionGroup" );
+            task.log( ).debug( "Entity does not exist for Text: " + "mMasLC.M_DilutionGroup" );
       }
    }
 %>
 
-<input class="text12" name="EditBox2" id="EditBox2" style="width:202px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Text" id="Text" style="width:574px;position:absolute;left:164px;top:58px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
-</td>
-</tr>
-</table>
+<% /* Ratio::Text */ %>
 
-</div>  <!-- GroupBox7 --> 
+<label  id="Ratio:" name="Ratio:" style="width:138px;height:16px;position:absolute;left:18px;top:80px;">Ratio:</label>
 
-</div>  <!-- End of a new line -->
+<% /* Ratio:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "Ratio", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "Ratio" );
+      else
+      {
+         nRC = mMasLC.cursor( "M_DilutionGroup" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = mMasLC.cursor( "M_DilutionGroup" ).getAttribute( "Ratio" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on Ratio: " + e.getMessage());
+               task.log().error( "*** Error on ctrl Ratio", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "M_DilutionGroup.Ratio: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for Ratio: " + "mMasLC.M_DilutionGroup" );
+      }
+   }
+%>
+
+<input name="Ratio" id="Ratio" style="width:574px;position:absolute;left:164px;top:80px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
+<% /* UnitsNumerator::Text */ %>
+
+<label  id="UnitsNumerator:" name="UnitsNumerator:" style="width:138px;height:16px;position:absolute;left:18px;top:102px;">Units Numerator:</label>
+
+<% /* UnitsNumerator:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "UnitsNumerator", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "UnitsNumerator" );
+      else
+      {
+         nRC = mMasLC.cursor( "M_DilutionGroup" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = mMasLC.cursor( "M_DilutionGroup" ).getAttribute( "UnitsNumerator" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on UnitsNumerator: " + e.getMessage());
+               task.log().error( "*** Error on ctrl UnitsNumerator", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "M_DilutionGroup.UnitsNumerator: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for UnitsNumerator: " + "mMasLC.M_DilutionGroup" );
+      }
+   }
+%>
+
+<input name="UnitsNumerator" id="UnitsNumerator" style="width:574px;position:absolute;left:164px;top:102px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
+<% /* UnitsDenominator::Text */ %>
+
+<label  id="UnitsDenominator:" name="UnitsDenominator:" style="width:138px;height:16px;position:absolute;left:18px;top:124px;">Units Denominator:</label>
+
+<% /* UnitsDenominator:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "UnitsDenominator", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "UnitsDenominator" );
+      else
+      {
+         nRC = mMasLC.cursor( "M_DilutionGroup" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = mMasLC.cursor( "M_DilutionGroup" ).getAttribute( "UnitsDenominator" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on UnitsDenominator: " + e.getMessage());
+               task.log().error( "*** Error on ctrl UnitsDenominator", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "M_DilutionGroup.UnitsDenominator: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for UnitsDenominator: " + "mMasLC.M_DilutionGroup" );
+      }
+   }
+%>
+
+<input name="UnitsDenominator" id="UnitsDenominator" style="width:574px;position:absolute;left:164px;top:124px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
+<% /* ReviewerNote::Text */ %>
+
+<label  id="ReviewerNote:" name="ReviewerNote:" style="width:138px;height:16px;position:absolute;left:18px;top:146px;">ReviewerNote:</label>
+
+<% /* ReviewerNote:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "ReviewerNote", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "ReviewerNote" );
+      else
+      {
+         nRC = mMasLC.cursor( "M_DilutionGroup" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = mMasLC.cursor( "M_DilutionGroup" ).getAttribute( "ReviewerNote" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on ReviewerNote: " + e.getMessage());
+               task.log().error( "*** Error on ctrl ReviewerNote", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "M_DilutionGroup.ReviewerNote: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for ReviewerNote: " + "mMasLC.M_DilutionGroup" );
+      }
+   }
+%>
+
+<input name="ReviewerNote" id="ReviewerNote" style="width:574px;position:absolute;left:164px;top:146px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
+<% /* ReviewerNoteTable::Text */ %>
+
+<label  id="ReviewerNoteTable:" name="ReviewerNoteTable:" style="width:138px;height:16px;position:absolute;left:18px;top:168px;">ReviewerNoteTable:</label>
+
+<% /* ReviewerNoteTable:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "ReviewerNoteTable", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "ReviewerNoteTable" );
+      else
+      {
+         nRC = mMasLC.cursor( "M_DilutionGroup" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = mMasLC.cursor( "M_DilutionGroup" ).getAttribute( "ReviewerNoteTable" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on ReviewerNoteTable: " + e.getMessage());
+               task.log().error( "*** Error on ctrl ReviewerNoteTable", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "M_DilutionGroup.ReviewerNoteTable: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for ReviewerNoteTable: " + "mMasLC.M_DilutionGroup" );
+      }
+   }
+%>
+
+<input name="ReviewerNoteTable" id="ReviewerNoteTable" style="width:574px;position:absolute;left:164px;top:168px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 
-</div>  <!--  MarketingSection3 --> 
+</div>  <!--  GBDilution --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
  <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
+<div style="height:4px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GBDirectionsUseStatements2:GroupBox */ %>
+<% /* GBDilutionChartItems:GroupBox */ %>
 
-<div id="GBDirectionsUseStatements2" name="GBDirectionsUseStatements2" style="width:780px;float:left;">  <!-- GBDirectionsUseStatements2 --> 
+<div id="GBDilutionChartItems" name="GBDilutionChartItems" style="width:780px;float:left;">  <!-- GBDilutionChartItems --> 
 
 
  <!-- This is added as a line spacer -->
@@ -939,12 +1494,12 @@ else
 
 <div id="GroupBox8" name="GroupBox8"   style="float:left;position:relative; width:686px; height:30px;">  <!-- GroupBox8 --> 
 
-<% /* Text6:Text */ %>
+<% /* DilutionChartItem:Text */ %>
 
-<label class="listheader"  id="Text6" name="Text6" style="width:434px;height:16px;position:absolute;left:12px;top:4px;">Dilution Group Item</label>
+<label class="listheader"  id="DilutionChartItem" name="DilutionChartItem" style="width:434px;height:16px;position:absolute;left:12px;top:4px;">Dilution Chart Item</label>
 
-<% /* PushBtn5:PushBtn */ %>
-<button type="button" class="newbutton" name="PushBtn5" id="PushBtn5" value="" onclick="GOTO_DilutionGroupItemAdd( )" style="width:78px;height:26px;position:absolute;left:560px;top:4px;">New</button>
+<% /* NewChartItem:PushBtn */ %>
+<button type="button" class="newbutton" name="NewChartItem" id="NewChartItem" value="" onclick="GOTO_DilutionChartItemAdd( )" style="width:78px;height:26px;position:absolute;left:560px;top:4px;">New</button>
 
 
 </div>  <!--  GroupBox8 --> 
@@ -958,8 +1513,180 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GridDirectionsUse2:Grid */ %>
-<table  cols=3 style=""  name="GridDirectionsUse2" id="GridDirectionsUse2">
+<% /* GridDilutionGroupItems:Grid */ %>
+<table  cols=6 style=""  name="GridDilutionGroupItems" id="GridDilutionGroupItems">
+
+<thead><tr>
+
+   <th>Use</th>
+   <th>Product Amount</th>
+   <th>Water Amount</th>
+   <th>Contact Time</th>
+   <th>Update</th>
+   <th>Delete</th>
+
+</tr></thead>
+
+<tbody>
+
+<%
+try
+{
+   iTableRowCnt = 0;
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) )
+   {
+      long   lEntityKey;
+      String strEntityKey;
+      String strButtonName;
+      String strOdd;
+      String strTag;
+      String strUse;
+      String strProductAmount;
+      String strWaterAmount;
+      String strContactTime;
+      String strBMBUpdateDilutionChartItem;
+      String strBMBDeleteDilutionChartItem;
+      
+      View vGridDilutionGroupItems;
+      vGridDilutionGroupItems = mMasLC.newView( );
+      csrRC2 = vGridDilutionGroupItems.cursor( "M_DilutionChartEntry" ).setFirst(  );
+      while ( csrRC2.isSet() )
+      {
+         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
+         iTableRowCnt++;
+
+         lEntityKey = vGridDilutionGroupItems.cursor( "M_DilutionChartEntry" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         strUse = "";
+         nRC = vGridDilutionGroupItems.cursor( "M_DilutionChartEntry" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strUse = vGridDilutionGroupItems.cursor( "M_DilutionChartEntry" ).getAttribute( "Use" ).getString( "" );
+
+            if ( strUse == null )
+               strUse = "";
+         }
+
+         if ( StringUtils.isBlank( strUse ) )
+            strUse = "&nbsp";
+
+         strProductAmount = "";
+         nRC = vGridDilutionGroupItems.cursor( "M_DilutionChartEntry" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strProductAmount = vGridDilutionGroupItems.cursor( "M_DilutionChartEntry" ).getAttribute( "ProductAmountText" ).getString( "" );
+
+            if ( strProductAmount == null )
+               strProductAmount = "";
+         }
+
+         if ( StringUtils.isBlank( strProductAmount ) )
+            strProductAmount = "&nbsp";
+
+         strWaterAmount = "";
+         nRC = vGridDilutionGroupItems.cursor( "M_DilutionChartEntry" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strWaterAmount = vGridDilutionGroupItems.cursor( "M_DilutionChartEntry" ).getAttribute( "WaterAmountText" ).getString( "" );
+
+            if ( strWaterAmount == null )
+               strWaterAmount = "";
+         }
+
+         if ( StringUtils.isBlank( strWaterAmount ) )
+            strWaterAmount = "&nbsp";
+
+         strContactTime = "";
+         nRC = vGridDilutionGroupItems.cursor( "M_DilutionChartEntry" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strContactTime = vGridDilutionGroupItems.cursor( "M_DilutionChartEntry" ).getAttribute( "ContactTime" ).getString( "" );
+
+            if ( strContactTime == null )
+               strContactTime = "";
+         }
+
+         if ( StringUtils.isBlank( strContactTime ) )
+            strContactTime = "&nbsp";
+
+%>
+
+<tr<%=strOdd%>>
+
+   <td><a href="#" onclick="GOTO_DilutionGroupItemAdd( this.id )" id="Use::<%=strEntityKey%>"><%=strUse%></a></td>
+   <td><a href="#" onclick="GOTO_DilutionGroupItemAdd( this.id )" id="ProductAmount::<%=strEntityKey%>"><%=strProductAmount%></a></td>
+   <td><a href="#" onclick="GOTO_DilutionGroupItemAdd( this.id )" id="WaterAmount::<%=strEntityKey%>"><%=strWaterAmount%></a></td>
+   <td><a href="#" onclick="GOTO_DilutionGroupItemAdd( this.id )" id="ContactTime::<%=strEntityKey%>"><%=strContactTime%></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateDilutionChartItem" onclick="GOTO_DilutionChartItemUpdate( this.id )" id="BMBUpdateDilutionChartItem::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteDilutionChartItem" onclick="GOTO_DilutionChartItemDelete( this.id )" id="BMBDeleteDilutionChartItem::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
+
+</tr>
+
+<%
+         csrRC2 = vGridDilutionGroupItems.cursor( "M_DilutionChartEntry" ).setNextContinue( );
+      }
+      vGridDilutionGroupItems.drop( );
+   }
+}
+catch (Exception e)
+{
+out.println("There is an error in grid: " + e.getMessage());
+task.log().info( "*** Error in grid" + e.getMessage() );
+}
+%>
+</tbody>
+</table>
+
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  GBDilutionChartItems --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:4px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GBDilutionGroupItems:GroupBox */ %>
+
+<div id="GBDilutionGroupItems" name="GBDilutionGroupItems" style="width:780px;float:left;">  <!-- GBDilutionGroupItems --> 
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:6px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox9:GroupBox */ %>
+
+<div id="GroupBox9" name="GroupBox9"   style="float:left;position:relative; width:686px; height:30px;">  <!-- GroupBox9 --> 
+
+<% /* DilutionGroupItem:Text */ %>
+
+<label class="listheader"  id="DilutionGroupItem" name="DilutionGroupItem" style="width:434px;height:16px;position:absolute;left:12px;top:4px;">Dilution Group Item</label>
+
+<% /* NewGroupItem::PushBtn */ %>
+<button type="button" class="newbutton" name="NewGroupItem:" id="NewGroupItem:" value="" onclick="GOTO_DilutionGroupItemAdd( )" style="width:78px;height:26px;position:absolute;left:560px;top:4px;">New</button>
+
+
+</div>  <!--  GroupBox9 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:10px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GridGroupItems:Grid */ %>
+<table  cols=3 style=""  name="GridGroupItems" id="GridGroupItems">
 
 <thead><tr>
 
@@ -983,47 +1710,47 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
-      String strGridEditDirectionsUse2;
-      String strBMBUpdateDirectionsUseStatement2;
-      String strBMBDeleteDirectionsUseStatement2;
+      String strItemText;
+      String strBMBUpdateDilutionGroupItem;
+      String strBMBDeleteDilutionGroupItem;
       
-      View vGridDirectionsUse2;
-      vGridDirectionsUse2 = mMasLC.newView( );
-      csrRC2 = vGridDirectionsUse2.cursor( "M_DilutionGroupItem" ).setFirst(  );
+      View vGridGroupItems;
+      vGridGroupItems = mMasLC.newView( );
+      csrRC2 = vGridGroupItems.cursor( "M_DilutionGroupItem" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGridDirectionsUse2.cursor( "M_DilutionGroupItem" ).getEntityKey( );
+         lEntityKey = vGridGroupItems.cursor( "M_DilutionGroupItem" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strGridEditDirectionsUse2 = "";
-         nRC = vGridDirectionsUse2.cursor( "M_DilutionGroupItem" ).checkExistenceOfEntity( ).toInt();
+         strItemText = "";
+         nRC = vGridGroupItems.cursor( "M_DilutionGroupItem" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditDirectionsUse2 = vGridDirectionsUse2.cursor( "M_DilutionGroupItem" ).getAttribute( "Text" ).getString( "" );
+            strItemText = vGridGroupItems.cursor( "M_DilutionGroupItem" ).getAttribute( "Text" ).getString( "" );
 
-            if ( strGridEditDirectionsUse2 == null )
-               strGridEditDirectionsUse2 = "";
+            if ( strItemText == null )
+               strItemText = "";
          }
 
-         if ( StringUtils.isBlank( strGridEditDirectionsUse2 ) )
-            strGridEditDirectionsUse2 = "&nbsp";
+         if ( StringUtils.isBlank( strItemText ) )
+            strItemText = "&nbsp";
 
 %>
 
 <tr<%=strOdd%>>
 
-   <td><a href="#" onclick="GOTO_DilutionGroupItem( this.id )" id="GridEditDirectionsUse2::<%=strEntityKey%>"><%=strGridEditDirectionsUse2%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateDirectionsUseStatement2" onclick="GOTO_DilutionGroupItem( this.id )" id="BMBUpdateDirectionsUseStatement2::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteDirectionsUseStatement2" onclick="GOTO_DilutionGroupItemDelete( this.id )" id="BMBDeleteDirectionsUseStatement2::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
+   <td><a href="#" onclick="GOTO_DilutionGroupItemAdd( this.id )" id="ItemText::<%=strEntityKey%>"><%=strItemText%></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateDilutionGroupItem" onclick="GOTO_DilutionGroupItemUpdate( this.id )" id="BMBUpdateDilutionGroupItem::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteDilutionGroupItem" onclick="GOTO_DilutionGroupItemDelete( this.id )" id="BMBDeleteDilutionGroupItem::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 
 <%
-         csrRC2 = vGridDirectionsUse2.cursor( "M_DilutionGroupItem" ).setNextContinue( );
+         csrRC2 = vGridGroupItems.cursor( "M_DilutionGroupItem" ).setNextContinue( );
       }
-      vGridDirectionsUse2.drop( );
+      vGridGroupItems.drop( );
    }
 }
 catch (Exception e)
@@ -1038,7 +1765,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </div>  <!-- End of a new line -->
 
 
-</div>  <!--  GBDirectionsUseStatements2 --> 
+</div>  <!--  GBDilutionGroupItems --> 
 </div>  <!-- End of a new line -->
 
 

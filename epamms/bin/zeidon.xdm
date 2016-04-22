@@ -1,4 +1,4 @@
-z1000-Zeidon    ZEIDON   TZDMXGPO 04/06/16   13:43:40 1.0a2   
+z1000-Zeidon    ZEIDON   TZDMXGPO 04/21/16   10:05:46 1.0a2   
 eDomainGroup 1
 aName      ePamms
 
@@ -2795,6 +2795,26 @@ aZKey      3898407
 aExternalValue Location 5
 aInternalValue 5
 
+eTableEntry 4
+aZKey      130001729
+aExternalValue Location 6
+aInternalValue 6
+
+eTableEntry 4
+aZKey      130001730
+aExternalValue Location 7
+aInternalValue 7
+
+eTableEntry 4
+aZKey      130001731
+aExternalValue Location 8
+aInternalValue 8
+
+eTableEntry 4
+aZKey      130001732
+aExternalValue Location 9
+aInternalValue 9
+
 eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aZKey      3785525
@@ -3375,9 +3395,19 @@ aExternalValue CAUTION
 aInternalValue CAUTION
 
 eTableEntry 4
+aZKey      130001726
+aExternalValue CAUTION {PRECAUCIÓN}
+aInternalValue CAUTION {PRECAUCIÓN}
+
+eTableEntry 4
 aZKey      1178410
 aExternalValue WARNING
 aInternalValue WARNING
+
+eTableEntry 4
+aZKey      130001725
+aExternalValue WARNING {ADVERTENCIA}
+aInternalValue WARNING {ADVERTENCIA}
 
 eTableEntry 4
 aZKey      1178411
@@ -3385,9 +3415,19 @@ aExternalValue DANGER
 aInternalValue DANGER
 
 eTableEntry 4
+aZKey      130001728
+aExternalValue DANGER {PELIGRO}
+aInternalValue DANGER {PELIGRO}
+
+eTableEntry 4
 aZKey      1178413
 aExternalValue POISON
 aInternalValue POISON
+
+eTableEntry 4
+aZKey      130001727
+aExternalValue POISON {VENENO}
+aInternalValue POISON {VENENO}
 
 eTableEntry 4
 aZKey      1178427
@@ -4266,6 +4306,36 @@ eTableEntry 4
 aZKey      1178532
 aExternalValue IV
 aInternalValue 4
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      130001718
+aName      Units
+aDesc      Dilution units
+aDomainType T
+aDataType  S
+aMaxStringLth 4
+aContextRestriction N
+
+eContext   3
+aZKey      130001719
+aName      Units
+aIsDefault Y
+
+eTableEntry 4
+aZKey      130001720
+aExternalValue oz.
+aInternalValue oz
+
+eTableEntry 4
+aZKey      130001721
+aExternalValue gal.
+aInternalValue gal
+
+eTableEntry 4
+aZKey      130001722
+aExternalValue lbs.
+aInternalValue lbs
 
 eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain

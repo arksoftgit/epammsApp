@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDeleteComponent   Generate Timestamp: 20160412115805056 --%>
+<%-- wMLCDeleteComponent   Generate Timestamp: 20160415145303864 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>

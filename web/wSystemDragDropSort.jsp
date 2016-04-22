@@ -631,7 +631,7 @@ else
 
    // this is hand coded!!!
    strTextDisplayValue = wWebXA.cursor( "Root" ).getAttribute( "HTML" ).getString();
-   wWebXA.cursor( "Root" ).setAttribute( "HTML", "" ); // done with it
+   wWebXA.cursor( "Root" ).getAttribute( "HTML" ).setValue( "" ); // done with it
    // this is hand coded!!!
 
    if ( VmlOperation.isValid( wWebXA ) )

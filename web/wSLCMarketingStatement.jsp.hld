@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCMarketingStatement   Generate Timestamp: 20160328163921334 --%>
+<%-- wSLCMarketingStatement   Generate Timestamp: 20160421163557855 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -231,8 +231,8 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mSubLC = task.getViewByName( "mSubLC" );
-      EntityCursor cursor = mSubLC.cursor( "S_MarketingStatement" );
+         View mSubLCAuto = task.getViewByName( "mSubLC" );
+         EntityCursor cursor = mSubLCAuto.cursor( "S_MarketingStatement" );
       if ( cursor.isNull() )
          nRC = 0;
       else
@@ -267,8 +267,8 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mSubLC = task.getViewByName( "mSubLC" );
-      EntityCursor cursor = mSubLC.cursor( "S_MarketingStatement" );
+         View mSubLCAuto = task.getViewByName( "mSubLC" );
+         EntityCursor cursor = mSubLCAuto.cursor( "S_MarketingStatement" );
       if ( cursor.isNull() )
          nRC = 0;
       else
@@ -397,13 +397,14 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
-      // We are borrowing zTableRowSelect for the moment and this code is hardwired for the moment
+      // Next Window
+      // We are borrowing zTableRowSelect and this code is hardwired for the moment.  javascript code similar to the following must be added to the action:
+      // document.wSLCMarketingStatement.zTableRowSelect.value = buildSortTableHtml( "mSubLC", "S_MarketingUsageOrdering", "GridMarketingUsage", ["Usage Type","Usage Name"] );
       wWebXA = task.getViewByName( "wWebXfer" );
       String strHtml = (String) request.getParameter( "zTableRowSelect" );
       wWebXA.cursor( "Root" ).getAttribute( "HTML" ).setValue( strHtml, "" );
-      // We are borrowing zTableRowSelect for the moment and this code is hardwired for the moment
+      // We are borrowing zTableRowSelect and the code above is hardwired for the moment
 
-      // Next Window
       strNextJSP_Name = wSLC.SetWebRedirection( vKZXMLPGO, wSLC.zWAB_StartModalSubwindow, "wSystem", "DragDropSort" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
@@ -538,10 +539,10 @@ else
 <%@ include file="./include/timeout.inc" %>
 <link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jsoeUtils.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jsoe.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
-<script src="js/jsoeUtils.js"></script>
-<script src="js/jsoe.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
 <script language="JavaScript" type="text/javascript" src="./genjs/wSLCMarketingStatement.js"></script>
 

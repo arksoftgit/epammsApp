@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCAddUpdateKeywordMarketing   Generate Timestamp: 20160412115804673 --%>
+<%-- wMLCAddUpdateKeywordMarketing   Generate Timestamp: 20160420151244516 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -60,41 +60,41 @@ public int DoInputMapping( HttpServletRequest request,
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
    {
-      // EditBox: DirectionsUseName1
+      // EditBox: DirectionsUseName
       nRC = mMasLC.cursor( "M_InsertTextKeywordMarketing" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "DirectionsUseName1" );
+         strMapValue = request.getParameter( "DirectionsUseName" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "DirectionsUseName1", "", strMapValue );
+               VmlOperation.CreateMessage( task, "DirectionsUseName", "", strMapValue );
             else
                mMasLC.cursor( "M_InsertTextKeywordMarketing" ).getAttribute( "Name" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "DirectionsUseName1", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "DirectionsUseName", e.getReason( ), strMapValue );
          }
       }
 
-      // ComboBox: ComboBox1
+      // ComboBox: ComboBox
       nRC = mMasLC.cursor( "M_InsertTextKeywordMarketing" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 )
       {
-         strMapValue = request.getParameter( "hComboBox1" );
+         strMapValue = request.getParameter( "hComboBox" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "ComboBox1", "", strMapValue );
+               VmlOperation.CreateMessage( task, "ComboBox", "", strMapValue );
             else
                mMasLC.cursor( "M_InsertTextKeywordMarketing" ).getAttribute( "Type" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "ComboBox1", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "ComboBox", e.getReason( ), strMapValue );
          }
       }
 
@@ -112,14 +112,14 @@ public int DoInputMapping( HttpServletRequest request,
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
 
-         strTag = "GridCtrlText11::" + strEntityKey;
+         strTag = "GridCtrlText::" + strEntityKey;
          strMapValue = request.getParameter( strTag );
          if ( strMapValue != null ) 
          {
             try
             {
                if ( webMapping )
-                  VmlOperation.CreateMessage( task, "GridCtrlText11", "", strMapValue );
+                  VmlOperation.CreateMessage( task, "GridCtrlText", "", strMapValue );
                else
                   vGridTmp.cursor( "M_InsertTextMarketing" ).getAttribute( "Text" ).setValue( strMapValue, "" );
             }
@@ -269,18 +269,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordMarketing" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         if ( cursor.isVersioned( ) )
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_InsertTextKeywordMarketing" );
+         if ( cursor.isNull() )
+            nRC = 0;
+         else
          {
-            cursor.acceptSubobject( );
+            if ( cursor.isVersioned( ) )
+            {
+               cursor.acceptSubobject( );
+            }
+            nRC = 0;
          }
-         nRC = 0;
-      }
 
       }
       catch ( Exception e )
@@ -337,8 +337,8 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      EntityCursor cursor = mMasLC.cursor( "M_InsertTextMarketing" );
-      cursor.createEntity( );
+         EntityCursor cursor = mMasLC.cursor( "M_InsertTextMarketing" );
+         cursor.createEntity( );
 
       }
       catch ( Exception e )
@@ -368,9 +368,9 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_InsertTextMarketing" );
-      cursor.createEntity( );
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_InsertTextMarketing" );
+         cursor.createEntity( );
 
       }
       catch ( Exception e )
@@ -395,18 +395,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordMarketing" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         if ( cursor.isVersioned( ) )
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_InsertTextKeywordMarketing" );
+         if ( cursor.isNull() )
+            nRC = 0;
+         else
          {
-            cursor.cancelSubobject( );
+            if ( cursor.isVersioned( ) )
+            {
+               cursor.cancelSubobject( );
+            }
+            nRC = 0;
          }
-         nRC = 0;
-      }
 
       }
       catch ( Exception e )
@@ -463,14 +463,14 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      EntityCursor cursor = mMasLC.cursor( "M_InsertTextMarketing" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         cursor.deleteEntity( CursorPosition.NEXT );
-         nRC = 0;
-      }
+         EntityCursor cursor = mMasLC.cursor( "M_InsertTextMarketing" );
+         if ( cursor.isNull() )
+            nRC = 0;
+         else
+         {
+            cursor.deleteEntity( CursorPosition.NEXT );
+            nRC = 0;
+         }
 
       }
       catch ( Exception e )
@@ -813,15 +813,15 @@ else
 
 <tr>
 <td valign="top" style="width:104px;">
-<% /* DirectionsUseTitle:1:Text */ %>
+<% /* DirectionsUseTitle::Text */ %>
 
-<span  id="DirectionsUseTitle:1" name="DirectionsUseTitle:1" style="width:104px;height:16px;">Keyword:</span>
+<span  id="DirectionsUseTitle:" name="DirectionsUseTitle:" style="width:104px;height:16px;">Keyword:</span>
 
 </td>
 <td valign="top"  class="text12" style="width:184px;">
-<% /* DirectionsUseName1:EditBox */ %>
+<% /* DirectionsUseName:EditBox */ %>
 <%
-   strErrorMapValue = VmlOperation.CheckError( "DirectionsUseName1", strError );
+   strErrorMapValue = VmlOperation.CheckError( "DirectionsUseName", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -832,7 +832,7 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "DirectionsUseName1" );
+         task.log( ).debug( "Invalid View: " + "DirectionsUseName" );
       else
       {
          nRC = mMasLC.cursor( "M_InsertTextKeywordMarketing" ).checkExistenceOfEntity( ).toInt();
@@ -844,8 +844,8 @@ else
             }
             catch (Exception e)
             {
-               out.println("There is an error on DirectionsUseName1: " + e.getMessage());
-               task.log().error( "*** Error on ctrl DirectionsUseName1", e );
+               out.println("There is an error on DirectionsUseName: " + e.getMessage());
+               task.log().error( "*** Error on ctrl DirectionsUseName", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -853,12 +853,12 @@ else
             task.log( ).debug( "M_InsertTextKeywordMarketing.Name: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for DirectionsUseName1: " + "mMasLC.M_InsertTextKeywordMarketing" );
+            task.log( ).debug( "Entity does not exist for DirectionsUseName: " + "mMasLC.M_InsertTextKeywordMarketing" );
       }
    }
 %>
 
-<input class="text12" name="DirectionsUseName1" id="DirectionsUseName1"  title="Required Name to differentiate Directions for Use Sections within a list"style="width:184px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="DirectionsUseName" id="DirectionsUseName"  title="Required Name to differentiate Directions for Use Sections within a list"style="width:184px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -870,13 +870,13 @@ else
 
 </td>
 <td valign="top" style="width:184px;">
-<% /* ComboBox1:ComboBox */ %>
+<% /* ComboBox:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="ComboBox1" id="ComboBox1" size="1" style="width:184px;" onchange="ComboBox1OnChange( )">
+<select  name="ComboBox" id="ComboBox" size="1" style="width:184px;" onchange="ComboBoxOnChange( )">
 
 <%
-   boolean inListComboBox1 = false;
+   boolean inListComboBox = false;
 
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
@@ -898,7 +898,7 @@ else
       // Code for NOT required attribute, which makes sure a blank entry exists.
       if ( strComboCurrentValue == "" )
       {
-         inListComboBox1 = true;
+         inListComboBox = true;
 %>
          <option selected="selected" value=""></option>
 <%
@@ -925,7 +925,7 @@ else
          {
             if ( StringUtils.equals( strComboCurrentValue, externalValue ) )
             {
-               inListComboBox1 = true;
+               inListComboBox = true;
 %>
                <option selected="selected" value="<%=externalValue%>"><%=externalValue%></option>
 <%
@@ -939,7 +939,7 @@ else
          }
       }  // for ( TableEntry entry
       // The value from the database isn't in the domain, add it to the list as disabled.
-      if ( !inListComboBox1 )
+      if ( !inListComboBox )
       {
 %>
          <option disabled selected="selected" value="<%=strComboCurrentValue%>"><%=strComboCurrentValue%></option>
@@ -949,7 +949,7 @@ else
 %>
 </select>
 
-<input name="hComboBox1" id="hComboBox1" type="hidden" value="<%=strComboCurrentValue%>" >
+<input name="hComboBox" id="hComboBox" type="hidden" value="<%=strComboCurrentValue%>" >
 </td>
 </tr>
 </table>
@@ -968,7 +968,7 @@ else
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox1:GroupBox */ %>
 
-<div id="GroupBox1" name="GroupBox1" style="width:716px;height:142px;float:left;">  <!-- GroupBox1 --> 
+<div id="GroupBox1" name="GroupBox1" style="width:726px;float:left;">  <!-- GroupBox1 --> 
 
 
  <!-- This is added as a line spacer -->
@@ -978,14 +978,14 @@ else
 <div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox7:GroupBox */ %>
 
-<div id="GroupBox7" name="GroupBox7"   style="float:left;position:relative; width:702px; height:30px;">  <!-- GroupBox7 --> 
+<div id="GroupBox7" name="GroupBox7"   style="float:left;position:relative; width:678px; height:30px;">  <!-- GroupBox7 --> 
 
-<% /* Text5:Text */ %>
+<% /* Text2:Text */ %>
 
-<label class="listheader"  id="Text5" name="Text5" style="width:240px;height:16px;position:absolute;left:6px;top:4px;">Text Items for Keyword Replace</label>
+<label class="listheader"  id="Text2" name="Text2" style="width:240px;height:16px;position:absolute;left:6px;top:4px;">Text Items for Keyword Replace</label>
 
-<% /* PushBtn4:PushBtn */ %>
-<button type="button" class="newbutton" name="PushBtn4" id="PushBtn4" value="" onclick="ADD_MarketingKeywordTextItemInit( )" style="width:120px;height:26px;position:absolute;left:490px;top:4px;">Add Blank Entry</button>
+<% /* PushBtn:PushBtn */ %>
+<button type="button" class="newbutton" name="PushBtn" id="PushBtn" value="" onclick="ADD_MarketingKeywordTextItemInit( )" style="width:120px;height:26px;position:absolute;left:490px;top:4px;">Add Blank Entry</button>
 
 
 </div>  <!--  GroupBox7 --> 
@@ -1024,10 +1024,10 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
-      String strGridCtrlText11;
-      String strGridCtrlText11ErrorColor;
-      String strDeleteBtn1;
-      String strBitmapBtn1;
+      String strGridCtrlText;
+      String strGridCtrlTextErrorColor;
+      String strAddBtn;
+      String strDeleteBtn;
       
       View vGridM_InsertTextMarketing1;
       vGridM_InsertTextMarketing1 = mMasLC.newView( );
@@ -1039,37 +1039,37 @@ try
 
          lEntityKey = vGridM_InsertTextMarketing1.cursor( "M_InsertTextMarketing" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strGridCtrlText11 = "";
-         strGridCtrlText11ErrorColor = "";
+         strGridCtrlText = "";
+         strGridCtrlTextErrorColor = "";
          nRC = vGridM_InsertTextMarketing1.cursor( "M_InsertTextMarketing" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strTag = "GridCtrlText11::" + strEntityKey;
+            strTag = "GridCtrlText::" + strEntityKey;
             strErrorMapValue = VmlOperation.CheckError( strTag, strError );
             if ( !StringUtils.isBlank( strErrorMapValue ) )
             {
                if ( StringUtils.equals( strErrorFlag, "Y" ) )
-                  strGridCtrlText11ErrorColor = " style='color:red'";
-                  strGridCtrlText11 = strErrorMapValue;
+                  strGridCtrlTextErrorColor = " style='color:red'";
+                  strGridCtrlText = strErrorMapValue;
             }
             else
             {
-               strGridCtrlText11 = vGridM_InsertTextMarketing1.cursor( "M_InsertTextMarketing" ).getAttribute( "Text" ).getString( "" );
-               if ( strGridCtrlText11 == null )
-                  strGridCtrlText11 = "";
+               strGridCtrlText = vGridM_InsertTextMarketing1.cursor( "M_InsertTextMarketing" ).getAttribute( "Text" ).getString( "" );
+               if ( strGridCtrlText == null )
+                  strGridCtrlText = "";
             }
          }
 
-         if ( StringUtils.isBlank( strGridCtrlText11 ) )
-            strGridCtrlText11 = "";
+         if ( StringUtils.isBlank( strGridCtrlText ) )
+            strGridCtrlText = "";
 
 %>
 
 <tr<%=strOdd%>>
 
-   <td><input size="99" value="<%=strGridCtrlText11%>"<%=strGridCtrlText11ErrorColor%> name="GridCtrlText11::<%=strEntityKey%>" id="GridCtrlText11::<%=strEntityKey%>" ></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="DeleteBtn1" onclick="ADD_MarketingKeywordTextItem( this.id )" id="DeleteBtn1::<%=strEntityKey%>"><img src="./images/ePammsNew.png" alt="Add"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn1" onclick="DELETE_InsertTextItem( this.id )" id="BitmapBtn1::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
+   <td><input size="100" value="<%=strGridCtrlText%>"<%=strGridCtrlTextErrorColor%> name="GridCtrlText::<%=strEntityKey%>" id="GridCtrlText::<%=strEntityKey%>" ></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="AddBtn" onclick="ADD_MarketingKeywordTextItem( this.id )" id="AddBtn::<%=strEntityKey%>"><img src="./images/ePammsNew.png" alt="Add"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="DeleteBtn" onclick="DELETE_InsertTextItem( this.id )" id="DeleteBtn::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 

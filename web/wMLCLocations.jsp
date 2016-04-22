@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCLocations   Generate Timestamp: 20160412115806300 --%>
+<%-- wMLCLocations   Generate Timestamp: 20160415145305271 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -100,44 +100,6 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       vGridTmp.drop( );
-      // EditBox: Title
-      nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
-      {
-         strMapValue = request.getParameter( "Title" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "Title", "", strMapValue );
-            else
-               mMasLC.cursor( "M_UsageType" ).getAttribute( "Title" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "Title", e.getReason( ), strMapValue );
-         }
-      }
-
-      // EditBox: ReviewerNote
-      nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
-      {
-         strMapValue = request.getParameter( "ReviewerNote" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "ReviewerNote", "", strMapValue );
-            else
-               mMasLC.cursor( "M_UsageType" ).getAttribute( "ReviewerNote" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "ReviewerNote", e.getReason( ), strMapValue );
-         }
-      }
-
       // Grid: GridLocationGroup
       iTableRowCnt = 0;
 
@@ -196,6 +158,44 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       vGridTmp.drop( );
+      // EditBox: Title
+      nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "Title" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "Title", "", strMapValue );
+            else
+               mMasLC.cursor( "M_UsageType" ).getAttribute( "Title" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "Title", e.getReason( ), strMapValue );
+         }
+      }
+
+      // EditBox: ReviewerNote
+      nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "ReviewerNote" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "ReviewerNote", "", strMapValue );
+            else
+               mMasLC.cursor( "M_UsageType" ).getAttribute( "ReviewerNote" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "ReviewerNote", e.getReason( ), strMapValue );
+         }
+      }
+
    }
 
    if ( webMapping == true )
@@ -953,44 +953,6 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditClaimsSection" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocations", "wMLC.EditClaimsSection" );
-      nOptRC = wMLC.EditClaimsSection( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "OrganismClaims" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
    while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditSurfacesSection" ) )
    {
       bDone = true;
@@ -1098,6 +1060,44 @@ if ( strActionToProcess != null )
       {
          // Next Window
          strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "ApplicationTypes" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditClaimsSection" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCLocations", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCLocations", "wMLC.EditClaimsSection" );
+      nOptRC = wMLC.EditClaimsSection( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "OrganismClaims" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -1411,16 +1411,6 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "OrganismClaims" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smOrganismClaims" name="smOrganismClaims"><a href="#"  onclick="smEditClaimsSection()">Organism Claims</a></li>
-<%
-   }
-%>
-
-<%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "TypesOfSurfaces" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
@@ -1446,6 +1436,16 @@ else
    {
 %>
        <li id="smAppTypes" name="smAppTypes"><a href="#"  onclick="smEditApplicationTypesSection()">Application Types</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "OrganismClaims" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="smOrganismClaims" name="smOrganismClaims"><a href="#"  onclick="smEditClaimsSection()">Organism Claims</a></li>
 <%
    }
 %>
@@ -1634,13 +1634,13 @@ else
 
 <% /* LocationsStatements:Text */ %>
 
-<label class="groupbox"  id="LocationsStatements" name="LocationsStatements" style="">Locations Statements</label>
+<label class="groupbox"  id="LocationsStatements" name="LocationsStatements" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Locations Statements</label>
 
 <% /* DeleteLocations:PushBtn */ %>
-<button type="button" name="DeleteLocations" id="DeleteLocations" value="" onclick="GOTO_DeleteSelectedEntries( )" style="width:210px;height:26px;position:absolute;left:264px;top:12px;" tabindex=-1 >Delete Selected Locations</button>
+<button type="button" name="DeleteLocations" id="DeleteLocations" value="" onclick="GOTO_DeleteSelectedEntries( )" style="width:210px;height:26px;position:absolute;left:264px;top:12px;">Delete Selected Locations</button>
 
 <% /* PBNew1:PushBtn */ %>
-<button type="button" name="PBNew1" id="PBNew1" value="" onclick="ADD_LocationStatements( )" style="width:78px;height:26px;position:absolute;left:482px;top:12px;" tabindex=-1 >New</button>
+<button type="button" name="PBNew1" id="PBNew1" value="" onclick="ADD_LocationStatements( )" style="width:78px;height:26px;position:absolute;left:482px;top:12px;">New</button>
 
 
 </div>  <!--  GBLocationStatements --> 
@@ -1773,16 +1773,16 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <% /* LocationsGroupsStatements:Text */ %>
 
-<label class="groupbox"  id="LocationsGroupsStatements" name="LocationsGroupsStatements" style="">Locations Groups</label>
+<label class="groupbox"  id="LocationsGroupsStatements" name="LocationsGroupsStatements" style="width:166px;height:16px;position:absolute;left:6px;top:12px;">Locations Groups</label>
 
 <% /* PushBtn2:PushBtn */ %>
-<button type="button" name="PushBtn2" id="PushBtn2" value="" onclick="DELETE_UsageGroupEntriesOnly( )" style="width:258px;height:26px;position:absolute;left:194px;top:12px;" tabindex=-1 >Delete Selected Groups Only</button>
+<button type="button" name="PushBtn2" id="PushBtn2" value="" onclick="DELETE_UsageGroupEntriesOnly( )" style="width:258px;height:26px;position:absolute;left:194px;top:12px;">Delete Selected Groups Only</button>
 
 <% /* PBNew2:PushBtn */ %>
-<button type="button" name="PBNew2" id="PBNew2" value="" onclick="GOTO_AddUsageGroup( )" style="width:78px;height:26px;position:absolute;left:482px;top:12px;" tabindex=-1 >New</button>
+<button type="button" name="PBNew2" id="PBNew2" value="" onclick="GOTO_AddUsageGroup( )" style="width:78px;height:26px;position:absolute;left:482px;top:12px;">New</button>
 
 <% /* DeleteLocationGroups:PushBtn */ %>
-<button type="button" name="DeleteLocationGroups" id="DeleteLocationGroups" value="" onclick="DELETE_UsageGroupEntries( )" style="width:258px;height:26px;position:absolute;left:194px;top:38px;" tabindex=-1 >Delete Selected Groups & Locations</button>
+<button type="button" name="DeleteLocationGroups" id="DeleteLocationGroups" value="" onclick="DELETE_UsageGroupEntries( )" style="width:258px;height:26px;position:absolute;left:194px;top:38px;">Delete Selected Groups & Locations</button>
 
 
 </div>  <!--  GBLocationGroups --> 
@@ -2003,7 +2003,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <td valign="top" style="width:136px;">
 <% /* Title::Text */ %>
 
-<span  id="Title:" name="Title:" style="width:132px;height:20px;" tabindex=-1 >Title:</span>
+<span  id="Title:" name="Title:" style="width:132px;height:20px;">Title:</span>
 
 </td>
 <td valign="top" style="width:466px;">
@@ -2046,7 +2046,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
    }
 %>
 
-<input name="Title" id="Title" style="width:466px;<%=strErrorColor%>" tabindex=-1  type="text" value="<%=strErrorMapValue%>" >
+<input name="Title" id="Title" style="width:466px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -2054,7 +2054,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <td valign="top" style="width:136px;">
 <% /* ReviewerNote::Text */ %>
 
-<span  id="ReviewerNote:" name="ReviewerNote:" style="width:132px;height:20px;" tabindex=-1 >Note to Reviewer:</span>
+<span  id="ReviewerNote:" name="ReviewerNote:" style="width:132px;height:20px;">Note to Reviewer:</span>
 
 </td>
 <td valign="top" style="width:466px;">
@@ -2097,7 +2097,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
    }
 %>
 
-<input name="ReviewerNote" id="ReviewerNote" style="width:466px;<%=strErrorColor%>" tabindex=-1  type="text" value="<%=strErrorMapValue%>" >
+<input name="ReviewerNote" id="ReviewerNote" style="width:466px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

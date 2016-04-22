@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCMLC_Sidebar   Generate Timestamp: 20160412115806946 --%>
+<%-- wMLCMLC_Sidebar   Generate Timestamp: 20160415145305998 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -990,16 +990,6 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "OrganismClaims" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="OrganismClaims" name="OrganismClaims"><a href="#"  onclick="EditClaimsSection()">Organism Claims</a></li>
-<%
-   }
-%>
-
-<%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "TypesOfSurfaces" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
@@ -1025,6 +1015,16 @@ else
    {
 %>
        <li id="AppTypes" name="AppTypes"><a href="#"  onclick="EditApplicationTypesSection()">Application Types</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "OrganismClaims" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="OrganismClaims" name="OrganismClaims"><a href="#"  onclick="EditClaimsSection()">Organism Claims</a></li>
 <%
    }
 %>

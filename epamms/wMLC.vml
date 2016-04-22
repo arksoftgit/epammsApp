@@ -221,6 +221,30 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+//  OPERATION: AcceptAddNewIngredient
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+AcceptAddNewTOC( VIEW ViewToWindow )
+
+   VIEW  mMasLC   REGISTERED AS mMasLC
+   SHORT nRC
+
+   // Accept Ingredients Statement and add new temporal one.
+   nRC = AcceptSubobject( mMasLC, "TOC" )
+   IF nRC < 0
+      MessageSend( ViewToWindow, "", "Save And Add New Table of Contents Entry",
+                   "Error saving table of contents entry.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+
+   CreateTemporalEntity( mMasLC, "TOC", zPOS_AFTER )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
 //  OPERATION: GOTO_StorageDispSectionDelete
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -1561,22 +1585,6 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-//  OPERATION: GOTO_DilutionChartItemDelete
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-GOTO_DilutionChartItemDelete( VIEW ViewToWindow )
-
-   VIEW mMasLC   REGISTERED AS mMasLC
-
-   mMasLC.MasterLabelContent.wDeleteType       = "Dilution Chart Item"
-   mMasLC.MasterLabelContent.wDeleteText       = mMasLC.M_DilutionChartEntry.ProductAmountText
-   mMasLC.MasterLabelContent.wDeleteEntityName = "M_DilutionChartEntry"
-
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
 //  OPERATION: GOTO_DilutionGroupDelete
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -1604,6 +1612,22 @@ GOTO_DilutionGroupItemDelete( VIEW ViewToWindow )
    mMasLC.MasterLabelContent.wDeleteType       = "Dilution Group Item"
    mMasLC.MasterLabelContent.wDeleteText       = mMasLC.M_DilutionGroupItem.Text
    mMasLC.MasterLabelContent.wDeleteEntityName = "M_DilutionGroupItem"
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_DilutionChartItemDelete
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+GOTO_DilutionChartItemDelete( VIEW ViewToWindow )
+
+   VIEW mMasLC   REGISTERED AS mMasLC
+
+   mMasLC.MasterLabelContent.wDeleteType       = "Dilution Chart Item"
+   mMasLC.MasterLabelContent.wDeleteText       = mMasLC.M_DilutionChartEntry.Use
+   mMasLC.MasterLabelContent.wDeleteEntityName = "M_DilutionChartEntry"
 
 END
 
@@ -1967,7 +1991,6 @@ ConfirmAddItemsMultiple( VIEW ViewToWindow )
    STRING ( 2048 ) szName
    SHORT nCount
    SHORT nSubCount
-   SHORT nRC
 
    // Call operation to split text up into one or more entities, depending on the view, EntityName and
    // AttributeName passed in mMasLC root work entities.
@@ -2025,7 +2048,6 @@ ConfirmAddItemsMultiple( VIEW ViewToWindow )
          END
       END
    END
-   RETURN nCount
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -3054,6 +3076,20 @@ SaveNetContents( VIEW ViewToWindow )
       
    // Accept temporal NetContents.
    AcceptSubobject( mMasLC, "NetContents" )
+   COMMIT mMasLC
+   
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: SaveTOC
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+SaveTOC( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
    COMMIT mMasLC
    
 END

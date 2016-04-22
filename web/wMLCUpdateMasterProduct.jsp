@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCUpdateMasterProduct   Generate Timestamp: 20160412115807767 --%>
+<%-- wMLCUpdateMasterProduct   Generate Timestamp: 20160419151736043 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -196,25 +196,25 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
-      // MLEdit: Footnote
+      // MLEdit: Footer
       nRC = mMasProd.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "Footnote" );
-         task.log().debug( "Footnote prior to TrimTinyHtml: " + strMapValue );
+         strMapValue = request.getParameter( "Footer" );
+         task.log().debug( "Footer prior to TrimTinyHtml: " + strMapValue );
          strMapValue = VmlOperation.TrimTinyHtml( strMapValue );
-         task.log().debug( "Footnote after TrimTinyHtml: '" + strMapValue + "'" );
+         task.log().debug( "Footer after TrimTinyHtml: '" + strMapValue + "'" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "Footnote", "", strMapValue );
+               VmlOperation.CreateMessage( task, "Footer", "", strMapValue );
             else
-               mMasProd.cursor( "MasterProduct" ).getAttribute( "Footnote" ).setValue( strMapValue, "" );
+               mMasProd.cursor( "MasterProduct" ).getAttribute( "Footer" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "Footnote", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "Footer", e.getReason( ), strMapValue );
          }
       }
 
@@ -1395,18 +1395,18 @@ else
 
 
 </div>  <!--  GroupBox2 --> 
-<% /* Footnote::Text */ %>
+<% /* Footer::Text */ %>
 
-<label  id="Footnote:" name="Footnote:" style="width:88px;height:16px;position:absolute;left:0px;top:56px;">Footnote:</label>
+<label  id="Footer:" name="Footer:" style="width:88px;height:16px;position:absolute;left:0px;top:56px;">Footer:</label>
 
 <% /* GroupBox3:GroupBox */ %>
 
 <div id="GroupBox3" name="GroupBox3" style="width:658px;height:64px;position:absolute;left:98px;top:56px;">  <!-- GroupBox3 --> 
 
-<% /* Footnote:MLEdit */ %>
+<% /* Footer:MLEdit */ %>
 <%
-   // : Footnote
-   strErrorMapValue = VmlOperation.CheckError( "Footnote", strError );
+   // : Footer
+   strErrorMapValue = VmlOperation.CheckError( "Footer", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -1417,26 +1417,26 @@ else
       strErrorColor = "";
       mMasProd = task.getViewByName( "mMasProd" );
       if ( VmlOperation.isValid( mMasProd ) == false )
-         task.log( ).info( "Invalid View: " + "Footnote" );
+         task.log( ).info( "Invalid View: " + "Footer" );
       else
       {
          nRC = mMasProd.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strErrorMapValue = mMasProd.cursor( "MasterProduct" ).getAttribute( "Footnote" ).getString( "" );
+            strErrorMapValue = mMasProd.cursor( "MasterProduct" ).getAttribute( "Footer" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).info( "MasterProduct.Footnote: " + strErrorMapValue );
+            task.log( ).info( "MasterProduct.Footer: " + strErrorMapValue );
          }
          else
-            task.log( ).info( "Entity does not exist for Footnote: " + "mMasProd.MasterProduct" );
+            task.log( ).info( "Entity does not exist for Footer: " + "mMasProd.MasterProduct" );
       }
    }
 %>
 
 <div style="background-color:#eee;border:1px solid #042;width:650px;height:64px;position:absolute;left:0px;top:0px;overflow:auto;">
-<div class="mceSimpleZeidon" name="Footnote" id="Footnote" style="width:650px;height:64px;position:absolute;left:0px;top:0px;"><%=strErrorMapValue%></div></div>
+<div class="mceSimpleZeidon" name="Footer" id="Footer" style="width:650px;height:64px;position:absolute;left:0px;top:0px;"><%=strErrorMapValue%></div></div>
 
 
 </div>  <!--  GroupBox3 --> 
@@ -1535,7 +1535,7 @@ try
          nRC = vGridMasterLabelContent.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditRevisionDate = vGridMasterLabelContent.cursor( "MasterLabelContent" ).getAttribute( "RevisionDate" ).getString( "REVMMDDYY" );
+            strGridEditRevisionDate = vGridMasterLabelContent.cursor( "MasterLabelContent" ).getAttribute( "RevisionDate" ).getString( "" );
 
             if ( strGridEditRevisionDate == null )
                strGridEditRevisionDate = "";

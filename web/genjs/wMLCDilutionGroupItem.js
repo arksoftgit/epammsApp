@@ -189,7 +189,7 @@ function CheckAllInGrid(id, CheckBoxName) // triggered by no text checkbox
    }
 }
 
-function AcceptChartEntryItem( )
+function AcceptGroupItem( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -199,12 +199,12 @@ function AcceptChartEntryItem( )
    {
       _DisableFormElements( true );
 
-      document.wMLCDilutionGroupItem.zAction.value = "AcceptChartEntryItem";
+      document.wMLCDilutionGroupItem.zAction.value = "AcceptGroupItem";
       document.wMLCDilutionGroupItem.submit( );
    }
 }
 
-function CancelChartEntryItem( )
+function CancelGroupItem( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -214,7 +214,7 @@ function CancelChartEntryItem( )
    {
       _DisableFormElements( true );
 
-      document.wMLCDilutionGroupItem.zAction.value = "CancelChartEntryItem";
+      document.wMLCDilutionGroupItem.zAction.value = "CancelGroupItem";
       document.wMLCDilutionGroupItem.submit( );
    }
 }

@@ -617,6 +617,26 @@ dFullHazardStatement( VIEW mMasLC BASED ON LOD mMasLC,
                szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
             END
 
+            szLocation = mMasLC.M_HumanHazardSection.PanelLoc6
+            IF szLocation != ""
+               szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+            END
+
+            szLocation = mMasLC.M_HumanHazardSection.PanelLoc7
+            IF szLocation != ""
+               szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+            END
+
+            szLocation = mMasLC.M_HumanHazardSection.PanelLoc8
+            IF szLocation != ""
+               szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+            END
+
+            szLocation = mMasLC.M_HumanHazardSection.PanelLoc9
+            IF szLocation != ""
+               szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+            END
+
             zReplaceSubString( szString, nPosStart, nPosEnd, szReplaceString )
          END
 
@@ -650,6 +670,26 @@ dFullHazardStatement( VIEW mMasLC BASED ON LOD mMasLC,
             END
 
             szLocation = mMasLC.M_HumanHazardSection.LabelLoc5
+            IF szLocation != ""
+               szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+            END
+
+            szLocation = mMasLC.M_HumanHazardSection.LabelLoc6
+            IF szLocation != ""
+               szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+            END
+
+            szLocation = mMasLC.M_HumanHazardSection.LabelLoc7
+            IF szLocation != ""
+               szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+            END
+
+            szLocation = mMasLC.M_HumanHazardSection.LabelLoc8
+            IF szLocation != ""
+               szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
+            END
+
+            szLocation = mMasLC.M_HumanHazardSection.LabelLoc9
             IF szLocation != ""
                szReplaceString = szReplaceString + szOpenSeparator + szLocation + szCloseSeparator
             END
@@ -1220,19 +1260,23 @@ dDisplayGenStmtText( VIEW mMasLC BASED ON LOD mMasLC,
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
 
-      // If a Title exists, concatenate Title and Text.
-      // Otherwise, just show text.
-
-      IF mMasLC.M_GeneralStatement.Title = ""
-         szCombinedText = mMasLC.M_GeneralStatement.Text
+      // If Combined and a Title exists, concatenate Title and Text.  Otherwise, just show text.
+      // Bold Title and Text as specified.
+      IF mMasLC.M_GeneralSection.Combined = "Y" AND mMasLC.M_GeneralStatement.Title != ""
+         IF mMasLC.M_GeneralSection.BoldTitle = "Y"
+            szCombinedText = "<b>" + mMasLC.M_GeneralStatement.Title + "</b>"
+         ELSE
+            szCombinedText = mMasLC.M_GeneralStatement.Title
+         END
+      END
+      IF mMasLC.M_GeneralSection.BoldText = "Y"
+         szCombinedText = szCombinedText + "<b> " + mMasLC.M_GeneralStatement.Text + "</b>"
       ELSE
-         szCombinedText = mMasLC.M_GeneralStatement.Title + " " + mMasLC.M_GeneralStatement.Text
+         szCombinedText = szCombinedText + " " + mMasLC.M_GeneralStatement.Text
       END
 
       // Store the calculated value in the object.
-      StoreStringInRecord( mMasLC,
-                           InternalEntityStructure,
-                           InternalAttribStructure, szCombinedText )
+      StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szCombinedText )
 
         /* end zDERIVED_GET */
    OF   zDERIVED_SET:

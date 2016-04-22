@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCMarketingSelectByType   Generate Timestamp: 20160412115806844 --%>
+<%-- wMLCMarketingSelectByType   Generate Timestamp: 20160415145305865 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>

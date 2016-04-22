@@ -43,8 +43,8 @@ function _OnAlmostTimeout()
       // If the time is less than one minute, resubmit the page.  Otherwise, go to the timeout window.
       if (tDiff < 60000)
       {
-         document.wMLCDilutionGroup.zAction.value = "_OnResubmitPage";
-         document.wMLCDilutionGroup.submit( );
+         document.wMLCTOC_Entry.zAction.value = "_OnResubmitPage";
+         document.wMLCTOC_Entry.submit( );
       }
       else
       {
@@ -59,8 +59,8 @@ function _OnTimeout( )
    {
       _DisableFormElements( true );
 
-      document.wMLCDilutionGroup.zAction.value = "_OnTimeout";
-      document.wMLCDilutionGroup.submit( );
+      document.wMLCTOC_Entry.zAction.value = "_OnTimeout";
+      document.wMLCTOC_Entry.submit( );
    }
 }
 
@@ -74,8 +74,8 @@ function _BeforePageUnload( )
       // If the user clicked the window close box, unregister zeidon.
       if (isWindowClosing)
       {
-         document.wMLCDilutionGroup.zAction.value = "_OnUnload";
-         document.wMLCDilutionGroup.submit( );
+         document.wMLCTOC_Entry.zAction.value = "_OnUnload";
+         document.wMLCTOC_Entry.submit( );
       }
    }
 }
@@ -128,16 +128,16 @@ function _AfterPageLoaded( )
 {
 // _DisableFormElements( false );
 
-   var szFocusCtrl = document.wMLCDilutionGroup.zFocusCtrl.value;
+   var szFocusCtrl = document.wMLCTOC_Entry.zFocusCtrl.value;
    if ( szFocusCtrl != "" && szFocusCtrl != "null" )
-      eval( 'document.wMLCDilutionGroup.' + szFocusCtrl + '.focus( )' );
+      eval( 'document.wMLCTOC_Entry.' + szFocusCtrl + '.focus( )' );
 
    // This is where we put out a message from the previous iteration on this window
-   var szMsg = document.wMLCDilutionGroup.zError.value;
+   var szMsg = document.wMLCTOC_Entry.zError.value;
    if ( szMsg != "" )
       alert( szMsg ); // "Houston ... We have a problem"
 
-   szMsg = document.wMLCDilutionGroup.zOpenFile.value;
+   szMsg = document.wMLCTOC_Entry.zOpenFile.value;
    if ( szMsg != "" )
    {
       var NewWin = window.open( szMsg );
@@ -149,10 +149,10 @@ function _AfterPageLoaded( )
       }
    }
 
-   var LoginName = document.wMLCDilutionGroup.zLoginName.value;
-   var keyRole = document.wMLCDilutionGroup.zKeyRole.value;
-   document.wMLCDilutionGroup.zError.value = "";
-   document.wMLCDilutionGroup.zOpenFile.value = "";
+   var LoginName = document.wMLCTOC_Entry.zLoginName.value;
+   var keyRole = document.wMLCTOC_Entry.zKeyRole.value;
+   document.wMLCTOC_Entry.zError.value = "";
+   document.wMLCTOC_Entry.zOpenFile.value = "";
 
    if ( timerID != null )
    {
@@ -160,7 +160,7 @@ function _AfterPageLoaded( )
       timerID = null;
    }
 
-   var varTimeout = document.wMLCDilutionGroup.zTimeout.value;
+   var varTimeout = document.wMLCTOC_Entry.zTimeout.value;
    if ( varTimeout > 0 )
    {
       var varDelay = 60000 * varTimeout;  // Timeout value in timeout.inc
@@ -189,7 +189,7 @@ function CheckAllInGrid(id, CheckBoxName) // triggered by no text checkbox
    }
 }
 
-function AcceptChartItem( )
+function AcceptAndReturnTOC_Entry( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -199,12 +199,12 @@ function AcceptChartItem( )
    {
       _DisableFormElements( true );
 
-      document.wMLCDilutionGroup.zAction.value = "AcceptChartItem";
-      document.wMLCDilutionGroup.submit( );
+      document.wMLCTOC_Entry.zAction.value = "AcceptAndReturnTOC_Entry";
+      document.wMLCTOC_Entry.submit( );
    }
 }
 
-function AcceptGroupItem( )
+function CancelTOC_Entry( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -214,12 +214,12 @@ function AcceptGroupItem( )
    {
       _DisableFormElements( true );
 
-      document.wMLCDilutionGroup.zAction.value = "AcceptGroupItem";
-      document.wMLCDilutionGroup.submit( );
+      document.wMLCTOC_Entry.zAction.value = "CancelTOC_Entry";
+      document.wMLCTOC_Entry.submit( );
    }
 }
 
-function CancelChartItem( )
+function AcceptAndAddNew( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -229,133 +229,8 @@ function CancelChartItem( )
    {
       _DisableFormElements( true );
 
-      document.wMLCDilutionGroup.zAction.value = "CancelChartItem";
-      document.wMLCDilutionGroup.submit( );
-   }
-}
-
-function CancelGroupItem( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCDilutionGroup.zAction.value = "CancelGroupItem";
-      document.wMLCDilutionGroup.submit( );
-   }
-}
-
-function GOTO_DilutionChartItemAdd( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCDilutionGroup.zAction.value = "GOTO_DilutionChartItemAdd";
-      document.wMLCDilutionGroup.submit( );
-   }
-}
-
-function GOTO_DilutionChartItemDelete( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCDilutionGroup.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wMLCDilutionGroup.zAction.value = "GOTO_DilutionChartItemDelete";
-      document.wMLCDilutionGroup.submit( );
-   }
-}
-
-function GOTO_DilutionChartItemUpdate( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCDilutionGroup.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wMLCDilutionGroup.zAction.value = "GOTO_DilutionChartItemUpdate";
-      document.wMLCDilutionGroup.submit( );
-   }
-}
-
-function GOTO_DilutionGroupItemAdd( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCDilutionGroup.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wMLCDilutionGroup.zAction.value = "GOTO_DilutionGroupItemAdd";
-      document.wMLCDilutionGroup.submit( );
-   }
-}
-
-function GOTO_DilutionGroupItemDelete( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCDilutionGroup.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wMLCDilutionGroup.zAction.value = "GOTO_DilutionGroupItemDelete";
-      document.wMLCDilutionGroup.submit( );
-   }
-}
-
-function GOTO_DilutionGroupItemUpdate( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCDilutionGroup.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wMLCDilutionGroup.zAction.value = "GOTO_DilutionGroupItemUpdate";
-      document.wMLCDilutionGroup.submit( );
+      document.wMLCTOC_Entry.zAction.value = "AcceptAndAddNew";
+      document.wMLCTOC_Entry.submit( );
    }
 }
 

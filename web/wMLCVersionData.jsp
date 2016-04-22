@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCVersionData   Generate Timestamp: 20160412115807892 --%>
+<%-- wMLCVersionData   Generate Timestamp: 20160421172405642 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -77,6 +77,44 @@ public int DoInputMapping( HttpServletRequest request,
          {
             nMapError = -16;
             VmlOperation.CreateMessage( task, "MasterLabelContentVersion", e.getReason( ), strMapValue );
+         }
+      }
+
+      // EditBox: Title
+      nRC = mMasLC.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "Title" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "Title", "", strMapValue );
+            else
+               mMasLC.cursor( "MasterLabelContent" ).getAttribute( "Title" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "Title", e.getReason( ), strMapValue );
+         }
+      }
+
+      // EditBox: ReviewerNote
+      nRC = mMasLC.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "ReviewerNote" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "ReviewerNote", "", strMapValue );
+            else
+               mMasLC.cursor( "MasterLabelContent" ).getAttribute( "ReviewerNote" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "ReviewerNote", e.getReason( ), strMapValue );
          }
       }
 
@@ -239,6 +277,23 @@ if ( strActionToProcess != null )
          strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
       }
 
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "TOC" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCVersionData", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "TableOfContents" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -609,44 +664,6 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditClaimsSection" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCVersionData", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCVersionData", "wMLC.EditClaimsSection" );
-      nOptRC = wMLC.EditClaimsSection( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "OrganismClaims" );
-      }
-
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
    while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditSurfacesSection" ) )
    {
       bDone = true;
@@ -754,6 +771,44 @@ if ( strActionToProcess != null )
       {
          // Next Window
          strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "ApplicationTypes" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditClaimsSection" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCVersionData", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCVersionData", "wMLC.EditClaimsSection" );
+      nOptRC = wMLC.EditClaimsSection( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "OrganismClaims" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -1079,16 +1134,6 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "OrganismClaims" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smOrganismClaims" name="smOrganismClaims"><a href="#"  onclick="smEditClaimsSection()">Organism Claims</a></li>
-<%
-   }
-%>
-
-<%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "TypesOfSurfaces" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
@@ -1114,6 +1159,16 @@ else
    {
 %>
        <li id="smAppTypes" name="smAppTypes"><a href="#"  onclick="smEditApplicationTypesSection()">Application Types</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "OrganismClaims" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="smOrganismClaims" name="smOrganismClaims"><a href="#"  onclick="smEditClaimsSection()">Organism Claims</a></li>
 <%
    }
 %>
@@ -1154,6 +1209,16 @@ else
    {
 %>
        <li id="Marketing" name="Marketing"><a href="#"  onclick="NetContents()">Net Contents</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "TOC" );
+   if ( !csrRC.isSet( ) )
+   {
+%>
+       <li id="Marketing" name="Marketing"><a href="#"  onclick="TOC()">Table of Contents</a></li>
 <%
    }
 %>
@@ -1303,7 +1368,7 @@ else
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* MasterLabelContent:GroupBox */ %>
 
-<div id="MasterLabelContent" name="MasterLabelContent" class="withborder"   style="float:left;position:relative; width:732px; height:264px;">  <!-- MasterLabelContent --> 
+<div id="MasterLabelContent" name="MasterLabelContent" class="withborder"   style="float:left;position:relative; width:756px; height:274px;">  <!-- MasterLabelContent --> 
 
 <% /* PrimaryRegistrant:Text */ %>
 <% strTextDisplayValue = "";
@@ -1334,7 +1399,7 @@ else
 
 <% /* Product::Text */ %>
 
-<label  id="Product:" name="Product:" style="width:154px;height:16px;position:absolute;left:12px;top:48px;">Product:</label>
+<label  id="Product:" name="Product:" style="width:232px;height:16px;position:absolute;left:12px;top:48px;">Product:</label>
 
 <% /* Product:Text */ %>
 <% strTextDisplayValue = "";
@@ -1361,11 +1426,11 @@ else
    }
 %>
 
-<label  id="Product" name="Product" style="width:370px;height:24px;position:absolute;left:170px;top:48px;"><%=strTextDisplayValue%></label>
+<label  id="Product" name="Product" style="width:370px;height:24px;position:absolute;left:250px;top:48px;"><%=strTextDisplayValue%></label>
 
 <% /* EPA_RegistrationNbr:Text */ %>
 
-<label  id="EPA_RegistrationNbr" name="EPA_RegistrationNbr" style="width:154px;height:16px;position:absolute;left:12px;top:76px;">Registration Number:</label>
+<label  id="EPA_RegistrationNbr" name="EPA_RegistrationNbr" style="width:232px;height:16px;position:absolute;left:12px;top:76px;">Registration Number:</label>
 
 <% /* EPA_RegNbr:Text */ %>
 <% strTextDisplayValue = "";
@@ -1392,11 +1457,11 @@ else
    }
 %>
 
-<label  id="EPA_RegNbr" name="EPA_RegNbr" style="width:182px;height:24px;position:absolute;left:170px;top:76px;"><%=strTextDisplayValue%></label>
+<label  id="EPA_RegNbr" name="EPA_RegNbr" style="width:182px;height:24px;position:absolute;left:250px;top:76px;"><%=strTextDisplayValue%></label>
 
 <% /* Version::Text */ %>
 
-<label  id="Version:" name="Version:" style="width:154px;height:16px;position:absolute;left:12px;top:104px;">Version:</label>
+<label  id="Version:" name="Version:" style="width:232px;height:16px;position:absolute;left:12px;top:104px;">Version:</label>
 
 <% /* MasterLabelContentVersion:EditBox */ %>
 <%
@@ -1437,11 +1502,11 @@ else
    }
 %>
 
-<input class="text12" name="MasterLabelContentVersion" id="MasterLabelContentVersion" style="width:182px;position:absolute;left:170px;top:104px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="MasterLabelContentVersion" id="MasterLabelContentVersion" style="width:182px;position:absolute;left:250px;top:104px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* RevisionDate::Text */ %>
 
-<label  id="RevisionDate:" name="RevisionDate:" style="width:154px;height:16px;position:absolute;left:12px;top:132px;">Revision Date:</label>
+<label  id="RevisionDate:" name="RevisionDate:" style="width:232px;height:16px;position:absolute;left:12px;top:132px;">Revision Date:</label>
 
 <% /* RevisionDate:Text */ %>
 <% strTextDisplayValue = "";
@@ -1455,7 +1520,7 @@ else
       {
       try
       {
-         strTextDisplayValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "RevisionDate" ).getString( "REVMMDDYY" );
+         strTextDisplayValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "RevisionDate" ).getString( "" );
       }
       catch (Exception e)
       {
@@ -1468,11 +1533,101 @@ else
    }
 %>
 
-<label  id="RevisionDate" name="RevisionDate" style="width:182px;height:24px;position:absolute;left:170px;top:132px;"><%=strTextDisplayValue%></label>
+<label  id="RevisionDate" name="RevisionDate" style="width:182px;height:24px;position:absolute;left:250px;top:132px;"><%=strTextDisplayValue%></label>
+
+<% /* Title::Text */ %>
+
+<label  id="Title:" name="Title:" style="width:232px;height:16px;position:absolute;left:12px;top:160px;">Title:</label>
+
+<% /* Title:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "Title", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "Title" );
+      else
+      {
+         nRC = mMasLC.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "Title" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on Title: " + e.getMessage());
+               task.log().error( "*** Error on ctrl Title", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "MasterLabelContent.Title: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for Title: " + "mMasLC.MasterLabelContent" );
+      }
+   }
+%>
+
+<input class="text12" name="Title" id="Title" style="width:494px;position:absolute;left:250px;top:160px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
+<% /* ReviewerNote::Text */ %>
+
+<label  id="ReviewerNote:" name="ReviewerNote:" style="width:232px;height:16px;position:absolute;left:12px;top:188px;">Reviewer Note:</label>
+
+<% /* ReviewerNote:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "ReviewerNote", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "ReviewerNote" );
+      else
+      {
+         nRC = mMasLC.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "ReviewerNote" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on ReviewerNote: " + e.getMessage());
+               task.log().error( "*** Error on ctrl ReviewerNote", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "MasterLabelContent.ReviewerNote: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for ReviewerNote: " + "mMasLC.MasterLabelContent" );
+      }
+   }
+%>
+
+<input class="text12" name="ReviewerNote" id="ReviewerNote" style="width:494px;position:absolute;left:250px;top:188px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* Status::Text */ %>
 
-<label  id="Status:" name="Status:" style="width:154px;height:16px;position:absolute;left:12px;top:162px;">Status:</label>
+<label  id="Status:" name="Status:" style="width:232px;height:16px;position:absolute;left:12px;top:228px;">Status:</label>
 
 <% /* Finalized:Text */ %>
 <% strTextDisplayValue = "";
@@ -1499,7 +1654,7 @@ else
    }
 %>
 
-<label class="text12"  id="Finalized" name="Finalized" style="width:182px;height:24px;position:absolute;left:170px;top:162px;"><%=strTextDisplayValue%></label>
+<label class="text12"  id="Finalized" name="Finalized" style="width:182px;height:24px;position:absolute;left:250px;top:228px;"><%=strTextDisplayValue%></label>
 
 
 </div>  <!--  MasterLabelContent --> 

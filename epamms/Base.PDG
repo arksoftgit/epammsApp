@@ -1,10 +1,10 @@
-z1000-Zeidon    BASE     TZDGSRCO 01/19/16   08:44:01 1.0a2   
+z1000-Zeidon    BASE     TZDGSRCO 04/21/16   10:05:46 1.0a2   
 eDomainGroup 1
 aZKey      68567479
-aNextZKeyToAssign 130001717
+aNextZKeyToAssign 130001732
 aName      Base
 aExtension C
-aWorkNumeric 5
+aWorkNumeric 9
 
 eDomain    2
 aZKey      68567480
@@ -19,6 +19,36 @@ eContext   3
 aZKey      68567481
 aName      BLOB
 aIsDefault Y
+
+eDomain    2
+aZKey      130001718
+aName      Units
+aDesc      Dilution units
+aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aDataType  S
+aMaxStringLth 4
+aContextRestriction N
+
+eContext   3
+aZKey      130001719
+aName      Units
+aIsDefault Y
+
+eTableEntry 4
+aZKey      130001720
+aExternalValue oz.
+aInternalValue oz
+
+eTableEntry 4
+aZKey      130001721
+aExternalValue gal.
+aInternalValue gal
+
+eTableEntry 4
+aZKey      130001722
+aExternalValue lbs.
+aInternalValue lbs
 
 eDomain    2
 aZKey      130001711
@@ -505,6 +535,26 @@ aZKey      3898407
 aExternalValue Location 5
 aInternalValue 5
 
+eTableEntry 4
+aZKey      130001729
+aExternalValue Location 6
+aInternalValue 6
+
+eTableEntry 4
+aZKey      130001730
+aExternalValue Location 7
+aInternalValue 7
+
+eTableEntry 4
+aZKey      130001731
+aExternalValue Location 8
+aInternalValue 8
+
+eTableEntry 4
+aZKey      130001732
+aExternalValue Location 9
+aInternalValue 9
+
 eDomain    2
 aZKey      3785525
 aName      HTML Units
@@ -751,9 +801,6 @@ aName      ActiveInert
 aIsDefault Y
 
 eTableEntry 4
-aZKey      120130707
-
-eTableEntry 4
 aZKey      1266503
 aExternalValue Active
 aInternalValue A
@@ -766,9 +813,6 @@ aInternalValue I
 eContext   3
 aZKey      2448237
 aName      YN
-
-eTableEntry 4
-aZKey      120130708
 
 eTableEntry 4
 aZKey      2448238
@@ -1089,9 +1133,19 @@ aExternalValue CAUTION
 aInternalValue CAUTION
 
 eTableEntry 4
+aZKey      130001726
+aExternalValue CAUTION {PRECAUCIÓN}
+aInternalValue CAUTION {PRECAUCIÓN}
+
+eTableEntry 4
 aZKey      1178410
 aExternalValue WARNING
 aInternalValue WARNING
+
+eTableEntry 4
+aZKey      130001725
+aExternalValue WARNING {ADVERTENCIA}
+aInternalValue WARNING {ADVERTENCIA}
 
 eTableEntry 4
 aZKey      1178411
@@ -1099,9 +1153,19 @@ aExternalValue DANGER
 aInternalValue DANGER
 
 eTableEntry 4
+aZKey      130001728
+aExternalValue DANGER {PELIGRO}
+aInternalValue DANGER {PELIGRO}
+
+eTableEntry 4
 aZKey      1178413
 aExternalValue POISON
 aInternalValue POISON
+
+eTableEntry 4
+aZKey      130001727
+aExternalValue POISON {VENENO}
+aInternalValue POISON {VENENO}
 
 eTableEntry 4
 aZKey      1178427

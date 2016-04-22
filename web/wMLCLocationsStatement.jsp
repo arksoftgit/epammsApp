@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCLocationsStatement   Generate Timestamp: 20160412115806425 --%>
+<%-- wMLCLocationsStatement   Generate Timestamp: 20160415145305396 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1153,7 +1153,7 @@ else
 
 <thead bgcolor=green><tr>
 
-   <th>Sub-Location Text</th>
+   <th>Text</th>
    <th>Update</th>
    <th>Delete</th>
 

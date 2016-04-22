@@ -189,7 +189,7 @@ function CheckAllInGrid(id, CheckBoxName) // triggered by no text checkbox
    }
 }
 
-function GOTO_DilutionChartItem( strTagEntityKey )
+function GOTO_DilutionChartItemDelete( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -197,44 +197,6 @@ function GOTO_DilutionChartItem( strTagEntityKey )
 
    if ( _IsDocDisabled( ) == false )
    {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCDilution.zTableRowSelect.value = strEntityKey;
-      _DisableFormElements( true );
-
-      document.wMLCDilution.zAction.value = "GOTO_DilutionChartItem";
-      document.wMLCDilution.submit( );
-   }
-}
-
-function GOTO_DilutionChartItemAdd( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCDilution.zAction.value = "GOTO_DilutionChartItemAdd";
-      document.wMLCDilution.submit( );
-   }
-}
-
-function GOTO_DilutionChartItemDelete( strTagEntityKey )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCDilution.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
       document.wMLCDilution.zAction.value = "GOTO_DilutionChartItemDelete";
@@ -242,7 +204,7 @@ function GOTO_DilutionChartItemDelete( strTagEntityKey )
    }
 }
 
-function GOTO_DilutionGroup( strTagEntityKey )
+function GOTO_DilutionGroup( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -250,10 +212,6 @@ function GOTO_DilutionGroup( strTagEntityKey )
 
    if ( _IsDocDisabled( ) == false )
    {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCDilution.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
       document.wMLCDilution.zAction.value = "GOTO_DilutionGroup";
@@ -291,6 +249,40 @@ function GOTO_DilutionGroupDelete( strTagEntityKey )
       _DisableFormElements( true );
 
       document.wMLCDilution.zAction.value = "GOTO_DilutionGroupDelete";
+      document.wMLCDilution.submit( );
+   }
+}
+
+function GOTO_DilutionGroupItem( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCDilution.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCDilution.zAction.value = "GOTO_DilutionGroupItem";
+      document.wMLCDilution.submit( );
+   }
+}
+
+function GOTO_DilutionItemAdd( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCDilution.zAction.value = "GOTO_DilutionItemAdd";
       document.wMLCDilution.submit( );
    }
 }
@@ -460,21 +452,6 @@ function smGOTO_DilutionEntries( )
    }
 }
 
-function smEditClaimsSection( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCDilution.zAction.value = "smEditClaimsSection";
-      document.wMLCDilution.submit( );
-   }
-}
-
 function smEditSurfacesSection( )
 {
 
@@ -516,6 +493,21 @@ function smEditApplicationTypesSection( )
       _DisableFormElements( true );
 
       document.wMLCDilution.zAction.value = "smEditApplicationTypesSection";
+      document.wMLCDilution.submit( );
+   }
+}
+
+function smEditClaimsSection( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCDilution.zAction.value = "smEditClaimsSection";
       document.wMLCDilution.submit( );
    }
 }

@@ -455,21 +455,6 @@ function smGOTO_DilutionEntries( )
    }
 }
 
-function smEditClaimsSection( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCEnvironmentalHazards.zAction.value = "smEditClaimsSection";
-      document.wMLCEnvironmentalHazards.submit( );
-   }
-}
-
 function smEditSurfacesSection( )
 {
 
@@ -511,6 +496,21 @@ function smEditApplicationTypesSection( )
       _DisableFormElements( true );
 
       document.wMLCEnvironmentalHazards.zAction.value = "smEditApplicationTypesSection";
+      document.wMLCEnvironmentalHazards.submit( );
+   }
+}
+
+function smEditClaimsSection( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCEnvironmentalHazards.zAction.value = "smEditClaimsSection";
       document.wMLCEnvironmentalHazards.submit( );
    }
 }

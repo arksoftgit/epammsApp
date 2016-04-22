@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCFirstAidStatement   Generate Timestamp: 20160412115805925 --%>
+<%-- wMLCFirstAidStatement   Generate Timestamp: 20160419212113744 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -233,18 +233,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_GeneralStatement" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         if ( cursor.isVersioned( ) )
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_GeneralStatement" );
+         if ( cursor.isNull() )
+            nRC = 0;
+         else
          {
-            cursor.acceptSubobject( );
+            if ( cursor.isVersioned( ) )
+            {
+               cursor.acceptSubobject( );
+            }
+            nRC = 0;
          }
-         nRC = 0;
-      }
 
       }
       catch ( Exception e )
@@ -269,18 +269,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_GeneralStatement" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         if ( cursor.isVersioned( ) )
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_GeneralStatement" );
+         if ( cursor.isNull() )
+            nRC = 0;
+         else
          {
-            cursor.cancelSubobject( );
+            if ( cursor.isVersioned( ) )
+            {
+               cursor.cancelSubobject( );
+            }
+            nRC = 0;
          }
-         nRC = 0;
-      }
 
       }
       catch ( Exception e )
@@ -633,7 +633,7 @@ else
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* MarketingStatementGroup2:GroupBox */ %>
 
-<div id="MarketingStatementGroup2" name="MarketingStatementGroup2" class="withborder" style="width:832px;height:394px;float:left;">  <!-- MarketingStatementGroup2 --> 
+<div id="MarketingStatementGroup2" name="MarketingStatementGroup2" class="withborder" style="width:832px;height:388px;float:left;">  <!-- MarketingStatementGroup2 --> 
 
 
  <!-- This is added as a line spacer -->

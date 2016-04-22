@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDilutionChartItem   Generate Timestamp: 20160412115805259 --%>
+<%-- wMLCDilutionChartItem   Generate Timestamp: 20160415145304090 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -60,41 +60,79 @@ public int DoInputMapping( HttpServletRequest request,
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
    {
-      // EditBox: EditBox3
+      // EditBox: Use
       nRC = mMasLC.cursor( "M_DilutionChartEntry" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "EditBox3" );
+         strMapValue = request.getParameter( "Use" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "EditBox3", "", strMapValue );
+               VmlOperation.CreateMessage( task, "Use", "", strMapValue );
+            else
+               mMasLC.cursor( "M_DilutionChartEntry" ).getAttribute( "Use" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "Use", e.getReason( ), strMapValue );
+         }
+      }
+
+      // EditBox: Product
+      nRC = mMasLC.cursor( "M_DilutionChartEntry" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "Product" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "Product", "", strMapValue );
             else
                mMasLC.cursor( "M_DilutionChartEntry" ).getAttribute( "ProductAmountText" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "EditBox3", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "Product", e.getReason( ), strMapValue );
          }
       }
 
-      // EditBox: EditBox2
+      // EditBox: Water
       nRC = mMasLC.cursor( "M_DilutionChartEntry" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "EditBox2" );
+         strMapValue = request.getParameter( "Water" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "EditBox2", "", strMapValue );
+               VmlOperation.CreateMessage( task, "Water", "", strMapValue );
             else
                mMasLC.cursor( "M_DilutionChartEntry" ).getAttribute( "WaterAmountText" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "EditBox2", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "Water", e.getReason( ), strMapValue );
+         }
+      }
+
+      // EditBox: ContactTime
+      nRC = mMasLC.cursor( "M_DilutionChartEntry" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "ContactTime" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "ContactTime", "", strMapValue );
+            else
+               mMasLC.cursor( "M_DilutionChartEntry" ).getAttribute( "ContactTime" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "ContactTime", e.getReason( ), strMapValue );
          }
       }
 
@@ -604,9 +642,9 @@ else
 
 <div id="GBStorDispSections3" name="GBStorDispSections3" class="listgroup"   style="float:left;position:relative; width:574px; height:36px;">  <!-- GBStorDispSections3 --> 
 
-<% /* DilutionChartEntry:Text */ %>
+<% /* DilutionGroupEntry:Text */ %>
 
-<label class="groupbox"  id="DilutionChartEntry" name="DilutionChartEntry" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Dilution Chart Entry</label>
+<label class="groupbox"  id="DilutionGroupEntry" name="DilutionGroupEntry" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Dilution Group Item</label>
 
 
 </div>  <!--  GBStorDispSections3 --> 
@@ -619,27 +657,27 @@ else
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* MarketingSection3:GroupBox */ %>
 
-<div id="MarketingSection3" name="MarketingSection3" class="withborder" style="width:574px;height:64px;float:left;">  <!-- MarketingSection3 --> 
+<div id="MarketingSection3" name="MarketingSection3" class="withborder" style="width:574px;height:148px;float:left;">  <!-- MarketingSection3 --> 
 
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox7:GroupBox */ %>
-<div id="GroupBox7" name="GroupBox7" style="float:left;width:312px;" >
+<div id="GroupBox7" name="GroupBox7" style="float:left;width:418px;" >
 
-<table cols=2 style="width:312px;"  class="grouptable">
+<table cols=2 style="width:418px;"  class="grouptable">
 
 <tr>
-<td valign="top" style="width:64px;">
-<% /* Text4:Text */ %>
+<td valign="top" style="width:100px;">
+<% /* Use::Text */ %>
 
-<span  id="Text4" name="Text4" style="width:58px;height:16px;">Product:</span>
+<span  id="Use:" name="Use:" style="width:98px;height:16px;">Use:</span>
 
 </td>
-<td valign="top"  class="text12" style="width:214px;">
-<% /* EditBox3:EditBox */ %>
+<td valign="top"  class="text12" style="width:298px;">
+<% /* Use:EditBox */ %>
 <%
-   strErrorMapValue = VmlOperation.CheckError( "EditBox3", strError );
+   strErrorMapValue = VmlOperation.CheckError( "Use", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -650,7 +688,58 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "EditBox3" );
+         task.log( ).debug( "Invalid View: " + "Use" );
+      else
+      {
+         nRC = mMasLC.cursor( "M_DilutionChartEntry" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = mMasLC.cursor( "M_DilutionChartEntry" ).getAttribute( "Use" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on Use: " + e.getMessage());
+               task.log().error( "*** Error on ctrl Use", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "M_DilutionChartEntry.Use: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for Use: " + "mMasLC.M_DilutionChartEntry" );
+      }
+   }
+%>
+
+<input class="text12" name="Use" id="Use" style="width:298px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
+</td>
+</tr>
+<tr>
+<td valign="top" style="width:100px;">
+<% /* Product::Text */ %>
+
+<span  id="Product:" name="Product:" style="width:98px;height:16px;">Product:</span>
+
+</td>
+<td valign="top"  class="text12" style="width:298px;">
+<% /* Product:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "Product", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "Product" );
       else
       {
          nRC = mMasLC.cursor( "M_DilutionChartEntry" ).checkExistenceOfEntity( ).toInt();
@@ -662,8 +751,8 @@ else
             }
             catch (Exception e)
             {
-               out.println("There is an error on EditBox3: " + e.getMessage());
-               task.log().error( "*** Error on ctrl EditBox3", e );
+               out.println("There is an error on Product: " + e.getMessage());
+               task.log().error( "*** Error on ctrl Product", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -671,26 +760,26 @@ else
             task.log( ).debug( "M_DilutionChartEntry.ProductAmountText: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for EditBox3: " + "mMasLC.M_DilutionChartEntry" );
+            task.log( ).debug( "Entity does not exist for Product: " + "mMasLC.M_DilutionChartEntry" );
       }
    }
 %>
 
-<input class="text12" name="EditBox3" id="EditBox3" style="width:214px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="Product" id="Product" style="width:298px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:64px;">
-<% /* DirectionsUseTitle:3:Text */ %>
+<td valign="top" style="width:100px;">
+<% /* Water::Text */ %>
 
-<span  id="DirectionsUseTitle:3" name="DirectionsUseTitle:3" style="width:56px;height:16px;">Water:</span>
+<span  id="Water:" name="Water:" style="width:96px;height:16px;">Water:</span>
 
 </td>
-<td valign="top"  class="text12" style="width:214px;">
-<% /* EditBox2:EditBox */ %>
+<td valign="top"  class="text12" style="width:298px;">
+<% /* Water:EditBox */ %>
 <%
-   strErrorMapValue = VmlOperation.CheckError( "EditBox2", strError );
+   strErrorMapValue = VmlOperation.CheckError( "Water", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -701,7 +790,7 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "EditBox2" );
+         task.log( ).debug( "Invalid View: " + "Water" );
       else
       {
          nRC = mMasLC.cursor( "M_DilutionChartEntry" ).checkExistenceOfEntity( ).toInt();
@@ -713,8 +802,8 @@ else
             }
             catch (Exception e)
             {
-               out.println("There is an error on EditBox2: " + e.getMessage());
-               task.log().error( "*** Error on ctrl EditBox2", e );
+               out.println("There is an error on Water: " + e.getMessage());
+               task.log().error( "*** Error on ctrl Water", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -722,12 +811,63 @@ else
             task.log( ).debug( "M_DilutionChartEntry.WaterAmountText: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for EditBox2: " + "mMasLC.M_DilutionChartEntry" );
+            task.log( ).debug( "Entity does not exist for Water: " + "mMasLC.M_DilutionChartEntry" );
       }
    }
 %>
 
-<input class="text12" name="EditBox2" id="EditBox2" style="width:214px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="Water" id="Water" style="width:298px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
+</td>
+</tr>
+<tr>
+<td valign="top" style="width:100px;">
+<% /* ContactTime::Text */ %>
+
+<span  id="ContactTime:" name="ContactTime:" style="width:96px;height:16px;">Contact Time:</span>
+
+</td>
+<td valign="top"  class="text12" style="width:298px;">
+<% /* ContactTime:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "ContactTime", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "ContactTime" );
+      else
+      {
+         nRC = mMasLC.cursor( "M_DilutionChartEntry" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = mMasLC.cursor( "M_DilutionChartEntry" ).getAttribute( "ContactTime" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on ContactTime: " + e.getMessage());
+               task.log().error( "*** Error on ctrl ContactTime", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "M_DilutionChartEntry.ContactTime: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for ContactTime: " + "mMasLC.M_DilutionChartEntry" );
+      }
+   }
+%>
+
+<input class="text12" name="ContactTime" id="ContactTime" style="width:298px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

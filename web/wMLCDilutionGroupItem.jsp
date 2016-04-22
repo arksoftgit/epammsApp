@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDilutionGroupItem   Generate Timestamp: 20160412115805337 --%>
+<%-- wMLCDilutionGroupItem   Generate Timestamp: 20160415145304176 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -70,7 +70,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "EditBox3", "", strMapValue );
             else
-               mMasLC.cursor( "M_DilutionGroupItem" ).getAttribute( "Text" ).setValue( strMapValue, "" );
+               mMasLC.cursor( "M_DilutionGroupItem" ).getAttribute( "ID" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -200,7 +200,7 @@ if ( strActionToProcess != null )
 
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "AcceptChartEntryItem" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "AcceptGroupItem" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDilutionGroupItem", strActionToProcess );
@@ -231,7 +231,7 @@ if ( strActionToProcess != null )
       catch ( Exception e )
       {
          nRC = 2;
-         VmlOperation.CreateMessage( task, "AcceptChartEntryItem", e.getMessage( ), "" );
+         VmlOperation.CreateMessage( task, "AcceptGroupItem", e.getMessage( ), "" );
          break;
       }
       // Next Window
@@ -241,7 +241,7 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelChartEntryItem" ) )
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "CancelGroupItem" ) )
    {
       bDone = true;
       VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDilutionGroupItem", strActionToProcess );
@@ -267,7 +267,7 @@ if ( strActionToProcess != null )
       catch ( Exception e )
       {
          nRC = 2;
-         VmlOperation.CreateMessage( task, "CancelChartEntryItem", e.getMessage( ), "" );
+         VmlOperation.CreateMessage( task, "CancelGroupItem", e.getMessage( ), "" );
          break;
       }
       // Next Window
@@ -397,7 +397,7 @@ else
 <html>
 <head>
 
-<title>Dilution Chart Item</title>
+<title>Dilution Group Item</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
@@ -432,7 +432,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="AcceptAndReturn" name="AcceptAndReturn"><a href="#"  onclick="AcceptChartEntryItem()">Accept & Return</a></li>
+       <li id="AcceptAndReturn" name="AcceptAndReturn"><a href="#"  onclick="AcceptGroupItem()">Accept & Return</a></li>
 <%
    }
 %>
@@ -442,7 +442,7 @@ else
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CancelChartEntryItem()">Cancel & Return</a></li>
+       <li id="CancelAndReturn" name="CancelAndReturn"><a href="#"  onclick="CancelGroupItem()">Cancel & Return</a></li>
 <%
    }
 %>
@@ -585,9 +585,9 @@ else
 
 <div id="GBStorDispSections5" name="GBStorDispSections5" class="listgroup"   style="float:left;position:relative; width:574px; height:36px;">  <!-- GBStorDispSections5 --> 
 
-<% /* DilutionGroupItem:Text */ %>
+<% /* DilutionChartItem:Text */ %>
 
-<label class="groupbox"  id="DilutionGroupItem" name="DilutionGroupItem" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Dilution Group Item</label>
+<label class="groupbox"  id="DilutionChartItem" name="DilutionChartItem" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Dilution Chart Item</label>
 
 
 </div>  <!--  GBStorDispSections5 --> 
@@ -639,7 +639,7 @@ else
          {
             try
             {
-               strErrorMapValue = mMasLC.cursor( "M_DilutionGroupItem" ).getAttribute( "Text" ).getString( "" );
+               strErrorMapValue = mMasLC.cursor( "M_DilutionGroupItem" ).getAttribute( "ID" ).getString( "" );
             }
             catch (Exception e)
             {
@@ -649,7 +649,7 @@ else
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "M_DilutionGroupItem.Text: " + strErrorMapValue );
+            task.log( ).debug( "M_DilutionGroupItem.ID: " + strErrorMapValue );
          }
          else
             task.log( ).debug( "Entity does not exist for EditBox3: " + "mMasLC.M_DilutionGroupItem" );

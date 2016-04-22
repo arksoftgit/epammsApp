@@ -214,7 +214,7 @@ if ( rc != true )
    }
 }
 
-function NetContents( )
+function TOC( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -224,7 +224,7 @@ function NetContents( )
    {
       _DisableFormElements( true );
 
-      document.wMLCVersionData.zAction.value = "NetContents";
+      document.wMLCVersionData.zAction.value = "TOC";
       document.wMLCVersionData.submit( );
    }
 }
@@ -240,6 +240,21 @@ function InitMasterLabelContentForUpdate( )
       _DisableFormElements( true );
 
       document.wMLCVersionData.zAction.value = "InitMasterLabelContentForUpdate";
+      document.wMLCVersionData.submit( );
+   }
+}
+
+function NetContents( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCVersionData.zAction.value = "NetContents";
       document.wMLCVersionData.submit( );
    }
 }
@@ -409,21 +424,6 @@ function smGOTO_DilutionEntries( )
    }
 }
 
-function smEditClaimsSection( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCVersionData.zAction.value = "smEditClaimsSection";
-      document.wMLCVersionData.submit( );
-   }
-}
-
 function smEditSurfacesSection( )
 {
 
@@ -465,6 +465,21 @@ function smEditApplicationTypesSection( )
       _DisableFormElements( true );
 
       document.wMLCVersionData.zAction.value = "smEditApplicationTypesSection";
+      document.wMLCVersionData.submit( );
+   }
+}
+
+function smEditClaimsSection( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCVersionData.zAction.value = "smEditClaimsSection";
       document.wMLCVersionData.submit( );
    }
 }

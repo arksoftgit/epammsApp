@@ -160,7 +160,7 @@ function _AfterPageLoaded( )
       timerID = null;
    }
 
-   document.wMLCAddUpdateKeywordGeneral.hComboBox1.value = document.wMLCAddUpdateKeywordGeneral.ComboBox1.value
+   document.wMLCAddUpdateKeywordGeneral.hComboBox.value = document.wMLCAddUpdateKeywordGeneral.ComboBox.value
 
    var varTimeout = document.wMLCAddUpdateKeywordGeneral.zTimeout.value;
    if ( varTimeout > 0 )
@@ -274,7 +274,7 @@ function DELETE_InsertTextItem( strTagEntityKey )
    }
 }
 
-function ComboBox1OnChange( )
+function ComboBoxOnChange( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -282,7 +282,7 @@ function ComboBox1OnChange( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      document.wMLCAddUpdateKeywordGeneral.hComboBox1.value = document.wMLCAddUpdateKeywordGeneral.ComboBox1.value;
+      document.wMLCAddUpdateKeywordGeneral.hComboBox.value = document.wMLCAddUpdateKeywordGeneral.ComboBox.value;
    }
 }
 
