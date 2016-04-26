@@ -11,6 +11,19 @@ tinymce.init({
    toolbar: "bold italic | subscript superscript | undo redo | removeformat visualchars visualblocks nonbreaking | preview fullscreen charmap"
 });
 
+tinymce.init({
+   selector: 'div.mceSimpleZeidonSpecialCharacters',
+   inline: true,
+   menubar: false,
+   width : "100%",
+// oninit : "resizeTiny",
+   plugins: [
+      "charmap"
+   ],
+   toolbar: "charmap | subscript superscript"
+});
+
+
 // Returns text statistics for the specified editor by id
 //function getTinyStats(id) {
 //    var body = tinymce.get(id).getBody(), text = tinymce.trim(body.innerText || body.textContent);

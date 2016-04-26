@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDirectionsForUse   Generate Timestamp: 20160415145304239 --%>
+<%-- wMLCDirectionsForUse   Generate Timestamp: 20160422182803210 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -60,7 +60,45 @@ public int DoInputMapping( HttpServletRequest request,
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
    {
-      // Grid: GridStorDisp
+      // EditBox: DFU_Title
+      nRC = mMasLC.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "DFU_Title" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "DFU_Title", "", strMapValue );
+            else
+               mMasLC.cursor( "MasterLabelContent" ).getAttribute( "TitleDFU" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "DFU_Title", e.getReason( ), strMapValue );
+         }
+      }
+
+      // EditBox: DFU_ReviewerNote
+      nRC = mMasLC.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "DFU_ReviewerNote" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "DFU_ReviewerNote", "", strMapValue );
+            else
+               mMasLC.cursor( "MasterLabelContent" ).getAttribute( "ReviewerNoteDFU" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "DFU_ReviewerNote", e.getReason( ), strMapValue );
+         }
+      }
+
+      // Grid: GridDirectionsForUse
       iTableRowCnt = 0;
 
       // We are creating a temp view to the grid view so that if there are 
@@ -264,6 +302,30 @@ if ( strActionToProcess != null )
       break;
    }
 
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "Sort" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUse", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      // We are borrowing zTableRowSelect and this code is hardwired for the moment.  javascript code similar to the following must be added to the action:
+      // document.wSLCMarketingStatement.zTableRowSelect.value = buildSortTableHtml( "mSubLC", "S_MarketingUsageOrdering", "GridMarketingUsage", ["Usage Type","Usage Name"] );
+      wWebXA = task.getViewByName( "wWebXfer" );
+      String strHtml = (String) request.getParameter( "zTableRowSelect" );
+      wWebXA.cursor( "Root" ).getAttribute( "HTML" ).setValue( strHtml, "" );
+      // We are borrowing zTableRowSelect and the code above is hardwired for the moment
+
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wSystem", "DragDropSort" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
    while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DirsForUseSectionUpdate" ) )
    {
       bDone = true;
@@ -305,8 +367,8 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      EntityCursor cursor = mMasLC.cursor( "M_DirectionsForUseSection" );
-      cursor.createTemporalSubobjectVersion( );
+         EntityCursor cursor = mMasLC.cursor( "M_DirectionsForUseSection" );
+         cursor.createTemporalSubobjectVersion( );
 
       }
       catch ( Exception e )
@@ -332,39 +394,13 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
-      // Position on the entity that was selected in the grid.
-      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
-      View mMasLC;
-      mMasLC = task.getViewByName( "mMasLC" );
-      if ( VmlOperation.isValid( mMasLC ) )
-      {
-         lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mMasLC.cursor( "M_DirectionsForUseSection" ).setByEntityKey( lEKey );
-         if ( !csrRC.isSet() )
-         {
-            boolean bFound = false;
-            csrRCk = mMasLC.cursor( "M_DirectionsForUseSection" ).setFirst( );
-            while ( csrRCk.isSet() && !bFound )
-            {
-               lEKey = mMasLC.cursor( "M_DirectionsForUseSection" ).getEntityKey( );
-               strKey = Long.toString( lEKey );
-               if ( StringUtils.equals( strKey, strEntityKey ) )
-               {
-                  // Stop while loop because we have positioned on the correct entity.
-                  bFound = true;
-               }
-               else
-                  csrRCk = mMasLC.cursor( "M_DirectionsForUseSection" ).setNextContinue( );
-            } // Grid
-         }
-      }
-
       // Action Auto Object Function
       nRC = 0;
       try
       {
-      EntityCursor cursor = mMasLC.cursor( "M_DirectionsForUseSection" );
-      cursor.createTemporalEntity( );
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_DirectionsForUseSection" );
+         cursor.createTemporalEntity( );
 
       }
       catch ( Exception e )
@@ -394,9 +430,9 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_DirectionsForUseSection" );
-      cursor.createTemporalEntity( );
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_DirectionsForUseSection" );
+         cursor.createTemporalEntity( );
 
       }
       catch ( Exception e )
@@ -421,33 +457,6 @@ if ( strActionToProcess != null )
       nRC = DoInputMapping( request, session, application, false );
       if ( nRC < 0 )
          break;
-
-      // Position on the entity that was selected in the grid.
-      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
-      View mMasLC;
-      mMasLC = task.getViewByName( "mMasLC" );
-      if ( VmlOperation.isValid( mMasLC ) )
-      {
-         lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mMasLC.cursor( "M_DirectionsForUseSection" ).setByEntityKey( lEKey );
-         if ( !csrRC.isSet() )
-         {
-            boolean bFound = false;
-            csrRCk = mMasLC.cursor( "M_DirectionsForUseSection" ).setFirst( );
-            while ( csrRCk.isSet() && !bFound )
-            {
-               lEKey = mMasLC.cursor( "M_DirectionsForUseSection" ).getEntityKey( );
-               strKey = Long.toString( lEKey );
-               if ( StringUtils.equals( strKey, strEntityKey ) )
-               {
-                  // Stop while loop because we have positioned on the correct entity.
-                  bFound = true;
-               }
-               else
-                  csrRCk = mMasLC.cursor( "M_DirectionsForUseSection" ).setNextContinue( );
-            } // Grid
-         }
-      }
 
       // Action Operation
       nRC = 0;
@@ -1121,6 +1130,8 @@ else
 <%@ include file="./include/timeout.inc" %>
 <link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jsoeUtils.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jsoe.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
@@ -1452,42 +1463,140 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
+<div style="height:2px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GBStorDispSections:GroupBox */ %>
+<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GBDFU_Sections:GroupBox */ %>
 
-<div id="GBStorDispSections" name="GBStorDispSections" class="listgroup"   style="float:left;position:relative; width:802px; height:36px;">  <!-- GBStorDispSections --> 
+<div id="GBDFU_Sections" name="GBDFU_Sections"   style="float:left;position:relative; width:780px; height:112px;">  <!-- GBDFU_Sections --> 
 
-<% /* OrganismClaimsStatements1:Text */ %>
+<% /* DFU_Statements:Text */ %>
 
-<label class="groupbox"  id="OrganismClaimsStatements1" name="OrganismClaimsStatements1" style="width:238px;height:16px;position:absolute;left:6px;top:12px;">Directions for Use</label>
+<label class="groupbox"  id="DFU_Statements" name="DFU_Statements" style="width:338px;height:16px;position:absolute;left:6px;top:6px;">Directions for Use</label>
+
+<% /* DFU_Title::Text */ %>
+
+<label  id="DFU_Title:" name="DFU_Title:" style="width:110px;height:16px;position:absolute;left:20px;top:26px;">Title:</label>
+
+<% /* DFU_Title:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "DFU_Title", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "DFU_Title" );
+      else
+      {
+         nRC = mMasLC.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "TitleDFU" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on DFU_Title: " + e.getMessage());
+               task.log().error( "*** Error on ctrl DFU_Title", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "MasterLabelContent.TitleDFU: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for DFU_Title: " + "mMasLC.MasterLabelContent" );
+      }
+   }
+%>
+
+<input class="text12" name="DFU_Title" id="DFU_Title" style="width:634px;position:absolute;left:130px;top:26px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+
+<% /* DFU_ReviewerNote::Text */ %>
+
+<label  id="DFU_ReviewerNote:" name="DFU_ReviewerNote:" style="width:110px;height:16px;position:absolute;left:20px;top:52px;">Reviewer Note:</label>
+
+<% /* DFU_ReviewerNote:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "DFU_ReviewerNote", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "DFU_ReviewerNote" );
+      else
+      {
+         nRC = mMasLC.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "ReviewerNoteDFU" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on DFU_ReviewerNote: " + e.getMessage());
+               task.log().error( "*** Error on ctrl DFU_ReviewerNote", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "MasterLabelContent.ReviewerNoteDFU: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for DFU_ReviewerNote: " + "mMasLC.MasterLabelContent" );
+      }
+   }
+%>
+
+<input class="text12" name="DFU_ReviewerNote" id="DFU_ReviewerNote" style="width:634px;position:absolute;left:130px;top:52px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* New:PushBtn */ %>
-<button type="button" class="newbutton" name="New" id="New" value="" onclick="GOTO_DU_SectionAdd( )" style="width:78px;height:24px;position:absolute;left:586px;top:12px;">New</button>
+<button type="button" class="newbutton" name="New" id="New" value="" onclick="GOTO_DU_SectionAdd( )" style="width:78px;height:26px;position:absolute;left:586px;top:82px;">New</button>
+
+<% /* PBSort:PushBtn */ %>
+<button type="button" class="newbutton" name="PBSort" id="PBSort" value="" onclick="Sort( )" style="width:78px;height:26px;position:absolute;left:686px;top:82px;">Sort</button>
+
+<% /* DirectionsForUseSections:Text */ %>
+
+<label class="listheader"  id="DirectionsForUseSections" name="DirectionsForUseSections" style="width:210px;height:16px;position:absolute;left:6px;top:92px;">Directions For Use Sections</label>
 
 
-</div>  <!--  GBStorDispSections --> 
+</div>  <!--  GBDFU_Sections --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
- <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox1:GroupBox */ %>
+
+<div id="GroupBox1" name="GroupBox1" class="withborder" style="width:784px;height:244px;float:left;">  <!-- GroupBox1 --> 
+
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:22px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GridStorDisp:Grid */ %>
-<table  cols=6 style="width:792px;"  name="GridStorDisp" id="GridStorDisp">
+<% /* GridDirectionsForUse:Grid */ %>
+<table  cols=4 style="width:792px;"  name="GridDirectionsForUse" id="GridDirectionsForUse">
 
 <thead><tr>
 
    <th>Name</th>
    <th>Title</th>
-   <th>Add Before</th>
-   <th>Add After</th>
    <th>Update</th>
    <th>Delete</th>
 
@@ -1509,26 +1618,24 @@ try
       String strTag;
       String strName;
       String strTitle;
-      String strBitmapBtn2;
-      String strBitmapBtn1;
       String strBMBUpdateStorDispSect;
       String strBMBDeleteStorDispSect;
       
-      View vGridStorDisp;
-      vGridStorDisp = mMasLC.newView( );
-      csrRC2 = vGridStorDisp.cursor( "M_DirectionsForUseSection" ).setFirst(  );
+      View vGridDirectionsForUse;
+      vGridDirectionsForUse = mMasLC.newView( );
+      csrRC2 = vGridDirectionsForUse.cursor( "M_DirectionsForUseSection" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGridStorDisp.cursor( "M_DirectionsForUseSection" ).getEntityKey( );
+         lEntityKey = vGridDirectionsForUse.cursor( "M_DirectionsForUseSection" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          strName = "";
-         nRC = vGridStorDisp.cursor( "M_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGridDirectionsForUse.cursor( "M_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strName = vGridStorDisp.cursor( "M_DirectionsForUseSection" ).getAttribute( "Name" ).getString( "" );
+            strName = vGridDirectionsForUse.cursor( "M_DirectionsForUseSection" ).getAttribute( "Name" ).getString( "" );
 
             if ( strName == null )
                strName = "";
@@ -1538,10 +1645,10 @@ try
             strName = "&nbsp";
 
          strTitle = "";
-         nRC = vGridStorDisp.cursor( "M_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
+         nRC = vGridDirectionsForUse.cursor( "M_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strTitle = vGridStorDisp.cursor( "M_DirectionsForUseSection" ).getAttribute( "Title" ).getString( "" );
+            strTitle = vGridDirectionsForUse.cursor( "M_DirectionsForUseSection" ).getAttribute( "Title" ).getString( "" );
 
             if ( strTitle == null )
                strTitle = "";
@@ -1556,17 +1663,15 @@ try
 
    <td><a href="#" onclick="GOTO_DirsForUseSectionUpdate( this.id )" id="Name::<%=strEntityKey%>"><%=strName%></a></td>
    <td><a href="#" onclick="GOTO_DirsForUseSectionUpdate( this.id )" id="Title::<%=strEntityKey%>"><%=strTitle%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn2" onclick="GOTO_DU_SectionAddBefore( this.id )" id="BitmapBtn2::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Add Before"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn1" onclick="GOTO_DU_SectionAddAfter( this.id )" id="BitmapBtn1::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Add After"></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateStorDispSect" onclick="GOTO_DirsForUseSectionUpdate( this.id )" id="BMBUpdateStorDispSect::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteStorDispSect" onclick="GOTO_DirsForUseSectionDelete( this.id )" id="BMBDeleteStorDispSect::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 
 <%
-         csrRC2 = vGridStorDisp.cursor( "M_DirectionsForUseSection" ).setNextContinue( );
+         csrRC2 = vGridDirectionsForUse.cursor( "M_DirectionsForUseSection" ).setNextContinue( );
       }
-      vGridStorDisp.drop( );
+      vGridDirectionsForUse.drop( );
    }
 }
 catch (Exception e)
@@ -1578,6 +1683,10 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </tbody>
 </table>
 
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  GroupBox1 --> 
 </div>  <!-- End of a new line -->
 
 

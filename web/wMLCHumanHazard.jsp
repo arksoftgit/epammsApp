@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCHumanHazard   Generate Timestamp: 20160420112617676 --%>
+<%-- wMLCHumanHazard   Generate Timestamp: 20160425102458747 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1872,12 +1872,12 @@ else
 </div>  <!--  GroupBox4 --> 
 <% /* LocSeparator::Text */ %>
 
-<label  id="LocSeparator:" name="LocSeparator:" style="width:184px;height:16px;position:absolute;left:10px;top:130px;">Location Separator:</label>
+<label  id="LocSeparator:" name="LocSeparator:" style="width:158px;height:16px;position:absolute;left:10px;top:136px;">Location Separator:</label>
 
 <% /* LocSeparator:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="LocSeparator" id="LocSeparator" size="1" style="width:214px;position:absolute;left:204px;top:130px;" onchange="LocSeparatorOnChange( )">
+<select  name="LocSeparator" id="LocSeparator" size="1" style="width:214px;position:absolute;left:178px;top:136px;" onchange="LocSeparatorOnChange( )">
 
 <%
    boolean inListLocSeparator = false;
@@ -1971,8 +1971,8 @@ else
       strErrorMapValue = "checked=\"checked\"";
 %>
 
-<input type="checkbox" name="EncloseFirst" id="EncloseFirst"  value="Y" <%=strErrorMapValue%> style="position:absolute;left:546px;top:130px;">
-<span style="width:178px;height:24px;position:absolute;left:576px;top:130px;">Enclose First Location</span>
+<input type="checkbox" name="EncloseFirst" id="EncloseFirst"  value="Y" <%=strErrorMapValue%> style="position:absolute;left:482px;top:136px;">
+<span style="width:178px;height:24px;position:absolute;left:512px;top:136px;">Enclose First Location</span>
 
 <% /* PanelLocations::Text */ %>
 

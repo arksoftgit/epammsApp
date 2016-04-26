@@ -208,6 +208,27 @@ function GOTO_DirsForUseSectionDelete( strTagEntityKey )
    }
 }
 
+function Sort( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+       document.wMLCDirectionsForUse.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_DirectionsForUseSection", "GridDirectionsForUse",  ["Name","Title"]  );
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUse.zAction.value = "Sort";
+      document.wMLCDirectionsForUse.submit( );
+   }
+}
+
 function GOTO_DirsForUseSectionUpdate( strTagEntityKey )
 {
 
@@ -227,7 +248,7 @@ function GOTO_DirsForUseSectionUpdate( strTagEntityKey )
    }
 }
 
-function GOTO_DU_SectionAddAfter( strTagEntityKey )
+function GOTO_DU_SectionAddAfter( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -235,10 +256,6 @@ function GOTO_DU_SectionAddAfter( strTagEntityKey )
 
    if ( _IsDocDisabled( ) == false )
    {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCDirectionsForUse.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
       document.wMLCDirectionsForUse.zAction.value = "GOTO_DU_SectionAddAfter";
@@ -261,7 +278,7 @@ function GOTO_DU_SectionAdd( )
    }
 }
 
-function GOTO_DU_SectionAddBefore( strTagEntityKey )
+function GOTO_DU_SectionAddBefore( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -269,10 +286,6 @@ function GOTO_DU_SectionAddBefore( strTagEntityKey )
 
    if ( _IsDocDisabled( ) == false )
    {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCDirectionsForUse.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
       document.wMLCDirectionsForUse.zAction.value = "GOTO_DU_SectionAddBefore";

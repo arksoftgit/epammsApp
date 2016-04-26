@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCMarketing   Generate Timestamp: 20160421201917670 --%>
+<%-- wMLCMarketing   Generate Timestamp: 20160422182756085 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -247,38 +247,12 @@ if ( strActionToProcess != null )
       if ( nRC < 0 )
          break;
 
-      // Position on the entity that was selected in the grid.
-      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
-      View mMasLC;
-      mMasLC = task.getViewByName( "mMasLC" );
-      if ( VmlOperation.isValid( mMasLC ) )
-      {
-         lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mMasLC.cursor( "M_MarketingSection" ).setByEntityKey( lEKey );
-         if ( !csrRC.isSet() )
-         {
-            boolean bFound = false;
-            csrRCk = mMasLC.cursor( "M_MarketingSection" ).setFirst( );
-            while ( csrRCk.isSet() && !bFound )
-            {
-               lEKey = mMasLC.cursor( "M_MarketingSection" ).getEntityKey( );
-               strKey = Long.toString( lEKey );
-               if ( StringUtils.equals( strKey, strEntityKey ) )
-               {
-                  // Stop while loop because we have positioned on the correct entity.
-                  bFound = true;
-               }
-               else
-                  csrRCk = mMasLC.cursor( "M_MarketingSection" ).setNextContinue( );
-            } // Grid
-         }
-      }
-
       // Action Auto Object Function
       nRC = 0;
       try
       {
-         EntityCursor cursor = mMasLC.cursor( "M_MarketingSection" );
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_MarketingSection" );
          cursor.createTemporalEntity( );
 
       }
@@ -360,33 +334,6 @@ if ( strActionToProcess != null )
       nRC = DoInputMapping( request, session, application, false );
       if ( nRC < 0 )
          break;
-
-      // Position on the entity that was selected in the grid.
-      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
-      View mMasLC;
-      mMasLC = task.getViewByName( "mMasLC" );
-      if ( VmlOperation.isValid( mMasLC ) )
-      {
-         lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mMasLC.cursor( "M_MarketingSection" ).setByEntityKey( lEKey );
-         if ( !csrRC.isSet() )
-         {
-            boolean bFound = false;
-            csrRCk = mMasLC.cursor( "M_MarketingSection" ).setFirst( );
-            while ( csrRCk.isSet() && !bFound )
-            {
-               lEKey = mMasLC.cursor( "M_MarketingSection" ).getEntityKey( );
-               strKey = Long.toString( lEKey );
-               if ( StringUtils.equals( strKey, strEntityKey ) )
-               {
-                  // Stop while loop because we have positioned on the correct entity.
-                  bFound = true;
-               }
-               else
-                  csrRCk = mMasLC.cursor( "M_MarketingSection" ).setNextContinue( );
-            } // Grid
-         }
-      }
 
       // Action Operation
       nRC = 0;
@@ -1624,6 +1571,10 @@ else
 <% /* PBSort:PushBtn */ %>
 <button type="button" class="newbutton" name="PBSort" id="PBSort" value="" onclick="Sort( )" style="width:78px;height:26px;position:absolute;left:686px;top:82px;">Sort</button>
 
+<% /* MarketingSections:Text */ %>
+
+<label class="listheader"  id="MarketingSections" name="MarketingSections" style="width:154px;height:16px;position:absolute;left:6px;top:92px;">Marketing Sections</label>
+
 
 </div>  <!--  GBStorDispSections --> 
 </div>  <!-- End of a new line -->
@@ -1640,14 +1591,12 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <% /* GridMarketing:Grid */ %>
-<table  cols=6 style="width:768px;"  name="GridMarketing" id="GridMarketing">
+<table  cols=4 style="width:768px;"  name="GridMarketing" id="GridMarketing">
 
 <thead><tr>
 
    <th>Name</th>
    <th>Title</th>
-   <th>Add Before</th>
-   <th>Add After</th>
    <th>Update</th>
    <th>Delete</th>
 
@@ -1669,8 +1618,6 @@ try
       String strTag;
       String strName;
       String strTitle;
-      String strBitmapBtn2;
-      String strBitmapBtn1;
       String strBMBUpdateStorDispSect;
       String strBMBDeleteStorDispSect;
       
@@ -1716,8 +1663,6 @@ try
 
    <td><a href="#" onclick="GOTO_MarketingSectionUpdate( this.id )" id="Name::<%=strEntityKey%>"><%=strName%></a></td>
    <td><a href="#" onclick="GOTO_MarketingSectionUpdate( this.id )" id="Title::<%=strEntityKey%>"><%=strTitle%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn2" onclick="GOTO_MarketingSectionAddBefore( this.id )" id="BitmapBtn2::<%=strEntityKey%>"><img src="./images/ePammsNew.png" alt="Add Before"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn1" onclick="GOTO_MarketingSectionAddAfter( this.id )" id="BitmapBtn1::<%=strEntityKey%>"><img src="./images/ePammsNew.png" alt="Add After"></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateStorDispSect" onclick="GOTO_MarketingSectionUpdate( this.id )" id="BMBUpdateStorDispSect::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteStorDispSect" onclick="GOTO_MarketingSectionDelete( this.id )" id="BMBDeleteStorDispSect::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 

@@ -189,7 +189,7 @@ function CheckAllInGrid(id, CheckBoxName) // triggered by no text checkbox
    }
 }
 
-function GOTO_MarketingSectionAddAfter( strTagEntityKey )
+function GOTO_MarketingSectionAddAfter( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -197,10 +197,6 @@ function GOTO_MarketingSectionAddAfter( strTagEntityKey )
 
    if ( _IsDocDisabled( ) == false )
    {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCMarketing.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
       document.wMLCMarketing.zAction.value = "GOTO_MarketingSectionAddAfter";
@@ -244,7 +240,7 @@ function GOTO_MarketingSectionAdd( )
    }
 }
 
-function GOTO_MarketingSectionAddBefore( strTagEntityKey )
+function GOTO_MarketingSectionAddBefore( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -252,10 +248,6 @@ function GOTO_MarketingSectionAddBefore( strTagEntityKey )
 
    if ( _IsDocDisabled( ) == false )
    {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCMarketing.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
       document.wMLCMarketing.zAction.value = "GOTO_MarketingSectionAddBefore";

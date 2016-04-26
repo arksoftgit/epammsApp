@@ -4724,7 +4724,7 @@ omMasLC_dDisplayPathogenName( View     mMasLC,
    String   szClassification = null;
    //:STRING ( 512 ) szCombinedName
    String   szCombinedName = null;
-   //:STRING ( 3 )   szFootnoteNumber
+   //:STRING ( 32 )  szFootnoteNumber
    String   szFootnoteNumber = null;
    //:INTEGER        Count
    int      Count = 0;
@@ -4733,10 +4733,11 @@ omMasLC_dDisplayPathogenName( View     mMasLC,
    int      lTempInteger_1 = 0;
    int      lTempInteger_2 = 0;
    int      lTempInteger_3 = 0;
-   String   szTempString_0 = null;
    int      lTempInteger_4 = 0;
-   String   szTempString_1 = null;
+   String   szTempString_0 = null;
    int      lTempInteger_5 = 0;
+   String   szTempString_1 = null;
+   int      lTempInteger_6 = 0;
 
 
    //:CASE GetOrSetFlag
@@ -4821,16 +4822,32 @@ omMasLC_dDisplayPathogenName( View     mMasLC,
                } 
 
                //:END
-               //:szFootnoteNumber = mMasLC.M_UsageFootnote.wFootNoteRelativeNumber
+               //:szFootnoteNumber = mMasLC.M_UsageFootnote.Symbol
                {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
                StringBuilder sb_szFootnoteNumber;
                if ( szFootnoteNumber == null )
                   sb_szFootnoteNumber = new StringBuilder( 32 );
                else
                   sb_szFootnoteNumber = new StringBuilder( szFootnoteNumber );
-                               GetVariableFromAttribute( sb_szFootnoteNumber, mi_lTempInteger_2, 'S', 4, mMasLC, "M_UsageFootnote", "wFootNoteRelativeNumber", "", 0 );
+                               GetVariableFromAttribute( sb_szFootnoteNumber, mi_lTempInteger_2, 'S', 33, mMasLC, "M_UsageFootnote", "Symbol", "", 0 );
                lTempInteger_2 = mi_lTempInteger_2.intValue( );
                szFootnoteNumber = sb_szFootnoteNumber.toString( );}
+               //:IF szFootnoteNumber = ""
+               if ( ZeidonStringCompare( szFootnoteNumber, 1, 0, "", 1, 0, 33 ) == 0 )
+               { 
+                  //:szFootnoteNumber = mMasLC.M_UsageFootnote.wFootNoteRelativeNumber
+                  {MutableInt mi_lTempInteger_3 = new MutableInt( lTempInteger_3 );
+                  StringBuilder sb_szFootnoteNumber;
+                  if ( szFootnoteNumber == null )
+                     sb_szFootnoteNumber = new StringBuilder( 32 );
+                  else
+                     sb_szFootnoteNumber = new StringBuilder( szFootnoteNumber );
+                                     GetVariableFromAttribute( sb_szFootnoteNumber, mi_lTempInteger_3, 'S', 33, mMasLC, "M_UsageFootnote", "wFootNoteRelativeNumber", "", 0 );
+                  lTempInteger_3 = mi_lTempInteger_3.intValue( );
+                  szFootnoteNumber = sb_szFootnoteNumber.toString( );}
+               } 
+
+               //:END
                //:szCombinedName = szCombinedName + "<sup> " + szFootnoteNumber + "</sup>"
                 {StringBuilder sb_szCombinedName;
                if ( szCombinedName == null )
@@ -4860,8 +4877,8 @@ omMasLC_dDisplayPathogenName( View     mMasLC,
 
          //:END
          //:IF mMasLC.M_InsertTextKeywordUsage EXISTS
-         lTempInteger_3 = CheckExistenceOfEntity( mMasLC, "M_InsertTextKeywordUsage" );
-         if ( lTempInteger_3 == 0 )
+         lTempInteger_4 = CheckExistenceOfEntity( mMasLC, "M_InsertTextKeywordUsage" );
+         if ( lTempInteger_4 == 0 )
          { 
             //:CreateViewFromView( mMasLC2, mMasLC )
             CreateViewFromView( mMasLC2, mMasLC );
@@ -4871,14 +4888,14 @@ omMasLC_dDisplayPathogenName( View     mMasLC,
             { 
                //:// Reuse szUsageType and szClassification
                //:szUsageType = "{" + mMasLC2.M_InsertTextKeywordUsage.Name + "}"
-               {MutableInt mi_lTempInteger_4 = new MutableInt( lTempInteger_4 );
+               {MutableInt mi_lTempInteger_5 = new MutableInt( lTempInteger_5 );
                StringBuilder sb_szTempString_0;
                if ( szTempString_0 == null )
                   sb_szTempString_0 = new StringBuilder( 32 );
                else
                   sb_szTempString_0 = new StringBuilder( szTempString_0 );
-                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_4, 'S', 255, mMasLC2, "M_InsertTextKeywordUsage", "Name", "", 0 );
-               lTempInteger_4 = mi_lTempInteger_4.intValue( );
+                               GetVariableFromAttribute( sb_szTempString_0, mi_lTempInteger_5, 'S', 255, mMasLC2, "M_InsertTextKeywordUsage", "Name", "", 0 );
+               lTempInteger_5 = mi_lTempInteger_5.intValue( );
                szTempString_0 = sb_szTempString_0.toString( );}
                 {StringBuilder sb_szUsageType;
                if ( szUsageType == null )
@@ -4902,14 +4919,14 @@ omMasLC_dDisplayPathogenName( View     mMasLC,
                               ZeidonStringConcat( sb_szUsageType, 1, 0, "}", 1, 0, 101 );
                szUsageType = sb_szUsageType.toString( );}
                //:szClassification = "<b>" + mMasLC2.M_InsertTextUsage.Text + "</b>"
-               {MutableInt mi_lTempInteger_5 = new MutableInt( lTempInteger_5 );
+               {MutableInt mi_lTempInteger_6 = new MutableInt( lTempInteger_6 );
                StringBuilder sb_szTempString_1;
                if ( szTempString_1 == null )
                   sb_szTempString_1 = new StringBuilder( 32 );
                else
                   sb_szTempString_1 = new StringBuilder( szTempString_1 );
-                               GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_5, 'S', 255, mMasLC2, "M_InsertTextUsage", "Text", "", 0 );
-               lTempInteger_5 = mi_lTempInteger_5.intValue( );
+                               GetVariableFromAttribute( sb_szTempString_1, mi_lTempInteger_6, 'S', 255, mMasLC2, "M_InsertTextUsage", "Text", "", 0 );
+               lTempInteger_6 = mi_lTempInteger_6.intValue( );
                szTempString_1 = sb_szTempString_1.toString( );}
                 {StringBuilder sb_szClassification;
                if ( szClassification == null )

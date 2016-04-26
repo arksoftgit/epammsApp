@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCClaimsFootnoteSection   Generate Timestamp: 20160415145303762 --%>
+<%-- wMLCClaimsFootnoteSection   Generate Timestamp: 20160425112329370 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -60,7 +60,7 @@ public int DoInputMapping( HttpServletRequest request,
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
    {
-      // Grid: GridPrecautionary
+      // Grid: GridFootnotes
       iTableRowCnt = 0;
 
       // We are creating a temp view to the grid view so that if there are 
@@ -213,9 +213,9 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_UsageFootnote" );
-      cursor.createTemporalEntity( );
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_UsageFootnote" );
+         cursor.createTemporalEntity( );
 
       }
       catch ( Exception e )
@@ -337,8 +337,8 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      EntityCursor cursor = mMasLC.cursor( "M_UsageFootnote" );
-      cursor.createTemporalSubobjectVersion( );
+         EntityCursor cursor = mMasLC.cursor( "M_UsageFootnote" );
+         cursor.createTemporalSubobjectVersion( );
 
       }
       catch ( Exception e )
@@ -1337,9 +1337,9 @@ else
 
 <div id="GroupBox3" name="GroupBox3"   style="float:left;position:relative; width:730px; height:28px;">  <!-- GroupBox3 --> 
 
-<% /* PrecautionarySection:Text */ %>
+<% /* FootnoteSection:Text */ %>
 
-<label class="groupbox"  id="PrecautionarySection" name="PrecautionarySection" style="width:338px;height:16px;position:absolute;left:6px;top:6px;">Claims Footnote Section</label>
+<label class="groupbox"  id="FootnoteSection" name="FootnoteSection" style="width:338px;height:16px;position:absolute;left:6px;top:6px;">Claims Footnote Section</label>
 
 
 </div>  <!--  GroupBox3 --> 
@@ -1357,16 +1357,16 @@ else
 
 <div id="GroupBox2" name="GroupBox2"   style="float:left;position:relative; width:730px; height:34px;">  <!-- GroupBox2 --> 
 
-<% /* GBPrecautionaryStatements:GroupBox */ %>
-<div id="GBPrecautionaryStatements" name="GBPrecautionaryStatements" style="float:left;width:486px;"  class="listgroup">
+<% /* GBFootnoteStatements:GroupBox */ %>
+<div id="GBFootnoteStatements" name="GBFootnoteStatements" style="float:left;width:486px;"  class="listgroup">
 
 <table cols=0 style="width:486px;"  class="grouptable">
 
 <tr>
 <td valign="top"  class="listheader" style="width:332px;">
-<% /* FirstAidStatements:Text */ %>
+<% /* FootnoteStatements:Text */ %>
 
-<label class="listheader"  id="FirstAidStatements" name="FirstAidStatements" style="width:238px;height:16px;position:absolute;left:10px;top:2px;">Footnote Statements</label>
+<label class="listheader"  id="FootnoteStatements" name="FootnoteStatements" style="width:238px;height:16px;position:absolute;left:10px;top:2px;">Footnote Statements</label>
 
 </td>
 <td valign="top"  class="newbutton" style="width:78px;">
@@ -1377,7 +1377,7 @@ else
 </tr>
 </table>
 
-</div>  <!-- GBPrecautionaryStatements --> 
+</div>  <!-- GBFootnoteStatements --> 
 
 
 </div>  <!--  GroupBox2 --> 
@@ -1391,12 +1391,13 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GridPrecautionary:Grid */ %>
-<table  cols=3 style="width:710px;"  name="GridPrecautionary" id="GridPrecautionary">
+<% /* GridFootnotes:Grid */ %>
+<table  cols=4 style="width:726px;"  name="GridFootnotes" id="GridFootnotes">
 
 <thead><tr>
 
-   <th>Statement Text</th>
+   <th>Footnote Text</th>
+   <th>Symbol</th>
    <th>Update</th>
    <th>Delete</th>
 
@@ -1416,47 +1417,62 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
-      String strGridEditPrecautionary;
-      String strBMBUpdatePrecautionaryStatement;
-      String strBMBDeletePrecautionaryStatement;
+      String strGridEditFootnote;
+      String strGridEditFootnoteSymbol;
+      String strBMBUpdateFootnoteStatement;
+      String strBMBDeleteFootnoteStatement;
       
-      View vGridPrecautionary;
-      vGridPrecautionary = mMasLC.newView( );
-      csrRC2 = vGridPrecautionary.cursor( "M_UsageFootnote" ).setFirst(  );
+      View vGridFootnotes;
+      vGridFootnotes = mMasLC.newView( );
+      csrRC2 = vGridFootnotes.cursor( "M_UsageFootnote" ).setFirst(  );
       while ( csrRC2.isSet() )
       {
          strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
          iTableRowCnt++;
 
-         lEntityKey = vGridPrecautionary.cursor( "M_UsageFootnote" ).getEntityKey( );
+         lEntityKey = vGridFootnotes.cursor( "M_UsageFootnote" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strGridEditPrecautionary = "";
-         nRC = vGridPrecautionary.cursor( "M_UsageFootnote" ).checkExistenceOfEntity( ).toInt();
+         strGridEditFootnote = "";
+         nRC = vGridFootnotes.cursor( "M_UsageFootnote" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditPrecautionary = vGridPrecautionary.cursor( "M_UsageFootnote" ).getAttribute( "Text" ).getString( "" );
+            strGridEditFootnote = vGridFootnotes.cursor( "M_UsageFootnote" ).getAttribute( "Text" ).getString( "" );
 
-            if ( strGridEditPrecautionary == null )
-               strGridEditPrecautionary = "";
+            if ( strGridEditFootnote == null )
+               strGridEditFootnote = "";
          }
 
-         if ( StringUtils.isBlank( strGridEditPrecautionary ) )
-            strGridEditPrecautionary = "&nbsp";
+         if ( StringUtils.isBlank( strGridEditFootnote ) )
+            strGridEditFootnote = "&nbsp";
+
+         strGridEditFootnoteSymbol = "";
+         nRC = vGridFootnotes.cursor( "M_UsageFootnote" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strGridEditFootnoteSymbol = vGridFootnotes.cursor( "M_UsageFootnote" ).getAttribute( "Symbol" ).getString( "" );
+
+            if ( strGridEditFootnoteSymbol == null )
+               strGridEditFootnoteSymbol = "";
+         }
+
+         if ( StringUtils.isBlank( strGridEditFootnoteSymbol ) )
+            strGridEditFootnoteSymbol = "&nbsp";
 
 %>
 
 <tr<%=strOdd%>>
 
-   <td><a href="#" onclick="GOTO_UpdateFootnoteStatement( this.id )" id="GridEditPrecautionary::<%=strEntityKey%>"><%=strGridEditPrecautionary%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdatePrecautionaryStatement" onclick="GOTO_UpdateFootnoteStatement( this.id )" id="BMBUpdatePrecautionaryStatement::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeletePrecautionaryStatement" onclick="GOTO_HazardsStmtDelete( this.id )" id="BMBDeletePrecautionaryStatement::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
+   <td><a href="#" onclick="GOTO_UpdateFootnoteStatement( this.id )" id="GridEditFootnote::<%=strEntityKey%>"><%=strGridEditFootnote%></a></td>
+   <td><a href="#" onclick="GOTO_UpdateFootnoteStatement( this.id )" id="GridEditFootnoteSymbol::<%=strEntityKey%>"><%=strGridEditFootnoteSymbol%></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateFootnoteStatement" onclick="GOTO_UpdateFootnoteStatement( this.id )" id="BMBUpdateFootnoteStatement::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteFootnoteStatement" onclick="GOTO_HazardsStmtDelete( this.id )" id="BMBDeleteFootnoteStatement::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 
 <%
-         csrRC2 = vGridPrecautionary.cursor( "M_UsageFootnote" ).setNextContinue( );
+         csrRC2 = vGridFootnotes.cursor( "M_UsageFootnote" ).setNextContinue( );
       }
-      vGridPrecautionary.drop( );
+      vGridFootnotes.drop( );
    }
 }
 catch (Exception e)

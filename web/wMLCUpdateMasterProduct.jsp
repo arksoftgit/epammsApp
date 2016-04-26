@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCUpdateMasterProduct   Generate Timestamp: 20160419151736043 --%>
+<%-- wMLCUpdateMasterProduct   Generate Timestamp: 20160426114919961 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -60,11 +60,14 @@ public int DoInputMapping( HttpServletRequest request,
    mMasProd = task.getViewByName( "mMasProd" );
    if ( VmlOperation.isValid( mMasProd ) )
    {
-      // EditBox: MasterProductName
+      // MLEdit: MasterProductName
       nRC = mMasProd.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
          strMapValue = request.getParameter( "MasterProductName" );
+         task.log().debug( "MasterProductName prior to TrimTinyHtml: " + strMapValue );
+         strMapValue = VmlOperation.TrimTinyHtml( strMapValue );
+         task.log().debug( "MasterProductName after TrimTinyHtml: '" + strMapValue + "'" );
          try
          {
             if ( webMapping )
@@ -1002,8 +1005,13 @@ else
 
 <label  id="ProductName:" name="ProductName:" style="width:178px;height:16px;position:absolute;left:12px;top:4px;">Name:</label>
 
-<% /* MasterProductName:EditBox */ %>
+<% /* GroupBox4:GroupBox */ %>
+
+<div id="GroupBox4" name="GroupBox4" style="width:578px;height:16px;position:absolute;left:198px;top:4px;">  <!-- GroupBox4 --> 
+
+<% /* MasterProductName:MLEdit */ %>
 <%
+   // : MasterProductName
    strErrorMapValue = VmlOperation.CheckError( "MasterProductName", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
@@ -1015,34 +1023,29 @@ else
       strErrorColor = "";
       mMasProd = task.getViewByName( "mMasProd" );
       if ( VmlOperation.isValid( mMasProd ) == false )
-         task.log( ).debug( "Invalid View: " + "MasterProductName" );
+         task.log( ).info( "Invalid View: " + "MasterProductName" );
       else
       {
          nRC = mMasProd.cursor( "MasterProduct" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            try
-            {
-               strErrorMapValue = mMasProd.cursor( "MasterProduct" ).getAttribute( "Name" ).getString( "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on MasterProductName: " + e.getMessage());
-               task.log().error( "*** Error on ctrl MasterProductName", e );
-            }
+            strErrorMapValue = mMasProd.cursor( "MasterProduct" ).getAttribute( "Name" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "MasterProduct.Name: " + strErrorMapValue );
+            task.log( ).info( "MasterProduct.Name: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for MasterProductName: " + "mMasProd.MasterProduct" );
+            task.log( ).info( "Entity does not exist for MasterProductName: " + "mMasProd.MasterProduct" );
       }
    }
 %>
 
-<input class="text12" name="MasterProductName" id="MasterProductName" style="width:578px;position:absolute;left:198px;top:4px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<div style="background-color:#eee;border:1px solid #042;width:578px;height:16px;position:absolute;left:0px;top:0px;overflow:auto;">
+<div class="text12 mceSimpleZeidonSpecialCharacters" name="MasterProductName" id="MasterProductName" style="width:578px;height:16px;position:absolute;left:0px;top:0px;"><%=strErrorMapValue%></div></div>
 
+
+</div>  <!--  GroupBox4 --> 
 <% /* ProductNumber::Text */ %>
 
 <label  id="ProductNumber:" name="ProductNumber:" style="width:178px;height:16px;position:absolute;left:12px;top:30px;">Number:</label>

@@ -1080,7 +1080,7 @@ dDisplayPathogenName( VIEW mMasLC BASED ON LOD mMasLC,
    STRING ( 100 ) szUsageType
    STRING ( 100 ) szClassification
    STRING ( 512 ) szCombinedName
-   STRING ( 3 )   szFootnoteNumber
+   STRING ( 32 )  szFootnoteNumber
    INTEGER        Count
 
    CASE GetOrSetFlag
@@ -1106,7 +1106,10 @@ dDisplayPathogenName( VIEW mMasLC BASED ON LOD mMasLC,
                END
                DropView( mMasLC2 )
             END
-            szFootnoteNumber = mMasLC.M_UsageFootnote.wFootNoteRelativeNumber
+            szFootnoteNumber = mMasLC.M_UsageFootnote.Symbol
+            IF szFootnoteNumber = ""
+               szFootnoteNumber = mMasLC.M_UsageFootnote.wFootNoteRelativeNumber
+            END
             szCombinedName = szCombinedName + "<sup> " + szFootnoteNumber + "</sup>"
          END
       END

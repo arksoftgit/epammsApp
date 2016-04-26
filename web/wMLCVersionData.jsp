@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCVersionData   Generate Timestamp: 20160421172405642 --%>
+<%-- wMLCVersionData   Generate Timestamp: 20160425102309896 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -80,11 +80,14 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
-      // EditBox: Title
+      // MLEdit: Title
       nRC = mMasLC.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
          strMapValue = request.getParameter( "Title" );
+         task.log().debug( "Title prior to TrimTinyHtml: " + strMapValue );
+         strMapValue = VmlOperation.TrimTinyHtml( strMapValue );
+         task.log().debug( "Title after TrimTinyHtml: '" + strMapValue + "'" );
          try
          {
             if ( webMapping )
@@ -1004,6 +1007,12 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
+
+<!-- TinyMCE -->
+<script language="JavaScript" type="text/javascript" src="./js/tinymce/js/tinymce/tinymce.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/TinyMCE.js"></script>
+<!-- /TinyMCE -->
+
 <script language="JavaScript" type="text/javascript" src="./genjs/wMLCVersionData.js"></script>
 
 </head>
@@ -1368,7 +1377,7 @@ else
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* MasterLabelContent:GroupBox */ %>
 
-<div id="MasterLabelContent" name="MasterLabelContent" class="withborder"   style="float:left;position:relative; width:756px; height:274px;">  <!-- MasterLabelContent --> 
+<div id="MasterLabelContent" name="MasterLabelContent" class="withborder"   style="float:left;position:relative; width:756px; height:300px;">  <!-- MasterLabelContent --> 
 
 <% /* PrimaryRegistrant:Text */ %>
 <% strTextDisplayValue = "";
@@ -1399,7 +1408,7 @@ else
 
 <% /* Product::Text */ %>
 
-<label  id="Product:" name="Product:" style="width:232px;height:16px;position:absolute;left:12px;top:48px;">Product:</label>
+<label  id="Product:" name="Product:" style="width:144px;height:16px;position:absolute;left:12px;top:48px;">Product:</label>
 
 <% /* Product:Text */ %>
 <% strTextDisplayValue = "";
@@ -1426,11 +1435,11 @@ else
    }
 %>
 
-<label  id="Product" name="Product" style="width:370px;height:24px;position:absolute;left:250px;top:48px;"><%=strTextDisplayValue%></label>
+<label  id="Product" name="Product" style="width:448px;height:24px;position:absolute;left:166px;top:48px;"><%=strTextDisplayValue%></label>
 
 <% /* EPA_RegistrationNbr:Text */ %>
 
-<label  id="EPA_RegistrationNbr" name="EPA_RegistrationNbr" style="width:232px;height:16px;position:absolute;left:12px;top:76px;">Registration Number:</label>
+<label  id="EPA_RegistrationNbr" name="EPA_RegistrationNbr" style="width:144px;height:16px;position:absolute;left:12px;top:74px;">Registration Number:</label>
 
 <% /* EPA_RegNbr:Text */ %>
 <% strTextDisplayValue = "";
@@ -1457,11 +1466,11 @@ else
    }
 %>
 
-<label  id="EPA_RegNbr" name="EPA_RegNbr" style="width:182px;height:24px;position:absolute;left:250px;top:76px;"><%=strTextDisplayValue%></label>
+<label  id="EPA_RegNbr" name="EPA_RegNbr" style="width:210px;height:24px;position:absolute;left:166px;top:74px;"><%=strTextDisplayValue%></label>
 
 <% /* Version::Text */ %>
 
-<label  id="Version:" name="Version:" style="width:232px;height:16px;position:absolute;left:12px;top:104px;">Version:</label>
+<label  id="Version:" name="Version:" style="width:144px;height:16px;position:absolute;left:12px;top:100px;">Version:</label>
 
 <% /* MasterLabelContentVersion:EditBox */ %>
 <%
@@ -1502,11 +1511,11 @@ else
    }
 %>
 
-<input class="text12" name="MasterLabelContentVersion" id="MasterLabelContentVersion" style="width:182px;position:absolute;left:250px;top:104px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="MasterLabelContentVersion" id="MasterLabelContentVersion" style="width:210px;position:absolute;left:166px;top:100px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* RevisionDate::Text */ %>
 
-<label  id="RevisionDate:" name="RevisionDate:" style="width:232px;height:16px;position:absolute;left:12px;top:132px;">Revision Date:</label>
+<label  id="RevisionDate:" name="RevisionDate:" style="width:144px;height:16px;position:absolute;left:12px;top:126px;">Revision Date:</label>
 
 <% /* RevisionDate:Text */ %>
 <% strTextDisplayValue = "";
@@ -1533,14 +1542,23 @@ else
    }
 %>
 
-<label  id="RevisionDate" name="RevisionDate" style="width:182px;height:24px;position:absolute;left:250px;top:132px;"><%=strTextDisplayValue%></label>
+<label  id="RevisionDate" name="RevisionDate" style="width:210px;height:24px;position:absolute;left:166px;top:126px;"><%=strTextDisplayValue%></label>
+
+<% /* GroupBox1:GroupBox */ %>
+
+<div id="GroupBox1" name="GroupBox1" style="width:734px;height:64px;position:absolute;left:12px;top:152px;">  <!-- GroupBox1 --> 
 
 <% /* Title::Text */ %>
 
-<label  id="Title:" name="Title:" style="width:232px;height:16px;position:absolute;left:12px;top:160px;">Title:</label>
+<label  id="Title:" name="Title:" style="width:144px;height:16px;position:absolute;left:0px;top:0px;">Title:</label>
 
-<% /* Title:EditBox */ %>
+<% /* GroupBox2:GroupBox */ %>
+
+<div id="GroupBox2" name="GroupBox2" style="width:574px;height:64px;position:absolute;left:154px;top:0px;">  <!-- GroupBox2 --> 
+
+<% /* Title:MLEdit */ %>
 <%
+   // : Title
    strErrorMapValue = VmlOperation.CheckError( "Title", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
@@ -1552,37 +1570,34 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "Title" );
+         task.log( ).info( "Invalid View: " + "Title" );
       else
       {
          nRC = mMasLC.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            try
-            {
-               strErrorMapValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "Title" ).getString( "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on Title: " + e.getMessage());
-               task.log().error( "*** Error on ctrl Title", e );
-            }
+            strErrorMapValue = mMasLC.cursor( "MasterLabelContent" ).getAttribute( "Title" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "MasterLabelContent.Title: " + strErrorMapValue );
+            task.log( ).info( "MasterLabelContent.Title: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for Title: " + "mMasLC.MasterLabelContent" );
+            task.log( ).info( "Entity does not exist for Title: " + "mMasLC.MasterLabelContent" );
       }
    }
 %>
 
-<input class="text12" name="Title" id="Title" style="width:494px;position:absolute;left:250px;top:160px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<div style="background-color:#eee;border:1px solid #042;width:572px;height:64px;position:absolute;left:0px;top:0px;overflow:auto;">
+<div class="mceSimpleZeidon" name="Title" id="Title" style="width:572px;height:64px;position:absolute;left:0px;top:0px;"><%=strErrorMapValue%></div></div>
 
+
+</div>  <!--  GroupBox2 --> 
+
+</div>  <!--  GroupBox1 --> 
 <% /* ReviewerNote::Text */ %>
 
-<label  id="ReviewerNote:" name="ReviewerNote:" style="width:232px;height:16px;position:absolute;left:12px;top:188px;">Reviewer Note:</label>
+<label  id="ReviewerNote:" name="ReviewerNote:" style="width:144px;height:16px;position:absolute;left:12px;top:226px;">Reviewer Note:</label>
 
 <% /* ReviewerNote:EditBox */ %>
 <%
@@ -1623,11 +1638,11 @@ else
    }
 %>
 
-<input class="text12" name="ReviewerNote" id="ReviewerNote" style="width:494px;position:absolute;left:250px;top:188px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="ReviewerNote" id="ReviewerNote" style="width:572px;position:absolute;left:166px;top:226px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* Status::Text */ %>
 
-<label  id="Status:" name="Status:" style="width:232px;height:16px;position:absolute;left:12px;top:228px;">Status:</label>
+<label  id="Status:" name="Status:" style="width:144px;height:16px;position:absolute;left:12px;top:268px;">Status:</label>
 
 <% /* Finalized:Text */ %>
 <% strTextDisplayValue = "";
@@ -1654,7 +1669,7 @@ else
    }
 %>
 
-<label class="text12"  id="Finalized" name="Finalized" style="width:182px;height:24px;position:absolute;left:250px;top:228px;"><%=strTextDisplayValue%></label>
+<label class="text12"  id="Finalized" name="Finalized" style="width:182px;height:24px;position:absolute;left:166px;top:268px;"><%=strTextDisplayValue%></label>
 
 
 </div>  <!--  MasterLabelContent --> 
