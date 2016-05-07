@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCTOC_Entry   Generate Timestamp: 20160420114053932 --%>
+<%-- wMLCTOC_Entry   Generate Timestamp: 20160427124123698 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -216,14 +216,14 @@ if ( strActionToProcess != null )
       {
          View mMasLCAuto = task.getViewByName( "mMasLC" );
          EntityCursor cursor = mMasLCAuto.cursor( "TOC" );
-         if ( cursor.isNull() )
-            nRC = 0;
-         else
-         {
-            if ( cursor.isVersioned( ) )
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
             {
-               cursor.acceptSubobject( );
-            }
+               if ( cursor.isVersioned( ) )
+               {
+                  cursor.acceptSubobject( );
+               }
             nRC = 0;
          }
 
@@ -252,14 +252,14 @@ if ( strActionToProcess != null )
       {
          View mMasLCAuto = task.getViewByName( "mMasLC" );
          EntityCursor cursor = mMasLCAuto.cursor( "TOC" );
-         if ( cursor.isNull() )
-            nRC = 0;
-         else
-         {
-            if ( cursor.isVersioned( ) )
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
             {
-               cursor.cancelSubobject( );
-            }
+               if ( cursor.isVersioned( ) )
+               {
+                  cursor.cancelSubobject( );
+               }
             nRC = 0;
          }
 
@@ -712,7 +712,7 @@ else
    }
 %>
 
-<input class="text12" name="SurfaceText" id="SurfaceText" style="width:614px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="SurfaceText" id="SurfaceText" maxlength="254" style="width:614px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

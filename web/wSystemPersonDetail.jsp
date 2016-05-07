@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSystemPersonDetail   Generate Timestamp: 20160406142159090 --%>
+<%-- wSystemPersonDetail   Generate Timestamp: 20160427103803084 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -635,21 +635,21 @@ else
 <span class="text10"  id="Text2" name="Text2" style="width:84px;height:16px;" tabindex=-1 >Last Name:</span>
 
 <% /* EditBox1:EditBox */ %>
-<input class="text10" name="EditBox1" id="EditBox1" style="width:88px;<%=strErrorColor%>" tabindex=1  type="text" value="<%=strErrorMapValue%>" >
+<input class="text10" name="EditBox1" id="EditBox1" maxlength="0" style="width:88px;<%=strErrorColor%>" tabindex=1  type="text" value="<%=strErrorMapValue%>" >
 
 <% /* Text6:Text */ %>
 
 <span class="text10"  id="Text6" name="Text6" style="width:76px;height:16px;" tabindex=-1 >First Name:</span>
 
 <% /* EditBox5:EditBox */ %>
-<input class="text10" name="EditBox5" id="EditBox5" style="width:88px;<%=strErrorColor%>" tabindex=2  type="text" value="<%=strErrorMapValue%>" >
+<input class="text10" name="EditBox5" id="EditBox5" maxlength="0" style="width:88px;<%=strErrorColor%>" tabindex=2  type="text" value="<%=strErrorMapValue%>" >
 
 <% /* Text8:Text */ %>
 
 <span class="text10"  id="Text8" name="Text8" style="width:90px;height:16px;" tabindex=-1 >Middle Name:</span>
 
 <% /* EditBox2:EditBox */ %>
-<input class="text10" name="EditBox2" id="EditBox2" style="width:88px;<%=strErrorColor%>" tabindex=3  type="text" value="<%=strErrorMapValue%>" >
+<input class="text10" name="EditBox2" id="EditBox2" maxlength="0" style="width:88px;<%=strErrorColor%>" tabindex=3  type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -666,7 +666,7 @@ else
 <span class="text10"  id="Text1" name="Text1" style="width:84px;height:16px;" tabindex=-1 >Prefix:</span>
 
 <% /* EditBox3:EditBox */ %>
-<input class="text10" name="EditBox3" id="EditBox3" style="width:88px;<%=strErrorColor%>" tabindex=4  type="text" value="<%=strErrorMapValue%>" >
+<input class="text10" name="EditBox3" id="EditBox3" maxlength="0" style="width:88px;<%=strErrorColor%>" tabindex=4  type="text" value="<%=strErrorMapValue%>" >
 
 <% /* Text5:Text */ %>
 
@@ -680,7 +680,7 @@ else
 <div>  <!-- Beginning of a new line -->
 <span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
 <% /* EditBox4:EditBox */ %>
-<input class="text10" name="EditBox4" id="EditBox4" style="width:182px;<%=strErrorColor%>" tabindex=5  type="text" value="<%=strErrorMapValue%>" >
+<input class="text10" name="EditBox4" id="EditBox4" maxlength="0" style="width:182px;<%=strErrorColor%>" tabindex=5  type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -793,7 +793,7 @@ else
 <span class="text10"  id="Text9" name="Text9" style="width:84px;height:16px;" tabindex=-1 >Line 1:</span>
 
 <% /* EditBox7:EditBox */ %>
-<input class="text10" name="EditBox7" id="EditBox7" style="width:136px;<%=strErrorColor%>" tabindex=7  type="text" value="<%=strErrorMapValue%>" >
+<input class="text10" name="EditBox7" id="EditBox7" maxlength="0" style="width:136px;<%=strErrorColor%>" tabindex=7  type="text" value="<%=strErrorMapValue%>" >
 
 <span style="height:16px;">&nbsp</span>
 <% /* Text12:Text */ %>
@@ -801,7 +801,7 @@ else
 <span class="text10"  id="Text12" name="Text12" style="width:102px;height:16px;" tabindex=-1 >City:</span>
 
 <% /* EditBox10:EditBox */ %>
-<input class="text10" name="EditBox10" id="EditBox10" style="width:136px;<%=strErrorColor%>" tabindex=10  type="text" value="<%=strErrorMapValue%>" >
+<input class="text10" name="EditBox10" id="EditBox10" maxlength="0" style="width:136px;<%=strErrorColor%>" tabindex=10  type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -818,7 +818,7 @@ else
 <span class="text10"  id="Text10" name="Text10" style="width:84px;height:16px;" tabindex=-1 >Line 2:</span>
 
 <% /* EditBox8:EditBox */ %>
-<input class="text10" name="EditBox8" id="EditBox8" style="width:136px;<%=strErrorColor%>" tabindex=8  type="text" value="<%=strErrorMapValue%>" >
+<input class="text10" name="EditBox8" id="EditBox8" maxlength="0" style="width:136px;<%=strErrorColor%>" tabindex=8  type="text" value="<%=strErrorMapValue%>" >
 
 <span style="height:16px;">&nbsp</span>
 <% /* Text13:Text */ %>
@@ -826,7 +826,7 @@ else
 <span class="text10"  id="Text13" name="Text13" style="width:102px;height:16px;" tabindex=-1 >State Province:</span>
 
 <% /* EditBox11:EditBox */ %>
-<input class="text10" name="EditBox11" id="EditBox11" style="width:136px;<%=strErrorColor%>" tabindex=13  type="text" value="<%=strErrorMapValue%>" >
+<input class="text10" name="EditBox11" id="EditBox11" maxlength="0" style="width:136px;<%=strErrorColor%>" tabindex=13  type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -843,7 +843,7 @@ else
 <span class="text10"  id="Text11" name="Text11" style="width:84px;height:16px;" tabindex=-1 >Line 3:</span>
 
 <% /* EditBox9:EditBox */ %>
-<input class="text10" name="EditBox9" id="EditBox9" style="width:136px;<%=strErrorColor%>" tabindex=9  type="text" value="<%=strErrorMapValue%>" >
+<input class="text10" name="EditBox9" id="EditBox9" maxlength="0" style="width:136px;<%=strErrorColor%>" tabindex=9  type="text" value="<%=strErrorMapValue%>" >
 
 <span style="height:16px;">&nbsp</span>
 <% /* Text14:Text */ %>
@@ -851,7 +851,7 @@ else
 <span class="text10"  id="Text14" name="Text14" style="width:102px;height:16px;" tabindex=-1 >Country:</span>
 
 <% /* EditBox12:EditBox */ %>
-<input class="text10" name="EditBox12" id="EditBox12" style="width:136px;<%=strErrorColor%>" tabindex=14  type="text" value="<%=strErrorMapValue%>" >
+<input class="text10" name="EditBox12" id="EditBox12" maxlength="0" style="width:136px;<%=strErrorColor%>" tabindex=14  type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -868,7 +868,7 @@ else
 <span class="text10"  id="Text15" name="Text15" style="width:102px;height:16px;" tabindex=-1 >Postal Code:</span>
 
 <% /* EditBox13:EditBox */ %>
-<input class="text10" name="EditBox13" id="EditBox13" style="width:136px;<%=strErrorColor%>" tabindex=15  type="text" value="<%=strErrorMapValue%>" >
+<input class="text10" name="EditBox13" id="EditBox13" maxlength="0" style="width:136px;<%=strErrorColor%>" tabindex=15  type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 

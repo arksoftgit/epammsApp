@@ -74,63 +74,6 @@ GOTO_PrecautionaryStmtDelete( View     ViewToWindow )
 
 
 private int 
-o_fnLocalBuildQual_13( View     vSubtask,
-                       zVIEW    vQualObject,
-                       int      lTempInteger_0 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterLabelContent" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterLabelContent" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_3( View     vSubtask,
-                      zVIEW    vQualObject,
-                      int      lTempInteger_0 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterProduct" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
-o_fnLocalBuildQual_4( View     vSubtask,
-                      zVIEW    vQualObject,
-                      int      lTempInteger_0 )
-{
-   int      RESULT = 0;
-
-   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
-   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterLabelContent" );
-   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
-   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterLabelContent" );
-   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
-   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
-   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
-   return( 0 );
-} 
-
-
-private int 
 o_fnLocalBuildQual_5( View     vSubtask,
                       zVIEW    vQualObject,
                       int      lTempInteger_0 )
@@ -283,6 +226,25 @@ o_fnLocalBuildQual_12( View     vSubtask,
 
 
 private int 
+o_fnLocalBuildQual_13( View     vSubtask,
+                       zVIEW    vQualObject,
+                       int      lTempInteger_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterLabelContent" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterLabelContent" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
 o_fnLocalBuildQual_0( View     vSubtask,
                       zVIEW    vQualObject,
                       int      MasProdID )
@@ -332,6 +294,44 @@ o_fnLocalBuildQual_2( View     vSubtask,
    SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterProduct" );
    CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
    SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterProduct" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_3( View     vSubtask,
+                      zVIEW    vQualObject,
+                      int      lTempInteger_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterProduct" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "PrimaryRegistrant" );
+   SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
+   SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
+   SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
+   return( 0 );
+} 
+
+
+private int 
+o_fnLocalBuildQual_4( View     vSubtask,
+                      zVIEW    vQualObject,
+                      int      lTempInteger_0 )
+{
+   int      RESULT = 0;
+
+   RESULT = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", vSubtask, zMULTIPLE );
+   CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "MasterLabelContent" );
+   CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER );
+   SetAttributeFromString( vQualObject, "QualAttrib", "EntityName", "MasterLabelContent" );
    SetAttributeFromString( vQualObject, "QualAttrib", "AttributeName", "ID" );
    SetAttributeFromInteger( vQualObject, "QualAttrib", "Value", lTempInteger_0 );
    SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "=" );
@@ -2113,10 +2113,124 @@ GOTO_DirsForUseStatementAdd( View     ViewToWindow )
    RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
 
    //:// Add new temporal entity as last statement under section.
-   //:SET CURSOR LAST mMasLC.M_DirectionsForUseStatement
-   RESULT = SetCursorLastEntity( mMasLC, "M_DirectionsForUseStatement", "" );
-   //:CreateTemporalEntity( mMasLC, "M_DirectionsForUseStatement", zPOS_AFTER )
-   CreateTemporalEntity( mMasLC, "M_DirectionsForUseStatement", zPOS_AFTER );
+   //:CreateTemporalEntity( mMasLC, "M_DirectionsForUseStatement", zPOS_LAST )
+   CreateTemporalEntity( mMasLC, "M_DirectionsForUseStatement", zPOS_LAST );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:GOTO_DirsForUseSubStatementAdd( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+GOTO_DirsForUseSubStatementAdd( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:SetViewToSubobject( mMasLC, "M_DirectionsForUseSubStatement" )
+   SetViewToSubobject( mMasLC, "M_DirectionsForUseSubStatement" );
+   //:CreateTemporalEntity( mMasLC, "M_DirectionsForUseStatement", zPOS_LAST )
+   CreateTemporalEntity( mMasLC, "M_DirectionsForUseStatement", zPOS_LAST );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:GOTO_DirsForUseSubStmtUpdate( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+GOTO_DirsForUseSubStmtUpdate( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:SetViewToSubobject( mMasLC, "M_DirectionsForUseSubStatement" )
+   SetViewToSubobject( mMasLC, "M_DirectionsForUseSubStatement" );
+   //:CreateTemporalSubobjectVersion( mMasLC, "M_DirectionsForUseStatement" )
+   CreateTemporalSubobjectVersion( mMasLC, "M_DirectionsForUseStatement" );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:AcceptDirectionsSubStatement( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+AcceptDirectionsSubStatement( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+   //:SHORT nRC
+   int      nRC = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:nRC = AcceptSubobject( mMasLC, "M_DirectionsForUseSubStatement" )
+   nRC = AcceptSubobject( mMasLC, "M_DirectionsForUseSubStatement" );
+   //:IF nRC < 0
+   if ( nRC < 0 )
+   { 
+      //:MessageSend( ViewToWindow, "", "Accept Directions For Use Sub-statement",
+      //:             "The Directions For Use Sub-Statement (Accept) contains errors.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Accept Directions For Use Sub-statement", "The Directions For Use Sub-Statement (Accept) contains errors.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN nRC
+      if(8==8)return( nRC );
+   } 
+
+   //:END
+   //:ResetViewFromSubobject( mMasLC )
+   ResetViewFromSubobject( mMasLC );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:CancelDirectionsSubStatement( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+CancelDirectionsSubStatement( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+   //:SHORT nRC
+   int      nRC = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:nRC = CancelSubobject( mMasLC, "M_DirectionsForUseSubStatement" )
+   nRC = CancelSubobject( mMasLC, "M_DirectionsForUseSubStatement" );
+   //:IF nRC < 0
+   if ( nRC < 0 )
+   { 
+      //:MessageSend( ViewToWindow, "", "Cancel Directions For Use Sub-statement",
+      //:             "The Directions For Use Sub-Statement (Cancel) contains errors.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Cancel Directions For Use Sub-statement", "The Directions For Use Sub-Statement (Cancel) contains errors.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN nRC
+      if(8==8)return( nRC );
+   } 
+
+   //:END
+   //:ResetViewFromSubobject( mMasLC )
+   ResetViewFromSubobject( mMasLC );
    return( 0 );
 // END
 } 
@@ -3638,6 +3752,12 @@ InitMasterLabelContentForUpdate( View     ViewToWindow )
     // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
    }
    return( 0 );
+// /*
+//          mMasLC.cursor( "MasterLabelContent" ).createEntity();
+//          mMasLC.cursor( "MasterLabelContent" ).createTemporalSubobjectVersion();
+//          mMasLC.cursor( "MasterSubLabelContent" ).setToSubobject();
+//          mMasLC.cursor("MasterSubLabelContent").createTemporalEntity();
+// */
 // END
 } 
 
@@ -3947,10 +4067,8 @@ GOTO_StorageDispStatementAdd( View     ViewToWindow )
 
    //:// We are creating the new temporal entity in this operation, rather than as auto action, so that
    //:// the NotForUseType attribute can be set, since it's currently required in the database.
-   //:SET CURSOR LAST mMasLC.M_StorageDisposalStatement
-   RESULT = SetCursorLastEntity( mMasLC, "M_StorageDisposalStatement", "" );
-   //:CreateTemporalEntity( mMasLC, "M_StorageDisposalStatement", zPOS_AFTER )
-   CreateTemporalEntity( mMasLC, "M_StorageDisposalStatement", zPOS_AFTER );
+   //:CreateTemporalEntity( mMasLC, "M_StorageDisposalStatement", zPOS_LAST )
+   CreateTemporalEntity( mMasLC, "M_StorageDisposalStatement", zPOS_LAST );
    //:mMasLC.M_StorageDisposalStatement.NotForUseType = "NA"
    SetAttributeFromString( mMasLC, "M_StorageDisposalStatement", "NotForUseType", "NA" );
    return( 0 );
@@ -4314,6 +4432,25 @@ GOTO_DirsForUseSectionDelete( View     ViewToWindow )
    SetAttributeFromAttribute( mMasLC, "MasterLabelContent", "wDeleteText", mMasLC, "M_DirectionsForUseSection", "Name" );
    //:mMasLC.MasterLabelContent.wDeleteEntityName = "M_DirectionsForUseSection"
    SetAttributeFromString( mMasLC, "MasterLabelContent", "wDeleteEntityName", "M_DirectionsForUseSection" );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:DELETE_DirectionsForUseStatement( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+DELETE_DirectionsForUseStatement( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:DELETE ENTITY mMasLC.M_DirectionsForUseStatement NONE
+   RESULT = DeleteEntity( mMasLC, "M_DirectionsForUseStatement", zREPOS_NONE );
    return( 0 );
 // END
 } 
@@ -6324,6 +6461,129 @@ DummyOperationForPositioning( View     ViewToWindow )
 
    return( 0 );
 //    // Do nothing ... for positioning only
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:GOTO_StorageDispSubStatementAdd( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+GOTO_StorageDispSubStatementAdd( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:// We are creating the new temporal entity in this operation, rather than as auto action, so that
+   //:// the NotForUseType attribute can be set, since it's currently required in the database.
+   //:SetViewToSubobject( mMasLC, "M_StorageDisposalSubStatement" )
+   SetViewToSubobject( mMasLC, "M_StorageDisposalSubStatement" );
+   //:CreateTemporalEntity( mMasLC, "M_StorageDisposalStatement", zPOS_LAST )
+   CreateTemporalEntity( mMasLC, "M_StorageDisposalStatement", zPOS_LAST );
+   //:mMasLC.M_StorageDisposalStatement.NotForUseType = "NA"
+   SetAttributeFromString( mMasLC, "M_StorageDisposalStatement", "NotForUseType", "NA" );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:GOTO_StorageDispSubStmtUpdate( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+GOTO_StorageDispSubStmtUpdate( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+   //:SHORT nRC
+   int      nRC = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:SetViewToSubobject( mMasLC, "M_StorageDisposalSubStatement" )
+   SetViewToSubobject( mMasLC, "M_StorageDisposalSubStatement" );
+   //:CreateTemporalSubobjectVersion( mMasLC, "M_StorageDisposalStatement" )
+   CreateTemporalSubobjectVersion( mMasLC, "M_StorageDisposalStatement" );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:AcceptStorDispSubStmt( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+AcceptStorDispSubStmt( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+   //:SHORT nRC
+   int      nRC = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:nRC = AcceptSubobject( mMasLC, "M_StorageDisposalStatement" )
+   nRC = AcceptSubobject( mMasLC, "M_StorageDisposalStatement" );
+   //:IF nRC < 0
+   if ( nRC < 0 )
+   { 
+      //:MessageSend( ViewToWindow, "", "Accept Storage and Disposal Sub-statement",
+      //:             "The Storage and Disposal Statement contains errors.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Accept Storage and Disposal Sub-statement", "The Storage and Disposal Statement contains errors.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN nRC
+      if(8==8)return( nRC );
+   } 
+
+   //:END
+   //:ResetViewFromSubobject( mMasLC )
+   ResetViewFromSubobject( mMasLC );
+   return( 0 );
+//    
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:CancelStorDispSubStmt( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+CancelStorDispSubStmt( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+   //:SHORT nRC
+   int      nRC = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:nRC = CancelSubobject( mMasLC, "M_StorageDisposalStatement" )
+   nRC = CancelSubobject( mMasLC, "M_StorageDisposalStatement" );
+   //:IF nRC < 0
+   if ( nRC < 0 )
+   { 
+      //:MessageSend( ViewToWindow, "", "Cancel Storage and Disposal Sub-statement",
+      //:             "The Storage and Disposal Statement contains errors.",
+      //:             zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      MessageSend( ViewToWindow, "", "Cancel Storage and Disposal Sub-statement", "The Storage and Disposal Statement contains errors.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 );
+      //:SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      m_ZDRVROPR.SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" );
+      //:RETURN nRC
+      if(8==8)return( nRC );
+   } 
+
+   //:END
+   //:ResetViewFromSubobject( mMasLC )
+   ResetViewFromSubobject( mMasLC );
+   return( 0 );
 // END
 } 
 

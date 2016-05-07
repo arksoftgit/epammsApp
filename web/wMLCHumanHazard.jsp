@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCHumanHazard   Generate Timestamp: 20160425102458747 --%>
+<%-- wMLCHumanHazard   Generate Timestamp: 20160427124122114 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -797,23 +797,6 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditStorDispSect" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCHumanHazard", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "StorageDisposal" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
    while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditHumanHazardSect" ) )
    {
       bDone = true;
@@ -826,44 +809,6 @@ if ( strActionToProcess != null )
 
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "HumanHazard" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditPrecautionarySection" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCHumanHazard", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCHumanHazard", "wMLC.EditPrecautionarySection" );
-      nOptRC = wMLC.EditPrecautionarySection( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "PrecautionarySection" );
-      }
-
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -900,6 +845,78 @@ if ( strActionToProcess != null )
       {
          // Next Window
          strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "FirstAidSection" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditStorDispSect" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCHumanHazard", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "StorageDisposal" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditDirectionsUseSect" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCHumanHazard", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "DirectionsForUse" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditPrecautionarySection" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCHumanHazard", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCHumanHazard", "wMLC.EditPrecautionarySection" );
+      nOptRC = wMLC.EditPrecautionarySection( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "PrecautionarySection" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -1131,23 +1148,6 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditDirectionsUseSect" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCHumanHazard", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "DirectionsForUse" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
    while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditMarketingSect" ) )
    {
       bDone = true;
@@ -1372,16 +1372,6 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "StorDisp" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smStorDisp" name="smStorDisp"><a href="#"  onclick="smEditStorDispSect()">Storage and Disposal</a></li>
-<%
-   }
-%>
-
-<%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "HumanHazard" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
@@ -1392,21 +1382,41 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Precautionary" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smPrecautionary" name="smPrecautionary"><a href="#"  onclick="smEditPrecautionarySection()">Precautionary</a></li>
-<%
-   }
-%>
-
-<%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "FirstAid" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
        <li id="smFirstAid" name="smFirstAid"><a href="#"  onclick="smEditFirstAidSect()">First Aid</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "StorDisp" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="smStorDisp" name="smStorDisp"><a href="#"  onclick="smEditStorDispSect()">Storage and Disposal</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "DirectionsForUse" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="smDirectionsForUse" name="smDirectionsForUse"><a href="#"  onclick="smEditDirectionsUseSect()">Directions For Use</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Precautionary" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="smPrecautionary" name="smPrecautionary"><a href="#"  onclick="smEditPrecautionarySection()">Precautionary</a></li>
 <%
    }
 %>
@@ -1477,16 +1487,6 @@ else
    {
 %>
        <li id="smNew1" name="smNew1"><a href="#"  onclick="smGOTO_ClaimsFootnote()">Claims Footnotes</a></li>
-<%
-   }
-%>
-
-<%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "DirectionsForUse" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smDirectionsForUse" name="smDirectionsForUse"><a href="#"  onclick="smEditDirectionsUseSect()">Directions For Use</a></li>
 <%
    }
 %>
@@ -2017,7 +2017,7 @@ else
    }
 %>
 
-<input class="text12" name="PanelLocation1" id="PanelLocation1" style="width:162px;position:absolute;left:236px;top:166px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="PanelLocation1" id="PanelLocation1" maxlength="254" style="width:162px;position:absolute;left:236px;top:166px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* LabelLocations::Text */ %>
 
@@ -2062,7 +2062,7 @@ else
    }
 %>
 
-<input class="text12" name="LabelLocation1" id="LabelLocation1" style="width:162px;position:absolute;left:590px;top:166px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="LabelLocation1" id="LabelLocation1" maxlength="254" style="width:162px;position:absolute;left:590px;top:166px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* PanelLocation2:EditBox */ %>
 <%
@@ -2103,7 +2103,7 @@ else
    }
 %>
 
-<input name="PanelLocation2" id="PanelLocation2" style="width:162px;position:absolute;left:236px;top:190px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="PanelLocation2" id="PanelLocation2" maxlength="254" style="width:162px;position:absolute;left:236px;top:190px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* LabelLocation2:EditBox */ %>
 <%
@@ -2144,7 +2144,7 @@ else
    }
 %>
 
-<input name="LabelLocation2" id="LabelLocation2" style="width:162px;position:absolute;left:590px;top:190px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="LabelLocation2" id="LabelLocation2" maxlength="254" style="width:162px;position:absolute;left:590px;top:190px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* PanelLocation3:EditBox */ %>
 <%
@@ -2185,7 +2185,7 @@ else
    }
 %>
 
-<input name="PanelLocation3" id="PanelLocation3" style="width:162px;position:absolute;left:236px;top:216px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="PanelLocation3" id="PanelLocation3" maxlength="254" style="width:162px;position:absolute;left:236px;top:216px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* LabelLocation3:EditBox */ %>
 <%
@@ -2226,7 +2226,7 @@ else
    }
 %>
 
-<input name="LabelLocation3" id="LabelLocation3" style="width:162px;position:absolute;left:590px;top:216px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="LabelLocation3" id="LabelLocation3" maxlength="254" style="width:162px;position:absolute;left:590px;top:216px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* PanelLocation4:EditBox */ %>
 <%
@@ -2267,7 +2267,7 @@ else
    }
 %>
 
-<input name="PanelLocation4" id="PanelLocation4" style="width:162px;position:absolute;left:236px;top:240px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="PanelLocation4" id="PanelLocation4" maxlength="254" style="width:162px;position:absolute;left:236px;top:240px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* LabelLocation4:EditBox */ %>
 <%
@@ -2308,7 +2308,7 @@ else
    }
 %>
 
-<input name="LabelLocation4" id="LabelLocation4" style="width:162px;position:absolute;left:590px;top:240px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="LabelLocation4" id="LabelLocation4" maxlength="254" style="width:162px;position:absolute;left:590px;top:240px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* PanelLocation5:EditBox */ %>
 <%
@@ -2349,7 +2349,7 @@ else
    }
 %>
 
-<input class="text12" name="PanelLocation5" id="PanelLocation5" style="width:162px;position:absolute;left:236px;top:264px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="PanelLocation5" id="PanelLocation5" maxlength="254" style="width:162px;position:absolute;left:236px;top:264px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* LabelLocation5:EditBox */ %>
 <%
@@ -2390,7 +2390,7 @@ else
    }
 %>
 
-<input class="text12" name="LabelLocation5" id="LabelLocation5" style="width:162px;position:absolute;left:590px;top:264px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="LabelLocation5" id="LabelLocation5" maxlength="254" style="width:162px;position:absolute;left:590px;top:264px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* Panel Location6:EditBox */ %>
 <%
@@ -2431,7 +2431,7 @@ else
    }
 %>
 
-<input class="text12" name="Panel Location6" id="Panel Location6" style="width:162px;position:absolute;left:236px;top:290px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="Panel Location6" id="Panel Location6" maxlength="254" style="width:162px;position:absolute;left:236px;top:290px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* LabelLocation6:EditBox */ %>
 <%
@@ -2472,7 +2472,7 @@ else
    }
 %>
 
-<input class="text12" name="LabelLocation6" id="LabelLocation6" style="width:162px;position:absolute;left:590px;top:290px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="LabelLocation6" id="LabelLocation6" maxlength="254" style="width:162px;position:absolute;left:590px;top:290px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* PanelLocation7:EditBox */ %>
 <%
@@ -2513,7 +2513,7 @@ else
    }
 %>
 
-<input class="text12" name="PanelLocation7" id="PanelLocation7" style="width:162px;position:absolute;left:236px;top:314px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="PanelLocation7" id="PanelLocation7" maxlength="254" style="width:162px;position:absolute;left:236px;top:314px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* LabelLocation7:EditBox */ %>
 <%
@@ -2554,7 +2554,7 @@ else
    }
 %>
 
-<input class="text12" name="LabelLocation7" id="LabelLocation7" style="width:162px;position:absolute;left:590px;top:314px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="LabelLocation7" id="LabelLocation7" maxlength="254" style="width:162px;position:absolute;left:590px;top:314px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* PanelLocation8:EditBox */ %>
 <%
@@ -2595,7 +2595,7 @@ else
    }
 %>
 
-<input class="text12" name="PanelLocation8" id="PanelLocation8" style="width:162px;position:absolute;left:236px;top:338px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="PanelLocation8" id="PanelLocation8" maxlength="254" style="width:162px;position:absolute;left:236px;top:338px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* LabelLocation8:EditBox */ %>
 <%
@@ -2636,7 +2636,7 @@ else
    }
 %>
 
-<input class="text12" name="LabelLocation8" id="LabelLocation8" style="width:162px;position:absolute;left:590px;top:338px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="LabelLocation8" id="LabelLocation8" maxlength="254" style="width:162px;position:absolute;left:590px;top:338px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* PanelLocation9:EditBox */ %>
 <%
@@ -2677,7 +2677,7 @@ else
    }
 %>
 
-<input class="text12" name="PanelLocation9" id="PanelLocation9" style="width:162px;position:absolute;left:236px;top:364px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="PanelLocation9" id="PanelLocation9" maxlength="254" style="width:162px;position:absolute;left:236px;top:364px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* LabelLocation9:EditBox */ %>
 <%
@@ -2718,7 +2718,7 @@ else
    }
 %>
 
-<input class="text12" name="LabelLocation9" id="LabelLocation9" style="width:162px;position:absolute;left:590px;top:364px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="LabelLocation9" id="LabelLocation9" maxlength="254" style="width:162px;position:absolute;left:590px;top:364px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 
 </div>  <!--  GroupBox1 --> 
@@ -2759,11 +2759,11 @@ else
          nRC = mMasLC.cursor( "M_HumanHazardSection" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strErrorMapValue = mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "dFullStatement" ).getString( "" );
+            strErrorMapValue = mMasLC.cursor( "M_HumanHazardSection" ).getAttribute( "dFullHazardStatement" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).info( "M_HumanHazardSection.dFullStatement: " + strErrorMapValue );
+            task.log( ).info( "M_HumanHazardSection.dFullHazardStatement: " + strErrorMapValue );
          }
          else
             task.log( ).info( "Entity does not exist for MLEditFullStatement: " + "mMasLC.M_HumanHazardSection" );

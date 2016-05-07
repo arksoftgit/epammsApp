@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wStartUpUserLogin   Generate Timestamp: 20160328174628563 --%>
+<%-- wStartUpUserLogin   Generate Timestamp: 20160426145255184 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -720,7 +720,7 @@ else
    }
 %>
 
-<input class="text14" name="EBRegistrantName" id="EBRegistrantName" style="width:256px;position:absolute;left:146px;top:54px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input class="text14" name="EBRegistrantName" id="EBRegistrantName" maxlength="128" style="width:256px;position:absolute;left:146px;top:54px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
 <% /* PBLogin:PushBtn */ %>
 <span style="text-align: center"></span>
@@ -769,7 +769,7 @@ else
    }
 %>
 
-<input class="text14" name="EBUserName" id="EBUserName" style="width:256px;position:absolute;left:146px;top:80px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input class="text14" name="EBUserName" id="EBUserName" maxlength="128" style="width:256px;position:absolute;left:146px;top:80px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
 <% /* Forgot:Text */ %>
 
@@ -818,7 +818,7 @@ else
    }
 %>
 
-<input class="text14" name="EBPassword" id="EBPassword" style="width:256px;position:absolute;left:146px;top:108px;<%=strErrorColor%>" type="password" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input class="text14" name="EBPassword" id="EBPassword" maxlength="254" style="width:256px;position:absolute;left:146px;top:108px;<%=strErrorColor%>" type="password" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
 <% /* PrimaryRegistrants:ComboBox */ %>
 <% strErrorMapValue = "";  %>

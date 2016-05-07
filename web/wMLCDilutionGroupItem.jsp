@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDilutionGroupItem   Generate Timestamp: 20160415145304176 --%>
+<%-- wMLCDilutionGroupItem   Generate Timestamp: 20160427124121458 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -214,18 +214,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_DilutionGroupItem" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         if ( cursor.isVersioned( ) )
-         {
-            cursor.acceptSubobject( );
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_DilutionGroupItem" );
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
+            {
+               if ( cursor.isVersioned( ) )
+               {
+                  cursor.acceptSubobject( );
+               }
+            nRC = 0;
          }
-         nRC = 0;
-      }
 
       }
       catch ( Exception e )
@@ -250,18 +250,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_DilutionGroupItem" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         if ( cursor.isVersioned( ) )
-         {
-            cursor.cancelSubobject( );
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_DilutionGroupItem" );
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
+            {
+               if ( cursor.isVersioned( ) )
+               {
+                  cursor.cancelSubobject( );
+               }
+            nRC = 0;
          }
-         nRC = 0;
-      }
 
       }
       catch ( Exception e )
@@ -657,7 +657,7 @@ else
    }
 %>
 
-<input class="text12" name="EditBox3" id="EditBox3" style="width:426px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="EditBox3" id="EditBox3" maxlength="4" style="width:426px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

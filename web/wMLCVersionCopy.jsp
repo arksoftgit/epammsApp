@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCVersionCopy   Generate Timestamp: 20160415145307108 --%>
+<%-- wMLCVersionCopy   Generate Timestamp: 20160427124123854 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -657,7 +657,7 @@ else
    }
 %>
 
-<input class="text12" name="MasterLabelContentVersion" id="MasterLabelContentVersion" style="width:182px;position:absolute;left:170px;top:56px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="MasterLabelContentVersion" id="MasterLabelContentVersion" maxlength="254" style="width:182px;position:absolute;left:170px;top:56px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 
 </div>  <!--  MasterLabelContent --> 

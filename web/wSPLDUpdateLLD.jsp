@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSPLDUpdateLLD   Generate Timestamp: 20160406142154118 --%>
+<%-- wSPLDUpdateLLD   Generate Timestamp: 20160427103752559 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -652,7 +652,7 @@ else
    }
 %>
 
-<input class="text14bold" name="TXName" id="TXName" style="width:366px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text14bold" name="TXName" id="TXName" maxlength="128" style="width:366px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -703,7 +703,7 @@ else
    }
 %>
 
-<input class="text14bold" name="EditBox1" id="EditBox1" style="width:366px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text14bold" name="EditBox1" id="EditBox1" maxlength="254" style="width:366px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

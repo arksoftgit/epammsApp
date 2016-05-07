@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDilutionChartItem   Generate Timestamp: 20160415145304090 --%>
+<%-- wMLCDilutionChartItem   Generate Timestamp: 20160427124121372 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -271,18 +271,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_DilutionChartEntry" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         if ( cursor.isVersioned( ) )
-         {
-            cursor.acceptSubobject( );
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_DilutionChartEntry" );
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
+            {
+               if ( cursor.isVersioned( ) )
+               {
+                  cursor.acceptSubobject( );
+               }
+            nRC = 0;
          }
-         nRC = 0;
-      }
 
       }
       catch ( Exception e )
@@ -307,18 +307,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_DilutionChartEntry" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         if ( cursor.isVersioned( ) )
-         {
-            cursor.cancelSubobject( );
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_DilutionChartEntry" );
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
+            {
+               if ( cursor.isVersioned( ) )
+               {
+                  cursor.cancelSubobject( );
+               }
+            nRC = 0;
          }
-         nRC = 0;
-      }
 
       }
       catch ( Exception e )
@@ -714,7 +714,7 @@ else
    }
 %>
 
-<input class="text12" name="Use" id="Use" style="width:298px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="Use" id="Use" maxlength="254" style="width:298px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -765,7 +765,7 @@ else
    }
 %>
 
-<input class="text12" name="Product" id="Product" style="width:298px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="Product" id="Product" maxlength="254" style="width:298px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -816,7 +816,7 @@ else
    }
 %>
 
-<input class="text12" name="Water" id="Water" style="width:298px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="Water" id="Water" maxlength="254" style="width:298px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -867,7 +867,7 @@ else
    }
 %>
 
-<input class="text12" name="ContactTime" id="ContactTime" style="width:298px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="ContactTime" id="ContactTime" maxlength="254" style="width:298px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

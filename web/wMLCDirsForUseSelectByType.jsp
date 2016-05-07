@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDirsForUseSelectByType   Generate Timestamp: 20160415145304504 --%>
+<%-- wMLCDirsForUseSelectByType   Generate Timestamp: 20160427124121731 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1075,7 +1075,7 @@ try
          nRC = vGrid1.cursor( "M_DirectionsUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl3 = vGrid1.cursor( "M_DirectionsUsage" ).getAttribute( "dDisplayUsageName" ).getString( "" );
+            strGridEditCtl3 = vGrid1.cursor( "M_DirectionsUsage" ).getAttribute( "dUsageNameFootnote" ).getString( "" );
 
             if ( strGridEditCtl3 == null )
                strGridEditCtl3 = "";
@@ -1250,7 +1250,7 @@ try
          nRC = vGrid2.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl1 = vGrid2.cursor( "M_Usage" ).getAttribute( "dDisplayUsageName" ).getString( "" );
+            strGridEditCtl1 = vGrid2.cursor( "M_Usage" ).getAttribute( "dUsageNameFootnote" ).getString( "" );
 
             if ( strGridEditCtl1 == null )
                strGridEditCtl1 = "";

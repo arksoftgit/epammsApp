@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wPrimRUpdateMasterProductSection   Generate Timestamp: 20160406142151619 --%>
+<%-- wPrimRUpdateMasterProductSection   Generate Timestamp: 20160427103747504 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1124,7 +1124,7 @@ else
    }
 %>
 
-<input name="EBSectionName" id="EBSectionName" style="width:366px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input name="EBSectionName" id="EBSectionName" maxlength="254" style="width:366px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
 </div>  <!-- End of a new line -->
 
@@ -1142,7 +1142,7 @@ else
 
 <span style="height:16px;">&nbsp</span>
 <% /* EPA_Title:EditBox */ %>
-<input name="EPA_Title" id="EPA_Title" style="width:366px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input name="EPA_Title" id="EPA_Title" maxlength="0" style="width:366px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
 </div>  <!-- End of a new line -->
 
@@ -1160,7 +1160,7 @@ else
 
 <span style="height:16px;">&nbsp</span>
 <% /* Graphic:EditBox */ %>
-<input name="Graphic" id="Graphic" style="width:366px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input name="Graphic" id="Graphic" maxlength="0" style="width:366px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
 </div>  <!-- End of a new line -->
 
@@ -1187,7 +1187,7 @@ else
 <div>  <!-- Beginning of a new line -->
 <span style="height:16px;">&nbsp&nbsp</span>
 <% /* Text:EditBox */ %>
-<input name="Text" id="Text" style="width:478px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input name="Text" id="Text" maxlength="0" style="width:478px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
 </div>  <!-- End of a new line -->
 

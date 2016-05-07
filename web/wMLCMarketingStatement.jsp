@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCMarketingStatement   Generate Timestamp: 20160415145305919 --%>
+<%-- wMLCMarketingStatement   Generate Timestamp: 20160427154305791 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -231,18 +231,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_MarketingStatement" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         if ( cursor.isVersioned( ) )
-         {
-            cursor.acceptSubobject( );
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_MarketingStatement" );
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
+            {
+               if ( cursor.isVersioned( ) )
+               {
+                  cursor.acceptSubobject( );
+               }
+            nRC = 0;
          }
-         nRC = 0;
-      }
 
       }
       catch ( Exception e )
@@ -272,9 +272,9 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordMarketing" );
-      cursor.createTemporalEntity( );
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_InsertTextKeywordMarketing" );
+         cursor.createTemporalEntity( );
 
       }
       catch ( Exception e )
@@ -299,18 +299,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_MarketingStatement" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         if ( cursor.isVersioned( ) )
-         {
-            cursor.cancelSubobject( );
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_MarketingStatement" );
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
+            {
+               if ( cursor.isVersioned( ) )
+               {
+                  cursor.cancelSubobject( );
+               }
+            nRC = 0;
          }
-         nRC = 0;
-      }
 
       }
       catch ( Exception e )
@@ -432,14 +432,14 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordMarketing" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         cursor.deleteEntity( CursorPosition.NEXT );
-         nRC = 0;
-      }
+         EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordMarketing" );
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
+            {
+               cursor.deleteEntity( CursorPosition.NEXT );
+            nRC = 0;
+         }
 
       }
       catch ( Exception e )
@@ -534,8 +534,8 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordMarketing" );
-      cursor.createTemporalSubobjectVersion( );
+         EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordMarketing" );
+         cursor.createTemporalSubobjectVersion( );
 
       }
       catch ( Exception e )
@@ -1283,7 +1283,7 @@ try
          nRC = vGrid1.cursor( "M_MarketingUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl1 = vGrid1.cursor( "M_MarketingUsage" ).getAttribute( "dDisplayUsageClaim" ).getString( "" );
+            strGridEditCtl1 = vGrid1.cursor( "M_MarketingUsage" ).getAttribute( "dUsageClaimClassification" ).getString( "" );
 
             if ( strGridEditCtl1 == null )
                strGridEditCtl1 = "";
@@ -1296,7 +1296,7 @@ try
          nRC = vGrid1.cursor( "M_MarketingUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl2 = vGrid1.cursor( "M_MarketingUsage" ).getAttribute( "dDisplayMarketUseName" ).getString( "" );
+            strGridEditCtl2 = vGrid1.cursor( "M_MarketingUsage" ).getAttribute( "dMarketUsageTextSubUsageNames" ).getString( "" );
 
             if ( strGridEditCtl2 == null )
                strGridEditCtl2 = "";

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCSubregProductUpdate   Generate Timestamp: 20160406142153750 --%>
+<%-- wSLCSubregProductUpdate   Generate Timestamp: 20160427103751777 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1279,7 +1279,7 @@ else
    }
 %>
 
-<input name="Name" id="Name" style="width:366px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Name" id="Name" maxlength="254" style="width:366px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

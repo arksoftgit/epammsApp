@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDirectionsForUseReviewerNote   Generate Timestamp: 20160415145304309 --%>
+<%-- wMLCDirectionsForUseReviewerNote   Generate Timestamp: 20160427124121551 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -233,18 +233,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_DirectionsForUseReviewerNote" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         if ( cursor.isVersioned( ) )
-         {
-            cursor.acceptSubobject( );
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_DirectionsForUseReviewerNote" );
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
+            {
+               if ( cursor.isVersioned( ) )
+               {
+                  cursor.acceptSubobject( );
+               }
+            nRC = 0;
          }
-         nRC = 0;
-      }
 
       }
       catch ( Exception e )
@@ -269,18 +269,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_DirectionsForUseReviewerNote" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         if ( cursor.isVersioned( ) )
-         {
-            cursor.cancelSubobject( );
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_DirectionsForUseReviewerNote" );
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
+            {
+               if ( cursor.isVersioned( ) )
+               {
+                  cursor.cancelSubobject( );
+               }
+            nRC = 0;
          }
-         nRC = 0;
-      }
 
       }
       catch ( Exception e )

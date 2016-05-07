@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSystemDeleteSystemChemical   Generate Timestamp: 20160406142158622 --%>
+<%-- wSystemDeleteSystemChemical   Generate Timestamp: 20160427103802314 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -706,7 +706,7 @@ else
    }
 %>
 
-<input name="Name" id="Name"  disabled style="width:130px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Name" id="Name" maxlength="254"  disabled style="width:130px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -762,7 +762,7 @@ else
    }
 %>
 
-<input name="Description" id="Description"  disabled style="width:130px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Description" id="Description" maxlength="254"  disabled style="width:130px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -818,7 +818,7 @@ else
    }
 %>
 
-<input name="Family" id="Family"  disabled style="width:130px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Family" id="Family" maxlength="2"  disabled style="width:130px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 

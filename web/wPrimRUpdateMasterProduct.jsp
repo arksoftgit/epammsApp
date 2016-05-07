@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wPrimRUpdateMasterProduct   Generate Timestamp: 20160406142149934 --%>
+<%-- wPrimRUpdateMasterProduct   Generate Timestamp: 20160427103743635 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1464,7 +1464,7 @@ else
    }
 %>
 
-<input name="ProductName" id="ProductName" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="ProductName" id="ProductName" maxlength="254" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -1520,7 +1520,7 @@ else
    }
 %>
 
-<input name="ProductDescription" id="ProductDescription" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="ProductDescription" id="ProductDescription" maxlength="1024" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -1576,7 +1576,7 @@ else
    }
 %>
 
-<input name="EPARegistrationNumber" id="EPARegistrationNumber" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EPARegistrationNumber" id="EPARegistrationNumber" maxlength="128" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -1632,7 +1632,7 @@ else
    }
 %>
 
-<input name="ESL_Date" id="ESL_Date" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="ESL_Date" id="ESL_Date" maxlength="0" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 

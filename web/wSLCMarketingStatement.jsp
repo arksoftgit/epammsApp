@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCMarketingStatement   Generate Timestamp: 20160421163557855 --%>
+<%-- wSLCMarketingStatement   Generate Timestamp: 20160426145251627 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -233,14 +233,14 @@ if ( strActionToProcess != null )
       {
          View mSubLCAuto = task.getViewByName( "mSubLC" );
          EntityCursor cursor = mSubLCAuto.cursor( "S_MarketingStatement" );
-         if ( cursor.isNull() )
-            nRC = 0;
-         else
-         {
-            if ( cursor.isVersioned( ) )
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
             {
-               cursor.acceptSubobject( );
-            }
+               if ( cursor.isVersioned( ) )
+               {
+                  cursor.acceptSubobject( );
+               }
             nRC = 0;
          }
 
@@ -269,14 +269,14 @@ if ( strActionToProcess != null )
       {
          View mSubLCAuto = task.getViewByName( "mSubLC" );
          EntityCursor cursor = mSubLCAuto.cursor( "S_MarketingStatement" );
-         if ( cursor.isNull() )
-            nRC = 0;
-         else
-         {
-            if ( cursor.isVersioned( ) )
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
             {
-               cursor.cancelSubobject( );
-            }
+               if ( cursor.isVersioned( ) )
+               {
+                  cursor.cancelSubobject( );
+               }
             nRC = 0;
          }
 

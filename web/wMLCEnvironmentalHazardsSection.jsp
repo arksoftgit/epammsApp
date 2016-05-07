@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCEnvironmentalHazardsSection   Generate Timestamp: 20160415145304676 --%>
+<%-- wMLCEnvironmentalHazardsSection   Generate Timestamp: 20160427124121864 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -270,18 +270,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_GeneralSubsection" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         if ( cursor.isVersioned( ) )
-         {
-            cursor.acceptSubobject( );
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_GeneralSubsection" );
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
+            {
+               if ( cursor.isVersioned( ) )
+               {
+                  cursor.acceptSubobject( );
+               }
+            nRC = 0;
          }
-         nRC = 0;
-      }
 
       }
       catch ( Exception e )
@@ -306,18 +306,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_GeneralSubsection" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         if ( cursor.isVersioned( ) )
-         {
-            cursor.cancelSubobject( );
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_GeneralSubsection" );
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
+            {
+               if ( cursor.isVersioned( ) )
+               {
+                  cursor.cancelSubobject( );
+               }
+            nRC = 0;
          }
-         nRC = 0;
-      }
 
       }
       catch ( Exception e )
@@ -374,14 +374,14 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      EntityCursor cursor = mMasLC.cursor( "M_GeneralSubStatement" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         cursor.deleteEntity( CursorPosition.NEXT );
-         nRC = 0;
-      }
+         EntityCursor cursor = mMasLC.cursor( "M_GeneralSubStatement" );
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
+            {
+               cursor.deleteEntity( CursorPosition.NEXT );
+            nRC = 0;
+         }
 
       }
       catch ( Exception e )
@@ -438,8 +438,8 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      EntityCursor cursor = mMasLC.cursor( "M_GeneralSubStatement" );
-      cursor.createTemporalSubobjectVersion( );
+         EntityCursor cursor = mMasLC.cursor( "M_GeneralSubStatement" );
+         cursor.createTemporalSubobjectVersion( );
 
       }
       catch ( Exception e )
@@ -469,9 +469,9 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_GeneralSubStatement" );
-      cursor.createTemporalEntity( );
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_GeneralSubStatement" );
+         cursor.createTemporalEntity( );
 
       }
       catch ( Exception e )
@@ -869,7 +869,7 @@ else
    }
 %>
 
-<input class="text12" name="DirectionsUseTitle2" id="DirectionsUseTitle2" style="width:592px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="DirectionsUseTitle2" id="DirectionsUseTitle2" maxlength="254" style="width:592px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -920,7 +920,7 @@ else
    }
 %>
 
-<input class="text12" name="EditBox3" id="EditBox3" style="width:592px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="EditBox3" id="EditBox3" maxlength="254" style="width:592px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

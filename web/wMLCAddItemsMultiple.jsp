@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCAddItemsMultiple   Generate Timestamp: 20160415145302798 --%>
+<%-- wMLCAddItemsMultiple   Generate Timestamp: 20160427124120417 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -755,7 +755,7 @@ else
    }
 %>
 
-<input name="Delimiters" id="Delimiters" style="width:74px;position:absolute;left:338px;top:12px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Delimiters" id="Delimiters" maxlength="254" style="width:74px;position:absolute;left:338px;top:12px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* SubItemsDelimiter::Text */ %>
 
@@ -800,7 +800,7 @@ else
    }
 %>
 
-<input name="EditBox1" id="EditBox1" style="width:40px;position:absolute;left:570px;top:12px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EditBox1" id="EditBox1" maxlength="32000" style="width:40px;position:absolute;left:570px;top:12px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* Doc:Text */ %>
 

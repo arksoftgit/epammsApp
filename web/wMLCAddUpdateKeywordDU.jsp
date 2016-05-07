@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCAddUpdateKeywordDU   Generate Timestamp: 20160415145303205 --%>
+<%-- wMLCAddUpdateKeywordDU   Generate Timestamp: 20160427124120660 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -269,18 +269,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordDU" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         if ( cursor.isVersioned( ) )
-         {
-            cursor.acceptSubobject( );
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_InsertTextKeywordDU" );
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
+            {
+               if ( cursor.isVersioned( ) )
+               {
+                  cursor.acceptSubobject( );
+               }
+            nRC = 0;
          }
-         nRC = 0;
-      }
 
       }
       catch ( Exception e )
@@ -337,8 +337,8 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      EntityCursor cursor = mMasLC.cursor( "M_InsertTextDU" );
-      cursor.createEntity( );
+         EntityCursor cursor = mMasLC.cursor( "M_InsertTextDU" );
+         cursor.createEntity( );
 
       }
       catch ( Exception e )
@@ -368,9 +368,9 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_InsertTextDU" );
-      cursor.createEntity( );
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_InsertTextDU" );
+         cursor.createEntity( );
 
       }
       catch ( Exception e )
@@ -395,18 +395,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordDU" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         if ( cursor.isVersioned( ) )
-         {
-            cursor.cancelSubobject( );
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_InsertTextKeywordDU" );
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
+            {
+               if ( cursor.isVersioned( ) )
+               {
+                  cursor.cancelSubobject( );
+               }
+            nRC = 0;
          }
-         nRC = 0;
-      }
 
       }
       catch ( Exception e )
@@ -463,14 +463,14 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      EntityCursor cursor = mMasLC.cursor( "M_InsertTextDU" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         cursor.deleteEntity( CursorPosition.NEXT );
-         nRC = 0;
-      }
+         EntityCursor cursor = mMasLC.cursor( "M_InsertTextDU" );
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
+            {
+               cursor.deleteEntity( CursorPosition.NEXT );
+            nRC = 0;
+         }
 
       }
       catch ( Exception e )
@@ -858,7 +858,7 @@ else
    }
 %>
 
-<input class="text12" name="DirectionsUseName1" id="DirectionsUseName1"  title="Required Name to differentiate Directions for Use Sections within a list"style="width:184px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="DirectionsUseName1" id="DirectionsUseName1" maxlength="254"  title="Required Name to differentiate Directions for Use Sections within a list"style="width:184px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCDirectionsForUseStatement   Generate Timestamp: 20160406142152985 --%>
+<%-- wSLCDirectionsForUseStatement   Generate Timestamp: 20160427103750306 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -213,18 +213,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mSubLC = task.getViewByName( "mSubLC" );
-      EntityCursor cursor = mSubLC.cursor( "S_DirectionsForUseStatement" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         if ( cursor.isVersioned( ) )
-         {
-            cursor.acceptSubobject( );
+         View mSubLCAuto = task.getViewByName( "mSubLC" );
+         EntityCursor cursor = mSubLCAuto.cursor( "S_DirectionsForUseStatement" );
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
+            {
+               if ( cursor.isVersioned( ) )
+               {
+                  cursor.acceptSubobject( );
+               }
+            nRC = 0;
          }
-         nRC = 0;
-      }
 
       }
       catch ( Exception e )
@@ -249,18 +249,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mSubLC = task.getViewByName( "mSubLC" );
-      EntityCursor cursor = mSubLC.cursor( "S_DirectionsForUseStatement" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         if ( cursor.isVersioned( ) )
-         {
-            cursor.cancelSubobject( );
+         View mSubLCAuto = task.getViewByName( "mSubLC" );
+         EntityCursor cursor = mSubLCAuto.cursor( "S_DirectionsForUseStatement" );
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
+            {
+               if ( cursor.isVersioned( ) )
+               {
+                  cursor.cancelSubobject( );
+               }
+            nRC = 0;
          }
-         nRC = 0;
-      }
 
       }
       catch ( Exception e )

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCNewSLC_SelectMLC   Generate Timestamp: 20160406142153391 --%>
+<%-- wSLCNewSLC_SelectMLC   Generate Timestamp: 20160427103751167 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -662,7 +662,7 @@ else
    }
 %>
 
-<input class="text12" name="PrecautionaryTitle1" id="PrecautionaryTitle1" style="width:42px;position:absolute;left:208px;top:14px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="PrecautionaryTitle1" id="PrecautionaryTitle1" maxlength="4" style="width:42px;position:absolute;left:208px;top:14px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 
 </div>  <!--  GroupBox2 --> 

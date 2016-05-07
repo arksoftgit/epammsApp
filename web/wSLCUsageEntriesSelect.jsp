@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCUsageEntriesSelect   Generate Timestamp: 20160406142153836 --%>
+<%-- wSLCUsageEntriesSelect   Generate Timestamp: 20160427103751955 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -276,18 +276,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mSubLC = task.getViewByName( "mSubLC" );
-      EntityCursor cursor = mSubLC.cursor( "S_UsageType" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         if ( cursor.isVersioned( ) )
-         {
-            cursor.cancelSubobject( );
+         View mSubLCAuto = task.getViewByName( "mSubLC" );
+         EntityCursor cursor = mSubLCAuto.cursor( "S_UsageType" );
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
+            {
+               if ( cursor.isVersioned( ) )
+               {
+                  cursor.cancelSubobject( );
+               }
+            nRC = 0;
          }
-         nRC = 0;
-      }
 
       }
       catch ( Exception e )

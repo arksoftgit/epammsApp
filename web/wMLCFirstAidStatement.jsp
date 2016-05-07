@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCFirstAidStatement   Generate Timestamp: 20160419212113744 --%>
+<%-- wMLCFirstAidStatement   Generate Timestamp: 20160427124121965 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -235,14 +235,14 @@ if ( strActionToProcess != null )
       {
          View mMasLCAuto = task.getViewByName( "mMasLC" );
          EntityCursor cursor = mMasLCAuto.cursor( "M_GeneralStatement" );
-         if ( cursor.isNull() )
-            nRC = 0;
-         else
-         {
-            if ( cursor.isVersioned( ) )
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
             {
-               cursor.acceptSubobject( );
-            }
+               if ( cursor.isVersioned( ) )
+               {
+                  cursor.acceptSubobject( );
+               }
             nRC = 0;
          }
 
@@ -271,14 +271,14 @@ if ( strActionToProcess != null )
       {
          View mMasLCAuto = task.getViewByName( "mMasLC" );
          EntityCursor cursor = mMasLCAuto.cursor( "M_GeneralStatement" );
-         if ( cursor.isNull() )
-            nRC = 0;
-         else
-         {
-            if ( cursor.isVersioned( ) )
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
             {
-               cursor.cancelSubobject( );
-            }
+               if ( cursor.isVersioned( ) )
+               {
+                  cursor.cancelSubobject( );
+               }
             nRC = 0;
          }
 

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCAddUpdateKeywordGeneral   Generate Timestamp: 20160420151238375 --%>
+<%-- wMLCAddUpdateKeywordGeneral   Generate Timestamp: 20160427124120715 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -271,14 +271,14 @@ if ( strActionToProcess != null )
       {
          View mMasLCAuto = task.getViewByName( "mMasLC" );
          EntityCursor cursor = mMasLCAuto.cursor( "M_InsertTextKeywordGeneral" );
-         if ( cursor.isNull() )
-            nRC = 0;
-         else
-         {
-            if ( cursor.isVersioned( ) )
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
             {
-               cursor.acceptSubobject( );
-            }
+               if ( cursor.isVersioned( ) )
+               {
+                  cursor.acceptSubobject( );
+               }
             nRC = 0;
          }
 
@@ -397,14 +397,14 @@ if ( strActionToProcess != null )
       {
          View mMasLCAuto = task.getViewByName( "mMasLC" );
          EntityCursor cursor = mMasLCAuto.cursor( "M_InsertTextKeywordGeneral" );
-         if ( cursor.isNull() )
-            nRC = 0;
-         else
-         {
-            if ( cursor.isVersioned( ) )
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
             {
-               cursor.cancelSubobject( );
-            }
+               if ( cursor.isVersioned( ) )
+               {
+                  cursor.cancelSubobject( );
+               }
             nRC = 0;
          }
 
@@ -464,11 +464,11 @@ if ( strActionToProcess != null )
       try
       {
          EntityCursor cursor = mMasLC.cursor( "M_InsertTextGeneral" );
-         if ( cursor.isNull() )
-            nRC = 0;
-         else
-         {
-            cursor.deleteEntity( CursorPosition.NEXT );
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
+            {
+               cursor.deleteEntity( CursorPosition.NEXT );
             nRC = 0;
          }
 
@@ -858,7 +858,7 @@ else
    }
 %>
 
-<input class="text12" name="DirectionsUseName" id="DirectionsUseName"  title="Required Name to differentiate Directions for Use Sections within a list"style="width:184px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="DirectionsUseName" id="DirectionsUseName" maxlength="254"  title="Required Name to differentiate Directions for Use Sections within a list"style="width:184px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

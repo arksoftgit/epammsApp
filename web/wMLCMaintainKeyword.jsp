@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCMaintainKeyword   Generate Timestamp: 20160415145305560 --%>
+<%-- wMLCMaintainKeyword   Generate Timestamp: 20160427124122520 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -594,7 +594,7 @@ else
    }
 %>
 
-<input class="groupbox" name="KeywordName:" id="KeywordName:"  placeholder="Keyword"style="width:746px;position:absolute;left:6px;top:12px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="groupbox" name="KeywordName:" id="KeywordName:" maxlength="254"  placeholder="Keyword"style="width:746px;position:absolute;left:6px;top:12px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* KeywordValue:EditBox */ %>
 <%
@@ -635,7 +635,7 @@ else
    }
 %>
 
-<input class="groupbox" name="KeywordValue" id="KeywordValue"  placeholder="Keyword Value"style="width:746px;position:absolute;left:6px;top:32px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="groupbox" name="KeywordValue" id="KeywordValue" maxlength="254"  placeholder="Keyword Value"style="width:746px;position:absolute;left:6px;top:32px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 
 </div>  <!--  GB1 --> 

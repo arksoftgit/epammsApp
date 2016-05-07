@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCUpdateMasterProduct   Generate Timestamp: 20160426114919961 --%>
+<%-- wMLCUpdateMasterProduct   Generate Timestamp: 20160427124123768 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1089,7 +1089,7 @@ else
    }
 %>
 
-<input class="text12" name="MasterProductNumber" id="MasterProductNumber"  title="Product Number within this Registrant"style="width:142px;position:absolute;left:198px;top:30px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="MasterProductNumber" id="MasterProductNumber" maxlength="32"  title="Product Number within this Registrant"style="width:142px;position:absolute;left:198px;top:30px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* ChemicalFamily::Text */ %>
 
@@ -1218,7 +1218,7 @@ else
    }
 %>
 
-<input class="text12" name="EstablishmentNumber" id="EstablishmentNumber"  title="EPA Establishment Number"style="width:142px;position:absolute;left:198px;top:82px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="EstablishmentNumber" id="EstablishmentNumber" maxlength="128"  title="EPA Establishment Number"style="width:142px;position:absolute;left:198px;top:82px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* ToxicityCategory::Text */ %>
 
@@ -1347,11 +1347,11 @@ else
    }
 %>
 
-<input class="text12" name="ReviewerNote" id="ReviewerNote"  title="Product Number within this Registrant"style="width:578px;position:absolute;left:198px;top:134px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="ReviewerNote" id="ReviewerNote" maxlength="1024"  title="Product Number within this Registrant"style="width:578px;position:absolute;left:198px;top:134px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* GroupBox1:GroupBox */ %>
 
-<div id="GroupBox1" name="GroupBox1" style="width:766px;height:120px;position:absolute;left:12px;top:160px;">  <!-- GroupBox1 --> 
+<div id="GroupBox1" name="GroupBox1" style="width:772px;height:120px;position:absolute;left:12px;top:160px;">  <!-- GroupBox1 --> 
 
 <% /* Description::Text */ %>
 
@@ -1359,7 +1359,7 @@ else
 
 <% /* GroupBox2:GroupBox */ %>
 
-<div id="GroupBox2" name="GroupBox2" style="width:658px;height:48px;position:absolute;left:98px;top:0px;">  <!-- GroupBox2 --> 
+<div id="GroupBox2" name="GroupBox2" style="width:672px;height:48px;position:absolute;left:98px;top:0px;">  <!-- GroupBox2 --> 
 
 <% /* MasterProductDescription:MLEdit */ %>
 <%
@@ -1393,8 +1393,8 @@ else
    }
 %>
 
-<div style="background-color:#eee;border:1px solid #042;width:650px;height:48px;position:absolute;left:0px;top:0px;overflow:auto;">
-<div class="mceSimpleZeidon" name="MasterProductDescription" id="MasterProductDescription" style="width:650px;height:48px;position:absolute;left:0px;top:0px;"><%=strErrorMapValue%></div></div>
+<div style="background-color:#eee;border:1px solid #042;width:668px;height:48px;position:absolute;left:0px;top:0px;overflow:auto;">
+<div class="mceSimpleZeidon" name="MasterProductDescription" id="MasterProductDescription" style="width:668px;height:48px;position:absolute;left:0px;top:0px;"><%=strErrorMapValue%></div></div>
 
 
 </div>  <!--  GroupBox2 --> 
@@ -1404,7 +1404,7 @@ else
 
 <% /* GroupBox3:GroupBox */ %>
 
-<div id="GroupBox3" name="GroupBox3" style="width:658px;height:64px;position:absolute;left:98px;top:56px;">  <!-- GroupBox3 --> 
+<div id="GroupBox3" name="GroupBox3" style="width:672px;height:64px;position:absolute;left:98px;top:56px;">  <!-- GroupBox3 --> 
 
 <% /* Footer:MLEdit */ %>
 <%
@@ -1438,8 +1438,8 @@ else
    }
 %>
 
-<div style="background-color:#eee;border:1px solid #042;width:650px;height:64px;position:absolute;left:0px;top:0px;overflow:auto;">
-<div class="mceSimpleZeidon" name="Footer" id="Footer" style="width:650px;height:64px;position:absolute;left:0px;top:0px;"><%=strErrorMapValue%></div></div>
+<div style="background-color:#eee;border:1px solid #042;width:668px;height:64px;position:absolute;left:0px;top:0px;overflow:auto;">
+<div class="mceSimpleZeidon" name="Footer" id="Footer" style="width:668px;height:64px;position:absolute;left:0px;top:0px;"><%=strErrorMapValue%></div></div>
 
 
 </div>  <!--  GroupBox3 --> 
@@ -1538,7 +1538,7 @@ try
          nRC = vGridMasterLabelContent.cursor( "MasterLabelContent" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditRevisionDate = vGridMasterLabelContent.cursor( "MasterLabelContent" ).getAttribute( "RevisionDate" ).getString( "" );
+            strGridEditRevisionDate = vGridMasterLabelContent.cursor( "MasterLabelContent" ).getAttribute( "RevisionDate" ).getString( "REVMMDDYY" );
 
             if ( strGridEditRevisionDate == null )
                strGridEditRevisionDate = "";

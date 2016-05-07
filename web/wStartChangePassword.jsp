@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wStartChangePassword   Generate Timestamp: 20160406142154719 --%>
+<%-- wStartChangePassword   Generate Timestamp: 20160427103753601 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -600,7 +600,7 @@ else
 </td>
 <td valign="top"  class="edittext" style="width:130px;">
 <% /* EditBox3:EditBox */ %>
-<input class="edittext" name="EditBox3" id="EditBox3" style="width:130px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input class="edittext" name="EditBox3" id="EditBox3" maxlength="0" style="width:130px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
 </td>
 </tr>
@@ -613,7 +613,7 @@ else
 </td>
 <td valign="top"  class="edittext" style="width:130px;">
 <% /* EditBox1:EditBox */ %>
-<input class="edittext" name="EditBox1" id="EditBox1" style="width:130px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input class="edittext" name="EditBox1" id="EditBox1" maxlength="0" style="width:130px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
 </td>
 </tr>

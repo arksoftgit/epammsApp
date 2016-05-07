@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDirectionsForUseStatement   Generate Timestamp: 20160415145304395 --%>
+<%-- wMLCDirectionsForUseStatement   Generate Timestamp: 20160504212919531 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -131,6 +131,24 @@ public int DoInputMapping( HttpServletRequest request,
          iTableRowCnt++;
 
          csrRC = vGridTmp.cursor( "M_DirectionsUsageOrdering" ).setNextContinue( );
+      }
+
+      vGridTmp.drop( );
+      // Grid: GridDirectionsUse
+      iTableRowCnt = 0;
+
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
+      vGridTmp = mMasLC.newView( );
+      csrRC = vGridTmp.cursor( "M_DirectionsForUseSubStatement" ).setFirst(  );
+      while ( csrRC.isSet() )
+      {
+         lEntityKey = vGridTmp.cursor( "M_DirectionsForUseSubStatement" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         iTableRowCnt++;
+
+         csrRC = vGridTmp.cursor( "M_DirectionsForUseSubStatement" ).setNextContinue( );
       }
 
       vGridTmp.drop( );
@@ -269,18 +287,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_DirectionsForUseStatement" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         if ( cursor.isVersioned( ) )
-         {
-            cursor.acceptSubobject( );
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_DirectionsForUseStatement" );
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
+            {
+               if ( cursor.isVersioned( ) )
+               {
+                  cursor.acceptSubobject( );
+               }
+            nRC = 0;
          }
-         nRC = 0;
-      }
 
       }
       catch ( Exception e )
@@ -291,6 +309,153 @@ if ( strActionToProcess != null )
       }
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "DELETE_DirectionsForUseSubStmt" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mMasLC;
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mMasLC.cursor( "M_DirectionsForUseSubStatement" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mMasLC.cursor( "M_DirectionsForUseSubStatement" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mMasLC.cursor( "M_DirectionsForUseSubStatement" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mMasLC.cursor( "M_DirectionsForUseSubStatement" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DirsForUseSubStatementAdd" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseStatement", "wMLC.GOTO_DirsForUseSubStatementAdd" );
+      nOptRC = wMLC.GOTO_DirsForUseSubStatementAdd( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "DirectionsForUseSubStatement" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_DirsForUseSubStmtUpdate" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mMasLC;
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mMasLC.cursor( "M_DirectionsForUseSubStatement" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mMasLC.cursor( "M_DirectionsForUseSubStatement" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mMasLC.cursor( "M_DirectionsForUseSubStatement" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mMasLC.cursor( "M_DirectionsForUseSubStatement" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseStatement", "wMLC.GOTO_DirsForUseSubStmtUpdate" );
+      nOptRC = wMLC.GOTO_DirsForUseSubStmtUpdate( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "DirectionsForUseSubStatement" );
+      }
+
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -413,9 +578,9 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordDU" );
-      cursor.createTemporalEntity( );
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_InsertTextKeywordDU" );
+         cursor.createTemporalEntity( );
 
       }
       catch ( Exception e )
@@ -468,26 +633,6 @@ if ( strActionToProcess != null )
          }
       }
 
-      // Action Auto Object Function
-      nRC = 0;
-      try
-      {
-      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordDU" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         cursor.deleteEntity( CursorPosition.NEXT );
-         nRC = 0;
-      }
-
-      }
-      catch ( Exception e )
-      {
-         nRC = 2;
-         VmlOperation.CreateMessage( task, "DELETE_DU_StatementKeyword", e.getMessage( ), "" );
-         break;
-      }
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -574,8 +719,8 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordDU" );
-      cursor.createTemporalSubobjectVersion( );
+         EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordDU" );
+         cursor.createTemporalSubobjectVersion( );
 
       }
       catch ( Exception e )
@@ -600,18 +745,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_DirectionsForUseStatement" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         if ( cursor.isVersioned( ) )
-         {
-            cursor.cancelSubobject( );
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_DirectionsForUseStatement" );
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
+            {
+               if ( cursor.isVersioned( ) )
+               {
+                  cursor.cancelSubobject( );
+               }
+            nRC = 0;
          }
-         nRC = 0;
-      }
 
       }
       catch ( Exception e )
@@ -1328,7 +1473,7 @@ try
          nRC = vGrid4.cursor( "M_DirectionsUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl5 = vGrid4.cursor( "M_DirectionsUsage" ).getAttribute( "dDisplayUsageName" ).getString( "" );
+            strGridEditCtl5 = vGrid4.cursor( "M_DirectionsUsage" ).getAttribute( "dUsageNameFootnote" ).getString( "" );
 
             if ( strGridEditCtl5 == null )
                strGridEditCtl5 = "";
@@ -1365,6 +1510,130 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 
 </div>  <!--  GroupBox8 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:8px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GBDirectionsUseStatements:GroupBox */ %>
+
+<div id="GBDirectionsUseStatements" name="GBDirectionsUseStatements" style="width:830px;float:left;">  <!-- GBDirectionsUseStatements --> 
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:12px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox10:GroupBox */ %>
+
+<div id="GroupBox10" name="GroupBox10"   style="float:left;position:relative; width:686px; height:30px;">  <!-- GroupBox10 --> 
+
+<% /* Text6:Text */ %>
+
+<label class="listheader"  id="Text6" name="Text6" style="width:434px;height:16px;position:absolute;left:4px;top:4px;">Directions for Use Sub-Statements</label>
+
+<% /* NewSubStatement:PushBtn */ %>
+<button type="button" class="newbutton"  title="Go to add one orNewSubStatement" id="NewSubStatement" value="" onclick="GOTO_DirsForUseSubStatementAdd( )" style="width:78px;height:26px;position:absolute;left:544px;top:4px;">New</button>
+
+
+</div>  <!--  GroupBox10 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:4px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GridDirectionsUse:Grid */ %>
+<table  cols=3 style=""  name="GridDirectionsUse" id="GridDirectionsUse">
+
+<thead><tr>
+
+   <th>Statement Text</th>
+   <th>Update</th>
+   <th>Delete</th>
+
+</tr></thead>
+
+<tbody>
+
+<%
+try
+{
+   iTableRowCnt = 0;
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) )
+   {
+      long   lEntityKey;
+      String strEntityKey;
+      String strButtonName;
+      String strOdd;
+      String strTag;
+      String strGridEditDirectionsUse;
+      String strBMBUpdateDirectionsUseSubStmt;
+      String strBMBDeleteDirectionsUseSubStmt;
+      
+      View vGridDirectionsUse;
+      vGridDirectionsUse = mMasLC.newView( );
+      csrRC2 = vGridDirectionsUse.cursor( "M_DirectionsForUseSubStatement" ).setFirst(  );
+      while ( csrRC2.isSet() )
+      {
+         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
+         iTableRowCnt++;
+
+         lEntityKey = vGridDirectionsUse.cursor( "M_DirectionsForUseSubStatement" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         strGridEditDirectionsUse = "";
+         nRC = vGridDirectionsUse.cursor( "M_DirectionsForUseSubStatement" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strGridEditDirectionsUse = vGridDirectionsUse.cursor( "M_DirectionsForUseSubStatement" ).getAttribute( "dDU_SubStmtTitleText" ).getString( "" );
+
+            if ( strGridEditDirectionsUse == null )
+               strGridEditDirectionsUse = "";
+         }
+
+         if ( StringUtils.isBlank( strGridEditDirectionsUse ) )
+            strGridEditDirectionsUse = "&nbsp";
+
+%>
+
+<tr<%=strOdd%>>
+
+   <td title="Text for the Directions for Use Statement identified on this row" ><a href="#" onclick="GOTO_DirsForUseSubStmtUpdate( this.id )" id="GridEditDirectionsUse::<%=strEntityKey%>" title="Text for the Directions for Use Statement identified on this row" ><%=strGridEditDirectionsUse%></a></td>
+   <td nowrap title="Go to update the the Directions for Use Statement text identified on this row" ><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateDirectionsUseSubStmt" onclick="GOTO_DirsForUseSubStmtUpdate( this.id )" id="BMBUpdateDirectionsUseSubStmt::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png"  title="Go to update the the Directions for Use Statement text identified on this row" alt="Update"></a></td>
+   <td nowrap title="Delete the Directions for Use Statement entry identified on this row" ><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteDirectionsUseSubStmt" onclick="DELETE_DirectionsForUseSubStmt( this.id )" id="BMBDeleteDirectionsUseSubStmt::<%=strEntityKey%>"><img src="./images/ePammsDelete.png"  title="Delete the Directions for Use Statement entry identified on this row" alt="Delete"></a></td>
+
+</tr>
+
+<%
+         csrRC2 = vGridDirectionsUse.cursor( "M_DirectionsForUseSubStatement" ).setNextContinue( );
+      }
+      vGridDirectionsUse.drop( );
+   }
+}
+catch (Exception e)
+{
+out.println("There is an error in grid: " + e.getMessage());
+task.log().info( "*** Error in grid" + e.getMessage() );
+}
+%>
+</tbody>
+</table>
+
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  GBDirectionsUseStatements --> 
 </div>  <!-- End of a new line -->
 
 

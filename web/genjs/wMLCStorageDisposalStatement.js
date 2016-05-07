@@ -204,6 +204,59 @@ function AcceptAddNewStorDispStmt( )
    }
 }
 
+function GOTO_StorageDispSubStatementAdd( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCStorageDisposalStatement.zAction.value = "GOTO_StorageDispSubStatementAdd";
+      document.wMLCStorageDisposalStatement.submit( );
+   }
+}
+
+function GOTO_StorageDispStatementDelete( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCStorageDisposalStatement.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCStorageDisposalStatement.zAction.value = "GOTO_StorageDispStatementDelete";
+      document.wMLCStorageDisposalStatement.submit( );
+   }
+}
+
+function GOTO_StorageDispStatementUpdate( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCStorageDisposalStatement.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCStorageDisposalStatement.zAction.value = "GOTO_StorageDispStatementUpdate";
+      document.wMLCStorageDisposalStatement.submit( );
+   }
+}
+
 function AcceptStorDispStmt( )
 {
 

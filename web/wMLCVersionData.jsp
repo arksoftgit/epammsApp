@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCVersionData   Generate Timestamp: 20160425102309896 --%>
+<%-- wMLCVersionData   Generate Timestamp: 20160429175100058 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -502,23 +502,6 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditStorDispSect" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCVersionData", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "StorageDisposal" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
    while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditHumanHazardSect" ) )
    {
       bDone = true;
@@ -531,44 +514,6 @@ if ( strActionToProcess != null )
 
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "HumanHazard" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditPrecautionarySection" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCVersionData", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCVersionData", "wMLC.EditPrecautionarySection" );
-      nOptRC = wMLC.EditPrecautionarySection( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "PrecautionarySection" );
-      }
-
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -605,6 +550,78 @@ if ( strActionToProcess != null )
       {
          // Next Window
          strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "FirstAidSection" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditStorDispSect" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCVersionData", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "StorageDisposal" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditDirectionsUseSect" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCVersionData", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "DirectionsForUse" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditPrecautionarySection" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCVersionData", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCVersionData", "wMLC.EditPrecautionarySection" );
+      nOptRC = wMLC.EditPrecautionarySection( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "PrecautionarySection" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -831,23 +848,6 @@ if ( strActionToProcess != null )
 
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "ClaimsFootnoteSection" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditDirectionsUseSect" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCVersionData", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "DirectionsForUse" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -1083,16 +1083,6 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "StorDisp" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smStorDisp" name="smStorDisp"><a href="#"  onclick="smEditStorDispSect()">Storage and Disposal</a></li>
-<%
-   }
-%>
-
-<%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "HumanHazard" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
@@ -1103,21 +1093,41 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Precautionary" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smPrecautionary" name="smPrecautionary"><a href="#"  onclick="smEditPrecautionarySection()">Precautionary</a></li>
-<%
-   }
-%>
-
-<%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "FirstAid" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
        <li id="smFirstAid" name="smFirstAid"><a href="#"  onclick="smEditFirstAidSect()">First Aid</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "StorDisp" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="smStorDisp" name="smStorDisp"><a href="#"  onclick="smEditStorDispSect()">Storage and Disposal</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "DirectionsForUse" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="smDirectionsForUse" name="smDirectionsForUse"><a href="#"  onclick="smEditDirectionsUseSect()">Directions For Use</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Precautionary" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="smPrecautionary" name="smPrecautionary"><a href="#"  onclick="smEditPrecautionarySection()">Precautionary</a></li>
 <%
    }
 %>
@@ -1188,16 +1198,6 @@ else
    {
 %>
        <li id="smNew1" name="smNew1"><a href="#"  onclick="smGOTO_ClaimsFootnote()">Claims Footnotes</a></li>
-<%
-   }
-%>
-
-<%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "DirectionsForUse" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smDirectionsForUse" name="smDirectionsForUse"><a href="#"  onclick="smEditDirectionsUseSect()">Directions For Use</a></li>
 <%
    }
 %>
@@ -1408,7 +1408,7 @@ else
 
 <% /* Product::Text */ %>
 
-<label  id="Product:" name="Product:" style="width:144px;height:16px;position:absolute;left:12px;top:48px;">Product:</label>
+<label  id="Product:" name="Product:" style="width:152px;height:16px;position:absolute;left:12px;top:48px;">Product:</label>
 
 <% /* Product:Text */ %>
 <% strTextDisplayValue = "";
@@ -1435,11 +1435,11 @@ else
    }
 %>
 
-<label  id="Product" name="Product" style="width:448px;height:24px;position:absolute;left:166px;top:48px;"><%=strTextDisplayValue%></label>
+<label  id="Product" name="Product" style="width:448px;height:24px;position:absolute;left:172px;top:48px;"><%=strTextDisplayValue%></label>
 
 <% /* EPA_RegistrationNbr:Text */ %>
 
-<label  id="EPA_RegistrationNbr" name="EPA_RegistrationNbr" style="width:144px;height:16px;position:absolute;left:12px;top:74px;">Registration Number:</label>
+<label  id="EPA_RegistrationNbr" name="EPA_RegistrationNbr" style="width:152px;height:16px;position:absolute;left:12px;top:74px;">Registration Number:</label>
 
 <% /* EPA_RegNbr:Text */ %>
 <% strTextDisplayValue = "";
@@ -1466,11 +1466,11 @@ else
    }
 %>
 
-<label  id="EPA_RegNbr" name="EPA_RegNbr" style="width:210px;height:24px;position:absolute;left:166px;top:74px;"><%=strTextDisplayValue%></label>
+<label  id="EPA_RegNbr" name="EPA_RegNbr" style="width:210px;height:24px;position:absolute;left:172px;top:74px;"><%=strTextDisplayValue%></label>
 
 <% /* Version::Text */ %>
 
-<label  id="Version:" name="Version:" style="width:144px;height:16px;position:absolute;left:12px;top:100px;">Version:</label>
+<label  id="Version:" name="Version:" style="width:152px;height:16px;position:absolute;left:12px;top:100px;">Version:</label>
 
 <% /* MasterLabelContentVersion:EditBox */ %>
 <%
@@ -1511,11 +1511,11 @@ else
    }
 %>
 
-<input class="text12" name="MasterLabelContentVersion" id="MasterLabelContentVersion" style="width:210px;position:absolute;left:166px;top:100px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="MasterLabelContentVersion" id="MasterLabelContentVersion" maxlength="254" style="width:210px;position:absolute;left:172px;top:100px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* RevisionDate::Text */ %>
 
-<label  id="RevisionDate:" name="RevisionDate:" style="width:144px;height:16px;position:absolute;left:12px;top:126px;">Revision Date:</label>
+<label  id="RevisionDate:" name="RevisionDate:" style="width:152px;height:16px;position:absolute;left:12px;top:126px;">Revision Date:</label>
 
 <% /* RevisionDate:Text */ %>
 <% strTextDisplayValue = "";
@@ -1542,7 +1542,7 @@ else
    }
 %>
 
-<label  id="RevisionDate" name="RevisionDate" style="width:210px;height:24px;position:absolute;left:166px;top:126px;"><%=strTextDisplayValue%></label>
+<label  id="RevisionDate" name="RevisionDate" style="width:210px;height:24px;position:absolute;left:172px;top:126px;"><%=strTextDisplayValue%></label>
 
 <% /* GroupBox1:GroupBox */ %>
 
@@ -1550,7 +1550,7 @@ else
 
 <% /* Title::Text */ %>
 
-<label  id="Title:" name="Title:" style="width:144px;height:16px;position:absolute;left:0px;top:0px;">Title:</label>
+<label  id="Title:" name="Title:" style="width:152px;height:16px;position:absolute;left:0px;top:0px;">Title:</label>
 
 <% /* GroupBox2:GroupBox */ %>
 
@@ -1597,7 +1597,7 @@ else
 </div>  <!--  GroupBox1 --> 
 <% /* ReviewerNote::Text */ %>
 
-<label  id="ReviewerNote:" name="ReviewerNote:" style="width:144px;height:16px;position:absolute;left:12px;top:226px;">Reviewer Note:</label>
+<label  id="ReviewerNote:" name="ReviewerNote:" style="width:152px;height:16px;position:absolute;left:12px;top:226px;">Reviewer Note:</label>
 
 <% /* ReviewerNote:EditBox */ %>
 <%
@@ -1638,11 +1638,11 @@ else
    }
 %>
 
-<input class="text12" name="ReviewerNote" id="ReviewerNote" style="width:572px;position:absolute;left:166px;top:226px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="ReviewerNote" id="ReviewerNote" maxlength="1024" style="width:572px;position:absolute;left:172px;top:226px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* Status::Text */ %>
 
-<label  id="Status:" name="Status:" style="width:144px;height:16px;position:absolute;left:12px;top:268px;">Status:</label>
+<label  id="Status:" name="Status:" style="width:152px;height:16px;position:absolute;left:12px;top:268px;">Status:</label>
 
 <% /* Finalized:Text */ %>
 <% strTextDisplayValue = "";
@@ -1669,7 +1669,7 @@ else
    }
 %>
 
-<label class="text12"  id="Finalized" name="Finalized" style="width:182px;height:24px;position:absolute;left:166px;top:268px;"><%=strTextDisplayValue%></label>
+<label class="text12"  id="Finalized" name="Finalized" style="width:182px;height:24px;position:absolute;left:172px;top:268px;"><%=strTextDisplayValue%></label>
 
 
 </div>  <!--  MasterLabelContent --> 

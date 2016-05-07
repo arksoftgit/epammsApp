@@ -305,21 +305,6 @@ function smDisplayIngredientsSect( )
    }
 }
 
-function smDisplayStorDispSect( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSLCMarketing.zAction.value = "smDisplayStorDispSect";
-      document.wSLCMarketing.submit( );
-   }
-}
-
 function smDisplayHumanHazardSect( )
 {
 
@@ -331,21 +316,6 @@ function smDisplayHumanHazardSect( )
       _DisableFormElements( true );
 
       document.wSLCMarketing.zAction.value = "smDisplayHumanHazardSect";
-      document.wSLCMarketing.submit( );
-   }
-}
-
-function smDisplayPrecautionarySection( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSLCMarketing.zAction.value = "smDisplayPrecautionarySection";
       document.wSLCMarketing.submit( );
    }
 }
@@ -365,6 +335,51 @@ function smDisplayFirstAidSection( )
    }
 }
 
+function smDisplayStorDispSect( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCMarketing.zAction.value = "smDisplayStorDispSect";
+      document.wSLCMarketing.submit( );
+   }
+}
+
+function smDisplayDirectionsUseSect( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCMarketing.zAction.value = "smDisplayDirectionsUseSect";
+      document.wSLCMarketing.submit( );
+   }
+}
+
+function smDisplayPrecautionarySection( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCMarketing.zAction.value = "smDisplayPrecautionarySection";
+      document.wSLCMarketing.submit( );
+   }
+}
+
 function smDisplayHazardSection( )
 {
 
@@ -376,21 +391,6 @@ function smDisplayHazardSection( )
       _DisableFormElements( true );
 
       document.wSLCMarketing.zAction.value = "smDisplayHazardSection";
-      document.wSLCMarketing.submit( );
-   }
-}
-
-function smDisplayClaimsSection( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSLCMarketing.zAction.value = "smDisplayClaimsSection";
       document.wSLCMarketing.submit( );
    }
 }
@@ -440,7 +440,7 @@ function smDisplayApplicationTypesSection( )
    }
 }
 
-function smDisplayDirectionsUseSect( )
+function smDisplayClaimsSection( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -450,7 +450,7 @@ function smDisplayDirectionsUseSect( )
    {
       _DisableFormElements( true );
 
-      document.wSLCMarketing.zAction.value = "smDisplayDirectionsUseSect";
+      document.wSLCMarketing.zAction.value = "smDisplayClaimsSection";
       document.wSLCMarketing.submit( );
    }
 }

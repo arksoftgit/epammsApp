@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCAddItemsMultipleClaims   Generate Timestamp: 20160415145302923 --%>
+<%-- wMLCAddItemsMultipleClaims   Generate Timestamp: 20160427124120457 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -809,7 +809,7 @@ else
    }
 %>
 
-<input name="Delimiters" id="Delimiters" style="width:90px;position:absolute;left:432px;top:12px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Delimiters" id="Delimiters" maxlength="254" style="width:90px;position:absolute;left:432px;top:12px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* Doc:Text */ %>
 

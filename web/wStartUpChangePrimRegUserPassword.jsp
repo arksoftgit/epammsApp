@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wStartUpChangePrimRegUserPassword   Generate Timestamp: 20160406142156262 --%>
+<%-- wStartUpChangePrimRegUserPassword   Generate Timestamp: 20160427103756946 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1169,7 +1169,7 @@ else
    }
 %>
 
-<input name="Password" id="Password" style="width:458px;<%=strErrorColor%>" type="password" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input name="Password" id="Password" maxlength="254" style="width:458px;<%=strErrorColor%>" type="password" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
 </td>
 </tr>
@@ -1220,7 +1220,7 @@ else
    }
 %>
 
-<input name="NewPassword" id="NewPassword" style="width:458px;<%=strErrorColor%>" type="password" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input name="NewPassword" id="NewPassword" maxlength="254" style="width:458px;<%=strErrorColor%>" type="password" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
 </td>
 </tr>
@@ -1271,7 +1271,7 @@ else
    }
 %>
 
-<input name="ConfirmPassword" id="ConfirmPassword" style="width:458px;<%=strErrorColor%>" type="password" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input name="ConfirmPassword" id="ConfirmPassword" maxlength="254" style="width:458px;<%=strErrorColor%>" type="password" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
 </td>
 </tr>

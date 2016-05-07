@@ -404,21 +404,6 @@ function smEditIngredientsSect( )
    }
 }
 
-function smEditStorDispSect( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCSurfaces.zAction.value = "smEditStorDispSect";
-      document.wMLCSurfaces.submit( );
-   }
-}
-
 function smEditHumanHazardSect( )
 {
 
@@ -434,21 +419,6 @@ function smEditHumanHazardSect( )
    }
 }
 
-function smEditPrecautionarySection( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCSurfaces.zAction.value = "smEditPrecautionarySection";
-      document.wMLCSurfaces.submit( );
-   }
-}
-
 function smEditFirstAidSect( )
 {
 
@@ -460,6 +430,51 @@ function smEditFirstAidSect( )
       _DisableFormElements( true );
 
       document.wMLCSurfaces.zAction.value = "smEditFirstAidSect";
+      document.wMLCSurfaces.submit( );
+   }
+}
+
+function smEditStorDispSect( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCSurfaces.zAction.value = "smEditStorDispSect";
+      document.wMLCSurfaces.submit( );
+   }
+}
+
+function smEditDirectionsUseSect( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCSurfaces.zAction.value = "smEditDirectionsUseSect";
+      document.wMLCSurfaces.submit( );
+   }
+}
+
+function smEditPrecautionarySection( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCSurfaces.zAction.value = "smEditPrecautionarySection";
       document.wMLCSurfaces.submit( );
    }
 }
@@ -565,21 +580,6 @@ function smGOTO_ClaimsFootnote( )
       _DisableFormElements( true );
 
       document.wMLCSurfaces.zAction.value = "smGOTO_ClaimsFootnote";
-      document.wMLCSurfaces.submit( );
-   }
-}
-
-function smEditDirectionsUseSect( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCSurfaces.zAction.value = "smEditDirectionsUseSect";
       document.wMLCSurfaces.submit( );
    }
 }

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCMarketingSection   Generate Timestamp: 20160415145305794 --%>
+<%-- wMLCMarketingSection   Generate Timestamp: 20160428135918938 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -378,18 +378,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_MarketingSection" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         if ( cursor.isVersioned( ) )
-         {
-            cursor.cancelSubobject( );
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_MarketingSection" );
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
+            {
+               if ( cursor.isVersioned( ) )
+               {
+                  cursor.cancelSubobject( );
+               }
+            nRC = 0;
          }
-         nRC = 0;
-      }
 
       }
       catch ( Exception e )
@@ -446,14 +446,14 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      EntityCursor cursor = mMasLC.cursor( "M_MarketingStatement" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         cursor.deleteEntity( CursorPosition.NEXT );
-         nRC = 0;
-      }
+         EntityCursor cursor = mMasLC.cursor( "M_MarketingStatement" );
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
+            {
+               cursor.deleteEntity( CursorPosition.NEXT );
+            nRC = 0;
+         }
 
       }
       catch ( Exception e )
@@ -510,14 +510,14 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      EntityCursor cursor = mMasLC.cursor( "M_MarketingReviewerNote" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         cursor.deleteEntity( CursorPosition.NEXT );
-         nRC = 0;
-      }
+         EntityCursor cursor = mMasLC.cursor( "M_MarketingReviewerNote" );
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
+            {
+               cursor.deleteEntity( CursorPosition.NEXT );
+            nRC = 0;
+         }
 
       }
       catch ( Exception e )
@@ -612,8 +612,8 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      EntityCursor cursor = mMasLC.cursor( "M_MarketingStatement" );
-      cursor.createTemporalSubobjectVersion( );
+         EntityCursor cursor = mMasLC.cursor( "M_MarketingStatement" );
+         cursor.createTemporalSubobjectVersion( );
 
       }
       catch ( Exception e )
@@ -643,9 +643,9 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_MarketingReviewerNote" );
-      cursor.createTemporalEntity( );
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_MarketingReviewerNote" );
+         cursor.createTemporalEntity( );
 
       }
       catch ( Exception e )
@@ -702,8 +702,8 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      EntityCursor cursor = mMasLC.cursor( "M_MarketingReviewerNote" );
-      cursor.createTemporalSubobjectVersion( );
+         EntityCursor cursor = mMasLC.cursor( "M_MarketingReviewerNote" );
+         cursor.createTemporalSubobjectVersion( );
 
       }
       catch ( Exception e )
@@ -847,6 +847,8 @@ else
 <%@ include file="./include/timeout.inc" %>
 <link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/css.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/sts.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
@@ -855,7 +857,12 @@ else
 
 </head>
 
-<body onLoad="_AfterPageLoaded( )" onSubmit="_DisableFormElements( true )" onBeforeUnload="_BeforePageUnload( )">
+<!-- 
+// If we have table sorting on this page, the table sorting does not work in Firefox 
+// (seems to work in IE and Opera).  The solution is to not call _AfterPageLoaded in OnLoad event. 
+// In the Standardista code (sts.js) there is an addEvent that will call _AfterPageLoaded. 
+--> 
+<body onSubmit="_DisableFormElements( true )" onBeforeUnload="_BeforePageUnload( )">
 
 <%@ include file="./include/pagebackground.inc" %>  <!-- just temporary until we get the painter dialog updates from Kelly ... 2011.10.08 dks -->
 
@@ -1059,13 +1066,13 @@ else
 <table cols=2 style="width:780px;"  class="grouptable">
 
 <tr>
-<td valign="top" style="width:62px;">
+<td valign="top" style="width:128px;">
 <% /* Name::Text */ %>
 
-<span  id="Name:" name="Name:" style="width:58px;height:16px;">Name:</span>
+<span  id="Name:" name="Name:" style="width:126px;height:16px;">Name:</span>
 
 </td>
-<td valign="top"  class="text12" style="width:210px;">
+<td valign="top"  class="text12" style="width:286px;">
 <% /* Name:EditBox */ %>
 <%
    strErrorMapValue = VmlOperation.CheckError( "Name", strError );
@@ -1105,15 +1112,15 @@ else
    }
 %>
 
-<input class="text12" name="Name" id="Name" style="width:210px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="Name" id="Name" maxlength="254" style="width:286px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:62px;">
+<td valign="top" style="width:128px;">
 <% /* MarketingTitle::Text */ %>
 
-<span  id="MarketingTitle:" name="MarketingTitle:" style="width:56px;height:16px;">Title:</span>
+<span  id="MarketingTitle:" name="MarketingTitle:" style="width:122px;height:16px;">Title:</span>
 
 </td>
 <td valign="top"  class="text12" style="width:592px;">
@@ -1156,15 +1163,15 @@ else
    }
 %>
 
-<input class="text12" name="MarketingTitle" id="MarketingTitle" style="width:592px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="MarketingTitle" id="MarketingTitle" maxlength="254" style="width:592px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:62px;">
+<td valign="top" style="width:128px;">
 <% /* Subtitle::Text */ %>
 
-<span  id="Subtitle:" name="Subtitle:" style="width:56px;height:16px;">Subtitle:</span>
+<span  id="Subtitle:" name="Subtitle:" style="width:122px;height:16px;">Subtitle:</span>
 
 </td>
 <td valign="top"  class="text12" style="width:592px;">
@@ -1207,15 +1214,15 @@ else
    }
 %>
 
-<input class="text12" name="Subtitle" id="Subtitle" style="width:592px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="Subtitle" id="Subtitle" maxlength="254" style="width:592px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:62px;">
-<% /* Note::Text */ %>
+<td valign="top" style="width:128px;">
+<% /* ReviewerNote::Text */ %>
 
-<span  id="Note:" name="Note:" style="width:56px;height:16px;">Note:</span>
+<span  id="ReviewerNote:" name="ReviewerNote:" style="width:122px;height:16px;">Reviewer Note:</span>
 
 </td>
 <td valign="top"  class="text12" style="width:592px;">
@@ -1258,7 +1265,7 @@ else
    }
 %>
 
-<input class="text12" name="Note" id="Note" style="width:592px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="Note" id="Note" maxlength="1024" style="width:592px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -1322,9 +1329,9 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridMarketing:Grid */ %>
-<table  cols=3 style=""  name="GridMarketing" id="GridMarketing">
+<table class="sortable"  cols=3 style=""  name="GridMarketing" id="GridMarketing">
 
-<thead><tr>
+<thead bgcolor=green><tr>
 
    <th>Statement Title/Text</th>
    <th>Update</th>
@@ -1364,7 +1371,7 @@ try
          nRC = vGridMarketing.cursor( "M_MarketingStatement" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditMarketing = vGridMarketing.cursor( "M_MarketingStatement" ).getAttribute( "dMarketingTitleAndText" ).getString( "" );
+            strGridEditMarketing = vGridMarketing.cursor( "M_MarketingStatement" ).getAttribute( "dMarketingTitleTextKeyword" ).getString( "" );
 
             if ( strGridEditMarketing == null )
                strGridEditMarketing = "";

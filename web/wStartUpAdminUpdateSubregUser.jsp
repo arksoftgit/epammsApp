@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wStartUpAdminUpdateSubregUser   Generate Timestamp: 20160406142156184 --%>
+<%-- wStartUpAdminUpdateSubregUser   Generate Timestamp: 20160427103756786 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1100,7 +1100,7 @@ else
    }
 %>
 
-<input name="EBFirstName" id="EBFirstName" style="width:318px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input name="EBFirstName" id="EBFirstName" maxlength="64" style="width:318px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
 </td>
 </tr>
@@ -1151,7 +1151,7 @@ else
    }
 %>
 
-<input name="EBLastName" id="EBLastName" style="width:318px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input name="EBLastName" id="EBLastName" maxlength="64" style="width:318px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
 </td>
 </tr>
@@ -1202,7 +1202,7 @@ else
    }
 %>
 
-<input name="EBTitle" id="EBTitle" style="width:318px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input name="EBTitle" id="EBTitle" maxlength="254" style="width:318px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
 </td>
 </tr>
@@ -1253,7 +1253,7 @@ else
    }
 %>
 
-<input name="EBCPhone" id="EBCPhone" style="width:318px;<%=strErrorColor%>" type="text" mask="###-###-####" onblur="return onBlurMask(this);" onfocus="return onFocusMask(this);" onkeydown="return doMask(this);" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input name="EBCPhone" id="EBCPhone" maxlength="11" style="width:318px;<%=strErrorColor%>" type="text" mask="###-###-####" onblur="return onBlurMask(this);" onfocus="return onFocusMask(this);" onkeydown="return doMask(this);" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
 </td>
 </tr>
@@ -1304,7 +1304,7 @@ else
    }
 %>
 
-<input name="EBFax" id="EBFax" style="width:318px;<%=strErrorColor%>" type="text" mask="###-###-####" onblur="return onBlurMask(this);" onfocus="return onFocusMask(this);" onkeydown="return doMask(this);" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input name="EBFax" id="EBFax" maxlength="11" style="width:318px;<%=strErrorColor%>" type="text" mask="###-###-####" onblur="return onBlurMask(this);" onfocus="return onFocusMask(this);" onkeydown="return doMask(this);" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
 </td>
 </tr>
@@ -1355,7 +1355,7 @@ else
    }
 %>
 
-<input name="EBEmail" id="EBEmail" style="width:318px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input name="EBEmail" id="EBEmail" maxlength="128" style="width:318px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
 </td>
 </tr>
@@ -1529,7 +1529,7 @@ else
    }
 %>
 
-<input name="EBPStreetAddress" id="EBPStreetAddress" style="width:318px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input name="EBPStreetAddress" id="EBPStreetAddress" maxlength="128" style="width:318px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
 </td>
 </tr>
@@ -1580,7 +1580,7 @@ else
    }
 %>
 
-<input name="EBPAddress" id="EBPAddress" style="width:318px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input name="EBPAddress" id="EBPAddress" maxlength="128" style="width:318px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
 </td>
 </tr>
@@ -1631,7 +1631,7 @@ else
    }
 %>
 
-<input name="EBPCity" id="EBPCity" style="width:318px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input name="EBPCity" id="EBPCity" maxlength="128" style="width:318px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
 </td>
 </tr>
@@ -1770,7 +1770,7 @@ else
    }
 %>
 
-<input name="EBPZipCode" id="EBPZipCode" style="width:76px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input name="EBPZipCode" id="EBPZipCode" maxlength="10" style="width:76px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
 </td>
 </tr>
@@ -1854,7 +1854,7 @@ else
    }
 %>
 
-<input name="EBUserName" id="EBUserName" style="width:318px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input name="EBUserName" id="EBUserName" maxlength="128" style="width:318px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
 </td>
 </tr>

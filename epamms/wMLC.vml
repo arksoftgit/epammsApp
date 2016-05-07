@@ -139,7 +139,12 @@ InitMasterLabelContentForUpdate( VIEW ViewToWindow )
    wWebXfer.Root.Banner6 = ""
 
    SetDynamicBannerName( ViewToWindow, "wMLC", "PrimaryRegistrantLabel" )
-
+/*
+         mMasLC.cursor( "MasterLabelContent" ).createEntity();
+         mMasLC.cursor( "MasterLabelContent" ).createTemporalSubobjectVersion();
+         mMasLC.cursor( "MasterSubLabelContent" ).setToSubobject();
+         mMasLC.cursor("MasterSubLabelContent").createTemporalEntity();
+*/
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -338,6 +343,52 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+//  OPERATION: AcceptStorDispSubStmt
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+AcceptStorDispSubStmt( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   SHORT nRC
+
+   nRC = AcceptSubobject( mMasLC, "M_StorageDisposalStatement" )
+   IF nRC < 0
+      MessageSend( ViewToWindow, "", "Accept Storage and Disposal Sub-statement",
+                   "The Storage and Disposal Statement contains errors.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      RETURN nRC
+   END
+   ResetViewFromSubobject( mMasLC )
+   
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: CancelStorDispSubStmt
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+CancelStorDispSubStmt( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   SHORT nRC
+
+   nRC = CancelSubobject( mMasLC, "M_StorageDisposalStatement" )
+   IF nRC < 0
+      MessageSend( ViewToWindow, "", "Cancel Storage and Disposal Sub-statement",
+                   "The Storage and Disposal Statement contains errors.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      RETURN nRC
+   END
+   ResetViewFromSubobject( mMasLC )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
 //  OPERATION: GOTO_StorageDispStatementAdd
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -349,9 +400,42 @@ GOTO_StorageDispStatementAdd( VIEW ViewToWindow )
 
    // We are creating the new temporal entity in this operation, rather than as auto action, so that
    // the NotForUseType attribute can be set, since it's currently required in the database.
-   SET CURSOR LAST mMasLC.M_StorageDisposalStatement
-   CreateTemporalEntity( mMasLC, "M_StorageDisposalStatement", zPOS_AFTER )
+   CreateTemporalEntity( mMasLC, "M_StorageDisposalStatement", zPOS_LAST )
    mMasLC.M_StorageDisposalStatement.NotForUseType = "NA"
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_StorageDispSubStatementAdd
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+GOTO_StorageDispSubStatementAdd( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   // We are creating the new temporal entity in this operation, rather than as auto action, so that
+   // the NotForUseType attribute can be set, since it's currently required in the database.
+   SetViewToSubobject( mMasLC, "M_StorageDisposalSubStatement" )
+   CreateTemporalEntity( mMasLC, "M_StorageDisposalStatement", zPOS_LAST )
+   mMasLC.M_StorageDisposalStatement.NotForUseType = "NA"
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_StorageDispSubStmtUpdate
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+GOTO_StorageDispSubStmtUpdate( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   SHORT nRC
+
+   SetViewToSubobject( mMasLC, "M_StorageDisposalSubStatement" )
+   CreateTemporalSubobjectVersion( mMasLC, "M_StorageDisposalStatement" )
 
 END
 
@@ -1282,6 +1366,20 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+//  OPERATION: DELETE_DirectionsForUseStatement
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+DELETE_DirectionsForUseStatement( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   
+   DELETE ENTITY mMasLC.M_DirectionsForUseStatement NONE
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
 //  OPERATION: GOTO_SelectRemoveDrivingDU
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -1321,8 +1419,83 @@ GOTO_DirsForUseStatementAdd( VIEW ViewToWindow )
    VIEW mMasLC REGISTERED AS mMasLC
 
    // Add new temporal entity as last statement under section.
-   SET CURSOR LAST mMasLC.M_DirectionsForUseStatement
-   CreateTemporalEntity( mMasLC, "M_DirectionsForUseStatement", zPOS_AFTER )
+   CreateTemporalEntity( mMasLC, "M_DirectionsForUseStatement", zPOS_LAST )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_DirsForUseSubStatementAdd
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+GOTO_DirsForUseSubStatementAdd( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   SetViewToSubobject( mMasLC, "M_DirectionsForUseSubStatement" )
+   CreateTemporalEntity( mMasLC, "M_DirectionsForUseStatement", zPOS_LAST )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_DirsForUseSubStmtUpdate
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+GOTO_DirsForUseSubStmtUpdate( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   SetViewToSubobject( mMasLC, "M_DirectionsForUseSubStatement" )
+   CreateTemporalSubobjectVersion( mMasLC, "M_DirectionsForUseStatement" )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: AcceptDirectionsSubStatement
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+AcceptDirectionsSubStatement( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   SHORT nRC
+
+   nRC = AcceptSubobject( mMasLC, "M_DirectionsForUseSubStatement" )
+   IF nRC < 0
+      MessageSend( ViewToWindow, "", "Accept Directions For Use Sub-statement",
+                   "The Directions For Use Sub-Statement (Accept) contains errors.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      RETURN nRC
+   END
+   ResetViewFromSubobject( mMasLC )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: CancelDirectionsSubStatement
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+CancelDirectionsSubStatement( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   SHORT nRC
+
+   nRC = CancelSubobject( mMasLC, "M_DirectionsForUseSubStatement" )
+   IF nRC < 0
+      MessageSend( ViewToWindow, "", "Cancel Directions For Use Sub-statement",
+                   "The Directions For Use Sub-Statement (Cancel) contains errors.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      RETURN nRC
+   END
+   ResetViewFromSubobject( mMasLC )
 
 END
 

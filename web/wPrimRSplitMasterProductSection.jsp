@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wPrimRSplitMasterProductSection   Generate Timestamp: 20160406142149109 --%>
+<%-- wPrimRSplitMasterProductSection   Generate Timestamp: 20160427103741679 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1240,7 +1240,7 @@ else
    }
 %>
 
-<input name="TextPrevious" id="TextPrevious" style="width:438px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input name="TextPrevious" id="TextPrevious" maxlength="32000" style="width:438px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
 </div>  <!-- End of a new line -->
 
@@ -1253,7 +1253,7 @@ else
 <div>  <!-- Beginning of a new line -->
 <span style="height:16px;">&nbsp&nbsp</span>
 <% /* TextOriginal:EditBox */ %>
-<input name="TextOriginal" id="TextOriginal" style="width:438px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input name="TextOriginal" id="TextOriginal" maxlength="0" style="width:438px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
 </div>  <!-- End of a new line -->
 
@@ -1304,7 +1304,7 @@ else
    }
 %>
 
-<input name="TextNext" id="TextNext" style="width:438px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input name="TextNext" id="TextNext" maxlength="32000" style="width:438px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
 </div>  <!-- End of a new line -->
 
@@ -1388,7 +1388,7 @@ else
    }
 %>
 
-<input name="PrevName" id="PrevName" style="width:110px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input name="PrevName" id="PrevName" maxlength="254" style="width:110px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
 </div>  <!-- End of a new line -->
 
@@ -1481,7 +1481,7 @@ else
    }
 %>
 
-<input name="NextName" id="NextName" style="width:110px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input name="NextName" id="NextName" maxlength="254" style="width:110px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
 </div>  <!-- End of a new line -->
 

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSystemUpdateViruses   Generate Timestamp: 20160406142159934 --%>
+<%-- wSystemUpdateViruses   Generate Timestamp: 20160427103804703 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -514,6 +514,13 @@ if ( strActionToProcess != null )
          break;
 
       // Next Window
+      // We are borrowing zTableRowSelect and this code is hardwired for the moment.  javascript code similar to the following must be added to the action:
+      // document.wSLCMarketingStatement.zTableRowSelect.value = buildSortTableHtml( "mSubLC", "S_MarketingUsageOrdering", "GridMarketingUsage", ["Usage Type","Usage Name"] );
+      wWebXA = task.getViewByName( "wWebXfer" );
+      String strHtml = (String) request.getParameter( "zTableRowSelect" );
+      wWebXA.cursor( "Root" ).getAttribute( "HTML" ).setValue( strHtml, "" );
+      // We are borrowing zTableRowSelect and the code above is hardwired for the moment
+
       strNextJSP_Name = wSystem.SetWebRedirection( vKZXMLPGO, wSystem.zWAB_StartModalSubwindow, "wSystem", "DragDropSort" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
@@ -800,6 +807,8 @@ else
 <%@ include file="./include/timeout.inc" %>
 <link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jsoeUtils.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jsoe.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
@@ -1166,7 +1175,7 @@ else
    }
 %>
 
-<input name="Virus" id="Virus" style="width:530px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Virus" id="Virus" maxlength="254" style="width:530px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* PBNewVirus:PushBtn */ %>
 <button type="button" class="formStylebutton" name="PBNewVirus" id="PBNewVirus" value="" onclick="NewVirusLast( )" style="width:80px;height:28px;">New</button>

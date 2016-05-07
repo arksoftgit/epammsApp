@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSPLDSPLD_PanelUpdate   Generate Timestamp: 20160406142154485 --%>
+<%-- wSPLDSPLD_PanelUpdate   Generate Timestamp: 20160427103753189 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -415,18 +415,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mSPLDef = task.getViewByName( "mSPLDef" );
-      EntityCursor cursor = mSPLDef.cursor( "LLD_Panel" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         if ( cursor.isVersioned( ) )
-         {
-            cursor.cancelSubobject( );
+         View mSPLDefAuto = task.getViewByName( "mSPLDef" );
+         EntityCursor cursor = mSPLDefAuto.cursor( "LLD_Panel" );
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
+            {
+               if ( cursor.isVersioned( ) )
+               {
+                  cursor.cancelSubobject( );
+               }
+            nRC = 0;
          }
-         nRC = 0;
-      }
 
       }
       catch ( Exception e )
@@ -1102,7 +1102,7 @@ else
    }
 %>
 
-<input name="EditBox2" id="EditBox2" style="width:78px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EditBox2" id="EditBox2" maxlength="0" style="width:78px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -1153,7 +1153,7 @@ else
    }
 %>
 
-<input name="EditBox1" id="EditBox1" style="width:78px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EditBox1" id="EditBox1" maxlength="0" style="width:78px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -1204,7 +1204,7 @@ else
    }
 %>
 
-<input name="EditBox3" id="EditBox3" style="width:78px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EditBox3" id="EditBox3" maxlength="0" style="width:78px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -1255,7 +1255,7 @@ else
    }
 %>
 
-<input name="EditBox4" id="EditBox4" style="width:78px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EditBox4" id="EditBox4" maxlength="0" style="width:78px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

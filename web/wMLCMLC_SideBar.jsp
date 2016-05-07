@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCMLC_Sidebar   Generate Timestamp: 20160415145305998 --%>
+<%-- wMLCMLC_Sidebar   Generate Timestamp: 20160427124122909 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -930,16 +930,6 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "StorDisp" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="StorDisp" name="StorDisp"><a href="#"  onclick="EditStorDispSect()">Storage and Disposal</a></li>
-<%
-   }
-%>
-
-<%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "HumanHazard" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
@@ -950,21 +940,41 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Precautionary" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="Precautionary" name="Precautionary"><a href="#"  onclick="EditPrecautionarySection()">Precautionary</a></li>
-<%
-   }
-%>
-
-<%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "FirstAid" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
        <li id="FirstAid" name="FirstAid"><a href="#"  onclick="EditFirstAidSect()">First Aid</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "StorDisp" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="StorDisp" name="StorDisp"><a href="#"  onclick="EditStorDispSect()">Storage and Disposal</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "DirectionsForUse" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="DirectionsForUse" name="DirectionsForUse"><a href="#"  onclick="EditDirectionsUseSect()">Directions For Use</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Precautionary" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="Precautionary" name="Precautionary"><a href="#"  onclick="EditPrecautionarySection()">Precautionary</a></li>
 <%
    }
 %>
@@ -1035,16 +1045,6 @@ else
    {
 %>
        <li id="New1" name="New1"><a href="#"  onclick="GOTO_ClaimsFootnote()">Claims Footnotes</a></li>
-<%
-   }
-%>
-
-<%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "DirectionsForUse" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="DirectionsForUse" name="DirectionsForUse"><a href="#"  onclick="EditDirectionsUseSect()">Directions For Use</a></li>
 <%
    }
 %>

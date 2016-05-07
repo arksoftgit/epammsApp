@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wStartUpEmailSubregistrants   Generate Timestamp: 20160406142156364 --%>
+<%-- wStartUpEmailSubregistrants   Generate Timestamp: 20160427103757220 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -690,7 +690,7 @@ else
          strErrorMapValue = "";
 %>
 
-<input name="Subject" id="Subject" style="width:540px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Subject" id="Subject" maxlength="254" style="width:540px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

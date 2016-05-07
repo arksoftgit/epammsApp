@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDeleteMasterLabelContent   Generate Timestamp: 20160415145303911 --%>
+<%-- wMLCDeleteMasterLabelContent   Generate Timestamp: 20160427124121215 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -586,7 +586,7 @@ else
    }
 %>
 
-<input class="text12" name="Version" id="Version"  disabled style="width:568px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="Version" id="Version" maxlength="254"  disabled style="width:568px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -637,7 +637,7 @@ else
    }
 %>
 
-<input class="text12" name="Revision Date" id="Revision Date"  disabled style="width:214px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="Revision Date" id="Revision Date" maxlength="0"  disabled style="width:214px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

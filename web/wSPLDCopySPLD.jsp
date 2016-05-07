@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSPLDCopySPLD   Generate Timestamp: 20160406142154071 --%>
+<%-- wSPLDCopySPLD   Generate Timestamp: 20160427103752481 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -607,7 +607,7 @@ else
    }
 %>
 
-<input name="SPLD_Name" id="SPLD_Name" style="width:392px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="SPLD_Name" id="SPLD_Name" maxlength="254" style="width:392px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 

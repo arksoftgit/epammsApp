@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCGeneratedTextDisplay   Generate Timestamp: 20160415145304840 --%>
+<%-- wMLCGeneratedTextDisplay   Generate Timestamp: 20160427124122004 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -70,7 +70,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "MLEdit1", "", strMapValue );
             else
-               mMasLC.cursor( "DisplayKeywordText" ).getAttribute( "dDisplayKeywordStatementText" ).setValue( strMapValue, "" );
+               mMasLC.cursor( "DisplayKeywordText" ).getAttribute( "dUsageKeywordStatementText" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -637,11 +637,11 @@ else
          nRC = mMasLC.cursor( "DisplayKeywordText" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strErrorMapValue = mMasLC.cursor( "DisplayKeywordText" ).getAttribute( "dDisplayKeywordStatementText" ).getString( "" );
+            strErrorMapValue = mMasLC.cursor( "DisplayKeywordText" ).getAttribute( "dUsageKeywordStatementText" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "DisplayKeywordText.dDisplayKeywordStatementText: " + strErrorMapValue );
+            task.log( ).debug( "DisplayKeywordText.dUsageKeywordStatementText: " + strErrorMapValue );
          }
          else
             task.log( ).debug( "Entity does not exist for MLEdit1: " + "mMasLC.DisplayKeywordText" );

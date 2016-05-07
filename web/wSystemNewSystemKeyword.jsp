@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSystemNewSystemKeyword   Generate Timestamp: 20160406142159004 --%>
+<%-- wSystemNewSystemKeyword   Generate Timestamp: 20160427103802920 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -800,7 +800,7 @@ else
    }
 %>
 
-<input name="Name" id="Name" style="width:302px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Name" id="Name" maxlength="254" style="width:302px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 

@@ -286,21 +286,6 @@ function smDisplayIngredientsSect( )
    }
 }
 
-function smDisplayStorDispSect( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSLCSurfaces.zAction.value = "smDisplayStorDispSect";
-      document.wSLCSurfaces.submit( );
-   }
-}
-
 function smDisplayHumanHazardSect( )
 {
 
@@ -312,21 +297,6 @@ function smDisplayHumanHazardSect( )
       _DisableFormElements( true );
 
       document.wSLCSurfaces.zAction.value = "smDisplayHumanHazardSect";
-      document.wSLCSurfaces.submit( );
-   }
-}
-
-function smDisplayPrecautionarySection( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSLCSurfaces.zAction.value = "smDisplayPrecautionarySection";
       document.wSLCSurfaces.submit( );
    }
 }
@@ -346,6 +316,51 @@ function smDisplayFirstAidSection( )
    }
 }
 
+function smDisplayStorDispSect( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCSurfaces.zAction.value = "smDisplayStorDispSect";
+      document.wSLCSurfaces.submit( );
+   }
+}
+
+function smDisplayDirectionsUseSect( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCSurfaces.zAction.value = "smDisplayDirectionsUseSect";
+      document.wSLCSurfaces.submit( );
+   }
+}
+
+function smDisplayPrecautionarySection( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wSLCSurfaces.zAction.value = "smDisplayPrecautionarySection";
+      document.wSLCSurfaces.submit( );
+   }
+}
+
 function smDisplayHazardSection( )
 {
 
@@ -357,21 +372,6 @@ function smDisplayHazardSection( )
       _DisableFormElements( true );
 
       document.wSLCSurfaces.zAction.value = "smDisplayHazardSection";
-      document.wSLCSurfaces.submit( );
-   }
-}
-
-function smDisplayClaimsSection( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wSLCSurfaces.zAction.value = "smDisplayClaimsSection";
       document.wSLCSurfaces.submit( );
    }
 }
@@ -421,7 +421,7 @@ function smDisplayApplicationTypesSection( )
    }
 }
 
-function smDisplayDirectionsUseSect( )
+function smDisplayClaimsSection( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -431,7 +431,7 @@ function smDisplayDirectionsUseSect( )
    {
       _DisableFormElements( true );
 
-      document.wSLCSurfaces.zAction.value = "smDisplayDirectionsUseSect";
+      document.wSLCSurfaces.zAction.value = "smDisplayClaimsSection";
       document.wSLCSurfaces.submit( );
    }
 }

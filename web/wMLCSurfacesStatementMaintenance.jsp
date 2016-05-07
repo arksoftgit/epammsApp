@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCSurfacesStatementMaintenance   Generate Timestamp: 20160415145305513 --%>
+<%-- wMLCSurfacesStatementMaintenance   Generate Timestamp: 20160427124123573 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -762,7 +762,7 @@ else
    }
 %>
 
-<input class="mceSimpleZeidon" name="Title" id="Title" style="width:722px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="mceSimpleZeidon" name="Title" id="Title" maxlength="32000" style="width:722px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

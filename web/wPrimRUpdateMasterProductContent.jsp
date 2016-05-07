@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wPrimRUpdateMasterProductContent   Generate Timestamp: 20160406142150791 --%>
+<%-- wPrimRUpdateMasterProductContent   Generate Timestamp: 20160427103745820 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1448,7 +1448,7 @@ else
    }
 %>
 
-<input name="ContentName" id="ContentName" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="ContentName" id="ContentName" maxlength="254" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -1504,7 +1504,7 @@ else
    }
 %>
 
-<input name="ContentDescription" id="ContentDescription" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="ContentDescription" id="ContentDescription" maxlength="1024" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 

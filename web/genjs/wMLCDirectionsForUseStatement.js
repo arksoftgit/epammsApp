@@ -204,6 +204,59 @@ function AcceptDirectionsStatement( )
    }
 }
 
+function DELETE_DirectionsForUseSubStmt( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCDirectionsForUseStatement.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseStatement.zAction.value = "DELETE_DirectionsForUseSubStmt";
+      document.wMLCDirectionsForUseStatement.submit( );
+   }
+}
+
+function GOTO_DirsForUseSubStatementAdd( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseStatement.zAction.value = "GOTO_DirsForUseSubStatementAdd";
+      document.wMLCDirectionsForUseStatement.submit( );
+   }
+}
+
+function GOTO_DirsForUseSubStmtUpdate( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCDirectionsForUseStatement.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseStatement.zAction.value = "GOTO_DirsForUseSubStmtUpdate";
+      document.wMLCDirectionsForUseStatement.submit( );
+   }
+}
+
 function PASTE_InsertKeywordDU( )
 {
 
@@ -265,16 +318,6 @@ function DELETE_DU_StatementKeyword( strTagEntityKey )
       var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
 
       document.wMLCDirectionsForUseStatement.zTableRowSelect.value = strEntityKey;
-      // Javascript code entered by user.
-
-// Confirmation of  Delete.
-if (!confirm("OK to delete selected entry?"))
-{
-   return;
-}
-
-      // END of Javascript code entered by user.
-
       _DisableFormElements( true );
 
       document.wMLCDirectionsForUseStatement.zAction.value = "DELETE_DU_StatementKeyword";

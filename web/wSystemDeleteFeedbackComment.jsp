@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSystemDeleteFeedbackComment   Generate Timestamp: 20160406142158590 --%>
+<%-- wSystemDeleteFeedbackComment   Generate Timestamp: 20160427103802258 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -703,7 +703,7 @@ else
    }
 %>
 
-<input name="Organization" id="Organization"  disabled style="width:208px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Organization" id="Organization" maxlength="128"  disabled style="width:208px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -754,7 +754,7 @@ else
    }
 %>
 
-<input name="UserId" id="UserId"  disabled style="width:208px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="UserId" id="UserId" maxlength="128"  disabled style="width:208px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -805,7 +805,7 @@ else
    }
 %>
 
-<input name="Dialog" id="Dialog"  disabled style="width:208px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Dialog" id="Dialog" maxlength="128"  disabled style="width:208px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -856,7 +856,7 @@ else
    }
 %>
 
-<input name="Window" id="Window"  disabled style="width:208px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Window" id="Window" maxlength="128"  disabled style="width:208px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -907,7 +907,7 @@ else
    }
 %>
 
-<input name="Comment" id="Comment"  disabled style="width:568px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Comment" id="Comment" maxlength="32000"  disabled style="width:568px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

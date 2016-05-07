@@ -4824,6 +4824,7 @@ public class ZGlobal1_Operation extends VmlOperation
    public int
    InsertOptionalSubUsages( View     mMasLC,
                             StringBuilder sbSourceToModify,
+                            String   stringEntity,
                             int      bInsertBraces )
    {
       StringBuilder sbTarget = new StringBuilder();
@@ -4850,13 +4851,13 @@ public class ZGlobal1_Operation extends VmlOperation
       // Parse the double braces out of the string of the form {{}}.
       openBracePos = szOrigSource.indexOf( "{{", 0 );
       closeBracePos = szOrigSource.indexOf( "}}", openBracePos + 2 );
-      if ( openBracePos >= 0 && closeBracePos >= 0 && (nRC = mMasLC.cursor( "M_SubUsage" ).setFirst().toInt()) >= zCURSOR_SET ) {
+      if ( openBracePos >= 0 && closeBracePos >= 0 && (nRC = mMasLC.cursor( stringEntity ).setFirst().toInt()) >= zCURSOR_SET ) {
          // Copy static text up to the brace to the target.
          sbTarget.append( szOrigSource.substring( 0, openBracePos ) );
 
          // Copy the SubUsage values into the text - surounded by single braces to signify the values are optional.
          while ( nRC >= zCURSOR_SET ) {
-            sbTarget.append( szOpenBrace + mMasLC.cursor( "M_SubUsage" ).getAttribute( "Name" ).getString() );
+            sbTarget.append( szOpenBrace + mMasLC.cursor( stringEntity ).getAttribute( "Name" ).getString() );
             if ( bInsertBraces != 0 )
                sbTarget.append( "}" );
             if ( changed == false ) {
@@ -4866,7 +4867,7 @@ public class ZGlobal1_Operation extends VmlOperation
                else
                   szOpenBrace = ", ";
             }
-            nRC = mMasLC.cursor( "M_SubUsage" ).setNext().toInt();
+            nRC = mMasLC.cursor( stringEntity ).setNext().toInt();
          }
          sbTarget.append( szOrigSource.substring( closeBracePos + 2 ) ); // append remaining static text in the original source string
       }

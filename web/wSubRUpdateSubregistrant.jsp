@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSubRUpdateSubregistrant   Generate Timestamp: 20160406142158286 --%>
+<%-- wSubRUpdateSubregistrant   Generate Timestamp: 20160427103801668 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1167,7 +1167,7 @@ else
    }
 %>
 
-<input name="EBName" id="EBName" style="width:318px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EBName" id="EBName" maxlength="254" style="width:318px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -1326,7 +1326,7 @@ else
    }
 %>
 
-<input name="EBPStreetAddress" id="EBPStreetAddress" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EBPStreetAddress" id="EBPStreetAddress" maxlength="128" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -1377,7 +1377,7 @@ else
    }
 %>
 
-<input name="EBPAddress2" id="EBPAddress2" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EBPAddress2" id="EBPAddress2" maxlength="128" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -1433,7 +1433,7 @@ else
    }
 %>
 
-<input name="EBPCity" id="EBPCity" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EBPCity" id="EBPCity" maxlength="128" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -1575,7 +1575,7 @@ else
    }
 %>
 
-<input name="EBPZipCode" id="EBPZipCode" style="width:76px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EBPZipCode" id="EBPZipCode" maxlength="10" style="width:76px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -1631,7 +1631,7 @@ else
    }
 %>
 
-<input name="EBPEmergencyPhone" id="EBPEmergencyPhone" style="width:250px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EBPEmergencyPhone" id="EBPEmergencyPhone" maxlength="11" style="width:250px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -1729,7 +1729,7 @@ else
    }
 %>
 
-<input name="EBStreetAddress" id="EBStreetAddress" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EBStreetAddress" id="EBStreetAddress" maxlength="128" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -1780,7 +1780,7 @@ else
    }
 %>
 
-<input name="EBAddress2" id="EBAddress2" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EBAddress2" id="EBAddress2" maxlength="128" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -1836,7 +1836,7 @@ else
    }
 %>
 
-<input name="EBCity" id="EBCity" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EBCity" id="EBCity" maxlength="128" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -1978,7 +1978,7 @@ else
    }
 %>
 
-<input name="EBZipCode" id="EBZipCode" style="width:76px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EBZipCode" id="EBZipCode" maxlength="10" style="width:76px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -2049,7 +2049,7 @@ else
    }
 %>
 
-<input name="EBFirstName" id="EBFirstName" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EBFirstName" id="EBFirstName" maxlength="64" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -2105,7 +2105,7 @@ else
    }
 %>
 
-<input name="EBLastName" id="EBLastName" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EBLastName" id="EBLastName" maxlength="64" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -2161,7 +2161,7 @@ else
    }
 %>
 
-<input name="EBTitle" id="EBTitle" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EBTitle" id="EBTitle" maxlength="254" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -2217,7 +2217,7 @@ else
    }
 %>
 
-<input name="EBCPhone" id="EBCPhone" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EBCPhone" id="EBCPhone" maxlength="11" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -2273,7 +2273,7 @@ else
    }
 %>
 
-<input name="EBFax" id="EBFax" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EBFax" id="EBFax" maxlength="11" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -2329,7 +2329,7 @@ else
    }
 %>
 
-<input name="EBEmail" id="EBEmail" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EBEmail" id="EBEmail" maxlength="128" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 

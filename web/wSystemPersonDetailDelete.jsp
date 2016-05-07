@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSystemPersonDetailDelete   Generate Timestamp: 20160406142159176 --%>
+<%-- wSystemPersonDetailDelete   Generate Timestamp: 20160427103803253 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -698,7 +698,7 @@ else
    }
 %>
 
-<input class="text10" name="EditBox2" id="EditBox2" style="width:194px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text10" name="EditBox2" id="EditBox2" maxlength="128" style="width:194px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 

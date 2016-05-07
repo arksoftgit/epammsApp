@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDeleteUsageStatements   Generate Timestamp: 20160415145303997 --%>
+<%-- wMLCDeleteUsageStatements   Generate Timestamp: 20160427124121278 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -646,7 +646,7 @@ try
          nRC = vGrid1.cursor( "MI_UsageList" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl1 = vGrid1.cursor( "MI_UsageList" ).getAttribute( "dFullEmbeddedNameL" ).getString( "" );
+            strGridEditCtl1 = vGrid1.cursor( "MI_UsageList" ).getAttribute( "dUsageListFullEmbeddedName" ).getString( "" );
 
             if ( strGridEditCtl1 == null )
                strGridEditCtl1 = "";

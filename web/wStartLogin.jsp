@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wStartLogin   Generate Timestamp: 20160406142154743 --%>
+<%-- wStartLogin   Generate Timestamp: 20160427103753648 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -553,7 +553,7 @@ else
 </td>
 <td valign="top"  class="text14" style="width:144px;">
 <% /* EBUserName:EditBox */ %>
-<input class="text14" name="EBUserName" id="EBUserName" style="width:130px;<%=strErrorColor%>" tabindex=1  type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input class="text14" name="EBUserName" id="EBUserName" maxlength="0" style="width:130px;<%=strErrorColor%>" tabindex=1  type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
 </td>
 <td valign="top" style="width:208px;">
@@ -579,7 +579,7 @@ else
 </td>
 <td valign="top"  class="text14" style="width:146px;">
 <% /* EditBox2:EditBox */ %>
-<input class="text14" name="EditBox2" id="EditBox2" style="width:130px;<%=strErrorColor%>" tabindex=2  type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input class="text14" name="EditBox2" id="EditBox2" maxlength="0" style="width:130px;<%=strErrorColor%>" tabindex=2  type="text" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
 </td>
 <td valign="top"  class="text10" style="width:208px;">

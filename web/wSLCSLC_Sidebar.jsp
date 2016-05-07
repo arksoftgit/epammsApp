@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCSLC_Sidebar   Generate Timestamp: 20160406142153586 --%>
+<%-- wSLCSLC_Sidebar   Generate Timestamp: 20160427103751503 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -896,31 +896,11 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "StorDisp" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="StorDisp" name="StorDisp"><a href="#"  onclick="DisplayStorDispSect()">Storage and Disposal</a></li>
-<%
-   }
-%>
-
-<%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "HumanHazard" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
        <li id="HumanHazard" name="HumanHazard"><a href="#"  onclick="DisplayHumanHazardSect()">Human Hazard</a></li>
-<%
-   }
-%>
-
-<%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Precautionary" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="Precautionary" name="Precautionary"><a href="#"  onclick="DisplayPrecautionarySection()">Precautionary</a></li>
 <%
    }
 %>
@@ -936,6 +916,36 @@ else
 %>
 
 <%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "StorDisp" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="StorDisp" name="StorDisp"><a href="#"  onclick="DisplayStorDispSect()">Storage and Disposal</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "DirectionsForUse" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="DirectionsForUse" name="DirectionsForUse"><a href="#"  onclick="DisplayDirectionsUseSect()">Directions For Use</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Precautionary" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="Precautionary" name="Precautionary"><a href="#"  onclick="DisplayPrecautionarySection()">Precautionary</a></li>
+<%
+   }
+%>
+
+<%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "EnvironmentalHazards" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
@@ -946,21 +956,11 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "OrganismClaims" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="OrganismClaims" name="OrganismClaims"><a href="#"  onclick="DisplayClaimsSection()">Organism Claims</a></li>
-<%
-   }
-%>
-
-<%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "TypesOfSurfaces" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="TypesOfSurfaces" name="TypesOfSurfaces"><a href="#"  onclick="DisplaySurfacesSection()">Types of Surfaces</a></li>
+       <li id="TypesOfSurfaces" name="TypesOfSurfaces"><a href="#"  onclick="DisplaySurfacesSection()">Surfaces</a></li>
 <%
    }
 %>
@@ -986,11 +986,11 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "DirectionsForUse" );
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "OrganismClaims" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
-       <li id="DirectionsForUse" name="DirectionsForUse"><a href="#"  onclick="DisplayDirectionsUseSect()">Directions For Use</a></li>
+       <li id="OrganismClaims" name="OrganismClaims"><a href="#"  onclick="DisplayClaimsSection()">Organism Claims</a></li>
 <%
    }
 %>

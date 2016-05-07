@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDirsForUseDrivingUsageSelect   Generate Timestamp: 20160415145304450 --%>
+<%-- wMLCDirsForUseDrivingUsageSelect   Generate Timestamp: 20160505173137693 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -60,22 +60,6 @@ public int DoInputMapping( HttpServletRequest request,
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
    {
-      // ComboBox: ComboBox1
-      mMasLC = task.getViewByName( "mMasLC" );
-      if ( VmlOperation.isValid( mMasLC ) )
-      {
-         nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strMapValue = request.getParameter( "hComboBox1" );
-            if ( strMapValue != null )
-            {
-               nRelPos = java.lang.Integer.parseInt( strMapValue );
-               mMasLC.cursor( "M_UsageType" ).setPosition( nRelPos, "MasterLabelContent" );
-            }
-         }
-
-         }  // checkExistenceofEntity
       // Grid: Grid1
       iTableRowCnt = 0;
 
@@ -116,6 +100,22 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       vGridTmp.drop( );
+      // ComboBox: ComboBox1
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
+      {
+         nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strMapValue = request.getParameter( "hComboBox1" );
+            if ( strMapValue != null )
+            {
+               nRelPos = java.lang.Integer.parseInt( strMapValue );
+               mMasLC.cursor( "M_UsageType" ).setPosition( nRelPos, "MasterLabelContent" );
+            }
+         }
+
+         }  // checkExistenceofEntity
       // Grid: Grid2
       iTableRowCnt = 0;
 
@@ -835,11 +835,49 @@ else
 <div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBAddAppTypesList1:GroupBox */ %>
 
-<div id="GBAddAppTypesList1" name="GBAddAppTypesList1"   style="float:left;position:relative; width:402px; height:32px;">  <!-- GBAddAppTypesList1 --> 
+<div id="GBAddAppTypesList1" name="GBAddAppTypesList1"   style="float:left;position:relative; width:828px; height:64px;">  <!-- GBAddAppTypesList1 --> 
 
 <% /* AddAppTypesList1:Text */ %>
 
-<label class="groupbox"  id="AddAppTypesList1" name="AddAppTypesList1" style="width:382px;height:16px;position:absolute;left:6px;top:12px;">Selection of Directions for Use Driving Usage Entries</label>
+<label class="groupbox"  id="AddAppTypesList1" name="AddAppTypesList1" style="width:300px;height:16px;position:absolute;left:6px;top:12px;">Selection of Directions for Use</label>
+
+<% /* Title1:MLEdit */ %>
+<%
+   // : Title1
+   strErrorMapValue = VmlOperation.CheckError( "Title1", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).info( "Invalid View: " + "Title1" );
+      else
+      {
+         nRC = mMasLC.cursor( "M_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strErrorMapValue = mMasLC.cursor( "M_DirectionsForUseSection" ).getAttribute( "Name" ).getString( "" );
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).info( "M_DirectionsForUseSection.Name: " + strErrorMapValue );
+         }
+         else
+            task.log( ).info( "Entity does not exist for Title1: " + "mMasLC.M_DirectionsForUseSection" );
+      }
+   }
+%>
+
+<div name="Title1" id="Title1" style="width:502px;height:46px;position:absolute;left:316px;top:12px;border:solid;border-width:4px;border-style:groove;text-overflow:hidden;background-color:lightgray;" wrap="wrap"><%=strErrorMapValue%></div>
+
+<% /* Text1:Text */ %>
+
+<label class="groupbox"  id="Text1" name="Text1" style="width:300px;height:16px;position:absolute;left:6px;top:28px;">Driving Usage Entries</label>
 
 
 </div>  <!--  GBAddAppTypesList1 --> 
@@ -848,110 +886,11 @@ else
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
-<div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox8:GroupBox */ %>
-
-<div id="GroupBox8" name="GroupBox8"   style="float:left;position:relative; width:402px; height:32px;">  <!-- GroupBox8 --> 
-
-<% /* Text5:Text */ %>
-
-<label class="groupbox"  id="Text5" name="Text5" style="width:350px;height:16px;position:absolute;left:18px;top:12px;">Currently Selected Driving Usage Entries</label>
-
-
-</div>  <!--  GroupBox8 --> 
-<div style="height:1px;width:34px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox9:GroupBox */ %>
-
-<div id="GroupBox9" name="GroupBox9"   style="float:left;position:relative; width:402px; height:32px;">  <!-- GroupBox9 --> 
-
-<% /* Text6:Text */ %>
-
-<label class="groupbox"  id="Text6" name="Text6" style="width:350px;height:16px;position:absolute;left:18px;top:12px;">Potential Driving Usage Entries for Type</label>
-
-
-</div>  <!--  GroupBox9 --> 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
+ <!-- This is added as a line spacer -->
+<div style="height:8px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:444px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox10:GroupBox */ %>
-
-<div id="GroupBox10" name="GroupBox10"   style="float:left;position:relative; width:402px; height:38px;">  <!-- GroupBox10 --> 
-
-<% /* Text1:Text */ %>
-
-<label class="groupbox"  id="Text1" name="Text1" style="width:116px;height:16px;position:absolute;left:46px;top:12px;">Current Type:</label>
-
-<% /* ComboBox1:ComboBox */ %>
-<% strErrorMapValue = "";  %>
-
-<select  name="ComboBox1" id="ComboBox1" size="1"style="width:150px;position:absolute;left:170px;top:12px;" onchange="ComboBox1OnChange( )">
-
-<%
-   mMasLC = task.getViewByName( "mMasLC" );
-   if ( VmlOperation.isValid( mMasLC ) )
-   {
-         strComboCurrentValue = "";
-      View vComboBox1;
-      mMasLC = task.getViewByName( "mMasLC" );
-      if ( VmlOperation.isValid( mMasLC ) )
-      {
-         nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strComboCurrentValue = mMasLC.cursor( "M_UsageType" ).getAttribute( "UsageType" ).getString( "FullUsageType" );
-            if ( strComboCurrentValue == null )
-               strComboCurrentValue = "";
-         }
-      }
-      vComboBox1 = mMasLC.newView( );
-      ComboCount = 0;
-      strComboSelectedValue = "0";
-      csrRC = vComboBox1.cursor( "M_UsageType" ).setFirst( "MasterLabelContent" );
-      while ( csrRC.isSet() )
-      {
-         strErrorMapValue = vComboBox1.cursor( "M_UsageType" ).getAttribute( "UsageType" ).getString( "FullUsageType" );
-         if ( strErrorMapValue == null )
-            strErrorMapValue = "";
-
-         if ( StringUtils.equals( strComboCurrentValue, strErrorMapValue ) )
-         {
-%>
-            <option selected="selected"><%=strErrorMapValue%></option>
-<%
-            strComboSelectedValue = Integer.toString( ComboCount );
-         }
-         else
-         {
-%>
-            <option><%=strErrorMapValue%></option>
-<%
-         }
-
-         ComboCount++;
-         csrRC =  vComboBox1.cursor( "M_UsageType" ).setNextContinue( );
-      }
-
-      vComboBox1.drop( );
-
-   }
-%>
-</select>
-<input name="hComboBox1" id="hComboBox1" type="hidden" value="<%=strComboSelectedValue%>" >
-
-
-</div>  <!--  GroupBox10 --> 
-</div>  <!-- End of a new line -->
-
-<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
-
-
-<div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
+<div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox4:GroupBox */ %>
 
 <div id="GroupBox4" name="GroupBox4" style="width:838px;float:left;">  <!-- GroupBox4 --> 
@@ -967,30 +906,17 @@ else
 
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox6:GroupBox */ %>
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox8:GroupBox */ %>
 
-<div id="GroupBox6" name="GroupBox6" style="width:342px;height:28px;float:left;">  <!-- GroupBox6 --> 
+<div id="GroupBox8" name="GroupBox8"   style="float:left;position:relative; width:342px; height:42px;">  <!-- GroupBox8 --> 
 
+<% /* Text5:Text */ %>
 
- <!-- This is added as a line spacer -->
-<div style="height:4px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp&nbsp</span>
-<% /* HTSelectAllLocations2:Text */ %>
-
-<a href="#" id="HTSelectAllLocations2" name="HTSelectAllLocations2"  onclick="CLEAR_MLC_UsageTarget( );" style="width:134px;height:16px;">Clear Target Entries</a>
-
-<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
-<% /* Text4:Text */ %>
-
-<a href="#" id="Text4" name="Text4"  onclick="SETALL_MLC_UsageTarget( );" style="width:178px;height:16px;">Set All Target Entries</a>
-
-</div>  <!-- End of a new line -->
+<label  id="Text5" name="Text5" style="width:330px;height:22px;position:absolute;left:0px;top:10px;">Currently Selected Driving Usage Entries</label>
 
 
-</div>  <!--  GroupBox6 --> 
+</div>  <!--  GroupBox8 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -1062,7 +988,7 @@ try
          nRC = vGrid1.cursor( "M_DrivingUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl2 = vGrid1.cursor( "M_DrivingUsage" ).getAttribute( "UsageType" ).getString( "FullUsageType" );
+            strGridEditCtl2 = vGrid1.cursor( "M_DrivingUsage" ).getAttribute( "dUsageClaimClassification" ).getString( "" );
 
             if ( strGridEditCtl2 == null )
                strGridEditCtl2 = "";
@@ -1075,7 +1001,7 @@ try
          nRC = vGrid1.cursor( "M_DrivingUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl3 = vGrid1.cursor( "M_DrivingUsage" ).getAttribute( "dDisplayUsageName" ).getString( "" );
+            strGridEditCtl3 = vGrid1.cursor( "M_DrivingUsage" ).getAttribute( "dUsageTextSubUsageNames" ).getString( "" );
 
             if ( strGridEditCtl3 == null )
                strGridEditCtl3 = "";
@@ -1122,7 +1048,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <div>  <!-- Beginning of a new line -->
 <% /* GroupBox5:GroupBox */ %>
 
-<div id="GroupBox5" name="GroupBox5" style="width:22px;height:76px;float:left;">  <!-- GroupBox5 --> 
+<div id="GroupBox5" name="GroupBox5" style="width:22px;height:62px;float:left;">  <!-- GroupBox5 --> 
 
 
 </div>  <!--  GroupBox5 --> 
@@ -1158,29 +1084,73 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GroupBox7:GroupBox */ %>
+<% /* GroupBox9:GroupBox */ %>
 
-<div id="GroupBox7" name="GroupBox7" style="width:412px;height:28px;float:left;">  <!-- GroupBox7 --> 
+<div id="GroupBox9" name="GroupBox9"   style="float:left;position:relative; width:388px; height:42px;">  <!-- GroupBox9 --> 
+
+<% /* ComboBox1:ComboBox */ %>
+<% strErrorMapValue = "";  %>
+
+<select  name="ComboBox1" id="ComboBox1" size="1"style="width:150px;position:absolute;left:226px;top:0px;" onchange="ComboBox1OnChange( )">
+
+<%
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) )
+   {
+         strComboCurrentValue = "";
+      View vComboBox1;
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
+      {
+         nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strComboCurrentValue = mMasLC.cursor( "M_UsageType" ).getAttribute( "UsageType" ).getString( "FullUsageType" );
+            if ( strComboCurrentValue == null )
+               strComboCurrentValue = "";
+         }
+      }
+      vComboBox1 = mMasLC.newView( );
+      ComboCount = 0;
+      strComboSelectedValue = "0";
+      csrRC = vComboBox1.cursor( "M_UsageType" ).setFirst( "MasterLabelContent" );
+      while ( csrRC.isSet() )
+      {
+         strErrorMapValue = vComboBox1.cursor( "M_UsageType" ).getAttribute( "UsageType" ).getString( "FullUsageType" );
+         if ( strErrorMapValue == null )
+            strErrorMapValue = "";
+
+         if ( StringUtils.equals( strComboCurrentValue, strErrorMapValue ) )
+         {
+%>
+            <option selected="selected"><%=strErrorMapValue%></option>
+<%
+            strComboSelectedValue = Integer.toString( ComboCount );
+         }
+         else
+         {
+%>
+            <option><%=strErrorMapValue%></option>
+<%
+         }
+
+         ComboCount++;
+         csrRC =  vComboBox1.cursor( "M_UsageType" ).setNextContinue( );
+      }
+
+      vComboBox1.drop( );
+
+   }
+%>
+</select>
+<input name="hComboBox1" id="hComboBox1" type="hidden" value="<%=strComboSelectedValue%>" >
+
+<% /* Text6:Text */ %>
+
+<label  id="Text6" name="Text6" style="width:230px;height:24px;position:absolute;left:0px;top:10px;">Potential Usage Entries for Type</label>
 
 
- <!-- This is added as a line spacer -->
-<div style="height:4px;width:100px;"></div>
-
-<div>  <!-- Beginning of a new line -->
-<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
-<% /* HTSelectAllLocations1:Text */ %>
-
-<a href="#" id="HTSelectAllLocations1" name="HTSelectAllLocations1"  onclick="CLEAR_MLC_UsageSource( );" style="width:152px;height:16px;">Clear Source Entries</a>
-
-<span style="height:16px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
-<% /* Text2:Text */ %>
-
-<a href="#" id="Text2" name="Text2"  onclick="SETALL_MLC_UsageSource( );" style="width:184px;height:16px;">Set All Source Entries</a>
-
-</div>  <!-- End of a new line -->
-
-
-</div>  <!--  GroupBox7 --> 
+</div>  <!--  GroupBox9 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -1250,7 +1220,7 @@ try
          nRC = vGrid2.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl1 = vGrid2.cursor( "M_Usage" ).getAttribute( "dDisplayUsageName" ).getString( "" );
+            strGridEditCtl1 = vGrid2.cursor( "M_Usage" ).getAttribute( "dUsageTextSubUsageNames" ).getString( "" );
 
             if ( strGridEditCtl1 == null )
                strGridEditCtl1 = "";

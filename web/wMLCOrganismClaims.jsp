@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCOrganismClaims   Generate Timestamp: 20160415145306115 --%>
+<%-- wMLCOrganismClaims   Generate Timestamp: 20160427124123002 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -60,41 +60,41 @@ public int DoInputMapping( HttpServletRequest request,
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
    {
-      // EditBox: Title1
+      // EditBox: Title
       nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "Title1" );
+         strMapValue = request.getParameter( "Title" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "Title1", "", strMapValue );
+               VmlOperation.CreateMessage( task, "Title", "", strMapValue );
             else
                mMasLC.cursor( "M_UsageType" ).getAttribute( "Title" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "Title1", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "Title", e.getReason( ), strMapValue );
          }
       }
 
-      // EditBox: ReviewerNote1
+      // EditBox: ReviewerNote
       nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
-         strMapValue = request.getParameter( "ReviewerNote1" );
+         strMapValue = request.getParameter( "ReviewerNote" );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "ReviewerNote1", "", strMapValue );
+               VmlOperation.CreateMessage( task, "ReviewerNote", "", strMapValue );
             else
                mMasLC.cursor( "M_UsageType" ).getAttribute( "ReviewerNote" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
             nMapError = -16;
-            VmlOperation.CreateMessage( task, "ReviewerNote1", e.getReason( ), strMapValue );
+            VmlOperation.CreateMessage( task, "ReviewerNote", e.getReason( ), strMapValue );
          }
       }
 
@@ -393,8 +393,8 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      EntityCursor cursor = mMasLC.cursor( "M_Usage" );
-      cursor.createTemporalSubobjectVersion( );
+         EntityCursor cursor = mMasLC.cursor( "M_Usage" );
+         cursor.createTemporalSubobjectVersion( );
 
       }
       catch ( Exception e )
@@ -572,23 +572,6 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditStorDispSect" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCOrganismClaims", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "StorageDisposal" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
    while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditHumanHazardSect" ) )
    {
       bDone = true;
@@ -601,44 +584,6 @@ if ( strActionToProcess != null )
 
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "HumanHazard" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditPrecautionarySection" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCOrganismClaims", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Action Operation
-      nRC = 0;
-      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCOrganismClaims", "wMLC.EditPrecautionarySection" );
-      nOptRC = wMLC.EditPrecautionarySection( new zVIEW( vKZXMLPGO ) );
-      if ( nOptRC == 2 )
-      {
-         nRC = 2;  // do the "error" redirection
-         session.setAttribute( "ZeidonError", "Y" );
-         break;
-      }
-      else
-      if ( nOptRC == 1 )
-      {
-         // Dynamic Next Window
-         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
-      }
-
-      if ( strNextJSP_Name.equals( "" ) )
-      {
-         // Next Window
-         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "PrecautionarySection" );
-      }
-
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -675,6 +620,78 @@ if ( strActionToProcess != null )
       {
          // Next Window
          strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "FirstAidSection" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditStorDispSect" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCOrganismClaims", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "StorageDisposal" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditDirectionsUseSect" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCOrganismClaims", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "DirectionsForUse" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditPrecautionarySection" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCOrganismClaims", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCOrganismClaims", "wMLC.EditPrecautionarySection" );
+      nOptRC = wMLC.EditPrecautionarySection( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "PrecautionarySection" );
       }
 
       strURL = response.encodeRedirectURL( strNextJSP_Name );
@@ -906,23 +923,6 @@ if ( strActionToProcess != null )
       break;
    }
 
-   while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditDirectionsUseSect" ) )
-   {
-      bDone = true;
-      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCOrganismClaims", strActionToProcess );
-
-      // Input Mapping
-      nRC = DoInputMapping( request, session, application, false );
-      if ( nRC < 0 )
-         break;
-
-      // Next Window
-      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReplaceWindowWithModalWindow, "wMLC", "DirectionsForUse" );
-      strURL = response.encodeRedirectURL( strNextJSP_Name );
-      nRC = 1;  // do the redirection
-      break;
-   }
-
    while ( bDone == false && StringUtils.equals( strActionToProcess, "smEditMarketingSect" ) )
    {
       bDone = true;
@@ -1134,16 +1134,6 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "StorDisp" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smStorDisp" name="smStorDisp"><a href="#"  onclick="smEditStorDispSect()">Storage and Disposal</a></li>
-<%
-   }
-%>
-
-<%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "HumanHazard" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
@@ -1154,21 +1144,41 @@ else
 %>
 
 <%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Precautionary" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smPrecautionary" name="smPrecautionary"><a href="#"  onclick="smEditPrecautionarySection()">Precautionary</a></li>
-<%
-   }
-%>
-
-<%
    csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "FirstAid" );
    if ( !csrRC.isSet() ) //if ( nRC < 0 )
    {
 %>
        <li id="smFirstAid" name="smFirstAid"><a href="#"  onclick="smEditFirstAidSect()">First Aid</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "StorDisp" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="smStorDisp" name="smStorDisp"><a href="#"  onclick="smEditStorDispSect()">Storage and Disposal</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "DirectionsForUse" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="smDirectionsForUse" name="smDirectionsForUse"><a href="#"  onclick="smEditDirectionsUseSect()">Directions For Use</a></li>
+<%
+   }
+%>
+
+<%
+   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "Precautionary" );
+   if ( !csrRC.isSet() ) //if ( nRC < 0 )
+   {
+%>
+       <li id="smPrecautionary" name="smPrecautionary"><a href="#"  onclick="smEditPrecautionarySection()">Precautionary</a></li>
 <%
    }
 %>
@@ -1239,16 +1249,6 @@ else
    {
 %>
        <li id="smNew1" name="smNew1"><a href="#"  onclick="smGOTO_ClaimsFootnote()">Claims Footnotes</a></li>
-<%
-   }
-%>
-
-<%
-   csrRC = vKZXMLPGO.cursor( "DisableMenuOption" ).setFirst( "MenuOptionName", "DirectionsForUse" );
-   if ( !csrRC.isSet() ) //if ( nRC < 0 )
-   {
-%>
-       <li id="smDirectionsForUse" name="smDirectionsForUse"><a href="#"  onclick="smEditDirectionsUseSect()">Directions For Use</a></li>
 <%
    }
 %>
@@ -1397,21 +1397,21 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox2:GroupBox */ %>
-<div id="GroupBox2" name="GroupBox2" style="float:left;width:620px;" >
+<div id="GroupBox2" name="GroupBox2" style="float:left;width:662px;" >
 
-<table cols=2 style="width:620px;"  class="grouptable">
+<table cols=2 style="width:662px;"  class="grouptable">
 
 <tr>
 <td valign="top" style="width:136px;">
-<% /* Title:1:Text */ %>
+<% /* Title::Text */ %>
 
-<span  id="Title:1" name="Title:1" style="width:132px;height:20px;">Title:</span>
+<span  id="Title:" name="Title:" style="width:132px;height:20px;">Title:</span>
 
 </td>
-<td valign="top" style="width:466px;">
-<% /* Title1:EditBox */ %>
+<td valign="top" style="width:512px;">
+<% /* Title:EditBox */ %>
 <%
-   strErrorMapValue = VmlOperation.CheckError( "Title1", strError );
+   strErrorMapValue = VmlOperation.CheckError( "Title", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -1422,7 +1422,7 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "Title1" );
+         task.log( ).debug( "Invalid View: " + "Title" );
       else
       {
          nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
@@ -1434,8 +1434,8 @@ else
             }
             catch (Exception e)
             {
-               out.println("There is an error on Title1: " + e.getMessage());
-               task.log().error( "*** Error on ctrl Title1", e );
+               out.println("There is an error on Title: " + e.getMessage());
+               task.log().error( "*** Error on ctrl Title", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -1443,26 +1443,26 @@ else
             task.log( ).debug( "M_UsageType.Title: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for Title1: " + "mMasLC.M_UsageType" );
+            task.log( ).debug( "Entity does not exist for Title: " + "mMasLC.M_UsageType" );
       }
    }
 %>
 
-<input name="Title1" id="Title1" style="width:466px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Title" id="Title" maxlength="254" style="width:512px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
 <tr>
 <td valign="top" style="width:136px;">
-<% /* ReviewerNote:1:Text */ %>
+<% /* ReviewerNote::Text */ %>
 
-<span  id="ReviewerNote:1" name="ReviewerNote:1" style="width:132px;height:20px;">Note to Reviewer:</span>
+<span  id="ReviewerNote:" name="ReviewerNote:" style="width:132px;height:20px;">Note to Reviewer:</span>
 
 </td>
-<td valign="top" style="width:466px;">
-<% /* ReviewerNote1:EditBox */ %>
+<td valign="top" style="width:512px;">
+<% /* ReviewerNote:EditBox */ %>
 <%
-   strErrorMapValue = VmlOperation.CheckError( "ReviewerNote1", strError );
+   strErrorMapValue = VmlOperation.CheckError( "ReviewerNote", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
       if ( StringUtils.equals( strErrorFlag, "Y" ) )
@@ -1473,7 +1473,7 @@ else
       strErrorColor = "";
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "ReviewerNote1" );
+         task.log( ).debug( "Invalid View: " + "ReviewerNote" );
       else
       {
          nRC = mMasLC.cursor( "M_UsageType" ).checkExistenceOfEntity( ).toInt();
@@ -1485,8 +1485,8 @@ else
             }
             catch (Exception e)
             {
-               out.println("There is an error on ReviewerNote1: " + e.getMessage());
-               task.log().error( "*** Error on ctrl ReviewerNote1", e );
+               out.println("There is an error on ReviewerNote: " + e.getMessage());
+               task.log().error( "*** Error on ctrl ReviewerNote", e );
             }
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
@@ -1494,12 +1494,12 @@ else
             task.log( ).debug( "M_UsageType.ReviewerNote: " + strErrorMapValue );
          }
          else
-            task.log( ).debug( "Entity does not exist for ReviewerNote1: " + "mMasLC.M_UsageType" );
+            task.log( ).debug( "Entity does not exist for ReviewerNote: " + "mMasLC.M_UsageType" );
       }
    }
 %>
 
-<input name="ReviewerNote1" id="ReviewerNote1" style="width:466px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="ReviewerNote" id="ReviewerNote" maxlength="1024" style="width:512px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -1517,16 +1517,16 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GBStorDispSections3:GroupBox */ %>
+<% /* GBClaimsSections:GroupBox */ %>
 
-<div id="GBStorDispSections3" name="GBStorDispSections3" class="listgroup"   style="float:left;position:relative; width:666px; height:40px;">  <!-- GBStorDispSections3 --> 
+<div id="GBClaimsSections" name="GBClaimsSections" class="listgroup"   style="float:left;position:relative; width:666px; height:40px;">  <!-- GBClaimsSections --> 
 
-<% /* EnvironmentalHazardsSection1:Text */ %>
+<% /* EnvironmentalHazardsSection:Text */ %>
 
-<label class="groupbox"  id="EnvironmentalHazardsSection1" name="EnvironmentalHazardsSection1" style="width:198px;height:16px;position:absolute;left:6px;top:12px;">Organism Claims Statements</label>
+<label class="groupbox"  id="EnvironmentalHazardsSection" name="EnvironmentalHazardsSection" style="width:198px;height:16px;position:absolute;left:6px;top:12px;">Organism Claims Statements</label>
 
-<% /* PushBtn1:PushBtn */ %>
-<button type="button" name="PushBtn1" id="PushBtn1" value="" onclick="GOTO_DeleteSelectedEntries( )" style="width:166px;height:26px;position:absolute;left:222px;top:12px;">Delete Selected Claims</button>
+<% /* PBDelete:PushBtn */ %>
+<button type="button" name="PBDelete" id="PBDelete" value="" onclick="GOTO_DeleteSelectedEntries( )" style="width:166px;height:26px;position:absolute;left:222px;top:12px;">Delete Selected Claims</button>
 
 <% /* PBNew:PushBtn */ %>
 <button type="button" name="PBNew" id="PBNew" value="" onclick="GOTO_AddUsageStatements( )" style="width:78px;height:26px;position:absolute;left:410px;top:12px;">New</button>
@@ -1535,7 +1535,7 @@ else
 <button type="button" name="EmbedKeywords" id="EmbedKeywords" value="" onclick="AttemptEmbedKeywords( )" style="width:132px;height:26px;position:absolute;left:510px;top:12px;">Embed Keywords</button>
 
 
-</div>  <!--  GBStorDispSections3 --> 
+</div>  <!--  GBClaimsSections --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -1548,7 +1548,7 @@ else
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox1:GroupBox */ %>
 
-<div id="GroupBox1" name="GroupBox1" style="width:658px;float:left;">  <!-- GroupBox1 --> 
+<div id="GroupBox1" name="GroupBox1" style="width:662px;float:left;">  <!-- GroupBox1 --> 
 
 
  <!-- This is added as a line spacer -->
@@ -1557,7 +1557,7 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GridClaims:Grid */ %>
-<table class="sortable"  cols=4 style="width:616px;"  name="GridClaims" id="GridClaims">
+<table class="sortable"  cols=4 style="width:638px;"  name="GridClaims" id="GridClaims">
 
 <thead bgcolor=green><tr>
 
@@ -1636,7 +1636,7 @@ try
          nRC = vGridClaims.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGEPathogen = vGridClaims.cursor( "M_Usage" ).getAttribute( "dDisplayPathogenName" ).getString( "" );
+            strGEPathogen = vGridClaims.cursor( "M_Usage" ).getAttribute( "dDisplayPathogenNameKeyword" ).getString( "" );
 
             if ( strGEPathogen == null )
                strGEPathogen = "";

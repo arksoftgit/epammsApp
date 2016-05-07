@@ -317,21 +317,6 @@ function smEditIngredientsSect( )
    }
 }
 
-function smEditStorDispSect( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCPhysicalChemicalHazardsSection.zAction.value = "smEditStorDispSect";
-      document.wMLCPhysicalChemicalHazardsSection.submit( );
-   }
-}
-
 function smEditHumanHazardSect( )
 {
 
@@ -347,21 +332,6 @@ function smEditHumanHazardSect( )
    }
 }
 
-function smEditPrecautionarySection( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCPhysicalChemicalHazardsSection.zAction.value = "smEditPrecautionarySection";
-      document.wMLCPhysicalChemicalHazardsSection.submit( );
-   }
-}
-
 function smEditFirstAidSect( )
 {
 
@@ -373,6 +343,51 @@ function smEditFirstAidSect( )
       _DisableFormElements( true );
 
       document.wMLCPhysicalChemicalHazardsSection.zAction.value = "smEditFirstAidSect";
+      document.wMLCPhysicalChemicalHazardsSection.submit( );
+   }
+}
+
+function smEditStorDispSect( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCPhysicalChemicalHazardsSection.zAction.value = "smEditStorDispSect";
+      document.wMLCPhysicalChemicalHazardsSection.submit( );
+   }
+}
+
+function smEditDirectionsUseSect( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCPhysicalChemicalHazardsSection.zAction.value = "smEditDirectionsUseSect";
+      document.wMLCPhysicalChemicalHazardsSection.submit( );
+   }
+}
+
+function smEditPrecautionarySection( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCPhysicalChemicalHazardsSection.zAction.value = "smEditPrecautionarySection";
       document.wMLCPhysicalChemicalHazardsSection.submit( );
    }
 }
@@ -478,21 +493,6 @@ function smGOTO_ClaimsFootnote( )
       _DisableFormElements( true );
 
       document.wMLCPhysicalChemicalHazardsSection.zAction.value = "smGOTO_ClaimsFootnote";
-      document.wMLCPhysicalChemicalHazardsSection.submit( );
-   }
-}
-
-function smEditDirectionsUseSect( )
-{
-
-   // This is for indicating whether the user hit the window close box.
-   isWindowClosing = false;
-
-   if ( _IsDocDisabled( ) == false )
-   {
-      _DisableFormElements( true );
-
-      document.wMLCPhysicalChemicalHazardsSection.zAction.value = "smEditDirectionsUseSect";
       document.wMLCPhysicalChemicalHazardsSection.submit( );
    }
 }

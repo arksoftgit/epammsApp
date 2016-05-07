@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSystemUsersDetail   Generate Timestamp: 20160406142200004 --%>
+<%-- wSystemUsersDetail   Generate Timestamp: 20160427103804867 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -684,7 +684,7 @@ else
 <span class="text10"  id="FullName:" name="FullName:" style="width:78px;height:16px;">Full Name:</span>
 
 <% /* FullName:EditBox */ %>
-<input class="text10" name="FullName" id="FullName" style="width:194px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text10" name="FullName" id="FullName" maxlength="0" style="width:194px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -739,7 +739,7 @@ else
    }
 %>
 
-<input class="text10" name="UserName" id="UserName" style="width:194px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text10" name="UserName" id="UserName" maxlength="128" style="width:194px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -794,7 +794,7 @@ else
    }
 %>
 
-<input class="text10" name="Password" id="Password" style="width:194px;<%=strErrorColor%>" type="password" value="<%=strErrorMapValue%>" >
+<input class="text10" name="Password" id="Password" maxlength="128" style="width:194px;<%=strErrorColor%>" type="password" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -849,7 +849,7 @@ else
    }
 %>
 
-<input class="text10" name="EditBox4" id="EditBox4" style="width:194px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text10" name="EditBox4" id="EditBox4" maxlength="4" style="width:194px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 

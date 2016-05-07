@@ -232,16 +232,6 @@ function DELETE_DirectionsForUseStatement( strTagEntityKey )
       var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
 
       document.wMLCDirectionsForUseSection.zTableRowSelect.value = strEntityKey;
-      // Javascript code entered by user.
-
-// Confirmation of  Delete.
-if (!confirm("OK to delete selected Marketing Statement?"))
-{
-   return;
-}
-
-      // END of Javascript code entered by user.
-
       _DisableFormElements( true );
 
       document.wMLCDirectionsForUseSection.zAction.value = "DELETE_DirectionsForUseStatement";
@@ -364,6 +354,20 @@ function GOTO_SelectRemoveDrivingDU( )
       _DisableFormElements( true );
 
       document.wMLCDirectionsForUseSection.zAction.value = "GOTO_SelectRemoveDrivingDU";
+      document.wMLCDirectionsForUseSection.submit( );
+   }
+}
+
+function ComboBoxXOROnChange( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      document.wMLCDirectionsForUseSection.hComboBoxXOR.value = document.wMLCDirectionsForUseSection.ComboBoxXOR.selectedIndex;
+      document.wMLCDirectionsForUseSection.zAction.value = "ZEIDON_ComboBoxSubmit";
       document.wMLCDirectionsForUseSection.submit( );
    }
 }

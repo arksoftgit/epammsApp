@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCMaintainSubItems   Generate Timestamp: 20160415145305662 --%>
+<%-- wMLCMaintainSubItems   Generate Timestamp: 20160427124122583 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -753,7 +753,7 @@ else
    }
 %>
 
-<input name="Delimiters" id="Delimiters" style="width:90px;position:absolute;left:472px;top:94px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Delimiters" id="Delimiters" maxlength="254" style="width:90px;position:absolute;left:472px;top:94px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* Doc:Text */ %>
 

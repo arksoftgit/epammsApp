@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wStartUpSubregColorUpdate   Generate Timestamp: 20160406142156536 --%>
+<%-- wStartUpSubregColorUpdate   Generate Timestamp: 20160427103757634 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -847,7 +847,7 @@ else
    }
 %>
 
-<input name="ColorName" id="ColorName" style="width:300px;position:absolute;left:92px;top:24px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="ColorName" id="ColorName" maxlength="254" style="width:300px;position:absolute;left:92px;top:24px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* RGB::Text */ %>
 
@@ -892,7 +892,7 @@ else
    }
 %>
 
-<input name="RGB" id="RGB" style="width:110px;position:absolute;left:92px;top:54px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="RGB" id="RGB" maxlength="254" style="width:110px;position:absolute;left:92px;top:54px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* C::Text */ %>
 
@@ -937,7 +937,7 @@ else
    }
 %>
 
-<input name="C" id="C" style="width:110px;position:absolute;left:92px;top:84px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="C" id="C" maxlength="4" style="width:110px;position:absolute;left:92px;top:84px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* M::Text */ %>
 
@@ -982,7 +982,7 @@ else
    }
 %>
 
-<input name="M" id="M" style="width:110px;position:absolute;left:92px;top:114px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="M" id="M" maxlength="4" style="width:110px;position:absolute;left:92px;top:114px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* Y::Text */ %>
 
@@ -1027,7 +1027,7 @@ else
    }
 %>
 
-<input name="Y" id="Y" style="width:110px;position:absolute;left:92px;top:144px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Y" id="Y" maxlength="4" style="width:110px;position:absolute;left:92px;top:144px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* K::Text */ %>
 
@@ -1072,7 +1072,7 @@ else
    }
 %>
 
-<input name="K" id="K" style="width:110px;position:absolute;left:92px;top:174px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="K" id="K" maxlength="4" style="width:110px;position:absolute;left:92px;top:174px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* Pantone::Text */ %>
 
@@ -1117,7 +1117,7 @@ else
    }
 %>
 
-<input name="Pantone" id="Pantone" style="width:300px;position:absolute;left:92px;top:204px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Pantone" id="Pantone" maxlength="254" style="width:300px;position:absolute;left:92px;top:204px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 
 </div>  <!--  Color --> 

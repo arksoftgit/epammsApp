@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wStartUpChangePrimRegPassword   Generate Timestamp: 20160406142156223 --%>
+<%-- wStartUpChangePrimRegPassword   Generate Timestamp: 20160427103756860 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1121,7 +1121,7 @@ else
    }
 %>
 
-<input name="Password" id="Password" style="width:458px;<%=strErrorColor%>" type="password" value="<%=strErrorMapValue%>" >
+<input name="Password" id="Password" maxlength="254" style="width:458px;<%=strErrorColor%>" type="password" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -1172,7 +1172,7 @@ else
    }
 %>
 
-<input name="NewPassword" id="NewPassword" style="width:458px;<%=strErrorColor%>" type="password" value="<%=strErrorMapValue%>" >
+<input name="NewPassword" id="NewPassword" maxlength="254" style="width:458px;<%=strErrorColor%>" type="password" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -1223,7 +1223,7 @@ else
    }
 %>
 
-<input name="ConfirmPassword" id="ConfirmPassword" style="width:458px;<%=strErrorColor%>" type="password" value="<%=strErrorMapValue%>" >
+<input name="ConfirmPassword" id="ConfirmPassword" maxlength="254" style="width:458px;<%=strErrorColor%>" type="password" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

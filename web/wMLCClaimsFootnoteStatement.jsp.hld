@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCClaimsFootnoteStatement   Generate Timestamp: 20160415145303833 --%>
+<%-- wMLCClaimsFootnoteStatement   Generate Timestamp: 20160427124121145 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -79,6 +79,28 @@ public int DoInputMapping( HttpServletRequest request,
          {
             nMapError = -16;
             VmlOperation.CreateMessage( task, "Footnote", e.getReason( ), strMapValue );
+         }
+      }
+
+      // MLEdit: Symbol
+      nRC = mMasLC.cursor( "M_UsageFootnote" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "Symbol" );
+         task.log().debug( "Symbol prior to TrimTinyHtml: " + strMapValue );
+         strMapValue = VmlOperation.TrimTinyHtml( strMapValue );
+         task.log().debug( "Symbol after TrimTinyHtml: '" + strMapValue + "'" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "Symbol", "", strMapValue );
+            else
+               mMasLC.cursor( "M_UsageFootnote" ).getAttribute( "Symbol" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "Symbol", e.getReason( ), strMapValue );
          }
       }
 
@@ -217,8 +239,8 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_UsageFootnote" );
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_UsageFootnote" );
       if ( cursor.isNull() )
          nRC = 0;
       else
@@ -253,8 +275,8 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_UsageFootnote" );
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_UsageFootnote" );
       if ( cursor.isNull() )
          nRC = 0;
       else
@@ -411,6 +433,12 @@ else
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
+
+<!-- TinyMCE -->
+<script language="JavaScript" type="text/javascript" src="./js/tinymce/js/tinymce/tinymce.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/TinyMCE.js"></script>
+<!-- /TinyMCE -->
+
 <script language="JavaScript" type="text/javascript" src="./genjs/wMLCClaimsFootnoteStatement.js"></script>
 
 </head>
@@ -605,11 +633,11 @@ else
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBIngredientsStatement:GroupBox */ %>
 
-<div id="GBIngredientsStatement" name="GBIngredientsStatement"   style="float:left;position:relative; width:670px; height:40px;">  <!-- GBIngredientsStatement -->
+<div id="GBIngredientsStatement" name="GBIngredientsStatement"   style="float:left;position:relative; width:670px; height:66px;">  <!-- GBIngredientsStatement -->
 
 <% /* ActiveTitle::Text */ %>
 
-<label  id="ActiveTitle:" name="ActiveTitle:" style="width:50px;height:20px;position:absolute;left:12px;top:6px;">Text:</label>
+<label  id="ActiveTitle:" name="ActiveTitle:" style="width:62px;height:20px;position:absolute;left:8px;top:6px;">Text:</label>
 
 <% /* Footnote:EditBox */ %>
 <%
@@ -653,8 +681,53 @@ else
    }
 %>
 
-<input name="Footnote" id="Footnote" style="width:594px;position:absolute;left:62px;top:6px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Footnote" id="Footnote" maxlength="254" style="width:594px;position:absolute;left:70px;top:6px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
+<% /* Symbol::Text */ %>
+
+<label  id="Symbol:" name="Symbol:" style="width:62px;height:20px;position:absolute;left:8px;top:36px;">Symbol:</label>
+
+<% /* GroupBox1:GroupBox */ %>
+
+<div id="GroupBox1" name="GroupBox1" style="width:168px;height:18px;position:absolute;left:70px;top:36px;">  <!-- GroupBox1 -->
+
+<% /* Symbol:MLEdit */ %>
+<%
+   // : Symbol
+   strErrorMapValue = VmlOperation.CheckError( "Symbol", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).info( "Invalid View: " + "Symbol" );
+      else
+      {
+         nRC = mMasLC.cursor( "M_UsageFootnote" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strErrorMapValue = mMasLC.cursor( "M_UsageFootnote" ).getAttribute( "Symbol" ).getString( "" );
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).info( "M_UsageFootnote.Symbol: " + strErrorMapValue );
+         }
+         else
+            task.log( ).info( "Entity does not exist for Symbol: " + "mMasLC.M_UsageFootnote" );
+      }
+   }
+%>
+
+<div style="background-color:#eee;border:1px solid #042;width:166px;height:20px;position:absolute;left:0px;top:0px;overflow:auto;">
+<div class="mceSimpleZeidonSpecialCharacters" name="Symbol" id="Symbol" style="width:166px;height:20px;position:absolute;left:0px;top:0px;"><%=strErrorMapValue%></div></div>
+
+
+</div>  <!--  GroupBox1 -->
 
 </div>  <!--  GBIngredientsStatement -->
 </div>  <!-- End of a new line -->

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSubRUpdateSubregLabelContent   Generate Timestamp: 20160406142158333 --%>
+<%-- wSubRUpdateSubregLabelContent   Generate Timestamp: 20160427103801767 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -946,7 +946,7 @@ else
    }
 %>
 
-<input name="ProductName" id="ProductName" style="width:422px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="ProductName" id="ProductName" maxlength="254" style="width:422px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -1002,7 +1002,7 @@ else
    }
 %>
 
-<input name="Description" id="Description" style="width:422px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Description" id="Description" maxlength="1024" style="width:422px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -1058,7 +1058,7 @@ else
    }
 %>
 
-<input name="Number" id="Number" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Number" id="Number" maxlength="32" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -1114,7 +1114,7 @@ else
    }
 %>
 
-<input name="EPARegistrationNumber" id="EPARegistrationNumber" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EPARegistrationNumber" id="EPARegistrationNumber" maxlength="128" style="width:300px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -1199,7 +1199,7 @@ else
 
 <span style="height:16px;">&nbsp</span>
 <% /* LabelName:EditBox */ %>
-<input name="LabelName" id="LabelName" style="width:422px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="LabelName" id="LabelName" maxlength="0" style="width:422px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -1255,7 +1255,7 @@ else
    }
 %>
 
-<input name="ContentDescription" id="ContentDescription" style="width:422px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="ContentDescription" id="ContentDescription" maxlength="254" style="width:422px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 

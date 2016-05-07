@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSPLDLLD_GenerateFromSPLD   Generate Timestamp: 20160406142154196 --%>
+<%-- wSPLDLLD_GenerateFromSPLD   Generate Timestamp: 20160427103752688 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -612,7 +612,7 @@ else
    }
 %>
 
-<input name="EditBox2" id="EditBox2" style="width:338px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EditBox2" id="EditBox2" maxlength="254" style="width:338px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

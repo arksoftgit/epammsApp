@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSystemImportAppTypesList   Generate Timestamp: 20160406142158715 --%>
+<%-- wSystemImportAppTypesList   Generate Timestamp: 20160427103802502 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -961,7 +961,7 @@ else
    }
 %>
 
-<input class="text12" name="FileName" id="FileName" style="width:702px;position:absolute;left:96px;top:28px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="FileName" id="FileName" maxlength="254" style="width:702px;position:absolute;left:96px;top:28px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* TXSortAppTypesList:Text */ %>
 

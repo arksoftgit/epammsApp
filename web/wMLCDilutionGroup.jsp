@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDilutionGroup   Generate Timestamp: 20160415212146903 --%>
+<%-- wMLCDilutionGroup   Generate Timestamp: 20160427124121403 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -366,14 +366,14 @@ if ( strActionToProcess != null )
       {
          View mMasLCAuto = task.getViewByName( "mMasLC" );
          EntityCursor cursor = mMasLCAuto.cursor( "M_DilutionGroup" );
-         if ( cursor.isNull() )
-            nRC = 0;
-         else
-         {
-            if ( cursor.isVersioned( ) )
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
             {
-               cursor.acceptSubobject( );
-            }
+               if ( cursor.isVersioned( ) )
+               {
+                  cursor.acceptSubobject( );
+               }
             nRC = 0;
          }
 
@@ -407,14 +407,14 @@ if ( strActionToProcess != null )
       {
          View mMasLCAuto = task.getViewByName( "mMasLC" );
          EntityCursor cursor = mMasLCAuto.cursor( "M_DilutionGroup" );
-         if ( cursor.isNull() )
-            nRC = 0;
-         else
-         {
-            if ( cursor.isVersioned( ) )
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
             {
-               cursor.acceptSubobject( );
-            }
+               if ( cursor.isVersioned( ) )
+               {
+                  cursor.acceptSubobject( );
+               }
             nRC = 0;
          }
 
@@ -443,14 +443,14 @@ if ( strActionToProcess != null )
       {
          View mMasLCAuto = task.getViewByName( "mMasLC" );
          EntityCursor cursor = mMasLCAuto.cursor( "M_DilutionGroup" );
-         if ( cursor.isNull() )
-            nRC = 0;
-         else
-         {
-            if ( cursor.isVersioned( ) )
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
             {
-               cursor.cancelSubobject( );
-            }
+               if ( cursor.isVersioned( ) )
+               {
+                  cursor.cancelSubobject( );
+               }
             nRC = 0;
          }
 
@@ -479,14 +479,14 @@ if ( strActionToProcess != null )
       {
          View mMasLCAuto = task.getViewByName( "mMasLC" );
          EntityCursor cursor = mMasLCAuto.cursor( "M_DilutionGroupItem" );
-         if ( cursor.isNull() )
-            nRC = 0;
-         else
-         {
-            if ( cursor.isVersioned( ) )
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
             {
-               cursor.cancelSubobject( );
-            }
+               if ( cursor.isVersioned( ) )
+               {
+                  cursor.cancelSubobject( );
+               }
             nRC = 0;
          }
 
@@ -1196,7 +1196,7 @@ else
    }
 %>
 
-<input name="Title" id="Title" style="width:574px;position:absolute;left:164px;top:36px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Title" id="Title" maxlength="254" style="width:574px;position:absolute;left:164px;top:36px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* Text::Text */ %>
 
@@ -1241,7 +1241,7 @@ else
    }
 %>
 
-<input name="Text" id="Text" style="width:574px;position:absolute;left:164px;top:58px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Text" id="Text" maxlength="254" style="width:574px;position:absolute;left:164px;top:58px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* Ratio::Text */ %>
 
@@ -1286,7 +1286,7 @@ else
    }
 %>
 
-<input name="Ratio" id="Ratio" style="width:574px;position:absolute;left:164px;top:80px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Ratio" id="Ratio" maxlength="4" style="width:574px;position:absolute;left:164px;top:80px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* UnitsNumerator::Text */ %>
 
@@ -1331,7 +1331,7 @@ else
    }
 %>
 
-<input name="UnitsNumerator" id="UnitsNumerator" style="width:574px;position:absolute;left:164px;top:102px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="UnitsNumerator" id="UnitsNumerator" maxlength="4" style="width:574px;position:absolute;left:164px;top:102px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* UnitsDenominator::Text */ %>
 
@@ -1376,7 +1376,7 @@ else
    }
 %>
 
-<input name="UnitsDenominator" id="UnitsDenominator" style="width:574px;position:absolute;left:164px;top:124px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="UnitsDenominator" id="UnitsDenominator" maxlength="4" style="width:574px;position:absolute;left:164px;top:124px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* ReviewerNote::Text */ %>
 
@@ -1421,7 +1421,7 @@ else
    }
 %>
 
-<input name="ReviewerNote" id="ReviewerNote" style="width:574px;position:absolute;left:164px;top:146px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="ReviewerNote" id="ReviewerNote" maxlength="1024" style="width:574px;position:absolute;left:164px;top:146px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* ReviewerNoteTable::Text */ %>
 
@@ -1466,7 +1466,7 @@ else
    }
 %>
 
-<input name="ReviewerNoteTable" id="ReviewerNoteTable" style="width:574px;position:absolute;left:164px;top:168px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="ReviewerNoteTable" id="ReviewerNoteTable" maxlength="1024" style="width:574px;position:absolute;left:164px;top:168px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 
 </div>  <!--  GBDilution --> 

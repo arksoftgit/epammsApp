@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wStartUpChangeSubregUserPassword   Generate Timestamp: 20160406142156333 --%>
+<%-- wStartUpChangeSubregUserPassword   Generate Timestamp: 20160427103757150 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -843,7 +843,7 @@ else
    }
 %>
 
-<input name="Password" id="Password" style="width:458px;<%=strErrorColor%>" type="password" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input name="Password" id="Password" maxlength="254" style="width:458px;<%=strErrorColor%>" type="password" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
 </div>  <!-- End of a new line -->
 
@@ -899,7 +899,7 @@ else
    }
 %>
 
-<input class="text10" name="NewPassword" id="NewPassword" style="width:458px;<%=strErrorColor%>" type="password" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input class="text10" name="NewPassword" id="NewPassword" maxlength="254" style="width:458px;<%=strErrorColor%>" type="password" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
 </div>  <!-- End of a new line -->
 
@@ -955,7 +955,7 @@ else
    }
 %>
 
-<input class="text10" name="ConfirmPassword" id="ConfirmPassword" style="width:458px;<%=strErrorColor%>" type="password" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
+<input class="text10" name="ConfirmPassword" id="ConfirmPassword" maxlength="254" style="width:458px;<%=strErrorColor%>" type="password" value="<%=strErrorMapValue%>" onKeyPress="return _OnEnter( event )" >
 
 </div>  <!-- End of a new line -->
 

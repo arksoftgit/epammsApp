@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCTableOfContents   Generate Timestamp: 20160421204231960 --%>
+<%-- wMLCTableOfContents   Generate Timestamp: 20160427124123729 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -385,11 +385,11 @@ if ( strActionToProcess != null )
       try
       {
          EntityCursor cursor = mMasLC.cursor( "TOC" );
-         if ( cursor.isNull() )
-            nRC = 0;
-         else
-         {
-            cursor.deleteEntity( CursorPosition.NEXT );
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
+            {
+               cursor.deleteEntity( CursorPosition.NEXT );
             nRC = 0;
          }
 
@@ -821,7 +821,7 @@ else
    }
 %>
 
-<input class="text12" name="TOC_Title" id="TOC_Title" style="width:634px;position:absolute;left:130px;top:26px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="TOC_Title" id="TOC_Title" maxlength="254" style="width:634px;position:absolute;left:130px;top:26px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* TOC_ReviewerNote::Text */ %>
 
@@ -866,7 +866,7 @@ else
    }
 %>
 
-<input class="text12" name="TOC_ReviewerNote" id="TOC_ReviewerNote" style="width:634px;position:absolute;left:130px;top:52px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="TOC_ReviewerNote" id="TOC_ReviewerNote" maxlength="1024" style="width:634px;position:absolute;left:130px;top:52px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* New:PushBtn */ %>
 <button type="button" class="newbutton" name="New" id="New" value="" onclick="GOTO_AddTableOfContentsEntry( )" style="width:78px;height:26px;position:absolute;left:586px;top:82px;">New</button>

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSPLDUpdateReusableBlock   Generate Timestamp: 20160406142154649 --%>
+<%-- wSPLDUpdateReusableBlock   Generate Timestamp: 20160427103753476 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -658,7 +658,7 @@ else
    }
 %>
 
-<input name="SectionType" id="SectionType"  disabled style="width:346px;position:absolute;left:114px;top:24px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="SectionType" id="SectionType" maxlength="32"  disabled style="width:346px;position:absolute;left:114px;top:24px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* Name::Text */ %>
 
@@ -703,7 +703,7 @@ else
    }
 %>
 
-<input name="ReusableBlockName" id="ReusableBlockName" style="width:346px;position:absolute;left:114px;top:52px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="ReusableBlockName" id="ReusableBlockName" maxlength="254" style="width:346px;position:absolute;left:114px;top:52px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* Description::Text */ %>
 

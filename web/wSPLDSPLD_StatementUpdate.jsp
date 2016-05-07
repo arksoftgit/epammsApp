@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSPLDSPLD_StatementUpdate   Generate Timestamp: 20160406142154563 --%>
+<%-- wSPLDSPLD_StatementUpdate   Generate Timestamp: 20160427103753328 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -347,18 +347,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mSPLDef = task.getViewByName( "mSPLDef" );
-      EntityCursor cursor = mSPLDef.cursor( "CompositeComponentList" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         if ( cursor.isVersioned( ) )
-         {
-            cursor.cancelSubobject( );
+         View mSPLDefAuto = task.getViewByName( "mSPLDef" );
+         EntityCursor cursor = mSPLDefAuto.cursor( "CompositeComponentList" );
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
+            {
+               if ( cursor.isVersioned( ) )
+               {
+                  cursor.cancelSubobject( );
+               }
+            nRC = 0;
          }
-         nRC = 0;
-      }
 
       }
       catch ( Exception e )

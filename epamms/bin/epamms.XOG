@@ -1,4 +1,4 @@
-z1000-Zeidon    EPAMMS   TZZOXOGO 04/11/16   21:01:43 1.0a2   
+z1000-Zeidon    EPAMMS   TZZOXOGO 04/27/16   15:29:02 1.0a2   
 eTZZOXOGO  1
 aNAME      epamms
 
@@ -84,6 +84,10 @@ aDATATYPE  V
 
 ePARAMETER 4
 aNAME      ReturnFormatted
+aDATATYPE  S
+
+ePARAMETER 4
+aNAME      Entity
 aDATATYPE  S
 
 ePARAMETER 4

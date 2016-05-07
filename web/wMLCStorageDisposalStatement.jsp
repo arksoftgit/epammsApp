@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCStorageDisposalStatement   Generate Timestamp: 20160415145306513 --%>
+<%-- wMLCStorageDisposalStatement   Generate Timestamp: 20160504093025119 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -98,6 +98,25 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
+      // EditBox: ReviewerNote
+      nRC = mMasLC.cursor( "M_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "ReviewerNote" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "ReviewerNote", "", strMapValue );
+            else
+               mMasLC.cursor( "M_StorageDisposalStatement" ).getAttribute( "ReviewerNote" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "ReviewerNote", e.getReason( ), strMapValue );
+         }
+      }
+
       // Grid: Grid4
       iTableRowCnt = 0;
 
@@ -113,6 +132,24 @@ public int DoInputMapping( HttpServletRequest request,
          iTableRowCnt++;
 
          csrRC = vGridTmp.cursor( "M_InsertTextKeywordSD" ).setNextContinue( );
+      }
+
+      vGridTmp.drop( );
+      // Grid: GridStorDispSubStmts
+      iTableRowCnt = 0;
+
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
+      vGridTmp = mMasLC.newView( );
+      csrRC = vGridTmp.cursor( "M_StorageDisposalSubStatement" ).setFirst(  );
+      while ( csrRC.isSet() )
+      {
+         lEntityKey = vGridTmp.cursor( "M_StorageDisposalSubStatement" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         iTableRowCnt++;
+
+         csrRC = vGridTmp.cursor( "M_StorageDisposalSubStatement" ).setNextContinue( );
       }
 
       vGridTmp.drop( );
@@ -275,6 +312,174 @@ if ( strActionToProcess != null )
       break;
    }
 
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_StorageDispSubStatementAdd" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCStorageDisposalStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCStorageDisposalStatement", "wMLC.GOTO_StorageDispSubStatementAdd" );
+      nOptRC = wMLC.GOTO_StorageDispSubStatementAdd( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "StorageDisposalSubStatement" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_StorageDispStatementDelete" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCStorageDisposalStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mMasLC;
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mMasLC.cursor( "M_StorageDisposalSubStatement" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mMasLC.cursor( "M_StorageDisposalSubStatement" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mMasLC.cursor( "M_StorageDisposalSubStatement" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mMasLC.cursor( "M_StorageDisposalSubStatement" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCStorageDisposalStatement", "wMLC.GOTO_StorageDispStatementDelete" );
+      nOptRC = wMLC.GOTO_StorageDispStatementDelete( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "DeleteComponent" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_StorageDispStatementUpdate" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCStorageDisposalStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mMasLC;
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mMasLC.cursor( "M_StorageDisposalSubStatement" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mMasLC.cursor( "M_StorageDisposalSubStatement" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mMasLC.cursor( "M_StorageDisposalSubStatement" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mMasLC.cursor( "M_StorageDisposalSubStatement" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCStorageDisposalStatement", "wMLC.GOTO_StorageDispSubStmtUpdate" );
+      nOptRC = wMLC.GOTO_StorageDispSubStmtUpdate( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "StorageDisposalSubStatement" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
    while ( bDone == false && StringUtils.equals( strActionToProcess, "AcceptStorDispStmt" ) )
    {
       bDone = true;
@@ -289,18 +494,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_StorageDisposalStatement" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         if ( cursor.isVersioned( ) )
-         {
-            cursor.acceptSubobject( );
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_StorageDisposalStatement" );
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
+            {
+               if ( cursor.isVersioned( ) )
+               {
+                  cursor.acceptSubobject( );
+               }
+            nRC = 0;
          }
-         nRC = 0;
-      }
 
       }
       catch ( Exception e )
@@ -330,9 +535,9 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordSD" );
-      cursor.createTemporalEntity( );
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_InsertTextKeywordSD" );
+         cursor.createTemporalEntity( );
 
       }
       catch ( Exception e )
@@ -357,18 +562,18 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      View mMasLC = task.getViewByName( "mMasLC" );
-      EntityCursor cursor = mMasLC.cursor( "M_StorageDisposalStatement" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         if ( cursor.isVersioned( ) )
-         {
-            cursor.cancelSubobject( );
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_StorageDisposalStatement" );
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
+            {
+               if ( cursor.isVersioned( ) )
+               {
+                  cursor.cancelSubobject( );
+               }
+            nRC = 0;
          }
-         nRC = 0;
-      }
 
       }
       catch ( Exception e )
@@ -490,14 +695,14 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordSD" );
-      if ( cursor.isNull() )
-         nRC = 0;
-      else
-      {
-         cursor.deleteEntity( CursorPosition.NEXT );
-         nRC = 0;
-      }
+         EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordSD" );
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
+            {
+               cursor.deleteEntity( CursorPosition.NEXT );
+            nRC = 0;
+         }
 
       }
       catch ( Exception e )
@@ -592,8 +797,8 @@ if ( strActionToProcess != null )
       nRC = 0;
       try
       {
-      EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordSD" );
-      cursor.createTemporalSubobjectVersion( );
+         EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordSD" );
+         cursor.createTemporalSubobjectVersion( );
 
       }
       catch ( Exception e )
@@ -1040,7 +1245,7 @@ else
 <span  id="Text2" name="Text2" style="width:38px;height:18px;">Text:</span>
 
 </td>
-<td valign="top" style="width:754px;">
+<td valign="top" style="width:738px;">
 <% /* MLEdit2:MLEdit */ %>
 <%
    // MLEdit: MLEdit2
@@ -1073,7 +1278,58 @@ else
    }
 %>
 
-<textarea id="MLEdit2" name="MLEdit2" class="" style="width:754px;height:76px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+<textarea id="MLEdit2" name="MLEdit2" class="" style="width:738px;height:76px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+
+</td>
+</tr>
+<tr>
+<td valign="top" style="width:128px;">
+<% /* ReviewerNote::Text */ %>
+
+<span  id="ReviewerNote:" name="ReviewerNote:" style="width:122px;height:16px;">Reviewer Note:</span>
+
+</td>
+<td valign="top"  class="text12" style="width:592px;">
+<% /* ReviewerNote:EditBox */ %>
+<%
+   strErrorMapValue = VmlOperation.CheckError( "ReviewerNote", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "ReviewerNote" );
+      else
+      {
+         nRC = mMasLC.cursor( "M_StorageDisposalStatement" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            try
+            {
+               strErrorMapValue = mMasLC.cursor( "M_StorageDisposalStatement" ).getAttribute( "ReviewerNote" ).getString( "" );
+            }
+            catch (Exception e)
+            {
+               out.println("There is an error on ReviewerNote: " + e.getMessage());
+               task.log().error( "*** Error on ctrl ReviewerNote", e );
+            }
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "M_StorageDisposalStatement.ReviewerNote: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for ReviewerNote: " + "mMasLC.M_StorageDisposalStatement" );
+      }
+   }
+%>
+
+<input class="text12" name="ReviewerNote" id="ReviewerNote" maxlength="1024" style="width:592px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -1087,7 +1343,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
+<div style="height:6px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
@@ -1104,18 +1360,18 @@ else
 
 <div id="GroupBox3" name="GroupBox3"   style="float:left;position:relative; width:756px; height:30px;">  <!-- GroupBox3 --> 
 
-<% /* PushBtn4:PushBtn */ %>
-<button type="button" class="newbutton" name="PushBtn4" id="PushBtn4" value="" onclick="GOTO_DisplayGeneratedTextSD( )" style="width:158px;height:26px;position:absolute;left:354px;top:4px;">Show Generated Text</button>
+<% /* PBDisplayGeneratedText:PushBtn */ %>
+<button type="button" class="newbutton" name="PBDisplayGeneratedText" id="PBDisplayGeneratedText" value="" onclick="GOTO_DisplayGeneratedTextSD( )" style="width:158px;height:26px;position:absolute;left:354px;top:4px;">Show Generated Text</button>
 
-<% /* PushBtn5:PushBtn */ %>
-<button type="button" class="newbutton" name="PushBtn5" id="PushBtn5" value="" onclick="PASTE_InsertKeyword( )" style="width:74px;height:26px;position:absolute;left:530px;top:4px;">Paste</button>
+<% /* PBInsertKeyword:PushBtn */ %>
+<button type="button" class="newbutton" name="PBInsertKeyword" id="PBInsertKeyword" value="" onclick="PASTE_InsertKeyword( )" style="width:74px;height:26px;position:absolute;left:530px;top:4px;">Paste</button>
 
-<% /* PushBtn3:PushBtn */ %>
-<button type="button" class="newbutton" name="PushBtn3" id="PushBtn3" value="" onclick="ADD_SD_StatementKeyword( )" style="width:66px;height:26px;position:absolute;left:618px;top:4px;">New</button>
+<% /* PBAddKeyword:PushBtn */ %>
+<button type="button" class="newbutton" name="PBAddKeyword" id="PBAddKeyword" value="" onclick="ADD_SD_StatementKeyword( )" style="width:66px;height:26px;position:absolute;left:618px;top:4px;">New</button>
 
-<% /* Text5:Text */ %>
+<% /* KeywordText::Text */ %>
 
-<label class="listheader"  id="Text5" name="Text5" style="width:324px;height:16px;position:absolute;left:10px;top:8px;">Keyword text for Embedding in Statement Text</label>
+<label class="listheader"  id="KeywordText:" name="KeywordText:" style="width:324px;height:16px;position:absolute;left:10px;top:8px;">Keyword text for Embedding in Statement Text</label>
 
 
 </div>  <!--  GroupBox3 --> 
@@ -1156,11 +1412,11 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
-      String strGridEditCtl4;
-      String strGridEditCtl5;
-      String strBitmapBtn3;
-      String strBMBDeleteDirectionsUseStatement2;
-      String strBitmapBtn2;
+      String strKeyword;
+      String strKewordText;
+      String strBMBUpdateSD_Keyword;
+      String strBMBCopySD_Keyword;
+      String strBitmapDeleteSD_Keyword;
       
       View vGrid4;
       vGrid4 = mMasLC.newView( );
@@ -1172,41 +1428,41 @@ try
 
          lEntityKey = vGrid4.cursor( "M_InsertTextKeywordSD" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strGridEditCtl4 = "";
+         strKeyword = "";
          nRC = vGrid4.cursor( "M_InsertTextKeywordSD" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl4 = vGrid4.cursor( "M_InsertTextKeywordSD" ).getAttribute( "Name" ).getString( "" );
+            strKeyword = vGrid4.cursor( "M_InsertTextKeywordSD" ).getAttribute( "Name" ).getString( "" );
 
-            if ( strGridEditCtl4 == null )
-               strGridEditCtl4 = "";
+            if ( strKeyword == null )
+               strKeyword = "";
          }
 
-         if ( StringUtils.isBlank( strGridEditCtl4 ) )
-            strGridEditCtl4 = "&nbsp";
+         if ( StringUtils.isBlank( strKeyword ) )
+            strKeyword = "&nbsp";
 
-         strGridEditCtl5 = "";
+         strKewordText = "";
          nRC = vGrid4.cursor( "M_InsertTextKeywordSD" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl5 = vGrid4.cursor( "M_InsertTextKeywordSD" ).getAttribute( "dSD_KeywordText" ).getString( "" );
+            strKewordText = vGrid4.cursor( "M_InsertTextKeywordSD" ).getAttribute( "dSD_KeywordText" ).getString( "" );
 
-            if ( strGridEditCtl5 == null )
-               strGridEditCtl5 = "";
+            if ( strKewordText == null )
+               strKewordText = "";
          }
 
-         if ( StringUtils.isBlank( strGridEditCtl5 ) )
-            strGridEditCtl5 = "&nbsp";
+         if ( StringUtils.isBlank( strKewordText ) )
+            strKewordText = "&nbsp";
 
 %>
 
 <tr<%=strOdd%>>
 
-   <td><a href="#" onclick="GOTO_DU_KeywordUpdate( this.id )" id="GridEditCtl4::<%=strEntityKey%>"><%=strGridEditCtl4%></a></td>
-   <td><%=strGridEditCtl5%></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn3" onclick="GOTO_DU_KeywordUpdate( this.id )" id="BitmapBtn3::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteDirectionsUseStatement2" onclick="COPY_InsertKeyword( this.id )" id="BMBDeleteDirectionsUseStatement2::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Copy"></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapBtn2" onclick="DELETE_DS_StatementKeyword( this.id )" id="BitmapBtn2::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
+   <td><a href="#" onclick="GOTO_DU_KeywordUpdate( this.id )" id="Keyword::<%=strEntityKey%>"><%=strKeyword%></a></td>
+   <td><%=strKewordText%></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateSD_Keyword" onclick="GOTO_DU_KeywordUpdate( this.id )" id="BMBUpdateSD_Keyword::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBCopySD_Keyword" onclick="COPY_InsertKeyword( this.id )" id="BMBCopySD_Keyword::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Copy"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BitmapDeleteSD_Keyword" onclick="DELETE_DS_StatementKeyword( this.id )" id="BitmapDeleteSD_Keyword::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
 </tr>
 
@@ -1229,6 +1485,130 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 
 </div>  <!--  GroupBox8 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:2px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox9:GroupBox */ %>
+
+<div id="GroupBox9" name="GroupBox9"   style="float:left;position:relative; width:830px; height:30px;">  <!-- GroupBox9 --> 
+
+<% /* SD_SubStatements:Text */ %>
+
+<label class="listheader"  id="SD_SubStatements" name="SD_SubStatements" style="width:434px;height:16px;position:absolute;left:6px;top:4px;">Storage and Disposal Sub-Statements</label>
+
+<% /* NewSubStatement:PushBtn */ %>
+<button type="button" class="newbutton" name="NewSubStatement" id="NewSubStatement" value="" onclick="GOTO_StorageDispSubStatementAdd( )" style="width:78px;height:26px;position:absolute;left:560px;top:4px;">New</button>
+
+
+</div>  <!--  GroupBox9 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:2px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GBStorDispSubStatements:GroupBox */ %>
+
+<div id="GBStorDispSubStatements" name="GBStorDispSubStatements" style="width:832px;float:left;">  <!-- GBStorDispSubStatements --> 
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:8px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GridStorDispSubStmts:Grid */ %>
+<table  cols=3 style=""  name="GridStorDispSubStmts" id="GridStorDispSubStmts">
+
+<thead><tr>
+
+   <th>Statement Text</th>
+   <th>Update</th>
+   <th>Delete</th>
+
+</tr></thead>
+
+<tbody>
+
+<%
+try
+{
+   iTableRowCnt = 0;
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) )
+   {
+      long   lEntityKey;
+      String strEntityKey;
+      String strButtonName;
+      String strOdd;
+      String strTag;
+      String strGridEditStorDispSubStmt;
+      String strBMBUpdateStorDispSubStatement;
+      String strBMBDeleteStorDispSubStatement;
+      
+      View vGridStorDispSubStmts;
+      vGridStorDispSubStmts = mMasLC.newView( );
+      csrRC2 = vGridStorDispSubStmts.cursor( "M_StorageDisposalSubStatement" ).setFirst(  );
+      while ( csrRC2.isSet() )
+      {
+         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
+         iTableRowCnt++;
+
+         lEntityKey = vGridStorDispSubStmts.cursor( "M_StorageDisposalSubStatement" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         strGridEditStorDispSubStmt = "";
+         nRC = vGridStorDispSubStmts.cursor( "M_StorageDisposalSubStatement" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strGridEditStorDispSubStmt = vGridStorDispSubStmts.cursor( "M_StorageDisposalSubStatement" ).getAttribute( "dSD_SubTitleText" ).getString( "" );
+
+            if ( strGridEditStorDispSubStmt == null )
+               strGridEditStorDispSubStmt = "";
+         }
+
+         if ( StringUtils.isBlank( strGridEditStorDispSubStmt ) )
+            strGridEditStorDispSubStmt = "&nbsp";
+
+%>
+
+<tr<%=strOdd%>>
+
+   <td><a href="#" onclick="GOTO_StorageDispStatementUpdate( this.id )" id="GridEditStorDispSubStmt::<%=strEntityKey%>"><%=strGridEditStorDispSubStmt%></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateStorDispSubStatement" onclick="GOTO_StorageDispStatementUpdate( this.id )" id="BMBUpdateStorDispSubStatement::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteStorDispSubStatement" onclick="GOTO_StorageDispStatementDelete( this.id )" id="BMBDeleteStorDispSubStatement::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
+
+</tr>
+
+<%
+         csrRC2 = vGridStorDispSubStmts.cursor( "M_StorageDisposalSubStatement" ).setNextContinue( );
+      }
+      vGridStorDispSubStmts.drop( );
+   }
+}
+catch (Exception e)
+{
+out.println("There is an error in grid: " + e.getMessage());
+task.log().info( "*** Error in grid" + e.getMessage() );
+}
+%>
+</tbody>
+</table>
+
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  GBStorDispSubStatements --> 
 </div>  <!-- End of a new line -->
 
 

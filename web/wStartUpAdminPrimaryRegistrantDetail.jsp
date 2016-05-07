@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wStartUpAdminPrimaryRegistrantDetail   Generate Timestamp: 20160406142155644 --%>
+<%-- wStartUpAdminPrimaryRegistrantDetail   Generate Timestamp: 20160427103755581 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1470,7 +1470,7 @@ else
    }
 %>
 
-<input name="EBName" id="EBName"  disabled style="width:706px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EBName" id="EBName" maxlength="254"  disabled style="width:706px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -1526,7 +1526,7 @@ else
    }
 %>
 
-<input name="LoginName" id="LoginName"  disabled style="width:706px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="LoginName" id="LoginName" maxlength="128"  disabled style="width:706px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 
@@ -1564,7 +1564,7 @@ else
 <span  id="MoveIncrement:" name="MoveIncrement:" style="width:114px;height:16px;">Move Increment:</span>
 
 <% /* MoveIncrement:EditBox */ %>
-<input name="MoveIncrement" id="MoveIncrement" style="width:32px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="MoveIncrement" id="MoveIncrement" maxlength="0" style="width:32px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 

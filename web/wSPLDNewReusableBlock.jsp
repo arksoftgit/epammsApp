@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSPLDNewReusableBlock   Generate Timestamp: 20160406142154219 --%>
+<%-- wSPLDNewReusableBlock   Generate Timestamp: 20160427103752733 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -704,7 +704,7 @@ else
    }
 %>
 
-<input name="ReusableBlockName" id="ReusableBlockName" style="width:350px;position:absolute;left:114px;top:52px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="ReusableBlockName" id="ReusableBlockName" maxlength="128" style="width:350px;position:absolute;left:114px;top:52px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* Description::Text */ %>
 

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wStartUpAdminNewAdministrator   Generate Timestamp: 20160406142155402 --%>
+<%-- wStartUpAdminNewAdministrator   Generate Timestamp: 20160427103755018 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1105,7 +1105,7 @@ else
    }
 %>
 
-<input name="EBName" id="EBName" style="width:350px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EBName" id="EBName" maxlength="128" style="width:350px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -1186,7 +1186,7 @@ else
    }
 %>
 
-<input name="EBPassword" id="EBPassword" style="width:350px;<%=strErrorColor%>" type="password" value="<%=strErrorMapValue%>" >
+<input name="EBPassword" id="EBPassword" maxlength="254" style="width:350px;<%=strErrorColor%>" type="password" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -1237,7 +1237,7 @@ else
    }
 %>
 
-<input name="EBConfirmPassword" id="EBConfirmPassword" style="width:350px;<%=strErrorColor%>" type="password" value="<%=strErrorMapValue%>" >
+<input name="EBConfirmPassword" id="EBConfirmPassword" maxlength="254" style="width:350px;<%=strErrorColor%>" type="password" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

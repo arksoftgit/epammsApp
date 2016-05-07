@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCMarketingSelectByType   Generate Timestamp: 20160415145305865 --%>
+<%-- wMLCMarketingSelectByType   Generate Timestamp: 20160505131118019 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -910,7 +910,7 @@ else
 
 
 <div>  <!-- Beginning of a new line -->
-<div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox6:GroupBox */ %>
 
 <div id="GroupBox6" name="GroupBox6" style="width:342px;height:42px;float:left;">  <!-- GroupBox6 --> 
@@ -922,7 +922,7 @@ else
 <div>  <!-- Beginning of a new line -->
 <% /* Text1:Text */ %>
 
-<span  id="Text1" name="Text1" style="width:254px;height:22px;">Currently Selected MLC Usage Entries</span>
+<span  id="Text1" name="Text1" style="width:324px;height:22px;">Currently Selected MLC Usage Entries</span>
 
 </div>  <!-- End of a new line -->
 
@@ -999,7 +999,7 @@ try
          nRC = vGrid1.cursor( "M_MarketingUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl2 = vGrid1.cursor( "M_MarketingUsage" ).getAttribute( "dDisplayUsageClaim" ).getString( "" );
+            strGridEditCtl2 = vGrid1.cursor( "M_MarketingUsage" ).getAttribute( "dUsageClaimClassification" ).getString( "" );
 
             if ( strGridEditCtl2 == null )
                strGridEditCtl2 = "";
@@ -1012,7 +1012,7 @@ try
          nRC = vGrid1.cursor( "M_MarketingUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl3 = vGrid1.cursor( "M_MarketingUsage" ).getAttribute( "dDisplayMarketUseName" ).getString( "" );
+            strGridEditCtl3 = vGrid1.cursor( "M_MarketingUsage" ).getAttribute( "dMarketUsageTextSubUsageNames" ).getString( "" );
 
             if ( strGridEditCtl3 == null )
                strGridEditCtl3 = "";
@@ -1097,7 +1097,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <div style="height:1px;width:2px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox7:GroupBox */ %>
 
-<div id="GroupBox7" name="GroupBox7" style="width:412px;height:42px;float:left;">  <!-- GroupBox7 --> 
+<div id="GroupBox7" name="GroupBox7" style="width:388px;height:42px;float:left;">  <!-- GroupBox7 --> 
 
 
 <div>  <!-- Beginning of a new line -->
@@ -1167,7 +1167,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <div>  <!-- Beginning of a new line -->
 <% /* Text3:Text */ %>
 
-<span  id="Text3" name="Text3" style="width:244px;height:24px;">Potential MLC Usage Entries for Type</span>
+<span  id="Text3" name="Text3" style="width:230px;height:24px;">Potential Usage Entries for Type</span>
 
 </div>  <!-- End of a new line -->
 
@@ -1242,7 +1242,7 @@ try
          nRC = vGrid2.cursor( "M_Usage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl1 = vGrid2.cursor( "M_Usage" ).getAttribute( "dDisplayPathogenName" ).getString( "" );
+            strGridEditCtl1 = vGrid2.cursor( "M_Usage" ).getAttribute( "dUsageTextSubUsageNames" ).getString( "" );
 
             if ( strGridEditCtl1 == null )
                strGridEditCtl1 = "";

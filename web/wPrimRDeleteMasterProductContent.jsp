@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wPrimRDeleteMasterProductContent   Generate Timestamp: 20160406142143402 --%>
+<%-- wPrimRDeleteMasterProductContent   Generate Timestamp: 20160427103731701 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1123,7 +1123,7 @@ else
    }
 %>
 
-<input name="EBPassword" id="EBPassword" style="width:166px;<%=strErrorColor%>" type="password" value="<%=strErrorMapValue%>" >
+<input name="EBPassword" id="EBPassword" maxlength="254" style="width:166px;<%=strErrorColor%>" type="password" value="<%=strErrorMapValue%>" >
 
 </div>  <!-- End of a new line -->
 

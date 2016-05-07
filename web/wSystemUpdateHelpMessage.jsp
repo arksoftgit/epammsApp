@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSystemUpdateHelpMessage   Generate Timestamp: 20160328163930201 --%>
+<%-- wSystemUpdateHelpMessage   Generate Timestamp: 20160426145258605 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -536,7 +536,7 @@ tinymce.init({
    }
 %>
 
-   <textarea name="HelpMsg" id="HelpMsg" style="width:100%"><%=strErrorMapValue%></textarea>
+   <textarea name="HelpMsg" id="HelpMsg" maxlength="32000" style="width:100%"><%=strErrorMapValue%></textarea>
 
 </div>  <!-- End of a new line -->
 
