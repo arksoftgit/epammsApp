@@ -361,7 +361,7 @@ AcceptStorDispSubStmt( VIEW ViewToWindow )
       RETURN nRC
    END
    ResetViewFromSubobject( mMasLC )
-   
+
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -436,6 +436,181 @@ GOTO_StorageDispSubStmtUpdate( VIEW ViewToWindow )
 
    SetViewToSubobject( mMasLC, "M_StorageDisposalSubStatement" )
    CreateTemporalSubobjectVersion( mMasLC, "M_StorageDisposalStatement" )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_DirsForUseSectionDelete
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+GOTO_DirsForUseSectionDelete( VIEW ViewToWindow )
+
+   VIEW mMasLC   REGISTERED AS mMasLC
+
+   mMasLC.MasterLabelContent.wDeleteType       = "Directions For Use Section"
+   mMasLC.MasterLabelContent.wDeleteText       = mMasLC.M_DirectionsForUseSection.Name
+   mMasLC.MasterLabelContent.wDeleteEntityName = "M_DirectionsForUseSection"
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: DELETE_DirectionsForUseStatement
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+DELETE_DirectionsForUseStatement( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   DELETE ENTITY mMasLC.M_DirectionsForUseStatement NONE
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_SelectRemoveDrivingDU
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+GOTO_SelectRemoveDrivingDU( VIEW ViewToWindow )
+
+   VIEW mMasLC  REGISTERED AS mMasLC
+
+   // Initialize the mMasLC  for selecting Driving Claims.
+   mMasLC.MasterLabelContent.wSelectedUsageType = "DC"
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_SelectRemoveDUEntries
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+GOTO_SelectRemoveDUEntries( VIEW ViewToWindow )
+
+   VIEW mMasLC  REGISTERED AS mMasLC
+
+   // Initialize the mMasLC for selecting Statement Usage entries.
+   mMasLC.MasterLabelContent.wSelectedUsageType = "D"
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_DirsForUseStatementAdd
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+GOTO_DirsForUseStatementAdd( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   // Add new temporal entity as last statement under section.
+   CreateTemporalEntity( mMasLC, "M_DirectionsForUseStatement", zPOS_LAST )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_DirsForUseSubStatementAdd
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+GOTO_DirsForUseSubStatementAdd( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   SetViewToSubobject( mMasLC, "M_DirectionsForUseSubStatement" )
+   CreateTemporalEntity( mMasLC, "M_DirectionsForUseStatement", zPOS_LAST )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: GOTO_DirsForUseSubStmtUpdate
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+GOTO_DirsForUseSubStmtUpdate( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+
+   SetViewToSubobject( mMasLC, "M_DirectionsForUseSubStatement" )
+   CreateTemporalSubobjectVersion( mMasLC, "M_DirectionsForUseStatement" )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: AcceptDirectionsSubStatement
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+AcceptDirectionsSubStatement( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   SHORT nRC
+
+   nRC = AcceptSubobject( mMasLC, "M_DirectionsForUseSubStatement" )
+   IF nRC < 0
+      MessageSend( ViewToWindow, "", "Accept Directions For Use Sub-statement",
+                   "The Directions For Use Sub-Statement (Accept) contains errors.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      RETURN nRC
+   END
+   ResetViewFromSubobject( mMasLC )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: CancelDirectionsSubStatement
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+CancelDirectionsSubStatement( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   SHORT nRC
+
+   nRC = CancelSubobject( mMasLC, "M_DirectionsForUseSubStatement" )
+   IF nRC < 0
+      MessageSend( ViewToWindow, "", "Cancel Directions For Use Sub-statement",
+                   "The Directions For Use Sub-Statement (Cancel) contains errors.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+      RETURN nRC
+   END
+   ResetViewFromSubobject( mMasLC )
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: AcceptAddNewDU_Stmt
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+AcceptAddNewDU_Stmt( VIEW ViewToWindow )
+
+   VIEW  mMasLC   REGISTERED AS mMasLC
+   SHORT nRC
+
+   // Accept Direction for Use Statement and add new temporal one.
+   nRC = AcceptSubobject( mMasLC, "M_DirectionsForUseStatement" )
+   IF nRC < 0
+      MessageSend( ViewToWindow, "", "Save And Add New Dirs for Use Statement",
+                   "Error saving Dirs for Use statement.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+
+   CreateTemporalEntity( mMasLC, "M_DirectionsForUseStatement", zPOS_AFTER )
 
 END
 
@@ -1209,12 +1384,12 @@ ConfirmDeleteUsageEntry( VIEW ViewToWindow )
          // Delete the actual Usage entry.
 
          // We don't believe this should be necessary, but JOE is being extremely picky ... DKS 2016.01.23
-         SET CURSOR FIRST mMasLC.M_UsageNonGroupUsage WHERE mMasLC.M_UsageNonGroupUsage.Name = mMasLC.M_Usage.Name 
+         SET CURSOR FIRST mMasLC.M_UsageNonGroupUsage WHERE mMasLC.M_UsageNonGroupUsage.Name = mMasLC.M_Usage.Name
          IF RESULT >= zCURSOR_SET
             EXCLUDE mMasLC.M_UsageNonGroupUsage NONE
          ELSE
-            SET CURSOR FIRST mMasLC.M_UsageGroupUsage WITHIN mMasLC.M_UsageType 
-                       WHERE mMasLC.M_UsageGroupUsage.Name = mMasLC.M_Usage.Name 
+            SET CURSOR FIRST mMasLC.M_UsageGroupUsage WITHIN mMasLC.M_UsageType
+                       WHERE mMasLC.M_UsageGroupUsage.Name = mMasLC.M_Usage.Name
             IF RESULT >= zCURSOR_SET
                EXCLUDE mMasLC.M_UsageGroupUsage NONE
             END
@@ -1345,181 +1520,6 @@ EditApplicationTypesSection( VIEW ViewToWindow )
       CREATE ENTITY mMasLC.M_UsageType
       mMasLC.M_UsageType.UsageType = "T"
    END
-
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
-//  OPERATION: GOTO_DirsForUseSectionDelete
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-GOTO_DirsForUseSectionDelete( VIEW ViewToWindow )
-
-   VIEW mMasLC   REGISTERED AS mMasLC
-
-   mMasLC.MasterLabelContent.wDeleteType       = "Directions For Use Section"
-   mMasLC.MasterLabelContent.wDeleteText       = mMasLC.M_DirectionsForUseSection.Name
-   mMasLC.MasterLabelContent.wDeleteEntityName = "M_DirectionsForUseSection"
-
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
-//  OPERATION: DELETE_DirectionsForUseStatement
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-DELETE_DirectionsForUseStatement( VIEW ViewToWindow )
-
-   VIEW mMasLC REGISTERED AS mMasLC
-   
-   DELETE ENTITY mMasLC.M_DirectionsForUseStatement NONE
-
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
-//  OPERATION: GOTO_SelectRemoveDrivingDU
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-GOTO_SelectRemoveDrivingDU( VIEW ViewToWindow )
-
-   VIEW mMasLC  REGISTERED AS mMasLC
-
-   // Initialize the mMasLC  for selecting Driving Claims.
-   mMasLC.MasterLabelContent.wSelectedUsageType = "DC"
-
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
-//  OPERATION: GOTO_SelectRemoveDUEntries
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-GOTO_SelectRemoveDUEntries( VIEW ViewToWindow )
-
-   VIEW mMasLC  REGISTERED AS mMasLC
-
-   // Initialize the mMasLC for selecting Statement Usage entries.
-   mMasLC.MasterLabelContent.wSelectedUsageType = "D"
-
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
-//  OPERATION: GOTO_DirsForUseStatementAdd
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-GOTO_DirsForUseStatementAdd( VIEW ViewToWindow )
-
-   VIEW mMasLC REGISTERED AS mMasLC
-
-   // Add new temporal entity as last statement under section.
-   CreateTemporalEntity( mMasLC, "M_DirectionsForUseStatement", zPOS_LAST )
-
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
-//  OPERATION: GOTO_DirsForUseSubStatementAdd
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-GOTO_DirsForUseSubStatementAdd( VIEW ViewToWindow )
-
-   VIEW mMasLC REGISTERED AS mMasLC
-
-   SetViewToSubobject( mMasLC, "M_DirectionsForUseSubStatement" )
-   CreateTemporalEntity( mMasLC, "M_DirectionsForUseStatement", zPOS_LAST )
-
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
-//  OPERATION: GOTO_DirsForUseSubStmtUpdate
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-GOTO_DirsForUseSubStmtUpdate( VIEW ViewToWindow )
-
-   VIEW mMasLC REGISTERED AS mMasLC
-
-   SetViewToSubobject( mMasLC, "M_DirectionsForUseSubStatement" )
-   CreateTemporalSubobjectVersion( mMasLC, "M_DirectionsForUseStatement" )
-
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
-//  OPERATION: AcceptDirectionsSubStatement
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-AcceptDirectionsSubStatement( VIEW ViewToWindow )
-
-   VIEW mMasLC REGISTERED AS mMasLC
-   SHORT nRC
-
-   nRC = AcceptSubobject( mMasLC, "M_DirectionsForUseSubStatement" )
-   IF nRC < 0
-      MessageSend( ViewToWindow, "", "Accept Directions For Use Sub-statement",
-                   "The Directions For Use Sub-Statement (Accept) contains errors.",
-                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      RETURN nRC
-   END
-   ResetViewFromSubobject( mMasLC )
-
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
-//  OPERATION: CancelDirectionsSubStatement
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-CancelDirectionsSubStatement( VIEW ViewToWindow )
-
-   VIEW mMasLC REGISTERED AS mMasLC
-   SHORT nRC
-
-   nRC = CancelSubobject( mMasLC, "M_DirectionsForUseSubStatement" )
-   IF nRC < 0
-      MessageSend( ViewToWindow, "", "Cancel Directions For Use Sub-statement",
-                   "The Directions For Use Sub-Statement (Cancel) contains errors.",
-                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
-      RETURN nRC
-   END
-   ResetViewFromSubobject( mMasLC )
-
-END
-
-/////////////////////////////////////////////////////////////////////////////
-//
-//  OPERATION: AcceptAddNewDU_Stmt
-//
-/////////////////////////////////////////////////////////////////////////////
-DIALOG OPERATION
-AcceptAddNewDU_Stmt( VIEW ViewToWindow )
-
-   VIEW  mMasLC   REGISTERED AS mMasLC
-   SHORT nRC
-
-   // Accept Direction for Use Statement and add new temporal one.
-   nRC = AcceptSubobject( mMasLC, "M_DirectionsForUseStatement" )
-   IF nRC < 0
-      MessageSend( ViewToWindow, "", "Save And Add New Dirs for Use Statement",
-                   "Error saving Dirs for Use statement.",
-                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
-      RETURN 2
-   END
-
-   CreateTemporalEntity( mMasLC, "M_DirectionsForUseStatement", zPOS_AFTER )
 
 END
 
@@ -2201,7 +2201,7 @@ ConfirmAddItemsMultiple( VIEW ViewToWindow )
       OrderEntityForView( mMasLC, "M_Usage", "Name A" )
       OrderEntityForView( mMasLC, "M_UsageGroupUsage", "Name A" )
    END
-   
+
    IF wWebXfer.Root.Note != ""
       wWebXfer.Root.String = wWebXfer.Root.Note
       mMasLC.MasterLabelContent.wAddStatementsEntityName = "M_SubUsage"
@@ -2886,7 +2886,7 @@ AttemptDecipheredEntry( VIEW ViewToWindow )
    STRING ( 256 ) szKeyword
    STRING ( 256 ) szKeyValue
    SHORT  nRC
-      
+
    // Try to decipher the Keyword and the Text
    szName = mMasLC.M_Usage.Name
    nRC = DecipherUsageKeyword( szName, "{(", ")}", szKeyword, 256, szKeyValue, 256 )
@@ -2942,7 +2942,7 @@ AcceptAndReturnSubUsageStatement( VIEW ViewToWindow )
    VIEW mMasLC REGISTERED AS mMasLC
 
    mMasLC.M_SubUsage.UsageType = "S"
-      
+
    // Accept temporal Usage statement.
    AcceptSubobject( mMasLC, "M_SubUsage" )
 
@@ -2960,7 +2960,7 @@ AcceptAddNewSubUsageStatement( VIEW ViewToWindow )
    SHORT nRC
 
    mMasLC.M_SubUsage.UsageType = "S"
-      
+
    // Accept temporal Usage statement.
    nRC = AcceptSubobject( mMasLC, "M_SubUsage" )
    IF nRC < 0
@@ -3246,11 +3246,11 @@ DIALOG OPERATION
 SaveNetContents( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-      
+
    // Accept temporal NetContents.
    AcceptSubobject( mMasLC, "NetContents" )
    COMMIT mMasLC
-   
+
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -3264,7 +3264,7 @@ SaveTOC( VIEW ViewToWindow )
    VIEW mMasLC REGISTERED AS mMasLC
 
    COMMIT mMasLC
-   
+
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -3276,11 +3276,11 @@ DIALOG OPERATION
 SaveMarketingSection( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-      
+
    // Accept temporal NetContents.
    AcceptSubobject( mMasLC, "M_MarketingSection" )
    COMMIT mMasLC
-   
+
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -3292,12 +3292,12 @@ DIALOG OPERATION
 SaveMarketingSectionVersion( VIEW ViewToWindow )
 
    VIEW mMasLC REGISTERED AS mMasLC
-      
+
    // Accept temporal NetContents.
    AcceptSubobject( mMasLC, "M_MarketingSection" )
    COMMIT mMasLC
    CreateTemporalSubobjectVersion( mMasLC, "M_MarketingSection" )
-   
+
 END
 
 /////////////////////////////////////////////////////////////////////////////

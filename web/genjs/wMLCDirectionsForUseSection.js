@@ -205,6 +205,36 @@ function AcceptDirectionsUseSect( )
    }
 }
 
+function IncludeXOR( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseSection.zAction.value = "IncludeXOR";
+      document.wMLCDirectionsForUseSection.submit( );
+   }
+}
+
+function CreateView( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseSection.zAction.value = "CreateView";
+      document.wMLCDirectionsForUseSection.submit( );
+   }
+}
+
 function CancelDirectionsUseSect( )
 {
 
@@ -367,7 +397,9 @@ function ComboBoxXOROnChange( )
    if ( _IsDocDisabled( ) == false )
    {
       document.wMLCDirectionsForUseSection.hComboBoxXOR.value = document.wMLCDirectionsForUseSection.ComboBoxXOR.selectedIndex;
-      document.wMLCDirectionsForUseSection.zAction.value = "ZEIDON_ComboBoxSubmit";
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseSection.zAction.value = "IncludeXOR";
       document.wMLCDirectionsForUseSection.submit( );
    }
 }

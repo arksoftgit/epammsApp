@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDirectionsForUseSection   Generate Timestamp: 20160506145303690 --%>
+<%-- wMLCDirectionsForUseSection   Generate Timestamp: 20160506172329058 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -36,6 +36,7 @@ public int DoInputMapping( HttpServletRequest request,
    Task task = objectEngine.getTaskById( taskId );
 
    View mMasLC = null;
+   View mMasLCIncludeExclude = null;
    View vGridTmp = null; // temp view to grid view
    View vRepeatingGrp = null; // temp view to repeating group view
    String strDateFormat = "";
@@ -118,46 +119,36 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       // ComboBox: ComboBoxXOR
-      mMasLC = task.getViewByName( "mMasLC" );
-      if ( VmlOperation.isValid( mMasLC ) )
+      mMasLCIncludeExclude = task.getViewByName( "mMasLCIncludeExclude" );
+      if ( VmlOperation.isValid( mMasLCIncludeExclude ) )
       {
-         nRC = mMasLC.cursor( "M_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
+         nRC = mMasLCIncludeExclude.cursor( "M_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
             strMapValue = request.getParameter( "hComboBoxXOR" );
             if ( strMapValue != null )
             {
                nRelPos = java.lang.Integer.parseInt( strMapValue );
-               nRelPos--;    // For Auto Include combos, we need to decrement for the blank entry.
-               mMasLC.cursor( "M_DirectionsForUseSection" ).setPosition( nRelPos, "" );
+               mMasLCIncludeExclude.cursor( "M_DirectionsForUseSection" ).setPosition( nRelPos, "" );
             }
  
-            // Auto Include Code 
-            // If the value is "0" then the user has selected the null entry, we do not want to do an include.
-            // If there is an entity, we want to exclude it. 
-            if ( !StringUtils.equals( strMapValue, "0" ) )
+            // Set Foreign Key Code 
+            nRC = mMasLC.cursor( "M_DirectionsForUseXOR_Section" ).checkExistenceOfEntity( ).toInt();
+            if ( nRC >= 0 )
             {
-               nRC = mMasLC.cursor( "M_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
-               if ( nRC >= 0 )
-               {
-                  // Only do the automatic include if this is a different entity
-                  strTemp = mMasLC.cursor( "M_DirectionsForUseSection" ).getAttribute( "ID" ).getString( "" );
-                  if ( !StringUtils.equals( strTemp, mMasLC.cursor( "M_DirectionsForUseSection" ).getAttribute( "Name" ).getString( "" ) ) )
-                  {
-                     mMasLC.cursor( "M_DirectionsForUseSection" ).excludeEntity( CursorPosition.NONE );
-                     mMasLC.cursor( "M_DirectionsForUseSection" ).includeSubobject( mMasLC.cursor( "M_DirectionsForUseSection" ), CursorPosition.NEXT );
-                  }
-               }
+               strMapValue = mMasLCIncludeExclude.cursor( "M_DirectionsForUseSection" ).getAttribute( "Name" ).getString( "" );
+            try
+            {
+               if ( webMapping )
+                  VmlOperation.CreateMessage( task, "ComboBoxXOR", "", strMapValue );
                else
-                     mMasLC.cursor( "M_DirectionsForUseSection" ).includeSubobject( mMasLC.cursor( "M_DirectionsForUseSection" ), CursorPosition.NEXT );
+                  mMasLC.cursor( "M_DirectionsForUseXOR_Section" ).getAttribute( "Name" ).setValue( strMapValue, "" );
             }
-            else
+            catch ( InvalidAttributeValueException e )
             {
-               nRC = mMasLC.cursor( "M_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
-               if ( nRC >= 0 )
-               {
-                     mMasLC.cursor( "M_DirectionsForUseSection" ).excludeEntity( CursorPosition.NONE );
-               }
+               nMapError = -16;
+               VmlOperation.CreateMessage( task, "ComboBoxXOR", e.getReason( ), strMapValue );
+            }
             }
          }
 
@@ -216,6 +207,11 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       vGridTmp.drop( );
+   }
+
+   mMasLCIncludeExclude = task.getViewByName( "mMasLCIncludeExclude" );
+   if ( VmlOperation.isValid( mMasLCIncludeExclude ) )
+   {
    }
 
    if ( webMapping == true )
@@ -373,6 +369,44 @@ if ( strActionToProcess != null )
       }
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "IncludeXOR" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseSection", "wMLC.IncludeExclusiveOrDU_Section" );
+      nOptRC = wMLC.IncludeExclusiveOrDU_Section( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -867,7 +901,27 @@ if ( session.getAttribute( "ZeidonError" ) == "Y" )
    session.setAttribute( "ZeidonError", null );
 else
 {
+   VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseSection", "wMLC.CreateIncludeExcludeView" );
+   nOptRC = wMLC.CreateIncludeExcludeView( new zVIEW( vKZXMLPGO ) );
+   if ( nOptRC == 2 )
+   {
+      View vView;
+      String strMessage;
+      String strURLParameters;
+
+      vView = task.getViewByName( "wXferO" );
+      strMessage = vView.cursor( "Root" ).getAttribute( "WebReturnMessage" ).getString( "" );
+      strURLParameters = "?CallingPage=wMLCDirectionsForUseSection.jsp" +
+                         "&Message=" + strMessage +
+                         "&DialogName=" + "wMLC" +
+                         "&OperationName=" + "CreateIncludeExcludeView";
+      strURL = response.encodeRedirectURL( "MessageDisplay.jsp" + strURLParameters );
+      response.sendRedirect( strURL );
+      task.log().info( "Pre/Post Redirect to: " + strURL );
+      return;
+   }
 }
+
    csrRC = vKZXMLPGO.cursor( "DynamicBannerName" ).setFirst( "DialogName", "wMLC", "" );
    if ( csrRC.isSet( ) )
       strBannerName = vKZXMLPGO.cursor( "DynamicBannerName" ).getAttribute( "BannerName" ).getString( "" );
@@ -964,6 +1018,7 @@ else
    View mOrganiz = null;
    View mPrimReg = null;
    View wWebXfer = null;
+   View mMasLCIncludeExclude = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";
@@ -1256,48 +1311,32 @@ else
 <span  id="Text2" name="Text2" style="width:112px;height:16px;">Reviewer Note:</span>
 
 </td>
-<td valign="top" style="width:240px;">
+<td valign="top" style="width:280px;">
 <% /* ComboBoxXOR:ComboBox */ %>
 <% strErrorMapValue = "";  %>
 
-<select  name="ComboBoxXOR" id="ComboBoxXOR" size="1"style="width:240px;" onchange="ComboBoxXOROnChange( )">
+<select  name="ComboBoxXOR" id="ComboBoxXOR" size="1"style="width:280px;" onchange="ComboBoxXOROnChange( )">
 
 <%
-   mMasLC = task.getViewByName( "mMasLC" );
-   if ( VmlOperation.isValid( mMasLC ) )
+   mMasLCIncludeExclude = task.getViewByName( "mMasLCIncludeExclude" );
+   if ( VmlOperation.isValid( mMasLCIncludeExclude ) )
    {
          strComboCurrentValue = "";
       View vComboBoxXOR;
       mMasLC = task.getViewByName( "mMasLC" );
       if ( VmlOperation.isValid( mMasLC ) )
       {
-         nRC = mMasLC.cursor( "M_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
+         nRC = mMasLC.cursor( "M_DirectionsForUseXOR_Section" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strComboCurrentValue = mMasLC.cursor( "M_DirectionsForUseSection" ).getAttribute( "ID" ).getString( "" );
+            strComboCurrentValue = mMasLC.cursor( "M_DirectionsForUseXOR_Section" ).getAttribute( "Name" ).getString( "" );
             if ( strComboCurrentValue == null )
                strComboCurrentValue = "";
          }
       }
-      vComboBoxXOR = mMasLC.newView( );
+      vComboBoxXOR = mMasLCIncludeExclude.newView( );
       ComboCount = 0;
       strComboSelectedValue = "0";
-
-      // For Auto Include, always add a null entry to the combo box.
-      ComboCount++;
-      if ( StringUtils.isBlank( strComboCurrentValue ) )
-      {
-%>
-         <option selected="selected"></option>
-<%
-      }
-      else
-      {
-%>
-         <option></option>
-<%
-      }
-
       csrRC = vComboBoxXOR.cursor( "M_DirectionsForUseSection" ).setFirst(  );
       while ( csrRC.isSet() )
       {
