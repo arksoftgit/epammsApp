@@ -1,3 +1,5 @@
+// wMLCClaimsFootnoteSection   Generate Timestamp: 20160525203747856
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

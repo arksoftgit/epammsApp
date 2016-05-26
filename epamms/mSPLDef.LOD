@@ -1,4 +1,4 @@
-z1000-Zeidon    MSPLDEF  TZZOLODO 03/28/16   16:20:27 1.0a2   
+z1000-Zeidon    MSPLDEF  TZZOLODO 05/26/16   12:37:13 1.0a2   
 eLOD       1
 aZKey      69082112
 aNextZKeyToAssign 130001898
@@ -190,7 +190,7 @@ aName      Organization
 aZKey      1653216
 aPurpose   F
 aER_DiagramPosX 66
-aER_DiagramPosY 37
+aER_DiagramPosY 33
 
 eER_RelLinkRec 7
 aName      for
@@ -207,9 +207,9 @@ aFact      Added thru ER Dialog
 aER_DiagramBendPosX 0
 aER_DiagramBendPosY 0
 aER_DiagramE1PosX 75
-aER_DiagramE1PosY 39
+aER_DiagramE1PosY 37
 aER_DiagramE2PosX 93
-aER_DiagramE2PosY 39
+aER_DiagramE2PosY 37
 
 ePOD_Entity 7
 aSQL_JoinWithParent Y
@@ -397,12 +397,12 @@ aCardMax   m
 eER_RelTypeRec 8
 aZKey      110004749
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 102
-aER_DiagramBendPosY 34
-aER_DiagramE1PosX 102
-aER_DiagramE1PosY 36
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
+aER_DiagramE1PosX 103
+aER_DiagramE1PosY 35
 aER_DiagramE2PosX 186
-aER_DiagramE2PosY 34
+aER_DiagramE2PosY 35
 
 eLOD_EntityChild 6
 aName      ReusableBlockDefinition
@@ -455,11 +455,12 @@ aName      Description
 aZKey      110030382
 
 eDomainRec 9
-aZKey      68568051
-aName      Note
+aZKey      68568087
+aName      TextDescription
 aDomainType A
 aDataType  S
-aMaxStringLth 32000
+aMaxStringLth 1024
+aDesc      Long text
 aContextRestriction N
 
 eLOD_AttributeRec 7
@@ -516,7 +517,7 @@ aFact      Added thru ER Dialog
 aER_DiagramBendPosX 99
 aER_DiagramBendPosY 47
 aER_DiagramE1PosX 99
-aER_DiagramE1PosY 42
+aER_DiagramE1PosY 39
 aER_DiagramE2PosX 159
 aER_DiagramE2PosY 47
 
@@ -575,7 +576,7 @@ aName      Subregistrant
 aZKey      68568355
 aPurpose   F
 aER_DiagramPosX 94
-aER_DiagramPosY 37
+aER_DiagramPosY 34
 
 eER_RelLinkRec 6
 aName      for
@@ -589,12 +590,12 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 7
 aZKey      69031588
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 98
-aER_DiagramBendPosY 53
-aER_DiagramE1PosX 98
-aER_DiagramE1PosY 42
+aER_DiagramBendPosX 97
+aER_DiagramBendPosY 54
+aER_DiagramE1PosX 97
+aER_DiagramE1PosY 39
 aER_DiagramE2PosX 122
-aER_DiagramE2PosY 53
+aER_DiagramE2PosY 54
 
 ePOD_Entity 6
 aSQL_JoinWithParent Y
@@ -712,9 +713,9 @@ aFact      Added thru ER Dialog
 aER_DiagramBendPosX 0
 aER_DiagramBendPosY 0
 aER_DiagramE1PosX 65
-aER_DiagramE1PosY 41
-aER_DiagramE2PosX 49
-aER_DiagramE2PosY 41
+aER_DiagramE1PosY 33
+aER_DiagramE2PosX 48
+aER_DiagramE2PosY 33
 
 ePOD_Entity 8
 aSQL_JoinWithParent Y
@@ -768,8 +769,8 @@ eER_EntityRec 7
 aName      PrimaryRegistrant
 aZKey      68568354
 aPurpose   F
-aER_DiagramPosX 40
-aER_DiagramPosY 38
+aER_DiagramPosX 39
+aER_DiagramPosY 32
 
 eER_RelLinkRec 7
 aName      for
@@ -783,12 +784,12 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 8
 aZKey      69031569
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 44
-aER_DiagramBendPosY 55
-aER_DiagramE1PosX 44
-aER_DiagramE1PosY 43
+aER_DiagramBendPosX 43
+aER_DiagramBendPosY 51
+aER_DiagramE1PosX 43
+aER_DiagramE1PosY 37
 aER_DiagramE2PosX 50
-aER_DiagramE2PosY 55
+aER_DiagramE2PosY 51
 
 ePOD_Entity 7
 aSQL_JoinWithParent Y
@@ -838,13 +839,6 @@ aName      Description
 aZKey      69031560
 
 eDomainRec 8
-aZKey      68568087
-aName      TextDescription
-aDomainType A
-aDataType  S
-aMaxStringLth 1024
-aDesc      Long text
-aContextRestriction N
 
 eLOD_AttributeRec 6
 aZKey      3961472
@@ -955,7 +949,7 @@ aName      MasterProduct
 aZKey      69031545
 aPurpose   F
 aER_DiagramPosX 51
-aER_DiagramPosY 53
+aER_DiagramPosY 49
 
 eER_RelLinkRec 6
 aName      for
@@ -972,9 +966,9 @@ aFact      Added thru ER Dialog
 aER_DiagramBendPosX 0
 aER_DiagramBendPosY 0
 aER_DiagramE1PosX 60
-aER_DiagramE1PosY 55
+aER_DiagramE1PosY 52
 aER_DiagramE2PosX 122
-aER_DiagramE2PosY 55
+aER_DiagramE2PosY 52
 
 ePOD_Entity 6
 aSQL_JoinWithParent Y
@@ -1112,7 +1106,7 @@ aName      SubregProduct
 aZKey      69031572
 aPurpose   F
 aER_DiagramPosX 123
-aER_DiagramPosY 53
+aER_DiagramPosY 51
 
 eER_RelLinkRec 5
 aName      for
@@ -1127,9 +1121,9 @@ eER_RelTypeRec 6
 aZKey      69031576
 aFact      Added thru ER Dialog
 aER_DiagramBendPosX 152
-aER_DiagramBendPosY 55
+aER_DiagramBendPosY 53
 aER_DiagramE1PosX 132
-aER_DiagramE1PosY 55
+aER_DiagramE1PosY 53
 aER_DiagramE2PosX 152
 aER_DiagramE2PosY 60
 
@@ -1244,7 +1238,7 @@ aName      MasterLabelContent
 aZKey      68568593
 aPurpose   F
 aER_DiagramPosX 51
-aER_DiagramPosY 64
+aER_DiagramPosY 63
 
 eER_RelLinkRec 5
 aName      for
@@ -1259,11 +1253,11 @@ eER_RelTypeRec 6
 aZKey      68568643
 aFact      Added thru ER Dialog
 aER_DiagramBendPosX 59
-aER_DiagramBendPosY 62
+aER_DiagramBendPosY 61
 aER_DiagramE1PosX 59
-aER_DiagramE1PosY 63
+aER_DiagramE1PosY 62
 aER_DiagramE2PosX 149
-aER_DiagramE2PosY 62
+aER_DiagramE2PosY 61
 
 ePOD_Entity 5
 aSQL_JoinWithParent Y
@@ -2531,6 +2525,13 @@ aZKey      69054619
 aDesc      For display purposes only
 
 eDomainRec 6
+aZKey      110059057
+aName      ContainerVolumeStorageDisposal
+aDomainType T
+aDataType  S
+aMaxStringLth 3
+aDesc      Storage/Disposal split <=1 or >1
+aContextRestriction N
 
 eLOD_AttributeRec 4
 aZKey      3935566
@@ -2937,6 +2938,12 @@ aName      DisplayText
 aZKey      4335241
 
 eDomainRec 7
+aZKey      68568051
+aName      Note
+aDomainType A
+aDataType  S
+aMaxStringLth 32000
+aContextRestriction N
 
 eLOD_AttributeRec 5
 aZKey      4732182
@@ -4278,6 +4285,7 @@ aZKey      120406427
 eER_AttributeRec 7
 aName      Name
 aZKey      1178554
+aNotNull   Y
 aCaseSens  Y
 
 eDomainRec 8
@@ -17127,6 +17135,7 @@ i132       25
 i135       8
 i138       14
 i141       83
+i144       68
 i153       150
 i159       156
 i165       14
@@ -17135,7 +17144,7 @@ i172       25
 i175       8
 i178       14
 i181       83
-i184       144
+i184       68
 i187       147
 i190       150
 i193       150
@@ -17149,10 +17158,10 @@ i216       8
 i219       14
 i222       156
 i228       225
-i234       68
+i234       14
 i239       25
 i242       8
-i245       14
+i245       68
 i248       150
 i251       150
 i254       156
@@ -17176,10 +17185,10 @@ i324       25
 i327       8
 i330       14
 i333       14
-i336       14
-i342       68
-i345       68
-i348       68
+i336       68
+i342       14
+i345       14
+i348       14
 i351       74
 i354       300
 i363       8
@@ -17197,7 +17206,7 @@ i409       8
 i412       14
 i415       14
 i418       14
-i421       68
+i421       14
 i424       386
 i427       74
 i436       8
@@ -17213,27 +17222,25 @@ i471       68
 i478       8
 i483       25
 i486       8
-i489       14
 i495       14
-i498       14
+i498       68
 i501       74
-i504       68
+i504       14
 i507       74
 i510       300
 i519       8
 i524       25
 i529       8
-i538       68
+i538       14
 i543       25
 i546       8
 i549       8
 i555       8
 i558       14
 i561       68
-i564       68
 i567       68
 i570       459
-i573       68
+i573       14
 i576       74
 i579       465
 i582       68
@@ -17243,7 +17250,7 @@ i597       25
 i600       8
 i603       14
 i606       14
-i609       14
+i609       68
 i612       74
 i615       14
 i618       74
@@ -17260,7 +17267,7 @@ i652       532
 i654       534
 i655       535
 i657       537
-i658       68
+i658       14
 i661       14
 i662       539
 i663       540
@@ -17273,7 +17280,7 @@ i673       550
 i678       8
 i681       68
 i684       14
-i687       68
+i687       564
 i690       74
 i693       465
 i696       68
@@ -17283,8 +17290,8 @@ i711       25
 i714       8
 i717       14
 i720       14
-i723       14
-i726       68
+i723       68
+i726       14
 i729       74
 i732       300
 i735       74
@@ -17312,17 +17319,17 @@ i813       14
 i815       55
 i818       74
 i828       8
-i831       14
+i831       68
 i836       25
 i839       8
 i842       532
 i845       535
-i848       68
+i848       14
 i853       25
 i856       8
 i859       532
 i862       535
-i865       68
+i865       14
 i868       14
 i871       74
 i876       25
@@ -17333,7 +17340,7 @@ i882       532
 i884       534
 i885       535
 i887       537
-i888       68
+i888       14
 i891       14
 i894       74
 i895       539
@@ -17344,7 +17351,7 @@ i906       532
 i908       534
 i909       535
 i911       537
-i912       68
+i912       14
 i914       890
 i915       14
 i917       893
@@ -17353,7 +17360,7 @@ i919       539
 i926       827
 i927       8
 i929       830
-i930       14
+i930       68
 i931       832
 i932       833
 i933       834
@@ -17364,7 +17371,7 @@ i939       532
 i941       844
 i942       535
 i944       847
-i945       68
+i945       14
 i948       14
 i951       14
 i953       55
@@ -17378,7 +17385,7 @@ i962       532
 i964       861
 i965       535
 i967       864
-i968       68
+i968       14
 i970       867
 i971       14
 i973       870
@@ -17393,7 +17400,7 @@ i983       532
 i985       534
 i986       535
 i988       537
-i989       68
+i989       14
 i991       890
 i992       14
 i994       893
@@ -17757,7 +17764,7 @@ i1680      14
 i1681      54
 i1682      55
 i1683      56
-i1689      68
+i1689      564
 i1692      14
 i1695      8
 i1698      14
@@ -17874,15 +17881,15 @@ i1997      14
 i1999      332
 i2000      14
 i2002      335
-i2003      14
+i2003      68
 i2005      338
 i2006      339
 i2008      341
-i2009      68
+i2009      14
 i2011      344
-i2012      68
+i2012      14
 i2014      347
-i2015      68
+i2015      14
 i2017      350
 i2018      74
 i2019      355
@@ -17904,15 +17911,15 @@ i2041      14
 i2043      332
 i2044      14
 i2046      335
-i2047      14
+i2047      68
 i2049      338
 i2050      339
 i2052      341
-i2053      68
+i2053      14
 i2055      344
-i2056      68
+i2056      14
 i2058      347
-i2059      68
+i2059      14
 i2061      350
 i2062      74
 i2063      355
@@ -17934,15 +17941,15 @@ i2085      14
 i2087      332
 i2088      14
 i2090      335
-i2091      14
+i2091      68
 i2093      338
 i2094      339
 i2096      341
-i2097      68
+i2097      14
 i2099      344
-i2100      68
+i2100      14
 i2102      347
-i2103      68
+i2103      14
 i2105      350
 i2106      74
 i2107      355
@@ -17955,7 +17962,7 @@ i2116      532
 i2118      534
 i2119      535
 i2121      537
-i2122      68
+i2122      14
 i2124      890
 i2125      14
 i2127      893
@@ -17970,7 +17977,7 @@ i2139      532
 i2141      534
 i2142      535
 i2144      537
-i2145      68
+i2145      14
 i2147      890
 i2148      14
 i2150      893
@@ -17988,7 +17995,7 @@ i2181      14
 i2184      241
 i2185      8
 i2187      244
-i2188      14
+i2188      68
 i2190      247
 i2191      150
 i2193      250
@@ -18029,9 +18036,9 @@ i2253      8
 i2255      719
 i2256      14
 i2258      722
-i2259      14
+i2259      68
 i2261      725
-i2262      68
+i2262      14
 i2264      728
 i2265      74
 i2266      739
@@ -18050,18 +18057,18 @@ i2307      14
 i2310      14
 i2316      8
 i2319      14
-i2322      68
+i2322      564
 i2325      8
 i2328      71
 i2331      14
-i2334      68
+i2334      564
 i2337      465
-i2340      68
-i2343      68
-i2346      68
+i2340      564
+i2343      564
+i2346      564
 i2350      14
 i2355      14
-i2358      68
+i2358      564
 i2361      14
 i2365      14
 i2369      14
@@ -18072,7 +18079,7 @@ i2382      14
 i2385      827
 i2386      8
 i2388      830
-i2389      14
+i2389      68
 i2392      8
 i2393      832
 i2396      8
@@ -18127,7 +18134,7 @@ i2465      241
 i2466      8
 i2467      243
 i2468      244
-i2469      14
+i2469      68
 i2470      246
 i2471      247
 i2472      150
@@ -18173,7 +18180,7 @@ i2511      180
 i2512      83
 i2513      182
 i2514      183
-i2515      144
+i2515      68
 i2516      185
 i2517      186
 i2518      147
@@ -18298,7 +18305,7 @@ i2636      140
 i2637      83
 i2638      142
 i2639      143
-i2640      144
+i2640      68
 i2641      145
 i2642      146
 i2643      147
@@ -18380,7 +18387,7 @@ i2718      230
 i2719      231
 i2720      232
 i2721      233
-i2722      68
+i2722      14
 i2723      235
 i2724      236
 i2725      237
@@ -18396,19 +18403,19 @@ i2734      332
 i2735      14
 i2736      334
 i2737      335
-i2738      14
+i2738      68
 i2739      337
 i2740      338
 i2741      339
 i2742      340
 i2743      341
-i2744      68
+i2744      14
 i2745      343
 i2746      344
-i2747      68
+i2747      14
 i2748      346
 i2749      347
-i2750      68
+i2750      14
 i2751      349
 i2752      350
 i2753      74
@@ -18472,7 +18479,7 @@ i2810      417
 i2811      14
 i2812      419
 i2813      420
-i2814      68
+i2814      14
 i2815      422
 i2816      423
 i2817      386
@@ -18532,7 +18539,7 @@ i2870      485
 i2871      8
 i2872      487
 i2873      488
-i2874      14
+i2874      489
 i2875      490
 i2876      491
 i2877      492
@@ -18541,13 +18548,13 @@ i2879      494
 i2880      14
 i2881      496
 i2882      497
-i2883      14
+i2883      68
 i2884      499
 i2885      500
 i2886      74
 i2887      502
 i2888      503
-i2889      68
+i2889      14
 i2890      505
 i2891      506
 i2892      74
@@ -18617,7 +18624,7 @@ i2955      605
 i2956      14
 i2957      607
 i2958      608
-i2959      14
+i2959      68
 i2960      610
 i2961      611
 i2962      74
@@ -18648,7 +18655,7 @@ i2986      560
 i2987      68
 i2988      562
 i2989      563
-i2990      68
+i2990      564
 i2991      565
 i2992      566
 i2993      68
@@ -18657,7 +18664,7 @@ i2995      569
 i2996      459
 i2997      571
 i2998      572
-i2999      68
+i2999      14
 i3000      574
 i3001      575
 i3002      74
@@ -18702,7 +18709,7 @@ i3040      534
 i3041      535
 i3042      536
 i3043      537
-i3044      68
+i3044      14
 i3045      539
 i3046      540
 i3047      541
@@ -18725,10 +18732,10 @@ i3063      719
 i3064      14
 i3065      721
 i3066      722
-i3067      14
+i3067      68
 i3068      724
 i3069      725
-i3070      68
+i3070      14
 i3071      727
 i3072      728
 i3073      74
@@ -18756,7 +18763,7 @@ i3094      683
 i3095      14
 i3096      685
 i3097      686
-i3098      68
+i3098      564
 i3099      688
 i3100      689
 i3101      74
@@ -18807,7 +18814,7 @@ i3145      534
 i3146      535
 i3147      656
 i3148      537
-i3149      68
+i3149      14
 i3150      659
 i3151      660
 i3152      14
@@ -18911,7 +18918,7 @@ i3249      534
 i3250      535
 i3251      886
 i3252      537
-i3253      68
+i3253      14
 i3254      889
 i3255      890
 i3256      14
@@ -18933,7 +18940,7 @@ i3271      861
 i3272      535
 i3273      863
 i3274      864
-i3275      68
+i3275      14
 i3276      866
 i3277      867
 i3278      14
@@ -18955,7 +18962,7 @@ i3293      844
 i3294      535
 i3295      846
 i3296      847
-i3297      68
+i3297      14
 i3298      849
 i3299      850
 i3300      851
@@ -18965,7 +18972,7 @@ i3303      827
 i3304      8
 i3305      829
 i3306      830
-i3307      14
+i3307      68
 i3308      832
 i3309      833
 i3310      834
@@ -18991,7 +18998,7 @@ i3329      534
 i3330      535
 i3331      987
 i3332      537
-i3333      68
+i3333      14
 i3334      990
 i3335      890
 i3336      14
@@ -19013,7 +19020,7 @@ i3351      534
 i3352      535
 i3353      910
 i3354      537
-i3355      68
+i3355      14
 i3356      913
 i3357      890
 i3358      14
@@ -19035,7 +19042,7 @@ i3373      861
 i3374      535
 i3375      966
 i3376      864
-i3377      68
+i3377      14
 i3378      969
 i3379      867
 i3380      14
@@ -19057,7 +19064,7 @@ i3395      844
 i3396      535
 i3397      943
 i3398      847
-i3399      68
+i3399      14
 i3400      946
 i3401      947
 i3402      14
@@ -19075,7 +19082,7 @@ i3413      827
 i3414      8
 i3415      928
 i3416      830
-i3417      14
+i3417      68
 i3418      832
 i3419      833
 i3420      834
@@ -20010,7 +20017,7 @@ i4348      1685
 i4349      1686
 i4350      1687
 i4351      1688
-i4352      68
+i4352      564
 i4353      1690
 i4354      1691
 i4355      14
@@ -20059,19 +20066,19 @@ i4397      332
 i4398      14
 i4399      2001
 i4400      335
-i4401      14
+i4401      68
 i4402      2004
 i4403      338
 i4404      339
 i4405      2007
 i4406      341
-i4407      68
+i4407      14
 i4408      2010
 i4409      344
-i4410      68
+i4410      14
 i4411      2013
 i4412      347
-i4413      68
+i4413      14
 i4414      2016
 i4415      350
 i4416      74
@@ -20103,19 +20110,19 @@ i4441      332
 i4442      14
 i4443      2045
 i4444      335
-i4445      14
+i4445      68
 i4446      2048
 i4447      338
 i4448      339
 i4449      2051
 i4450      341
-i4451      68
+i4451      14
 i4452      2054
 i4453      344
-i4454      68
+i4454      14
 i4455      2057
 i4456      347
-i4457      68
+i4457      14
 i4458      2060
 i4459      350
 i4460      74
@@ -20147,19 +20154,19 @@ i4485      332
 i4486      14
 i4487      2089
 i4488      335
-i4489      14
+i4489      68
 i4490      2092
 i4491      338
 i4492      339
 i4493      2095
 i4494      341
-i4495      68
+i4495      14
 i4496      2098
 i4497      344
-i4498      68
+i4498      14
 i4499      2101
 i4500      347
-i4501      68
+i4501      14
 i4502      2104
 i4503      350
 i4504      74
@@ -20191,7 +20198,7 @@ i4529      534
 i4530      535
 i4531      2120
 i4532      537
-i4533      68
+i4533      14
 i4534      2123
 i4535      890
 i4536      14
@@ -20217,7 +20224,7 @@ i4555      534
 i4556      535
 i4557      2143
 i4558      537
-i4559      68
+i4559      14
 i4560      2146
 i4561      890
 i4562      14
@@ -20257,7 +20264,7 @@ i4595      241
 i4596      8
 i4597      2186
 i4598      244
-i4599      14
+i4599      68
 i4600      2189
 i4601      247
 i4602      150
@@ -20315,10 +20322,10 @@ i4653      719
 i4654      14
 i4655      2257
 i4656      722
-i4657      14
+i4657      68
 i4658      2260
 i4659      725
-i4660      68
+i4660      14
 i4661      2263
 i4662      728
 i4663      74
@@ -20390,7 +20397,7 @@ i4728      2315
 i4729      8
 i4730      2320
 i4731      2321
-i4732      68
+i4732      564
 i4733      2326
 i4734      2327
 i4735      71
@@ -20402,19 +20409,19 @@ i4740      2324
 i4741      8
 i4742      2332
 i4743      2333
-i4744      68
+i4744      564
 i4745      2335
 i4746      2336
 i4747      465
 i4748      2338
 i4749      2339
-i4750      68
+i4750      564
 i4751      2341
 i4752      2342
-i4753      68
+i4753      564
 i4754      2344
 i4755      2345
-i4756      68
+i4756      564
 i4757      2304
 i4758      2347
 i4759      2348
@@ -20436,7 +20443,7 @@ i4774      2354
 i4775      14
 i4776      2356
 i4777      2357
-i4778      68
+i4778      564
 i4779      2359
 i4780      2360
 i4781      14
@@ -20458,7 +20465,7 @@ i4796      827
 i4797      8
 i4798      2387
 i4799      830
-i4800      14
+i4800      68
 i4801      2390
 i4802      2391
 i4803      8

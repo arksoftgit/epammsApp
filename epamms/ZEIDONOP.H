@@ -1,4 +1,4 @@
-//start mSPLDef 2016.04.28 15:44:02
+//start mSPLDef 2016.05.26 13:05:27
 zOPER_EXPORT zSHORT OPERATION
 omSPLDef_GeneratePDF_Label( zVIEW vViewToInstance0 );
 
@@ -169,7 +169,7 @@ zOPER_EXPORT zSHORT OPERATION
 omTempl_BuildDisplayStructure( zVIEW vViewToInstance0 );
 
 //end
-//start mMasLC 2016.05.03 19:06:42
+//start mMasLC 2016.05.26 13:05:26
 zOPER_EXPORT zSHORT OPERATION
 omMasLC_MergeUsageSelectEnts( zVIEW vViewToInstance0 );
 
@@ -220,7 +220,7 @@ zOPER_EXPORT zSHORT OPERATION
 omMasLC_BuildNonGroupEntries( zVIEW vViewToInstance0 );
 
 //end
-//start mSubLC 2016.04.28 15:44:04
+//start mSubLC 2016.05.26 13:05:28
 zOPER_EXPORT zSHORT OPERATION
 omSubLC_BuildNewSLC_Version( zVIEW vViewToInstance0,
                              zVIEW vOriginalSLC1,
@@ -264,7 +264,7 @@ omSubLC_ObjectConstraints( zVIEW vViewtoInstance0,
                            zSHORT nState2 );
 
 //end
-//start DOMAINT 2016.04.28 15:43:49
+//start DOMAINT 2016.05.26 13:05:23
 zOPER_EXPORT zSHORT OPERATION
 oDOMAINT_ActivateDomainList( zPVIEW vViewToInstance0,
                              zVIEW vViewToWindow1 );
@@ -285,7 +285,7 @@ oDOMAINT_PreloadSystemDomains( zVIEW vViewToInstance0,
                                zPCHAR pchInstallApp2 );
 
 //end
-//start lMLCATgt 2016.04.28 15:43:51
+//start lMLCATgt 2016.05.26 13:05:24
 zOPER_EXPORT zSHORT OPERATION
 olMLCATgt_BuildDifferencesMLC( zVIEW vViewToInstance0,
                                zVIEW vSourceCompareObject1 );
@@ -332,7 +332,7 @@ InsertOptionalSubUsages( zVIEW vmMasLC0,
                          zSHORT nbInsertBraces3 );
 
 zOPER_EXPORT zSHORT OPERATION
-InsertMappingWordsIntoString( zVIEW vmSPLDef0,
+InsertKeywordsIntoString( zVIEW vmSPLDef0,
                               zPCHAR pchszString1,
                               zPCHAR pchszUsageEntityName2,
                               zPCHAR pchszUsageNameScope3,
@@ -703,7 +703,7 @@ GenerateKeywordTextIntoString( zVIEW vKeywordEntityView0,
                                zPCHAR pchSeparatorCharacters4 );
 
 zOPER_EXPORT zSHORT OPERATION
-InsertMappingWordsIntoString( zVIEW vmSPLDef0,
+InsertKeywordsIntoString( zVIEW vmSPLDef0,
                               zPCHAR pchszString1,
                               zPCHAR pchszUsageEntityName2,
                               zPCHAR pchszUsageNameScope3,

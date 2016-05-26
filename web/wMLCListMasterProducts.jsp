@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCListMasterProducts   Generate Timestamp: 20160427124122286 --%>
+<%-- wMLCListMasterProducts   Generate Timestamp: 20160525203751606 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -642,6 +642,7 @@ else
    View mOrganiz = null;
    View mPrimReg = null;
    View wWebXfer = null;
+   View mMasLCIncludeExclude = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";

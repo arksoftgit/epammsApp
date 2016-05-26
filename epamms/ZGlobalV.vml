@@ -1203,15 +1203,15 @@ CreateCurrentTemporalVersion( VIEW  ViewToWindow,
 
 END
 
-/////////////////////////////////////////////////////////////////////////////
-//    
-//  OPERATION: InsertMappingWordsIntoString
-//    
-/////////////////////////////////////////////////////////////////////////////
 /**** moved to ZGlobal1
+/////////////////////////////////////////////////////////////////////////////
+//    
+//  OPERATION: InsertKeywordsIntoString
+//    
+/////////////////////////////////////////////////////////////////////////////
 GLOBAL OPERATION
-InsertMappingWordsIntoString( VIEW mSPLDef BASED ON LOD mSPLDef,
-                              STRING ( 10000 ) szSourceString,
+InsertKeywordsIntoString( VIEW mSPLDef BASED ON LOD mSPLDef,
+                              STRING ( 10000 ) szTextToModify,
                               STRING ( 32 ) szUsageTypeEntityName,
                               STRING ( 32 ) szLoopingEntityName,
                               STRING ( 32 ) szSeparatorCharacters )
@@ -1234,7 +1234,7 @@ InsertMappingWordsIntoString( VIEW mSPLDef BASED ON LOD mSPLDef,
    INTEGER TempLength
    SHORT   nRC
    
-   // Insert Usage text into a position in szStringArea that is identified by a Usage Keyword.
+   // Insert Usage text into a position in szTextToModify that is identified by a Usage Keyword.
    // The entries inserted will be separated by one or more characters as identified by the variable szSeparatorCharacters.
    // After determining the position of the insertion, we will loop through Usage entries, formatting each entry as we go.
 //TraceLineS( "### Insert szUsageTypeEntityName: ", szUsageTypeEntityName )
@@ -1247,10 +1247,10 @@ InsertMappingWordsIntoString( VIEW mSPLDef BASED ON LOD mSPLDef,
    SourceIndex  = 1
    SourceOffset = 1
    MoveStringLength = 1
-   Length = zGetStringLen( szSourceString )  // 133
+   Length = zGetStringLen( szTextToModify )  // 133
    Length = Length - 4  // 129  Back off the end of the string so that the two character compare doesn't go beyond the string.
    LOOP WHILE SourceIndex <= Length
-      IF szSourceString[SourceIndex:2] = "{{"  // 13,115
+      IF szTextToModify[SourceIndex:2] = "{{"  // 13,115
       
          // First copy over the characters we've just skipped over and reset length (unless {{ are first two characters).
          // ZeidonStringCopy( Target, TargetOffset, TargetMaxToReceive, Source, SourceOffset, NoCharsToCopy, TargetMaxLength )
@@ -1258,7 +1258,7 @@ InsertMappingWordsIntoString( VIEW mSPLDef BASED ON LOD mSPLDef,
             TargetOffset = zstrlen( szToString )  // 0,132("For use in: Airports, Animal Care, Animal Laboratories, Animal Life Science Laboratories, Athletic Facilities and Automotive Industy")
             TargetOffset = TargetOffset + 1  // 1,133
             MoveStringLength = MoveStringLength - 1 // 12,86
-            ZeidonStringCopy( szToString, TargetOffset, 5000, szSourceString, SourceOffset, MoveStringLength, 10000 )
+            ZeidonStringCopy( szToString, TargetOffset, 5000, szTextToModify, SourceOffset, MoveStringLength, 10000 )
             // "For use in: "
             // "For use in: Airports, Animal Care, Animal Laboratories, Animal Life Science Laboratories, Athletic Facilities and Automotive Industy. Disinfects, cleans, and deodorizes the following hard nonporous inanimate surfaces:"
             SourceOffset = SourceOffset + MoveStringLength   // 13,114=28+86  Skip past characters just moved.
@@ -1269,13 +1269,13 @@ InsertMappingWordsIntoString( VIEW mSPLDef BASED ON LOD mSPLDef,
          SourceIndex  = SourceIndex + 2  // 15,117
          TypeLength  = 0
          TempLength = Length + 4  // 133,133  We need to add the characters back to the length in case the Type is at the end of the Source.
-         LOOP WHILE szSourceString[SourceIndex:2] != "}}" AND TypeLength <= 32 AND SourceIndex < TempLength
+         LOOP WHILE szTextToModify[SourceIndex:2] != "}}" AND TypeLength <= 32 AND SourceIndex < TempLength
             SourceIndex = SourceIndex + 1
             TypeLength  = TypeLength + 1
          END
          // SourceIndex == 26,124   TypeLength == 11,7 ("Location"),("{Surfac")
          SourceOffset = SourceOffset + 2  // 15,116  Skip past closing double parens and length of keyword.
-         ZeidonStringCopy( szUsageType, 1, 50, szSourceString, SourceOffset, TypeLength, 100 )  // "Location","{Surfac"     <== ERROR!!!
+         ZeidonStringCopy( szUsageType, 1, 50, szTextToModify, SourceOffset, TypeLength, 100 )  // "Location","{Surfac"     <== ERROR!!!
          SourceIndex = SourceIndex + 2  // 28
          SourceOffset = SourceOffset + TypeLength + 2  // 28  Skip past closing double parens and length of keyword.
          
@@ -1346,8 +1346,8 @@ InsertMappingWordsIntoString( VIEW mSPLDef BASED ON LOD mSPLDef,
    MoveStringLength = MoveStringLength + 10    // Add extra characters to length as above was not calculating them correctly.
    TargetOffset = zstrlen( szToString )
    TargetOffset = TargetOffset + 1
-   ZeidonStringCopy( szToString, TargetOffset, 5000, szSourceString, SourceOffset, MoveStringLength, 10000 )
-   szSourceString = szToString
+   ZeidonStringCopy( szToString, TargetOffset, 5000, szTextToModify, SourceOffset, MoveStringLength, 10000 )
+   szTextToModify = szToString
 ***/
     /*****
        zVIEW  viewT;
@@ -1362,7 +1362,7 @@ InsertMappingWordsIntoString( VIEW mSPLDef BASED ON LOD mSPLDef,
        int    nNameLth;
        int    nCount;
        int    nRC;
-       // Insert Usage text into a position in szStringArea that is identified by a Usage Keyword.
+       // Insert Usage text into a position in szTextToModify that is identified by a Usage Keyword.
        // The entries inserted will be separated by one or more characters as identified by the variable szSeparatorCharacters.
        // After determining the position of the insertion, we will loop through Usage entries, formatting each entry as we go.
        // Which entries we insert depend on the UsageType as follows:
@@ -1439,6 +1439,7 @@ InsertMappingWordsIntoString( VIEW mSPLDef BASED ON LOD mSPLDef,
 
 // END
 
+/**** moved to ZGlobal1
 /////////////////////////////////////////////////////////////////////////////
 //    
 //  OPERATION: GenerateKeywordTextIntoString
@@ -1446,7 +1447,7 @@ InsertMappingWordsIntoString( VIEW mSPLDef BASED ON LOD mSPLDef,
 /////////////////////////////////////////////////////////////////////////////
 GLOBAL OPERATION
 GenerateKeywordTextIntoString( VIEW mMasLC BASED ON LOD mMasLC,
-                               STRING ( 10000 ) szSourceString,
+                               STRING ( 10000 ) szTextToModify,
                                STRING ( 32 ) szKeywordEntityName,
                                STRING ( 32 ) szKeywordTextEntityName,
                                STRING ( 32 ) szSeparatorCharacters )
@@ -1471,112 +1472,113 @@ GenerateKeywordTextIntoString( VIEW mMasLC BASED ON LOD mMasLC,
    INTEGER TempLength
    SHORT   nRC
    
-   // Insert Keyword text items into a position in szStringArea that is identified by the Keyword.
+   // Insert Keyword text items into a position in szTextToModify that is identified by the Keyword.
    // The entries inserted will be separated by one or more characters as identified by the variable szSeparatorCharacters.
    // After determining the position of the insertion, we will loop through Keyword entries, formatting each entry as we go.
 TraceLineS( "### Insert szKeywordEntityName: ", szKeywordEntityName )
 TraceLineS( "### Insert szKeywordTextEntityName: ", szKeywordTextEntityName )
-   
-   SourceIndex  = 1
-   SourceOffset = 1
-   MoveStringLength = 1
-   szToString = ""
-   Length = zGetStringLen( szSourceString )
-   Length = Length - 4    // We need to back off the end of the string so that the two character compare doesn't go beyond the string.
-   szLastKeywordCharacter = ""
-   LOOP WHILE SourceIndex <= Length
-      IF szSourceString[SourceIndex:2] = "{{"
-      
-         szLastKeywordCharacter = "{"
-      
-         // First copy over the characters we've just skipped over and reset length (unless {{ are first two characters).
-         // ZeidonStringCopy( Target, TargetOffset, TargetMaxToReceive, Source, SourceOffset, NoCharsToCopy, TargetMaxLength )
-         IF SourceIndex > 1
-            TargetOffset = zstrlen( szToString )
-            TargetOffset = TargetOffset + 1
-            MoveStringLength = MoveStringLength - 1
-     
-            ZeidonStringCopy( szToString, TargetOffset, 5000, szSourceString, SourceOffset, MoveStringLength, 10000 )
-            //SourceOffset = SourceOffset + MoveStringLength   // Skip past characters just moved.
-            SourceOffset = SourceIndex    // Skip to new position.
-            MoveStringLength = 1
-         END
+   nRC = zSearchSubString( szTextToModify, "{{", "f", 0 )
+   IF nRC >= 0
+      SourceIndex  = 1
+      SourceOffset = 1
+      MoveStringLength = 1
+      szToString = ""
+      Length = zGetStringLen( szTextToModify )
+      Length = Length - 4    // We need to back off the end of the string so that the two character compare doesn't go beyond the string.
+      szLastKeywordCharacter = ""
+      LOOP WHILE SourceIndex <= Length
+         IF szTextToModify[SourceIndex:2] = "{{"
          
-         // Parse the Usage Type out of the string of the form {{xxxxx}}.
-         SourceIndex  = SourceIndex + 2
-         TypeLength  = 0
-         TempLength = Length + 4  // We need to add the characters back to the length in case the Type is at the end of the Source.
-         LOOP WHILE szSourceString[SourceIndex:2] != "}}" AND TypeLength <= 32 AND SourceIndex < TempLength
-            SourceIndex = SourceIndex + 1
-            TypeLength  = TypeLength + 1
-         END
+            szLastKeywordCharacter = "{"
          
-         // Process Keyword, if closing braces found.
-         IF szSourceString[SourceIndex:2] = "}}"
-            szLastKeywordCharacter = "}"
-         
-         SourceOffset = SourceOffset + 2  // Skip past closing double parens and length of keyword.
-         ZeidonStringCopy( szKeywordName, 1, 50, szSourceString, SourceOffset, TypeLength, 100 )
-         SourceIndex = SourceIndex + 2
-         SourceOffset = SourceOffset + TypeLength + 2  // Skip past closing double parens and length of keyword.
-  TraceLineS( "### szKeywordName: ", szKeywordName )
-     TraceLineS( "### szKeywordEntityName: ", szKeywordEntityName )
-         
-         // Copy any Keyword Text entries for the specified Keyword.
-         // Look for a Keyword entry that matches the one parsed out in text.
-         CreateViewFromView( mMasLC2, mMasLC )
-         nRC = SetCursorFirstEntityByString( mMasLC2, szKeywordEntityName, "Name", szKeywordName, "" )
-         IF nRC >= zCURSOR_SET
-            // There are Text entries for the Keyword specified, so loop through all.
-  TraceLineS( "### Keyword Found ", "" )
-            Count = 0
-            nRC = SetCursorFirstEntity( mMasLC2, szKeywordTextEntityName, "" )
-            LOOP WHILE nRC >= zCURSOR_SET
-               Count = Count + 1
-               GetStringFromAttribute( KeywordValue, mMasLC2, szKeywordTextEntityName, "Text" )
-               IF Count > 1
-                  // If szSeparatorCharacters are ", ", substitute " and " for the separator characters before the last
-                  // Usage entry.
-                  CreateViewFromView( mMasLC3, mMasLC2 )
-                  nRC = SetCursorNextEntity( mMasLC3, szKeywordTextEntityName, "" )
-                  IF nRC < zCURSOR_SET
-                     szToString = szToString + " and "
-                  ELSE
-                     szToString = szToString + szSeparatorCharacters
+            // First copy over the characters we've just skipped over and reset length (unless {{ are first two characters).
+            // ZeidonStringCopy( Target, TargetOffset, TargetMaxToReceive, Source, SourceOffset, NoCharsToCopy, TargetMaxLength )
+            IF SourceIndex > 1
+               TargetOffset = zstrlen( szToString )
+               TargetOffset = TargetOffset + 1
+               MoveStringLength = MoveStringLength - 1
+        
+               ZeidonStringCopy( szToString, TargetOffset, 5000, szTextToModify, SourceOffset, MoveStringLength, 10000 )
+               //SourceOffset = SourceOffset + MoveStringLength   // Skip past characters just moved.
+               SourceOffset = SourceIndex    // Skip to new position.
+               MoveStringLength = 1
+            END
+            
+            // Parse the Usage Type out of the string of the form {{xxxxx}}.
+            SourceIndex  = SourceIndex + 2
+            TypeLength  = 0
+            TempLength = Length + 4  // We need to add the characters back to the length in case the Type is at the end of the Source.
+            LOOP WHILE szTextToModify[SourceIndex:2] != "}}" AND TypeLength <= 32 AND SourceIndex < TempLength
+               SourceIndex = SourceIndex + 1
+               TypeLength  = TypeLength + 1
+            END
+            
+            // Process Keyword, if closing braces found.
+            IF szTextToModify[SourceIndex:2] = "}}"
+               szLastKeywordCharacter = "}"
+            
+               SourceOffset = SourceOffset + 2  // Skip past closing double parens and length of keyword.
+               ZeidonStringCopy( szKeywordName, 1, 50, szTextToModify, SourceOffset, TypeLength, 100 )
+               SourceIndex = SourceIndex + 2
+               SourceOffset = SourceOffset + TypeLength + 2  // Skip past closing double parens and length of keyword.
+            TraceLineS( "### szKeywordName: ", szKeywordName )
+            TraceLineS( "### szKeywordEntityName: ", szKeywordEntityName )
+               
+               // Copy any Keyword Text entries for the specified Keyword.
+               // Look for a Keyword entry that matches the one parsed out in text.
+               CreateViewFromView( mMasLC2, mMasLC )
+               nRC = SetCursorFirstEntityByString( mMasLC2, szKeywordEntityName, "Name", szKeywordName, "" )
+               IF nRC >= zCURSOR_SET
+                  // There are Text entries for the Keyword specified, so loop through all.
+               TraceLineS( "### Keyword Found ", "" )
+                  Count = 0
+                  nRC = SetCursorFirstEntity( mMasLC2, szKeywordTextEntityName, "" )
+                  LOOP WHILE nRC >= zCURSOR_SET
+                     Count = Count + 1
+                     GetStringFromAttribute( KeywordValue, mMasLC2, szKeywordTextEntityName, "Text" )
+                     IF Count > 1
+                        // If szSeparatorCharacters are ", ", substitute " and " for the separator characters before the last Usage entry.
+                        CreateViewFromView( mMasLC3, mMasLC2 )
+                        nRC = SetCursorNextEntity( mMasLC3, szKeywordTextEntityName, "" )
+                        IF nRC < zCURSOR_SET
+                           szToString = szToString + " and "
+                        ELSE
+                           szToString = szToString + szSeparatorCharacters
+                        END
+                        DropView( mMasLC3 )
+                     END
+                     szToString = szToString + KeywordValue
+                     nRC = SetCursorNextEntity( mMasLC2, szKeywordTextEntityName, "" )
                   END
-                  DropView( mMasLC3 )
+               ELSE
+                  TraceLineS( "### Keyword NOT Found: ", szKeywordName )
+                  nRC = SetCursorFirstEntity( mMasLC2, szKeywordEntityName, "" )
+                  LOOP WHILE nRC >= zCURSOR_SET
+                     GetStringFromAttribute( szKeywordName, mMasLC2, szKeywordEntityName, "Name" )
+                     TraceLineS( "### Current Keyword : ", szKeywordName )
+                     nRC = SetCursorNextEntity( mMasLC2, szKeywordEntityName, "" )
+                  END
                END
-               szToString = szToString + KeywordValue
-               nRC = SetCursorNextEntity( mMasLC2, szKeywordTextEntityName, "" )
+               DropView( mMasLC2 )
             END
-            ELSE
-               TraceLineS( "### Keyword NOT Found: ", szKeywordName )
-               nRC = SetCursorFirstEntity( mMasLC2, szKeywordEntityName, "" )
-               LOOP WHILE nRC >= zCURSOR_SET
-                  GetStringFromAttribute( szKeywordName, mMasLC2, szKeywordEntityName, "Name" )
-                  TraceLineS( "### Current Keyword : ", szKeywordName )
-                  nRC = SetCursorNextEntity( mMasLC2, szKeywordEntityName, "" )
          END
-            END
-            DropView( mMasLC2 )
-         END
+         
+         SourceIndex      = SourceIndex + 1
+         MoveStringLength = MoveStringLength + 1
       END
       
-      SourceIndex      = SourceIndex + 1
-      MoveStringLength = MoveStringLength + 1
-   END
-   
-   // Move in remaining characters, if keyword analysis was successful. Otherwise, return error.
-   IF szLastKeywordCharacter = "}"
-   MoveStringLength = MoveStringLength + 10    // Add extra characters to length as above was not calculating them correctly.
-   TargetOffset = zstrlen( szToString )
-   TargetOffset = TargetOffset + 1
-   ZeidonStringCopy( szToString, TargetOffset, 5000, szSourceString, SourceOffset, MoveStringLength, 10000 )
-   szSourceString = szToString
-   ELSE
-      IF szLastKeywordCharacter = "{"
-      szSourceString = "*** Keyword Parse Error ***"
+      // Move in remaining characters, if keyword analysis was successful. Otherwise, return error.
+      IF szLastKeywordCharacter = "}"
+         MoveStringLength = MoveStringLength + 10    // Add extra characters to length as above was not calculating them correctly.
+         TargetOffset = zstrlen( szToString )
+         TargetOffset = TargetOffset + 1
+         ZeidonStringCopy( szToString, TargetOffset, 5000, szTextToModify, SourceOffset, MoveStringLength, 10000 )
+         szTextToModify = szToString
+      ELSE
+         IF szLastKeywordCharacter = "{"
+            szTextToModify = "*** Keyword Parse Error ***"
+         END
       END
    END
-
 END
+****/

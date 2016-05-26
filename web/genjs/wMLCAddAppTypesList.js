@@ -1,3 +1,5 @@
+// wMLCAddAppTypesList   Generate Timestamp: 20160525203745950
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

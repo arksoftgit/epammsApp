@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCIngredientsStatement   Generate Timestamp: 20160427124122247 --%>
+<%-- wMLCIngredientsStatement   Generate Timestamp: 20160525203751481 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -580,6 +580,7 @@ else
    View mOrganiz = null;
    View mPrimReg = null;
    View wWebXfer = null;
+   View mMasLCIncludeExclude = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";
@@ -858,20 +859,6 @@ else
          strComboCurrentValue = "";
       }
 
-      // Code for NOT required attribute, which makes sure a blank entry exists.
-      if ( strComboCurrentValue == "" )
-      {
-         inListIngredientsActive = true;
-%>
-         <option selected="selected" value=""></option>
-<%
-      }
-      else
-      {
-%>
-         <option value=""></option>
-<%
-      }
       for ( TableEntry entry : list )
       {
          String internalValue = entry.getInternalValue( );

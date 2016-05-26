@@ -1,3 +1,5 @@
+// wMLCHumanHazard   Generate Timestamp: 20160525203751044
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

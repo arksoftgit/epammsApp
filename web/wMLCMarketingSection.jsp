@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCMarketingSection   Generate Timestamp: 20160428135918938 --%>
+<%-- wMLCMarketingSection   Generate Timestamp: 20160525203752950 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -933,6 +933,7 @@ else
    View mOrganiz = null;
    View mPrimReg = null;
    View wWebXfer = null;
+   View mMasLCIncludeExclude = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";
@@ -1214,7 +1215,7 @@ else
    }
 %>
 
-<input class="text12" name="Subtitle" id="Subtitle" maxlength="254" style="width:592px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="Subtitle" id="Subtitle" maxlength="1024" style="width:592px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -1265,7 +1266,7 @@ else
    }
 %>
 
-<input class="text12" name="Note" id="Note" maxlength="1024" style="width:592px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="Note" id="Note" maxlength="254" style="width:592px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
@@ -1495,7 +1496,7 @@ try
          nRC = vGrid3.cursor( "M_MarketingReviewerNote" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl4 = vGrid3.cursor( "M_MarketingReviewerNote" ).getAttribute( "Note" ).getString( "" );
+            strGridEditCtl4 = vGrid3.cursor( "M_MarketingReviewerNote" ).getAttribute( "Text" ).getString( "" );
 
             if ( strGridEditCtl4 == null )
                strGridEditCtl4 = "";

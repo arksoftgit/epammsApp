@@ -4706,14 +4706,142 @@ public class ZGlobal1_Operation extends VmlOperation
    }
 
    public int
-   InsertMappingWordsIntoString( View     mSPLDef,
-                                 StringBuilder sbSourceToModify,
-                                 String   szUsageTypeEntityName,
-                                 String   szLoopingEntityName,
-                                 String   szSeparatorCharacters )
+   GenerateKeywordTextIntoString( View mMasLC,
+                                  StringBuilder sbTextToModify,
+                                  String szKeywordEntityName,
+                                  String szKeywordTextEntityName,
+                                  String szSeparatorCharacters )
    {
       StringBuilder sbTarget = new StringBuilder();
-      String   szOrigSource = sbSourceToModify.toString();
+      String   szOrigSource = sbTextToModify.toString();
+      int      sourceLth = szOrigSource.length();
+      String   szKeywordName = null;
+      String   szKeywordValue = null;
+      char     chKeywordType;
+      boolean  changed = false;
+      int      sourcePos = 0;  // keeps track of last position in source copied to target
+      int      openBracePos = 0;
+      int      closeBracePos;
+      int      traverse = 1;
+      int      count;
+            
+      // Insert Keyword text items into a position in szStringArea that is identified by the Keyword.
+      // The entries inserted will be separated by one or more characters as identified by the variable szSeparatorCharacters.
+      // After determining the position of the insertion, we will loop through Keyword entries, formatting each entry as we go.
+      sbTarget.setLength( 0 );
+      openBracePos = szOrigSource.indexOf( "{{", sourcePos );
+      if ( openBracePos >= 0 && mMasLC.cursor( szKeywordEntityName ).hasAny() ) {  // looks like it's worth processing
+         View mMasLC2 = mMasLC.newView( );
+         mMasLC2.copyCursors( mMasLC );
+
+         while ( openBracePos >= 0 ) {
+            // Copy static text up to the brace to the target.
+            sbTarget.append( szOrigSource.substring( sourcePos, openBracePos ) );
+
+            // Parse the Keyword out of the string of the form {{xxxxx}}.
+            closeBracePos = szOrigSource.indexOf( "}}", openBracePos + 2 );
+            if ( closeBracePos >= 0 ) {
+               changed = true;
+               szKeywordName = szOrigSource.substring( openBracePos + 2, closeBracePos );
+               sourcePos = closeBracePos + 2; // point to the next static text portion in the original source string
+               count = 0;
+
+               CursorResult cr = mMasLC2.cursor( szKeywordEntityName ).setFirst( "Name", szKeywordName );
+               if ( cr.isSet() ) {
+                  // Type values: All optional, Only one allowed, Required (at least one)
+                  String szType = mMasLC2.cursor( szKeywordEntityName ).getAttribute( "Type" ).getString();
+                  if ( szType == "" ) {
+                     chKeywordType = 'A';
+                  } else {
+                     chKeywordType = szType.charAt( 0 );
+                  }
+                  if ( chKeywordType == 'R' || chKeywordType == 'X' ) {
+                     sbTarget.append( '[' );
+                  }
+                  while ( cr.isSet() ) {
+                     // There are Text entries for the Keyword specified, so loop through all.
+                     count++;
+                     szKeywordValue = mMasLC2.cursor( szKeywordTextEntityName ).getAttribute( "Text" ).getString();
+                     if ( count > 1 ) {
+                        // If szSeparatorCharacters are ", ", substitute " and " for the separator characters before the last Usage entry.
+                        if ( mMasLC2.cursor( szKeywordTextEntityName ).hasNext() ) {
+                           sbTarget.append( szSeparatorCharacters );
+                        } else {
+                           if ( chKeywordType == 'O' || chKeywordType == 'X' ) {
+                              sbTarget.append( " or " );
+                           } else {
+                              sbTarget.append( szSeparatorCharacters );
+                           }
+                        }
+                     }
+                     if ( traverse > 2 ) {
+                        sbTarget.append( "{" + szKeywordValue + "}" );
+                     } else if ( traverse > 1 ) {
+                        sbTarget.append( "<i>{" + szKeywordValue + "}</i>" );
+                     } else {
+                        sbTarget.append( "<b>{" + szKeywordValue + "}</b>" );
+                     }
+                     cr = mMasLC2.cursor( szKeywordTextEntityName ).setNext( );
+                  }
+                  if ( chKeywordType == 'R' || chKeywordType == 'X' ) {
+                     sbTarget.append( ']' );
+                  }
+               } else {
+                  // notify user that the keyword is not found
+                  sbTarget.append( "{{'" + szKeywordName + "' not found}} " );
+                  TraceLineS( "### Keyword NOT Found: ", szKeywordName );
+                  cr = mMasLC2.cursor( szKeywordEntityName ).setFirst();
+                  while ( cr.isSet() ) {
+                     szKeywordValue = mMasLC2.cursor( szKeywordEntityName ).getAttribute( "Name" ).getString();
+                     TraceLineS( "### Current Keyword : ", szKeywordValue );
+                     cr = mMasLC2.cursor( szKeywordEntityName ).setNext();
+                  }
+                  break;
+               }
+            } else {
+               break;  // improper close braces (matching not found)
+            }
+            openBracePos = szOrigSource.indexOf( "{{", sourcePos );
+            if ( openBracePos < 0 && changed && traverse < 3 ) {
+               traverse++;
+               sbTextToModify.setLength( 0 );
+               sbTextToModify.append( sbTarget.toString() );
+
+               // Move in remaining characters.
+               if ( sourcePos < sourceLth ) {
+                  sbTextToModify.append( szOrigSource.substring( sourcePos ) );
+               }
+               szOrigSource = sbTextToModify.toString();
+               sourceLth = szOrigSource.length();
+               sourcePos = 0;
+               sbTarget.setLength( 0 );
+               openBracePos = szOrigSource.indexOf( "{{", sourcePos );
+            }
+         }
+         mMasLC2.drop();
+      }
+      if ( changed ) {
+         sbTextToModify.setLength( 0 );
+         sbTextToModify.append( sbTarget.toString() );
+
+         // Move in remaining characters.
+         if ( sourcePos < sourceLth ) {
+            sbTextToModify.append( szOrigSource.substring( sourcePos ) );
+         }
+      }
+
+      return( 0 );
+   }
+   
+   public int
+   InsertKeywordsIntoString( View     mSPLDef,
+                             StringBuilder sbTextToModify,
+                             String   szUsageTypeEntityName,
+                             String   szLoopingEntityName,
+                             String   szSeparatorCharacters )
+   {
+      StringBuilder sbTarget = new StringBuilder();
+      String   szOrigSource = sbTextToModify.toString();
       int      sourceLth = szOrigSource.length();
       String   szUsageType = null;
       String   szUsageValue = null;
@@ -4796,7 +4924,7 @@ public class ZGlobal1_Operation extends VmlOperation
                sbTarget.append( szInsertValue );
             }
          } else {
-            sbSourceToModify.append( " ### Error replacing keywords" );
+            sbTextToModify.append( " ### Error replacing keywords" );
             return -1;
          }
 
@@ -4804,12 +4932,12 @@ public class ZGlobal1_Operation extends VmlOperation
       }
 
       if ( changed ) {
-         sbSourceToModify.setLength( 0 );
-         sbSourceToModify.append( sbTarget.toString() );
+         sbTextToModify.setLength( 0 );
+         sbTextToModify.append( sbTarget.toString() );
 
          // Move in remaining characters.
          if ( sourcePos < sourceLth ) {
-            sbSourceToModify.append( szOrigSource.substring( sourcePos ) );
+            sbTextToModify.append( szOrigSource.substring( sourcePos ) );
          }
       }
 
@@ -4823,12 +4951,12 @@ public class ZGlobal1_Operation extends VmlOperation
 
    public int
    InsertOptionalSubUsages( View     mMasLC,
-                            StringBuilder sbSourceToModify,
+                            StringBuilder sbTextToModify,
                             String   stringEntity,
                             int      bInsertBraces )
    {
       StringBuilder sbTarget = new StringBuilder();
-      String   szOrigSource = sbSourceToModify.toString();
+      String   szOrigSource = sbTextToModify.toString();
       String   szOpenBrace = "{";
       boolean  changed = false;
       int      openBracePos = 0;
@@ -4873,8 +5001,8 @@ public class ZGlobal1_Operation extends VmlOperation
       }
 
       if ( changed ) {
-         sbSourceToModify.setLength( 0 );
-         sbSourceToModify.append( sbTarget.toString() );
+         sbTextToModify.setLength( 0 );
+         sbTextToModify.append( sbTarget.toString() );
       }
 
       return( 0 );

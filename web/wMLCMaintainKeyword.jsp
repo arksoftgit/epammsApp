@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCMaintainKeyword   Generate Timestamp: 20160427124122520 --%>
+<%-- wMLCMaintainKeyword   Generate Timestamp: 20160525203752388 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -444,6 +444,7 @@ else
    View mOrganiz = null;
    View mPrimReg = null;
    View wWebXfer = null;
+   View mMasLCIncludeExclude = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";
@@ -635,7 +636,7 @@ else
    }
 %>
 
-<input class="groupbox" name="KeywordValue" id="KeywordValue" maxlength="254"  placeholder="Keyword Value"style="width:746px;position:absolute;left:6px;top:32px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="groupbox" name="KeywordValue" id="KeywordValue" maxlength="1024"  placeholder="Keyword Value"style="width:746px;position:absolute;left:6px;top:32px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 
 </div>  <!--  GB1 --> 

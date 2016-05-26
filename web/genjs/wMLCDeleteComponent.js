@@ -1,3 +1,5 @@
+// wMLCDeleteComponent   Generate Timestamp: 20160525203748106
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

@@ -1,3 +1,5 @@
+// wMLCMaintainKeyword   Generate Timestamp: 20160525203752388
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

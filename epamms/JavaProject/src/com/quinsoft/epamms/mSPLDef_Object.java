@@ -6921,7 +6921,7 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
       if ( ZeidonStringCompare( szUsageTypeEntity, 1, 0, "", 1, 0, 33 ) != 0 )
       { 
          //:// Storage and Disposal has no keyword mapping.
-         //:InsertMappingWordsIntoString( mSPLDef, szStatementText, szUsageTypeEntity, szLoopingEntity, szSeparatorCharacters )
+         //:InsertKeywordsIntoString( mSPLDef, szStatementText, szUsageTypeEntity, szLoopingEntity, szSeparatorCharacters )
          {
           ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mSPLDef );
           {StringBuilder sb_szStatementText;
@@ -6929,7 +6929,7 @@ omSPLDef_GeneratePDF_DFU( View     mSPLDef,
             sb_szStatementText = new StringBuilder( 32 );
          else
             sb_szStatementText = new StringBuilder( szStatementText );
-                   m_ZGlobal1_Operation.InsertMappingWordsIntoString( mSPLDef, sb_szStatementText, szUsageTypeEntity, szLoopingEntity, szSeparatorCharacters );
+                   m_ZGlobal1_Operation.InsertKeywordsIntoString( mSPLDef, sb_szStatementText, szUsageTypeEntity, szLoopingEntity, szSeparatorCharacters );
          szStatementText = sb_szStatementText.toString( );}
           // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
          }

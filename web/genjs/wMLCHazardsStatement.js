@@ -1,3 +1,5 @@
+// wMLCHazardsStatement   Generate Timestamp: 20160525203750950
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

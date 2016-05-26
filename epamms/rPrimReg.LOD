@@ -1,4 +1,4 @@
-z1000-Zeidon    RPRIMREG TZZOLODO 03/25/16   16:36:32 1.0a2   
+z1000-Zeidon    RPRIMREG TZZOLODO 05/26/16   12:37:15 1.0a2   
 eLOD       1
 aZKey      1157074
 aName      rPrimReg
@@ -77,10 +77,10 @@ aCardMax   m
 eER_RelTypeRec 5
 aZKey      68568357
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 44
+aER_DiagramBendPosX 43
 aER_DiagramBendPosY 19
-aER_DiagramE1PosX 44
-aER_DiagramE1PosY 37
+aER_DiagramE1PosX 43
+aER_DiagramE1PosY 31
 aER_DiagramE2PosX 67
 aER_DiagramE2PosY 19
 
@@ -200,7 +200,7 @@ aName      Organization
 aZKey      1653216
 aPurpose   F
 aER_DiagramPosX 66
-aER_DiagramPosY 37
+aER_DiagramPosY 33
 
 eER_RelLinkRec 4
 aName      for
@@ -217,9 +217,9 @@ aFact      Added thru ER Dialog
 aER_DiagramBendPosX 0
 aER_DiagramBendPosY 0
 aER_DiagramE1PosX 65
-aER_DiagramE1PosY 41
-aER_DiagramE2PosX 49
-aER_DiagramE2PosY 41
+aER_DiagramE1PosY 33
+aER_DiagramE2PosX 48
+aER_DiagramE2PosY 33
 
 eLOD_EntityChild 3
 aName      MasterProduct
@@ -342,7 +342,7 @@ aName      MasterLabelContent
 aZKey      68568593
 aPurpose   F
 aER_DiagramPosX 51
-aER_DiagramPosY 64
+aER_DiagramPosY 63
 
 eER_RelLinkRec 5
 aName      has
@@ -359,9 +359,9 @@ aFact      Added thru ER Dialog
 aER_DiagramBendPosX 0
 aER_DiagramBendPosY 0
 aER_DiagramE1PosX 55
-aER_DiagramE1PosY 58
+aER_DiagramE1PosY 54
 aER_DiagramE2PosX 55
-aER_DiagramE2PosY 63
+aER_DiagramE2PosY 62
 
 eLOD_AttributeRec 4
 aZKey      1163349
@@ -528,7 +528,7 @@ aName      MasterProduct
 aZKey      69031545
 aPurpose   F
 aER_DiagramPosX 51
-aER_DiagramPosY 53
+aER_DiagramPosY 49
 
 eER_RelLinkRec 4
 aName      has
@@ -542,12 +542,12 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 5
 aZKey      69031569
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 44
-aER_DiagramBendPosY 55
-aER_DiagramE1PosX 44
-aER_DiagramE1PosY 43
+aER_DiagramBendPosX 43
+aER_DiagramBendPosY 51
+aER_DiagramE1PosX 43
+aER_DiagramE1PosY 37
 aER_DiagramE2PosX 50
-aER_DiagramE2PosY 55
+aER_DiagramE2PosY 51
 
 eLOD_AttributeRec 3
 aZKey      1158076
@@ -598,8 +598,8 @@ eER_EntityRec 3
 aName      PrimaryRegistrant
 aZKey      68568354
 aPurpose   F
-aER_DiagramPosX 40
-aER_DiagramPosY 38
+aER_DiagramPosX 39
+aER_DiagramPosY 32
 
 eLOD_Entity 2
 awkSelectedAttributeForDragSort 8

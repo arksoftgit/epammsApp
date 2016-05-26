@@ -1,3 +1,5 @@
+// wMLCPrecautionarySection   Generate Timestamp: 20160525203754060
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

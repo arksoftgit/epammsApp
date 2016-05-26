@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCPhysicalChemicalHazardsSection   Generate Timestamp: 20160427124123120 --%>
+<%-- wMLCPhysicalChemicalHazardsSection   Generate Timestamp: 20160525203753903 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1245,6 +1245,7 @@ else
    View mOrganiz = null;
    View mPrimReg = null;
    View wWebXfer = null;
+   View mMasLCIncludeExclude = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";

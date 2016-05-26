@@ -1,3 +1,5 @@
+// wMLCAddItemsMultiple   Generate Timestamp: 20160525203746111
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

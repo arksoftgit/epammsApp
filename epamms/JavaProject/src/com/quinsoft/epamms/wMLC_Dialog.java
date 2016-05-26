@@ -340,6 +340,29 @@ o_fnLocalBuildQual_4( View     vSubtask,
 
 
 //:DIALOG OPERATION
+//:CreateIncludeExcludeView( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+CreateIncludeExcludeView( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW mMasLCIncludeExclude BASED ON LOD mMasLC
+   zVIEW    mMasLCIncludeExclude = new zVIEW( );
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:CreateViewFromView( mMasLCIncludeExclude, mMasLC )
+   CreateViewFromView( mMasLCIncludeExclude, mMasLC );
+   //:NAME VIEW mMasLCIncludeExclude "mMasLCIncludeExclude"
+   SetNameForView( mMasLCIncludeExclude, "mMasLCIncludeExclude", null, zLEVEL_TASK );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
 //:CANCEL_MLC_Version( VIEW ViewToWindow )
 
 //:   VIEW mMasLCNew REGISTERED AS mMasLC
@@ -2176,8 +2199,8 @@ AcceptDirectionsSubStatement( View     ViewToWindow )
 
    RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
 
-   //:nRC = AcceptSubobject( mMasLC, "M_DirectionsForUseSubStatement" )
-   nRC = AcceptSubobject( mMasLC, "M_DirectionsForUseSubStatement" );
+   //:nRC = AcceptSubobject( mMasLC, "M_DirectionsForUseStatement" )
+   nRC = AcceptSubobject( mMasLC, "M_DirectionsForUseStatement" );
    //:IF nRC < 0
    if ( nRC < 0 )
    { 
@@ -2213,8 +2236,8 @@ CancelDirectionsSubStatement( View     ViewToWindow )
 
    RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
 
-   //:nRC = CancelSubobject( mMasLC, "M_DirectionsForUseSubStatement" )
-   nRC = CancelSubobject( mMasLC, "M_DirectionsForUseSubStatement" );
+   //:nRC = CancelSubobject( mMasLC, "M_DirectionsForUseStatement" )
+   nRC = CancelSubobject( mMasLC, "M_DirectionsForUseStatement" );
    //:IF nRC < 0
    if ( nRC < 0 )
    { 
@@ -5699,6 +5722,53 @@ COPY_InsertKeywordDU( View     ViewToWindow )
 
 
 //:DIALOG OPERATION
+//:COPY_InsertKeywordTitleDU( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+COPY_InsertKeywordTitleDU( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+   int      lTempInteger_0 = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:// Copy the M_InsertTextKeywordDU subobject to the base derived subobject.
+
+   //:IF mMasLC.DisplayKeywordText EXISTS
+   lTempInteger_0 = CheckExistenceOfEntity( mMasLC, "DisplayKeywordText" );
+   if ( lTempInteger_0 == 0 )
+   { 
+      //:DELETE ENTITY mMasLC.DisplayKeywordText
+      RESULT = DeleteEntity( mMasLC, "DisplayKeywordText", zPOS_NEXT );
+   } 
+
+   //:END
+   //:CREATE ENTITY mMasLC.DisplayKeywordText
+   RESULT = CreateEntity( mMasLC, "DisplayKeywordText", zPOS_AFTER );
+   //:CREATE ENTITY mMasLC.M_InsertTextKeywordBase
+   RESULT = CreateEntity( mMasLC, "M_InsertTextKeywordBase", zPOS_AFTER );
+   //:SetMatchingAttributesByName( mMasLC, "M_InsertTextKeywordBase", mMasLC, "M_InsertTextKeywordSectionDU", zSET_ALL )
+   SetMatchingAttributesByName( mMasLC, "M_InsertTextKeywordBase", mMasLC, "M_InsertTextKeywordSectionDU", zSET_ALL );
+   //:FOR EACH mMasLC.M_InsertTextDU
+   RESULT = SetCursorFirstEntity( mMasLC, "M_InsertTextDU", "" );
+   while ( RESULT > zCURSOR_UNCHANGED )
+   { 
+      //:CREATE ENTITY mMasLC.M_InsertTextBase
+      RESULT = CreateEntity( mMasLC, "M_InsertTextBase", zPOS_AFTER );
+      //:SetMatchingAttributesByName( mMasLC, "M_InsertTextBase", mMasLC, "M_InsertTextSectionDU", zSET_ALL )
+      SetMatchingAttributesByName( mMasLC, "M_InsertTextBase", mMasLC, "M_InsertTextSectionDU", zSET_ALL );
+      RESULT = SetCursorNextEntity( mMasLC, "M_InsertTextDU", "" );
+   } 
+
+   //:END
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
 //:COPY_InsertKeywordSD( VIEW ViewToWindow )
 
 //:   VIEW mMasLC REGISTERED AS mMasLC
@@ -6583,6 +6653,77 @@ CancelStorDispSubStmt( View     ViewToWindow )
    //:END
    //:ResetViewFromSubobject( mMasLC )
    ResetViewFromSubobject( mMasLC );
+   return( 0 );
+// END
+} 
+
+
+//:DIALOG OPERATION
+//:IncludeExclusiveOrDU_Section( VIEW ViewToWindow )
+
+//:   VIEW mMasLC REGISTERED AS mMasLC
+public int 
+IncludeExclusiveOrDU_Section( View     ViewToWindow )
+{
+   zVIEW    mMasLC = new zVIEW( );
+   int      RESULT = 0;
+   //:VIEW mMasLCIncludeExclude REGISTERED AS mMasLC
+   zVIEW    mMasLCIncludeExclude = new zVIEW( );
+   //:STRING ( 256 ) szName
+   String   szName = null;
+   //:STRING ( 256 ) szNameXOR
+   String   szNameXOR = null;
+   int      lTempInteger_0 = 0;
+   int      lTempInteger_1 = 0;
+   int      lTempInteger_2 = 0;
+
+   RESULT = GetViewByName( mMasLC, "mMasLC", ViewToWindow, zLEVEL_TASK );
+   RESULT = GetViewByName( mMasLCIncludeExclude, "mMasLC", ViewToWindow, zLEVEL_TASK );
+
+   //:IF mMasLC.M_DirectionsForUseXOR_Section EXISTS
+   lTempInteger_0 = CheckExistenceOfEntity( mMasLC, "M_DirectionsForUseXOR_Section" );
+   if ( lTempInteger_0 == 0 )
+   { 
+      //:EXCLUDE mMasLC.M_DirectionsForUseXOR_Section NONE
+      RESULT = ExcludeEntity( mMasLC, "M_DirectionsForUseXOR_Section", zREPOS_NONE );
+   } 
+
+   //:END
+
+   //:szNameXOR = mMasLCIncludeExclude.M_DirectionsForUseSection.Name
+   {MutableInt mi_lTempInteger_1 = new MutableInt( lTempInteger_1 );
+   StringBuilder sb_szNameXOR;
+   if ( szNameXOR == null )
+      sb_szNameXOR = new StringBuilder( 32 );
+   else
+      sb_szNameXOR = new StringBuilder( szNameXOR );
+       GetVariableFromAttribute( sb_szNameXOR, mi_lTempInteger_1, 'S', 257, mMasLCIncludeExclude, "M_DirectionsForUseSection", "Name", "", 0 );
+   lTempInteger_1 = mi_lTempInteger_1.intValue( );
+   szNameXOR = sb_szNameXOR.toString( );}
+   //:IF szNameXOR != ""
+   if ( ZeidonStringCompare( szNameXOR, 1, 0, "", 1, 0, 257 ) != 0 )
+   { 
+      //:szName = mMasLC.M_DirectionsForUseSection.Name
+      {MutableInt mi_lTempInteger_2 = new MutableInt( lTempInteger_2 );
+      StringBuilder sb_szName;
+      if ( szName == null )
+         sb_szName = new StringBuilder( 32 );
+      else
+         sb_szName = new StringBuilder( szName );
+             GetVariableFromAttribute( sb_szName, mi_lTempInteger_2, 'S', 257, mMasLC, "M_DirectionsForUseSection", "Name", "", 0 );
+      lTempInteger_2 = mi_lTempInteger_2.intValue( );
+      szName = sb_szName.toString( );}
+      //:IF szNameXOR != szName
+      if ( ZeidonStringCompare( szNameXOR, 1, 0, szName, 1, 0, 257 ) != 0 )
+      { 
+         //:INCLUDE mMasLC.M_DirectionsForUseXOR_Section FROM mMasLCIncludeExclude.MP_DirectionsForUseSection
+         RESULT = IncludeSubobjectFromSubobject( mMasLC, "M_DirectionsForUseXOR_Section", mMasLCIncludeExclude, "MP_DirectionsForUseSection", zPOS_AFTER );
+      } 
+
+      //:END
+   } 
+
+   //:END
    return( 0 );
 // END
 } 

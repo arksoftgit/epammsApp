@@ -1,3 +1,5 @@
+// wMLCTOC_Entry   Generate Timestamp: 20160525203755794
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

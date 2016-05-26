@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCMarketingReviewerNote   Generate Timestamp: 20160427124122692 --%>
+<%-- wMLCMarketingReviewerNote   Generate Timestamp: 20160525203752856 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -89,7 +89,7 @@ public int DoInputMapping( HttpServletRequest request,
             if ( webMapping )
                VmlOperation.CreateMessage( task, "MLEdit2", "", strMapValue );
             else
-               mMasLC.cursor( "M_MarketingReviewerNote" ).getAttribute( "Note" ).setValue( strMapValue, "" );
+               mMasLC.cursor( "M_MarketingReviewerNote" ).getAttribute( "Text" ).setValue( strMapValue, "" );
          }
          catch ( InvalidAttributeValueException e )
          {
@@ -493,6 +493,7 @@ else
    View mOrganiz = null;
    View mPrimReg = null;
    View wWebXfer = null;
+   View mMasLCIncludeExclude = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";
@@ -694,11 +695,11 @@ else
          nRC = mMasLC.cursor( "M_MarketingReviewerNote" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strErrorMapValue = mMasLC.cursor( "M_MarketingReviewerNote" ).getAttribute( "Note" ).getString( "" );
+            strErrorMapValue = mMasLC.cursor( "M_MarketingReviewerNote" ).getAttribute( "Text" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
-            task.log( ).debug( "M_MarketingReviewerNote.Note: " + strErrorMapValue );
+            task.log( ).debug( "M_MarketingReviewerNote.Text: " + strErrorMapValue );
          }
          else
             task.log( ).debug( "Entity does not exist for MLEdit2: " + "mMasLC.M_MarketingReviewerNote" );

@@ -4688,7 +4688,7 @@ public class ZGlobal1_Operation extends VmlOperation
    }
 
    public int
-   InsertMappingWordsIntoString( View     mSPLDef,
+   InsertKeywordsIntoString( View         mSPLDef,
                                  StringBuilder sbSourceToModify,
                                  String   szUsageTypeEntityName,
                                  String   szLoopingEntityName,

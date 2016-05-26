@@ -1,3 +1,5 @@
+// wMLCUsageGroupSelect   Generate Timestamp: 20160525203756044
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

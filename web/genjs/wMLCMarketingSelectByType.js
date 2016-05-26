@@ -1,3 +1,5 @@
+// wMLCMarketingSelectByType   Generate Timestamp: 20160525203753091
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

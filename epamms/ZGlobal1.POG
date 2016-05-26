@@ -1,7 +1,7 @@
-z1000-Zeidon    ZGLOBAL1 TZOGSRCO 04/27/16   15:29:02 1.0a2   
+z1000-Zeidon    ZGLOBAL1 TZOGSRCO 05/18/16   18:23:16 1.0a2   
 eGlobalOperationGroup 1
 aZKey      89816452
-aNextZKeyToAssign 110040705
+aNextZKeyToAssign 110040710
 aName      ZGlobal1
 aDesc      Global Operations in C
 aExtension C
@@ -50,6 +50,47 @@ aDataType  L
 aPFlag     N
 aUFlag     N
 aZKey      89816458
+
+eOperation 2
+aName      GenerateKeywordTextIntoString
+aZKey      110215868
+aType      G
+aReturnDataType N
+
+eParameter 3
+aShortDesc KeywordEntityView
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      110040706
+
+eParameter 3
+aShortDesc ReturnedTextString
+aDataType  S
+aPFlag     Y
+aUFlag     N
+aZKey      110040707
+
+eParameter 3
+aShortDesc KeywordEntityName
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      110040708
+
+eParameter 3
+aShortDesc KeywordTextEntityName
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      110040709
+
+eParameter 3
+aShortDesc SeparatorCharacters
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      110040710
 
 eOperation 2
 aName      SetFirstCharacterCase
@@ -161,7 +202,7 @@ aUFlag     N
 aZKey      110040704
 
 eOperation 2
-aName      InsertMappingWordsIntoString
+aName      InsertKeywordsIntoString
 aZKey      69087046
 aType      G
 aReturnDataType N

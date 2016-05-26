@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCLocationStatementMaintenance   Generate Timestamp: 20160427124122481 --%>
+<%-- wMLCLocationStatementMaintenance   Generate Timestamp: 20160525203752231 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -603,6 +603,7 @@ else
    View mOrganiz = null;
    View mPrimReg = null;
    View wWebXfer = null;
+   View mMasLCIncludeExclude = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";
@@ -762,7 +763,7 @@ else
    }
 %>
 
-<input class="mceSimpleZeidon" name="Title" id="Title" maxlength="32000" style="width:722px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="mceSimpleZeidon" name="Title" id="Title" maxlength="254" style="width:722px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

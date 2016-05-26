@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCEncodedTitleTextUpdate   Generate Timestamp: 20160427124121778 --%>
+<%-- wMLCEncodedTitleTextUpdate   Generate Timestamp: 20160525203750106 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -95,6 +95,25 @@ public int DoInputMapping( HttpServletRequest request,
          {
             nMapError = -16;
             VmlOperation.CreateMessage( task, "Text", e.getReason( ), strMapValue );
+         }
+      }
+
+      // MLEdit: ReviewerNote
+      nRC = mMasLC.cursor( "M_MarketingStatement" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "ReviewerNote" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "ReviewerNote", "", strMapValue );
+            else
+               mMasLC.cursor( "M_MarketingStatement" ).getAttribute( "ReviewerNote" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "ReviewerNote", e.getReason( ), strMapValue );
          }
       }
 
@@ -501,6 +520,7 @@ else
    View mOrganiz = null;
    View mPrimReg = null;
    View wWebXfer = null;
+   View mMasLCIncludeExclude = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";
@@ -749,7 +769,81 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:704px;width:100px;"></div>
+<div style="height:4px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox3:GroupBox */ %>
+
+<div id="GroupBox3" name="GroupBox3" class="listgroup"   style="float:left;position:relative; width:780px; height:36px;">  <!-- GroupBox3 --> 
+
+<% /* ReviewerNote::Text */ %>
+
+<label class="groupbox"  id="ReviewerNote:" name="ReviewerNote:" style="width:324px;height:16px;position:absolute;left:6px;top:12px;">Statement Reviewer Note</label>
+
+
+</div>  <!--  GroupBox3 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox5:GroupBox */ %>
+<div id="GroupBox5" name="GroupBox5" style="float:left;width:780px;" >
+
+<table cols=0 style="width:780px;"  class="grouptable">
+
+<tr>
+<td valign="top" style="width:754px;">
+<% /* ReviewerNote:MLEdit */ %>
+<%
+   // MLEdit: ReviewerNote
+   strErrorMapValue = VmlOperation.CheckError( "ReviewerNote", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "ReviewerNote" );
+      else
+      {
+         nRC = mMasLC.cursor( "M_MarketingStatement" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strErrorMapValue = mMasLC.cursor( "M_MarketingStatement" ).getAttribute( "ReviewerNote" ).getString( "" );
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "M_MarketingStatement.ReviewerNote: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for ReviewerNote: " + "mMasLC.M_MarketingStatement" );
+      }
+   }
+%>
+
+<textarea id="ReviewerNote" name="ReviewerNote" class="" style="width:754px;height:114px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+
+</td>
+</tr>
+</table>
+
+</div>  <!-- GroupBox5 --> 
+
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:524px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:32px;float:left;"></div>   <!-- Width Spacer -->

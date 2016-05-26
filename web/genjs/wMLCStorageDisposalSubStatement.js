@@ -1,3 +1,5 @@
+// wMLCStorageDisposalSubStatement   Generate Timestamp: 20160525203754794
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

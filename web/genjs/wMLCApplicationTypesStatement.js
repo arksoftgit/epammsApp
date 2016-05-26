@@ -1,3 +1,5 @@
+// wMLCApplicationTypesStatement   Generate Timestamp: 20160525203747731
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

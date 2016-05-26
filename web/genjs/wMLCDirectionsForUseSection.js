@@ -1,3 +1,5 @@
+// wMLCDirectionsForUseSection   Generate Timestamp: 20160526160256299
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;
@@ -201,6 +203,129 @@ function AcceptDirectionsUseSect( )
       _DisableFormElements( true );
 
       document.wMLCDirectionsForUseSection.zAction.value = "AcceptDirectionsUseSect";
+      document.wMLCDirectionsForUseSection.submit( );
+   }
+}
+
+function Sort( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+       document.wMLCDirectionsForUseSection.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_InsertTextKeywordSectionDU", "GridKeywords",  ["Keyword","Keyword Text"]  );
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseSection.zAction.value = "Sort";
+      document.wMLCDirectionsForUseSection.submit( );
+   }
+}
+
+function PASTE_InsertKeywordDU( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseSection.zAction.value = "PASTE_InsertKeywordDU";
+      document.wMLCDirectionsForUseSection.submit( );
+   }
+}
+
+function COPY_InsertKeywordTitleDU( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCDirectionsForUseSection.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseSection.zAction.value = "COPY_InsertKeywordTitleDU";
+      document.wMLCDirectionsForUseSection.submit( );
+   }
+}
+
+function ADD_SectionKeywordDU( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseSection.zAction.value = "ADD_SectionKeywordDU";
+      document.wMLCDirectionsForUseSection.submit( );
+   }
+}
+
+function DELETE_TextKeywordTitleDU( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCDirectionsForUseSection.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseSection.zAction.value = "DELETE_TextKeywordTitleDU";
+      document.wMLCDirectionsForUseSection.submit( );
+   }
+}
+
+function DisplayGeneratedTextDU( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseSection.zAction.value = "DisplayGeneratedTextDU";
+      document.wMLCDirectionsForUseSection.submit( );
+   }
+}
+
+function GOTO_MarketingKeywordUpdate( strTagEntityKey )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      var nIdx = strTagEntityKey.lastIndexOf( '::' );
+      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
+
+      document.wMLCDirectionsForUseSection.zTableRowSelect.value = strEntityKey;
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseSection.zAction.value = "GOTO_MarketingKeywordUpdate";
       document.wMLCDirectionsForUseSection.submit( );
    }
 }

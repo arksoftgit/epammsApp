@@ -1,1 +1,1 @@
-windiff "C:\Program Files\Apache Group\Tomcat 7.0\webapps\ROOT\epamms" ." "\Workspace\NetBeansProjects\epammsApp\web" /x@qadnb.exc
+windiff "%TOMCAT_HOME%\webapps\ROOT\epamms" ." "%KZD%:\Workspace\NetBeansProjects\epammsApp\web" /x@qadnb.exc

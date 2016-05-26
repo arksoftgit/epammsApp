@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDirectionsForUseSection   Generate Timestamp: 20160506172329058 --%>
+<%-- wMLCDirectionsForUseSection   Generate Timestamp: 20160526160256299 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -80,7 +80,7 @@ public int DoInputMapping( HttpServletRequest request,
          }
       }
 
-      // EditBox: DirectionsForUseTitle
+      // MLEdit: DirectionsForUseTitle
       nRC = mMasLC.cursor( "M_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
       if ( nRC >= 0 ) // CursorResult.SET
       {
@@ -96,6 +96,25 @@ public int DoInputMapping( HttpServletRequest request,
          {
             nMapError = -16;
             VmlOperation.CreateMessage( task, "DirectionsForUseTitle", e.getReason( ), strMapValue );
+         }
+      }
+
+      // MLEdit: Subtitle
+      nRC = mMasLC.cursor( "M_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 ) // CursorResult.SET
+      {
+         strMapValue = request.getParameter( "Subtitle" );
+         try
+         {
+            if ( webMapping )
+               VmlOperation.CreateMessage( task, "Subtitle", "", strMapValue );
+            else
+               mMasLC.cursor( "M_DirectionsForUseSection" ).getAttribute( "Subtitle" ).setValue( strMapValue, "" );
+         }
+         catch ( InvalidAttributeValueException e )
+         {
+            nMapError = -16;
+            VmlOperation.CreateMessage( task, "Subtitle", e.getReason( ), strMapValue );
          }
       }
 
@@ -131,25 +150,6 @@ public int DoInputMapping( HttpServletRequest request,
                nRelPos = java.lang.Integer.parseInt( strMapValue );
                mMasLCIncludeExclude.cursor( "M_DirectionsForUseSection" ).setPosition( nRelPos, "" );
             }
- 
-            // Set Foreign Key Code 
-            nRC = mMasLC.cursor( "M_DirectionsForUseXOR_Section" ).checkExistenceOfEntity( ).toInt();
-            if ( nRC >= 0 )
-            {
-               strMapValue = mMasLCIncludeExclude.cursor( "M_DirectionsForUseSection" ).getAttribute( "Name" ).getString( "" );
-            try
-            {
-               if ( webMapping )
-                  VmlOperation.CreateMessage( task, "ComboBoxXOR", "", strMapValue );
-               else
-                  mMasLC.cursor( "M_DirectionsForUseXOR_Section" ).getAttribute( "Name" ).setValue( strMapValue, "" );
-            }
-            catch ( InvalidAttributeValueException e )
-            {
-               nMapError = -16;
-               VmlOperation.CreateMessage( task, "ComboBoxXOR", e.getReason( ), strMapValue );
-            }
-            }
          }
 
          }  // checkExistenceofEntity
@@ -171,6 +171,24 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       vGridTmp.drop( );
+      // Grid: Grid2
+      iTableRowCnt = 0;
+
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
+      vGridTmp = mMasLC.newView( );
+      csrRC = vGridTmp.cursor( "M_DirectionsForUseReviewerNote" ).setFirst(  );
+      while ( csrRC.isSet() )
+      {
+         lEntityKey = vGridTmp.cursor( "M_DirectionsForUseReviewerNote" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         iTableRowCnt++;
+
+         csrRC = vGridTmp.cursor( "M_DirectionsForUseReviewerNote" ).setNextContinue( );
+      }
+
+      vGridTmp.drop( );
       // Grid: Grid1
       iTableRowCnt = 0;
 
@@ -189,21 +207,21 @@ public int DoInputMapping( HttpServletRequest request,
       }
 
       vGridTmp.drop( );
-      // Grid: Grid2
+      // Grid: GridKeywords
       iTableRowCnt = 0;
 
       // We are creating a temp view to the grid view so that if there are 
       // grids on the same window with the same view we do not mess up the 
       // entity positions. 
       vGridTmp = mMasLC.newView( );
-      csrRC = vGridTmp.cursor( "M_DirectionsForUseReviewerNote" ).setFirst(  );
+      csrRC = vGridTmp.cursor( "M_InsertTextKeywordSectionDU" ).setFirst(  );
       while ( csrRC.isSet() )
       {
-         lEntityKey = vGridTmp.cursor( "M_DirectionsForUseReviewerNote" ).getEntityKey( );
+         lEntityKey = vGridTmp.cursor( "M_InsertTextKeywordSectionDU" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
 
-         csrRC = vGridTmp.cursor( "M_DirectionsForUseReviewerNote" ).setNextContinue( );
+         csrRC = vGridTmp.cursor( "M_InsertTextKeywordSectionDU" ).setNextContinue( );
       }
 
       vGridTmp.drop( );
@@ -369,6 +387,304 @@ if ( strActionToProcess != null )
       }
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "Sort" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      // We are borrowing zTableRowSelect and this code is hardwired for the moment.  javascript code similar to the following must be added to the action:
+      // document.wSLCMarketingStatement.zTableRowSelect.value = buildSortTableHtml( "mSubLC", "S_MarketingUsageOrdering", "GridMarketingUsage", ["Usage Type","Usage Name"] );
+      wWebXA = task.getViewByName( "wWebXfer" );
+      String strHtml = (String) request.getParameter( "zTableRowSelect" );
+      wWebXA.cursor( "Root" ).getAttribute( "HTML" ).setValue( strHtml, "" );
+      // We are borrowing zTableRowSelect and the code above is hardwired for the moment
+
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wSystem", "DragDropSort" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "PASTE_InsertKeywordDU" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseSection", "wMLC.PASTE_InsertKeywordDU" );
+      nOptRC = wMLC.PASTE_InsertKeywordDU( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "COPY_InsertKeywordTitleDU" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mMasLC;
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mMasLC.cursor( "M_InsertTextKeywordSectionDU" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mMasLC.cursor( "M_InsertTextKeywordSectionDU" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mMasLC.cursor( "M_InsertTextKeywordSectionDU" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mMasLC.cursor( "M_InsertTextKeywordSectionDU" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseSection", "wMLC.COPY_InsertKeywordTitleDU" );
+      nOptRC = wMLC.COPY_InsertKeywordTitleDU( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "ADD_SectionKeywordDU" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Auto Object Function
+      nRC = 0;
+      try
+      {
+         View mMasLCAuto = task.getViewByName( "mMasLC" );
+         EntityCursor cursor = mMasLCAuto.cursor( "M_InsertTextKeywordSectionDU" );
+         cursor.createTemporalEntity( );
+
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "ADD_SectionKeywordDU", e.getMessage( ), "" );
+         break;
+      }
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "AddUpdateSectionKeywordDU" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "DELETE_TextKeywordTitleDU" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mMasLC;
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mMasLC.cursor( "M_InsertTextKeywordSectionDU" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mMasLC.cursor( "M_InsertTextKeywordSectionDU" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mMasLC.cursor( "M_InsertTextKeywordSectionDU" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mMasLC.cursor( "M_InsertTextKeywordSectionDU" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Action Auto Object Function
+      nRC = 0;
+      try
+      {
+         EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordSectionDU" );
+            if ( cursor.isNull() )
+               nRC = 0;
+            else
+            {
+               cursor.deleteEntity( CursorPosition.NEXT );
+            nRC = 0;
+         }
+
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "DELETE_TextKeywordTitleDU", e.getMessage( ), "" );
+         break;
+      }
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "DisplayGeneratedTextDU" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "GOTO_MarketingKeywordUpdate" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseSection", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Position on the entity that was selected in the grid.
+      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
+      View mMasLC;
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) )
+      {
+         lEKey = java.lang.Long.parseLong( strEntityKey );
+         csrRC = mMasLC.cursor( "M_InsertTextKeywordSectionDU" ).setByEntityKey( lEKey );
+         if ( !csrRC.isSet() )
+         {
+            boolean bFound = false;
+            csrRCk = mMasLC.cursor( "M_InsertTextKeywordSectionDU" ).setFirst( );
+            while ( csrRCk.isSet() && !bFound )
+            {
+               lEKey = mMasLC.cursor( "M_InsertTextKeywordSectionDU" ).getEntityKey( );
+               strKey = Long.toString( lEKey );
+               if ( StringUtils.equals( strKey, strEntityKey ) )
+               {
+                  // Stop while loop because we have positioned on the correct entity.
+                  bFound = true;
+               }
+               else
+                  csrRCk = mMasLC.cursor( "M_InsertTextKeywordSectionDU" ).setNextContinue( );
+            } // Grid
+         }
+      }
+
+      // Action Auto Object Function
+      nRC = 0;
+      try
+      {
+         EntityCursor cursor = mMasLC.cursor( "M_InsertTextKeywordSectionDU" );
+         cursor.createTemporalSubobjectVersion( );
+
+      }
+      catch ( Exception e )
+      {
+         nRC = 2;
+         VmlOperation.CreateMessage( task, "GOTO_MarketingKeywordUpdate", e.getMessage( ), "" );
+         break;
+      }
+      // Next Window
+      strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StartModalSubwindow, "wMLC", "AddUpdateSectionKeywordDU" );
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -949,6 +1265,8 @@ else
 <%@ include file="./include/timeout.inc" %>
 <link rel="stylesheet" type="text/css" href="./css/print.css" media="print" />
 <script language="JavaScript" type="text/javascript" src="./js/common.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jsoeUtils.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/jsoe.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/scw.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/animatedcollapse.js"></script>
 <script language="JavaScript" type="text/javascript" src="./js/jquery.blockUI.js"></script>
@@ -1210,8 +1528,9 @@ else
 
 </td>
 <td valign="top"  class="text12" style="width:650px;">
-<% /* DirectionsForUseTitle:EditBox */ %>
+<% /* DirectionsForUseTitle:MLEdit */ %>
 <%
+   // MLEdit: DirectionsForUseTitle
    strErrorMapValue = VmlOperation.CheckError( "DirectionsForUseTitle", strError );
    if ( !StringUtils.isBlank( strErrorMapValue ) )
    {
@@ -1229,15 +1548,7 @@ else
          nRC = mMasLC.cursor( "M_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            try
-            {
-               strErrorMapValue = mMasLC.cursor( "M_DirectionsForUseSection" ).getAttribute( "Title" ).getString( "" );
-            }
-            catch (Exception e)
-            {
-               out.println("There is an error on DirectionsForUseTitle: " + e.getMessage());
-               task.log().error( "*** Error on ctrl DirectionsForUseTitle", e );
-            }
+            strErrorMapValue = mMasLC.cursor( "M_DirectionsForUseSection" ).getAttribute( "Title" ).getString( "" );
             if ( strErrorMapValue == null )
                strErrorMapValue = "";
 
@@ -1249,7 +1560,51 @@ else
    }
 %>
 
-<input class="text12" name="DirectionsForUseTitle" id="DirectionsForUseTitle" maxlength="254"  title="Optional Title to appear with text on generated label"style="width:650px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<textarea id="DirectionsForUseTitle" name="DirectionsForUseTitle" class="text12" style="width:650px;height:32px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+
+</td>
+</tr>
+<tr>
+<td valign="top" style="width:118px;">
+<% /* Subtitle::Text */ %>
+
+<span  id="Subtitle:" name="Subtitle:" style="width:112px;height:16px;">Subtitle:</span>
+
+</td>
+<td valign="top"  class="text12" style="width:650px;">
+<% /* Subtitle:MLEdit */ %>
+<%
+   // MLEdit: Subtitle
+   strErrorMapValue = VmlOperation.CheckError( "Subtitle", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "Subtitle" );
+      else
+      {
+         nRC = mMasLC.cursor( "M_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strErrorMapValue = mMasLC.cursor( "M_DirectionsForUseSection" ).getAttribute( "Subtitle" ).getString( "" );
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "M_DirectionsForUseSection.Subtitle: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for Subtitle: " + "mMasLC.M_DirectionsForUseSection" );
+      }
+   }
+%>
+
+<textarea id="Subtitle" name="Subtitle" class="text12" style="width:650px;height:96px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 </td>
 </tr>
@@ -1300,15 +1655,15 @@ else
    }
 %>
 
-<input class="text12" name="DirectionsForUseReviewerNote" id="DirectionsForUseReviewerNote" maxlength="1024"  title="Optional Title to appear with text on generated label"style="width:650px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="DirectionsForUseReviewerNote" id="DirectionsForUseReviewerNote" maxlength="254"  title="Optional Title to appear with text on generated label"style="width:650px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>
 <tr>
 <td valign="top" style="width:118px;">
-<% /* Text2:Text */ %>
+<% /* ExclusiveXOR::Text */ %>
 
-<span  id="Text2" name="Text2" style="width:112px;height:16px;">Reviewer Note:</span>
+<span  id="ExclusiveXOR:" name="ExclusiveXOR:" style="width:112px;height:16px;">Exclusive To:</span>
 
 </td>
 <td valign="top" style="width:280px;">
@@ -1381,24 +1736,24 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:10px;width:100px;"></div>
+<div style="height:6px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* Tab1:Tab */ %>
 
-<div id="Tab1" class="tab-pane" style="width:820px;"> <!-- Beginning of Tab Control Tab1 -->
+<div id="Tab1" class="tab-pane" style="width:814px;"> <!-- Beginning of Tab Control Tab1 -->
 <script type="text/javascript">Tab1 = new WebFXTabPane( document.getElementById( "Tab1" ) );</script>
 
-<div id="TabCtl1" class="tab-page " > <!-- Tab item TabCtl1 -->
+<div id="Statements" class="tab-page " > <!-- Tab item Statements -->
 <h2 class="tab"><span>Statements</span></h2>
-<script type="text/javascript">Tab1.addTabPage( document.getElementById( "TabCtl1" ) );</script>
+<script type="text/javascript">Tab1.addTabPage( document.getElementById( "Statements" ) );</script>
 
 
 <div>  <!-- Beginning of a new line -->
 <% /* GBDirectionsUseStatements:GroupBox */ %>
 
-<div id="GBDirectionsUseStatements" name="GBDirectionsUseStatements" style="width:806px;float:left;">  <!-- GBDirectionsUseStatements --> 
+<div id="GBDirectionsUseStatements" name="GBDirectionsUseStatements" style="width:810px;float:left;">  <!-- GBDirectionsUseStatements --> 
 
 
  <!-- This is added as a line spacer -->
@@ -1410,9 +1765,9 @@ else
 
 <div id="GroupBox9" name="GroupBox9"   style="float:left;position:relative; width:716px; height:30px;">  <!-- GroupBox9 --> 
 
-<% /* Text5:Text */ %>
+<% /* DFU_Statements:Text */ %>
 
-<label class="listheader"  id="Text5" name="Text5" style="width:434px;height:16px;position:absolute;left:4px;top:4px;">Directions for Use Statements</label>
+<label class="listheader"  id="DFU_Statements" name="DFU_Statements" style="width:434px;height:16px;position:absolute;left:4px;top:4px;">Directions for Use Statements</label>
 
 <% /* NewStatement:PushBtn */ %>
 <button type="button" class="newbutton"  title="Go to add one orNewStatement" id="NewStatement" value="" onclick="GOTO_DirsForUseStatementAdd( )" style="width:78px;height:26px;position:absolute;left:578px;top:4px;">New</button>
@@ -1512,17 +1867,17 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </div>  <!--  GBDirectionsUseStatements --> 
 </div>  <!-- End of a new line -->
 
-</div> <!-- End of Tab item TabCtl1 -->
+</div> <!-- End of Tab item Statements -->
 
-<div id="TabCtl2" class="tab-page " > <!-- Tab item TabCtl2 -->
+<div id="ItemsDrivingSection" class="tab-page " > <!-- Tab item ItemsDrivingSection -->
 <h2 class="tab"><span>Items Driving this Section</span></h2>
-<script type="text/javascript">Tab1.addTabPage( document.getElementById( "TabCtl2" ) );</script>
+<script type="text/javascript">Tab1.addTabPage( document.getElementById( "ItemsDrivingSection" ) );</script>
 
 
 <div>  <!-- Beginning of a new line -->
 <% /* GroupBox5:GroupBox */ %>
 
-<div id="GroupBox5" name="GroupBox5" style="width:806px;float:left;">  <!-- GroupBox5 --> 
+<div id="GroupBox5" name="GroupBox5" style="width:802px;float:left;">  <!-- GroupBox5 --> 
 
 
  <!-- This is added as a line spacer -->
@@ -1646,11 +2001,247 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </div>  <!--  GroupBox5 --> 
 </div>  <!-- End of a new line -->
 
-</div> <!-- End of Tab item TabCtl2 -->
+</div> <!-- End of Tab item ItemsDrivingSection -->
 
-<div id="TabCtl3" class="tab-page " > <!-- Tab item TabCtl3 -->
+<div id="Keywords" class="tab-page " > <!-- Tab item Keywords -->
+<h2 class="tab"><span>Keywords</span></h2>
+<script type="text/javascript">Tab1.addTabPage( document.getElementById( "Keywords" ) );</script>
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:4px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp</span>
+<% /* DirectionsForUseTitleKey::Text */ %>
+
+<span  id="DirectionsForUseTitleKey:" name="DirectionsForUseTitleKey:" style="width:70px;height:16px;">Title:</span>
+
+<span style="height:16px;">&nbsp</span>
+<% /* DirectionsForUseTitleKey:Text */ %>
+<% strTextDisplayValue = "";
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) == false )
+      task.log( ).debug( "Invalid View: " + "DirectionsForUseTitleKey" );
+   else
+   {
+      nRC = mMasLC.cursor( "M_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mMasLC.cursor( "M_DirectionsForUseSection" ).getAttribute( "dDU_SectionTitleKeyword" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on DirectionsForUseTitleKey: " + e.getMessage());
+         task.log().info( "*** Error on ctrl DirectionsForUseTitleKey" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<span class="text12"  id="DirectionsForUseTitleKey" name="DirectionsForUseTitleKey"  title="Optional Title to appear with text on generated label" style="width:698px;height:16px;"><%=strTextDisplayValue%></span>
+
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:4px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<span style="height:16px;">&nbsp&nbsp</span>
+<% /* SubtitleKey::Text */ %>
+
+<span  id="SubtitleKey:" name="SubtitleKey:" style="width:70px;height:16px;">Subtitle:</span>
+
+<span style="height:16px;">&nbsp</span>
+<% /* SubtitleKey:Text */ %>
+<% strTextDisplayValue = "";
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) == false )
+      task.log( ).debug( "Invalid View: " + "SubtitleKey" );
+   else
+   {
+      nRC = mMasLC.cursor( "M_DirectionsForUseSection" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
+      {
+      try
+      {
+         strTextDisplayValue = mMasLC.cursor( "M_DirectionsForUseSection" ).getAttribute( "dDU_SectionTextKeyword" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on SubtitleKey: " + e.getMessage());
+         task.log().info( "*** Error on ctrl SubtitleKey" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
+      }
+   }
+%>
+
+<span class="text12"  id="SubtitleKey" name="SubtitleKey"  title="Optional Title to appear with text on generated label" style="width:698px;height:16px;"><%=strTextDisplayValue%></span>
+
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:6px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:12px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GroupBox10:GroupBox */ %>
+
+<div id="GroupBox10" name="GroupBox10" style="width:778px;float:left;">  <!-- GroupBox10 --> 
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:8px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<% /* GroupBox6:GroupBox */ %>
+
+<div id="GroupBox6" name="GroupBox6"   style="float:left;position:relative; width:756px; height:30px;">  <!-- GroupBox6 --> 
+
+<% /* Show:PushBtn */ %>
+<button type="button" class="newbutton" name="Show" id="Show" value="" onclick="DisplayGeneratedTextDU( )" style="width:158px;height:26px;position:absolute;left:354px;top:4px;">Show Generated Text</button>
+
+<% /* NewKeyword:PushBtn */ %>
+<button type="button" class="newbutton" name="NewKeyword" id="NewKeyword" value="" onclick="ADD_SectionKeywordDU( )" style="width:66px;height:26px;position:absolute;left:586px;top:4px;">New</button>
+
+<% /* PBSort:PushBtn */ %>
+<button type="button" class="newbutton" name="PBSort" id="PBSort" value="" onclick="Sort( )" style="width:66px;height:26px;position:absolute;left:678px;top:4px;">Sort</button>
+
+<% /* KeywordTextEmbedding:Text */ %>
+
+<label class="listheader"  id="KeywordTextEmbedding" name="KeywordTextEmbedding" style="width:324px;height:16px;position:absolute;left:10px;top:8px;">Keyword text for Embedding in Section Title/Subtitle</label>
+
+
+</div>  <!--  GroupBox6 --> 
+</div>  <!-- End of a new line -->
+
+<div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
+
+
+ <!-- This is added as a line spacer -->
+<div style="height:8px;width:100px;"></div>
+
+<div>  <!-- Beginning of a new line -->
+<div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
+<% /* GridKeywords:Grid */ %>
+<table  cols=5 style=""  name="GridKeywords" id="GridKeywords">
+
+<thead><tr>
+
+   <th>Keyword</th>
+   <th>Keyword Text</th>
+   <th>Update</th>
+   <th>Copy</th>
+   <th>Delete</th>
+
+</tr></thead>
+
+<tbody>
+
+<%
+try
+{
+   iTableRowCnt = 0;
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) )
+   {
+      long   lEntityKey;
+      String strEntityKey;
+      String strButtonName;
+      String strOdd;
+      String strTag;
+      String strKeywordName;
+      String strKeywordText;
+      String strBMBUpdate;
+      String strBMBCopy;
+      String strBMBDelete;
+      
+      View vGridKeywords;
+      vGridKeywords = mMasLC.newView( );
+      csrRC2 = vGridKeywords.cursor( "M_InsertTextKeywordSectionDU" ).setFirst(  );
+      while ( csrRC2.isSet() )
+      {
+         strOdd = (iTableRowCnt % 2) != 0 ? " class='odd'" : "";
+         iTableRowCnt++;
+
+         lEntityKey = vGridKeywords.cursor( "M_InsertTextKeywordSectionDU" ).getEntityKey( );
+         strEntityKey = Long.toString( lEntityKey );
+         strKeywordName = "";
+         nRC = vGridKeywords.cursor( "M_InsertTextKeywordSectionDU" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strKeywordName = vGridKeywords.cursor( "M_InsertTextKeywordSectionDU" ).getAttribute( "Name" ).getString( "" );
+
+            if ( strKeywordName == null )
+               strKeywordName = "";
+         }
+
+         if ( StringUtils.isBlank( strKeywordName ) )
+            strKeywordName = "&nbsp";
+
+         strKeywordText = "";
+         nRC = vGridKeywords.cursor( "M_InsertTextSectionDU" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strKeywordText = vGridKeywords.cursor( "M_InsertTextSectionDU" ).getAttribute( "Text" ).getString( "" );
+
+            if ( strKeywordText == null )
+               strKeywordText = "";
+         }
+
+         if ( StringUtils.isBlank( strKeywordText ) )
+            strKeywordText = "&nbsp";
+
+%>
+
+<tr<%=strOdd%>>
+
+   <td><a href="#" onclick="GOTO_MarketingKeywordUpdate( this.id )" id="KeywordName::<%=strEntityKey%>"><%=strKeywordName%></a></td>
+   <td><%=strKeywordText%></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdate" onclick="GOTO_MarketingKeywordUpdate( this.id )" id="BMBUpdate::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBCopy" onclick="COPY_InsertKeywordTitleDU( this.id )" id="BMBCopy::<%=strEntityKey%>"><img src="./images/ePammsCopy.png" alt="Copy"></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDelete" onclick="DELETE_TextKeywordTitleDU( this.id )" id="BMBDelete::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
+
+</tr>
+
+<%
+         csrRC2 = vGridKeywords.cursor( "M_InsertTextKeywordSectionDU" ).setNextContinue( );
+      }
+      vGridKeywords.drop( );
+   }
+}
+catch (Exception e)
+{
+out.println("There is an error in grid: " + e.getMessage());
+task.log().info( "*** Error in grid" + e.getMessage() );
+}
+%>
+</tbody>
+</table>
+
+</div>  <!-- End of a new line -->
+
+
+</div>  <!--  GroupBox10 --> 
+</div>  <!-- End of a new line -->
+
+</div> <!-- End of Tab item Keywords -->
+
+<div id="ReviewerNotes" class="tab-page " > <!-- Tab item ReviewerNotes -->
 <h2 class="tab"><span>Reviewer Notes</span></h2>
-<script type="text/javascript">Tab1.addTabPage( document.getElementById( "TabCtl3" ) );</script>
+<script type="text/javascript">Tab1.addTabPage( document.getElementById( "ReviewerNotes" ) );</script>
 
 
 <div>  <!-- Beginning of a new line -->
@@ -1668,12 +2259,12 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <div id="GroupBox4" name="GroupBox4"   style="float:left;position:relative; width:716px; height:30px;">  <!-- GroupBox4 --> 
 
-<% /* Text1:Text */ %>
+<% /* Note:Text */ %>
 
-<label class="listheader"  id="Text1" name="Text1" style="width:434px;height:16px;position:absolute;left:4px;top:4px;">Notes to Reviewer</label>
+<label class="listheader"  id="Note" name="Note" style="width:434px;height:16px;position:absolute;left:4px;top:4px;">Notes to Reviewer</label>
 
-<% /* PushBtn1:PushBtn */ %>
-<button type="button" class="newbutton"  title="Go to add one orPushBtn1" id="PushBtn1" value="" onclick="GOTO_ReviewerNoteAdd( )" style="width:78px;height:26px;position:absolute;left:578px;top:4px;">New</button>
+<% /* NewNote:PushBtn */ %>
+<button type="button" class="newbutton"  title="Go to add one orNewNote" id="NewNote" value="" onclick="GOTO_ReviewerNoteAdd( )" style="width:78px;height:26px;position:absolute;left:578px;top:4px;">New</button>
 
 
 </div>  <!--  GroupBox4 --> 
@@ -1730,7 +2321,7 @@ try
          nRC = vGrid2.cursor( "M_DirectionsForUseReviewerNote" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl3 = vGrid2.cursor( "M_DirectionsForUseReviewerNote" ).getAttribute( "Note" ).getString( "" );
+            strGridEditCtl3 = vGrid2.cursor( "M_DirectionsForUseReviewerNote" ).getAttribute( "Text" ).getString( "" );
 
             if ( strGridEditCtl3 == null )
                strGridEditCtl3 = "";
@@ -1770,7 +2361,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </div>  <!--  GroupBox3 --> 
 </div>  <!-- End of a new line -->
 
-</div> <!-- End of Tab item TabCtl3 -->
+</div> <!-- End of Tab item ReviewerNotes -->
 
 </div> <!-- End of Tab Control Tab1 -->
 

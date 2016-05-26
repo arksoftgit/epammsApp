@@ -1379,7 +1379,7 @@ dDisplayKeywordText( VIEW mSubLC BASED ON LOD mSubLC,
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
 
-      // Expand the current Text attribute by replacing imbedded Keywords with the Keyword
+      // Expand the current Text attribute by replacing embedded Keywords with the Keyword
       // values in the M_InsertTextMarketing subentities.
       szGeneratedString = mSubLC.S_MarketingStatement.Text
       GenerateKeywordTextIntoString( mSubLC,

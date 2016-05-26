@@ -1,3 +1,5 @@
+// wMLCDirsForUseSelectByType   Generate Timestamp: 20160525203749981
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

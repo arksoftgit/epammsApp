@@ -1,4 +1,4 @@
-z1000-Zeidon    QORGANIZ TZZOLODO 03/25/16   16:36:32 1.0a2   
+z1000-Zeidon    QORGANIZ TZZOLODO 05/26/16   12:37:15 1.0a2   
 eLOD       1
 aZKey      1658404
 aName      qOrganiz
@@ -83,8 +83,8 @@ eER_EntityRec 4
 aName      PrimaryRegistrant
 aZKey      68568354
 aPurpose   F
-aER_DiagramPosX 40
-aER_DiagramPosY 38
+aER_DiagramPosX 39
+aER_DiagramPosY 32
 
 eER_RelLinkRec 4
 aName      has
@@ -101,9 +101,9 @@ aFact      Added thru ER Dialog
 aER_DiagramBendPosX 0
 aER_DiagramBendPosY 0
 aER_DiagramE1PosX 65
-aER_DiagramE1PosY 41
-aER_DiagramE2PosX 49
-aER_DiagramE2PosY 41
+aER_DiagramE1PosY 33
+aER_DiagramE2PosX 48
+aER_DiagramE2PosY 33
 
 eLOD_EntityChild 3
 aName      Subregistrant
@@ -209,7 +209,7 @@ aName      Organization
 aZKey      1653216
 aPurpose   F
 aER_DiagramPosX 66
-aER_DiagramPosY 37
+aER_DiagramPosY 33
 
 eER_RelLinkRec 7
 aName      for
@@ -247,10 +247,10 @@ aCardMax   1
 eER_RelTypeRec 7
 aZKey      68568357
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 44
+aER_DiagramBendPosX 43
 aER_DiagramBendPosY 19
-aER_DiagramE1PosX 44
-aER_DiagramE1PosY 37
+aER_DiagramE1PosX 43
+aER_DiagramE1PosY 31
 aER_DiagramE2PosX 67
 aER_DiagramE2PosY 19
 
@@ -285,7 +285,7 @@ aFact      Added thru ER Dialog
 aER_DiagramBendPosX 98
 aER_DiagramBendPosY 19
 aER_DiagramE1PosX 98
-aER_DiagramE1PosY 36
+aER_DiagramE1PosY 33
 aER_DiagramE2PosX 77
 aER_DiagramE2PosY 19
 
@@ -316,7 +316,7 @@ aName      Subregistrant
 aZKey      68568355
 aPurpose   F
 aER_DiagramPosX 94
-aER_DiagramPosY 37
+aER_DiagramPosY 34
 
 eER_RelLinkRec 4
 aName      has
@@ -333,9 +333,9 @@ aFact      Added thru ER Dialog
 aER_DiagramBendPosX 0
 aER_DiagramBendPosY 0
 aER_DiagramE1PosX 75
-aER_DiagramE1PosY 39
+aER_DiagramE1PosY 37
 aER_DiagramE2PosX 93
-aER_DiagramE2PosY 39
+aER_DiagramE2PosY 37
 
 eLOD_EntityChild 3
 aName      Employee
@@ -825,11 +825,11 @@ eER_RelTypeRec 5
 aZKey      1654852
 aFact      Added thru ER Dialog
 aER_DiagramBendPosX 86
-aER_DiagramBendPosY 37
+aER_DiagramBendPosY 35
 aER_DiagramE1PosX 86
 aER_DiagramE1PosY 28
 aER_DiagramE2PosX 75
-aER_DiagramE2PosY 37
+aER_DiagramE2PosY 35
 
 eLOD_AttributeRec 3
 aZKey      1658406

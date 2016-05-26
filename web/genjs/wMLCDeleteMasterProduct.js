@@ -1,3 +1,5 @@
+// wMLCDeleteMasterProduct   Generate Timestamp: 20160525203748294
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

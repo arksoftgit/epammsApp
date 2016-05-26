@@ -1,3 +1,5 @@
+// wMLCFirstAidStatement   Generate Timestamp: 20160525203750653
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

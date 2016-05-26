@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCClaimsFootnoteStatement   Generate Timestamp: 20160427124121145 --%>
+<%-- wMLCClaimsFootnoteStatement   Generate Timestamp: 20160525203748012 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -504,6 +504,7 @@ else
    View mOrganiz = null;
    View mPrimReg = null;
    View wWebXfer = null;
+   View mMasLCIncludeExclude = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";
@@ -681,7 +682,7 @@ else
    }
 %>
 
-<input name="Footnote" id="Footnote" maxlength="254" style="width:594px;position:absolute;left:70px;top:6px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="Footnote" id="Footnote" maxlength="1024" style="width:594px;position:absolute;left:70px;top:6px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* Symbol::Text */ %>
 

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCSurfaceText   Generate Timestamp: 20160427124123659 --%>
+<%-- wMLCSurfaceText   Generate Timestamp: 20160525203755575 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -690,6 +690,7 @@ else
    View mOrganiz = null;
    View mPrimReg = null;
    View wWebXfer = null;
+   View mMasLCIncludeExclude = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";
@@ -881,7 +882,7 @@ else
    }
 %>
 
-<input class="text12" name="SurfaceText" id="SurfaceText" maxlength="32000" style="width:614px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="SurfaceText" id="SurfaceText" maxlength="254" style="width:614px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

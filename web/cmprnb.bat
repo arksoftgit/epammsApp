@@ -1,6 +1,6 @@
 @echo off
 if '%1' == '' goto :comparedir
-"C:\Program Files (x86)\CompareIt!\wincmp3"  %1  "\Program Files\Apache Group\Tomcat 7.0\webapps\ROOT\epamms\%1"
+"C:\Program Files (x86)\CompareIt!\wincmp3"  %1  "%TOMCAT_HOME%\webapps\ROOT\epamms\%1"
 quit
 :comparedir
-"C:\Program Files (x86)\CompareIt!\SynchronizeIt!\wndsync" "\Workspace\NetBeansProjects\epammsApp\web" "\Program Files\Apache Group\Tomcat 7.0\webapps\ROOT\epamms" 
+"C:\Program Files (x86)\CompareIt!\SynchronizeIt!\wndsync" "%KZD%:\Workspace\NetBeansProjects\epammsApp\web" "%TOMCAT_HOME%\webapps\ROOT\epamms" 

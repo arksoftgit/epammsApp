@@ -1867,7 +1867,7 @@ GeneratePDF_DFU( VIEW mSPLDef    BASED ON LOD mSPLDef,
       //
       IF szUsageTypeEntity != ""
          // Storage and Disposal has no keyword mapping.
-         InsertMappingWordsIntoString( mSPLDef, szStatementText, szUsageTypeEntity, szLoopingEntity, szSeparatorCharacters )
+         InsertKeywordsIntoString( mSPLDef, szStatementText, szUsageTypeEntity, szLoopingEntity, szSeparatorCharacters )
          SetAttributeFromString( mSPLDef, szStatementName, "DisplayText", szStatementText )
       END
 

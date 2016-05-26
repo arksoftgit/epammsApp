@@ -1,4 +1,4 @@
-z1000-Zeidon    ZEIDON   TZDMXGPO 04/21/16   10:05:46 1.0a2   
+z1000-Zeidon    ZEIDON   TZDMXGPO 05/25/16   18:30:45 1.0a2   
 eDomainGroup 1
 aName      ePamms
 
@@ -2911,8 +2911,13 @@ aInternalValue O
 
 eTableEntry 4
 aZKey      110226103
-aExternalValue At Least One Req'd
+aExternalValue At Least One Required
 aInternalValue R
+
+eTableEntry 4
+aZKey      130001733
+aExternalValue Exactly One Required
+aInternalValue X
 
 eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.IntegerDomain

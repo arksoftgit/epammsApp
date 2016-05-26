@@ -1,3 +1,5 @@
+// wMLCAddUpdateKeywordDU   Generate Timestamp: 20160525203746729
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;
@@ -160,7 +162,7 @@ function _AfterPageLoaded( )
       timerID = null;
    }
 
-   document.wMLCAddUpdateKeywordDU.hComboBox1.value = document.wMLCAddUpdateKeywordDU.ComboBox1.value
+   document.wMLCAddUpdateKeywordDU.hComboBox.value = document.wMLCAddUpdateKeywordDU.ComboBox.value
 
    var varTimeout = document.wMLCAddUpdateKeywordDU.zTimeout.value;
    if ( varTimeout > 0 )
@@ -274,7 +276,7 @@ function DELETE_InsertTextItem( strTagEntityKey )
    }
 }
 
-function ComboBox1OnChange( )
+function ComboBoxOnChange( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -282,7 +284,7 @@ function ComboBox1OnChange( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      document.wMLCAddUpdateKeywordDU.hComboBox1.value = document.wMLCAddUpdateKeywordDU.ComboBox1.value;
+      document.wMLCAddUpdateKeywordDU.hComboBox.value = document.wMLCAddUpdateKeywordDU.ComboBox.value;
    }
 }
 

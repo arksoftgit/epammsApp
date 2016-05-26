@@ -1,3 +1,5 @@
+// wMLCEnvironmentalHazardsSection   Generate Timestamp: 20160525203750356
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

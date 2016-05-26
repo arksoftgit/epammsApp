@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCTableOfContents   Generate Timestamp: 20160427124123729 --%>
+<%-- wMLCTableOfContents   Generate Timestamp: 20160525203755685 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -663,6 +663,7 @@ else
    View mOrganiz = null;
    View mPrimReg = null;
    View wWebXfer = null;
+   View mMasLCIncludeExclude = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";
@@ -866,7 +867,7 @@ else
    }
 %>
 
-<input class="text12" name="TOC_ReviewerNote" id="TOC_ReviewerNote" maxlength="1024" style="width:634px;position:absolute;left:130px;top:52px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="TOC_ReviewerNote" id="TOC_ReviewerNote" maxlength="254" style="width:634px;position:absolute;left:130px;top:52px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* New:PushBtn */ %>
 <button type="button" class="newbutton" name="New" id="New" value="" onclick="GOTO_AddTableOfContentsEntry( )" style="width:78px;height:26px;position:absolute;left:586px;top:82px;">New</button>

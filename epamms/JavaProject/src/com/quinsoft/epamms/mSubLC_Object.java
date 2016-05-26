@@ -30,7 +30,6 @@ import org.apache.commons.lang3.mutable.MutableDouble;
 import org.apache.commons.lang3.mutable.MutableInt;
 
 import com.quinsoft.epamms.ZGlobal1_Operation;
-import com.quinsoft.epamms.ZGlobalV_Operation;
 
 /**
    @author QuinSoft
@@ -4051,7 +4050,7 @@ omSubLC_dDisplayKeywordText( View     mSubLC,
       //:OF   zDERIVED_GET:
       case zDERIVED_GET :
 
-         //:// Expand the current Text attribute by replacing imbedded Keywords with the Keyword
+         //:// Expand the current Text attribute by replacing embedded Keywords with the Keyword
          //:// values in the M_InsertTextMarketing subentities.
          //:szGeneratedString = mSubLC.S_MarketingStatement.Text
          {MutableInt mi_lTempInteger_0 = new MutableInt( lTempInteger_0 );
@@ -4069,15 +4068,15 @@ omSubLC_dDisplayKeywordText( View     mSubLC,
          //:                            "S_InsertTextMarketing",
          //:                            ", " )
          {
-          ZGlobalV_Operation m_ZGlobalV_Operation = new ZGlobalV_Operation( mSubLC );
+          ZGlobal1_Operation m_ZGlobal1_Operation = new ZGlobal1_Operation( mSubLC );
           {StringBuilder sb_szGeneratedString;
          if ( szGeneratedString == null )
             sb_szGeneratedString = new StringBuilder( 32 );
          else
             sb_szGeneratedString = new StringBuilder( szGeneratedString );
-                   m_ZGlobalV_Operation.GenerateKeywordTextIntoString( mSubLC, sb_szGeneratedString, "S_InsertTextKeywordMarketing", "S_InsertTextMarketing", ", " );
+                   m_ZGlobal1_Operation.GenerateKeywordTextIntoString( mSubLC, sb_szGeneratedString, "S_InsertTextKeywordMarketing", "S_InsertTextMarketing", ", " );
          szGeneratedString = sb_szGeneratedString.toString( );}
-          // m_ZGlobalV_Operation = null;  // permit gc  (unnecessary)
+          // m_ZGlobal1_Operation = null;  // permit gc  (unnecessary)
          }
 
          //:// Store the calculated value in the object.

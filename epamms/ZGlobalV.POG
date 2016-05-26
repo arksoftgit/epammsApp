@@ -1,4 +1,4 @@
-z1000-Zeidon    ZGLOBALV TZOGSRCO 01/23/16   23:15:05 1.0a2   
+z1000-Zeidon    ZGLOBALV TZOGSRCO 05/18/16   18:23:16 1.0a2   
 eGlobalOperationGroup 1
 aZKey      1399843
 aName      ZGlobalV
@@ -26,47 +26,6 @@ aDataType  V
 aPFlag     N
 aUFlag     N
 aZKey      1399846
-
-eOperation 2
-aName      GenerateKeywordTextIntoString
-aZKey      110215868
-aType      G
-aReturnDataType N
-
-eParameter 3
-aShortDesc KeywordEntityView
-aDataType  V
-aPFlag     N
-aUFlag     N
-aZKey      110215869
-
-eParameter 3
-aShortDesc ReturnedTextString
-aDataType  S
-aPFlag     Y
-aUFlag     N
-aZKey      110215870
-
-eParameter 3
-aShortDesc KeywordEntityName
-aDataType  S
-aPFlag     N
-aUFlag     N
-aZKey      110215871
-
-eParameter 3
-aShortDesc KeywordTextEntityName
-aDataType  S
-aPFlag     N
-aUFlag     N
-aZKey      110215872
-
-eParameter 3
-aShortDesc SeparatorCharacters
-aDataType  S
-aPFlag     N
-aUFlag     N
-aZKey      110215873
 
 eOperation 2
 aName      SyncPhysicalLabel

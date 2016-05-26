@@ -1,4 +1,4 @@
-z1000-Zeidon    MBLOCKRU TZZOLODO 03/25/16   16:36:28 1.0a2   
+z1000-Zeidon    MBLOCKRU TZZOLODO 05/26/16   12:37:11 1.0a2   
 eLOD       1
 aZKey      110030723
 aName      mBlockRU
@@ -60,7 +60,7 @@ aName      Subregistrant
 aZKey      68568355
 aPurpose   F
 aER_DiagramPosX 94
-aER_DiagramPosY 37
+aER_DiagramPosY 34
 
 eER_RelLinkRec 4
 aName      for
@@ -74,7 +74,7 @@ aFact      Added thru ER Dialog
 aER_DiagramBendPosX 99
 aER_DiagramBendPosY 47
 aER_DiagramE1PosX 99
-aER_DiagramE1PosY 42
+aER_DiagramE1PosY 39
 aER_DiagramE2PosX 159
 aER_DiagramE2PosY 47
 
@@ -1783,11 +1783,12 @@ aName      Description
 aZKey      110030382
 
 eDomainRec 5
-aZKey      68568051
-aName      Note
+aZKey      68568087
+aName      TextDescription
 aDomainType A
 aDataType  S
-aMaxStringLth 32000
+aMaxStringLth 1024
+aDesc      Long text
 aContextRestriction N
 
 eLOD_AttributeRec 3

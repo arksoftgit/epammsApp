@@ -1,3 +1,5 @@
+// wMLCDeleteMasterLabelContent   Generate Timestamp: 20160525203748200
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

@@ -1,3 +1,5 @@
+// wMLCLocationsGroup   Generate Timestamp: 20160525203751950
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

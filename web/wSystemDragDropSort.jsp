@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSystemDragDropSort   Generate Timestamp: 20160426145257496 --%>
+<%-- wSystemDragDropSort   Generate Timestamp: 20160524093207665 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -13,7 +13,7 @@
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
 <%@ page import="com.quinsoft.epamms.*" %>
 
-<%!
+<%! 
 
 ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
@@ -231,7 +231,7 @@ String strInputFileName = "";
 strActionToProcess = (String) request.getParameter( "zAction" );
 
 strLastWindow = (String) session.getAttribute( "ZeidonWindow" );
-if ( StringUtils.isBlank( strLastWindow ) )
+if ( StringUtils.isBlank( strLastWindow ) ) 
    strLastWindow = "NoLastWindow";
 
 strLastAction = (String) session.getAttribute( "ZeidonAction" );
@@ -357,7 +357,7 @@ if ( strActionToProcess != null )
       View vOrig = task.getViewByName( strView );
       String arr = (String) request.getParameter( "zOrderArray" );
       orderByNewIndex( arr, vOrig, strEntity );
-      vOrig.commit();
+   // vOrig.commit();
       // This is hand coded!!!
 
       // Next Window
@@ -443,7 +443,7 @@ if ( strActionToProcess != null )
             task.log().info( "Action Error Redirect to: " + strURL );
          }
 
-         if ( ! strURL.equals("wSystemDragDropSort.jsp") )
+         if ( ! strURL.equals("wSystemDragDropSort.jsp") ) 
          {
             response.sendRedirect( strURL );
             // If we are redirecting to a new page, then we need this return so that the rest of this page doesn't get built.
@@ -677,7 +677,7 @@ else
 
    <h1 id="SortDragDrop" name="SortDragDrop" >Drag &AMP; Drop Sort</h1>&nbsp;&nbsp;
    <%=strTextDisplayValue%>
-</div>  <!--  SortDragDrop -->
+</div>  <!--  SortDragDrop --> 
 </div>  <!-- End of a new line -->
 
 

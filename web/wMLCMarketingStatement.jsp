@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCMarketingStatement   Generate Timestamp: 20160427154305791 --%>
+<%-- wMLCMarketingStatement   Generate Timestamp: 20160525203753216 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -831,6 +831,7 @@ else
    View mOrganiz = null;
    View mPrimReg = null;
    View wWebXfer = null;
+   View mMasLCIncludeExclude = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";
@@ -961,13 +962,13 @@ else
 <table cols=2 style="width:832px;"  class="grouptable">
 
 <tr>
-<td valign="top" style="width:54px;">
+<td valign="top" style="width:112px;">
 <% /* Title::Text */ %>
 
-<span  id="Title:" name="Title:" style="width:46px;height:18px;">Title:</span>
+<span  id="Title:" name="Title:" style="width:78px;height:18px;">Title:</span>
 
 </td>
-<td valign="top" style="width:754px;">
+<td valign="top" style="width:696px;">
 <% /* Title:MLEdit */ %>
 <%
    // MLEdit: Title
@@ -1000,18 +1001,18 @@ else
    }
 %>
 
-<div id="Title" name="Title" class="" style="width:754px;height:54px;border:solid;border-width:4px;border-style:groove;text-overflow:hidden;background-color:lightgray;" wrap="wrap"><%=strErrorMapValue%></div>
+<div id="Title" name="Title" class="" style="width:696px;height:54px;border:solid;border-width:4px;border-style:groove;text-overflow:hidden;background-color:lightgray;" wrap="wrap"><%=strErrorMapValue%></div>
 
 </td>
 </tr>
 <tr>
-<td valign="top" style="width:54px;">
+<td valign="top" style="width:112px;">
 <% /* Text::Text */ %>
 
-<span  id="Text:" name="Text:" style="width:38px;height:18px;">Text:</span>
+<span  id="Text:" name="Text:" style="width:78px;height:18px;">Text:</span>
 
 </td>
-<td valign="top" style="width:754px;">
+<td valign="top" style="width:696px;">
 <% /* Text:MLEdit */ %>
 <%
    // MLEdit: Text
@@ -1044,7 +1045,51 @@ else
    }
 %>
 
-<div id="Text" name="Text" class="" style="width:754px;height:76px;border:solid;border-width:4px;border-style:groove;text-overflow:hidden;background-color:lightgray;" wrap="wrap"><%=strErrorMapValue%></div>
+<div id="Text" name="Text" class="" style="width:696px;height:76px;border:solid;border-width:4px;border-style:groove;text-overflow:hidden;background-color:lightgray;" wrap="wrap"><%=strErrorMapValue%></div>
+
+</td>
+</tr>
+<tr>
+<td valign="top" style="width:112px;">
+<% /* ReviewerNote::Text */ %>
+
+<span  id="ReviewerNote:" name="ReviewerNote:" style="width:106px;height:18px;">Reviewer Note:</span>
+
+</td>
+<td valign="top" style="width:696px;">
+<% /* ReviewerNote:MLEdit */ %>
+<%
+   // MLEdit: ReviewerNote
+   strErrorMapValue = VmlOperation.CheckError( "ReviewerNote", strError );
+   if ( !StringUtils.isBlank( strErrorMapValue ) )
+   {
+      if ( StringUtils.equals( strErrorFlag, "Y" ) )
+         strErrorColor = "color:red;";
+   }
+   else
+   {
+      strErrorColor = "";
+      mMasLC = task.getViewByName( "mMasLC" );
+      if ( VmlOperation.isValid( mMasLC ) == false )
+         task.log( ).debug( "Invalid View: " + "ReviewerNote" );
+      else
+      {
+         nRC = mMasLC.cursor( "M_MarketingStatement" ).checkExistenceOfEntity( ).toInt();
+         if ( nRC >= 0 )
+         {
+            strErrorMapValue = mMasLC.cursor( "M_MarketingStatement" ).getAttribute( "ReviewerNote" ).getString( "" );
+            if ( strErrorMapValue == null )
+               strErrorMapValue = "";
+
+            task.log( ).debug( "M_MarketingStatement.ReviewerNote: " + strErrorMapValue );
+         }
+         else
+            task.log( ).debug( "Entity does not exist for ReviewerNote: " + "mMasLC.M_MarketingStatement" );
+      }
+   }
+%>
+
+<div id="ReviewerNote" name="ReviewerNote" class="" style="width:696px;height:34px;border:solid;border-width:4px;border-style:groove;text-overflow:hidden;background-color:lightgray;" wrap="wrap"><%=strErrorMapValue%></div>
 
 </td>
 </tr>
@@ -1058,7 +1103,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
+<div style="height:8px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
@@ -1075,18 +1120,18 @@ else
 
 <div id="GroupBox2" name="GroupBox2"   style="float:left;position:relative; width:756px; height:30px;">  <!-- GroupBox2 --> 
 
-<% /* PushBtn3:PushBtn */ %>
-<button type="button" class="newbutton" name="PushBtn3" id="PushBtn3" value="" onclick="GOTO_DisplayGeneratedTextMktg( )" style="width:158px;height:26px;position:absolute;left:354px;top:4px;">Update Text and Title</button>
+<% /* UpdateStatement:PushBtn */ %>
+<button type="button" class="newbutton" name="UpdateStatement" id="UpdateStatement" value="" onclick="GOTO_DisplayGeneratedTextMktg( )" style="width:158px;height:26px;position:absolute;left:354px;top:4px;">Update Statement</button>
 
-<% /* PushBtn4:PushBtn */ %>
-<button type="button" class="newbutton" name="PushBtn4" id="PushBtn4" value="" onclick="PASTE_InsertKeyword( )" style="width:74px;height:26px;position:absolute;left:530px;top:4px;">Paste</button>
+<% /* Paste:PushBtn */ %>
+<button type="button" class="newbutton" name="Paste" id="Paste" value="" onclick="PASTE_InsertKeyword( )" style="width:74px;height:26px;position:absolute;left:530px;top:4px;">Paste</button>
 
-<% /* PushBtn2:PushBtn */ %>
-<button type="button" class="newbutton" name="PushBtn2" id="PushBtn2" value="" onclick="ADD_MarketingStatementKeyword( )" style="width:66px;height:26px;position:absolute;left:618px;top:4px;">New</button>
+<% /* New:PushBtn */ %>
+<button type="button" class="newbutton" name="New" id="New" value="" onclick="ADD_MarketingStatementKeyword( )" style="width:66px;height:26px;position:absolute;left:618px;top:4px;">New</button>
 
-<% /* Text4:Text */ %>
+<% /* KeywordTextEmbedded:Text */ %>
 
-<label class="listheader"  id="Text4" name="Text4" style="width:324px;height:16px;position:absolute;left:10px;top:8px;">Keyword text for Embedding in Statement Text</label>
+<label class="listheader"  id="KeywordTextEmbedded" name="KeywordTextEmbedded" style="width:324px;height:16px;position:absolute;left:10px;top:8px;">Keyword text for Embedding in Statement Text</label>
 
 
 </div>  <!--  GroupBox2 --> 
@@ -1127,9 +1172,9 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
-      String strGridEditCtl3;
-      String strGridEditCtl4;
-      String strUpdate;
+      String strKeyword;
+      String strKeywordText;
+      String strUpdateKeyword;
       String strCopy;
       String strDelete;
       
@@ -1143,39 +1188,39 @@ try
 
          lEntityKey = vGrid3.cursor( "M_InsertTextKeywordMarketing" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strGridEditCtl3 = "";
+         strKeyword = "";
          nRC = vGrid3.cursor( "M_InsertTextKeywordMarketing" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl3 = vGrid3.cursor( "M_InsertTextKeywordMarketing" ).getAttribute( "Name" ).getString( "" );
+            strKeyword = vGrid3.cursor( "M_InsertTextKeywordMarketing" ).getAttribute( "Name" ).getString( "" );
 
-            if ( strGridEditCtl3 == null )
-               strGridEditCtl3 = "";
+            if ( strKeyword == null )
+               strKeyword = "";
          }
 
-         if ( StringUtils.isBlank( strGridEditCtl3 ) )
-            strGridEditCtl3 = "&nbsp";
+         if ( StringUtils.isBlank( strKeyword ) )
+            strKeyword = "&nbsp";
 
-         strGridEditCtl4 = "";
+         strKeywordText = "";
          nRC = vGrid3.cursor( "M_InsertTextKeywordMarketing" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl4 = vGrid3.cursor( "M_InsertTextKeywordMarketing" ).getAttribute( "dMarketingKeywordText" ).getString( "" );
+            strKeywordText = vGrid3.cursor( "M_InsertTextKeywordMarketing" ).getAttribute( "dMarketingKeywordText" ).getString( "" );
 
-            if ( strGridEditCtl4 == null )
-               strGridEditCtl4 = "";
+            if ( strKeywordText == null )
+               strKeywordText = "";
          }
 
-         if ( StringUtils.isBlank( strGridEditCtl4 ) )
-            strGridEditCtl4 = "&nbsp";
+         if ( StringUtils.isBlank( strKeywordText ) )
+            strKeywordText = "&nbsp";
 
 %>
 
 <tr<%=strOdd%>>
 
-   <td><a href="#" onclick="GOTO_MarketingKeywordUpdate( this.id )" id="GridEditCtl3::<%=strEntityKey%>"><%=strGridEditCtl3%></a></td>
-   <td><a href="#" onclick="GOTO_MarketingKeywordUpdate( this.id )" id="GridEditCtl4::<%=strEntityKey%>"><%=strGridEditCtl4%></a></td>
-   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="Update" onclick="GOTO_MarketingKeywordUpdate( this.id )" id="Update::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
+   <td><a href="#" onclick="GOTO_MarketingKeywordUpdate( this.id )" id="Keyword::<%=strEntityKey%>"><%=strKeyword%></a></td>
+   <td><a href="#" onclick="GOTO_MarketingKeywordUpdate( this.id )" id="KeywordText::<%=strEntityKey%>"><%=strKeywordText%></a></td>
+   <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="UpdateKeyword" onclick="GOTO_MarketingKeywordUpdate( this.id )" id="UpdateKeyword::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="Copy" onclick="COPY_InsertKeyword( this.id )" id="Copy::<%=strEntityKey%>"><img src="./images/ePammsCopy.png" alt="Copy"></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="Delete" onclick="DELETE_MarketingStatementKeyword( this.id )" id="Delete::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
@@ -1206,7 +1251,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 
  <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
+<div style="height:6px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
@@ -1223,12 +1268,12 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 <div id="GroupBox4" name="GroupBox4"   style="float:left;position:relative; width:686px; height:30px;">  <!-- GroupBox4 --> 
 
-<% /* Text2:Text */ %>
+<% /* UsageEntries:Text */ %>
 
-<label class="listheader"  id="Text2" name="Text2" style="width:434px;height:16px;position:absolute;left:10px;top:4px;">Usage Entries for Embedding in Statement Text</label>
+<label class="listheader"  id="UsageEntries" name="UsageEntries" style="width:434px;height:16px;position:absolute;left:10px;top:4px;">Usage Entries for Embedding in Statement Text</label>
 
-<% /* PushBtn1:PushBtn */ %>
-<button type="button" class="newbutton" name="PushBtn1" id="PushBtn1" value="" onclick="GOTO_SelectRemoveMktgEntries( )" style="width:118px;height:26px;position:absolute;left:560px;top:4px;">Select/Remove</button>
+<% /* Select:PushBtn */ %>
+<button type="button" class="newbutton" name="Select" id="Select" value="" onclick="GOTO_SelectRemoveMktgEntries( )" style="width:118px;height:26px;position:absolute;left:560px;top:4px;">Select/Remove</button>
 
 
 </div>  <!--  GroupBox4 --> 
@@ -1266,8 +1311,8 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
-      String strGridEditCtl1;
-      String strGridEditCtl2;
+      String strUsageType;
+      String strUsageName;
       
       View vGrid1;
       vGrid1 = mMasLC.newView( );
@@ -1279,38 +1324,38 @@ try
 
          lEntityKey = vGrid1.cursor( "M_MarketingUsageOrdering" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strGridEditCtl1 = "";
+         strUsageType = "";
          nRC = vGrid1.cursor( "M_MarketingUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl1 = vGrid1.cursor( "M_MarketingUsage" ).getAttribute( "dUsageClaimClassification" ).getString( "" );
+            strUsageType = vGrid1.cursor( "M_MarketingUsage" ).getAttribute( "dUsageClaimClassification" ).getString( "" );
 
-            if ( strGridEditCtl1 == null )
-               strGridEditCtl1 = "";
+            if ( strUsageType == null )
+               strUsageType = "";
          }
 
-         if ( StringUtils.isBlank( strGridEditCtl1 ) )
-            strGridEditCtl1 = "&nbsp";
+         if ( StringUtils.isBlank( strUsageType ) )
+            strUsageType = "&nbsp";
 
-         strGridEditCtl2 = "";
+         strUsageName = "";
          nRC = vGrid1.cursor( "M_MarketingUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl2 = vGrid1.cursor( "M_MarketingUsage" ).getAttribute( "dMarketUsageTextSubUsageNames" ).getString( "" );
+            strUsageName = vGrid1.cursor( "M_MarketingUsage" ).getAttribute( "dMarketUsageTextSubUsageNames" ).getString( "" );
 
-            if ( strGridEditCtl2 == null )
-               strGridEditCtl2 = "";
+            if ( strUsageName == null )
+               strUsageName = "";
          }
 
-         if ( StringUtils.isBlank( strGridEditCtl2 ) )
-            strGridEditCtl2 = "&nbsp";
+         if ( StringUtils.isBlank( strUsageName ) )
+            strUsageName = "&nbsp";
 
 %>
 
 <tr<%=strOdd%>>
 
-   <td><%=strGridEditCtl1%></td>
-   <td><%=strGridEditCtl2%></td>
+   <td><%=strUsageType%></td>
+   <td><%=strUsageName%></td>
 
 </tr>
 

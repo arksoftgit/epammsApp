@@ -95,7 +95,7 @@ aNAME      bInsertBraces
 aDATATYPE  N
 
 eOPERATION 3
-aNAME      InsertMappingWordsIntoString
+aNAME      InsertKeywordsIntoString
 aTYPE      G
 
 ePARAMETER 4

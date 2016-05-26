@@ -1,3 +1,5 @@
+// wMLCAddLocationsList   Generate Timestamp: 20160525203746325
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

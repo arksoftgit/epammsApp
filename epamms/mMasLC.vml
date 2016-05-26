@@ -22,7 +22,7 @@ dEPA_RegistrationNbr( VIEW mMasLC BASED ON LOD mMasLC,
                       STRING ( 32 ) InternalAttribStructure,
                       SHORT GetOrSetFlag )
 
-   STRING ( 1000 ) szString
+   STRING ( 1024 ) szString
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -57,7 +57,7 @@ dIngredientName( VIEW mMasLC BASED ON LOD mMasLC,
                  STRING ( 32 ) InternalAttribStructure,
                  SHORT GetOrSetFlag )
 
-   STRING ( 1000 ) szString
+   STRING ( 1024 ) szString
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -94,7 +94,7 @@ dMasterProductNameNbr( VIEW mMasLC BASED ON LOD mMasLC,
                        STRING ( 32 ) InternalAttribStructure,
                        SHORT GetOrSetFlag )
 
-   STRING ( 1000 ) szString
+   STRING ( 1024 ) szString
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -131,7 +131,7 @@ dRegistrantNameID( VIEW mMasLC BASED ON LOD mMasLC,
                    STRING ( 32 ) InternalAttribStructure,
                    SHORT GetOrSetFlag )
 
-   STRING ( 1000 ) szString
+   STRING ( 1024 ) szString
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -440,12 +440,12 @@ CopyMLCToNewProduct( VIEW TargetMLC BASED ON LOD mMasLC,
       END
 
       // Text Keyword
-      /*FOR EACH SourceMLC.M_InsertTextKeywordTitleDU
-         CREATE ENTITY TargetMLC.M_InsertTextKeywordTitleDU
-         SetMatchingAttributesByName( TargetMLC, "M_InsertTextKeywordTitleDU", SourceMLC, "M_InsertTextKeywordTitleDU", zSET_NULL )
-         FOR EACH SourceMLC.M_InsertTextTitleDU
-            CREATE ENTITY TargetMLC.M_InsertTextTitleDU
-            SetMatchingAttributesByName( TargetMLC, "M_InsertTextTitleDU", SourceMLC, "M_InsertTextTitleDU", zSET_NULL )
+      /*FOR EACH SourceMLC.M_InsertTextKeywordSectionDU
+         CREATE ENTITY TargetMLC.M_InsertTextKeywordSectionDU
+         SetMatchingAttributesByName( TargetMLC, "M_InsertTextKeywordSectionDU", SourceMLC, "M_InsertTextKeywordSectionDU", zSET_NULL )
+         FOR EACH SourceMLC.M_InsertTextSectionDU
+            CREATE ENTITY TargetMLC.M_InsertTextSectionDU
+            SetMatchingAttributesByName( TargetMLC, "M_InsertTextSectionDU", SourceMLC, "M_InsertTextSectionDU", zSET_NULL )
          END
       END*/
 
@@ -724,18 +724,22 @@ dUsgTextSubUsageNames( VIEW mMasLC BASED ON LOD mMasLC,
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
 
-      // Display required text combined with optional usage(s).
-      szDisplayStatement = mMasLC.M_Usage.Name
-      InsertOptionalSubUsages( mMasLC, szDisplayStatement, "M_SubUsage", 1 )
+      IF mMasLC.M_Usage EXISTS
+         // Display required text combined with optional usage(s).
+         szDisplayStatement = mMasLC.M_Usage.Name
+         InsertOptionalSubUsages( mMasLC, szDisplayStatement, "M_SubUsage", 1 )
 
-      IF mMasLC.M_InsertTextKeywordUsage EXISTS
-         CreateViewFromView( mMasLC2, mMasLC )
-         FOR EACH mMasLC2.M_InsertTextKeywordUsage
-            szUsageName = "{" + mMasLC2.M_InsertTextKeywordUsage.Name + "}"
-            szUsageText = "<b>" + mMasLC2.M_InsertTextUsage.Text + "</b>"
-            zSearchAndReplace( szDisplayStatement, 1024, szUsageName, szUsageText )
+         IF mMasLC.M_InsertTextKeywordUsage EXISTS
+            CreateViewFromView( mMasLC2, mMasLC )
+            FOR EACH mMasLC2.M_InsertTextKeywordUsage
+               szUsageName = "{" + mMasLC2.M_InsertTextKeywordUsage.Name + "}"
+               szUsageText = "<b>" + mMasLC2.M_InsertTextUsage.Text + "</b>"
+               zSearchAndReplace( szDisplayStatement, 1024, szUsageName, szUsageText )
+            END
+            DropView( mMasLC2 )
          END
-         DropView( mMasLC2 )
+      ELSE
+         szDisplayStatement = ""
       END
 
       // Store the calculated value in the object.
@@ -847,7 +851,7 @@ dUsgListFullEmbedName( VIEW mMasLC BASED ON LOD mMasLC,
       CreateViewFromView( mMasLC2, mMasLC )
       SetCursorFirstEntityByEntityCsr( mMasLC2, "M_Usage", mMasLC, "MI_UsageList", "" )
       szDisplayStatement = mMasLC2.M_Usage.Name
-      
+
       // Display required text combined with optional usage(s).
       InsertOptionalSubUsages( mMasLC2, szDisplayStatement, "M_SubUsage", 0 )
       SetFirstCharacterCase( szDisplayStatement, 1 )
@@ -901,6 +905,80 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+//  OPERATION: dDU_SectionTitleKeyword
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dDU_SectionTitleKeyword( VIEW mMasLC BASED ON LOD mMasLC,
+                         STRING ( 32 ) InternalEntityStructure,
+                         STRING ( 32 ) InternalAttribStructure,
+                         SHORT GetOrSetFlag )
+
+   STRING ( 1024 ) szDisplayStatement
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Directions For Use Display Section Title embeds keywords into the Title.
+      szDisplayStatement = mMasLC.M_DirectionsForUseSection.Title
+
+      IF szDisplayStatement != ""
+         GenerateKeywordTextIntoString( mMasLC, szDisplayStatement,
+                                        "M_InsertTextKeywordSectionDU", "M_InsertTextSectionDU", ", " )
+      END
+
+      // Store the calculated value in the object.
+      StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
+      RETURN 0
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: dDU_SectionTextKeyword
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dDU_SectionTextKeyword( VIEW mMasLC BASED ON LOD mMasLC,
+                        STRING ( 32 ) InternalEntityStructure,
+                        STRING ( 32 ) InternalAttribStructure,
+                        SHORT GetOrSetFlag )
+
+   STRING ( 1024 ) szDisplayStatement
+   STRING ( 1024 ) szStatementText
+   STRING ( 256 )  szTitle
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Directions For Use Display Section Text embeds keywords into the Text.
+      szDisplayStatement = mMasLC.M_DirectionsForUseSection.Subtitle
+
+      IF szDisplayStatement != ""
+         GenerateKeywordTextIntoString( mMasLC, szDisplayStatement,
+                                        "M_InsertTextKeywordSectionDU", "M_InsertTextSectionDU", ", " )
+      END
+
+      // Store the calculated value in the object.
+      StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
+      RETURN 0
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
 //  OPERATION: dDU_StatementTitleText
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -910,20 +988,102 @@ dDU_StatementTitleText( VIEW mMasLC BASED ON LOD mMasLC,
                         STRING ( 32 ) InternalAttribStructure,
                         SHORT GetOrSetFlag )
 
-   STRING ( 10000 ) szDisplayStatement
-   STRING ( 10000 ) szStatementText
-   STRING ( 256 )   szTitle
+   STRING ( 1024 ) szDisplayStatement
+   STRING ( 1024 ) szStatementText
+   STRING ( 256 )  szTitle
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
 
       // Directions For Use Display Statement Text is a combination of Title and Text.
       szStatementText = mMasLC.M_DirectionsForUseStatement.Text
+      IF szStatementText != ""
+         GenerateKeywordTextIntoString( mMasLC, szStatementText,
+                                        "M_InsertTextKeywordDU", "M_InsertTextDU", ", " )
+      END
+
       IF mMasLC.M_DirectionsForUseStatement.Title != ""
          szTitle = mMasLC.M_DirectionsForUseStatement.Title
-         szDisplayStatement = szTitle + " --- " + szStatementText
+         szDisplayStatement = "<b>" + szTitle + "</b>"
+         IF szStatementText != ""
+            szDisplayStatement = szDisplayStatement + " --- " + szStatementText
+         END
       ELSE
          szDisplayStatement = szStatementText
+      END
+
+      // Store the calculated value in the object.
+      StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
+      RETURN 0
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: dDU_StmtTitleKeyword
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dDU_StmtTitleKeyword( VIEW mMasLC BASED ON LOD mMasLC,
+                      STRING ( 32 ) InternalEntityStructure,
+                      STRING ( 32 ) InternalAttribStructure,
+                      SHORT GetOrSetFlag )
+
+   STRING ( 1024 ) szDisplayStatement
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Directions For Use Display Section Title embeds keywords into the Title.
+      szDisplayStatement = mMasLC.M_DirectionsForUseStatement.Title
+
+      IF szDisplayStatement != ""
+         GenerateKeywordTextIntoString( mMasLC, szDisplayStatement,
+                                        "M_InsertTextKeywordDU", "M_InsertTextDU", ", " )
+      END
+
+      // Store the calculated value in the object.
+      StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
+      RETURN 0
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: dDU_StmtTextKeyword
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dDU_StmtTextKeyword( VIEW mMasLC BASED ON LOD mMasLC,
+                     STRING ( 32 ) InternalEntityStructure,
+                     STRING ( 32 ) InternalAttribStructure,
+                     SHORT GetOrSetFlag )
+
+   STRING ( 1024 ) szDisplayStatement
+   STRING ( 1024 ) szStatementText
+   STRING ( 256 )  szTitle
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Directions For Use Display Section Text embeds keywords into the Text.
+      szDisplayStatement = mMasLC.M_DirectionsForUseStatement.Text
+
+      IF szDisplayStatement != ""
+         GenerateKeywordTextIntoString( mMasLC, szDisplayStatement,
+                                        "M_InsertTextKeywordDU", "M_InsertTextDU", ", " )
       END
 
       // Store the calculated value in the object.
@@ -949,9 +1109,9 @@ dDU_SubStmtTitleText( VIEW mMasLC BASED ON LOD mMasLC,
                       STRING ( 32 ) InternalAttribStructure,
                       SHORT GetOrSetFlag )
 
-   STRING ( 10000 ) szDisplayStatement
-   STRING ( 10000 ) szStatementText
-   STRING ( 256 )   szTitle
+   STRING ( 1024 ) szDisplayStatement
+   STRING ( 1024 ) szStatementText
+   STRING ( 256 )  szTitle
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -979,6 +1139,103 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+//  OPERATION: dDU_DrivingUsgTxtNames
+//  Display required text + optional atomic usages
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dDU_DrivingUsgTxtNames( VIEW mMasLC BASED ON LOD mMasLC,
+                        STRING ( 32 ) InternalEntityStructure,
+                        STRING ( 32 ) InternalAttribStructure,
+                        SHORT GetOrSetFlag )
+
+   VIEW mMasLC1 BASED ON LOD mMasLC
+   VIEW mMasLC2 BASED ON LOD mMasLC
+   STRING ( 1024 ) szDisplayStatement
+   STRING ( 100 )  szUsageName
+   STRING ( 100 )  szUsageText
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      IF mMasLC.M_DrivingUsage EXISTS
+         // Display required text combined with optional usage(s).
+         CreateViewFromView( mMasLC1, mMasLC )
+         SetCursorFirstEntityByAttr( mMasLC1, "M_UsageType", "UsageType",
+                                     mMasLC, "M_DrivingUsage", "UsageType", "" )
+         SetCursorFirstEntityByAttr( mMasLC1, "M_Usage", "ID",
+                                     mMasLC, "M_DrivingUsage", "ID", "" )
+      // SetCursorFirstEntityByEntityCsr( mMasLC1, "M_Usage", mMasLC, "M_DrivingUsage", "" )
+
+         szDisplayStatement = mMasLC1.M_Usage.Name
+         InsertOptionalSubUsages( mMasLC1, szDisplayStatement, "M_SubUsage", 1 )
+      // SetFirstCharacterCase( szDisplayStatement, 1 )
+
+         IF mMasLC1.M_InsertTextKeywordUsage EXISTS
+            CreateViewFromView( mMasLC2, mMasLC1 )
+            FOR EACH mMasLC2.M_InsertTextKeywordUsage
+               szUsageName = "{" + mMasLC2.M_InsertTextKeywordUsage.Name + "}"
+               szUsageText = "<b>" + mMasLC2.M_InsertTextUsage.Text + "</b>"
+               zSearchAndReplace( szDisplayStatement, 1024, szUsageName, szUsageText )
+            END
+            DropView( mMasLC2 )
+         END
+
+         DropView( mMasLC1 )
+      ELSE
+         szDisplayStatement = ""
+      END
+
+      // Store the calculated value in the object.
+      StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: dDU_DrvUsgClaimClass
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dDU_DrvUsgClaimClass( VIEW mMasLC BASED ON LOD mMasLC,
+                      STRING ( 32 ) InternalEntityStructure,
+                      STRING ( 32 ) InternalAttribStructure,
+                      SHORT GetOrSetFlag )
+
+   STRING ( 32 )  szEntityName
+   STRING ( 64  ) szUsageType
+   STRING ( 32 )  szClassification
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Combine the UsageType and the ClaimsClassification.
+      GetEntityNameFromStructure( InternalEntityStructure, szEntityName )
+      GetStringFromAttributeByContext( szUsageType, mMasLC, szEntityName, "UsageType", "FullUsageType", 32 )
+      GetStringFromAttribute( szClassification, mMasLC, szEntityName, "ClaimsClassification" )
+      IF szClassification != ""
+         szUsageType = szUsageType + "/" + szClassification
+      END
+
+      // Store the calculated value in the object.
+      StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szUsageType )
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
 //  OPERATION: dSD_TitleText
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -988,9 +1245,9 @@ dSD_TitleText( VIEW mMasLC BASED ON LOD mMasLC,
                STRING ( 32 ) InternalAttribStructure,
                SHORT GetOrSetFlag )
 
-   STRING ( 10000 ) szDisplayStatement
-   STRING ( 10000 ) szStatementText
-   STRING ( 256 )   szTitle
+   STRING ( 1024 ) szDisplayStatement
+   STRING ( 1024 ) szStatementText
+   STRING ( 256 )  szTitle
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -1028,9 +1285,9 @@ dSD_SubTitleText( VIEW mMasLC BASED ON LOD mMasLC,
                   STRING ( 32 ) InternalAttribStructure,
                   SHORT GetOrSetFlag )
 
-   STRING ( 10000 ) szDisplayStatement
-   STRING ( 10000 ) szStatementText
-   STRING ( 256 )   szTitle
+   STRING ( 1024 ) szDisplayStatement
+   STRING ( 1024 ) szStatementText
+   STRING ( 256 )  szTitle
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -1070,7 +1327,7 @@ dTitleText( VIEW mMasLC BASED ON LOD mMasLC,
             STRING ( 32 ) InternalAttribStructure,
             SHORT GetOrSetFlag )
 
-   STRING ( 1000 ) szString
+   STRING ( 1024 ) szString
    STRING ( 256 ) szTitle
 
    CASE GetOrSetFlag
@@ -1210,7 +1467,7 @@ dUsageNameFootnote( VIEW mMasLC BASED ON LOD mMasLC,
          END
          DropView( mMasLC2 )
       END
-      
+
       // Store the calculated value in the object.
       StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szCombinedName )
 
@@ -1318,7 +1575,7 @@ dUsageClaimClass( VIEW mMasLC BASED ON LOD mMasLC,
       IF szClassification != ""
          szUsageType = szUsageType + "/" + szClassification
       END
-      
+
       // Store the calculated value in the object.
       StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szUsageType )
 
@@ -1413,7 +1670,7 @@ dGenStmtTitleText( VIEW mMasLC BASED ON LOD mMasLC,
                    SHORT GetOrSetFlag )
 
    VIEW mMasLC2 BASED ON LOD mMasLC
-   STRING ( 5000 )  szCombinedText
+   STRING ( 1024 ) szCombinedText
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -1455,7 +1712,7 @@ dUsageKeywordStmtText( VIEW mMasLC BASED ON LOD mMasLC,
                        STRING ( 32 ) InternalAttribStructure,
                        SHORT GetOrSetFlag )
 
-   STRING ( 10000 ) szGeneratedString
+   STRING ( 1024 ) szGeneratedString
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -1464,11 +1721,8 @@ dUsageKeywordStmtText( VIEW mMasLC BASED ON LOD mMasLC,
       // values in the M_InsertText subentities.
       szGeneratedString = mMasLC.DisplayKeywordText.Text
       IF szGeneratedString != ""
-         GenerateKeywordTextIntoString( mMasLC,
-                                        szGeneratedString,
-                                        "M_InsertTextKeyword",
-                                        "M_InsertText",
-                                        ", " )
+         GenerateKeywordTextIntoString( mMasLC, szGeneratedString,
+                                        "M_InsertTextKeyword", "M_InsertText", ", " )
       END
 
       // Store the resulting value in the object.
@@ -1494,7 +1748,7 @@ dFullKeywordTitleText( VIEW mMasLC BASED ON LOD mMasLC,
                        STRING ( 32 ) InternalAttribStructure,
                        SHORT GetOrSetFlag )
 
-   STRING ( 10000 ) szGeneratedString
+   STRING ( 1024 ) szGeneratedString
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -1503,11 +1757,8 @@ dFullKeywordTitleText( VIEW mMasLC BASED ON LOD mMasLC,
       // values in the M_InsertText subentities.
       szGeneratedString = mMasLC.DisplayKeywordText.Title
       IF szGeneratedString != ""
-         GenerateKeywordTextIntoString( mMasLC,
-                                        szGeneratedString,
-                                        "M_InsertTextKeyword",
-                                        "M_InsertText",
-                                        ", " )
+         GenerateKeywordTextIntoString( mMasLC, szGeneratedString,
+                                        "M_InsertTextKeyword", "M_InsertText", ", " )
       END
 
       // Store the resulting value in the object.
@@ -1574,7 +1825,7 @@ dDU_KeywordText( VIEW mMasLC BASED ON LOD mMasLC,
                  STRING ( 32 ) InternalAttribStructure,
                  SHORT GetOrSetFlag )
 
-   STRING ( 1000 ) szKeyValue
+   STRING ( 1024 ) szKeyValue
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -1612,7 +1863,7 @@ dSD_KeywordText( VIEW mMasLC BASED ON LOD mMasLC,
                  STRING ( 32 ) InternalAttribStructure,
                  SHORT GetOrSetFlag )
 
-   STRING ( 1000 ) szGeneratedString
+   STRING ( 1024 ) szGeneratedString
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -1650,7 +1901,7 @@ dGeneralKeywordText( VIEW mMasLC BASED ON LOD mMasLC,
                      STRING ( 32 ) InternalAttribStructure,
                      SHORT GetOrSetFlag )
 
-   STRING ( 1000 ) szGeneratedString
+   STRING ( 1024 ) szGeneratedString
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -1682,6 +1933,7 @@ END
 //  OPERATION: dMarketingTitleKeyword
 //
 /////////////////////////////////////////////////////////////////////////////
+/*
 DERIVED ATTRIBUTE OPERATION
 dMarketingTitleKeyword( VIEW mMasLC BASED ON LOD mMasLC,
                         STRING ( 32 ) InternalEntityStructure,
@@ -1705,7 +1957,7 @@ dMarketingTitleKeyword( VIEW mMasLC BASED ON LOD mMasLC,
          CreateViewFromView( mMasLC2, mMasLC )
          FOR EACH mMasLC2.M_InsertTextKeywordMarketing
             szKeyword = "{(" + mMasLC2.M_InsertTextKeywordMarketing.Name  + ")}"
-            
+
             // Concatenate all the Keyword values for a Marketing Keyword entry.
             szKeyValue = ""
             FOR EACH mMasLC2.M_InsertTextMarketing
@@ -1729,11 +1981,45 @@ dMarketingTitleKeyword( VIEW mMasLC BASED ON LOD mMasLC,
       // Store the calculated value in the object.
       StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szCombinedName )
 
-        /* end zDERIVED_GET */
+        // end zDERIVED_GET
    OF   zDERIVED_SET:
 
-        /* end zDERIVED_SET */
-   END  /* case */
+        // end zDERIVED_SET
+   END  // case
+
+END
+*/
+
+DERIVED ATTRIBUTE OPERATION
+dMarketingTitleKeyword( VIEW mMasLC BASED ON LOD mMasLC,
+                        STRING ( 32 ) InternalEntityStructure,
+                        STRING ( 32 ) InternalAttribStructure,
+                        SHORT GetOrSetFlag )
+
+   STRING ( 32 )  szEntityName
+   STRING ( 1024 ) szDisplayStatement
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // For a Marketing Statement entity, this is the combined name of Text and any keyword(s).
+      GetEntityNameFromStructure( InternalEntityStructure, szEntityName )
+      GetStringFromAttribute( szDisplayStatement, mMasLC, szEntityName, "Title" )
+
+      IF szDisplayStatement != ""
+         GenerateKeywordTextIntoString( mMasLC, szDisplayStatement,
+                                        "M_InsertTextKeywordMarketing", "M_InsertTextMarketing", ", " )
+      END
+      
+      // Store the calculated value in the object.
+      StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
+      RETURN 0
+
+        // end zDERIVED_GET
+   OF   zDERIVED_SET:
+
+        // end zDERIVED_SET
+   END  // case
 
 END
 
@@ -1742,6 +2028,7 @@ END
 //  OPERATION: dMarketingTextKeyword
 //
 /////////////////////////////////////////////////////////////////////////////
+/*
 DERIVED ATTRIBUTE OPERATION
 dMarketingTextKeyword( VIEW mMasLC BASED ON LOD mMasLC,
                        STRING ( 32 ) InternalEntityStructure,
@@ -1765,7 +2052,7 @@ dMarketingTextKeyword( VIEW mMasLC BASED ON LOD mMasLC,
          CreateViewFromView( mMasLC2, mMasLC )
          FOR EACH mMasLC2.M_InsertTextKeywordMarketing
             szKeyword = "{(" + mMasLC2.M_InsertTextKeywordMarketing.Name  + ")}"
-            
+
             // Concatenate all the Keyword values for a Marketing Keyword entry.
             szKeyValue = ""
             FOR EACH mMasLC2.M_InsertTextMarketing
@@ -1789,11 +2076,45 @@ dMarketingTextKeyword( VIEW mMasLC BASED ON LOD mMasLC,
       // Store the calculated value in the object.
       StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szCombinedName )
 
-        /* end zDERIVED_GET */
+        // end zDERIVED_GET
    OF   zDERIVED_SET:
 
-        /* end zDERIVED_SET */
-   END  /* case */
+        // end zDERIVED_SET
+   END  // case
+
+END
+*/
+
+DERIVED ATTRIBUTE OPERATION
+dMarketingTextKeyword( VIEW mMasLC BASED ON LOD mMasLC,
+                       STRING ( 32 ) InternalEntityStructure,
+                       STRING ( 32 ) InternalAttribStructure,
+                       SHORT GetOrSetFlag )
+
+   STRING ( 32 )  szEntityName
+   STRING ( 1024 ) szDisplayStatement
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // For a Marketing Statement entity, this is the combined name of Text and any keyword(s).
+      GetEntityNameFromStructure( InternalEntityStructure, szEntityName )
+      GetStringFromAttribute( szDisplayStatement, mMasLC, szEntityName, "Text" )
+
+      IF szDisplayStatement != ""
+         GenerateKeywordTextIntoString( mMasLC, szDisplayStatement,
+                                        "M_InsertTextKeywordMarketing", "M_InsertTextMarketing", ", " )
+      END
+      
+      // Store the calculated value in the object.
+      StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
+      RETURN 0
+
+        // end zDERIVED_GET
+   OF   zDERIVED_SET:
+
+        // end zDERIVED_SET
+   END  // case
 
 END
 
@@ -1802,6 +2123,7 @@ END
 //  OPERATION: dMarketTitleTextKey
 //
 /////////////////////////////////////////////////////////////////////////////
+/*
 DERIVED ATTRIBUTE OPERATION
 dMarketTitleTextKey( VIEW mMasLC BASED ON LOD mMasLC,
                      STRING ( 32 ) InternalEntityStructure,
@@ -1828,7 +2150,7 @@ dMarketTitleTextKey( VIEW mMasLC BASED ON LOD mMasLC,
          CreateViewFromView( mMasLC2, mMasLC )
          FOR EACH mMasLC2.M_InsertTextKeywordMarketing
             szKeyword = "{(" + mMasLC2.M_InsertTextKeywordMarketing.Name  + ")}"
-            
+
             // Concatenate all the Keyword values for a Marketing Keyword entry.
             szKeyValue = ""
             FOR EACH mMasLC2.M_InsertTextMarketing
@@ -1848,15 +2170,62 @@ dMarketTitleTextKey( VIEW mMasLC BASED ON LOD mMasLC,
          DropView( mMasLC2 )
       END
       szGeneratedString = "<b>" + szTitle + "</b>  " + szText
-      
+
       // Store the calculated value in the object.
       StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szGeneratedString )
 
-        /* end zDERIVED_GET */
+        // end zDERIVED_GET
    OF   zDERIVED_SET:
 
-        /* end zDERIVED_SET */
-   END  /* case */
+        // end zDERIVED_SET
+   END  // case
+
+END
+*/
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: dMarketTitleTextKey
+//
+/////////////////////////////////////////////////////////////////////////////
+DERIVED ATTRIBUTE OPERATION
+dMarketTitleTextKey( VIEW mMasLC BASED ON LOD mMasLC,
+                     STRING ( 32 ) InternalEntityStructure,
+                     STRING ( 32 ) InternalAttribStructure,
+                     SHORT GetOrSetFlag )
+
+   STRING ( 1024 ) szTitle
+   STRING ( 1024 ) szText
+   STRING ( 2048 ) szDisplayStatement
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      // Concatenate a string combining Title and Text, with Title made bold.
+      // Keyword substitutions are incorporated.
+      szTitle = mMasLC.M_MarketingStatement.Title
+      szText = mMasLC.M_MarketingStatement.Text
+
+      IF szTitle != ""
+         GenerateKeywordTextIntoString( mMasLC, szTitle,
+                                        "M_InsertTextKeywordMarketing", "M_InsertTextMarketing", ", " )
+         szDisplayStatement = "<b>" + szTitle + "</b>"
+      END
+      IF szText != ""
+         GenerateKeywordTextIntoString( mMasLC, szText,
+                                        "M_InsertTextKeywordMarketing", "M_InsertTextMarketing", ", " )
+         szDisplayStatement = szDisplayStatement + "  " + szText
+      END
+      
+      // Store the calculated value in the object.
+      StoreStringInRecord( mMasLC, InternalEntityStructure, InternalAttribStructure, szDisplayStatement )
+      RETURN 0
+
+        // end zDERIVED_GET
+   OF   zDERIVED_SET:
+
+        // end zDERIVED_SET
+   END  // case
 
 END
 
@@ -1891,12 +2260,12 @@ TRANSFORMATION OPERATION
 BuildCompositeEntries( VIEW mMasLC BASED ON LOD mMasLC )
 
    STRING ( 100 ) szCompositeLocation
-   STRING ( 105 )   szDisplayValue
-   STRING ( 100 )   szOriginalDisplayValue
-   STRING ( 20 )    szUsageType
-   INTEGER          MaxDisplayLength
-   INTEGER          OriginalStringLength
-   INTEGER          Count
+   STRING ( 105 ) szDisplayValue
+   STRING ( 100 ) szOriginalDisplayValue
+   STRING ( 20 )  szUsageType
+   INTEGER        MaxDisplayLength
+   INTEGER        OriginalStringLength
+   INTEGER        Count
 
    // Build Marketing Section and Statement components.
    FOR EACH mMasLC.M_MarketingSection
@@ -2234,11 +2603,11 @@ TRANSFORMATION OPERATION
 BuildFullCompEntries( VIEW mMasLC BASED ON LOD mMasLC )
 
    STRING ( 100 ) szCompositeLocation
-   STRING ( 105 )   szDisplayValue
-   STRING ( 100 )   szOriginalDisplayValue
-   STRING ( 20 )    szUsageType
-   INTEGER          MaxDisplayLength
-   INTEGER          OriginalStringLength
+   STRING ( 105 ) szDisplayValue
+   STRING ( 100 ) szOriginalDisplayValue
+   STRING ( 20 )  szUsageType
+   INTEGER        MaxDisplayLength
+   INTEGER        OriginalStringLength
 
    // Build the flat display of all components subobject.
    MaxDisplayLength = 100
@@ -2612,7 +2981,7 @@ dUsageKeywordText( VIEW mMasLC BASED ON LOD mMasLC,
                    STRING ( 32 ) InternalAttribStructure,
                    SHORT GetOrSetFlag )
 
-   STRING ( 1000 ) szGeneratedString
+   STRING ( 1024 ) szGeneratedString
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
@@ -2650,12 +3019,12 @@ dSubUsageCombinedText( VIEW mMasLC BASED ON LOD mMasLC,
                        STRING ( 32 ) InternalAttribStructure,
                        SHORT GetOrSetFlag )
 
-   STRING ( 10000 ) szCombinedText
+   STRING ( 1024 ) szCombinedText
 
    CASE GetOrSetFlag
    OF   zDERIVED_GET:
 
-      // Expand the current Text attribute by replacing imbedded Keywords with the Keyword
+      // Expand the current Text attribute by replacing embedded Keywords with the Keyword
       // values in the M_InsertTextMarketing subentities.
       szCombinedText = ""
       FOR EACH mMasLC.M_UsageGroupUsage
@@ -2725,8 +3094,8 @@ TRANSFORMATION OPERATION
 BuildUsageKeyEntries( VIEW mMasLC BASED ON LOD mMasLC,
                       STRING ( 32 ) SourceKeywordEntityName,
                       STRING ( 32 ) SourceTextEntityName,
-                      STRING ( 2000 ) TextValue,
-                      STRING ( 2000 ) TitleValue )
+                      STRING ( 1024 ) TextValue,
+                      STRING ( 1024 ) TitleValue )
 
    SHORT nRC1
    SHORT nRC2

@@ -1,4 +1,4 @@
-z1000-Zeidon    MEPA     TZZOLODO 03/28/16   16:19:07 1.0a2   
+z1000-Zeidon    MEPA     TZZOLODO 05/26/16   12:37:11 1.0a2   
 eLOD       1
 aZKey      1178878
 aName      mEPA
@@ -84,8 +84,8 @@ aName      Keyword
 aZKey      2344470
 aPurpose   F
 aDesc      Double Brace{{ ... }} enclosed replacable keyword:  Usage, Claim, Surface, Location, ApplicationType
-aER_DiagramPosX 44
-aER_DiagramPosY 8
+aER_DiagramPosX 17
+aER_DiagramPosY 18
 
 eER_RelLinkRec 4
 aName      has
@@ -99,12 +99,12 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 5
 aZKey      2344471
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 0
-aER_DiagramBendPosY 0
-aER_DiagramE1PosX 11
-aER_DiagramE1PosY 9
-aER_DiagramE2PosX 43
-aER_DiagramE2PosY 9
+aER_DiagramBendPosX 8
+aER_DiagramBendPosY 20
+aER_DiagramE1PosX 8
+aER_DiagramE1PosY 15
+aER_DiagramE2PosX 16
+aER_DiagramE2PosY 20
 
 eLOD_EntityChild 3
 aName      EPA_ChemicalFamily
@@ -212,8 +212,8 @@ eER_EntityRec 5
 aName      EPA_StorageDisposal
 aZKey      1178416
 aPurpose   F
-aER_DiagramPosX 2
-aER_DiagramPosY 44
+aER_DiagramPosX 3
+aER_DiagramPosY 55
 
 eER_RelLinkRec 5
 aName      has
@@ -229,10 +229,10 @@ aZKey      1178445
 aFact      Added thru ER Dialog
 aER_DiagramBendPosX 0
 aER_DiagramBendPosY 0
-aER_DiagramE1PosX 6
-aER_DiagramE1PosY 33
-aER_DiagramE2PosX 6
-aER_DiagramE2PosY 43
+aER_DiagramE1PosX 4
+aER_DiagramE1PosY 38
+aER_DiagramE2PosX 4
+aER_DiagramE2PosY 54
 
 eLOD_EntityChild 4
 aName      EPA_Location
@@ -298,8 +298,8 @@ eER_EntityRec 5
 aName      EPA_Location
 aZKey      1178451
 aPurpose   F
-aER_DiagramPosX 19
-aER_DiagramPosY 18
+aER_DiagramPosX 17
+aER_DiagramPosY 27
 
 eER_RelLinkRec 5
 aName      has
@@ -313,12 +313,12 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 6
 aZKey      1178452
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 9
-aER_DiagramBendPosY 20
-aER_DiagramE1PosX 9
-aER_DiagramE1PosY 27
-aER_DiagramE2PosX 18
-aER_DiagramE2PosY 20
+aER_DiagramBendPosX 8
+aER_DiagramBendPosY 29
+aER_DiagramE1PosX 8
+aER_DiagramE1PosY 32
+aER_DiagramE2PosX 16
+aER_DiagramE2PosY 29
 
 eLOD_EntityChild 4
 aName      EPA_Surface
@@ -374,8 +374,8 @@ eER_EntityRec 5
 aName      EPA_Surface
 aZKey      1178458
 aPurpose   F
-aER_DiagramPosX 19
-aER_DiagramPosY 25
+aER_DiagramPosX 17
+aER_DiagramPosY 35
 
 eER_RelLinkRec 5
 aName      has
@@ -391,10 +391,10 @@ aZKey      1178459
 aFact      Added thru ER Dialog
 aER_DiagramBendPosX 0
 aER_DiagramBendPosY 0
-aER_DiagramE1PosX 11
-aER_DiagramE1PosY 29
-aER_DiagramE2PosX 18
-aER_DiagramE2PosY 29
+aER_DiagramE1PosX 13
+aER_DiagramE1PosY 35
+aER_DiagramE2PosX 16
+aER_DiagramE2PosY 35
 
 eLOD_EntityChild 4
 aName      EPA_ApplicationType
@@ -452,8 +452,8 @@ aName      EPA_ApplicationType
 aZKey      2344453
 aPurpose   F
 aDesc      Disinfectant, Sanitizer, Fungicide, Virucide
-aER_DiagramPosX 19
-aER_DiagramPosY 32
+aER_DiagramPosX 17
+aER_DiagramPosY 42
 
 eER_RelLinkRec 5
 aName      has
@@ -467,12 +467,12 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 6
 aZKey      2344458
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 0
-aER_DiagramBendPosY 0
-aER_DiagramE1PosX 11
-aER_DiagramE1PosY 32
-aER_DiagramE2PosX 18
-aER_DiagramE2PosY 32
+aER_DiagramBendPosX 8
+aER_DiagramBendPosY 44
+aER_DiagramE1PosX 8
+aER_DiagramE1PosY 38
+aER_DiagramE2PosX 16
+aER_DiagramE2PosY 44
 
 eLOD_EntityChild 4
 aName      EPA_Claim
@@ -623,8 +623,8 @@ aName      EPA_Claim
 aZKey      1178468
 aPurpose   F
 aDesc      Pathogens: Bacteria, Viruses, Fungi
-aER_DiagramPosX 19
-aER_DiagramPosY 39
+aER_DiagramPosX 17
+aER_DiagramPosY 49
 
 eER_RelLinkRec 5
 aName      has
@@ -638,12 +638,12 @@ aTE_NoForeignKeyPrefix N
 eER_RelTypeRec 6
 aZKey      1178469
 aFact      Added thru ER Dialog
-aER_DiagramBendPosX 9
-aER_DiagramBendPosY 41
-aER_DiagramE1PosX 9
-aER_DiagramE1PosY 33
-aER_DiagramE2PosX 18
-aER_DiagramE2PosY 41
+aER_DiagramBendPosX 6
+aER_DiagramBendPosY 51
+aER_DiagramE1PosX 6
+aER_DiagramE1PosY 38
+aER_DiagramE2PosX 16
+aER_DiagramE2PosY 51
 
 eLOD_AttributeRec 4
 aZKey      2348770
@@ -699,8 +699,8 @@ aName      EPA_ChemicalFamily
 aZKey      1178444
 aPurpose   F
 aDesc      Disinfectants, Pesticides, ...
-aER_DiagramPosX 2
-aER_DiagramPosY 28
+aER_DiagramPosX 4
+aER_DiagramPosY 33
 
 eER_RelLinkRec 4
 aName      has
@@ -717,9 +717,9 @@ aFact      Added thru ER Dialog
 aER_DiagramBendPosX 0
 aER_DiagramBendPosY 0
 aER_DiagramE1PosX 6
-aER_DiagramE1PosY 14
+aER_DiagramE1PosY 15
 aER_DiagramE2PosX 6
-aER_DiagramE2PosY 27
+aER_DiagramE2PosY 32
 
 eLOD_AttributeRec 3
 aZKey      2348764
@@ -754,7 +754,7 @@ aName      ePamms
 aZKey      2344466
 aPurpose   F
 aER_DiagramPosX 2
-aER_DiagramPosY 9
+aER_DiagramPosY 10
 
 eLOD_Entity 2
 awkSelectedAttributeForDragSort 2

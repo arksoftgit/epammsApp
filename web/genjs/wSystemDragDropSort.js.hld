@@ -1,3 +1,5 @@
+// wSystemDragDropSort   Generate Timestamp: 20160524093207665
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

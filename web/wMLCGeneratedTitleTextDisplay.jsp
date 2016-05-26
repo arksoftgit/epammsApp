@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCGeneratedTitleTextDisplay   Generate Timestamp: 20160427124122043 --%>
+<%-- wMLCGeneratedTitleTextDisplay   Generate Timestamp: 20160526152747016 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -60,44 +60,6 @@ public int DoInputMapping( HttpServletRequest request,
    mMasLC = task.getViewByName( "mMasLC" );
    if ( VmlOperation.isValid( mMasLC ) )
    {
-      // MLEdit: MLEdit3
-      nRC = mMasLC.cursor( "DisplayKeywordText" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
-      {
-         strMapValue = request.getParameter( "MLEdit3" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "MLEdit3", "", strMapValue );
-            else
-               mMasLC.cursor( "DisplayKeywordText" ).getAttribute( "dFullKeywordTitleText" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "MLEdit3", e.getReason( ), strMapValue );
-         }
-      }
-
-      // MLEdit: MLEdit1
-      nRC = mMasLC.cursor( "DisplayKeywordText" ).checkExistenceOfEntity( ).toInt();
-      if ( nRC >= 0 ) // CursorResult.SET
-      {
-         strMapValue = request.getParameter( "MLEdit1" );
-         try
-         {
-            if ( webMapping )
-               VmlOperation.CreateMessage( task, "MLEdit1", "", strMapValue );
-            else
-               mMasLC.cursor( "DisplayKeywordText" ).getAttribute( "dUsageKeywordStatementText" ).setValue( strMapValue, "" );
-         }
-         catch ( InvalidAttributeValueException e )
-         {
-            nMapError = -16;
-            VmlOperation.CreateMessage( task, "MLEdit1", e.getReason( ), strMapValue );
-         }
-      }
-
       // Grid: GridM_InsertTextBase5
       iTableRowCnt = 0;
 
@@ -112,12 +74,12 @@ public int DoInputMapping( HttpServletRequest request,
          strEntityKey = Long.toString( lEntityKey );
          iTableRowCnt++;
 
-         strTag = "GridCtrlwSelected51" + strEntityKey;
+         strTag = "GridSelected" + strEntityKey;
          strMapValue = request.getParameter( strTag );
          try
          {
             if ( webMapping )
-               VmlOperation.CreateMessage( task, "GridCtrlwSelected51", "", strMapValue );
+               VmlOperation.CreateMessage( task, "GridSelected", "", strMapValue );
             else
                if ( strMapValue != null )
                   vGridTmp.cursor( "M_InsertTextBase" ).getAttribute( "wSelected" ).setValue( strMapValue, "" );
@@ -425,7 +387,7 @@ else
 <html>
 <head>
 
-<title>GeneratedTitleTextDisplay</title>
+<title>Generated Title/Text Display</title>
 
 <%@ include file="./include/head.inc" %>
 <!-- Timeout.inc has a value for nTimeout which is used to determine when to -->
@@ -491,6 +453,7 @@ else
    View mOrganiz = null;
    View mPrimReg = null;
    View wWebXfer = null;
+   View mMasLCIncludeExclude = null;
    String strRadioGroupValue = "";
    String strComboCurrentValue = "";
    String strAutoComboBoxExternalValue = "";
@@ -598,16 +561,16 @@ else
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
-<% /* GBStorDispSections2:GroupBox */ %>
+<% /* GBTitle:GroupBox */ %>
 
-<div id="GBStorDispSections2" name="GBStorDispSections2" class="listgroup"   style="float:left;position:relative; width:780px; height:36px;">  <!-- GBStorDispSections2 --> 
+<div id="GBTitle" name="GBTitle" class="listgroup"   style="float:left;position:relative; width:780px; height:36px;">  <!-- GBTitle --> 
 
-<% /* OrganismClaimsStatements3:Text */ %>
+<% /* FullGeneratedTitle::Text */ %>
 
-<label class="groupbox"  id="OrganismClaimsStatements3" name="OrganismClaimsStatements3" style="width:324px;height:16px;position:absolute;left:6px;top:12px;">Full Generated Statement Title</label>
+<label class="groupbox"  id="FullGeneratedTitle:" name="FullGeneratedTitle:" style="width:324px;height:16px;position:absolute;left:6px;top:12px;">Full Generated Statement Title</label>
 
 
-</div>  <!--  GBStorDispSections2 --> 
+</div>  <!--  GBTitle --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -622,39 +585,32 @@ else
 
 <tr>
 <td valign="top" style="width:754px;">
-<% /* MLEdit3:MLEdit */ %>
-<%
-   // MLEdit: MLEdit3
-   strErrorMapValue = VmlOperation.CheckError( "MLEdit3", strError );
-   if ( !StringUtils.isBlank( strErrorMapValue ) )
-   {
-      if ( StringUtils.equals( strErrorFlag, "Y" ) )
-         strErrorColor = "color:red;";
-   }
+<% /* Title:Text */ %>
+<% strTextDisplayValue = "";
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) == false )
+      task.log( ).debug( "Invalid View: " + "Title" );
    else
    {
-      strErrorColor = "";
-      mMasLC = task.getViewByName( "mMasLC" );
-      if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "MLEdit3" );
-      else
+      nRC = mMasLC.cursor( "DisplayKeywordText" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         nRC = mMasLC.cursor( "DisplayKeywordText" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strErrorMapValue = mMasLC.cursor( "DisplayKeywordText" ).getAttribute( "dFullKeywordTitleText" ).getString( "" );
-            if ( strErrorMapValue == null )
-               strErrorMapValue = "";
-
-            task.log( ).debug( "DisplayKeywordText.dFullKeywordTitleText: " + strErrorMapValue );
-         }
-         else
-            task.log( ).debug( "Entity does not exist for MLEdit3: " + "mMasLC.DisplayKeywordText" );
+      try
+      {
+         strTextDisplayValue = mMasLC.cursor( "DisplayKeywordText" ).getAttribute( "dFullKeywordTitleText" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on Title: " + e.getMessage());
+         task.log().info( "*** Error on ctrl Title" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
       }
    }
 %>
 
-<textarea id="MLEdit3" name="MLEdit3" class="" style="width:754px;height:60px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+<span  id="Title" name="Title" style="width:754px;height:60px;"><%=strTextDisplayValue%></span>
 
 </td>
 </tr>
@@ -673,9 +629,9 @@ else
 
 <div id="GroupBox3" name="GroupBox3" class="listgroup"   style="float:left;position:relative; width:780px; height:36px;">  <!-- GroupBox3 --> 
 
-<% /* Text1:Text */ %>
+<% /* FullGeneratedText::Text */ %>
 
-<label class="groupbox"  id="Text1" name="Text1" style="width:324px;height:16px;position:absolute;left:6px;top:12px;">Full Generated Statement Text</label>
+<label class="groupbox"  id="FullGeneratedText:" name="FullGeneratedText:" style="width:324px;height:16px;position:absolute;left:6px;top:12px;">Full Generated Statement Text</label>
 
 
 </div>  <!--  GroupBox3 --> 
@@ -693,39 +649,32 @@ else
 
 <tr>
 <td valign="top" style="width:754px;">
-<% /* MLEdit1:MLEdit */ %>
-<%
-   // MLEdit: MLEdit1
-   strErrorMapValue = VmlOperation.CheckError( "MLEdit1", strError );
-   if ( !StringUtils.isBlank( strErrorMapValue ) )
-   {
-      if ( StringUtils.equals( strErrorFlag, "Y" ) )
-         strErrorColor = "color:red;";
-   }
+<% /* Text:Text */ %>
+<% strTextDisplayValue = "";
+   mMasLC = task.getViewByName( "mMasLC" );
+   if ( VmlOperation.isValid( mMasLC ) == false )
+      task.log( ).debug( "Invalid View: " + "Text" );
    else
    {
-      strErrorColor = "";
-      mMasLC = task.getViewByName( "mMasLC" );
-      if ( VmlOperation.isValid( mMasLC ) == false )
-         task.log( ).debug( "Invalid View: " + "MLEdit1" );
-      else
+      nRC = mMasLC.cursor( "DisplayKeywordText" ).checkExistenceOfEntity( ).toInt();
+      if ( nRC >= 0 )
       {
-         nRC = mMasLC.cursor( "DisplayKeywordText" ).checkExistenceOfEntity( ).toInt();
-         if ( nRC >= 0 )
-         {
-            strErrorMapValue = mMasLC.cursor( "DisplayKeywordText" ).getAttribute( "dUsageKeywordStatementText" ).getString( "" );
-            if ( strErrorMapValue == null )
-               strErrorMapValue = "";
-
-            task.log( ).debug( "DisplayKeywordText.dUsageKeywordStatementText: " + strErrorMapValue );
-         }
-         else
-            task.log( ).debug( "Entity does not exist for MLEdit1: " + "mMasLC.DisplayKeywordText" );
+      try
+      {
+         strTextDisplayValue = mMasLC.cursor( "DisplayKeywordText" ).getAttribute( "dUsageKeywordStatementText" ).getString( "" );
+      }
+      catch (Exception e)
+      {
+         out.println("There is an error on Text: " + e.getMessage());
+         task.log().info( "*** Error on ctrl Text" + e.getMessage() );
+      }
+         if ( strTextDisplayValue == null )
+            strTextDisplayValue = "";
       }
    }
 %>
 
-<textarea id="MLEdit1" name="MLEdit1" class="" style="width:754px;height:116px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+<span  id="Text" name="Text" style="width:754px;height:116px;"><%=strTextDisplayValue%></span>
 
 </td>
 </tr>
@@ -757,12 +706,12 @@ else
 
 <div id="TitleGroupM_InsertTextBase5" name="TitleGroupM_InsertTextBase5"   style="float:left;position:relative; width:754px; height:30px;">  <!-- TitleGroupM_InsertTextBase5 --> 
 
-<% /* NewBtn5:PushBtn */ %>
-<button type="button" name="NewBtn5" id="NewBtn5" value="" onclick="REGENERATE_TitleText( )" style="width:142px;height:26px;position:absolute;left:502px;top:4px;">Regenerate</button>
+<% /* Regenerate:PushBtn */ %>
+<button type="button" name="Regenerate" id="Regenerate" value="" onclick="REGENERATE_TitleText( )" style="width:142px;height:26px;position:absolute;left:502px;top:4px;">Regenerate</button>
 
-<% /* Title5:Text */ %>
+<% /* RegenerateTitleText:Text */ %>
 
-<label class="listheader"  id="Title5" name="Title5" style="width:434px;height:16px;position:absolute;left:12px;top:8px;">Regenerate Title and Text with Selected Values</label>
+<label class="listheader"  id="RegenerateTitleText" name="RegenerateTitleText" style="width:434px;height:16px;position:absolute;left:12px;top:8px;">Regenerate Title and Text with Selected Values</label>
 
 
 </div>  <!--  TitleGroupM_InsertTextBase5 --> 
@@ -800,9 +749,9 @@ try
       String strButtonName;
       String strOdd;
       String strTag;
-      String strGridCtrlwSelected51;
-      String strGridCtrlwSelected51Value;
-      String strGridCtrlText52;
+      String strGridSelected;
+      String strGridSelectedValue;
+      String strGridText;
       
       View vGridM_InsertTextBase5;
       vGridM_InsertTextBase5 = mMasLC.newView( );
@@ -814,46 +763,46 @@ try
 
          lEntityKey = vGridM_InsertTextBase5.cursor( "M_InsertTextBase" ).getEntityKey( );
          strEntityKey = Long.toString( lEntityKey );
-         strGridCtrlwSelected51 = "";
+         strGridSelected = "";
          nRC = vGridM_InsertTextBase5.cursor( "M_InsertTextBase" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridCtrlwSelected51 = vGridM_InsertTextBase5.cursor( "M_InsertTextBase" ).getAttribute( "wSelected" ).getString( "" );
+            strGridSelected = vGridM_InsertTextBase5.cursor( "M_InsertTextBase" ).getAttribute( "wSelected" ).getString( "" );
 
-            if ( strGridCtrlwSelected51 == null )
-               strGridCtrlwSelected51 = "";
+            if ( strGridSelected == null )
+               strGridSelected = "";
          }
 
-         if ( StringUtils.equals( strGridCtrlwSelected51, "Y" ) )
+         if ( StringUtils.equals( strGridSelected, "Y" ) )
          {
-            strGridCtrlwSelected51Value = "GridCtrlwSelected51" + strEntityKey;
-            strGridCtrlwSelected51 = "<input name='" + strGridCtrlwSelected51Value + "' id='" + strGridCtrlwSelected51Value + "' value='Y' type='checkbox'  CHECKED > ";
+            strGridSelectedValue = "GridSelected" + strEntityKey;
+            strGridSelected = "<input name='" + strGridSelectedValue + "' id='" + strGridSelectedValue + "' value='Y' type='checkbox'  CHECKED > ";
          }
          else
          {
-            strGridCtrlwSelected51Value = "GridCtrlwSelected51" + strEntityKey;
-            strGridCtrlwSelected51 = "<input name='" + strGridCtrlwSelected51Value + "' id='" + strGridCtrlwSelected51Value + "' value='Y' type='checkbox' > ";
+            strGridSelectedValue = "GridSelected" + strEntityKey;
+            strGridSelected = "<input name='" + strGridSelectedValue + "' id='" + strGridSelectedValue + "' value='Y' type='checkbox' > ";
          }
 
-         strGridCtrlText52 = "";
+         strGridText = "";
          nRC = vGridM_InsertTextBase5.cursor( "M_InsertTextBase" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridCtrlText52 = vGridM_InsertTextBase5.cursor( "M_InsertTextBase" ).getAttribute( "Text" ).getString( "" );
+            strGridText = vGridM_InsertTextBase5.cursor( "M_InsertTextBase" ).getAttribute( "Text" ).getString( "" );
 
-            if ( strGridCtrlText52 == null )
-               strGridCtrlText52 = "";
+            if ( strGridText == null )
+               strGridText = "";
          }
 
-         if ( StringUtils.isBlank( strGridCtrlText52 ) )
-            strGridCtrlText52 = "&nbsp";
+         if ( StringUtils.isBlank( strGridText ) )
+            strGridText = "&nbsp";
 
 %>
 
 <tr<%=strOdd%>>
 
-   <td><%=strGridCtrlwSelected51%></td>
-   <td><%=strGridCtrlText52%></td>
+   <td><%=strGridSelected%></td>
+   <td><%=strGridText%></td>
 
 </tr>
 

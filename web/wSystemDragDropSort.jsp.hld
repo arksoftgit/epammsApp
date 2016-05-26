@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSystemDragDropSort   Generate Timestamp: 20160426145257496 --%>
+<%-- wSystemDragDropSort   Generate Timestamp: 20160524093207665 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -357,7 +357,7 @@ if ( strActionToProcess != null )
       View vOrig = task.getViewByName( strView );
       String arr = (String) request.getParameter( "zOrderArray" );
       orderByNewIndex( arr, vOrig, strEntity );
-      vOrig.commit();
+   // vOrig.commit();
       // This is hand coded!!!
 
       // Next Window

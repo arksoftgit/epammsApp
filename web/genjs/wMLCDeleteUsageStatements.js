@@ -1,3 +1,5 @@
+// wMLCDeleteUsageStatements   Generate Timestamp: 20160525203748403
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

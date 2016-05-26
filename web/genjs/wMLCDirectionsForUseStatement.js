@@ -1,3 +1,5 @@
+// wMLCDirectionsForUseStatement   Generate Timestamp: 20160526160301658
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;
@@ -204,6 +206,72 @@ function AcceptDirectionsStatement( )
    }
 }
 
+function DELETE_DirectionsForUseStatement( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseStatement.zAction.value = "DELETE_DirectionsForUseStatement";
+      document.wMLCDirectionsForUseStatement.submit( );
+   }
+}
+
+function GOTO_DirsForUseStatementAdd( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseStatement.zAction.value = "GOTO_DirsForUseStatementAdd";
+      document.wMLCDirectionsForUseStatement.submit( );
+   }
+}
+
+function GOTO_DirsForUseStatementUpdate( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseStatement.zAction.value = "GOTO_DirsForUseStatementUpdate";
+      document.wMLCDirectionsForUseStatement.submit( );
+   }
+}
+
+function Sort( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+       document.wMLCDirectionsForUseStatement.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_InsertTextKeywordDU", "GridKeywords",  ["Keyword","Keyword Text"]  );
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseStatement.zAction.value = "Sort";
+      document.wMLCDirectionsForUseStatement.submit( );
+   }
+}
+
 function DELETE_DirectionsForUseSubStmt( strTagEntityKey )
 {
 
@@ -382,13 +450,6 @@ function GOTO_SelectRemoveDUEntries( )
 
    if ( _IsDocDisabled( ) == false )
    {
-      // Javascript code entered by user.
-
-
-
-
-      // END of Javascript code entered by user.
-
       _DisableFormElements( true );
 
       document.wMLCDirectionsForUseStatement.zAction.value = "GOTO_SelectRemoveDUEntries";
