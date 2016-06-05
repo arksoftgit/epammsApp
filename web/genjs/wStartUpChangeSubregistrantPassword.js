@@ -1,3 +1,5 @@
+// wStartUpChangeSubregistrantPassword   Generate Timestamp: 20160531205251959
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

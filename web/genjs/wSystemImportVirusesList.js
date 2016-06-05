@@ -1,3 +1,5 @@
+// wSystemImportVirusesList   Generate Timestamp: 20160531205257600
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

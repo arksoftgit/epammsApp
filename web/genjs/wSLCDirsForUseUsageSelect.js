@@ -1,3 +1,5 @@
+// wSLCDirsForUseUsageSelect   Generate Timestamp: 20160531205242022
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

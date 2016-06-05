@@ -1,3 +1,5 @@
+// wSubRUpdateSubregProduct   Generate Timestamp: 20160531205256037
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

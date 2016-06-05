@@ -1,3 +1,5 @@
+// wStartUpAdminListPrimRegUsers   Generate Timestamp: 20160531205249052
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

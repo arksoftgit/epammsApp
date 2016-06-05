@@ -1,3 +1,5 @@
+// wStartUpSubregReusableBlockUpdate   Generate Timestamp: 20160531205252959
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

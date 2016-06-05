@@ -1,3 +1,5 @@
+// wSystemSysDefDelete   Generate Timestamp: 20160531205258990
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

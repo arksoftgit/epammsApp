@@ -1,3 +1,5 @@
+// wSLCSLC_VersionCopy   Generate Timestamp: 20160531205244349
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

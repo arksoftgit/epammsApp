@@ -1,3 +1,5 @@
+// wSLCFirstAidSection   Generate Timestamp: 20160531205242132
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCMarketingStatement   Generate Timestamp: 20160426145251627 --%>
+<%-- wSLCMarketingStatement   Generate Timestamp: 20160531205243119 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -13,7 +13,7 @@
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
 <%@ page import="com.quinsoft.epamms.*" %>
 
-<%!
+<%! 
 
 ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
@@ -63,9 +63,9 @@ public int DoInputMapping( HttpServletRequest request,
       // Grid: Grid4
       iTableRowCnt = 0;
 
-      // We are creating a temp view to the grid view so that if there are
-      // grids on the same window with the same view we do not mess up the
-      // entity positions.
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
       vGridTmp = mSubLC.newView( );
       csrRC = vGridTmp.cursor( "S_InsertTextMarketing" ).setFirst( "S_MarketingStatement" );
       while ( csrRC.isSet() )
@@ -81,9 +81,9 @@ public int DoInputMapping( HttpServletRequest request,
       // Grid: GridMarketingUsage
       iTableRowCnt = 0;
 
-      // We are creating a temp view to the grid view so that if there are
-      // grids on the same window with the same view we do not mess up the
-      // entity positions.
+      // We are creating a temp view to the grid view so that if there are 
+      // grids on the same window with the same view we do not mess up the 
+      // entity positions. 
       vGridTmp = mSubLC.newView( );
       csrRC = vGridTmp.cursor( "S_MarketingUsageOrdering" ).setFirst(  );
       while ( csrRC.isSet() )
@@ -156,7 +156,7 @@ String strInputFileName = "";
 strActionToProcess = (String) request.getParameter( "zAction" );
 
 strLastWindow = (String) session.getAttribute( "ZeidonWindow" );
-if ( StringUtils.isBlank( strLastWindow ) )
+if ( StringUtils.isBlank( strLastWindow ) ) 
    strLastWindow = "NoLastWindow";
 
 strLastAction = (String) session.getAttribute( "ZeidonAction" );
@@ -484,7 +484,7 @@ if ( strActionToProcess != null )
             task.log().info( "Action Error Redirect to: " + strURL );
          }
 
-         if ( ! strURL.equals("wSLCMarketingStatement.jsp") )
+         if ( ! strURL.equals("wSLCMarketingStatement.jsp") ) 
          {
             response.sendRedirect( strURL );
             // If we are redirecting to a new page, then we need this return so that the rest of this page doesn't get built.
@@ -720,14 +720,14 @@ else
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox10:GroupBox */ %>
 
-<div id="GroupBox10" name="GroupBox10"   style="float:left;position:relative; width:730px; height:28px;">  <!-- GroupBox10 -->
+<div id="GroupBox10" name="GroupBox10"   style="float:left;position:relative; width:730px; height:28px;">  <!-- GroupBox10 --> 
 
 <% /* SLC_ProductText2:Text */ %>
 
 <label class="groupbox"  id="SLC_ProductText2" name="SLC_ProductText2" style="width:338px;height:16px;position:absolute;left:0px;top:12px;">Marketing Statement</label>
 
 
-</div>  <!--  GroupBox10 -->
+</div>  <!--  GroupBox10 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -819,7 +819,7 @@ else
 </tr>
 </table>
 
-</div>  <!-- GroupBox3 -->
+</div>  <!-- GroupBox3 --> 
 
 </div>  <!-- End of a new line -->
 
@@ -833,7 +833,7 @@ else
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox9:GroupBox */ %>
 
-<div id="GroupBox9" name="GroupBox9" style="width:832px;float:left;">  <!-- GroupBox9 -->
+<div id="GroupBox9" name="GroupBox9" style="width:832px;float:left;">  <!-- GroupBox9 --> 
 
 
  <!-- This is added as a line spacer -->
@@ -843,7 +843,7 @@ else
 <div style="height:1px;width:14px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox5:GroupBox */ %>
 
-<div id="GroupBox5" name="GroupBox5"   style="float:left;position:relative; width:782px; height:30px;">  <!-- GroupBox5 -->
+<div id="GroupBox5" name="GroupBox5"   style="float:left;position:relative; width:782px; height:30px;">  <!-- GroupBox5 --> 
 
 <% /* PushBtn4:PushBtn */ %>
 <button type="button" class="newbutton" name="PushBtn4" id="PushBtn4" value="" onclick="GOTO_DisplayGeneratedText( )" style="width:158px;height:26px;position:absolute;left:398px;top:4px;">Show Generated Text</button>
@@ -856,7 +856,7 @@ else
 <label class="listheader"  id="Text7" name="Text7" style="width:366px;height:16px;position:absolute;left:12px;top:8px;">Keyword text for Embedding in Statement Text</label>
 
 
-</div>  <!--  GroupBox5 -->
+</div>  <!--  GroupBox5 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -893,7 +893,7 @@ try
       String strTag;
       String strGridEditCtl6;
       String strGridEditCtl7;
-
+      
       View vGrid4;
       vGrid4 = mSubLC.newView( );
       csrRC2 = vGrid4.cursor( "S_InsertTextMarketing" ).setFirst( "S_MarketingStatement" );
@@ -957,7 +957,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </div>  <!-- End of a new line -->
 
 
-</div>  <!--  GroupBox9 -->
+</div>  <!--  GroupBox9 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -967,7 +967,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox8:GroupBox */ %>
 
-<div id="GroupBox8" name="GroupBox8" style="width:830px;float:left;">  <!-- GroupBox8 -->
+<div id="GroupBox8" name="GroupBox8" style="width:830px;float:left;">  <!-- GroupBox8 --> 
 
 
  <!-- This is added as a line spacer -->
@@ -977,7 +977,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <div style="height:1px;width:6px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox4:GroupBox */ %>
 
-<div id="GroupBox4" name="GroupBox4"   style="float:left;position:relative; width:798px; height:30px;">  <!-- GroupBox4 -->
+<div id="GroupBox4" name="GroupBox4"   style="float:left;position:relative; width:798px; height:30px;">  <!-- GroupBox4 --> 
 
 <% /* Text4:Text */ %>
 
@@ -990,7 +990,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <button type="button" class="newbutton" name="PBSort" id="PBSort" value="" onclick="SortMarketingStatements( )" style="width:78px;height:26px;position:absolute;left:630px;top:4px;">Sort</button>
 
 
-</div>  <!--  GroupBox4 -->
+</div>  <!--  GroupBox4 --> 
 </div>  <!-- End of a new line -->
 
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
@@ -1027,7 +1027,7 @@ try
       String strTag;
       String strGridEditCtl4;
       String strGridEditCtl5;
-
+      
       View vGridMarketingUsage;
       vGridMarketingUsage = mSubLC.newView( );
       csrRC2 = vGridMarketingUsage.cursor( "S_MarketingUsageOrdering" ).setFirst(  );
@@ -1091,7 +1091,7 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 </div>  <!-- End of a new line -->
 
 
-</div>  <!--  GroupBox8 -->
+</div>  <!--  GroupBox8 --> 
 </div>  <!-- End of a new line -->
 
 

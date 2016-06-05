@@ -1,3 +1,5 @@
+// wSystemPeople   Generate Timestamp: 20160531205258147
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

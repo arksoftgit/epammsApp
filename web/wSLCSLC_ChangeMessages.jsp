@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCSLC_ChangeMessages   Generate Timestamp: 20160427103751355 --%>
+<%-- wSLCSLC_ChangeMessages   Generate Timestamp: 20160531205243807 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -587,7 +587,7 @@ try
          nRC = vGrid2.cursor( "S_VersionChangeMessage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl5 = vGrid2.cursor( "S_VersionChangeMessage" ).getAttribute( "ChangeText" ).getString( "" );
+            strGridEditCtl5 = vGrid2.cursor( "S_VersionChangeMessage" ).getAttribute( "ChangeNote" ).getString( "" );
 
             if ( strGridEditCtl5 == null )
                strGridEditCtl5 = "";

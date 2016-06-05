@@ -1,3 +1,5 @@
+// wSystemImportBacteriaList   Generate Timestamp: 20160531205257225
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

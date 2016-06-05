@@ -1,3 +1,5 @@
+// wStartUpTopMenu   Generate Timestamp: 20160531205253053
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

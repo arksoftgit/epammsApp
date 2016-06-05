@@ -1,3 +1,5 @@
+// wSystemImportFungiList   Generate Timestamp: 20160531205257365
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

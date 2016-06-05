@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDirectionsForUseSection   Generate Timestamp: 20160526160256299 --%>
+<%-- wMLCDirectionsForUseSection   Generate Timestamp: 20160531205224865 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1655,7 +1655,7 @@ else
    }
 %>
 
-<input class="text12" name="DirectionsForUseReviewerNote" id="DirectionsForUseReviewerNote" maxlength="254"  title="Optional Title to appear with text on generated label"style="width:650px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="DirectionsForUseReviewerNote" id="DirectionsForUseReviewerNote" maxlength="1024"  title="Optional Title to appear with text on generated label"style="width:650px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

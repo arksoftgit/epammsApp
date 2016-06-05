@@ -1,3 +1,5 @@
+// wSPLDDeleteSubregProductSPLD   Generate Timestamp: 20160531205245740
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

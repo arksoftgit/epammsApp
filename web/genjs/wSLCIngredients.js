@@ -1,3 +1,5 @@
+// wSLCIngredients   Generate Timestamp: 20160531205242682
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

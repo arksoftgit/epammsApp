@@ -1,3 +1,5 @@
+// wSLCSLC_ChangeMessages   Generate Timestamp: 20160531205243807
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

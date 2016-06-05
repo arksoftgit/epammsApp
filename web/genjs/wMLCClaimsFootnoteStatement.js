@@ -1,4 +1,4 @@
-// wMLCClaimsFootnoteStatement   Generate Timestamp: 20160525203748012
+// wMLCClaimsFootnoteStatement   Generate Timestamp: 20160531205223553
 
 var isWindowClosing = true;
 var timerID = null;

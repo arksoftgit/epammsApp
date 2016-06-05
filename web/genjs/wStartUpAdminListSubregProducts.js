@@ -1,3 +1,5 @@
+// wStartUpAdminListSubregProducts   Generate Timestamp: 20160531205249287
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

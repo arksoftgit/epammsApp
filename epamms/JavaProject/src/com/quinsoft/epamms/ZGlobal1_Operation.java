@@ -4735,6 +4735,10 @@ public class ZGlobal1_Operation extends VmlOperation
          mMasLC2.copyCursors( mMasLC );
 
          while ( openBracePos >= 0 ) {
+            // Get to the innermost set of "{{"
+            while ( szOrigSource.charAt( openBracePos + 2) == '{' ) {
+               openBracePos++;
+            }
             // Copy static text up to the brace to the target.
             sbTarget.append( szOrigSource.substring( sourcePos, openBracePos ) );
 
@@ -4789,7 +4793,7 @@ public class ZGlobal1_Operation extends VmlOperation
                } else {
                   // notify user that the keyword is not found
                   sbTarget.append( "{{'" + szKeywordName + "' not found}} " );
-                  TraceLineS( "### Keyword NOT Found: ", szKeywordName );
+                  TraceLineS( "### Keyword NOT Found: "+ szKeywordName + "   in Statement: ", szOrigSource );
                   cr = mMasLC2.cursor( szKeywordEntityName ).setFirst();
                   while ( cr.isSet() ) {
                      szKeywordValue = mMasLC2.cursor( szKeywordEntityName ).getAttribute( "Name" ).getString();
@@ -5005,6 +5009,89 @@ public class ZGlobal1_Operation extends VmlOperation
          sbTextToModify.append( sbTarget.toString() );
       }
 
+      return( 0 );
+   }
+
+   /////////////////////////////////////////////////////////////////////////////
+   /////////////////////////////////////////////////////////////////////////////
+   /////////////////////////////////////////////////////////////////////////////
+   /////////////////////////////////////////////////////////////////////////////
+
+   private String
+   EliminateBlanksCamelCase( String s )
+   {
+      if ( s.length() < 2 )
+         return s;
+
+      if ( s.charAt( 0 ) == '(' && s.charAt( s.length() - 1 ) == ')' )
+         s = s.substring( 1, s.length() - 1 );
+
+      String[] sub = s.split( " " );
+      StringBuilder sb = new StringBuilder();
+      int k = 0;
+      while ( k < sub.length ) {
+         if ( sub[ k ].length() > 0 && sub[ k ].compareToIgnoreCase( "or" ) != 0 && sub[ k ].compareToIgnoreCase( "and" ) != 0 ) {
+            sb.append( sub[ k ].substring( 0, 1 ).toUpperCase() + sub[ k ].substring( 1 ) );
+         }
+         k++;
+      }
+      return sb.toString();
+   }
+
+   public int
+   ParseStatementForKeywords( View     mMasLC,
+                              String   statementEntity,
+                              String   keywordEntity,
+                              String   keywordTextEntity,
+                              String   keywordSemaphore )
+   {
+      StringBuilder sbTarget = new StringBuilder();
+      String   szKeyword;
+      String   szKeywordValue;
+      String   szBraceEnclosedKeyword;
+      int      openSemaphorePos = 0;
+      int      closeSemaphorePos = 0;
+
+      if ( keywordSemaphore.length() < 2 )
+         keywordSemaphore = "{}";
+
+      char openSemaphore = keywordSemaphore.charAt( 0 );
+      char closeSemaphore = keywordSemaphore.charAt( 1 );
+
+   // 0.75 oz. of this product per 4 gal. of water {(0.19 oz. per gal. of water)} {(150 ppm active quat)}{(or equivalent use dilution)} 
+   // 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123  << lth = 133
+   //          1         2         3         4         5         6         7         8         9        10        11        12        13
+      String szOrigStatement = mMasLC.cursor( statementEntity ).getAttribute( "Text" ).getValue().toString();
+      sbTarget.setLength( 0 );
+
+      // Parse the semaphores out of the string.
+      openSemaphorePos = szOrigStatement.indexOf( openSemaphore, openSemaphorePos );
+      while ( openSemaphorePos >= 0 ) {
+         // Copy static text up to the semaphore to the target.
+         sbTarget.append( szOrigStatement.substring( closeSemaphorePos, openSemaphorePos ) );
+
+         openSemaphorePos++;
+         closeSemaphorePos = szOrigStatement.indexOf( closeSemaphore, openSemaphorePos );
+         if ( closeSemaphorePos >= 0 ) {
+            szKeywordValue = szOrigStatement.substring( openSemaphorePos, closeSemaphorePos );
+            szKeyword = EliminateBlanksCamelCase( szKeywordValue );
+            szBraceEnclosedKeyword = "{{" + szKeyword + "}}";
+            sbTarget.append( szBraceEnclosedKeyword );
+            mMasLC.cursor( keywordEntity ).createEntity();
+            mMasLC.cursor( keywordEntity ).getAttribute( "Name" ).setValue( szKeyword );
+            mMasLC.cursor( keywordEntity ).getAttribute( "Type" ).setValue( "A" );  // All optional
+            mMasLC.cursor( keywordTextEntity ).createEntity();
+            mMasLC.cursor( keywordTextEntity ).getAttribute( "Text" ).setValue( szKeywordValue );
+            closeSemaphorePos++;
+            openSemaphorePos = szOrigStatement.indexOf( openSemaphore, closeSemaphorePos );
+         } else {
+            closeSemaphorePos = openSemaphorePos;
+            openSemaphorePos = -1;
+         }
+      }
+
+      sbTarget.append( szOrigStatement.substring( closeSemaphorePos ) ); // append remaining static text in the original source string
+      mMasLC.cursor( statementEntity ).getAttribute( "Text" ).setValue( sbTarget.toString() );
       return( 0 );
    }
 

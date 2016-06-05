@@ -1,4 +1,4 @@
-// wMLCDilutionGroup   Generate Timestamp: 20160525203748763
+// wMLCDilutionGroup   Generate Timestamp: 20160531205224381
 
 var isWindowClosing = true;
 var timerID = null;
@@ -304,7 +304,7 @@ function GOTO_DilutionChartItemUpdate( strTagEntityKey )
    }
 }
 
-function GOTO_DilutionGroupItemAdd( strTagEntityKey )
+function GOTO_DilutionGroupItemAdd( )
 {
 
    // This is for indicating whether the user hit the window close box.
@@ -312,10 +312,6 @@ function GOTO_DilutionGroupItemAdd( strTagEntityKey )
 
    if ( _IsDocDisabled( ) == false )
    {
-      var nIdx = strTagEntityKey.lastIndexOf( '::' );
-      var strEntityKey = strTagEntityKey.substring( nIdx + 2 );
-
-      document.wMLCDilutionGroup.zTableRowSelect.value = strEntityKey;
       _DisableFormElements( true );
 
       document.wMLCDilutionGroup.zAction.value = "GOTO_DilutionGroupItemAdd";

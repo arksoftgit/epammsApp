@@ -1,7 +1,7 @@
-z1000-Zeidon    ZGLOBAL1 TZOGSRCO 05/18/16   18:23:16 1.0a2   
+z1000-Zeidon    ZGLOBAL1 TZOGSRCO 06/03/16   18:26:47 1.0a2   
 eGlobalOperationGroup 1
 aZKey      89816452
-aNextZKeyToAssign 110040710
+aNextZKeyToAssign 110040717
 aName      ZGlobal1
 aDesc      Global Operations in C
 aExtension C
@@ -50,6 +50,46 @@ aDataType  L
 aPFlag     N
 aUFlag     N
 aZKey      89816458
+
+eOperation 2
+aName      ParseStatementForKeywords
+aZKey      110040711
+aType      G
+
+eParameter 3
+aShortDesc mMasLC
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      110040712
+
+eParameter 3
+aShortDesc StatementEntity
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      110040714
+
+eParameter 3
+aShortDesc KeywordEntity
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      110040715
+
+eParameter 3
+aShortDesc KeywordTextEntity
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      110040716
+
+eParameter 3
+aShortDesc KeywordSemaphore
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      110040717
 
 eOperation 2
 aName      GenerateKeywordTextIntoString

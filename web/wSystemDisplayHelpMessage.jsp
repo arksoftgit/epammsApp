@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSystemDisplayHelpMessage   Generate Timestamp: 20160426145257472 --%>
+<%-- wSystemDisplayHelpMessage   Generate Timestamp: 20160531205256709 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -13,7 +13,7 @@
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
 <%@ page import="com.quinsoft.epamms.*" %>
 
-<%!
+<%! 
 
 ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
@@ -258,7 +258,7 @@ if ( strActionToProcess != null )
             task.log().info( "Action Error Redirect to: " + strURL );
          }
 
-         if ( ! strURL.equals("wSystemDisplayHelpMessage.jsp") )
+         if ( ! strURL.equals("wSystemDisplayHelpMessage.jsp") ) 
          {
             response.sendRedirect( strURL );
             // If we are redirecting to a new page, then we need this return so that the rest of this page doesn't get built.

@@ -1,3 +1,5 @@
+// wePammsReports   Generate Timestamp: 20160531205220771
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

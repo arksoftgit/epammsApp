@@ -1,3 +1,5 @@
+// wSLCSurfaces   Generate Timestamp: 20160531205244943
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

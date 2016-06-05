@@ -1,3 +1,5 @@
+// wSLCLocations   Generate Timestamp: 20160531205241304
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

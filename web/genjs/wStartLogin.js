@@ -1,3 +1,5 @@
+// wStartLogin   Generate Timestamp: 20160531205247693
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

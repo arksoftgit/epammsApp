@@ -1,3 +1,5 @@
+// wSPLDDeleteLLD   Generate Timestamp: 20160531205245552
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

@@ -1,3 +1,5 @@
+// wSystemListPrimaryRegistrants   Generate Timestamp: 20160531205257772
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCStorageDisposalSubStatement   Generate Timestamp: 20160525203754794 --%>
+<%-- wMLCStorageDisposalSubStatement   Generate Timestamp: 20160531205230178 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1246,7 +1246,7 @@ else
    }
 %>
 
-<input class="text12" name="Note1" id="Note1" maxlength="254" style="width:592px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="Note1" id="Note1" maxlength="1024" style="width:592px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

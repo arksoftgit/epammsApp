@@ -1,3 +1,5 @@
+// wSystemUpdateViruses   Generate Timestamp: 20160531205300365
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

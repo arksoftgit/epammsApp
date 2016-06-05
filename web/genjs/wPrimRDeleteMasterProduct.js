@@ -1,3 +1,5 @@
+// wPrimRDeleteMasterProduct   Generate Timestamp: 20160531205232069
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

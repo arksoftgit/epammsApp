@@ -1,3 +1,5 @@
+// wSLCGeneratedTextDisplay   Generate Timestamp: 20160531205242272
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

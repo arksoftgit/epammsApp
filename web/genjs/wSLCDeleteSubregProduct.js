@@ -1,3 +1,5 @@
+// wSLCDeleteSubregProduct   Generate Timestamp: 20160531205241444
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

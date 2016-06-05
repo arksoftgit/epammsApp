@@ -1,3 +1,5 @@
+// wStartUpAdminDeletePrimRegUser   Generate Timestamp: 20160531205248615
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

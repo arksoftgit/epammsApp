@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDirectionsForUseStatement   Generate Timestamp: 20160526160301658 --%>
+<%-- wMLCDirectionsForUseStatement   Generate Timestamp: 20160605160737962 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -309,6 +309,44 @@ if ( strActionToProcess != null )
       }
       // Next Window
       strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_ReturnToParent, "", "" );
+      strURL = response.encodeRedirectURL( strNextJSP_Name );
+      nRC = 1;  // do the redirection
+      break;
+   }
+
+   while ( bDone == false && StringUtils.equals( strActionToProcess, "ParseStatementText" ) )
+   {
+      bDone = true;
+      VmlOperation.SetZeidonSessionAttribute( session, task, "wMLCDirectionsForUseStatement", strActionToProcess );
+
+      // Input Mapping
+      nRC = DoInputMapping( request, session, application, false );
+      if ( nRC < 0 )
+         break;
+
+      // Action Operation
+      nRC = 0;
+      VmlOperation.SetZeidonSessionAttribute( null, task, "wMLCDirectionsForUseStatement", "wMLC.ParseDFU_StatementText" );
+      nOptRC = wMLC.ParseDFU_StatementText( new zVIEW( vKZXMLPGO ) );
+      if ( nOptRC == 2 )
+      {
+         nRC = 2;  // do the "error" redirection
+         session.setAttribute( "ZeidonError", "Y" );
+         break;
+      }
+      else
+      if ( nOptRC == 1 )
+      {
+         // Dynamic Next Window
+         strNextJSP_Name = wMLC.GetWebRedirection( vKZXMLPGO );
+      }
+
+      if ( strNextJSP_Name.equals( "" ) )
+      {
+         // Next Window
+         strNextJSP_Name = wMLC.SetWebRedirection( vKZXMLPGO, wMLC.zWAB_StayOnWindowWithRefresh, "", "" );
+      }
+
       strURL = response.encodeRedirectURL( strNextJSP_Name );
       nRC = 1;  // do the redirection
       break;
@@ -1286,9 +1324,9 @@ else
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox3:GroupBox */ %>
-<div id="GroupBox3" name="GroupBox3" style="float:left;width:830px;" >
+<div id="GroupBox3" name="GroupBox3" style="float:left;width:846px;" >
 
-<table cols=2 style="width:830px;"  class="grouptable">
+<table cols=2 style="width:846px;"  class="grouptable">
 
 <tr>
 <td valign="top" style="width:54px;">
@@ -1297,7 +1335,7 @@ else
 <span  id="Title:" name="Title:" style="width:46px;height:18px;">Title:</span>
 
 </td>
-<td valign="top" style="width:738px;">
+<td valign="top" style="width:762px;">
 <% /* MLETitle:MLEdit */ %>
 <%
    // MLEdit: MLETitle
@@ -1330,7 +1368,7 @@ else
    }
 %>
 
-<textarea id="MLETitle" name="MLETitle" class="" style="width:738px;height:34px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+<textarea id="MLETitle" name="MLETitle" class="" style="width:762px;height:34px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 </td>
 </tr>
@@ -1341,7 +1379,7 @@ else
 <span  id="Text:" name="Text:" style="width:46px;height:18px;">Text:</span>
 
 </td>
-<td valign="top" style="width:738px;">
+<td valign="top" style="width:762px;">
 <% /* MLEText:MLEdit */ %>
 <%
    // MLEdit: MLEText
@@ -1374,7 +1412,7 @@ else
    }
 %>
 
-<textarea id="MLEText" name="MLEText" class="" style="width:738px;height:130px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
+<textarea id="MLEText" name="MLEText" class="" style="width:762px;height:128px;border:solid;border-width:4px;border-style:groove;" wrap="wrap"><%=strErrorMapValue%></textarea>
 
 </td>
 </tr>
@@ -1394,7 +1432,7 @@ else
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox9:GroupBox */ %>
 
-<div id="GroupBox9" name="GroupBox9" style="width:832px;float:left;">  <!-- GroupBox9 --> 
+<div id="GroupBox9" name="GroupBox9" style="width:846px;float:left;">  <!-- GroupBox9 --> 
 
 
  <!-- This is added as a line spacer -->
@@ -1432,7 +1470,7 @@ else
    }
 %>
 
-<span class="text12"  id="DirectionsForUseTitle" name="DirectionsForUseTitle"  title="Optional Title to appear with text on generated label" style="width:704px;height:16px;"><%=strTextDisplayValue%></span>
+<span class="text12"  id="DirectionsForUseTitle" name="DirectionsForUseTitle"  title="Optional Title to appear with text on generated label" style="width:730px;height:16px;"><%=strTextDisplayValue%></span>
 
 </div>  <!-- End of a new line -->
 
@@ -1474,7 +1512,7 @@ else
    }
 %>
 
-<span class="text12"  id="DirectionsForUseText" name="DirectionsForUseText"  title="Optional Title to appear with text on generated label" style="width:704px;height:16px;"><%=strTextDisplayValue%></span>
+<span class="text12"  id="DirectionsForUseText" name="DirectionsForUseText"  title="Optional Title to appear with text on generated label" style="width:730px;height:16px;"><%=strTextDisplayValue%></span>
 
 </div>  <!-- End of a new line -->
 
@@ -1482,21 +1520,24 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:2px;width:100px;"></div>
+<div style="height:10px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <% /* GroupBox5:GroupBox */ %>
 
-<div id="GroupBox5" name="GroupBox5"   style="float:left;position:relative; width:810px; height:30px;">  <!-- GroupBox5 --> 
+<div id="GroupBox5" name="GroupBox5"   style="float:left;position:relative; width:832px; height:30px;">  <!-- GroupBox5 --> 
 
 <% /* Show:PushBtn */ %>
-<button type="button" class="newbutton" name="Show" id="Show" value="" onclick="GOTO_DisplayGeneratedTextDU( )" style="width:158px;height:26px;position:absolute;left:354px;top:4px;">Show Generated Text</button>
+<button type="button" class="newbutton" name="Show" id="Show" value="" onclick="GOTO_DisplayGeneratedTextDU( )" style="width:74px;height:26px;position:absolute;left:354px;top:4px;">Refresh</button>
 
 <% /* Paste:PushBtn */ %>
-<button type="button" class="newbutton" name="Paste" id="Paste" value="" onclick="PASTE_InsertKeywordDU( )" style="width:74px;height:26px;position:absolute;left:532px;top:4px;">Paste</button>
+<button type="button" class="newbutton" name="Paste" id="Paste" value="" onclick="PASTE_InsertKeywordDU( )" style="width:74px;height:26px;position:absolute;left:438px;top:4px;">Paste</button>
+
+<% /* ParseText1:PushBtn */ %>
+<button type="button" class="newbutton" name="ParseText1" id="ParseText1" value="" onclick="ParseStatementText( )" style="width:94px;height:26px;position:absolute;left:524px;top:4px;">Parse Text</button>
 
 <% /* New:PushBtn */ %>
-<button type="button" class="newbutton" name="New" id="New" value="" onclick="ADD_MarketingStatementKeyword( )" style="width:66px;height:26px;position:absolute;left:626px;top:4px;">New</button>
+<button type="button" class="newbutton" name="New" id="New" value="" onclick="ADD_MarketingStatementKeyword( )" style="width:66px;height:26px;position:absolute;left:630px;top:4px;">New</button>
 
 <% /* PBSort:PushBtn */ %>
 <button type="button" class="newbutton" name="PBSort" id="PBSort" value="" onclick="Sort( )" style="width:66px;height:26px;position:absolute;left:710px;top:4px;">Sort</button>
@@ -1513,7 +1554,7 @@ else
 
 
  <!-- This is added as a line spacer -->
-<div style="height:8px;width:100px;"></div>
+<div style="height:4px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
@@ -1623,13 +1664,13 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 
 
  <!-- This is added as a line spacer -->
-<div style="height:4px;width:100px;"></div>
+<div style="height:12px;width:100px;"></div>
 
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GroupBox8:GroupBox */ %>
 
-<div id="GroupBox8" name="GroupBox8" style="width:830px;float:left;">  <!-- GroupBox8 --> 
+<div id="GroupBox8" name="GroupBox8" style="width:846px;float:left;">  <!-- GroupBox8 --> 
 
 
  <!-- This is added as a line spacer -->
@@ -1756,14 +1797,11 @@ task.log().info( "*** Error in grid" + e.getMessage() );
 <div style="clear:both;"></div>  <!-- Moving to a new line, so do a clear -->
 
 
- <!-- This is added as a line spacer -->
-<div style="height:6px;width:100px;"></div>
-
 <div>  <!-- Beginning of a new line -->
 <div style="height:1px;width:10px;float:left;"></div>   <!-- Width Spacer -->
 <% /* GBDirectionsUseStatements:GroupBox */ %>
 
-<div id="GBDirectionsUseStatements" name="GBDirectionsUseStatements" style="width:830px;float:left;">  <!-- GBDirectionsUseStatements --> 
+<div id="GBDirectionsUseStatements" name="GBDirectionsUseStatements" style="width:846px;float:left;">  <!-- GBDirectionsUseStatements --> 
 
 
  <!-- This is added as a line spacer -->

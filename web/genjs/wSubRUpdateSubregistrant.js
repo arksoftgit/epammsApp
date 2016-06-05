@@ -1,3 +1,5 @@
+// wSubRUpdateSubregistrant   Generate Timestamp: 20160531205255678
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

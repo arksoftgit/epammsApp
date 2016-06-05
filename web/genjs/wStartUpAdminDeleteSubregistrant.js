@@ -1,3 +1,5 @@
+// wStartUpAdminDeleteSubregistrant   Generate Timestamp: 20160531205248724
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

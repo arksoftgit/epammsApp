@@ -1,3 +1,5 @@
+// wStartUpAdminUpdateSubregUser   Generate Timestamp: 20160531205251459
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

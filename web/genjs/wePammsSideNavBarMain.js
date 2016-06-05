@@ -1,3 +1,5 @@
+// wePammsSideNavBarMain   Generate Timestamp: 20160531205220959
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

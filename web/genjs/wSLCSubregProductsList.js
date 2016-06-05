@@ -1,3 +1,5 @@
+// wSLCSubregProductsList   Generate Timestamp: 20160531205244677
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

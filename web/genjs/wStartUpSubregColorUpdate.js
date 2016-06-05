@@ -1,3 +1,5 @@
+// wStartUpSubregColorUpdate   Generate Timestamp: 20160531205252803
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

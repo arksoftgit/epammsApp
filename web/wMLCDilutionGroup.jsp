@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCDilutionGroup   Generate Timestamp: 20160525203748763 --%>
+<%-- wMLCDilutionGroup   Generate Timestamp: 20160531205224381 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -668,33 +668,6 @@ if ( strActionToProcess != null )
       nRC = DoInputMapping( request, session, application, false );
       if ( nRC < 0 )
          break;
-
-      // Position on the entity that was selected in the grid.
-      String strEntityKey = (String) request.getParameter( "zTableRowSelect" );
-      View mMasLC;
-      mMasLC = task.getViewByName( "mMasLC" );
-      if ( VmlOperation.isValid( mMasLC ) )
-      {
-         lEKey = java.lang.Long.parseLong( strEntityKey );
-         csrRC = mMasLC.cursor( "M_DilutionChartEntry" ).setByEntityKey( lEKey );
-         if ( !csrRC.isSet() )
-         {
-            boolean bFound = false;
-            csrRCk = mMasLC.cursor( "M_DilutionChartEntry" ).setFirst( );
-            while ( csrRCk.isSet() && !bFound )
-            {
-               lEKey = mMasLC.cursor( "M_DilutionChartEntry" ).getEntityKey( );
-               strKey = Long.toString( lEKey );
-               if ( StringUtils.equals( strKey, strEntityKey ) )
-               {
-                  // Stop while loop because we have positioned on the correct entity.
-                  bFound = true;
-               }
-               else
-                  csrRCk = mMasLC.cursor( "M_DilutionChartEntry" ).setNextContinue( );
-            } // Grid
-         }
-      }
 
       // Action Auto Object Function
       nRC = 0;
@@ -1422,7 +1395,7 @@ else
    }
 %>
 
-<input name="ReviewerNote" id="ReviewerNote" maxlength="254" style="width:574px;position:absolute;left:164px;top:146px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="ReviewerNote" id="ReviewerNote" maxlength="1024" style="width:574px;position:absolute;left:164px;top:146px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* ReviewerNoteTable::Text */ %>
 
@@ -1467,7 +1440,7 @@ else
    }
 %>
 
-<input name="ReviewerNoteTable" id="ReviewerNoteTable" maxlength="254" style="width:574px;position:absolute;left:164px;top:168px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="ReviewerNoteTable" id="ReviewerNoteTable" maxlength="1024" style="width:574px;position:absolute;left:164px;top:168px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 
 </div>  <!--  GBDilution --> 
@@ -1615,10 +1588,10 @@ try
 
 <tr<%=strOdd%>>
 
-   <td><a href="#" onclick="GOTO_DilutionGroupItemAdd( this.id )" id="Use::<%=strEntityKey%>"><%=strUse%></a></td>
-   <td><a href="#" onclick="GOTO_DilutionGroupItemAdd( this.id )" id="ProductAmount::<%=strEntityKey%>"><%=strProductAmount%></a></td>
-   <td><a href="#" onclick="GOTO_DilutionGroupItemAdd( this.id )" id="WaterAmount::<%=strEntityKey%>"><%=strWaterAmount%></a></td>
-   <td><a href="#" onclick="GOTO_DilutionGroupItemAdd( this.id )" id="ContactTime::<%=strEntityKey%>"><%=strContactTime%></a></td>
+   <td><a href="#" onclick="GOTO_DilutionChartItemUpdate( this.id )" id="Use::<%=strEntityKey%>"><%=strUse%></a></td>
+   <td><a href="#" onclick="GOTO_DilutionChartItemUpdate( this.id )" id="ProductAmount::<%=strEntityKey%>"><%=strProductAmount%></a></td>
+   <td><a href="#" onclick="GOTO_DilutionChartItemUpdate( this.id )" id="WaterAmount::<%=strEntityKey%>"><%=strWaterAmount%></a></td>
+   <td><a href="#" onclick="GOTO_DilutionChartItemUpdate( this.id )" id="ContactTime::<%=strEntityKey%>"><%=strContactTime%></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateDilutionChartItem" onclick="GOTO_DilutionChartItemUpdate( this.id )" id="BMBUpdateDilutionChartItem::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteDilutionChartItem" onclick="GOTO_DilutionChartItemDelete( this.id )" id="BMBDeleteDilutionChartItem::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 
@@ -1742,7 +1715,7 @@ try
 
 <tr<%=strOdd%>>
 
-   <td><a href="#" onclick="GOTO_DilutionGroupItemAdd( this.id )" id="ItemText::<%=strEntityKey%>"><%=strItemText%></a></td>
+   <td><a href="#" onclick="GOTO_DilutionGroupItemUpdate( this.id )" id="ItemText::<%=strEntityKey%>"><%=strItemText%></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBUpdateDilutionGroupItem" onclick="GOTO_DilutionGroupItemUpdate( this.id )" id="BMBUpdateDilutionGroupItem::<%=strEntityKey%>"><img src="./images/ePammsUpdate.png" alt="Update"></a></td>
    <td nowrap><a href="#" style="display:block;width:100%;height:100%;text-decoration:none;" name="BMBDeleteDilutionGroupItem" onclick="GOTO_DilutionGroupItemDelete( this.id )" id="BMBDeleteDilutionGroupItem::<%=strEntityKey%>"><img src="./images/ePammsDelete.png" alt="Delete"></a></td>
 

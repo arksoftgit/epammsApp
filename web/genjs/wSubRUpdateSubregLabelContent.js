@@ -1,3 +1,5 @@
+// wSubRUpdateSubregLabelContent   Generate Timestamp: 20160531205255912
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

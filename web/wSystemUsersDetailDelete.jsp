@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSystemUsersDetailDelete   Generate Timestamp: 20160427103804929 --%>
+<%-- wSystemUsersDetailDelete   Generate Timestamp: 20160531205300694 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>

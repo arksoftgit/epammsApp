@@ -1,3 +1,5 @@
+// wSLCSLC_Sidebar   Generate Timestamp: 20160531205244161
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

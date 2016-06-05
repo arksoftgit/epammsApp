@@ -1,3 +1,5 @@
+// wSPLDUpdateReusableBlock   Generate Timestamp: 20160531205247427
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

@@ -1,3 +1,5 @@
+// wSPLDSPLD_BlockSpecialFormatDef   Generate Timestamp: 20160531205246677
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

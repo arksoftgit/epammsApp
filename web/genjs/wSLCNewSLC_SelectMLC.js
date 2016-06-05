@@ -1,3 +1,5 @@
+// wSLCNewSLC_SelectMLC   Generate Timestamp: 20160531205243416
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

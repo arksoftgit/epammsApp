@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCPrecautionarySection   Generate Timestamp: 20160427103751277 --%>
+<%-- wSLCPrecautionarySection   Generate Timestamp: 20160531205243650 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1298,7 +1298,7 @@ else
    }
 %>
 
-<input class="text12" name="PrecautionarySubtitle" id="PrecautionarySubtitle" maxlength="254" style="width:550px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="PrecautionarySubtitle" id="PrecautionarySubtitle" maxlength="1024" style="width:550px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

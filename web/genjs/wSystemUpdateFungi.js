@@ -1,3 +1,5 @@
+// wSystemUpdateFungi   Generate Timestamp: 20160531205259772
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

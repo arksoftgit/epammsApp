@@ -1,3 +1,5 @@
+// wStartUpListMasterProducts   Generate Timestamp: 20160531205252396
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

@@ -1,3 +1,5 @@
+// wSubRChangeSubregUserPass   Generate Timestamp: 20160531205253474
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

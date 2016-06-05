@@ -1,3 +1,5 @@
+// wSPLDLLD_GenerateFromSPLD   Generate Timestamp: 20160531205245927
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

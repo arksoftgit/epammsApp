@@ -1,3 +1,5 @@
+// wStartSecurityValidations   Generate Timestamp: 20160531205248162
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

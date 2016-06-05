@@ -1,3 +1,5 @@
+// wSystemNewSystemChemical   Generate Timestamp: 20160531205257912
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

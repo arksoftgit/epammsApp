@@ -1,4 +1,4 @@
-// wMLCDirectionsForUseSubStatement   Generate Timestamp: 20160525203749731
+// wMLCDirectionsForUseSubStatement   Generate Timestamp: 20160605160747650
 
 var isWindowClosing = true;
 var timerID = null;
@@ -202,6 +202,42 @@ function AcceptDirectionsSubStatement( )
       _DisableFormElements( true );
 
       document.wMLCDirectionsForUseSubStatement.zAction.value = "AcceptDirectionsSubStatement";
+      document.wMLCDirectionsForUseSubStatement.submit( );
+   }
+}
+
+function Sort( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      // Javascript code entered by user.
+
+       document.wMLCDirectionsForUseSubStatement.zTableRowSelect.value = buildSortTableHtml( "mMasLC", "M_InsertTextKeywordDU", "GridKeywords",  ["Keyword","Keyword Text"]  );
+
+      // END of Javascript code entered by user.
+
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseSubStatement.zAction.value = "Sort";
+      document.wMLCDirectionsForUseSubStatement.submit( );
+   }
+}
+
+function ParseStatementText( )
+{
+
+   // This is for indicating whether the user hit the window close box.
+   isWindowClosing = false;
+
+   if ( _IsDocDisabled( ) == false )
+   {
+      _DisableFormElements( true );
+
+      document.wMLCDirectionsForUseSubStatement.zAction.value = "ParseStatementText";
       document.wMLCDirectionsForUseSubStatement.submit( );
    }
 }

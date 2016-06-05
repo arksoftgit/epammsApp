@@ -3377,3 +3377,16 @@ CreateIncludeExcludeView( VIEW ViewToWindow )
    CreateViewFromView( mMasLCIncludeExclude, mMasLC )
    NAME VIEW mMasLCIncludeExclude "mMasLCIncludeExclude"
 END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//  OPERATION: ParseDFU_StatementText
+//
+/////////////////////////////////////////////////////////////////////////////
+DIALOG OPERATION
+ParseDFU_StatementText( VIEW ViewToWindow )
+
+   VIEW mMasLC REGISTERED AS mMasLC
+   ParseStatementForKeywords( mMasLC, "M_DirectionsForUseStatement",
+                              "M_InsertTextKeywordDU", "M_InsertTextDU", "{}" )
+END

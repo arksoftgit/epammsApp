@@ -1,3 +1,5 @@
+// wSystemDisplayHelpMessage   Generate Timestamp: 20160531205256709
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

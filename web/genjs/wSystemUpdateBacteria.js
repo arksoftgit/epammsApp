@@ -1,3 +1,5 @@
+// wSystemUpdateBacteria   Generate Timestamp: 20160531205259647
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

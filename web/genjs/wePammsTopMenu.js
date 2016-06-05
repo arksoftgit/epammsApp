@@ -1,3 +1,5 @@
+// wePammsTopMenu   Generate Timestamp: 20160531205221053
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

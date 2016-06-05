@@ -1,3 +1,5 @@
+// wSubRDeleteSubregUser   Generate Timestamp: 20160531205254084
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

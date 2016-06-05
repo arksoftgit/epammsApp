@@ -1,3 +1,5 @@
+// wSystemDeleteFeedbackComment   Generate Timestamp: 20160531205256506
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

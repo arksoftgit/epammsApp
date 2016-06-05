@@ -1,3 +1,5 @@
+// wPrimRUpdateMasterProduct   Generate Timestamp: 20160531205238616
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

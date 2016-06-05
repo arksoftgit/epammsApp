@@ -1,4 +1,4 @@
-// wMLCMarketingSelectByType   Generate Timestamp: 20160525203753091
+// wMLCMarketingSelectByType   Generate Timestamp: 20160531205228428
 
 var isWindowClosing = true;
 var timerID = null;

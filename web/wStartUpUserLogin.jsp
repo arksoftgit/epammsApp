@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wStartUpUserLogin   Generate Timestamp: 20160426145255184 --%>
+<%-- wStartUpUserLogin   Generate Timestamp: 20160531205253162 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -13,7 +13,7 @@
 <%@ page import="com.quinsoft.zeidon.domains.*" %>
 <%@ page import="com.quinsoft.epamms.*" %>
 
-<%!
+<%! 
 
 ObjectEngine objectEngine = com.quinsoft.epamms.ZeidonObjectEngineConfiguration.getObjectEngine();
 
@@ -199,7 +199,7 @@ String strInputFileName = "";
 strActionToProcess = (String) request.getParameter( "zAction" );
 
 strLastWindow = (String) session.getAttribute( "ZeidonWindow" );
-if ( StringUtils.isBlank( strLastWindow ) )
+if ( StringUtils.isBlank( strLastWindow ) ) 
    strLastWindow = "NoLastWindow";
 
 strLastAction = (String) session.getAttribute( "ZeidonAction" );
@@ -427,7 +427,7 @@ JspWebUtils.createWebSession( session, task, VmlOperation.SfGetUserIdForTask( ta
             task.log().info( "Action Error Redirect to: " + strURL );
          }
 
-         if ( ! strURL.equals("wStartUpUserLogin.jsp") )
+         if ( ! strURL.equals("wStartUpUserLogin.jsp") ) 
          {
             response.sendRedirect( strURL );
             // If we are redirecting to a new page, then we need this return so that the rest of this page doesn't get built.
@@ -670,7 +670,7 @@ else
 <div id="GroupBox1" name="GroupBox1" style="width:46px;height:166px;float:left;">  <!-- GroupBox1 -->
 
 
-</div>  <!--  GroupBox1 -->
+</div>  <!--  GroupBox1 --> 
 <div style="height:1px;width:8px;float:left;"></div>   <!-- Width Spacer -->
 <% /* WelcomeContainer:GroupBox */ %>
 
@@ -878,7 +878,7 @@ else
 <input name="hPrimaryRegistrants" id="hPrimaryRegistrants" type="hidden" value="<%=strComboSelectedValue%>" >
 
 
-</div>  <!--  WelcomeContainer -->
+</div>  <!--  WelcomeContainer --> 
 </div>
 <p>
   <!-- End of a new line -->

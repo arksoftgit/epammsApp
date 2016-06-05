@@ -1,3 +1,5 @@
+// wStartChangePassword   Generate Timestamp: 20160531205247599
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

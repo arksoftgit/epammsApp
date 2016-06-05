@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCDirectionsForUseStatement   Generate Timestamp: 20160427103750306 --%>
+<%-- wSLCDirectionsForUseStatement   Generate Timestamp: 20160531205241913 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -731,7 +731,7 @@ else
 
 <% /* Text4:Text */ %>
 
-<label class="listheader"  id="Text4" name="Text4" style="width:434px;height:16px;position:absolute;left:12px;top:4px;">Usage Entries for Imbedding in Statement Text</label>
+<label class="listheader"  id="Text4" name="Text4" style="width:434px;height:16px;position:absolute;left:12px;top:4px;">Usage Entries for Embedding in Statement Text</label>
 
 <% /* PushBtn3:PushBtn */ %>
 <button type="button" class="newbutton" name="PushBtn3" id="PushBtn3" value="" onclick="GOTO_SelectRemoveDUEntries( )" style="width:118px;height:26px;position:absolute;left:560px;top:4px;">Select/Remove</button>

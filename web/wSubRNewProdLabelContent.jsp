@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSubRNewProdLabelContent   Generate Timestamp: 20160427103800356 --%>
+<%-- wSubRNewProdLabelContent   Generate Timestamp: 20160531205254506 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1271,7 +1271,7 @@ else
    }
 %>
 
-<input name="ContentDescription" id="ContentDescription" maxlength="254" style="width:422px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="ContentDescription" id="ContentDescription" maxlength="1024" style="width:422px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

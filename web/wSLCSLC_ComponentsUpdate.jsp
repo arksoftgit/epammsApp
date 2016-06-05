@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCSLC_ComponentsUpdate   Generate Timestamp: 20160427103751441 --%>
+<%-- wSLCSLC_ComponentsUpdate   Generate Timestamp: 20160531205244027 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1041,7 +1041,7 @@ else
    }
 %>
 
-<input name="EditBox1" id="EditBox1" maxlength="254" style="width:338px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EditBox1" id="EditBox1" maxlength="1024" style="width:338px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

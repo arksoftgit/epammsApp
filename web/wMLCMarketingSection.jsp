@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCMarketingSection   Generate Timestamp: 20160525203752950 --%>
+<%-- wMLCMarketingSection   Generate Timestamp: 20160531205228287 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1266,7 +1266,7 @@ else
    }
 %>
 
-<input class="text12" name="Note" id="Note" maxlength="254" style="width:592px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="Note" id="Note" maxlength="1024" style="width:592px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 </td>
 </tr>

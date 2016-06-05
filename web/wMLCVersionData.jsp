@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wMLCVersionData   Generate Timestamp: 20160525203756263 --%>
+<%-- wMLCVersionData   Generate Timestamp: 20160531205231662 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1639,7 +1639,7 @@ else
    }
 %>
 
-<input class="text12" name="ReviewerNote" id="ReviewerNote" maxlength="254" style="width:572px;position:absolute;left:172px;top:226px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input class="text12" name="ReviewerNote" id="ReviewerNote" maxlength="1024" style="width:572px;position:absolute;left:172px;top:226px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* Status::Text */ %>
 

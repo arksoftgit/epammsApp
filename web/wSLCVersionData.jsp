@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCVersionData   Generate Timestamp: 20160427103752019 --%>
+<%-- wSLCVersionData   Generate Timestamp: 20160531205245193 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1475,7 +1475,7 @@ else
    }
 %>
 
-<input name="EditBox2" id="EditBox2" maxlength="254" style="width:338px;position:absolute;left:166px;top:4px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
+<input name="EditBox2" id="EditBox2" maxlength="1024" style="width:338px;position:absolute;left:166px;top:4px;<%=strErrorColor%>" type="text" value="<%=strErrorMapValue%>" >
 
 <% /* Text9:Text */ %>
 
@@ -1600,7 +1600,7 @@ try
          nRC = vGrid3.cursor( "S_VersionChangeMessage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl6 = vGrid3.cursor( "S_VersionChangeMessage" ).getAttribute( "ChangeText" ).getString( "" );
+            strGridEditCtl6 = vGrid3.cursor( "S_VersionChangeMessage" ).getAttribute( "ChangeNote" ).getString( "" );
 
             if ( strGridEditCtl6 == null )
                strGridEditCtl6 = "";

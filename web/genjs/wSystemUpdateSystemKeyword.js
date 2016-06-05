@@ -1,3 +1,5 @@
+// wSystemUpdateSystemKeyword   Generate Timestamp: 20160531205300272
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

@@ -1,4 +1,4 @@
-z1000-Zeidon    EPAMMS   TZZOXOGO 04/27/16   15:29:02 1.0a2   
+z1000-Zeidon    EPAMMS   TZZOXOGO 06/03/16   18:26:47 1.0a2   
 eTZZOXOGO  1
 aNAME      epamms
 
@@ -29,6 +29,54 @@ aDATATYPE  S
 ePARAMETER 4
 aNAME      MaxRecordLth
 aDATATYPE  L
+
+eOPERATION 3
+aNAME      ParseStatementForKeywords
+aTYPE      G
+
+ePARAMETER 4
+aNAME      mMasLC
+aDATATYPE  V
+
+ePARAMETER 4
+aNAME      StatementEntity
+aDATATYPE  S
+
+ePARAMETER 4
+aNAME      KeywordEntity
+aDATATYPE  S
+
+ePARAMETER 4
+aNAME      KeywordTextEntity
+aDATATYPE  S
+
+ePARAMETER 4
+aNAME      KeywordSemaphore
+aDATATYPE  S
+
+eOPERATION 3
+aNAME      GenerateKeywordTextIntoString
+aTYPE      G
+
+ePARAMETER 4
+aNAME      KeywordEntityView
+aDATATYPE  V
+
+ePARAMETER 4
+aNAME      ReturnedTextString
+aDATATYPE  S
+
+ePARAMETER 4
+aNAME      KeywordEntityName
+aDATATYPE  S
+
+ePARAMETER 4
+aNAME      KeywordTextEntityName
+aDATATYPE  S
+
+ePARAMETER 4
+aNAME      SeparatorCharacters
+aDATATYPE  S
 
 eOPERATION 3
 aNAME      SetFirstCharacterCase
@@ -1293,30 +1341,6 @@ aDATATYPE  V
 ePARAMETER 4
 aNAME      SubLC
 aDATATYPE  V
-
-eOPERATION 3
-aNAME      GenerateKeywordTextIntoString
-aTYPE      G
-
-ePARAMETER 4
-aNAME      KeywordEntityView
-aDATATYPE  V
-
-ePARAMETER 4
-aNAME      ReturnedTextString
-aDATATYPE  S
-
-ePARAMETER 4
-aNAME      KeywordEntityName
-aDATATYPE  S
-
-ePARAMETER 4
-aNAME      KeywordTextEntityName
-aDATATYPE  S
-
-ePARAMETER 4
-aNAME      SeparatorCharacters
-aDATATYPE  S
 
 eOPERATION 3
 aNAME      SyncPhysicalLabel

@@ -1,3 +1,5 @@
+// wSystemImportLocationsList   Generate Timestamp: 20160531205257084
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

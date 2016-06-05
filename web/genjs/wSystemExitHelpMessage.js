@@ -1,3 +1,5 @@
+// wSystemExitHelpMessage   Generate Timestamp: 20160531205256896
+
 var isWindowClosing = true;
 window.history.forward( 1 );
 

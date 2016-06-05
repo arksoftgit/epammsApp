@@ -1,3 +1,5 @@
+// wStartUpChangePrimRegUserPassword   Generate Timestamp: 20160531205251771
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

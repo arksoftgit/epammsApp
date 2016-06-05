@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wStartUpChangeSubregUserPassword   Generate Timestamp: 20160427103757150 --%>
+<%-- wStartUpChangeSubregUserPassword   Generate Timestamp: 20160531205252068 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>

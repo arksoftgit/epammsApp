@@ -1,3 +1,5 @@
+// wSLCUsageEntriesSelect   Generate Timestamp: 20160531205245083
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

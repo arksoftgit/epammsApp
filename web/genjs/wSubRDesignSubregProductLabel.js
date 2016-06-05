@@ -1,3 +1,5 @@
+// wSubRDesignSubregProductLabel   Generate Timestamp: 20160531205254178
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

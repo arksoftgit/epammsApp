@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wSLCDirectionsForUseSection   Generate Timestamp: 20160427103750251 --%>
+<%-- wSLCDirectionsForUseSection   Generate Timestamp: 20160531205241788 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -1027,7 +1027,7 @@ try
          nRC = vGrid2.cursor( "M_DrivingUsage" ).checkExistenceOfEntity( ).toInt();
          if ( nRC >= 0 )
          {
-            strGridEditCtl4 = vGrid2.cursor( "M_DrivingUsage" ).getAttribute( "dDisplayUsageName" ).getString( "" );
+            strGridEditCtl4 = vGrid2.cursor( "M_DrivingUsage" ).getAttribute( "dUsageNameFootnote" ).getString( "" );
 
             if ( strGridEditCtl4 == null )
                strGridEditCtl4 = "";

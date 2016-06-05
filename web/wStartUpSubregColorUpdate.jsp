@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<%-- wStartUpSubregColorUpdate   Generate Timestamp: 20160427103757634 --%>
+<%-- wStartUpSubregColorUpdate   Generate Timestamp: 20160531205252803 --%>
 
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.*" %>

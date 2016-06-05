@@ -1,3 +1,5 @@
+// wSystemAnalysisDifferences   Generate Timestamp: 20160531205256412
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

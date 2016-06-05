@@ -1,3 +1,5 @@
+// wSLCStorageDisposal   Generate Timestamp: 20160531205244536
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;

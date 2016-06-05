@@ -1,3 +1,5 @@
+// wSPLDSPLD_BlockMarketingSectionSelect   Generate Timestamp: 20160531205246583
+
 var isWindowClosing = true;
 var timerID = null;
 onerror = handleErr;
